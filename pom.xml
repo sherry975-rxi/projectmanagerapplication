@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>lapr2</groupId>
-    <artifactId>expo</artifactId>
+    <groupId>switch</groupId>
+    <artifactId>project-management</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -179,17 +179,17 @@
                 <version>1.2.0</version>
                 <configuration>
                     <!--<timestampedReports>false</timestampedReports>-->
-                    <inScopeClasses>
+                    <!--<inScopeClasses>
                         <param>lapr.project.model.*</param>
                         <param>lapr.project.utils.*</param>
-                    </inScopeClasses>
+                    </inScopeClasses>-->
                     <targetClasses>
-                        <param>lapr.project.model.*</param>
-                        <param>lapr.project.utils.*</param>
+                        <param>project.model.*</param>
+                        <param>project.utils.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>lapr.project.model.*</param>
-                        <param>lapr.project.utils.*</param>
+                        <param>project.model.*</param>
+                        <param>project.utils.*</param>
                     </targetTests>
                     <outputFormats>
                         <outputFormat>XML</outputFormat>
