@@ -179,10 +179,10 @@
                 <version>1.2.0</version>
                 <configuration>
                     <!--<timestampedReports>false</timestampedReports>-->
-                    <inScopeClasses>
+                    <!--<inScopeClasses>
                         <param>project.model.*</param>
                         <param>project.utils.*</param>
-                    </inScopeClasses>
+                    </inScopeClasses>-->
                     <targetClasses>
                         <param>project.model.*</param>
                         <param>project.utils.*</param>
