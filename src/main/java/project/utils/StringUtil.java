@@ -1,4 +1,4 @@
-package lapr.project.utils;
+package project.utils;
 
 /**
  * Created by nuno on 01/05/17.

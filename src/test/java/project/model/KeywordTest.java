@@ -1,11 +1,12 @@
 package lapr.project.model;
 
-import lapr.project.utils.StringUtil;
-import lapr.project.utils.XMLParser;
+import project.utils.StringUtil;
+import project.utils.XMLParser;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import project.model.Keyword;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

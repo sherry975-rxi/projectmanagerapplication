@@ -1,12 +1,14 @@
 package lapr.project.utils;
 
-import lapr.project.model.Keyword;
+import project.model.Keyword;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXParseException;
+import project.utils.StringUtil;
+import project.utils.XMLParser;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

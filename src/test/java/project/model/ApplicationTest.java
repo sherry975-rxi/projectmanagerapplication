@@ -1,6 +1,8 @@
 package lapr.project.model;
 
-import lapr.project.utils.StringUtil;
+import project.model.Application;
+import project.model.Keyword;
+import project.utils.StringUtil;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

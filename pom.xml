@@ -180,8 +180,8 @@
                 <configuration>
                     <!--<timestampedReports>false</timestampedReports>-->
                     <inScopeClasses>
-                        <param>lapr.project.model.*</param>
-                        <param>lapr.project.utils.*</param>
+                        <param>project.model.*</param>
+                        <param>project.utils.*</param>
                     </inScopeClasses>
                     <targetClasses>
                         <param>project.model.*</param>

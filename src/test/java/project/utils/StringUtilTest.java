@@ -1,6 +1,7 @@
 package lapr.project.utils;
 
 import org.junit.Test;
+import project.utils.StringUtil;
 
 import static org.junit.Assert.assertEquals;
 

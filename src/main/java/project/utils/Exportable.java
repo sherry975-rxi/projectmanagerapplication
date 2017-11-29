@@ -1,6 +1,7 @@
-package lapr.project.utils;
+package project.utils;
 
 import org.w3c.dom.Node;
+import project.utils.XMLParser;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
