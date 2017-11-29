@@ -1,4 +1,4 @@
-package lapr.project.model;
+package project.model;
 
 import project.model.Application;
 import project.model.Keyword;

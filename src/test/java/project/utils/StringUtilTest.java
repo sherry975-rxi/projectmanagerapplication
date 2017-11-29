@@ -1,4 +1,4 @@
-package lapr.project.utils;
+package project.utils;
 
 import org.junit.Test;
 import project.utils.StringUtil;

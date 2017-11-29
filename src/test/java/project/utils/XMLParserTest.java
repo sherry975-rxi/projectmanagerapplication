@@ -1,4 +1,4 @@
-package lapr.project.utils;
+package project.utils;
 
 import project.model.Keyword;
 import org.custommonkey.xmlunit.XMLUnit;

@@ -1,4 +1,4 @@
 /**
  * Package location for Apllication Controllers concepts.
  */
-package lapr.project.controller;
+package project.controller;

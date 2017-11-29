@@ -1,4 +1,4 @@
-package lapr.project.model;
+package project.model;
 
 import project.utils.StringUtil;
 import project.utils.XMLParser;
