@@ -16,3 +16,4 @@ This repository contains an example project.
 
 ### LOG ###
 2017-12-04 Check if build pipeline is working
+2017-12-04 Change SonarQube analysis profile
