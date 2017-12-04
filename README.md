@@ -13,3 +13,6 @@ This repository contains an example project.
 ### Who do I talk to? ###
 
 * Nuno Bettencourt (nmb@isep.ipp.pt)
+
+### LOG ###
+2017-12-04 Check if build pipeline is working
