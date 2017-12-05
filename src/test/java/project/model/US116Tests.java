@@ -23,6 +23,7 @@ class US116Tests {
 	Company myCompany;
 	User newUser2;
 	User newUser3;
+	int typeOfUser;
 
 	@BeforeEach
 	void setUp() {
@@ -35,14 +36,14 @@ class US116Tests {
 		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Rua Bla",
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		int typeOfUser = 1;
+		typeOfUser = 1;
 	}
 
 	@AfterEach
 	void tearDown() {
-		Company myCompany = null;
-		User newUser2 = null;
-		User newUser3 = null;
+		myCompany = null;
+		newUser2 = null;
+		newUser3 = null;
 	}
 
 	/**
