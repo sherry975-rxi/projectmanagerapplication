@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
 import main.java.project.model.Project;
+import main.java.project.model.Task;
 import main.java.project.model.User;
 
 class US206Tests {

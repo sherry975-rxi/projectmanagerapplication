@@ -34,9 +34,9 @@ class US112Tests {
 	void setUp() {
 		Armis = Company.getTheInstance();
 		Armis.getUsersList().clear();
-		newUser2 = Armis.createUser("Manel", "user2@gmail.com", "Empregado", "930000000", "Testy Street", "2401-343",
-				"Testburg", "Testo", "Testistan");
-		newUser3 = Armis.createUser("Manelinho", "user3@gmail.com", "Telefonista", "940000000", "Testy Street",
+		newUser2 = Armis.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "Testy Street",
+				"2401-343", "Testburg", "Testo", "Testistan");
+		newUser3 = Armis.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Testy Street",
 				"2401-343", "Testburg", "Testo", "Testistan");
 
 		typeOfUser = 1;
@@ -62,8 +62,8 @@ class US112Tests {
 		assertTrue(Armis.addUserToUserList(newUser2));
 		assertTrue(Armis.addUserToUserList(newUser3));
 
-		assertTrue(Armis.doesUserExist(newUser2.getEmail()));
-		assertTrue(Armis.doesUserExist(newUser3.getEmail()));
+		assertTrue(Armis.doesUserExist(newUser2));
+		assertTrue(Armis.doesUserExist(newUser3));
 
 		assertEquals(newUser2.getProfile().getProfileInt(), 0);
 

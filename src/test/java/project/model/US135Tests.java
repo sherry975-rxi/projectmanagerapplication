@@ -36,12 +36,12 @@ class US135Tests {
 	void setUp() {
 		myCompany = Company.getTheInstance();
 
-		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "Empregado", "930000000", "ruinha", "7040-531",
-				"Bucareste", "Porto", "Portugal");
-		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "Telefonista", "940000000", "ruinha",
+		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "ruinha",
 				"7040-531", "Bucareste", "Porto", "Portugal");
-		newUser4 = myCompany.createUser("Emanuel", "user4@sapo.com", "Faz tudo", "960000000", "ruinha", "7040-531",
-				"Bucareste", "Porto", "Portugal");
+		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "ruinha",
+				"7040-531", "Bucareste", "Porto", "Portugal");
+		newUser4 = myCompany.createUser("Emanuel", "user4@sapo.com", "003", "Faz tudo", "960000000", "ruinha",
+				"7040-531", "Bucareste", "Porto", "Portugal");
 
 		myCompany.getUsersList().clear();
 		/* Adds the created users to the Company user list */

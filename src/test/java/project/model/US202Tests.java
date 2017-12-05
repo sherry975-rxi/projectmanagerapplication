@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import main.java.project.model.Address;
 import main.java.project.model.Company;
 import main.java.project.model.User;
 
@@ -25,8 +26,8 @@ class US202Tests {
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersList().clear();
 		// create user
-		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "Director", "910000000", "Rua", "2401-00", "Test",
-				"Testo", "Testistan");
+		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "001", "Director", "910000000", "Rua", "2401-00",
+				"Test", "Testo", "Testistan");
 		// create a new address
 
 		address1 = user1.createAddress("Testy Street", "2401-343", "Testburg", "Testo", "Testistan");

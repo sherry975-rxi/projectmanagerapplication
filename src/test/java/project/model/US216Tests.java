@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
 import main.java.project.model.Project;
+import main.java.project.model.Task;
 import main.java.project.model.User;
 
 class US216Tests {
@@ -48,10 +49,10 @@ class US216Tests {
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersList().clear();
 
-		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "Programador", "910000000", "Rua Azul", "5679-987",
-				"braga", "braga", "portugal");
-		user2 = myCompany.createUser("Rita", "rita@gmail.com", "Gestora de Projeto", "920000000", "rua verde", "6789",
-				"porto", "porto", "portugal");
+		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "001", "Programador", "910000000", "Rua Azul",
+				"5679-987", "braga", "braga", "portugal");
+		user2 = myCompany.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "rua verde",
+				"6789", "porto", "porto", "portugal");
 
 		// New project: Project 1
 		myProject = myCompany.createProject("Projecto I", "Projecto de Gestão", user1);

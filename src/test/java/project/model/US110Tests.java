@@ -36,9 +36,9 @@ class US110Tests {
 		Blip = Company.getTheInstance();
 		Blip.getUsersList().clear();
 
-		newUser2 = Blip.createUser("Manel", "user2@gmail.com", "Empregado", "930000000", "Testy Street", "2401-343",
-				"Testburg", "Testo", "Testistan");
-		newUser3 = Blip.createUser("Manelinho", "user3@gmail.com", "Telefonista", "940000000", "Testy Street",
+		newUser2 = Blip.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "Testy Street",
+				"2401-343", "Testburg", "Testo", "Testistan");
+		newUser3 = Blip.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Testy Street",
 				"2401-343", "Testburg", "Testo", "Testistan");
 
 		typeOfUser = 2;
@@ -64,8 +64,8 @@ class US110Tests {
 
 		assertTrue(Blip.addUserToUserList(newUser2));
 
-		assertTrue(Blip.doesUserExist(newUser2.getEmail()));
-		assertFalse(Blip.doesUserExist(newUser3.getEmail()));
+		assertTrue(Blip.doesUserExist(newUser2));
+		assertFalse(Blip.doesUserExist(newUser3));
 
 		assertTrue(newUser2.setUserProfile(typeOfUser));
 
@@ -88,8 +88,8 @@ class US110Tests {
 		assertTrue(Blip.addUserToUserList(newUser2));
 		assertTrue(Blip.addUserToUserList(newUser3));
 
-		assertTrue(Blip.doesUserExist(newUser2.getEmail()));
-		assertTrue(Blip.doesUserExist(newUser3.getEmail()));
+		assertTrue(Blip.doesUserExist(newUser2));
+		assertTrue(Blip.doesUserExist(newUser3));
 
 		// Sets both users as directors and confirms status
 		assertTrue(newUser2.setUserProfile(typeOfUser));
