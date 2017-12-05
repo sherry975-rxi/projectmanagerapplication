@@ -10,8 +10,6 @@ public class ProjectRepository {
 	/**
 	 * Creates an instance of Project
 	 * 
-	 * @param Company
-	 *            (unique instance of Company)
 	 * @param name
 	 * @param description
 	 * @param projectManager
@@ -90,7 +88,8 @@ public class ProjectRepository {
 
 		for (int indexProject = 0; indexProject < this.projectsRepository.size(); indexProject++) {
 			if (this.projectsRepository.get(indexProject).containsUser(specificUser)) {
-				tasksOfSpecificUser.addAll(this.projectsRepository.get(indexProject).getAllTasks(specificUser));
+				tasksOfSpecificUser.addAll(
+						this.projectsRepository.get(indexProject).getTaskRepository().getAllTasks(specificUser));
 			}
 		}
 
@@ -111,7 +110,7 @@ public class ProjectRepository {
 		List<Task> finishedTasksOfSpecificUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
 			if (test.containsUser(user)) {
-				finishedTasksOfSpecificUser.addAll(test.getFinishedTasksGivenMonth(user, -1));
+				finishedTasksOfSpecificUser.addAll(test.getTaskRepository().getFinishedTasksGivenMonth(user, -1));
 			}
 		}
 		return finishedTasksOfSpecificUser;
@@ -130,7 +129,7 @@ public class ProjectRepository {
 		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
 			if (test.containsUser(user)) {
-				unfinishedTasksOfSpecificUser.addAll(test.getUnFinishedTasks(user));
+				unfinishedTasksOfSpecificUser.addAll(test.getTaskRepository().getUnFinishedTasks(user));
 			}
 		}
 		return unfinishedTasksOfSpecificUser;
@@ -154,7 +153,7 @@ public class ProjectRepository {
 		List<Task> lastMonthFinishedTaskListByUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
 			if (test.containsUser(user)) {
-				lastMonthFinishedTaskListByUser.addAll(test.getFinishedTasksGivenMonth(user, 1));
+				lastMonthFinishedTaskListByUser.addAll(test.getTaskRepository().getFinishedTasksGivenMonth(user, 1));
 			}
 		}
 		return lastMonthFinishedTaskListByUser;
@@ -174,7 +173,7 @@ public class ProjectRepository {
 		double totalTime = 0;
 		for (Project test : this.projectsRepository) {
 			if (test.containsUser(user)) {
-				totalTime = totalTime + test.getTimeSpentOnLastMonthProjectUserTasks(user);
+				totalTime = totalTime + test.getTaskRepository().getTimeSpentOnLastMonthProjectUserTasks(user);
 			}
 		}
 

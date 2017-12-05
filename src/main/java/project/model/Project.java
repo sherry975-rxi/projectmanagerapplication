@@ -56,7 +56,7 @@ public class Project {
 	/**
 	 * This method returns the Task Repository for this specific Project
 	 * 
-	 * @return
+	 * @return taskRepository
 	 */
 	public TaskRepository getTaskRepository() {
 		return taskRepository;
