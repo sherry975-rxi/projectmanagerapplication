@@ -1,5 +1,6 @@
 package test.java.project.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -11,9 +12,21 @@ import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Address;
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.User;
 
 class US202Tests {
+
+	/**
+	 * Tests US202
+	 * 
+	 * US202: Como colaborador, eu pretendo associar um novo endereço postal ao meu
+	 * perfil.
+	 * 
+	 * uses methods addAddress(), Address toString()
+	 * 
+	 * 
+	 */
 
 	Company myCompany;
 	User user1;
@@ -34,7 +47,8 @@ class US202Tests {
 		// add user to user list
 		myCompany.addUserToUserList(user1);
 		// set user as collaborator
-		user1.getProfile().setCollaborator();
+		user1.setUserProfile(Profile.COLLABORATOR);
+		;
 		// add address to collaborator
 		user1.addAddress(address1);
 
@@ -48,19 +62,14 @@ class US202Tests {
 	}
 
 	/**
-	 * Tests US202
-	 * 
-	 * US202: Como colaborador, eu pretendo associar um novo endereço postal ao meu
-	 * perfil.
-	 * 
-	 * uses methods addAddress(), Address toString()
-	 * 
-	 * new method: isApprovedUser > if(User.getProfile != 0), return true;
-	 * 
+	 * This test verifies if the user is collaborator, then tests the addition of
+	 * addresses
 	 */
-
 	@Test
 	void testAddAddress() {
+		// Verfies User is Collaborator
+		assertEquals(user1.getUserProfile(), Profile.COLLABORATOR);
+
 		// Creates a new list and adds address to that list, to compare with
 		// userAddresslist
 		List<Address> testList = new ArrayList<Address>();
