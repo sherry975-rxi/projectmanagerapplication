@@ -49,8 +49,7 @@ public class Project {
 		this.description = description;
 		this.projectManager = projectManager;
 		this.status = PLANNING;
-		this.taskRepository = new TaskRepository();
-		taskRepository.setProjId(idCode);
+		this.taskRepository = new TaskRepository(idCode);
 		this.projectTeam = new ArrayList<User>();
 	}
 
