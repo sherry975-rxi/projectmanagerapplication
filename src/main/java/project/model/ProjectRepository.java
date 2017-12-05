@@ -6,6 +6,7 @@ import java.util.List;
 public class ProjectRepository {
 
 	private List<Project> projectsRepository;
+	private int projCounter;
 
 	/**
 	 * Creates an instance of Project
@@ -17,12 +18,30 @@ public class ProjectRepository {
 	 * 
 	 * @return the project created
 	 */
-	public Project createProject(String name, String description, User projectManager) {
+	public Project createProject(int projCounter, String name, String description, User projectManager) {
 
-		Project newProject = new Project(name, description, projectManager);
-
+		Project newProject = new Project(projCounter, name, description, projectManager);
+		projCounter++;
 		return newProject;
 
+	}
+
+	/**
+	 * This method returns the Project Counter
+	 * 
+	 * @return Project Counter
+	 */
+	public int getProjCounter() {
+		return projCounter;
+	}
+
+	/**
+	 * Takes an int to set the Project counter
+	 * 
+	 * @param projCounter
+	 */
+	public void setProjCounter(int projCounter) {
+		this.projCounter = projCounter;
 	}
 
 	/**

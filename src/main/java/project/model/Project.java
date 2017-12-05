@@ -41,10 +41,9 @@ public class Project {
 	 * @param projectManager
 	 */
 
-	public Project(String name, String description, User projectManager) {
+	public Project(int projCounter, String name, String description, User projectManager) {
 
-		this.idCode = Company.getTheInstance().getCounter();
-		Company.getTheInstance().setCounter(Company.getTheInstance().getCounter() + 1);
+		this.idCode = projCounter;
 		this.name = name;
 		this.description = description;
 		this.projectManager = projectManager;
