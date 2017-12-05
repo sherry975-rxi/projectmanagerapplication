@@ -69,7 +69,7 @@ class US110Tests {
 		assertTrue(Blip.doesUserExist(newUser2));
 		assertFalse(Blip.doesUserExist(newUser3));
 
-		assertTrue(newUser2.setUserProfile(typeOfUser));
+		newUser2.setAsDirector;
 
 		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
 		assertEquals(newUser3.getProfile().getProfileInt(), 0);
@@ -93,8 +93,8 @@ class US110Tests {
 		assertTrue(Blip.doesUserExist(newUser3));
 
 		// Sets both users as directors and confirms status
-		assertTrue(newUser2.setUserProfile(typeOfUser));
-		assertTrue(newUser3.setUserProfile(typeOfUser));
+		newUser2.setAsDirector;
+		newUser3.setAsDirector;
 
 		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
 		assertEquals(newUser3.getProfile().getProfileInt(), typeOfUser);

@@ -68,16 +68,15 @@ class US101Tests {
 	@Test
 	void testUserAdditionEmailValidation() {
 
+		// Confirms the UserList starts with 0 users, then checks test Users' emails
+		// before adding them
 		assertEquals(Critical.getUsersList().size(), 0);
-
 		assertFalse(Critical.isEmailAddressValid(uFalse.getEmail()));
 
 		assertTrue(Critical.isEmailAddressValid(user1.getEmail()));
-
 		assertTrue(Critical.addUserToUserList(user1));
 
 		assertTrue(Critical.isEmailAddressValid(uRepeat.getEmail()));
-
 		assertFalse(Critical.addUserToUserList(uRepeat));
 
 		assertEquals(user1, Critical.getUsersList().get(0));
@@ -92,15 +91,15 @@ class US101Tests {
 	@Test
 	void testUS101RepeatedUser() {
 
+		// Adds first user to List and asserts its presence using various methods
 		assertTrue(Critical.addUserToUserList(user1));
-
 		assertFalse(user2.equals(Critical.getUsersList().get(0)));
-
 		assertTrue(Critical.doesUserExist(user1));
 
+		// Attempts to add the same user again (false) and add a new one
+		// then confirms the Userlist size, and compares it to a test List
 		assertFalse(Critical.addUserToUserList(user1));
 		assertTrue(Critical.addUserToUserList(user2));
-
 		assertEquals(Critical.getUsersList().size(), 2);
 
 		List<User> testList = new ArrayList<User>();
