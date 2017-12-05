@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.User;
 
 class US201Tests {
@@ -61,7 +62,7 @@ class US201Tests {
 	 */
 	@Test
 	void testSetName() {
-		newUserA.getProfile().setCollaborator();
+		newUserA.setUserProfile(Profile.COLLABORATOR);
 
 		String Name1 = newUserA.getName();
 		String Name2 = "TesterJ";
@@ -77,7 +78,7 @@ class US201Tests {
 	 */
 	@Test
 	void testSetEmail() {
-		newUserA.getProfile().setCollaborator();
+		newUserA.setUserProfile(Profile.COLLABORATOR);
 
 		String Email1 = newUserA.getEmail();
 		String Email2 = "TesterJ@test.org";
@@ -93,7 +94,7 @@ class US201Tests {
 	 */
 	@Test
 	void testSetNumber() {
-		newUserA.getProfile().setCollaborator();
+		newUserA.setUserProfile(Profile.COLLABORATOR);
 
 		String Number1 = newUserA.getPhone();
 		String Number2 = "919191919";
@@ -115,7 +116,7 @@ class US201Tests {
 		String Number1 = newUserA.getPhone();
 		String Number2 = "91919199191";
 
-		assertEquals(newUserA.getProfile().getProfileInt(), 0);
+		assertEquals(newUserA.getProfile(), Profile.VISITOR);
 
 		newUserA.setPhone(Number2);
 		assertFalse(newUserA.getPhone().equals(Number1));
@@ -128,8 +129,9 @@ class US201Tests {
 	 */
 	@Test
 	void testAttemptChangeEmailToExistingEmail() {
-		newUserA.getProfile().setCollaborator();
-		newUserB.getProfile().setCollaborator();
+		newUserA.setUserProfile(Profile.COLLABORATOR);
+		newUserB.setUserProfile(Profile.COLLABORATOR);
+		;
 
 		String Email2 = newUserA.getEmail();
 		String Email3 = newUserB.getEmail();
