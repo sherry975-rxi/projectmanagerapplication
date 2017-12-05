@@ -23,7 +23,6 @@ class US116Tests {
 	Company myCompany;
 	User newUser2;
 	User newUser3;
-	int typeOfUser;
 
 	@BeforeEach
 	void setUp() {
@@ -35,8 +34,12 @@ class US116Tests {
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Rua Bla",
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+		
+		myCompany.addUserToUserList(newUser2);
+		myCompany.addUserToUserList(newUser3);
 
-		typeOfUser = 1;
+		newUser2.setSystemUserState(false);
+		newUser3.setSystemUserState(true);
 	}
 
 	@AfterEach
@@ -53,30 +56,8 @@ class US116Tests {
 	 */
 	@Test
 	void testSetSystemUserState() {
-
-		myCompany.addUserToUserList(newUser2);
-		myCompany.addUserToUserList(newUser3);
-
-		newUser2.setSystemUserState(false);
-		newUser3.setSystemUserState(true);
-
 		assertFalse(newUser2.isSystemUserStateActive());
 		assertTrue(newUser3.isSystemUserStateActive());
-
-	}
-
-	/**
-	 * Asserts if UserStateActive is True; Finally, Asserts if UserStateActive if
-	 * False, after setting it as such;
-	 */
-	@Test
-	void testAssertSystemUserState() {
-
-		newUser2.setSystemUserState(true);
-		assertTrue(newUser2.isSystemUserStateActive());
-
-		newUser3.setSystemUserState(false);
-		assertFalse(newUser3.isSystemUserStateActive());
 	}
 
 }
