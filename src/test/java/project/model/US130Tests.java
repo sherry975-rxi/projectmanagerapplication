@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.User;
 
 class US130Tests {
@@ -51,11 +52,11 @@ class US130Tests {
 		myCompany.addUserToUserList(user5);
 
 		// Set users's profile type to collaborator
-		user1.getProfile().setCollaborator();
-		user2.getProfile().setCollaborator();
-		user3.getProfile().setCollaborator();
-		user4.getProfile().setCollaborator();
-		user5.getProfile().setCollaborator();
+		user1.setUserProfile(Profile.COLLABORATOR);
+		user2.setUserProfile(Profile.COLLABORATOR);
+		user3.setUserProfile(Profile.COLLABORATOR);
+		user4.setUserProfile(Profile.COLLABORATOR);
+		user5.setUserProfile(Profile.COLLABORATOR);
 	}
 
 	@AfterEach
