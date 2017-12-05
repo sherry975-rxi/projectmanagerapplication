@@ -29,7 +29,7 @@ public class TaskRepository {
 
 	public Task createTask(String description) {
 
-		Task newTask = new Task(this.taskCounter, this.projId, description);
+		Task newTask = new Task(this, description);
 
 		return newTask;
 
@@ -93,26 +93,6 @@ public class TaskRepository {
 		}
 
 		return finishedTaskList;
-	}
-
-	/**
-	 * This method returns only the unfinished tasks in a project.
-	 * 
-	 * @return UnfinishedTaskList The list if tasks that are not finished
-	 */
-	public List<Task> getUnFinishedTasks(User user) {
-
-		List<Task> unfinishedTaskList = new ArrayList<Task>();
-		unfinishedTaskList.addAll(this.getAllTasks(user));
-
-		for (Task other : this.getAllTasks(user)) {
-			if (other.isFinished()) {
-				unfinishedTaskList.remove(other);
-			}
-		}
-
-		return unfinishedTaskList;
-
 	}
 
 	/**
