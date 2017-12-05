@@ -47,7 +47,7 @@ public class User {
 		this.function = function;
 		this.addressList = new ArrayList<Address>();
 		this.phone = phone;
-		this.userProfile = new Profile();
+		this.userProfile = Profile.VISITOR;
 		this.systemUserStateActive = true;
 	}
 
@@ -231,29 +231,24 @@ public class User {
 	 * @param userProfile
 	 *            Profile that will be set as the user profile.
 	 * 
-	 * @return TRUE if the user profile was successfully changed, FALSE if it
-	 *         failed.
+	 * @return Sets the user profile equal to the @param userProfile received.
 	 */
-	public boolean setUserProfile(int userProfile) {
+	public void setUserProfile(Profile userProfile) {
 
-		if (userProfile == Profile.DIRECTOR) {
+		this.userProfile = userProfile;
 
-			this.userProfile.setDirector();
-			return true;
-		}
+	}
 
-		if (userProfile == Profile.COLLABORATOR) {
+	/**
+	 * Gets the user profile.
+	 * 
+	 * 
+	 * @return the user profile.
+	 */
+	public Profile getUserProfile() {
 
-			this.userProfile.setCollaborator();
-			return true;
-		}
+		return this.userProfile;
 
-		if (userProfile == Profile.VISITOR) {
-			this.userProfile.setVisitor();
-			return true;
-		}
-
-		return false;
 	}
 
 }

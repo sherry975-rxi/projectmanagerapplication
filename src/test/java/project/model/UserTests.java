@@ -185,9 +185,9 @@ class UserTests {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
-		int visitante = 0;
+		Profile visitor = Profile.VISITOR;
 
-		assertEquals(visitante, u1.getProfile().getProfileInt());
+		assertEquals(visitor, u1.getUserProfile());
 	}
 
 	/**
@@ -277,7 +277,7 @@ class UserTests {
 
 		u1.setUserProfile(Profile.COLLABORATOR);
 
-		assertEquals(Profile.COLLABORATOR, u1.getProfile().getProfileInt());
+		assertEquals(Profile.COLLABORATOR, u1.getProfile());
 
 	}
 
@@ -291,7 +291,7 @@ class UserTests {
 
 		u1.setUserProfile(Profile.DIRECTOR);
 
-		assertEquals(Profile.DIRECTOR, u1.getProfile().getProfileInt());
+		assertEquals(Profile.DIRECTOR, u1.getProfile());
 
 	}
 
@@ -305,7 +305,7 @@ class UserTests {
 
 		u1.setUserProfile(Profile.VISITOR);
 
-		assertEquals(Profile.VISITOR, u1.getProfile().getProfileInt());
+		assertEquals(Profile.VISITOR, u1.getProfile());
 
 	}
 }
