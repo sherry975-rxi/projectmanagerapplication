@@ -1,5 +1,7 @@
 package test.java.project.model;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,7 @@ import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
+import main.java.project.model.TaskRepository;
 import main.java.project.model.User;
 
 class TaskRepositoryTests {
@@ -18,6 +21,7 @@ class TaskRepositoryTests {
 	User userAdmin;
 	Project project;
 	ProjectRepository projectRepository;
+	TaskRepository taskRepository;
 	Task testTask;
 	Task testTask2;
 	Task testTask3;
@@ -42,6 +46,8 @@ class TaskRepositoryTests {
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
 		project = myCompany.getProjectRepository.createProject("name3", "description4", userAdmin);// !!!
+		// create taskRepository
+		taskRepository = project.getTaskRepository();
 		// create 4 tasks
 		testTask = myCompany.getProjectRepository.getProject(project).getTaskRepository.createTask("Test dis agen pls");
 		testTask2 = project.createTask("Test dis agen pls");
@@ -60,6 +66,7 @@ class TaskRepositoryTests {
 		testTask4 = null;
 		project = null;
 		projectRepository = null;
+		taskRepository = null;
 	}
 
 	@Test
@@ -83,7 +90,19 @@ class TaskRepositoryTests {
 	}
 
 	@Test
-	void testUnFinishedTasks() {
+	void testGetUnFinishedTasks() {
+		// add task to repository
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+		testTask.addUserToTask(user1);
+		testTask2.addUserToTask(user1);
+		testTask3.addUserToTask(user1);
+		testTask4.addUserToTask(user1);
+
+		assertEquals(t1, p1.getUnFinishedTaskList(u1).get(0));
+	}
 
 	}
 
