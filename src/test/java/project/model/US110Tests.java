@@ -1,14 +1,13 @@
 package test.java.project.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.User;
 
 class US110Tests {
@@ -42,8 +41,6 @@ class US110Tests {
 				"2401-343", "Testburg", "Testo", "Testistan");
 
 		Blip.addUserToUserList(newUser2);
-
-		typeOfUser = 2;
 	}
 
 	@AfterEach
@@ -52,58 +49,36 @@ class US110Tests {
 
 		newUser2 = null;
 		newUser3 = null;
-		typeOfUser = 0;
 
 	}
 
 	/**
 	 * Tests the setUserProfile method to check if the profile director was
-	 * correctly attributed. TypeofUser=3 (non-existent) will return false (not
-	 * equal)
+	 * correctly attributed. Then tests the ability to set multiple directors; Also
+	 * attempts to switch from director to collaborator, then to director again.
 	 */
 	@Test
 	void testSetUserAsDirector() {
 
-		newUser2.setAsDirector;
+		newUser2.setUserProfile(Profile.DIRECTOR);
 
-		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
-		assertEquals(newUser3.getProfile().getProfileInt(), 0);
+		assertEquals(newUser2.getProfile(), Profile.DIRECTOR);
+		assertEquals(newUser3.getProfile(), Profile.VISITOR);
 
-		typeOfUser = 3;
+		// Sets another users as directors and confirms status
+		newUser3.setUserProfile(Profile.DIRECTOR);
 
-		assertFalse(newUser2.setUserProfile(typeOfUser));
-
-	}
-
-	/**
-	 * Tests the ability to set multiple directors; Also attempts to switch from
-	 * director to collaborator, then to director again.
-	 */
-	@Test
-	void testSetMultipleDirectors() {
-
-		assertTrue(Blip.addUserToUserList(newUser3));
-
-		assertTrue(Blip.doesUserExist(newUser2));
-		assertTrue(Blip.doesUserExist(newUser3));
-
-		// Sets both users as directors and confirms status
-		newUser2.setAsDirector;
-		newUser3.setAsDirector;
-
-		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
-		assertEquals(newUser3.getProfile().getProfileInt(), typeOfUser);
+		assertEquals(newUser2.getProfile(), Profile.DIRECTOR);
+		assertEquals(newUser3.getProfile(), Profile.DIRECTOR);
 
 		// tests changing to visitor
-		typeOfUser = 0;
 
-		assertTrue(newUser2.setUserProfile(typeOfUser));
-		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
+		newUser3.setUserProfile(Profile.VISITOR);
+		assertEquals(newUser3.getProfile(), Profile.VISITOR);
 
 		// tests changing back to director
-		typeOfUser = 2;
-		assertTrue(newUser2.setUserProfile(typeOfUser));
-		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
+		newUser3.setUserProfile(Profile.DIRECTOR);
+		assertEquals(newUser3.getProfile(), Profile.DIRECTOR);
 
 	}
 
