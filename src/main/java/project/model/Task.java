@@ -39,7 +39,6 @@ public class Task {
 		Integer taskNumber = (Integer) taskRep.getTaskCounter();
 		Integer projId = (Integer) taskRep.getProjId();
 		this.taskID = projId.toString() + "." + taskNumber.toString();
-		taskRep.setTaskCounter(taskRep.getTaskCounter() + 1);
 		this.description = description;
 		this.creationDate = Calendar.getInstance();
 		this.startDate = null;

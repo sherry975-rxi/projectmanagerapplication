@@ -105,15 +105,15 @@ class TaskRepositoryTests {
 		testTask3.addUserToTask(user1);
 		testTask4.addUserToTask(user1);
 
+		// create a list and add task to compare to unfinished task list
 		List<Task> test = new ArrayList<Task>();
 		test.add(testTask);
 		test.add(testTask2);
 		test.add(testTask3);
 		test.add(testTask4);
 
-		assertEquals(test, taskRepository.get(u1).get(0));
-	}
-
+		// verify if test list is the same as the user unfinished task list
+		assertEquals(test, taskRepository.getUnFinishedTasks(user1));
 	}
 
 	@Test
