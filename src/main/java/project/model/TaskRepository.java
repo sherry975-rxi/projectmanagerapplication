@@ -169,7 +169,7 @@ public class TaskRepository {
 	 */
 	public double getTimeSpentOnLastMonthProjectUserTasks(User user) {
 		List<Task> lastMonth = new ArrayList<Task>();
-		lastMonth.addAll(this.getFinishedTaskListLastMonth(user));
+		lastMonth.addAll(this.getFinishedTasksGivenMonth(user, 1));
 		double totalTime = 0;
 		for (Task test : lastMonth) {
 			if (test.taskTeamContainsUser(user) && test.getFinishDate() != null) {
@@ -201,7 +201,25 @@ public class TaskRepository {
 
 	public int getProjId() {
 		return projId;
+	}
 
+	/**
+	 * This method returns a list with all the tasks of a certain user in the
+	 * project
+	 * 
+	 * @param user
+	 *            User (to be able to return its tasks)
+	 * 
+	 * @return AllTasksList List if all tasks from a user
+	 */
+	public List<Task> getAllTasks(User user) {
+		List<Task> allTasks = new ArrayList<Task>();
+		for (Task other : this.projectTasks) {
+			if (other.taskTeamContainsUser(user)) {
+				allTasks.add(other);
+			}
+		}
+		return allTasks;
 	}
 
 }
