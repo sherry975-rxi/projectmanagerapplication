@@ -54,6 +54,15 @@ public class Project {
 	}
 
 	/**
+	 * This method returns the Task Repository for this specific Project
+	 * 
+	 * @return
+	 */
+	public TaskRepository getTaskRepository() {
+		return taskRepository;
+	}
+
+	/**
 	 * Get the complete user list for this project's team
 	 * 
 	 * @return Project Team
