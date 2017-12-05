@@ -2,6 +2,9 @@ package test.java.project.model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,10 +52,10 @@ class TaskRepositoryTests {
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 		// create 4 tasks
-		testTask = myCompany.getProjectRepository.getProject(project).getTaskRepository.createTask("Test dis agen pls");
-		testTask2 = project.createTask("Test dis agen pls");
-		testTask3 = project.createTask("Test moar yeh");
-		testTask4 = project.createTask("TEST HARDER!");
+		testTask = taskRepository.createTask("Test dis agen pls");
+		testTask2 = taskRepository.createTask("Test dis agen pls");
+		testTask3 = taskRepository.createTask("Test moar yeh");
+		testTask4 = taskRepository.createTask("TEST HARDER!");
 
 	}
 
@@ -91,19 +94,26 @@ class TaskRepositoryTests {
 
 	@Test
 	void testGetUnFinishedTasks() {
-		// add task to repository
+		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
+		// add de user to the task
 		testTask.addUserToTask(user1);
 		testTask2.addUserToTask(user1);
 		testTask3.addUserToTask(user1);
 		testTask4.addUserToTask(user1);
 
-		assertEquals(t1, p1.getUnFinishedTaskList(u1).get(0));
-	}
+		// create a list and add task to compare to unfinished task list
+		List<Task> test = new ArrayList<Task>();
+		test.add(testTask);
+		test.add(testTask2);
+		test.add(testTask3);
+		test.add(testTask4);
 
+		// verify if test list is the same as the user unfinished task list
+		assertEquals(test, taskRepository.getUnFinishedTasks(user1));
 	}
 
 	@Test

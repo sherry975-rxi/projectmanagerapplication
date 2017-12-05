@@ -29,7 +29,7 @@ public class TaskRepository {
 	public Task createTask(String description) {
 
 		Task newTask = new Task(this, description);
-
+		taskCounter++;
 		return newTask;
 
 	}
