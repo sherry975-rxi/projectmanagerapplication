@@ -41,6 +41,8 @@ class US110Tests {
 		newUser3 = Blip.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Testy Street",
 				"2401-343", "Testburg", "Testo", "Testistan");
 
+		Blip.addUserToUserList(newUser2);
+
 		typeOfUser = 2;
 	}
 
@@ -62,7 +64,7 @@ class US110Tests {
 	@Test
 	void testSetUserAsDirector() {
 
-		assertTrue(Blip.addUserToUserList(newUser2));
+		assertFalse(Blip.addUserToUserList(newUser2));
 
 		assertTrue(Blip.doesUserExist(newUser2));
 		assertFalse(Blip.doesUserExist(newUser3));
@@ -85,7 +87,6 @@ class US110Tests {
 	@Test
 	void testSetMultipleDirectors() {
 
-		assertTrue(Blip.addUserToUserList(newUser2));
 		assertTrue(Blip.addUserToUserList(newUser3));
 
 		assertTrue(Blip.doesUserExist(newUser2));

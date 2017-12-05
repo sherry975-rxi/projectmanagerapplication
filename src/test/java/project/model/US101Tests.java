@@ -96,6 +96,8 @@ class US101Tests {
 
 		assertFalse(user2.equals(Critical.getUsersList().get(0)));
 
+		assertTrue(Critical.doesUserExist(user1));
+
 		assertFalse(Critical.addUserToUserList(user1));
 		assertTrue(Critical.addUserToUserList(user2));
 
