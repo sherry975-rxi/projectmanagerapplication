@@ -18,9 +18,8 @@ import java.util.List;
 public class Project {
 
 	private int idCode;
-	private int taskCounter;
 	private int status;
-	private List<Task> projectTaskList;
+	private TaskRepository taskRepository;
 	private User projectManager;
 	private List<User> projectTeam;
 	private String name;
@@ -50,7 +49,8 @@ public class Project {
 		this.description = description;
 		this.projectManager = projectManager;
 		this.status = PLANNING;
-		this.projectTaskList = new ArrayList<Task>();
+		this.taskRepository = new TaskRepository();
+		taskRepository.setProjId(IdCode);
 		this.projectTeam = new ArrayList<User>();
 	}
 

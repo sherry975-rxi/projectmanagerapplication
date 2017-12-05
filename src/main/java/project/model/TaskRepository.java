@@ -6,6 +6,18 @@ import java.util.List;
 
 public class TaskRepository {
 
+	private int taskCounter;
+	private List<Task> taskList;
+	private int projId;
+
+	public TaskRepository() {
+
+		this.taskList = new ArrayList<Task>();
+		this.taskCounter = 0;
+		Integer projId = (Integer) proj.getIdCode();
+
+	}
+
 	/**
 	 * Creates an instance of Task
 	 * 
@@ -14,6 +26,7 @@ public class TaskRepository {
 	 * 
 	 * @return the task created
 	 */
+
 	public Task createTask(String description) {
 
 		Task newTask = new Task(this, description);
