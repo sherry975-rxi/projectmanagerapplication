@@ -35,10 +35,11 @@ public class Task {
 	 * @param project
 	 * 
 	 */
-	public Task(Project proj, String description) {
-		Integer taskCounter = (Integer) proj.getTaskCounter();
-		this.taskID = projId.toString() + "." + taskCounter.toString();
-		proj.setTaskCounter(proj.getTaskCounter() + 1);
+	public Task(TaskRepository taskRep, String description) {
+		Integer taskNumber = (Integer) taskRep.getTaskCounter();
+		Integer projId = (Integer) taskRep.getProjId();
+		this.taskID = projId.toString() + "." + taskNumber.toString();
+		taskRep.setTaskCounter(taskRep.getTaskCounter() + 1);
 		this.description = description;
 		this.creationDate = Calendar.getInstance();
 		this.startDate = null;

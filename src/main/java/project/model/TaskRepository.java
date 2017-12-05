@@ -7,14 +7,14 @@ import java.util.List;
 public class TaskRepository {
 
 	private int taskCounter;
-	private List<Task> projectTasks;
 	private int projId;
+	private List<Task> projectTasks;
 
-	public TaskRepository() {
+	public TaskRepository(int projId) {
 
 		this.projectTasks = new ArrayList<Task>();
-		this.taskCounter = 0;
-		Integer projId = (Integer) proj.getIdCode();
+		this.taskCounter = projId;
+		this.projId = projId;
 
 	}
 
@@ -29,7 +29,7 @@ public class TaskRepository {
 
 	public Task createTask(String description) {
 
-		Task newTask = new Task(this, description);
+		Task newTask = new Task(this.taskCounter, this.projId, description);
 
 		return newTask;
 
@@ -199,7 +199,7 @@ public class TaskRepository {
 		return this.taskCounter;
 	}
 
-	public int setProjId() {
+	public int getProjId() {
 		return projId;
 
 	}
