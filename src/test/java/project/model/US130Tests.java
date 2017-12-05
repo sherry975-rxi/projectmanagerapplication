@@ -32,16 +32,16 @@ class US130Tests {
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersList().clear();
 
-		user1 = myCompany.createUser("Dani", "daniel@gmail.com", "Programador", "910000000", "ruinha", "7040-531",
-				"Bucareste", "Porto", "Portugal");
-		user2 = myCompany.createUser("Rita", "rita@gmail.com", "Gestora de Projeto", "920000000", "ruinha", "7040-531",
-				"Bucareste", "Porto", "Portugal");
-		user3 = myCompany.createUser("Joao", "joao@gmail.com", "Programador", "910000000", "ruinha", "7040-531",
-				"Bucareste", "Porto", "Portugal");
-		user4 = myCompany.createUser("Maria", "maria@gmail.com", "Gestora de Projeto", "920000000", "ruinha",
+		user1 = myCompany.createUser("Dani", "daniel@gmail.com", "001", "Programador", "910000000", "ruinha",
 				"7040-531", "Bucareste", "Porto", "Portugal");
-		user5 = myCompany.createUser("Manel", "manel@gmail.com", "Programador", "910000000", "ruinha", "7040-531",
+		user2 = myCompany.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "ruinha",
+				"7040-531", "Bucareste", "Porto", "Portugal");
+		user3 = myCompany.createUser("Joao", "joao@gmail.com", "003", "Programador", "910000000", "ruinha", "7040-531",
 				"Bucareste", "Porto", "Portugal");
+		user4 = myCompany.createUser("Maria", "maria@gmail.com", "004", "Gestora de Projeto", "920000000", "ruinha",
+				"7040-531", "Bucareste", "Porto", "Portugal");
+		user5 = myCompany.createUser("Manel", "manel@gmail.com", "005", "Programador", "910000000", "ruinha",
+				"7040-531", "Bucareste", "Porto", "Portugal");
 
 		// Adds the created users to the Company user list.
 		myCompany.addUserToUserList(user1);

@@ -33,9 +33,9 @@ class US320Tests {
 		c1.getProjectsList().clear();
 
 		// User creation
-		u1 = c1.createUser("Daniel", "daniel@gmail.com", "Director", "910000000", "Rua Bla", "BlaBla", "BlaBlaBla",
-				"BlaBlaBlaBla", "Blalandia");
-		u2 = c1.createUser("Rita", "rita@gmail.com", "Gestora de Projeto", "920000000", "Rua Bla", "BlaBla",
+		u1 = c1.createUser("Daniel", "daniel@gmail.com", "001", "Director", "910000000", "Rua Bla", "BlaBla",
+				"BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+		u2 = c1.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "Rua Bla", "BlaBla",
 				"BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
 		// create the project and set a user to Project manager

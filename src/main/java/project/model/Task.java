@@ -36,7 +36,6 @@ public class Task {
 	 * 
 	 */
 	public Task(Project proj, String description) {
-		Integer projId = (Integer) proj.getIdCode();
 		Integer taskCounter = (Integer) proj.getTaskCounter();
 		this.taskID = projId.toString() + "." + taskCounter.toString();
 		proj.setTaskCounter(proj.getTaskCounter() + 1);

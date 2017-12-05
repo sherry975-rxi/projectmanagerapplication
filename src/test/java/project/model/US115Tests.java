@@ -31,10 +31,10 @@ class US115Tests {
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersList().clear();
 
-		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "Empregado", "930000000", "Rua Bla", "BlaBla",
-				"BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "Telefonista", "940000000", "Rua Bla", "BlaBla",
-				"BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "Rua Bla",
+				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Rua Bla",
+				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
 		int typeOfUser = 1;
 

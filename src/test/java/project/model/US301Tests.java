@@ -26,10 +26,10 @@ class US301Tests {
 		c1.setCounter(1);
 
 		// User creation
-		u1 = c1.createUser("Leonor", "leonor@gmail.com", "Empregado", "930000000", "Rua Maria", "4444-444", "221234567",
-				"Porto", "Portugal");
-		u2 = c1.createUser("Maria", "maria@gmail.com", "Empregado", "930000000", "Rua Maria", "4444-444", "221234567",
-				"Porto", "Portugal");
+		u1 = c1.createUser("Leonor", "leonor@gmail.com", "001", "Empregado", "930000000", "Rua Maria", "4444-444",
+				"221234567", "Porto", "Portugal");
+		u2 = c1.createUser("Maria", "maria@gmail.com", "002", "Empregado", "930000000", "Rua Maria", "4444-444",
+				"221234567", "Porto", "Portugal");
 
 		// create the project and set a user to Project manager
 		p1 = c1.createProject("Teste", "blablabla", u2);

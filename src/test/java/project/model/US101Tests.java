@@ -40,13 +40,13 @@ class US101Tests {
 		Critical = Company.getTheInstance();
 		Critical.getUsersList().clear();
 
-		user1 = Critical.createUser("Daniel", "daniel@gmail.com", "Porteiro", "920000000", "Testy Street", "2401-343",
-				"Testburg", "Testo", "Testistan");
-		uFalse = Critical.createUser("DanielA", "daniel&gmail,com", "Porteiro", "910000000", "Testy Street", "2401-343",
-				"Testburg", "Testo", "Testistan");
-		uRepeat = Critical.createUser("DanielC", "daniel@gmail.com", "Porteiro", "930000000", "Testy Street",
+		user1 = Critical.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000", "Testy Street",
 				"2401-343", "Testburg", "Testo", "Testistan");
-		user2 = Critical.createUser("DanielM", "danielM@gmail.com", "Code Monkey", "920000000", "Testy Street",
+		uFalse = Critical.createUser("DanielA", "daniel&gmail,com", "001", "Porteiro", "910000000", "Testy Street",
+				"2401-343", "Testburg", "Testo", "Testistan");
+		uRepeat = Critical.createUser("DanielC", "daniel@gmail.com", "002", "Porteiro", "930000000", "Testy Street",
+				"2401-343", "Testburg", "Testo", "Testistan");
+		user2 = Critical.createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey", "920000000", "Testy Street",
 				"2401-343", "Testburg", "Testo", "Testistan");
 
 	}

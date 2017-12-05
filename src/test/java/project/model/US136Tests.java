@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.User;
 
 class US136Tests {
@@ -32,9 +33,9 @@ class US136Tests {
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
-		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "Empregado", "930000000", "rua cinzenta",
+		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "rua cinzenta",
 				"6789-654", "porto", "porto", "portugal");
-		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "Telefonista", "940000000", "rua rosa",
+		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "rua rosa",
 				"6799-654", "porto", "porto", "portugal");
 		testCollab = new Profile();
 
