@@ -50,7 +50,7 @@ public class Project {
 		this.projectManager = projectManager;
 		this.status = PLANNING;
 		this.taskRepository = new TaskRepository();
-		taskRepository.setProjId(IdCode);
+		taskRepository.setProjId(idCode);
 		this.projectTeam = new ArrayList<User>();
 	}
 

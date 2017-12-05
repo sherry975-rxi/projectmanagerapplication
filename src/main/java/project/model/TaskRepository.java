@@ -7,12 +7,12 @@ import java.util.List;
 public class TaskRepository {
 
 	private int taskCounter;
-	private List<Task> taskList;
+	private List<Task> projectTasks;
 	private int projId;
 
 	public TaskRepository() {
 
-		this.taskList = new ArrayList<Task>();
+		this.projectTasks = new ArrayList<Task>();
 		this.taskCounter = 0;
 		Integer projId = (Integer) proj.getIdCode();
 
@@ -41,7 +41,7 @@ public class TaskRepository {
 	 * @return Project Task List
 	 */
 	public List<Task> getProjectTaskList() {
-		return this.projectTaskList;
+		return this.projectTasks;
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class TaskRepository {
 	 *            Task to add to the Project Task List
 	 */
 	public void addProjectTask(Task toAdd) {
-		this.projectTaskList.add(toAdd);
+		this.projectTasks.add(toAdd);
 	}
 
 	/**
@@ -59,17 +59,15 @@ public class TaskRepository {
 	 * 
 	 * @return UnfinishedTaskList The list if tasks that are not finished
 	 */
-	public List<Task> getUnFinishedTaskList(User user) {
+	public List<Task> getUnFinishedTasks(User user) {
 
 		List<Task> unfinishedTaskList = new ArrayList<Task>();
+		unfinishedTaskList.addAll(this.getAllTasks(user));
 
-		for (Task other : this.projectTaskList) {
-			if (!other.isFinished()) {
-				if (other.taskTeamContainsUser(user)) {
-					unfinishedTaskList.add(other);
-				}
+		for (Task other : this.getAllTasks(user)) {
+			if (other.isFinished()) {
+				unfinishedTaskList.remove(other);
 			}
-
 		}
 
 		return unfinishedTaskList;
@@ -85,7 +83,7 @@ public class TaskRepository {
 
 		List<Task> finishedTaskList = new ArrayList<Task>();
 
-		for (Task other : this.projectTaskList) {
+		for (Task other : this.projectTasks) {
 			if (other.isFinished()) {
 				if (other.taskTeamContainsUser(user)) {
 					finishedTaskList.add(other);
@@ -98,39 +96,46 @@ public class TaskRepository {
 	}
 
 	/**
-	 * This method returns a list with all the tasks of a certain user in the
-	 * project (finished + unfinished)
+	 * This method returns only the unfinished tasks in a project.
 	 * 
-	 * @param user
-	 *            User (to be able to return its tasks)
-	 * 
-	 * @return AllTasksList List if all tasks from a user
+	 * @return UnfinishedTaskList The list if tasks that are not finished
 	 */
-	public List<Task> getAllTasks(User user) {
-		List<Task> allTasks = new ArrayList<Task>();
-		allTasks.addAll(this.getFinishedTaskListofUserInProject(user));
-		allTasks.addAll(this.getUnFinishedTaskList(user));
-		return allTasks;
+	public List<Task> getUnFinishedTasks(User user) {
+
+		List<Task> unfinishedTaskList = new ArrayList<Task>();
+		unfinishedTaskList.addAll(this.getAllTasks(user));
+
+		for (Task other : this.getAllTasks(user)) {
+			if (other.isFinished()) {
+				unfinishedTaskList.remove(other);
+			}
+		}
+
+		return unfinishedTaskList;
+
 	}
 
 	/**
-	 * This method returns a list with the finished tasks from the last month in
-	 * regards to the month provided
+	 * This method returns a list with the finished tasks from the month provided by
+	 * the user
 	 * 
-	 * @param thisMonth
-	 *            Goes from 0 to 11 (0 - January, 1 - February, 2 - March [...] 11 -
-	 *            December)
+	 * @param user
+	 *            user who is in the tasks
+	 * @param monthsAgo
+	 *            how many months to subtract
 	 * @return lastMonthFinishedTaskList List of all tasks finished the previous
 	 *         month, by the user
 	 */
-	public List<Task> getFinishedTaskListLastMonth(User user) {
-		Calendar previousMonth = Calendar.getInstance();
-		previousMonth.add(Calendar.MONTH, -1);
+	public List<Task> getFinishedTasksGivenMonth(User user, int monthsAgo) {
+		Calendar givenMonth = Calendar.getInstance();
+		givenMonth.add(Calendar.MONTH, -monthsAgo);
 		List<Task> lastMonthFinishedTaskList = new ArrayList<Task>();
 
-		for (Task other : this.getFinishedTaskListofUserInProject(user)) {
+		for (Task other : this.getAllTasks(user)) {
 			if (other.getFinishDate() != null) {
-				if (other.getFinishDate().get(Calendar.MONTH) == previousMonth.get(Calendar.MONTH)) {
+				if (monthsAgo < 0) {
+					lastMonthFinishedTaskList.add(other);
+				} else if (other.getFinishDate().get(Calendar.MONTH) == givenMonth.get(Calendar.MONTH)) {
 					lastMonthFinishedTaskList.add(other);
 				}
 			}
@@ -147,7 +152,7 @@ public class TaskRepository {
 	 *         the task list
 	 */
 	public boolean containsTask(Task task) {
-		for (Task other : this.projectTaskList) {
+		for (Task other : this.projectTasks) {
 			if (task.equals(other)) {
 				return true;
 			}
@@ -192,6 +197,11 @@ public class TaskRepository {
 	 */
 	public int getTaskCounter() {
 		return this.taskCounter;
+	}
+
+	public int setProjId() {
+		return projId;
+
 	}
 
 }
