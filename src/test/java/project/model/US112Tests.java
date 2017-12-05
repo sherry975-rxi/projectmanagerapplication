@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.User;
 
 class US112Tests {
@@ -59,29 +60,31 @@ class US112Tests {
 	@Test
 	void testSetUserAsCollaborator() {
 
+		newUser2.setUserProfile(Profile.VISITOR);
+		newUser3.setUserProfile(Profile.VISITOR);
+
 		assertTrue(Armis.addUserToUserList(newUser2));
 		assertTrue(Armis.addUserToUserList(newUser3));
 
 		assertTrue(Armis.doesUserExist(newUser2));
 		assertTrue(Armis.doesUserExist(newUser3));
 
-		assertEquals(newUser2.getProfile().getProfileInt(), 0);
+		assertEquals(newUser2.getProfile(), Profile.VISITOR);
 
-		assertTrue(newUser2.setUserProfile(typeOfUser));
-		assertTrue(newUser3.setUserProfile(typeOfUser));
+		newUser2.setUserProfile(Profile.VISITOR);
+		newUser3.setUserProfile(Profile.COLLABORATOR);
 
-		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
-		assertEquals(newUser3.getProfile().getProfileInt(), typeOfUser);
+		assertEquals(newUser2.getProfile(), Profile.VISITOR);
+		assertEquals(newUser3.getProfile(), Profile.COLLABORATOR);
 
 		// typeOfUser passa a ser 2 (Director), e newUser2 passa a Director
-		typeOfUser = 2;
-		assertTrue(newUser2.setUserProfile(typeOfUser));
-		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
+
+		newUser2.setUserProfile(Profile.DIRECTOR);
+		assertEquals(newUser2.getProfile(), Profile.DIRECTOR);
 
 		// newUser2 volta a Colaborador
-		typeOfUser = 1;
-		assertTrue(newUser2.setUserProfile(typeOfUser));
-		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
+		newUser2.setUserProfile(Profile.COLLABORATOR);
+		assertEquals(newUser2.getProfile(), Profile.COLLABORATOR);
 
 	}
 }
