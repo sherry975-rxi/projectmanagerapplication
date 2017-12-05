@@ -1,4 +1,4 @@
-package code;
+package main.java.project.model;
 
 /**
  * Profile Class for setting profiles in Users
@@ -42,19 +42,20 @@ public class Profile {
 		this.profile = DIRECTOR;
 	}
 
-// WHY????? Should be deleted
-//	/**
-//	 * Changes profile to the one provided if an object of the class Company is also
-//	 * provided
-//	 * 
-//	 * @param ob
-//	 *            object provided to check if it's a Company object
-//	 * @param profile
-//	 *            profile to which to change this.profile
-//	 */
-//	public void changeUserProfile(User user, Profile profile) {
-//		this.profile = profile.profile;
-//	}
+	// WHY????? Should be deleted
+	// /**
+	// * Changes profile to the one provided if an object of the class Company is
+	// also
+	// * provided
+	// *
+	// * @param ob
+	// * object provided to check if it's a Company object
+	// * @param profile
+	// * profile to which to change this.profile
+	// */
+	// public void changeUserProfile(User user, Profile profile) {
+	// this.profile = profile.profile;
+	// }
 
 	/**
 	 * Returns the profile

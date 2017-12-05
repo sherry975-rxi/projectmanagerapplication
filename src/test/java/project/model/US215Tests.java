@@ -1,17 +1,15 @@
-package userStoryTests;
+package test.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Calendar;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import code.Company;
-import code.Project;
-import code.Task;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.Project;
+import main.java.project.model.User;
 
 class US215Tests {
 
@@ -40,7 +38,7 @@ class US215Tests {
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersList().clear();
 
-		user1 = myCompany.createUser("Daniel", "daniel@gmail.com","Programador", "910000000", "Rua Amarela ",
+		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "Programador", "910000000", "Rua Amarela ",
 				"5552-767", "Porto", "Porto", "Portugal");
 		user2 = myCompany.createUser("Rita", "rita@gmail.com", "Gestora de Projeto", "920000000", "Rua Verde",
 				"6789-765", "Matosinhos", "Porto", "Portugal");
@@ -63,7 +61,7 @@ class US215Tests {
 		 * marked as finished during the last month. So it runs a cycle to get the time
 		 * spent on every task finished on last month, and sum one by one.
 		 */
-		
+
 		// Adds two users to the Company user list.
 		myCompany.addUserToUserList(user1);
 		myCompany.addUserToUserList(user2);
@@ -111,13 +109,12 @@ class US215Tests {
 		task1.markTaskAsFinished();
 		task2.markTaskAsFinished();
 		task3.markTaskAsFinished();
-	
+
 	}
 
 	@Test
 	void testGetTotalTimeLastMonthFinishedTasksByUser() {
 
-		
 		// Sum of total time spend in finished tasks. The tasks finished in the last
 		// month were t2 and t3
 		double expectTotalTime = task2.getTimeSpentOnTask() + task3.getTimeSpentOnTask();

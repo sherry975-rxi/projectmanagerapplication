@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tests;
+package test.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -11,11 +11,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import code.Company;
-import code.Profile;
-import code.Project;
-import code.Task;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.Profile;
+import main.java.project.model.Project;
+import main.java.project.model.Task;
+import main.java.project.model.User;
 
 /**
  * 

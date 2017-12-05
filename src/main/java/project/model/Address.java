@@ -1,26 +1,27 @@
-package code;
+package main.java.project.model;
 
 /**
- * Class to builds an Address. 
+ * Class to builds an Address.
  * 
- * From this class one can create a new
- *         Address(object), which is defined by its street, zipCode, city, district, country.
+ * From this class one can create a new Address(object), which is defined by its
+ * street, zipCode, city, district, country.
  * 
- * @author Group 3 
+ * @author Group 3
  *
  */
 
 public class Address {
-	
+
 	private String street;
 	private String zipCode;
 	private String city;
 	private String district;
 	private String country;
 
-	
 	/**
-	 * This method defines the Constructor Address which will have the following fields as Strings:
+	 * This method defines the Constructor Address which will have the following
+	 * fields as Strings:
+	 * 
 	 * @param street
 	 * @param zipCode
 	 * @param city
@@ -33,13 +34,14 @@ public class Address {
 		this.city = city;
 		this.district = district;
 		this.country = country;
-	
+
 	}
 
 	/**
-	 * Sets the street 
+	 * Sets the street
 	 * 
-	 * @param street Street
+	 * @param street
+	 *            Street
 	 */
 	public void setStreet(String street) {
 		this.street = street;
@@ -47,7 +49,8 @@ public class Address {
 
 	/**
 	 * 
-	 * Gets the street 
+	 * Gets the street
+	 * 
 	 * @return Street
 	 */
 	public String getStreet() {
@@ -55,15 +58,18 @@ public class Address {
 	}
 
 	/**
-	 * Sets the zipCode 
-	 * @param zipCode zipCode
+	 * Sets the zipCode
+	 * 
+	 * @param zipCode
+	 *            zipCode
 	 */
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
 
 	/**
-	 * Gets the zipCode 
+	 * Gets the zipCode
+	 * 
 	 * @return zipCode zipCode
 	 */
 	public String getZipCode() {
@@ -71,15 +77,18 @@ public class Address {
 	}
 
 	/**
-	 * Sets the City 
-	 * @param city City
+	 * Sets the City
+	 * 
+	 * @param city
+	 *            City
 	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
 	/**
-	 * Gets the City 
+	 * Gets the City
+	 * 
 	 * @return city City
 	 */
 	public String getCity() {
@@ -87,15 +96,18 @@ public class Address {
 	}
 
 	/**
-	 * Sets the District 
-	 * @param district District
+	 * Sets the District
+	 * 
+	 * @param district
+	 *            District
 	 */
 	public void setDistrict(String district) {
 		this.district = district;
 	}
 
 	/**
-	 * Gets the District 
+	 * Gets the District
+	 * 
 	 * @return district District
 	 */
 	public String getDistrict() {
@@ -104,7 +116,9 @@ public class Address {
 
 	/**
 	 * Sets the Country
-	 * @param country Country
+	 * 
+	 * @param country
+	 *            Country
 	 */
 	public void setCountry(String country) {
 		this.country = country;
@@ -112,6 +126,7 @@ public class Address {
 
 	/**
 	 * Gets the Country
+	 * 
 	 * @return country Country
 	 */
 	public String getCountry() {

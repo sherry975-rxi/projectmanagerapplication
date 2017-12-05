@@ -1,4 +1,4 @@
-package userStoryTests;
+package test.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,8 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import code.Company;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.User;
 
 class US130Tests {
 
@@ -26,23 +26,23 @@ class US130Tests {
 	User user3;
 	User user4;
 	User user5;
-	
+
 	@BeforeEach
 	void clearCompany() {
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersList().clear();
-		
-		user1 = myCompany.createUser("Dani", "daniel@gmail.com", "Programador", "910000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
-		user2 = myCompany.createUser("Rita", "rita@gmail.com", "Gestora de Projeto", "920000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
+
+		user1 = myCompany.createUser("Dani", "daniel@gmail.com", "Programador", "910000000", "ruinha", "7040-531",
+				"Bucareste", "Porto", "Portugal");
+		user2 = myCompany.createUser("Rita", "rita@gmail.com", "Gestora de Projeto", "920000000", "ruinha", "7040-531",
+				"Bucareste", "Porto", "Portugal");
 		user3 = myCompany.createUser("Joao", "joao@gmail.com", "Programador", "910000000", "ruinha", "7040-531",
 				"Bucareste", "Porto", "Portugal");
 		user4 = myCompany.createUser("Maria", "maria@gmail.com", "Gestora de Projeto", "920000000", "ruinha",
 				"7040-531", "Bucareste", "Porto", "Portugal");
-		user5 = myCompany.createUser("Manel", "manel@gmail.com", "Programador", "910000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
-		
+		user5 = myCompany.createUser("Manel", "manel@gmail.com", "Programador", "910000000", "ruinha", "7040-531",
+				"Bucareste", "Porto", "Portugal");
+
 		// Adds the created users to the Company user list.
 		myCompany.addUserToUserList(user1);
 		myCompany.addUserToUserList(user2);
@@ -67,8 +67,7 @@ class US130Tests {
 		user4 = null;
 		user5 = null;
 	}
-	
-	
+
 	@Test
 	void US130test() {
 		// Create the list of all users in the system

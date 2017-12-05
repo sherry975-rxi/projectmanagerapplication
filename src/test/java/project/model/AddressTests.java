@@ -1,10 +1,10 @@
-package tests;
+package test.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import code.Address;
+import main.java.project.model.Address;
 
 class AddressTests {
 

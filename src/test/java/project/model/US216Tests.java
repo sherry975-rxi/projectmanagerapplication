@@ -1,4 +1,4 @@
-package userStoryTests;
+package test.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,10 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import code.Company;
-import code.Project;
-import code.Task;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.Project;
+import main.java.project.model.User;
 
 class US216Tests {
 
@@ -49,12 +48,11 @@ class US216Tests {
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersList().clear();
 
-		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "Programador", "910000000", "Rua Azul",
-				"5679-987", "braga", "braga", "portugal");
-		user2 = myCompany.createUser("Rita", "rita@gmail.com", "Gestora de Projeto", "920000000", "rua verde",
-				"6789", "porto", "porto", "portugal");
-		
-		
+		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "Programador", "910000000", "Rua Azul", "5679-987",
+				"braga", "braga", "portugal");
+		user2 = myCompany.createUser("Rita", "rita@gmail.com", "Gestora de Projeto", "920000000", "rua verde", "6789",
+				"porto", "porto", "portugal");
+
 		// New project: Project 1
 		myProject = myCompany.createProject("Projecto I", "Projecto de Gestão", user1);
 
@@ -63,19 +61,17 @@ class US216Tests {
 		task2 = myProject.createTask("Task 2");
 		task3 = myProject.createTask("Task 3");
 		task4 = myProject.createTask("Task 4");
-		
+
 		// Users 1 and 2 added to the Company user list.
 		myCompany.addUserToUserList(user1);
 		myCompany.addUserToUserList(user2);
-		
-		
+
 		// Project 1 added to the Company List.
 		myCompany.addProjectToProjectList(myProject);
 
 		// user2 added user 1 to the ProjectTeam
 		myProject.addUserToProjectTeam(user1);
 
-		
 		// Add Tasks to project 1
 		myProject.addProjectTask(task1);
 		myProject.addProjectTask(task2);
@@ -103,7 +99,7 @@ class US216Tests {
 		finishDate.add(Calendar.MONTH, -1);
 		Calendar otherFinishDate = Calendar.getInstance();
 		otherFinishDate.add(Calendar.MONTH, -2);
-		
+
 		// Finish dates were attributed to each task
 		task1.setFinishDate(otherFinishDate);
 		task2.setFinishDate(finishDate);
@@ -114,7 +110,6 @@ class US216Tests {
 		task2.markTaskAsFinished();
 		task3.markTaskAsFinished();
 
-				
 		// List to compare to the getLastMonthFinishedUserTaskList.
 		List<Task> expResult = new ArrayList<Task>();
 		// expResult.add(t1);
@@ -126,7 +121,6 @@ class US216Tests {
 	@Test
 	void getAverageTimeLastMonthFinishedTasksUser() {
 
-		
 		// Calculate expected Total time spent in task 2 and task3, by calling the
 		// method getTimeSpentOnTask
 		double expectTotalTime = (task2.getTimeSpentOnTask() + task3.getTimeSpentOnTask());

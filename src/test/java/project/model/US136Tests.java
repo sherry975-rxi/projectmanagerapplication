@@ -1,4 +1,4 @@
-package userStoryTests;
+package test.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,9 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import code.Company;
-import code.Profile;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.User;
 
 class US136Tests {
 
@@ -25,13 +24,10 @@ class US136Tests {
 	 * 
 	 */
 
-
 	Company myCompany;
 	User newUser2;
 	User newUser3;
 	Profile testCollab;
-	
-	
 
 	@BeforeEach
 	void setUp() {
@@ -41,27 +37,27 @@ class US136Tests {
 		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "Telefonista", "940000000", "rua rosa",
 				"6799-654", "porto", "porto", "portugal");
 		testCollab = new Profile();
-		
+
 		myCompany.getUsersList().clear();
 		/* Set the testCollab profile type to collaborator */
 		testCollab.setCollaborator();
-		
+
 		/* Set the newUser2 and newUser3 profile type to collaborator */
 		newUser2.getProfile().setCollaborator();
 		newUser3.getProfile().setCollaborator();
 	}
-	
+
 	@AfterEach
 	void tearDown() {
 		myCompany = null;
 		newUser2 = null;
-		newUser2 = null;	
+		newUser2 = null;
 		testCollab = null;
 	}
-	
+
 	@Test
 	void testSearchUsersByProfile() {
-		/* Compares a search of a profile type that doesn't exist with a empty List */ 
+		/* Compares a search of a profile type that doesn't exist with a empty List */
 		List<User> emptyList = new ArrayList<User>();
 		assertEquals(myCompany.searchUsersByProfile(testCollab), emptyList);
 	}

@@ -1,4 +1,4 @@
-package code;
+package main.java.project.model;
 
 //
 import java.util.ArrayList;

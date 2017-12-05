@@ -1,4 +1,4 @@
-package userStoryTests;
+package test.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,8 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import code.Company;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.User;
 
 class US135Tests {
 
@@ -31,18 +31,18 @@ class US135Tests {
 	User newUser2;
 	User newUser3;
 	User newUser4;
-	
+
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
-		
-		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "Empregado", "930000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
+
+		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "Empregado", "930000000", "ruinha", "7040-531",
+				"Bucareste", "Porto", "Portugal");
 		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "Telefonista", "940000000", "ruinha",
 				"7040-531", "Bucareste", "Porto", "Portugal");
-		newUser4 = myCompany.createUser("Emanuel", "user4@sapo.com", "Faz tudo", "960000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
-		
+		newUser4 = myCompany.createUser("Emanuel", "user4@sapo.com", "Faz tudo", "960000000", "ruinha", "7040-531",
+				"Bucareste", "Porto", "Portugal");
+
 		myCompany.getUsersList().clear();
 		/* Adds the created users to the Company user list */
 		myCompany.addUserToUserList(newUser2);
@@ -57,7 +57,7 @@ class US135Tests {
 		newUser3 = null;
 		newUser4 = null;
 	}
-	
+
 	@Test
 	void searchEmailThatDoesntExists() {
 		/* Compares a search of a mail that doesn't exist with a empty List */
@@ -76,8 +76,8 @@ class US135Tests {
 	@Test
 	void searchBySomeCharacteresOfEmailAfter() {
 		/*
-		 * Compares a search by some characters (after @) of mail address with a list with two mails that
-		 * contain that characters
+		 * Compares a search by some characters (after @) of mail address with a list
+		 * with two mails that contain that characters
 		 */
 		List<User> testUsersEmail2 = new ArrayList<User>();
 		testUsersEmail2.add(newUser2);
@@ -88,8 +88,8 @@ class US135Tests {
 	@Test
 	void searchBySomeCharacteresOfEmailBefore() {
 		/*
-		 * Compares a search by some characters  (before @) of mail address with a list with three mails that
-		 * contain that characters
+		 * Compares a search by some characters (before @) of mail address with a list
+		 * with three mails that contain that characters
 		 */
 		List<User> testUsersEmail3 = new ArrayList<User>();
 		testUsersEmail3.add(newUser2);

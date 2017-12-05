@@ -1,4 +1,4 @@
-package userStoryTests;
+package test.java.project.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,10 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import code.Company;
-import code.Project;
-import code.Task;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.Project;
+import main.java.project.model.User;
 
 class US203Tests {
 
@@ -35,31 +34,31 @@ class US203Tests {
 	 * no longer appears in Unfinished Task List
 	 * 
 	 */
-	
+
 	Company myCompany;
 	User user2;
 	User user3;
 	Project project1;
 	Task task1;
 	Task task2;
-	
+
 	@BeforeEach
 	void setUp() {
-		
+
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersList().clear();
 		myCompany.getProjectsList().clear();
 
-		user2 = myCompany.createUser("João", "user2@gmail.com", "Manager", "930000000",
-				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
-		user3 = myCompany.createUser("Juni", "user3@gmail.com", "Code Monkey", "930000000",
-				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
+		user2 = myCompany.createUser("João", "user2@gmail.com", "Manager", "930000000", "rua doutor antónio",
+				"7689-654", "porto", "porto", "portugal");
+		user3 = myCompany.createUser("Juni", "user3@gmail.com", "Code Monkey", "930000000", "rua engenheiro joão",
+				"789-654", "porto", "porto", "portugal");
 
 		project1 = myCompany.createProject("name3", "description4", user2);
-		
+
 		task1 = project1.createTask("Task 1");
 		task2 = project1.createTask("Task 2");
-		
+
 		user2.getProfile().setCollaborator();
 		user3.getProfile().setCollaborator();
 
@@ -77,20 +76,20 @@ class US203Tests {
 		task1.markTaskAsFinished();
 
 	}
-	
+
 	@Test
 	void testGetUserTaskList() {
 
 		assertTrue(myCompany.addUserToUserList(user2));
 		assertTrue(myCompany.addUserToUserList(user3));
-		
+
 		// Creates testList and compares it to the Unfinished task List
 		List<Task> testList = new ArrayList<Task>();
 		testList.add(task1);
 		testList.add(task2);
-		
+
 		testList.remove(task1);
-		
+
 		assertEquals(myCompany.getUnfinishedUserTaskList(user3), testList);
 
 		assertEquals(myCompany.getUnfinishedUserTaskList(user3), testList);

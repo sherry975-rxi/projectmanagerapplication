@@ -1,4 +1,4 @@
-package tests;
+package test.java.project.model;
 
 //
 import static org.junit.Assert.assertEquals;
@@ -12,10 +12,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import code.Company;
-import code.Project;
-import code.Task;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.Project;
+import main.java.project.model.Task;
+import main.java.project.model.User;
 
 class ProjectTests {
 

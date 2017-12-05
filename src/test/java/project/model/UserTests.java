@@ -1,4 +1,4 @@
-package tests;
+package test.java.project.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import code.Address;
-import code.Profile;
-import code.User;
+import main.java.project.model.Address;
+import main.java.project.model.Profile;
+import main.java.project.model.User;
 
 /**
  * @author Group 3

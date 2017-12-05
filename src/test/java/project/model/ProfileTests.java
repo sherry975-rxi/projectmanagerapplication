@@ -1,16 +1,16 @@
 /**
  * 
  */
-package tests;
+package test.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import code.Company;
-import code.Profile;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.Profile;
+import main.java.project.model.User;
 
 class ProfileTests {
 	User user;

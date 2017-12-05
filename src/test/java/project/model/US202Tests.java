@@ -1,4 +1,4 @@
-package userStoryTests;
+package test.java.project.model;
 
 import static org.junit.Assert.assertTrue;
 
@@ -9,9 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import code.Address;
-import code.Company;
-import code.User;
+import main.java.project.model.Company;
+import main.java.project.model.User;
 
 class US202Tests {
 
