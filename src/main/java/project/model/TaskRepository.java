@@ -21,7 +21,6 @@ public class TaskRepository {
 	/**
 	 * Creates an instance of Task
 	 * 
-	 * @param proj
 	 * @param description
 	 * 
 	 * @return the task created
@@ -179,6 +178,11 @@ public class TaskRepository {
 		return this.taskCounter;
 	}
 
+	/**
+	 * Gets the Project Id
+	 * 
+	 * @return the Project Id
+	 */
 	public int getProjId() {
 		return projId;
 	}
