@@ -36,48 +36,40 @@ class US115Tests {
 		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Rua Bla",
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		int typeOfUser = 1;
+		myCompany.addUserToUserList(newUser2);
+		myCompany.addUserToUserList(newUser3);
 
 	}
 
 	@AfterEach
 	void tearDown() {
-		Company myCompany = null;
-		User newUser2 = null;
-		User newUser3 = null;
+		myCompany = null;
+		newUser2 = null;
+		newUser3 = null;
 	}
 
 	/**
 	 * Tests the setSystemUserState method to check if the active or deactivate
-	 * state was correctly attributed to the user; Also Attempts to change UserState
-	 * of non existent user (False)
-	 */
-	@Test
-	void testSetSystemUserState() {
-
-		myCompany.addUserToUserList(newUser2);
-		myCompany.addUserToUserList(newUser3);
-
-		newUser2.setSystemUserState(true);
-		newUser3.setSystemUserState(true);
-
-		assertTrue(newUser2.isSystemUserStateActive());
-		assertTrue(newUser3.isSystemUserStateActive());
-
-	}
-
-	/**
-	 * Asserts if UserStateActive is True; Finally, Asserts if UserStateActive if
-	 * False, after setting it as such;
+	 * state was correctly attributed to the user. Asserts if UserStateActive starts
+	 * True; then, Asserts if UserStateActive if False, after setting it as such;
+	 * Finally, asserts if UserState is true after resetting it.
 	 */
 	@Test
 	void testAssertSystemUserState() {
+
+		assertTrue(newUser2.isSystemUserStateActive());
 
 		newUser2.setSystemUserState(false);
 		newUser3.setSystemUserState(false);
 
 		assertFalse(newUser2.isSystemUserStateActive());
 		assertFalse(newUser3.isSystemUserStateActive());
+
+		newUser2.setSystemUserState(true);
+		newUser3.setSystemUserState(true);
+
+		assertTrue(newUser2.isSystemUserStateActive());
+		assertTrue(newUser3.isSystemUserStateActive());
 	}
 
 }

@@ -64,11 +64,6 @@ class US110Tests {
 	@Test
 	void testSetUserAsDirector() {
 
-		assertFalse(Blip.addUserToUserList(newUser2));
-
-		assertTrue(Blip.doesUserExist(newUser2));
-		assertFalse(Blip.doesUserExist(newUser3));
-
 		newUser2.setAsDirector;
 
 		assertEquals(newUser2.getProfile().getProfileInt(), typeOfUser);
