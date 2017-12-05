@@ -230,7 +230,7 @@ public class Company {
 		List<User> usersByProfileList = new ArrayList<User>();
 
 		for (int i = 0; i < this.getUsersList().size(); i++) {
-			if (searchProfile.getProfileInt() == this.getUsersList().get(i).getProfile().getProfileInt()) {
+			if (searchProfile == this.getUsersList().get(i).getProfile()) {
 				usersByProfileList.add(this.getUsersList().get(i));
 
 			}

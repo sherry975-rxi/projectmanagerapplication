@@ -28,7 +28,6 @@ class US136Tests {
 	Company myCompany;
 	User newUser2;
 	User newUser3;
-	Profile testCollab;
 
 	@BeforeEach
 	void setUp() {
@@ -37,15 +36,13 @@ class US136Tests {
 				"6789-654", "porto", "porto", "portugal");
 		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "rua rosa",
 				"6799-654", "porto", "porto", "portugal");
-		testCollab = new Profile();
 
 		myCompany.getUsersList().clear();
 		/* Set the testCollab profile type to collaborator */
-		testCollab.setCollaborator();
 
 		/* Set the newUser2 and newUser3 profile type to collaborator */
-		newUser2.getProfile().setCollaborator();
-		newUser3.getProfile().setCollaborator();
+		newUser2.setUserProfile(Profile.COLLABORATOR);
+		newUser3.setUserProfile(Profile.COLLABORATOR);
 	}
 
 	@AfterEach
@@ -53,14 +50,14 @@ class US136Tests {
 		myCompany = null;
 		newUser2 = null;
 		newUser2 = null;
-		testCollab = null;
+
 	}
 
 	@Test
 	void testSearchUsersByProfile() {
 		/* Compares a search of a profile type that doesn't exist with a empty List */
 		List<User> emptyList = new ArrayList<User>();
-		assertEquals(myCompany.searchUsersByProfile(testCollab), emptyList);
+		assertEquals(myCompany.searchUsersByProfile(Profile.COLLABORATOR), emptyList);
 	}
 
 	@Test
@@ -76,6 +73,6 @@ class US136Tests {
 		collaboratorstest.add(newUser2);
 		collaboratorstest.add(newUser3);
 
-		assertEquals(myCompany.searchUsersByProfile(testCollab), collaboratorstest);
+		assertEquals(myCompany.searchUsersByProfile(Profile.COLLABORATOR), collaboratorstest);
 	}
 }
