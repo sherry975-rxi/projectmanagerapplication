@@ -34,7 +34,7 @@ class US116Tests {
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Rua Bla",
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-		
+
 		myCompany.addUserToUserList(newUser2);
 		myCompany.addUserToUserList(newUser3);
 
@@ -51,8 +51,7 @@ class US116Tests {
 
 	/**
 	 * Tests the setSystemUserState method to check if the active or deactivate
-	 * state was correctly attributed to the user; Also Attempts to change UserState
-	 * of non existent user (False)
+	 * state was correctly attributed to the user
 	 */
 	@Test
 	void testSetSystemUserState() {
