@@ -28,17 +28,27 @@ class TaskWorkerTest {
 		workerTester = null;
 	}
 
+	/**
+	 * Tests if the state of the collaborator is true when he is created
+	 */
 	@Test
 	final void testIsCollaboratorInTask() {
 		assertTrue(workerTester.isCollaboratorInTask());
 	}
 
+	/**
+	 * Tests if the state of the collaborator is the one set prior to the assertion
+	 */
 	@Test
 	final void testIsCollaboratorNotInTask() {
 		workerTester.setCollaboratorStateInTask(false);
 		assertFalse(workerTester.isCollaboratorInTask());
 	}
 
+	/**
+	 * Tests if the collaborator is created with 0 hours spent on task, and if it
+	 * changes when it is set as another value
+	 */
 	@Test
 	final void testSetAndGetHoursSpent() {
 		assertEquals(0, workerTester.getHoursSpent());
