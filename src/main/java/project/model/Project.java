@@ -127,7 +127,7 @@ public class Project {
 	 */
 	public void addUserToProjectTeam(User toAdd, int costPerEffort) {
 		ProjectCollaborator newAddition = new ProjectCollaborator(toAdd, costPerEffort);
-		if (!this.projectTeam.contains(newAddition)) {
+		if (!containsUser(toAdd)) {
 			this.projectTeam.add(newAddition);
 		}
 	}
