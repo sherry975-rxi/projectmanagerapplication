@@ -6,6 +6,9 @@ package test.java.project.model;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,23 +22,23 @@ import main.java.project.model.User;
  *
  */
 class UserRepositoryTests {
-	
+
 	User user1;
 	User user2;
 	User user3;
+	User user4;
 	UserRepository userRep = new UserRepository();
 
 	@BeforeEach
 	void setUp() {
-		
+
 		// instantiate users
 		user1 = userRep.createUser ("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 		user2 = userRep.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
-		User user3 = new User ("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
-
-
+		user4 = userRep.createUser ("DanielMM", "danielmm@gmail.com", "003", "collaborator", "910000000", "Rua", "2401-00",
+				"Test", "Testo", "Testistan");
 	}
 
 	@AfterEach
@@ -43,62 +46,90 @@ class UserRepositoryTests {
 		user1 = null;
 		user2 = null;
 		user3 = null;
+		user4 = null;
 		userRep = null;
-			}
+	}
 
 	/**
 	 * Tests constructor for User Repository
 	 */
-	
+
 	@Test
 	void testUserRepository() {
-		
-		
+
+		List <User> testUserRep = new ArrayList<>();
+
+		assertEquals(testUserRep, userRep.getAllUsersFromRepository());
 	}
-	
+
 	/**
-	 * Tests the creation of an instance of User
+	 * Tests the creation of an instance of User (compares user1 created with createUser() and user3 created as a new object)
 	 */
-	
+
 	@Test
 	void testCreateUser() {
 
+		User user3 = new User ("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
 		Address newAddress = user3.createAddress("Rua", "2401-00","Test", "Testo", "Testistan");
 		user3.addAddress(newAddress);
-		
-		assertEquals(user3, user1);
-		
+
+		assertTrue(user3.equals(user1));
 	}
-	
 	/**
-	 * Tests addition of users to the User Repository, if the user is missing from the repository
+	 * Tests the creation of an instance of User (compares user1 created with createUser())
 	 */
-	
+
 	@Test
-	void testAddUserToUserRepository() {
-		
-		userRep.addUserToUserRepository(user1);
-		
-		assertTrue(userRep.isUserinUserRepository(user1));
-		assertFalse(userRep.isUserinUserRepository(user2));
+	void testCreateUser_2() {
+		User user3 = new User ("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
+		Address newAddress = user3.createAddress("Rua", "2401-00","Test", "Testo", "Testistan");
+		user3.addAddress(newAddress);		
+
+		assertEquals(user3 , userRep.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000","Rua", "2401-00","Test", "Testo", "Testistan"));
 	}
-	
+
 	/**
 	 * Tests the construction of a copy of the list of all users
 	 */
-	
+
 	@Test
 	void testGetAllUsersFromRepository() {
-		
+
+		userRep.addUserToUserRepository(user1);
+		userRep.addUserToUserRepository(user2);
+
+		List <User> testUsersInRep = new ArrayList<>();
+		testUsersInRep.add(user1);
+		testUsersInRep.add(user2);
+
+		assertEquals(testUsersInRep, userRep.getAllUsersFromRepository());
 	}
 
-
 	/**
-	 * Tests if a given user already exists in a company
+	 * Tests addition of users to the User Repository, if the user is missing from the repository
 	 */
 	@Test
-	void testDoesUserExistInUserRepository() {
+	void testAddUserToUserRepository() {
+
+		//adds user twice
+		userRep.addUserToUserRepository(user1);
+		userRep.addUserToUserRepository(user1);
+
+		assertTrue(user1.equals(userRep.getAllUsersFromRepository().get(0)));
+		assertEquals(1,userRep.getAllUsersFromRepository().size()); //if it would add even if the user was already on the list, the size of the repository would be 2 instead of 1
+	}
+
+	/**
+	 * Tests if a given user already exists in a repository
+	 */
+	@Test
+	void testIsUserinUserRepository() {
 		
+		userRep.addUserToUserRepository(user1);
+		
+		
+		assertTrue(userRep.isUserinUserRepository(user1));
+		assertFalse(userRep.isUserinUserRepository(user2));
 	}
 
 	/**
@@ -107,20 +138,36 @@ class UserRepositoryTests {
 	@Test
 	void testSearchUsersByEmail() {
 		
+		userRep.addUserToUserRepository(user1);
+		userRep.addUserToUserRepository(user2);
+		userRep.addUserToUserRepository(user4);
+		
+		List <User> testUsersWithEmail = new ArrayList<>();
+		testUsersWithEmail.add(user1);
+		testUsersWithEmail.add(user4);
+		
+		assertEquals(testUsersWithEmail, userRep.searchUsersByEmail("daniel"));
 	}
-	
+
 	/**
 	 * Tests the output of a users with searched full e-mail.
 	 * 
 	 */
 	@Test
 	void testGetUserByEmail() {
-}
-	
+
+		userRep.addUserToUserRepository(user1);
+		userRep.addUserToUserRepository(user2);
+		userRep.addUserToUserRepository(user4);
+		
+		assertTrue(user1.equals(userRep.getUserByEmail("daniel@gmail.com")));
+		assertFalse(user1.equals(userRep.getUserByEmail("danielmm@gmail.com")));
+	}
+
 	/**
 	 * Tests the creation of a list of users with a certain profile.
 	 */
 	@Test
 	void testsearchUsersByProfile() {
-}
+	}
 }
