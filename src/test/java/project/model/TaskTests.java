@@ -37,7 +37,7 @@ class TaskTests {
 	void setUp() {
 
 		myComp = Company.getTheInstance();
-		myComp.getUsersList().getAllUsersFromRepository().clear();
+		myComp.getUsersRepository();
 
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
