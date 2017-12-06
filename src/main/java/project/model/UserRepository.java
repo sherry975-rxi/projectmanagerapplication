@@ -63,6 +63,18 @@ public class UserRepository {
 			this.usersRepository.add(toAddUsers);
 		}
 	}
+	
+	/**
+	 * This method checks if the user was added to the Repository
+	 * 
+	 * @param addedUser
+	 *            User added to the List of Users
+	 */
+	public void isUserinUserRepository(User toAddUsers) {
+		if (!this.usersRepository.contains(toAddUsers)) {
+			this.usersRepository.add(toAddUsers);
+		}
+	}
 
 	/**
 	 * This method returns a copy of the list of all users (usersRepository)
