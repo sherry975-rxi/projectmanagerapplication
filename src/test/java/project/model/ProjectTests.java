@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.EffortUnit;
 import main.java.project.model.Project;
 import main.java.project.model.Task;
 import main.java.project.model.User;
@@ -32,15 +33,16 @@ class ProjectTests {
 	public void setUp() {
 
 		c1 = Company.getTheInstance();
+		c1.getUsersRepository().getAllUsersFromRepository().clear();
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
-		p1 = c1.getProjectsRepository().createProject("name3", "description4", u1);
+		p1 = new Project(1, "name3", "description4", u1, EffortUnit.HOURS, 12000);
 		t1 = p1.getTaskRepository().createTask("description");
 		p1.getTaskRepository().addProjectTask(t1);
 		t2 = p1.getTaskRepository().createTask("description2");
 		p1.getTaskRepository().addProjectTask(t2);
 		t2.markTaskAsFinished();
-		p2 = c1.getProjectsRepository().createProject("name4", "description5", u2);
+		p2 = new Project(2, "name1", "description4", u2, EffortUnit.HOURS, 12000);
 		t3 = p1.getTaskRepository().createTask("description3");
 		t3.markTaskAsFinished();
 
@@ -63,14 +65,14 @@ class ProjectTests {
 
 	@Test
 	void testAddUserToProjectTeam() {
-		p1.addUserToProjectTeam(u2);
-		assertEquals(u2, p1.getProjectTeam().get(0));
+		p1.addUserToProjectTeam(u2, 1200);
+		assertEquals(u2, p1.getProjectTeam().get(0).getCollaboratorUserData());
 	}
 
 	@Test
 	void testTryToAddTheSameUserTwiceToProjectTeam() {
-		p1.addUserToProjectTeam(u1);
-		p1.addUserToProjectTeam(u1);
+		p1.addUserToProjectTeam(u1, 1200);
+		p1.addUserToProjectTeam(u1, 1200);
 		assertEquals(1, p1.getProjectTeam().size());
 	}
 
