@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
-import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.Task;
 import main.java.project.model.User;
@@ -28,27 +28,35 @@ import main.java.project.model.User;
  */
 class TaskTests {
 
-	User user1;
-	User user2;
+	User user1, user2;
 	Company myComp;
 	Project myProject;
-	Profile visitor;
-	Profile collaborator;
-	Profile director;
+	Task testTask, testTask2, testTask3;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 
 		myComp = Company.getTheInstance();
-		user1 = new User("name", "email", "idNumber", "function", "123456789");
-		user2 = new User("name1", "email1", "idNumber1", "function1", "123456789");
-		myProject = new Project("Projecto 1", "Projecto Abcd", user1);
-		visitor = new Profile();
-		visitor.setVisitor();
-		collaborator = new Profile();
-		collaborator.setCollaborator();
-		director = new Profile();
-		director.setDirector();
+		myComp.getUsersList().getAllUsersFromRepository().clear();
+
+		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
+		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
+		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
+		testTask = new Task(1, 2, "Task 1");
+		testTask2 = new Task(1, 2, "Task 1");
+		testTask3 = new Task(1, 3, "Task Hue");
+	}
+
+	@AfterEach
+	void breakDown() {
+		myComp = null;
+		user1 = null;
+		user2 = null;
+		myProject = null;
+		testTask = null;
+		testTask2 = null;
+		testTask3 = null;
+
 	}
 
 	/**
@@ -57,10 +65,6 @@ class TaskTests {
 	 */
 	@Test
 	void testTaskConstructor() {
-		myComp.createProject("Projecto I", "Projecto de Gestão", user1);
-		Task testTask = new Task(myProject, "Task 1");
-		Task testTask2 = new Task(myProject, "Task 1");
-		Task testTask3 = new Task(myProject, "Task Hue");
 
 		assertTrue(testTask.getDescription().equals(testTask2.getDescription()));
 		assertFalse(testTask.getDescription().equals(testTask3.getDescription()));
@@ -72,7 +76,6 @@ class TaskTests {
 	 */
 	@Test
 	void testTaskTeam() {
-		Task testTask = new Task(myProject, "Task 1");
 		assertFalse(testTask.removeUserFromTask(user1));
 		assertTrue(testTask.addUserToTask(user1));
 		assertFalse(testTask.addUserToTask(user1));
@@ -93,7 +96,7 @@ class TaskTests {
 	 */
 	@Test
 	void testGetFinishDate() {
-		Task testTask = new Task(myProject, "Task 1");
+		Task testTask = new Task(1, 01, "Task 1");
 		testTask.setFinishDate();
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DAY_OF_MONTH, 5);
@@ -106,7 +109,7 @@ class TaskTests {
 	 */
 	@Test
 	void testIsFinished() {
-		Task testTask = new Task(myProject, "Task 1");
+		Task testTask = new Task(1, 01, "Task 1");
 		assertFalse(testTask.isFinished());
 		testTask.markTaskAsFinished();
 		assertTrue(testTask.isFinished());
@@ -118,11 +121,8 @@ class TaskTests {
 	 */
 	@Test
 	void testTaskEquals() {
-		Company.getTheInstance().addProjectToProjectList(myProject);
-		Task testTask = new Task(myProject, "Task 1");
-		myProject.addProjectTask(testTask);
-		Task testTask2 = new Task(myProject, "Task 2");
-		myProject.addProjectTask(testTask2);
+		Task testTask = new Task(1, 01, "Task 1");
+		Task testTask2 = new Task(2, 02, "Task 2");
 		assertTrue(testTask.equals(testTask));
 		assertFalse(testTask.equals(testTask2));
 		assertFalse(testTask.equals(user2));
@@ -135,26 +135,20 @@ class TaskTests {
 	 */
 	@Test
 	void testGetTimeSpentOnTask() {
-		Task testTask = new Task(myProject, "Task 1");
-
+		Task testTask = new Task(1, 01, "Task 1");
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.set(Calendar.YEAR, 2017);
 		finishDate.set(Calendar.MONTH, Calendar.NOVEMBER);
 		finishDate.set(Calendar.DAY_OF_MONTH, 29);
 		finishDate.set(Calendar.HOUR_OF_DAY, 14);
-
 		Calendar startDate = (Calendar) finishDate.clone();
 		startDate.add(Calendar.DAY_OF_MONTH, -5);
-
 		testTask.setStartDate(startDate);
 		testTask.setFinishDate(finishDate);
-
 		assertEquals((testTask.getTimeSpentOnTask()), 24, 0.01);
-
 		startDate.add(Calendar.HOUR_OF_DAY, -5);
 		testTask.setStartDate(startDate);
 		assertEquals((testTask.getTimeSpentOnTask()), 28, 0.01);
-
 		testTask.setFinishDate(startDate);
 		assertEquals((testTask.getTimeSpentOnTask()), 0, 00.1);
 	}
@@ -166,7 +160,7 @@ class TaskTests {
 	 */
 	@Test
 	void testSecondConstructor() {
-		Task testTask = new Task(myProject, "Task 1");
+		Task testTask = new Task(1, 01, "Task 1");
 		Task testDupe = new Task(testTask);
 		assertTrue(testTask.equals(testDupe));
 		Calendar startDate1 = Calendar.getInstance();

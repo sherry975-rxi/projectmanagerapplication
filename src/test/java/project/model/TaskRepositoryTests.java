@@ -49,7 +49,7 @@ class TaskRepositoryTests {
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
-		project = myCompany.getProjectRepository.createProject("name3", "description4", userAdmin);// !!!
+		project = myCompany.getProjectsRepository().createProject("name3", "description4", userAdmin);// !!!
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 		// create 4 tasks
@@ -80,6 +80,18 @@ class TaskRepositoryTests {
 
 	@Test
 	void testCreateTask() {
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+
+		List<Task> taskListToCompare = new ArrayList<Task>();
+		taskListToCompare.add(testTask);
+		taskListToCompare.add(testTask2);
+		taskListToCompare.add(testTask3);
+		taskListToCompare.add(testTask4);
+
+		assertEquals(taskRepository.getProjectTaskList(), taskListToCompare);
 
 	}
 
@@ -162,6 +174,16 @@ class TaskRepositoryTests {
 
 	@Test
 	void testGetTimeOnLastMonthProjectUserTask() {
+		// add task to task repository of the project
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+		// add de user to the task
+		testTask.addUserToTask(user1);
+		testTask2.addUserToTask(user1);
+		testTask3.addUserToTask(user1);
+		testTask4.addUserToTask(user1);
 
 	}
 
