@@ -20,7 +20,7 @@ public class Task {
 
 	private String taskID;
 	private String description;
-	private List<User> taskTeam;
+	private List<TaskWorker> taskTeam;
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
@@ -44,7 +44,7 @@ public class Task {
 		this.startDate = null;
 		this.finishDate = null;
 		this.taskState = false;
-		this.taskTeam = new ArrayList<User>();
+		this.taskTeam = new ArrayList<TaskWorker>();
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class Task {
 	 * 
 	 * @return taskTeam List of assigned users to a certain Task
 	 */
-	public List<User> getTaskTeam() {
+	public List<TaskWorker> getTaskTeam() {
 		return taskTeam;
 	}
 
@@ -168,7 +168,7 @@ public class Task {
 	 */
 	public boolean addUserToTask(User user) {
 		if (!taskTeamContainsUser(user)) {
-			return this.taskTeam.add(user);
+			return this.taskTeam.add(new TaskWorker(user));
 		}
 		return false;
 	}
@@ -413,8 +413,8 @@ public class Task {
 	 *         the user to check
 	 */
 	public boolean taskTeamContainsUser(User user) {
-		for (User other : taskTeam) {
-			if (other.equals(user)) {
+		for (TaskWorker other : taskTeam) {
+			if (other.getCollaborator().equals(user)) {
 				return true;
 			}
 		}
@@ -428,9 +428,9 @@ public class Task {
 	 *            Empty list that will be filled with the users from another task.
 	 * @return Returns a list of users copied from another task.
 	 */
-	public List<User> copyListOfUsersInTask(List<User> emptyListOfUsersInTask) {
+	public List<TaskWorker> copyListOfUsersInTask(List<TaskWorker> emptyListOfUsersInTask) {
 
-		emptyListOfUsersInTask = new ArrayList<User>();
+		emptyListOfUsersInTask = new ArrayList<TaskWorker>();
 
 		for (int iUser = 0; iUser < this.getTaskTeam().size(); iUser++) {
 			emptyListOfUsersInTask.add(this.getTaskTeam().get(iUser));
