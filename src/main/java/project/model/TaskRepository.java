@@ -28,7 +28,7 @@ public class TaskRepository {
 
 	public Task createTask(String description) {
 
-		Task newTask = new Task(this, description);
+		Task newTask = new Task(this.taskCounter, this.projId, description);
 		taskCounter++;
 		return newTask;
 
