@@ -176,15 +176,6 @@ public class User {
 	}
 
 	/**
-	 * Returns the user profile
-	 * 
-	 * @return the user profile.
-	 */
-	public Profile getProfile() {
-		return this.userProfile;
-	}
-
-	/**
 	 * Returns the SystemUserState boolean that returns true if the user is active
 	 * and false if it is not active
 	 * 
