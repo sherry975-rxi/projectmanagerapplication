@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.Task;
 import main.java.project.model.User;
@@ -47,8 +48,8 @@ class US204Tests {
 		newUserB = company.createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000", "StreetB",
 				"ZipCodeB", "CityB", "DistrictB", "CountryB");
 		project = company.createProject("name3", "description4", newUserA);
-		taskA = project.createTask("Test dis pls");
-		taskB = project.createTask("Test dis agen pls");
+		taskA = project.getTaskRepository().createTask("Test dis pls");
+		taskB = project.getTaskRepository().createTask("Test dis agen pls");
 	}
 
 	@AfterEach
@@ -72,16 +73,16 @@ class US204Tests {
 	void testCheckProjectManagerAndAddTaskToProject() {
 		assertTrue(company.addUserToUserList(newUserA));
 		assertTrue(company.addUserToUserList(newUserB));
-		newUserA.getProfile().setCollaborator();
-		newUserB.getProfile().setCollaborator();
+		newUserA.setUserProfile(Profile.COLLABORATOR);
+		newUserB.setUserProfile(Profile.COLLABORATOR);
 
 		company.addProjectToProjectList(project);
 
 		assertTrue(project.isProjectManager(newUserA));
 		assertFalse(project.isProjectManager(newUserB));
 
-		project.addProjectTask(taskA);
-		project.addProjectTask(taskB);
+		project.getTaskRepository().addProjectTask(taskA);
+		project.getTaskRepository().addProjectTask(taskB);
 
 	}
 
@@ -96,15 +97,15 @@ class US204Tests {
 
 		// assertTrue(company.addUserToUserList(newUserA));
 		// assertTrue(company.addUserToUserList(newUserB));
-		newUserA.getProfile().setCollaborator();
-		newUserB.getProfile().setCollaborator();
+		newUserA.setUserProfile(Profile.COLLABORATOR);
+		newUserB.setUserProfile(Profile.COLLABORATOR);
 
 		company.addProjectToProjectList(project);
 
 		project.addUserToProjectTeam(newUserB);
 
-		project.addProjectTask(taskA);
-		project.addProjectTask(taskB);
+		project.getTaskRepository().addProjectTask(taskA);
+		project.getTaskRepository().addProjectTask(taskB);
 
 		// verifies if project team contains User 3
 		assertTrue(project.getProjectTeam().contains(newUserB));

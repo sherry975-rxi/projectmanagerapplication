@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.Task;
 import main.java.project.model.User;
@@ -45,9 +46,9 @@ class US205Tests {
 				"4444-444", "221234567", "Porto", "Portugal");
 		testProj = myCompany.createProject("name3", "description4", newUser2);
 
-		testTask = testProj.createTask("Test dis pls");
+		testTask = testProj.getTaskRepository().createTask("Test dis pls");
 
-		testTask2 = testProj.createTask("Test dis agen pls");
+		testTask2 = testProj.getTaskRepository().createTask("Test dis agen pls");
 
 		typeOfUser = 1;
 	}
@@ -75,15 +76,15 @@ class US205Tests {
 	void testMarkTaskAsCompleted() {
 		assertTrue(myCompany.addUserToUserList(newUser2));
 		assertTrue(myCompany.addUserToUserList(newUser3));
-		newUser2.getProfile().setCollaborator();
-		newUser3.getProfile().setCollaborator();
+		newUser2.setUserProfile(Profile.COLLABORATOR);
+		newUser3.setUserProfile(Profile.COLLABORATOR);
 
 		myCompany.addProjectToProjectList(testProj);
 
 		// Adds User 3 to team and both tasks to project
 		testProj.addUserToProjectTeam(newUser3);
-		testProj.addProjectTask(testTask);
-		testProj.addProjectTask(testTask2);
+		testProj.getTaskRepository().addProjectTask(testTask);
+		testProj.getTaskRepository().addProjectTask(testTask2);
 
 		// Adds user 3 to both tasks and marks the first task as cleared
 		testTask.addUserToTask(newUser3);

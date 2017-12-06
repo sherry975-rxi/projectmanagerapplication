@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.Task;
 import main.java.project.model.User;
@@ -48,10 +49,10 @@ class US210Tests {
 		newUserB = company.createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000", "StreetB",
 				"ZipCodeB", "CityB", "DistrictB", "CountryB");
 		project = company.createProject("name3", "description4", newUserA);
-		testTask = project.createTask("Test dis pls");
-		testTask2 = project.createTask("Test dis agen pls");
-		testTask3 = project.createTask("Test moar yeh");
-		testTask4 = project.createTask("TEST HARDER!");
+		testTask = project.getTaskRepository().createTask("Test dis pls");
+		testTask2 = project.getTaskRepository().createTask("Test dis agen pls");
+		testTask3 = project.getTaskRepository().createTask("Test moar yeh");
+		testTask4 = project.getTaskRepository().createTask("TEST HARDER!");
 	}
 
 	@AfterEach
@@ -71,17 +72,17 @@ class US210Tests {
 
 		assertTrue(company.addUserToUserList(newUserA));
 		assertTrue(company.addUserToUserList(newUserB));
-		newUserA.getProfile().setCollaborator();
-		newUserB.getProfile().setCollaborator();
+		newUserA.setUserProfile(Profile.COLLABORATOR);
+		newUserB.setUserProfile(Profile.COLLABORATOR);
 
 		company.addProjectToProjectList(project);
 
 		// Adds User 3 to all tasks and project, adds tasks to project
 		project.addUserToProjectTeam(newUserB);
-		project.addProjectTask(testTask);
-		project.addProjectTask(testTask2);
-		project.addProjectTask(testTask3);
-		project.addProjectTask(testTask4);
+		project.getTaskRepository().addProjectTask(testTask);
+		project.getTaskRepository().addProjectTask(testTask2);
+		project.getTaskRepository().addProjectTask(testTask3);
+		project.getTaskRepository().addProjectTask(testTask4);
 
 		testTask.addUserToTask(newUserB);
 		testTask2.addUserToTask(newUserB);

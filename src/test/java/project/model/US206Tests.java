@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.Task;
 import main.java.project.model.User;
@@ -48,8 +49,8 @@ class US206Tests {
 		p1 = c1.createProject("Teste", "blablabla", u2);
 
 		// create task
-		testTask = p1.createTask("sdfsdfdsfsdf");
-		testTask2 = p1.createTask("sdfsdfdsfsdf");
+		testTask = p1.getTaskRepository().createTask("sdfsdfdsfsdf");
+		testTask2 = p1.getTaskRepository().createTask("sdfsdfdsfsdf");
 	}
 
 	@AfterEach
@@ -72,11 +73,11 @@ class US206Tests {
 		c1.addUserToUserList(u3);
 
 		// set user as collaborator
-		u2.getProfile().setCollaborator();
-		u3.getProfile().setCollaborator();
+		u2.setUserProfile(Profile.COLLABORATOR);
+		u3.setUserProfile(Profile.COLLABORATOR);
 
 		// set user as Director
-		u1.getProfile().setDirector();
+		u1.setUserProfile(Profile.DIRECTOR);
 
 		// add project to project list
 		c1.addProjectToProjectList(p1);
@@ -89,8 +90,8 @@ class US206Tests {
 		p1.addUserToProjectTeam(u3);
 
 		// add task to project
-		p1.addProjectTask(testTask);
-		p1.addProjectTask(testTask2);
+		p1.getTaskRepository().addProjectTask(testTask);
+		p1.getTaskRepository().addProjectTask(testTask2);
 
 		// add task to collaborator
 		testTask.addUserToTask(u2);
