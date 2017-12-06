@@ -23,6 +23,15 @@ public class TaskWorker {
 	}
 
 	/**
+	 * Returns the user that identifies this collaborator
+	 * 
+	 * @return collaborator
+	 */
+	public User getCollaborator() {
+		return collaborator;
+	}
+
+	/**
 	 * Returns the state of the collaborator in the task. inTask is true if user is
 	 * in task, false if not
 	 * 
