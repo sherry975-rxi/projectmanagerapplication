@@ -70,10 +70,11 @@ public class UserRepository {
 	 * @param addedUser
 	 *            User added to the List of Users
 	 */
-	public void isUserinUserRepository(User toAddUsers) {
-		if (!this.usersRepository.contains(toAddUsers)) {
-			this.usersRepository.add(toAddUsers);
+	public boolean isUserinUserRepository(User addedUser) {
+		if (this.usersRepository.contains(addedUser)) {
+			return true;
 		}
+		return false;
 	}
 
 	/**
