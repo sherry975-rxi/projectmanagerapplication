@@ -17,10 +17,12 @@ import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
 import main.java.project.model.User;
+import main.java.project.model.UserRepository;
 
 class TaskRepositoryTests {
 
 	Company myCompany;
+	UserRepository userRepository;
 	User user1;
 	User userAdmin;
 	Project project;
@@ -35,21 +37,28 @@ class TaskRepositoryTests {
 	void setUp() {
 		// create company
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersList().clear();
+
+		// creates an UserRepository
+		userRepository = myCompany.getUsersList();
+
+		// creattes a ProjectRepository
+		projectRepository = myCompany.getProjectsRepository();
+
+		userRepository.getAllUsersFromRepository().clear();
 		// create user
-		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua", "2401-00",
-				"Test", "Testo", "Testistan");
+		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
 		// create user admin
-		userAdmin = myCompany.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		userAdmin = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 		// add user to user list
-		myCompany.addUserToUserList(user1);
-		myCompany.addUserToUserList(userAdmin);
+		userRepository.addUserToUserRepository(user1);
+		userRepository.addUserToUserRepository(userAdmin);
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
-		project = myCompany.getProjectsRepository().createProject("name3", "description4", userAdmin);// !!!
+		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 		// create 4 tasks
@@ -71,6 +80,7 @@ class TaskRepositoryTests {
 		project = null;
 		projectRepository = null;
 		taskRepository = null;
+		userRepository = null;
 	}
 
 	@Test
