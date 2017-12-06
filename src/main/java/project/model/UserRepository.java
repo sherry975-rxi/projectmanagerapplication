@@ -140,12 +140,12 @@ public class UserRepository {
 	}
 
 	/**
-	 * This method allows the administrator to access the user list and search users
+	 * This method allows the administrator to access the userRepository and search users
 	 * by profile.
 	 * 
 	 * @param searchProfile
 	 *            Profile of a user
-	 * @return A list of users with a certain profile
+	 * @return Repository of users with a certain profile
 	 * 
 	 */
 	public List<User> searchUsersByProfile(Profile searchProfile) {
@@ -153,14 +153,14 @@ public class UserRepository {
 		List<User> usersByProfileList = new ArrayList<User>();
 
 		for (int i = 0; i < this.usersRepository.size(); i++) {
-			if (searchProfile.getProfileInt() == this.usersRepository.get(i).getProfile().getProfileInt()) {
+			if(usersRepository.get(i).getUserProfile() == searchProfile) {
 				usersByProfileList.add(this.usersRepository.get(i));
-
 			}
 		}
 		return usersByProfileList;
 	}
 
+	
 	/**
 	 * This method checks if an e-mail inserted by the user is valid or not
 	 * 

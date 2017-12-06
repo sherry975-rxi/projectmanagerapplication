@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import main.java.project.model.UserRepository;
 import main.java.project.model.Address;
+import main.java.project.model.Profile;
 import main.java.project.model.User;
 
 /**
@@ -27,6 +28,7 @@ class UserRepositoryTests {
 	User user2;
 	User user3;
 	User user4;
+	User user5;
 	UserRepository userRep = new UserRepository();
 
 	@BeforeEach
@@ -39,6 +41,9 @@ class UserRepositoryTests {
 				"Test", "Testo", "Testistan");
 		user4 = userRep.createUser ("DanielMM", "danielmm@gmail.com", "003", "collaborator", "910000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
+		
+		user5 = userRep.createUser ("DanielMM", "danielmmgmail.com", "003", "collaborator", "910000000", "Rua", "2401-00",
+				"Test", "Testo", "Testistan");
 	}
 
 	@AfterEach
@@ -47,6 +52,7 @@ class UserRepositoryTests {
 		user2 = null;
 		user3 = null;
 		user4 = null;
+		user5 = null;
 		userRep = null;
 	}
 
@@ -161,6 +167,7 @@ class UserRepositoryTests {
 		userRep.addUserToUserRepository(user4);
 		
 		assertTrue(user1.equals(userRep.getUserByEmail("daniel@gmail.com")));
+		assertTrue(user4.equals(userRep.getUserByEmail("danielmm@gmail.com")));
 		assertFalse(user1.equals(userRep.getUserByEmail("danielmm@gmail.com")));
 	}
 
@@ -169,5 +176,34 @@ class UserRepositoryTests {
 	 */
 	@Test
 	void testsearchUsersByProfile() {
+		
+		userRep.addUserToUserRepository(user1);
+		userRep.addUserToUserRepository(user2);
+		userRep.addUserToUserRepository(user4);
+		
+		user2.setUserProfile(Profile.DIRECTOR);
+		
+		List <User> testUsersWithProfileVisitor = new ArrayList<>();
+		testUsersWithProfileVisitor.add(user1);
+		testUsersWithProfileVisitor.add(user4);
+		
+		List <User> testUsersWithProfileDirector = new ArrayList<>();
+		testUsersWithProfileDirector.add(user2);
+		
+		assertEquals(testUsersWithProfileVisitor, userRep.searchUsersByProfile(Profile.VISITOR));	
+		assertEquals(testUsersWithProfileDirector, userRep.searchUsersByProfile(Profile.DIRECTOR));		
 	}
+	
+	/**
+	 * This tests checks if an email that is typed by the user is valid or not. 
+	 */
+
+	@Test
+	void testUserEmailValid() {
+
+		assertEquals(userRep.isEmailAddressValid(user1.getEmail()), true);
+		assertEquals(userRep.isEmailAddressValid(user5.getEmail()), false);
+	}
+	
+	
 }
