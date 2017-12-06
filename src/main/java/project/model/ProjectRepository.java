@@ -9,6 +9,16 @@ public class ProjectRepository {
 	private int projCounter;
 
 	/**
+	 * Constructor that allows one to create a new Project Repository. There are no
+	 * mandatory fields.
+	 */
+	public ProjectRepository() {
+
+		this.projectsRepository = new ArrayList<Project>();
+
+	}
+
+	/**
 	 * Creates an instance of Project
 	 * 
 	 * @param name
