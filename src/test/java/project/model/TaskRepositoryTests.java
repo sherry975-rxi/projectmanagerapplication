@@ -39,7 +39,7 @@ class TaskRepositoryTests {
 		myCompany = Company.getTheInstance();
 
 		// creates an UserRepository
-		userRepository = myCompany.getUsersList();
+		userRepository = myCompany.getUsersRepository();
 
 		// creattes a ProjectRepository
 		projectRepository = myCompany.getProjectsRepository();
