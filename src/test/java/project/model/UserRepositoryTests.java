@@ -3,17 +3,15 @@
  */
 package test.java.project.model;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.java.project.model.Company;
-import main.java.project.model.Profile;
-import main.java.project.model.Project;
-import main.java.project.model.ProjectRepository;
-import main.java.project.model.Task;
+import main.java.project.model.UserRepository;
+import main.java.project.model.Address;
 import main.java.project.model.User;
 
 /**
@@ -23,35 +21,29 @@ import main.java.project.model.User;
 class UserRepositoryTests {
 	
 	User user1;
-	User userAdmin;
+	User user2;
+	User user3;
+	UserRepository userRep = new UserRepository();
 
 	@BeforeEach
 	void setUp() {
-		// create user
-		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua", "2401-00",
+		
+		// instantiate users
+		user1 = userRep.createUser ("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
-		// create user admin
-		userAdmin = myCompany.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		user2 = userRep.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
-		// add user to user list
-		myCompany.addUserToUserList(user1);
-		myCompany.addUserToUserList(userAdmin);
-		// set user as collaborator
-		user1.setUserProfile(Profile.COLLABORATOR);
-		userAdmin.setUserProfile(Profile.COLLABORATOR);
-		// create project
-		project = myCompany.getProjectRepository.createProject("name3", "description4", userAdmin);// !!!
-		// create 4 tasks
-		testTask = myCompany.getProjectRepository.getProject(project).getTaskRepository.createTask("Test dis agen pls");
-		testTask2 = project.createTask("Test dis agen pls");
-		testTask3 = project.createTask("Test moar yeh");
-		testTask4 = project.createTask("TEST HARDER!");
+		User user3 = new User ("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
+
 
 	}
 
 	@AfterEach
 	void tearDown() {
 		user1 = null;
+		user2 = null;
+		user3 = null;
+		userRep = null;
 			}
 
 	/**
@@ -61,6 +53,7 @@ class UserRepositoryTests {
 	@Test
 	void testUserRepository() {
 		
+		
 	}
 	
 	/**
@@ -69,6 +62,11 @@ class UserRepositoryTests {
 	
 	@Test
 	void testCreateUser() {
+
+		Address newAddress = user3.createAddress("Rua", "2401-00","Test", "Testo", "Testistan");
+		user3.addAddress(newAddress);
+		
+		assertEquals(user3, user1);
 		
 	}
 	
@@ -79,6 +77,10 @@ class UserRepositoryTests {
 	@Test
 	void testAddUserToUserRepository() {
 		
+		userRep.addUserToUserRepository(user1);
+		
+		assertTrue(userRep.isUserinUserRepository(user1));
+		assertFalse(userRep.isUserinUserRepository(user2));
 	}
 	
 	/**
