@@ -23,31 +23,12 @@ public class TaskWorker {
 	}
 
 	/**
-	 * returns the User that identifies this Collaborator
-	 * 
-	 * @return collaborator
-	 */
-	public User getCollaborator() {
-		return collaborator;
-	}
-
-	/**
-	 * Sets the User that identifies this Collaborator
-	 * 
-	 * @param collaborator
-	 *            user to set
-	 */
-	public void setCollaborator(User collaborator) {
-		this.collaborator = collaborator;
-	}
-
-	/**
 	 * Returns the state of the collaborator in the task. inTask is true if user is
 	 * in task, false if not
 	 * 
 	 * @return inTask
 	 */
-	public boolean isInTask() {
+	public boolean isCollaboratorInTask() {
 		return inTask;
 	}
 
@@ -58,7 +39,7 @@ public class TaskWorker {
 	 *            true if user is to be added to the task, false if the user is to
 	 *            be removed from the task
 	 */
-	public void setInTask(boolean inTask) {
+	public void setCollaboratorStateInTask(boolean inTask) {
 		this.inTask = inTask;
 	}
 
