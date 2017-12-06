@@ -439,4 +439,10 @@ public class Task {
 		return emptyListOfUsersInTask;
 	}
 
+	public void updateTimeUserSpentOnTask(TaskWorker Worker, int Time) {
+		int timeSpent = 0;
+		timeSpent += Worker.getHoursSpent() + Time;
+		Worker.setHoursSpent(timeSpent);
+	}
+
 }
