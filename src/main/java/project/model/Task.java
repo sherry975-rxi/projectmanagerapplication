@@ -441,7 +441,8 @@ public class Task {
 
 	public void updateTimeUserSpentOnTask(TaskWorker Worker, int Time) {
 		int timeSpent = 0;
-		timeSpent += Worker.getHoursSpent() + Time;
+		timeSpent = Worker.getHoursSpent();
+		timeSpent += Time;
 		Worker.setHoursSpent(timeSpent);
 	}
 
