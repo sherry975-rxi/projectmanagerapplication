@@ -18,7 +18,7 @@ public class ProjectRepository {
 	 * 
 	 * @return the project created
 	 */
-	public Project createProject(int projCounter, String name, String description, User projectManager) {
+	public Project createProject(String name, String description, User projectManager) {
 
 		Project newProject = new Project(projCounter, name, description, projectManager);
 		projCounter++;

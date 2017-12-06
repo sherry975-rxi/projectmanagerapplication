@@ -47,7 +47,7 @@ public class Company {
 	 * 
 	 * @return usersList This is the List of all Users created
 	 */
-	public UserRepository getUsersList() {
+	public UserRepository getUsersRepository() {
 		return this.usersRepository;
 	}
 }
