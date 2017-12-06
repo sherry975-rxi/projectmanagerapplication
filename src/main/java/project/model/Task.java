@@ -25,6 +25,7 @@ public class Task {
 	private Calendar startDate;
 	private Calendar finishDate;
 	private boolean taskState;
+	private int timeSpentOnTask;
 
 	/**
 	 * This Constructor creates a Task object with the mandatory parameters taskID
@@ -45,6 +46,7 @@ public class Task {
 		this.finishDate = null;
 		this.taskState = false;
 		this.taskTeam = new ArrayList<TaskWorker>();
+		this.timeSpentOnTask = 0;
 	}
 
 	/**
