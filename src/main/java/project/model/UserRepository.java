@@ -65,10 +65,13 @@ public class UserRepository {
 	}
 	
 	/**
-	 * This method checks if the user was added to the Repository
+	 * This method allows the administrator to see if a given user already exists in
+	 * company
 	 * 
-	 * @param addedUser
-	 *            User added to the List of Users
+	 * @param user
+	 *            user
+	 * @return boolean; TRUE if user exists in company FALSE if user doesn’t exist
+	 *         in company
 	 */
 	public boolean isUserinUserRepository(User addedUser) {
 		if (this.usersRepository.contains(addedUser)) {
@@ -90,23 +93,6 @@ public class UserRepository {
 
 	}
 
-	/**
-	 * This method allows the administrator to see if a given user already exists in
-	 * company
-	 * 
-	 * @param user
-	 *            user
-	 * @return boolean; TRUE if user exists in company FALSE if user doesn’t exist
-	 *         in company
-	 */
-
-	public boolean doesUserExistInUserRepository(User user) {
-		if (this.usersRepository.contains(user)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	/**
 	 * This method allows the Administrator to access the user list and search users
@@ -154,12 +140,12 @@ public class UserRepository {
 	}
 
 	/**
-	 * This method allows the administrator to access the user list and search users
+	 * This method allows the administrator to access the userRepository and search users
 	 * by profile.
 	 * 
 	 * @param searchProfile
 	 *            Profile of a user
-	 * @return A list of users with a certain profile
+	 * @return Repository of users with a certain profile
 	 * 
 	 */
 	public List<User> searchUsersByProfile(Profile searchProfile) {
@@ -167,14 +153,14 @@ public class UserRepository {
 		List<User> usersByProfileList = new ArrayList<User>();
 
 		for (int i = 0; i < this.usersRepository.size(); i++) {
-			if (searchProfile.getProfileInt() == this.usersRepository.get(i).getProfile().getProfileInt()) {
+			if(usersRepository.get(i).getUserProfile() == searchProfile) {
 				usersByProfileList.add(this.usersRepository.get(i));
-
 			}
 		}
 		return usersByProfileList;
 	}
 
+	
 	/**
 	 * This method checks if an e-mail inserted by the user is valid or not
 	 * 

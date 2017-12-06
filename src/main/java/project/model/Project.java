@@ -21,9 +21,11 @@ public class Project {
 	private int status;
 	private TaskRepository taskRepository;
 	private User projectManager;
-	private List<User> projectTeam;
+	private List<ProjectCollaborator> projectTeam;
 	private String name;
 	private String description;
+	private EffortUnit effortUnit;
+	private int budget;
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
 	public static final int EXECUTION = 2; // execução
@@ -41,15 +43,18 @@ public class Project {
 	 * @param projectManager
 	 */
 
-	public Project(int projCounter, String name, String description, User projectManager) {
+	public Project(int projCounter, String name, String description, User projectManager, EffortUnit effortUnit,
+			int budget) {
 
 		this.idCode = projCounter;
 		this.name = name;
 		this.description = description;
 		this.projectManager = projectManager;
+		this.effortUnit = effortUnit;
+		this.budget = budget;
 		this.status = PLANNING;
 		this.taskRepository = new TaskRepository(idCode);
-		this.projectTeam = new ArrayList<User>();
+		this.projectTeam = new ArrayList<ProjectCollaborator>();
 	}
 
 	/**
@@ -66,7 +71,7 @@ public class Project {
 	 * 
 	 * @return Project Team
 	 */
-	public List<User> getProjectTeam() {
+	public List<ProjectCollaborator> getProjectTeam() {
 		return this.projectTeam;
 	}
 
@@ -116,10 +121,14 @@ public class Project {
 	 * 
 	 * @param toAdd
 	 *            User to add to the Project Team
+	 * 
+	 * @param costPerEffort
+	 *            Added User's cost per effort
 	 */
-	public void addUserToProjectTeam(User toAdd) {
-		if (!this.projectTeam.contains(toAdd)) {
-			this.projectTeam.add(toAdd);
+	public void addUserToProjectTeam(User toAdd, int costPerEffort) {
+		ProjectCollaborator newAddition = new ProjectCollaborator(toAdd, costPerEffort);
+		if (!this.projectTeam.contains(newAddition)) {
+			this.projectTeam.add(newAddition);
 		}
 	}
 
@@ -188,8 +197,8 @@ public class Project {
 	 *         not exist in the project team
 	 */
 	public boolean containsUser(User user) {
-		for (User other : this.projectTeam) {
-			if (user.equals(other)) {
+		for (ProjectCollaborator other : this.projectTeam) {
+			if (user.equals(other.getCollaboratorUserData())) {
 				return true;
 			}
 		}
@@ -203,6 +212,15 @@ public class Project {
 	 */
 	public int getIdCode() {
 		return this.idCode;
+	}
+
+	/**
+	 * Get Project effortUnit
+	 * 
+	 * @return EfforUnit of Project
+	 */
+	public EffortUnit getEffortUnit() {
+		return this.effortUnit;
 	}
 
 }
