@@ -3,6 +3,7 @@ package test.java.project.model;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -123,7 +124,35 @@ class TaskRepositoryTests {
 
 	@Test
 	void testGetFinishedTaskGivenMonth() {
+		// add task to task repository of the project
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+		// add de user to the task
+		testTask.addUserToTask(user1);
+		testTask2.addUserToTask(user1);
+		testTask3.addUserToTask(user1);
+		testTask4.addUserToTask(user1);
+		// create finished date to test
+		Calendar finishDateTest = Calendar.getInstance();
+		finishDateTest.set(Calendar.YEAR, 2017);
+		finishDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
+		finishDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		finishDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
+		// finish tasks
+		testTask.setFinishDate(finishDateTest);
+
+		// create a list and add finished tasks to compare to finished task list
+		List<Task> test = new ArrayList<Task>();
+		test.add(testTask);
+		test.add(testTask2);
+		test.add(testTask3);
+		test.add(testTask4);
+
+		// verify if test list is the same as the user unfinished task list
+		assertEquals(test, taskRepository.getFinishedTasksGivenMonth(user1, 1));
 	}
 
 	@Test
