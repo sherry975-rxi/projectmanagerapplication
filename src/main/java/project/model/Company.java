@@ -1,8 +1,5 @@
 package main.java.project.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Company Class for building Lists of Users and Projects (according to certain
  * specifications)
@@ -12,8 +9,8 @@ import java.util.List;
  */
 public class Company {
 
-	private List<User> usersList;
-	private List<Project> projectsList;
+	private UserRepository usersRepository;
+	private ProjectRepository projectsRepository;
 	static private Company _theInstance;
 
 	/**
@@ -32,8 +29,8 @@ public class Company {
 	 * Constructor for Company includes usersList creation and projectsList creation
 	 */
 	private Company() {
-		this.usersList = new ArrayList<User>();
-		this.projectsList = new ArrayList<Project>();
+		this.usersRepository = new UserRepository();
+		this.projectsRepository = new ProjectRepository();
 	}
 
 	/**
@@ -41,8 +38,8 @@ public class Company {
 	 * 
 	 * @return projectsList This is the List of all Projects created
 	 */
-	public List<Project> getProjectsList() {
-		return this.projectsList;
+	public ProjectRepository getProjectsRepository() {
+		return this.projectsRepository;
 	}
 
 	/**
@@ -50,7 +47,7 @@ public class Company {
 	 * 
 	 * @return usersList This is the List of all Users created
 	 */
-	public List<User> getUsersList() {
-		return this.usersList;
+	public UserRepository getUsersList() {
+		return this.usersRepository;
 	}
 }
