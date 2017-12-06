@@ -65,10 +65,13 @@ public class UserRepository {
 	}
 	
 	/**
-	 * This method checks if the user was added to the Repository
+	 * This method allows the administrator to see if a given user already exists in
+	 * company
 	 * 
-	 * @param addedUser
-	 *            User added to the List of Users
+	 * @param user
+	 *            user
+	 * @return boolean; TRUE if user exists in company FALSE if user doesn’t exist
+	 *         in company
 	 */
 	public boolean isUserinUserRepository(User addedUser) {
 		if (this.usersRepository.contains(addedUser)) {
@@ -90,23 +93,6 @@ public class UserRepository {
 
 	}
 
-	/**
-	 * This method allows the administrator to see if a given user already exists in
-	 * company
-	 * 
-	 * @param user
-	 *            user
-	 * @return boolean; TRUE if user exists in company FALSE if user doesn’t exist
-	 *         in company
-	 */
-
-	public boolean doesUserExistInUserRepository(User user) {
-		if (this.usersRepository.contains(user)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	/**
 	 * This method allows the Administrator to access the user list and search users
