@@ -110,11 +110,6 @@ class TaskRepositoryTests {
 	}
 
 	@Test
-	void testAddProjectTasks() {
-
-	}
-
-	@Test
 	void testGetProjectTaskList() {
 
 		// Adds Tasks to TaskRepository
@@ -264,8 +259,18 @@ class TaskRepositoryTests {
 		// start task
 		testTask.setStartDate(startDateTest);
 
+		// create finished date to test
+		Calendar finishDateTest = Calendar.getInstance();
+		finishDateTest.set(Calendar.YEAR, 2017);
+		finishDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
+		finishDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		finishDateTest.set(Calendar.HOUR_OF_DAY, 15);
+
+		// finish task
+		testTask.setFinishDate(finishDateTest);
+
 		// Checks if the 2 values are equal
-		assertEquals(expectedTaskCounter, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(user1));
+		assertEquals(1.0, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(user1), 0.001);
 
 	}
 
