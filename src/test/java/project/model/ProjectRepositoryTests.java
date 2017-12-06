@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import main.java.project.model.EffortUnit;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
@@ -38,9 +39,9 @@ class ProjectRepositoryTests {
 		user1 = new User("name", "email", "idNumber", "function", "123456789");
 		user2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
 		user2 = new User("name6", "email6", "idNumber6", "function6", "987654271");
-		project1 = new Project(0, "name3", "description3", user1);
-		project2 = new Project(2, "name4", "description5", user2);
-		project3 = new Project(3, "name5", "description5", user3);
+		project1 = new Project(0, "name3", "description3", user1, EffortUnit.HOURS, 2000);
+		project2 = new Project(2, "name4", "description5", user2, EffortUnit.HOURS, 2000);
+		project3 = new Project(3, "name5", "description5", user3, EffortUnit.HOURS, 2000);
 		task1 = new Task(111, 222, "Task 1");
 		task2 = new Task(112, 223, "Task 1");
 		task3 = new Task(113, 224, "Task 1");
@@ -61,7 +62,6 @@ class ProjectRepositoryTests {
 		task1 = null;
 		task2 = null;
 		task3 = null;
-
 	}
 
 	/**
@@ -73,7 +73,8 @@ class ProjectRepositoryTests {
 	@Test
 	void testCreateProject() {
 
-		assertTrue(project1.equals(projectRepository.createProject("name3", "description3", user1)));
+		assertTrue(project1
+				.equals(projectRepository.createProject("name3", "description3", user1, EffortUnit.HOURS, 2000)));
 
 	}
 
@@ -141,8 +142,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1);
-		project1.addUserToProjectTeam(user2);
+		project1.addUserToProjectTeam(user1, 15);
+		project1.addUserToProjectTeam(user2, 15);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -172,8 +173,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1);
-		project1.addUserToProjectTeam(user2);
+		project1.addUserToProjectTeam(user1, 15);
+		project1.addUserToProjectTeam(user2, 15);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -210,8 +211,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1);
-		project1.addUserToProjectTeam(user2);
+		project1.addUserToProjectTeam(user1, 15);
+		project1.addUserToProjectTeam(user2, 15);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -246,8 +247,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1);
-		project1.addUserToProjectTeam(user2);
+		project1.addUserToProjectTeam(user1, 15);
+		project1.addUserToProjectTeam(user2, 15);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -292,7 +293,7 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1);
+		project1.addUserToProjectTeam(user1, 15);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -337,7 +338,7 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1);
+		project1.addUserToProjectTeam(user1, 15);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -381,8 +382,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1);
-		project1.addUserToProjectTeam(user2);
+		project1.addUserToProjectTeam(user1, 15);
+		project1.addUserToProjectTeam(user2, 15);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -428,8 +429,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1);
-		project1.addUserToProjectTeam(user2);
+		project1.addUserToProjectTeam(user1, 15);
+		project1.addUserToProjectTeam(user2, 15);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
