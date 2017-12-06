@@ -1,4 +1,4 @@
-package test.java.project.model;
+package usTest.java.project.model;
 
 import static org.junit.Assert.assertTrue;
 
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.User;
 
@@ -48,12 +49,12 @@ public class US350Tests {
 		c1.addUserToUserList(u4);
 		c1.addUserToUserList(u5);
 		// set user as Director
-		u1.getProfile().setDirector();
+		u1.setUserProfile(Profile.DIRECTOR);
 		// set user to collaborator
-		u2.getProfile().setCollaborator();
-		u3.getProfile().setCollaborator();
-		u4.getProfile().setCollaborator();
-		u5.getProfile().setCollaborator();
+		u2.setUserProfile(Profile.COLLABORATOR);
+		u3.setUserProfile(Profile.COLLABORATOR);
+		u4.setUserProfile(Profile.COLLABORATOR);
+		u5.setUserProfile(Profile.COLLABORATOR);
 		// create the project and set a user to Project manager
 		p1 = c1.createProject("Teste", "blablabla", u2);
 		// add project to the Company Project list

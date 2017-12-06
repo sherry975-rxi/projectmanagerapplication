@@ -1,4 +1,4 @@
-package test.java.project.model;
+package usTest.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -46,10 +46,10 @@ class US215Tests {
 
 		myProject = myCompany.createProject("Projecto I", "Projecto de Gestão", user1);
 
-		task1 = myProject.createTask("Task 1");
-		task2 = myProject.createTask("Task 2");
-		task3 = myProject.createTask("Task 3");
-		task4 = myProject.createTask("Task 4");
+		task1 = myProject.getTaskRepository().createTask("Task 1");
+		task2 = myProject.getTaskRepository().createTask("Task 2");
+		task3 = myProject.getTaskRepository().createTask("Task 3");
+		task4 = myProject.getTaskRepository().createTask("Task 4");
 
 		/**
 		 * Tests the getTotalTimeLastMonthFinishedTasksByUser method, which returns a
@@ -74,10 +74,10 @@ class US215Tests {
 		myProject.addUserToProjectTeam(user1);
 
 		// Add Tasks to project 1
-		myProject.addProjectTask(task1);
-		myProject.addProjectTask(task2);
-		myProject.addProjectTask(task3);
-		myProject.addProjectTask(task4);
+		myProject.getTaskRepository().addProjectTask(task1);
+		myProject.getTaskRepository().addProjectTask(task2);
+		myProject.getTaskRepository().addProjectTask(task3);
+		myProject.getTaskRepository().addProjectTask(task4);
 
 		// Associates users to task
 		task1.addUserToTask(user1);

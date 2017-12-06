@@ -1,4 +1,4 @@
-package test.java.project.model;
+package usTest.java.project.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.Task;
 import main.java.project.model.User;
@@ -57,17 +58,17 @@ class US203Tests {
 
 		project1 = myCompany.createProject("name3", "description4", user2);
 
-		task1 = project1.createTask("Task 1");
-		task2 = project1.createTask("Task 2");
+		task1 = project1.getTaskRepository().createTask("Task 1");
+		task2 = project1.getTaskRepository().createTask("Task 2");
 
-		user2.getProfile().setCollaborator();
-		user3.getProfile().setCollaborator();
+		user2.setUserProfile(Profile.COLLABORATOR);
+		user3.setUserProfile(Profile.COLLABORATOR);
 
 		myCompany.addProjectToProjectList(project1);
 
 		project1.addUserToProjectTeam(user3);
-		project1.addProjectTask(task1);
-		project1.addProjectTask(task2);
+		project1.getTaskRepository().addProjectTask(task1);
+		project1.getTaskRepository().addProjectTask(task2);
 
 		task1.addUserToTask(user3);
 		task2.addUserToTask(user3);

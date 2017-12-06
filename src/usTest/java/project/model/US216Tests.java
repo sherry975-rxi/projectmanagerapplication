@@ -1,4 +1,4 @@
-package test.java.project.model;
+package usTest.java.project.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -58,10 +58,10 @@ class US216Tests {
 		myProject = myCompany.createProject("Projecto I", "Projecto de Gestão", user1);
 
 		// Four new tasks were created and added to project1
-		task1 = myProject.createTask("Task 1");
-		task2 = myProject.createTask("Task 2");
-		task3 = myProject.createTask("Task 3");
-		task4 = myProject.createTask("Task 4");
+		task1 = myProject.getTaskRepository().createTask("Task 1");
+		task2 = myProject.getTaskRepository().createTask("Task 2");
+		task3 = myProject.getTaskRepository().createTask("Task 3");
+		task4 = myProject.getTaskRepository().createTask("Task 4");
 
 		// Users 1 and 2 added to the Company user list.
 		myCompany.addUserToUserList(user1);
@@ -74,10 +74,10 @@ class US216Tests {
 		myProject.addUserToProjectTeam(user1);
 
 		// Add Tasks to project 1
-		myProject.addProjectTask(task1);
-		myProject.addProjectTask(task2);
-		myProject.addProjectTask(task3);
-		myProject.addProjectTask(task4);
+		myProject.getTaskRepository().addProjectTask(task1);
+		myProject.getTaskRepository().addProjectTask(task2);
+		myProject.getTaskRepository().addProjectTask(task3);
+		myProject.getTaskRepository().addProjectTask(task4);
 
 		// Associates users to tasks
 		task1.addUserToTask(user1);

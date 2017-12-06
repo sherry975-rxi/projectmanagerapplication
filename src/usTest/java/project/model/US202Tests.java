@@ -1,4 +1,4 @@
-package test.java.project.model;
+package usTest.java.project.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

@@ -1,4 +1,4 @@
-package test.java.project.model;
+package usTest.java.project.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.User;
 
@@ -57,10 +58,10 @@ class US301Tests {
 		c1.addUserToUserList(u2);
 
 		// set user as Director
-		u1.getProfile().setDirector();
+		u1.setUserProfile(Profile.DIRECTOR);
 
 		// set user to collaborator
-		u2.getProfile().setCollaborator();
+		u2.setUserProfile(Profile.COLLABORATOR);
 
 		boolean result = p1.isProjectManager(u2);
 		int projectid = p1.getIdCode();
