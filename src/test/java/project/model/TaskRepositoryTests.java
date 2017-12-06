@@ -1,6 +1,8 @@
 package test.java.project.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,7 +41,7 @@ class TaskRepositoryTests {
 		myCompany = Company.getTheInstance();
 
 		// creates an UserRepository
-		userRepository = myCompany.getUsersList();
+		userRepository = myCompany.getUsersRepository();
 
 		// creattes a ProjectRepository
 		projectRepository = myCompany.getProjectsRepository();
@@ -84,34 +86,50 @@ class TaskRepositoryTests {
 	}
 
 	@Test
-	void testTaskRepository() {
-
-	}
-
-	@Test
 	void testCreateTask() {
+
+		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 
+		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
+		// getProjectTaskList method
 		List<Task> taskListToCompare = new ArrayList<Task>();
+
+		// adds tasks to the task list
 		taskListToCompare.add(testTask);
 		taskListToCompare.add(testTask2);
 		taskListToCompare.add(testTask3);
 		taskListToCompare.add(testTask4);
 
+		// See if the two lists have the same tasks
 		assertEquals(taskRepository.getProjectTaskList(), taskListToCompare);
 
 	}
 
 	@Test
-	void testAddProjectTasks() {
-
-	}
-
-	@Test
 	void testGetProjectTaskList() {
+
+		// Adds Tasks to TaskRepository
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+
+		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
+		// getProjectTaskList method
+		List<Task> taskListToCompare = new ArrayList<Task>();
+
+		// adds tasks to the task list
+		taskListToCompare.add(testTask);
+		taskListToCompare.add(testTask2);
+		taskListToCompare.add(testTask3);
+		taskListToCompare.add(testTask4);
+
+		// See if the two lists have the same tasks
+		assertEquals(taskRepository.getProjectTaskList(), taskListToCompare);
 
 	}
 
@@ -142,6 +160,29 @@ class TaskRepositoryTests {
 	@Test
 	void testFinishedTaskListOfUserInProject() {
 
+		// add task to task repository of the project
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+		// adds the user to the task
+		testTask.addUserToTask(user1);
+		testTask2.addUserToTask(user1);
+		testTask3.addUserToTask(user1);
+		testTask4.addUserToTask(user1);
+
+		// Marks task and task3 as finished
+		testTask.markTaskAsFinished();
+		testTask3.markTaskAsFinished();
+
+		// create a list and add task to compare to unfinished task list
+		List<Task> test = new ArrayList<Task>();
+		test.add(testTask);
+		test.add(testTask3);
+
+		// verify if test list is the same as the user finished task list
+		assertEquals(test, taskRepository.getFinishedTaskListofUserInProject(user1));
+
 	}
 
 	@Test
@@ -165,6 +206,9 @@ class TaskRepositoryTests {
 
 		// finish tasks
 		testTask.setFinishDate(finishDateTest);
+		testTask2.setFinishDate(finishDateTest);
+		testTask3.setFinishDate(finishDateTest);
+		testTask4.setFinishDate(finishDateTest);
 
 		// create a list and add finished tasks to compare to finished task list
 		List<Task> test = new ArrayList<Task>();
@@ -180,40 +224,129 @@ class TaskRepositoryTests {
 	@Test
 	void testContainsTask() {
 
+		// add task to task repository of the project
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+
+		// See if the tasks are contained in the Task Repository
+		assertTrue(taskRepository.containsTask(testTask));
+		assertFalse(taskRepository.containsTask(testTask4));
+
+		// adds Task4 to the Repository
+		taskRepository.addProjectTask(testTask4);
+
+		// See if task4 is contained in the Task Repository
+		assertTrue(taskRepository.containsTask(testTask4));
+
 	}
 
 	@Test
 	void testGetTimeOnLastMonthProjectUserTask() {
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
-		taskRepository.addProjectTask(testTask3);
-		taskRepository.addProjectTask(testTask4);
+
 		// add de user to the task
 		testTask.addUserToTask(user1);
-		testTask2.addUserToTask(user1);
-		testTask3.addUserToTask(user1);
-		testTask4.addUserToTask(user1);
+
+		// create finished date to test
+		Calendar startDateTest = Calendar.getInstance();
+		startDateTest.set(Calendar.YEAR, 2017);
+		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
+		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
+		// start task
+		testTask.setStartDate(startDateTest);
+
+		// create finished date to test
+		Calendar finishDateTest = Calendar.getInstance();
+		finishDateTest.set(Calendar.YEAR, 2017);
+		finishDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
+		finishDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		finishDateTest.set(Calendar.HOUR_OF_DAY, 15);
+
+		// finish task
+		testTask.setFinishDate(finishDateTest);
+
+		// Checks if the 2 values are equal
+		assertEquals(1.0, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(user1), 0.001);
 
 	}
 
 	@Test
 	void testSetTaskCounter() {
 
+		// sets the task counter as 0;
+		taskRepository.setTaskCounter(0);
+		// add task to task repository of the project
+		taskRepository.createTask("New Task 1");
+		taskRepository.createTask("New Task 2");
+		taskRepository.createTask("New Task 3");
+
+		// creates a variable with the value of the expected outcome of getTaskCounter
+		// method in taskRepository class
+		int expectedTaskCounter = 3;
+
+		// Checks if the 2 values are equal
+		assertEquals(expectedTaskCounter, taskRepository.getTaskCounter());
+
 	}
 
 	@Test
 	void testGetTaskCounter() {
+		// sets the task counter as 0;
+		taskRepository.setTaskCounter(0);
+		// add task to task repository of the project
+		taskRepository.createTask("New Task 1");
+		taskRepository.createTask("New Task 2");
+		taskRepository.createTask("New Task 3");
 
+		// creates a variable with the value of the expected outcome of getTaskCounter
+		// method in taskRepository class
+		int expectedTaskCounter = 3;
+
+		// Checks if the 2 values are equal
+		assertEquals(expectedTaskCounter, taskRepository.getTaskCounter());
 	}
 
 	@Test
-	void testProjectId() {
+	void testGetProjectId() {
+		// checks if the project id are the same;
+		assertEquals(project.getIdCode(), taskRepository.getProjId());
 
+		// creates a new project
+		Project proj1 = projectRepository.createProject("Project", "My Description", user1);
+		TaskRepository anotherTaskRepository = proj1.getTaskRepository();
+		assertEquals(proj1.getIdCode(), anotherTaskRepository.getProjId());
 	}
 
 	@Test
-	void testAllTasks() {
+	void testGetAllTaskOfUser() {
+		// add task to task repository of the project
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+		// adds the user to the task
+		testTask.addUserToTask(user1);
+		testTask2.addUserToTask(user1);
+		testTask3.addUserToTask(user1);
+		testTask4.addUserToTask(user1);
+
+		// Marks task and task3 as finished
+		testTask.markTaskAsFinished();
+		testTask3.markTaskAsFinished();
+
+		// create a list and add tasks to compare with user task list
+		List<Task> testList = new ArrayList<Task>();
+		testList.add(testTask);
+		testList.add(testTask2);
+		testList.add(testTask3);
+		testList.add(testTask4);
+
+		// See if the two taskLists have the same tasks
+		assertEquals(testList, taskRepository.getAllTasks(user1));
 
 	}
 

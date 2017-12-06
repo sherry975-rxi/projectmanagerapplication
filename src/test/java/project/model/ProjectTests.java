@@ -34,23 +34,21 @@ class ProjectTests {
 		c1 = Company.getTheInstance();
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
-		p1 = new Project("name3", "description4", u1);
-		p2 = new Project("name4", "description5", u2);
-		t1 = new Task(p1, "description");
-		p1.addProjectTask(t1);
-		t2 = new Task(p1, "description2");
+		p1 = c1.getProjectsRepository().createProject("name3", "description4", u1);
+		t1 = p1.getTaskRepository().createTask("description");
+		p1.getTaskRepository().addProjectTask(t1);
+		t2 = p1.getTaskRepository().createTask("description2");
+		p1.getTaskRepository().addProjectTask(t2);
 		t2.markTaskAsFinished();
-		p1.addProjectTask(t2);
-		t3 = new Task(p1, "description3");
+		p2 = c1.getProjectsRepository().createProject("name4", "description5", u2);
+		t3 = p1.getTaskRepository().createTask("description3");
 		t3.markTaskAsFinished();
-		c1.addProjectToProjectList(p1);
-		c1.addProjectToProjectList(p2);
+
 	}
 
 	@Test
 	void testAddTaskToProjectTaskList() {
-		p1.addProjectTask(t1);
-		assertEquals(t1, p1.getProjectTaskList().get(0));
+		assertEquals(t1, p1.getTaskRepository().getProjectTaskList().get(0));
 	}
 
 	@Test
@@ -99,18 +97,14 @@ class ProjectTests {
 
 	@Test
 	void testGetUnfinishedTasks() {
-		p1.addProjectTask(t1);
-		p1.addProjectTask(t2);
 		t1.addUserToTask(u1);
-		assertEquals(t1, p1.getUnFinishedTaskList(u1).get(0));
+		assertEquals(t1, p1.getTaskRepository().getUnFinishedTasks(u1).get(0));
 	}
 
 	@Test
 	void testGetFinishedTasks() {
-		p1.addProjectTask(t1);
-		p1.addProjectTask(t2);
 		t2.addUserToTask(u2);
-		assertEquals(t2, p1.getFinishedTaskListofUserInProject(u2).get(0));
+		assertEquals(t2, p1.getTaskRepository().getFinishedTaskListofUserInProject(u2).get(0));
 	}
 
 	@Test
@@ -119,9 +113,9 @@ class ProjectTests {
 		t1.addUserToTask(u1);
 		t2.addUserToTask(u1);
 		List<Task> test = new ArrayList<Task>();
-		test.add(t2);
 		test.add(t1);
-		assertEquals(p1.getAllTasks(u1), test);
+		test.add(t2);
+		assertEquals(test, p1.getTaskRepository().getAllTasks(u1));
 	}
 
 	@Test
@@ -131,42 +125,42 @@ class ProjectTests {
 		t1.addUserToTask(u1);
 		t2.addUserToTask(u1);
 		t3.addUserToTask(u1);
-		p1.addProjectTask(t1);
-		p1.addProjectTask(t2);
-		p1.addProjectTask(t3);
+		p1.getTaskRepository().addProjectTask(t1);
+		p1.getTaskRepository().addProjectTask(t2);
+		p1.getTaskRepository().addProjectTask(t3);
 		t2.setFinishDate();
 		t3.setFinishDate();
 		t2.getFinishDate().set(Calendar.MONTH, test.get(Calendar.MONTH) - 1);
 		t3.getFinishDate().set(Calendar.MONTH, test.get(Calendar.MONTH));
-		assertEquals(t3, p1.getFinishedTaskListLastMonth(u1).get(0));
+		assertEquals(t3, p1.getTaskRepository().getFinishedTasksGivenMonth(u1, 1).get(0));
 	}
 
 	@Test
 	void testAddUserToTask() {
-		p1.addProjectTask(t1);
-		p1.addProjectTask(t2);
-		p1.addProjectTask(t3);
+		p1.getTaskRepository().addProjectTask(t1);
+		p1.getTaskRepository().addProjectTask(t2);
+		p1.getTaskRepository().addProjectTask(t3);
 		t2.addUserToTask(u1);
 		assertTrue(t2.taskTeamContainsUser(u1));
 	}
 
 	@Test
 	void testFailToAddUserToTask() {
-		p1.addProjectTask(t1);
-		p1.addProjectTask(t2);
-		p1.addProjectTask(t3);
+		p1.getTaskRepository().addProjectTask(t1);
+		p1.getTaskRepository().addProjectTask(t2);
+		p1.getTaskRepository().addProjectTask(t3);
 		t2.addUserToTask(u1);
 		assertFalse(t1.taskTeamContainsUser(u1));
 	}
 
 	@Test
 	void testProjectContainsTask() {
-		assertTrue(p1.containsTask(t2));
+		assertTrue(p1.getTaskRepository().containsTask(t2));
 	}
 
 	@Test
 	void testProjectContainsTaskFalse() {
-		assertFalse(p1.containsTask(t3));
+		assertFalse(p1.getTaskRepository().containsTask(t3));
 	}
 
 }
