@@ -277,7 +277,7 @@ class UserTests {
 
 		u1.setUserProfile(Profile.COLLABORATOR);
 
-		assertEquals(Profile.COLLABORATOR, u1.getProfile());
+		assertEquals(Profile.COLLABORATOR, u1.getUserProfile());
 
 	}
 
@@ -291,7 +291,7 @@ class UserTests {
 
 		u1.setUserProfile(Profile.DIRECTOR);
 
-		assertEquals(Profile.DIRECTOR, u1.getProfile());
+		assertEquals(Profile.DIRECTOR, u1.getUserProfile());
 
 	}
 
@@ -305,7 +305,7 @@ class UserTests {
 
 		u1.setUserProfile(Profile.VISITOR);
 
-		assertEquals(Profile.VISITOR, u1.getProfile());
+		assertEquals(Profile.VISITOR, u1.getUserProfile());
 
 	}
 }
