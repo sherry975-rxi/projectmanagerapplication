@@ -20,7 +20,6 @@ public class UserRepository {
 	/**
 	 * Constructor for UserRepository includes usersList creation 
 	 */
-
 	public UserRepository() {
 		this.usersRepository = new ArrayList<User>();
 	}
@@ -43,11 +42,11 @@ public class UserRepository {
 	 */
 	public User createUser(String name, String email, String idNumber, String function, String phone, String street,
 			String zipCode, String city, String district, String country) {
-		
+
 		User newUser = new User(name, email, idNumber, function, phone);
-		
+
 		Address newAddress = newUser.createAddress(street, zipCode, city, district, country);
-		
+
 		newUser.addAddress(newAddress);
 
 		return newUser;
@@ -71,11 +70,11 @@ public class UserRepository {
 	 * @return allUsers This is the copy of the List of all Users in the repository
 	 */
 	public List<User> getAllUsersFromRepository() {
-		
+
 		List <User> allUsers = new ArrayList<>();
 		allUsers.addAll(this.usersRepository);
 		return allUsers;
-		
+
 	}
 
 	/**
@@ -120,7 +119,7 @@ public class UserRepository {
 		return userListThatContainsPiecesOfEmailString;
 
 	}
-	
+
 	/**
 	 * This method allows the Administrator to access the user list and search users
 	 * by complete email. This is achieved by using the .contains() method.
@@ -137,7 +136,7 @@ public class UserRepository {
 			if (usersRepository.get(i).getEmail().contains(completeEmail)) {	
 				return usersRepository.get(i);
 			}
-	}
+		}
 		return null;
 	}
 
@@ -163,7 +162,6 @@ public class UserRepository {
 		return usersByProfileList;
 	}
 
-
 	/**
 	 * This method checks if an e-mail inserted by the user is valid or not
 	 * 
@@ -185,4 +183,3 @@ public class UserRepository {
 	}
 
 }	
-
