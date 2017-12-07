@@ -266,8 +266,10 @@ public class Task {
 	 */
 
 	public boolean removeUserFromTask(User user) {
-		if (taskTeamContainsUser(user)) {
-			return this.taskTeam.remove(user);
+		for (TaskWorker other : taskTeam) {
+			if (other.getCollaborator().equals(user)) {
+				other.disableCollaborator();
+			}
 		}
 		return false;
 	}
