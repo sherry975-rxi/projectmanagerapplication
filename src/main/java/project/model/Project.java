@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Project {
 
-	private int idCode;
+	private int projectIdCode;
 	private int status;
 	private TaskRepository taskRepository;
 	private User projectManager;
@@ -48,7 +48,7 @@ public class Project {
 
 	public Project(int projCounter, String name, String description, User projectManager) {
 
-		this.idCode = projCounter;
+		this.projectIdCode = projCounter;
 		this.name = name;
 		this.description = description;
 		this.projectManager = projectManager;
@@ -57,8 +57,17 @@ public class Project {
 		this.status = PLANNING;
 		this.startdate = null;
 		this.finishdate = null;
-		this.taskRepository = new TaskRepository(idCode);
+		this.taskRepository = new TaskRepository(projectIdCode);
 		this.projectTeam = new ArrayList<ProjectCollaborator>();
+	}
+
+	/**
+	 * This method allows the projectManager to be changed
+	 * 
+	 * @param newProjectManager New Project Manager to Set
+	 */
+	public void setProjectManager(User newProjectManager) {
+		this.projectManager = newProjectManager;
 	}
 
 	/**
@@ -169,7 +178,7 @@ public class Project {
 		boolean result = false;
 		if (toCompare instanceof Project) {
 			Project proj = (Project) toCompare;
-			if (this.idCode == proj.idCode) {
+			if (this.projectIdCode == proj.projectIdCode) {
 				result = true;
 			}
 		}
@@ -215,7 +224,7 @@ public class Project {
 	 * @return idCode of Project
 	 */
 	public int getIdCode() {
-		return this.idCode;
+		return this.projectIdCode;
 	}
 
 	/**
