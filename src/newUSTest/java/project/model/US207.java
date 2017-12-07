@@ -2,9 +2,7 @@ package newUSTest.java.project.model;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +17,7 @@ import main.java.project.model.TaskRepository;
 import main.java.project.model.User;
 import main.java.project.model.UserRepository;
 
-class US340 {
+class US207 {
 
 	Company myCompany;
 	UserRepository userRepository;
@@ -29,9 +27,6 @@ class US340 {
 	ProjectRepository projectRepository;
 	TaskRepository taskRepository;
 	Task testTask;
-	Task testTask2;
-	Task testTask3;
-	Task testTask4;
 
 	@BeforeEach
 	void setUp() {
@@ -69,9 +64,6 @@ class US340 {
 		myCompany = null;
 		user1 = null;
 		testTask = null;
-		testTask2 = null;
-		testTask3 = null;
-		testTask4 = null;
 		project = null;
 		projectRepository = null;
 		taskRepository = null;
@@ -79,7 +71,7 @@ class US340 {
 	}
 
 	@Test
-	void test340() {
+	void test207() {
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -97,31 +89,25 @@ class US340 {
 		// create 1 task
 		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
-		testTask3 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
-		testTask4 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
-		taskRepository.addProjectTask(testTask3);
-		taskRepository.addProjectTask(testTask4);
 
-		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
-		// getProjectTaskList method
-		List<Task> taskListToCompare = new ArrayList<Task>();
+		// Adds user1 to the Task
+		testTask.addUserToTask(user1);
 
-		// adds tasks to the task list
-		taskListToCompare.add(testTask);
-		taskListToCompare.add(testTask2);
-		taskListToCompare.add(testTask3);
-		taskListToCompare.add(testTask4);
+		// Updates the time spent on task by user
+		testTask.updateTimeUserSpentOnTask(user1, 1.0);
 
-		// See if the two lists have the same tasks
-		assertEquals(taskRepository.getProjectTaskList(), taskListToCompare);
+		// Checks if both times are the same
+		assertEquals(1.0, testTask.getTimeSpentOntask(user1), 1.0);
+
+		// Updates the time spent on task by user
+		testTask.updateTimeUserSpentOnTask(user1, 2.0);
+
+		// Checks if both times are the same
+		assertEquals(1.0, testTask.getTimeSpentOntask(user1), 3.0);
 
 	}
+
 }

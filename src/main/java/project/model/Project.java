@@ -73,16 +73,16 @@ public class Project {
 	/**
 	 * This method returns the Task Repository for this specific Project
 	 * 
-	 * @return taskRepository
+	 * @return taskRepository Task Repository for this Project
 	 */
 	public TaskRepository getTaskRepository() {
 		return taskRepository;
 	}
 
 	/**
-	 * Get the complete user list for this project's team
+	 * Get the complete user Repository for this Project's Team
 	 * 
-	 * @return Project Team
+	 * @return Project Team Team of the Project
 	 */
 	public List<ProjectCollaborator> getProjectTeam() {
 		return this.projectTeam;
@@ -203,9 +203,10 @@ public class Project {
 	// }
 
 	/**
-	 * Checks if the user exist in the list of users
+	 * Checks if the user exist in the User Repository
 	 * 
-	 * @param user
+	 * @param user User to add as ProjectCollaborator
+	 * 
 	 * @return TRUE if the user exists in the project team FALSE if the user does
 	 *         not exist in the project team
 	 */
