@@ -1,10 +1,14 @@
 package newUSTest.java.project.model;
 
-import java.util.Calendar;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
 import main.java.project.model.Profile;
@@ -15,7 +19,7 @@ import main.java.project.model.TaskRepository;
 import main.java.project.model.User;
 import main.java.project.model.UserRepository;
 
-class US207 {
+class US340 {
 
 	Company myCompany;
 	UserRepository userRepository;
@@ -57,24 +61,6 @@ class US207 {
 		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
-		// create a estimated Task Start Date
-		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
-		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
-		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
-		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
-		// create a estimated Task Start Date
-		Calendar taskDeadlineDateTest = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
-		// create 4 tasks
-		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, taskDeadlineDateTest, taskDeadlineDateTest, 10);
-		testTask3 = taskRepository.createTask("Test moar yeh", 10, taskDeadlineDateTest, taskDeadlineDateTest, 10);
-		testTask4 = taskRepository.createTask("TEST HARDER!", 10, taskDeadlineDateTest, taskDeadlineDateTest, 10);
 
 	}
 
@@ -93,8 +79,49 @@ class US207 {
 	}
 
 	@Test
-	void test207() {
+	void test340() {
+
+		// create a estimated Task Start Date
+		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
+		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
+		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		// create a estimated Task Start Date
+		Calendar taskDeadlineDateTest = Calendar.getInstance();
+		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
+		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
+		// create 1 task
+		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		testTask3 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		testTask4 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+
+		// Adds Tasks to TaskRepository
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+
+		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
+		// getProjectTaskList method
+		List<Task> taskListToCompare = new ArrayList<Task>();
+
+		// adds tasks to the task list
+		taskListToCompare.add(testTask);
+		taskListToCompare.add(testTask2);
+		taskListToCompare.add(testTask3);
+		taskListToCompare.add(testTask4);
+
+		// See if the two lists have the same tasks
+		assertEquals(taskRepository.getProjectTaskList(), taskListToCompare);
 
 	}
-
 }
