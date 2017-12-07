@@ -538,11 +538,14 @@ public class Task {
 		return emptyListOfUsersInTask;
 	}
 
-	public void updateTimeUserSpentOnTask(TaskWorker Worker, int Time) {
+	public void updateTimeUserSpentOnTask(User user, int Time) {
 		int timeSpent = 0;
-		timeSpent = Worker.getHoursSpent();
-		timeSpent += Time;
-		Worker.setHoursSpent(timeSpent);
+		for (TaskWorker other : taskTeam) {
+			if (other.getCollaborator().equals(user)) {
+				timeSpent = other.getHoursSpent();
+				timeSpent += Time;
+				other.setHoursSpent(timeSpent);
+			}
+		}
 	}
-
 }
