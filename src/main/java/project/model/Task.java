@@ -246,11 +246,11 @@ public class Task {
 	 * @return TRUE if the user was added to the list of users (taskTeam) in a task
 	 *         FALSE if user is already in the list of users in a task
 	 */
-	public boolean addUserToTask(User user) {
+	public void addUserToTask(User user) {
 		if (!taskTeamContainsUser(user)) {
-			return this.taskTeam.add(new TaskWorker(user));
+			this.taskTeam.add(new TaskWorker(user));
 		}
-		return false;
+
 	}
 
 	/**
@@ -265,13 +265,12 @@ public class Task {
 	 *         task or if it was missing from the list
 	 */
 
-	public boolean removeUserFromTask(User user) {
+	public void removeUserFromTask(User user) {
 		for (TaskWorker other : taskTeam) {
 			if (other.getCollaborator().equals(user)) {
 				other.disableCollaborator();
 			}
 		}
-		return false;
 	}
 
 	public double getTimeSpentOntask(User user) {
