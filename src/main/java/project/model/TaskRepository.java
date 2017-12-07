@@ -13,7 +13,7 @@ public class TaskRepository {
 	public TaskRepository(int projId) {
 
 		this.projectTasks = new ArrayList<Task>();
-		this.taskCounter = projId;
+		this.taskCounter = 1;
 		this.projId = projId;
 
 	}
