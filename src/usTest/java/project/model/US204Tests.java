@@ -40,14 +40,14 @@ class US204Tests {
 	@BeforeEach
 	void setUp() {
 		company = Company.getTheInstance();
-		company.getUsersList().clear();
-		company.getProjectsList().clear();
+		company.getUsersRepository().getAllUsersFromRepository().clear();
+		company.getProjectsRepository().getAllProjects().clear();
 
-		newUserA = company.createUser("João", "user2@gmail.com", "123", "Maneger", "940000000", "StreetA", "ZipCodeA",
-				"CityA", "DistrictA", "CountryA");
-		newUserB = company.createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000", "StreetB",
-				"ZipCodeB", "CityB", "DistrictB", "CountryB");
-		project = company.createProject("name3", "description4", newUserA);
+		newUserA = company.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
+				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
+		newUserB = company.getUsersRepository().createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000",
+				"StreetB", "ZipCodeB", "CityB", "DistrictB", "CountryB");
+		project = company.getProjectsRepository().createProject("name3", "description4", newUserA);
 		taskA = project.getTaskRepository().createTask("Test dis pls");
 		taskB = project.getTaskRepository().createTask("Test dis agen pls");
 	}
