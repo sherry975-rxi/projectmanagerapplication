@@ -42,14 +42,17 @@ public class TaskWorker {
 	}
 
 	/**
-	 * Sets the state of the collaborator in the task
-	 * 
-	 * @param inTask
-	 *            true if user is to be added to the task, false if the user is to
-	 *            be removed from the task
+	 * Enables this collaborator
 	 */
-	public void setCollaboratorStateInTask(boolean inTask) {
-		this.inTask = inTask;
+	public void enableCollaborator() {
+		this.inTask = true;
+	}
+
+	/**
+	 * Disables this collaborator
+	 */
+	public void disableCollaborator() {
+		this.inTask = false;
 	}
 
 	/**
