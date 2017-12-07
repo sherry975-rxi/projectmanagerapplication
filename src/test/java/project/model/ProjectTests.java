@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,34 +38,63 @@ class ProjectTests {
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
 		p1 = new Project(1, "name3", "description4", u1);
-		t1 = p1.getTaskRepository().createTask("description");
+		//t1 = p1.getTaskRepository().createTask("description");
 		p1.getTaskRepository().addProjectTask(t1);
-		t2 = p1.getTaskRepository().createTask("description2");
+		//t2 = p1.getTaskRepository().createTask("description2");
 		p1.getTaskRepository().addProjectTask(t2);
-		t2.markTaskAsFinished();
+		//t2.markTaskAsFinished();
 		p2 = new Project(2, "name1", "description4", u2);
-		t3 = p1.getTaskRepository().createTask("description3");
-		t3.markTaskAsFinished();
+		//t3 = p1.getTaskRepository().createTask("description3");
+		//t3.markTaskAsFinished();
 
 	}
+	
+	@AfterEach
+	void tearDown() {
+		Company c1 = null;
+		User u1 = null;
+		User u2 = null;
+		Task t1 = null;
+		Task t2 = null;
+		Task t3 = null;
+		Project p1 = null;
+		Project p2 = null;
+	}
+	
 
+	/**
+	 * Tests constructor for Project
+	 */
+	@Test
+	void testProject(){
+		
+		
+		
+	}
+	
 	@Test
 	void testAddTaskToProjectTaskList() {
 		assertEquals(t1, p1.getTaskRepository().getProjectTaskList().get(0));
 	}
 
+	/**
+	 * This test checks the project manager of Project 1
+	 */
 	@Test
 	void testCheckProjectManagerTrue() {
 		assertTrue(p1.isProjectManager(u1));
 	}
-
+	
+	/**
+	 * This test checks the project manager of Project 1
+	 */
 	@Test
 	void testCheckProjectManagerFalse() {
 		assertFalse(p1.isProjectManager(u2));
 	}
 	
 	/**
-	 * This test changes project manager of project 1
+	 * This test changes project manager of Project 1
 	 * and checks if this change occurred.
 	 */
 	@Test
@@ -75,9 +105,9 @@ class ProjectTests {
 	}
 
 	/**
-	 * This test changes project manager of project 1
-	 * and then checks if the previous project manager
-	 * is not anymore the project manager.
+	 * This test changes project manager of Project 1
+	 * and then checks if the previous Project Manager
+	 * is no longer in the project manager.
 	 */
 	@Test
 	void testSetProjectManagerFalse() {
@@ -85,12 +115,20 @@ class ProjectTests {
 		assertFalse(p1.isProjectManager(u1));
 	}
 
+	/**
+	 * This test changes project manager of Project 1
+	 * and then checks if the previous Project Manager
+	 * is no longer in the project manager.
+	 */
 	@Test
 	void testAddUserToProjectTeam() {
 		p1.addUserToProjectTeam(u2, 1200);
 		assertEquals(u2, p1.getProjectTeam().get(0).getCollaboratorUserData());
 	}
 
+	/**
+	 * Tests that it is impossible to add the same object twice to the ProjectTeam
+	 */
 	@Test
 	void testTryToAddTheSameUserTwiceToProjectTeam() {
 		p1.addUserToProjectTeam(u1, 1200);
@@ -103,16 +141,25 @@ class ProjectTests {
 	 * p3 = new Project("name5", "description5", u2);
 	 * c2.addProjectToProjectList(p3); assertFalse(p3.equals(p1)); }
 	 */
+	/**
+	 * Tests the comparison between objects that are different 
+	 */
 	@Test
 	void testEqualsFalse() {
 		assertFalse(p1.equals(p2));
 	}
 
+	/**
+	 * Tests the comparison between objects that are different and from different types
+	 */
 	@Test
 	void testEqualsDifferentObject() {
 		assertFalse(p1.equals(u1));
 	}
 
+	/**
+	 * Sets the status of a project to Execution
+	 */
 	@Test
 	void testProjectState() {
 		p1.setProjectStatus(Project.EXECUTION);
