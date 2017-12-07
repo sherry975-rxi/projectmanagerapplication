@@ -62,6 +62,15 @@ public class Project {
 	}
 
 	/**
+	 * This method allows the projectManager to be changed
+	 * 
+	 * @param newProjectManager New Project Manager to Set
+	 */
+	public void setProjectManager(User newProjectManager) {
+		this.projectManager = newProjectManager;
+	}
+
+	/**
 	 * This method returns the Task Repository for this specific Project
 	 * 
 	 * @return taskRepository
