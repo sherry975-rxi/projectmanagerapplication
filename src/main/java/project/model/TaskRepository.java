@@ -13,7 +13,7 @@ public class TaskRepository {
 	public TaskRepository(int projId) {
 
 		this.projectTasks = new ArrayList<Task>();
-		this.taskCounter = projId;
+		this.taskCounter = 1;
 		this.projId = projId;
 
 	}
@@ -153,7 +153,7 @@ public class TaskRepository {
 		double totalTime = 0;
 		for (Task test : lastMonth) {
 			if (test.taskTeamContainsUser(user) && test.getFinishDate() != null) {
-				totalTime = totalTime + test.getTimeSpentOnTask();
+				totalTime = totalTime + test.getTimeSpentOnTask(user);
 
 			}
 		}

@@ -271,6 +271,16 @@ public class Task {
 		return false;
 	}
 
+	public double getTimeSpentOntask(User user) {
+		double result = 0;
+		for (TaskWorker other : taskTeam) {
+			if (other.getCollaborator().equals(user)) {
+				result = other.getHoursSpent();
+			}
+		}
+		return result;
+	}
+
 	// /**
 	// * This method returns the total amount of time spent on a task. It takes in
 	// * consideration the task startDate and finishDate, that a working day has 8h
