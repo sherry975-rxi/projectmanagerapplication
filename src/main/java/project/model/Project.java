@@ -236,5 +236,25 @@ public class Project {
 	public EffortUnit getEffortUnit() {
 		return this.effortUnit;
 	}
+	
+    /**
+    * This method checks which ProjectCollaborators don't have tasks assigned. First, it copies the active project team; then, cycles each collaborator through each task and verifies if it's active on any task. If so, it's removed from the inactiveCollaborators list. 
+    *
+    *  @Return
+    *       returns a List of Inactive Collaborators
+    *
+    */
+    public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
+        List<ProjectCollaborator> inactiveCollaborators = new ArrayList<ProjectCollaborator> (this.getProjectTeam().clone);
+        
+        for(ProjectCollaborator other : this.getProjectTeam()) {
+            for(Task otherTask : this.taskRepository.getProjectTaskList()) {
+                if(otherTask.taskTeamContainsUser(other.getCollaboratorUserData()))
+                    inactiveCollaborators.remove(other);
+                    break;
+            }
+        }
+    
+    }
 
 }
