@@ -264,6 +264,7 @@ public class Task {
 	 *         a task FALSE if user it was not removed from the list of users in a
 	 *         task or if it was missing from the list
 	 */
+
 	public boolean removeUserFromTask(User user) {
 		if (taskTeamContainsUser(user)) {
 			return this.taskTeam.remove(user);
@@ -538,7 +539,7 @@ public class Task {
 		return emptyListOfUsersInTask;
 	}
 
-	public void updateTimeUserSpentOnTask(User user, int Time) {
+	public void updateTimeUserSpentOnTask(User user, double Time) {
 		int timeSpent = 0;
 		for (TaskWorker other : taskTeam) {
 			if (other.getCollaborator().equals(user)) {
