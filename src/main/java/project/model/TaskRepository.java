@@ -26,12 +26,13 @@ public class TaskRepository {
 	 * @return the task created
 	 */
 
-	public Task createTask(String description) {
+	public Task createTask(String description, int estimatedTaskEffort, Calendar estimatedTaskStartDate,
+			Calendar taskDeadline, int estimatedBudgetCostTask) {
 
-		Task newTask = new Task(this.taskCounter, this.projId, description);
+		Task newTask = new Task(this.taskCounter, this.projId, description, estimatedBudgetCostTask,
+				estimatedTaskStartDate, taskDeadline, estimatedBudgetCostTask);
 		taskCounter++;
 		return newTask;
-
 	}
 
 	/**

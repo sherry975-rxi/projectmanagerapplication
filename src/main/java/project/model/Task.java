@@ -9,9 +9,6 @@ import java.util.List;
 /**
  * Class that allows building and accessing Task attributes.
  * 
- * From this class one can create a new Address(object), which is defined by its
- * street, zipCode, city, district, country.
- * 
  * @author Group 3
  *
  */
@@ -25,8 +22,7 @@ public class Task {
 	private Calendar startDate;
 	private Calendar finishDate;
 	private boolean taskState;
-	private int timeSpentOnTask;
-	private Enum estimatedTaskEffort;
+	private int estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
 	private int estimatedBudgetCostTask;
@@ -36,11 +32,13 @@ public class Task {
 	 * and description and non mandatory parameters creation date, start date,
 	 * finish date, task state (finished or unfinished) and task team
 	 * 
+	 * @param taskCounter
+	 * @param projId
 	 * @param description
-	 * @param project
 	 * 
 	 */
-	public Task(int taskCounter, int projId, String description) {
+	public Task(int taskCounter, int projId, String description, int estimatedTaskEffort,
+			Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedBudgetCostTask) {
 		Integer taskNumber = (Integer) taskCounter;
 		Integer projCode = (Integer) projId;
 		this.taskID = projCode.toString() + "." + taskNumber.toString();
@@ -50,11 +48,10 @@ public class Task {
 		this.finishDate = null;
 		this.taskState = false;
 		this.taskTeam = new ArrayList<TaskWorker>();
-		this.timeSpentOnTask = 0;
-		this.estimatedTaskEffort = null;
-		this.estimatedTaskStartDate = null;
-		this.taskDeadline = null;
-		this.estimatedBudgetCostTask = null;
+		this.estimatedTaskEffort = estimatedTaskEffort;
+		this.estimatedTaskStartDate = estimatedTaskStartDate;
+		this.taskDeadline = taskDeadline;
+		this.estimatedBudgetCostTask = estimatedBudgetCostTask;
 
 	}
 
@@ -74,6 +71,78 @@ public class Task {
 		this.finishDate = task.getFinishDate();
 		this.taskState = task.isFinished();
 		this.taskTeam = task.copyListOfUsersInTask(this.taskTeam);
+	}
+
+	/**
+	 * This method when called returns the Estimated Task Effort
+	 * 
+	 * @return estimatedTaskEffort
+	 */
+	public int getEstimatedTaskEffort() {
+		return this.estimatedTaskEffort;
+	}
+
+	/**
+	 * This method when called update the estimated task effort
+	 * 
+	 * @param newEstimatedTaskEffort
+	 */
+	public void setEstimatedTaskEffort(int newEstimatedTaskEffort) {
+		this.estimatedTaskEffort = newEstimatedTaskEffort;
+	}
+
+	/**
+	 * This method when called returns the Estimated Task Start Date
+	 * 
+	 * @return estimatedTaskStartDate
+	 */
+	public Calendar getEstimatedTaskStartDate() {
+		return this.estimatedTaskStartDate;
+	}
+
+	/**
+	 * This method when called update the Estimated Task Start Date
+	 * 
+	 * @param newEstimatedTaskStartDate
+	 */
+	public void setEstimatedTaskStartDate(Calendar newEstimatedTaskStartDate) {
+		this.estimatedTaskStartDate = newEstimatedTaskStartDate;
+	}
+
+	/**
+	 * This method when called returns the task Dead line
+	 * 
+	 * @return taskDeadline
+	 */
+	public Calendar getTaskDeadline() {
+		return this.taskDeadline;
+	}
+
+	/**
+	 * This method when called update the task Dead line
+	 * 
+	 * @param newTaskDeadline
+	 */
+	public void setTaskDeadline(Calendar newTaskDeadline) {
+		this.taskDeadline = newTaskDeadline;
+	}
+
+	/**
+	 * This method when called returns the estimated Budget Cost Task
+	 * 
+	 * @return estimatedBudgetCostTask
+	 */
+	public int getEstimatedBudgetCostTask() {
+		return this.estimatedBudgetCostTask;
+	}
+
+	/**
+	 * This method when called update the estimated Budget Cost Task
+	 * 
+	 * @param newEstimatedBudgetCostTask
+	 */
+	public void setEstimatedBudgetCostTask(int newEstimatedBudgetCostTask) {
+		this.estimatedBudgetCostTask = newEstimatedBudgetCostTask;
 	}
 
 	/**
@@ -202,64 +271,73 @@ public class Task {
 		return false;
 	}
 
-	/**
-	 * This method returns the total amount of time spent on a task. It takes in
-	 * consideration the task startDate and finishDate, that a working day has 8h
-	 * and that Sundays, Saturdays and Holidays are not considered for the
-	 * calculation.
-	 * 
-	 * @return intervalHoursFullDays + intervalHoursPartialDays Total hours of work
-	 *         spent in a task
-	 */
-	public double getTimeSpentOnTask() {
-
-		int intervalDays = this.finishDate.get(Calendar.DAY_OF_YEAR) - this.startDate.get(Calendar.DAY_OF_YEAR) - 1;
-		// 1 is subtracted to guarantee I only work with full days here.
-
-		Calendar referenceDate = (Calendar) this.startDate.clone();
-
-		// To make sure that the interval of dates doesn't consider Saturdays, Sundays
-		// and holidays. Subtract 24 hours for each weekend day and holiday
-		while (referenceDate.before(this.finishDate)) {
-			if (referenceDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-					|| referenceDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || isItHoliday(referenceDate)) {
-				intervalDays = intervalDays - 1;
-			}
-			referenceDate.add(Calendar.DAY_OF_YEAR, 1);// TODO NEED DOUBLE CHECK because it may fail while changing
-														// year
-		}
-
-		int intervalHoursFullDays = intervalDays * 8; // find useful hours (8)
-
-		// Sets start working hour of the day to 9 am
-		Calendar startHour = (Calendar) this.finishDate.clone();
-		startHour.set(Calendar.HOUR_OF_DAY, 9);
-		startHour.set(Calendar.MINUTE, 0);
-		startHour.set(Calendar.SECOND, 0);
-
-		// Sets finish working hour of the day to 6 pm
-		Calendar finishHour = (Calendar) this.startDate.clone();
-		finishHour.set(Calendar.HOUR_OF_DAY, 18);
-		finishHour.set(Calendar.MINUTE, 0);
-		finishHour.set(Calendar.SECOND, 0);
-
-		double intervalHoursFirstDay = (double) (finishHour.getTimeInMillis() - this.startDate.getTimeInMillis());
-		intervalHoursFirstDay = intervalHoursFirstDay / 3600000;
-		if (intervalHoursFirstDay >= 5) {
-			intervalHoursFirstDay--;
-		}
-
-		double intervalHoursLastDay = (this.finishDate.getTimeInMillis() - startHour.getTimeInMillis());
-		intervalHoursLastDay = intervalHoursLastDay / 3600000;
-		if (intervalHoursLastDay >= 5) {
-			intervalHoursLastDay--;
-		}
-		double intervalHoursPartialDays = intervalHoursFirstDay + intervalHoursLastDay; // partial work hours in
-																						// first and last days of
-																						// work
-
-		return intervalHoursFullDays + intervalHoursPartialDays; // total hours working days
-	}
+	// /**
+	// * This method returns the total amount of time spent on a task. It takes in
+	// * consideration the task startDate and finishDate, that a working day has 8h
+	// * and that Sundays, Saturdays and Holidays are not considered for the
+	// * calculation.
+	// *
+	// * @return intervalHoursFullDays + intervalHoursPartialDays Total hours of
+	// work
+	// * spent in a task
+	// */
+	// public double getTimeSpentOnTask() {
+	//
+	// int intervalDays = this.finishDate.get(Calendar.DAY_OF_YEAR) -
+	// this.startDate.get(Calendar.DAY_OF_YEAR) - 1;
+	// // 1 is subtracted to guarantee I only work with full days here.
+	//
+	// Calendar referenceDate = (Calendar) this.startDate.clone();
+	//
+	// // To make sure that the interval of dates doesn't consider Saturdays,
+	// Sundays
+	// // and holidays. Subtract 24 hours for each weekend day and holiday
+	// while (referenceDate.before(this.finishDate)) {
+	// if (referenceDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+	// || referenceDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ||
+	// isItHoliday(referenceDate)) {
+	// intervalDays = intervalDays - 1;
+	// }
+	// referenceDate.add(Calendar.DAY_OF_YEAR, 1);// TODO NEED DOUBLE CHECK because
+	// it may fail while changing
+	// // year
+	// }
+	//
+	// int intervalHoursFullDays = intervalDays * 8; // find useful hours (8)
+	//
+	// // Sets start working hour of the day to 9 am
+	// Calendar startHour = (Calendar) this.finishDate.clone();
+	// startHour.set(Calendar.HOUR_OF_DAY, 9);
+	// startHour.set(Calendar.MINUTE, 0);
+	// startHour.set(Calendar.SECOND, 0);
+	//
+	// // Sets finish working hour of the day to 6 pm
+	// Calendar finishHour = (Calendar) this.startDate.clone();
+	// finishHour.set(Calendar.HOUR_OF_DAY, 18);
+	// finishHour.set(Calendar.MINUTE, 0);
+	// finishHour.set(Calendar.SECOND, 0);
+	//
+	// double intervalHoursFirstDay = (double) (finishHour.getTimeInMillis() -
+	// this.startDate.getTimeInMillis());
+	// intervalHoursFirstDay = intervalHoursFirstDay / 3600000;
+	// if (intervalHoursFirstDay >= 5) {
+	// intervalHoursFirstDay--;
+	// }
+	//
+	// double intervalHoursLastDay = (this.finishDate.getTimeInMillis() -
+	// startHour.getTimeInMillis());
+	// intervalHoursLastDay = intervalHoursLastDay / 3600000;
+	// if (intervalHoursLastDay >= 5) {
+	// intervalHoursLastDay--;
+	// }
+	// double intervalHoursPartialDays = intervalHoursFirstDay +
+	// intervalHoursLastDay; // partial work hours in
+	// // first and last days of
+	// // work
+	//
+	// return intervalHoursFullDays + intervalHoursPartialDays; // total hours
+	// working days
+	// }
 
 	/**
 	 * This is a private method that checks if a date is a holiday (non working day)
