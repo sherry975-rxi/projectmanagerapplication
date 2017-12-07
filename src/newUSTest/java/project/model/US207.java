@@ -102,6 +102,12 @@ class US207 {
 		// Checks if both times are the same
 		assertEquals(1.0, testTask.getTimeSpentOntask(user1), 1.0);
 
+		// Updates the time spent on task by user
+		testTask.updateTimeUserSpentOnTask(user1, 2.0);
+
+		// Checks if both times are the same
+		assertEquals(1.0, testTask.getTimeSpentOntask(user1), 3.0);
+
 	}
 
 }
