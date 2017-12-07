@@ -28,15 +28,15 @@ class US116Tests {
 	void setUp() {
 
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersList().clear();
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
 
-		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "Rua Bla",
-				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Rua Bla",
-				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+				"930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+		newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+				"940000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		myCompany.addUserToUserList(newUser2);
-		myCompany.addUserToUserList(newUser3);
+		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
+		myCompany.getUsersRepository().addUserToUserRepository(newUser3);
 
 		newUser2.setSystemUserState(false);
 		newUser3.setSystemUserState(true);
@@ -57,6 +57,10 @@ class US116Tests {
 	void testSetSystemUserState() {
 		assertFalse(newUser2.isSystemUserStateActive());
 		assertTrue(newUser3.isSystemUserStateActive());
+
+		newUser2.setSystemUserState(true);
+
+		assertTrue(newUser2.isSystemUserStateActive());
 	}
 
 }
