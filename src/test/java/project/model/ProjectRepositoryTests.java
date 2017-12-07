@@ -93,6 +93,19 @@ class ProjectRepositoryTests {
 	}
 
 	/**
+	 * Tests the getProjCounter and SetProjectCounter at the same time. First the
+	 * project counter is set to 10 and then is asserted if the getProjCounter
+	 * method outputs the value 10.
+	 */
+	@Test
+	void test_getProjCounter() {
+
+		projectRepository.setProjCounter(10);
+
+		assertEquals(10, projectRepository.getProjCounter());
+	}
+
+	/**
 	 * Tests the addProjectToProjectRepository by asserting if the list within the
 	 * projectRepository is equal to a new list of projects created, after adding
 	 * the same project to both lists.
