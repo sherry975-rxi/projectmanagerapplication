@@ -1,5 +1,6 @@
 package main.java.project.model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class TaskWorker {
 	 */
 	public TaskWorker(User collaborator) {
 		this.collaborator = collaborator;
+		dates = new ArrayList<Calendar>();
 		this.dates.add(Calendar.getInstance());
 		this.hoursSpent = 0;
 	}
