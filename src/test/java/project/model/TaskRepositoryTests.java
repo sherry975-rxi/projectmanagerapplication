@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.EffortUnit;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectRepository;
@@ -43,7 +44,7 @@ class TaskRepositoryTests {
 		// creates an UserRepository
 		userRepository = myCompany.getUsersRepository();
 
-		// creattes a ProjectRepository
+		// creates a ProjectRepository
 		projectRepository = myCompany.getProjectsRepository();
 
 		userRepository.getAllUsersFromRepository().clear();
@@ -60,14 +61,27 @@ class TaskRepositoryTests {
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
-		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
+		project = projectRepository.createProject("name3", "description4", userAdmin, EffortUnit.HOURS, 1000);// !!!
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
+		// create a estimated Task Start Date
+		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
+		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
+		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		// create a estimated Task Start Date
+		Calendar taskDeadlineDateTest = Calendar.getInstance();
+		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
+		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 		// create 4 tasks
-		testTask = taskRepository.createTask("Test dis agen pls");
-		testTask2 = taskRepository.createTask("Test dis agen pls");
-		testTask3 = taskRepository.createTask("Test moar yeh");
-		testTask4 = taskRepository.createTask("TEST HARDER!");
+		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		testTask2 = taskRepository.createTask("Test dis agen pls", 10, taskDeadlineDateTest, taskDeadlineDateTest, 10);
+		testTask3 = taskRepository.createTask("Test moar yeh", 10, taskDeadlineDateTest, taskDeadlineDateTest, 10);
+		testTask4 = taskRepository.createTask("TEST HARDER!", 10, taskDeadlineDateTest, taskDeadlineDateTest, 10);
 
 	}
 
@@ -280,9 +294,9 @@ class TaskRepositoryTests {
 		// sets the task counter as 0;
 		taskRepository.setTaskCounter(0);
 		// add task to task repository of the project
-		taskRepository.createTask("New Task 1");
-		taskRepository.createTask("New Task 2");
-		taskRepository.createTask("New Task 3");
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
 
 		// creates a variable with the value of the expected outcome of getTaskCounter
 		// method in taskRepository class
@@ -298,9 +312,9 @@ class TaskRepositoryTests {
 		// sets the task counter as 0;
 		taskRepository.setTaskCounter(0);
 		// add task to task repository of the project
-		taskRepository.createTask("New Task 1");
-		taskRepository.createTask("New Task 2");
-		taskRepository.createTask("New Task 3");
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
 
 		// creates a variable with the value of the expected outcome of getTaskCounter
 		// method in taskRepository class
@@ -316,9 +330,9 @@ class TaskRepositoryTests {
 		assertEquals(project.getIdCode(), taskRepository.getProjId());
 
 		// creates a new project
-		Project proj1 = projectRepository.createProject("Project", "My Description", user1);
-		TaskRepository anotherTaskRepository = proj1.getTaskRepository();
-		assertEquals(proj1.getIdCode(), anotherTaskRepository.getProjId());
+		projectRepository.addProjectToProjectRepository(project);
+		TaskRepository anotherTaskRepository = project.getTaskRepository();
+		assertEquals(project.getIdCode(), anotherTaskRepository.getProjId());
 	}
 
 	@Test
