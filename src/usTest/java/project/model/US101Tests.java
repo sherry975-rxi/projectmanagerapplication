@@ -38,16 +38,16 @@ class US101Tests {
 	@BeforeEach
 	void setUp() {
 		Critical = Company.getTheInstance();
-		Critical.getUsersList().clear();
+		Critical.getUsersRepository().getAllUsersFromRepository().clear();
 
-		user1 = Critical.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000", "Testy Street",
-				"2401-343", "Testburg", "Testo", "Testistan");
-		uFalse = Critical.createUser("DanielA", "daniel&gmail,com", "001", "Porteiro", "910000000", "Testy Street",
-				"2401-343", "Testburg", "Testo", "Testistan");
-		uRepeat = Critical.createUser("DanielC", "daniel@gmail.com", "002", "Porteiro", "930000000", "Testy Street",
-				"2401-343", "Testburg", "Testo", "Testistan");
-		user2 = Critical.createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey", "920000000", "Testy Street",
-				"2401-343", "Testburg", "Testo", "Testistan");
+		user1 = Critical.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
+				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		uFalse = Critical.getUsersRepository().createUser("DanielA", "daniel&gmail,com", "001", "Porteiro", "910000000",
+				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		uRepeat = Critical.getUsersRepository().createUser("DanielC", "daniel@gmail.com", "002", "Porteiro",
+				"930000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		user2 = Critical.getUsersRepository().createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey",
+				"920000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
 	}
 
@@ -70,16 +70,19 @@ class US101Tests {
 
 		// Confirms the UserList starts with 0 users, then checks test Users' emails
 		// before adding them
-		assertEquals(Critical.getUsersList().size(), 0);
-		assertFalse(Critical.isEmailAddressValid(uFalse.getEmail()));
+		assertEquals(Critical.getUsersRepository().getAllUsersFromRepository().size(), 0);
+		assertFalse(Critical.getUsersRepository().isEmailAddressValid(uFalse.getEmail()));
 
-		assertTrue(Critical.isEmailAddressValid(user1.getEmail()));
-		assertTrue(Critical.addUserToUserList(user1));
+		assertTrue(Critical.getUsersRepository().isEmailAddressValid(user1.getEmail()));
+		Critical.getUsersRepository().addUserToUserRepository(user1);
+		assertTrue(Critical.getUsersRepository().getAllUsersFromRepository().contains(user1));
+		assertEquals(Critical.getUsersRepository().getAllUsersFromRepository().size(), 1);
 
-		assertTrue(Critical.isEmailAddressValid(uRepeat.getEmail()));
-		assertFalse(Critical.addUserToUserList(uRepeat));
+		assertTrue(Critical.getUsersRepository().isEmailAddressValid(uRepeat.getEmail()));
+		Critical.getUsersRepository().addUserToUserRepository(uRepeat);
+		assertEquals(Critical.getUsersRepository().getAllUsersFromRepository().size(), 1);
 
-		assertEquals(user1, Critical.getUsersList().get(0));
+		assertEquals(user1, Critical.getUsersRepository().getAllUsersFromRepository().get(0));
 	}
 
 	/**
@@ -92,22 +95,23 @@ class US101Tests {
 	void testUS101RepeatedUser() {
 
 		// Adds first user to List and asserts its presence using various methods
-		assertTrue(Critical.addUserToUserList(user1));
-		assertFalse(user2.equals(Critical.getUsersList().get(0)));
-		assertTrue(Critical.doesUserExist(user1));
+		Critical.getUsersRepository().addUserToUserRepository(user1);
+		assertFalse(user2.equals(Critical.getUsersRepository().getAllUsersFromRepository().get(0)));
+		assertTrue(Critical.getUsersRepository().getAllUsersFromRepository().contains(user1));
 
 		// Attempts to add the same user again (false) and add a new one
 		// then confirms the Userlist size, and compares it to a test List
-		assertFalse(Critical.addUserToUserList(user1));
-		assertTrue(Critical.addUserToUserList(user2));
-		assertEquals(Critical.getUsersList().size(), 2);
+		Critical.getUsersRepository().addUserToUserRepository(user1);
+		assertEquals(Critical.getUsersRepository().getAllUsersFromRepository().size(), 1);
+		Critical.getUsersRepository().addUserToUserRepository(user2);
+		assertEquals(Critical.getUsersRepository().getAllUsersFromRepository().size(), 2);
 
 		List<User> testList = new ArrayList<User>();
 
 		testList.add(user1);
 		testList.add(user2);
 
-		assertTrue(Critical.getUsersList().equals(testList));
+		assertTrue(Critical.getUsersRepository().getAllUsersFromRepository().equals(testList));
 	}
 
 }
