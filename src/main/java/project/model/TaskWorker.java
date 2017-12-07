@@ -1,9 +1,13 @@
 package main.java.project.model;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 public class TaskWorker {
 
 	private User collaborator;
-	private boolean inTask;
+	private List<Calendar> dates;
 	private int hoursSpent;
 
 	/**
@@ -18,7 +22,8 @@ public class TaskWorker {
 	 */
 	public TaskWorker(User collaborator) {
 		this.collaborator = collaborator;
-		this.inTask = true;
+		dates = new ArrayList<Calendar>();
+		this.dates.add(Calendar.getInstance());
 		this.hoursSpent = 0;
 	}
 
@@ -27,7 +32,7 @@ public class TaskWorker {
 	 * 
 	 * @return collaborator
 	 */
-	public User getCollaborator() {
+	public User getTaskWorker() {
 		return collaborator;
 	}
 
@@ -37,19 +42,18 @@ public class TaskWorker {
 	 * 
 	 * @return inTask
 	 */
-	public boolean isCollaboratorInTask() {
-		return inTask;
+	public boolean isTaskWorkerActiveInTask() {
+		if (this.dates.size() % 2 == 0) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
-	 * Sets the state of the collaborator in the task
-	 * 
-	 * @param inTask
-	 *            true if user is to be added to the task, false if the user is to
-	 *            be removed from the task
+	 * Adds Date to task worker list
 	 */
-	public void setCollaboratorStateInTask(boolean inTask) {
-		this.inTask = inTask;
+	public void setDateForTaskWorker() {
+		this.dates.add(Calendar.getInstance());
 	}
 
 	/**
