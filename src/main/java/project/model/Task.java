@@ -249,8 +249,15 @@ public class Task {
 	public void addUserToTask(User user) {
 		if (!taskTeamContainsUser(user)) {
 			this.taskTeam.add(new TaskWorker(user));
-		}
+		} else {
 
+			for (TaskWorker other : taskTeam) {
+				if (other.getTaskWorker().equals(user)) {
+					other.setDateForTaskWorker();
+				}
+			}
+
+		}
 	}
 
 	/**
@@ -267,8 +274,8 @@ public class Task {
 
 	public void removeUserFromTask(User user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getCollaborator().equals(user)) {
-				other.disableCollaborator();
+			if (other.getTaskWorker().equals(user)) {
+				other.setDateForTaskWorker();
 			}
 		}
 	}
@@ -276,7 +283,7 @@ public class Task {
 	public double getTimeSpentOntask(User user) {
 		double result = 0;
 		for (TaskWorker other : taskTeam) {
-			if (other.getCollaborator().equals(user)) {
+			if (other.getTaskWorker().equals(user)) {
 				result = other.getHoursSpent();
 			}
 		}
@@ -515,7 +522,7 @@ public class Task {
 	 */
 	public boolean taskTeamContainsUser(User user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getCollaborator().equals(user)) {
+			if (other.getTaskWorker().equals(user)) {
 				return true;
 			}
 		}
@@ -543,7 +550,7 @@ public class Task {
 	public void updateTimeUserSpentOnTask(User user, double Time) {
 		int timeSpent = 0;
 		for (TaskWorker other : taskTeam) {
-			if (other.getCollaborator().equals(user)) {
+			if (other.getTaskWorker().equals(user)) {
 				timeSpent = other.getHoursSpent();
 				timeSpent += Time;
 				other.setHoursSpent(timeSpent);
