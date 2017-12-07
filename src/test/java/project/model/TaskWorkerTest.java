@@ -33,7 +33,7 @@ class TaskWorkerTest {
 	 */
 	@Test
 	final void testIsCollaboratorInTask() {
-		assertTrue(workerTester.isCollaboratorInTask());
+		assertTrue(workerTester.isTaskWorkerActiveInTask());
 	}
 
 	/**
@@ -42,7 +42,7 @@ class TaskWorkerTest {
 	@Test
 	final void testIsCollaboratorNotInTask() {
 		workerTester.setCollaboratorStateInTask(false);
-		assertFalse(workerTester.isCollaboratorInTask());
+		assertFalse(workerTester.isTaskWorkerActiveInTask());
 	}
 
 	/**
