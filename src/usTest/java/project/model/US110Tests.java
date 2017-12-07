@@ -33,14 +33,14 @@ class US110Tests {
 	@BeforeEach
 	void setUp() {
 		Blip = Company.getTheInstance();
-		Blip.getUsersList().clear();
+		Blip.getUsersRepository().getAllUsersFromRepository().clear();
 
-		newUser2 = Blip.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "Testy Street",
-				"2401-343", "Testburg", "Testo", "Testistan");
-		newUser3 = Blip.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "Testy Street",
-				"2401-343", "Testburg", "Testo", "Testistan");
+		newUser2 = Blip.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
+				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		newUser3 = Blip.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-		Blip.addUserToUserList(newUser2);
+		Blip.getUsersRepository().addUserToUserRepository(newUser2);
 	}
 
 	@AfterEach
@@ -62,23 +62,23 @@ class US110Tests {
 
 		newUser2.setUserProfile(Profile.DIRECTOR);
 
-		assertEquals(newUser2.getProfile(), Profile.DIRECTOR);
-		assertEquals(newUser3.getProfile(), Profile.VISITOR);
+		assertEquals(newUser2.getUserProfile(), Profile.DIRECTOR);
+		assertEquals(newUser3.getUserProfile(), Profile.VISITOR);
 
 		// Sets another users as directors and confirms status
 		newUser3.setUserProfile(Profile.DIRECTOR);
 
-		assertEquals(newUser2.getProfile(), Profile.DIRECTOR);
-		assertEquals(newUser3.getProfile(), Profile.DIRECTOR);
+		assertEquals(newUser2.getUserProfile(), Profile.DIRECTOR);
+		assertEquals(newUser3.getUserProfile(), Profile.DIRECTOR);
 
 		// tests changing to visitor
 
 		newUser3.setUserProfile(Profile.VISITOR);
-		assertEquals(newUser3.getProfile(), Profile.VISITOR);
+		assertEquals(newUser3.getUserProfile(), Profile.VISITOR);
 
 		// tests changing back to director
 		newUser3.setUserProfile(Profile.DIRECTOR);
-		assertEquals(newUser3.getProfile(), Profile.DIRECTOR);
+		assertEquals(newUser3.getUserProfile(), Profile.DIRECTOR);
 
 	}
 
