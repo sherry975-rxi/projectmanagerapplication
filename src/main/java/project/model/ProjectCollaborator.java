@@ -57,4 +57,15 @@ public class ProjectCollaborator {
 		return this.collaborator;
 	}
 
+	@Override
+	public boolean equals(Object toCompare) {
+		boolean result = false;
+		if (toCompare instanceof ProjectCollaborator) {
+			ProjectCollaborator collaborator1 = (ProjectCollaborator) toCompare;
+			if (this.collaborator.equals(collaborator1.collaborator)) {
+				result = true;
+			}
+		}
+		return result;
+	}
 }

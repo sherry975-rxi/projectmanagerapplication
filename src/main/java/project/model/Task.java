@@ -246,11 +246,11 @@ public class Task {
 	 * @return TRUE if the user was added to the list of users (taskTeam) in a task
 	 *         FALSE if user is already in the list of users in a task
 	 */
-	public boolean addUserToTask(User user) {
+	public void addUserToTask(User user) {
 		if (!taskTeamContainsUser(user)) {
-			return this.taskTeam.add(new TaskWorker(user));
+			this.taskTeam.add(new TaskWorker(user));
 		}
-		return false;
+
 	}
 
 	/**
@@ -264,11 +264,13 @@ public class Task {
 	 *         a task FALSE if user it was not removed from the list of users in a
 	 *         task or if it was missing from the list
 	 */
-	public boolean removeUserFromTask(User user) {
-		if (taskTeamContainsUser(user)) {
-			return this.taskTeam.remove(user);
+
+	public void removeUserFromTask(User user) {
+		for (TaskWorker other : taskTeam) {
+			if (other.getCollaborator().equals(user)) {
+				other.disableCollaborator();
+			}
 		}
-		return false;
 	}
 
 	public double getTimeSpentOntask(User user) {
@@ -538,11 +540,14 @@ public class Task {
 		return emptyListOfUsersInTask;
 	}
 
-	public void updateTimeUserSpentOnTask(TaskWorker Worker, int Time) {
+	public void updateTimeUserSpentOnTask(User user, double Time) {
 		int timeSpent = 0;
-		timeSpent = Worker.getHoursSpent();
-		timeSpent += Time;
-		Worker.setHoursSpent(timeSpent);
+		for (TaskWorker other : taskTeam) {
+			if (other.getCollaborator().equals(user)) {
+				timeSpent = other.getHoursSpent();
+				timeSpent += Time;
+				other.setHoursSpent(timeSpent);
+			}
+		}
 	}
-
 }

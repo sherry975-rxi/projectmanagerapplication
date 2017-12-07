@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.Project;
 import main.java.project.model.Task;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 
 /**
@@ -29,6 +30,7 @@ import main.java.project.model.User;
 class TaskTests {
 
 	User user1, user2;
+	TaskWorker Worker1, Worker2;
 	Company myComp;
 	Project myProject;
 	Task testTask, testTask2, testTask3;
@@ -41,10 +43,17 @@ class TaskTests {
 
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
+		Worker1 = new TaskWorker(user1);
+		Worker2 = new TaskWorker(user2);
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
-		testTask = new Task(1, 2, "Task 1");
-		testTask2 = new Task(1, 2, "Task 1");
-		testTask3 = new Task(1, 3, "Task Hue");
+		Calendar estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		Calendar taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+
+		testTask = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
+		testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
+		testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
 	}
 
 	@AfterEach
@@ -76,18 +85,17 @@ class TaskTests {
 	 */
 	@Test
 	void testTaskTeam() {
-		assertFalse(testTask.removeUserFromTask(user1));
-		assertTrue(testTask.addUserToTask(user1));
-		assertFalse(testTask.addUserToTask(user1));
-		assertTrue(testTask.addUserToTask(user2));
-		assertTrue(testTask.removeUserFromTask(user2));
-		assertTrue(testTask.addUserToTask(user2));
-		List<User> TestUsers = new ArrayList<User>();
-		TestUsers.add(user1);
-		TestUsers.add(user2);
-		assertTrue(testTask.getTaskTeam().equals(TestUsers));
-		assertTrue(testTask.copyListOfUsersInTask(new ArrayList<User>()).equals(TestUsers));
-		TestUsers.remove(user1);
+
+		testTask.addUserToTask(user1);
+		testTask.addUserToTask(user2);
+		List<TaskWorker> TestUsers = new ArrayList<TaskWorker>();
+		TestUsers.add(Worker1);
+		TestUsers.add(Worker2);
+		assertTrue(testTask.getTaskTeam().get(0).getCollaborator().equals(TestUsers.get(0).getCollaborator()));
+		assertTrue(testTask.getTaskTeam().get(1).getCollaborator().equals(TestUsers.get(1).getCollaborator()));
+
+		assertTrue(testTask.copyListOfUsersInTask(new ArrayList<TaskWorker>()).equals(TestUsers));
+		TestUsers.remove(Worker1);
 		assertFalse(testTask.getTaskTeam().equals(TestUsers));
 	}
 
@@ -96,7 +104,6 @@ class TaskTests {
 	 */
 	@Test
 	void testGetFinishDate() {
-		Task testTask = new Task(1, 01, "Task 1");
 		testTask.setFinishDate();
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DAY_OF_MONTH, 5);
@@ -109,7 +116,6 @@ class TaskTests {
 	 */
 	@Test
 	void testIsFinished() {
-		Task testTask = new Task(1, 01, "Task 1");
 		assertFalse(testTask.isFinished());
 		testTask.markTaskAsFinished();
 		assertTrue(testTask.isFinished());
@@ -121,10 +127,8 @@ class TaskTests {
 	 */
 	@Test
 	void testTaskEquals() {
-		Task testTask = new Task(1, 01, "Task 1");
-		Task testTask2 = new Task(2, 02, "Task 2");
 		assertTrue(testTask.equals(testTask));
-		assertFalse(testTask.equals(testTask2));
+		assertFalse(testTask.equals(testTask2));//
 		assertFalse(testTask.equals(user2));
 	}
 
@@ -135,7 +139,6 @@ class TaskTests {
 	 */
 	@Test
 	void testGetTimeSpentOnTask() {
-		Task testTask = new Task(1, 01, "Task 1");
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.set(Calendar.YEAR, 2017);
 		finishDate.set(Calendar.MONTH, Calendar.NOVEMBER);
@@ -160,7 +163,6 @@ class TaskTests {
 	 */
 	@Test
 	void testSecondConstructor() {
-		Task testTask = new Task(1, 01, "Task 1");
 		Task testDupe = new Task(testTask);
 		assertTrue(testTask.equals(testDupe));
 		Calendar startDate1 = Calendar.getInstance();

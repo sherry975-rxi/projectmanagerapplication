@@ -282,6 +282,9 @@ class TaskRepositoryTests {
 		// finish task
 		testTask.setFinishDate(finishDateTest);
 
+		// set work time in task
+		testTask.updateTimeUserSpentOnTask(user1, 1.0);
+
 		// Checks if the 2 values are equal
 		assertEquals(1.0, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(user1), 0.001);
 
