@@ -107,13 +107,7 @@ class US350v02 {
 		testUs350.add(collaborator2);
 		testUs350.add(collaborator3);
 		
-		//TODO override equals
-		//assertEquals(testUs350, p1.getProjectTeam());
-		assertEquals(testUs350.size(), p1.getProjectTeam().size());
-		assertEquals(testUs350.get(0).getCollaboratorUserData(), p1.getProjectTeam().get(0).getCollaboratorUserData());
-		assertEquals(testUs350.get(1).getCollaboratorUserData(), p1.getProjectTeam().get(1).getCollaboratorUserData());
-		assertEquals(testUs350.get(2).getCollaboratorUserData(), p1.getProjectTeam().get(2).getCollaboratorUserData());
-
+		assertEquals(testUs350, p1.getProjectTeam());
 	}
 
 }
