@@ -11,7 +11,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.java.project.model.EffortUnit;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
@@ -31,6 +30,8 @@ class ProjectRepositoryTests {
 	Task task3;
 	List<Project> expResultProjectList;
 	List<Task> expResultTaskList;
+	Calendar estimatedStartDate;
+	Calendar taskDeadline;
 
 	@BeforeEach
 	public void setUp() {
@@ -39,12 +40,16 @@ class ProjectRepositoryTests {
 		user1 = new User("name", "email", "idNumber", "function", "123456789");
 		user2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
 		user2 = new User("name6", "email6", "idNumber6", "function6", "987654271");
-		project1 = new Project(0, "name3", "description3", user1, EffortUnit.HOURS, 2000);
-		project2 = new Project(2, "name4", "description5", user2, EffortUnit.HOURS, 2000);
-		project3 = new Project(3, "name5", "description5", user3, EffortUnit.HOURS, 2000);
-		task1 = new Task(111, 222, "Task 1");
-		task2 = new Task(112, 223, "Task 1");
-		task3 = new Task(113, 224, "Task 1");
+		project1 = new Project(0, "name3", "description3", user1);
+		project2 = new Project(2, "name4", "description5", user2);
+		project3 = new Project(3, "name5", "description5", user3);
+		estimatedStartDate = Calendar.getInstance();
+		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
+		task1 = new Task(111, 222, "Task 1", 50, estimatedStartDate, taskDeadline, 2000);
+		task2 = new Task(112, 223, "Task 1", 50, estimatedStartDate, taskDeadline, 2000);
+		task3 = new Task(113, 224, "Task 1", 50, estimatedStartDate, taskDeadline, 2000);
 		expResultProjectList = new ArrayList<Project>();
 		expResultTaskList = new ArrayList<Task>();
 	}
@@ -65,6 +70,16 @@ class ProjectRepositoryTests {
 	}
 
 	/**
+	 * Tests the ProjectRepository constructor.
+	 */
+	@Test
+	void test_Constructor() {
+
+		assertEquals(expResultProjectList, projectRepository.getAllProjects());
+
+	}
+
+	/**
 	 * Tests the CreateProject method by calling the method equals (project) to
 	 * assert if the project created is equal to other project. If the equals
 	 * returns TRUE means the two projects are equal, so the creatProject method
@@ -73,8 +88,7 @@ class ProjectRepositoryTests {
 	@Test
 	void testCreateProject() {
 
-		assertTrue(project1
-				.equals(projectRepository.createProject("name3", "description3", user1, EffortUnit.HOURS, 2000)));
+		assertTrue(project1.equals(projectRepository.createProject("name3", "description3", user1)));
 
 	}
 
@@ -321,7 +335,7 @@ class ProjectRepositoryTests {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		Double expResult = (task1.getTimeSpentOnTask() + task2.getTimeSpentOnTask());
+		Double expResult = (task1.getTimeSpentOnTask(user1) + task2.getTimeSpentOnTask(user1));
 
 		assertEquals(expResult, projectRepository.getTotalTimeLastMonthFinishedTasksByUser(user1), 0.000000001);
 	}
@@ -366,7 +380,7 @@ class ProjectRepositoryTests {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		Double expResult = (task1.getTimeSpentOnTask() + task2.getTimeSpentOnTask()) / 2;
+		Double expResult = (task1.getTimeSpentOnTask(user1) + task2.getTimeSpentOnTask(user1)) / 2;
 
 		assertEquals(expResult, projectRepository.getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
 	}
