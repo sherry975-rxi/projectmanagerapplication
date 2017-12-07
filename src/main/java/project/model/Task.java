@@ -276,8 +276,8 @@ public class Task {
 		}
 	}
 
-	public double getTimeSpentOntask(User user) {
-		double result = 0;
+	public int getTimeSpentOntask(User user) {
+		int result = 0;
 		for (TaskWorker other : taskTeam) {
 			if (other.getTaskWorker().equals(user)) {
 				result = other.getHoursSpent();
@@ -543,7 +543,7 @@ public class Task {
 		return emptyListOfUsersInTask;
 	}
 
-	public void updateTimeUserSpentOnTask(User user, double Time) {
+	public void updateTimeUserSpentOnTask(User user, int Time) {
 		int timeSpent = 0;
 		for (TaskWorker other : taskTeam) {
 			if (other.getTaskWorker().equals(user)) {
