@@ -2,6 +2,7 @@ package main.java.project.model;
 
 //
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -26,6 +27,8 @@ public class Project {
 	private String description;
 	private EffortUnit effortUnit;
 	private int budget;
+	private Calendar startdate;
+	private Calendar finishdate;
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
 	public static final int EXECUTION = 2; // execução
@@ -43,16 +46,17 @@ public class Project {
 	 * @param projectManager
 	 */
 
-	public Project(int projCounter, String name, String description, User projectManager, EffortUnit effortUnit,
-			int budget) {
+	public Project(int projCounter, String name, String description, User projectManager) {
 
 		this.idCode = projCounter;
 		this.name = name;
 		this.description = description;
 		this.projectManager = projectManager;
-		this.effortUnit = effortUnit;
-		this.budget = budget;
+		this.effortUnit = EffortUnit.HOURS;
+		this.budget = 0;
 		this.status = PLANNING;
+		this.startdate = null;
+		this.finishdate = null;
 		this.taskRepository = new TaskRepository(idCode);
 		this.projectTeam = new ArrayList<ProjectCollaborator>();
 	}

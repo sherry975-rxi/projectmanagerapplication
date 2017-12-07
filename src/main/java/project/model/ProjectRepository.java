@@ -28,9 +28,9 @@ public class ProjectRepository {
 	 * 
 	 * @return the project created
 	 */
-	public Project createProject(String name, String description, User projectManager, EffortUnit unit, int budget) {
+	public Project createProject(String name, String description, User projectManager) {
 
-		Project newProject = new Project(projCounter, name, description, projectManager, unit, budget);
+		Project newProject = new Project(projCounter, name, description, projectManager);
 		projCounter++;
 		return newProject;
 
