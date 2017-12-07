@@ -36,13 +36,13 @@ class ProjectTests {
 		c1.getUsersRepository().getAllUsersFromRepository().clear();
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
-		p1 = new Project(1, "name3", "description4", u1, EffortUnit.HOURS, 12000);
+		p1 = new Project(1, "name3", "description4", u1);
 		t1 = p1.getTaskRepository().createTask("description");
 		p1.getTaskRepository().addProjectTask(t1);
 		t2 = p1.getTaskRepository().createTask("description2");
 		p1.getTaskRepository().addProjectTask(t2);
 		t2.markTaskAsFinished();
-		p2 = new Project(2, "name1", "description4", u2, EffortUnit.HOURS, 12000);
+		p2 = new Project(2, "name1", "description4", u2);
 		t3 = p1.getTaskRepository().createTask("description3");
 		t3.markTaskAsFinished();
 
@@ -61,6 +61,28 @@ class ProjectTests {
 	@Test
 	void testCheckProjectManagerFalse() {
 		assertFalse(p1.isProjectManager(u2));
+	}
+	
+	/**
+	 * This test changes project manager of project 1
+	 * and checks if this change occurred.
+	 */
+	@Test
+	void testSetProjectManagerTrue() {
+		
+		p1.setProjectManager(u2);
+		assertTrue(p1.isProjectManager(u2));
+	}
+
+	/**
+	 * This test changes project manager of project 1
+	 * and then checks if the previous project manager
+	 * is not anymore the project manager.
+	 */
+	@Test
+	void testSetProjectManagerFalse() {
+		p1.setProjectManager(u2);
+		assertFalse(p1.isProjectManager(u1));
 	}
 
 	@Test
