@@ -239,12 +239,12 @@ public class Task {
 	/**
 	 * This method checks if the user is missing from the task team (List of users
 	 * in Task), and if it is missing from the list, the user is added to the team.
+	 * If it is already already added to the the list it is reactivated
 	 * 
 	 * @param user
 	 *            User to add to users list
 	 * 
-	 * @return TRUE if the user was added to the list of users (taskTeam) in a task
-	 *         FALSE if user is already in the list of users in a task
+	 * 
 	 */
 	public void addUserToTask(User user) {
 		if (!taskTeamContainsUser(user)) {
@@ -252,7 +252,7 @@ public class Task {
 		} else {
 
 			for (TaskWorker other : taskTeam) {
-				if (other.getTaskWorker().equals(user)) {
+				if (other.getTaskWorker().equals(user) && !other.isTaskWorkerActiveInTask()) {
 					other.setDateForTaskWorker();
 				}
 			}
@@ -262,19 +262,15 @@ public class Task {
 
 	/**
 	 * This method removes the user from a task. It checks first if the user is in
-	 * the task team (List of users in Task), and removes it from the team.
+	 * the task team (List of users in Task), and deactivates it from the team.
 	 * 
 	 * @param user
 	 *            User to remove from the list of users in a task
 	 * 
-	 * @return TRUE if the user was removed from the the list of user (taskTeam) in
-	 *         a task FALSE if user it was not removed from the list of users in a
-	 *         task or if it was missing from the list
 	 */
-
 	public void removeUserFromTask(User user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user)) {
+			if (other.getTaskWorker().equals(user) && other.isTaskWorkerActiveInTask()) {
 				other.setDateForTaskWorker();
 			}
 		}
@@ -522,7 +518,7 @@ public class Task {
 	 */
 	public boolean taskTeamContainsUser(User user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user)) {
+			if (other.getTaskWorker().equals(user) && other.isTaskWorkerActiveInTask()) {
 				return true;
 			}
 		}

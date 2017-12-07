@@ -9,9 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,8 +41,6 @@ class TaskTests {
 
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
-		Worker1 = new TaskWorker(user1);
-		Worker2 = new TaskWorker(user2);
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
 		Calendar estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.add(Calendar.MONTH, -1);
@@ -88,15 +84,7 @@ class TaskTests {
 
 		testTask.addUserToTask(user1);
 		testTask.addUserToTask(user2);
-		List<TaskWorker> TestUsers = new ArrayList<TaskWorker>();
-		TestUsers.add(Worker1);
-		TestUsers.add(Worker2);
-		assertTrue(testTask.getTaskTeam().get(0).getCollaborator().equals(TestUsers.get(0).getCollaborator()));
-		assertTrue(testTask.getTaskTeam().get(1).getCollaborator().equals(TestUsers.get(1).getCollaborator()));
-
-		assertTrue(testTask.copyListOfUsersInTask(new ArrayList<TaskWorker>()).equals(TestUsers));
-		TestUsers.remove(Worker1);
-		assertFalse(testTask.getTaskTeam().equals(TestUsers));
+		assertTrue(testTask.taskTeamContainsUser(user1) && testTask.taskTeamContainsUser(user2));
 	}
 
 	/**
