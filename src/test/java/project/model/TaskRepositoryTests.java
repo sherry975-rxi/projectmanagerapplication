@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
-import main.java.project.model.EffortUnit;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectRepository;
@@ -61,7 +60,7 @@ class TaskRepositoryTests {
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
-		project = projectRepository.createProject("name3", "description4", userAdmin, EffortUnit.HOURS, 1000);// !!!
+		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 		// create a estimated Task Start Date
@@ -289,32 +288,16 @@ class TaskRepositoryTests {
 	}
 
 	@Test
-	void testSetTaskCounter() {
-
-		// sets the task counter as 0;
-		taskRepository.setTaskCounter(0);
-		// add task to task repository of the project
-		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
-		taskRepository.addProjectTask(testTask3);
-
-		// creates a variable with the value of the expected outcome of getTaskCounter
-		// method in taskRepository class
-		int expectedTaskCounter = 3;
-
-		// Checks if the 2 values are equal
-		assertEquals(expectedTaskCounter, taskRepository.getTaskCounter());
-
-	}
-
-	@Test
 	void testGetTaskCounter() {
 		// sets the task counter as 0;
 		taskRepository.setTaskCounter(0);
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
+		taskRepository.setTaskCounter(1);
 		taskRepository.addProjectTask(testTask2);
+		taskRepository.setTaskCounter(2);
 		taskRepository.addProjectTask(testTask3);
+		taskRepository.setTaskCounter(3);
 
 		// creates a variable with the value of the expected outcome of getTaskCounter
 		// method in taskRepository class
