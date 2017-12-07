@@ -127,21 +127,17 @@ class TaskTests {
 	 */
 	@Test
 	void testGetTimeSpentOnTask() {
-		Calendar finishDate = Calendar.getInstance();
-		finishDate.set(Calendar.YEAR, 2017);
-		finishDate.set(Calendar.MONTH, Calendar.NOVEMBER);
-		finishDate.set(Calendar.DAY_OF_MONTH, 29);
-		finishDate.set(Calendar.HOUR_OF_DAY, 14);
-		Calendar startDate = (Calendar) finishDate.clone();
-		startDate.add(Calendar.DAY_OF_MONTH, -5);
-		testTask.setStartDate(startDate);
-		testTask.setFinishDate(finishDate);
-		assertEquals((testTask.getTimeSpentOnTask()), 24, 0.01);
-		startDate.add(Calendar.HOUR_OF_DAY, -5);
-		testTask.setStartDate(startDate);
-		assertEquals((testTask.getTimeSpentOnTask()), 28, 0.01);
-		testTask.setFinishDate(startDate);
-		assertEquals((testTask.getTimeSpentOnTask()), 0, 00.1);
+		testTask.addUserToTask(user1);
+		testTask.addUserToTask(user2);
+		testTask.updateTimeUserSpentOnTask(user1, 20);
+		testTask.updateTimeUserSpentOnTask(user2, 15);
+
+		int i = 20;
+		int j = 15;
+
+		assertEquals(i, testTask.getTimeSpentOntask(user1));
+		assertEquals(j, testTask.getTimeSpentOntask(user2));
+
 	}
 
 	/**
