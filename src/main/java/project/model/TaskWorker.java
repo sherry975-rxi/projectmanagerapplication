@@ -7,24 +7,30 @@ import java.util.List;
 public class TaskWorker {
 
 	private User collaborator;
-	private List<Calendar> dates;
-	private int hoursSpent;
+	private List<Calendar> startDates;
+	private List<Calendar> finishDates;
+	private List<Integer> hoursSpent;
+	private List<Integer> cost;
 
 	/**
 	 * Constructor to create a new task worker
 	 * 
-	 * Collaborator is set as the user provided Collaborator is defined as being in
-	 * the task (inTask = true) Hours spent byt the Collaborator on this task is set
-	 * as 0.
+	 * Collaborator is set as the Project Collaborator provided. A start date is set
+	 * automatically. Hours Spent and Cost are set from the Project Collaborator.
+	 * Finish date is added after collaborator is removed.
 	 * 
 	 * @param collaborator
 	 *            user to set
 	 */
-	public TaskWorker(User collaborator) {
-		this.collaborator = collaborator;
-		dates = new ArrayList<Calendar>();
-		this.dates.add(Calendar.getInstance());
-		this.hoursSpent = 0;
+	public TaskWorker(ProjectCollaborator collaborator) {
+		this.collaborator = collaborator.getCollaboratorUserData();
+		this.startDates = new ArrayList<Calendar>();
+		this.startDates.add(Calendar.getInstance());
+		this.finishDates = new ArrayList<Calendar>();
+		this.cost = new ArrayList<Integer>();
+		this.cost.add(collaborator.getCollaboratorCost());
+		this.hoursSpent = new ArrayList<Integer>();
+		this.hoursSpent.add(0);
 	}
 
 	/**
@@ -43,35 +49,74 @@ public class TaskWorker {
 	 * @return inTask
 	 */
 	public boolean isTaskWorkerActiveInTask() {
-		if (this.dates.size() % 2 == 0) {
+		if (this.startDates.size() != this.finishDates.size()) {
 			return false;
 		}
 		return true;
 	}
 
 	/**
-	 * Adds Date to task worker list
+	 * Adds Finish Date to task worker list
 	 */
-	public void setDateForTaskWorker() {
-		this.dates.add(Calendar.getInstance());
+	public void addFinishDateForTaskWorker() {
+		this.finishDates.add(Calendar.getInstance());
 	}
 
 	/**
-	 * Returns the hours spent by the collaborator in this task
+	 * Returns a specific Start Date
+	 * 
+	 * @param i
+	 *            index of the the date wanted
+	 * 
+	 * @return StartDate
+	 */
+	public Calendar getStartDate(int i) {
+		return startDates.get(i);
+	}
+
+	/**
+	 * Returns a specific Finish Date
+	 * 
+	 * @param i
+	 *            index of the date wanted
+	 * 
+	 * @return Finish Date
+	 */
+	public Calendar getFinishDate(int i) {
+		return finishDates.get(i);
+	}
+
+	/**
+	 * Returns the hours spent by the collaborator in a specific period
+	 * 
+	 * @param i
+	 *            index of hours spent
 	 * 
 	 * @return hoursSpent
 	 */
-	public int getHoursSpent() {
-		return hoursSpent;
+	public int getHoursSpent(int i) {
+		return hoursSpent.get(i);
 	}
 
 	/**
-	 * Sets the hours spent by the user in this task
+	 * Returns the cost of the collaborator in a specific period
+	 * 
+	 * @param i
+	 *            index of the cost wanted
+	 * 
+	 * @return cost
+	 */
+	public int getCost(int i) {
+		return cost.get(i);
+	}
+
+	/**
+	 * Sets the hours spent by the user in this task in this period
 	 * 
 	 * @param hoursSpent
 	 */
 	public void setHoursSpent(int hoursSpent) {
-		this.hoursSpent = hoursSpent;
+		this.hoursSpent.set(this.hoursSpent.size() - 1, hoursSpent);
 	}
 
 }
