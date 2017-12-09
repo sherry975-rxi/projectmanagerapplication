@@ -246,16 +246,9 @@ public class Task {
 	 * 
 	 * 
 	 */
-	public void addUserToTask(User user) {
+	public void addUserToTask(ProjectCollaborator user) {
 		if (!taskTeamContainsUser(user)) {
 			this.taskTeam.add(new TaskWorker(user));
-		} else {
-
-			for (TaskWorker other : taskTeam) {
-				if (other.getTaskWorker().equals(user) && !other.isTaskWorkerActiveInTask()) {
-					other.setDateForTaskWorker();
-				}
-			}
 
 		}
 	}
@@ -271,16 +264,16 @@ public class Task {
 	public void removeUserFromTask(User user) {
 		for (TaskWorker other : taskTeam) {
 			if (other.getTaskWorker().equals(user) && other.isTaskWorkerActiveInTask()) {
-				other.setDateForTaskWorker();
+				other.addFinishDateForTaskWorker();
 			}
 		}
 	}
 
-	public int getTimeSpentOntask(User user) {
+	public int getTimeSpentOntask(ProjectCollaborator user, int i) {
 		int result = 0;
 		for (TaskWorker other : taskTeam) {
 			if (other.getTaskWorker().equals(user)) {
-				result = other.getHoursSpent();
+				result = other.getHoursSpent(i);
 			}
 		}
 		return result;
@@ -516,7 +509,7 @@ public class Task {
 	 * @return True if task team contains user, FALSE if the task team does not have
 	 *         the user to check
 	 */
-	public boolean taskTeamContainsUser(User user) {
+	public boolean taskTeamContainsUser(ProjectCollaborator user) {
 		for (TaskWorker other : taskTeam) {
 			if (other.getTaskWorker().equals(user) && other.isTaskWorkerActiveInTask()) {
 				return true;
@@ -543,14 +536,4 @@ public class Task {
 		return emptyListOfUsersInTask;
 	}
 
-	public void updateTimeUserSpentOnTask(User user, int Time) {
-		int timeSpent = 0;
-		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user)) {
-				timeSpent = other.getHoursSpent();
-				timeSpent += Time;
-				other.setHoursSpent(timeSpent);
-			}
-		}
-	}
 }
