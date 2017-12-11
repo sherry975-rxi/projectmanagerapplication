@@ -267,22 +267,21 @@ public class Project {
 
 	/**
 	 * This method allows removing a Project Collaborator from a Project Team
+	 * and includes removing that Project Collaborator from all Tasks in this Project
 	 * 
 	 * @param collaboratorToRemoveFromProjectTeam
 	 *            Collaborator to remove from project
 	 */
-	public void removeCollaboratorFromProjectTeam(ProjectCollaborator collaboratorToRemoveFromProjectTeam) {
 
-		if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
+	public void removeCollaboratorFromProjectTeam (ProjectCollaborator collaboratorToRemoveFromProjectTeam) {
+
+		if(this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
 			collaboratorToRemoveFromProjectTeam.setState(false);
 			projectTeam.remove(collaboratorToRemoveFromProjectTeam);
-			List<Task> allTasks = new ArrayList<Task>();
-			allTasks.addAll(allTasks);
-			for (Task other : allTasks) {
-				if (other.taskTeamContainsUser(collaboratorToRemoveFromProjectTeam)) {
-					other.removeUserFromTask(collaboratorToRemoveFromProjectTeam);
-				}
-			}
+
+			for (Task otherTask : this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)){
+				otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam);
+			}	
 		}
 
 	}
