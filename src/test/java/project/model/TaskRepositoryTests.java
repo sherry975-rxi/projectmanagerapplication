@@ -174,7 +174,6 @@ class TaskRepositoryTests {
 		test.add(testTask3);
 		test.add(testTask4);
 
-		System.out.println(taskRepository.getAllTasks(project.getProjectTeam().get(0)));
 		// verify if test list is the same as the user unfinished task list
 		assertEquals(test, taskRepository.getUnFinishedTasks(project.getProjectTeam().get(0)));
 	}
@@ -188,10 +187,10 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// adds the user to the task
-		testTask.addUserToTask(user1);
-		testTask2.addUserToTask(user1);
-		testTask3.addUserToTask(user1);
-		testTask4.addUserToTask(user1);
+		testTask.addUserToTask(project.getProjectTeam().get(0));
+		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		testTask3.addUserToTask(project.getProjectTeam().get(0));
+		testTask4.addUserToTask(project.getProjectTeam().get(0));
 
 		// Marks task and task3 as finished
 		testTask.markTaskAsFinished();
@@ -203,7 +202,7 @@ class TaskRepositoryTests {
 		test.add(testTask3);
 
 		// verify if test list is the same as the user finished task list
-		assertEquals(test, taskRepository.getFinishedTaskListofUserInProject(user1));
+		assertEquals(test, taskRepository.getFinishedTaskListofUserInProject(project.getProjectTeam().get(0)));
 
 	}
 
@@ -215,10 +214,10 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// add de user to the task
-		testTask.addUserToTask(user1);
-		testTask2.addUserToTask(user1);
-		testTask3.addUserToTask(user1);
-		testTask4.addUserToTask(user1);
+		testTask.addUserToTask(project.getProjectTeam().get(0));
+		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		testTask3.addUserToTask(project.getProjectTeam().get(0));
+		testTask4.addUserToTask(project.getProjectTeam().get(0));
 		// create finished date to test
 		Calendar finishDateTest = Calendar.getInstance();
 		finishDateTest.set(Calendar.YEAR, 2017);
@@ -240,7 +239,7 @@ class TaskRepositoryTests {
 		test.add(testTask4);
 
 		// verify if test list is the same as the user unfinished task list
-		assertEquals(test, taskRepository.getFinishedTasksGivenMonth(user1, 1));
+		assertEquals(test, taskRepository.getFinishedTasksGivenMonth(project.getProjectTeam().get(0), 1));
 	}
 
 	@Test
@@ -269,7 +268,7 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask);
 
 		// add de user to the task
-		testTask.addUserToTask(user1);
+		testTask.addUserToTask(project.getProjectTeam().get(0));
 
 		// create finished date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -295,7 +294,8 @@ class TaskRepositoryTests {
 		testTask.updateTimeUserSpentOnTask(user1, 1.0);
 
 		// Checks if the 2 values are equal
-		assertEquals(1.0, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(user1), 0.001);
+		assertEquals(1.0, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(project.getProjectTeam().get(0)),
+				0.001);
 
 	}
 
@@ -338,10 +338,10 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// adds the user to the task
-		testTask.addUserToTask(user1);
-		testTask2.addUserToTask(user1);
-		testTask3.addUserToTask(user1);
-		testTask4.addUserToTask(user1);
+		testTask.addUserToTask(project.getProjectTeam().get(0));
+		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		testTask3.addUserToTask(project.getProjectTeam().get(0));
+		testTask4.addUserToTask(project.getProjectTeam().get(0));
 
 		// Marks task and task3 as finished
 		testTask.markTaskAsFinished();
@@ -355,7 +355,7 @@ class TaskRepositoryTests {
 		testList.add(testTask4);
 
 		// See if the two taskLists have the same tasks
-		assertEquals(testList, taskRepository.getAllTasks(user1));
+		assertEquals(testList, taskRepository.getAllTasks(project.getProjectTeam().get(0)));
 
 	}
 
