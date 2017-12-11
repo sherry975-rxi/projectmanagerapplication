@@ -110,13 +110,20 @@ public class TaskWorker {
 	/**
 	 * Returns the hours spent by the collaborator in a specific period
 	 * 
-	 * @param i
-	 *            index of hours spent
 	 * 
 	 * @return hoursSpent
 	 */
-	public int getHoursSpent(int i) {
-		return hoursSpent.get(i);
+	public int getHoursSpent() {
+
+		int result = 0;
+
+		for (int indexHoursSpent = 0; indexHoursSpent < this.hoursSpent.size(); indexHoursSpent++) {
+
+			result = result + this.hoursSpent.get(indexHoursSpent);
+		}
+
+		return result;
+
 	}
 
 	/**

@@ -280,14 +280,16 @@ public class Task {
 		}
 	}
 
-	public int getTimeSpentOntask(ProjectCollaborator user, int i) {
-		int result = 0;
+	public int getTimeSpentOntask(ProjectCollaborator user) {
+
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
-				result = other.getHoursSpent(i);
+			if (other.getTaskWorker().equals(user)) {
+
+				return other.getHoursSpent();
 			}
 		}
-		return result;
+
+		return 0;
 	}
 
 	// /**
