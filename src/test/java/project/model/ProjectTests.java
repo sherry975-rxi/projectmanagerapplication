@@ -4,6 +4,7 @@ package test.java.project.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,6 +28,8 @@ class ProjectTests {
 	Company c1;
 	User u1;
 	User u2;
+	ProjectCollaborator projectCollaborator1;
+	ProjectCollaborator projectCollaborator2;
 	Calendar estimatedStartDate;
 	Calendar taskDeadline;
 	Task t1;
@@ -42,6 +45,8 @@ class ProjectTests {
 		c1.getUsersRepository().getAllUsersFromRepository().clear();
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
+		projectCollaborator1 = new ProjectCollaborator(u2, 1200);
+		projectCollaborator2 = new ProjectCollaborator(u1, 1200);
 		p1 = new Project(1, "name3", "description4", u1);
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
@@ -68,6 +73,8 @@ class ProjectTests {
 		Task t3 = null;
 		Project p1 = null;
 		Project p2 = null;
+		ProjectCollaborator projectCollaborator1 = null;
+		ProjectCollaborator projectCollaborator2 = null;
 	}
 	
 
@@ -131,7 +138,7 @@ class ProjectTests {
 	 */
 	@Test
 	void testAddUserToProjectTeam() {
-		p1.addUserToProjectTeam(u2, 1200);
+		p1.addUserToProjectTeam(projectCollaborator1);
 		assertEquals(u2, p1.getProjectTeam().get(0).getCollaboratorUserData());
 	}
 
@@ -140,8 +147,8 @@ class ProjectTests {
 	 */
 	@Test
 	void testTryToAddTheSameUserTwiceToProjectTeam() {
-		p1.addUserToProjectTeam(u1, 1200);
-		p1.addUserToProjectTeam(u1, 1200);
+		p1.addUserToProjectTeam(projectCollaborator2);
+		p1.addUserToProjectTeam(projectCollaborator2);
 		assertEquals(1, p1.getProjectTeam().size());
 	}
 
@@ -246,15 +253,23 @@ class ProjectTests {
 	/**
 	 * This method allows removing a Project Collaborator from a Project Team
 	 * and includes removing that Project Collaborator from all Tasks in this Project
+	 * 
+	 * projectCollaborator1 is removed from ProjectTeam 
 	 */
 	@Test
 	void testRemoveCollaboratorFromProjectTeam() {
 		
-		p1.addUserToProjectTeam(u1, 27);
-		p1.addUserToProjectTeam(u2, 39);
+		p1.addUserToProjectTeam(projectCollaborator1);
+		p1.addUserToProjectTeam(projectCollaborator2);
+		t1.addUserToTask(projectCollaborator1);
+		t1.addUserToTask(projectCollaborator2);
 		
+	
+		p1.removeCollaboratorFromProjectTeam(projectCollaborator1);	
 		
-		
+		assertEquals(1, p1.getProjectTeam().size());
+		assertFalse(projectCollaborator1.equals(p1.getProjectTeam().get(0)));
+		assertFalse(p1.getTaskRepository().getAllTasks(projectCollaborator1).get(0).getTaskTeam().get(0).isTaskWorkerActiveInTask());
 	}
 
 }

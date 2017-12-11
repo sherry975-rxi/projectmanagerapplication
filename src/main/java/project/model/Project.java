@@ -62,6 +62,21 @@ public class Project {
 	}
 
 	/**
+	 * Creates an instance of ProjectCollaborator
+	 * 
+	 * @param collaborator User to add to Project Collaborator
+	 * @param costPerEffort Cost per Effort of user In Project
+	 * 
+	 * @return The new Project Collaborator instantiated
+	 */
+	public ProjectCollaborator createProjectCollaborator(User collaborator, int costPerEffort) {
+
+		ProjectCollaborator newProjectCollaborator = new ProjectCollaborator(collaborator, costPerEffort);
+
+		return newProjectCollaborator;
+	}
+
+	/**
 	 * This method allows the projectManager to be changed
 	 * 
 	 * @param newProjectManager
@@ -131,20 +146,13 @@ public class Project {
 	}
 
 	/**
-	 * Add user to project team if is missing from the projectTeam. The user to add
-	 * is transformed in a Project Collaborator when the cost of user in project is
-	 * associated with the user.
+	 * Add Project Collaborator to project team if is missing from the projectTeam.
 	 * 
-	 * @param userToAdd
-	 *            User to add to the Project Team
-	 * 
-	 * @param costPerEffort
-	 *            Added User's cost per effort in Project
+	 * @param newAddedProjectCollaborator
+	 *            Project Collaborator to add to the Project Team
 	 */
-	public void addUserToProjectTeam(User userToAdd, int costPerEffort) {
-
-		ProjectCollaborator newAddedProjectCollaborator = new ProjectCollaborator(userToAdd, costPerEffort);
-		if (!containsUser(userToAdd)) {
+	public void addUserToProjectTeam(ProjectCollaborator newAddedProjectCollaborator) {
+		if (!containsUser(newAddedProjectCollaborator.getCollaboratorUserData())) {
 			this.projectTeam.add(newAddedProjectCollaborator);
 		}
 	}
@@ -289,13 +297,13 @@ public class Project {
 	public void removeCollaboratorFromProjectTeam(ProjectCollaborator collaboratorToRemoveFromProjectTeam) {
 
 		if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
-			collaboratorToRemoveFromProjectTeam.setState(false);
+			collaboratorToRemoveFromProjectTeam.setState(false); //DELETE to be removed after deleting boolean inProject in Class ProjectCollaborator 
 			projectTeam.remove(collaboratorToRemoveFromProjectTeam); // removes collaborator from ProjectTeam
 
 			for (Task otherTask : this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
 				otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); // Deactivates the Collaborator that
-																					// is removed from
-																					// ProjectCollaborator team
+				// is removed from
+				// ProjectCollaborator team
 			}
 		}
 
