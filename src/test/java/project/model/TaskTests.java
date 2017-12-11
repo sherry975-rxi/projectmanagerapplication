@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.Task;
 import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
@@ -32,6 +33,7 @@ class TaskTests {
 	Company myComp;
 	Project myProject;
 	Task testTask, testTask2, testTask3;
+	ProjectCollaborator Collab1, Collab2;
 
 	@BeforeEach
 	void setUp() {
@@ -41,6 +43,8 @@ class TaskTests {
 
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
+		Collab1 = new ProjectCollaborator(user1, 5);
+		Collab2 = new ProjectCollaborator(user2, 5);
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
 		Calendar estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.add(Calendar.MONTH, -1);
@@ -61,6 +65,8 @@ class TaskTests {
 		testTask = null;
 		testTask2 = null;
 		testTask3 = null;
+		Collab1 = null;
+		Collab2 = null;
 
 	}
 
@@ -82,9 +88,9 @@ class TaskTests {
 	@Test
 	void testTaskTeam() {
 
-		testTask.addUserToTask(user1);
-		testTask.addUserToTask(user2);
-		assertTrue(testTask.taskTeamContainsUser(user1) && testTask.taskTeamContainsUser(user2));
+		testTask.addUserToTask(Collab1);
+		testTask.addUserToTask(Collab2);
+		assertTrue(testTask.taskTeamContainsUser(Collab1) && testTask.taskTeamContainsUser(Collab2));
 	}
 
 	/**
@@ -127,16 +133,16 @@ class TaskTests {
 	 */
 	@Test
 	void testGetTimeSpentOnTask() {
-		testTask.addUserToTask(user1);
-		testTask.addUserToTask(user2);
-		testTask.updateTimeUserSpentOnTask(user1, 20);
-		testTask.updateTimeUserSpentOnTask(user2, 15);
+		testTask.addUserToTask(Collab1);
+		testTask.addUserToTask(Collab2);
+		testTask.getTaskTeam().get(0).setHoursSpent(20);
+		testTask.getTaskTeam().get(1).setHoursSpent(15);
 
 		int i = 20;
 		int j = 15;
 
-		assertEquals(i, testTask.getTimeSpentOntask(user1));
-		assertEquals(j, testTask.getTimeSpentOntask(user2));
+		assertEquals(i, testTask.getTimeSpentOntask(Collab1));
+		assertEquals(j, testTask.getTimeSpentOntask(Collab2));
 
 	}
 
@@ -156,5 +162,25 @@ class TaskTests {
 		testDupe.setStartDate(startDateDupe);
 		assertTrue(testTask.equals(testDupe));
 		assertFalse(testTask.getStartDate().equals(testDupe.getStartDate()));
+	}
+
+	/**
+	 * Verifies if the task team is empty. Must be true (is empty).
+	 */
+	@Test
+	void isTaskTeamEmpty_true() {
+
+		assertTrue(testTask.isTaskTeamEmpty());
+	}
+
+	/**
+	 * Verifies if the task team is empty. Must be false (not empty).
+	 */
+	@Test
+	void isTaskTeamEmpty_false() {
+
+		testTask2.addUserToTask(Collab1);
+
+		assertFalse(testTask2.isTaskTeamEmpty());
 	}
 }
