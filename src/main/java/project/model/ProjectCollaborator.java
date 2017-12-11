@@ -50,11 +50,21 @@ public class ProjectCollaborator {
 	}
 
 	/**
-	 * This method views the Collaborator's User Data
+	 * This method views the Collaborator's User Data. THIS METHOD WILL BE PURGED
 	 * 
+	 * @return Returns the User Data
 	 */
 	public User getCollaboratorUserData() {
 		return this.collaborator;
+	}
+
+	/**
+	 * This method compares a User with a Project Collaborator's User Data.
+	 * 
+	 * @return Returns true if its the same user
+	 */
+	public boolean isUser(User toCompare) {
+		return toCompare.equals(this.collaborator);
 	}
 
 	@Override
