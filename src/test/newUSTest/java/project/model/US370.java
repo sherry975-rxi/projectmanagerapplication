@@ -120,7 +120,7 @@ class US370 {
 		// finished task 
 		testTask.setFinishDate(taskDeadlineDateTest);
 		
-taskRepository.getFinishedTaskList
+		taskRepository.getFinishedTasks
 
 	}
 
