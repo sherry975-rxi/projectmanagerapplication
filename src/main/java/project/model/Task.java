@@ -496,22 +496,39 @@ public class Task {
 		return specialHolidays;
 	}
 
-	/**
-	 * This method overrides the equals to be able to compare tasks (two tasks are
-	 * equal id the taskID is the same)
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return TRUE if the tasks are equal FALSE if the task is not equal
+	 * @see java.lang.Object#hashCode()
 	 */
-
 	@Override
-	public boolean equals(Object other) {
-		if (other instanceof Task) {
-			Task t1 = (Task) other;
-			if (t1.taskID.equals(this.taskID)) {
-				return true;
-			}
-		}
-		return false;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((taskID == null) ? 0 : taskID.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Task other = (Task) obj;
+		if (taskID == null) {
+			if (other.taskID != null)
+				return false;
+		} else if (!taskID.equals(other.taskID))
+			return false;
+		return true;
 	}
 
 	/**

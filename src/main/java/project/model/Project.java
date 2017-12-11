@@ -131,7 +131,9 @@ public class Project {
 	}
 
 	/**
-	 * Add user to project team if is missing from the projectTeam. The user to add is transformed in a Project Collaborator when the cost of user in project is associated with the user. 
+	 * Add user to project team if is missing from the projectTeam. The user to add
+	 * is transformed in a Project Collaborator when the cost of user in project is
+	 * associated with the user.
 	 * 
 	 * @param userToAdd
 	 *            User to add to the Project Team
@@ -140,7 +142,7 @@ public class Project {
 	 *            Added User's cost per effort in Project
 	 */
 	public void addUserToProjectTeam(User userToAdd, int costPerEffort) {
-		
+
 		ProjectCollaborator newAddedProjectCollaborator = new ProjectCollaborator(userToAdd, costPerEffort);
 		if (!containsUser(userToAdd)) {
 			this.projectTeam.add(newAddedProjectCollaborator);
@@ -165,26 +167,36 @@ public class Project {
 	// }
 	// }
 
-	/**
-	 * Overrides equals comparing a project to this one, and if their idCode is the
-	 * same, returns true, and therefore, they are equal.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param toCompare
-	 *            Project to compare to the current Project
-	 * @return result TRUE if the projects are equal (equal idCode) FALSE if they
-	 *         are not equal (different idCode)
-	 * 
+	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public boolean equals(Object toCompare) {
-		boolean result = false;
-		if (toCompare instanceof Project) {
-			Project proj = (Project) toCompare;
-			if (this.projectIdCode == proj.projectIdCode) {
-				result = true;
-			}
-		}
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + projectIdCode;
 		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Project other = (Project) obj;
+		if (projectIdCode != other.projectIdCode)
+			return false;
+		return true;
 	}
 
 	// THIS METHOD SHOULD ONLY EXIST IN TASK AS IT IS THE TASK RESPONSIBILITY TO ADD
@@ -267,22 +279,24 @@ public class Project {
 	}
 
 	/**
-	 * This method allows removing a Project Collaborator from a Project Team
-	 * and includes removing that Project Collaborator from all Tasks in this Project
+	 * This method allows removing a Project Collaborator from a Project Team and
+	 * includes removing that Project Collaborator from all Tasks in this Project
 	 * 
 	 * @param collaboratorToRemoveFromProjectTeam
 	 *            Collaborator to remove from project
 	 */
 
-	public void removeCollaboratorFromProjectTeam (ProjectCollaborator collaboratorToRemoveFromProjectTeam) {
+	public void removeCollaboratorFromProjectTeam(ProjectCollaborator collaboratorToRemoveFromProjectTeam) {
 
-		if(this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
+		if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
 			collaboratorToRemoveFromProjectTeam.setState(false);
-			projectTeam.remove(collaboratorToRemoveFromProjectTeam); //removes collaborator from ProjectTeam
+			projectTeam.remove(collaboratorToRemoveFromProjectTeam); // removes collaborator from ProjectTeam
 
-			for (Task otherTask : this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)){
-				otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); //Deactivates the Collaborator that is removed from ProjectCollaborator team
-			}	
+			for (Task otherTask : this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
+				otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); // Deactivates the Collaborator that
+																					// is removed from
+																					// ProjectCollaborator team
+			}
 		}
 
 	}
