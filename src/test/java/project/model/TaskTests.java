@@ -90,7 +90,8 @@ class TaskTests {
 
 		testTask.addUserToTask(Collab1);
 		testTask.addUserToTask(Collab2);
-		assertTrue(testTask.taskTeamContainsUser(Collab1) && testTask.taskTeamContainsUser(Collab2));
+		assertTrue(testTask.taskTeamContainsUser(Collab1.getCollaboratorUserData())
+				&& testTask.taskTeamContainsUser(Collab2.getCollaboratorUserData()));
 	}
 
 	/**
@@ -141,8 +142,8 @@ class TaskTests {
 		int i = 20;
 		int j = 15;
 
-		assertEquals(i, testTask.getTimeSpentOntask(Collab1));
-		assertEquals(j, testTask.getTimeSpentOntask(Collab2));
+		assertEquals(i, testTask.getTimeSpentOntask(Collab1.getCollaboratorUserData()));
+		assertEquals(j, testTask.getTimeSpentOntask(Collab2.getCollaboratorUserData()));
 
 	}
 

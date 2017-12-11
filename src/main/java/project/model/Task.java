@@ -246,11 +246,11 @@ public class Task {
 	 * 
 	 */
 	public void addUserToTask(ProjectCollaborator user) {
-		if (!taskTeamContainsUser(user)) {
+		if (!taskTeamContainsUser(user.getCollaboratorUserData())) {
 			this.taskTeam.add(new TaskWorker(user));
 		}
 
-		else if (taskTeamUserIsActive(user)) {
+		else if (taskTeamUserIsActive(user.getCollaboratorUserData())) {
 			for (TaskWorker other : taskTeam) {
 				if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
 					other.addCostForTaskWorker(user.getCollaboratorCost());
@@ -271,18 +271,18 @@ public class Task {
 	 *            User to remove from the list of users in a task
 	 * 
 	 */
-	public void removeUserFromTask(ProjectCollaborator user) {
+	public void removeUserFromTask(User user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user.getCollaboratorUserData()) && other.isTaskWorkerActiveInTask()) {
+			if (other.getTaskWorker().equals(user) && other.isTaskWorkerActiveInTask()) {
 				other.addFinishDateForTaskWorker();
 			}
 		}
 	}
 
-	public int getTimeSpentOntask(ProjectCollaborator user) {
+	public int getTimeSpentOntask(User user) {
 
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
+			if (other.getTaskWorker().equals(user)) {
 
 				return other.getTotalHoursSpent();
 			}
@@ -539,9 +539,9 @@ public class Task {
 	 * @return True if task team contains user, FALSE if the task team does not have
 	 *         the user to check
 	 */
-	public boolean taskTeamContainsUser(ProjectCollaborator user) {
+	public boolean taskTeamContainsUser(User user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
+			if (other.getTaskWorker().equals(user)) {
 				return true;
 			}
 		}
@@ -556,9 +556,9 @@ public class Task {
 	 * @return True if task team user is active, FALSE if the task team does not
 	 *         have the user active
 	 */
-	public boolean taskTeamUserIsActive(ProjectCollaborator user) {
+	public boolean taskTeamUserIsActive(User user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
+			if (other.getTaskWorker().equals(user)) {
 				if (other.isTaskWorkerActiveInTask()) {
 					return true;
 				}

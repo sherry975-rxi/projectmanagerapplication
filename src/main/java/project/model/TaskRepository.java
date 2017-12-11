@@ -59,7 +59,7 @@ public class TaskRepository {
 	 * 
 	 * @return UnfinishedTaskList The list if tasks that are not finished
 	 */
-	public List<Task> getUnFinishedTasksFromUser(ProjectCollaborator user) {
+	public List<Task> getUnFinishedTasksFromUser(User user) {
 
 		List<Task> unfinishedTaskList = new ArrayList<Task>();
 		unfinishedTaskList.addAll(this.getAllTasks(user));
@@ -79,7 +79,7 @@ public class TaskRepository {
 	 * 
 	 * @return FinishedTaskList The list if tasks that are finished
 	 */
-	public List<Task> getFinishedTaskListofUserInProject(ProjectCollaborator user) {
+	public List<Task> getFinishedTaskListofUserInProject(User user) {
 
 		List<Task> finishedTaskList = new ArrayList<Task>();
 
@@ -106,7 +106,7 @@ public class TaskRepository {
 	 * @return lastMonthFinishedTaskList List of all tasks finished the previous
 	 *         month, by the user
 	 */
-	public List<Task> getFinishedTasksGivenMonth(ProjectCollaborator user, int monthsAgo) {
+	public List<Task> getFinishedTasksGivenMonth(User user, int monthsAgo) {
 		Calendar givenMonth = Calendar.getInstance();
 		givenMonth.add(Calendar.MONTH, -monthsAgo);
 		List<Task> lastMonthFinishedTaskList = new ArrayList<Task>();
@@ -147,7 +147,7 @@ public class TaskRepository {
 	 * @param user
 	 * @return Time spent on last month project user tasks
 	 */
-	public double getTimeSpentOnLastMonthProjectUserTasks(ProjectCollaborator user) {
+	public double getTimeSpentOnLastMonthProjectUserTasks(User user) {
 		List<Task> lastMonth = new ArrayList<Task>();
 		lastMonth.addAll(this.getFinishedTasksGivenMonth(user, 1));
 		double totalTime = 0;
@@ -197,7 +197,7 @@ public class TaskRepository {
 	 * 
 	 * @return AllTasksList List if all tasks from a user
 	 */
-	public List<Task> getAllTasks(ProjectCollaborator user) {
+	public List<Task> getAllTasks(User user) {
 		List<Task> allTasks = new ArrayList<Task>();
 		for (Task other : this.getProjectTaskList()) {
 			if (other.taskTeamContainsUser(user)) {
@@ -216,7 +216,7 @@ public class TaskRepository {
 	 * @return true if the user doesnt have a task. False if he has at least one
 	 *         task
 	 */
-	public boolean isCollaboratorActiveOnTasks(ProjectCollaborator user) {
+	public boolean isCollaboratorActiveOnTasks(User user) {
 		for (Task otherTask : this.getProjectTaskList()) {
 			if (otherTask.taskTeamContainsUser(user))
 				return true;

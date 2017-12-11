@@ -112,11 +112,11 @@ public class ProjectRepository {
 	 * 
 	 * @return Returns the user task list.
 	 */
-	public List<Task> getUserTasks(ProjectCollaborator collab) {
+	public List<Task> getUserTasks(User collab) {
 		List<Task> tasksOfSpecificUser = new ArrayList<Task>();
 
 		for (int indexProject = 0; indexProject < this.projectsRepository.size(); indexProject++) {
-			if (this.projectsRepository.get(indexProject).containsUser(collab.getCollaboratorUserData())) {
+			if (this.projectsRepository.get(indexProject).containsUser(collab)) {
 				tasksOfSpecificUser
 						.addAll(this.projectsRepository.get(indexProject).getTaskRepository().getAllTasks(collab));
 			}
@@ -134,11 +134,11 @@ public class ProjectRepository {
 	 * 
 	 * @return List of finished tasks of a specific user
 	 */
-	public List<Task> getFinishedUserTaskList(ProjectCollaborator collab) {
+	public List<Task> getFinishedUserTaskList(User collab) {
 
 		List<Task> finishedTasksOfSpecificUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
-			if (test.containsUser(collab.getCollaboratorUserData())) {
+			if (test.containsUser(collab)) {
 				finishedTasksOfSpecificUser.addAll(test.getTaskRepository().getFinishedTasksGivenMonth(collab, -1));
 			}
 		}
@@ -153,11 +153,11 @@ public class ProjectRepository {
 	 * @param user
 	 * @return List of unfinished tasks of a specific user
 	 */
-	public List<Task> getUnfinishedUserTaskList(ProjectCollaborator collab) {
+	public List<Task> getUnfinishedUserTaskList(User collab) {
 
 		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
-			if (test.containsUser(collab.getCollaboratorUserData())) {
+			if (test.containsUser(collab)) {
 				unfinishedTasksOfSpecificUser.addAll(test.getTaskRepository().getUnFinishedTasksFromUser(collab));
 			}
 		}
@@ -177,11 +177,11 @@ public class ProjectRepository {
 	 *         decreasing order.
 	 */
 
-	public List<Task> getLastMonthFinishedUserTaskList(ProjectCollaborator collab) {
+	public List<Task> getLastMonthFinishedUserTaskList(User collab) {
 
 		List<Task> lastMonthFinishedTaskListByUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
-			if (test.containsUser(collab.getCollaboratorUserData())) {
+			if (test.containsUser(collab)) {
 				lastMonthFinishedTaskListByUser.addAll(test.getTaskRepository().getFinishedTasksGivenMonth(collab, 1));
 			}
 		}
@@ -197,11 +197,11 @@ public class ProjectRepository {
 	 * 
 	 * @return Returns total time spent doing tasks in the last month.
 	 */
-	public double getTotalTimeLastMonthFinishedTasksByUser(ProjectCollaborator collab) {
+	public double getTotalTimeLastMonthFinishedTasksByUser(User collab) {
 
 		double totalTime = 0;
 		for (Project test : this.projectsRepository) {
-			if (test.containsUser(collab.getCollaboratorUserData())) {
+			if (test.containsUser(collab)) {
 				totalTime = totalTime + test.getTaskRepository().getTimeSpentOnLastMonthProjectUserTasks(collab);
 			}
 		}
@@ -219,7 +219,7 @@ public class ProjectRepository {
 	 * 
 	 * @return Returns the average time spent by finished task in the last month.
 	 */
-	public double getAverageTimeLastMonthFinishedTasksUser(ProjectCollaborator collab) {
+	public double getAverageTimeLastMonthFinishedTasksUser(User collab) {
 
 		double totalTime = this.getTotalTimeLastMonthFinishedTasksByUser(collab);
 
@@ -237,7 +237,7 @@ public class ProjectRepository {
 	 * @return Returns a list with the tasks finished last month by decreasing
 	 *         order.
 	 */
-	public List<Task> getLastMonthFinishedUserTaskListDecreasingOrder(ProjectCollaborator collab) {
+	public List<Task> getLastMonthFinishedUserTaskListDecreasingOrder(User collab) {
 
 		List<Task> LastMonthFinishedUserTaskListDecreasingOrder = new ArrayList<Task>();
 		LastMonthFinishedUserTaskListDecreasingOrder.addAll(this.getLastMonthFinishedUserTaskList(collab));
@@ -258,7 +258,7 @@ public class ProjectRepository {
 	 * @return Returns a list with the all the user finished tasks sorted by
 	 *         decreasing order.
 	 */
-	public List<Task> getFinishedTaskListByDecreasingOrder(ProjectCollaborator collab) {
+	public List<Task> getFinishedTaskListByDecreasingOrder(User collab) {
 
 		List<Task> FinishedUserTaskListDecreasingOrder = new ArrayList<Task>();
 		FinishedUserTaskListDecreasingOrder.addAll(this.getFinishedUserTaskList(collab));

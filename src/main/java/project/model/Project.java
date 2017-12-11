@@ -64,8 +64,10 @@ public class Project {
 	/**
 	 * Creates an instance of ProjectCollaborator
 	 * 
-	 * @param collaborator User to add to Project Collaborator
-	 * @param costPerEffort Cost per Effort of user In Project
+	 * @param collaborator
+	 *            User to add to Project Collaborator
+	 * @param costPerEffort
+	 *            Cost per Effort of user In Project
 	 * 
 	 * @return The new Project Collaborator instantiated
 	 */
@@ -277,7 +279,8 @@ public class Project {
 
 		for (ProjectCollaborator other : this.getProjectTeam()) {
 			for (Task otherTask : this.taskRepository.getProjectTaskList()) {
-				if (otherTask.taskTeamContainsUser(other)) // needs to check if collaborator is active
+				if (otherTask.taskTeamContainsUser(other.getCollaboratorUserData())) // needs to check if collaborator
+																						// is active
 					inactiveCollaborators.remove(other);
 				break;
 			}
@@ -297,11 +300,16 @@ public class Project {
 	public void removeCollaboratorFromProjectTeam(ProjectCollaborator collaboratorToRemoveFromProjectTeam) {
 
 		if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
-			collaboratorToRemoveFromProjectTeam.setState(false); //DELETE to be removed after deleting boolean inProject in Class ProjectCollaborator 
+			collaboratorToRemoveFromProjectTeam.setState(false); // DELETE to be removed after deleting boolean
+																	// inProject in Class ProjectCollaborator
 			projectTeam.remove(collaboratorToRemoveFromProjectTeam); // removes collaborator from ProjectTeam
 
-			for (Task otherTask : this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
-				otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); // Deactivates the Collaborator that
+			for (Task otherTask : this.taskRepository
+					.getAllTasks(collaboratorToRemoveFromProjectTeam.getCollaboratorUserData())) {
+				otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam.getCollaboratorUserData()); // Deactivates
+																												// the
+																												// Collaborator
+																												// that
 				// is removed from
 				// ProjectCollaborator team
 			}

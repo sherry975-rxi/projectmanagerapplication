@@ -4,7 +4,6 @@ package test.java.project.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,13 +14,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
-import main.java.project.model.EffortUnit;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.Task;
 import main.java.project.model.User;
-import main.java.project.model.UserRepository;
-import sun.font.CreatedFontTracker;
 
 class ProjectTests {
 
@@ -62,7 +58,7 @@ class ProjectTests {
 		t3.markTaskAsFinished();
 
 	}
-	
+
 	@AfterEach
 	void tearDown() {
 		Company c1 = null;
@@ -76,18 +72,15 @@ class ProjectTests {
 		ProjectCollaborator projectCollaborator1 = null;
 		ProjectCollaborator projectCollaborator2 = null;
 	}
-	
 
 	/**
 	 * Tests constructor for Project
 	 */
 	@Test
-	void testProject(){
-		
-		
-		
+	void testProject() {
+
 	}
-	
+
 	@Test
 	void testAddTaskToProjectTaskList() {
 		assertEquals(t1, p1.getTaskRepository().getProjectTaskList().get(0));
@@ -100,7 +93,7 @@ class ProjectTests {
 	void testCheckProjectManagerTrue() {
 		assertTrue(p1.isProjectManager(u1));
 	}
-	
+
 	/**
 	 * This test checks the project manager of Project 1
 	 */
@@ -108,22 +101,21 @@ class ProjectTests {
 	void testCheckProjectManagerFalse() {
 		assertFalse(p1.isProjectManager(u2));
 	}
-	
+
 	/**
-	 * This test changes project manager of Project 1
-	 * and checks if this change occurred.
+	 * This test changes project manager of Project 1 and checks if this change
+	 * occurred.
 	 */
 	@Test
 	void testSetProjectManagerTrue() {
-		
+
 		p1.setProjectManager(u2);
 		assertTrue(p1.isProjectManager(u2));
 	}
 
 	/**
-	 * This test changes project manager of Project 1
-	 * and then checks if the previous Project Manager
-	 * is no longer in the project manager.
+	 * This test changes project manager of Project 1 and then checks if the
+	 * previous Project Manager is no longer in the project manager.
 	 */
 	@Test
 	void testSetProjectManagerFalse() {
@@ -132,9 +124,8 @@ class ProjectTests {
 	}
 
 	/**
-	 * This test changes project manager of Project 1
-	 * and then checks if the previous Project Manager
-	 * is no longer in the project manager.
+	 * This test changes project manager of Project 1 and then checks if the
+	 * previous Project Manager is no longer in the project manager.
 	 */
 	@Test
 	void testAddUserToProjectTeam() {
@@ -158,7 +149,7 @@ class ProjectTests {
 	 * c2.addProjectToProjectList(p3); assertFalse(p3.equals(p1)); }
 	 */
 	/**
-	 * Tests the comparison between objects that are different 
+	 * Tests the comparison between objects that are different
 	 */
 	@Test
 	void testEqualsFalse() {
@@ -166,7 +157,8 @@ class ProjectTests {
 	}
 
 	/**
-	 * Tests the comparison between objects that are different and from different types
+	 * Tests the comparison between objects that are different and from different
+	 * types
 	 */
 	@Test
 	void testEqualsDifferentObject() {
@@ -184,21 +176,21 @@ class ProjectTests {
 
 	@Test
 	void testGetUnfinishedTasks() {
-		t1.addUserToTask(u1);
+		t1.addUserToTask(projectCollaborator2);
 		assertEquals(t1, p1.getTaskRepository().getUnFinishedTasksFromUser(u1).get(0));
 	}
 
 	@Test
 	void testGetFinishedTasks() {
-		t2.addUserToTask(u2);
+		t2.addUserToTask(projectCollaborator1);
 		assertEquals(t2, p1.getTaskRepository().getFinishedTaskListofUserInProject(u2).get(0));
 	}
 
 	@Test
 	void testGetAllTasks() {// The order of tasks in the test list changes because the getAllTasks method
 							// shows the finished tasks first.
-		t1.addUserToTask(u1);
-		t2.addUserToTask(u1);
+		t1.addUserToTask(projectCollaborator2);
+		t2.addUserToTask(projectCollaborator2);
 		List<Task> test = new ArrayList<Task>();
 		test.add(t1);
 		test.add(t2);
@@ -209,9 +201,9 @@ class ProjectTests {
 	void testGetFinishedTaskListLastMonth() {
 		Calendar test = Calendar.getInstance();
 		test.add(Calendar.MONTH, -1);
-		t1.addUserToTask(u1);
-		t2.addUserToTask(u1);
-		t3.addUserToTask(u1);
+		t1.addUserToTask(projectCollaborator2);
+		t2.addUserToTask(projectCollaborator2);
+		t3.addUserToTask(projectCollaborator2);
 		p1.getTaskRepository().addProjectTask(t1);
 		p1.getTaskRepository().addProjectTask(t2);
 		p1.getTaskRepository().addProjectTask(t3);
@@ -227,7 +219,7 @@ class ProjectTests {
 		p1.getTaskRepository().addProjectTask(t1);
 		p1.getTaskRepository().addProjectTask(t2);
 		p1.getTaskRepository().addProjectTask(t3);
-		t2.addUserToTask(u1);
+		t2.addUserToTask(projectCollaborator2);
 		assertTrue(t2.taskTeamContainsUser(u1));
 	}
 
@@ -236,7 +228,7 @@ class ProjectTests {
 		p1.getTaskRepository().addProjectTask(t1);
 		p1.getTaskRepository().addProjectTask(t2);
 		p1.getTaskRepository().addProjectTask(t3);
-		t2.addUserToTask(u1);
+		t2.addUserToTask(projectCollaborator2);
 		assertFalse(t1.taskTeamContainsUser(u1));
 	}
 
@@ -249,27 +241,26 @@ class ProjectTests {
 	void testProjectContainsTaskFalse() {
 		assertFalse(p1.getTaskRepository().containsTask(t3));
 	}
-	
+
 	/**
-	 * This method allows removing a Project Collaborator from a Project Team
-	 * and includes removing that Project Collaborator from all Tasks in this Project
+	 * This method allows removing a Project Collaborator from a Project Team and
+	 * includes removing that Project Collaborator from all Tasks in this Project
 	 * 
-	 * projectCollaborator1 is removed from ProjectTeam 
+	 * projectCollaborator1 is removed from ProjectTeam
 	 */
 	@Test
 	void testRemoveCollaboratorFromProjectTeam() {
-		
+
 		p1.addUserToProjectTeam(projectCollaborator1);
 		p1.addUserToProjectTeam(projectCollaborator2);
 		t1.addUserToTask(projectCollaborator1);
 		t1.addUserToTask(projectCollaborator2);
-		
-	
-		p1.removeCollaboratorFromProjectTeam(projectCollaborator1);	
-		
+
+		p1.removeCollaboratorFromProjectTeam(projectCollaborator1);
+
 		assertEquals(1, p1.getProjectTeam().size());
 		assertFalse(projectCollaborator1.equals(p1.getProjectTeam().get(0)));
-		assertFalse(p1.getTaskRepository().getAllTasks(projectCollaborator1).get(0).getTaskTeam().get(0).isTaskWorkerActiveInTask());
+		assertFalse(p1.getTaskRepository().getAllTasks(u2).get(0).getTaskTeam().get(0).isTaskWorkerActiveInTask());
 	}
 
 }

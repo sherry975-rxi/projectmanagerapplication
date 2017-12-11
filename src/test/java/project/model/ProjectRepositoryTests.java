@@ -176,8 +176,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1, 15);
-		project1.addUserToProjectTeam(user2, 15);
+		project1.addUserToProjectTeam(collab1);
+		project1.addUserToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -193,7 +193,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getUserTasks(collab1));
+		assertEquals(expResultTaskList, projectRepository.getUserTasks(user1));
 	}
 
 	/**
@@ -207,8 +207,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1, 15);
-		project1.addUserToProjectTeam(user2, 15);
+		project1.addUserToProjectTeam(collab1);
+		project1.addUserToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -230,7 +230,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getFinishedUserTaskList(collab1));
+		assertEquals(expResultTaskList, projectRepository.getFinishedUserTaskList(user1));
 
 	}
 
@@ -245,8 +245,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1, 15);
-		project1.addUserToProjectTeam(user2, 15);
+		project1.addUserToProjectTeam(collab1);
+		project1.addUserToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -266,7 +266,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task2);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getUnfinishedUserTaskList(collab1));
+		assertEquals(expResultTaskList, projectRepository.getUnfinishedUserTaskList(user1));
 
 	}
 
@@ -281,8 +281,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1, 15);
-		project1.addUserToProjectTeam(user2, 15);
+		project1.addUserToProjectTeam(collab1);
+		project1.addUserToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -314,7 +314,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task2);
 
-		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskList(collab1));
+		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskList(user1));
 	}
 
 	/**
@@ -327,7 +327,7 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1, 15);
+		project1.addUserToProjectTeam(collab1);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -355,9 +355,9 @@ class ProjectRepositoryTests {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		int expResult = (task1.getTimeSpentOntask(collab1) + task2.getTimeSpentOntask(collab1));
+		int expResult = (task1.getTimeSpentOntask(user1) + task2.getTimeSpentOntask(user1));
 
-		assertEquals(expResult, projectRepository.getTotalTimeLastMonthFinishedTasksByUser(collab1), 0.000000001);
+		assertEquals(expResult, projectRepository.getTotalTimeLastMonthFinishedTasksByUser(user1), 0.000000001);
 	}
 
 	/**
@@ -372,7 +372,7 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1, 15);
+		project1.addUserToProjectTeam(collab1);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -400,9 +400,9 @@ class ProjectRepositoryTests {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		int expResult = (task1.getTimeSpentOntask(collab1) + task2.getTimeSpentOntask(collab1)) / 2;
+		int expResult = (task1.getTimeSpentOntask(user1) + task2.getTimeSpentOntask(user1)) / 2;
 
-		assertEquals(expResult, projectRepository.getAverageTimeLastMonthFinishedTasksUser(collab1), 0.000000001);
+		assertEquals(expResult, projectRepository.getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
 	}
 
 	/**
@@ -416,8 +416,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1, 15);
-		project1.addUserToProjectTeam(user2, 15);
+		project1.addUserToProjectTeam(collab1);
+		project1.addUserToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -449,7 +449,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task2);
 		expResultTaskList.add(task1);
 
-		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskListDecreasingOrder(collab1));
+		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskListDecreasingOrder(user1));
 	}
 
 	/**
@@ -463,8 +463,8 @@ class ProjectRepositoryTests {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(user1, 15);
-		project1.addUserToProjectTeam(user2, 15);
+		project1.addUserToProjectTeam(collab1);
+		project1.addUserToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -497,7 +497,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getFinishedTaskListByDecreasingOrder(collab1));
+		assertEquals(expResultTaskList, projectRepository.getFinishedTaskListByDecreasingOrder(user1));
 	}
 
 	/**
