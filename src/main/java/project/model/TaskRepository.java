@@ -241,7 +241,7 @@ public class TaskRepository {
 			}
 		}
 
-		return null;
+		return listOfTasksWithoutCollaboratorsAssigned;
 	}
 
 }
