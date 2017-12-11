@@ -174,6 +174,7 @@ class TaskRepositoryTests {
 		test.add(testTask3);
 		test.add(testTask4);
 
+		System.out.println(taskRepository.getAllTasks(project.getProjectTeam().get(0)));
 		// verify if test list is the same as the user unfinished task list
 		assertEquals(test, taskRepository.getUnFinishedTasks(project.getProjectTeam().get(0)));
 	}
