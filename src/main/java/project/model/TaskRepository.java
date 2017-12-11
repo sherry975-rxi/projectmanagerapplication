@@ -207,4 +207,12 @@ public class TaskRepository {
 		return allTasks;
 	}
 
+	public boolean isThereAnUserWithoutTasks(ProjectCollaborator user) {
+		for (Task otherTask : this.getProjectTaskList()) {
+			if (otherTask.taskTeamContainsUser(user))
+				return false;
+		}
+		return true;
+	}
+
 }
