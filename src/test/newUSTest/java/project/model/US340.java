@@ -1,6 +1,8 @@
 package test.newUSTest.java.project.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +20,19 @@ import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
 import main.java.project.model.User;
 import main.java.project.model.UserRepository;
+
+/**
+ * Tests US340
+ * 
+ * US350: - Como Gestor de projeto quero poder criar uma tarefa.
+ * 
+ * Ao criar uma tarefa posso: - indicar a o esforço estimado (na unidade
+ * definida para o projeto) - data de início prevista - data de conclusão
+ * prevista - custo unitário orçamentado
+ * 
+ * uses method isProjectManager, createTask
+ * 
+ */
 
 class US340 {
 
@@ -45,6 +60,7 @@ class US340 {
 		projectRepository = myCompany.getProjectsRepository();
 
 		userRepository.getAllUsersFromRepository().clear();
+
 		// create user
 		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
@@ -81,13 +97,17 @@ class US340 {
 	@Test
 	void test340() {
 
+		// verifies if userAdmin is Project Manager
+		assertTrue(project.isProjectManager(userAdmin));
+		assertFalse(project.isProjectManager(user1));
+
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
 		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
 		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
-		// create a estimated Task Start Date
+		// create a estimated Task Deadline
 		Calendar taskDeadlineDateTest = Calendar.getInstance();
 		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
