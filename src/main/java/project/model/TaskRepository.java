@@ -59,7 +59,7 @@ public class TaskRepository {
 	 * 
 	 * @return UnfinishedTaskList The list if tasks that are not finished
 	 */
-	public List<Task> getUnFinishedTasks(User user) {
+	public List<Task> getUnFinishedTasks(ProjectCollaborator user) {
 
 		List<Task> unfinishedTaskList = new ArrayList<Task>();
 		unfinishedTaskList.addAll(this.getAllTasks(user));
@@ -79,7 +79,7 @@ public class TaskRepository {
 	 * 
 	 * @return FinishedTaskList The list if tasks that are finished
 	 */
-	public List<Task> getFinishedTaskListofUserInProject(User user) {
+	public List<Task> getFinishedTaskListofUserInProject(ProjectCollaborator user) {
 
 		List<Task> finishedTaskList = new ArrayList<Task>();
 
@@ -106,7 +106,7 @@ public class TaskRepository {
 	 * @return lastMonthFinishedTaskList List of all tasks finished the previous
 	 *         month, by the user
 	 */
-	public List<Task> getFinishedTasksGivenMonth(User user, int monthsAgo) {
+	public List<Task> getFinishedTasksGivenMonth(ProjectCollaborator user, int monthsAgo) {
 		Calendar givenMonth = Calendar.getInstance();
 		givenMonth.add(Calendar.MONTH, -monthsAgo);
 		List<Task> lastMonthFinishedTaskList = new ArrayList<Task>();
@@ -147,13 +147,13 @@ public class TaskRepository {
 	 * @param user
 	 * @return Time spent on last month project user tasks
 	 */
-	public double getTimeSpentOnLastMonthProjectUserTasks(User user) {
+	public double getTimeSpentOnLastMonthProjectUserTasks(ProjectCollaborator user, int i) {
 		List<Task> lastMonth = new ArrayList<Task>();
 		lastMonth.addAll(this.getFinishedTasksGivenMonth(user, 1));
 		double totalTime = 0;
 		for (Task test : lastMonth) {
 			if (test.taskTeamContainsUser(user) && test.getFinishDate() != null) {
-				totalTime = totalTime + test.getTimeSpentOntask(user);
+				totalTime = totalTime + test.getTimeSpentOntask(user, i);
 
 			}
 		}
@@ -197,7 +197,7 @@ public class TaskRepository {
 	 * 
 	 * @return AllTasksList List if all tasks from a user
 	 */
-	public List<Task> getAllTasks(User user) {
+	public List<Task> getAllTasks(ProjectCollaborator user) {
 		List<Task> allTasks = new ArrayList<Task>();
 		for (Task other : this.projectTasks) {
 			if (other.taskTeamContainsUser(user)) {
