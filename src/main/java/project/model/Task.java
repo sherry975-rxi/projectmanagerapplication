@@ -249,8 +249,8 @@ public class Task {
 	public void addUserToTask(ProjectCollaborator user) {
 		if (!taskTeamContainsUser(user)) {
 			this.taskTeam.add(new TaskWorker(user));
-
 		}
+
 	}
 
 	/**
@@ -511,7 +511,24 @@ public class Task {
 	 */
 	public boolean taskTeamContainsUser(ProjectCollaborator user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user) && other.isTaskWorkerActiveInTask()) {
+			if (other.getTaskWorker().equals(user)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * This PRIVATE method checks if a user is active on the task team.
+	 * 
+	 * @param user
+	 *            User to check
+	 * @return True if task team user is active, FALSE if the task team does not
+	 *         have the user active
+	 */
+	public boolean taskTeamUserIsActive(ProjectCollaborator user) {
+		for (TaskWorker other : taskTeam) {
+			if (other.isTaskWorkerActiveInTask()) {
 				return true;
 			}
 		}
