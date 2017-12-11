@@ -20,14 +20,15 @@ import main.java.project.model.User;
 import main.java.project.model.UserRepository;
 
 /**
+ * 
  * @author Group 3
  * 
- *         Test to US370
+ *         test to US375
  * 
- *         US370 - As Project Manager, I want to get a list of completed tasks.
+ *         US375 - As Project Manager, I want to get a list of unstarted tasks.
+ *
  */
-class US370 {
-
+public class US375 {
 	Company myCompany;
 	UserRepository userRepository;
 	User user1;
@@ -91,7 +92,7 @@ class US370 {
 	}
 
 	@Test
-	void testUS307() {
+	void testUS375() {
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
@@ -118,26 +119,13 @@ class US370 {
 		testTask.addUserToTask(project.getProjectTeam().get(0));
 		testTask2.addUserToTask(project.getProjectTeam().get(0));
 
-		// start task
-		testTask.setStartDate(estimatedTaskStartDateTest);
-		testTask2.setStartDate(estimatedTaskStartDateTest);
-
-		// finished task
-		testTask.setFinishDate(taskDeadlineDateTest);
-		testTask2.setFinishDate(taskDeadlineDateTest);
-
-		// set as finished
-		testTask.markTaskAsFinished();
-		testTask2.markTaskAsFinished();
-
 		// Creates a new list, and then added the tasks without any user assigned to
 		// them
-		List<Task> listFinishedTasks = new ArrayList<Task>();
-		listFinishedTasks.add(testTask);
-		listFinishedTasks.add(testTask2);
+		List<Task> listunstartedTasks = new ArrayList<Task>();
+		listunstartedTasks.add(testTask);
+		listunstartedTasks.add(testTask2);
 
-		assertEquals(listFinishedTasks, taskRepository.getFinishedTasks());
+		assertEquals(listunstartedTasks, taskRepository.getUnstartedTasks());
 
 	}
-
 }
