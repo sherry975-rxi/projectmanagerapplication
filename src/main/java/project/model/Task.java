@@ -569,4 +569,15 @@ public class Task {
 		return emptyListOfUsersInTask;
 	}
 
+	/**
+	 * @return TRUE if task team is empty, FALSE if not.
+	 */
+	public boolean isTaskTeamEmpty() {
+
+		if (this.getTaskTeam().isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
 }

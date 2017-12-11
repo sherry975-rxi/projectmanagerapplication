@@ -236,10 +236,24 @@ public class TaskRepository {
 		List<Task> listOfTasksWithoutCollaboratorsAssigned = new ArrayList<Task>();
 
 		for (Task other : this.getProjectTaskList()) {
-			if (other.isTaskTeamEmpty) {
+			if (other.isTaskTeamEmpty()) {
 				listOfTasksWithoutCollaboratorsAssigned.add(other);
 			}
 		}
+
+		return listOfTasksWithoutCollaboratorsAssigned;
+	}
+
+	public List<Task> getFinishedTasks() {
+		List<Task> allFinishedTasks = new ArrayList<Task>();
+
+		for (Task other : this.getProjectTaskList()) {
+			if (other.isFinished()) {
+				allFinishedTasks.add(other);
+			}
+		}
+
+		return allFinishedTasks;
 	}
 
 }

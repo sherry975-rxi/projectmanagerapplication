@@ -362,6 +362,43 @@ class TaskRepositoryTests {
 
 	@Test
 	void testIsThereUserWithoutTasks() {
+		// adds task to task repository of the project
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+
+		// Adds user to testTssk
+		testTask.addUserToTask(project.getProjectTeam().get(1));
+
+		// Checks if the user of index.0 doesnt have any task assigned to him
+		assertTrue(taskRepository.isThereAnUserWithoutTasks(project.getProjectTeam().get(0)));
+
+		// Checks if the user of index.1 has tasks assigned to him
+		assertFalse(taskRepository.isThereAnUserWithoutTasks(project.getProjectTeam().get(1)));
+	}
+
+	@Test
+	void testGetListofTasksWithoutCollaboratorsAssigned() {
+
+		// adds task to task repository of the project
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+
+		// adds User of index 1 to testTask and testTask4
+		testTask.addUserToTask(project.getProjectTeam().get(1));
+		testTask4.addUserToTask(project.getProjectTeam().get(1));
+
+		// Creates a new list, and then added the tasks without any user assigned to
+		// them
+		List<Task> listTasksWithoutUser = new ArrayList<Task>();
+		listTasksWithoutUser.add(testTask2);
+		listTasksWithoutUser.add(testTask3);
+
+		// Checks if both lists have the same tasks
+		assertEquals(listTasksWithoutUser, taskRepository.getListofTasksWithoutCollaboratorsAssigned());
 
 	}
 
