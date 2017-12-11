@@ -216,7 +216,7 @@ public class TaskRepository {
 	 * @return true if the user doesnt have a task. False if he has at least one
 	 *         task
 	 */
-	public boolean isThereAnUserWithoutTasks(ProjectCollaborator user) {
+	public boolean isCollaboratorActiveOnTasks(ProjectCollaborator user) {
 		for (Task otherTask : this.getProjectTaskList()) {
 			if (otherTask.taskTeamContainsUser(user))
 				return false;
