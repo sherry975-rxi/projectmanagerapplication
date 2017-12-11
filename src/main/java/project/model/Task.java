@@ -3,7 +3,6 @@ package main.java.project.model;
 //
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -360,141 +359,142 @@ public class Task {
 	// working days
 	// }
 
-	/**
-	 * This is a private method that checks if a date is a holiday (non working day)
-	 * 
-	 * @param date
-	 * 
-	 * @return TRUE if the day is a holiday FALSE if the day is not a holiday
-	 */
-	private boolean isItHoliday(Calendar date) {
-		int currentDay = date.get(Calendar.DAY_OF_MONTH);
-		int currentMonth = date.get(Calendar.MONTH);
-		int currentYear = date.get(Calendar.YEAR);
-		int[] specialDays = getSpecialHolidaysDate(currentYear);
-
-		int dayEaster = specialDays[1];
-		int monthEaster = specialDays[0];
-
-		int dayCarnival = specialDays[3];
-		int monthCarnival = specialDays[2];
-
-		int dayCorpusChrist = specialDays[5];
-		int monthCorpusChrist = specialDays[4];
-
-		int dayHolyFriday = specialDays[7];
-		int monthHolyFriday = specialDays[6];
-
-		switch (currentDay) {
-		case 1:
-			switch (currentMonth) {
-			case 0:
-				return true;
-			case 10:
-				return true;
-			case 11:
-				return true;
-			}
-
-		case 25:
-			switch (currentMonth) {
-			case 3:
-				return true;
-			case 11:
-				return true;
-
-			}
-
-		case 10:
-			switch (currentMonth) {
-			case 5:
-				return true;
-			}
-
-		case 15:
-			switch (currentMonth) {
-			case 7:
-				return true;
-			}
-
-		case 5:
-			switch (currentMonth) {
-			case 9:
-				return true;
-			}
-
-		case 8:
-			switch (currentMonth) {
-			case 11:
-				return true;
-			}
-		}
-
-		if (currentDay == dayEaster && currentMonth == monthEaster)
-			return true; // Feriado Páscoa - Feriado Móvel
-		if (currentDay == dayCarnival && currentMonth == monthCarnival)
-			return true; // Feriado Carnaval - Feriado Móvel
-		if (currentDay == dayCorpusChrist && currentMonth == monthCorpusChrist)
-			return true; // Corpo Cristo - Feriado Móvel
-		if (currentDay == dayHolyFriday && currentMonth == monthHolyFriday)
-			return true; // Sexta-Feira Santa - Feriado Móvel
-
-		return false;
-	}
-
-	private int[] getSpecialHolidaysDate(int year) {
-
-		int[] specialHolidays = new int[8];
-
-		GregorianCalendar easterDate = new GregorianCalendar();
-		GregorianCalendar carnivalDate = new GregorianCalendar();
-		GregorianCalendar corpusChristDate = new GregorianCalendar();
-		GregorianCalendar holyFridayDate = new GregorianCalendar();
-
-		int a = year % 19;
-		int b = year / 100;
-		int c = year % 100;
-		int d = b / 4;
-		int e = b % 4;
-		int f = (b + 8) / 25;
-		int g = (b - f + 1) / 3;
-		int h = (19 * a + b - d - g + 15) % 30;
-		int i = c / 4;
-		int k = c % 4;
-		int l = (32 + 2 * e + 2 * i - h - k) % 7;
-		int m = (a + 11 * h + 22 * l) / 451;
-		int month = (h + l - 7 * m + 114) / 31;
-		int day = ((h + l - 7 * m + 114) % 31) + 1;
-
-		easterDate.set(Calendar.MONTH, month - 1);
-		easterDate.set(Calendar.DAY_OF_MONTH, day);
-
-		specialHolidays[0] = easterDate.get(Calendar.MONTH);
-		specialHolidays[1] = easterDate.get(Calendar.DAY_OF_MONTH);
-
-		// Carnival - 47 Days Before Easter
-		carnivalDate.setTimeInMillis(easterDate.getTimeInMillis());
-		if (k != 0) {
-			carnivalDate.add(Calendar.DAY_OF_MONTH, -47);
-		} else {
-			carnivalDate.add(Calendar.DAY_OF_MONTH, -46);
-		}
-		specialHolidays[2] = carnivalDate.get(Calendar.MONTH);
-		specialHolidays[3] = carnivalDate.get(Calendar.DAY_OF_MONTH);
-
-		// CorpusChristi 60 days after Easter
-		corpusChristDate.setTimeInMillis(easterDate.getTimeInMillis());
-		corpusChristDate.add(Calendar.DAY_OF_MONTH, 60);
-		specialHolidays[4] = corpusChristDate.get(Calendar.MONTH);
-		specialHolidays[5] = corpusChristDate.get(Calendar.DAY_OF_MONTH);
-
-		holyFridayDate.setTimeInMillis(easterDate.getTimeInMillis());
-		holyFridayDate.add(Calendar.DAY_OF_MONTH, -2);
-		specialHolidays[6] = holyFridayDate.get(Calendar.MONTH);
-		specialHolidays[7] = holyFridayDate.get(Calendar.DAY_OF_MONTH);
-
-		return specialHolidays;
-	}
+	// /**
+	// * This is a private method that checks if a date is a holiday (non working
+	// day)
+	// *
+	// * @param date
+	// *
+	// * @return TRUE if the day is a holiday FALSE if the day is not a holiday
+	// */
+	// private boolean isItHoliday(Calendar date) {
+	// int currentDay = date.get(Calendar.DAY_OF_MONTH);
+	// int currentMonth = date.get(Calendar.MONTH);
+	// int currentYear = date.get(Calendar.YEAR);
+	// int[] specialDays = getSpecialHolidaysDate(currentYear);
+	//
+	// int dayEaster = specialDays[1];
+	// int monthEaster = specialDays[0];
+	//
+	// int dayCarnival = specialDays[3];
+	// int monthCarnival = specialDays[2];
+	//
+	// int dayCorpusChrist = specialDays[5];
+	// int monthCorpusChrist = specialDays[4];
+	//
+	// int dayHolyFriday = specialDays[7];
+	// int monthHolyFriday = specialDays[6];
+	//
+	// switch (currentDay) {
+	// case 1:
+	// switch (currentMonth) {
+	// case 0:
+	// return true;
+	// case 10:
+	// return true;
+	// case 11:
+	// return true;
+	// }
+	//
+	// case 25:
+	// switch (currentMonth) {
+	// case 3:
+	// return true;
+	// case 11:
+	// return true;
+	//
+	// }
+	//
+	// case 10:
+	// switch (currentMonth) {
+	// case 5:
+	// return true;
+	// }
+	//
+	// case 15:
+	// switch (currentMonth) {
+	// case 7:
+	// return true;
+	// }
+	//
+	// case 5:
+	// switch (currentMonth) {
+	// case 9:
+	// return true;
+	// }
+	//
+	// case 8:
+	// switch (currentMonth) {
+	// case 11:
+	// return true;
+	// }
+	// }
+	//
+	// if (currentDay == dayEaster && currentMonth == monthEaster)
+	// return true; // Feriado Páscoa - Feriado Móvel
+	// if (currentDay == dayCarnival && currentMonth == monthCarnival)
+	// return true; // Feriado Carnaval - Feriado Móvel
+	// if (currentDay == dayCorpusChrist && currentMonth == monthCorpusChrist)
+	// return true; // Corpo Cristo - Feriado Móvel
+	// if (currentDay == dayHolyFriday && currentMonth == monthHolyFriday)
+	// return true; // Sexta-Feira Santa - Feriado Móvel
+	//
+	// return false;
+	// }
+	//
+	// private int[] getSpecialHolidaysDate(int year) {
+	//
+	// int[] specialHolidays = new int[8];
+	//
+	// GregorianCalendar easterDate = new GregorianCalendar();
+	// GregorianCalendar carnivalDate = new GregorianCalendar();
+	// GregorianCalendar corpusChristDate = new GregorianCalendar();
+	// GregorianCalendar holyFridayDate = new GregorianCalendar();
+	//
+	// int a = year % 19;
+	// int b = year / 100;
+	// int c = year % 100;
+	// int d = b / 4;
+	// int e = b % 4;
+	// int f = (b + 8) / 25;
+	// int g = (b - f + 1) / 3;
+	// int h = (19 * a + b - d - g + 15) % 30;
+	// int i = c / 4;
+	// int k = c % 4;
+	// int l = (32 + 2 * e + 2 * i - h - k) % 7;
+	// int m = (a + 11 * h + 22 * l) / 451;
+	// int month = (h + l - 7 * m + 114) / 31;
+	// int day = ((h + l - 7 * m + 114) % 31) + 1;
+	//
+	// easterDate.set(Calendar.MONTH, month - 1);
+	// easterDate.set(Calendar.DAY_OF_MONTH, day);
+	//
+	// specialHolidays[0] = easterDate.get(Calendar.MONTH);
+	// specialHolidays[1] = easterDate.get(Calendar.DAY_OF_MONTH);
+	//
+	// // Carnival - 47 Days Before Easter
+	// carnivalDate.setTimeInMillis(easterDate.getTimeInMillis());
+	// if (k != 0) {
+	// carnivalDate.add(Calendar.DAY_OF_MONTH, -47);
+	// } else {
+	// carnivalDate.add(Calendar.DAY_OF_MONTH, -46);
+	// }
+	// specialHolidays[2] = carnivalDate.get(Calendar.MONTH);
+	// specialHolidays[3] = carnivalDate.get(Calendar.DAY_OF_MONTH);
+	//
+	// // CorpusChristi 60 days after Easter
+	// corpusChristDate.setTimeInMillis(easterDate.getTimeInMillis());
+	// corpusChristDate.add(Calendar.DAY_OF_MONTH, 60);
+	// specialHolidays[4] = corpusChristDate.get(Calendar.MONTH);
+	// specialHolidays[5] = corpusChristDate.get(Calendar.DAY_OF_MONTH);
+	//
+	// holyFridayDate.setTimeInMillis(easterDate.getTimeInMillis());
+	// holyFridayDate.add(Calendar.DAY_OF_MONTH, -2);
+	// specialHolidays[6] = holyFridayDate.get(Calendar.MONTH);
+	// specialHolidays[7] = holyFridayDate.get(Calendar.DAY_OF_MONTH);
+	//
+	// return specialHolidays;
+	// }
 
 	/*
 	 * (non-Javadoc)
