@@ -272,9 +272,9 @@ public class Task {
 	 *            User to remove from the list of users in a task
 	 * 
 	 */
-	public void removeUserFromTask(User user) {
+	public void removeUserFromTask(ProjectCollaborator user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user) && other.isTaskWorkerActiveInTask()) {
+			if (other.getTaskWorker().equals(user.getCollaboratorUserData()) && other.isTaskWorkerActiveInTask()) {
 				other.addFinishDateForTaskWorker();
 			}
 		}
@@ -283,9 +283,9 @@ public class Task {
 	public int getTimeSpentOntask(ProjectCollaborator user) {
 
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user)) {
+			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
 
-				return other.getHoursSpent();
+				return other.getTotalHoursSpent();
 			}
 		}
 

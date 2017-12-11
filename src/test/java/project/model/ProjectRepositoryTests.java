@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.User;
@@ -22,6 +23,9 @@ class ProjectRepositoryTests {
 	User user1;
 	User user2;
 	User user3;
+	ProjectCollaborator collab1;
+	ProjectCollaborator collab2;
+	ProjectCollaborator collab3;
 	Project project1;
 	Project project2;
 	Project project3;
@@ -40,6 +44,9 @@ class ProjectRepositoryTests {
 		user1 = new User("name", "email", "idNumber", "function", "123456789");
 		user2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
 		user2 = new User("name6", "email6", "idNumber6", "function6", "987654271");
+		collab1 = new ProjectCollaborator(user1, 1);
+		collab2 = new ProjectCollaborator(user2, 2);
+		collab3 = new ProjectCollaborator(user3, 3);
 		project1 = new Project(0, "name3", "description3", user1);
 		project2 = new Project(2, "name4", "description5", user2);
 		project3 = new Project(3, "name5", "description5", user3);
@@ -178,15 +185,15 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(user1);
-		task2.addUserToTask(user2);
-		task3.addUserToTask(user1);
+		task1.addUserToTask(collab1);
+		task2.addUserToTask(collab2);
+		task3.addUserToTask(collab1);
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getUserTasks(user1));
+		assertEquals(expResultTaskList, projectRepository.getUserTasks(collab1));
 	}
 
 	/**
@@ -209,9 +216,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(user1);
-		task2.addUserToTask(user1);
-		task3.addUserToTask(user1);
+		task1.addUserToTask(collab1);
+		task2.addUserToTask(collab1);
+		task3.addUserToTask(collab1);
 
 		// Marks tasks as finished
 		task1.markTaskAsFinished();
@@ -223,7 +230,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getFinishedUserTaskList(user1));
+		assertEquals(expResultTaskList, projectRepository.getFinishedUserTaskList(collab1));
 
 	}
 
@@ -247,9 +254,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(user1);
-		task2.addUserToTask(user1);
-		task3.addUserToTask(user1);
+		task1.addUserToTask(collab1);
+		task2.addUserToTask(collab1);
+		task3.addUserToTask(collab1);
 
 		// Marks tasks as finished
 		task1.markTaskAsFinished();
@@ -259,7 +266,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task2);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getUnfinishedUserTaskList(user1));
+		assertEquals(expResultTaskList, projectRepository.getUnfinishedUserTaskList(collab1));
 
 	}
 
@@ -283,9 +290,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(user1);
-		task2.addUserToTask(user1);
-		task3.addUserToTask(user1);
+		task1.addUserToTask(collab1);
+		task2.addUserToTask(collab1);
+		task3.addUserToTask(collab1);
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
@@ -307,7 +314,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task2);
 
-		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskList(user1));
+		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskList(collab1));
 	}
 
 	/**
@@ -327,8 +334,8 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task2);
 
 		// Adds user to tasks.
-		task1.addUserToTask(user1);
-		task2.addUserToTask(user1);
+		task1.addUserToTask(collab1);
+		task2.addUserToTask(collab1);
 
 		// Sets a startDate for the tasks
 
@@ -348,9 +355,9 @@ class ProjectRepositoryTests {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		Double expResult = (task1.getTimeSpentOntask(user1) + task2.getTimeSpentOntask(user1));
+		int expResult = (task1.getTimeSpentOntask(collab1) + task2.getTimeSpentOntask(collab1));
 
-		assertEquals(expResult, projectRepository.getTotalTimeLastMonthFinishedTasksByUser(user1), 0.000000001);
+		assertEquals(expResult, projectRepository.getTotalTimeLastMonthFinishedTasksByUser(collab1), 0.000000001);
 	}
 
 	/**
@@ -372,8 +379,8 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task2);
 
 		// Adds user to tasks.
-		task1.addUserToTask(user1);
-		task2.addUserToTask(user1);
+		task1.addUserToTask(collab1);
+		task2.addUserToTask(collab1);
 
 		// Sets a startDate for the tasks
 
@@ -393,9 +400,9 @@ class ProjectRepositoryTests {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		Double expResult = (task1.getTimeSpentOntask(user1) + task2.getTimeSpentOntask(user1)) / 2;
+		int expResult = (task1.getTimeSpentOntask(collab1) + task2.getTimeSpentOntask(collab1)) / 2;
 
-		assertEquals(expResult, projectRepository.getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
+		assertEquals(expResult, projectRepository.getAverageTimeLastMonthFinishedTasksUser(collab1), 0.000000001);
 	}
 
 	/**
@@ -418,9 +425,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(user1);
-		task2.addUserToTask(user1);
-		task3.addUserToTask(user1);
+		task1.addUserToTask(collab1);
+		task2.addUserToTask(collab1);
+		task3.addUserToTask(collab1);
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
@@ -442,7 +449,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task2);
 		expResultTaskList.add(task1);
 
-		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskListDecreasingOrder(user1));
+		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskListDecreasingOrder(collab1));
 	}
 
 	/**
@@ -465,9 +472,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(user1);
-		task2.addUserToTask(user1);
-		task3.addUserToTask(user1);
+		task1.addUserToTask(collab1);
+		task2.addUserToTask(collab1);
+		task3.addUserToTask(collab1);
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
@@ -490,7 +497,7 @@ class ProjectRepositoryTests {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getFinishedTaskListByDecreasingOrder(user1));
+		assertEquals(expResultTaskList, projectRepository.getFinishedTaskListByDecreasingOrder(collab1));
 	}
 
 	/**

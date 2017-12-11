@@ -112,13 +112,13 @@ public class ProjectRepository {
 	 * 
 	 * @return Returns the user task list.
 	 */
-	public List<Task> getUserTasks(User specificUser) {
+	public List<Task> getUserTasks(ProjectCollaborator collab) {
 		List<Task> tasksOfSpecificUser = new ArrayList<Task>();
 
 		for (int indexProject = 0; indexProject < this.projectsRepository.size(); indexProject++) {
-			if (this.projectsRepository.get(indexProject).containsUser(specificUser)) {
-				tasksOfSpecificUser.addAll(
-						this.projectsRepository.get(indexProject).getTaskRepository().getAllTasks(specificUser));
+			if (this.projectsRepository.get(indexProject).containsUser(collab.getCollaboratorUserData())) {
+				tasksOfSpecificUser
+						.addAll(this.projectsRepository.get(indexProject).getTaskRepository().getAllTasks(collab));
 			}
 		}
 
@@ -134,12 +134,12 @@ public class ProjectRepository {
 	 * 
 	 * @return List of finished tasks of a specific user
 	 */
-	public List<Task> getFinishedUserTaskList(User user) {
+	public List<Task> getFinishedUserTaskList(ProjectCollaborator collab) {
 
 		List<Task> finishedTasksOfSpecificUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
-			if (test.containsUser(user)) {
-				finishedTasksOfSpecificUser.addAll(test.getTaskRepository().getFinishedTasksGivenMonth(user, -1));
+			if (test.containsUser(collab.getCollaboratorUserData())) {
+				finishedTasksOfSpecificUser.addAll(test.getTaskRepository().getFinishedTasksGivenMonth(collab, -1));
 			}
 		}
 		return finishedTasksOfSpecificUser;
@@ -153,12 +153,12 @@ public class ProjectRepository {
 	 * @param user
 	 * @return List of unfinished tasks of a specific user
 	 */
-	public List<Task> getUnfinishedUserTaskList(User user) {
+	public List<Task> getUnfinishedUserTaskList(ProjectCollaborator collab) {
 
 		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
-			if (test.containsUser(user)) {
-				unfinishedTasksOfSpecificUser.addAll(test.getTaskRepository().getUnFinishedTasks(user));
+			if (test.containsUser(collab.getCollaboratorUserData())) {
+				unfinishedTasksOfSpecificUser.addAll(test.getTaskRepository().getUnFinishedTasks(collab));
 			}
 		}
 		return unfinishedTasksOfSpecificUser;
@@ -177,12 +177,12 @@ public class ProjectRepository {
 	 *         decreasing order.
 	 */
 
-	public List<Task> getLastMonthFinishedUserTaskList(User user) {
+	public List<Task> getLastMonthFinishedUserTaskList(ProjectCollaborator collab) {
 
 		List<Task> lastMonthFinishedTaskListByUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
-			if (test.containsUser(user)) {
-				lastMonthFinishedTaskListByUser.addAll(test.getTaskRepository().getFinishedTasksGivenMonth(user, 1));
+			if (test.containsUser(collab.getCollaboratorUserData())) {
+				lastMonthFinishedTaskListByUser.addAll(test.getTaskRepository().getFinishedTasksGivenMonth(collab, 1));
 			}
 		}
 		return lastMonthFinishedTaskListByUser;
@@ -197,12 +197,12 @@ public class ProjectRepository {
 	 * 
 	 * @return Returns total time spent doing tasks in the last month.
 	 */
-	public double getTotalTimeLastMonthFinishedTasksByUser(User user) {
+	public double getTotalTimeLastMonthFinishedTasksByUser(ProjectCollaborator collab) {
 
 		double totalTime = 0;
 		for (Project test : this.projectsRepository) {
-			if (test.containsUser(user)) {
-				totalTime = totalTime + test.getTaskRepository().getTimeSpentOnLastMonthProjectUserTasks(user);
+			if (test.containsUser(collab.getCollaboratorUserData())) {
+				totalTime = totalTime + test.getTaskRepository().getTimeSpentOnLastMonthProjectUserTasks(collab, 1);
 			}
 		}
 
@@ -219,11 +219,11 @@ public class ProjectRepository {
 	 * 
 	 * @return Returns the average time spent by finished task in the last month.
 	 */
-	public double getAverageTimeLastMonthFinishedTasksUser(User user) {
+	public double getAverageTimeLastMonthFinishedTasksUser(ProjectCollaborator collab) {
 
-		double totalTime = this.getTotalTimeLastMonthFinishedTasksByUser(user);
+		double totalTime = this.getTotalTimeLastMonthFinishedTasksByUser(collab);
 
-		double average = totalTime / this.getLastMonthFinishedUserTaskList(user).size();
+		double average = totalTime / this.getLastMonthFinishedUserTaskList(collab).size();
 
 		return average;
 	}
@@ -237,10 +237,10 @@ public class ProjectRepository {
 	 * @return Returns a list with the tasks finished last month by decreasing
 	 *         order.
 	 */
-	public List<Task> getLastMonthFinishedUserTaskListDecreasingOrder(User user) {
+	public List<Task> getLastMonthFinishedUserTaskListDecreasingOrder(ProjectCollaborator collab) {
 
 		List<Task> LastMonthFinishedUserTaskListDecreasingOrder = new ArrayList<Task>();
-		LastMonthFinishedUserTaskListDecreasingOrder.addAll(this.getLastMonthFinishedUserTaskList(user));
+		LastMonthFinishedUserTaskListDecreasingOrder.addAll(this.getLastMonthFinishedUserTaskList(collab));
 
 		return this.sortTaskListDecreasingOrder(LastMonthFinishedUserTaskListDecreasingOrder);
 
@@ -258,10 +258,10 @@ public class ProjectRepository {
 	 * @return Returns a list with the all the user finished tasks sorted by
 	 *         decreasing order.
 	 */
-	public List<Task> getFinishedTaskListByDecreasingOrder(User user) {
+	public List<Task> getFinishedTaskListByDecreasingOrder(ProjectCollaborator collab) {
 
 		List<Task> FinishedUserTaskListDecreasingOrder = new ArrayList<Task>();
-		FinishedUserTaskListDecreasingOrder.addAll(this.getFinishedUserTaskList(user));
+		FinishedUserTaskListDecreasingOrder.addAll(this.getFinishedUserTaskList(collab));
 
 		return this.sortTaskListDecreasingOrder(FinishedUserTaskListDecreasingOrder);
 	}
