@@ -374,10 +374,10 @@ class TaskRepositoryTests {
 		testTask.addUserToTask(project.getProjectTeam().get(1));
 
 		// Checks if the user of index.0 doesnt have any task assigned to him
-		assertTrue(taskRepository.isThereAnUserWithoutTasks(project.getProjectTeam().get(0)));
+		assertTrue(taskRepository.isCollaboratorActiveOnTasks(project.getProjectTeam().get(0)));
 
 		// Checks if the user of index.1 has tasks assigned to him
-		assertFalse(taskRepository.isThereAnUserWithoutTasks(project.getProjectTeam().get(1)));
+		assertFalse(taskRepository.isCollaboratorActiveOnTasks(project.getProjectTeam().get(1)));
 	}
 
 	@Test

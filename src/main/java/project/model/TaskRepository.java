@@ -216,12 +216,12 @@ public class TaskRepository {
 	 * @return true if the user doesnt have a task. False if he has at least one
 	 *         task
 	 */
-	public boolean isThereAnUserWithoutTasks(ProjectCollaborator user) {
+	public boolean isCollaboratorActiveOnTasks(ProjectCollaborator user) {
 		for (Task otherTask : this.getProjectTaskList()) {
 			if (otherTask.taskTeamContainsUser(user))
-				return false;
+				return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -292,6 +292,26 @@ public class TaskRepository {
 			}
 		}
 		return allUnstartedTasks;
+	}
+
+	/**
+	 * Returns a list of the tasks which are unfinished but which deadline has
+	 * already passed
+	 * 
+	 * @return expiredTasks
+	 */
+	public List<Task> getExpiredTasks() {
+		Calendar today = Calendar.getInstance();
+		List<Task> expiredTasks = new ArrayList<Task>();
+		for (Task other : this.projectTasks) {
+			if (!other.isFinished()) {
+				if (other.getTaskDeadline().get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR)
+						|| other.getTaskDeadline().get(Calendar.YEAR) < today.get(Calendar.YEAR)) {
+					expiredTasks.add(other);
+				}
+			}
+		}
+		return expiredTasks;
 	}
 
 }
