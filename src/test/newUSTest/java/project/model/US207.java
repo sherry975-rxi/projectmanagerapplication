@@ -54,6 +54,8 @@ class US207 {
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
 		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
+		// add user to project team
+		project.addUserToProjectTeam(user1, 2);
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 
@@ -94,19 +96,20 @@ class US207 {
 		taskRepository.addProjectTask(testTask);
 
 		// Adds user1 to the Task
-		testTask.addUserToTask(user1);
+		testTask.addUserToTask(project.getProjectTeam().get(0));
 
 		// Updates the time spent on task by user
-		testTask.updateTimeUserSpentOnTask(user1, 1.0);
+		testTask.getTaskTeam().get(0).setHoursSpent(1);
 
 		// Checks if both times are the same
-		assertEquals(1.0, testTask.getTimeSpentOntask(user1), 1.0);
+		assertEquals(1.0, testTask.getTimeSpentOntask(project.getProjectTeam().get(0)), 0.001);
 
 		// Updates the time spent on task by user
-		testTask.updateTimeUserSpentOnTask(user1, 2.0);
+		testTask.getTaskTeam().get(0).setHoursSpent(2);
 
 		// Checks if both times are the same
-		assertEquals(1.0, testTask.getTimeSpentOntask(user1), 3.0);
+
+		assertEquals(2.0, testTask.getTimeSpentOntask(project.getProjectTeam().get(0)), 0.001);
 
 	}
 
