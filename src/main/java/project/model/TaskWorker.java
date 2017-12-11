@@ -50,16 +50,37 @@ public class TaskWorker {
 	 */
 	public boolean isTaskWorkerActiveInTask() {
 		if (this.startDates.size() != this.finishDates.size()) {
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
-	 * Adds Finish Date to task worker list
+	 * Adds a Finish Date to the task worker list
 	 */
 	public void addFinishDateForTaskWorker() {
 		this.finishDates.add(Calendar.getInstance());
+	}
+
+	/**
+	 * Adds a Start Date to the task worker list
+	 */
+	public void addStartDateForTaskWorker() {
+		this.startDates.add(Calendar.getInstance());
+	}
+
+	/**
+	 * Adds a cost to the task worker list
+	 */
+	public void addCostForTaskWorker(int c) {
+		this.cost.add(c);
+	}
+
+	/**
+	 * Adds hours spent to the task worker list
+	 */
+	public void addHoursSpentForTaskWorker() {
+		this.hoursSpent.add(0);
 	}
 
 	/**

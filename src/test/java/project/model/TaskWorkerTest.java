@@ -8,28 +8,40 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 
 class TaskWorkerTest {
 
 	User userTester;
+	ProjectCollaborator collabTester;
 	TaskWorker workerTester;
 
 	@BeforeEach
 	void setUp() {
 		userTester = new User("myname", "myemail", "myidnumber", "myfunction", "myphone");
-		workerTester = new TaskWorker(userTester);
+		collabTester = new ProjectCollaborator(userTester, 5);
+		workerTester = new TaskWorker(collabTester);
 	}
 
 	@AfterEach
 	void tearDown() {
 		userTester = null;
+		collabTester = null;
 		workerTester = null;
 	}
 
 	/**
-	 * Tests if the state of the collaborator is true when he is created
+	 * Tests if the user info is correctly added to the task worker
+	 */
+	@Test
+	final void testUserInformationInTaskWorker() {
+		assertEquals(userTester, workerTester.getTaskWorker());
+	}
+
+	/**
+	 * Tests if the worker is active in the task
 	 */
 	@Test
 	final void testIsCollaboratorInTask() {
@@ -37,23 +49,42 @@ class TaskWorkerTest {
 	}
 
 	/**
-	 * Tests if the state of the collaborator is the one set prior to the assertion
+	 * Tests if the worker is NOT active in the task
 	 */
 	@Test
 	final void testIsCollaboratorNotInTask() {
-		workerTester.setCollaboratorStateInTask(false);
+		workerTester.addFinishDateForTaskWorker();
 		assertFalse(workerTester.isTaskWorkerActiveInTask());
 	}
 
 	/**
-	 * Tests if the collaborator is created with 0 hours spent on task, and if it
-	 * changes when it is set as another value
+	 * Tests if a start date was added
 	 */
 	@Test
-	final void testSetAndGetHoursSpent() {
-		assertEquals(0, workerTester.getHoursSpent());
-		workerTester.setHoursSpent(15);
-		assertEquals(15, workerTester.getHoursSpent());
+	final void testAddStartDate() {
+		workerTester.addStartDateForTaskWorker();
+		assertTrue(workerTester.isTaskWorkerActiveInTask());
+	}
+
+	/**
+	 * Tests if a cost was added
+	 */
+	@Test
+	final void testAddCost() {
+		workerTester.addCostForTaskWorker(4);
+		;
+		assertEquals(4, workerTester.getCost(1));
+	}
+
+	/**
+	 * Tests if a new hours spent was added, and if it is set correctly as well
+	 */
+	@Test
+	final void testAddHoursSpent() {
+		workerTester.addHoursSpentForTaskWorker();
+		workerTester.setHoursSpent(5);
+		assertEquals(0, workerTester.getHoursSpent(0));
+		assertEquals(5, workerTester.getHoursSpent(1));
 	}
 
 }
