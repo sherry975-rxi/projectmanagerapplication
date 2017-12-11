@@ -256,4 +256,27 @@ public class TaskRepository {
 		return allFinishedTasks;
 	}
 
+	public List<Task> getUnFinishedTasks() {
+		List<Task> allUnFinishedTasks = new ArrayList<Task>();
+
+		for (Task other : this.getProjectTaskList()) {
+			if (!other.isFinished() && other.getStartDate() != null) {
+				allUnFinishedTasks.add(other);
+			}
+
+		}
+		return allUnFinishedTasks;
+	}
+
+	public List<Task> getUnstartedTasks() {
+		List<Task> allUnstartedTasks = new ArrayList<Task>();
+
+		for (Task other : this.getProjectTaskList()) {
+			if (other.getStartDate() == null) {
+				allUnstartedTasks.add(other);
+			}
+		}
+		return allUnstartedTasks;
+	}
+
 }
