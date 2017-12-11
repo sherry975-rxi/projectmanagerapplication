@@ -59,7 +59,7 @@ public class TaskRepository {
 	 * 
 	 * @return UnfinishedTaskList The list if tasks that are not finished
 	 */
-	public List<Task> getUnFinishedTasks(ProjectCollaborator user) {
+	public List<Task> getUnFinishedTasksFromUser(ProjectCollaborator user) {
 
 		List<Task> unfinishedTaskList = new ArrayList<Task>();
 		unfinishedTaskList.addAll(this.getAllTasks(user));

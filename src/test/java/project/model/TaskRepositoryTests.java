@@ -155,7 +155,7 @@ class TaskRepositoryTests {
 	}
 
 	@Test
-	void testGetUnFinishedTasks() {
+	void testGetUnFinishedTasksFromUser() {
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
@@ -175,7 +175,7 @@ class TaskRepositoryTests {
 		test.add(testTask4);
 
 		// verify if test list is the same as the user unfinished task list
-		assertEquals(test, taskRepository.getUnFinishedTasks(project.getProjectTeam().get(0)));
+		assertEquals(test, taskRepository.getUnFinishedTasksFromUser(project.getProjectTeam().get(0)));
 	}
 
 	@Test
@@ -399,6 +399,11 @@ class TaskRepositoryTests {
 
 		// Checks if both lists have the same tasks
 		assertEquals(listTasksWithoutUser, taskRepository.getListofTasksWithoutCollaboratorsAssigned());
+
+	}
+
+	@Test
+	void testGetUnFinishedTasks() {
 
 	}
 
