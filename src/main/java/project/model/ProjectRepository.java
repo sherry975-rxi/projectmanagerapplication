@@ -158,7 +158,7 @@ public class ProjectRepository {
 		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<Task>();
 		for (Project test : this.projectsRepository) {
 			if (test.containsUser(collab.getCollaboratorUserData())) {
-				unfinishedTasksOfSpecificUser.addAll(test.getTaskRepository().getUnFinishedTasks(collab));
+				unfinishedTasksOfSpecificUser.addAll(test.getTaskRepository().getUnFinishedTasksFromUser(collab));
 			}
 		}
 		return unfinishedTasksOfSpecificUser;

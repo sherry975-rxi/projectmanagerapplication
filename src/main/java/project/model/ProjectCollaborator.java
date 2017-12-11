@@ -67,15 +67,38 @@ public class ProjectCollaborator {
 		return toCompare.equals(this.collaborator);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
-	public boolean equals(Object toCompare) {
-		boolean result = false;
-		if (toCompare instanceof ProjectCollaborator) {
-			ProjectCollaborator collaborator1 = (ProjectCollaborator) toCompare;
-			if (this.collaborator.equals(collaborator1.collaborator)) {
-				result = true;
-			}
-		}
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((collaborator == null) ? 0 : collaborator.hashCode());
 		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProjectCollaborator other = (ProjectCollaborator) obj;
+		if (collaborator == null) {
+			if (other.collaborator != null)
+				return false;
+		} else if (!collaborator.equals(other.collaborator))
+			return false;
+		return true;
 	}
 }

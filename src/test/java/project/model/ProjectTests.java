@@ -178,7 +178,7 @@ class ProjectTests {
 	@Test
 	void testGetUnfinishedTasks() {
 		t1.addUserToTask(u1);
-		assertEquals(t1, p1.getTaskRepository().getUnFinishedTasks(u1).get(0));
+		assertEquals(t1, p1.getTaskRepository().getUnFinishedTasksFromUser(u1).get(0));
 	}
 
 	@Test

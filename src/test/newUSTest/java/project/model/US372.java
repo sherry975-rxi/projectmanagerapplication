@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +18,15 @@ import main.java.project.model.TaskRepository;
 import main.java.project.model.User;
 import main.java.project.model.UserRepository;
 
-/**
- * @author Group 3
- * 
- *         Test to US370
- * 
- *         US370 - As Project Manager, I want to get a list of completed tasks.
- */
-class US370 {
+class US372 {
+
+	/**
+	 * @author Group 3
+	 * 
+	 *         Test to US372
+	 * 
+	 *         US372 - As Project Manager, I want to get a list of completed tasks.
+	 */
 
 	Company myCompany;
 	UserRepository userRepository;
@@ -37,6 +37,8 @@ class US370 {
 	TaskRepository taskRepository;
 	Task testTask;
 	Task testTask2;
+	Task testTask3;
+	Task testTask4;
 
 	@BeforeEach
 	void setUp() {
@@ -91,7 +93,8 @@ class US370 {
 	}
 
 	@Test
-	void testUS307() {
+	void us372() {
+
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
@@ -104,39 +107,37 @@ class US370 {
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
-		// create 2 task
+
+		// create a start date
+
+		Calendar startDate = Calendar.getInstance();
+		startDate.set(Calendar.YEAR, 2017);
+		startDate.set(Calendar.MONTH, Calendar.DECEMBER);
+		startDate.set(Calendar.DAY_OF_MONTH, 11);
+		startDate.set(Calendar.HOUR_OF_DAY, 14);
+
+		// create 4 tasks
 		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
 		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
+		testTask3 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		testTask4 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
 
-		// Adds Tasks to TaskRepository
-		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
+		// Marks 2 tasks as finished
+		testTask3.markTaskAsFinished();
+		testTask4.markTaskAsFinished();
 
-		// Adds user1 to the Task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		// Sets start date for testTask and testTask3
+		testTask.setStartDate(startDate);
+		testTask3.setStartDate(startDate);
 
-		// start task
-		testTask.setStartDate(estimatedTaskStartDateTest);
-		testTask2.setStartDate(estimatedTaskStartDateTest);
+		ArrayList<Task> listOfUnfinishedTasks = new ArrayList<Task>();
 
-		// finished task
-		testTask.setFinishDate(taskDeadlineDateTest);
-		testTask2.setFinishDate(taskDeadlineDateTest);
-
-		// set as finished
-		testTask.markTaskAsFinished();
-		testTask2.markTaskAsFinished();
-
-		// Creates a new list, and then added the tasks without any user assigned to
-		// them
-		List<Task> listFinishedTasks = new ArrayList<Task>();
-		listFinishedTasks.add(testTask);
-		listFinishedTasks.add(testTask2);
-
-		assertEquals(listFinishedTasks, taskRepository.getFinishedTasks());
+		// Sees if the two lists are the same
+		assertEquals(listOfUnfinishedTasks, taskRepository.getUnFinishedTasks());
 
 	}
 

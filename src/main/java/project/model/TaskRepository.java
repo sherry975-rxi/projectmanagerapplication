@@ -59,7 +59,7 @@ public class TaskRepository {
 	 * 
 	 * @return UnfinishedTaskList The list if tasks that are not finished
 	 */
-	public List<Task> getUnFinishedTasks(ProjectCollaborator user) {
+	public List<Task> getUnFinishedTasksFromUser(ProjectCollaborator user) {
 
 		List<Task> unfinishedTaskList = new ArrayList<Task>();
 		unfinishedTaskList.addAll(this.getAllTasks(user));
@@ -216,12 +216,12 @@ public class TaskRepository {
 	 * @return true if the user doesnt have a task. False if he has at least one
 	 *         task
 	 */
-	public boolean isThereAnUserWithoutTasks(ProjectCollaborator user) {
+	public boolean isCollaboratorActiveOnTasks(ProjectCollaborator user) {
 		for (Task otherTask : this.getProjectTaskList()) {
 			if (otherTask.taskTeamContainsUser(user))
-				return false;
+				return true;
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -244,6 +244,11 @@ public class TaskRepository {
 		return listOfTasksWithoutCollaboratorsAssigned;
 	}
 
+	/**
+	 * This method creates a list with all finished tasks in project.
+	 * 
+	 * @return allFinishedTasks
+	 */
 	public List<Task> getFinishedTasks() {
 		List<Task> allFinishedTasks = new ArrayList<Task>();
 
@@ -254,6 +259,59 @@ public class TaskRepository {
 		}
 
 		return allFinishedTasks;
+	}
+
+	/**
+	 * this method create a list whit all unfinished tasks in project.
+	 * 
+	 * @return allUnFinishedTasks
+	 */
+	public List<Task> getUnFinishedTasks() {
+		List<Task> allUnFinishedTasks = new ArrayList<Task>();
+
+		for (Task other : this.getProjectTaskList()) {
+			if (!other.isFinished() && other.getStartDate() != null) {
+				allUnFinishedTasks.add(other);
+			}
+
+		}
+		return allUnFinishedTasks;
+	}
+
+	/**
+	 * this method create a list with all unstarted tasks in project.
+	 * 
+	 * @return allUnstartedTasks
+	 */
+	public List<Task> getUnstartedTasks() {
+		List<Task> allUnstartedTasks = new ArrayList<Task>();
+
+		for (Task other : this.getProjectTaskList()) {
+			if (other.getStartDate() == null) {
+				allUnstartedTasks.add(other);
+			}
+		}
+		return allUnstartedTasks;
+	}
+
+	/**
+	 * Returns a list of the tasks which are unfinished but which deadline has
+	 * already passed
+	 * 
+	 * @return expiredTasks
+	 */
+	public List<Task> getExpiredTasks() {
+		Calendar today = Calendar.getInstance();
+		List<Task> expiredTasks = new ArrayList<Task>();
+		for (Task other : this.projectTasks) {
+			if (!other.isFinished()) {
+				if (other.getTaskDeadline().get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR)
+						|| other.getTaskDeadline().get(Calendar.YEAR) < today.get(Calendar.YEAR)) {
+					expiredTasks.add(other);
+				}
+			}
+		}
+		return expiredTasks;
 	}
 
 }
