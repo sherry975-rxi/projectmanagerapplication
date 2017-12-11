@@ -199,7 +199,7 @@ public class TaskRepository {
 	 */
 	public List<Task> getAllTasks(ProjectCollaborator user) {
 		List<Task> allTasks = new ArrayList<Task>();
-		for (Task other : this.projectTasks) {
+		for (Task other : this.getProjectTaskList()) {
 			if (other.taskTeamContainsUser(user)) {
 				allTasks.add(other);
 			}
