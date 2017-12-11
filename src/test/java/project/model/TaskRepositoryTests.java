@@ -27,6 +27,7 @@ class TaskRepositoryTests {
 	UserRepository userRepository;
 	User user1;
 	User userAdmin;
+	User user2;
 	Project project;
 	ProjectRepository projectRepository;
 	TaskRepository taskRepository;
@@ -50,17 +51,24 @@ class TaskRepositoryTests {
 		// create user
 		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
+		user2 = userRepository.createUser("Joao", "joao@gmail.com", "002", "collaborator", "920000000", "Rua",
+				"2402-00", "Test", "Testo", "Testistan");
 		// create user admin
 		userAdmin = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 		// add user to user list
 		userRepository.addUserToUserRepository(user1);
+		userRepository.addUserToUserRepository(user2);
 		userRepository.addUserToUserRepository(userAdmin);
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
+		user2.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
-		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
+		project = projectRepository.createProject("name3", "description4", userAdmin);
+		// add user to project team
+		project.addUserToProjectTeam(user1, 2);
+		project.addUserToProjectTeam(user2, 3);
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 		// create a estimated Task Start Date
@@ -154,10 +162,10 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// add de user to the task
-		testTask.addUserToTask(user1);
-		testTask2.addUserToTask(user1);
-		testTask3.addUserToTask(user1);
-		testTask4.addUserToTask(user1);
+		testTask.addUserToTask(project.getProjectTeam().get(0));
+		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		testTask3.addUserToTask(project.getProjectTeam().get(0));
+		testTask4.addUserToTask(project.getProjectTeam().get(0));
 
 		// create a list and add task to compare to unfinished task list
 		List<Task> test = new ArrayList<Task>();
@@ -167,7 +175,7 @@ class TaskRepositoryTests {
 		test.add(testTask4);
 
 		// verify if test list is the same as the user unfinished task list
-		assertEquals(test, taskRepository.getUnFinishedTasks(user1));
+		assertEquals(test, taskRepository.getUnFinishedTasks(project.getProjectTeam().get(0)));
 	}
 
 	@Test
