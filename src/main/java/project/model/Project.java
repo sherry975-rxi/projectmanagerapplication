@@ -131,18 +131,19 @@ public class Project {
 	}
 
 	/**
-	 * Add user to project team if is missing from the projectTeam.
+	 * Add user to project team if is missing from the projectTeam. The user to add is transformed in a Project Collaborator when the cost of user in project is associated with the user. 
 	 * 
-	 * @param toAdd
+	 * @param userToAdd
 	 *            User to add to the Project Team
 	 * 
 	 * @param costPerEffort
-	 *            Added User's cost per effort
+	 *            Added User's cost per effort in Project
 	 */
-	public void addUserToProjectTeam(User toAdd, int costPerEffort) {
-		ProjectCollaborator newAddition = new ProjectCollaborator(toAdd, costPerEffort);
-		if (!containsUser(toAdd)) {
-			this.projectTeam.add(newAddition);
+	public void addUserToProjectTeam(User userToAdd, int costPerEffort) {
+		
+		ProjectCollaborator newAddedProjectCollaborator = new ProjectCollaborator(userToAdd, costPerEffort);
+		if (!containsUser(userToAdd)) {
+			this.projectTeam.add(newAddedProjectCollaborator);
 		}
 	}
 
@@ -277,10 +278,10 @@ public class Project {
 
 		if(this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
 			collaboratorToRemoveFromProjectTeam.setState(false);
-			projectTeam.remove(collaboratorToRemoveFromProjectTeam);
+			projectTeam.remove(collaboratorToRemoveFromProjectTeam); //removes collaborator from ProjectTeam
 
 			for (Task otherTask : this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)){
-				otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam);
+				otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); //Deactivates the Collaborator that is removed from ProjectCollaborator team
 			}	
 		}
 

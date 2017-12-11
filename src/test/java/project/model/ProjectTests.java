@@ -16,8 +16,11 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.EffortUnit;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.Task;
 import main.java.project.model.User;
+import main.java.project.model.UserRepository;
+import sun.font.CreatedFontTracker;
 
 class ProjectTests {
 
@@ -38,14 +41,14 @@ class ProjectTests {
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
 		p1 = new Project(1, "name3", "description4", u1);
-		//t1 = p1.getTaskRepository().createTask("description");
+		t1 = p1.getTaskRepository().createTask("description", 0, null, null, 0);
 		p1.getTaskRepository().addProjectTask(t1);
-		//t2 = p1.getTaskRepository().createTask("description2");
+		t2 = p1.getTaskRepository().createTask("description2", 0, null, null, 0);
 		p1.getTaskRepository().addProjectTask(t2);
-		//t2.markTaskAsFinished();
+		t2.markTaskAsFinished();
 		p2 = new Project(2, "name1", "description4", u2);
-		//t3 = p1.getTaskRepository().createTask("description3");
-		//t3.markTaskAsFinished();
+		t3 = p1.getTaskRepository().createTask("description3", 0, null, null, 0);
+		t3.markTaskAsFinished();
 
 	}
 	
@@ -232,6 +235,20 @@ class ProjectTests {
 	@Test
 	void testProjectContainsTaskFalse() {
 		assertFalse(p1.getTaskRepository().containsTask(t3));
+	}
+	
+	/**
+	 * This method allows removing a Project Collaborator from a Project Team
+	 * and includes removing that Project Collaborator from all Tasks in this Project
+	 */
+	@Test
+	void testRemoveCollaboratorFromProjectTeam() {
+		
+		p1.addUserToProjectTeam(u1, 27);
+		p1.addUserToProjectTeam(u2, 39);
+		
+		
+		
 	}
 
 }
