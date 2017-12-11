@@ -4,12 +4,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.User;
 
 class ProjectCollaboratorTests {
+
+	User tester, testerTwo;
+	ProjectCollaborator testMoar, testEvenMoar;
+
+	@BeforeEach
+	void SetUp() {
+		tester = new User("pepe", "trollolol@mail.com", "12", "hue", "12356");
+		testerTwo = new User("pepe", "lolno@mail.com", "12", "hue", "12356");
+		testMoar = new ProjectCollaborator(tester, 100000);
+		testEvenMoar = new ProjectCollaborator(testerTwo, 100000);
+	}
+
+	@AfterEach
+	void BreakDown() {
+		tester = null;
+		testerTwo = null;
+		testMoar = null;
+		testEvenMoar = null;
+	}
 
 	/**
 	 * This test creates a user, then a Project Collaborator using its data. First
@@ -21,10 +42,6 @@ class ProjectCollaboratorTests {
 	@Test
 	void testProjectCollaborator() {
 
-		User tester = new User("pepe", "trollolol@mail.com", "12", "hue", "12356");
-
-		ProjectCollaborator testMoar = new ProjectCollaborator(tester, 100000);
-
 		assertTrue(testMoar.isCollaboratorInProject());
 		testMoar.setState(false);
 		assertFalse(testMoar.isCollaboratorInProject());
@@ -35,6 +52,20 @@ class ProjectCollaboratorTests {
 
 		assertEquals(tester, testMoar.getCollaboratorUserData());
 
+	}
+
+	@Test
+	void testIsUser() {
+		assertTrue(testMoar.isUser(tester));
+
+		assertFalse(testMoar.isUser(testerTwo));
+	}
+
+	@Test
+	void testEquals() {
+		assertTrue(testMoar.equals(testMoar));
+
+		assertFalse(testMoar.equals(testEvenMoar));
 	}
 
 }

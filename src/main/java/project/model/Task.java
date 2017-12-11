@@ -249,8 +249,19 @@ public class Task {
 	public void addUserToTask(ProjectCollaborator user) {
 		if (!taskTeamContainsUser(user)) {
 			this.taskTeam.add(new TaskWorker(user));
+		}
+
+		else if (taskTeamUserIsActive(user)) {
+			for (TaskWorker other : taskTeam) {
+				if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
+					other.addCostForTaskWorker(user.getCollaboratorCost());
+					other.addHoursSpentForTaskWorker();
+					other.addStartDateForTaskWorker();
+				}
+			}
 
 		}
+
 	}
 
 	/**
@@ -269,14 +280,16 @@ public class Task {
 		}
 	}
 
-	public int getTimeSpentOntask(ProjectCollaborator user, int i) {
-		int result = 0;
+	public int getTimeSpentOntask(ProjectCollaborator user) {
+
 		for (TaskWorker other : taskTeam) {
 			if (other.getTaskWorker().equals(user)) {
-				result = other.getHoursSpent(i);
+
+				return other.getHoursSpent();
 			}
 		}
-		return result;
+
+		return 0;
 	}
 
 	// /**
@@ -511,8 +524,28 @@ public class Task {
 	 */
 	public boolean taskTeamContainsUser(ProjectCollaborator user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user) && other.isTaskWorkerActiveInTask()) {
+			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * This PRIVATE method checks if a user is active on the task team.
+	 * 
+	 * @param user
+	 *            User to check
+	 * @return True if task team user is active, FALSE if the task team does not
+	 *         have the user active
+	 */
+	public boolean taskTeamUserIsActive(ProjectCollaborator user) {
+		for (TaskWorker other : taskTeam) {
+			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
+				if (other.isTaskWorkerActiveInTask()) {
+					return true;
+				}
+
 			}
 		}
 		return false;
