@@ -362,7 +362,15 @@ class TaskRepositoryTests {
 
 	@Test
 	void testIsThereUserWithoutTasks() {
+		// add task to task repository of the project
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+		testTask.addUserToTask(project.getProjectTeam().get(1));
 
+		assertTrue(taskRepository.isThereAnUserWithoutTasks(project.getProjectTeam().get(0)));
+		assertFalse(taskRepository.isThereAnUserWithoutTasks(project.getProjectTeam().get(1)));
 	}
 
 }
