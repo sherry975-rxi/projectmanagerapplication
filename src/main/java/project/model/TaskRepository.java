@@ -244,6 +244,11 @@ public class TaskRepository {
 		return listOfTasksWithoutCollaboratorsAssigned;
 	}
 
+	/**
+	 * This method creates a list with all finished tasks in project.
+	 * 
+	 * @return allFinishedTasks
+	 */
 	public List<Task> getFinishedTasks() {
 		List<Task> allFinishedTasks = new ArrayList<Task>();
 
@@ -256,6 +261,11 @@ public class TaskRepository {
 		return allFinishedTasks;
 	}
 
+	/**
+	 * this method create a list whit all unfinished tasks in project.
+	 * 
+	 * @return allUnFinishedTasks
+	 */
 	public List<Task> getUnFinishedTasks() {
 		List<Task> allUnFinishedTasks = new ArrayList<Task>();
 
@@ -268,6 +278,11 @@ public class TaskRepository {
 		return allUnFinishedTasks;
 	}
 
+	/**
+	 * this method create a list with all unstarted tasks in project.
+	 * 
+	 * @return allUnstartedTasks
+	 */
 	public List<Task> getUnstartedTasks() {
 		List<Task> allUnstartedTasks = new ArrayList<Task>();
 
