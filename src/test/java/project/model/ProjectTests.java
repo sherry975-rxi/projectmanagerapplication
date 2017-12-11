@@ -27,6 +27,8 @@ class ProjectTests {
 	Company c1;
 	User u1;
 	User u2;
+	Calendar estimatedStartDate;
+	Calendar taskDeadline;
 	Task t1;
 	Task t2;
 	Task t3;
@@ -41,7 +43,11 @@ class ProjectTests {
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
 		p1 = new Project(1, "name3", "description4", u1);
-		t1 = p1.getTaskRepository().createTask("description", 0, null, null, 0);
+		estimatedStartDate = Calendar.getInstance();
+		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
+		t1 = p1.getTaskRepository().createTask("description", 0, estimatedStartDate, taskDeadline, 0);
 		p1.getTaskRepository().addProjectTask(t1);
 		t2 = p1.getTaskRepository().createTask("description2", 0, null, null, 0);
 		p1.getTaskRepository().addProjectTask(t2);
