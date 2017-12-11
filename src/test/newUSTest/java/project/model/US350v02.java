@@ -1,6 +1,8 @@
 package test.newUSTest.java.project.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,17 @@ import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.User;
 
 class US350v02 {
+	
+	/**
+	 * Tests US350v02
+	 * 
+	 * US350v02: - Como Gestor de projeto, quero poder adicionar colaboradores à equipa do projeto. Ao adicionar um colaborador tenho de definir:
+	 * - custo do colaborador por unidade de esforço do projeto.
+	 * 
+	 * uses method getProjectTeam and addUserToProjectTeam
+	 * 
+	 */
+	
 	Company c1;
 	User u1;
 	User u2;
@@ -26,10 +39,12 @@ class US350v02 {
 
 	@BeforeEach
 	void setUp() {
+		// create company and clear ProjectRepository and UsersRepository 
 		c1 = Company.getTheInstance();
 		c1.getProjectsRepository().getAllProjects().clear();
 		c1.getUsersRepository().getAllUsersFromRepository().clear();
 
+		// create users
 		u1 = c1.getUsersRepository().createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",
 				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
 		u2 = c1.getUsersRepository().createUser("Joaquim", "joaquim@gmail.com", "126", "Empregado", "940000000",
@@ -75,16 +90,14 @@ class US350v02 {
 		Project p1 = null;
 	}
 
-	/**
-	 * This test will respond to Us350:
-	 * 
-	 * US350 - As Project Manager, I want to be able to add collaborators to the
-	 * project team.
-	 *
-	 */
+	
 	@Test
 	public void test() {
 
+		//tests that project manager is u2 and not other user (for example u4)
+		assertTrue(p1.isProjectManager(u2));
+		assertFalse(p1.isProjectManager(u4));
+		
 		// add collaborators to project
 		p1.addUserToProjectTeam(u3, 120);
 		p1.addUserToProjectTeam(u4, 130);
@@ -98,6 +111,8 @@ class US350v02 {
 		ProjectCollaborator collaborator2 = new ProjectCollaborator(u4, 130);
 		ProjectCollaborator collaborator3 = new ProjectCollaborator(u5, 150);
 
+		
+		
 		// Creates a new list and adds user to that list, to compare with userList
 		// inside ProjectTeam
 		List<ProjectCollaborator> testUs350 = new ArrayList<ProjectCollaborator>();
