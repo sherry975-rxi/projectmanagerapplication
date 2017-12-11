@@ -291,10 +291,11 @@ class TaskRepositoryTests {
 		testTask.setFinishDate(finishDateTest);
 
 		// set work time in task
-		testTask.updateTimeUserSpentOnTask(user1, 1.0);
+
+		testTask.getTaskTeam().get(0).setHoursSpent(5);
 
 		// Checks if the 2 values are equal
-		assertEquals(1.0, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(project.getProjectTeam().get(0)),
+		assertEquals(5.0, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(project.getProjectTeam().get(0)),
 				0.001);
 
 	}
@@ -356,6 +357,11 @@ class TaskRepositoryTests {
 
 		// See if the two taskLists have the same tasks
 		assertEquals(testList, taskRepository.getAllTasks(project.getProjectTeam().get(0)));
+
+	}
+
+	@Test
+	void testIsThereUserWithoutTasks() {
 
 	}
 

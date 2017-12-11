@@ -207,12 +207,39 @@ public class TaskRepository {
 		return allTasks;
 	}
 
+	/**
+	 * 
+	 * This method checks if a given user doesnt have any task assigned to him
+	 * 
+	 * @param user
+	 *            Project Collaborator
+	 * @return true if the user doesnt have a task. False if he has at least one
+	 *         task
+	 */
 	public boolean isThereAnUserWithoutTasks(ProjectCollaborator user) {
 		for (Task otherTask : this.getProjectTaskList()) {
 			if (otherTask.taskTeamContainsUser(user))
 				return false;
 		}
 		return true;
+	}
+
+	/**
+	 * This method tells every task within the project task repository to check if
+	 * its team is empty.
+	 * 
+	 * @return listOfTasksWithoutCollaboratorsAssigned List with all the tasks with
+	 *         no collaborators assigned.
+	 */
+	public List<Task> getListofTasksWithoutCollaboratorsAssigned() {
+
+		List<Task> listOfTasksWithoutCollaboratorsAssigned = new ArrayList<Task>();
+
+		for (Task other : this.getProjectTaskList()) {
+			if (other.isTaskTeamEmpty) {
+				listOfTasksWithoutCollaboratorsAssigned.add(other);
+			}
+		}
 	}
 
 }
