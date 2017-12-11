@@ -251,6 +251,17 @@ public class Task {
 			this.taskTeam.add(new TaskWorker(user));
 		}
 
+		else if (taskTeamUserIsActive(user)) {
+			for (TaskWorker other : taskTeam) {
+				if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
+					other.addCostForTaskWorker(user.getCollaboratorCost());
+					other.addHoursSpentForTaskWorker();
+					other.addStartDateForTaskWorker();
+				}
+			}
+
+		}
+
 	}
 
 	/**
@@ -272,7 +283,7 @@ public class Task {
 	public int getTimeSpentOntask(ProjectCollaborator user, int i) {
 		int result = 0;
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user)) {
+			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
 				result = other.getHoursSpent(i);
 			}
 		}
@@ -511,7 +522,7 @@ public class Task {
 	 */
 	public boolean taskTeamContainsUser(ProjectCollaborator user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user)) {
+			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
 				return true;
 			}
 		}
@@ -528,8 +539,11 @@ public class Task {
 	 */
 	public boolean taskTeamUserIsActive(ProjectCollaborator user) {
 		for (TaskWorker other : taskTeam) {
-			if (other.isTaskWorkerActiveInTask()) {
-				return true;
+			if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
+				if (other.isTaskWorkerActiveInTask()) {
+					return true;
+				}
+
 			}
 		}
 		return false;
