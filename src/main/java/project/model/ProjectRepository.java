@@ -202,7 +202,7 @@ public class ProjectRepository {
 		double totalTime = 0;
 		for (Project test : this.projectsRepository) {
 			if (test.containsUser(collab.getCollaboratorUserData())) {
-				totalTime = totalTime + test.getTaskRepository().getTimeSpentOnLastMonthProjectUserTasks(collab, 1);
+				totalTime = totalTime + test.getTaskRepository().getTimeSpentOnLastMonthProjectUserTasks(collab);
 			}
 		}
 

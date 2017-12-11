@@ -147,7 +147,7 @@ public class TaskRepository {
 	 * @param user
 	 * @return Time spent on last month project user tasks
 	 */
-	public double getTimeSpentOnLastMonthProjectUserTasks(ProjectCollaborator user, int i) {
+	public double getTimeSpentOnLastMonthProjectUserTasks(ProjectCollaborator user) {
 		List<Task> lastMonth = new ArrayList<Task>();
 		lastMonth.addAll(this.getFinishedTasksGivenMonth(user, 1));
 		double totalTime = 0;

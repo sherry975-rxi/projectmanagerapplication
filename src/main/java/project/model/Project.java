@@ -113,8 +113,9 @@ public class Project {
 	}
 
 	/**
-	 * Check if the user provided is the project manager or not. This method exists because when adding a user to a
-	 * UserTeam, the user cannot be the project manager.
+	 * Check if the user provided is the project manager or not. This method exists
+	 * because when adding a user to a UserTeam, the user cannot be the project
+	 * manager.
 	 * 
 	 * @param toCheck
 	 *            User provided to check if he is the Project Manager
@@ -140,7 +141,7 @@ public class Project {
 	 */
 	public void addUserToProjectTeam(User toAdd, int costPerEffort) {
 		ProjectCollaborator newAddition = new ProjectCollaborator(toAdd, costPerEffort);
-		if (!containsUser(toAdd)) { 
+		if (!containsUser(toAdd)) {
 			this.projectTeam.add(newAddition);
 		}
 	}
@@ -169,8 +170,7 @@ public class Project {
 	 * 
 	 * @param toCompare
 	 *            Project to compare to the current Project
-	 * @return result 
-	 * 				TRUE if the projects are equal (equal idCode) FALSE if they
+	 * @return result TRUE if the projects are equal (equal idCode) FALSE if they
 	 *         are not equal (different idCode)
 	 * 
 	 */
@@ -204,7 +204,8 @@ public class Project {
 	// }
 
 	/**
-	 * Checks if the user is in the Project Team. A project collaborator contains a User that is a collaborator and has a cost associated to him
+	 * Checks if the user is in the Project Team. A project collaborator contains a
+	 * User that is a collaborator and has a cost associated to him
 	 * 
 	 * @param user
 	 *            User to add as ProjectCollaborator
@@ -255,7 +256,7 @@ public class Project {
 
 		for (ProjectCollaborator other : this.getProjectTeam()) {
 			for (Task otherTask : this.taskRepository.getProjectTaskList()) {
-				if (otherTask.taskTeamContainsUser(other)) //needs to check if collaborator is active
+				if (otherTask.taskTeamContainsUser(other)) // needs to check if collaborator is active
 					inactiveCollaborators.remove(other);
 				break;
 			}
@@ -263,22 +264,27 @@ public class Project {
 		return inactiveCollaborators;
 
 	}
-	
+
 	/**
 	 * This method allows removing a Project Collaborator from a Project Team
 	 * 
 	 * @param collaboratorToRemoveFromProjectTeam
-	 * 										Collaborator to remove from project
+	 *            Collaborator to remove from project
 	 */
-	public void removeCollaboratorFromProjectTeam (ProjectCollaborator collaboratorToRemoveFromProjectTeam) {
-		
-		if(this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
+	public void removeCollaboratorFromProjectTeam(ProjectCollaborator collaboratorToRemoveFromProjectTeam) {
+
+		if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
 			collaboratorToRemoveFromProjectTeam.setState(false);
 			projectTeam.remove(collaboratorToRemoveFromProjectTeam);
-			this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam).removeUserFromTask(collaboratorToRemoveFromProjectTeam);
+			List<Task> allTasks = new ArrayList<Task>();
+			allTasks.addAll(allTasks);
+			for (Task other : allTasks) {
+				if (other.taskTeamContainsUser(collaboratorToRemoveFromProjectTeam)) {
+					other.removeUserFromTask(collaboratorToRemoveFromProjectTeam);
+				}
+			}
 		}
-		
-		
+
 	}
 
 }
