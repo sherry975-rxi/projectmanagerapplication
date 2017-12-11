@@ -244,4 +244,16 @@ public class TaskRepository {
 		return null;
 	}
 
+	public List<Task> getFinishedTasks() {
+		List<Task> allFinishedTasks = new ArrayList<Task>();
+
+		for (Task other : this.getProjectTaskList()) {
+			if (other.isFinished()) {
+				allFinishedTasks.add(other);
+			}
+		}
+
+		return allFinishedTasks;
+	}
+
 }
