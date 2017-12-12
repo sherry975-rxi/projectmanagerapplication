@@ -14,26 +14,26 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.User;
 
+/**
+ * Test the registration of a User, and its incorporation in a list of Users
+ * 
+ * US101 - Como Visitante da aplicação de gestão de projetos, eu pretendo
+ * registar-me como utilizador de forma a poder usufruir das suas várias
+ * funcionalidades. (PS.: Reescrita relativamente à semana anterior).
+ * 
+ * uses methods addUserToUserList(toAddUsers), createUser(), isEmailValid(),
+ * getUserList
+ * 
+ * 
+ * @author Rita Machado
+ * @author João Bessa
+ * 
+ */
 class US101Tests {
-
-	/**
-	 * Test the registration of a User, and its incorporation in a list of Users
-	 * 
-	 * US101 - Como Visitante da aplicação de gestão de projetos, eu pretendo
-	 * registar-me como utilizador de forma a poder usufruir das suas várias
-	 * funcionalidades. (PS.: Reescrita relativamente à semana anterior).
-	 * 
-	 * uses methods addUserToUserList(toAddUsers), createUser(), isEmailValid(),
-	 * getUserList
-	 * 
-	 * 
-	 * @author Rita Machado
-	 * @author João Bessa
-	 * 
-	 */
 
 	Company Critical;
 	User user1, uFalse, uRepeat, user2;
+	List<User> testList;
 
 	@BeforeEach
 	void setUp() {
@@ -49,6 +49,7 @@ class US101Tests {
 		user2 = Critical.getUsersRepository().createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey",
 				"920000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
+		testList = new ArrayList<User>();
 	}
 
 	@AfterEach
@@ -59,6 +60,7 @@ class US101Tests {
 		user2 = null;
 		uFalse = null;
 		uRepeat = null;
+		testList = null;
 	}
 
 	/**
@@ -105,8 +107,6 @@ class US101Tests {
 		assertEquals(Critical.getUsersRepository().getAllUsersFromRepository().size(), 1);
 		Critical.getUsersRepository().addUserToUserRepository(user2);
 		assertEquals(Critical.getUsersRepository().getAllUsersFromRepository().size(), 2);
-
-		List<User> testList = new ArrayList<User>();
 
 		testList.add(user1);
 		testList.add(user2);
