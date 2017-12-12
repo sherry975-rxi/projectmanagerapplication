@@ -272,32 +272,36 @@ public class Project {
 	 * @Return returns a List of Inactive Collaborators
 	 *
 	 */
-//	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
-//		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<ProjectCollaborator>();
-//
-//		inactiveCollaborators.addAll(this.getProjectTeam());
-//
-//		for (ProjectCollaborator other : this.getProjectTeam()) {
-//			for (Task otherTask : this.taskRepository.getProjectTaskList()) {
-//				if (otherTask.taskTeamContainsUser(other.getCollaboratorUserData())) // needs to check if collaborator
-//																						// is active
-//					inactiveCollaborators.remove(other);
-//				break;
-//			}
-//		}
-//		return inactiveCollaborators;
-//
-//	}
-	
+	// public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
+	// List<ProjectCollaborator> inactiveCollaborators = new
+	// ArrayList<ProjectCollaborator>();
+	//
+	// inactiveCollaborators.addAll(this.getProjectTeam());
+	//
+	// for (ProjectCollaborator other : this.getProjectTeam()) {
+	// for (Task otherTask : this.taskRepository.getProjectTaskList()) {
+	// if (otherTask.taskTeamContainsUser(other.getCollaboratorUserData())) // needs
+	// to check if collaborator
+	// // is active
+	// inactiveCollaborators.remove(other);
+	// break;
+	// }
+	// }
+	// return inactiveCollaborators;
+	//
+	// }
+
 	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
-        List<ProjectCollaborator> inactiveCollaborators = new ArrayList<ProjectCollaborator>();
-        inactiveCollaborators.addAll(this.getProjectTeam());
-        for (ProjectCollaborator other : this.getProjectTeam()) {
-            if (this.taskRepository.isCollaboratorActiveOnTasks(other.getCollaboratorUserData())) // needs to check if collaborator is active
-                inactiveCollaborators.remove(other);
-        }
-        return inactiveCollaborators;
-    }
+		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<ProjectCollaborator>();
+		inactiveCollaborators.addAll(this.getProjectTeam());
+		for (ProjectCollaborator other : this.getProjectTeam()) {
+			if (this.taskRepository.isCollaboratorActiveOnTasks(other.getCollaboratorUserData())) // needs to check if
+																									// collaborator is
+																									// active
+				inactiveCollaborators.remove(other);
+		}
+		return inactiveCollaborators;
+	}
 
 	/**
 	 * This method allows removing a Project Collaborator from a Project Team and
@@ -325,6 +329,24 @@ public class Project {
 			}
 		}
 
+	}
+
+	/**
+	 * This method calculates the sum of the values reported to the task until the
+	 * moment
+	 * 
+	 * @return The value reported to the project until the moment
+	 */
+
+	public double getTotalCostReportedToProjectUntilNow() {
+		double reportedCost = 0.0;
+
+		for (ProjectCollaborator projectCollab : this.getProjectTeam()) {
+			for (Task task : taskRepository.getAllTasks(projectCollab.getCollaboratorUserData())) {
+				reportedCost += task.getReportedBudgetToTheTask();
+			}
+		}
+		return reportedCost;
 	}
 
 }

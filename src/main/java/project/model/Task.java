@@ -605,4 +605,22 @@ public class Task {
 
 		return false;
 	}
+
+	/**
+	 * This method returns the total budget reported to task from all TaskWorkers
+	 * 
+	 * @return Returns a double with the value of the total cost reported to the
+	 *         task
+	 */
+	public double getReportedBudgetToTheTask() {
+		double taskBudgetReported = 0.0;
+
+		for (TaskWorker taskWorker : this.getTaskTeam()) {
+			for (int i = 0; i < taskWorker.getCostListSize(); i++) {
+				taskBudgetReported += taskWorker.getCost(i) * taskWorker.getHoursSpent(i);
+			}
+		}
+		return taskBudgetReported;
+	}
+
 }

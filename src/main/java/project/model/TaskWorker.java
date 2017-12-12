@@ -159,4 +159,12 @@ public class TaskWorker {
 		this.hoursSpent.set(this.hoursSpent.size() - 1, hoursSpent);
 	}
 
+	/**
+	 * Gets the size of the cost list
+	 * 
+	 */
+	public int getCostListSize() {
+		return this.cost.size();
+	}
+
 }
