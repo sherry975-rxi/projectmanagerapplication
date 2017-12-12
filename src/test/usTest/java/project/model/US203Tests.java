@@ -14,12 +14,9 @@ import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectCollaborator;
-import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
-import main.java.project.model.TaskRepository;
 import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
-import main.java.project.model.UserRepository;
 
 class US203Tests {
 
@@ -55,7 +52,7 @@ class US203Tests {
 	Task task1;
 	Task task2;
 	Task task3;
-	
+
 	@BeforeEach
 	void setUp() {
 
@@ -63,14 +60,13 @@ class US203Tests {
 		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
 		myCompany.getProjectsRepository().getAllProjects().clear();
 
-		user2 = myCompany.getUsersRepository().createUser("João", "user2@gmail.com", "001", "Manager", "930000000", "rua doutor antónio",
-				"7689-654", "porto", "porto", "portugal");
+		user2 = myCompany.getUsersRepository().createUser("João", "user2@gmail.com", "001", "Manager", "930000000",
+				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
 		user3 = myCompany.getUsersRepository().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
-		
+
 		project1 = myCompany.getProjectsRepository().createProject("name3", "description4", user2);
-		
-					
+
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
@@ -91,26 +87,26 @@ class US203Tests {
 		taskExpiredDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		task1 = project1.getTaskRepository().createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
-		task2 = project1.getTaskRepository().createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
-		task3 = project1.getTaskRepository().createTask("Test moar yeh", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
-		
+		task1 = project1.getTaskRepository().createTask("Test dis agen pls", 10, estimatedTaskStartDateTest,
+				taskDeadlineDateTest, 10);
+		task2 = project1.getTaskRepository().createTask("Test dis agen pls", 10, estimatedTaskStartDateTest,
+				taskDeadlineDateTest, 10);
+		task3 = project1.getTaskRepository().createTask("Test moar yeh", 10, estimatedTaskStartDateTest,
+				taskDeadlineDateTest, 10);
+
 		user2.setUserProfile(Profile.COLLABORATOR);
 		user3.setUserProfile(Profile.COLLABORATOR);
-		
+
 		projCollab1 = project1.createProjectCollaborator(user3, 250);
-				
+
 		projCollab2 = project1.createProjectCollaborator(user2, 120);
-		
+
 		projCollab3 = project1.createProjectCollaborator(user2, 200);
-		
+
 		taskWorker1 = task1.createTaskWorker(projCollab1);
-		
+
 		taskWorker2 = task2.createTaskWorker(projCollab2);
-		
+
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
 
 		project1.addUserToProjectTeam(projCollab2);
@@ -125,10 +121,10 @@ class US203Tests {
 		task1.markTaskAsFinished();
 
 	}
-	
+
 	@AfterEach
 	void tearDown() {
-		
+
 		myCompany = null;
 		user2 = null;
 		user3 = null;
@@ -141,18 +137,18 @@ class US203Tests {
 		task1 = null;
 		task2 = null;
 		task3 = null;
-	
+
 	}
-	
-	
+
 	@Test
 	void testGetUserTaskList() {
-		
-		//List<User> userList = new ArrayList<User>();
-		//userList.add(user2);
-		
-		//assertEquals(userList, userRepository.addUserToUserRepository(user2));
-		//assertEquals(myCompany.getUsersRepository().addUserToUserRepository(user3), userList);
+
+		// List<User> userList = new ArrayList<User>();
+		// userList.add(user2);
+
+		// assertEquals(userList, userRepository.addUserToUserRepository(user2));
+		// assertEquals(myCompany.getUsersRepository().addUserToUserRepository(user3),
+		// userList);
 
 		// Creates testList and compares it to the Unfinished task List
 		List<Task> testList = new ArrayList<Task>();

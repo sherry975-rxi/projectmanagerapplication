@@ -15,7 +15,9 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.Task;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 
 class US204Tests {
@@ -28,43 +30,55 @@ class US204Tests {
 	 * 
 	 * uses methods addProjectTask, addUserToTask, isProjectManager,
 	 * getProjectTeam().contains()
-	 * 
-	 * 
 	 */
-	Company company;
+	
+	Company myCompany;
 	User newUserA;
 	User newUserB;
-	Project project;
+	Project project1;
 	Task taskA;
 	Task taskB;
+	ProjectCollaborator projCollab1; 
+	TaskWorker taskWorker1;
 
 	@BeforeEach
 	void setUp() {
-		company = Company.getTheInstance();
-		company.getUsersRepository().getAllUsersFromRepository().clear();
-		company.getProjectsRepository().getAllProjects().clear();
+		myCompany = Company.getTheInstance();
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		myCompany.getProjectsRepository().getAllProjects().clear();
 
-		newUserA = company.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
+		//Creation of two users: newUserA and newUserB		
+		newUserA = myCompany.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
 				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
-		newUserB = company.getUsersRepository().createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000",
+		
+		newUserB = myCompany.getUsersRepository().createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000",
 				"StreetB", "ZipCodeB", "CityB", "DistrictB", "CountryB");
-		project = company.getProjectsRepository().createProject("name3", "description4", newUserA);
+		
+		//Creation of one project and newUser4 set as the project manager
+		project1 = myCompany.getProjectsRepository().createProject("name3", "description4", newUserA);
+		
+		//Creation of two tasks: taskA and taskB		
 		Calendar startDateA = Calendar.getInstance();
 		startDateA.clear();
 		startDateA.set(2017, 05, 15);
 		Calendar finishDateA = Calendar.getInstance();
 		finishDateA.clear();
 		finishDateA.set(2017, 05, 16);
-		taskA = project.getTaskRepository().createTask("Test dis pls", 100, startDateA, finishDateA, 15000);
-		taskB = project.getTaskRepository().createTask("Test dis agen pls", 100, startDateA, finishDateA, 15000);
+		taskA = project1.getTaskRepository().createTask("Test dis pls", 100, startDateA, finishDateA, 15000);
+		taskB = project1.getTaskRepository().createTask("Test dis agen pls", 100, startDateA, finishDateA, 15000);
+		
+		projCollab1 = project1.createProjectCollaborator(newUserB, 250);
+		
+		taskWorker1 = taskA.createTaskWorker(projCollab1);
+		
 	}
 
 	@AfterEach
 	void tearDown() {
-		company = null;
+		myCompany = null;
 		newUserA = null;
 		newUserB = null;
-		project = null;
+		project1 = null;
 		taskA = null;
 		taskB = null;
 
@@ -78,18 +92,18 @@ class US204Tests {
 	 */
 	@Test
 	void testCheckProjectManagerAndAddTaskToProject() {
-		company.getUsersRepository().addUserToUserRepository(newUserA);
-		company.getUsersRepository().addUserToUserRepository(newUserB);
+		myCompany.getUsersRepository().addUserToUserRepository(newUserA);
+		myCompany.getUsersRepository().addUserToUserRepository(newUserB);
 		newUserA.setUserProfile(Profile.COLLABORATOR);
 		newUserB.setUserProfile(Profile.COLLABORATOR);
 
-		company.getProjectsRepository().addProjectToProjectRepository(project);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
 
-		assertTrue(project.isProjectManager(newUserA));
-		assertFalse(project.isProjectManager(newUserB));
+		assertTrue(project1.isProjectManager(newUserA));
+		assertFalse(project1.isProjectManager(newUserB));
 
-		project.getTaskRepository().addProjectTask(taskA);
-		project.getTaskRepository().addProjectTask(taskB);
+		project1.getTaskRepository().addProjectTask(taskA);
+		project1.getTaskRepository().addProjectTask(taskB);
 
 	}
 
@@ -107,24 +121,24 @@ class US204Tests {
 		newUserA.setUserProfile(Profile.COLLABORATOR);
 		newUserB.setUserProfile(Profile.COLLABORATOR);
 
-		company.getProjectsRepository().addProjectToProjectRepository(project);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
 
-		project.addUserToProjectTeam(newUserB, 5);
+		project1.addUserToProjectTeam(projCollab1);
 
-		project.getTaskRepository().addProjectTask(taskA);
-		project.getTaskRepository().addProjectTask(taskB);
+		project1.getTaskRepository().addProjectTask(taskA);
+		project1.getTaskRepository().addProjectTask(taskB);
 
 		// verifies if project team contains User 3
-		assertTrue(project.containsUser(newUserB));
+		assertTrue(project1.containsUser(newUserB));
 
 		// assigns both tasks to User 3 then checks their unfinished task list
-		taskA.addUserToTask(newUserB);
-		taskB.addUserToTask(newUserB);
+		taskA.addUserToTask(taskWorker1);
+		taskB.addUserToTask(taskWorker1);
 
 		List<Task> testList = new ArrayList<Task>();
 		testList.add(taskA);
 		testList.add(taskB);
-		assertEquals(company.getProjectsRepository().getUnfinishedUserTaskList(newUserB), testList);
+		assertEquals(myCompany.getProjectsRepository().getUnfinishedUserTaskList(newUserB), testList);
 
 		// tests taskTeamContainsUser method
 		assertTrue(taskA.taskTeamContainsUser(newUserB));

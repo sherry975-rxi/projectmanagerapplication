@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.EffortUnit;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectCollaborator;
-import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
 import main.java.project.model.TaskWorker;
@@ -68,19 +67,19 @@ class ProjectTests {
 
 	@AfterEach
 	void tearDown() {
-		User u1 = null;
-		User u2 = null;
-		Task t1 = null;
-		Task t2 = null;
-		Task t3 = null;
-		Task t4 = null;
-		TaskWorker taskWorker1 = null;
-		TaskWorker taskWorker2 = null;
-		Project p1 = null;
-		Project p2 = null;
-		ProjectCollaborator projectCollaborator1 = null;
-		ProjectCollaborator projectCollaborator2 = null;
-		TaskRepository taskRepository = null;
+		u1 = null;
+		u2 = null;
+		t1 = null;
+		t2 = null;
+		t3 = null;
+		t4 = null;
+		taskWorker1 = null;
+		taskWorker2 = null;
+		p1 = null;
+		p2 = null;
+		projectCollaborator1 = null;
+		projectCollaborator2 = null;
+		taskRepository = null;
 	}
 
 	/**
@@ -88,31 +87,30 @@ class ProjectTests {
 	 */
 	@Test
 	void testProject() {
-		
+
 		List<Task> tasksListofThisProject = new ArrayList<Task>();
 		tasksListofThisProject.add(t1);
 		tasksListofThisProject.add(t2);
 		List<ProjectCollaborator> projectTeam = new ArrayList<ProjectCollaborator>();
-		
-		
-		assertEquals(EffortUnit.HOURS,p1.getEffortUnit());
-		assertEquals(1,p1.getIdCode());
-		assertEquals(0,p1.getProjectStatus());
+
+		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
+		assertEquals(1, p1.getIdCode());
+		assertEquals(0, p1.getProjectStatus());
 		assertTrue(p1.isProjectManager(u1));
-		assertEquals(tasksListofThisProject,p1.getTaskRepository().getProjectTaskList());
+		assertEquals(tasksListofThisProject, p1.getTaskRepository().getProjectTaskList());
 		assertEquals(projectTeam, p1.getProjectTeam());
 	}
 
-	
 	/**
-	 * Tests the Creator of Project Collaborator that instantiates the object Project Collaborator
+	 * Tests the Creator of Project Collaborator that instantiates the object
+	 * Project Collaborator
 	 */
 	@Test
 	void testCreateProjectCollaborator() {
-		
-		assertEquals(projectCollaborator1,p1.createProjectCollaborator(u2, 1200));
+
+		assertEquals(projectCollaborator1, p1.createProjectCollaborator(u2, 1200));
 	}
-	
+
 	/**
 	 * Tests addition of task to Project Task list
 	 */
@@ -179,7 +177,6 @@ class ProjectTests {
 		assertEquals(1, p1.getProjectTeam().size());
 	}
 
-	
 	/**
 	 * Tests the comparison between objects that are different
 	 */
@@ -216,12 +213,12 @@ class ProjectTests {
 	}
 
 	/**
-	 * Tests the return of the finished tasks only of a user in a project.
-	 * The same task worker can be associated with different tasks.
+	 * Tests the return of the finished tasks only of a user in a project. The same
+	 * task worker can be associated with different tasks.
 	 */
 	@Test
 	void testGetFinishedTasks() {
-		
+
 		t2.addUserToTask(taskWorker1);
 		assertEquals(t2, p1.getTaskRepository().getFinishedTaskListofUserInProject(u1).get(0));
 	}
@@ -307,13 +304,11 @@ class ProjectTests {
 	}
 
 	/**
-	 * Tests the calculation of the project cost (the sum of the values reported to the task until the
-	 * moment)
+	 * Tests the calculation of the project cost (the sum of the values reported to
+	 * the task until the moment)
 	 */
 	@Test
 	void testGetTotalCostReportedToProjectUntilNow() {
-		
-		
-		
+
 	}
 }
