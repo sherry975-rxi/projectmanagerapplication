@@ -34,6 +34,7 @@ class US110Tests {
 	void setUp() {
 		Blip = Company.getTheInstance();
 		Blip.getUsersRepository().getAllUsersFromRepository().clear();
+		Blip.getProjectsRepository().getAllProjects().clear();
 
 		newUser2 = Blip.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");

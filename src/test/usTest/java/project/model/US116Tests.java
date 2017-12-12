@@ -29,6 +29,7 @@ class US116Tests {
 
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		myCompany.getProjectsRepository().getAllProjects().clear();
 
 		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");

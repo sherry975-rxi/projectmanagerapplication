@@ -35,7 +35,8 @@ class US201Tests {
 	@BeforeEach
 	void setUp() {
 		company = Company.getTheInstance();
-		company.getUsersList().clear();
+		company.getUsersRepository().getAllUsersFromRepository().clear();
+		company.getProjectsRepository().getAllProjects().clear();
 		newUserA = company.createUser("João", "user2@gmail.com", "123", "Empregado", "930000000", "StreetA", "ZipCodeA",
 				"CityA", "DistrictA", "CountryA");
 		newUserB = company.createUser("Jonny", "user3@gmail.com", "132", "Telefonista", "940000000", "StreetB",

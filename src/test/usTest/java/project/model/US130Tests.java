@@ -32,6 +32,7 @@ class US130Tests {
 	void clearCompany() {
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		myCompany.getProjectsRepository().getAllProjects().clear();
 
 		user1 = myCompany.getUsersRepository().createUser("Dani", "daniel@gmail.com", "001", "Programador", "910000000",
 				"ruinha", "7040-531", "Bucareste", "Porto", "Portugal");

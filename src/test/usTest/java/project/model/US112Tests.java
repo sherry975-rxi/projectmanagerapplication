@@ -35,6 +35,7 @@ class US112Tests {
 	void setUp() {
 		Armis = Company.getTheInstance();
 		Armis.getUsersRepository().getAllUsersFromRepository().clear();
+		Armis.getProjectsRepository().getAllProjects().clear();
 		newUser2 = Armis.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		newUser3 = Armis.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
