@@ -17,6 +17,7 @@ import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 import main.java.project.model.UserRepository;
 
@@ -39,6 +40,8 @@ class US370 {
 	Task testTask;
 	Task testTask2;
 	ProjectCollaborator projectCollaborator;
+	TaskWorker taskWorker;
+	TaskWorker taskWorker1;
 
 	@BeforeEach
 	void setUp() {
@@ -125,9 +128,13 @@ class US370 {
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
 
+		// create task Worker
+		taskWorker = testTask.createTaskWorker(projectCollaborator);
+		taskWorker1 = testTask2.createTaskWorker(projectCollaborator);
+
 		// Adds user1 to the Task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker);
+		testTask2.addUserToTask(taskWorker1);
 
 		// start task
 		testTask.setStartDate(estimatedTaskStartDateTest);

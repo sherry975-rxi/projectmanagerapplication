@@ -80,6 +80,27 @@ public class US375 {
 		// create project collaborator
 		projectCollaborator = project.createProjectCollaborator(user1, 2);
 
+		// add user to project team
+		project.addUserToProjectTeam(projectCollaborator);
+
+		// create taskRepository
+		taskRepository = project.getTaskRepository();
+
+	}
+
+	@AfterEach
+	void tearDown() {
+		myCompany = null;
+		user1 = null;
+		testTask = null;
+		project = null;
+		projectRepository = null;
+		taskRepository = null;
+		userRepository = null;
+	}
+
+	@Test
+	void testUS375() {
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
@@ -102,28 +123,6 @@ public class US375 {
 		// create task Worker
 		taskWorker = testTask.createTaskWorker(projectCollaborator);
 		taskWorker1 = testTask2.createTaskWorker(projectCollaborator);
-
-		// add user to project team
-		project.addUserToProjectTeam(projectCollaborator);
-
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
-
-	}
-
-	@AfterEach
-	void tearDown() {
-		myCompany = null;
-		user1 = null;
-		testTask = null;
-		project = null;
-		projectRepository = null;
-		taskRepository = null;
-		userRepository = null;
-	}
-
-	@Test
-	void testUS375() {
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);

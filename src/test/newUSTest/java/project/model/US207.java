@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 import main.java.project.model.UserRepository;
 
@@ -37,6 +39,9 @@ class US207 {
 	ProjectRepository projectRepository;
 	TaskRepository taskRepository;
 	Task testTask;
+	ProjectCollaborator projectCollaborator;
+	TaskWorker taskWorker;
+	TaskWorker taskWorker1;
 
 	@BeforeEach
 	void setUp() {
@@ -59,13 +64,20 @@ class US207 {
 		// add user to user list
 		userRepository.addUserToUserRepository(user1);
 		userRepository.addUserToUserRepository(userAdmin);
+
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
+
 		// create project
-		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
+		project = projectRepository.createProject("name3", "description4", userAdmin);
+
+		// create project collaborator
+		projectCollaborator = project.createProjectCollaborator(user1, 2);
+
 		// add user to project team
-		project.addUserToProjectTeam(user1, 2);
+		project.addUserToProjectTeam(projectCollaborator);
+
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 
@@ -105,21 +117,24 @@ class US207 {
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
 
+		// create task Worker
+		taskWorker = testTask.createTaskWorker(projectCollaborator);
+
 		// Adds user1 to the Task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker);
 
 		// Updates the time spent on task by user
 		testTask.getTaskTeam().get(0).setHoursSpent(1);
 
 		// Checks if both times are the same
-		assertEquals(1.0, testTask.getTimeSpentOntask(project.getProjectTeam().get(0)), 0.001);
+		assertEquals(1.0, testTask.getTimeSpentOntask(user1), 0.001);
 
 		// Updates the time spent on task by user
 		testTask.getTaskTeam().get(0).setHoursSpent(2);
 
 		// Checks if both times are the same
 
-		assertEquals(2.0, testTask.getTimeSpentOntask(project.getProjectTeam().get(0)), 0.001);
+		assertEquals(2.0, testTask.getTimeSpentOntask(user1), 0.001);
 
 	}
 
