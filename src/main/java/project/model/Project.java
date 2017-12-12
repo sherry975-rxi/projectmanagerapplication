@@ -341,11 +341,10 @@ public class Project {
 	public double getTotalCostReportedToProjectUntilNow() {
 		double reportedCost = 0.0;
 
-		for (ProjectCollaborator projectCollab : this.getProjectTeam()) {
-			for (Task task : taskRepository.getAllTasks(projectCollab.getCollaboratorUserData())) {
-				reportedCost += task.getReportedBudgetToTheTask();
-			}
-		}
+		for (Task task : taskRepository.getProjectTaskList()) {
+            reportedCost += task.getReportedBudgetToTheTask();
+        }
+		
 		return reportedCost;
 	}
 
