@@ -49,7 +49,7 @@ class US136Tests {
 	void tearDown() {
 		myCompany = null;
 		newUser2 = null;
-		newUser2 = null;
+		newUser3 = null;
 
 	}
 
