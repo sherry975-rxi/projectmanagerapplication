@@ -69,13 +69,13 @@ public class US350Tests {
 
 	@AfterEach
 	void tearDown() {
-		Company c1 = null;
-		User u1 = null;
-		User u2 = null;
-		User u3 = null;
-		User u4 = null;
-		User u5 = null;
-		Project p1 = null;
+		c1 = null;
+		u1 = null;
+		u2 = null;
+		u3 = null;
+		u4 = null;
+		u5 = null;
+		p1 = null;
 	}
 
 	/**

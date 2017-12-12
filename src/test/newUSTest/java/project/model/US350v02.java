@@ -18,17 +18,18 @@ import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.User;
 
 class US350v02 {
-	
+
 	/**
 	 * Tests US350v02
 	 * 
-	 * US350v02: - Como Gestor de projeto, quero poder adicionar colaboradores à equipa do projeto. Ao adicionar um colaborador tenho de definir:
-	 * - custo do colaborador por unidade de esforço do projeto.
+	 * US350v02: - Como Gestor de projeto, quero poder adicionar colaboradores à
+	 * equipa do projeto. Ao adicionar um colaborador tenho de definir: - custo do
+	 * colaborador por unidade de esforço do projeto.
 	 * 
 	 * uses method getProjectTeam and addUserToProjectTeam
 	 * 
 	 */
-	
+
 	Company c1;
 	User u1;
 	User u2;
@@ -39,7 +40,7 @@ class US350v02 {
 
 	@BeforeEach
 	void setUp() {
-		// create company and clear ProjectRepository and UsersRepository 
+		// create company and clear ProjectRepository and UsersRepository
 		c1 = Company.getTheInstance();
 		c1.getProjectsRepository().getAllProjects().clear();
 		c1.getUsersRepository().getAllUsersFromRepository().clear();
@@ -82,23 +83,22 @@ class US350v02 {
 
 	@AfterEach
 	void tearDown() {
-		Company c1 = null;
-		User u1 = null;
-		User u2 = null;
-		User u3 = null;
-		User u4 = null;
-		User u5 = null;
-		Project p1 = null;
+		c1 = null;
+		u1 = null;
+		u2 = null;
+		u3 = null;
+		u4 = null;
+		u5 = null;
+		p1 = null;
 	}
 
-	
 	@Test
 	public void test() {
 
-		//tests that project manager is u2 and not other user (for example u4)
+		// tests that project manager is u2 and not other user (for example u4)
 		assertTrue(p1.isProjectManager(u2));
 		assertFalse(p1.isProjectManager(u4));
-		
+
 		// create project collabotors with u3, u4 and u5 users
 		ProjectCollaborator collaborattor1 = p1.createProjectCollaborator(u3, 120);
 		ProjectCollaborator collaborattor2 = p1.createProjectCollaborator(u4, 130);
@@ -111,7 +111,7 @@ class US350v02 {
 
 		// add project to the Company Project list
 		c1.getProjectsRepository().addProjectToProjectRepository(p1);
-		
+
 		// Creates a new list and adds user to that list, to compare with userList
 		// inside ProjectTeam
 		List<ProjectCollaborator> testUs350 = new ArrayList<ProjectCollaborator>();
