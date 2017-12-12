@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
@@ -70,11 +71,14 @@ class US372 {
 		user1.setUserProfile(Profile.COLLABORATOR);
 		user2.setUserProfile(Profile.COLLABORATOR);
 
+		// create project collabotors with u3, u4 and u5 users
+		ProjectCollaborator collaborator1 = new ProjectCollaborator(user1, 1200);
+		
 		// create project
 		project = projectRepository.createProject("name3", "description4", user2);
 
 		// add user to project team
-		project.addUserToProjectTeam(user1, 2);
+		project.addUserToProjectTeam(collaborator1);
 
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
