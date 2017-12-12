@@ -39,16 +39,18 @@ class US135Tests {
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		myCompany.getProjectsRepository().getAllProjects().clear();
 
-		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
-		newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
-		newUser4 = myCompany.getUsersRepository().createUser("Emanuel", "user4@sapo.com", "003", "Faz tudo", "960000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
+		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+				"930000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
+		newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+				"940000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
+		newUser4 = myCompany.getUsersRepository().createUser("Emanuel", "user4@sapo.com", "003", "Faz tudo",
+				"960000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
 
 		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
-		
+
 		/* Adds the created users to the Company user list */
 		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
 		myCompany.getUsersRepository().addUserToUserRepository(newUser3);

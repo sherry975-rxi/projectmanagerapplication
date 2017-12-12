@@ -37,7 +37,8 @@ class US215Tests {
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersList().clear();
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		myCompany.getProjectsRepository().getAllProjects().clear();
 
 		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "001", "Programador", "910000000", "Rua Amarela ",
 				"5552-767", "Porto", "Porto", "Portugal");
