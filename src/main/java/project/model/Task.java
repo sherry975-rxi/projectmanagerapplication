@@ -263,6 +263,13 @@ public class Task {
 
 	}
 
+	/**
+	 * Creates a Task Worker from a Project Collaborator
+	 * 
+	 * @param ProjectCollaborator
+	 * 
+	 * @return TaskWorker
+	 */
 	public TaskWorker createTaskWorker(ProjectCollaborator user) {
 
 		TaskWorker taskWorker = new TaskWorker(user);
