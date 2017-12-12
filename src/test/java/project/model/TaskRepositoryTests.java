@@ -12,7 +12,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectCollaborator;
@@ -25,7 +24,6 @@ import main.java.project.model.UserRepository;
 
 class TaskRepositoryTests {
 
-	Company myCompany;
 	UserRepository userRepository;
 	User user1;
 	User userAdmin;
@@ -49,16 +47,12 @@ class TaskRepositoryTests {
 
 	@BeforeEach
 	void setUp() {
-		// create company
-		myCompany = Company.getTheInstance();
-
 		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		userRepository = new UserRepository();
 
 		// creates a ProjectRepository
-		projectRepository = myCompany.getProjectsRepository();
+		projectRepository = new ProjectRepository();
 
-		userRepository.getAllUsersFromRepository().clear();
 		// create user
 		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
@@ -127,7 +121,6 @@ class TaskRepositoryTests {
 
 	@AfterEach
 	void tearDown() {
-		myCompany = null;
 		user1 = null;
 		testTask = null;
 		testTask2 = null;

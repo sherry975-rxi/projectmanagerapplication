@@ -15,7 +15,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.java.project.model.Company;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.Task;
@@ -29,25 +28,25 @@ import main.java.project.model.User;
 class TaskTests {
 
 	User user1, user2;
-	Company myComp;
 	Project myProject;
 	Task testTask, testTask2, testTask3;
-	ProjectCollaborator Collab1, Collab2;
-	TaskWorker tWorker1, tWorker2;
+	ProjectCollaborator Collab1, Collab2, Collab3;
+	TaskWorker tWorker1, tWorker2, tWorker3;
+	double expectedCost;
 
 	@BeforeEach
 	void setUp() {
 
-		myComp = Company.getTheInstance();
-		myComp.getUsersRepository();
-
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
-		Collab1 = new ProjectCollaborator(user1, 5);
-		Collab2 = new ProjectCollaborator(user2, 5);
+		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
+
+		Collab1 = myProject.createProjectCollaborator(user1, 5);
+		Collab2 = myProject.createProjectCollaborator(user2, 5);
+
 		tWorker1 = new TaskWorker(Collab1);
 		tWorker2 = new TaskWorker(Collab2);
-		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
+
 		Calendar estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.add(Calendar.MONTH, -1);
 		Calendar taskDeadline = Calendar.getInstance();
@@ -60,7 +59,6 @@ class TaskTests {
 
 	@AfterEach
 	void breakDown() {
-		myComp = null;
 		user1 = null;
 		user2 = null;
 		myProject = null;
@@ -69,8 +67,10 @@ class TaskTests {
 		testTask3 = null;
 		Collab1 = null;
 		Collab2 = null;
+		Collab3 = null;
 		tWorker1 = null;
 		tWorker2 = null;
+		expectedCost = 0;
 
 	}
 
@@ -203,5 +203,30 @@ class TaskTests {
 		assertEquals(15, tWorker1.getHoursSpent(1));
 		assertTrue(tWorker1.getStartDate(1) != null);
 		assertTrue(testTask2.taskTeamUserIsActive(tWorker1.getTaskWorker()));
+	}
+
+	/**
+	 * tests if the method to get the reported budget to the task returns the
+	 * expected value, according to the taskWorker value and the hours he spent on
+	 * that task
+	 * 
+	 */
+	@Test
+	void testGetReportedBudgetToTheTask() {
+		// Adds two users to the task
+		testTask2.addUserToTask(tWorker1);
+		testTask2.addUserToTask(tWorker2);
+
+		// sets the hours spent on the task by each user
+		tWorker1.setHoursSpent(10);
+		tWorker2.setHoursSpent(5);
+
+		// calculates the expected cost of the task
+		expectedCost = 10 * tWorker1.getCost(0);
+		expectedCost += 5 * tWorker2.getCost(0);
+
+		// Checks if the two values are the smae
+		assertEquals(expectedCost, testTask2.getTaskCost(), 0.001);
+
 	}
 }
