@@ -238,7 +238,8 @@ public class Task {
 	/**
 	 * This method checks if the user is missing from the task team (List of users
 	 * in Task), and if it is missing from the list, the user is added to the team.
-	 * If it is already already added to the the list it is reactivated
+	 * If it is already already added to the the list it is reactivated, and its
+	 * attributes are copied into the existing task worker
 	 * 
 	 * @param user
 	 *            User to add to users list
