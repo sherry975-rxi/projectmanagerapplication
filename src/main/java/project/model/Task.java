@@ -245,21 +245,29 @@ public class Task {
 	 * 
 	 * 
 	 */
-	public void addUserToTask(ProjectCollaborator user) {
-		if (!taskTeamContainsUser(user.getCollaboratorUserData())) {
-			this.taskTeam.add(new TaskWorker(user));
+	public void addUserToTask(TaskWorker user) {
+		if (!taskTeamContainsUser(user.getTaskWorker())) {
+			this.taskTeam.add(user);
 		}
 
-		else if (taskTeamUserIsActive(user.getCollaboratorUserData())) {
+		else if (taskTeamUserIsActive(user.getTaskWorker())) {
 			for (TaskWorker other : taskTeam) {
-				if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
-					other.addCostForTaskWorker(user.getCollaboratorCost());
+				if (other.getTaskWorker().equals(user.getTaskWorker())) {
+					other.addCostForTaskWorker(user.getCost(0));
 					other.addHoursSpentForTaskWorker();
 					other.addStartDateForTaskWorker();
 				}
 			}
 
 		}
+
+	}
+
+	public TaskWorker createTaskWorker(ProjectCollaborator user) {
+
+		TaskWorker taskWorker = new TaskWorker(user);
+
+		return taskWorker;
 
 	}
 
