@@ -226,7 +226,7 @@ class TaskTests {
 		expectedCost += 5 * tWorker2.getCost(0);
 
 		// Checks if the two values are the smae
-		assertEquals(expectedCost, testTask2.getReportedBudgetToTheTask(), 0.001);
+		assertEquals(expectedCost, testTask2.getTaskCost(), 0.001);
 
 	}
 }
