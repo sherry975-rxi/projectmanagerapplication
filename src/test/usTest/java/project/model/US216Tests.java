@@ -6,13 +6,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
+import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
+import main.java.project.model.TaskRepository;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
+import main.java.project.model.UserRepository;
 
 class US216Tests {
 
@@ -36,9 +42,14 @@ class US216Tests {
 	 */
 
 	Company myCompany;
+	UserRepository userRepository;
 	User user1;
 	User user2;
+	ProjectCollaborator projectCollaborator1;
+	TaskWorker taskWorker1;
+	ProjectRepository projectRepository;
 	Project myProject;
+	TaskRepository taskRepository;
 	Task task1;
 	Task task2;
 	Task task3;
@@ -47,31 +58,45 @@ class US216Tests {
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersList().clear();
-
-		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "001", "Programador", "910000000", "Rua Azul",
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		myCompany.getProjectsRepository().getAllProjects().clear();
+		
+		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Programador", "910000000", "Rua Azul",
 				"5679-987", "braga", "braga", "portugal");
-		user2 = myCompany.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "rua verde",
+		user2 = myCompany.getUsersRepository().createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "rua verde",
 				"6789", "porto", "porto", "portugal");
 
-		// New project: Project 1
-		myProject = myCompany.createProject("Projecto I", "Projecto de Gestão", user1);
+		// create myProject
+		myProject = myCompany.getProjectsRepository().createProject("Projecto I", "Projecto de Gestão", user1);
 
+		// Generate a Start Calendar
+		Calendar startDate = Calendar.getInstance();
+		startDate.add(Calendar.MONTH, -3);
+
+		// Generates a Finish Calendar
+		Calendar finishDate = Calendar.getInstance();
+		finishDate.add(Calendar.MONTH, -1);
+		Calendar otherFinishDate = Calendar.getInstance();
+		otherFinishDate.add(Calendar.MONTH, -2);
+		
 		// Four new tasks were created and added to project1
-		task1 = myProject.getTaskRepository().createTask("Task 1");
-		task2 = myProject.getTaskRepository().createTask("Task 2");
-		task3 = myProject.getTaskRepository().createTask("Task 3");
-		task4 = myProject.getTaskRepository().createTask("Task 4");
+		task1 = myProject.getTaskRepository().createTask("Task 1", 1, startDate, finishDate, 10);
+		task2 = myProject.getTaskRepository().createTask("Task 2", 2, startDate, finishDate, 10);
+		task3 = myProject.getTaskRepository().createTask("Task 3", 3, startDate, finishDate, 10);
+		task4 = myProject.getTaskRepository().createTask("Task 4", 4, startDate, finishDate, 10);
 
-		// Users 1 and 2 added to the Company user list.
-		myCompany.addUserToUserList(user1);
-		myCompany.addUserToUserList(user2);
+		// Users 1 and 2 added to the users repository.
+		myCompany.getUsersRepository().addUserToUserRepository(user1);
+		myCompany.getUsersRepository().addUserToUserRepository(user2);
 
-		// Project 1 added to the Company List.
-		myCompany.addProjectToProjectList(myProject);
+		// Project 1 added to the project repository.
+		myCompany.getProjectsRepository().addProjectToProjectRepository(myProject);
 
+		//create project collaborators
+		projectCollaborator1 = myProject.createProjectCollaborator(user1, 10);
+		
 		// user2 added user 1 to the ProjectTeam
-		myProject.addUserToProjectTeam(user1);
+		myProject.addUserToProjectTeam(projectCollaborator1);
 
 		// Add Tasks to project 1
 		myProject.getTaskRepository().addProjectTask(task1);
@@ -79,27 +104,14 @@ class US216Tests {
 		myProject.getTaskRepository().addProjectTask(task3);
 		myProject.getTaskRepository().addProjectTask(task4);
 
+		//create task workers
+		taskWorker1 = task1.createTaskWorker(projectCollaborator1);
+		
 		// Associates users to tasks
-		task1.addUserToTask(user1);
-		task2.addUserToTask(user1);
-		task3.addUserToTask(user1);
-		task4.addUserToTask(user1);
-
-		// Generate a Start Calendar
-		Calendar startDate = Calendar.getInstance();
-		startDate.add(Calendar.MONTH, -3);
-
-		// Start dates were attributed to each task
-		task1.setStartDate(startDate);
-		task2.setStartDate(startDate);
-		task3.setStartDate(startDate);
-		task4.setStartDate(startDate);
-
-		// Generates a Finish Calendar
-		Calendar finishDate = Calendar.getInstance();
-		finishDate.add(Calendar.MONTH, -1);
-		Calendar otherFinishDate = Calendar.getInstance();
-		otherFinishDate.add(Calendar.MONTH, -2);
+		task1.addUserToTask(taskWorker1);
+		task2.addUserToTask(taskWorker1);
+		task3.addUserToTask(taskWorker1);
+		task4.addUserToTask(taskWorker1);
 
 		// Finish dates were attributed to each task
 		task1.setFinishDate(otherFinishDate);
@@ -118,19 +130,36 @@ class US216Tests {
 		expResult.add(task3);
 
 	}
+	
+	@AfterEach
+	void tearDown() {
+		myCompany = null;
+		userRepository = null;
+		user1 = null;
+		user2 = null;
+		projectCollaborator1 = null;
+		taskWorker1 = null;
+		projectRepository = null;
+		myProject = null;
+		taskRepository = null;
+		task1 = null;
+		task2 = null;
+		task3 = null;
+		task4 = null;
+	}
 
 	@Test
 	void getAverageTimeLastMonthFinishedTasksUser() {
 
 		// Calculate expected Total time spent in task 2 and task3, by calling the
 		// method getTimeSpentOnTask
-		double expectTotalTime = (task2.getTimeSpentOnTask() + task3.getTimeSpentOnTask());
+		double expectTotalTime = (task2.getTimeSpentOntask(user1) + task3.getTimeSpentOntask(user1));
 		// Calculate expected Average total time spent in task 2 and task3, by dividing
 		// the total time spent on these tasks and
 		// dividing by the number of tasks (in the case 2 tasks).
 		double expectAverageTime = expectTotalTime / 2;
 
-		assertEquals(expectAverageTime, myCompany.getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
+		assertEquals(expectAverageTime, myCompany.getProjectsRepository().getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
 
 	}
 }
