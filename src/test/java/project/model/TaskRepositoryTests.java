@@ -15,9 +15,11 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 import main.java.project.model.UserRepository;
 
@@ -28,6 +30,10 @@ class TaskRepositoryTests {
 	User user1;
 	User userAdmin;
 	User user2;
+	TaskWorker taskWorker1;
+	TaskWorker taskWorker2;
+	ProjectCollaborator collab1;
+	ProjectCollaborator collab2;
 	Project project;
 	ProjectRepository projectRepository;
 	TaskRepository taskRepository;
@@ -61,6 +67,12 @@ class TaskRepositoryTests {
 		// create user admin
 		userAdmin = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
+		// create project collaborators
+		collab1 = new ProjectCollaborator(user1, 2);
+		collab2 = new ProjectCollaborator(user2, 3);
+		// create task workers
+		taskWorker1 = new TaskWorker(collab1);
+		taskWorker2 = new TaskWorker(collab2);
 		// add user to user list
 		userRepository.addUserToUserRepository(user1);
 		userRepository.addUserToUserRepository(user2);
@@ -72,8 +84,8 @@ class TaskRepositoryTests {
 		// create project
 		project = projectRepository.createProject("name3", "description4", userAdmin);
 		// add user to project team
-		project.addUserToProjectTeam(project.createProjectCollaborator(user1, 2));
-		project.addUserToProjectTeam(project.createProjectCollaborator(user2, 3));
+		project.addUserToProjectTeam(collab1);
+		project.addUserToProjectTeam(collab2);
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 		// create a estimated Task Start Date
@@ -125,6 +137,10 @@ class TaskRepositoryTests {
 		projectRepository = null;
 		taskRepository = null;
 		userRepository = null;
+		taskWorker1 = null;
+		taskWorker2 = null;
+		collab1 = null;
+		collab2 = null;
 	}
 
 	@Test
@@ -183,10 +199,10 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// add de user to the task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
-		testTask3.addUserToTask(project.getProjectTeam().get(0));
-		testTask4.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker1);
+		testTask2.addUserToTask(taskWorker1);
+		testTask3.addUserToTask(taskWorker1);
+		testTask4.addUserToTask(taskWorker1);
 
 		// create a list and add task to compare to unfinished task list
 		List<Task> test = new ArrayList<Task>();
@@ -209,10 +225,10 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// adds the user to the task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
-		testTask3.addUserToTask(project.getProjectTeam().get(0));
-		testTask4.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker1);
+		testTask2.addUserToTask(taskWorker1);
+		testTask3.addUserToTask(taskWorker1);
+		testTask4.addUserToTask(taskWorker1);
 
 		// Marks task and task3 as finished
 		testTask.markTaskAsFinished();
@@ -237,10 +253,10 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// add de user to the task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
-		testTask3.addUserToTask(project.getProjectTeam().get(0));
-		testTask4.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker1);
+		testTask2.addUserToTask(taskWorker1);
+		testTask3.addUserToTask(taskWorker1);
+		testTask4.addUserToTask(taskWorker1);
 		// create finished date to test
 		Calendar finishDateTest = Calendar.getInstance();
 		finishDateTest.set(Calendar.YEAR, 2017);
@@ -292,7 +308,7 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask);
 
 		// add de user to the task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker1);
 
 		// create finished date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -363,10 +379,10 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// adds the user to the task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
-		testTask3.addUserToTask(project.getProjectTeam().get(0));
-		testTask4.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker1);
+		testTask2.addUserToTask(taskWorker1);
+		testTask3.addUserToTask(taskWorker1);
+		testTask4.addUserToTask(taskWorker1);
 
 		// Marks task and task3 as finished
 		testTask.markTaskAsFinished();
@@ -393,7 +409,7 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask4);
 
 		// Adds user to testTssk
-		testTask.addUserToTask(project.getProjectTeam().get(1));
+		testTask.addUserToTask(taskWorker2);
 
 		// Checks if the user of index.0 doesnt have any task assigned to him
 		assertFalse(
@@ -414,8 +430,8 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask4);
 
 		// adds User of index 1 to testTask and testTask4
-		testTask.addUserToTask(project.getProjectTeam().get(1));
-		testTask4.addUserToTask(project.getProjectTeam().get(1));
+		testTask.addUserToTask(taskWorker2);
+		testTask4.addUserToTask(taskWorker2);
 
 		// Creates a new list, and then added the tasks without any user assigned to
 		// them
@@ -436,8 +452,8 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask2);
 
 		// Adds user1 to the Task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker1);
+		testTask2.addUserToTask(taskWorker1);
 
 		// create finished date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -468,8 +484,8 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask2);
 
 		// Adds user1 to the Task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker1);
+		testTask2.addUserToTask(taskWorker1);
 
 		// create star date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -515,8 +531,8 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask2);
 
 		// Adds user1 to the Task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker1);
+		testTask2.addUserToTask(taskWorker1);
 
 		// Creates a new list, and then added the unfished task
 		List<Task> listUnstartedTasks = new ArrayList<Task>();
@@ -544,10 +560,10 @@ class TaskRepositoryTests {
 		taskRepository.addProjectTask(testTask7);
 
 		// Adds user1 to the Task
-		testTask4.addUserToTask(project.getProjectTeam().get(0));
-		testTask5.addUserToTask(project.getProjectTeam().get(0));
-		testTask6.addUserToTask(project.getProjectTeam().get(0));
-		testTask7.addUserToTask(project.getProjectTeam().get(0));
+		testTask4.addUserToTask(taskWorker1);
+		testTask5.addUserToTask(taskWorker1);
+		testTask6.addUserToTask(taskWorker1);
+		testTask7.addUserToTask(taskWorker1);
 
 		// start tasks
 		testTask4.setStartDate(startDateTest);

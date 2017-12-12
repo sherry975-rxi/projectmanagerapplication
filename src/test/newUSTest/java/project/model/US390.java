@@ -110,7 +110,6 @@ class US390 {
 		projectUser3 = project.createProjectCollaborator(user3, 5);
 		projectUser4 = project.createProjectCollaborator(user4, 3);
 
-		// create 2 task
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
