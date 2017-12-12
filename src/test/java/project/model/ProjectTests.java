@@ -14,9 +14,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.EffortUnit;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectCollaborator;
+import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
+import main.java.project.model.TaskRepository;
 import main.java.project.model.User;
 
 class ProjectTests {
@@ -31,8 +34,10 @@ class ProjectTests {
 	Task t1;
 	Task t2;
 	Task t3;
+	Task t4;
 	Project p1;
 	Project p2;
+	TaskRepository taskRepository;
 
 	@BeforeEach
 	public void setUp() {
@@ -56,6 +61,7 @@ class ProjectTests {
 		p2 = new Project(2, "name1", "description4", u2);
 		t3 = p1.getTaskRepository().createTask("description3", 0, null, null, 0);
 		t3.markTaskAsFinished();
+		t4 = p1.getTaskRepository().createTask("description11111", 0, estimatedStartDate, taskDeadline, 0);
 
 	}
 
@@ -67,10 +73,12 @@ class ProjectTests {
 		Task t1 = null;
 		Task t2 = null;
 		Task t3 = null;
+		Task t4 = null;
 		Project p1 = null;
 		Project p2 = null;
 		ProjectCollaborator projectCollaborator1 = null;
 		ProjectCollaborator projectCollaborator2 = null;
+		TaskRepository taskRepository = null;
 	}
 
 	/**
@@ -78,12 +86,38 @@ class ProjectTests {
 	 */
 	@Test
 	void testProject() {
-
+		
+		List<Task> tasksListofThisProject = new ArrayList<Task>();
+		tasksListofThisProject.add(t1);
+		tasksListofThisProject.add(t2);
+		List<ProjectCollaborator> projectTeam = new ArrayList<ProjectCollaborator>();
+		
+		
+		assertEquals(EffortUnit.HOURS,p1.getEffortUnit());
+		assertEquals(1,p1.getIdCode());
+		assertEquals(0,p1.getProjectStatus());
+		assertTrue(p1.isProjectManager(u1));
+		assertEquals(tasksListofThisProject,p1.getTaskRepository().getProjectTaskList());
+		assertEquals(projectTeam, p1.getProjectTeam());
 	}
 
+	
+	/**
+	 * Tests the Creator of Project Collaborator that instantiates the object Project Collaborator
+	 */
+	@Test
+	void testCreateProjectCollaborator() {
+		
+		assertEquals(projectCollaborator1,p1.createProjectCollaborator(u2, 1200));
+	}
+	
+	/**
+	 * Tests addition of task to Project Task list
+	 */
 	@Test
 	void testAddTaskToProjectTaskList() {
-		assertEquals(t1, p1.getTaskRepository().getProjectTaskList().get(0));
+		p1.getTaskRepository().addProjectTask(t4);
+		assertEquals(t4, p1.getTaskRepository().getProjectTaskList().get(2));
 	}
 
 	/**
@@ -143,11 +177,7 @@ class ProjectTests {
 		assertEquals(1, p1.getProjectTeam().size());
 	}
 
-	/*
-	 * @Test void testEqualsTrue() { Company c2 = Company.getTheInstance(); Project
-	 * p3 = new Project("name5", "description5", u2);
-	 * c2.addProjectToProjectList(p3); assertFalse(p3.equals(p1)); }
-	 */
+	
 	/**
 	 * Tests the comparison between objects that are different
 	 */
@@ -174,6 +204,9 @@ class ProjectTests {
 		assertEquals(Project.EXECUTION, p1.getProjectStatus());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void testGetUnfinishedTasks() {
 		t1.addUserToTask(projectCollaborator2);
