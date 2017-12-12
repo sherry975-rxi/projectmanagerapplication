@@ -15,6 +15,7 @@ import main.java.project.model.Project;
 import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 
 class ProjectRepositoryTests {
@@ -26,6 +27,9 @@ class ProjectRepositoryTests {
 	ProjectCollaborator collab1;
 	ProjectCollaborator collab2;
 	ProjectCollaborator collab3;
+	TaskWorker taskWorker1;
+	TaskWorker taskWorker2;
+	TaskWorker taskWorker3;
 	Project project1;
 	Project project2;
 	Project project3;
@@ -47,7 +51,10 @@ class ProjectRepositoryTests {
 		collab1 = new ProjectCollaborator(user1, 1);
 		collab2 = new ProjectCollaborator(user2, 2);
 		collab3 = new ProjectCollaborator(user3, 3);
-		project1 = new Project(0, "name3", "description3", user1);
+		taskWorker1 = new TaskWorker(collab1);
+		taskWorker2 = new TaskWorker(collab2);
+		taskWorker3 = new TaskWorker(collab3);
+		project1 = new Project(1, "name3", "description3", user1);
 		project2 = new Project(2, "name4", "description5", user2);
 		project3 = new Project(3, "name5", "description5", user3);
 		estimatedStartDate = Calendar.getInstance();
@@ -185,9 +192,8 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(collab1);
-		task2.addUserToTask(collab2);
-		task3.addUserToTask(collab1);
+		task1.addUserToTask(taskWorker1);
+		task3.addUserToTask(taskWorker1);
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task1);
@@ -216,9 +222,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(collab1);
-		task2.addUserToTask(collab1);
-		task3.addUserToTask(collab1);
+		task1.addUserToTask(taskWorker1);
+		task2.addUserToTask(taskWorker1);
+		task3.addUserToTask(taskWorker1);
 
 		// Marks tasks as finished
 		task1.markTaskAsFinished();
@@ -254,9 +260,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(collab1);
-		task2.addUserToTask(collab1);
-		task3.addUserToTask(collab1);
+		task1.addUserToTask(taskWorker1);
+		task2.addUserToTask(taskWorker1);
+		task3.addUserToTask(taskWorker1);
 
 		// Marks tasks as finished
 		task1.markTaskAsFinished();
@@ -290,9 +296,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(collab1);
-		task2.addUserToTask(collab1);
-		task3.addUserToTask(collab1);
+		task1.addUserToTask(taskWorker1);
+		task2.addUserToTask(taskWorker1);
+		task3.addUserToTask(taskWorker1);
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
@@ -334,8 +340,8 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task2);
 
 		// Adds user to tasks.
-		task1.addUserToTask(collab1);
-		task2.addUserToTask(collab1);
+		task1.addUserToTask(taskWorker1);
+		task2.addUserToTask(taskWorker1);
 
 		// Sets a startDate for the tasks
 
@@ -379,8 +385,8 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task2);
 
 		// Adds user to tasks.
-		task1.addUserToTask(collab1);
-		task2.addUserToTask(collab1);
+		task1.addUserToTask(taskWorker1);
+		task2.addUserToTask(taskWorker1);
 
 		// Sets a startDate for the tasks
 
@@ -425,9 +431,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(collab1);
-		task2.addUserToTask(collab1);
-		task3.addUserToTask(collab1);
+		task1.addUserToTask(taskWorker1);
+		task2.addUserToTask(taskWorker1);
+		task3.addUserToTask(taskWorker1);
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
@@ -472,9 +478,9 @@ class ProjectRepositoryTests {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(collab1);
-		task2.addUserToTask(collab1);
-		task3.addUserToTask(collab1);
+		task1.addUserToTask(taskWorker1);
+		task2.addUserToTask(taskWorker1);
+		task3.addUserToTask(taskWorker1);
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
