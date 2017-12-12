@@ -10,7 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
+import main.java.project.model.ProjectRepository;
 import main.java.project.model.User;
+import main.java.project.model.UserRepository;
 
 class US135Tests {
 
@@ -31,23 +33,26 @@ class US135Tests {
 	User newUser2;
 	User newUser3;
 	User newUser4;
+	UserRepository userRepository;
+	ProjectRepository projectRepository;
 
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
 
-		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "ruinha",
+		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "ruinha",
 				"7040-531", "Bucareste", "Porto", "Portugal");
-		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "ruinha",
+		newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "ruinha",
 				"7040-531", "Bucareste", "Porto", "Portugal");
-		newUser4 = myCompany.createUser("Emanuel", "user4@sapo.com", "003", "Faz tudo", "960000000", "ruinha",
+		newUser4 = myCompany.getUsersRepository().createUser("Emanuel", "user4@sapo.com", "003", "Faz tudo", "960000000", "ruinha",
 				"7040-531", "Bucareste", "Porto", "Portugal");
 
-		myCompany.getUsersList().clear();
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		
 		/* Adds the created users to the Company user list */
-		myCompany.addUserToUserList(newUser2);
-		myCompany.addUserToUserList(newUser3);
-		myCompany.addUserToUserList(newUser4);
+		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
+		myCompany.getUsersRepository().addUserToUserRepository(newUser3);
+		myCompany.getUsersRepository().addUserToUserRepository(newUser4);
 	}
 
 	@AfterEach
@@ -62,7 +67,7 @@ class US135Tests {
 	void searchEmailThatDoesntExists() {
 		/* Compares a search of a mail that doesn't exist with a empty List */
 		List<User> emptyList = new ArrayList<User>();
-		assertEquals(myCompany.searchUsersByEmail("yahoo"), emptyList);
+		assertEquals(myCompany.getUsersRepository().searchUsersByEmail("yahoo"), emptyList);
 	}
 
 	@Test
@@ -70,7 +75,7 @@ class US135Tests {
 		/* Compares a search by entire mail address with a list with that mail */
 		List<User> testUsersEmail1 = new ArrayList<User>();
 		testUsersEmail1.add(newUser2);
-		assertEquals(myCompany.searchUsersByEmail("user2@gmail.com"), testUsersEmail1);
+		assertEquals(myCompany.getUsersRepository().searchUsersByEmail("user2@gmail.com"), testUsersEmail1);
 	}
 
 	@Test
@@ -82,7 +87,7 @@ class US135Tests {
 		List<User> testUsersEmail2 = new ArrayList<User>();
 		testUsersEmail2.add(newUser2);
 		testUsersEmail2.add(newUser3);
-		assertEquals(myCompany.searchUsersByEmail("gmail"), testUsersEmail2);
+		assertEquals(myCompany.getUsersRepository().searchUsersByEmail("gmail"), testUsersEmail2);
 	}
 
 	@Test
@@ -95,6 +100,6 @@ class US135Tests {
 		testUsersEmail3.add(newUser2);
 		testUsersEmail3.add(newUser3);
 		testUsersEmail3.add(newUser4);
-		assertEquals(myCompany.searchUsersByEmail("user"), testUsersEmail3);
+		assertEquals(myCompany.getUsersRepository().searchUsersByEmail("user"), testUsersEmail3);
 	}
 }

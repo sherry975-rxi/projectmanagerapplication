@@ -245,21 +245,29 @@ public class Task {
 	 * 
 	 * 
 	 */
-	public void addUserToTask(ProjectCollaborator user) {
-		if (!taskTeamContainsUser(user.getCollaboratorUserData())) {
-			this.taskTeam.add(new TaskWorker(user));
+	public void addUserToTask(TaskWorker user) {
+		if (!taskTeamContainsUser(user.getTaskWorker())) {
+			this.taskTeam.add(user);
 		}
 
-		else if (taskTeamUserIsActive(user.getCollaboratorUserData())) {
+		else if (taskTeamUserIsActive(user.getTaskWorker())) {
 			for (TaskWorker other : taskTeam) {
-				if (other.getTaskWorker().equals(user.getCollaboratorUserData())) {
-					other.addCostForTaskWorker(user.getCollaboratorCost());
+				if (other.getTaskWorker().equals(user.getTaskWorker())) {
+					other.addCostForTaskWorker(user.getCost(0));
 					other.addHoursSpentForTaskWorker();
 					other.addStartDateForTaskWorker();
 				}
 			}
 
 		}
+
+	}
+
+	public TaskWorker createTaskWorker(ProjectCollaborator user) {
+
+		TaskWorker taskWorker = new TaskWorker(user);
+
+		return taskWorker;
 
 	}
 
@@ -597,4 +605,22 @@ public class Task {
 
 		return false;
 	}
+
+	/**
+	 * This method returns the total budget reported to task from all TaskWorkers
+	 * 
+	 * @return Returns a double with the value of the total cost reported to the
+	 *         task
+	 */
+	public double getReportedBudgetToTheTask() {
+		double taskBudgetReported = 0.0;
+
+		for (TaskWorker taskWorker : this.getTaskTeam()) {
+			for (int i = 0; i < taskWorker.getCostListSize(); i++) {
+				taskBudgetReported += taskWorker.getCost(i) * taskWorker.getHoursSpent(i);
+			}
+		}
+		return taskBudgetReported;
+	}
+
 }

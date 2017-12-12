@@ -37,18 +37,21 @@ class US202Tests {
 
 		// create company
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersList().clear();
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		
 		// create user
-		user1 = myCompany.createUser("Daniel", "daniel@gmail.com", "001", "Director", "910000000", "Rua", "2401-00",
+		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Director", "910000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
+		
 		// create a new address
-
 		address1 = user1.createAddress("Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		// add user to user list
-		myCompany.addUserToUserList(user1);
+		
+		// add user to user list		
+		myCompany.getUsersRepository().addUserToUserRepository(user1);
+		
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
-		;
+		
 		// add address to collaborator
 		user1.addAddress(address1);
 
@@ -67,7 +70,7 @@ class US202Tests {
 	 */
 	@Test
 	void testAddAddress() {
-		// Verfies User is Collaborator
+		// Verifies if User is Collaborator
 		assertEquals(user1.getUserProfile(), Profile.COLLABORATOR);
 
 		// Creates a new list and adds address to that list, to compare with
