@@ -250,7 +250,7 @@ public class Task {
 			this.taskTeam.add(user);
 		}
 
-		else if (taskTeamUserIsActive(user.getTaskWorker())) {
+		else if (!taskTeamUserIsActive(user.getTaskWorker())) {
 			for (TaskWorker other : taskTeam) {
 				if (other.getTaskWorker().equals(user.getTaskWorker())) {
 					other.addCostForTaskWorker(user.getCost(0));
