@@ -32,12 +32,12 @@ class US136Tests {
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
-		newUser2 = myCompany.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "rua cinzenta",
-				"6789-654", "porto", "porto", "portugal");
-		newUser3 = myCompany.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista", "940000000", "rua rosa",
-				"6799-654", "porto", "porto", "portugal");
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+				"930000000", "rua cinzenta", "6789-654", "porto", "porto", "portugal");
+		newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+				"940000000", "rua rosa", "6799-654", "porto", "porto", "portugal");
 
-		myCompany.getUsersList().clear();
 		/* Set the testCollab profile type to collaborator */
 
 		/* Set the newUser2 and newUser3 profile type to collaborator */
@@ -57,14 +57,14 @@ class US136Tests {
 	void testSearchUsersByProfile() {
 		/* Compares a search of a profile type that doesn't exist with a empty List */
 		List<User> emptyList = new ArrayList<User>();
-		assertEquals(myCompany.searchUsersByProfile(Profile.COLLABORATOR), emptyList);
+		assertEquals(myCompany.getUsersRepository().searchUsersByProfile(Profile.COLLABORATOR), emptyList);
 	}
 
 	@Test
 	void testSearchUsersByProfile2() {
 		/* Adds the created users to the Company user list */
-		myCompany.addUserToUserList(newUser2);
-		myCompany.addUserToUserList(newUser3);
+		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
+		myCompany.getUsersRepository().addUserToUserRepository(newUser3);
 
 		/*
 		 * Compares a search of collaborator with a list where two collaborators exist
@@ -73,6 +73,6 @@ class US136Tests {
 		collaboratorstest.add(newUser2);
 		collaboratorstest.add(newUser3);
 
-		assertEquals(myCompany.searchUsersByProfile(Profile.COLLABORATOR), collaboratorstest);
+		assertEquals(myCompany.getUsersRepository().searchUsersByProfile(Profile.COLLABORATOR), collaboratorstest);
 	}
 }
