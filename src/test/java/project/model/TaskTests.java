@@ -29,7 +29,6 @@ import main.java.project.model.User;
 class TaskTests {
 
 	User user1, user2;
-	TaskWorker Worker1, Worker2;
 	Company myComp;
 	Project myProject;
 	Task testTask, testTask2, testTask3;
@@ -188,5 +187,17 @@ class TaskTests {
 		testTask2.addUserToTask(tWorker1);
 
 		assertFalse(testTask2.isTaskTeamEmpty());
+	}
+
+	@Test
+	void updateTaskWorker() {
+		testTask2.addUserToTask(tWorker1);
+		testTask2.removeUserFromTask(tWorker1.getTaskWorker());
+		testTask2.addUserToTask(tWorker1);
+		tWorker1.setHoursSpent(15);
+		assertEquals(5, tWorker1.getCost(1));
+		assertEquals(15, tWorker1.getHoursSpent(1));
+		assertTrue(tWorker1.getStartDate(1) != null);
+		assertTrue(testTask2.taskTeamUserIsActive(tWorker1.getTaskWorker()));
 	}
 }
