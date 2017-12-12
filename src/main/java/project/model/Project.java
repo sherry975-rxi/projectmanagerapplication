@@ -342,7 +342,7 @@ public class Project {
 		double reportedCost = 0.0;
 
 		for (Task task : taskRepository.getProjectTaskList()) {
-            reportedCost += task.getReportedBudgetToTheTask();
+            reportedCost += task.getTaskCost();
         }
 		
 		return reportedCost;
