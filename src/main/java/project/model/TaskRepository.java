@@ -218,7 +218,7 @@ public class TaskRepository {
 	 */
 	public boolean isCollaboratorActiveOnTasks(User user) {
 		for (Task otherTask : this.getProjectTaskList()) {
-			if (otherTask.taskTeamContainsUser(user))
+			if (otherTask.taskTeamUserIsActive(user))
 				return true;
 		}
 		return false;
