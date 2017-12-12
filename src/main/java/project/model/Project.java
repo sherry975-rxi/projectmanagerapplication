@@ -272,22 +272,32 @@ public class Project {
 	 * @Return returns a List of Inactive Collaborators
 	 *
 	 */
+//	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
+//		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<ProjectCollaborator>();
+//
+//		inactiveCollaborators.addAll(this.getProjectTeam());
+//
+//		for (ProjectCollaborator other : this.getProjectTeam()) {
+//			for (Task otherTask : this.taskRepository.getProjectTaskList()) {
+//				if (otherTask.taskTeamContainsUser(other.getCollaboratorUserData())) // needs to check if collaborator
+//																						// is active
+//					inactiveCollaborators.remove(other);
+//				break;
+//			}
+//		}
+//		return inactiveCollaborators;
+//
+//	}
+	
 	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
-		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<ProjectCollaborator>();
-
-		inactiveCollaborators.addAll(this.getProjectTeam());
-
-		for (ProjectCollaborator other : this.getProjectTeam()) {
-			for (Task otherTask : this.taskRepository.getProjectTaskList()) {
-				if (otherTask.taskTeamContainsUser(other.getCollaboratorUserData())) // needs to check if collaborator
-																						// is active
-					inactiveCollaborators.remove(other);
-				break;
-			}
-		}
-		return inactiveCollaborators;
-
-	}
+        List<ProjectCollaborator> inactiveCollaborators = new ArrayList<ProjectCollaborator>();
+        inactiveCollaborators.addAll(this.getProjectTeam());
+        for (ProjectCollaborator other : this.getProjectTeam()) {
+            if (this.taskRepository.isCollaboratorActiveOnTasks(other.getCollaboratorUserData())) // needs to check if collaborator is active
+                inactiveCollaborators.remove(other);
+        }
+        return inactiveCollaborators;
+    }
 
 	/**
 	 * This method allows removing a Project Collaborator from a Project Team and
