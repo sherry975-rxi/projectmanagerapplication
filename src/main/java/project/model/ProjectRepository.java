@@ -6,7 +6,7 @@ import java.util.List;
 public class ProjectRepository {
 
 	private List<Project> projectsRepository;
-	private int projCounter;
+	private int projCounter = 1;
 
 	/**
 	 * Constructor that allows one to create a new Project Repository. There are no
@@ -15,7 +15,6 @@ public class ProjectRepository {
 	public ProjectRepository() {
 
 		this.projectsRepository = new ArrayList<Project>();
-
 	}
 
 	/**
