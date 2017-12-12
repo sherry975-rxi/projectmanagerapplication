@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +56,6 @@ class US203Tests {
 	Task task2;
 	Task task3;
 	
-
 	@BeforeEach
 	void setUp() {
 
@@ -111,11 +111,6 @@ class US203Tests {
 		
 		taskWorker2 = task2.createTaskWorker(projCollab2);
 		
-		
-		
-		
-		
-
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
 
 		project1.addUserToProjectTeam(projCollab2);
@@ -130,7 +125,26 @@ class US203Tests {
 		task1.markTaskAsFinished();
 
 	}
-
+	
+	@AfterEach
+	void tearDown() {
+		
+		myCompany = null;
+		user2 = null;
+		user3 = null;
+		projCollab1 = null;
+		projCollab2 = null;
+		projCollab3 = null;
+		taskWorker1 = null;
+		taskWorker2 = null;
+		project1 = null;
+		task1 = null;
+		task2 = null;
+		task3 = null;
+	
+	}
+	
+	
 	@Test
 	void testGetUserTaskList() {
 		
