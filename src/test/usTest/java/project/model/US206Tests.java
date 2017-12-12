@@ -1,8 +1,11 @@
 package test.usTest.java.project.model;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -10,10 +13,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
-import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
+import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
+import main.java.project.model.TaskRepository;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
+import main.java.project.model.UserRepository;
 
 class US206Tests {
 	/**
@@ -23,94 +30,131 @@ class US206Tests {
 	 * lista de tarefas
 	 * 
 	 */
-	Company c1;
-	User u1;
-	User u2;
-	User u3;
-	Project p1;
+	Company myCompany;
+	UserRepository userRepository;
+	ProjectRepository projectRepository;
+	TaskRepository taskRepository;
+	ProjectCollaborator projectUser1;
+	ProjectCollaborator projectUser2;
+	User newUser2;
+	User newUser3;
+	Project testProj;
 	Task testTask;
 	Task testTask2;
+	int typeOfUser;
+	TaskWorker taskWorker1;
+	TaskWorker taskWorker2;
+	List<TaskWorker> listToCompare;
 
 	@BeforeEach
 	void setUp() {
-		// Company creation
-		c1 = Company.getTheInstance();
-		c1.getUsersList().clear();
-		c1.getProjectsList().clear();
+		myCompany = Company.getTheInstance();
+		// creates an UserRepository
+		userRepository = myCompany.getUsersRepository();
 
-		// User creation
-		u1 = c1.createUser("Daniel", "daniel@gmail.com", "01", "Director", "910000000", "StreetA", "ZipCodeA", "CityA",
-				"DistrictA", "CountryA");
-		u2 = c1.createUser("Rita", "rita@gmail.com", "02", "Gestora de Projeto", "920000000", "StreetB", "ZipCodeB",
-				"CityB", "DistrictB", "CountryB");
-		u3 = c1.createUser("Ana", "ana@gmail.com", "03", "Colaboradora", "930000000", "StreetC", "ZipCodeC", "CityC",
-				"DistrictC", "CountryC");
-		// create the project and set a user to Project manager
-		p1 = c1.createProject("Teste", "blablabla", u2);
+		// creates a ProjectRepository
+		projectRepository = myCompany.getProjectsRepository();
 
-		// create task
-		testTask = p1.getTaskRepository().createTask("sdfsdfdsfsdf");
-		testTask2 = p1.getTaskRepository().createTask("sdfsdfdsfsdf");
+		// create user
+		newUser2 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
+
+		// create user
+		newUser3 = userRepository.createUser("Miguel", "miguel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
+
+		// create project
+		testProj = projectRepository.createProject("name3", "description4", newUser3);
+
+		// create a estimated Task Start Date
+		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
+		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
+		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 10);
+		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		// create a estimated Task Start Date
+		Calendar taskDeadlineDateTest = Calendar.getInstance();
+		taskDeadlineDateTest.set(Calendar.YEAR, 2017);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 20);
+		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
+		// creates a Project
+		testProj = projectRepository.createProject("name3", "description4", newUser3);
+
+		// create taskRepository
+		taskRepository = testProj.getTaskRepository();
+
+		// creates 2 Project Collaborators
+		projectUser1 = testProj.createProjectCollaborator(newUser2, 10);
+		projectUser2 = testProj.createProjectCollaborator(newUser3, 10);
+
+		// creates 2 Tasks
+		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+
+		// Creates 2 Task Workers
+		taskWorker1 = testTask.createTaskWorker(projectUser1);
+		taskWorker2 = testTask2.createTaskWorker(projectUser2);
+
+		// Creates a new list to Compare with the list of taskWorkes that is obtained by
+		// the method in Task Class
+		listToCompare = new ArrayList<TaskWorker>();
+
+		typeOfUser = 1;
 	}
 
 	@AfterEach
 	void tearDown() {
-		Company c1 = null;
-		User u1 = null;
-		User u2 = null;
-		User u3 = null;
-		Project p1 = null;
-		Task testTask = null;
-		Task testTask2 = null;
+		myCompany = null;
+		taskRepository = null;
+		newUser2 = null;
+		newUser3 = null;
+		testProj = null;
+		testTask = null;
+		testTask2 = null;
+		projectUser1 = null;
+		projectUser2 = null;
+		typeOfUser = 0;
+		listToCompare = null;
 	}
 
+	/**
+	 * 
+	 * This test adds two tasks workers to the task, created previously on the setUp
+	 * One of the tasks is mask as finished. Then it asserts to see if the state of
+	 * the isFinished field on the task is set to true.
+	 * 
+	 */
 	@Test
-	void testAddThenRemoveUserFromTask() {
+	void testRemoveTaskFromUser() {
 
-		// add users to company
-		c1.addUserToUserList(u1);
-		c1.addUserToUserList(u2);
-		c1.addUserToUserList(u3);
+		// Adds users to the respective tasks
+		testTask.addUserToTask(taskWorker1);
+		testTask2.addUserToTask(taskWorker1);
+		testTask.addUserToTask(taskWorker2);
 
-		// set user as collaborator
-		u2.setUserProfile(Profile.COLLABORATOR);
-		u3.setUserProfile(Profile.COLLABORATOR);
+		// Adds 2 users to the comparison list
+		listToCompare.add(taskWorker1);
+		listToCompare.add(taskWorker2);
 
-		// set user as Director
-		u1.setUserProfile(Profile.DIRECTOR);
+		// Checks if the two lists are the same
+		assertEquals(listToCompare, testTask.getTaskTeam());
 
-		// add project to project list
-		c1.addProjectToProjectList(p1);
+		// AssertsTrue to see if the TaskTeam contains both users
+		assertTrue(testTask.taskTeamContainsUser(newUser2));
+		assertTrue(testTask.taskTeamContainsUser(newUser3));
 
-		// set projects to active state
-		p1.setProjectStatus(1);
+		// AssertTrue to see if the TeamUser State is set to active
+		assertTrue(testTask.taskTeamUserIsActive(newUser2));
 
-		// add collaborator to project
-		p1.addUserToProjectTeam(u2);
-		p1.addUserToProjectTeam(u3);
+		// sets the userState from newUser 2 to not Active
+		testTask.removeUserFromTask(newUser2);
 
-		// add task to project
-		p1.getTaskRepository().addProjectTask(testTask);
-		p1.getTaskRepository().addProjectTask(testTask2);
-
-		// add task to collaborator
-		testTask.addUserToTask(u2);
-		testTask.addUserToTask(u3);
-		testTask2.addUserToTask(u3);
-
-		// remove user from task
-		testTask.removeUserFromTask(u2);
-		testTask2.removeUserFromTask(u3);
-
-		// Creates a new list and adds task to that list, to compare with
-		// taskList
-		List<User> test = new ArrayList<User>();
-		test.add(u3);
-
-		List<User> test1 = new ArrayList<User>();
-
-		assertTrue(test.equals(testTask.getTaskTeam()));
-		assertTrue(test1.equals(testTask2.getTaskTeam()));
+		// Checks if the active of newUser 2 is now set to false
+		assertFalse(testTask.taskTeamUserIsActive(newUser2));
 
 	}
 
