@@ -1,6 +1,6 @@
 package test.usTest.java.project.model;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,39 +12,88 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
+import main.java.project.model.ProjectRepository;
 import main.java.project.model.User;
+import main.java.project.model.UserRepository;
 
+/**
+ * 
+ * @author group 3
+ * 
+ *         Test US 320
+ * 
+ *         US320 - As a Director, I want to see a list of active projects.
+ *
+ */
 class US320Tests {
 
-	Company c1;
-	User u1;
-	User u2;
-	Project p1;
-	Project p2;
-	Project p3;
-	Project p4;
-	Project p5;
+	Company myCompany;
+	UserRepository userRepository;
+	User user1;
+	User user2;
+	Project project1;
+	Project project2;
+	Project project3;
+	Project project4;
+	Project project5;
+	ProjectRepository projectRepository;
+	ProjectCollaborator projectCollaborator;
 	List<Project> testUs320;
 
 	@BeforeEach
 	void setUp() {
 		// Company creation
-		c1 = Company.getTheInstance();
-		c1.getUsersList().clear();
-		c1.getProjectsList().clear();
+		myCompany = Company.getTheInstance();
+
+		// creates an UserRepository
+		userRepository = myCompany.getUsersRepository();
+
+		// creates a ProjectRepository
+		projectRepository = myCompany.getProjectsRepository();
+		userRepository.getAllUsersFromRepository().clear();
 
 		// User creation
-		u1 = c1.createUser("Daniel", "daniel@gmail.com", "001", "Director", "910000000", "Rua Bla", "BlaBla",
-				"BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-		u2 = c1.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "Rua Bla", "BlaBla",
-				"BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
+		user2 = userRepository.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "Rua Bla",
+				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		// create the project and set a user to Project manager
-		p1 = c1.createProject("Teste", "blablabla", u2);
-		p2 = c1.createProject("Teste", "blablabla", u2);
-		p3 = c1.createProject("Teste", "blablabla", u2);
-		p4 = c1.createProject("Teste", "blablabla", u2);
-		p5 = c1.createProject("Teste", "blablabla", u2);
+		// add user to user list
+		userRepository.addUserToUserRepository(user1);
+		userRepository.addUserToUserRepository(user2);
+
+		// set user as collaborator
+		user1.setUserProfile(Profile.DIRECTOR);
+		user2.setUserProfile(Profile.COLLABORATOR);
+
+		// create project and set a user to Project manager
+		project1 = projectRepository.createProject("name3", "description4", user2);
+		project2 = projectRepository.createProject("name3", "description4", user2);
+		project3 = projectRepository.createProject("name3", "description4", user2);
+		project4 = projectRepository.createProject("name3", "description4", user2);
+		project5 = projectRepository.createProject("name3", "description4", user2);
+
+		// add project to project repository
+		projectRepository.addProjectToProjectRepository(project1);
+		projectRepository.addProjectToProjectRepository(project2);
+		projectRepository.addProjectToProjectRepository(project3);
+		projectRepository.addProjectToProjectRepository(project4);
+		projectRepository.addProjectToProjectRepository(project5);
+
+		// create project collaborator
+		projectCollaborator = project1.createProjectCollaborator(user1, 2);
+		projectCollaborator = project2.createProjectCollaborator(user1, 2);
+		projectCollaborator = project3.createProjectCollaborator(user1, 2);
+		projectCollaborator = project4.createProjectCollaborator(user1, 2);
+		projectCollaborator = project5.createProjectCollaborator(user1, 2);
+
+		// add user to project team
+		project1.addUserToProjectTeam(projectCollaborator);
+		project2.addUserToProjectTeam(projectCollaborator);
+		project3.addUserToProjectTeam(projectCollaborator);
+		project4.addUserToProjectTeam(projectCollaborator);
+		project5.addUserToProjectTeam(projectCollaborator);
 
 		// Creates a new list and adds projects to that list, to compare with
 		// projectList
@@ -54,52 +103,35 @@ class US320Tests {
 
 	@AfterEach
 	void tearDown() {
-		Company c1 = null;
-		User u1 = null;
-		User u2 = null;
-		Project p1 = null;
-		Project p2 = null;
-		Project p3 = null;
-		Project p4 = null;
-		Project p5 = null;
-		List<Project> testUs320 = null;
+		myCompany = null;
+		user1 = null;
+		user2 = null;
+		project1 = null;
+		project2 = null;
+		project3 = null;
+		project4 = null;
+		project5 = null;
+		testUs320 = null;
 
 	}
 
 	@Test
 
-	// US320 - Como Diretor, quero poder ver uma lista dos projetos ativos.
-
 	void testUS320() {
 
-		// add users to company
-		c1.addUserToUserList(u1);
-		c1.addUserToUserList(u2);
-
-		// set user as Director
-		u1.setUserProfile(Profile.DIRECTOR);
-
-		// add project to project list
-		c1.addProjectToProjectList(p1);
-		c1.addProjectToProjectList(p2);
-		c1.addProjectToProjectList(p3);
-		c1.addProjectToProjectList(p4);
-		c1.addProjectToProjectList(p5);
-
 		// set projects to active state
-		p1.setProjectStatus(1);
-		p2.setProjectStatus(1);
-		p3.setProjectStatus(1);
-		p4.setProjectStatus(1);
-		p5.setProjectStatus(1);
+		project1.setProjectStatus(1);
+		project2.setProjectStatus(1);
+		project3.setProjectStatus(1);
+		project4.setProjectStatus(1);
+		project5.setProjectStatus(0);
 
 		// add projects to projects list to create expected result
-		testUs320.add(p1);
-		testUs320.add(p2);
-		testUs320.add(p3);
-		testUs320.add(p4);
-		testUs320.add(p5);
+		testUs320.add(project1);
+		testUs320.add(project2);
+		testUs320.add(project3);
+		testUs320.add(project4);
 
-		assertTrue(testUs320.equals(c1.getActiveProjectsList()));
+		assertEquals(testUs320, projectRepository.getActiveProjects());
 	}
 }

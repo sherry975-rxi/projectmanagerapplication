@@ -3,15 +3,21 @@ package test.usTest.java.project.model;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Calendar;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.java.project.model.Company;
-import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
+import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
+import main.java.project.model.TaskRepository;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
+import main.java.project.model.UserRepository;
 
 class US205Tests {
 
@@ -27,28 +33,72 @@ class US205Tests {
 	 * 
 	 */
 	Company myCompany;
+	UserRepository userRepository;
+	ProjectRepository projectRepository;
+	TaskRepository taskRepository;
+	ProjectCollaborator projectUser1;
+	ProjectCollaborator projectUser2;
 	User newUser2;
 	User newUser3;
 	Project testProj;
 	Task testTask;
 	Task testTask2;
 	int typeOfUser;
+	TaskWorker taskWorker1;
+	TaskWorker taskWorker2;
 
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersList().clear();
+		// creates an UserRepository
+		userRepository = myCompany.getUsersRepository();
 
-		newUser2 = myCompany.createUser("Joao", "Joao@gmail.com", "123", "Empregado", "930000000", "Rua Maria",
-				"4444-444", "221234567", "Porto", "Portugal");
+		// creates a ProjectRepository
+		projectRepository = myCompany.getProjectsRepository();
 
-		newUser3 = myCompany.createUser("Leonor", "leonor@gmail.com", "123", "Empregado", "930000000", "Rua Maria",
-				"4444-444", "221234567", "Porto", "Portugal");
-		testProj = myCompany.createProject("name3", "description4", newUser2);
+		// create user
+		newUser2 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
 
-		testTask = testProj.getTaskRepository().createTask("Test dis pls");
+		// create user
+		newUser3 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
 
-		testTask2 = testProj.getTaskRepository().createTask("Test dis agen pls");
+		// create project
+		testProj = projectRepository.createProject("name3", "description4", newUser3);
+
+		// create a estimated Task Start Date
+		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
+		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
+		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 10);
+		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		// create a estimated Task Start Date
+		Calendar taskDeadlineDateTest = Calendar.getInstance();
+		taskDeadlineDateTest.set(Calendar.YEAR, 2017);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 20);
+		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
+		// creates a Project
+		testProj = projectRepository.createProject("name3", "description4", newUser3);
+
+		// create taskRepository
+		taskRepository = testProj.getTaskRepository();
+
+		// creates 2 Project Collaborators
+		projectUser1 = testProj.createProjectCollaborator(newUser2, 10);
+		projectUser2 = testProj.createProjectCollaborator(newUser3, 10);
+
+		// creates 2 Tasks
+		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+
+		// Creates 2 Task Workers
+		taskWorker1 = testTask.createTaskWorker(projectUser1);
+		taskWorker2 = testTask2.createTaskWorker(projectUser2);
 
 		typeOfUser = 1;
 	}
@@ -56,49 +106,38 @@ class US205Tests {
 	@AfterEach
 	void tearDown() {
 		myCompany = null;
+		taskRepository = null;
 		newUser2 = null;
 		newUser3 = null;
 		testProj = null;
 		testTask = null;
 		testTask2 = null;
+		projectUser1 = null;
+		projectUser2 = null;
 		typeOfUser = 0;
 	}
 
 	/**
 	 * 
-	 * This test creates two users, one project, and two tasks. Both users are
-	 * marked as collaborators, one of them the project's manager; The, tests the
-	 * various steps of adding users to projects and tasks, and tasks to the
-	 * project; Finally, confirms if tasks can be marked as completed
+	 * This test adds two tasks workers to the task, created previously on the setUp
+	 * One of the tasks is mask as finished. Then it asserts to see if the state of
+	 * the isFinished field on the task is set to true.
 	 * 
 	 */
 	@Test
 	void testMarkTaskAsCompleted() {
-		assertTrue(myCompany.addUserToUserList(newUser2));
-		assertTrue(myCompany.addUserToUserList(newUser3));
-		newUser2.setUserProfile(Profile.COLLABORATOR);
-		newUser3.setUserProfile(Profile.COLLABORATOR);
 
-		myCompany.addProjectToProjectList(testProj);
+		// Adds users to the respective tasks
+		testTask.addUserToTask(taskWorker1);
+		testTask2.addUserToTask(taskWorker2);
 
-		// Adds User 3 to team and both tasks to project
-		testProj.addUserToProjectTeam(newUser3);
-		testProj.getTaskRepository().addProjectTask(testTask);
-		testProj.getTaskRepository().addProjectTask(testTask2);
-
-		// Adds user 3 to both tasks and marks the first task as cleared
-		testTask.addUserToTask(newUser3);
-		testTask2.addUserToTask(newUser3);
-		testTask.setFinishDate();
+		// Marks testTask as finished
 		testTask.markTaskAsFinished();
-
-		// Confirms if User 3 is in the team, and User 2 (Project manager) isn't
-		assertTrue(testTask.getTaskTeam().contains(newUser3));
-		assertFalse(testTask.getTaskTeam().contains(newUser2));
 
 		// Asserts if testTask is cleared, and testTask2 isn't
 		assertTrue(testTask.isFinished());
 		assertFalse(testTask2.isFinished());
+
 	}
 
 }
