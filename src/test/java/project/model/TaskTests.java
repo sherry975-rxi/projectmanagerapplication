@@ -189,6 +189,10 @@ class TaskTests {
 		assertFalse(testTask2.isTaskTeamEmpty());
 	}
 
+	/**
+	 * A test to confirm that the addUserToTask method updates Task Worker info if
+	 * the user already worked in a specific task
+	 */
 	@Test
 	void updateTaskWorker() {
 		testTask2.addUserToTask(tWorker1);
