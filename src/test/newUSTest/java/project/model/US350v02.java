@@ -98,20 +98,18 @@ class US350v02 {
 		assertTrue(p1.isProjectManager(u2));
 		assertFalse(p1.isProjectManager(u4));
 		
-		// add collaborators to project
-		p1.addUserToProjectTeam(u3, 120);
-		p1.addUserToProjectTeam(u4, 130);
-		p1.addUserToProjectTeam(u5, 150);
-
-		// add project to the Company Project list
-		c1.getProjectsRepository().addProjectToProjectRepository(p1);
-
 		// create project collabotors with u3, u4 and u5 users
 		ProjectCollaborator collaborator1 = new ProjectCollaborator(u3, 120);
 		ProjectCollaborator collaborator2 = new ProjectCollaborator(u4, 130);
 		ProjectCollaborator collaborator3 = new ProjectCollaborator(u5, 150);
 
-		
+		// add collaborators to project
+		p1.addUserToProjectTeam(collaborator1);
+		p1.addUserToProjectTeam(collaborator2);
+		p1.addUserToProjectTeam(collaborator3);
+
+		// add project to the Company Project list
+		c1.getProjectsRepository().addProjectToProjectRepository(p1);
 		
 		// Creates a new list and adds user to that list, to compare with userList
 		// inside ProjectTeam
