@@ -20,6 +20,7 @@ import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 
 class ProjectTests {
@@ -35,6 +36,8 @@ class ProjectTests {
 	Task t2;
 	Task t3;
 	Task t4;
+	TaskWorker taskWorker1;
+	TaskWorker taskWorker2;
 	Project p1;
 	Project p2;
 	TaskRepository taskRepository;
@@ -48,6 +51,8 @@ class ProjectTests {
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
 		projectCollaborator1 = new ProjectCollaborator(u2, 1200);
 		projectCollaborator2 = new ProjectCollaborator(u1, 1200);
+		taskWorker1 = new TaskWorker(projectCollaborator2);
+		taskWorker2 = new TaskWorker(projectCollaborator1);
 		p1 = new Project(1, "name3", "description4", u1);
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
@@ -74,6 +79,8 @@ class ProjectTests {
 		Task t2 = null;
 		Task t3 = null;
 		Task t4 = null;
+		TaskWorker taskWorker1 = null;
+		TaskWorker taskWorker2 = null;
 		Project p1 = null;
 		Project p2 = null;
 		ProjectCollaborator projectCollaborator1 = null;
@@ -209,21 +216,21 @@ class ProjectTests {
 	 */
 	@Test
 	void testGetUnfinishedTasks() {
-		t1.addUserToTask(projectCollaborator2);
+		t1.addUserToTask(taskWorker1);
 		assertEquals(t1, p1.getTaskRepository().getUnFinishedTasksFromUser(u1).get(0));
 	}
 
 	@Test
 	void testGetFinishedTasks() {
-		t2.addUserToTask(projectCollaborator1);
+		t2.addUserToTask(taskWorker1);
 		assertEquals(t2, p1.getTaskRepository().getFinishedTaskListofUserInProject(u2).get(0));
 	}
 
 	@Test
 	void testGetAllTasks() {// The order of tasks in the test list changes because the getAllTasks method
 							// shows the finished tasks first.
-		t1.addUserToTask(projectCollaborator2);
-		t2.addUserToTask(projectCollaborator2);
+		t1.addUserToTask(taskWorker1);
+		t2.addUserToTask(taskWorker1);
 		List<Task> test = new ArrayList<Task>();
 		test.add(t1);
 		test.add(t2);
@@ -234,9 +241,9 @@ class ProjectTests {
 	void testGetFinishedTaskListLastMonth() {
 		Calendar test = Calendar.getInstance();
 		test.add(Calendar.MONTH, -1);
-		t1.addUserToTask(projectCollaborator2);
-		t2.addUserToTask(projectCollaborator2);
-		t3.addUserToTask(projectCollaborator2);
+		t1.addUserToTask(taskWorker1);
+		t2.addUserToTask(taskWorker1);
+		t3.addUserToTask(taskWorker1);
 		p1.getTaskRepository().addProjectTask(t1);
 		p1.getTaskRepository().addProjectTask(t2);
 		p1.getTaskRepository().addProjectTask(t3);
@@ -252,7 +259,7 @@ class ProjectTests {
 		p1.getTaskRepository().addProjectTask(t1);
 		p1.getTaskRepository().addProjectTask(t2);
 		p1.getTaskRepository().addProjectTask(t3);
-		t2.addUserToTask(projectCollaborator2);
+		t2.addUserToTask(taskWorker1);
 		assertTrue(t2.taskTeamContainsUser(u1));
 	}
 
@@ -261,7 +268,7 @@ class ProjectTests {
 		p1.getTaskRepository().addProjectTask(t1);
 		p1.getTaskRepository().addProjectTask(t2);
 		p1.getTaskRepository().addProjectTask(t3);
-		t2.addUserToTask(projectCollaborator2);
+		t2.addUserToTask(taskWorker1);
 		assertFalse(t1.taskTeamContainsUser(u1));
 	}
 
@@ -286,8 +293,8 @@ class ProjectTests {
 
 		p1.addUserToProjectTeam(projectCollaborator1);
 		p1.addUserToProjectTeam(projectCollaborator2);
-		t1.addUserToTask(projectCollaborator1);
-		t1.addUserToTask(projectCollaborator2);
+		t1.addUserToTask(taskWorker2);
+		t1.addUserToTask(taskWorker1);
 
 		p1.removeCollaboratorFromProjectTeam(projectCollaborator1);
 
