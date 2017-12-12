@@ -615,12 +615,12 @@ public class Task {
 	}
 
 	/**
-	 * This method returns the total budget reported to task from all TaskWorkers
+	 * This method returns the total cost of a task. The reported value is associated with a task with all its TaskWorkers. It is calculated multiplying the cost of each task worker with the time that each worker spent on this particular task. 
 	 * 
-	 * @return Returns a double with the value of the total cost reported to the
+	 * @return Returns a double with the total cost of the task
 	 *         task
 	 */
-	public double getReportedBudgetToTheTask() {
+	public double getTaskCost() {
 		double taskBudgetReported = 0.0;
 
 		for (TaskWorker taskWorker : this.getTaskTeam()) {
