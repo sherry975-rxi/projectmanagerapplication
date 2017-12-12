@@ -13,9 +13,11 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 import main.java.project.model.UserRepository;
 
@@ -38,6 +40,9 @@ public class US375 {
 	TaskRepository taskRepository;
 	Task testTask;
 	Task testTask2;
+	ProjectCollaborator projectCollaborator;
+	TaskWorker taskWorker;
+	TaskWorker taskWorker1;
 
 	@BeforeEach
 	void setUp() {
@@ -72,8 +77,34 @@ public class US375 {
 		// create project
 		project = projectRepository.createProject("name3", "description4", user2);
 
+		// create project collaborator
+		projectCollaborator = project.createProjectCollaborator(user1, 2);
+
+		// create a estimated Task Start Date
+		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
+		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
+		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		// create a estimated Task Start Date
+		Calendar taskDeadlineDateTest = Calendar.getInstance();
+		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
+		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
+		// create 2 task
+		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+
+		// create task Worker
+		taskWorker = testTask.createTaskWorker(projectCollaborator);
+		taskWorker1 = testTask2.createTaskWorker(projectCollaborator);
+
 		// add user to project team
-		project.addUserToProjectTeam(user1, 2);
+		project.addUserToProjectTeam(projectCollaborator);
 
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
@@ -93,31 +124,14 @@ public class US375 {
 
 	@Test
 	void testUS375() {
-		// create a estimated Task Start Date
-		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
-		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
-		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
-		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
-		// create a estimated Task Start Date
-		Calendar taskDeadlineDateTest = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
-		// create 2 task
-		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
 
 		// Adds user1 to the Task
-		testTask.addUserToTask(project.getProjectTeam().get(0));
-		testTask2.addUserToTask(project.getProjectTeam().get(0));
+		testTask.addUserToTask(taskWorker);
+		testTask2.addUserToTask(taskWorker1);
 
 		// Creates a new list, and then added the tasks without any user assigned to
 		// them
