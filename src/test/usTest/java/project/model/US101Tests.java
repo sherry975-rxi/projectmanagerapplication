@@ -37,9 +37,12 @@ class US101Tests {
 
 	@BeforeEach
 	void setUp() {
+
+		// create company
 		Critical = Company.getTheInstance();
 		Critical.getUsersRepository().getAllUsersFromRepository().clear();
 
+		// create user
 		user1 = Critical.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		uFalse = Critical.getUsersRepository().createUser("DanielA", "daniel&gmail,com", "001", "Porteiro", "910000000",
@@ -49,6 +52,7 @@ class US101Tests {
 		user2 = Critical.getUsersRepository().createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey",
 				"920000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
+		// create a list to compare
 		testList = new ArrayList<User>();
 	}
 
