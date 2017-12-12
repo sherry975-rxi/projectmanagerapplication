@@ -79,8 +79,8 @@ class TaskRepositoryTests {
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
-		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
-		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
+		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 25);
 		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
 		// create a estimated Task Dead line Date
 		Calendar taskDeadlineDateTest = Calendar.getInstance();
@@ -91,23 +91,25 @@ class TaskRepositoryTests {
 
 		// create a expired estimated Task Dead line Date
 		Calendar taskExpiredDeadlineDateTest = Calendar.getInstance();
-		taskExpiredDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskExpiredDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
+		taskExpiredDeadlineDateTest.set(Calendar.YEAR, 2017);
+		taskExpiredDeadlineDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
 		taskExpiredDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create 4 tasks
 		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, taskDeadlineDateTest, taskDeadlineDateTest, 10);
-		testTask3 = taskRepository.createTask("Test moar yeh", 10, taskDeadlineDateTest, taskDeadlineDateTest, 10);
-		testTask4 = taskRepository.createTask("TEST HARDER!", 10, taskDeadlineDateTest, taskDeadlineDateTest, 10);
-		testTask5 = taskRepository.createTask("TEST HARDER!", 10, taskDeadlineDateTest, taskExpiredDeadlineDateTest,
+		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask6 = taskRepository.createTask("TEST HARDER!", 10, taskDeadlineDateTest, taskExpiredDeadlineDateTest,
+		testTask3 = taskRepository.createTask("Test moar yeh", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask7 = taskRepository.createTask("TEST HARDER!", 10, taskDeadlineDateTest, taskExpiredDeadlineDateTest,
-				10);
+		testTask4 = taskRepository.createTask("TEST HARDER!", 10, estimatedTaskStartDateTest, taskDeadlineDateTest, 10);
+		testTask5 = taskRepository.createTask("TEST HARDER!", 10, estimatedTaskStartDateTest,
+				taskExpiredDeadlineDateTest, 10);
+		testTask6 = taskRepository.createTask("TEST HARDER!", 10, estimatedTaskStartDateTest,
+				taskExpiredDeadlineDateTest, 10);
+		testTask7 = taskRepository.createTask("TEST HARDER!", 10, estimatedTaskStartDateTest,
+				taskExpiredDeadlineDateTest, 10);
 
 	}
 
@@ -528,6 +530,12 @@ class TaskRepositoryTests {
 
 	@Test
 	void testGetExpiredTasks() {
+		// create star date to test
+		Calendar startDateTest = Calendar.getInstance();
+		startDateTest.set(Calendar.YEAR, 2017);
+		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
+		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask4);
@@ -540,6 +548,12 @@ class TaskRepositoryTests {
 		testTask5.addUserToTask(project.getProjectTeam().get(0));
 		testTask6.addUserToTask(project.getProjectTeam().get(0));
 		testTask7.addUserToTask(project.getProjectTeam().get(0));
+
+		// start tasks
+		testTask4.setStartDate(startDateTest);
+		testTask5.setStartDate(startDateTest);
+		testTask6.setStartDate(startDateTest);
+		testTask7.setStartDate(startDateTest);
 
 		// Creates a new list, and then added the Expired tasks
 		List<Task> listExpiredTasks = new ArrayList<Task>();
