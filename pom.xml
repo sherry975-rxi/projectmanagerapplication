@@ -17,9 +17,9 @@
 
     <dependencies>
         <dependency>
- 		   <groupId>org.junit</groupId>
- 		   <artifactId>junit5-engine</artifactId>
-  		   <version>5.0.0-ALPHA</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
         </dependency>
         <dependency>
             <groupId>xml-apis</groupId>
@@ -68,7 +68,12 @@
 			<version>1.4</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.0.0</version>
+			<scope>test</scope>
+		</dependency>
 
     </dependencies>
     <build>
