@@ -34,6 +34,7 @@ class TaskTests {
 	Project myProject;
 	Task testTask, testTask2, testTask3;
 	ProjectCollaborator Collab1, Collab2;
+	TaskWorker tWorker1, tWorker2;
 
 	@BeforeEach
 	void setUp() {
@@ -45,6 +46,8 @@ class TaskTests {
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
 		Collab1 = new ProjectCollaborator(user1, 5);
 		Collab2 = new ProjectCollaborator(user2, 5);
+		tWorker1 = new TaskWorker(Collab1);
+		tWorker2 = new TaskWorker(Collab2);
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
 		Calendar estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.add(Calendar.MONTH, -1);
@@ -67,6 +70,8 @@ class TaskTests {
 		testTask3 = null;
 		Collab1 = null;
 		Collab2 = null;
+		tWorker1 = null;
+		tWorker2 = null;
 
 	}
 
@@ -88,8 +93,8 @@ class TaskTests {
 	@Test
 	void testTaskTeam() {
 
-		testTask.addUserToTask(Collab1);
-		testTask.addUserToTask(Collab2);
+		testTask.addUserToTask(tWorker1);
+		testTask.addUserToTask(tWorker2);
 		assertTrue(testTask.taskTeamContainsUser(Collab1.getCollaboratorUserData())
 				&& testTask.taskTeamContainsUser(Collab2.getCollaboratorUserData()));
 	}
@@ -134,8 +139,8 @@ class TaskTests {
 	 */
 	@Test
 	void testGetTimeSpentOnTask() {
-		testTask.addUserToTask(Collab1);
-		testTask.addUserToTask(Collab2);
+		testTask.addUserToTask(tWorker1);
+		testTask.addUserToTask(tWorker2);
 		testTask.getTaskTeam().get(0).setHoursSpent(20);
 		testTask.getTaskTeam().get(1).setHoursSpent(15);
 
@@ -180,7 +185,7 @@ class TaskTests {
 	@Test
 	void isTaskTeamEmpty_false() {
 
-		testTask2.addUserToTask(Collab1);
+		testTask2.addUserToTask(tWorker1);
 
 		assertFalse(testTask2.isTaskTeamEmpty());
 	}
