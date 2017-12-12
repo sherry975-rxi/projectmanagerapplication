@@ -1,7 +1,6 @@
 package test.usTest.java.project.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,7 +13,9 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.Task;
+import main.java.project.model.TaskWorker;
 import main.java.project.model.User;
 
 class US211Tests {
@@ -32,6 +33,7 @@ class US211Tests {
 	User newUserA;
 	User newUserB;
 	Project project;
+	ProjectCollaborator newCollaboratorB;
 	Task testTask;
 	Task testTask2;
 	Task testTask3;
@@ -40,52 +42,90 @@ class US211Tests {
 	@BeforeEach
 	void setUp() {
 		company = Company.getTheInstance();
-		company.getUsersList().clear();
+		company.getUsersRepository().getAllUsersFromRepository().clear();
+		company.getProjectsRepository().getAllProjects().clear();
 
-		newUserA = company.createUser("João", "user2@gmail.com", "123", "Maneger", "940000000", "StreetA", "ZipCodeA",
-				"CityA", "DistrictA", "CountryA");
-		newUserB = company.createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000", "StreetB",
-				"ZipCodeB", "CityB", "DistrictB", "CountryB");
-		project = company.createProject("name3", "description4", newUserA);
-		testTask = project.getTaskRepository().createTask("Test dis pls");
-		testTask2 = project.getTaskRepository().createTask("Test dis agen pls");
-		testTask3 = project.getTaskRepository().createTask("Test moar yeh");
-		testTask4 = project.getTaskRepository().createTask("TEST HARDER!");
-	}
+		newUserA = company.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
+				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
+		newUserB = company.getUsersRepository().createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000",
+				"StreetB", "ZipCodeB", "CityB", "DistrictB", "CountryB");
 
-	@AfterEach
-	void tearDown() {
-		Company company = null;
-		User newUserA = null;
-		User newUserB = null;
-		Project project = null;
-		Task testTask = null;
-		Task testTask2 = null;
-		Task testTask3 = null;
-		Task testTask4 = null;
-	}
-
-	@Test
-	void test() {
-
-		assertTrue(company.addUserToUserList(newUserA));
-		assertTrue(company.addUserToUserList(newUserB));
 		newUserA.setUserProfile(Profile.COLLABORATOR);
 		newUserB.setUserProfile(Profile.COLLABORATOR);
 
-		company.addProjectToProjectList(project);
+		company.getUsersRepository().addUserToUserRepository(newUserA);
+		company.getUsersRepository().addUserToUserRepository(newUserB);
 
-		// Adds User 3 to all tasks and project, adds tasks to project
-		project.addUserToProjectTeam(newUserA);
+		project = company.getProjectsRepository().createProject("name3", "description4", newUserA);
+		project.getProjectTeam().clear();
+		company.getProjectsRepository().addProjectToProjectRepository(project);
+
+		// create Collaborator from User and add it to team
+
+		newCollaboratorB = project.createProjectCollaborator(newUserB, 50);
+
+		project.addUserToProjectTeam(newCollaboratorB);
+
+		// create a estimated Task Start Date
+		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
+
+		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
+		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
+		// create a estimated Task Deadline
+		Calendar taskDeadlineDateTest = Calendar.getInstance();
+
+		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
+		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
+		// create four Tasks and add to Repository
+		testTask = project.getTaskRepository().createTask("Test dis", 10, estimatedTaskStartDateTest,
+				taskDeadlineDateTest, 10);
+		testTask2 = project.getTaskRepository().createTask("Test dis agen pls", 10, estimatedTaskStartDateTest,
+				taskDeadlineDateTest, 10);
+
+		testTask3 = project.getTaskRepository().createTask("Test moar yeh", 10, estimatedTaskStartDateTest,
+				taskDeadlineDateTest, 10);
+		testTask4 = project.getTaskRepository().createTask("TEST HARDER!", 10, estimatedTaskStartDateTest,
+				taskDeadlineDateTest, 10);
+
+		// Adds all tasks to project,
 		project.getTaskRepository().addProjectTask(testTask);
 		project.getTaskRepository().addProjectTask(testTask2);
 		project.getTaskRepository().addProjectTask(testTask3);
 		project.getTaskRepository().addProjectTask(testTask4);
 
-		testTask.addUserToTask(newUserA);
-		testTask2.addUserToTask(newUserA);
-		testTask3.addUserToTask(newUserA);
-		testTask4.addUserToTask(newUserA);
+	}
+
+	@AfterEach
+	void tearDown() {
+		company = null;
+		newUserA = null;
+		newUserB = null;
+		project = null;
+		newCollaboratorB = null;
+		testTask = null;
+		testTask2 = null;
+		testTask3 = null;
+		testTask4 = null;
+	}
+
+	@Test
+	void test() {
+
+		TaskWorker Task1CollaboratorB = testTask.createTaskWorker(newCollaboratorB);
+		TaskWorker Task2CollaboratorB = testTask2.createTaskWorker(newCollaboratorB);
+		TaskWorker Task3CollaboratorB = testTask3.createTaskWorker(newCollaboratorB);
+		TaskWorker Task4CollaboratorB = testTask4.createTaskWorker(newCollaboratorB);
+
+		testTask.addUserToTask(Task1CollaboratorB);
+		testTask2.addUserToTask(Task2CollaboratorB);
+		testTask3.addUserToTask(Task3CollaboratorB);
+		testTask4.addUserToTask(Task4CollaboratorB);
 
 		// Sets all 4 tasks as cleared
 		testTask.setFinishDate();
@@ -116,7 +156,8 @@ class US211Tests {
 		// Compares expected results with TaskList
 		// assertEquals(myCompany.getLastMonthFinishedUserTaskListDecreasingOrder(newUser3),
 		// testList);
-		assertEquals(company.getLastMonthFinishedUserTaskListDecreasingOrder(newUserA), testList);
+		assertEquals(company.getProjectsRepository().getLastMonthFinishedUserTaskListDecreasingOrder(newUserB),
+				testList);
 	}
 
 }
