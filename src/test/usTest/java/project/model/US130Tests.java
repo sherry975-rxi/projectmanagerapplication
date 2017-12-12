@@ -31,25 +31,25 @@ class US130Tests {
 	@BeforeEach
 	void clearCompany() {
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersList().clear();
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
 
-		user1 = myCompany.createUser("Dani", "daniel@gmail.com", "001", "Programador", "910000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
-		user2 = myCompany.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
-		user3 = myCompany.createUser("Joao", "joao@gmail.com", "003", "Programador", "910000000", "ruinha", "7040-531",
-				"Bucareste", "Porto", "Portugal");
-		user4 = myCompany.createUser("Maria", "maria@gmail.com", "004", "Gestora de Projeto", "920000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
-		user5 = myCompany.createUser("Manel", "manel@gmail.com", "005", "Programador", "910000000", "ruinha",
-				"7040-531", "Bucareste", "Porto", "Portugal");
+		user1 = myCompany.getUsersRepository().createUser("Dani", "daniel@gmail.com", "001", "Programador", "910000000",
+				"ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
+		user2 = myCompany.getUsersRepository().createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto",
+				"920000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
+		user3 = myCompany.getUsersRepository().createUser("Joao", "joao@gmail.com", "003", "Programador", "910000000",
+				"ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
+		user4 = myCompany.getUsersRepository().createUser("Maria", "maria@gmail.com", "004", "Gestora de Projeto",
+				"920000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
+		user5 = myCompany.getUsersRepository().createUser("Manel", "manel@gmail.com", "005", "Programador", "910000000",
+				"ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
 
 		// Adds the created users to the Company user list.
-		myCompany.addUserToUserList(user1);
-		myCompany.addUserToUserList(user2);
-		myCompany.addUserToUserList(user3);
-		myCompany.addUserToUserList(user4);
-		myCompany.addUserToUserList(user5);
+		myCompany.getUsersRepository().addUserToUserRepository(user1);
+		myCompany.getUsersRepository().addUserToUserRepository(user2);
+		myCompany.getUsersRepository().addUserToUserRepository(user3);
+		myCompany.getUsersRepository().addUserToUserRepository(user4);
+		myCompany.getUsersRepository().addUserToUserRepository(user5);
 
 		// Set users's profile type to collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -72,7 +72,7 @@ class US130Tests {
 	@Test
 	void US130test() {
 		// Create the list of all users in the system
-		List<User> result = myCompany.getUsersList();
+		List<User> result = myCompany.getUsersRepository().getAllUsersFromRepository();
 
 		// Create list of users to compare and add users to it
 		List<User> listOfusers = new ArrayList<User>();
