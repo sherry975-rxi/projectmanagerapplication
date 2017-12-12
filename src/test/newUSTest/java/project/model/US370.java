@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import main.java.project.model.Company;
 import main.java.project.model.Profile;
 import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
 import main.java.project.model.ProjectRepository;
 import main.java.project.model.Task;
 import main.java.project.model.TaskRepository;
@@ -37,6 +38,7 @@ class US370 {
 	TaskRepository taskRepository;
 	Task testTask;
 	Task testTask2;
+	ProjectCollaborator projectCollaborator;
 
 	@BeforeEach
 	void setUp() {
@@ -52,13 +54,19 @@ class US370 {
 		// creates a UserRepository
 		userRepository.getAllUsersFromRepository().clear();
 
+		// clean list ProjectRepository
+		myCompany.getProjectsRepository().getAllProjects().clear();
+
+		// clean list URepository
+		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
-				"2401-00", "Test", "Testo", "Testistan");
+		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		user2 = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
-				"Test", "Testo", "Testistan");
+		user2 = myCompany.getUsersRepository().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
 		userRepository.addUserToUserRepository(user1);
@@ -71,8 +79,11 @@ class US370 {
 		// create project
 		project = projectRepository.createProject("name3", "description4", user2);
 
+		// create project collaborator
+		projectCollaborator = project.createProjectCollaborator(user1, 2);
+
 		// add user to project team
-		project.addUserToProjectTeam(user1, 2);
+		project.addUserToProjectTeam(projectCollaborator);
 
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
@@ -91,7 +102,7 @@ class US370 {
 	}
 
 	@Test
-	void testUS307() {
+	void testUS370() {
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);

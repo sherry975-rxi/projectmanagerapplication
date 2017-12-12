@@ -76,7 +76,8 @@ class US350v02 {
 
 		// create the project and set a user to Project manager
 		p1 = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
-
+		p1.getProjectTeam().clear();
+		p1.getTaskRepository().getProjectTaskList().clear();
 	}
 
 	@AfterEach
@@ -99,14 +100,14 @@ class US350v02 {
 		assertFalse(p1.isProjectManager(u4));
 		
 		// create project collabotors with u3, u4 and u5 users
-		ProjectCollaborator collaborator1 = new ProjectCollaborator(u3, 120);
-		ProjectCollaborator collaborator2 = new ProjectCollaborator(u4, 130);
-		ProjectCollaborator collaborator3 = new ProjectCollaborator(u5, 150);
+		ProjectCollaborator collaborattor1 = p1.createProjectCollaborator(u3, 120);
+		ProjectCollaborator collaborattor2 = p1.createProjectCollaborator(u4, 130);
+		ProjectCollaborator collaborattor3 = p1.createProjectCollaborator(u5, 150);
 
 		// add collaborators to project
-		p1.addUserToProjectTeam(collaborator1);
-		p1.addUserToProjectTeam(collaborator2);
-		p1.addUserToProjectTeam(collaborator3);
+		p1.addUserToProjectTeam(collaborattor1);
+		p1.addUserToProjectTeam(collaborattor2);
+		p1.addUserToProjectTeam(collaborattor3);
 
 		// add project to the Company Project list
 		c1.getProjectsRepository().addProjectToProjectRepository(p1);
@@ -115,9 +116,9 @@ class US350v02 {
 		// inside ProjectTeam
 		List<ProjectCollaborator> testUs350 = new ArrayList<ProjectCollaborator>();
 
-		testUs350.add(collaborator1);
-		testUs350.add(collaborator2);
-		testUs350.add(collaborator3);
+		testUs350.add(collaborattor1);
+		testUs350.add(collaborattor2);
+		testUs350.add(collaborattor3);
 
 		assertEquals(testUs350, p1.getProjectTeam());
 	}
