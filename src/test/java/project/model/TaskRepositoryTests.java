@@ -509,4 +509,25 @@ class TaskRepositoryTests {
 
 	}
 
+	@Test
+	void testGetExpiredTasks() {
+
+		// Adds Tasks to TaskRepository
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+
+		// Adds user1 to the Task
+		testTask.addUserToTask(project.getProjectTeam().get(0));
+		testTask2.addUserToTask(project.getProjectTeam().get(0));
+
+		// Creates a new list, and then added the unfished task
+		List<Task> listUnstartedTasks = new ArrayList<Task>();
+		listUnstartedTasks.add(testTask);
+		listUnstartedTasks.add(testTask2);
+
+		// Checks if both lists have the same tasks
+		assertEquals(listUnstartedTasks, taskRepository.getUnstartedTasks());
+
+	}
+
 }
