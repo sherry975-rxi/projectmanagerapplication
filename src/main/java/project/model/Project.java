@@ -335,7 +335,7 @@ public class Project {
 	 * This method calculates the sum of the values reported to the task until the
 	 * moment
 	 * 
-	 * @return The value reported to the project until the moment
+	 * @return The cost value reported for the Project until the moment
 	 */
 
 	public double getTotalCostReportedToProjectUntilNow() {

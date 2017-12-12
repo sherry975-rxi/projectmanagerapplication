@@ -13,7 +13,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.java.project.model.Company;
 import main.java.project.model.EffortUnit;
 import main.java.project.model.Project;
 import main.java.project.model.ProjectCollaborator;
@@ -25,7 +24,6 @@ import main.java.project.model.User;
 
 class ProjectTests {
 
-	Company c1;
 	User u1;
 	User u2;
 	ProjectCollaborator projectCollaborator1;
@@ -45,8 +43,6 @@ class ProjectTests {
 	@BeforeEach
 	public void setUp() {
 
-		c1 = Company.getTheInstance();
-		c1.getUsersRepository().getAllUsersFromRepository().clear();
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
 		projectCollaborator1 = new ProjectCollaborator(u2, 1200);
@@ -72,7 +68,6 @@ class ProjectTests {
 
 	@AfterEach
 	void tearDown() {
-		Company c1 = null;
 		User u1 = null;
 		User u2 = null;
 		Task t1 = null;
@@ -212,7 +207,7 @@ class ProjectTests {
 	}
 
 	/**
-	 * 
+	 * Tests the return of the unfinished tasks only of a user in a project.
 	 */
 	@Test
 	void testGetUnfinishedTasks() {
@@ -220,10 +215,15 @@ class ProjectTests {
 		assertEquals(t1, p1.getTaskRepository().getUnFinishedTasksFromUser(u1).get(0));
 	}
 
+	/**
+	 * Tests the return of the finished tasks only of a user in a project.
+	 * The same task worker can be associated with different tasks.
+	 */
 	@Test
 	void testGetFinishedTasks() {
+		
 		t2.addUserToTask(taskWorker1);
-		assertEquals(t2, p1.getTaskRepository().getFinishedTaskListofUserInProject(u2).get(0));
+		assertEquals(t2, p1.getTaskRepository().getFinishedTaskListofUserInProject(u1).get(0));
 	}
 
 	@Test
@@ -237,6 +237,9 @@ class ProjectTests {
 		assertEquals(test, p1.getTaskRepository().getAllTasks(u1));
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	void testGetFinishedTaskListLastMonth() {
 		Calendar test = Calendar.getInstance();
@@ -303,4 +306,14 @@ class ProjectTests {
 		assertFalse(p1.getTaskRepository().getAllTasks(u2).get(0).getTaskTeam().get(0).isTaskWorkerActiveInTask());
 	}
 
+	/**
+	 * Tests the calculation of the project cost (the sum of the values reported to the task until the
+	 * moment)
+	 */
+	@Test
+	void testGetTotalCostReportedToProjectUntilNow() {
+		
+		
+		
+	}
 }
