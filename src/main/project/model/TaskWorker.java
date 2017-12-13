@@ -1,16 +1,14 @@
 package main.project.model;
 
-
 import java.util.Calendar;
-
 
 public class TaskWorker {
 
 	private ProjectCollaborator projCollaborator;
 	private Calendar startDate;
 	private Calendar finishDate;
-//	private Integer hoursSpent;
-//	private Integer costPerEffort;
+	// private Integer hoursSpent;
+	// private Integer costPerEffort;
 	private boolean status;
 
 	/**
@@ -27,8 +25,8 @@ public class TaskWorker {
 		this.projCollaborator = projCollaborator;
 		this.startDate = Calendar.getInstance();
 		this.finishDate = null;
-//		this.hoursSpent = null;
-//		this.costPerEffort = projCollaborator.getCollaboratorCost();
+		// this.hoursSpent = null;
+		// this.costPerEffort = projCollaborator.getCollaboratorCost();
 		this.status = true;
 	}
 
@@ -40,7 +38,7 @@ public class TaskWorker {
 	public User getTaskWorker() {
 		return this.projCollaborator.getCollaboratorUserData();
 	}
-	
+
 	/**
 	 * Returns the ProjectCollaborator of this Task Worker
 	 * 
@@ -49,29 +47,28 @@ public class TaskWorker {
 	public ProjectCollaborator getProjectCollaboratorFromTaskWorker() {
 		return this.projCollaborator;
 	}
-	
+
 	/**
-	 * Returns True if the Project Collaborator is in this TaskWorker
-	 *  false if not
+	 * Returns True if the Project Collaborator is in this TaskWorker false if not
 	 * 
 	 * @return boolean
 	 */
 	public boolean isProjectCollaboratorInTaskWorker(ProjectCollaborator projCollabToCheck) {
-	
-		 return this.projCollaborator.equals(projCollabToCheck);
+
+		return this.projCollaborator.equals(projCollabToCheck);
 
 	}
 
 	/**
-	 * Returns the state of the TaskWorker.
-	 * If the TaskWorker don't have a finish date, then it's Active, and returns True
-	 * If the TaskWorker has a finish date, then it's Inactive, and returns False
+	 * Returns the state of the TaskWorker. If the TaskWorker don't have a finish
+	 * date, then it's Active, and returns True If the TaskWorker has a finish date,
+	 * then it's Inactive, and returns False
 	 * 
 	 * @return boolean
 	 */
 	public boolean isTaskWorkerActiveInTask() {
-	
-		 return this.finishDate == null;
+
+		return this.finishDate == null;
 
 	}
 
@@ -83,8 +80,6 @@ public class TaskWorker {
 		this.status = false;
 	}
 
-
-	
 	/**
 	 * Returns a specific Start Date
 	 * 
@@ -109,54 +104,76 @@ public class TaskWorker {
 		return this.finishDate;
 	}
 
-	
-//
-//	/**
-//	 * Returns the total hours spent by the collaborator
-//	 * 
-//	 * 
-//	 * @return TotalHoursSpent
-//	 */
-//	public int getTotalHoursSpent() {
-//
-//		int result = 0;
-//
-//		for (int indexHoursSpent = 0; indexHoursSpent < this.hoursSpent.size(); indexHoursSpent++) {
-//
-//			result = result + this.hoursSpent.get(indexHoursSpent);
-//		}
-//
-//		return result;
-//
-//	}
-//
-//	/**
-//	 * Returns the cost of the collaborator in a specific period
-//	 * 
-//	 * @param i
-//	 *            index of the cost wanted
-//	 * 
-//	 * @return cost
-//	 */
-//	public int getCost(int i) {
-//		return cost.get(i);
-//	}
-//
-//	/**
-//	 * Sets the hours spent by the user in this task in this period
-//	 * 
-//	 * @param hoursSpent
-//	 */
-//	public void setHoursSpent(int hoursSpent) {
-//		this.hoursSpent.set(this.hoursSpent.size() - 1, hoursSpent);
-//	}
-//
-//	/**
-//	 * Gets the size of the cost list
-//	 * 
-//	 */
-//	public int getCostListSize() {
-//		return this.cost.size();
-//	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TaskWorker other = (TaskWorker) obj;
+		if (finishDate == null) {
+			if (other.finishDate != null)
+				return false;
+		} else if (!finishDate.equals(other.finishDate))
+			return false;
+		if (projCollaborator == null) {
+			if (other.projCollaborator != null)
+				return false;
+		} else if (!projCollaborator.equals(other.projCollaborator))
+			return false;
+		return true;
+	}
 
 }
+
+//
+// /**
+// * Returns the total hours spent by the collaborator
+// *
+// *
+// * @return TotalHoursSpent
+// */
+// public int getTotalHoursSpent() {
+//
+// int result = 0;
+//
+// for (int indexHoursSpent = 0; indexHoursSpent < this.hoursSpent.size();
+// indexHoursSpent++) {
+//
+// result = result + this.hoursSpent.get(indexHoursSpent);
+// }
+//
+// return result;
+//
+// }
+//
+// /**
+// * Returns the cost of the collaborator in a specific period
+// *
+// * @param i
+// * index of the cost wanted
+// *
+// * @return cost
+// */
+// public int getCost(int i) {
+// return cost.get(i);
+// }
+//
+// /**
+// * Sets the hours spent by the user in this task in this period
+// *
+// * @param hoursSpent
+// */
+// public void setHoursSpent(int hoursSpent) {
+// this.hoursSpent.set(this.hoursSpent.size() - 1, hoursSpent);
+// }
+//
+// /**
+// * Gets the size of the cost list
+// *
+// */
+// public int getCostListSize() {
+// return this.cost.size();
+// }

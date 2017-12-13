@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Calendar;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,12 +19,15 @@ class TaskWorkerTest {
 	User userTester;
 	ProjectCollaborator collabTester;
 	TaskWorker workerTester;
+	Calendar finishDate;
 
 	@BeforeEach
 	void setUp() {
 		userTester = new User("myname", "myemail", "myidnumber", "myfunction", "myphone");
 		collabTester = new ProjectCollaborator(userTester, 5);
 		workerTester = new TaskWorker(collabTester);
+		finishDate = Calendar.getInstance();
+
 	}
 
 	@AfterEach
@@ -38,6 +43,22 @@ class TaskWorkerTest {
 	@Test
 	final void testUserInformationInTaskWorker() {
 		assertEquals(userTester, workerTester.getTaskWorker());
+	}
+
+	/**
+	 * Tests the method to get a user from a task worker
+	 */
+	@Test
+	final void testGetTaskWorker() {
+		assertEquals(userTester, workerTester.getTaskWorker());
+	}
+
+	/**
+	 * Tests the method to get a project collaborator from a taskworker
+	 */
+	@Test
+	final void testGeProjectCollaborator() {
+		assertEquals(collabTester, workerTester.getProjectCollaboratorFromTaskWorker());
 	}
 
 	/**
@@ -58,33 +79,14 @@ class TaskWorkerTest {
 	}
 
 	/**
-	 * Tests if a start date was added
+	 * Tests the set and get finish date methods
 	 */
 	@Test
-	final void testAddStartDate() {
-		workerTester.addStartDateForTaskWorker();
-		assertTrue(workerTester.isTaskWorkerActiveInTask());
-	}
+	final void testGetFinishDate() {
 
-	/**
-	 * Tests if a cost was added
-	 */
-	@Test
-	final void testAddCost() {
-		workerTester.addCostForTaskWorker(4);
-		;
-		assertEquals(4, workerTester.getCost(1));
-	}
+		workerTester.addFinishDateForTaskWorker();
+		finishDate = Calendar.getInstance();
+		assertEquals(workerTester.getFinishDate(), finishDate);
 
-	/**
-	 * Tests if a new hours spent was added, and if it is set correctly as well
-	 */
-	@Test
-	final void testAddHoursSpent() {
-		workerTester.addHoursSpentForTaskWorker();
-		workerTester.setHoursSpent(5);
-		assertEquals(0, workerTester.getHoursSpent(0));
-		assertEquals(5, workerTester.getHoursSpent(1));
 	}
-
 }
