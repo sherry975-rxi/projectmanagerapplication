@@ -11,6 +11,7 @@ public class TaskWorker {
 	private Calendar finishDate;
 	private Integer hoursSpent;
 	private Integer costPerEffort;
+	private boolean status;
 
 	/**
 	 * Constructor to create a new task worker
@@ -28,6 +29,7 @@ public class TaskWorker {
 		this.finishDate = null;
 		this.hoursSpent = null;
 		this.costPerEffort = projCollaborator.getCollaboratorCost();
+		this.status = true;
 	}
 
 	/**
@@ -67,6 +69,7 @@ public class TaskWorker {
 	 */
 	public void addFinishDateForTaskWorker() {
 		this.finishDate = Calendar.getInstance();
+		this.status = false;
 	}
 
 
