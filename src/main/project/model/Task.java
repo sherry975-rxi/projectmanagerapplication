@@ -328,16 +328,20 @@ public class Task {
 		}
 	}
 
-	public int getTimeSpentOntask(User user) {
+	/**
+	 * This method returns the time that all Task Collaborators spent on this specific task
+	 * 
+	 * @return Time spent on task
+	 */
+	public double getTimeSpentOntask() {
+		
+		double timeSpentOnTask = 0.0;
 
-		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user)) {
-
-				return other.getTotalHoursSpent();
-			}
+		for (Report reports : this.reports) {
+			timeSpentOnTask += reports.getReportedTime();
 		}
 
-		return 0;
+		return timeSpentOnTask;
 	}
 
 	// /**
@@ -648,20 +652,19 @@ public class Task {
 	}
 
 	/**
-	 * This method returns the total cost of a task. The reported value is associated with a task with all its TaskWorkers. It is calculated multiplying the cost of each task worker with the time that each worker spent on this particular task. 
+	 * This method returns the total cost of a task. The value that is returned is associated with a task with all its Task Collaborator. It is calculated multiplying the cost of each task worker with the time that each worker spent on this particular task. 
 	 * 
-	 * @return Returns a double with the total cost of the task
-	 *         task
+	 * @return Returns a double with the total cost of the task 
+	 *         
 	 */
 	public double getTaskCost() {
-		double taskBudgetReported = 0.0;
+		double taskCost = 0.0;
 
-		for (TaskWorker taskWorker : this.getTaskTeam()) {
-			for (int i = 0; i < taskWorker.getCostListSize(); i++) {
-				taskBudgetReported += taskWorker.getCost(i) * taskWorker.getHoursSpent(i);
-			}
+		for (Report reports : this.reports) {
+				taskCost += reports.getReportedTime() * reports.getTaskWorker().getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
 		}
-		return taskBudgetReported;
+				return taskCost;
 	}
-
+	
 }
+
