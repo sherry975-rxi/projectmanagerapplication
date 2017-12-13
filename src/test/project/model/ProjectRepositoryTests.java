@@ -361,7 +361,7 @@ class ProjectRepositoryTests {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		int expResult = (task1.getTimeSpentOntask(user1) + task2.getTimeSpentOntask(user1));
+		int expResult = (task1.getTimeSpentByProjectCollaboratorOntask(user1) + task2.getTimeSpentByProjectCollaboratorOntask(user1));
 
 		assertEquals(expResult, projectRepository.getTotalTimeLastMonthFinishedTasksByUser(user1), 0.000000001);
 	}
@@ -406,7 +406,7 @@ class ProjectRepositoryTests {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		int expResult = (task1.getTimeSpentOntask(user1) + task2.getTimeSpentOntask(user1)) / 2;
+		int expResult = (task1.getTimeSpentByProjectCollaboratorOntask(user1) + task2.getTimeSpentByProjectCollaboratorOntask(user1)) / 2;
 
 		assertEquals(expResult, projectRepository.getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
 	}

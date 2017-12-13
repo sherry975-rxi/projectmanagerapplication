@@ -127,14 +127,14 @@ class US207 {
 		testTask.getTaskTeam().get(0).setHoursSpent(1);
 
 		// Checks if both times are the same
-		assertEquals(1.0, testTask.getTimeSpentOntask(user1), 0.001);
+		assertEquals(1.0, testTask.getTimeSpentByProjectCollaboratorOntask(user1), 0.001);
 
 		// Updates the time spent on task by user
 		testTask.getTaskTeam().get(0).setHoursSpent(2);
 
 		// Checks if both times are the same
 
-		assertEquals(2.0, testTask.getTimeSpentOntask(user1), 0.001);
+		assertEquals(2.0, testTask.getTimeSpentByProjectCollaboratorOntask(user1), 0.001);
 
 	}
 

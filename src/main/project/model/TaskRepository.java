@@ -153,7 +153,7 @@ public class TaskRepository {
 		double totalTime = 0;
 		for (Task test : lastMonth) {
 			if (test.taskTeamContainsUser(collab) && test.getFinishDate() != null) {
-				totalTime = totalTime + test.getTimeSpentOntask(collab);
+				totalTime = totalTime + test.getTimeSpentByProjectCollaboratorOntask(collab);
 
 			}
 		}

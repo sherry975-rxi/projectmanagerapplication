@@ -341,15 +341,14 @@ public class Task {
 	}
 
 	/**
-	 * This method returns the time that a specific Task Collaborators spent on this
-	 * specific task
-	 * 
+	 * This method returns the time that a specific Project Collaborator spent on this Task
+	 *  
 	 * @param ProjectCollaborator
 	 *            to check
 	 * 
 	 * @return Time spent on task
 	 */
-	public double getTimeSpentOntask(ProjectCollaborator toCheck) {
+	public double getTimeSpentByProjectCollaboratorOntask(ProjectCollaborator toCheck) {
 
 		double timeSpentByCollaboratorOnTask = 0.0;
 

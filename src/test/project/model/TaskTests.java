@@ -148,8 +148,8 @@ class TaskTests {
 		double j = 15;
 
 		// checks getTimeSpentOnTask for individual Collaborators
-		assertEquals(i, testTask.getTimeSpentOntask(collab1), 0.01);
-		assertEquals(j, testTask.getTimeSpentOntask(collab2), 0.01);
+		assertEquals(i, testTask.getTimeSpentByProjectCollaboratorOntask(collab1), 0.01);
+		assertEquals(j, testTask.getTimeSpentByProjectCollaboratorOntask(collab2), 0.01);
 
 		// then checks global getTimeSpentOnTask
 		assertEquals(j, testTask.getTimeSpentOntask(), 0.01);

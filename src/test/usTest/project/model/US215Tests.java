@@ -150,7 +150,7 @@ class US215Tests {
 
 		// Sum of total time spend in finished tasks. The tasks finished in the last
 		// month were t2 and t3
-		double expectTotalTime = task2.getTimeSpentOntask(user1) + task3.getTimeSpentOntask(user1);
+		double expectTotalTime = task2.getTimeSpentByProjectCollaboratorOntask(user1) + task3.getTimeSpentByProjectCollaboratorOntask(user1);
 
 		assertEquals(expectTotalTime, myCompany.getProjectsRepository().getTotalTimeLastMonthFinishedTasksByUser(user1),
 				0.000000001);
