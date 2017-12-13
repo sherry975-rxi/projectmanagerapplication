@@ -157,6 +157,9 @@ public class Project {
 		if (!containsUser(newAddedProjectCollaborator.getCollaboratorUserData())) {
 			this.projectTeam.add(newAddedProjectCollaborator);
 		}
+		else if(!newAddedProjectCollaborator.isCollaboratorInProject()) {
+			this.projectTeam.add(newAddedProjectCollaborator);
+		}
 	}
 
 	/**
@@ -236,7 +239,7 @@ public class Project {
 	 * @return TRUE if the user exists in the project team FALSE if the user does
 	 *         not exist in the project team
 	 */
-	public boolean containsUser(User user) {
+	public boolean containsUser(User user) { // REFACTOR TO isUserInProjectTeam
 		for (ProjectCollaborator other : this.projectTeam) {
 			if (user.equals(other.getCollaboratorUserData())) {
 				return true;
