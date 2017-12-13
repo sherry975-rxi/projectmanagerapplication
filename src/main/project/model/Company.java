@@ -26,6 +26,15 @@ public class Company {
 	}
 
 	/**
+	 * This method clears the Company.
+	 */
+	public void clear() {
+
+		_theInstance.clear();
+
+	}
+
+	/**
 	 * Constructor for Company includes usersList creation and projectsList creation
 	 */
 	private Company() {
