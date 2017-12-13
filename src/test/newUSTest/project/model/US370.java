@@ -46,7 +46,7 @@ class US370 {
 	@BeforeEach
 	void setUp() {
 		// create company
-		myCompany.clear();
+
 		myCompany = Company.getTheInstance();
 
 		// creates an UserRepository
@@ -96,7 +96,7 @@ class US370 {
 
 	@AfterEach
 	void tearDown() {
-		myCompany = null;
+		myCompany.clear();
 		user1 = null;
 		testTask = null;
 		project = null;

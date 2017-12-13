@@ -51,7 +51,7 @@ class US340 {
 	@BeforeEach
 	void setUp() {
 		// create company
-		myCompany.clear();
+
 		myCompany = Company.getTheInstance();
 
 		// creates an UserRepository
@@ -83,7 +83,7 @@ class US340 {
 
 	@AfterEach
 	void tearDown() {
-		myCompany = null;
+		myCompany.clear();
 		user1 = null;
 		testTask = null;
 		testTask2 = null;
