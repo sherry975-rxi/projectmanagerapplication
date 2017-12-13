@@ -30,7 +30,7 @@ public class Company {
 	 */
 	public void clear() {
 
-		_theInstance.clear();
+		_theInstance = null;
 
 	}
 

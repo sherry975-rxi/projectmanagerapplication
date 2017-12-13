@@ -58,7 +58,7 @@ class US390 {
 	@BeforeEach
 	void setUp() {
 		// create company
-		myCompany.clear();
+
 		myCompany = Company.getTheInstance();
 
 		// creates an UserRepository
@@ -150,7 +150,7 @@ class US390 {
 	@AfterEach
 	void tearDown() {
 
-		myCompany = null;
+		myCompany.clear();
 		user1 = null;
 		user2 = null;
 		user3 = null;

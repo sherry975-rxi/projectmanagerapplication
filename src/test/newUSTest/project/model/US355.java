@@ -44,7 +44,7 @@ class US355 {
 	@BeforeEach
 	void setUp() {
 		// create company and clear ProjectRepository and UsersRepository
-		c1.clear();
+
 		c1 = Company.getTheInstance();
 
 		// create users
@@ -126,7 +126,7 @@ class US355 {
 
 	@AfterEach
 	void tearDown() {
-		c1 = null;
+		c1.clear();
 		u1 = null;
 		u2 = null;
 		u3 = null;
