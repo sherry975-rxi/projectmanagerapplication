@@ -199,7 +199,7 @@ class US355 {
 		TaskWorker testTask2Collaborator2 = testTask.createTaskWorker(collaborator2);
 		testTask.addUserToTask(testTaskCollaborator1);
 		testTask2.addUserToTask(testTask2Collaborator2);
-		testTask2.removeUserFromTask(u4);
+		testTask2.removeUserFromTask(collaborator2);
 
 		// Creates a new list and adds user to that list, to compare with userList
 		// inside ProjectTeam
