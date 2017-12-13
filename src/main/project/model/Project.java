@@ -280,6 +280,31 @@ public class Project {
 	public EffortUnit getEffortUnit() {
 		return this.effortUnit;
 	}
+	
+	/**
+	 * Set Project effortUnit
+	 */
+	public void setEffortUnit(EffortUnit newEffortUnit) {
+		this.effortUnit = newEffortUnit;
+	}
+	
+	/**
+	 * Get Project budget
+	 * 
+	 * @return Budget (int) of Project
+	 */
+	public int getProjectBudget() {
+		return this.budget;
+	}
+	
+	/**
+	 * Set Project budget
+	 */
+	public void setProjectBudget(int newBudget) {
+		this.budget = newBudget;
+	}
+	
+	
 
 	/**
 	 * This method checks which ProjectCollaborators don't have tasks assigned.

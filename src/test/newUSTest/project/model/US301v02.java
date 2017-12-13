@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.project.model.Company;
+import main.project.model.EffortUnit;
 import main.project.model.Profile;
 import main.project.model.Project;
 import main.project.model.User;
@@ -62,11 +63,8 @@ class US301v02 {
 		p1 = null;
 	}
 
+	//tests if the user is project manager
 	@Test
-
-	// US301 - Como Diretor, quero poder criar um projeto e atribuir-lhe um Gestor
-	// de projetos
-
 	void testIfTheUserIsProjectManager() {
 
 		boolean truth = p1.isProjectManager(u2);
@@ -77,5 +75,20 @@ class US301v02 {
 		assertFalse(wrong);
 		assertEquals(1, projectid);
 	}
+	
+	//tests that the effort unit of the project can be define 
+	@Test
+	void testSetEffortUnit() {
+		p1.setEffortUnit(EffortUnit.HOURS);
+		
+		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
+	}
 
+	//tests that the project's budget can be define 
+	@Test
+	void testSetProjectBudget() {
+		p1.setProjectBudget(100);
+
+		assertEquals(100, p1.getProjectBudget());
+	}
 }
