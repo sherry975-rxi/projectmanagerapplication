@@ -47,6 +47,7 @@ public class US375 {
 	@BeforeEach
 	void setUp() {
 		// create company
+		myCompany.clear();
 		myCompany = Company.getTheInstance();
 
 		// creates an UserRepository

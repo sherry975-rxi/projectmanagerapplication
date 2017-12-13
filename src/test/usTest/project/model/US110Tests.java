@@ -32,9 +32,8 @@ class US110Tests {
 
 	@BeforeEach
 	void setUp() {
+
 		Blip = Company.getTheInstance();
-		Blip.getUsersRepository().getAllUsersFromRepository().clear();
-		Blip.getProjectsRepository().getAllProjects().clear();
 
 		newUser2 = Blip.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
@@ -46,8 +45,7 @@ class US110Tests {
 
 	@AfterEach
 	void breakDown() {
-		Blip = null;
-
+		Blip.clear();
 		newUser2 = null;
 		newUser3 = null;
 

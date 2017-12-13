@@ -24,8 +24,6 @@ class US301Tests {
 	void setUp() {
 		// Company creation
 		c1 = Company.getTheInstance();
-		c1.getUsersRepository().getAllUsersFromRepository().clear();
-		c1.getProjectsRepository().getAllProjects().clear();
 
 		// User creation
 		u1 = c1.getUsersRepository().createUser("Leonor", "leonor@gmail.com", "001", "Empregado", "930000000",
@@ -50,7 +48,7 @@ class US301Tests {
 
 	@AfterEach
 	void tearDown() {
-		c1 = null;
+		c1.clear();
 		u1 = null;
 		u2 = null;
 		p1 = null;

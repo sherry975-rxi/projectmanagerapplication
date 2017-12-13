@@ -50,8 +50,7 @@ class US205Tests {
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
-		myCompany.getProjectsRepository().getAllProjects().clear();
+
 		// creates an UserRepository
 		userRepository = myCompany.getUsersRepository();
 
@@ -108,7 +107,7 @@ class US205Tests {
 	@AfterEach
 	void tearDown() {
 
-		myCompany = null;
+		myCompany.clear();
 		taskRepository = null;
 		newUser2 = null;
 		newUser3 = null;

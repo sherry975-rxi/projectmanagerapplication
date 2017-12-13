@@ -57,14 +57,13 @@ class US216Tests {
 
 	@BeforeEach
 	void setUp() {
+		myCompany.clear();
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
-		myCompany.getProjectsRepository().getAllProjects().clear();
-		
-		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Programador", "910000000", "Rua Azul",
-				"5679-987", "braga", "braga", "portugal");
-		user2 = myCompany.getUsersRepository().createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "rua verde",
-				"6789", "porto", "porto", "portugal");
+
+		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Programador",
+				"910000000", "Rua Azul", "5679-987", "braga", "braga", "portugal");
+		user2 = myCompany.getUsersRepository().createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto",
+				"920000000", "rua verde", "6789", "porto", "porto", "portugal");
 
 		// create myProject
 		myProject = myCompany.getProjectsRepository().createProject("Projecto I", "Projecto de Gestão", user1);
@@ -78,7 +77,7 @@ class US216Tests {
 		finishDate.add(Calendar.MONTH, -1);
 		Calendar otherFinishDate = Calendar.getInstance();
 		otherFinishDate.add(Calendar.MONTH, -2);
-		
+
 		// Four new tasks were created and added to project1
 		task1 = myProject.getTaskRepository().createTask("Task 1", 1, startDate, finishDate, 10);
 		task2 = myProject.getTaskRepository().createTask("Task 2", 2, startDate, finishDate, 10);
@@ -92,9 +91,9 @@ class US216Tests {
 		// Project 1 added to the project repository.
 		myCompany.getProjectsRepository().addProjectToProjectRepository(myProject);
 
-		//create project collaborators
+		// create project collaborators
 		projectCollaborator1 = myProject.createProjectCollaborator(user1, 10);
-		
+
 		// user2 added user 1 to the ProjectTeam
 		myProject.addUserToProjectTeam(projectCollaborator1);
 
@@ -104,9 +103,9 @@ class US216Tests {
 		myProject.getTaskRepository().addProjectTask(task3);
 		myProject.getTaskRepository().addProjectTask(task4);
 
-		//create task workers
+		// create task workers
 		taskWorker1 = task1.createTaskWorker(projectCollaborator1);
-		
+
 		// Associates users to tasks
 		task1.addUserToTask(taskWorker1);
 		task2.addUserToTask(taskWorker1);
@@ -130,10 +129,10 @@ class US216Tests {
 		expResult.add(task3);
 
 	}
-	
+
 	@AfterEach
 	void tearDown() {
-		myCompany = null;
+		myCompany.clear();
 		userRepository = null;
 		user1 = null;
 		user2 = null;
@@ -159,7 +158,8 @@ class US216Tests {
 		// dividing by the number of tasks (in the case 2 tasks).
 		double expectAverageTime = expectTotalTime / 2;
 
-		assertEquals(expectAverageTime, myCompany.getProjectsRepository().getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
+		assertEquals(expectAverageTime,
+				myCompany.getProjectsRepository().getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
 
 	}
 }
