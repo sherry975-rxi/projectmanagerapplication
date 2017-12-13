@@ -320,9 +320,9 @@ public class Task {
 	 *            User to remove from the list of users in a task
 	 * 
 	 */
-	public void removeUserFromTask(User user) {
+	public void removeUserFromTask(ProjectCollaborator projCollaborator) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user) && other.isTaskWorkerActiveInTask()) {
+			if (other.getProjectCollaboratorFromTaskWorker().equals(projCollaborator) && (other.isTaskWorkerActiveInTask())) {
 				other.addFinishDateForTaskWorker();
 			}
 		}
