@@ -342,6 +342,19 @@ public class Project {
 	}
 	}
 	
+	/**
+	 * This method retrieves the Project Collaborator in a ProjectTeam from the User. If there are more than one Project Collaborator corresponding to the same user, that information is not collected in this method. 
+	 * @param collaborator
+	 * @return
+	 */
+	public ProjectCollaborator getProjectCollaboratorFromUser(User collaborator) { // REFACTOR TO removeProjectCollaboratorFromProjectTeam
+		for (ProjectCollaborator other : projectTeam) {
+			if (other.getCollaboratorUserData().equals(collaborator)) {
+			return other;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * This method calculates the sum of the values reported to the task until the
