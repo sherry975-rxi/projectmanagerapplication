@@ -182,17 +182,26 @@ class US390 {
 		testTask2.addUserToTask(taskWorker3);
 		testTask2.addUserToTask(taskWorker4);
 		// Task worker sets the hours spent on the task
-		taskWorker1.setHoursSpent(5);
-		taskWorker2.setHoursSpent(10);
-		taskWorker3.setHoursSpent(2);
-		taskWorker4.setHoursSpent(3);
+		testTask.createReport(taskWorker1);
+		testTask.getReports().get(0).setReportedTime(5);
+		testTask.createReport(taskWorker2);
+		testTask.getReports().get(0).setReportedTime(10);
+		testTask2.createReport(taskWorker3);
+		testTask2.getReports().get(0).setReportedTime(2);
+		testTask2.createReport(taskWorker4);
+		testTask2.getReports().get(0).setReportedTime(3);
 
 		// Calculates the value of the project - Equals to to the sum of the total hours
 		// spent times the cost of the TaskWorker
-		totalCost += taskWorker1.getTotalHoursSpent() * taskWorker1.getCost(0);
-		totalCost += taskWorker2.getTotalHoursSpent() * taskWorker2.getCost(0);
-		totalCost += taskWorker3.getTotalHoursSpent() * taskWorker3.getCost(0);
-		totalCost += taskWorker4.getTotalHoursSpent() * taskWorker4.getCost(0);
+
+		totalCost += testTask.getReports().get(0).getReportedTime()
+				* taskWorker1.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+		totalCost += testTask.getReports().get(1).getReportedTime()
+				* taskWorker2.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+		totalCost += testTask2.getReports().get(0).getReportedTime()
+				* taskWorker3.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+		totalCost += testTask2.getReports().get(1).getReportedTime()
+				* taskWorker4.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
 
 		// Compares the 2 values
 		assertEquals(totalCost, project.getTotalCostReportedToProjectUntilNow(), 0.01);
