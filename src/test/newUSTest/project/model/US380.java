@@ -1,19 +1,19 @@
 package test.newUSTest.project.model;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.project.model.Company;
 import main.project.model.Project;
-import main.project.model.ProjectCollaborator;
-import main.project.model.ProjectRepository;
 import main.project.model.Task;
-import main.project.model.TaskRepository;
-import main.project.model.TaskWorker;
 import main.project.model.User;
-import main.project.model.UserRepository;
 
 /**
  * @author Group 3
@@ -27,33 +27,22 @@ import main.project.model.UserRepository;
 class US380 {
 
 	Company myCompany;
-	UserRepository userRepository;
-	ProjectRepository projectRepository;
 	User user1;
 	User user2;
 	User user3;
 	Project project;
-	ProjectCollaborator projectCollaborator;
-	ProjectCollaborator projectCollaborator2;
-	TaskRepository taskRepository;
 	Task testTask;
 	Task testTask2;
 	Task testTask3;
-	TaskWorker taskWorker;
-	TaskWorker taskWorker1;
-	TaskWorker taskWorker2;
+	Calendar estimatedStartDate;
+	Calendar taskDeadline;
+	List<Task> expResult;
 
 	@BeforeEach
 	void setUp() {
 
 		// Creates the Company
 		myCompany = Company.getTheInstance();
-
-		// Creates the user repository
-		userRepository = myCompany.getUsersRepository();
-
-		// Creates the project repository
-		projectRepository = myCompany.getProjectsRepository();
 
 		// Creates three users
 		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
@@ -67,13 +56,54 @@ class US380 {
 		project = myCompany.getProjectsRepository().createProject("Project A", "Project AA", user1);
 
 		// Creates Project collaborators
-		projectCollaborator = project.addUserToProjectTeam(user2);
+		project.addUserRToProjectTeam(user2, 15);
+		project.addUserRToProjectTeam(user3, 20);
 
+		// Creates the dates
+		estimatedStartDate = Calendar.getInstance();
+		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
+
+		// Creates the tasks and adds the tasks to the task repository
+		project.getTaskRepository().addProjectTask(
+				project.getTaskRepository().createTask("Task a", 2000, estimatedStartDate, taskDeadline, 2000));
+		project.getTaskRepository().addProjectTask(
+				project.getTaskRepository().createTask("Task b", 3000, estimatedStartDate, taskDeadline, 3000));
+		project.getTaskRepository().addProjectTask(
+				project.getTaskRepository().createTask("Task c", 4000, estimatedStartDate, taskDeadline, 4000));
+
+		// Creates the expResult list
+		expResult = new ArrayList<Task>();
 	}
 
+	@AfterEach
+	void tearDown() {
+		myCompany.clear();
+		user1 = null;
+		user2 = null;
+		user3 = null;
+		project = null;
+		testTask = null;
+		testTask2 = null;
+		testTask3 = null;
+	}
+
+	/**
+	 * First, the second task (position 1 on the taskRepository list) is marked as
+	 * finished. Then, the other tasks that were not marked as finished were added
+	 * to the expResult list. The assert checks if the expResult is equal to the
+	 * result of the getExpiredTasks method.
+	 */
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void US380_test() {
+
+		project.getTaskRepository().getProjectTaskList().get(1).markTaskAsFinished();
+		expResult.add(project.getTaskRepository().getProjectTaskList().get(0));
+		expResult.add(project.getTaskRepository().getProjectTaskList().get(2));
+
+		assertEquals(expResult, project.getTaskRepository().getExpiredTasks());
+
 	}
 
 }
