@@ -53,7 +53,6 @@ public class Task {
 		this.estimatedTaskStartDate = estimatedTaskStartDate;
 		this.taskDeadline = taskDeadline;
 		this.estimatedBudgetCostTask = estimatedBudgetCostTask;
-		
 
 	}
 
@@ -221,6 +220,15 @@ public class Task {
 	}
 
 	/**
+	 * This method gets the list of reports from the task
+	 * 
+	 * @return reports List of reports in the task
+	 */
+	public List<Report> getReports() {
+		return reports;
+	}
+
+	/**
 	 * This method returns the task state.
 	 * 
 	 * @return TRUE if finished FALSE if unfinished
@@ -239,16 +247,16 @@ public class Task {
 	}
 
 	/**
-	 * This Method adds a Project Collaborator to a Task, 
-	 * and creates a New Task Worker from this Project Collaborator.
+	 * This Method adds a Project Collaborator to a Task, and creates a New Task
+	 * Worker from this Project Collaborator.
 	 * 
 	 * @param projCollaborator
 	 */
-	public void addNewTaskWorker (ProjectCollaborator projCollaborator) {
+	public void addNewTaskWorker(ProjectCollaborator projCollaborator) {
 		addUserToTask(createTaskWorker(projCollaborator));
-		
+
 	}
-	
+
 	/**
 	 * This method checks if the user is missing from the task team (List of users
 	 * in Task), and if it is missing from the list, the user is added to the team.
@@ -260,13 +268,12 @@ public class Task {
 	 * 
 	 * 
 	 */
-	public void addUserToTask(TaskWorker taskWorkerOfAProjCollab) { //REFACTOR TO ASSOCIATETASKWORKERTOTASK
+	public void addUserToTask(TaskWorker taskWorkerOfAProjCollab) { // REFACTOR TO ASSOCIATETASKWORKERTOTASK
 		if (!taskTeamContainsUser(taskWorkerOfAProjCollab.getProjectCollaboratorFromTaskWorker())) {
 			this.taskTeam.add(taskWorkerOfAProjCollab);
+		} else if (!taskTeamUserIsActive(taskWorkerOfAProjCollab.getProjectCollaboratorFromTaskWorker())) {
+			this.taskTeam.add(taskWorkerOfAProjCollab);
 		}
-			else if (!taskTeamUserIsActive(taskWorkerOfAProjCollab.getProjectCollaboratorFromTaskWorker())) {
-				this.taskTeam.add(taskWorkerOfAProjCollab);
-			}
 
 	}
 
@@ -278,26 +285,15 @@ public class Task {
 	 * @return TaskWorker
 	 */
 	public TaskWorker createTaskWorker(ProjectCollaborator projCollaborator) {
-		
-	
+
 		TaskWorker taskWorker = new TaskWorker(projCollaborator);
-		
+
 		return taskWorker;
 	}
-	
-	
-	
-		
-		
-		
-		
 
-	
-
-	
-	
 	/**
-	 * Creates and adds a Report of a Specific Task Worker associated to a Specific Project Collaborator
+	 * Creates and adds a Report of a Specific Task Worker associated to a Specific
+	 * Project Collaborator
 	 * 
 	 * @param taskWorker
 	 * 
@@ -309,8 +305,6 @@ public class Task {
 		this.reports.add(report);
 
 	}
-	
-	
 
 	/**
 	 * This method removes the user from a task. It checks first if the user is in
@@ -322,19 +316,21 @@ public class Task {
 	 */
 	public void removeUserFromTask(ProjectCollaborator projCollaborator) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getProjectCollaboratorFromTaskWorker().equals(projCollaborator) && (other.isTaskWorkerActiveInTask())) {
+			if (other.getProjectCollaboratorFromTaskWorker().equals(projCollaborator)
+					&& (other.isTaskWorkerActiveInTask())) {
 				other.addFinishDateForTaskWorker();
 			}
 		}
 	}
 
 	/**
-	 * This method returns the time that all Task Collaborators spent on this specific task
+	 * This method returns the time that all Task Collaborators spent on this
+	 * specific task
 	 * 
 	 * @return Time spent on task
 	 */
 	public double getTimeSpentOntask() {
-		
+
 		double timeSpentOnTask = 0.0;
 
 		for (Report reports : this.reports) {
@@ -342,6 +338,28 @@ public class Task {
 		}
 
 		return timeSpentOnTask;
+	}
+
+	/**
+	 * This method returns the time that a specific Task Collaborators spent on this
+	 * specific task
+	 * 
+	 * @param ProjectCollaborator
+	 *            to check
+	 * 
+	 * @return Time spent on task
+	 */
+	public double getTimeSpentOntask(ProjectCollaborator toCheck) {
+
+		double timeSpentByCollaboratorOnTask = 0.0;
+
+		for (Report reports : this.reports) {
+			if (reports.getTaskWorker().isProjectCollaboratorInTaskWorker(toCheck)) {
+				timeSpentByCollaboratorOnTask += reports.getReportedTime();
+			}
+		}
+
+		return timeSpentByCollaboratorOnTask;
 	}
 
 	// /**
@@ -585,12 +603,13 @@ public class Task {
 	}
 
 	/**
-	 * This PRIVATE method checks if a Project Collaborator is already on the task team.
+	 * This PRIVATE method checks if a Project Collaborator is already on the task
+	 * team.
 	 * 
-	 * @param Project Collaborator
-	 *            Project Collaborator to check
-	 * @return True if task team contains Project Collaborator, FALSE if the task team does not have
-	 *         the Project Collaborator to check
+	 * @param Project
+	 *            Collaborator Project Collaborator to check
+	 * @return True if task team contains Project Collaborator, FALSE if the task
+	 *         team does not have the Project Collaborator to check
 	 */
 	public boolean taskTeamContainsUser(ProjectCollaborator projCollaborator) {
 		for (TaskWorker other : taskTeam) {
@@ -602,12 +621,13 @@ public class Task {
 	}
 
 	/**
-	 * This PRIVATE method checks if a Project Collaborator is active on the task team.
+	 * This PRIVATE method checks if a Project Collaborator is active on the task
+	 * team.
 	 * 
-	 * @param Project Collaborator 
-	 *            Project Collaborator to check
-	 * @return True if task team Project Collaborator is active, FALSE if the task team does not
-	 *         have the Project Collaborator active
+	 * @param Project
+	 *            Collaborator Project Collaborator to check
+	 * @return True if task team Project Collaborator is active, FALSE if the task
+	 *         team does not have the Project Collaborator active
 	 */
 	public boolean taskTeamUserIsActive(ProjectCollaborator projCollaborator) {
 		for (TaskWorker other : taskTeam) {
@@ -652,19 +672,22 @@ public class Task {
 	}
 
 	/**
-	 * This method returns the total cost of a task. The value that is returned is associated with a task with all its Task Collaborator. It is calculated multiplying the cost of each task worker with the time that each worker spent on this particular task. 
+	 * This method returns the total cost of a task. The value that is returned is
+	 * associated with a task with all its Task Collaborator. It is calculated
+	 * multiplying the cost of each task worker with the time that each worker spent
+	 * on this particular task.
 	 * 
-	 * @return Returns a double with the total cost of the task 
-	 *         
+	 * @return Returns a double with the total cost of the task
+	 * 
 	 */
 	public double getTaskCost() {
 		double taskCost = 0.0;
 
 		for (Report reports : this.reports) {
-				taskCost += reports.getReportedTime() * reports.getTaskWorker().getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+			taskCost += reports.getReportedTime()
+					* reports.getTaskWorker().getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
 		}
-				return taskCost;
+		return taskCost;
 	}
-	
-}
 
+}

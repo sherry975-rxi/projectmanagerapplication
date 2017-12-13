@@ -94,8 +94,7 @@ class TaskTests {
 
 		testTask.addUserToTask(tWorker1);
 		testTask.addUserToTask(tWorker2);
-		assertTrue(testTask.taskTeamContainsUser(Collab1.getCollaboratorUserData())
-				&& testTask.taskTeamContainsUser(Collab2.getCollaboratorUserData()));
+		assertTrue(testTask.taskTeamContainsUser(Collab1) && testTask.taskTeamContainsUser(Collab2));
 	}
 
 	/**
@@ -132,22 +131,28 @@ class TaskTests {
 	}
 
 	/**
-	 * Tests the getTimeSpentOnTaskMethod First with a round number of hours - 5
-	 * days; Then a decimal one - 5 days and 8 hours; And finally equal start and
-	 * finish dates
+	 * Tests the getTimeSpentOnTaskMethod First with 0 hours (confirming if report
+	 * is created with time set to 0), then 15 hours;
 	 */
 	@Test
 	void testGetTimeSpentOnTask() {
 		testTask.addUserToTask(tWorker1);
 		testTask.addUserToTask(tWorker2);
-		testTask.getTaskTeam().get(0).setHoursSpent(20);
-		testTask.getTaskTeam().get(1).setHoursSpent(15);
 
-		int i = 20;
-		int j = 15;
+		testTask.createReport(tWorker1);
+		testTask.createReport(tWorker2);
 
-		assertEquals(i, testTask.getTimeSpentOntask(Collab1.getCollaboratorUserData()));
-		assertEquals(j, testTask.getTimeSpentOntask(Collab2.getCollaboratorUserData()));
+		testTask.getReports().get(1).setReportedTime(15);
+
+		double i = 0;
+		double j = 15;
+
+		// checks getTimeSpentOnTask for individual Collaborators
+		assertEquals(i, testTask.getTimeSpentOntask(Collab1), 0.01);
+		assertEquals(j, testTask.getTimeSpentOntask(Collab2), 0.01);
+
+		// then checks global getTimeSpentOnTask
+		assertEquals(j, testTask.getTimeSpentOntask(), 0.01);
 
 	}
 
