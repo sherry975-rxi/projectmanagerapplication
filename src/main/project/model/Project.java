@@ -60,6 +60,17 @@ public class Project {
 		this.taskRepository = new TaskRepository(projectIdCode);
 		this.projectTeam = new ArrayList<ProjectCollaborator>();
 	}
+	
+	/**
+	 * This Method adds a User to a project.
+	 * This action converts the User in a Project Collaborator ( User + costPerEffort)
+	 * 
+	 * @param userToAdd
+	 * @param costPerEffort
+	 */
+	public void addUserRToProjectTeam(User userToAdd, int costPerEffort) {
+		addUserToProjectTeam(createProjectCollaborator(userToAdd, costPerEffort));
+	}
 
 	/**
 	 * Creates an instance of ProjectCollaborator
@@ -77,6 +88,23 @@ public class Project {
 
 		return newProjectCollaborator;
 	}
+	
+	/**
+	 * Add Project Collaborator to project team if is missing from the projectTeam.
+	 * 
+	 * @param newAddedProjectCollaborator
+	 *            Project Collaborator to add to the Project Team
+	 */
+	public void addUserToProjectTeam(ProjectCollaborator newAddedProjectCollaborator) { //REFACTOR TO addProjectCollaboratorToProjectTeam
+		if (!containsUser(newAddedProjectCollaborator.getCollaboratorUserData())) {
+			this.projectTeam.add(newAddedProjectCollaborator);
+		}
+		else if(!newAddedProjectCollaborator.isCollaboratorInProject()) {
+			this.projectTeam.add(newAddedProjectCollaborator);
+		}
+	}
+	
+	
 
 	/**
 	 * This method allows the projectManager to be changed
@@ -147,20 +175,7 @@ public class Project {
 		return result;
 	}
 
-	/**
-	 * Add Project Collaborator to project team if is missing from the projectTeam.
-	 * 
-	 * @param newAddedProjectCollaborator
-	 *            Project Collaborator to add to the Project Team
-	 */
-	public void addUserToProjectTeam(ProjectCollaborator newAddedProjectCollaborator) {
-		if (!containsUser(newAddedProjectCollaborator.getCollaboratorUserData())) {
-			this.projectTeam.add(newAddedProjectCollaborator);
-		}
-		else if(!newAddedProjectCollaborator.isCollaboratorInProject()) {
-			this.projectTeam.add(newAddedProjectCollaborator);
-		}
-	}
+	
 
 	/**
 	 * 
@@ -298,7 +313,7 @@ public class Project {
 		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<ProjectCollaborator>();
 		inactiveCollaborators.addAll(this.getProjectTeam());
 		for (ProjectCollaborator other : this.getProjectTeam()) {
-			if (this.taskRepository.isCollaboratorActiveOnTasks(other.getCollaboratorUserData())) // needs to check if
+			if (this.taskRepository.isCollaboratorActiveOnTasks(other)) // needs to check if
 																									// collaborator is
 																									// active
 				inactiveCollaborators.remove(other);
