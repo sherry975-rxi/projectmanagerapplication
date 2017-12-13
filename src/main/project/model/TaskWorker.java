@@ -104,6 +104,8 @@ public class TaskWorker {
 		return this.finishDate;
 	}
 
+	// Override the Equals method. Compares only if the taskworker and the
+	// finishDate are the same
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
