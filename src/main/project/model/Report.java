@@ -2,11 +2,11 @@ package main.project.model;
 
 public class Report {
 
-	int time;
+	int reportedTime;
 
 	public Report(int time) {
 
-		this.time = time;
+		this.reportedTime = time;
 	}
 
 }
