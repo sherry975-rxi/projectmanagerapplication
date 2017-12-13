@@ -1,7 +1,5 @@
 package main.project.model;
 
-import java.util.Calendar;
-
 
 /**
  * 
@@ -41,6 +39,14 @@ public class Report {
 	 */
 	public int getReportedTime() {
 		return this.reportedTime;
+	}
+	
+	/**
+	 * Returns the Task Collaborator associated to this Report
+	 * @return Task Collaborator
+	 */
+	public TaskWorker getTaskWorker() {
+		return this.taskWorker;
 	}
 
 }
