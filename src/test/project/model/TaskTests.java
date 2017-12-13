@@ -201,9 +201,11 @@ class TaskTests {
 	@Test
 	void updateTaskWorker() {
 		testTask2.addUserToTask(tWorker1);
-		testTask2.removeUserFromTask(tWorker1.getTaskWorker());
+		testTask2.removeUserFromTask(Collab1);
 		testTask2.addUserToTask(tWorker1);
-		tWorker1.setHoursSpent(15);
+		testTask2.createReport(tWorker1);
+		testTask2.getReports().get(0).setReportedTime(15);
+
 		assertEquals(5, tWorker1.getCost(1));
 		assertEquals(15, tWorker1.getHoursSpent(1));
 		assertTrue(tWorker1.getStartDate(1) != null);
