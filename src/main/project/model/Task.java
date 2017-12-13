@@ -17,6 +17,7 @@ public class Task {
 	private String taskID;
 	private String description;
 	private List<TaskWorker> taskTeam;
+	private List<Report> reports;
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
@@ -47,10 +48,12 @@ public class Task {
 		this.finishDate = null;
 		this.taskState = false;
 		this.taskTeam = new ArrayList<TaskWorker>();
+		this.reports = new ArrayList<Report>();
 		this.estimatedTaskEffort = estimatedTaskEffort;
 		this.estimatedTaskStartDate = estimatedTaskStartDate;
 		this.taskDeadline = taskDeadline;
 		this.estimatedBudgetCostTask = estimatedBudgetCostTask;
+		
 
 	}
 
@@ -236,6 +239,17 @@ public class Task {
 	}
 
 	/**
+	 * This Method adds a Project Collaborator to a Task, 
+	 * and creates a New Task Worker from this Project Collaborator.
+	 * 
+	 * @param projCollaborator
+	 */
+	public void addNewTaskWorker (ProjectCollaborator projCollaborator) {
+		addUserToTask(createTaskWorker(projCollaborator));
+		
+	}
+	
+	/**
 	 * This method checks if the user is missing from the task team (List of users
 	 * in Task), and if it is missing from the list, the user is added to the team.
 	 * If it is already already added to the the list it is reactivated, and its
@@ -246,21 +260,13 @@ public class Task {
 	 * 
 	 * 
 	 */
-	public void addUserToTask(TaskWorker user) {
-		if (!taskTeamContainsUser(user.getTaskWorker())) {
-			this.taskTeam.add(user);
+	public void addUserToTask(TaskWorker taskWorkerOfAProjCollab) { //REFACTOR TO ASSOCIATETASKWORKERTOTASK
+		if (!taskTeamContainsUser(taskWorkerOfAProjCollab.getProjectCollaboratorFromTaskWorker())) {
+			this.taskTeam.add(taskWorkerOfAProjCollab);
 		}
-
-		else if (!taskTeamUserIsActive(user.getTaskWorker())) {
-			for (TaskWorker other : taskTeam) {
-				if (other.getTaskWorker().equals(user.getTaskWorker())) {
-					other.addCostForTaskWorker(user.getCost(0));
-					other.addHoursSpentForTaskWorker();
-					other.addStartDateForTaskWorker();
-				}
+			else if (!taskTeamUserIsActive(taskWorkerOfAProjCollab.getProjectCollaboratorFromTaskWorker())) {
+				this.taskTeam.add(taskWorkerOfAProjCollab);
 			}
-
-		}
 
 	}
 
@@ -271,13 +277,40 @@ public class Task {
 	 * 
 	 * @return TaskWorker
 	 */
-	public TaskWorker createTaskWorker(ProjectCollaborator user) {
-
-		TaskWorker taskWorker = new TaskWorker(user);
-
+	public TaskWorker createTaskWorker(ProjectCollaborator projCollaborator) {
+		
+	
+		TaskWorker taskWorker = new TaskWorker(projCollaborator);
+		
 		return taskWorker;
+	}
+	
+	
+	
+		
+		
+		
+		
+
+	
+
+	
+	
+	/**
+	 * Creates and adds a Report of a Specific Task Worker associated to a Specific Project Collaborator
+	 * 
+	 * @param taskWorker
+	 * 
+	 * @return report
+	 */
+	public void createReport(TaskWorker taskWorker) {
+
+		Report report = new Report(taskWorker);
+		this.reports.add(report);
 
 	}
+	
+	
 
 	/**
 	 * This method removes the user from a task. It checks first if the user is in
@@ -548,16 +581,16 @@ public class Task {
 	}
 
 	/**
-	 * This PRIVATE method checks if a user is already on the task team.
+	 * This PRIVATE method checks if a Project Collaborator is already on the task team.
 	 * 
-	 * @param user
-	 *            User to check
-	 * @return True if task team contains user, FALSE if the task team does not have
-	 *         the user to check
+	 * @param Project Collaborator
+	 *            Project Collaborator to check
+	 * @return True if task team contains Project Collaborator, FALSE if the task team does not have
+	 *         the Project Collaborator to check
 	 */
-	public boolean taskTeamContainsUser(User user) {
+	public boolean taskTeamContainsUser(ProjectCollaborator projCollaborator) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user)) {
+			if (other.getProjectCollaboratorFromTaskWorker().equals(projCollaborator)) {
 				return true;
 			}
 		}
@@ -565,16 +598,16 @@ public class Task {
 	}
 
 	/**
-	 * This PRIVATE method checks if a user is active on the task team.
+	 * This PRIVATE method checks if a Project Collaborator is active on the task team.
 	 * 
-	 * @param user
-	 *            User to check
-	 * @return True if task team user is active, FALSE if the task team does not
-	 *         have the user active
+	 * @param Project Collaborator 
+	 *            Project Collaborator to check
+	 * @return True if task team Project Collaborator is active, FALSE if the task team does not
+	 *         have the Project Collaborator active
 	 */
-	public boolean taskTeamUserIsActive(User user) {
+	public boolean taskTeamUserIsActive(ProjectCollaborator projCollaborator) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(user)) {
+			if (other.getTaskWorker().equals(projCollaborator)) {
 				if (other.isTaskWorkerActiveInTask()) {
 					return true;
 				}
