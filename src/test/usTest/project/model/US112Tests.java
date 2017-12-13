@@ -33,9 +33,9 @@ class US112Tests {
 
 	@BeforeEach
 	void setUp() {
+
 		Armis = Company.getTheInstance();
-		Armis.getUsersRepository().getAllUsersFromRepository().clear();
-		Armis.getProjectsRepository().getAllProjects().clear();
+
 		newUser2 = Armis.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		newUser3 = Armis.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
@@ -46,7 +46,7 @@ class US112Tests {
 
 	@AfterEach
 	void tearDown() {
-		Armis = null;
+		Armis.clear();
 		newUser2 = null;
 		newUser3 = null;
 

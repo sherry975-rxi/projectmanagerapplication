@@ -46,6 +46,7 @@ class US207 {
 	@BeforeEach
 	void setUp() {
 		// create company
+		myCompany.clear();
 		myCompany = Company.getTheInstance();
 
 		// creates an UserRepository

@@ -30,8 +30,7 @@ public class US350Tests {
 
 		// Company creation
 		c1 = Company.getTheInstance();
-		c1.getUsersRepository().getAllUsersFromRepository().clear();
-		c1.getProjectsRepository().getAllProjects().clear();
+
 		// User creation
 		u1 = c1.getUsersRepository().createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",
 				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
@@ -71,7 +70,7 @@ public class US350Tests {
 
 	@AfterEach
 	void tearDown() {
-		c1 = null;
+		c1.clear();
 		u1 = null;
 		u2 = null;
 		u3 = null;

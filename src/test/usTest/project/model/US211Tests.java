@@ -42,8 +42,6 @@ class US211Tests {
 	@BeforeEach
 	void setUp() {
 		company = Company.getTheInstance();
-		company.getUsersRepository().getAllUsersFromRepository().clear();
-		company.getProjectsRepository().getAllProjects().clear();
 
 		newUserA = company.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
 				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
@@ -103,7 +101,7 @@ class US211Tests {
 
 	@AfterEach
 	void tearDown() {
-		company = null;
+		company.clear();
 		newUserA = null;
 		newUserB = null;
 		project = null;

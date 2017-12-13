@@ -40,8 +40,6 @@ class US101Tests {
 
 		// create company
 		Critical = Company.getTheInstance();
-		Critical.getUsersRepository().getAllUsersFromRepository().clear();
-		Critical.getProjectsRepository().getAllProjects().clear();
 
 		// create user
 		user1 = Critical.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
@@ -60,7 +58,7 @@ class US101Tests {
 	@AfterEach
 	void tearDown() {
 
-		Critical = null;
+		Critical.clear();
 		user1 = null;
 		user2 = null;
 		uFalse = null;

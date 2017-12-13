@@ -31,33 +31,32 @@ class US204Tests {
 	 * uses methods addProjectTask, addUserToTask, isProjectManager,
 	 * getProjectTeam().contains()
 	 */
-	
+
 	Company myCompany;
 	User newUserA;
 	User newUserB;
 	Project project1;
 	Task taskA;
 	Task taskB;
-	ProjectCollaborator projCollab1; 
+	ProjectCollaborator projCollab1;
 	TaskWorker taskWorker1;
 
 	@BeforeEach
 	void setUp() {
-		myCompany = Company.getTheInstance();
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
-		myCompany.getProjectsRepository().getAllProjects().clear();
 
-		//Creation of two users: newUserA and newUserB		
+		myCompany = Company.getTheInstance();
+
+		// Creation of two users: newUserA and newUserB
 		newUserA = myCompany.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
 				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
-		
-		newUserB = myCompany.getUsersRepository().createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000",
-				"StreetB", "ZipCodeB", "CityB", "DistrictB", "CountryB");
-		
-		//Creation of one project and newUser4 set as the project manager
+
+		newUserB = myCompany.getUsersRepository().createUser("Juni", "user3@gmail.com", "132", "Code Monkey",
+				"930000000", "StreetB", "ZipCodeB", "CityB", "DistrictB", "CountryB");
+
+		// Creation of one project and newUser4 set as the project manager
 		project1 = myCompany.getProjectsRepository().createProject("name3", "description4", newUserA);
-		
-		//Creation of two tasks: taskA and taskB		
+
+		// Creation of two tasks: taskA and taskB
 		Calendar startDateA = Calendar.getInstance();
 		startDateA.clear();
 		startDateA.set(2017, 05, 15);
@@ -66,16 +65,16 @@ class US204Tests {
 		finishDateA.set(2017, 05, 16);
 		taskA = project1.getTaskRepository().createTask("Test dis pls", 100, startDateA, finishDateA, 15000);
 		taskB = project1.getTaskRepository().createTask("Test dis agen pls", 100, startDateA, finishDateA, 15000);
-		
+
 		projCollab1 = project1.createProjectCollaborator(newUserB, 250);
-		
+
 		taskWorker1 = taskA.createTaskWorker(projCollab1);
-		
+
 	}
 
 	@AfterEach
 	void tearDown() {
-		myCompany = null;
+		myCompany.clear();
 		newUserA = null;
 		newUserB = null;
 		project1 = null;

@@ -39,8 +39,6 @@ class US135Tests {
 	@BeforeEach
 	void setUp() {
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
-		myCompany.getProjectsRepository().getAllProjects().clear();
 
 		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
@@ -59,7 +57,7 @@ class US135Tests {
 
 	@AfterEach
 	void tearDown() {
-		myCompany = null;
+		myCompany.clear();
 		newUser2 = null;
 		newUser3 = null;
 		newUser4 = null;

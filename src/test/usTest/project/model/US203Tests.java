@@ -57,8 +57,6 @@ class US203Tests {
 	void setUp() {
 
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
-		myCompany.getProjectsRepository().getAllProjects().clear();
 
 		user2 = myCompany.getUsersRepository().createUser("João", "user2@gmail.com", "001", "Manager", "930000000",
 				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
@@ -125,7 +123,7 @@ class US203Tests {
 	@AfterEach
 	void tearDown() {
 
-		myCompany = null;
+		myCompany.clear();
 		user2 = null;
 		user3 = null;
 		projCollab1 = null;

@@ -41,9 +41,8 @@ class US350v02 {
 	@BeforeEach
 	void setUp() {
 		// create company and clear ProjectRepository and UsersRepository
+		c1.clear();
 		c1 = Company.getTheInstance();
-		c1.getProjectsRepository().getAllProjects().clear();
-		c1.getUsersRepository().getAllUsersFromRepository().clear();
 
 		// create users
 		u1 = c1.getUsersRepository().createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",

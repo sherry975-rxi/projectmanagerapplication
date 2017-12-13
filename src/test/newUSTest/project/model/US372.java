@@ -44,6 +44,7 @@ class US372 {
 	@BeforeEach
 	void setUp() {
 		// create company
+		myCompany.clear();
 		myCompany = Company.getTheInstance();
 
 		// creates an UserRepository
@@ -73,7 +74,7 @@ class US372 {
 
 		// create project collabotors with u3, u4 and u5 users
 		ProjectCollaborator collaborator1 = new ProjectCollaborator(user1, 1200);
-		
+
 		// create project
 		project = projectRepository.createProject("name3", "description4", user2);
 

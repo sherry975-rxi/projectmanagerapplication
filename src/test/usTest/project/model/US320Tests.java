@@ -103,7 +103,7 @@ class US320Tests {
 
 	@AfterEach
 	void tearDown() {
-		myCompany = null;
+		myCompany.clear();
 		user1 = null;
 		user2 = null;
 		project1 = null;

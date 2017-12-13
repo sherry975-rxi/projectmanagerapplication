@@ -37,8 +37,6 @@ class US202Tests {
 
 		// create company
 		myCompany = Company.getTheInstance();
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
-		myCompany.getProjectsRepository().getAllProjects().clear();
 
 		// create user
 		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Director", "910000000",
@@ -60,7 +58,7 @@ class US202Tests {
 
 	@AfterEach
 	void tearDown() {
-		myCompany = null;
+		myCompany.clear();
 		user1 = null;
 		address1 = null;
 	}
