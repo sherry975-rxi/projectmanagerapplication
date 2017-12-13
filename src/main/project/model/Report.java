@@ -2,8 +2,8 @@ package main.project.model;
 
 public class Report {
 
-	int reportedTime;
-	TaskWorker taskWorker;
+	private int reportedTime;
+	private TaskWorker taskWorker;
 
 	public Report(int time, TaskWorker taskWorker) {
 
