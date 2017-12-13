@@ -25,8 +25,12 @@ class ProjectTests {
 
 	User u1;
 	User u2;
+	User u3;
+    User u4;
 	ProjectCollaborator projectCollaborator1;
 	ProjectCollaborator projectCollaborator2;
+	ProjectCollaborator projectCollaborator3;
+	ProjectCollaborator projectCollaborator4;
 	Calendar estimatedStartDate;
 	Calendar taskDeadline;
 	Task t1;
@@ -44,8 +48,12 @@ class ProjectTests {
 
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		u2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
+		u3 = new User("name3", "email3", "idNumber3", "function3", "123456389");
+	    u4 = new User("name4", "email4", "idNumber4", "function4", "123456489");
 		projectCollaborator1 = new ProjectCollaborator(u2, 1200);
 		projectCollaborator2 = new ProjectCollaborator(u1, 1200);
+		projectCollaborator3 = new ProjectCollaborator(u3, 1200);
+	    projectCollaborator4 = new ProjectCollaborator(u4, 1200);
 		taskWorker1 = new TaskWorker(projectCollaborator2);
 		taskWorker2 = new TaskWorker(projectCollaborator1);
 		p1 = new Project(1, "name3", "description4", u1);
@@ -63,12 +71,15 @@ class ProjectTests {
 		t3.markTaskAsFinished();
 		t4 = p1.getTaskRepository().createTask("description11111", 0, estimatedStartDate, taskDeadline, 0);
 
+		t1.addNewTaskWorker(projCollaborator);
 	}
 
 	@AfterEach
 	void tearDown() {
 		u1 = null;
 		u2 = null;
+		u3 = null;
+	    u4 = null;
 		t1 = null;
 		t2 = null;
 		t3 = null;
@@ -79,6 +90,8 @@ class ProjectTests {
 		p2 = null;
 		projectCollaborator1 = null;
 		projectCollaborator2 = null;
+		projectCollaborator3 = null;
+		projectCollaborator4 = null;
 		taskRepository = null;
 	}
 
@@ -341,14 +354,38 @@ class ProjectTests {
 		
 		
 		assertEquals( espectres_total, p1.getTotalCostReportedToProjectUntilNow(), 0.0001);
-		
-		
-		
-		
-		
+	}
+	
+	
+	/**
+	 * Tests the method getCollaboratorsWithoutTasks that returns
+	 * a list of collaborators without task in the project.
+	 */
+	@Test
+    	void testgetCollaboratorsWithoutTasks() {
 
+        // add all project colllaborators to Project Team
+        p1.addUserToProjectTeam(projectCollaborator1);
+        p1.addUserToProjectTeam(projectCollaborator2);
+        p1.addUserToProjectTeam(projectCollaborator3);
+        p1.addUserToProjectTeam(projectCollaborator4);
 
-		
+        // add task t1 and t2 to Project 
+        p1.getTaskRepository().addProjectTask(t1);
+        p1.getTaskRepository().addProjectTask(t2);
+
+        // add taskWorkers to tasks
+        t1.addNewTaskWorker(projectCollaborator1);
+        t2.addNewTaskWorker(projectCollaborator2);
+        t1.addUserToTask(taskWorker1);
+        t2.addUserToTask(taskWorker2);
+
+        // create list to compare 
+        List<ProjectCollaborator> collaboratorsWithoutTasksCompare = new ArrayList<ProjectCollaborator>();
+        collaboratorsWithoutTasksCompare.add(projectCollaborator3);
+        collaboratorsWithoutTasksCompare.add(projectCollaborator4);
+    		
+    		assertEquals(collaboratorsWithoutTasksCompare, p1.getCollaboratorsWithoutTasks());
 		
 	}
 }
