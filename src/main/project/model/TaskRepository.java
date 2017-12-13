@@ -59,12 +59,12 @@ public class TaskRepository {
 	 * 
 	 * @return UnfinishedTaskList The list if tasks that are not finished
 	 */
-	public List<Task> getUnFinishedTasksFromUser(User user) {
+	public List<Task> getUnFinishedTasksFromUser(ProjectCollaborator collab) {
 
 		List<Task> unfinishedTaskList = new ArrayList<Task>();
-		unfinishedTaskList.addAll(this.getAllTasks(user));
+		unfinishedTaskList.addAll(this.getAllTasks(collab));
 
-		for (Task other : this.getAllTasks(user)) {
+		for (Task other : this.getAllTasks(collab)) {
 			if (other.isFinished()) {
 				unfinishedTaskList.remove(other);
 			}
@@ -79,13 +79,13 @@ public class TaskRepository {
 	 * 
 	 * @return FinishedTaskList The list if tasks that are finished
 	 */
-	public List<Task> getFinishedTaskListofUserInProject(User user) {
+	public List<Task> getFinishedTaskListofUserInProject(ProjectCollaborator collab) {
 
 		List<Task> finishedTaskList = new ArrayList<Task>();
 
 		for (Task other : this.projectTasks) {
 			if (other.isFinished()) {
-				if (other.taskTeamContainsUser(user)) {
+				if (other.taskTeamContainsUser(collab)) {
 					finishedTaskList.add(other);
 
 				}
@@ -106,12 +106,12 @@ public class TaskRepository {
 	 * @return lastMonthFinishedTaskList List of all tasks finished the previous
 	 *         month, by the user
 	 */
-	public List<Task> getFinishedTasksGivenMonth(User user, int monthsAgo) {
+	public List<Task> getFinishedTasksGivenMonth(ProjectCollaborator collab, int monthsAgo) {
 		Calendar givenMonth = Calendar.getInstance();
 		givenMonth.add(Calendar.MONTH, -monthsAgo);
 		List<Task> lastMonthFinishedTaskList = new ArrayList<Task>();
 
-		for (Task other : this.getAllTasks(user)) {
+		for (Task other : this.getAllTasks(collab)) {
 			if (other.getFinishDate() != null) {
 				if (monthsAgo < 0) {
 					lastMonthFinishedTaskList.add(other);
@@ -147,13 +147,13 @@ public class TaskRepository {
 	 * @param user
 	 * @return Time spent on last month project user tasks
 	 */
-	public double getTimeSpentOnLastMonthProjectUserTasks(User user) {
+	public double getTimeSpentOnLastMonthProjectUserTasks(ProjectCollaborator collab) {
 		List<Task> lastMonth = new ArrayList<Task>();
-		lastMonth.addAll(this.getFinishedTasksGivenMonth(user, 1));
+		lastMonth.addAll(this.getFinishedTasksGivenMonth(collab, 1));
 		double totalTime = 0;
 		for (Task test : lastMonth) {
-			if (test.taskTeamContainsUser(user) && test.getFinishDate() != null) {
-				totalTime = totalTime + test.getTimeSpentOntask(user);
+			if (test.taskTeamContainsUser(collab) && test.getFinishDate() != null) {
+				totalTime = totalTime + test.getTimeSpentOntask();
 
 			}
 		}
@@ -197,10 +197,10 @@ public class TaskRepository {
 	 * 
 	 * @return AllTasksList List if all tasks from a user
 	 */
-	public List<Task> getAllTasks(User user) {
+	public List<Task> getAllTasks(ProjectCollaborator collab) {
 		List<Task> allTasks = new ArrayList<Task>();
 		for (Task other : this.getProjectTaskList()) {
-			if (other.taskTeamContainsUser(user)) {
+			if (other.taskTeamContainsUser(collab)) {
 				allTasks.add(other);
 			}
 		}
@@ -216,9 +216,9 @@ public class TaskRepository {
 	 * @return true if the user doesnt have a task. False if he has at least one
 	 *         task
 	 */
-	public boolean isCollaboratorActiveOnTasks(User user) {
+	public boolean isCollaboratorActiveOnTasks(ProjectCollaborator collab) {
 		for (Task otherTask : this.getProjectTaskList()) {
-			if (otherTask.taskTeamUserIsActive(user))
+			if (otherTask.taskTeamUserIsActive(collab))
 				return true;
 		}
 		return false;
