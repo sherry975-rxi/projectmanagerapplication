@@ -402,10 +402,10 @@ class TaskRepositoryTests {
 		// Adds user to testTssk
 		testTask.addUserToTask(taskWorker2);
 
-		// Checks if the user of index.0 doesnt have any task assigned to him
+		// Checks if the collab1 doesnt have any task assigned to him
 		assertFalse(taskRepository.isCollaboratorActiveOnTasks(collab1));
 
-		// Checks if the user of index.1 has tasks assigned to him
+		// Checks if the collab2 has tasks assigned to him
 		assertTrue(taskRepository.isCollaboratorActiveOnTasks(collab2));
 	}
 
