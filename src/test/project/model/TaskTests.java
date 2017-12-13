@@ -30,7 +30,7 @@ class TaskTests {
 	User user1, user2;
 	Project myProject;
 	Task testTask, testTask2, testTask3;
-	ProjectCollaborator Collab1, Collab2, Collab3;
+	ProjectCollaborator collab1, collab2, collab3;
 	TaskWorker tWorker1, tWorker2, tWorker3;
 	double expectedCost;
 
@@ -41,11 +41,11 @@ class TaskTests {
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
 
-		Collab1 = myProject.createProjectCollaborator(user1, 5);
-		Collab2 = myProject.createProjectCollaborator(user2, 5);
+		collab1 = myProject.createProjectCollaborator(user1, 5);
+		collab2 = myProject.createProjectCollaborator(user2, 5);
 
-		tWorker1 = new TaskWorker(Collab1);
-		tWorker2 = new TaskWorker(Collab2);
+		tWorker1 = new TaskWorker(collab1);
+		tWorker2 = new TaskWorker(collab2);
 
 		Calendar estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.add(Calendar.MONTH, -1);
@@ -65,9 +65,9 @@ class TaskTests {
 		testTask = null;
 		testTask2 = null;
 		testTask3 = null;
-		Collab1 = null;
-		Collab2 = null;
-		Collab3 = null;
+		collab1 = null;
+		collab2 = null;
+		collab3 = null;
 		tWorker1 = null;
 		tWorker2 = null;
 		expectedCost = 0;
@@ -94,7 +94,7 @@ class TaskTests {
 
 		testTask.addUserToTask(tWorker1);
 		testTask.addUserToTask(tWorker2);
-		assertTrue(testTask.taskTeamContainsUser(Collab1) && testTask.taskTeamContainsUser(Collab2));
+		assertTrue(testTask.taskTeamContainsUser(collab1) && testTask.taskTeamContainsUser(collab2));
 	}
 
 	/**
@@ -148,8 +148,8 @@ class TaskTests {
 		double j = 15;
 
 		// checks getTimeSpentOnTask for individual Collaborators
-		assertEquals(i, testTask.getTimeSpentOntask(Collab1), 0.01);
-		assertEquals(j, testTask.getTimeSpentOntask(Collab2), 0.01);
+		assertEquals(i, testTask.getTimeSpentOntask(collab1), 0.01);
+		assertEquals(j, testTask.getTimeSpentOntask(collab2), 0.01);
 
 		// then checks global getTimeSpentOnTask
 		assertEquals(j, testTask.getTimeSpentOntask(), 0.01);
@@ -201,15 +201,15 @@ class TaskTests {
 	@Test
 	void updateTaskWorker() {
 		testTask2.addUserToTask(tWorker1);
-		testTask2.removeUserFromTask(Collab1);
+		testTask2.removeUserFromTask(collab1);
 		testTask2.addUserToTask(tWorker1);
 		testTask2.createReport(tWorker1);
 		testTask2.getReports().get(0).setReportedTime(15);
 
-		assertEquals(5, tWorker1.getCost(1));
-		assertEquals(15, tWorker1.getHoursSpent(1));
-		assertTrue(tWorker1.getStartDate(1) != null);
-		assertTrue(testTask2.taskTeamUserIsActive(tWorker1.getTaskWorker()));
+		assertEquals(5, collab1.getCollaboratorCost());
+		assertEquals(15, testTask2.getReports().get(0).getReportedTime());
+		assertTrue(tWorker1.getStartDate() != null);
+		assertTrue(testTask2.taskTeamUserIsActive(collab1));
 	}
 
 	/**
