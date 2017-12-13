@@ -3,7 +3,7 @@ package main.project.model;
 public class ProjectCollaborator {
 
 	private User collaborator;
-	private boolean inProject;
+	private boolean status;
 	private int costPerEffort;
 
 	/**
@@ -16,10 +16,10 @@ public class ProjectCollaborator {
 	 *            how much the collaborator costs per unit of effort
 	 */
 
-	public ProjectCollaborator(User collab, int cost) {
+	public ProjectCollaborator(User collab, int costPerEffort) {
 		this.collaborator = collab;
-		this.inProject = true;
-		this.costPerEffort = cost;
+		this.status = true;
+		this.costPerEffort = costPerEffort;
 	}
 
 	/**
@@ -30,7 +30,7 @@ public class ProjectCollaborator {
 	 *            project (true by default)
 	 */
 	public void setState(boolean status) {
-		this.inProject = status;
+		this.status = status;
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class ProjectCollaborator {
 	 * 
 	 */
 	public boolean isCollaboratorInProject() {
-		return this.inProject;
+		return this.status;
 	}
 
 	/**
