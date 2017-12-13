@@ -205,8 +205,7 @@ class TaskRepositoryTests {
 		test.add(testTask4);
 
 		// verify if test list is the same as the user unfinished task list
-		assertEquals(test,
-				taskRepository.getUnFinishedTasksFromUser(project.getProjectTeam().get(0).getCollaboratorUserData()));
+		assertEquals(test, taskRepository.getUnFinishedTasksFromUser(collab1));
 	}
 
 	@Test
@@ -233,8 +232,7 @@ class TaskRepositoryTests {
 		test.add(testTask3);
 
 		// verify if test list is the same as the user finished task list
-		assertEquals(test, taskRepository
-				.getFinishedTaskListofUserInProject(project.getProjectTeam().get(0).getCollaboratorUserData()));
+		assertEquals(test, taskRepository.getFinishedTaskListofUserInProject(collab1));
 
 	}
 
@@ -271,8 +269,7 @@ class TaskRepositoryTests {
 		test.add(testTask4);
 
 		// verify if test list is the same as the user unfinished task list
-		assertEquals(test, taskRepository
-				.getFinishedTasksGivenMonth(project.getProjectTeam().get(0).getCollaboratorUserData(), 1));
+		assertEquals(test, taskRepository.getFinishedTasksGivenMonth(collab1, 1));
 	}
 
 	@Test
@@ -325,11 +322,12 @@ class TaskRepositoryTests {
 
 		// set work time in task
 
-		testTask.getTaskTeam().get(0).setHoursSpent(5);
+		testTask.addUserToTask(taskWorker1);
+		testTask.createReport(taskWorker1);
+		testTask.getReports().get(0).setReportedTime(5);
 
 		// Checks if the 2 values are equal
-		assertEquals(5.0, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(
-				project.getProjectTeam().get(0).getCollaboratorUserData()), 0.001);
+		assertEquals(5.0, taskRepository.getTimeSpentOnLastMonthProjectUserTasks(collab1), 0.001);
 
 	}
 
@@ -389,7 +387,7 @@ class TaskRepositoryTests {
 		testList.add(testTask4);
 
 		// See if the two taskLists have the same tasks
-		assertEquals(testList, taskRepository.getAllTasks(project.getProjectTeam().get(0).getCollaboratorUserData()));
+		assertEquals(testList, taskRepository.getAllTasks(collab1));
 
 	}
 
@@ -405,12 +403,10 @@ class TaskRepositoryTests {
 		testTask.addUserToTask(taskWorker2);
 
 		// Checks if the user of index.0 doesnt have any task assigned to him
-		assertFalse(
-				taskRepository.isCollaboratorActiveOnTasks(project.getProjectTeam().get(0).getCollaboratorUserData()));
+		assertFalse(taskRepository.isCollaboratorActiveOnTasks(collab1));
 
 		// Checks if the user of index.1 has tasks assigned to him
-		assertTrue(
-				taskRepository.isCollaboratorActiveOnTasks(project.getProjectTeam().get(1).getCollaboratorUserData()));
+		assertTrue(taskRepository.isCollaboratorActiveOnTasks(collab2));
 	}
 
 	@Test

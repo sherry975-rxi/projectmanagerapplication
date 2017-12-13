@@ -631,7 +631,7 @@ public class Task {
 	 */
 	public boolean taskTeamUserIsActive(ProjectCollaborator projCollaborator) {
 		for (TaskWorker other : taskTeam) {
-			if (other.getTaskWorker().equals(projCollaborator)) {
+			if (other.getTaskWorker().equals(projCollaborator.getCollaboratorUserData())) {
 				if (other.isTaskWorkerActiveInTask()) {
 					return true;
 				}
