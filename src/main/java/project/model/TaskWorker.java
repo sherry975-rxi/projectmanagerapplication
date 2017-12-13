@@ -6,11 +6,11 @@ import java.util.List;
 
 public class TaskWorker {
 
-	private User collaborator;
-	private List<Calendar> startDates;
-	private List<Calendar> finishDates;
-	private List<Integer> hoursSpent;
-	private List<Integer> cost;
+	private ProjectCollaborator projCollaborator;
+	private Calendar startDate;
+	private Calendar finishDate;
+	private Integer hoursSpent;
+	private Integer costPerEffort;
 
 	/**
 	 * Constructor to create a new task worker
@@ -22,25 +22,33 @@ public class TaskWorker {
 	 * @param collaborator
 	 *            user to set
 	 */
-	public TaskWorker(ProjectCollaborator collaborator) {
-		this.collaborator = collaborator.getCollaboratorUserData();
-		this.startDates = new ArrayList<Calendar>();
-		this.startDates.add(Calendar.getInstance());
-		this.finishDates = new ArrayList<Calendar>();
-		this.cost = new ArrayList<Integer>();
-		this.cost.add(collaborator.getCollaboratorCost());
-		this.hoursSpent = new ArrayList<Integer>();
-		this.hoursSpent.add(0);
+	public TaskWorker(ProjectCollaborator projCollaborator) {
+		this.projCollaborator = projCollaborator;
+		this.startDate = Calendar.getInstance();
+		this.finishDate = null;
+		this.hoursSpent = null;
+		this.costPerEffort = projCollaborator.getCollaboratorCost();
 	}
 
 	/**
-	 * Returns the user that identifies this collaborator
+	 * Returns the user associated to the ProjectCollaborator of this Task Worker
+	 * 
+	 * @return user
+	 */
+	public User getTaskWorker() {
+		return this.projCollaborator.getCollaboratorUserData();
+	}
+	
+	/**
+	 * Returns the ProjectCollaborator of this Task Worker
 	 * 
 	 * @return collaborator
 	 */
-	public User getTaskWorker() {
-		return collaborator;
+	public ProjectCollaborator getProjectCollaboratorFromTaskWorker() {
+		return this.projCollaborator;
 	}
+	
+	
 
 	/**
 	 * Returns the state of the collaborator in the task. inTask is true if user is
@@ -49,38 +57,24 @@ public class TaskWorker {
 	 * @return inTask
 	 */
 	public boolean isTaskWorkerActiveInTask() {
-		if (this.startDates.size() != this.finishDates.size()) {
-			return true;
-		}
-		return false;
+	
+		 return this.finishDate == null;
+
 	}
 
 	/**
-	 * Adds a Finish Date to the task worker list
+	 * Adds a Finish Date to the task worker
 	 */
 	public void addFinishDateForTaskWorker() {
-		this.finishDates.add(Calendar.getInstance());
+		this.finishDate = Calendar.getInstance();
 	}
 
-	/**
-	 * Adds a Start Date to the task worker list
-	 */
-	public void addStartDateForTaskWorker() {
-		this.startDates.add(Calendar.getInstance());
-	}
-
-	/**
-	 * Adds a cost to the task worker list
-	 */
-	public void addCostForTaskWorker(int c) {
-		this.cost.add(c);
-	}
 
 	/**
 	 * Adds hours spent to the task worker list
 	 */
-	public void addHoursSpentForTaskWorker() {
-		this.hoursSpent.add(0);
+	public void addHoursSpentForTaskWorker(int hoursToAdd) {
+		this.hoursSpent = hoursToAdd;
 	}
 
 	/**
