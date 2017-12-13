@@ -37,7 +37,7 @@ public class ProjectCollaborator {
 	 * This method views whether the Collaborator is working or not on the project
 	 * 
 	 */
-	public boolean isCollaboratorInProject() {
+	public boolean isCollaboratorInProject() { // REFACTOR TO isProjectCollaboratorActive
 		return this.status;
 	}
 

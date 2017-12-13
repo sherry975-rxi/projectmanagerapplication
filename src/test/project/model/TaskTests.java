@@ -200,9 +200,9 @@ class TaskTests {
 	 */
 	@Test
 	void updateTaskWorker() {
-		testTask2.addUserToTask(tWorker1);
+		testTask2.addNewTaskWorker(collab1);
 		testTask2.removeUserFromTask(collab1);
-		testTask2.addUserToTask(tWorker1);
+		testTask2.addNewTaskWorker(collab1);
 		testTask2.createReport(tWorker1);
 		testTask2.getReports().get(0).setReportedTime(15);
 
@@ -225,12 +225,14 @@ class TaskTests {
 		testTask2.addUserToTask(tWorker2);
 
 		// sets the hours spent on the task by each user
-		tWorker1.setHoursSpent(10);
-		tWorker2.setHoursSpent(5);
+		testTask2.createReport(tWorker1);
+		testTask2.getReports().get(0).setReportedTime(10);
+		testTask2.createReport(tWorker2);
+		testTask2.getReports().get(1).setReportedTime(5);
 
 		// calculates the expected cost of the task
-		expectedCost = 10 * tWorker1.getCost(0);
-		expectedCost += 5 * tWorker2.getCost(0);
+		expectedCost = 10 * collab1.getCollaboratorCost();
+		expectedCost += 5 * collab2.getCollaboratorCost();
 
 		// Checks if the two values are the smae
 		assertEquals(expectedCost, testTask2.getTaskCost(), 0.001);
