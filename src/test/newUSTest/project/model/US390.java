@@ -105,11 +105,16 @@ class US390 {
 		// create project
 		project = projectRepository.createProject("name3", "description4", projectManager);
 
-		// creates 2 Project Collaborators
+		// creates 4 Project Collaborators and adds them to the project
 		projectUser1 = project.createProjectCollaborator(user1, 10);
 		projectUser2 = project.createProjectCollaborator(user2, 20);
 		projectUser3 = project.createProjectCollaborator(user3, 5);
 		projectUser4 = project.createProjectCollaborator(user4, 3);
+
+		project.addUserToProjectTeam(projectUser1);
+		project.addUserToProjectTeam(projectUser2);
+		project.addUserToProjectTeam(projectUser3);
+		project.addUserToProjectTeam(projectUser4);
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -204,6 +209,16 @@ class US390 {
 				* taskWorker4.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
 
 		// Compares the 2 values
+		assertEquals(totalCost, project.getTotalCostReportedToProjectUntilNow(), 0.01);
+
+		// removes two users and adds them again with a different cost
+		project.removeCollaboratorFromProjectTeam(user1);
+		project.removeCollaboratorFromProjectTeam(user2);
+		project.addUserRToProjectTeam(user1, 100);
+		project.addUserRToProjectTeam(user2, 200);
+
+		// Confirms that total cost remains unchanged after some collaborators get a
+		// raise
 		assertEquals(totalCost, project.getTotalCostReportedToProjectUntilNow(), 0.01);
 
 	}
