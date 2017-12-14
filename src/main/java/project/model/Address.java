@@ -1,4 +1,4 @@
-package main.java.project.model;
+package project.model;
 
 /**
  * Class to builds an Address.

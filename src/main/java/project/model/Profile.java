@@ -1,4 +1,4 @@
-package main.java.project.model;
+package project.model;
 
 /**
  * Profile Class for setting profiles in Users

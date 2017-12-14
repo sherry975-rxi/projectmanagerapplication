@@ -1,4 +1,4 @@
-package main.java.project.model;
+package project.model;
 
 /**
  * Company Class for building Lists of Users and Projects (according to certain

@@ -61,20 +61,12 @@
             <artifactId>sonar-jacoco-listeners</artifactId>
             <version>3.2</version>
         </dependency>
-		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+        <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.0.0</version>
-			<scope>test</scope>
-		</dependency>
-
     </dependencies>
     <build>
         <plugins>

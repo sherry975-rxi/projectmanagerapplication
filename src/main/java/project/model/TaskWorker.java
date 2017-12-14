@@ -1,4 +1,4 @@
-package main.java.project.model;
+package project.model;
 
 import java.util.Calendar;
 
@@ -97,6 +97,16 @@ public class TaskWorker {
 	 */
 	public Calendar getFinishDate() {
 		return this.finishDate;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		throw new UnsupportedOperationException();
 	}
 
 	// Override the Equals method. Compares only if the taskworker and the
