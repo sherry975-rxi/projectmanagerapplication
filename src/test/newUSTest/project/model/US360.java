@@ -1,9 +1,6 @@
 package test.newUSTest.project.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -17,21 +14,19 @@ import main.project.model.Profile;
 import main.project.model.Project;
 import main.project.model.ProjectCollaborator;
 import main.project.model.Task;
-import main.project.model.TaskWorker;
 import main.project.model.User;
 
-class US355 {
+class US360 {
 
 	/**
-	 * Tests US355
+	 * Tests US360
 	 * 
-	 * US355: - Como Gestor de Projeto, quero obter a lista de colaboradores do 
-	 * projeto sem tarefas atribuídas.
+	 * US360: - Como Gestor de projeto, quero obter a lista de tarefas do 
+	 * projeto sem colaboradores ativos atribuídos.
 	 * 
-	 * uses method isProjectManager, getProjectTeam, getCollaboratorsWithoutTasks
+	 * uses method getListofTasksWithoutCollaboratorsAssigned
 	 * 
 	 */
-
 	Company c1;
 	User u1;
 	User u2;
@@ -40,7 +35,7 @@ class US355 {
 	User u5;
 	Project p1;
 	ProjectCollaborator collaborator1, collaborator2, collaborator3;
-	Task testTask, testTask2;
+	Task testTask, testTask2, testTask3, testTask4;
 
 	@BeforeEach
 	void setUp() {
@@ -115,14 +110,28 @@ class US355 {
 		// create two Tasks and add to Repository
 		testTask = p1.getTaskRepository().createTask("Test dis agen pls", 10, estimatedTaskStartDateTest,
 				taskDeadlineDateTest, 10);
-		testTask2 = p1.getTaskRepository().createTask("Test dis agen pls", 10, estimatedTaskStartDateTest,
+		testTask2 = p1.getTaskRepository().createTask("Tests", 10, estimatedTaskStartDateTest,
 				taskDeadlineDateTest, 10);
+		testTask3 = p1.getTaskRepository().createTask("Test1", 10, estimatedTaskStartDateTest,
+				taskDeadlineDateTest, 10);
+		testTask4 = p1.getTaskRepository().createTask("Test2", 10, estimatedTaskStartDateTest,
+				taskDeadlineDateTest, 10);
+		
+		// clear all tasks's team
 		testTask.getTaskTeam().clear();
 		testTask2.getTaskTeam().clear();
+		testTask3.getTaskTeam().clear();
+		testTask4.getTaskTeam().clear();
 
+		// add tasks to project p1
 		p1.getTaskRepository().addProjectTask(testTask);
 		p1.getTaskRepository().addProjectTask(testTask2);
-
+		p1.getTaskRepository().addProjectTask(testTask3);
+		p1.getTaskRepository().addProjectTask(testTask4);
+		
+		// add taskworkers (collaborator1 and 2) to tasks 1 and 2
+		testTask.addNewTaskWorker(collaborator1);
+		testTask2.addNewTaskWorker(collaborator2);
 	}
 
 	@AfterEach
@@ -136,80 +145,24 @@ class US355 {
 		p1 = null;
 		testTask = null;
 		testTask2 = null;
+		testTask3 = null;
+		testTask4 = null;
 		collaborator1 = null;
 		collaborator2 = null;
 		collaborator3 = null;
 	}
 
 	/**
-	 * Adds three users to the Project but not to any task, then compares the test
-	 * List with the output of getCollaboratorsWithoutTasks
-	 * 
+	 * Tests that testTask3 and testTask4 don't have any collaborators assigned 
+	 * and are the tasks in the list
 	 */
 	@Test
-	public void US355NoUsersOnTasks() {
+	public void testGetTasksListWithoutUsers() {
+		// Creates a new list to compare and add the tasks that don't have collaborators
+		List<Task> tasksWithoutUsersTest = new ArrayList<Task>();
+		tasksWithoutUsersTest.add(testTask3);
+		tasksWithoutUsersTest.add(testTask4);
 
-		// tests that project manager is u2 and not other user (for example u4)
-		assertTrue(p1.isProjectManager(u2));
-		assertFalse(p1.isProjectManager(u4));
-
-		// Creates a new list and adds user to that list, to compare with userList
-		// inside ProjectTeam
-		List<ProjectCollaborator> testNoUsersOnTasks = new ArrayList<ProjectCollaborator>();
-
-		testNoUsersOnTasks.add(collaborator1);
-		testNoUsersOnTasks.add(collaborator2);
-		testNoUsersOnTasks.add(collaborator3);
-
-		assertEquals(testNoUsersOnTasks, p1.getCollaboratorsWithoutTasks());
+		assertEquals(tasksWithoutUsersTest, p1.getTaskRepository().getListofTasksWithoutCollaboratorsAssigned());
 	}
-
-	/**
-	 * Adds two users to the Project and two of them to tasks, then compares the
-	 * test List with the output of getCollaboratorsWithoutTasks (Must contain two
-	 * user)
-	 */
-	@Test
-	public void US355_TwoUsersOnTasks() {
-
-		// adds collaborator 1 and 2 to Tasks
-		TaskWorker testTaskCollaborator1 = testTask.createTaskWorker(collaborator1);
-		TaskWorker testTask2Collaborator2 = testTask.createTaskWorker(collaborator2);
-		testTask.addUserToTask(testTaskCollaborator1);
-		testTask2.addUserToTask(testTask2Collaborator2);
-
-		// Creates a new list and adds user to that list, to compare with userList
-		// inside ProjectTeam
-		List<ProjectCollaborator> testTwoUsersOnTasks = new ArrayList<ProjectCollaborator>();
-
-		testTwoUsersOnTasks.add(collaborator3);
-
-		assertEquals(testTwoUsersOnTasks, p1.getCollaboratorsWithoutTasks());
-	}
-
-	/**
-	 * Adds two users to the Project and two of them to tasks, then removes one from
-	 * the task. The test List with the output of getCollaboratorsWithoutTasks Must
-	 * contain one user
-	 */
-	@Test
-	public void US355_UserRemovedFromTask() {
-
-		// adds collaborator 1 and 2 to Tasks
-		TaskWorker testTaskCollaborator1 = testTask.createTaskWorker(collaborator1);
-		TaskWorker testTask2Collaborator2 = testTask.createTaskWorker(collaborator2);
-		testTask.addUserToTask(testTaskCollaborator1);
-		testTask2.addUserToTask(testTask2Collaborator2);
-		testTask2.removeUserFromTask(collaborator2);
-
-		// Creates a new list and adds user to that list, to compare with userList
-		// inside ProjectTeam
-		List<ProjectCollaborator> testOneUserOnTask = new ArrayList<ProjectCollaborator>();
-
-		testOneUserOnTask.add(collaborator2);
-		testOneUserOnTask.add(collaborator3);
-
-		assertEquals(testOneUserOnTask, p1.getCollaboratorsWithoutTasks());
-	}
-
 }
