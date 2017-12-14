@@ -57,7 +57,7 @@ class US216Tests {
 
 	@BeforeEach
 	void setUp() {
-		myCompany.clear();
+
 		myCompany = Company.getTheInstance();
 
 		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Programador",
@@ -152,7 +152,8 @@ class US216Tests {
 
 		// Calculate expected Total time spent in task 2 and task3, by calling the
 		// method getTimeSpentOnTask
-		double expectTotalTime = (task2.getTimeSpentByProjectCollaboratorOntask(user1) + task3.getTimeSpentByProjectCollaboratorOntask(user1));
+		double expectTotalTime = (task2.getTimeSpentByProjectCollaboratorOntask(projectCollaborator1)
+				+ task3.getTimeSpentByProjectCollaboratorOntask(projectCollaborator1));
 		// Calculate expected Average total time spent in task 2 and task3, by dividing
 		// the total time spent on these tasks and
 		// dividing by the number of tasks (in the case 2 tasks).
