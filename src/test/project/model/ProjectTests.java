@@ -416,27 +416,38 @@ class ProjectTests {
 
 	}
 
+	/**
+	 * Tests if the user is confirmed as active and in Project correctly
+	 */
 	@Test
 	void testIsUserActiveInProjectTrue() {
 		p1.addUserRToProjectTeam(user1, 5);
 		assertTrue(p1.isUserActiveInProject(user1));
 	}
 
+	/**
+	 * Tests if the user is confirmed as not active if it hasn't been added to the
+	 * project
+	 */
 	@Test
 	void testIsUserActiveInProjectNotInTheTeam() {
 		assertFalse(p1.isUserActiveInProject(user1));
 	}
 
+	/**
+	 * Tests if the user is confirmed as not active if it has been removed from the
+	 * project
+	 */
 	@Test
 	void testIsUserActiveInProjectUserInactive() {
 		p1.addUserRToProjectTeam(user1, 5);
 		p1.removeCollaboratorFromProjectTeam(user1);
 		assertFalse(p1.isUserActiveInProject(user1));
 	}
-	
+
 	/**
-	 * Tests if the method retrieves the Project Collaborator that exists in Project 1,
-	 * generated from a Specific User
+	 * Tests if the method retrieves the Project Collaborator that exists in Project
+	 * 1, generated from a Specific User
 	 */
 	@Test
 	void getProjectCollaboratorFromUser() {
