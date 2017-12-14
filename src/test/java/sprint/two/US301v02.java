@@ -65,7 +65,7 @@ public class US301v02 {
 
 	// tests if the user is project manager
 	@Test
-	void testIfTheUserIsProjectManager() {
+	public void testIfTheUserIsProjectManager() {
 
 		boolean truth = p1.isProjectManager(u2);
 		boolean wrong = p1.isProjectManager(u1);
@@ -78,7 +78,7 @@ public class US301v02 {
 
 	// tests that the effort unit of the project can be define
 	@Test
-	void testSetEffortUnit() {
+	public void testSetEffortUnit() {
 		p1.setEffortUnit(EffortUnit.HOURS);
 
 		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
@@ -86,7 +86,7 @@ public class US301v02 {
 
 	// tests that the project's budget can be define
 	@Test
-	void testSetProjectBudget() {
+	public void testSetProjectBudget() {
 		p1.setProjectBudget(100);
 
 		assertEquals(100, p1.getProjectBudget());

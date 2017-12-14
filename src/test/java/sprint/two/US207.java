@@ -95,7 +95,7 @@ public class US207 {
 	}
 
 	@Test
-	void test207() {
+	public void test207() {
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();

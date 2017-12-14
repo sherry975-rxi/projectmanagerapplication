@@ -96,7 +96,7 @@ public class US380 {
 	 * result of the getExpiredTasks method.
 	 */
 	@Test
-	void US380_test() {
+	public void US380_test() {
 
 		project.getTaskRepository().getProjectTaskList().get(1).markTaskAsFinished();
 		expResult.add(project.getTaskRepository().getProjectTaskList().get(0));

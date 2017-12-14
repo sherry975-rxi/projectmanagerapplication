@@ -96,7 +96,7 @@ public class US340 {
 	}
 
 	@Test
-	void test340() {
+	public void test340() {
 
 		// verifies if userAdmin is Project Manager
 		assertTrue(project.isProjectManager(userAdmin));

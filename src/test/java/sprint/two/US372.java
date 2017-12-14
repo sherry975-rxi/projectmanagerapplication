@@ -19,7 +19,7 @@ import project.model.TaskRepository;
 import project.model.User;
 import project.model.UserRepository;
 
-class US372 {
+public class US372 {
 
 	/**
 	 * @author Group 3

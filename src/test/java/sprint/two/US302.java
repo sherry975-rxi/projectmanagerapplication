@@ -46,7 +46,7 @@ public class US302 {
 	}
 
 	@Test
-	final void testChangeProjectManager() {
+	public final void testChangeProjectManager() {
 		assertTrue(proj1.isProjectManager(user1));
 		proj1.setProjectManager(user2);
 		assertTrue(proj1.isProjectManager(user2));

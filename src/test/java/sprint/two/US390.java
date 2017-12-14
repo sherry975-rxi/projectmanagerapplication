@@ -179,7 +179,7 @@ public class US390 {
 	}
 
 	@Test
-	void testUS390() {
+	public void testUS390() {
 
 		// Adds users to the respective tasks
 		testTask.addUserToTask(taskWorker1);

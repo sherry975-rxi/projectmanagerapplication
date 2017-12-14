@@ -101,7 +101,7 @@ public class US375 {
 	}
 
 	@Test
-	void testUS375() {
+	public void testUS375() {
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
