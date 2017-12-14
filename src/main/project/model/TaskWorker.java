@@ -18,8 +18,8 @@ public class TaskWorker {
 	 * automatically. Hours Spent and Cost are set from the Project Collaborator.
 	 * Finish date is added after collaborator is removed.
 	 * 
-	 * @param collaborator
-	 *            user to set
+	 * @param projCollaborator
+	 *            projectCollaborator to create the new TaskWorker
 	 */
 	public TaskWorker(ProjectCollaborator projCollaborator) {
 		this.projCollaborator = projCollaborator;
@@ -40,18 +40,18 @@ public class TaskWorker {
 	}
 
 	/**
-	 * Returns the ProjectCollaborator of this Task Worker
+	 * Gets the ProjectCollaborator of this Task Worker
 	 * 
-	 * @return Project Collaborator
+	 * @return Returns the ProjectCollaborator of this Task Worker
 	 */
 	public ProjectCollaborator getProjectCollaboratorFromTaskWorker() {
 		return this.projCollaborator;
 	}
 
 	/**
-	 * Returns True if the Project Collaborator is in this TaskWorker false if not
+	 * Checks if the a project collaborator is in a task worker.
 	 * 
-	 * @return boolean
+	 * @return TRUE if the Project Collaborator is in this TaskWorker FALSE if not
 	 */
 	public boolean isProjectCollaboratorInTaskWorker(ProjectCollaborator projCollabToCheck) {
 
@@ -64,7 +64,8 @@ public class TaskWorker {
 	 * date, then it's Active, and returns True If the TaskWorker has a finish date,
 	 * then it's Inactive, and returns False
 	 * 
-	 * @return boolean
+	 * @return TRUE if the taskWorker does not have a finish date(null) or FALSE if
+	 *         the task worker has a finish date.
 	 */
 	public boolean isTaskWorkerActiveInTask() {
 
@@ -83,9 +84,6 @@ public class TaskWorker {
 	/**
 	 * Returns a specific Start Date
 	 * 
-	 * @param i
-	 *            index of the the date wanted
-	 * 
 	 * @return StartDate
 	 */
 	public Calendar getStartDate() {
@@ -94,9 +92,6 @@ public class TaskWorker {
 
 	/**
 	 * Returns a specific Finish Date
-	 * 
-	 * @param i
-	 *            index of the date wanted
 	 * 
 	 * @return Finish Date
 	 */
