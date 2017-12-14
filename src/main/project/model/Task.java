@@ -341,8 +341,9 @@ public class Task {
 	}
 
 	/**
-	 * This method returns the time that a specific Project Collaborator spent on this Task
-	 *  
+	 * This method returns the time that a specific Project Collaborator spent on
+	 * this Task
+	 * 
 	 * @param ProjectCollaborator
 	 *            to check
 	 * 
@@ -683,8 +684,7 @@ public class Task {
 		double taskCost = 0.0;
 
 		for (Report reports : this.reports) {
-			taskCost += reports.getReportedTime()
-					* reports.getTaskWorker().getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+			taskCost += reports.getReportedTime() * reports.getCost();
 		}
 		return taskCost;
 	}
