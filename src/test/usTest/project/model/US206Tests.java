@@ -145,17 +145,17 @@ class US206Tests {
 		assertEquals(listToCompare, testTask.getTaskTeam());
 
 		// AssertsTrue to see if the TaskTeam contains both users
-		assertTrue(testTask.taskTeamContainsUser(newUser2));
-		assertTrue(testTask.taskTeamContainsUser(newUser3));
+		assertTrue(testTask.taskTeamContainsUser(projectUser1));
+		assertTrue(testTask.taskTeamContainsUser(projectUser2));
 
 		// AssertTrue to see if the TeamUser State is set to active
-		assertTrue(testTask.taskTeamUserIsActive(newUser2));
+		assertTrue(testTask.taskTeamUserIsActive(projectUser1));
 
 		// sets the userState from newUser 2 to not Active
-		testTask.removeUserFromTask(newUser2);
+		testTask.removeUserFromTask(projectUser1);
 
 		// Checks if the active of newUser 2 is now set to false
-		assertFalse(testTask.taskTeamUserIsActive(newUser2));
+		assertFalse(testTask.taskTeamUserIsActive(projectUser1));
 
 	}
 
