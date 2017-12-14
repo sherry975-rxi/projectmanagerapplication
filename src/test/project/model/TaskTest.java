@@ -25,7 +25,7 @@ import main.project.model.User;
  * @author Group 3
  *
  */
-class TaskTests {
+class TaskTest {
 
 	User user1, user2;
 	Project myProject;

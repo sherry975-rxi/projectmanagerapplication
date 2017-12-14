@@ -16,7 +16,7 @@ import main.project.model.TaskRepository;
 import main.project.model.TaskWorker;
 import main.project.model.User;
 
-class ReportTests {
+class ReportTest {
 
 	User u1;
 	ProjectCollaborator projectCollaborator1;

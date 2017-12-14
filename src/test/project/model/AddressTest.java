@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import main.project.model.Address;
 
-class AddressTests {
+class AddressTest {
 
 	/**
 	 * This test tests the get of the field street

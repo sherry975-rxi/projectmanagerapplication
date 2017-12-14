@@ -18,7 +18,7 @@ import main.project.model.Task;
 import main.project.model.TaskWorker;
 import main.project.model.User;
 
-class ProjectRepositoryTests {
+class ProjectRepositoryTest {
 
 	ProjectRepository projectRepository;
 	User user1;

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import main.project.model.ProjectCollaborator;
 import main.project.model.User;
 
-class ProjectCollaboratorTests {
+class ProjectCollaboratorTest {
 
 	User tester, testerTwo;
 	ProjectCollaborator testMoar, testEvenMoar;

@@ -23,7 +23,7 @@ import main.project.model.UserRepository;
  */
 
 		
-class CompanyTests {
+class CompanyTest {
 	
 	Company myCompany;
 	Company companyB;

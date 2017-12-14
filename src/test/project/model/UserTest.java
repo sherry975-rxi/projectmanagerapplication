@@ -17,7 +17,7 @@ import main.project.model.User;
  * @author Group 3
  *
  */
-class UserTests {
+class UserTest {
 
 	/**
 	 * test getter/ setter Name

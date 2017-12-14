@@ -22,7 +22,7 @@ import main.project.model.TaskWorker;
 import main.project.model.User;
 import main.project.model.UserRepository;
 
-class TaskRepositoryTests {
+class TaskRepositoryTest {
 
 	UserRepository userRepository;
 	User user1;

@@ -22,7 +22,7 @@ import main.project.model.UserRepository;
  * @author Group3
  *
  */
-class UserRepositoryTests {
+class UserRepositoryTest {
 
 	User user1;
 	User user2;
