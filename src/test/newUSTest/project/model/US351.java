@@ -49,9 +49,9 @@ class US351 {
 
 	@Test
 	final void testRemoveProjectCollaborator() {
-		assertTrue(proj1.containsUser(user2));
+		assertTrue(proj1.isUserActiveInProject(user2));
 		proj1.removeCollaboratorFromProjectTeam(user2);
-		assertFalse(proj1.containsUser(user2));
+		assertFalse(proj1.isUserActiveInProject(user2));
 
 	}
 
