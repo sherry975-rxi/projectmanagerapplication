@@ -30,20 +30,18 @@ class US201Tests {
 	User newUserA;
 	User newUserB;
 	User newUserC;
-	int typeOfUser;
 
 	@BeforeEach
 	void setUp() {
 		company = Company.getTheInstance();
 
-		newUserA = company.createUser("João", "user2@gmail.com", "123", "Empregado", "930000000", "StreetA", "ZipCodeA",
-				"CityA", "DistrictA", "CountryA");
-		newUserB = company.createUser("Jonny", "user3@gmail.com", "132", "Telefonista", "940000000", "StreetB",
-				"ZipCodeB", "CityB", "DistrictB", "CountryB");
-		newUserC = company.createUser("Juuni", "user4@sapo.com", "321", "Faz tudo", "960000000", "StreetC", "ZipCodeC",
-				"CityC", "DistrictC", "CountryC");
+		newUserA = company.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Empregado", "930000000",
+				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
+		newUserB = company.getUsersRepository().createUser("Jonny", "user3@gmail.com", "132", "Telefonista",
+				"940000000", "StreetB", "ZipCodeB", "CityB", "DistrictB", "CountryB");
+		newUserC = company.getUsersRepository().createUser("Juuni", "user4@sapo.com", "321", "Faz tudo", "960000000",
+				"StreetC", "ZipCodeC", "CityC", "DistrictC", "CountryC");
 
-		typeOfUser = 1;
 	}
 
 	@AfterEach
@@ -52,7 +50,7 @@ class US201Tests {
 		newUserA = null;
 		newUserB = null;
 		newUserC = null;
-		typeOfUser = 0;
+
 	}
 
 	/**
@@ -116,7 +114,7 @@ class US201Tests {
 		String Number1 = newUserA.getPhone();
 		String Number2 = "91919199191";
 
-		assertEquals(newUserA.getProfile(), Profile.VISITOR);
+		assertEquals(newUserA.getUserProfile(), Profile.VISITOR);
 
 		newUserA.setPhone(Number2);
 		assertFalse(newUserA.getPhone().equals(Number1));
@@ -137,8 +135,8 @@ class US201Tests {
 		String Email3 = newUserB.getEmail();
 		String FalseMail = "huehue€troll*org";
 
-		assertTrue(company.isEmailAddressValid(Email3));
-		assertFalse(company.isEmailAddressValid(FalseMail));
+		assertTrue(company.getUsersRepository().isEmailAddressValid(Email3));
+		assertFalse(company.getUsersRepository().isEmailAddressValid(FalseMail));
 
 		assertTrue(newUserA.getEmail().equals(Email2));
 	}
