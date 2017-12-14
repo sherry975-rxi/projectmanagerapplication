@@ -8,8 +8,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.project.model.ProjectCollaborator;
-import main.project.model.User;
+import main.java.project.model.ProjectCollaborator;
+import main.java.project.model.User;
 
 class ProjectCollaboratorTest {
 

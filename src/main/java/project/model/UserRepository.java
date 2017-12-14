@@ -1,4 +1,4 @@
-package main.project.model;
+package main.java.project.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 /**
- * Class UserRepository that contains all lists and methods to build lists of users
+ * Class UserRepository that contains all lists and methods to build lists of
+ * users
  * 
  * @author Group3
  *
@@ -16,9 +17,8 @@ public class UserRepository {
 
 	private List<User> usersRepository;
 
-
 	/**
-	 * Constructor for UserRepository includes usersList creation 
+	 * Constructor for UserRepository includes usersList creation
 	 */
 	public UserRepository() {
 		this.usersRepository = new ArrayList<User>();
@@ -63,7 +63,7 @@ public class UserRepository {
 			this.usersRepository.add(toAddUsers);
 		}
 	}
-	
+
 	/**
 	 * This method allows the administrator to see if a given user already exists in
 	 * company
@@ -87,22 +87,21 @@ public class UserRepository {
 	 */
 	public List<User> getAllUsersFromRepository() {
 
-		List <User> allUsers = new ArrayList<>();
+		List<User> allUsers = new ArrayList<>();
 		allUsers.addAll(this.usersRepository);
 		return allUsers;
 
 	}
-
 
 	/**
 	 * This method allows the Administrator to access the user list and search users
 	 * by parts of email. This is achieved by using the .contains() method.
 	 *
 	 * @param partOfEmail
-	 *            		This is not the complete user email but a part of the email string
+	 *            This is not the complete user email but a part of the email string
 	 * 
-	 * @return userListThatContainsPiecesOfEmailString 
-	 * 					The list with users that have the query piece of email
+	 * @return userListThatContainsPiecesOfEmailString The list with users that have
+	 *         the query piece of email
 	 */
 	public List<User> searchUsersByEmail(String partOfEmail) {
 
@@ -124,15 +123,15 @@ public class UserRepository {
 	 * by complete email. This is achieved by using the .contains() method.
 	 *
 	 * @param completeEmail
-	 *            		This is not the complete user email but a part of the email string
+	 *            This is not the complete user email but a part of the email string
 	 * 
 	 * @return the User that matches the searched e-mail address
-	 * 				
+	 * 
 	 */
 	public User getUserByEmail(String completeEmail) {
 
 		for (int i = 0; i < this.usersRepository.size(); i++) {
-			if (usersRepository.get(i).getEmail().contains(completeEmail)) {	
+			if (usersRepository.get(i).getEmail().contains(completeEmail)) {
 				return usersRepository.get(i);
 			}
 		}
@@ -140,8 +139,8 @@ public class UserRepository {
 	}
 
 	/**
-	 * This method allows the administrator to access the userRepository and search users
-	 * by profile.
+	 * This method allows the administrator to access the userRepository and search
+	 * users by profile.
 	 * 
 	 * @param searchProfile
 	 *            Profile of a user
@@ -153,14 +152,13 @@ public class UserRepository {
 		List<User> usersByProfileList = new ArrayList<User>();
 
 		for (int i = 0; i < this.usersRepository.size(); i++) {
-			if(usersRepository.get(i).getUserProfile() == searchProfile) {
+			if (usersRepository.get(i).getUserProfile() == searchProfile) {
 				usersByProfileList.add(this.usersRepository.get(i));
 			}
 		}
 		return usersByProfileList;
 	}
 
-	
 	/**
 	 * This method checks if an e-mail inserted by the user is valid or not
 	 * 
@@ -174,11 +172,10 @@ public class UserRepository {
 		try {
 			InternetAddress emailAddr = new InternetAddress(email);
 			emailAddr.validate();
-		} 
-		catch (AddressException ex) {
+		} catch (AddressException ex) {
 			result = false;
 		}
 		return result;
 	}
 
-}	
+}

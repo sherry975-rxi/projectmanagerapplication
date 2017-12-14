@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import main.project.model.Address;
+import main.java.project.model.Address;
 
 class AddressTest {
 

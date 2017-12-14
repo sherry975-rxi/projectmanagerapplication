@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import main.project.model.Address;
-import main.project.model.Profile;
-import main.project.model.User;
+import main.java.project.model.Address;
+import main.java.project.model.Profile;
+import main.java.project.model.User;
 
 /**
  * @author Group 3

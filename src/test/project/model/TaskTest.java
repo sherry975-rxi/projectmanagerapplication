@@ -15,11 +15,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.project.model.Project;
-import main.project.model.ProjectCollaborator;
-import main.project.model.Task;
-import main.project.model.TaskWorker;
-import main.project.model.User;
+import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
+import main.java.project.model.Task;
+import main.java.project.model.TaskWorker;
+import main.java.project.model.User;
 
 /**
  * @author Group 3

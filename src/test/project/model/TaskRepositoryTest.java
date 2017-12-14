@@ -12,15 +12,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.project.model.Profile;
-import main.project.model.Project;
-import main.project.model.ProjectCollaborator;
-import main.project.model.ProjectRepository;
-import main.project.model.Task;
-import main.project.model.TaskRepository;
-import main.project.model.TaskWorker;
-import main.project.model.User;
-import main.project.model.UserRepository;
+import main.java.project.model.Profile;
+import main.java.project.model.Project;
+import main.java.project.model.ProjectCollaborator;
+import main.java.project.model.ProjectRepository;
+import main.java.project.model.Task;
+import main.java.project.model.TaskRepository;
+import main.java.project.model.TaskWorker;
+import main.java.project.model.User;
+import main.java.project.model.UserRepository;
 
 class TaskRepositoryTest {
 
