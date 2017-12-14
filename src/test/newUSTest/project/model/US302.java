@@ -12,6 +12,11 @@ import main.project.model.User;
 
 class US302 {
 
+	/**
+	 * US302 - As a director, I want to be able to change a project's Project
+	 * Manager.
+	 */
+
 	Company myComp;
 	User user1;
 	User user2;
@@ -19,11 +24,14 @@ class US302 {
 
 	@BeforeEach
 	void setUp() {
+		// create company
 		myComp = Company.getTheInstance();
+		// create users
 		user1 = myComp.getUsersRepository().createUser("myuser", "myemail@myemail.com", "myid", "myfunction", "myphone",
 				"mystreet", "myzipcode", "mycity", "mydistrict", "mycountry");
 		user2 = myComp.getUsersRepository().createUser("myuser2", "myemail2@myemail.com", "myid2", "myfunction2",
 				"myphone2", "mystreet2", "myzipcode2", "mycity2", "mydistrict2", "mycountry2");
+		// create project
 		myComp.getProjectsRepository().addProjectToProjectRepository(
 				myComp.getProjectsRepository().createProject("myProj", "dis ma project", user1));
 		proj1 = myComp.getProjectsRepository().getAllProjects().get(0);
