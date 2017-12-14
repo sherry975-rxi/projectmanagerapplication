@@ -116,7 +116,11 @@ class ProjectTests {
 		tasksListofThisProject.add(task1);
 		tasksListofThisProject.add(task2);
 		List<ProjectCollaborator> projectTeam = new ArrayList<ProjectCollaborator>();
-
+		p1.setEffortUnit(EffortUnit.HOURS);
+		p1.setProjectBudget(100);
+		
+		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
+		assertEquals(100, p1.getProjectBudget());
 		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
 		assertEquals(1, p1.getIdCode());
 		assertEquals(0, p1.getProjectStatus());
