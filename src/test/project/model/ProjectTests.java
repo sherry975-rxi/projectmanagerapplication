@@ -118,7 +118,7 @@ class ProjectTests {
 		List<ProjectCollaborator> projectTeam = new ArrayList<ProjectCollaborator>();
 		p1.setEffortUnit(EffortUnit.HOURS);
 		p1.setProjectBudget(100);
-		
+
 		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
 		assertEquals(100, p1.getProjectBudget());
 		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
@@ -213,14 +213,14 @@ class ProjectTests {
 		assertFalse(p1.equals(p2));
 	}
 
-//	/**
-//	 * Tests the comparison between objects that are different and from different
-//	 * types
-//	 */
-//	@Test
-//	void testEqualsDifferentObject() {
-//		assertFalse(p1.equals(user1));
-//	}
+	// /**
+	// * Tests the comparison between objects that are different and from different
+	// * types
+	// */
+	// @Test
+	// void testEqualsDifferentObject() {
+	// assertFalse(p1.equals(user1));
+	// }
 
 	/**
 	 * Sets the status of a project to Execution
@@ -328,8 +328,10 @@ class ProjectTests {
 
 		assertEquals(2, p1.getProjectTeam().size());
 		assertTrue(projectCollaborator2.equals(p1.getProjectTeam().get(0)));
-		assertTrue(p1.getTaskRepository().getAllTasks(projectCollaborator1).get(0).getTaskTeam().get(1).isTaskWorkerActiveInTask());
-		assertFalse(p1.getTaskRepository().getAllTasks(projectCollaborator2).get(0).getTaskTeam().get(0).isTaskWorkerActiveInTask());
+		assertTrue(p1.getTaskRepository().getAllTasks(projectCollaborator1).get(0).getTaskTeam().get(1)
+				.isTaskWorkerActiveInTask());
+		assertFalse(p1.getTaskRepository().getAllTasks(projectCollaborator2).get(0).getTaskTeam().get(0)
+				.isTaskWorkerActiveInTask());
 	}
 
 	/**
@@ -339,49 +341,47 @@ class ProjectTests {
 	@Test
 	void testGetTotalCostReportedToProjectUntilNow() {
 
-		 task1.addUserToTask(taskWorker2);
-		 task1.addUserToTask(taskWorker1);
-		 
-		 
-//		 task1.addUserToTask(taskWorker1);
-//		 task1.createReport(taskWorker1);
-//		 task1.getReports().get(0).setReportedTime(5);
-		
-		 // The TaskWorker is not finished because it has not a finishDate,
-		 // and the current info about the TimeSpent is by default zero.
-		 // The following instructions will change that TimeSpent for each TaskWorker
-		 
-		 task1.createReport(taskWorker2);
-		 task1.createReport(taskWorker1);
-		 
-		 task1.getReports().get(0).setReportedTime(5);
-		 task1.getReports().get(1).setReportedTime(7);
-//		 task1.getTaskTeam().get(0).setHoursSpent(5);
-//		 task1.getTaskTeam().get(1).setHoursSpent(7);
-		
-		 // The TaskWorker has by default the Cost of the ProjectCollaborator
-		 // and now it has also a TimeSpent in each TaskWorker.
-		 // So it can be calculated the TaskCost of Task 1, that has the TaskWorker 1
-		 //and
-		 // 2
-		 // and so, get the Project Cost Until Now.
-		 // t1.getTaskCost();
-		
-		 // Task 4 will be added to Project 1 and associated to a new created
-		 p1.getTaskRepository().addProjectTask(task4);
-		 // t4.createTaskWorker(projectCollaborator1);
-		 //task4.addUserToTask(task4.createTaskWorker(projectCollaborator2));
-		 task4.addNewTaskWorker(projectCollaborator2);
-		 task4.createReport(task4.getTaskTeam().get(0));
-		 //task4.getTaskTeam().get(0).setHoursSpent(7);
-		 task4.getReports().get(0).setReportedTime(7);
-		
-		 double espectres_1 = 14400; // cost of Task 1
-		 double espectres_2 = 8400; // cost of Task 4
-		 double espectres_total = espectres_1 + espectres_2;
-		
-		 assertEquals(espectres_total, p1.getTotalCostReportedToProjectUntilNow(),
-		 0.0001);
+		task1.addUserToTask(taskWorker2);
+		task1.addUserToTask(taskWorker1);
+
+		// task1.addUserToTask(taskWorker1);
+		// task1.createReport(taskWorker1);
+		// task1.getReports().get(0).setReportedTime(5);
+
+		// The TaskWorker is not finished because it has not a finishDate,
+		// and the current info about the TimeSpent is by default zero.
+		// The following instructions will change that TimeSpent for each TaskWorker
+
+		task1.createReport(taskWorker2);
+		task1.createReport(taskWorker1);
+
+		task1.getReports().get(0).setReportedTime(5);
+		task1.getReports().get(1).setReportedTime(7);
+		// task1.getTaskTeam().get(0).setHoursSpent(5);
+		// task1.getTaskTeam().get(1).setHoursSpent(7);
+
+		// The TaskWorker has by default the Cost of the ProjectCollaborator
+		// and now it has also a TimeSpent in each TaskWorker.
+		// So it can be calculated the TaskCost of Task 1, that has the TaskWorker 1
+		// and
+		// 2
+		// and so, get the Project Cost Until Now.
+		// t1.getTaskCost();
+
+		// Task 4 will be added to Project 1 and associated to a new created
+		p1.getTaskRepository().addProjectTask(task4);
+		// t4.createTaskWorker(projectCollaborator1);
+		// task4.addUserToTask(task4.createTaskWorker(projectCollaborator2));
+		task4.addNewTaskWorker(projectCollaborator2);
+		task4.createReport(task4.getTaskTeam().get(0));
+		// task4.getTaskTeam().get(0).setHoursSpent(7);
+		task4.getReports().get(0).setReportedTime(7);
+
+		double espectres_1 = 14400; // cost of Task 1
+		double espectres_2 = 8400; // cost of Task 4
+		double espectres_total = espectres_1 + espectres_2;
+
+		assertEquals(espectres_total, p1.getTotalCostReportedToProjectUntilNow(), 0.0001);
 	}
 
 	/**
@@ -414,5 +414,23 @@ class ProjectTests {
 
 		assertEquals(collaboratorsWithoutTasksCompare, p1.getCollaboratorsWithoutTasks());
 
+	}
+
+	@Test
+	void testIsUserActiveInProjectTrue() {
+		p1.addUserRToProjectTeam(user1, 5);
+		assertTrue(p1.isUserActiveInProject(user1));
+	}
+
+	@Test
+	void testIsUserActiveInProjectNotInTheTeam() {
+		assertFalse(p1.isUserActiveInProject(user1));
+	}
+
+	@Test
+	void testIsUserActiveInProjectUserInactive() {
+		p1.addUserRToProjectTeam(user1, 5);
+		p1.removeCollaboratorFromProjectTeam(user1);
+		assertFalse(p1.isUserActiveInProject(user1));
 	}
 }
