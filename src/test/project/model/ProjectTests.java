@@ -433,4 +433,15 @@ class ProjectTests {
 		p1.removeCollaboratorFromProjectTeam(user1);
 		assertFalse(p1.isUserActiveInProject(user1));
 	}
+	
+	/**
+	 * Tests if the method retrieves the Project Collaborator that exists in Project 1,
+	 * generated from a Specific User
+	 */
+	@Test
+	void getProjectCollaboratorFromUser() {
+		p1.addUserToProjectTeam(projectCollaborator2);
+		p1.addUserToProjectTeam(projectCollaborator1);
+		assertEquals(projectCollaborator2, p1.getProjectCollaboratorFromUser(user2));
+	}
 }
