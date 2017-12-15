@@ -10,14 +10,13 @@ public class TaskCollaborator {
 	private boolean status;
 
 	/**
-	 * Constructor to create a new task worker
+	 * Constructor to create a new task collaborator
 	 * 
 	 * Collaborator is set as the Project Collaborator provided. A start date is set
-	 * automatically. Hours Spent and Cost are set from the Project Collaborator.
-	 * Finish date is added after collaborator is removed.
+	 * automatically. Finish date is added after collaborator is removed.
 	 * 
 	 * @param projCollaborator
-	 *            projectCollaborator to create the new TaskWorker
+	 *            projectCollaborator to create the new TaskCollaborator
 	 */
 	public TaskCollaborator(ProjectCollaborator projCollaborator) {
 		this.projCollaborator = projCollaborator;
@@ -27,52 +26,54 @@ public class TaskCollaborator {
 	}
 
 	/**
-	 * Returns the user associated to the ProjectCollaborator of this Task Worker
+	 * Returns the user associated to the ProjectCollaborator of this Task
+	 * Collaborator
 	 * 
 	 * @return user
 	 */
-	public User getTaskWorker() {
-		return this.projCollaborator.getCollaboratorUserData();
+	public User getTaskCollaborator() {
+		return this.projCollaborator.getUserFromProjectCollaborator();
 	}
 
 	/**
-	 * Gets the ProjectCollaborator of this Task Worker
+	 * Gets the ProjectCollaborator of this Task Collaborator
 	 * 
-	 * @return Returns the ProjectCollaborator of this Task Worker
+	 * @return Returns the ProjectCollaborator of this Task Collaborator
 	 */
-	public ProjectCollaborator getProjectCollaboratorFromTaskWorker() {
+	public ProjectCollaborator getProjectCollaboratorFromTaskCollaborator() {
 		return this.projCollaborator;
 	}
 
 	/**
-	 * Checks if the a project collaborator is in a task worker.
+	 * Checks if the a project collaborator is in a task collaborator.
 	 * 
-	 * @return TRUE if the Project Collaborator is in this TaskWorker FALSE if not
+	 * @return TRUE if the Project Collaborator is in this TaskCollaborator FALSE if
+	 *         not
 	 */
-	public boolean isProjectCollaboratorInTaskWorker(ProjectCollaborator projCollabToCheck) {
+	public boolean isProjectCollaboratorInTaskCollaborator(ProjectCollaborator projCollabToCheck) {
 
 		return this.projCollaborator.equals(projCollabToCheck);
 
 	}
 
 	/**
-	 * Returns the state of the TaskWorker. If the TaskWorker don't have a finish
-	 * date, then it's Active, and returns True If the TaskWorker has a finish date,
-	 * then it's Inactive, and returns False
+	 * Returns the state of the TaskCollaborator. If the TaskCollaborator don't have
+	 * a finish date, then it's Active, and returns True If the TaskCollaborator has
+	 * a finish date, then it's Inactive, and returns False
 	 * 
-	 * @return TRUE if the taskWorker does not have a finish date(null) or FALSE if
-	 *         the task worker has a finish date.
+	 * @return TRUE if the taskCollaborator does not have a finish date(null) or
+	 *         FALSE if the task collaborator has a finish date.
 	 */
-	public boolean isTaskWorkerActiveInTask() {
+	public boolean isTaskCollaboratorActiveInTask() {
 
 		return this.finishDate == null;
 
 	}
 
 	/**
-	 * Adds a Finish Date to the task worker
+	 * Adds a Finish Date to the task Collaborator
 	 */
-	public void addFinishDateForTaskWorker() {
+	public void addFinishDateForTaskCollaborator() {
 		this.finishDate = Calendar.getInstance();
 		this.status = false;
 	}
@@ -105,7 +106,7 @@ public class TaskCollaborator {
 		throw new UnsupportedOperationException();
 	}
 
-	// Override the Equals method. Compares only if the taskworker and the
+	// Override the Equals method. Compares only if the taskCollaborator and the
 	// finishDate are the same
 	@Override
 	public boolean equals(Object obj) {
@@ -133,50 +134,48 @@ public class TaskCollaborator {
 
 /*
  *//**
- * Returns the total hours spent by the collaborator
- *
- *
- * @return TotalHoursSpent
- *//*
- public int getTotalHoursSpent() {
-
- int result = 0;
-
- for (int indexHoursSpent = 0; indexHoursSpent < this.hoursSpent.size();
- indexHoursSpent++) {
-
- result = result + this.hoursSpent.get(indexHoursSpent);
- }
-
- return result;
-
- }
-
+	 * Returns the total hours spent by the collaborator
+	 *
+	 *
+	 * @return TotalHoursSpent
+	 */
+/*
+ * public int getTotalHoursSpent() {
+ * 
+ * int result = 0;
+ * 
+ * for (int indexHoursSpent = 0; indexHoursSpent < this.hoursSpent.size();
+ * indexHoursSpent++) {
+ * 
+ * result = result + this.hoursSpent.get(indexHoursSpent); }
+ * 
+ * return result;
+ * 
+ * }
+ * 
  *//**
- * Returns the cost of the collaborator in a specific period
- *
- * @param i
- * index of the cost wanted
- *
- * @return cost
- *//*
- public int getCost(int i) {
- return cost.get(i);
- }
-
+	 * Returns the cost of the collaborator in a specific period
+	 *
+	 * @param i
+	 *            index of the cost wanted
+	 *
+	 * @return cost
+	 */
+/*
+ * public int getCost(int i) { return cost.get(i); }
+ * 
  *//**
- * Sets the hours spent by the user in this task in this period
- *
- * @param hoursSpent
- *//*
- public void setHoursSpent(int hoursSpent) {
- this.hoursSpent.set(this.hoursSpent.size() - 1, hoursSpent);
- }
-
+	 * Sets the hours spent by the user in this task in this period
+	 *
+	 * @param hoursSpent
+	 */
+/*
+ * public void setHoursSpent(int hoursSpent) {
+ * this.hoursSpent.set(this.hoursSpent.size() - 1, hoursSpent); }
+ * 
  *//**
- * Gets the size of the cost list
- *
- *//*
- public int getCostListSize() {
- return this.cost.size();
- }*/
+	 * Gets the size of the cost list
+	 *
+	 *//*
+		 * public int getCostListSize() { return this.cost.size(); }
+		 */

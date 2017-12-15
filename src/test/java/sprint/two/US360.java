@@ -77,7 +77,7 @@ public class US360 {
 		// create the project and set a user to Project manager
 		p1 = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
 		p1.getProjectTeam().clear();
-		p1.getTaskRepository().getProjectTaskList().clear();
+		p1.getTaskRepository().getProjectTaskRepository().clear();
 
 		// add project to the Company Project list
 		c1.getProjectsRepository().addProjectToProjectRepository(p1);
@@ -88,9 +88,9 @@ public class US360 {
 		collaborator3 = p1.createProjectCollaborator(u5, 150);
 
 		// add collaborators to project
-		p1.addUserToProjectTeam(collaborator1);
-		p1.addUserToProjectTeam(collaborator2);
-		p1.addUserToProjectTeam(collaborator3);
+		p1.addProjectCollaboratorToProjectTeam(collaborator1);
+		p1.addProjectCollaboratorToProjectTeam(collaborator2);
+		p1.addProjectCollaboratorToProjectTeam(collaborator3);
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -131,8 +131,8 @@ public class US360 {
 		p1.getTaskRepository().addProjectTask(testTask4);
 
 		// add taskworkers (collaborator1 and 2) to tasks 1 and 2
-		testTask.addNewTaskWorker(collaborator1);
-		testTask2.addNewTaskWorker(collaborator2);
+		testTask.addProjectCollaboratorToTask(collaborator1);
+		testTask2.addProjectCollaboratorToTask(collaborator2);
 	}
 
 	@After
@@ -164,13 +164,13 @@ public class US360 {
 		List<Task> tasksWithoutUsersTest = new ArrayList<Task>();
 
 		// Adds a new taskCollaborator
-		testTask3.addNewTaskWorker(collaborator1);
+		testTask3.addProjectCollaboratorToTask(collaborator1);
 
 		// Sets collaborator state to inactive
-		testTask3.getTaskTeam().get(0).addFinishDateForTaskWorker();
+		testTask3.getTaskTeam().get(0).addFinishDateForTaskCollaborator();
 		tasksWithoutUsersTest.add(testTask3);
 		tasksWithoutUsersTest.add(testTask4);
 
-		assertEquals(tasksWithoutUsersTest, p1.getTaskRepository().getListofTasksWithoutCollaboratorsAssigned());
+		assertEquals(tasksWithoutUsersTest, p1.getTaskRepository().getAllTasksWithoutCollaboratorsAssigned());
 	}
 }

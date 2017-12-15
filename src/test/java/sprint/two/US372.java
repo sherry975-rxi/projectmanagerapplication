@@ -79,7 +79,7 @@ public class US372 {
 		project = projectRepository.createProject("name3", "description4", user2);
 
 		// add user to project team
-		project.addUserToProjectTeam(collaborator1);
+		project.addProjectCollaboratorToProjectTeam(collaborator1);
 
 		// create taskRepository
 		taskRepository = project.getTaskRepository();

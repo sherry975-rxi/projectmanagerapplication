@@ -62,7 +62,7 @@ public class US211Tests {
 
 		newCollaboratorB = project.createProjectCollaborator(newUserB, 50);
 
-		project.addUserToProjectTeam(newCollaboratorB);
+		project.addProjectCollaboratorToProjectTeam(newCollaboratorB);
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -115,15 +115,15 @@ public class US211Tests {
 	@Test
 	public void test() {
 
-		TaskCollaborator Task1CollaboratorB = testTask.createTaskWorker(newCollaboratorB);
-		TaskCollaborator Task2CollaboratorB = testTask2.createTaskWorker(newCollaboratorB);
-		TaskCollaborator Task3CollaboratorB = testTask3.createTaskWorker(newCollaboratorB);
-		TaskCollaborator Task4CollaboratorB = testTask4.createTaskWorker(newCollaboratorB);
+		TaskCollaborator Task1CollaboratorB = testTask.createTaskCollaborator(newCollaboratorB);
+		TaskCollaborator Task2CollaboratorB = testTask2.createTaskCollaborator(newCollaboratorB);
+		TaskCollaborator Task3CollaboratorB = testTask3.createTaskCollaborator(newCollaboratorB);
+		TaskCollaborator Task4CollaboratorB = testTask4.createTaskCollaborator(newCollaboratorB);
 
-		testTask.addUserToTask(Task1CollaboratorB);
-		testTask2.addUserToTask(Task2CollaboratorB);
-		testTask3.addUserToTask(Task3CollaboratorB);
-		testTask4.addUserToTask(Task4CollaboratorB);
+		testTask.addTaskCollaboratorToTask(Task1CollaboratorB);
+		testTask2.addTaskCollaboratorToTask(Task2CollaboratorB);
+		testTask3.addTaskCollaboratorToTask(Task3CollaboratorB);
+		testTask4.addTaskCollaboratorToTask(Task4CollaboratorB);
 
 		// Sets all 4 tasks as cleared
 		testTask.setFinishDate();
@@ -154,7 +154,7 @@ public class US211Tests {
 		// Compares expected results with TaskList
 		// assertEquals(myCompany.getLastMonthFinishedUserTaskListDecreasingOrder(newUser3),
 		// testList);
-		assertEquals(company.getProjectsRepository().getLastMonthFinishedUserTaskListDecreasingOrder(newUserB),
+		assertEquals(company.getProjectsRepository().getFinishedUserTasksFromLastMonthInDecreasingOrder(newUserB),
 				testList);
 	}
 

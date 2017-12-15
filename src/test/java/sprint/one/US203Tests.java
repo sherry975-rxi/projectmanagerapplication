@@ -101,18 +101,18 @@ public class US203Tests {
 
 		projCollab3 = project1.createProjectCollaborator(user2, 200);
 
-		taskWorker1 = task1.createTaskWorker(projCollab1);
+		taskWorker1 = task1.createTaskCollaborator(projCollab1);
 
-		taskWorker2 = task2.createTaskWorker(projCollab2);
+		taskWorker2 = task2.createTaskCollaborator(projCollab2);
 
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
 
-		project1.addUserToProjectTeam(projCollab2);
+		project1.addProjectCollaboratorToProjectTeam(projCollab2);
 		project1.getTaskRepository().addProjectTask(task1);
 		project1.getTaskRepository().addProjectTask(task2);
 
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker2);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker2);
 
 		// sets testTask as Finished, removes it from the test List, then compares again
 		task1.setFinishDate();

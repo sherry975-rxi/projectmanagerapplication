@@ -81,7 +81,7 @@ public class US355 {
 		// create the project and set a user to Project manager
 		p1 = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
 		p1.getProjectTeam().clear();
-		p1.getTaskRepository().getProjectTaskList().clear();
+		p1.getTaskRepository().getProjectTaskRepository().clear();
 
 		// add project to the Company Project list
 		c1.getProjectsRepository().addProjectToProjectRepository(p1);
@@ -92,9 +92,9 @@ public class US355 {
 		collaborator3 = p1.createProjectCollaborator(u5, 150);
 
 		// add collaborators to project
-		p1.addUserToProjectTeam(collaborator1);
-		p1.addUserToProjectTeam(collaborator2);
-		p1.addUserToProjectTeam(collaborator3);
+		p1.addProjectCollaboratorToProjectTeam(collaborator1);
+		p1.addProjectCollaboratorToProjectTeam(collaborator2);
+		p1.addProjectCollaboratorToProjectTeam(collaborator3);
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -161,7 +161,7 @@ public class US355 {
 		testNoUsersOnTasks.add(collaborator2);
 		testNoUsersOnTasks.add(collaborator3);
 
-		assertEquals(testNoUsersOnTasks, p1.getCollaboratorsWithoutTasks());
+		assertEquals(testNoUsersOnTasks, p1.getProjectCollaboratorsWithoutTasksAssigned());
 	}
 
 	/**
@@ -173,10 +173,10 @@ public class US355 {
 	public void US355_TwoUsersOnTasks() {
 
 		// adds collaborator 1 and 2 to Tasks
-		TaskCollaborator testTaskCollaborator1 = testTask.createTaskWorker(collaborator1);
-		TaskCollaborator testTask2Collaborator2 = testTask.createTaskWorker(collaborator2);
-		testTask.addUserToTask(testTaskCollaborator1);
-		testTask2.addUserToTask(testTask2Collaborator2);
+		TaskCollaborator testTaskCollaborator1 = testTask.createTaskCollaborator(collaborator1);
+		TaskCollaborator testTask2Collaborator2 = testTask.createTaskCollaborator(collaborator2);
+		testTask.addTaskCollaboratorToTask(testTaskCollaborator1);
+		testTask2.addTaskCollaboratorToTask(testTask2Collaborator2);
 
 		// Creates a new list and adds user to that list, to compare with userList
 		// inside ProjectTeam
@@ -184,7 +184,7 @@ public class US355 {
 
 		testTwoUsersOnTasks.add(collaborator3);
 
-		assertEquals(testTwoUsersOnTasks, p1.getCollaboratorsWithoutTasks());
+		assertEquals(testTwoUsersOnTasks, p1.getProjectCollaboratorsWithoutTasksAssigned());
 	}
 
 	/**
@@ -196,11 +196,11 @@ public class US355 {
 	public void US355_UserRemovedFromTask() {
 
 		// adds collaborator 1 and 2 to Tasks
-		TaskCollaborator testTaskCollaborator1 = testTask.createTaskWorker(collaborator1);
-		TaskCollaborator testTask2Collaborator2 = testTask.createTaskWorker(collaborator2);
-		testTask.addUserToTask(testTaskCollaborator1);
-		testTask2.addUserToTask(testTask2Collaborator2);
-		testTask2.removeUserFromTask(collaborator2);
+		TaskCollaborator testTaskCollaborator1 = testTask.createTaskCollaborator(collaborator1);
+		TaskCollaborator testTask2Collaborator2 = testTask.createTaskCollaborator(collaborator2);
+		testTask.addTaskCollaboratorToTask(testTaskCollaborator1);
+		testTask2.addTaskCollaboratorToTask(testTask2Collaborator2);
+		testTask2.removeProjectCollaboratorFromTask(collaborator2);
 
 		// Creates a new list and adds user to that list, to compare with userList
 		// inside ProjectTeam
@@ -209,7 +209,7 @@ public class US355 {
 		testOneUserOnTask.add(collaborator2);
 		testOneUserOnTask.add(collaborator3);
 
-		assertEquals(testOneUserOnTask, p1.getCollaboratorsWithoutTasks());
+		assertEquals(testOneUserOnTask, p1.getProjectCollaboratorsWithoutTasksAssigned());
 	}
 
 }

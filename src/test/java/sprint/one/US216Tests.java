@@ -95,7 +95,7 @@ public class US216Tests {
 		projectCollaborator1 = myProject.createProjectCollaborator(user1, 10);
 
 		// user2 added user 1 to the ProjectTeam
-		myProject.addUserToProjectTeam(projectCollaborator1);
+		myProject.addProjectCollaboratorToProjectTeam(projectCollaborator1);
 
 		// Add Tasks to project 1
 		myProject.getTaskRepository().addProjectTask(task1);
@@ -104,13 +104,13 @@ public class US216Tests {
 		myProject.getTaskRepository().addProjectTask(task4);
 
 		// create task workers
-		taskWorker1 = task1.createTaskWorker(projectCollaborator1);
+		taskWorker1 = task1.createTaskCollaborator(projectCollaborator1);
 
 		// Associates users to tasks
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker1);
-		task3.addUserToTask(taskWorker1);
-		task4.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
+		task3.addTaskCollaboratorToTask(taskWorker1);
+		task4.addTaskCollaboratorToTask(taskWorker1);
 
 		// Finish dates were attributed to each task
 		task1.setFinishDate(otherFinishDate);
@@ -160,7 +160,7 @@ public class US216Tests {
 		double expectAverageTime = expectTotalTime / 2;
 
 		assertEquals(expectAverageTime,
-				myCompany.getProjectsRepository().getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
+				myCompany.getProjectsRepository().getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 
 	}
 }

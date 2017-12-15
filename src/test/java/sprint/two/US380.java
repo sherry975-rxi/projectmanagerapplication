@@ -56,8 +56,8 @@ public class US380 {
 		project = myCompany.getProjectsRepository().createProject("Project A", "Project AA", user1);
 
 		// Creates Project collaborators
-		project.addUserRToProjectTeam(user2, 15);
-		project.addUserRToProjectTeam(user3, 20);
+		project.addUserToProjectTeam(user2, 15);
+		project.addUserToProjectTeam(user3, 20);
 
 		// Creates the dates
 		estimatedStartDate = Calendar.getInstance();
@@ -98,9 +98,9 @@ public class US380 {
 	@Test
 	public void US380_test() {
 
-		project.getTaskRepository().getProjectTaskList().get(1).markTaskAsFinished();
-		expResult.add(project.getTaskRepository().getProjectTaskList().get(0));
-		expResult.add(project.getTaskRepository().getProjectTaskList().get(2));
+		project.getTaskRepository().getProjectTaskRepository().get(1).markTaskAsFinished();
+		expResult.add(project.getTaskRepository().getProjectTaskRepository().get(0));
+		expResult.add(project.getTaskRepository().getProjectTaskRepository().get(2));
 
 		assertEquals(expResult, project.getTaskRepository().getExpiredTasks());
 

@@ -97,8 +97,8 @@ public class US206Tests {
 				10);
 
 		// Creates 2 Task Workers
-		taskWorker1 = testTask.createTaskWorker(projectUser1);
-		taskWorker2 = testTask2.createTaskWorker(projectUser2);
+		taskWorker1 = testTask.createTaskCollaborator(projectUser1);
+		taskWorker2 = testTask2.createTaskCollaborator(projectUser2);
 
 		// Creates a new list to Compare with the list of taskWorkes that is obtained by
 		// the method in Task Class
@@ -133,9 +133,9 @@ public class US206Tests {
 	public void testRemoveTaskFromUser() {
 
 		// Adds users to the respective tasks
-		testTask.addUserToTask(taskWorker1);
-		testTask2.addUserToTask(taskWorker1);
-		testTask.addUserToTask(taskWorker2);
+		testTask.addTaskCollaboratorToTask(taskWorker1);
+		testTask2.addTaskCollaboratorToTask(taskWorker1);
+		testTask.addTaskCollaboratorToTask(taskWorker2);
 
 		// Adds 2 users to the comparison list
 		listToCompare.add(taskWorker1);
@@ -145,17 +145,17 @@ public class US206Tests {
 		assertEquals(listToCompare, testTask.getTaskTeam());
 
 		// AssertsTrue to see if the TaskTeam contains both users
-		assertTrue(testTask.taskTeamContainsUser(projectUser1));
-		assertTrue(testTask.taskTeamContainsUser(projectUser2));
+		assertTrue(testTask.isProjectCollaboratorInTaskTeam(projectUser1));
+		assertTrue(testTask.isProjectCollaboratorInTaskTeam(projectUser2));
 
 		// AssertTrue to see if the TeamUser State is set to active
-		assertTrue(testTask.taskTeamUserIsActive(projectUser1));
+		assertTrue(testTask.isProjectCollaboratorActiveInTaskTeam(projectUser1));
 
 		// sets the userState from newUser 2 to not Active
-		testTask.removeUserFromTask(projectUser1);
+		testTask.removeProjectCollaboratorFromTask(projectUser1);
 
 		// Checks if the active of newUser 2 is now set to false
-		assertFalse(testTask.taskTeamUserIsActive(projectUser1));
+		assertFalse(testTask.isProjectCollaboratorActiveInTaskTeam(projectUser1));
 
 	}
 

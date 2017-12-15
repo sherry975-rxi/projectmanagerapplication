@@ -87,7 +87,7 @@ public class US370 {
 		projectCollaborator = project.createProjectCollaborator(user1, 2);
 
 		// add user to project team
-		project.addUserToProjectTeam(projectCollaborator);
+		project.addProjectCollaboratorToProjectTeam(projectCollaborator);
 
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
@@ -130,12 +130,12 @@ public class US370 {
 		taskRepository.addProjectTask(testTask2);
 
 		// create task Worker
-		taskWorker = testTask.createTaskWorker(projectCollaborator);
-		taskWorker1 = testTask2.createTaskWorker(projectCollaborator);
+		taskWorker = testTask.createTaskCollaborator(projectCollaborator);
+		taskWorker1 = testTask2.createTaskCollaborator(projectCollaborator);
 
 		// Adds user1 to the Task
-		testTask.addUserToTask(taskWorker);
-		testTask2.addUserToTask(taskWorker1);
+		testTask.addTaskCollaboratorToTask(taskWorker);
+		testTask2.addTaskCollaboratorToTask(taskWorker1);
 
 		// start task
 		testTask.setStartDate(estimatedTaskStartDateTest);

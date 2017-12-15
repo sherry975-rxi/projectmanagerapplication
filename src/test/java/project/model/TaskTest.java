@@ -87,9 +87,9 @@ public class TaskTest {
 	@Test
 	public void testTaskTeam() {
 
-		testTask.addUserToTask(tWorker1);
-		testTask.addUserToTask(tWorker2);
-		assertTrue(testTask.taskTeamContainsUser(collab1) && testTask.taskTeamContainsUser(collab2));
+		testTask.addTaskCollaboratorToTask(tWorker1);
+		testTask.addTaskCollaboratorToTask(tWorker2);
+		assertTrue(testTask.isProjectCollaboratorInTaskTeam(collab1) && testTask.isProjectCollaboratorInTaskTeam(collab2));
 	}
 
 	/**
@@ -109,9 +109,9 @@ public class TaskTest {
 	 */
 	@Test
 	public void testIsFinished() {
-		assertFalse(testTask.isFinished());
+		assertFalse(testTask.isTaskFinished());
 		testTask.markTaskAsFinished();
-		assertTrue(testTask.isFinished());
+		assertTrue(testTask.isTaskFinished());
 	}
 
 	/**
@@ -134,8 +134,8 @@ public class TaskTest {
 	 */
 	@Test
 	public void testGetTimeSpentOnTask() {
-		testTask.addUserToTask(tWorker1);
-		testTask.addUserToTask(tWorker2);
+		testTask.addTaskCollaboratorToTask(tWorker1);
+		testTask.addTaskCollaboratorToTask(tWorker2);
 
 		testTask.createReport(tWorker1);
 		testTask.createReport(tWorker2);
@@ -187,7 +187,7 @@ public class TaskTest {
 	@Test
 	public void isTaskTeamEmpty_false() {
 
-		testTask2.addUserToTask(tWorker1);
+		testTask2.addTaskCollaboratorToTask(tWorker1);
 
 		assertFalse(testTask2.isTaskTeamEmpty());
 	}
@@ -198,16 +198,16 @@ public class TaskTest {
 	 */
 	@Test
 	public void updateTaskWorker() {
-		testTask2.addNewTaskWorker(collab1);
-		testTask2.removeUserFromTask(collab1);
-		testTask2.addNewTaskWorker(collab1);
+		testTask2.addProjectCollaboratorToTask(collab1);
+		testTask2.removeProjectCollaboratorFromTask(collab1);
+		testTask2.addProjectCollaboratorToTask(collab1);
 		testTask2.createReport(tWorker1);
 		testTask2.getReports().get(0).setReportedTime(15);
 
 		assertEquals(5, collab1.getCollaboratorCost());
 		assertEquals(15, testTask2.getReports().get(0).getReportedTime());
 		assertTrue(tWorker1.getStartDate() != null);
-		assertTrue(testTask2.taskTeamUserIsActive(collab1));
+		assertTrue(testTask2.isProjectCollaboratorActiveInTaskTeam(collab1));
 	}
 
 	/**
@@ -219,8 +219,8 @@ public class TaskTest {
 	@Test
 	public void testGetReportedBudgetToTheTask() {
 		// Adds two users to the task
-		testTask2.addUserToTask(tWorker1);
-		testTask2.addUserToTask(tWorker2);
+		testTask2.addTaskCollaboratorToTask(tWorker1);
+		testTask2.addTaskCollaboratorToTask(tWorker2);
 
 		// sets the hours spent on the task by each user
 		testTask2.createReport(tWorker1);
@@ -247,15 +247,15 @@ public class TaskTest {
 	public void testTaskTeamHasActiveUsers() {
 		// Adds two users to the task
 		// Adds two users to the task
-		testTask2.addUserToTask(tWorker1);
+		testTask2.addTaskCollaboratorToTask(tWorker1);
 
 		// Checks if task has active users
-		assertTrue(testTask2.taskTeamHasActiveUsers());
+		assertTrue(testTask2.doesTaskTeamHaveActiveUsers());
 		// Set finish date for taskWorker - this method also changes is state to false
 		// in the task
-		tWorker1.addFinishDateForTaskWorker();
+		tWorker1.addFinishDateForTaskCollaborator();
 		// Checks if the task doesnt have any active user
-		assertFalse(testTask2.taskTeamHasActiveUsers());
+		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
 
 	}
 

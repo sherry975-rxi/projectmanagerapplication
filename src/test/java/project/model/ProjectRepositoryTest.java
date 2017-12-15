@@ -176,8 +176,8 @@ public class ProjectRepositoryTest {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(collab1);
-		project1.addUserToProjectTeam(collab2);
+		project1.addProjectCollaboratorToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -185,8 +185,8 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(taskWorker1);
-		task3.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task3.addTaskCollaboratorToTask(taskWorker1);
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task1);
@@ -206,8 +206,8 @@ public class ProjectRepositoryTest {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(collab1);
-		project1.addUserToProjectTeam(collab2);
+		project1.addProjectCollaboratorToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -215,9 +215,9 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker1);
-		task3.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
+		task3.addTaskCollaboratorToTask(taskWorker1);
 
 		// Marks tasks as finished
 		task1.markTaskAsFinished();
@@ -229,7 +229,7 @@ public class ProjectRepositoryTest {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getFinishedUserTaskList(user1));
+		assertEquals(expResultTaskList, projectRepository.getAllFinishedTasksFromUser(user1));
 
 	}
 
@@ -244,8 +244,8 @@ public class ProjectRepositoryTest {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(collab1);
-		project1.addUserToProjectTeam(collab2);
+		project1.addProjectCollaboratorToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -253,9 +253,9 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker1);
-		task3.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
+		task3.addTaskCollaboratorToTask(taskWorker1);
 
 		// Marks tasks as finished
 		task1.markTaskAsFinished();
@@ -280,8 +280,8 @@ public class ProjectRepositoryTest {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(collab1);
-		project1.addUserToProjectTeam(collab2);
+		project1.addProjectCollaboratorToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -289,9 +289,9 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker1);
-		task3.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
+		task3.addTaskCollaboratorToTask(taskWorker1);
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
@@ -326,15 +326,15 @@ public class ProjectRepositoryTest {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab1);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
 		project1.getTaskRepository().addProjectTask(task2);
 
 		// Adds user to tasks.
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
 
 		// Sets a startDate for the tasks
 
@@ -357,7 +357,7 @@ public class ProjectRepositoryTest {
 		double expResult = (task1.getTimeSpentByProjectCollaboratorOntask(collab1)
 				+ task2.getTimeSpentByProjectCollaboratorOntask(collab1));
 
-		assertEquals(expResult, projectRepository.getTotalTimeLastMonthFinishedTasksByUser(user1), 0.000000001);
+		assertEquals(expResult, projectRepository.getTotalTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
 
 	/**
@@ -372,15 +372,15 @@ public class ProjectRepositoryTest {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab1);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
 		project1.getTaskRepository().addProjectTask(task2);
 
 		// Adds user to tasks.
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
 
 		// Sets a startDate for the tasks
 
@@ -403,7 +403,7 @@ public class ProjectRepositoryTest {
 		double expResult = (task1.getTimeSpentByProjectCollaboratorOntask(collab1)
 				+ task2.getTimeSpentByProjectCollaboratorOntask(collab1)) / 2;
 
-		assertEquals(expResult, projectRepository.getAverageTimeLastMonthFinishedTasksUser(user1), 0.000000001);
+		assertEquals(expResult, projectRepository.getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
 
 	/**
@@ -417,8 +417,8 @@ public class ProjectRepositoryTest {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(collab1);
-		project1.addUserToProjectTeam(collab2);
+		project1.addProjectCollaboratorToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -426,9 +426,9 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker1);
-		task3.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
+		task3.addTaskCollaboratorToTask(taskWorker1);
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
@@ -450,7 +450,7 @@ public class ProjectRepositoryTest {
 		expResultTaskList.add(task2);
 		expResultTaskList.add(task1);
 
-		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskListDecreasingOrder(user1));
+		assertEquals(expResultTaskList, projectRepository.getFinishedUserTasksFromLastMonthInDecreasingOrder(user1));
 	}
 
 	/**
@@ -464,8 +464,8 @@ public class ProjectRepositoryTest {
 		projectRepository.addProjectToProjectRepository(project1);
 
 		// Adds user to project team
-		project1.addUserToProjectTeam(collab1);
-		project1.addUserToProjectTeam(collab2);
+		project1.addProjectCollaboratorToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
@@ -473,9 +473,9 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker1);
-		task3.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
+		task3.addTaskCollaboratorToTask(taskWorker1);
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
@@ -498,7 +498,7 @@ public class ProjectRepositoryTest {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getFinishedTaskListByDecreasingOrder(user1));
+		assertEquals(expResultTaskList, projectRepository.getAllFinishedUserTasksInDecreasingOrder(user1));
 	}
 
 	/**

@@ -76,7 +76,7 @@ public class US207 {
 		projectCollaborator = project.createProjectCollaborator(user1, 2);
 
 		// add user to project team
-		project.addUserToProjectTeam(projectCollaborator);
+		project.addProjectCollaboratorToProjectTeam(projectCollaborator);
 
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
@@ -118,10 +118,10 @@ public class US207 {
 		taskRepository.addProjectTask(testTask);
 
 		// create task Worker
-		taskWorker = testTask.createTaskWorker(projectCollaborator);
+		taskWorker = testTask.createTaskCollaborator(projectCollaborator);
 
 		// Adds user1 to the Task
-		testTask.addUserToTask(taskWorker);
+		testTask.addTaskCollaboratorToTask(taskWorker);
 
 		// Updates the time spent on task by user
 		testTask.createReport(taskWorker);

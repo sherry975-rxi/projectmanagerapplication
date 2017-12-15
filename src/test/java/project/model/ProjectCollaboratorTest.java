@@ -39,15 +39,15 @@ public class ProjectCollaboratorTest {
 	@Test
 	public void testProjectCollaborator() {
 
-		assertTrue(testMoar.isCollaboratorInProject());
+		assertTrue(testMoar.isProjectCollaboratorActive());
 		testMoar.setState(false);
-		assertFalse(testMoar.isCollaboratorInProject());
+		assertFalse(testMoar.isProjectCollaboratorActive());
 		testMoar.setState(true);
-		assertTrue(testMoar.isCollaboratorInProject());
+		assertTrue(testMoar.isProjectCollaboratorActive());
 
 		assertEquals(testMoar.getCollaboratorCost(), 100000);
 
-		assertEquals(tester, testMoar.getCollaboratorUserData());
+		assertEquals(tester, testMoar.getUserFromProjectCollaborator());
 
 	}
 

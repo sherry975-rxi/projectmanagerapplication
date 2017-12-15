@@ -93,7 +93,7 @@ public class ReportTest {
 		report = new Report(taskWorker1);
 
 		// Compares the two values
-		assertEquals(report.getTaskWorker(), taskWorker1);
+		assertEquals(report.getTaskCollaborator(), taskWorker1);
 
 	}
 

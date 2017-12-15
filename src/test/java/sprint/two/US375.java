@@ -82,7 +82,7 @@ public class US375 {
 		projectCollaborator = project.createProjectCollaborator(user1, 2);
 
 		// add user to project team
-		project.addUserToProjectTeam(projectCollaborator);
+		project.addProjectCollaboratorToProjectTeam(projectCollaborator);
 
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
@@ -122,16 +122,16 @@ public class US375 {
 				10);
 
 		// create task Worker
-		taskWorker = testTask.createTaskWorker(projectCollaborator);
-		taskWorker1 = testTask2.createTaskWorker(projectCollaborator);
+		taskWorker = testTask.createTaskCollaborator(projectCollaborator);
+		taskWorker1 = testTask2.createTaskCollaborator(projectCollaborator);
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
 
 		// Adds user1 to the Task
-		testTask.addUserToTask(taskWorker);
-		testTask2.addUserToTask(taskWorker1);
+		testTask.addTaskCollaboratorToTask(taskWorker);
+		testTask2.addTaskCollaboratorToTask(taskWorker1);
 
 		// Creates a new list, and then added the tasks without any user assigned to
 		// them

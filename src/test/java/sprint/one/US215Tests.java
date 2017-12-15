@@ -76,8 +76,8 @@ public class US215Tests {
 		projectCollaborator2 = myProject.createProjectCollaborator(user2, 20);
 
 		// Add User to ProjectTeam
-		myProject.addUserToProjectTeam(projectCollaborator1);
-		myProject.addUserToProjectTeam(projectCollaborator2);
+		myProject.addProjectCollaboratorToProjectTeam(projectCollaborator1);
+		myProject.addProjectCollaboratorToProjectTeam(projectCollaborator2);
 
 		// Project 1 added to the project repository.
 		myCompany.getProjectsRepository().addProjectToProjectRepository(myProject);
@@ -104,8 +104,8 @@ public class US215Tests {
 		task4 = myProject.getTaskRepository().createTask("Task 4", 4, startCalendar, finishCalendar, 10);
 
 		// create task workers
-		taskWorker1 = task1.createTaskWorker(projectCollaborator1);
-		taskWorker2 = task2.createTaskWorker(projectCollaborator2);
+		taskWorker1 = task1.createTaskCollaborator(projectCollaborator1);
+		taskWorker2 = task2.createTaskCollaborator(projectCollaborator2);
 
 		// Add Tasks to project
 		myProject.getTaskRepository().addProjectTask(task1);
@@ -114,10 +114,10 @@ public class US215Tests {
 		myProject.getTaskRepository().addProjectTask(task4);
 
 		// Associates users to tasks
-		task1.addUserToTask(taskWorker1);
-		task2.addUserToTask(taskWorker1);
-		task3.addUserToTask(taskWorker1);
-		task4.addUserToTask(taskWorker1);
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
+		task3.addTaskCollaboratorToTask(taskWorker1);
+		task4.addTaskCollaboratorToTask(taskWorker1);
 
 		// Tasks were marked as Finished
 		task1.markTaskAsFinished();
@@ -153,7 +153,7 @@ public class US215Tests {
 		double expectTotalTime = task2.getTimeSpentByProjectCollaboratorOntask(projectCollaborator1)
 				+ task3.getTimeSpentByProjectCollaboratorOntask(projectCollaborator1);
 
-		assertEquals(expectTotalTime, myCompany.getProjectsRepository().getTotalTimeLastMonthFinishedTasksByUser(user1),
+		assertEquals(expectTotalTime, myCompany.getProjectsRepository().getTotalTimeOfFinishedTasksFromUserLastMonth(user1),
 				0.000000001);
 
 	}

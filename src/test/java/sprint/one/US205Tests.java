@@ -98,8 +98,8 @@ public class US205Tests {
 				10);
 
 		// Creates 2 Task Workers
-		taskWorker1 = testTask.createTaskWorker(projectUser1);
-		taskWorker2 = testTask2.createTaskWorker(projectUser2);
+		taskWorker1 = testTask.createTaskCollaborator(projectUser1);
+		taskWorker2 = testTask2.createTaskCollaborator(projectUser2);
 
 		typeOfUser = 1;
 	}
@@ -130,15 +130,15 @@ public class US205Tests {
 	public void testMarkTaskAsCompleted() {
 
 		// Adds users to the respective tasks
-		testTask.addUserToTask(taskWorker1);
-		testTask2.addUserToTask(taskWorker2);
+		testTask.addTaskCollaboratorToTask(taskWorker1);
+		testTask2.addTaskCollaboratorToTask(taskWorker2);
 
 		// Marks testTask as finished
 		testTask.markTaskAsFinished();
 
 		// Asserts if testTask is cleared, and testTask2 isn't
-		assertTrue(testTask.isFinished());
-		assertFalse(testTask2.isFinished());
+		assertTrue(testTask.isTaskFinished());
+		assertFalse(testTask2.isTaskFinished());
 
 	}
 

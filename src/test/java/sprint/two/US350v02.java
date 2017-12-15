@@ -77,7 +77,7 @@ public class US350v02 {
 		// create the project and set a user to Project manager
 		p1 = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
 		p1.getProjectTeam().clear();
-		p1.getTaskRepository().getProjectTaskList().clear();
+		p1.getTaskRepository().getProjectTaskRepository().clear();
 	}
 
 	@After
@@ -104,9 +104,9 @@ public class US350v02 {
 		ProjectCollaborator collaborattor3 = p1.createProjectCollaborator(u5, 150);
 
 		// add collaborators to project
-		p1.addUserToProjectTeam(collaborattor1);
-		p1.addUserToProjectTeam(collaborattor2);
-		p1.addUserToProjectTeam(collaborattor3);
+		p1.addProjectCollaboratorToProjectTeam(collaborattor1);
+		p1.addProjectCollaboratorToProjectTeam(collaborattor2);
+		p1.addProjectCollaboratorToProjectTeam(collaborattor3);
 
 		// add project to the Company Project list
 		c1.getProjectsRepository().addProjectToProjectRepository(p1);

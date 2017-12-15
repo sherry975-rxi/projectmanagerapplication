@@ -7,13 +7,14 @@ public class ProjectCollaborator {
 	private int costPerEffort;
 
 	/**
-	 * Constructor of the class ProjectCollaborator. This contains a collaborator's
-	 * user data, their status on the project, and their cost per effort.
+	 * Constructor of the class ProjectCollaborator. This contains a Project
+	 * Collaborator's user data, their status on the project, and their cost per
+	 * effort.
 	 * 
 	 * @param collab
-	 *            the collaborator's user data
+	 *            the Project Collaborator's user data
 	 * @param cost
-	 *            how much the collaborator costs per unit of effort
+	 *            how much the Project Collaborator costs per unit of effort
 	 */
 
 	public ProjectCollaborator(User collab, int costPerEffort) {
@@ -23,26 +24,28 @@ public class ProjectCollaborator {
 	}
 
 	/**
-	 * This method sets the Collaborator as working or not working on the project.
+	 * This method sets the Project Collaborator as working or not working on the
+	 * project.
 	 * 
 	 * @param status
-	 *            determines whether the collaborator is still working on the
-	 *            project (true by default)
+	 *            determines whether the Project Collaborator is still working on
+	 *            the project (true by default)
 	 */
 	public void setState(boolean status) {
 		this.status = status;
 	}
 
 	/**
-	 * This method views whether the Collaborator is working or not on the project
+	 * This method views whether the Project Collaborator is working or not on the
+	 * project
 	 * 
 	 */
-	public boolean isCollaboratorInProject() { // REFACTOR TO isProjectCollaboratorActive
+	public boolean isProjectCollaboratorActive() {
 		return this.status;
 	}
 
 	/**
-	 * This method views the Collaborator's cost per effort unit
+	 * This method views the Project Collaborator's cost per effort unit
 	 * 
 	 */
 	public int getCollaboratorCost() {
@@ -50,11 +53,12 @@ public class ProjectCollaborator {
 	}
 
 	/**
-	 * This method views the Collaborator's User Data. THIS METHOD WILL BE PURGED
+	 * This method views the Project Collaborator's User Data. THIS METHOD WILL BE
+	 * PURGED
 	 * 
 	 * @return Returns the User Data
 	 */
-	public User getCollaboratorUserData() {
+	public User getUserFromProjectCollaborator() {
 		return this.collaborator;
 	}
 

@@ -70,7 +70,7 @@ public class US204Tests {
 		projCollab1 = project1.createProjectCollaborator(newUserA, 250);
 		projCollab2 = project1.createProjectCollaborator(newUserB, 250);
 
-		taskWorker1 = taskA.createTaskWorker(projCollab1);
+		taskWorker1 = taskA.createTaskCollaborator(projCollab1);
 
 	}
 
@@ -124,8 +124,8 @@ public class US204Tests {
 
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
 
-		project1.addUserRToProjectTeam(newUserB, 10);
-		project1.addUserRToProjectTeam(newUserA, 10);
+		project1.addUserToProjectTeam(newUserB, 10);
+		project1.addUserToProjectTeam(newUserA, 10);
 
 		project1.getTaskRepository().addProjectTask(taskA);
 		project1.getTaskRepository().addProjectTask(taskB);
@@ -134,8 +134,8 @@ public class US204Tests {
 		assertTrue(project1.containsUser(newUserB));
 
 		// assigns both tasks to User 3 then checks their unfinished task list
-		taskA.addUserToTask(taskWorker1);
-		taskB.addUserToTask(taskWorker1);
+		taskA.addTaskCollaboratorToTask(taskWorker1);
+		taskB.addTaskCollaboratorToTask(taskWorker1);
 
 		List<Task> testList = new ArrayList<Task>();
 		testList.add(taskA);
@@ -143,8 +143,8 @@ public class US204Tests {
 		assertEquals(myCompany.getProjectsRepository().getUnfinishedUserTaskList(newUserA), testList);
 
 		// tests taskTeamContainsUser method
-		assertTrue(taskA.taskTeamContainsUser(projCollab1));
-		assertFalse(taskA.taskTeamContainsUser(projCollab2));
+		assertTrue(taskA.isProjectCollaboratorInTaskTeam(projCollab1));
+		assertFalse(taskA.isProjectCollaboratorInTaskTeam(projCollab2));
 
 	}
 

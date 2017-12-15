@@ -181,7 +181,7 @@ public class User {
 	 * 
 	 * @return the SystemUserState. True if is active, false if not.
 	 */
-	public boolean isSystemUserStateActive() {
+	public boolean isUserActive() {
 		return this.systemUserStateActive;
 	}
 
@@ -192,7 +192,7 @@ public class User {
 	 *            State of the user to be set
 	 * 
 	 */
-	public void setSystemUserState(Boolean state) {
+	public void setUserState(Boolean state) {
 
 		this.systemUserStateActive = state;
 

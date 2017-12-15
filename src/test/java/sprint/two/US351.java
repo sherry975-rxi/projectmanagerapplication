@@ -36,7 +36,7 @@ public class US351 {
 				myComp.getProjectsRepository().createProject("myProj", "dis ma project", user1));
 		proj1 = myComp.getProjectsRepository().getAllProjects().get(0);
 		// add user to project as project collaborator
-		proj1.addUserRToProjectTeam(user2, 5);
+		proj1.addUserToProjectTeam(user2, 5);
 	}
 
 	@After
@@ -50,7 +50,7 @@ public class US351 {
 	@Test
 	public final void testRemoveProjectCollaborator() {
 		assertTrue(proj1.isUserActiveInProject(user2));
-		proj1.removeCollaboratorFromProjectTeam(user2);
+		proj1.removeProjectCollaboratorFromProjectTeam(user2);
 		assertFalse(proj1.isUserActiveInProject(user2));
 
 	}

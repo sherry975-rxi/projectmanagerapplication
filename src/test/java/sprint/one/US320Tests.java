@@ -89,11 +89,11 @@ public class US320Tests {
 		projectCollaborator = project5.createProjectCollaborator(user1, 2);
 
 		// add user to project team
-		project1.addUserToProjectTeam(projectCollaborator);
-		project2.addUserToProjectTeam(projectCollaborator);
-		project3.addUserToProjectTeam(projectCollaborator);
-		project4.addUserToProjectTeam(projectCollaborator);
-		project5.addUserToProjectTeam(projectCollaborator);
+		project1.addProjectCollaboratorToProjectTeam(projectCollaborator);
+		project2.addProjectCollaboratorToProjectTeam(projectCollaborator);
+		project3.addProjectCollaboratorToProjectTeam(projectCollaborator);
+		project4.addProjectCollaboratorToProjectTeam(projectCollaborator);
+		project5.addProjectCollaboratorToProjectTeam(projectCollaborator);
 
 		// Creates a new list and adds projects to that list, to compare with
 		// projectList

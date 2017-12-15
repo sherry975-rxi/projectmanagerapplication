@@ -94,9 +94,9 @@ public class US350Tests {
 	public void test() {
 
 		// add collaborators to project
-		p1.addUserToProjectTeam(p1.createProjectCollaborator(u3, 50));
-		p1.addUserToProjectTeam(p1.createProjectCollaborator(u4, 50));
-		p1.addUserToProjectTeam(p1.createProjectCollaborator(u5, 50));
+		p1.addProjectCollaboratorToProjectTeam(p1.createProjectCollaborator(u3, 50));
+		p1.addProjectCollaboratorToProjectTeam(p1.createProjectCollaborator(u4, 50));
+		p1.addProjectCollaboratorToProjectTeam(p1.createProjectCollaborator(u5, 50));
 
 		// Creates a new list and adds user to that list, to compare with userList
 		// inside ProjectTeam

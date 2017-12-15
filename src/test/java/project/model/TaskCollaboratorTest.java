@@ -54,7 +54,7 @@ public class TaskCollaboratorTest {
 	 */
 	@Test
 	public final void testUserInformationInTaskWorker() {
-		assertEquals(userTester, workerTester.getTaskWorker());
+		assertEquals(userTester, workerTester.getTaskCollaborator());
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class TaskCollaboratorTest {
 	 */
 	@Test
 	public final void testGetTaskWorker() {
-		assertEquals(userTester, workerTester.getTaskWorker());
+		assertEquals(userTester, workerTester.getTaskCollaborator());
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class TaskCollaboratorTest {
 	 */
 	@Test
 	public final void testGeProjectCollaborator() {
-		assertEquals(collabTester, workerTester.getProjectCollaboratorFromTaskWorker());
+		assertEquals(collabTester, workerTester.getProjectCollaboratorFromTaskCollaborator());
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class TaskCollaboratorTest {
 	 */
 	@Test
 	public final void testIsCollaboratorInTask() {
-		assertTrue(workerTester.isTaskWorkerActiveInTask());
+		assertTrue(workerTester.isTaskCollaboratorActiveInTask());
 	}
 
 	/**
@@ -86,8 +86,8 @@ public class TaskCollaboratorTest {
 	 */
 	@Test
 	public final void testIsCollaboratorNotInTask() {
-		workerTester.addFinishDateForTaskWorker();
-		assertFalse(workerTester.isTaskWorkerActiveInTask());
+		workerTester.addFinishDateForTaskCollaborator();
+		assertFalse(workerTester.isTaskCollaboratorActiveInTask());
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class TaskCollaboratorTest {
 	@Test
 	public final void testGetFinishDate() {
 
-		workerTester.addFinishDateForTaskWorker();
+		workerTester.addFinishDateForTaskCollaborator();
 		finishDate = Calendar.getInstance();
 		assertTrue(workerTester.getFinishDate().equals(finishDate));
 
@@ -108,7 +108,7 @@ public class TaskCollaboratorTest {
 	@Test
 	public final void isTaskWorkerActiveInTask_true() {
 
-		assertTrue(workerTester.isTaskWorkerActiveInTask());
+		assertTrue(workerTester.isTaskCollaboratorActiveInTask());
 	}
 
 	/**
@@ -118,9 +118,9 @@ public class TaskCollaboratorTest {
 	public final void isTaskWorkerActiveInTask_false() {
 
 		task1.getTaskTeam().add(workerTester);
-		workerTester.addFinishDateForTaskWorker();
+		workerTester.addFinishDateForTaskCollaborator();
 
-		assertFalse(workerTester.isTaskWorkerActiveInTask());
+		assertFalse(workerTester.isTaskCollaboratorActiveInTask());
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class TaskCollaboratorTest {
 	@Test
 	public final void isProjectCollaboratorInTaskWorker_true() {
 
-		assertTrue(workerTester.isProjectCollaboratorInTaskWorker(collabTester));
+		assertTrue(workerTester.isProjectCollaboratorInTaskCollaborator(collabTester));
 
 	}
 
@@ -139,7 +139,7 @@ public class TaskCollaboratorTest {
 	@Test
 	public final void isProjectCollaboratorInTaskWorker_false() {
 
-		assertFalse(workerTester.isProjectCollaboratorInTaskWorker(collabTester2));
+		assertFalse(workerTester.isProjectCollaboratorInTaskCollaborator(collabTester2));
 
 	}
 
@@ -157,7 +157,7 @@ public class TaskCollaboratorTest {
 		userTester.setEmail(newEmail);
 
 		assertEquals(newEmail,
-				workerTester.getProjectCollaboratorFromTaskWorker().getCollaboratorUserData().getEmail());
+				workerTester.getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail());
 
 	}
 
@@ -169,11 +169,11 @@ public class TaskCollaboratorTest {
 	public final void testOverrideEquals() {
 		assertTrue(workerTester.equals(workerTester));// same TaskCollaborator
 		assertFalse(workerTester.equals(workerTester2));// different user
-		workerTester3.addFinishDateForTaskWorker();
+		workerTester3.addFinishDateForTaskCollaborator();
 		assertFalse(workerTester2.equals(workerTester3));// same user, one finished and one active
 		assertFalse(workerTester3.equals(workerTester2));// same user, one finished and one active
 		assertTrue(workerTester3.equals(workerTester3));// same user with same finish date
-		workerTester2.addFinishDateForTaskWorker();
+		workerTester2.addFinishDateForTaskCollaborator();
 		workerTester2.getFinishDate().add(Calendar.DAY_OF_MONTH, -5);
 		assertFalse(workerTester3.equals(workerTester2));// same user with different finish date
 		TaskCollaborator workerTester4 = null;

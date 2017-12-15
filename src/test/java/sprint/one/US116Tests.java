@@ -37,8 +37,8 @@ public class US116Tests {
 		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
 		myCompany.getUsersRepository().addUserToUserRepository(newUser3);
 
-		newUser2.setSystemUserState(false);
-		newUser3.setSystemUserState(true);
+		newUser2.setUserState(false);
+		newUser3.setUserState(true);
 	}
 
 	@After
@@ -54,12 +54,12 @@ public class US116Tests {
 	 */
 	@Test
 	public void testSetSystemUserState() {
-		assertFalse(newUser2.isSystemUserStateActive());
-		assertTrue(newUser3.isSystemUserStateActive());
+		assertFalse(newUser2.isUserActive());
+		assertTrue(newUser3.isUserActive());
 
-		newUser2.setSystemUserState(true);
+		newUser2.setUserState(true);
 
-		assertTrue(newUser2.isSystemUserStateActive());
+		assertTrue(newUser2.isUserActive());
 	}
 
 }

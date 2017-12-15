@@ -111,10 +111,10 @@ public class US390 {
 		projectUser3 = project.createProjectCollaborator(user3, 5);
 		projectUser4 = project.createProjectCollaborator(user4, 3);
 
-		project.addUserToProjectTeam(projectUser1);
-		project.addUserToProjectTeam(projectUser2);
-		project.addUserToProjectTeam(projectUser3);
-		project.addUserToProjectTeam(projectUser4);
+		project.addProjectCollaboratorToProjectTeam(projectUser1);
+		project.addProjectCollaboratorToProjectTeam(projectUser2);
+		project.addProjectCollaboratorToProjectTeam(projectUser3);
+		project.addProjectCollaboratorToProjectTeam(projectUser4);
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -142,10 +142,10 @@ public class US390 {
 		taskRepository.addProjectTask(testTask2);
 
 		// Creates 4 Task Workers
-		taskWorker1 = testTask.createTaskWorker(projectUser1);
-		taskWorker2 = testTask2.createTaskWorker(projectUser2);
-		taskWorker3 = testTask.createTaskWorker(projectUser3);
-		taskWorker4 = testTask2.createTaskWorker(projectUser4);
+		taskWorker1 = testTask.createTaskCollaborator(projectUser1);
+		taskWorker2 = testTask2.createTaskCollaborator(projectUser2);
+		taskWorker3 = testTask.createTaskCollaborator(projectUser3);
+		taskWorker4 = testTask2.createTaskCollaborator(projectUser4);
 
 		// create variable to calculate total cost reported to project
 		totalCost = 0.0;
@@ -182,10 +182,10 @@ public class US390 {
 	public void testUS390() {
 
 		// Adds users to the respective tasks
-		testTask.addUserToTask(taskWorker1);
-		testTask.addUserToTask(taskWorker2);
-		testTask2.addUserToTask(taskWorker3);
-		testTask2.addUserToTask(taskWorker4);
+		testTask.addTaskCollaboratorToTask(taskWorker1);
+		testTask.addTaskCollaboratorToTask(taskWorker2);
+		testTask2.addTaskCollaboratorToTask(taskWorker3);
+		testTask2.addTaskCollaboratorToTask(taskWorker4);
 		// Task worker sets the hours spent on the task
 		testTask.createReport(taskWorker1);
 		testTask.getReports().get(0).setReportedTime(5);
@@ -200,22 +200,22 @@ public class US390 {
 		// spent times the cost of the TaskWorker
 
 		totalCost += testTask.getReports().get(0).getReportedTime()
-				* taskWorker1.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+				* taskWorker1.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
 		totalCost += testTask.getReports().get(1).getReportedTime()
-				* taskWorker2.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+				* taskWorker2.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
 		totalCost += testTask2.getReports().get(0).getReportedTime()
-				* taskWorker3.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+				* taskWorker3.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
 		totalCost += testTask2.getReports().get(1).getReportedTime()
-				* taskWorker4.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+				* taskWorker4.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
 
 		// Compares the 2 values
 		assertEquals(totalCost, project.getTotalCostReportedToProjectUntilNow(), 0.01);
 
 		// removes two users and adds them again with a different cost
-		project.removeCollaboratorFromProjectTeam(user1);
-		project.removeCollaboratorFromProjectTeam(user2);
-		project.addUserRToProjectTeam(user1, 100);
-		project.addUserRToProjectTeam(user2, 200);
+		project.removeProjectCollaboratorFromProjectTeam(user1);
+		project.removeProjectCollaboratorFromProjectTeam(user2);
+		project.addUserToProjectTeam(user1, 100);
+		project.addUserToProjectTeam(user2, 200);
 
 		// Confirms that total cost remains unchanged after some collaborators get a
 		// raise

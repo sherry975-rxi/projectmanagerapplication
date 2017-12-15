@@ -142,7 +142,7 @@ public class US340 {
 		taskListToCompare.add(testTask4);
 
 		// See if the two lists have the same tasks
-		assertEquals(taskRepository.getProjectTaskList(), taskListToCompare);
+		assertEquals(taskRepository.getProjectTaskRepository(), taskListToCompare);
 
 	}
 }
