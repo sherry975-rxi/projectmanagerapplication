@@ -58,7 +58,7 @@ public class Project {
 		this.startdate = null;
 		this.finishdate = null;
 		this.taskRepository = new TaskRepository(projectIdCode);
-		this.projectTeam = new ArrayList<ProjectCollaborator>();
+		this.projectTeam = new ArrayList<>();
 	}
 
 	/**
@@ -333,7 +333,7 @@ public class Project {
 
 	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() { // REFACTOR TO
 																		// getProjectCollaboratorsWithoutTasksAssigned
-		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<ProjectCollaborator>();
+		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
 		inactiveCollaborators.addAll(this.getProjectTeam());
 		for (ProjectCollaborator other : this.getProjectTeam()) {
 			if (this.taskRepository.isCollaboratorActiveOnTasks(other)) // needs to check if

@@ -47,8 +47,8 @@ public class Task {
 		this.startDate = null;
 		this.finishDate = null;
 		this.taskState = false;
-		this.taskTeam = new ArrayList<TaskCollaborator>();
-		this.reports = new ArrayList<Report>();
+		this.taskTeam = new ArrayList<>();
+		this.reports = new ArrayList<>();
 		this.estimatedTaskEffort = estimatedTaskEffort;
 		this.estimatedTaskStartDate = estimatedTaskStartDate;
 		this.taskDeadline = taskDeadline;
@@ -647,7 +647,7 @@ public class Task {
 	 */
 	public List<TaskCollaborator> copyListOfUsersInTask(List<TaskCollaborator> emptyListOfUsersInTask) {
 
-		emptyListOfUsersInTask = new ArrayList<TaskCollaborator>();
+		emptyListOfUsersInTask = new ArrayList<>();
 
 		for (int iUser = 0; iUser < this.getTaskTeam().size(); iUser++) {
 			emptyListOfUsersInTask.add(this.getTaskTeam().get(iUser));
