@@ -40,7 +40,7 @@ public class ProjectRepositoryTest {
 		projectRepository = new ProjectRepository();
 		user1 = new User("name", "email", "idNumber", "function", "123456789");
 		user2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
-		user2 = new User("name6", "email6", "idNumber6", "function6", "987654271");
+		user3 = new User("name6", "email6", "idNumber6", "function6", "987654271");
 		collab1 = new ProjectCollaborator(user1, 1);
 		collab2 = new ProjectCollaborator(user2, 2);
 		collab3 = new ProjectCollaborator(user3, 3);
@@ -354,10 +354,13 @@ public class ProjectRepositoryTest {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		double expResult = (task1.getTimeSpentByProjectCollaboratorOntask(collab1)
-				+ task2.getTimeSpentByProjectCollaboratorOntask(collab1));
+		task1.createReport(taskWorker1);
+		task2.createReport(taskWorker1);
 
-		assertEquals(expResult, projectRepository.getTotalTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
+		task1.getReports().get(0).setReportedTime(5);
+		task2.getReports().get(0).setReportedTime(10);
+
+		assertEquals(15.0, projectRepository.getTotalTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
 
 	/**

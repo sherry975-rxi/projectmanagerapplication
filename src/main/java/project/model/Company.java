@@ -27,7 +27,7 @@ public final class Company {
 	 * 
 	 * @return the only instance of Company that the program is allowed to have
 	 */
-	public synchronized static Company getTheInstance() {
+	public static synchronized Company getTheInstance() {
 		if (_theInstance == null)
 			_theInstance = new Company();
 
@@ -37,7 +37,7 @@ public final class Company {
 	/**
 	 * This method clears the Company.
 	 */
-	public void clear() {
+	public static void clear() {
 
 		_theInstance = null;
 
