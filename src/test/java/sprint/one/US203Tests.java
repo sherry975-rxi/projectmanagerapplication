@@ -15,7 +15,7 @@ import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
-import project.model.TaskWorker;
+import project.model.TaskCollaborator;
 import project.model.User;
 
 public class US203Tests {
@@ -46,8 +46,8 @@ public class US203Tests {
 	ProjectCollaborator projCollab1;
 	ProjectCollaborator projCollab2;
 	ProjectCollaborator projCollab3;
-	TaskWorker taskWorker1;
-	TaskWorker taskWorker2;
+	TaskCollaborator taskWorker1;
+	TaskCollaborator taskWorker2;
 	Project project1;
 	Task task1;
 	Task task2;

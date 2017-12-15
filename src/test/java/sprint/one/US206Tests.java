@@ -18,7 +18,7 @@ import project.model.ProjectCollaborator;
 import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskRepository;
-import project.model.TaskWorker;
+import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.UserRepository;
 
@@ -42,9 +42,9 @@ public class US206Tests {
 	Task testTask;
 	Task testTask2;
 	int typeOfUser;
-	TaskWorker taskWorker1;
-	TaskWorker taskWorker2;
-	List<TaskWorker> listToCompare;
+	TaskCollaborator taskWorker1;
+	TaskCollaborator taskWorker2;
+	List<TaskCollaborator> listToCompare;
 
 	@Before
 	public void setUp() {
@@ -102,7 +102,7 @@ public class US206Tests {
 
 		// Creates a new list to Compare with the list of taskWorkes that is obtained by
 		// the method in Task Class
-		listToCompare = new ArrayList<TaskWorker>();
+		listToCompare = new ArrayList<TaskCollaborator>();
 
 		typeOfUser = 1;
 	}

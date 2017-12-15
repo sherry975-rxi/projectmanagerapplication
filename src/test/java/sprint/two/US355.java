@@ -17,7 +17,7 @@ import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
-import project.model.TaskWorker;
+import project.model.TaskCollaborator;
 import project.model.User;
 
 public class US355 {
@@ -173,8 +173,8 @@ public class US355 {
 	public void US355_TwoUsersOnTasks() {
 
 		// adds collaborator 1 and 2 to Tasks
-		TaskWorker testTaskCollaborator1 = testTask.createTaskWorker(collaborator1);
-		TaskWorker testTask2Collaborator2 = testTask.createTaskWorker(collaborator2);
+		TaskCollaborator testTaskCollaborator1 = testTask.createTaskWorker(collaborator1);
+		TaskCollaborator testTask2Collaborator2 = testTask.createTaskWorker(collaborator2);
 		testTask.addUserToTask(testTaskCollaborator1);
 		testTask2.addUserToTask(testTask2Collaborator2);
 
@@ -196,8 +196,8 @@ public class US355 {
 	public void US355_UserRemovedFromTask() {
 
 		// adds collaborator 1 and 2 to Tasks
-		TaskWorker testTaskCollaborator1 = testTask.createTaskWorker(collaborator1);
-		TaskWorker testTask2Collaborator2 = testTask.createTaskWorker(collaborator2);
+		TaskCollaborator testTaskCollaborator1 = testTask.createTaskWorker(collaborator1);
+		TaskCollaborator testTask2Collaborator2 = testTask.createTaskWorker(collaborator2);
 		testTask.addUserToTask(testTaskCollaborator1);
 		testTask2.addUserToTask(testTask2Collaborator2);
 		testTask2.removeUserFromTask(collaborator2);

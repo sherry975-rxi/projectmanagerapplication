@@ -17,7 +17,7 @@ import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
-import project.model.TaskWorker;
+import project.model.TaskCollaborator;
 import project.model.User;
 
 public class US204Tests {
@@ -40,7 +40,7 @@ public class US204Tests {
 	Task taskB;
 	ProjectCollaborator projCollab1;
 	ProjectCollaborator projCollab2;
-	TaskWorker taskWorker1;
+	TaskCollaborator taskWorker1;
 
 	@Before
 	public void setUp() {

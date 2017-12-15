@@ -15,7 +15,7 @@ import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
-import project.model.TaskWorker;
+import project.model.TaskCollaborator;
 import project.model.User;
 
 public class US211Tests {
@@ -115,10 +115,10 @@ public class US211Tests {
 	@Test
 	public void test() {
 
-		TaskWorker Task1CollaboratorB = testTask.createTaskWorker(newCollaboratorB);
-		TaskWorker Task2CollaboratorB = testTask2.createTaskWorker(newCollaboratorB);
-		TaskWorker Task3CollaboratorB = testTask3.createTaskWorker(newCollaboratorB);
-		TaskWorker Task4CollaboratorB = testTask4.createTaskWorker(newCollaboratorB);
+		TaskCollaborator Task1CollaboratorB = testTask.createTaskWorker(newCollaboratorB);
+		TaskCollaborator Task2CollaboratorB = testTask2.createTaskWorker(newCollaboratorB);
+		TaskCollaborator Task3CollaboratorB = testTask3.createTaskWorker(newCollaboratorB);
+		TaskCollaborator Task4CollaboratorB = testTask4.createTaskWorker(newCollaboratorB);
 
 		testTask.addUserToTask(Task1CollaboratorB);
 		testTask2.addUserToTask(Task2CollaboratorB);

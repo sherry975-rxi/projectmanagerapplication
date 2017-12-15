@@ -30,8 +30,8 @@ public class ProjectTest {
 	Task task2;
 	Task task3;
 	Task task4;
-	TaskWorker taskWorker1;
-	TaskWorker taskWorker2;
+	TaskCollaborator taskWorker1;
+	TaskCollaborator taskWorker2;
 	Project p1;
 	Project p2;
 	TaskRepository taskRepository;
@@ -50,8 +50,8 @@ public class ProjectTest {
 		projectCollaborator3 = new ProjectCollaborator(user3, 1200);
 		projectCollaborator4 = new ProjectCollaborator(user4, 1200);
 		// create task worker
-		taskWorker1 = new TaskWorker(projectCollaborator1);
-		taskWorker2 = new TaskWorker(projectCollaborator2);
+		taskWorker1 = new TaskCollaborator(projectCollaborator1);
+		taskWorker2 = new TaskCollaborator(projectCollaborator2);
 		// create project
 		p1 = new Project(1, "name3", "description4", user1);
 		p2 = new Project(2, "name1", "description4", user2);

@@ -15,7 +15,7 @@ public class ReportTest {
 	Calendar estimatedStartDate;
 	Calendar taskDeadline;
 	Task t1;
-	TaskWorker taskWorker1;
+	TaskCollaborator taskWorker1;
 	Project p1;
 	TaskRepository taskRepository;
 	Report report;
@@ -26,7 +26,7 @@ public class ReportTest {
 
 		u1 = new User("name", "email", "idNumber", "function", "123456789");
 		projectCollaborator1 = new ProjectCollaborator(u1, 1200);
-		taskWorker1 = new TaskWorker(projectCollaborator1);
+		taskWorker1 = new TaskCollaborator(projectCollaborator1);
 		p1 = new Project(1, "name3", "description4", u1);
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);

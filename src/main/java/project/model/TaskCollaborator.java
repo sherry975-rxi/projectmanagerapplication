@@ -2,7 +2,7 @@ package project.model;
 
 import java.util.Calendar;
 
-public class TaskWorker {
+public class TaskCollaborator {
 
 	private ProjectCollaborator projCollaborator;
 	private Calendar startDate;
@@ -21,7 +21,7 @@ public class TaskWorker {
 	 * @param projCollaborator
 	 *            projectCollaborator to create the new TaskWorker
 	 */
-	public TaskWorker(ProjectCollaborator projCollaborator) {
+	public TaskCollaborator(ProjectCollaborator projCollaborator) {
 		this.projCollaborator = projCollaborator;
 		this.startDate = Calendar.getInstance();
 		this.finishDate = null;
@@ -119,7 +119,7 @@ public class TaskWorker {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TaskWorker other = (TaskWorker) obj;
+		TaskCollaborator other = (TaskCollaborator) obj;
 		if (finishDate == null) {
 			if (other.finishDate != null)
 				return false;

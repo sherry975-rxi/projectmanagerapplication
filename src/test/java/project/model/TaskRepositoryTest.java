@@ -18,8 +18,8 @@ public class TaskRepositoryTest {
 	User user1;
 	User userAdmin;
 	User user2;
-	TaskWorker taskWorker1;
-	TaskWorker taskWorker2;
+	TaskCollaborator taskWorker1;
+	TaskCollaborator taskWorker2;
 	ProjectCollaborator collab1;
 	ProjectCollaborator collab2;
 	Project project;
@@ -55,8 +55,8 @@ public class TaskRepositoryTest {
 		collab1 = new ProjectCollaborator(user1, 2);
 		collab2 = new ProjectCollaborator(user2, 3);
 		// create task workers
-		taskWorker1 = new TaskWorker(collab1);
-		taskWorker2 = new TaskWorker(collab2);
+		taskWorker1 = new TaskCollaborator(collab1);
+		taskWorker2 = new TaskCollaborator(collab2);
 		// add user to user list
 		userRepository.addUserToUserRepository(user1);
 		userRepository.addUserToUserRepository(user2);

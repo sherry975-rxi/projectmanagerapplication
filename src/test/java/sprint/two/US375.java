@@ -17,7 +17,7 @@ import project.model.ProjectCollaborator;
 import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskRepository;
-import project.model.TaskWorker;
+import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.UserRepository;
 
@@ -41,8 +41,8 @@ public class US375 {
 	Task testTask;
 	Task testTask2;
 	ProjectCollaborator projectCollaborator;
-	TaskWorker taskWorker;
-	TaskWorker taskWorker1;
+	TaskCollaborator taskWorker;
+	TaskCollaborator taskWorker1;
 
 	@Before
 	public void setUp() {

@@ -16,7 +16,7 @@ public class Task {
 
 	private String taskID;
 	private String description;
-	private List<TaskWorker> taskTeam;
+	private List<TaskCollaborator> taskTeam;
 	private List<Report> reports;
 	private Calendar creationDate;
 	private Calendar startDate;
@@ -47,7 +47,7 @@ public class Task {
 		this.startDate = null;
 		this.finishDate = null;
 		this.taskState = false;
-		this.taskTeam = new ArrayList<TaskWorker>();
+		this.taskTeam = new ArrayList<TaskCollaborator>();
 		this.reports = new ArrayList<Report>();
 		this.estimatedTaskEffort = estimatedTaskEffort;
 		this.estimatedTaskStartDate = estimatedTaskStartDate;
@@ -215,7 +215,7 @@ public class Task {
 	 * 
 	 * @return taskTeam List of assigned users to a certain Task
 	 */
-	public List<TaskWorker> getTaskTeam() {
+	public List<TaskCollaborator> getTaskTeam() {
 		return taskTeam;
 	}
 
@@ -268,7 +268,7 @@ public class Task {
 	 * 
 	 * 
 	 */
-	public void addUserToTask(TaskWorker taskWorkerOfAProjCollab) { // REFACTOR TO ASSOCIATETASKWORKERTOTASK
+	public void addUserToTask(TaskCollaborator taskWorkerOfAProjCollab) { // REFACTOR TO ASSOCIATETASKWORKERTOTASK
 		if (!taskTeamContainsUser(taskWorkerOfAProjCollab.getProjectCollaboratorFromTaskWorker())) {
 			this.taskTeam.add(taskWorkerOfAProjCollab);
 		} else if (!taskTeamUserIsActive(taskWorkerOfAProjCollab.getProjectCollaboratorFromTaskWorker())) {
@@ -284,9 +284,9 @@ public class Task {
 	 * 
 	 * @return TaskWorker
 	 */
-	public TaskWorker createTaskWorker(ProjectCollaborator projCollaborator) {
+	public TaskCollaborator createTaskWorker(ProjectCollaborator projCollaborator) {
 
-		TaskWorker taskWorker = new TaskWorker(projCollaborator);
+		TaskCollaborator taskWorker = new TaskCollaborator(projCollaborator);
 
 		return taskWorker;
 	}
@@ -299,7 +299,7 @@ public class Task {
 	 * 
 	 * @return report
 	 */
-	public void createReport(TaskWorker taskWorker) {
+	public void createReport(TaskCollaborator taskWorker) {
 
 		Report report = new Report(taskWorker);
 		this.reports.add(report);
@@ -315,7 +315,7 @@ public class Task {
 	 * 
 	 */
 	public void removeUserFromTask(ProjectCollaborator projCollaborator) {
-		for (TaskWorker other : taskTeam) {
+		for (TaskCollaborator other : taskTeam) {
 			if (other.getProjectCollaboratorFromTaskWorker().equals(projCollaborator)
 					&& (other.isTaskWorkerActiveInTask())) {
 				other.addFinishDateForTaskWorker();
@@ -612,7 +612,7 @@ public class Task {
 	 *         team does not have the Project Collaborator to check
 	 */
 	public boolean taskTeamContainsUser(ProjectCollaborator projCollaborator) {
-		for (TaskWorker other : taskTeam) {
+		for (TaskCollaborator other : taskTeam) {
 			if (other.getProjectCollaboratorFromTaskWorker().equals(projCollaborator)) {
 				return true;
 			}
@@ -630,7 +630,7 @@ public class Task {
 	 *         team does not have the Project Collaborator active
 	 */
 	public boolean taskTeamUserIsActive(ProjectCollaborator projCollaborator) {
-		for (TaskWorker other : taskTeam) {
+		for (TaskCollaborator other : taskTeam) {
 			if (other.getTaskWorker().equals(projCollaborator.getCollaboratorUserData())) {
 				if (other.isTaskWorkerActiveInTask()) {
 					return true;
@@ -648,9 +648,9 @@ public class Task {
 	 *            Empty list that will be filled with the users from another task.
 	 * @return Returns a list of users copied from another task.
 	 */
-	public List<TaskWorker> copyListOfUsersInTask(List<TaskWorker> emptyListOfUsersInTask) {
+	public List<TaskCollaborator> copyListOfUsersInTask(List<TaskCollaborator> emptyListOfUsersInTask) {
 
-		emptyListOfUsersInTask = new ArrayList<TaskWorker>();
+		emptyListOfUsersInTask = new ArrayList<TaskCollaborator>();
 
 		for (int iUser = 0; iUser < this.getTaskTeam().size(); iUser++) {
 			emptyListOfUsersInTask.add(this.getTaskTeam().get(iUser));

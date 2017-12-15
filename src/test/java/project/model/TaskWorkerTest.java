@@ -16,7 +16,7 @@ public class TaskWorkerTest {
 	User userTester2;
 	ProjectCollaborator collabTester;
 	ProjectCollaborator collabTester2;
-	TaskWorker workerTester;
+	TaskCollaborator workerTester;
 	Task task1;
 	Calendar finishDate;
 	Calendar estimatedStartDate;
@@ -28,7 +28,7 @@ public class TaskWorkerTest {
 		userTester2 = new User("myname2", "myemail2", "myidnumber2", "myfunction2", "myphone2");
 		collabTester = new ProjectCollaborator(userTester, 5);
 		collabTester2 = new ProjectCollaborator(userTester2, 10);
-		workerTester = new TaskWorker(collabTester);
+		workerTester = new TaskCollaborator(collabTester);
 		finishDate = Calendar.getInstance();
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);

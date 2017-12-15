@@ -10,7 +10,7 @@ package project.model;
 public class Report {
 
 	private int reportedTime;
-	private TaskWorker taskWorker;
+	private TaskCollaborator taskWorker;
 	private int cost;
 
 	/**
@@ -26,7 +26,7 @@ public class Report {
 	 * @param taskWorker
 	 *            Task Collaborator
 	 */
-	public Report(TaskWorker taskWorker) {
+	public Report(TaskCollaborator taskWorker) {
 
 		this.reportedTime = 0;
 		this.taskWorker = taskWorker;
@@ -58,7 +58,7 @@ public class Report {
 	 * 
 	 * @return Task Collaborator
 	 */
-	public TaskWorker getTaskWorker() {
+	public TaskCollaborator getTaskWorker() {
 		return this.taskWorker;
 	}
 

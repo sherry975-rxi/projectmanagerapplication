@@ -14,7 +14,7 @@ import project.model.ProjectCollaborator;
 import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskRepository;
-import project.model.TaskWorker;
+import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.UserRepository;
 
@@ -43,8 +43,8 @@ public class US215Tests {
 	User user2;
 	ProjectCollaborator projectCollaborator1;
 	ProjectCollaborator projectCollaborator2;
-	TaskWorker taskWorker1;
-	TaskWorker taskWorker2;
+	TaskCollaborator taskWorker1;
+	TaskCollaborator taskWorker2;
 	ProjectRepository projectRepository;
 	Project myProject;
 	TaskRepository taskRepository;

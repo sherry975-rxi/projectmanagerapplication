@@ -15,7 +15,7 @@ import project.model.ProjectCollaborator;
 import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskRepository;
-import project.model.TaskWorker;
+import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.UserRepository;
 
@@ -48,10 +48,10 @@ public class US390 {
 	TaskRepository taskRepository;
 	Task testTask;
 	Task testTask2;
-	TaskWorker taskWorker1;
-	TaskWorker taskWorker2;
-	TaskWorker taskWorker3;
-	TaskWorker taskWorker4;
+	TaskCollaborator taskWorker1;
+	TaskCollaborator taskWorker2;
+	TaskCollaborator taskWorker3;
+	TaskCollaborator taskWorker4;
 
 	double totalCost;
 

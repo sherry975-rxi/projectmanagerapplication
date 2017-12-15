@@ -25,7 +25,7 @@ public class TaskTest {
 	Project myProject;
 	Task testTask, testTask2, testTask3;
 	ProjectCollaborator collab1, collab2, collab3;
-	TaskWorker tWorker1, tWorker2, tWorker3;
+	TaskCollaborator tWorker1, tWorker2, tWorker3;
 	double expectedCost;
 
 	@Before public
@@ -38,8 +38,8 @@ public class TaskTest {
 		collab1 = myProject.createProjectCollaborator(user1, 5);
 		collab2 = myProject.createProjectCollaborator(user2, 5);
 
-		tWorker1 = new TaskWorker(collab1);
-		tWorker2 = new TaskWorker(collab2);
+		tWorker1 = new TaskCollaborator(collab1);
+		tWorker2 = new TaskCollaborator(collab2);
 
 		Calendar estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.add(Calendar.MONTH, -1);

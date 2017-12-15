@@ -20,9 +20,9 @@ public class ProjectRepositoryTest {
 	ProjectCollaborator collab1;
 	ProjectCollaborator collab2;
 	ProjectCollaborator collab3;
-	TaskWorker taskWorker1;
-	TaskWorker taskWorker2;
-	TaskWorker taskWorker3;
+	TaskCollaborator taskWorker1;
+	TaskCollaborator taskWorker2;
+	TaskCollaborator taskWorker3;
 	Project project1;
 	Project project2;
 	Project project3;
@@ -44,9 +44,9 @@ public class ProjectRepositoryTest {
 		collab1 = new ProjectCollaborator(user1, 1);
 		collab2 = new ProjectCollaborator(user2, 2);
 		collab3 = new ProjectCollaborator(user3, 3);
-		taskWorker1 = new TaskWorker(collab1);
-		taskWorker2 = new TaskWorker(collab2);
-		taskWorker3 = new TaskWorker(collab3);
+		taskWorker1 = new TaskCollaborator(collab1);
+		taskWorker2 = new TaskCollaborator(collab2);
+		taskWorker3 = new TaskCollaborator(collab3);
 		project1 = new Project(1, "name3", "description3", user1);
 		project2 = new Project(2, "name4", "description5", user2);
 		project3 = new Project(3, "name5", "description5", user3);
