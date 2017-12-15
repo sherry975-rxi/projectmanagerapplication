@@ -117,7 +117,7 @@ public class ProjectRepository {
 		for (Project other : this.projectsRepository) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
-			if (!(toCheck == null)) {
+			if (toCheck != null) {
 				tasksOfSpecificUser.addAll(other.getTaskRepository().getAllTasksFromProjectCollaborator(toCheck));
 			}
 		}
@@ -141,7 +141,7 @@ public class ProjectRepository {
 		for (Project other : this.projectsRepository) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
-			if (!(toCheck == null)) {
+			if (toCheck != null) {
 				finishedTasksOfSpecificUser.addAll(
 						other.getTaskRepository().getFinishedTasksFromProjectCollaboratorInGivenMonth(toCheck, -1));
 			}
@@ -165,7 +165,7 @@ public class ProjectRepository {
 		for (Project other : this.projectsRepository) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
-			if (!(toCheck == null)) {
+			if (toCheck != null) {
 				unfinishedTasksOfSpecificUser
 						.addAll(other.getTaskRepository().getUnfinishedTasksFromProjectCollaborator(toCheck));
 			}
@@ -193,7 +193,7 @@ public class ProjectRepository {
 		for (Project other : this.projectsRepository) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
-			if (!(toCheck == null)) {
+			if (toCheck != null) {
 				lastMonthFinishedTaskListByUser.addAll(
 						other.getTaskRepository().getFinishedTasksFromProjectCollaboratorInGivenMonth(toCheck, 1));
 			}
@@ -216,11 +216,9 @@ public class ProjectRepository {
 		double totalTime = 0;
 		for (Project other : this.projectsRepository) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
+			totalTime = totalTime
+					+ other.getTaskRepository().getTimeSpentByProjectCollaboratorInAllTasksLastMonth(toCheck);
 
-			if (!(toCheck == null)) {
-				totalTime = totalTime
-						+ other.getTaskRepository().getTimeSpentByProjectCollaboratorInAllTasksLastMonth(toCheck);
-			}
 		}
 
 		return totalTime;

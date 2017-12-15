@@ -84,9 +84,7 @@ public class Project {
 	 */
 	public ProjectCollaborator createProjectCollaborator(User collaborator, int costPerEffort) {
 
-		ProjectCollaborator newProjectCollaborator = new ProjectCollaborator(collaborator, costPerEffort);
-
-		return newProjectCollaborator;
+		return new ProjectCollaborator(collaborator, costPerEffort);
 	}
 
 	/**
@@ -216,9 +214,7 @@ public class Project {
 		if (getClass() != obj.getClass())
 			return false;
 		Project other = (Project) obj;
-		if (projectIdCode != other.projectIdCode)
-			return false;
-		return true;
+		return projectIdCode == other.projectIdCode;
 	}
 
 	/*

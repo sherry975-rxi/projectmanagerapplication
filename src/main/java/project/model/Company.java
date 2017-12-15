@@ -14,6 +14,15 @@ public final class Company {
 	private static Company _theInstance;
 
 	/**
+	 * Constructor for Company includes usersRepository creation and
+	 * projectsRepository creation
+	 */
+	private Company() {
+		this.usersRepository = new UserRepository();
+		this.projectsRepository = new ProjectRepository();
+	}
+
+	/**
 	 * Method to instantiate one Company only.
 	 * 
 	 * @return the only instance of Company that the program is allowed to have
@@ -32,15 +41,6 @@ public final class Company {
 
 		_theInstance = null;
 
-	}
-
-	/**
-	 * Constructor for Company includes usersRepository creation and
-	 * projectsRepository creation
-	 */
-	private Company() {
-		this.usersRepository = new UserRepository();
-		this.projectsRepository = new ProjectRepository();
 	}
 
 	/**
