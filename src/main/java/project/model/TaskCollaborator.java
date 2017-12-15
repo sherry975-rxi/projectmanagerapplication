@@ -7,8 +7,6 @@ public class TaskCollaborator {
 	private ProjectCollaborator projCollaborator;
 	private Calendar startDate;
 	private Calendar finishDate;
-	// private Integer hoursSpent;
-	// private Integer costPerEffort;
 	private boolean status;
 
 	/**
