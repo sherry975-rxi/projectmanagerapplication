@@ -12,7 +12,7 @@ public class TaskRepository {
 
 	public TaskRepository(int projId) {
 
-		this.projectTasks = new ArrayList<Task>();
+		this.projectTasks = new ArrayList<>();
 		this.taskCounter = 1;
 		this.projId = projId;
 
@@ -61,7 +61,7 @@ public class TaskRepository {
 	 */
 	public List<Task> getUnFinishedTasksFromUser(ProjectCollaborator collab) {
 
-		List<Task> unfinishedTaskList = new ArrayList<Task>();
+		List<Task> unfinishedTaskList = new ArrayList<>();
 		unfinishedTaskList.addAll(this.getAllTasks(collab));
 
 		for (Task other : this.getAllTasks(collab)) {
@@ -81,7 +81,7 @@ public class TaskRepository {
 	 */
 	public List<Task> getFinishedTaskListofUserInProject(ProjectCollaborator collab) {
 
-		List<Task> finishedTaskList = new ArrayList<Task>();
+		List<Task> finishedTaskList = new ArrayList<>();
 
 		for (Task other : this.projectTasks) {
 			if (other.isFinished()) {
@@ -109,7 +109,7 @@ public class TaskRepository {
 	public List<Task> getFinishedTasksGivenMonth(ProjectCollaborator collab, int monthsAgo) {
 		Calendar givenMonth = Calendar.getInstance();
 		givenMonth.add(Calendar.MONTH, -monthsAgo);
-		List<Task> lastMonthFinishedTaskList = new ArrayList<Task>();
+		List<Task> lastMonthFinishedTaskList = new ArrayList<>();
 
 		for (Task other : this.getAllTasks(collab)) {
 			if (other.getFinishDate() != null) {
@@ -148,7 +148,7 @@ public class TaskRepository {
 	 * @return Time spent on last month project user tasks
 	 */
 	public double getTimeSpentOnLastMonthProjectUserTasks(ProjectCollaborator collab) {
-		List<Task> lastMonth = new ArrayList<Task>();
+		List<Task> lastMonth = new ArrayList<>();
 		lastMonth.addAll(this.getFinishedTasksGivenMonth(collab, 1));
 		double totalTime = 0;
 		for (Task test : lastMonth) {
@@ -198,7 +198,7 @@ public class TaskRepository {
 	 * @return AllTasksList List if all tasks from a user
 	 */
 	public List<Task> getAllTasks(ProjectCollaborator collab) {
-		List<Task> allTasks = new ArrayList<Task>();
+		List<Task> allTasks = new ArrayList<>();
 		for (Task other : this.getProjectTaskList()) {
 			if (other.taskTeamContainsUser(collab)) {
 				allTasks.add(other);
@@ -233,7 +233,7 @@ public class TaskRepository {
 	 */
 	public List<Task> getListofTasksWithoutCollaboratorsAssigned() {
 
-		List<Task> listOfTasksWithoutCollaboratorsAssigned = new ArrayList<Task>();
+		List<Task> listOfTasksWithoutCollaboratorsAssigned = new ArrayList<>();
 
 		for (Task other : this.getProjectTaskList()) {
 			if (other.isTaskTeamEmpty()) {
@@ -250,7 +250,7 @@ public class TaskRepository {
 	 * @return allFinishedTasks
 	 */
 	public List<Task> getFinishedTasks() {
-		List<Task> allFinishedTasks = new ArrayList<Task>();
+		List<Task> allFinishedTasks = new ArrayList<>();
 
 		for (Task other : this.getProjectTaskList()) {
 			if (other.isFinished()) {
@@ -267,7 +267,7 @@ public class TaskRepository {
 	 * @return allUnFinishedTasks
 	 */
 	public List<Task> getUnFinishedTasks() {
-		List<Task> allUnFinishedTasks = new ArrayList<Task>();
+		List<Task> allUnFinishedTasks = new ArrayList<>();
 
 		for (Task other : this.getProjectTaskList()) {
 			if (!other.isFinished() && other.getStartDate() != null) {
@@ -284,7 +284,7 @@ public class TaskRepository {
 	 * @return allUnstartedTasks
 	 */
 	public List<Task> getUnstartedTasks() {
-		List<Task> allUnstartedTasks = new ArrayList<Task>();
+		List<Task> allUnstartedTasks = new ArrayList<>();
 
 		for (Task other : this.getProjectTaskList()) {
 			if (other.getStartDate() == null) {
@@ -302,7 +302,7 @@ public class TaskRepository {
 	 */
 	public List<Task> getExpiredTasks() {
 		Calendar today = Calendar.getInstance();
-		List<Task> expiredTasks = new ArrayList<Task>();
+		List<Task> expiredTasks = new ArrayList<>();
 		for (Task other : this.projectTasks) {
 			if (!other.isFinished()) {
 				if (other.getTaskDeadline().get(Calendar.YEAR) < today.get(Calendar.YEAR)) {

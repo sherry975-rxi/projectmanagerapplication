@@ -45,7 +45,7 @@ public class User {
 		this.email = email;
 		this.idNumber = idNumber;
 		this.function = function;
-		this.addressList = new ArrayList<Address>();
+		this.addressList = new ArrayList<>();
 		this.phone = phone;
 		this.userProfile = Profile.VISITOR;
 		this.systemUserStateActive = true;
