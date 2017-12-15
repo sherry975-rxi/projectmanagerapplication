@@ -441,14 +441,18 @@ public class ProjectTest {
 		assertEquals(projectCollaborator2, p1.getProjectCollaboratorFromUser(user2));
 	}
 
+	/**
+	 * Tests several combinations of the Equals override
+	 * 
+	 */
 	@Test
 	public void testEquals() {
-		assertTrue(p1.equals(p1));
+		assertTrue(p1.equals(p1));// same object
 		Project p3 = null;
-		assertFalse(p1.equals(p3));
-		assertFalse(p1.equals(task1));
-		assertFalse(p1.equals(p2));
+		assertFalse(p1.equals(p3));// null object
+		assertFalse(p1.equals(task1));// different classes
+		assertFalse(p1.equals(p2));// different counter
 		p3 = new Project(1, "name3", "description4", user1);
-		assertTrue(p1.equals(p3));
+		assertTrue(p1.equals(p3));// same counter
 	}
 }
