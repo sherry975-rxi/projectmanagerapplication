@@ -1,8 +1,8 @@
 package project.model;
 
 /**
- * Company Class for building Lists of Users and Projects (according to certain
- * specifications)
+ * Company Class for building Repositorys of Users and Projects (according to
+ * certain specifications)
  * 
  * @author Group3
  *
@@ -35,7 +35,8 @@ public final class Company {
 	}
 
 	/**
-	 * Constructor for Company includes usersList creation and projectsList creation
+	 * Constructor for Company includes usersRepository creation and
+	 * projectsRepository creation
 	 */
 	private Company() {
 		this.usersRepository = new UserRepository();
@@ -43,18 +44,18 @@ public final class Company {
 	}
 
 	/**
-	 * This method returns the list of projects (projectsList)
+	 * This method returns the Repository of projects (projectsRepository)
 	 * 
-	 * @return projectsList This is the List of all Projects created
+	 * @return projectsRepository This is the Repository of all Projects created
 	 */
 	public ProjectRepository getProjectsRepository() {
 		return this.projectsRepository;
 	}
 
 	/**
-	 * This method returns the list of users (usersList)
+	 * This method returns the Repository of users (usersRepository)
 	 * 
-	 * @return usersList This is the List of all Users created
+	 * @return usersRepository This is the Repository of all Users created
 	 */
 	public UserRepository getUsersRepository() {
 		return this.usersRepository;
