@@ -198,14 +198,6 @@ public class ProjectTest {
 		assertEquals(1, p1.getProjectTeam().size());
 	}
 
-	/**
-	 * Tests the comparison between objects that are different
-	 */
-	@Test
-	public void testEqualsFalse() {
-		assertFalse(p1.equals(p2));
-	}
-
 	// /**
 	// * Tests the comparison between objects that are different and from different
 	// * types
@@ -447,5 +439,16 @@ public class ProjectTest {
 		p1.addUserToProjectTeam(projectCollaborator2);
 		p1.addUserToProjectTeam(projectCollaborator1);
 		assertEquals(projectCollaborator2, p1.getProjectCollaboratorFromUser(user2));
+	}
+
+	@Test
+	public void testEquals() {
+		assertTrue(p1.equals(p1));
+		Project p3 = null;
+		assertFalse(p1.equals(p3));
+		assertFalse(p1.equals(task1));
+		assertFalse(p1.equals(p2));
+		p3 = new Project(1, "name3", "description4", user1);
+		assertTrue(p1.equals(p3));
 	}
 }
