@@ -30,8 +30,8 @@ public class CompanyTest {
 	Project project2;
 	Project project3;
 
-	@Before public
-	void setUp() {
+	@Before
+	public void setUp() {
 
 		myCompany = Company.getTheInstance();
 		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
@@ -62,9 +62,9 @@ public class CompanyTest {
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project3);
 	}
 
-	@After public
-	void tearDown() {
-		myCompany = null;
+	@After
+	public void tearDown() {
+		myCompany.clear();
 		user1 = null;
 		user2 = null;
 		user3 = null;

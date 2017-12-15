@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import project.model.Company;
@@ -72,7 +71,7 @@ public class US101Tests {
 	 * Tests if created user's email is valid and unique, then adds the user. It
 	 * must have an "@" and "."; Simulates the addition of any User with valid email
 	 */
-	@Ignore
+
 	@Test
 	public void testUserAdditionEmailValidation() {
 
@@ -99,7 +98,6 @@ public class US101Tests {
 	 * duplicated first user again to the list. Then compares the userLists
 	 *
 	 */
-	@Ignore
 	@Test
 	public void testUS101RepeatedUser() {
 

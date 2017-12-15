@@ -98,7 +98,7 @@ public class TaskCollaboratorTest {
 
 		workerTester.addFinishDateForTaskWorker();
 		finishDate = Calendar.getInstance();
-		assertEquals(workerTester.getFinishDate(), finishDate);
+		assertTrue(workerTester.getFinishDate().equals(finishDate));
 
 	}
 
