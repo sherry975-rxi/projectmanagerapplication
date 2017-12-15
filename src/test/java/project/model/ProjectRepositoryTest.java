@@ -403,10 +403,13 @@ public class ProjectRepositoryTest {
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
-		double expResult = (task1.getTimeSpentByProjectCollaboratorOntask(collab1)
-				+ task2.getTimeSpentByProjectCollaboratorOntask(collab1)) / 2;
+		task1.createReport(taskWorker1);
+		task2.createReport(taskWorker1);
 
-		assertEquals(expResult, projectRepository.getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
+		task1.getReports().get(0).setReportedTime(5);
+		task2.getReports().get(0).setReportedTime(10);
+
+		assertEquals(7.5, projectRepository.getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
 
 	/**

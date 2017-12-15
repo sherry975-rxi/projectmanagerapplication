@@ -238,9 +238,8 @@ public class ProjectRepository {
 
 		double totalTime = this.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
 
-		double average = totalTime / this.getLastMonthFinishedUserTaskList(user).size();
+		return totalTime / this.getLastMonthFinishedUserTaskList(user).size();
 
-		return average;
 	}
 
 	/**
