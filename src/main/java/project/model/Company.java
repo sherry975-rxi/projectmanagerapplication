@@ -11,14 +11,14 @@ public final class Company {
 
 	private UserRepository usersRepository;
 	private ProjectRepository projectsRepository;
-	static private Company _theInstance;
+	private static Company _theInstance;
 
 	/**
 	 * Method to instantiate one Company only.
 	 * 
 	 * @return the only instance of Company that the program is allowed to have
 	 */
-	public static Company getTheInstance() {
+	public synchronized static Company getTheInstance() {
 		if (_theInstance == null)
 			_theInstance = new Company();
 
