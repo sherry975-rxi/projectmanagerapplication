@@ -160,7 +160,9 @@ public class US360 {
 	@Test
 	public void testGetTasksListWithoutUsers() {
 		// Creates a new list to compare and add the tasks that don't have collaborators
+
 		List<Task> tasksWithoutUsersTest = new ArrayList<Task>();
+
 		tasksWithoutUsersTest.add(testTask3);
 		tasksWithoutUsersTest.add(testTask4);
 
