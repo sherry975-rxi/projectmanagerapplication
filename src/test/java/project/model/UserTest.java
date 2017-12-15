@@ -18,16 +18,16 @@ public class UserTest {
 	/**
 	 * test getter/ setter Name
 	 */
-	@Test public
-	void testGetName() {
+	@Test
+	public void testGetName() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
 		assertEquals("Daniel", u1.getName());
 	}
 
-	@Test public
-	void testSetName() {
+	@Test
+	public void testSetName() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -39,16 +39,16 @@ public class UserTest {
 	/**
 	 * test getter/ setter Email
 	 */
-	@Test public
-	void testGetEmail() {
+	@Test
+	public void testGetEmail() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
 		assertEquals("daniel@gmail.com", u1.getEmail());
 	}
 
-	@Test public
-	void testSetEmail() {
+	@Test
+	public void testSetEmail() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -60,8 +60,8 @@ public class UserTest {
 	/**
 	 * test getter IDNumber
 	 */
-	@Test public
-	void testGetIdNumber() {
+	@Test
+	public void testGetIdNumber() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -71,16 +71,16 @@ public class UserTest {
 	/**
 	 * test getter/ setter Function
 	 */
-	@Test public
-	void testGetFunction() {
+	@Test
+	public void testGetFunction() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
 		assertEquals("Porteiro", u1.getFunction());
 	}
 
-	@Test public
-	void testSetFunction() {
+	@Test
+	public void testSetFunction() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -92,16 +92,16 @@ public class UserTest {
 	/**
 	 * test getter/ setter Phone
 	 */
-	@Test public
-	void testGetPhone() {
+	@Test
+	public void testGetPhone() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
 		assertEquals("910000000", u1.getPhone());
 	}
 
-	@Test public
-	void testSetPhone() {
+	@Test
+	public void testSetPhone() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -113,8 +113,8 @@ public class UserTest {
 	/**
 	 * tests the getAddress method.
 	 */
-	@Test public
-	void testGetAddress() {
+	@Test
+	public void testGetAddress() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 		Address a1 = new Address("Rua A", "3700-243", "Aveiro", "Aveiro", "Portugal");
@@ -133,8 +133,8 @@ public class UserTest {
 	/**
 	 * tests the getAddress method with an empty address list.
 	 */
-	@Test public
-	void testGetAddress_emptyList() {
+	@Test
+	public void testGetAddress_emptyList() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -147,8 +147,8 @@ public class UserTest {
 	/**
 	 * tests the addAddress method.
 	 */
-	@Test public
-	void testAddAddress() {
+	@Test
+	public void testAddAddress() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 		Address a1 = new Address("Rua A", "3700-243", "Aveiro", "Aveiro", "Portugal");
@@ -168,16 +168,16 @@ public class UserTest {
 	 * as "Active" (true), the assert True of the isSystemUserState method must be
 	 * true.
 	 */
-	@Test public
-	void isSystemUserStateActive() {
+	@Test
+	public void isSystemUserStateActive() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
 		assertTrue(u1.isSystemUserStateActive());
 	}
 
-	@Test public
-	void getProfile() {
+	@Test
+	public void getProfile() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -189,8 +189,8 @@ public class UserTest {
 	/**
 	 * tests the changeSystemUserState to false.
 	 */
-	@Test public
-	void testChangeSystemUserState() {
+	@Test
+	public void testChangeSystemUserState() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -202,8 +202,8 @@ public class UserTest {
 	/**
 	 * tests the changeSystemUserState.
 	 */
-	@Test public
-	void testChangeSystemUserState_FalseAndTrue() {
+	@Test
+	public void testChangeSystemUserState_FalseAndTrue() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -217,8 +217,8 @@ public class UserTest {
 	 * Tests the createAddress method, by comparing if all fields of the address
 	 * added (to the user address list) are equal to Strings previously defined.
 	 */
-	@Test public
-	void testCreateAddress() {
+	@Test
+	public void testCreateAddress() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -238,36 +238,28 @@ public class UserTest {
 	}
 
 	/**
-	 * tests the equals methods on two Users with the same email.
+	 * Tests several combinations of the Equals override
+	 * 
 	 */
-	@Test public
-	void testUserEquals() {
-
+	@Test
+	public void testEquals() {
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
-		User u2 = new User("Joao", "daniel@gmail.com", "02", "Serralheiro", "960000000");
-
-		assertTrue(u1.equals(u2));
-
-	}
-
-	/**
-	 * tests the equals methods on two Users with different email.
-	 */
-	@Test public
-	void testUserEquals_False() {
-
-		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
-		User u2 = new User("Joao", "joao@gmail.com", "02", "Serralheiro", "960000000");
-
-		assertFalse(u1.equals(u2));
-
+		User u2 = new User("Daniel", "daniel2@gmail.com", "01", "Porteiro", "910000000");
+		User u3 = null;
+		assertTrue(u1.equals(u1));// same object
+		assertFalse(u1.equals(u3));// null object
+		Project p1 = new Project(1, "name3", "description4", u1);
+		assertFalse(u1.equals(p1));// different classes
+		assertFalse(u1.equals(u2));// different email
+		u3 = new User("Daniel2", "daniel@gmail.com", "02", "Cenas", "910007800");
+		assertTrue(u1.equals(u3));// same email
 	}
 
 	/**
 	 * Tests the setUserProfile method by setting the user profile to collaborator.
 	 */
-	@Test public
-	void setUserProfileCollaborator() {
+	@Test
+	public void setUserProfileCollaborator() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -280,8 +272,8 @@ public class UserTest {
 	/**
 	 * Tests the setUserProfile method by setting the user profile to Director.
 	 */
-	@Test public
-	void setUserProfileDirector() {
+	@Test
+	public void setUserProfileDirector() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
@@ -294,8 +286,8 @@ public class UserTest {
 	/**
 	 * Tests the setUserProfile method by setting the user profile to Visitor.
 	 */
-	@Test public
-	void setUserProfileVisitor() {
+	@Test
+	public void setUserProfileVisitor() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
