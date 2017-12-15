@@ -25,11 +25,12 @@ public class TaskTest {
 	Project myProject;
 	Task testTask, testTask2, testTask3;
 	ProjectCollaborator collab1, collab2, collab3;
+	Calendar estimatedTaskStartDate, taskDeadline;
 	TaskCollaborator tWorker1, tWorker2, tWorker3;
 	double expectedCost;
 
-	@Before public
-	void setUp() {
+	@Before
+	public void setUp() {
 
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
@@ -41,9 +42,9 @@ public class TaskTest {
 		tWorker1 = new TaskCollaborator(collab1);
 		tWorker2 = new TaskCollaborator(collab2);
 
-		Calendar estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.add(Calendar.MONTH, -1);
-		Calendar taskDeadline = Calendar.getInstance();
+		taskDeadline = Calendar.getInstance();
 		taskDeadline.add(Calendar.MONTH, 1);
 
 		testTask = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
@@ -51,8 +52,8 @@ public class TaskTest {
 		testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
 	}
 
-	@After public
-	void breakDown() {
+	@After
+	public void breakDown() {
 		user1 = null;
 		user2 = null;
 		myProject = null;
@@ -72,8 +73,8 @@ public class TaskTest {
 	 * Tests getDescription method by comparing it against a task with the same one
 	 * And afterwards comparing it against a different one
 	 */
-	@Test public
-	void testTaskConstructor() {
+	@Test
+	public void testTaskConstructor() {
 
 		assertTrue(testTask.getDescription().equals(testTask2.getDescription()));
 		assertFalse(testTask.getDescription().equals(testTask3.getDescription()));
@@ -83,8 +84,8 @@ public class TaskTest {
 	 * Tests add and remove users to task team: verifying true or false depending on
 	 * if they exist) Then compares the Team list with a test List
 	 */
-	@Test public
-	void testTaskTeam() {
+	@Test
+	public void testTaskTeam() {
 
 		testTask.addUserToTask(tWorker1);
 		testTask.addUserToTask(tWorker2);
@@ -94,8 +95,8 @@ public class TaskTest {
 	/**
 	 * Checks if clear date is different from a random date
 	 */
-	@Test public
-	void testGetFinishDate() {
+	@Test
+	public void testGetFinishDate() {
 		testTask.setFinishDate();
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DAY_OF_MONTH, 5);
@@ -106,30 +107,33 @@ public class TaskTest {
 	 * First checks if new task is not finished After setting it as finished,
 	 * confirms it's indeed finished
 	 */
-	@Test public
-	void testIsFinished() {
+	@Test
+	public void testIsFinished() {
 		assertFalse(testTask.isFinished());
 		testTask.markTaskAsFinished();
 		assertTrue(testTask.isFinished());
 	}
 
 	/**
-	 * Tests the task equals override, first by comparing it with itself(True); Then
-	 * with a different one (False); Then compares it with user (false: Not Task)
+	 * Tests the task equals override
 	 */
-	@Test public
-	void testTaskEquals() {
-		assertTrue(testTask.equals(testTask));
-		assertFalse(testTask.equals(testTask2));//
-		assertFalse(testTask.equals(user2));
+	@Test
+	public void testTaskEquals() {
+		assertTrue(testTask.equals(testTask));// same object
+		Task testTask4 = null;
+		assertFalse(testTask.equals(testTask4));// null object
+		assertFalse(testTask.equals(user1));// different classes
+		assertFalse(testTask.equals(testTask2));// different counter
+		testTask4 = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
+		assertTrue(testTask.equals(testTask4));// same counter
 	}
 
 	/**
 	 * Tests the getTimeSpentOnTaskMethod First with 0 hours (confirming if report
 	 * is created with time set to 0), then 15 hours;
 	 */
-	@Test public
-	void testGetTimeSpentOnTask() {
+	@Test
+	public void testGetTimeSpentOnTask() {
 		testTask.addUserToTask(tWorker1);
 		testTask.addUserToTask(tWorker2);
 
@@ -155,8 +159,8 @@ public class TaskTest {
 	 * both duplicated tasks different finish dates and confirms difference; Also
 	 * confirms if override equals still sees both tasks as the same
 	 */
-	@Test public
-	void testSecondConstructor() {
+	@Test
+	public void testSecondConstructor() {
 		Task testDupe = new Task(testTask);
 		assertTrue(testTask.equals(testDupe));
 		Calendar startDate1 = Calendar.getInstance();
@@ -171,8 +175,8 @@ public class TaskTest {
 	/**
 	 * Verifies if the task team is empty. Must be true (is empty).
 	 */
-	@Test public
-	void isTaskTeamEmpty_true() {
+	@Test
+	public void isTaskTeamEmpty_true() {
 
 		assertTrue(testTask.isTaskTeamEmpty());
 	}
@@ -180,8 +184,8 @@ public class TaskTest {
 	/**
 	 * Verifies if the task team is empty. Must be false (not empty).
 	 */
-	@Test public
-	void isTaskTeamEmpty_false() {
+	@Test
+	public void isTaskTeamEmpty_false() {
 
 		testTask2.addUserToTask(tWorker1);
 
@@ -192,8 +196,8 @@ public class TaskTest {
 	 * A test to confirm that the addUserToTask method updates Task Worker info if
 	 * the user already worked in a specific task
 	 */
-	@Test public
-	void updateTaskWorker() {
+	@Test
+	public void updateTaskWorker() {
 		testTask2.addNewTaskWorker(collab1);
 		testTask2.removeUserFromTask(collab1);
 		testTask2.addNewTaskWorker(collab1);
@@ -212,8 +216,8 @@ public class TaskTest {
 	 * that task
 	 * 
 	 */
-	@Test public
-	void testGetReportedBudgetToTheTask() {
+	@Test
+	public void testGetReportedBudgetToTheTask() {
 		// Adds two users to the task
 		testTask2.addUserToTask(tWorker1);
 		testTask2.addUserToTask(tWorker2);

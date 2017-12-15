@@ -594,10 +594,7 @@ public class Task {
 		if (getClass() != obj.getClass())
 			return false;
 		Task other = (Task) obj;
-		if (taskID == null) {
-			if (other.taskID != null)
-				return false;
-		} else if (!taskID.equals(other.taskID))
+		if (!taskID.equals(other.taskID))
 			return false;
 		return true;
 	}
