@@ -71,7 +71,7 @@ public class US202Tests {
 	public void testAddAddress() {
 		// Verifies if User is Collaborator
 		assertEquals(user1.getUserProfile(), Profile.COLLABORATOR);
-
+		assertEquals(user1.getAddressList().get(0).getCity(), "Test");
 		// Creates a new list and adds address to that list, to compare with
 		// userAddresslist
 		List<Address> testList = new ArrayList<Address>();
