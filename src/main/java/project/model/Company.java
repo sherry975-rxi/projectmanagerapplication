@@ -7,7 +7,7 @@ package project.model;
  * @author Group3
  *
  */
-public class Company {
+public final class Company {
 
 	private UserRepository usersRepository;
 	private ProjectRepository projectsRepository;
