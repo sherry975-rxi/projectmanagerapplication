@@ -21,7 +21,7 @@ public class UserRepository {
 	 * Constructor for UserRepository includes usersList creation
 	 */
 	public UserRepository() {
-		this.usersRepository = new ArrayList<User>();
+		this.usersRepository = new ArrayList<>();
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class UserRepository {
 	 */
 	public List<User> searchUsersByEmail(String partOfEmail) {
 
-		List<User> userListThatContainsPiecesOfEmailString = new ArrayList<User>();
+		List<User> userListThatContainsPiecesOfEmailString = new ArrayList<>();
 
 		for (int i = 0; i < this.usersRepository.size(); i++) {
 			if (usersRepository.get(i).getEmail().contains(partOfEmail)) {
@@ -149,7 +149,7 @@ public class UserRepository {
 	 */
 	public List<User> searchUsersByProfile(Profile searchProfile) {
 
-		List<User> usersByProfileList = new ArrayList<User>();
+		List<User> usersByProfileList = new ArrayList<>();
 
 		for (int i = 0; i < this.usersRepository.size(); i++) {
 			if (usersRepository.get(i).getUserProfile() == searchProfile) {
