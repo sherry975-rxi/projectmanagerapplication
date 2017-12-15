@@ -360,7 +360,7 @@ public class Task {
 		return timeSpentByCollaboratorOnTask;
 	}
 
-	/* *//**
+	/* /**
 	 * This method returns the total amount of time spent on a task. It takes in
 	 * consideration the task startDate and finishDate, that a working day has 8h
 	 * and that Sundays, Saturdays and Holidays are not considered for the
