@@ -286,9 +286,7 @@ public class Task {
 	 */
 	public TaskCollaborator createTaskWorker(ProjectCollaborator projCollaborator) {
 
-		TaskCollaborator taskWorker = new TaskCollaborator(projCollaborator);
-
-		return taskWorker;
+		return new TaskCollaborator(projCollaborator);
 	}
 
 	/**
