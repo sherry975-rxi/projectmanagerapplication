@@ -17,7 +17,6 @@ public class ProjectRepositoryTest {
 	User user1;
 	User user2;
 	User user3;
-	User user4;
 	ProjectCollaborator collab1;
 	ProjectCollaborator collab2;
 	ProjectCollaborator collab3;
@@ -41,8 +40,7 @@ public class ProjectRepositoryTest {
 		projectRepository = new ProjectRepository();
 		user1 = new User("name", "email", "idNumber", "function", "123456789");
 		user2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
-		user3 = new User("name6", "email6", "idNumber6", "function6", "987654271");
-		user4 = new User("name4", "email4", "idNumber4", "function4", "987654871");
+		user2 = new User("name6", "email6", "idNumber6", "function6", "987654271");
 		collab1 = new ProjectCollaborator(user1, 1);
 		collab2 = new ProjectCollaborator(user2, 2);
 		collab3 = new ProjectCollaborator(user3, 3);
@@ -360,7 +358,6 @@ public class ProjectRepositoryTest {
 				+ task2.getTimeSpentByProjectCollaboratorOntask(collab1));
 
 		assertEquals(expResult, projectRepository.getTotalTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
-		assertEquals(0.0, projectRepository.getTotalTimeOfFinishedTasksFromUserLastMonth(user4), 0.00000001);
 	}
 
 	/**
