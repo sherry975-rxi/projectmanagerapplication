@@ -14,7 +14,7 @@ public class ProjectRepository {
 	 */
 	public ProjectRepository() {
 
-		this.projectsRepository = new ArrayList<Project>();
+		this.projectsRepository = new ArrayList<>();
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class ProjectRepository {
 	 */
 	public List<Project> getAllProjects() {
 
-		List<Project> allProjects = new ArrayList<Project>();
+		List<Project> allProjects = new ArrayList<>();
 		allProjects.addAll(this.projectsRepository);
 
 		return allProjects;
@@ -88,7 +88,7 @@ public class ProjectRepository {
 	 */
 	public List<Project> getActiveProjects() {
 
-		List<Project> activeProjectsList = new ArrayList<Project>();
+		List<Project> activeProjectsList = new ArrayList<>();
 
 		for (Project other : this.projectsRepository) {
 
@@ -112,7 +112,7 @@ public class ProjectRepository {
 	 * @return Returns the user task list.
 	 */
 	public List<Task> getUserTasks(User user) {
-		List<Task> tasksOfSpecificUser = new ArrayList<Task>();
+		List<Task> tasksOfSpecificUser = new ArrayList<>();
 
 		for (Project other : this.projectsRepository) {
 			ProjectCollaborator toCheck = other.getProjectCollaboratorFromUser(user);
@@ -137,7 +137,7 @@ public class ProjectRepository {
 	 */
 	public List<Task> getFinishedUserTaskList(User user) {
 
-		List<Task> finishedTasksOfSpecificUser = new ArrayList<Task>();
+		List<Task> finishedTasksOfSpecificUser = new ArrayList<>();
 		for (Project other : this.projectsRepository) {
 			ProjectCollaborator toCheck = other.getProjectCollaboratorFromUser(user);
 
@@ -160,7 +160,7 @@ public class ProjectRepository {
 	 */
 	public List<Task> getUnfinishedUserTaskList(User user) {
 
-		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<Task>();
+		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<>();
 		for (Project other : this.projectsRepository) {
 			ProjectCollaborator toCheck = other.getProjectCollaboratorFromUser(user);
 
@@ -187,7 +187,7 @@ public class ProjectRepository {
 
 	public List<Task> getLastMonthFinishedUserTaskList(User user) {
 
-		List<Task> lastMonthFinishedTaskListByUser = new ArrayList<Task>();
+		List<Task> lastMonthFinishedTaskListByUser = new ArrayList<>();
 		for (Project other : this.projectsRepository) {
 			ProjectCollaborator toCheck = other.getProjectCollaboratorFromUser(user);
 
@@ -253,7 +253,7 @@ public class ProjectRepository {
 	 */
 	public List<Task> getLastMonthFinishedUserTaskListDecreasingOrder(User user) {
 
-		List<Task> LastMonthFinishedUserTaskListDecreasingOrder = new ArrayList<Task>();
+		List<Task> LastMonthFinishedUserTaskListDecreasingOrder = new ArrayList<>();
 		LastMonthFinishedUserTaskListDecreasingOrder.addAll(this.getLastMonthFinishedUserTaskList(user));
 
 		return this.sortTaskListDecreasingOrder(LastMonthFinishedUserTaskListDecreasingOrder);
@@ -274,7 +274,7 @@ public class ProjectRepository {
 	 */
 	public List<Task> getFinishedTaskListByDecreasingOrder(User user) {
 
-		List<Task> FinishedUserTaskListDecreasingOrder = new ArrayList<Task>();
+		List<Task> FinishedUserTaskListDecreasingOrder = new ArrayList<>();
 		FinishedUserTaskListDecreasingOrder.addAll(this.getFinishedUserTaskList(user));
 
 		return this.sortTaskListDecreasingOrder(FinishedUserTaskListDecreasingOrder);
