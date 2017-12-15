@@ -102,7 +102,7 @@ public class US210Tests {
 
 	@After
 	public void tearDown() {
-		company.clear();
+		Company.clear();
 		newUserA = null;
 		newUserB = null;
 		project = null;

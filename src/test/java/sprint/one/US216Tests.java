@@ -15,8 +15,8 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.ProjectRepository;
 import project.model.Task;
-import project.model.TaskRepository;
 import project.model.TaskCollaborator;
+import project.model.TaskRepository;
 import project.model.User;
 import project.model.UserRepository;
 
@@ -132,7 +132,7 @@ public class US216Tests {
 
 	@After
 	public void tearDown() {
-		myCompany.clear();
+		Company.clear();
 		userRepository = null;
 		user1 = null;
 		user2 = null;

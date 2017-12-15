@@ -43,7 +43,7 @@ public class US116Tests {
 
 	@After
 	public void tearDown() {
-		myCompany.clear();
+		Company.clear();
 		newUser2 = null;
 		newUser3 = null;
 	}

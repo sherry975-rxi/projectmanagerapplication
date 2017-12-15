@@ -103,7 +103,7 @@ public class US320Tests {
 
 	@After
 	public void tearDown() {
-		myCompany.clear();
+		Company.clear();
 		user1 = null;
 		user2 = null;
 		project1 = null;

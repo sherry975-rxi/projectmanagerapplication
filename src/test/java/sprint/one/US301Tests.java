@@ -48,7 +48,7 @@ public class US301Tests {
 
 	@After
 	public void tearDown() {
-		c1.clear();
+		Company.clear();
 		u1 = null;
 		u2 = null;
 		p1 = null;

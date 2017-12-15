@@ -123,7 +123,7 @@ public class US203Tests {
 	@After
 	public void tearDown() {
 
-		myCompany.clear();
+		Company.clear();
 		user2 = null;
 		user3 = null;
 		projCollab1 = null;

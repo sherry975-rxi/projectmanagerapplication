@@ -47,7 +47,7 @@ public class US136Tests {
 
 	@After
 	public void tearDown() {
-		myCompany.clear();
+		Company.clear();
 		newUser2 = null;
 		newUser3 = null;
 

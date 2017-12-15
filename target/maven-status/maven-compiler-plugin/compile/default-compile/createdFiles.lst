@@ -1,0 +1,17 @@
+project\model\ProjectCollaborator.class
+project\model\UserRepository.class
+project\utils\Exportable.class
+project\model\TaskRepository.class
+project\model\EffortUnit.class
+project\model\TaskCollaborator.class
+project\utils\StringUtil.class
+project\model\Profile.class
+project\model\Address.class
+project\model\Company.class
+project\utils\Importable.class
+project\model\Project.class
+project\model\Task.class
+project\model\ProjectRepository.class
+project\model\User.class
+project\utils\XMLParser.class
+project\model\Report.class

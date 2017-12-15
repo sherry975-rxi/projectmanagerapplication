@@ -88,7 +88,7 @@ public class US372 {
 
 	@After
 	public void tearDown() {
-		myCompany.clear();
+		Company.clear();
 		user1 = null;
 		testTask = null;
 		project = null;

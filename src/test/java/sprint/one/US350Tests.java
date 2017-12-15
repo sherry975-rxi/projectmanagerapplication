@@ -70,7 +70,7 @@ public class US350Tests {
 
 	@After
 	public void tearDown() {
-		c1.clear();
+		Company.clear();
 		u1 = null;
 		u2 = null;
 		u3 = null;

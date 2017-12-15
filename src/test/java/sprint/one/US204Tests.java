@@ -76,7 +76,7 @@ public class US204Tests {
 
 	@After
 	public void tearDown() {
-		myCompany.clear();
+		Company.clear();
 		newUserA = null;
 		newUserB = null;
 		project1 = null;

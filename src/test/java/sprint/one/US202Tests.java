@@ -55,7 +55,7 @@ public class US202Tests {
 
 	@After
 	public void tearDown() {
-		myCompany.clear();
+		Company.clear();
 		user1 = null;
 		address1 = null;
 	}

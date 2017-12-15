@@ -58,7 +58,7 @@ public class US101Tests {
 	@After
 	public void tearDown() {
 
-		Critical.clear();
+		Company.clear();
 		user1 = null;
 		user2 = null;
 		uFalse = null;

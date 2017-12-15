@@ -45,7 +45,7 @@ public class US110Tests {
 
 	@After
 	public void breakDown() {
-		Blip.clear();
+		Company.clear();
 		newUser2 = null;
 		newUser3 = null;
 

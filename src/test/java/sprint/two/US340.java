@@ -83,7 +83,7 @@ public class US340 {
 
 	@After
 	public void tearDown() {
-		myCompany.clear();
+		Company.clear();
 		user1 = null;
 		testTask = null;
 		testTask2 = null;

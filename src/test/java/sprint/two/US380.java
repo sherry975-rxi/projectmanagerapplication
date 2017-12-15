@@ -79,7 +79,7 @@ public class US380 {
 
 	@After
 	public void tearDown() {
-		myCompany.clear();
+		Company.clear();
 		user1 = null;
 		user2 = null;
 		user3 = null;

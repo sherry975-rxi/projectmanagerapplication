@@ -46,7 +46,7 @@ public class US112Tests {
 
 	@After
 	public void tearDown() {
-		Armis.clear();
+		Company.clear();
 		newUser2 = null;
 		newUser3 = null;
 

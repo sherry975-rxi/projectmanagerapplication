@@ -41,7 +41,7 @@ public class US351 {
 
 	@After
 	public void tearDown() {
-		myComp.clear();
+		Company.clear();
 		user1 = null;
 		user2 = null;
 		proj1 = null;
