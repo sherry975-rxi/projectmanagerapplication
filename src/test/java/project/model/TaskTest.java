@@ -236,4 +236,27 @@ public class TaskTest {
 		assertEquals(expectedCost, testTask2.getTaskCost(), 0.001);
 
 	}
+
+	/**
+	 * tests if the method to get the reported budget to the task returns the
+	 * expected value, according to the taskWorker value and the hours he spent on
+	 * that task
+	 * 
+	 */
+	@Test
+	public void testTaskTeamHasActiveUsers() {
+		// Adds two users to the task
+		// Adds two users to the task
+		testTask2.addUserToTask(tWorker1);
+
+		// Checks if task has active users
+		assertTrue(testTask2.taskTeamHasActiveUsers());
+		// Set finish date for taskWorker - this method also changes is state to false
+		// in the task
+		tWorker1.addFinishDateForTaskWorker();
+		// Checks if the task doesnt have any active user
+		assertFalse(testTask2.taskTeamHasActiveUsers());
+
+	}
+
 }

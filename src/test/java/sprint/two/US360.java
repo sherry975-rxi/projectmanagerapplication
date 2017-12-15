@@ -158,11 +158,16 @@ public class US360 {
 	 * are the tasks in the list
 	 */
 	@Test
-	public void testGetTasksListWithoutUsers() {
+	public void testGetTasksListWithoutActiveUsers() {
 		// Creates a new list to compare and add the tasks that don't have collaborators
 
 		List<Task> tasksWithoutUsersTest = new ArrayList<Task>();
 
+		// Adds a new taskCollaborator
+		testTask3.addNewTaskWorker(collaborator1);
+
+		// Sets collaborator state to inactive
+		testTask3.getTaskTeam().get(0).addFinishDateForTaskWorker();
 		tasksWithoutUsersTest.add(testTask3);
 		tasksWithoutUsersTest.add(testTask4);
 
