@@ -122,10 +122,7 @@ public class TaskCollaborator {
 				return false;
 		} else if (!finishDate.equals(other.finishDate))
 			return false;
-		if (projCollaborator == null) {
-			if (other.projCollaborator != null)
-				return false;
-		} else if (!projCollaborator.equals(other.projCollaborator))
+		if (!projCollaborator.equals(other.projCollaborator))
 			return false;
 		return true;
 	}
