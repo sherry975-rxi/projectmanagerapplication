@@ -11,7 +11,7 @@ public final class Company {
 
 	private UserRepository usersRepository;
 	private ProjectRepository projectsRepository;
-	private static Company _theInstance;
+	private static Company theInstance;
 
 	/**
 	 * Constructor for Company includes usersRepository creation and
@@ -28,10 +28,10 @@ public final class Company {
 	 * @return the only instance of Company that the program is allowed to have
 	 */
 	public static synchronized Company getTheInstance() {
-		if (_theInstance == null)
-			_theInstance = new Company();
+		if (theInstance == null)
+			theInstance = new Company();
 
-		return _theInstance;
+		return theInstance;
 	}
 
 	/**
@@ -39,7 +39,7 @@ public final class Company {
 	 */
 	public static void clear() {
 
-		_theInstance = null;
+		theInstance = null;
 
 	}
 

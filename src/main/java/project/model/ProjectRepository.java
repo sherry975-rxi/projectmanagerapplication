@@ -253,10 +253,10 @@ public class ProjectRepository {
 	 */
 	public List<Task> getFinishedUserTasksFromLastMonthInDecreasingOrder(User user) {
 
-		List<Task> LastMonthFinishedUserTaskListDecreasingOrder = new ArrayList<>();
-		LastMonthFinishedUserTaskListDecreasingOrder.addAll(this.getLastMonthFinishedUserTaskList(user));
+		List<Task> lastMonthFinishedUserTaskListDecreasingOrder = new ArrayList<>();
+		lastMonthFinishedUserTaskListDecreasingOrder.addAll(this.getLastMonthFinishedUserTaskList(user));
 
-		return this.sortTaskListDecreasingOrder(LastMonthFinishedUserTaskListDecreasingOrder);
+		return this.sortTaskListDecreasingOrder(lastMonthFinishedUserTaskListDecreasingOrder);
 
 	}
 
@@ -274,10 +274,10 @@ public class ProjectRepository {
 	 */
 	public List<Task> getAllFinishedUserTasksInDecreasingOrder(User user) {
 
-		List<Task> FinishedUserTaskListDecreasingOrder = new ArrayList<>();
-		FinishedUserTaskListDecreasingOrder.addAll(this.getAllFinishedTasksFromUser(user));
+		List<Task> finishedUserTaskListDecreasingOrder = new ArrayList<>();
+		finishedUserTaskListDecreasingOrder.addAll(this.getAllFinishedTasksFromUser(user));
 
-		return this.sortTaskListDecreasingOrder(FinishedUserTaskListDecreasingOrder);
+		return this.sortTaskListDecreasingOrder(finishedUserTaskListDecreasingOrder);
 	}
 
 	/**
@@ -296,7 +296,7 @@ public class ProjectRepository {
 	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
-		for (int i = 0; i < result.size() - 1; i++) {
+		for (int i = 0; i < result.size(); i++) {
 			for (int j = i + 1; j < result.size(); j++) {
 				if (result.get(i).getFinishDate().before(result.get(j).getFinishDate())) {
 					Task h = new Task(result.get(i));
