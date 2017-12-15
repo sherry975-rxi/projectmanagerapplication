@@ -94,10 +94,7 @@ public class ProjectCollaborator {
 		if (getClass() != obj.getClass())
 			return false;
 		ProjectCollaborator other = (ProjectCollaborator) obj;
-		if (collaborator == null) {
-			if (other.collaborator != null)
-				return false;
-		} else if (!collaborator.equals(other.collaborator))
+		if (!collaborator.equals(other.collaborator))
 			return false;
 		return true;
 	}
