@@ -236,8 +236,12 @@ public class TaskRepository {
 		List<Task> listOfTasksWithoutCollaboratorsAssigned = new ArrayList<>();
 
 		for (Task other : this.getProjectTaskList()) {
+
 			if (other.isTaskTeamEmpty()) {
 				listOfTasksWithoutCollaboratorsAssigned.add(other);
+			} else if (!other.taskTeamHasActiveUsers()) {
+				listOfTasksWithoutCollaboratorsAssigned.add(other);
+
 			}
 		}
 

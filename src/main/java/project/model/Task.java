@@ -636,6 +636,24 @@ public class Task {
 		return false;
 	}
 
+	/**
+	 * This PRIVATE method checks if a Project Collaborator is active on the task
+	 * team.
+	 * 
+	 * @param Project
+	 *            Collaborator Project Collaborator to check
+	 * @return True if task team Project Collaborator is active, FALSE if the task
+	 *         team does not have the Project Collaborator active
+	 */
+	public boolean taskTeamHasActiveUsers() {
+		for (TaskCollaborator other : taskTeam) {
+			if (other.isTaskWorkerActiveInTask()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	// TODO What does copyListOfUsersInTask do that getUserList doesn't?
 	// Why does it need to receive an empty list input?
 	/**
