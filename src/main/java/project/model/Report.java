@@ -14,13 +14,6 @@ public class Report {
 	private int cost;
 
 	/**
-	 * @return cost
-	 */
-	public int getCost() {
-		return cost;
-	}
-
-	/**
 	 * This method creates a report
 	 * 
 	 * @param taskWorker
@@ -31,6 +24,13 @@ public class Report {
 		this.reportedTime = 0;
 		this.taskWorker = taskWorker;
 		this.cost = taskWorker.getProjectCollaboratorFromTaskWorker().getCollaboratorCost();
+	}
+
+	/**
+	 * @return cost
+	 */
+	public int getCost() {
+		return cost;
 	}
 
 	/**
