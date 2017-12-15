@@ -225,10 +225,7 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
+		if (!email.equals(other.email))
 			return false;
 		return true;
 	}
