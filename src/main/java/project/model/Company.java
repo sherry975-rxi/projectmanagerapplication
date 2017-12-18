@@ -1,7 +1,7 @@
 package project.model;
 
 /**
- * Company Class for building Repositorys of Users and Projects (according to
+ * Company Class for building Repositories of Users and Projects (according to
  * certain specifications)
  * 
  * @author Group3
