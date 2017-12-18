@@ -171,7 +171,7 @@ public class Task {
 	 * @parameter c Calendar date to input in start date
 	 */
 	public void setStartDate(Calendar c) {
-		this.startDate = (Calendar) c.clone();
+		this.startDate = c;
 	}
 
 	/**
