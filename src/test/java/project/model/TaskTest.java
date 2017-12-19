@@ -299,8 +299,17 @@ public class TaskTest {
 		testTask2.removeProjectCollaboratorFromTask(collab1);
 		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
 
-		// tries to remove collab2 from testTask. Wont do anything because collab2 is
-		// not in task
+		/*
+		 * tries to remove collab1 from testTask. Wont do anything because collab1 was
+		 * already deactivated from task
+		 */
+		testTask2.removeProjectCollaboratorFromTask(collab1);
+		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
+
+		/*
+		 * tries to remove collab2 from testTask. Wont do anything because collab2 is
+		 * not in task
+		 */
 		testTask2.removeProjectCollaboratorFromTask(collab2);
 		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
 	}
