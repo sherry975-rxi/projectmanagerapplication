@@ -435,8 +435,14 @@ public class ProjectTest {
 	 */
 	@Test
 	public void testIsUserActiveInProjectUserInactive() {
+		// Adds user1 to ProjectTeam
 		p1.addUserToProjectTeam(user1, 5);
+		// Expected result is true. user1 is in Project team
+		assertTrue(p1.isUserActiveInProject(user1));
+
+		// remover user1 from ProjectTeam
 		p1.removeProjectCollaboratorFromProjectTeam(user1);
+		// Expected result is false. user1 is no longer in Project team
 		assertFalse(p1.isUserActiveInProject(user1));
 	}
 
