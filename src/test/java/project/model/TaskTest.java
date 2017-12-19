@@ -80,6 +80,35 @@ public class TaskTest {
 		assertFalse(testTask.getDescription().equals(testTask3.getDescription()));
 	}
 
+	@Test
+	public void testGettersAndSetters() {
+
+		// Creates an int variable
+		int valueToCompare = 10;
+
+		// Tests the set and getEstimatedTaskEffort methods
+		testTask.setEstimatedTaskEffort(valueToCompare);
+		assertEquals(valueToCompare, testTask.getEstimatedTaskEffort());
+
+		// Tests the set and getTaskBudget methods
+		testTask.setTaskBudget(valueToCompare);
+		assertEquals(valueToCompare, testTask.getTaskBudget());
+
+		// Tests the set and getTaskStartDate methods
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		assertEquals(estimatedTaskStartDate, testTask.getEstimatedTaskStartDate());
+
+		/*
+		 * Task is created in project MyProject, which is the first and only project to
+		 * be created in this unitTest, so it starts with one Since testTask is the
+		 * first task to be created, the number associated to it its also 1
+		 */
+
+		String taskIDToCompare = "1.1";
+
+		assertEquals(testTask.getTaskID(), taskIDToCompare);
+	}
+
 	/**
 	 * Tests add and remove users to task team: verifying true or false depending on
 	 * if they exist) Then compares the Team list with a test List
@@ -89,7 +118,8 @@ public class TaskTest {
 
 		testTask.addTaskCollaboratorToTask(tWorker1);
 		testTask.addTaskCollaboratorToTask(tWorker2);
-		assertTrue(testTask.isProjectCollaboratorInTaskTeam(collab1) && testTask.isProjectCollaboratorInTaskTeam(collab2));
+		assertTrue(
+				testTask.isProjectCollaboratorInTaskTeam(collab1) && testTask.isProjectCollaboratorInTaskTeam(collab2));
 	}
 
 	/**
