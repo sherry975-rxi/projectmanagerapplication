@@ -325,6 +325,9 @@ public class TaskRepositoryTest {
 		// Checks if the 2 values are equal
 		assertEquals(5.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab1), 0.001);
 
+		// Expects 0, as collab2 didnt have any task associated to him
+		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab2), 0.001);
+
 	}
 
 	@Test
@@ -457,11 +460,13 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
 		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
 
 		// Adds user1 to the Task
 		testTask.addTaskCollaboratorToTask(taskWorker1);
 		testTask2.addTaskCollaboratorToTask(taskWorker1);
 		testTask3.addTaskCollaboratorToTask(taskWorker1);
+		testTask4.addTaskCollaboratorToTask(taskWorker1);
 
 		// create finished date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -488,7 +493,7 @@ public class TaskRepositoryTest {
 		// Marks testTask3 as finished
 		testTask3.markTaskAsFinished();
 
-		// Creates a new list, and then added the unfished task
+		// Creates a new list, and then added the unfinished task
 		List<Task> listUnfinishedTasks = new ArrayList<Task>();
 		listUnfinishedTasks.add(testTask);
 		listUnfinishedTasks.add(testTask2);
@@ -595,12 +600,19 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask5);
 		taskRepository.addProjectTask(testTask6);
 		taskRepository.addProjectTask(testTask7);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
 
 		// Adds user1 to the Task
 		testTask4.addTaskCollaboratorToTask(taskWorker1);
 		testTask5.addTaskCollaboratorToTask(taskWorker1);
 		testTask6.addTaskCollaboratorToTask(taskWorker1);
 		testTask7.addTaskCollaboratorToTask(taskWorker1);
+		testTask2.addTaskCollaboratorToTask(taskWorker1);
+		testTask3.addTaskCollaboratorToTask(taskWorker1);
+
+		// Marks testTask2 as finished
+		testTask2.markTaskAsFinished();
 
 		// start tasks
 		testTask4.setStartDate(startDateTest);
@@ -615,8 +627,19 @@ public class TaskRepositoryTest {
 		taskDeadLine.set(Calendar.DAY_OF_MONTH, 15);
 		taskDeadLine.set(Calendar.HOUR_OF_DAY, 14);
 
-		// sets testTask4 with the date variable created before
+		// create taskDeadLine for task3
+		Calendar taskDeadLine2 = Calendar.getInstance();
+		taskDeadLine2.set(Calendar.YEAR, 2019);
+		taskDeadLine2.set(Calendar.MONTH, Calendar.DECEMBER);
+		taskDeadLine2.set(Calendar.DAY_OF_MONTH, 15);
+		taskDeadLine2.set(Calendar.HOUR_OF_DAY, 14);
+
+		// sets testTask4 with the date variable created before, that is already past
 		testTask4.setTaskDeadline(taskDeadLine);
+
+		// sets testTask3 with the date variable created before, that's still due until
+		// 2019
+		testTask3.setTaskDeadline(taskDeadLine2);
 
 		// Creates a new list, and then added the Expired tasks
 		List<Task> listExpiredTasks = new ArrayList<Task>();
