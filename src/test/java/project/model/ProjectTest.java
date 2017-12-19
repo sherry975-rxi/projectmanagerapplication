@@ -440,6 +440,9 @@ public class ProjectTest {
 		// Expected result is true. user1 is in Project team
 		assertTrue(p1.isUserActiveInProject(user1));
 
+		// Expected False. User2 is not in Project Team
+		assertFalse(p1.isUserActiveInProject(user2));
+
 		// remover user1 from ProjectTeam
 		p1.removeProjectCollaboratorFromProjectTeam(user1);
 		// Expected result is false. user1 is no longer in Project team
