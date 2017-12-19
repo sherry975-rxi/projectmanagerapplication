@@ -186,6 +186,14 @@ public class ProjectTest {
 	public void testAddUserToProjectTeam() {
 		p1.addProjectCollaboratorToProjectTeam(projectCollaborator2);
 		assertEquals(user2, p1.getProjectTeam().get(0).getUserFromProjectCollaborator());
+
+		// Deactivates user2(projectCollaborator2) from project
+		p1.removeProjectCollaboratorFromProjectTeam(user2);
+		// Adds user2 again to the project (this method checks for users that dont
+		// belong to the team or that were deactivated from project
+		p1.addProjectCollaboratorToProjectTeam(projectCollaborator2);
+		assertEquals(user2, p1.getProjectTeam().get(0).getUserFromProjectCollaborator());
+
 	}
 
 	/**
@@ -222,7 +230,8 @@ public class ProjectTest {
 	@Test
 	public void testGetUnfinishedTasks() {
 		task1.addTaskCollaboratorToTask(taskWorker1);
-		assertEquals(task1, p1.getTaskRepository().getUnfinishedTasksFromProjectCollaborator(projectCollaborator1).get(0));
+		assertEquals(task1,
+				p1.getTaskRepository().getUnfinishedTasksFromProjectCollaborator(projectCollaborator1).get(0));
 	}
 
 	/**
@@ -264,7 +273,8 @@ public class ProjectTest {
 		task3.setFinishDate();
 		task2.getFinishDate().set(Calendar.MONTH, test.get(Calendar.MONTH) - 1);
 		task3.getFinishDate().set(Calendar.MONTH, test.get(Calendar.MONTH));
-		assertEquals(task3, p1.getTaskRepository().getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator1, 1).get(0));
+		assertEquals(task3, p1.getTaskRepository()
+				.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator1, 1).get(0));
 	}
 
 	@Test
@@ -313,10 +323,10 @@ public class ProjectTest {
 
 		assertEquals(2, p1.getProjectTeam().size());
 		assertTrue(projectCollaborator2.equals(p1.getProjectTeam().get(0)));
-		assertTrue(p1.getTaskRepository().getAllTasksFromProjectCollaborator(projectCollaborator1).get(0).getTaskTeam().get(1)
-				.isTaskCollaboratorActiveInTask());
-		assertFalse(p1.getTaskRepository().getAllTasksFromProjectCollaborator(projectCollaborator2).get(0).getTaskTeam().get(0)
-				.isTaskCollaboratorActiveInTask());
+		assertTrue(p1.getTaskRepository().getAllTasksFromProjectCollaborator(projectCollaborator1).get(0).getTaskTeam()
+				.get(1).isTaskCollaboratorActiveInTask());
+		assertFalse(p1.getTaskRepository().getAllTasksFromProjectCollaborator(projectCollaborator2).get(0).getTaskTeam()
+				.get(0).isTaskCollaboratorActiveInTask());
 	}
 
 	/**
@@ -439,6 +449,10 @@ public class ProjectTest {
 		p1.addProjectCollaboratorToProjectTeam(projectCollaborator2);
 		p1.addProjectCollaboratorToProjectTeam(projectCollaborator1);
 		assertEquals(projectCollaborator2, p1.findProjectCollaborator(user2));
+
+		// Tries to find an user that doesnt belong to a project. The method returns
+		// null
+		assertEquals(null, p1.findProjectCollaborator(user3));
 	}
 
 	/**
