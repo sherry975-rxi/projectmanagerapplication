@@ -571,8 +571,19 @@ public class TaskRepositoryTest {
 		testTask6.setStartDate(startDateTest);
 		testTask7.setStartDate(startDateTest);
 
+		// create taskDeadLine for task4
+		Calendar taskDeadLine = Calendar.getInstance();
+		taskDeadLine.set(Calendar.YEAR, 2016);
+		taskDeadLine.set(Calendar.MONTH, Calendar.DECEMBER);
+		taskDeadLine.set(Calendar.DAY_OF_MONTH, 15);
+		taskDeadLine.set(Calendar.HOUR_OF_DAY, 14);
+
+		// sets testTask4 with the date variable created before
+		testTask4.setTaskDeadline(taskDeadLine);
+
 		// Creates a new list, and then added the Expired tasks
 		List<Task> listExpiredTasks = new ArrayList<Task>();
+		listExpiredTasks.add(testTask4);
 		listExpiredTasks.add(testTask5);
 		listExpiredTasks.add(testTask6);
 		listExpiredTasks.add(testTask7);
