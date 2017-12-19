@@ -84,11 +84,8 @@ public class TaskRepository {
 		List<Task> finishedTaskList = new ArrayList<>();
 
 		for (Task other : this.projectTasks) {
-			if (other.isTaskFinished()) {
-				if (other.isProjectCollaboratorInTaskTeam(collab)) {
-					finishedTaskList.add(other);
-
-				}
+			if (other.isTaskFinished() && other.isProjectCollaboratorInTaskTeam(collab)) {
+				finishedTaskList.add(other);
 			}
 		}
 
