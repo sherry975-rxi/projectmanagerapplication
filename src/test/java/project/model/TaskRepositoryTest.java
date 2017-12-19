@@ -614,6 +614,7 @@ public class TaskRepositoryTest {
 		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// Adds Tasks to TaskRepository
+		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask4);
 		taskRepository.addProjectTask(testTask5);
 		taskRepository.addProjectTask(testTask6);
@@ -622,6 +623,7 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 
 		// Adds user1 to the Task
+		testTask.addTaskCollaboratorToTask(taskWorker1);
 		testTask4.addTaskCollaboratorToTask(taskWorker1);
 		testTask5.addTaskCollaboratorToTask(taskWorker1);
 		testTask6.addTaskCollaboratorToTask(taskWorker1);
@@ -652,12 +654,27 @@ public class TaskRepositoryTest {
 		taskDeadLine2.set(Calendar.DAY_OF_MONTH, 15);
 		taskDeadLine2.set(Calendar.HOUR_OF_DAY, 14);
 
+		// create taskDeadLine for task
+		Calendar taskDeadLine3 = Calendar.getInstance();
+		taskDeadLine3.set(Calendar.YEAR, 2017);
+		taskDeadLine3.set(Calendar.MONTH, Calendar.DECEMBER);
+		taskDeadLine3.set(Calendar.DAY_OF_MONTH, 30);
+		taskDeadLine3.set(Calendar.HOUR_OF_DAY, 14);
+
 		// sets testTask4 with the date variable created before, that is already past
 		testTask4.setTaskDeadline(taskDeadLine);
 
-		// sets testTask3 with the date variable created before, that's still due until
-		// 2019
+		/*
+		 * sets testTask3 with the date variable created before, that's still due until
+		 * 2019
+		 */
 		testTask3.setTaskDeadline(taskDeadLine2);
+
+		/*
+		 * sets testTask with the date variable created before, that's still due until
+		 * the end of this year
+		 */
+		testTask.setTaskDeadline(taskDeadLine3);
 
 		// Creates a new list, and then added the Expired tasks
 		List<Task> listExpiredTasks = new ArrayList<Task>();
