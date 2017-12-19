@@ -35,8 +35,8 @@ public class TaskRepositoryTest {
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 
-	@Before public
-	void setUp() {
+	@Before
+	public void setUp() {
 		// creates an UserRepository
 		userRepository = new UserRepository();
 
@@ -109,8 +109,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@After public
-	void tearDown() {
+	@After
+	public void tearDown() {
 		user1 = null;
 		testTask = null;
 		testTask2 = null;
@@ -126,8 +126,8 @@ public class TaskRepositoryTest {
 		collab2 = null;
 	}
 
-	@Test public
-	void testCreateTask() {
+	@Test
+	public void testCreateTask() {
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
@@ -150,8 +150,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@Test public
-	void testGetProjectTaskList() {
+	@Test
+	public void testGetProjectTaskList() {
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
@@ -174,8 +174,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@Test public
-	void testGetUnFinishedTasksFromUser() {
+	@Test
+	public void testGetUnFinishedTasksFromUser() {
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
@@ -198,8 +198,8 @@ public class TaskRepositoryTest {
 		assertEquals(test, taskRepository.getUnfinishedTasksFromProjectCollaborator(collab1));
 	}
 
-	@Test public
-	void testFinishedTaskListOfUserInProject() {
+	@Test
+	public void testFinishedTaskListOfUserInProject() {
 
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
@@ -226,8 +226,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@Test public
-	void testGetFinishedTaskGivenMonth() {
+	@Test
+	public void testGetFinishedTaskGivenMonth() {
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
@@ -262,8 +262,8 @@ public class TaskRepositoryTest {
 		assertEquals(test, taskRepository.getFinishedTasksFromProjectCollaboratorInGivenMonth(collab1, 1));
 	}
 
-	@Test public
-	void testContainsTask() {
+	@Test
+	public void testContainsTask() {
 
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
@@ -282,8 +282,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@Test public
-	void testGetTimeOnLastMonthProjectUserTask() {
+	@Test
+	public void testGetTimeOnLastMonthProjectUserTask() {
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
 
@@ -321,8 +321,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@Test public
-	void testGetTaskCounter() {
+	@Test
+	public void testGetTaskCounter() {
 		// sets the task counter as 0;
 		taskRepository.setTaskCounter(0);
 		// add task to task repository of the project
@@ -341,8 +341,8 @@ public class TaskRepositoryTest {
 		assertEquals(expectedTaskCounter, taskRepository.getTaskCounter());
 	}
 
-	@Test public
-	void testGetProjectId() {
+	@Test
+	public void testGetProjectId() {
 		// checks if the project id are the same;
 		assertEquals(project.getIdCode(), taskRepository.getProjId());
 
@@ -352,8 +352,8 @@ public class TaskRepositoryTest {
 		assertEquals(project.getIdCode(), anotherTaskRepository.getProjId());
 	}
 
-	@Test public
-	void testGetAllTaskOfUser() {
+	@Test
+	public void testGetAllTaskOfUser() {
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
@@ -381,8 +381,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@Test public
-	void testIsThereUserWithoutTasks() {
+	@Test
+	public void testIsThereUserWithoutTasks() {
 		// adds task to task repository of the project
 		taskRepository.addProjectTask(testTask);
 		taskRepository.addProjectTask(testTask2);
@@ -399,8 +399,8 @@ public class TaskRepositoryTest {
 		assertTrue(taskRepository.isCollaboratorActiveOnAnyTask(collab2));
 	}
 
-	@Test public
-	void testGetListofTasksWithoutCollaboratorsAssigned() {
+	@Test
+	public void testGetListofTasksWithoutCollaboratorsAssigned() {
 
 		// adds task to task repository of the project
 		taskRepository.addProjectTask(testTask);
@@ -417,14 +417,35 @@ public class TaskRepositoryTest {
 		List<Task> listTasksWithoutUser = new ArrayList<Task>();
 		listTasksWithoutUser.add(testTask2);
 		listTasksWithoutUser.add(testTask3);
-
 		// Checks if both lists have the same tasks
+		assertEquals(listTasksWithoutUser, taskRepository.getAllTasksWithoutCollaboratorsAssigned());
+
+		// adds TaskWorker 1 to testTask2
+		testTask2.addTaskCollaboratorToTask(taskWorker1);
+
+		// Removes task2 from taskList to compare
+		listTasksWithoutUser.remove(testTask2);
+
+		// See if the both lists have the same tasks.
+		assertEquals(listTasksWithoutUser, taskRepository.getAllTasksWithoutCollaboratorsAssigned());
+
+		// removes collab1 from testTask2
+		testTask2.removeProjectCollaboratorFromTask(collab1);
+
+		// clears the taskList
+		listTasksWithoutUser.clear();
+
+		// Adds testTask2 and testTask3 to the list
+		listTasksWithoutUser.add(testTask2);
+		listTasksWithoutUser.add(testTask3);
+
+		// See if the both lists have the same tasks.
 		assertEquals(listTasksWithoutUser, taskRepository.getAllTasksWithoutCollaboratorsAssigned());
 
 	}
 
-	@Test public
-	void testGetUnFinishedTasks() {
+	@Test
+	public void testGetUnFinishedTasks() {
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
@@ -455,8 +476,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@Test public
-	void testGetFinishedTasks() {
+	@Test
+	public void testGetFinishedTasks() {
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
@@ -502,8 +523,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@Test public
-	void testGetUnstartedTasks() {
+	@Test
+	public void testGetUnstartedTasks() {
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
@@ -523,8 +544,8 @@ public class TaskRepositoryTest {
 
 	}
 
-	@Test public
-	void testGetExpiredTasks() {
+	@Test
+	public void testGetExpiredTasks() {
 		// create star date to test
 		Calendar startDateTest = Calendar.getInstance();
 		startDateTest.set(Calendar.YEAR, 2017);
