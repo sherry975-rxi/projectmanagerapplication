@@ -67,6 +67,8 @@ public class TaskRepositoryTest {
 		// create task workers
 		taskWorker1 = new TaskCollaborator(collab1);
 		taskWorker2 = new TaskCollaborator(collab2);
+		taskWorker3 = new TaskCollaborator(collab3);
+
 		// add user to user list
 		userRepository.addUserToUserRepository(user1);
 		userRepository.addUserToUserRepository(user2);
@@ -341,7 +343,7 @@ public class TaskRepositoryTest {
 		// Checks if the 2 values are equal
 		assertEquals(5.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab1), 0.001);
 
-		// Expects 0, as collab2 didnt have any task associated to him
+		// Expects 0, as collab3 didnt have any task associated to him
 		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab3), 0.001);
 
 	}
