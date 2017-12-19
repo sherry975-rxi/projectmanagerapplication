@@ -289,4 +289,20 @@ public class TaskTest {
 
 	}
 
+	/**
+	 * tests the removeProjectCollaboratorFromTask method
+	 */
+
+	@Test
+	public void testRemoveProjectCollaboratorFromTask() {
+		testTask2.addTaskCollaboratorToTask(tWorker1);
+		testTask2.removeProjectCollaboratorFromTask(collab1);
+		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
+
+		// tries to remove collab2 from testTask. Wont do anything because collab2 is
+		// not in task
+		testTask2.removeProjectCollaboratorFromTask(collab2);
+		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
+	}
+
 }
