@@ -17,6 +17,7 @@ public class ProjectRepositoryTest {
 	User user1;
 	User user2;
 	User user3;
+	User userNotCollaborator;
 	ProjectCollaborator collab1;
 	ProjectCollaborator collab2;
 	ProjectCollaborator collab3;
@@ -26,6 +27,10 @@ public class ProjectRepositoryTest {
 	Project project1;
 	Project project2;
 	Project project3;
+	Project project4;
+	Project project5;
+	Project project6;
+
 	Task task1;
 	Task task2;
 	Task task3;
@@ -41,6 +46,8 @@ public class ProjectRepositoryTest {
 		user1 = new User("name", "email", "idNumber", "function", "123456789");
 		user2 = new User("name2", "email2", "idNumber2", "function2", "987654321");
 		user3 = new User("name6", "email6", "idNumber6", "function6", "987654271");
+		userNotCollaborator = new User("name7", "notcollaborator@gmail.com", "idNumber7", "function6", "987654271");
+
 		collab1 = new ProjectCollaborator(user1, 1);
 		collab2 = new ProjectCollaborator(user2, 2);
 		collab3 = new ProjectCollaborator(user3, 3);
@@ -50,6 +57,10 @@ public class ProjectRepositoryTest {
 		project1 = new Project(1, "name3", "description3", user1);
 		project2 = new Project(2, "name4", "description5", user2);
 		project3 = new Project(3, "name5", "description5", user3);
+		project4 = new Project(4, "project4", "description5", user3);
+		project5 = new Project(5, "project5", "description5", user3);
+		project6 = new Project(6, "project6", "description5", user3);
+
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
 		taskDeadline = Calendar.getInstance();
@@ -71,6 +82,10 @@ public class ProjectRepositoryTest {
 		project1 = null;
 		project2 = null;
 		project3 = null;
+		project4 = null;
+		project5 = null;
+		project6 = null;
+
 		task1 = null;
 		task2 = null;
 		task3 = null;
@@ -125,6 +140,17 @@ public class ProjectRepositoryTest {
 		expResultProjectList.add(project1);
 
 		assertEquals(expResultProjectList, projectRepository.getAllProjects());
+
+		// Tried to add again the same project
+		projectRepository.addProjectToProjectRepository(project1);
+
+		/*
+		 * The result will be the same as before, as the method doesn't allow to add
+		 * projects that already exist in the projectRepository
+		 */
+
+		assertEquals(expResultProjectList, projectRepository.getAllProjects());
+
 	}
 
 	/**
@@ -149,18 +175,37 @@ public class ProjectRepositoryTest {
 	@Test
 	public void testGetActiveProjects() {
 
-		// Sets the project status to review (4, active)
-		project1.setProjectStatus(4);
-		project2.setProjectStatus(4);
-
 		// Adds the projects to the project repository
 		projectRepository.addProjectToProjectRepository(project1);
 		projectRepository.addProjectToProjectRepository(project2);
 		projectRepository.addProjectToProjectRepository(project3);
+		projectRepository.addProjectToProjectRepository(project4);
+		projectRepository.addProjectToProjectRepository(project5);
+		projectRepository.addProjectToProjectRepository(project6);
+
+		// Sets the project status to Planning (0, Not active)
+		project1.setProjectStatus(0);
+
+		// Sets the project status to Initiation (1, Active)
+		project2.setProjectStatus(1);
+
+		// Sets the project status to Executing (2, Active)
+		project3.setProjectStatus(2);
+
+		// Sets the project status to Delivery (3, Active)
+		project4.setProjectStatus(3);
+
+		// Sets the project status to Review (4, Active)
+		project5.setProjectStatus(4);
+
+		// Sets the project status to Close (5, Active)
+		project6.setProjectStatus(5);
 
 		// Adds the projects to the expResult list to be compared to.
-		expResultProjectList.add(project1);
 		expResultProjectList.add(project2);
+		expResultProjectList.add(project3);
+		expResultProjectList.add(project4);
+		expResultProjectList.add(project5);
 
 		assertEquals(expResultProjectList, projectRepository.getActiveProjects());
 	}
@@ -193,6 +238,19 @@ public class ProjectRepositoryTest {
 		expResultTaskList.add(task3);
 
 		assertEquals(expResultTaskList, projectRepository.getUserTasks(user1));
+
+		// Clears list
+		expResultTaskList.clear();
+
+		// returns an empty list, as the user is not a collaborator
+		assertEquals(expResultTaskList, projectRepository.getUserTasks(userNotCollaborator));
+
+		/*
+		 * returns an empty list, as the user is a collaborator but doesnt have any task
+		 * associated to him
+		 */
+		assertEquals(expResultTaskList, projectRepository.getUserTasks(user2));
+
 	}
 
 	/**
@@ -231,6 +289,12 @@ public class ProjectRepositoryTest {
 
 		assertEquals(expResultTaskList, projectRepository.getAllFinishedTasksFromUser(user1));
 
+		// Clears list
+		expResultTaskList.clear();
+
+		// returns an empty list, as the user is not a collaborator
+		assertEquals(expResultTaskList, projectRepository.getAllFinishedTasksFromUser(userNotCollaborator));
+
 	}
 
 	/**
@@ -266,6 +330,12 @@ public class ProjectRepositoryTest {
 		expResultTaskList.add(task3);
 
 		assertEquals(expResultTaskList, projectRepository.getUnfinishedUserTaskList(user1));
+
+		// Clears list
+		expResultTaskList.clear();
+
+		// returns an empty list, as the user is not a collaborator
+		assertEquals(expResultTaskList, projectRepository.getUnfinishedUserTaskList(userNotCollaborator));
 
 	}
 
@@ -314,6 +384,13 @@ public class ProjectRepositoryTest {
 		expResultTaskList.add(task2);
 
 		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskList(user1));
+
+		// Clears list
+		expResultTaskList.clear();
+
+		// returns an empty list, as the user is not a collaborator
+		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskList(userNotCollaborator));
+
 	}
 
 	/**
