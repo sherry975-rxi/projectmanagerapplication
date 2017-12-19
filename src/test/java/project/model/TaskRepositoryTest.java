@@ -18,10 +18,16 @@ public class TaskRepositoryTest {
 	User user1;
 	User userAdmin;
 	User user2;
+	User user3;
+
 	TaskCollaborator taskWorker1;
 	TaskCollaborator taskWorker2;
+	TaskCollaborator taskWorker3;
+
 	ProjectCollaborator collab1;
 	ProjectCollaborator collab2;
+	ProjectCollaborator collab3;
+
 	Project project;
 	ProjectRepository projectRepository;
 	TaskRepository taskRepository;
@@ -48,22 +54,30 @@ public class TaskRepositoryTest {
 				"2401-00", "Test", "Testo", "Testistan");
 		user2 = userRepository.createUser("Joao", "joao@gmail.com", "002", "collaborator", "920000000", "Rua",
 				"2402-00", "Test", "Testo", "Testistan");
+		user3 = userRepository.createUser("Francisco", "francisco@gmail.com", "003", "collaborator", "420000000", "Rua",
+				"2402-00", "Test", "Testo", "Testistan");
 		// create user admin
 		userAdmin = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 		// create project collaborators
 		collab1 = new ProjectCollaborator(user1, 2);
 		collab2 = new ProjectCollaborator(user2, 3);
+		collab3 = new ProjectCollaborator(user3, 3);
+
 		// create task workers
 		taskWorker1 = new TaskCollaborator(collab1);
 		taskWorker2 = new TaskCollaborator(collab2);
 		// add user to user list
 		userRepository.addUserToUserRepository(user1);
 		userRepository.addUserToUserRepository(user2);
+		userRepository.addUserToUserRepository(user3);
+
 		userRepository.addUserToUserRepository(userAdmin);
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		user2.setUserProfile(Profile.COLLABORATOR);
+		user3.setUserProfile(Profile.COLLABORATOR);
+
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
 		project = projectRepository.createProject("name3", "description4", userAdmin);
@@ -124,6 +138,8 @@ public class TaskRepositoryTest {
 		taskWorker2 = null;
 		collab1 = null;
 		collab2 = null;
+		collab3 = null;
+
 	}
 
 	@Test
@@ -326,7 +342,7 @@ public class TaskRepositoryTest {
 		assertEquals(5.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab1), 0.001);
 
 		// Expects 0, as collab2 didnt have any task associated to him
-		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab2), 0.001);
+		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab3), 0.001);
 
 	}
 
