@@ -30,18 +30,16 @@ public class CreateTaskController {
 	 * @param estimatedTaskStartDate
 	 * @param taskDeadline
 	 * @param estimatedCost
-	 * @return a string stating whether or not the task was added successfully
+	 * @return the added task
 	 */
-	public String addTask(String taskDescription, int estimatedTaskEffort, Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedCost) {
+	public Task addTask(String taskDescription, int estimatedTaskEffort, Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedCost) {
 		Task toAdd = target.createTask(taskDescription, estimatedTaskEffort, estimatedTaskStartDate, taskDeadline, estimatedCost);
 		
 		target.addProjectTask(toAdd);
 		
-		if(target.getUnFinishedTasks().contains(toAdd)) {
-			return "OK!";
-		}
-		else
-			return "Task not added!";
+		int index = target.getUnstartedTasks().size();
+		
+		return target.getUnstartedTasks().get(index-1);
 	}
 
 }

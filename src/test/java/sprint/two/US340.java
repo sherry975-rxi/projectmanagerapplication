@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.controller.CreateTaskController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
@@ -145,4 +146,23 @@ public class US340 {
 		assertEquals(taskRepository.getProjectTaskRepository(), taskListToCompare);
 
 	}
+	
+	@Test
+	public void test340Controller() {
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+		
+		CreateTaskController testControl = new CreateTaskController(project);
+		
+		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 0);
+		
+		Task testTaskController = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(),
+		10);
+		
+		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 1);
+		
+		assertTrue(testTaskController.getDescription().equals("Test dis agen pls"));
+		assertFalse(testTaskController.getDescription().equals(""));
+	}
+
 }
