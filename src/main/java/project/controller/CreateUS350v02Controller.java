@@ -5,9 +5,9 @@ import project.model.User;
 
 public class CreateUS350v02Controller {
 
-	public void addProjectCollaboratorToProjectTeam(User u1, Project p1) {
+	public void addUserToProjectTeam(User u1, Project p1, int effort) {
 
-		p1.addProjectCollaboratorToProjectTeam(p1.createProjectCollaborator(u1, 0));
+		p1.addUserToProjectTeam(u1, effort);
 
 	}
 }
