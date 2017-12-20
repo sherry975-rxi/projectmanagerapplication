@@ -10,13 +10,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.controller.GetAllFinishedUserTasksInDecreasingOrderController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
+import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.UserRepository;
 
 public class US210Tests {
 	/**
@@ -31,6 +34,8 @@ public class US210Tests {
 	 * 
 	 */
 	Company company;
+	ProjectRepository projRep;
+	UserRepository userRep;
 	User newUserA;
 	User newUserB;
 	Project project;
@@ -44,20 +49,23 @@ public class US210Tests {
 	public void setUp() {
 		company = Company.getTheInstance();
 
-		newUserA = company.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
-				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
-		newUserB = company.getUsersRepository().createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000",
-				"StreetB", "ZipCodeB", "CityB", "DistrictB", "CountryB");
+		projRep = company.getProjectsRepository();
+		userRep = company.getUsersRepository();
+
+		newUserA = userRep.createUser("João", "user2@gmail.com", "123", "Maneger", "940000000", "StreetA", "ZipCodeA",
+				"CityA", "DistrictA", "CountryA");
+		newUserB = userRep.createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000", "StreetB",
+				"ZipCodeB", "CityB", "DistrictB", "CountryB");
 
 		newUserA.setUserProfile(Profile.COLLABORATOR);
 		newUserB.setUserProfile(Profile.COLLABORATOR);
 
-		company.getUsersRepository().addUserToUserRepository(newUserA);
-		company.getUsersRepository().addUserToUserRepository(newUserB);
+		userRep.addUserToUserRepository(newUserA);
+		userRep.addUserToUserRepository(newUserB);
 
-		project = company.getProjectsRepository().createProject("name3", "description4", newUserA);
+		project = projRep.createProject("name3", "description4", newUserA);
 		project.getProjectTeam().clear();
-		company.getProjectsRepository().addProjectToProjectRepository(project);
+		projRep.addProjectToProjectRepository(project);
 
 		// create Collaborator from User and add it to team
 
@@ -154,7 +162,10 @@ public class US210Tests {
 		testList.add(testTask4);
 
 		// Compares expected results with TaskList
-		assertEquals(company.getProjectsRepository().getAllFinishedUserTasksInDecreasingOrder(newUserB), testList);
+		GetAllFinishedUserTasksInDecreasingOrderController controller = new GetAllFinishedUserTasksInDecreasingOrderController();
+		controller.setMyCompany(company);
+
+		assertEquals(testList, controller.getAllFinishedUserTasksInDecreasingOrder(newUserB));
 	}
 
 }
