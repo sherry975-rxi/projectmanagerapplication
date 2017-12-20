@@ -16,7 +16,7 @@ public class CreateTaskController {
 	 * This constructor creates a target controller. Currently, it recieves a project but it should recieve a Project Controller or Project Manager controller
 	 * 
 	 * 
-	 * @param target
+	 * @param target Task Repository
 	 */
 	public CreateTaskController(TaskRepository target) {
 		
