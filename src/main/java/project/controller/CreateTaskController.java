@@ -18,9 +18,13 @@ public class CreateTaskController {
 	 * 
 	 * @param target
 	 */
-	public CreateTaskController(Project target) {
+	public CreateTaskController(TaskRepository target) {
 		
-		this.target=target.getTaskRepository();
+		this.target=target;
+	}
+	
+	public TaskRepository getTaskRepository() {
+		return this.target;
 	}
 	/**
 	 * This controller calls the create task method, then the add task method, and finally confirms whether it was added successfully
