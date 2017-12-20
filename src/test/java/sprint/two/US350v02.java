@@ -75,6 +75,11 @@ public class US350v02 {
 		p1 = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
 		p1.getProjectTeam().clear();
 		p1.getTaskRepository().getProjectTaskRepository().clear();
+		contextualProject = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
+
+		// add project to project repository
+		c1.getProjectsRepository().addProjectToProjectRepository(contextualProject);
+
 	}
 
 	@After
@@ -86,6 +91,7 @@ public class US350v02 {
 		u4 = null;
 		u5 = null;
 		p1 = null;
+		contextualProject = null;
 	}
 
 	// @Test
@@ -119,17 +125,15 @@ public class US350v02 {
 	// assertEquals(testUs350, p1.getProjectTeam());
 	// }
 
-	c1.getUsersRepository().addUserToUserRepository(u1);c1.getProjectsRepository().addProjectToProjectRepository(contextualProject);
-
 	@Test
 	public void addColaboratorToProjectTeam_Test() {
 		CreateUS350v02Controller controller = new CreateUS350v02Controller();
 
-		assertFalse(contextualProject.isColaboratorInProjectTeam());
-		
-		controller.addProjectCollaboratorToProjectTeam(u1, contextualProject);
+		assertFalse(contextualProject.isUserInProjectTeam(u1));
 
-		assertTrue(contextualProject.isColaboratorInProjectTeam());
+		controller.addUserToProjectTeam(u1, contextualProject, 0);
+
+		assertTrue(contextualProject.isUserInProjectTeam(u1));
 
 	}
 
