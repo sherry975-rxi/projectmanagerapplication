@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.controller.createUS350v02Controller;
+import project.controller.CreateUS350v02Controller;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
@@ -33,6 +33,7 @@ public class US350v02 {
 	User u4;
 	User u5;
 	Project p1;
+	Project contextualProject;
 
 	@Before
 	public void setUp() {
@@ -118,18 +119,18 @@ public class US350v02 {
 	// assertEquals(testUs350, p1.getProjectTeam());
 	// }
 
+	c1.getUsersRepository().addUserToUserRepository(u1);c1.getProjectsRepository().addProjectToProjectRepository(contextualProject);
+
 	@Test
-	public void test2() {
-		createUS350v02Controller controllerxpto = new createUS350v02Controller();
+	public void addColaboratorToProjectTeam_Test() {
+		CreateUS350v02Controller controller = new CreateUS350v02Controller();
 
-		c1.getUsersRepository().addUserToUserRepository(u1);
-		c1.getProjectsRepository().addProjectToProjectRepository(p1);
+		assertFalse(contextualProject.isColaboratorInProjectTeam());
+		
+		controller.addProjectCollaboratorToProjectTeam(u1, contextualProject);
 
-		assertFalse(p1.getProjectTeam().contains(p1.createProjectCollaborator(u1, 0)));
-
-		controllerxpto.addProjectCollaboratorToProjectTeam(u1, p1);
-
-		assertTrue(p1.getProjectTeam().contains(p1.createProjectCollaborator(u1, 0)));
+		assertTrue(contextualProject.isColaboratorInProjectTeam());
 
 	}
+
 }

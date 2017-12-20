@@ -3,6 +3,7 @@ package project.controller;
 import java.util.List;
 
 import project.model.Company;
+import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.User;
 
@@ -15,10 +16,24 @@ public class GetAllFinishedUserTasksInDecreasingOrderController {
 
 	Company myCompany;
 
+	/**
+	 * Returns the list of finished user tasks in decreasing order for a specific
+	 * user
+	 * 
+	 * @param myUser
+	 * @return Task List
+	 * 
+	 */
 	public List<Task> getAllFinishedUserTasksInDecreasingOrder(User myUser) {
-		return this.myCompany.getProjectsRepository().getAllFinishedUserTasksInDecreasingOrder(myUser);
+		ProjectRepository myProjRep = this.myCompany.getProjectsRepository();
+		return myProjRep.getAllFinishedUserTasksInDecreasingOrder(myUser);
 	}
 
+	/**
+	 * Sets the company used in this method
+	 * 
+	 * @param companyToSet
+	 */
 	public void setMyCompany(Company companyToSet) {
 		this.myCompany = companyToSet;
 	}
