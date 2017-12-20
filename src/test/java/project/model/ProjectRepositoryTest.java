@@ -1,6 +1,7 @@
 package project.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -619,6 +620,21 @@ public class ProjectRepositoryTest {
 		expResultTaskList.add(task3);
 
 		assertEquals(expResultTaskList, projectRepository.sortTaskListDecreasingOrder(toBeSorted));
+	}
+
+	/**
+	 * test to isProjectInProjectRepository.
+	 */
+	@Test
+	public void test_isProjectInProjectRepository() {
+		// before add the project, verify if the project1 is in project repository
+		assertFalse(projectRepository.isProjectInProjectRepository(project1));
+
+		// add project 1 to project repository
+		projectRepository.addProjectToProjectRepository(project1);
+
+		// verify if project1 it was add to project repository
+		assertTrue(projectRepository.isProjectInProjectRepository(project1));
 	}
 
 }

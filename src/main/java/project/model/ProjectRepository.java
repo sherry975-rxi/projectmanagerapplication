@@ -309,4 +309,17 @@ public class ProjectRepository {
 		return result;
 	}
 
+	/**
+	 * Checks if the a project is in a project repository.
+	 * 
+	 * @return TRUE if the Project is in this project repository FALSE if not
+	 */
+	public boolean isProjectInProjectRepository(Project project) {
+
+		if (this.projectsRepository.contains(project))
+			return true;
+
+		return false;
+	}
+
 }
