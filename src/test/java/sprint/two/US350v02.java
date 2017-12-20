@@ -1,20 +1,16 @@
 package sprint.two;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.controller.createUS350v02Controller;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
-import project.model.ProjectCollaborator;
 import project.model.User;
 
 public class US350v02 {
@@ -91,35 +87,49 @@ public class US350v02 {
 		p1 = null;
 	}
 
+	// @Test
+	// public void test() {
+	//
+	// // tests that project manager is u2 and not other user (for example u4)
+	// assertTrue(p1.isProjectManager(u2));
+	// assertFalse(p1.isProjectManager(u4));
+	//
+	// // create project collabotors with u3, u4 and u5 users
+	// ProjectCollaborator collaborattor1 = p1.createProjectCollaborator(u3, 120);
+	// ProjectCollaborator collaborattor2 = p1.createProjectCollaborator(u4, 130);
+	// ProjectCollaborator collaborattor3 = p1.createProjectCollaborator(u5, 150);
+	//
+	// // add collaborators to project
+	// p1.addProjectCollaboratorToProjectTeam(collaborattor1);
+	// p1.addProjectCollaboratorToProjectTeam(collaborattor2);
+	// p1.addProjectCollaboratorToProjectTeam(collaborattor3);
+	//
+	// // add project to the Company Project list
+	// c1.getProjectsRepository().addProjectToProjectRepository(p1);
+	//
+	// // Creates a new list and adds user to that list, to compare with userList
+	// // inside ProjectTeam
+	// List<ProjectCollaborator> testUs350 = new ArrayList<ProjectCollaborator>();
+	//
+	// testUs350.add(collaborattor1);
+	// testUs350.add(collaborattor2);
+	// testUs350.add(collaborattor3);
+	//
+	// assertEquals(testUs350, p1.getProjectTeam());
+	// }
+
 	@Test
-	public void test() {
+	public void test2() {
+		createUS350v02Controller controllerxpto = new createUS350v02Controller();
 
-		// tests that project manager is u2 and not other user (for example u4)
-		assertTrue(p1.isProjectManager(u2));
-		assertFalse(p1.isProjectManager(u4));
-
-		// create project collabotors with u3, u4 and u5 users
-		ProjectCollaborator collaborattor1 = p1.createProjectCollaborator(u3, 120);
-		ProjectCollaborator collaborattor2 = p1.createProjectCollaborator(u4, 130);
-		ProjectCollaborator collaborattor3 = p1.createProjectCollaborator(u5, 150);
-
-		// add collaborators to project
-		p1.addProjectCollaboratorToProjectTeam(collaborattor1);
-		p1.addProjectCollaboratorToProjectTeam(collaborattor2);
-		p1.addProjectCollaboratorToProjectTeam(collaborattor3);
-
-		// add project to the Company Project list
+		c1.getUsersRepository().addUserToUserRepository(u1);
 		c1.getProjectsRepository().addProjectToProjectRepository(p1);
 
-		// Creates a new list and adds user to that list, to compare with userList
-		// inside ProjectTeam
-		List<ProjectCollaborator> testUs350 = new ArrayList<ProjectCollaborator>();
+		assertFalse(p1.getProjectTeam().contains(p1.createProjectCollaborator(u1, 0)));
 
-		testUs350.add(collaborattor1);
-		testUs350.add(collaborattor2);
-		testUs350.add(collaborattor3);
+		controllerxpto.addProjectCollaboratorToProjectTeam(u1, p1);
 
-		assertEquals(testUs350, p1.getProjectTeam());
+		assertTrue(p1.getProjectTeam().contains(p1.createProjectCollaborator(u1, 0)));
+
 	}
-
 }
