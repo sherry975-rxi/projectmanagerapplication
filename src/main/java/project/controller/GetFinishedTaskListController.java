@@ -7,7 +7,6 @@ import project.model.Company;
 import project.model.Project;
 import project.model.ProjectRepository;
 import project.model.Task;
-import project.model.TaskRepository;
 import project.model.UserRepository;;
 
 public class GetFinishedTaskListController {
@@ -16,9 +15,15 @@ public class GetFinishedTaskListController {
 	UserRepository userRepository;
 	Project project;
 	ProjectRepository projectRepository;
-	TaskRepository taskRepository;
 	List<Task> finishedTaskList = new ArrayList<>();
 
+	/**
+	 * @param p1
+	 *            The project to search for it's finished tasks
+	 * @return This method returns a list of tasks of a project that were marked as
+	 *         finished if the project doesn't exist, the method catches an
+	 *         IllegalArgumentException
+	 */
 	public List<Task> getFinishedTaskListController(Project p1) {
 
 		try {
