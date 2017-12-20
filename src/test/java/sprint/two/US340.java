@@ -151,24 +151,24 @@ public class US340 {
 
 	}
 	
-//	@Test
-//	public void test340Controller() {
-//		// asserts which user is the Project Manager
-//		assertFalse(project.isProjectManager(user1));
-//		assertTrue(project.isProjectManager(userAdmin));
-//		
-//		// creates the Controller and asserts the list of unstrarted tasks starts at 0
-//		CreateTaskController testControl = new CreateTaskController(project);
-//		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 0);
-//		
-//		// creates and adds a task using the controller and asserts a task was added
-//		Task testTaskController = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(),
-//		10);
-//		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 1);
-//		
-//		// asserts the added task matches the added task
-//		assertTrue(project.getTaskRepository().getUnstartedTasks().get(0).getDescription().equals("Test dis agen pls"));
-//		assertFalse(project.getTaskRepository().getUnstartedTasks().get(0).getDescription().equals(""));
-//	}
+	@Test
+	public void test340Controller() {
+		// asserts which user is the Project Manager
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+		
+		// creates the Controller and asserts the list of unstrarted tasks starts at 0
+		CreateTaskController testControl = new CreateTaskController(project.getTaskRepository());
+		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 0);
+		
+		// creates and adds a task using the controller and asserts a task was added
+		testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(),
+		10);
+		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 1);
+		
+		// asserts the added task matches the added task
+		assertTrue(project.getTaskRepository().getUnstartedTasks().get(0).getDescription().equals("Test dis agen pls"));
+		assertFalse(project.getTaskRepository().getUnstartedTasks().get(0).getDescription().equals(""));
+	}
 
 }

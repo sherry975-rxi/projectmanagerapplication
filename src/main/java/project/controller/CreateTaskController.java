@@ -9,22 +9,22 @@ import project.model.Task;
 
 public class CreateTaskController {
 	
-	private TaskRepository target;
+	private TaskRepository taskRepository;
 	
 	// TODO must receive the project the User manages
 	/**
 	 * This constructor creates a target controller. Currently, it recieves a project but it should recieve a Project Controller or Project Manager controller
 	 * 
 	 * 
-	 * @param target
+	 * @param target Task Repository
 	 */
 	public CreateTaskController(TaskRepository target) {
 		
-		this.target=target;
+		this.taskRepository=target;
 	}
 	
 	public TaskRepository getTaskRepository() {
-		return this.target;
+		return this.taskRepository;
 	}
 	/**
 	 * This controller calls the create task method, then the add task method, and finally confirms whether it was added successfully
@@ -37,13 +37,11 @@ public class CreateTaskController {
 	 * @return the added task
 	 */
 	public Task addTask(String taskDescription, int estimatedTaskEffort, Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedCost) {
-		Task toAdd = target.createTask(taskDescription, estimatedTaskEffort, estimatedTaskStartDate, taskDeadline, estimatedCost);
+		Task newTask = taskRepository.createTask(taskDescription, estimatedTaskEffort, estimatedTaskStartDate, taskDeadline, estimatedCost);
 		
-		target.addProjectTask(toAdd);
-		
-		int index = target.getUnstartedTasks().size();
-		
-		return target.getUnstartedTasks().get(index-1);
+		taskRepository.addProjectTask(newTask);
+
+		return newTask;
 	}
 
 }
