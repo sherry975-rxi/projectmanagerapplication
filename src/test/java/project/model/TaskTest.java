@@ -179,6 +179,10 @@ public class TaskTest {
 		assertEquals(i, testTask.getTimeSpentByProjectCollaboratorOntask(collab1), 0.01);
 		assertEquals(j, testTask.getTimeSpentByProjectCollaboratorOntask(collab2), 0.01);
 
+		// Collab3 doesnt belong to task, so he doesnt have any task assigned, and
+		// expected result is 0
+		assertEquals(0, testTask.getTimeSpentByProjectCollaboratorOntask(collab3), 0.01);
+
 		// then checks global getTimeSpentOnTask
 		assertEquals(j, testTask.getTimeSpentOntask(), 0.01);
 
