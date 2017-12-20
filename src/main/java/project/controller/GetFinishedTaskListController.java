@@ -12,7 +12,7 @@ import project.model.UserRepository;;
 
 public class GetFinishedTaskListController {
 
-	Company myCompany;
+	Company myCompany = Company.getTheInstance();
 	UserRepository userRepository;
 	Project project;
 	ProjectRepository projectRepository;
@@ -21,10 +21,16 @@ public class GetFinishedTaskListController {
 
 	public List<Task> getFinishedTaskListController(Project p1) {
 
-		myCompany = Company.getTheInstance();
-		projectRepository = myCompany.getProjectsRepository();
-
-		finishedTaskList = p1.getTaskRepository().getFinishedTasks();
+		try {
+			projectRepository = myCompany.getProjectsRepository();
+			for (Project other : projectRepository.getAllProjects()) {
+				if (other.equals(p1)) {
+					finishedTaskList = p1.getTaskRepository().getFinishedTasks();
+				}
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("Project does not exist!");
+		}
 
 		return finishedTaskList;
 
