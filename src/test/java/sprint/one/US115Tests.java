@@ -70,5 +70,6 @@ public class US115Tests {
 		assertTrue(newUser2.isUserActive());
 		assertTrue(newUser3.isUserActive());
 	}
+	
 
 }

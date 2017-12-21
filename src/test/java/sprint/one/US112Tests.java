@@ -42,6 +42,7 @@ public class US112Tests {
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
 		Armis.getUsersRepository().addUserToUserRepository(newUser2);
+		
 	}
 
 	@After
@@ -83,4 +84,6 @@ public class US112Tests {
 		assertEquals(newUser2.getUserProfile(), Profile.COLLABORATOR);
 
 	}
+
+	
 }

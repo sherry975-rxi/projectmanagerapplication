@@ -93,12 +93,19 @@ public class AddColaboratorToProjectTeamController_Test {
 		contextualProject = null;
 	}
 
+	/**
+	 * This test verify if the user was add to project team. first that the user
+	 * isn't in the list and them added to project team, and confirm if the user is
+	 * really there.
+	 */
 	@Test
 	public void addColaboratorToProjectTeam_Test() {
+		// create controller
 		AddColaboratorToProjectTeamController controller = new AddColaboratorToProjectTeamController();
 
 		assertFalse(contextualProject.isUserInProjectTeam(u1));
 
+		// add user to project team
 		controller.addUserToProjectTeam(u1, contextualProject, 0);
 
 		assertTrue(contextualProject.isUserInProjectTeam(u1));
