@@ -1,11 +1,13 @@
 package sprint.one;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.controller.SetUserProfileController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.User;
@@ -79,6 +81,23 @@ public class US110Tests {
 		newUser3.setUserProfile(Profile.DIRECTOR);
 		assertEquals(newUser3.getUserProfile(), Profile.DIRECTOR);
 
+	}
+	
+	@Test
+	public void testSetUserAsDirectorController() {
+		// given a User - newUser2 - asserts they start as Visitor when created
+		// and then creates the controller
+		assertEquals(newUser2.getUserProfile(), Profile.VISITOR);
+		SetUserProfileController testProfileController = new SetUserProfileController(newUser2);
+		
+		// sets newUser2 as Director and asserts its profile
+		testProfileController.setUserAsDirector();
+		assertEquals(newUser2.getUserProfile(), Profile.DIRECTOR);
+		
+		//finally, asserts that no other Users were changed
+		// and that user repository contains the new director
+		assertTrue(Blip.getUsersRepository().searchUsersByProfile(Profile.DIRECTOR).contains(newUser2));
+		assertEquals(newUser3.getUserProfile(), Profile.VISITOR);
 	}
 
 }
