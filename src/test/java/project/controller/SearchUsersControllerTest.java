@@ -27,13 +27,15 @@ public class SearchUsersControllerTest {
 	User newUser1;
 	User newUser2;
 	User newUser3;
-	SearchUsersController searchController = new SearchUsersController();
+	SearchUsersController searchController;
 
 	@Before
 	public void setUp() {
 
 		// Creates a new Company
 		myCompany = Company.getTheInstance();
+
+		searchController = new SearchUsersController();
 
 		// Clears the UsersRepository list
 		myCompany.getUsersRepository().getAllUsersFromRepository().clear();

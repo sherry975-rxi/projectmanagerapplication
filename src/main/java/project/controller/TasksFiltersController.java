@@ -51,7 +51,7 @@ public class TasksFiltersController {
 	 * @return Task List
 	 * 
 	 */
-	public List<Task> getFinishedUserTasksFromastMonthInDecreasingOrder(User myUser) {
+	public List<Task> getFinishedUserTasksFromLastMonthInDecreasingOrder(User myUser) {
 		ProjectRepository myProjRep = this.myCompany.getProjectsRepository();
 		return myProjRep.getFinishedUserTasksFromLastMonthInDecreasingOrder(myUser);
 	}

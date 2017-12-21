@@ -4,6 +4,13 @@ import project.model.Company;
 import project.model.Project;
 import project.model.User;
 
+/**
+ * @author Group 3
+ * 
+ *         This class implements the controller that allows a user to create a
+ *         Project.
+ *
+ */
 public class CreateProjectController {
 
 	Company myCompany;
@@ -12,7 +19,6 @@ public class CreateProjectController {
 	 * Constructor for project creation controller
 	 */
 	public CreateProjectController() {
-		this.myCompany = Company.getTheInstance();
 	}
 
 	/**
@@ -36,5 +42,14 @@ public class CreateProjectController {
 		myCompany.getProjectsRepository().addProjectToProjectRepository(newProject);
 
 		return newProject;
+	}
+
+	/**
+	 * Sets the company used in this class.
+	 * 
+	 * @param companyToSet
+	 */
+	public void setMyCompany(Company companyToSet) {
+		this.myCompany = companyToSet;
 	}
 }
