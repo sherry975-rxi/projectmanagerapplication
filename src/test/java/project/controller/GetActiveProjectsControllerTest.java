@@ -9,64 +9,39 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.model.Company;
-import project.model.Profile;
 import project.model.Project;
-import project.model.ProjectCollaborator;
 import project.model.ProjectRepository;
 import project.model.User;
-import project.model.UserRepository;
 
 public class GetActiveProjectsControllerTest {
 
-	Company myCompany;
-	UserRepository userRepository;
-	User user1;
-	User user2;
+	User projectManager;
 	Project project1;
 	Project project2;
 	Project project3;
 	Project project4;
 	Project project5;
 	ProjectRepository projectRepository;
-	ProjectCollaborator projectCollaborator;
 	List<Project> activeProjectsList;
 	GetActiveProjectsController controller;
 
 	@Before
 	public void setUp() {
-		// Company creation
-		myCompany = Company.getTheInstance();
 
+		// Creates a new GetActiveProjectsController
 		controller = new GetActiveProjectsController();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// create projectManager
+		projectManager = new User("João", "joao@gmail.com", "001", "Admin", "920000000");
 
-		// creates a ProjectRepository
-		projectRepository = myCompany.getProjectsRepository();
-		userRepository.getAllUsersFromRepository().clear();
-
-		// User creation
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
-				"2401-00", "Test", "Testo", "Testistan");
-		user2 = userRepository.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "Rua Bla",
-				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-
-		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(user2);
-
-		// set user as collaborator
-		user1.setUserProfile(Profile.DIRECTOR);
-		user2.setUserProfile(Profile.COLLABORATOR);
+		projectRepository = new ProjectRepository();
 
 		// create project and set a user to Project manager
-		project1 = projectRepository.createProject("name3", "description4", user2);
-		project2 = projectRepository.createProject("name3", "description4", user2);
-		project3 = projectRepository.createProject("name3", "description4", user2);
-		project4 = projectRepository.createProject("name3", "description4", user2);
-		project5 = projectRepository.createProject("name3", "description4", user2);
+		project1 = new Project(0, "name3", "description4", projectManager);
+		project2 = projectRepository.createProject("name3", "description4", projectManager);
+		project3 = projectRepository.createProject("name3", "description4", projectManager);
+		project4 = projectRepository.createProject("name3", "description4", projectManager);
+		project5 = projectRepository.createProject("name3", "description4", projectManager);
 
 		// add project to project repository
 		projectRepository.addProjectToProjectRepository(project1);
@@ -74,20 +49,6 @@ public class GetActiveProjectsControllerTest {
 		projectRepository.addProjectToProjectRepository(project3);
 		projectRepository.addProjectToProjectRepository(project4);
 		projectRepository.addProjectToProjectRepository(project5);
-
-		// create project collaborator
-		projectCollaborator = project1.createProjectCollaborator(user1, 2);
-		projectCollaborator = project2.createProjectCollaborator(user1, 2);
-		projectCollaborator = project3.createProjectCollaborator(user1, 2);
-		projectCollaborator = project4.createProjectCollaborator(user1, 2);
-		projectCollaborator = project5.createProjectCollaborator(user1, 2);
-
-		// add user to project team
-		project1.addProjectCollaboratorToProjectTeam(projectCollaborator);
-		project2.addProjectCollaboratorToProjectTeam(projectCollaborator);
-		project3.addProjectCollaboratorToProjectTeam(projectCollaborator);
-		project4.addProjectCollaboratorToProjectTeam(projectCollaborator);
-		project5.addProjectCollaboratorToProjectTeam(projectCollaborator);
 
 		// Creates a new list and adds projects to that list, to compare with
 		// projectList
@@ -97,9 +58,7 @@ public class GetActiveProjectsControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
-		user1 = null;
-		user2 = null;
+
 		project1 = null;
 		project2 = null;
 		project3 = null;
@@ -126,6 +85,7 @@ public class GetActiveProjectsControllerTest {
 		activeProjectsList.add(project3);
 		activeProjectsList.add(project4);
 
+		// Checks if both lists are the same
 		assertEquals(activeProjectsList, controller.getActiveProjectsController(projectRepository));
 	}
 
