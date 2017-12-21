@@ -24,7 +24,6 @@ public class CalculateReportedProjectCostControllerTest {
 	 * This class tests the CalculateReportedProjectCostController class
 	 *
 	 */
-
 	User user1;
 	User user2;
 	User user3;
@@ -179,16 +178,6 @@ public class CalculateReportedProjectCostControllerTest {
 				* taskWorker4.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
 
 		// Compares the 2 values
-		assertEquals(totalCost, controllerCost.calculateReportedProjectCostController(project), 0.01);
-
-		// removes two users and adds them again with a different cost
-		project.removeProjectCollaboratorFromProjectTeam(user1);
-		project.removeProjectCollaboratorFromProjectTeam(user2);
-		project.addUserToProjectTeam(user1, 100);
-		project.addUserToProjectTeam(user2, 200);
-
-		// Confirms that total cost remains unchanged after some collaborators get a
-		// raise
 		assertEquals(totalCost, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
 	}
