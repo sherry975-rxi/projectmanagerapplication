@@ -93,7 +93,9 @@ public class UpdateUserInfoController_Test {
 	}
 
 	/**
-	 * TODO
+	 * This test checks that address1 is not in user's address list and then add
+	 * this address with controller. Last assertTrue checks if the address1 is in
+	 * user's address list.
 	 */
 	@Test
 	public void addNewAddressTest() {

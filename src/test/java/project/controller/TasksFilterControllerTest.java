@@ -80,6 +80,7 @@ public class TasksFilterControllerTest {
 		// add tasks to task repository of project 1
 		project1.getTaskRepository().addProjectTask(task1);
 		project1.getTaskRepository().addProjectTask(task2);
+		project1.getTaskRepository().addProjectTask(task3);
 
 		// add costPerEffort to users in project 1, resulting in a Project Collaborator
 		// for each one
@@ -136,6 +137,40 @@ public class TasksFilterControllerTest {
 	public void testGetUserUnfinishedTaskList() {
 
 		assertEquals(1, tasksFiltersController.getUserUnfinishedTaskList(user2).size());
+
+	}
+
+	/**
+	 * US210 - Como colaborador, eu pretendo obter uma lista das tarefas que
+	 * concluí, ordenadas por ordem temporal decrescente.
+	 */
+	@Test
+	public void testGetAllFinishedUserTasksInDecreasingOrder() {
+
+		// Sets all 4 tasks as finished
+		task1.setFinishDate();
+		task1.markTaskAsFinished();
+		task2.setFinishDate();
+		task2.markTaskAsFinished();
+		task3.setFinishDate();
+		task3.markTaskAsFinished();
+
+		// Adds Collaborator 1 to all tasks
+		task2.addProjectCollaboratorToTask(projCollab1);
+		task3.addProjectCollaboratorToTask(projCollab1);
+
+		// Tasks completed x days ago
+		Calendar finishOverwrite = Calendar.getInstance();
+		finishOverwrite.add(Calendar.DAY_OF_MONTH, -5); // five days before
+		task1.setFinishDate(finishOverwrite);
+		finishOverwrite.add(Calendar.DAY_OF_MONTH, -10); // fifteen days before
+		task2.setFinishDate(finishOverwrite);
+		finishOverwrite.add(Calendar.DAY_OF_MONTH, 5); // ten days before
+		task3.setFinishDate(finishOverwrite);
+
+		assertEquals(task1, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder(user1).get(0));
+		assertEquals(task3, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder(user1).get(1));
+		assertEquals(task2, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder(user1).get(2));
 	}
 
 }
