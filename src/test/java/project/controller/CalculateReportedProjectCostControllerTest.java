@@ -8,7 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
@@ -17,7 +16,6 @@ import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.TaskRepository;
 import project.model.User;
-import project.model.UserRepository;
 
 public class CalculateReportedProjectCostControllerTest {
 
@@ -27,8 +25,6 @@ public class CalculateReportedProjectCostControllerTest {
 	 *
 	 */
 
-	Company myCompany;
-	UserRepository userRepository;
 	User user1;
 	User user2;
 	User user3;
@@ -53,47 +49,23 @@ public class CalculateReportedProjectCostControllerTest {
 
 	@Before
 	public void setUp() {
-		// create company
-
-		myCompany = Company.getTheInstance();
-
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
 
 		// Creates a CalculateReportedProjectCostController
 		controllerCost = new CalculateReportedProjectCostController();
 
-		// creates a ProjectRepository
-		projectRepository = myCompany.getProjectsRepository();
-
-		// creates a UserRepository
-		userRepository.getAllUsersFromRepository().clear();
-
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
-				"2401-00", "Test", "Testo", "Testistan");
-
+		user1 = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
 		// create user2
-		user2 = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
-				"Test", "Testo", "Testistan");
+		user2 = new User("João", "joao@gmail.com", "001", "Admin", "920000000");
 
 		// create user3
-		user3 = userRepository.createUser("Miguel", "miguel@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
-				"Test", "Testo", "Testistan");
+		user3 = new User("Miguel", "miguel@gmail.com", "001", "Admin", "920000000");
 
 		// create user4
-		user4 = userRepository.createUser("Ana", "ana@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00", "Test",
-				"Testo", "Testistan");
+		user4 = new User("Ana", "ana@gmail.com", "001", "Admin", "920000000");
 
 		// create projectManager
-		projectManager = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
-				"2401-00", "Test", "Testo", "Testistan");
-
-		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(user2);
-		userRepository.addUserToUserRepository(user3);
-		userRepository.addUserToUserRepository(user4);
+		projectManager = new User("João", "joao@gmail.com", "001", "Admin", "920000000");
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -102,7 +74,7 @@ public class CalculateReportedProjectCostControllerTest {
 		user4.setUserProfile(Profile.COLLABORATOR);
 
 		// create project
-		project = projectRepository.createProject("name3", "description4", projectManager);
+		project = new Project(0, "name3", "description4", projectManager);
 
 		// creates 4 Project Collaborators and adds them to the project
 		projectUser1 = project.createProjectCollaborator(user1, 10);
@@ -154,7 +126,6 @@ public class CalculateReportedProjectCostControllerTest {
 	@After
 	public void tearDown() {
 
-		Company.clear();
 		user1 = null;
 		user2 = null;
 		user3 = null;
@@ -172,7 +143,6 @@ public class CalculateReportedProjectCostControllerTest {
 		project = null;
 		projectRepository = null;
 		taskRepository = null;
-		userRepository = null;
 		totalCost = 0.0;
 		controllerCost = null;
 
