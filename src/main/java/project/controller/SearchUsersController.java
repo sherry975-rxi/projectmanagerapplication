@@ -6,11 +6,11 @@ import project.model.Company;
 import project.model.Profile;
 import project.model.User;
 
-public class SearchUsersByProfileController {
+public class SearchUsersController {
 
 	/**
 	 * Este controlador permite ao Administrador pesquisar utilizadores do sistema
-	 * por perfil de utilizador.
+	 * Pode pesquisar pelo email, ou pelo perfil de utilizador
 	 * 
 	 */
 
@@ -23,6 +23,18 @@ public class SearchUsersByProfileController {
 	public List<User> searchUsersByProfileController(Profile profileToSearch) {
 
 		return Company.getTheInstance().getUsersRepository().searchUsersByProfile(profileToSearch);
+
+	}
+
+	/**
+	 * @param emailToSearch
+	 *            The string of email to search for
+	 * @return This method returns a list of users with an email that contain the
+	 *         same text that the user typed
+	 */
+	public List<User> searchUsersByEmailController(String emailToSearch) {
+
+		return Company.getTheInstance().getUsersRepository().searchUsersByEmail(emailToSearch);
 
 	}
 
