@@ -7,31 +7,18 @@ import project.model.User;
 public class CreateProjectController {
 
 	Company myCompany;
-	String name;
-	String description;
-	User projectManager;
 
 	/**
 	 * Constructor for project creation controller
-	 * 
-	 * @param name
-	 *            Name to be set as the project name
-	 * @param description
-	 *            Description to be set as the project description
-	 * @param projectManager
-	 *            User to be set as the project manager
 	 */
-	public CreateProjectController(String name, String description, User projectManager) {
+	public CreateProjectController() {
 		this.myCompany = Company.getTheInstance();
-		this.name = name;
-		this.description = description;
-		this.projectManager = projectManager;
-		createProjectController(name, description, projectManager);
 	}
 
 	/**
 	 * This method creates a project from the controller by calling the create
-	 * project method in project repository class, and returns the project created.
+	 * project method in project repository class, and adds it to the project
+	 * repository.
 	 * 
 	 * @param name
 	 *            Name to be set as the project name
@@ -42,9 +29,12 @@ public class CreateProjectController {
 	 * 
 	 * @return Returns the project created
 	 */
-	public Project createProjectController(String name, String description, User projectManager) {
+	public Project createProject(String name, String description, User projectManager) {
 
-		return myCompany.getProjectsRepository().createProject(name, description, projectManager);
+		Project newProject = myCompany.getProjectsRepository().createProject(name, description, projectManager);
+
+		myCompany.getProjectsRepository().addProjectToProjectRepository(newProject);
+
+		return newProject;
 	}
-
 }
