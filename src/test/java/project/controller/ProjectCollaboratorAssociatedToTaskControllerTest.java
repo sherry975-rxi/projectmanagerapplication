@@ -9,7 +9,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.model.Company;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -22,7 +21,6 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 	 * 
 	 */
 
-	Company myCompany;
 	User newUserA;
 	Project project1;
 	Task taskA;
@@ -34,15 +32,13 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 	@Before
 	public void setUp() {
 
-		myCompany = Company.getTheInstance();
 		taskController = new ProjectCollaboratorAssociatedToTaskController();
 
-		// Creation of two users: newUserA and newUserB
-		newUserA = myCompany.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
-				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
+		// create user
+		newUserA = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
 
 		// Creation of one project and newUser4 set as the project manager
-		project1 = myCompany.getProjectsRepository().createProject("name3", "description4", newUserA);
+		project1 = new Project(0, "name3", "description4", newUserA);
 
 		// Creation of two tasks: taskA and taskB
 		Calendar startDateA = Calendar.getInstance();
@@ -53,8 +49,10 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 		finishDateA.set(2017, 05, 16);
 		taskA = project1.getTaskRepository().createTask("Test dis pls", 100, startDateA, finishDateA, 15000);
 
+		// Creates a project collaborator
 		projCollab1 = project1.createProjectCollaborator(newUserA, 250);
 
+		// Creates a taks worker
 		taskWorker1 = taskA.createTaskCollaborator(projCollab1);
 
 	}
@@ -62,11 +60,10 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 	@After
 	public void tearDown() {
 
-		Company.clear();
+		// Clears all the instances
 		newUserA = null;
 		project1 = null;
 		taskA = null;
-
 		taskController = null;
 
 	}
