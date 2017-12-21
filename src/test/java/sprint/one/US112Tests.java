@@ -8,7 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.controller.SetUserProfileController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.User;
@@ -84,23 +83,6 @@ public class US112Tests {
 		newUser2.setUserProfile(Profile.COLLABORATOR);
 		assertEquals(newUser2.getUserProfile(), Profile.COLLABORATOR);
 
-	}
-	
-	@Test
-	public void testSetUserAsCollaboratorController() {
-		// given a User - newUser2 - asserts they start as Visitor when created
-		// and then creates the controller
-		assertEquals(newUser2.getUserProfile(), Profile.VISITOR);
-		SetUserProfileController testProfileController = new SetUserProfileController(newUser2);
-		
-		// sets newUser2 as Collaborator and asserts its profile
-		testProfileController.setUserAsCollaborator();
-		assertEquals(newUser2.getUserProfile(), Profile.COLLABORATOR);
-		
-		//finally, asserts that no other Users were changed
-		// and that user repository contains the new director
-		assertTrue(Armis.getUsersRepository().searchUsersByProfile(Profile.COLLABORATOR).contains(newUser2));
-		assertEquals(newUser3.getUserProfile(), Profile.VISITOR);
 	}
 
 	

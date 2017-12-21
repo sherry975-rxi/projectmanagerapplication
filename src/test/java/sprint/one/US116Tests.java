@@ -61,5 +61,7 @@ public class US116Tests {
 
 		assertTrue(newUser2.isUserActive());
 	}
+	
+
 
 }
