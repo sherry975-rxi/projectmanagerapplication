@@ -36,7 +36,6 @@ public class US210Tests {
 	Company company;
 	ProjectRepository projRep;
 	UserRepository userRep;
-	User newUserA;
 	User newUserB;
 	Project project;
 	ProjectCollaborator newCollaboratorB;
@@ -52,19 +51,16 @@ public class US210Tests {
 		projRep = company.getProjectsRepository();
 		userRep = company.getUsersRepository();
 
-		newUserA = userRep.createUser("João", "user2@gmail.com", "123", "Maneger", "940000000", "StreetA", "ZipCodeA",
-				"CityA", "DistrictA", "CountryA");
+		// Create and prepare User
 		newUserB = userRep.createUser("Juni", "user3@gmail.com", "132", "Code Monkey", "930000000", "StreetB",
 				"ZipCodeB", "CityB", "DistrictB", "CountryB");
 
-		newUserA.setUserProfile(Profile.COLLABORATOR);
 		newUserB.setUserProfile(Profile.COLLABORATOR);
 
-		userRep.addUserToUserRepository(newUserA);
 		userRep.addUserToUserRepository(newUserB);
 
-		project = projRep.createProject("name3", "description4", newUserA);
-		project.getProjectTeam().clear();
+		// create Project and add it to the Project Repository.
+		project = projRep.createProject("name3", "description4", newUserB);
 		projRep.addProjectToProjectRepository(project);
 
 		// create Collaborator from User and add it to team
@@ -111,9 +107,10 @@ public class US210Tests {
 	@After
 	public void tearDown() {
 		Company.clear();
-		newUserA = null;
 		newUserB = null;
 		project = null;
+		projRep = null;
+		userRep = null;
 		newCollaboratorB = null;
 		testTask = null;
 		testTask2 = null;
@@ -124,17 +121,19 @@ public class US210Tests {
 	@Test
 	public void testGetFinishedTasksDecreasingOrder() {
 
+		// Create Task Collaborators
 		TaskCollaborator Task1CollaboratorB = testTask.createTaskCollaborator(newCollaboratorB);
 		TaskCollaborator Task2CollaboratorB = testTask2.createTaskCollaborator(newCollaboratorB);
 		TaskCollaborator Task3CollaboratorB = testTask3.createTaskCollaborator(newCollaboratorB);
 		TaskCollaborator Task4CollaboratorB = testTask4.createTaskCollaborator(newCollaboratorB);
 
+		// Add Task Collaborator
 		testTask.addTaskCollaboratorToTask(Task1CollaboratorB);
 		testTask2.addTaskCollaboratorToTask(Task2CollaboratorB);
 		testTask3.addTaskCollaboratorToTask(Task3CollaboratorB);
 		testTask4.addTaskCollaboratorToTask(Task4CollaboratorB);
 
-		// Sets all 4 tasks as cleared
+		// Sets all 4 tasks as finished
 		testTask.setFinishDate();
 		testTask.markTaskAsFinished();
 		testTask2.setFinishDate();
@@ -144,7 +143,7 @@ public class US210Tests {
 		testTask4.setFinishDate();
 		testTask4.markTaskAsFinished();
 
-		// Tasks completed -x days ago (from oldest to most recent completion date)
+		// Tasks completed x days ago
 		Calendar finishOverwrite = Calendar.getInstance();
 		finishOverwrite.add(Calendar.DAY_OF_MONTH, -5); // five days before
 		testTask.setFinishDate(finishOverwrite);
@@ -154,14 +153,16 @@ public class US210Tests {
 		testTask3.setFinishDate(finishOverwrite);
 		finishOverwrite.add(Calendar.DAY_OF_MONTH, -10); // twenty days before
 		testTask4.setFinishDate(finishOverwrite);
-		// Creates test List of completed tasks ordered decreasingly
+
+		// Creates test List of completed tasks in the expected order (decreasing order)
 		List<Task> testList = new ArrayList<Task>();
 		testList.add(testTask);
 		testList.add(testTask3);
 		testList.add(testTask2);
 		testList.add(testTask4);
 
-		// Compares expected results with TaskList
+		// Compares expected results (testList) with the Task lists that the controller
+		// returns
 		GetAllFinishedUserTasksInDecreasingOrderController controller = new GetAllFinishedUserTasksInDecreasingOrderController();
 		controller.setMyCompany(company);
 
