@@ -1,5 +1,6 @@
 package project.controller;
 
+import project.model.Address;
 import project.model.User;
 
 public class UpdateUserInfoController {
@@ -30,6 +31,10 @@ public class UpdateUserInfoController {
 	public void updateUserPhone(User user, String phone) {
 
 		user.setPhone(phone);
+	}
+	
+	public void addNewAddress(User user, Address address) {
+		user.addAddress(address);
 	}
 
 }
