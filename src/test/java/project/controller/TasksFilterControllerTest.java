@@ -2,7 +2,9 @@ package project.controller;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,9 +20,9 @@ import project.model.User;
 
 public class TasksFilterControllerTest {
 	
-	
+	TasksFiltersController tasksFiltersController;
 	Company company1;
-	User user1, user2, user3;
+	User user1, user2, user3; 
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
 	Task task1, task2, task3;
@@ -35,12 +37,12 @@ public class TasksFilterControllerTest {
 		//create users in company
 		user2 = company1.getUsersRepository().createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
 				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
-		user3 = company1.getUsersRepository().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
+		user1 = company1.getUsersRepository().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
 		
 		//change profiles of users from VISITOR (default) to COLLABORATOR
 		user2.setUserProfile(Profile.COLLABORATOR);
-		user3.setUserProfile(Profile.COLLABORATOR);
+		user1.setUserProfile(Profile.COLLABORATOR);
 		
 		//create project 1 in company 1
 		project1 = company1.getProjectsRepository().createProject("name3", "description4", user2);
@@ -76,16 +78,18 @@ public class TasksFilterControllerTest {
 				taskDeadlineDateTest, 10);
 		task3 = project1.getTaskRepository().createTask("Merge everything", 10, estimatedTaskStartDateTest,
 				taskDeadlineDateTest, 10);
+		
 		// add tasks to task repository of project 1
 		project1.getTaskRepository().addProjectTask(task1);
 		project1.getTaskRepository().addProjectTask(task2);
 		
 		//add costPerEffort to users in project 1, resulting in a Project Collaborator for each one
-		projCollab1 = project1.createProjectCollaborator(user3, 250);
+		projCollab1 = project1.createProjectCollaborator(user1, 250);
 		projCollab2 = project1.createProjectCollaborator(user2, 120);
 		projCollab3 = project1.createProjectCollaborator(user2, 200);
 		
 		// associate Project Collaborators to project 1 (info user + costPerEffort)
+		project1.addProjectCollaboratorToProjectTeam(projCollab1);
 		project1.addProjectCollaboratorToProjectTeam(projCollab2);
 		
 		// create Task Collaborator to regist the period that the user was in the task while he was active in project 1 
@@ -118,9 +122,18 @@ public class TasksFilterControllerTest {
 		taskCollab2= null;
 	}
 	
+	/**
+	 * US203: Como colaborador, eu pretendo consultar a minha lista de tarefas
+	 * pendentes de modo a saber o que tenho para fazer hoje.
+	 */
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testGetUserUnfinishedTaskList() {
+		
+		// create a test list with the expected result
+		List<Task> testList = new ArrayList<Task>();
+		testList.add(task2);
+
+		assertEquals(testList.size(),tasksFiltersController.getUserUnfinishedTaskList(user2).size());
 	}
 
 }
