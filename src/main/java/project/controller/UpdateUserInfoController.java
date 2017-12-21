@@ -36,5 +36,11 @@ public class UpdateUserInfoController {
 	public void addNewAddress(User user, Address address) {
 		user.addAddress(address);
 	}
+	
+	public void updateUserStreet(User user, Address address, String street) {
+
+		}
+		
+	}
 
 }
