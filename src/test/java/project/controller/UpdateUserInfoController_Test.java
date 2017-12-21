@@ -1,5 +1,7 @@
 package project.controller;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +39,49 @@ public class UpdateUserInfoController_Test {
 		u1 = null;
 	}
 
+	/**
+	 * this test update the user info
+	 */
 	@Test
-	public void updateUserInfo() {
+	public void updateUserName() {
+		// create controller
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertTrue(u1.getName() == "Daniel");
+
+		controller.setName("Pedro");
+
+		assertTrue(u1.getName() == "Pedro");
+	}
+
+	/**
+	 * this test update the user info
+	 */
+	@Test
+	public void updateUserEmail() {
+		// create controller
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertTrue(u1.getEmail() == "user2@gmail.com");
+
+		controller.setEmail("pedro@gmail.com");
+
+		assertTrue(u1.getEmail() == "pedro@gmail.com");
+	}
+
+	/**
+	 * this test update the user info
+	 */
+	@Test
+	public void updateUserPhone() {
+		// create controller
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertTrue(u1.getPhone() == "930000000");
+
+		controller.setPhone("950000000");
+
+		assertTrue(u1.getPhone() == "950000000");
 
 	}
 
