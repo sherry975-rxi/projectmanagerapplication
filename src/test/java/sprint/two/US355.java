@@ -161,7 +161,7 @@ public class US355 {
 		testNoUsersOnTasks.add(collaborator2);
 		testNoUsersOnTasks.add(collaborator3);
 
-		assertEquals(testNoUsersOnTasks, p1.blabla());
+		assertEquals(testNoUsersOnTasks, p1.getCollaboratorsWithoutTasks());
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class US355 {
 
 		testTwoUsersOnTasks.add(collaborator3);
 
-		assertEquals(testTwoUsersOnTasks, p1.blabla());
+		assertEquals(testTwoUsersOnTasks, p1.getCollaboratorsWithoutTasks());
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class US355 {
 		testOneUserOnTask.add(collaborator2);
 		testOneUserOnTask.add(collaborator3);
 
-		assertEquals(testOneUserOnTask, p1.blabla());
+		assertEquals(testOneUserOnTask, p1.getCollaboratorsWithoutTasks());
 	}
 
 }

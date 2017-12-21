@@ -3,7 +3,7 @@ package project.controller;
 import project.model.Project;
 import project.model.User;
 
-public class CreateUS350v02Controller {
+public class AddColaboratorToProjectTeamController {
 
 	public void addUserToProjectTeam(User u1, Project p1, int effort) {
 

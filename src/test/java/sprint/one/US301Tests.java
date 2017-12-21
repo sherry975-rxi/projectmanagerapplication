@@ -1,18 +1,28 @@
 package sprint.one;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
+import project.controller.CreateProjectController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
 import project.model.User;
 
+/**
+ * @author Grupo 3
+ * 
+ *         US301 - Como Diretor, quero poder criar um projeto e atribuir-lhe um
+ *         Gestorde projetos Detalhes: Cada projeto deverá ter pelo menos as
+ *         seguintes informações: Nome, descrição e Project Manager (user).
+ *
+ */
 public class US301Tests {
 
 	Company c1;
@@ -41,9 +51,6 @@ public class US301Tests {
 		// set user to collaborator
 		u2.setUserProfile(Profile.COLLABORATOR);
 
-		// create the project and set a user to Project manager
-		p1 = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
-
 	}
 
 	@After
@@ -54,21 +61,35 @@ public class US301Tests {
 		p1 = null;
 	}
 
-	@Test
+	/**
+	 * This method asserts if the project is sucessfully created by pre-asserting
+	 * that the project list is empty and then asserting that the project list has a
+	 * new project.
+	 * 
+	 * Also it checks if the user u1 is the project manager.
+	 */
+	public void US301CreateProject() {
 
-	// US301 - Como Diretor, quero poder criar um projeto e atribuir-lhe um Gestor
-	// de projetos
-	// Detalhes: Cada projeto deverá ter pelo menos as seguintes informações.
+		// Empty List to compare to the project repository with no project inside
+		List<Project> emptyProjectList = new ArrayList<Project>();
 
-	public void testUS301ProjectManager() {
+		// Asserts if the project list is empty
+		assertEquals(emptyProjectList, c1.getProjectsRepository());
 
-		boolean truth = p1.isProjectManager(u2);
-		boolean wrong = p1.isProjectManager(u1);
+		// Creates the controller to create a project
+		CreateProjectController createNewProject = new CreateProjectController();
 
-		int projectid = p1.getIdCode();
-		assertTrue(truth);
-		assertFalse(wrong);
-		assertEquals(1, projectid);
+		// Creates the project using the controller
+		Project newProject = createNewProject.createProject("name", "description", u2);
+
+		// List with a project to compare
+		List<Project> projectList = new ArrayList<Project>();
+		projectList.add(newProject);
+
+		// Asserts if the project repository has the new project in it
+		assertEquals(projectList, c1.getProjectsRepository());
+
+		// Asserts if the user u1 is the project manager
+		assertTrue(newProject.isProjectManager(u1));
 	}
-
 }

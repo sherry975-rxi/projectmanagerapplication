@@ -1,11 +1,7 @@
-package sprint.two;
+package project.controller;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,10 +10,9 @@ import org.junit.Test;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
-import project.model.ProjectCollaborator;
 import project.model.User;
 
-public class US350v02 {
+public class AddColaboratorToProjectTeamController_Test {
 
 	/**
 	 * Tests US350v02
@@ -98,35 +93,23 @@ public class US350v02 {
 		contextualProject = null;
 	}
 
+	/**
+	 * This test verify if the user was add to project team. first that the user
+	 * isn't in the list and them added to project team, and confirm if the user is
+	 * really there.
+	 */
 	@Test
-	public void test() {
+	public void addColaboratorToProjectTeam_Test() {
+		// create controller
+		AddColaboratorToProjectTeamController controller = new AddColaboratorToProjectTeamController();
 
-		// tests that project manager is u2 and not other user (for example u4)
-		assertTrue(p1.isProjectManager(u2));
-		assertFalse(p1.isProjectManager(u4));
+		assertFalse(contextualProject.isUserInProjectTeam(u1));
 
-		// create project collabotors with u3, u4 and u5 users
-		ProjectCollaborator collaborattor1 = p1.createProjectCollaborator(u3, 120);
-		ProjectCollaborator collaborattor2 = p1.createProjectCollaborator(u4, 130);
-		ProjectCollaborator collaborattor3 = p1.createProjectCollaborator(u5, 150);
+		// add user to project team
+		controller.addUserToProjectTeam(u1, contextualProject, 0);
 
-		// add collaborators to project
-		p1.addProjectCollaboratorToProjectTeam(collaborattor1);
-		p1.addProjectCollaboratorToProjectTeam(collaborattor2);
-		p1.addProjectCollaboratorToProjectTeam(collaborattor3);
+		assertTrue(contextualProject.isUserInProjectTeam(u1));
 
-		// add project to the Company Project list
-		c1.getProjectsRepository().addProjectToProjectRepository(p1);
-
-		// Creates a new list and adds user to that list, to compare with userList
-		// inside ProjectTeam
-		List<ProjectCollaborator> testUs350 = new ArrayList<ProjectCollaborator>();
-
-		testUs350.add(collaborattor1);
-		testUs350.add(collaborattor2);
-		testUs350.add(collaborattor3);
-
-		assertEquals(testUs350, p1.getProjectTeam());
 	}
 
 }
