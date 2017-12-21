@@ -322,7 +322,7 @@ public class Project {
 	 *
 	 */
 
-	public List<ProjectCollaborator> blabla() {
+	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
 		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
 		inactiveCollaborators.addAll(this.getProjectTeam());
 		for (ProjectCollaborator other : this.getProjectTeam()) {
