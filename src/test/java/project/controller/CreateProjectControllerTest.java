@@ -45,8 +45,6 @@ public class CreateProjectControllerTest {
 	public void tearDown() {
 		Company.clear();
 		u1 = null;
-		u2 = null;
-		p1 = null;
 	}
 
 	/**
@@ -68,7 +66,7 @@ public class CreateProjectControllerTest {
 		CreateProjectController createNewProject = new CreateProjectController();
 
 		// Creates the project using the controller
-		Project newProject = createNewProject.createProject("name", "description", u2);
+		Project newProject = createNewProject.createProject("name", "description", u1);
 
 		// List with a project to compare
 		List<Project> projectList = new ArrayList<Project>();
