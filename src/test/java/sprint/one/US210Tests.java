@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.controller.GetAllFinishedUserTasksInDecreasingOrderController;
+import project.controller.TasksFiltersController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
@@ -163,7 +163,7 @@ public class US210Tests {
 
 		// Compares expected results (testList) with the Task lists that the controller
 		// returns
-		GetAllFinishedUserTasksInDecreasingOrderController controller = new GetAllFinishedUserTasksInDecreasingOrderController();
+		TasksFiltersController controller = new TasksFiltersController();
 		controller.setMyCompany(company);
 
 		assertEquals(testList, controller.getAllFinishedUserTasksInDecreasingOrder(newUserB));
