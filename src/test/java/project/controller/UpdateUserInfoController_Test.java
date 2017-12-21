@@ -40,7 +40,7 @@ public class UpdateUserInfoController_Test {
 	}
 
 	/**
-	 * this test update the user info
+	 * this test update name
 	 */
 	@Test
 	public void updateUserName() {
@@ -49,13 +49,13 @@ public class UpdateUserInfoController_Test {
 
 		assertTrue(u1.getName() == "Daniel");
 
-		controller.setName("Pedro");
+		controller.updateUserName(u1, "Pedro");
 
 		assertTrue(u1.getName() == "Pedro");
 	}
 
 	/**
-	 * this test update the user info
+	 * this test update email
 	 */
 	@Test
 	public void updateUserEmail() {
@@ -64,13 +64,13 @@ public class UpdateUserInfoController_Test {
 
 		assertTrue(u1.getEmail() == "user2@gmail.com");
 
-		controller.setEmail("pedro@gmail.com");
+		controller.updateUserEmail(u1, "pedro@gmail.com");
 
 		assertTrue(u1.getEmail() == "pedro@gmail.com");
 	}
 
 	/**
-	 * this test update the user info
+	 * this test update phone
 	 */
 	@Test
 	public void updateUserPhone() {
@@ -79,7 +79,7 @@ public class UpdateUserInfoController_Test {
 
 		assertTrue(u1.getPhone() == "930000000");
 
-		controller.setPhone("950000000");
+		controller.updateUserPhone(u1, "950000000");
 
 		assertTrue(u1.getPhone() == "950000000");
 

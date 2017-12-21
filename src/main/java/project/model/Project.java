@@ -128,6 +128,22 @@ public class Project {
 	public List<ProjectCollaborator> getProjectTeam() {
 		return this.projectTeam;
 	}
+	
+	/**
+	 * Get the active users inside this Project's Team
+	 * 
+	 * @return Project Team - Active Team of the Project
+	 */
+	public List<ProjectCollaborator> getActiveProjectTeam() {
+		List<ProjectCollaborator> activeCollaborators = new ArrayList<>();
+		
+		for (ProjectCollaborator other : this.projectTeam) {
+			if(other.isProjectCollaboratorActive()) 
+				activeCollaborators.add(other);
+		}
+		
+		return activeCollaborators;
+	}
 
 	/**
 	 * This method returns the state of the attribute status that can be planning,
