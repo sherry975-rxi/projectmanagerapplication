@@ -5,9 +5,18 @@ import project.model.User;
 
 public class AddColaboratorToProjectTeamController {
 
-	public void addUserToProjectTeam(User u1, Project p1, int effort) {
+	/**
+	 * This controller add user to project team
+	 * 
+	 * respond to US 350
+	 * 
+	 * @param user
+	 * @param project
+	 * @param effort
+	 */
+	public void addUserToProjectTeam(User user, Project project, int effort) {
 
-		p1.addUserToProjectTeam(u1, effort);
+		project.addUserToProjectTeam(user, effort);
 
 	}
 }
