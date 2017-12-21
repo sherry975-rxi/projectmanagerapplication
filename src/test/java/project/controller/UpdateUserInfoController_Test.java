@@ -47,20 +47,61 @@ public class UpdateUserInfoController_Test {
 		address1 = null;
 	}
 
+	/**
+	 * this test update name
+	 */
 	@Test
-	public void updateUserInfo() {
+	public void updateUserName() {
+		// create controller
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertTrue(u1.getName() == "Daniel");
+
+		controller.updateUserName(u1, "Pedro");
+
+		assertTrue(u1.getName() == "Pedro");
+	}
+
+	/**
+	 * this test update email
+	 */
+	@Test
+	public void updateUserEmail() {
+		// create controller
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertTrue(u1.getEmail() == "user2@gmail.com");
+
+		controller.updateUserEmail(u1, "pedro@gmail.com");
+
+		assertTrue(u1.getEmail() == "pedro@gmail.com");
+	}
+
+	/**
+	 * this test update phone
+	 */
+	@Test
+	public void updateUserPhone() {
+		// create controller
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertTrue(u1.getPhone() == "930000000");
+
+		controller.updateUserPhone(u1, "950000000");
+
+		assertTrue(u1.getPhone() == "950000000");
 
 	}
 
 	/**
-	 * This test BLABLABLA
+	 * TODO 
 	 */
 	@Test
 	public void addNewAddressTest() {
-		addNewAddressController testController = new addNewAddressController;
+		UpdateUserInfoController controller = new UpdateUserInfoController();
 		
 		assertFalse(u1.getAddressList().contains(address1));
-		u1.addAddress(address1);
+		controller.addNewAddress(u1, address1);
 		assertTrue(u1.getAddressList().contains(address1));
 	}
 
