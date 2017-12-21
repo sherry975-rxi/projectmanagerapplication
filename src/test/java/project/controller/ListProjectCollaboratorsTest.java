@@ -4,9 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +16,7 @@ public class ListProjectCollaboratorsTest {
 
 	
 	Company Critical;
-	User userMenager, user2, newUser2, newUser3;
+	User userManager, user2, newUser2, newUser3;
 	Project project1;
 	ListProjectCollaboratorController listCollaboratorsController = new ListProjectCollaboratorController();
 	RegisterUserController usersController = new RegisterUserController();
@@ -34,7 +31,7 @@ public class ListProjectCollaboratorsTest {
 		Critical = Company.getTheInstance();
 		
 		// creates user four users
-		userMenager = usersController.addNewUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000", "MuhPass",
+		userManager = usersController.addNewUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000", "MuhPass",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		user2 = usersController.addNewUser("DanielM", "danielM@gmail.com", "002", "Code Monkey",
 				"920000000", "MuhPass", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
@@ -43,7 +40,7 @@ public class ListProjectCollaboratorsTest {
 		newUser3 = usersController.addNewUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "MuhPass", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		
-		project1 = projectController.createProject("testing", "testing a lot", userMenager);
+		project1 = projectController.createProject("testing", "testing a lot", userManager);
 		
 		
 	}
@@ -52,7 +49,7 @@ public class ListProjectCollaboratorsTest {
 	public void tearDown() {
 
 		Company.clear();
-		userMenager = null;
+		userManager = null;
 		user2 = null;
 		newUser2 = null;
 		newUser3 = null;
@@ -73,7 +70,7 @@ public class ListProjectCollaboratorsTest {
 		
 		// Confirms all three users were added to Project Team (team size must be 3)
 		assertEquals(listCollaboratorsController.listCollaboratorsController(project1).size(), 3);
-		assertFalse(project1.isUserInProjectTeam(userMenager));
+		assertFalse(project1.isUserInProjectTeam(userManager));
 		assertTrue(project1.isUserInProjectTeam(user2));
 		assertTrue(project1.isUserInProjectTeam(newUser2));
 		assertTrue(project1.isUserInProjectTeam(newUser3));

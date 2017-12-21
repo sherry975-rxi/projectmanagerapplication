@@ -12,7 +12,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.controller.CreateTaskController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
@@ -144,10 +143,6 @@ public class US340 {
 
 		// See if the two lists have the same tasks
 		assertEquals(taskRepository.getProjectTaskRepository(), taskListToCompare);
-		
-		CreateTaskController testControl = new CreateTaskController(project.getTaskRepository());
-		
-		assertEquals(testControl.getTaskRepository().getProjectTaskRepository(), taskListToCompare);
 
 	}
 	
