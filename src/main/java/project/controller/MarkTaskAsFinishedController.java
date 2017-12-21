@@ -9,6 +9,10 @@ public class MarkTaskAsFinishedController {
 	 * 
 	 */
 
+	/**
+	 * @param task
+	 *            The task that will be marked as finished
+	 */
 	public void markTaskAsFinishedController(Task task) {
 		task.markTaskAsFinished();
 
