@@ -14,8 +14,6 @@ public class SearchUsersByProfileController {
 	 * 
 	 */
 
-	Company myCompany;
-
 	/**
 	 * @param profileToSearch
 	 *            The type of of profile to search for
@@ -24,7 +22,7 @@ public class SearchUsersByProfileController {
 	 */
 	public List<User> searchUsersByProfileController(Profile profileToSearch) {
 
-		return myCompany.getUsersRepository().searchUsersByProfile(profileToSearch);
+		return Company.getTheInstance().getUsersRepository().searchUsersByProfile(profileToSearch);
 
 	}
 
