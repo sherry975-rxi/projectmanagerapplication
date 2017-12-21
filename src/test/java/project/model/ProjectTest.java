@@ -407,7 +407,7 @@ public class ProjectTest {
 		collaboratorsWithoutTasksCompare.add(projectCollaborator3);
 		collaboratorsWithoutTasksCompare.add(projectCollaborator4);
 
-		assertEquals(collaboratorsWithoutTasksCompare, p1.getProjectCollaboratorsWithoutTasksAssigned());
+		assertEquals(collaboratorsWithoutTasksCompare, p1.blabla());
 
 	}
 

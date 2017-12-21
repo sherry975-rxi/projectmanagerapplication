@@ -128,7 +128,7 @@ public class US350v02 {
 	@Test
 	public void addColaboratorToProjectTeam_Test() {
 		CreateUS350v02Controller controller = new CreateUS350v02Controller();
-
+		
 		assertFalse(contextualProject.isUserInProjectTeam(u1));
 
 		controller.addUserToProjectTeam(u1, contextualProject, 0);

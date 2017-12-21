@@ -131,7 +131,7 @@ public class US204Tests {
 		project1.getTaskRepository().addProjectTask(taskB);
 
 		// verifies if project team contains newUserB
-		assertTrue(project1.containsUser(newUserB));
+		assertTrue(project1.isUserInProjectTeam(newUserB));
 
 		// assigns both tasks to User 3 then checks their unfinished task list
 		taskA.addTaskCollaboratorToTask(taskWorker1);
