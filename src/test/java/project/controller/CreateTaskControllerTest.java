@@ -13,7 +13,6 @@ import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectRepository;
 import project.model.Task;
-import project.model.TaskRepository;
 import project.model.User;
 import project.model.UserRepository;
 
@@ -71,13 +70,13 @@ public class CreateTaskControllerTest {
 	
 	
 	@Test
-	public void test340Controller() {
+	public void testTaskController() {
 		// asserts which user is the Project Manager
 		assertFalse(project.isProjectManager(user1));
 		assertTrue(project.isProjectManager(userAdmin));
 		
 		// creates the Controller and asserts the list of unstrarted tasks starts at 0
-		CreateTaskController testControl = new CreateTaskController(project.getTaskRepository());
+		CreateTaskController testControl = new CreateTaskController(project);
 		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 0);
 		
 		// creates and adds a task using the controller and asserts a task was added

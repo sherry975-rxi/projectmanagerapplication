@@ -18,9 +18,9 @@ public class CreateTaskController {
 	 * 
 	 * @param target Task Repository
 	 */
-	public CreateTaskController(TaskRepository target) {
+	public CreateTaskController(Project target) {
 		
-		this.taskRepository=target;
+		this.taskRepository=target.getTaskRepository();
 	}
 	
 	public TaskRepository getTaskRepository() {
