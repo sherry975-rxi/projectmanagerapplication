@@ -687,7 +687,7 @@ public class TaskRepositoryTest {
 		assertEquals(listExpiredTasks, taskRepository.getExpiredTasks());
 
 	}
-	
+
 	/**
 	 * Tests the SortTaskListDecreasingOrder. Compares the output of the method to a
 	 * list with the projects added be decreasing order.
@@ -717,9 +717,9 @@ public class TaskRepositoryTest {
 		toBeSorted.add(testTask2);
 		toBeSorted.add(testTask3);
 
-		//creat list to compare
+		// creat list to compare
 		List<Task> expResultTaskList = new ArrayList<>();
-		
+
 		// List of sorted tasks.
 		expResultTaskList.add(testTask2);
 		expResultTaskList.add(testTask);
@@ -776,7 +776,7 @@ public class TaskRepositoryTest {
 		assertEquals(listFinishedTasks, taskRepository.getFinishedTasksInDecreasingOrder(project));
 
 	}
-	
+
 	@Test
 	public void testGetStartedNotFinishedTasksFromProjectCollaborator() {
 
@@ -806,6 +806,7 @@ public class TaskRepositoryTest {
 		testTask7.addTaskCollaboratorToTask(taskWorker1);
 
 		// start tasks
+		testTask.setStartDate(startDateTest);
 		testTask2.setStartDate(startDateTest);
 		testTask3.setStartDate(startDateTest);
 		testTask4.setStartDate(startDateTest);
@@ -828,6 +829,7 @@ public class TaskRepositoryTest {
 		/*
 		 * Adds the started and not finished tasks to that list
 		 */
+		getStartedNotFinishedTasks.add(testTask);
 		getStartedNotFinishedTasks.add(testTask3);
 		getStartedNotFinishedTasks.add(testTask5);
 		getStartedNotFinishedTasks.add(testTask6);

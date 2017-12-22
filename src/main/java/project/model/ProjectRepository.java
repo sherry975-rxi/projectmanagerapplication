@@ -44,6 +44,15 @@ public class ProjectRepository {
 		return projCounter;
 	}
 
+	public Project getProjById(int projCounter) {
+		for (Project proj : projectsRepository) {
+			if (proj.getIdCode() == projCounter) {
+				return proj;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Takes an int to set the Project counter
 	 * 
@@ -172,10 +181,10 @@ public class ProjectRepository {
 		}
 		return unfinishedTasksOfSpecificUser;
 	}
-	
+
 	/**
-	 * This method returns all the Started tasks with state "unfinished" from all the
-	 * projects, that has a specific user associated to that task.
+	 * This method returns all the Started tasks with state "unfinished" from all
+	 * the projects, that has a specific user associated to that task.
 	 * 
 	 * @param user
 	 *            user to search the tasks in which it is included
@@ -193,11 +202,9 @@ public class ProjectRepository {
 						.addAll(other.getTaskRepository().getStartedNotFinishedTasksFromProjectCollaborator(toCheck));
 			}
 		}
-		
-		
+
 		return unfinishedTasksOfSpecificUser;
 	}
-
 
 	/**
 	 * This method returns a list with the finished tasks of a certain user by
@@ -305,17 +312,19 @@ public class ProjectRepository {
 
 		return this.sortTaskListDecreasingOrder(finishedUserTaskListDecreasingOrder);
 	}
-	
-	
+
 	/**
-	 * This method returns a list with the started but not finished tasks of a certain user by
-	 * increasing order of deadline. First, this method creates a list which is a copy
-	 * of the started, unfinished task list of the user. This method just sorts the list by increasing order of deadline. It does not runs a cycle to compare the tasks, neither analysis the finishedTaskList in any way.
+	 * This method returns a list with the started but not finished tasks of a
+	 * certain user by increasing order of deadline. First, this method creates a
+	 * list which is a copy of the started, unfinished task list of the user. This
+	 * method just sorts the list by increasing order of deadline. It does not runs
+	 * a cycle to compare the tasks, neither analysis the finishedTaskList in any
+	 * way.
 	 * 
 	 * @param user
 	 * 
-	 * @return Returns a list with the all the user started, unfinished tasks sorted by
-	 *         increasing Deadline order.
+	 * @return Returns a list with the all the user started, unfinished tasks sorted
+	 *         by increasing Deadline order.
 	 */
 	public List<Task> getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(User user) {
 
@@ -324,8 +333,6 @@ public class ProjectRepository {
 
 		return this.sortTaskListByDeadline(incompleteUserTaskListIncreasingOrder);
 	}
-	
-	
 
 	/**
 	 * This method returns a list with the tasks of a certain user by decreasing
@@ -355,12 +362,13 @@ public class ProjectRepository {
 		}
 		return result;
 	}
-	
+
 	// TODO implement verification of Null Deadlines
 	/**
 	 * This method returns a list with the tasks of a certain user by decreasing
 	 * order of date. First, this method creates a list which is a copy of the task
-	 * list of the user. This method just sorts the Task List by Deadline, increasing order.
+	 * list of the user. This method just sorts the Task List by Deadline,
+	 * increasing order.
 	 * 
 	 * @param toSort
 	 *            List of tasks to sort
