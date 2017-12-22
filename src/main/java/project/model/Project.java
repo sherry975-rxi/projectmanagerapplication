@@ -102,6 +102,42 @@ public class Project {
 	}
 
 	/**
+	 * Returns the start date of the project
+	 * 
+	 * @return startDate
+	 */
+	public Calendar getStartdate() {
+		return startdate;
+	}
+
+	/**
+	 * Sets the start date of the project
+	 * 
+	 * @param startdate
+	 */
+	public void setStartdate(Calendar startdate) {
+		this.startdate = startdate;
+	}
+
+	/**
+	 * Returns the finish date of the project
+	 * 
+	 * @return finishDate
+	 */
+	public Calendar getFinishdate() {
+		return finishdate;
+	}
+
+	/**
+	 * Sets the finish date of the project
+	 * 
+	 * @param finishdate
+	 */
+	public void setFinishdate(Calendar finishdate) {
+		this.finishdate = finishdate;
+	}
+
+	/**
 	 * This method allows the projectManager to be changed
 	 * 
 	 * @param newProjectManager
@@ -128,7 +164,7 @@ public class Project {
 	public List<ProjectCollaborator> getProjectTeam() {
 		return this.projectTeam;
 	}
-	
+
 	/**
 	 * Get the active users inside this Project's Team
 	 * 
@@ -136,12 +172,12 @@ public class Project {
 	 */
 	public List<ProjectCollaborator> getActiveProjectTeam() {
 		List<ProjectCollaborator> activeCollaborators = new ArrayList<>();
-		
+
 		for (ProjectCollaborator other : this.projectTeam) {
-			if(other.isProjectCollaboratorActive()) 
+			if (other.isProjectCollaboratorActive())
 				activeCollaborators.add(other);
 		}
-		
+
 		return activeCollaborators;
 	}
 
@@ -277,7 +313,7 @@ public class Project {
 	 * @return TRUE if the user exists in the project team AND is active FALSE if
 	 *         the user does not exist in the project team OR isn't active
 	 */
-	public boolean isUserActiveInProject(User user) { 
+	public boolean isUserActiveInProject(User user) {
 		for (ProjectCollaborator other : this.projectTeam) {
 			if (user.equals(other.getUserFromProjectCollaborator()) && other.isProjectCollaboratorActive()) {
 				return true;
