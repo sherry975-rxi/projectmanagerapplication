@@ -26,7 +26,7 @@ public class TasksFilterControllerTest {
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
 	Task task1, task2, task3, task4, task5, task6;
-	TaskCollaborator taskCollab1, taskCollab2;
+	TaskCollaborator taskCollab1, taskCollab2, taskCollab3, taskCollab4, taskCollab5, taskCollab6;
 
 	@Before
 	public void setUp() {
@@ -57,12 +57,19 @@ public class TasksFilterControllerTest {
 		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create an estimated Task Dead line Date
-		Calendar taskDeadlineDateTest = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
-
+		Calendar taskDeadlineDateTest1 = Calendar.getInstance();
+		taskDeadlineDateTest1.set(Calendar.YEAR, 2019);
+		taskDeadlineDateTest1.set(Calendar.MONTH, Calendar.JANUARY);
+		Calendar taskDeadlineDateTest2 = Calendar.getInstance();
+		taskDeadlineDateTest2.set(Calendar.YEAR, 2019);
+		taskDeadlineDateTest2.set(Calendar.MONTH, Calendar.FEBRUARY);
+		Calendar taskDeadlineDateTest3 = Calendar.getInstance();
+		taskDeadlineDateTest3.set(Calendar.YEAR, 2019);
+		taskDeadlineDateTest3.set(Calendar.MONTH, Calendar.MARCH);
+		Calendar taskDeadlineDateTest4 = Calendar.getInstance();
+		taskDeadlineDateTest4.set(Calendar.YEAR, 2019);
+		taskDeadlineDateTest4.set(Calendar.MONTH, Calendar.APRIL);
+		
 		// create a Date before to the previous Dead line created in order to result in
 		// an expired Task
 		Calendar taskExpiredDeadlineDateTest = Calendar.getInstance();
@@ -72,17 +79,17 @@ public class TasksFilterControllerTest {
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create tasks in project 1
-		task1 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		task1 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest1,
 				10);
-		task2 = project1.getTaskRepository().createTask("Do that", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		task2 = project1.getTaskRepository().createTask("Do that", 10, estimatedTaskStartDateTest, taskDeadlineDateTest2,
 				10);
 		task3 = project1.getTaskRepository().createTask("Merge everything", 10, estimatedTaskStartDateTest,
-				taskDeadlineDateTest, 10);
-		task4 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				taskExpiredDeadlineDateTest, 10);
+		task4 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest3,
 				10);
-		task5 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		task5 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest4,
 				10);
-		task6 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		task6 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskExpiredDeadlineDateTest,
 				10);
 
 		// add tasks to task repository of project 1
@@ -103,15 +110,23 @@ public class TasksFilterControllerTest {
 		project1.addProjectCollaboratorToProjectTeam(projCollab1);
 		project1.addProjectCollaboratorToProjectTeam(projCollab2);
 
-		// create Task Collaborator to regist the period that the user was in the task
+		// create Task Collaborator to register the period that the user was in the task
 		// while he was active in project 1
 		taskCollab1 = task1.createTaskCollaborator(projCollab1);
 		taskCollab2 = task2.createTaskCollaborator(projCollab2);
-
+		taskCollab3 = task3.createTaskCollaborator(projCollab2);
+		taskCollab4 = task4.createTaskCollaborator(projCollab2);
+		taskCollab5 = task5.createTaskCollaborator(projCollab2);
+		taskCollab6 = task6.createTaskCollaborator(projCollab2);
+		
 		// associate Task Collaborators to task (info project collaborator + period he
 		// was in the task)
 		task1.addTaskCollaboratorToTask(taskCollab1);
 		task2.addTaskCollaboratorToTask(taskCollab2);
+		task3.addTaskCollaboratorToTask(taskCollab3);
+		task4.addTaskCollaboratorToTask(taskCollab4);
+		task5.addTaskCollaboratorToTask(taskCollab5);
+		task6.addTaskCollaboratorToTask(taskCollab6);
 
 		// defines finish date to task, and mark it as Finished
 		task1.setFinishDate();
@@ -140,6 +155,10 @@ public class TasksFilterControllerTest {
 		task6 = null;
 		taskCollab1 = null;
 		taskCollab2 = null;
+		taskCollab3 = null;
+		taskCollab4 = null;
+		taskCollab5 = null;
+		taskCollab6 = null;
 		tasksFiltersController = null;
 	}
 
@@ -150,10 +169,36 @@ public class TasksFilterControllerTest {
 	@Test
 	public void testGetUserUnfinishedTaskList() {
 
-		assertEquals(1, tasksFiltersController.getUserUnfinishedTaskList(user2).size());
+		assertEquals(5, tasksFiltersController.getUserUnfinishedTaskList(user2).size());
 
 	}
 
+	/**
+	 * 
+	 * US203v02 - Como colaborador, eu pretendo consultar a minha lista de tarefas
+	 * iniciadas mas não concluidas de modo a saber o que tenho para fazer hoje. Se tiverem data limite
+	 * quero-as ordenadas por ordem crescente de data limite
+	 */
+	
+	@Test
+	public void testGetUserStartedNotFinishedTaskList() {
+		Calendar startDateTest = Calendar.getInstance();
+		startDateTest.add(Calendar.YEAR, 2016);
+		task1.setStartDate(startDateTest);
+		task2.setStartDate(startDateTest);
+		task3.setStartDate(startDateTest);
+		task4.setStartDate(startDateTest);
+		task5.setStartDate(startDateTest);
+		task6.setStartDate(startDateTest);
+		
+		// asserts the list contains five tasks, and the first two are the ones with the earliest deadline
+		assertEquals(5, tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).size());
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(0), task3);
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(1), task6);
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(2), task2);
+	}
+	
+	
 	/**
 	 * US210 - Como colaborador, eu pretendo obter uma lista das tarefas que
 	 * concluí, ordenadas por ordem temporal decrescente.
