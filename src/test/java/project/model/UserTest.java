@@ -296,5 +296,22 @@ public class UserTest {
 		assertEquals(Profile.VISITOR, u1.getUserProfile());
 
 	}
+	
+	/**
+	 * Tests if the user1Address and user2Address exists using searchUserAddress method by search user1Address and user2Address in user u1 address list.
+	 */
+	@Test
+	public void testSearchUserAddress() {
+		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+		
+		Address user1Address = new Address("street", "zipCode", "city", "district", "country");
+		Address user2Address = new Address("street2", "zipCode2", "city2", "district2", "country2");
+		
+		u1.addAddress(user1Address);
+		u1.addAddress(user2Address);
+		
+		assertEquals(user1Address, u1.searchUserAddress(user1Address));
+		assertEquals(user2Address, u1.searchUserAddress(user2Address));
+	}
 
 }
