@@ -1,6 +1,5 @@
 package project.model;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class ProjectRepository {
 		return projCounter;
 	}
 
-	public Project getProjById(int projCounter) throws IOException {
+	public Project getProjById(int projCounter) {
 		for (Project proj : projectsRepository) {
 			if (proj.getIdCode() == projCounter) {
 				return proj;
