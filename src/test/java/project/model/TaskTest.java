@@ -58,6 +58,7 @@ public class TaskTest {
 		myProject.setStartdate(projStartDate);
 
 		testTask = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
+		testTask.addProjectCollaboratorToTask(collab1);
 		testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
 		testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
 	}
@@ -207,6 +208,21 @@ public class TaskTest {
 	 */
 	@Test
 	public void testSecondConstructor() {
+		testTask.setStartDateInterval(5);
+		testTask.setDeadlineInterval(10);
+		Task testDupe = new Task(testTask);
+		assertTrue(testTask.equals(testDupe));
+		Calendar startDate1 = Calendar.getInstance();
+		Calendar startDateDupe = Calendar.getInstance();
+		startDateDupe.add(Calendar.DAY_OF_MONTH, -5);
+		testTask.setStartDate(startDate1);
+		testDupe.setStartDate(startDateDupe);
+		assertTrue(testTask.equals(testDupe));
+		assertFalse(testTask.getStartDate().equals(testDupe.getStartDate()));
+	}
+
+	@Test
+	public void testSecondConstructorNullIntervals() {
 		Task testDupe = new Task(testTask);
 		assertTrue(testTask.equals(testDupe));
 		Calendar startDate1 = Calendar.getInstance();
@@ -224,7 +240,7 @@ public class TaskTest {
 	@Test
 	public void isTaskTeamEmpty_true() {
 
-		assertTrue(testTask.isTaskTeamEmpty());
+		assertTrue(testTask2.isTaskTeamEmpty());
 	}
 
 	/**
@@ -430,6 +446,9 @@ public class TaskTest {
 
 	@Test
 	public void testTaskDeadline() {
-		assertEquals(taskDeadline, testTask.getTaskDeadline());
+		Calendar newTaskDeadline = Calendar.getInstance();
+		newTaskDeadline.add(Calendar.DAY_OF_MONTH, 5);
+		testTask2.setTaskDeadline(newTaskDeadline);
+		assertEquals(newTaskDeadline, testTask2.getTaskDeadline());
 	}
 }
