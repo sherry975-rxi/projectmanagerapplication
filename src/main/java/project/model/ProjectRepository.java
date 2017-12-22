@@ -172,6 +172,32 @@ public class ProjectRepository {
 		}
 		return unfinishedTasksOfSpecificUser;
 	}
+	
+	/**
+	 * This method returns all the Started tasks with state "unfinished" from all the
+	 * projects, that has a specific user associated to that task.
+	 * 
+	 * @param user
+	 *            user to search the tasks in which it is included
+	 * 
+	 * @return List of started but not finished tasks of a specific user
+	 */
+	public List<Task> getStartedNotFinishedTasksSortedByDeadline(User user) {
+
+		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<>();
+		for (Project other : this.projectsRepository) {
+			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
+
+			if (toCheck != null) {
+				unfinishedTasksOfSpecificUser
+						.addAll(other.getTaskRepository().getStartedNotFinishedTasksFromProjectCollaborator(toCheck));
+			}
+		}
+		
+		
+		return unfinishedTasksOfSpecificUser;
+	}
+
 
 	/**
 	 * This method returns a list with the finished tasks of a certain user by
