@@ -28,20 +28,28 @@ public class Task {
 	private int taskBudget;
 	private Task taskDependence;
 	private Integer startDateInterval;
-	private Integer finishDateInterval;
+	private Integer deadlineInterval;
 
 	/**
 	 * This Constructor creates a Task object with the mandatory parameters taskID
 	 * and description and non mandatory parameters creation date, start date,
 	 * finish date, task state (finished or unfinished) and task team
 	 * 
-	 * @param taskCounter The Task counter in the Project in which it is included. This value is generated in the Creator of Task.
-	 * @param projId This is the Project ID to which this Task belongs to.
-	 * @param description Description of Task.
-	 * @param estimatedTaskEffort Value that corresponds to the effort associated with this Task.
-	 * @param estimatedTaskStartDate This value may have dependences if this Task has dependences.
-	 * @param taskDeadline Estimated finish Task date.
-	 * @param estimatedBudgetCostTask Value for the estimated cost of the Task.
+	 * @param taskCounter
+	 *            The Task counter in the Project in which it is included. This
+	 *            value is generated in the Creator of Task.
+	 * @param projId
+	 *            This is the Project ID to which this Task belongs to.
+	 * @param description
+	 *            Description of Task.
+	 * @param estimatedTaskEffort
+	 *            Value that corresponds to the effort associated with this Task.
+	 * @param estimatedTaskStartDate
+	 *            This value may have dependences if this Task has dependences.
+	 * @param taskDeadline
+	 *            Estimated finish Task date.
+	 * @param estimatedBudgetCostTask
+	 *            Value for the estimated cost of the Task.
 	 */
 	public Task(int taskCounter, int projId, String description, int estimatedTaskEffort,
 			Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedBudgetCostTask) {
@@ -60,7 +68,7 @@ public class Task {
 		this.taskDeadline = taskDeadline;
 		this.taskBudget = estimatedBudgetCostTask;
 		this.startDateInterval = null;
-		this.finishDateInterval = null;
+		this.deadlineInterval = null;
 		this.taskDependence = null;
 	}
 
@@ -91,10 +99,10 @@ public class Task {
 		} else {
 			this.startDateInterval = null;
 		}
-		if (task.finishDateInterval != null) {
-			this.finishDateInterval = task.getFinishDateInterval();
+		if (task.deadlineInterval != null) {
+			this.deadlineInterval = task.getDeadlineInterval();
 		} else {
-			this.finishDateInterval = null;
+			this.deadlineInterval = null;
 		}
 	}
 
@@ -124,8 +132,8 @@ public class Task {
 	 * 
 	 * @return finishDateInterval
 	 */
-	public Integer getFinishDateInterval() {
-		return (int) finishDateInterval;
+	public Integer getDeadlineInterval() {
+		return (int) deadlineInterval;
 	}
 
 	/**
@@ -134,10 +142,9 @@ public class Task {
 	 * 
 	 * @param newFinishDateInterval
 	 */
-	public void setFinishDateInterval(int newFinishDateInterval) {
-		this.finishDateInterval = newFinishDateInterval;
+	public void setDeadlineInterval(int newFinishDateInterval) {
+		this.deadlineInterval = newFinishDateInterval;
 	}
-	
 
 	/**
 	 * This method when called returns the Estimated Task Effort
@@ -163,8 +170,8 @@ public class Task {
 	 * task start date. else, adds the interval to the project start date and
 	 * returns the result (new date).
 	 * 
-	 * The task ID is the same of the projID and so it can get the start date of the
-	 * project where the task is in.
+	 * The task ID has the projID and so it can get the start date of the project
+	 * where the task is in.
 	 * 
 	 * @return estimatedTaskStartDate
 	 */
@@ -191,12 +198,27 @@ public class Task {
 	}
 
 	/**
-	 * This method when called returns the task Dead line
+	 * This method when called returns the Deadline Date if there is no finish date
+	 * interval (that happens by default), returns the initial Deadline date. else,
+	 * adds the interval to the project start date and returns the result (new
+	 * date).
 	 * 
-	 * @return taskDeadline
+	 * The task ID is the same of the projID and so it can get the start date of the
+	 * project where the task is in.
+	 * 
+	 * @return Deadline
 	 */
 	public Calendar getTaskDeadline() {
-		return this.taskDeadline;
+		if (this.deadlineInterval == null) {
+			return this.taskDeadline;
+		}
+		double d = Double.parseDouble(taskID);
+		int projId = (int) d;
+		Project proj = Company.getTheInstance().getProjectsRepository().getProjById(projId);
+		Calendar newDeadline = (Calendar) proj.getStartdate().clone();
+		newDeadline.add(Calendar.DAY_OF_YEAR, this.deadlineInterval);
+		return newDeadline;
+
 	}
 
 	/**
@@ -715,20 +737,24 @@ public class Task {
 		return taskCost;
 	}
 
-	
 	/**
-	 * This method creates a dependence between two tasks. It determines from which task the dependence is being created. It sets the estimated start date of the new task as the estimated start date of the parent task plus the number of days to be set. 
+	 * This method creates a dependence between two tasks. It determines from which
+	 * task the dependence is being created. It sets the estimated start date of the
+	 * new task as the estimated start date of the parent task plus the number of
+	 * days to be set.
 	 * 
-	 * @param taskToEstablishDependenceUpon Parent Task from which dependence is established
-	 * @param incrementDays Number of days to increment the start date
+	 * @param taskToEstablishDependenceUpon
+	 *            Parent Task from which dependence is established
+	 * @param incrementDays
+	 *            Number of days to increment the start date
 	 */
 	public void createTaskDependence(Task taskToEstablishDependenceUpon, int incrementDays) {
-		
+
 		this.taskDependence = taskToEstablishDependenceUpon;
-		
+
 		Calendar date = taskToEstablishDependenceUpon.getEstimatedTaskStartDate();
 		date.add(Calendar.DAY_OF_YEAR, incrementDays);
-		
-		this.setEstimatedTaskStartDate(date);	
-	} 
+
+		this.setEstimatedTaskStartDate(date);
+	}
 }

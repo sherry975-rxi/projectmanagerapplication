@@ -21,6 +21,8 @@ import org.junit.Test;
  */
 public class TaskTest {
 
+	Company myCompany;
+	ProjectRepository myProjRep;
 	User user1, user2;
 	Project myProject;
 	Task testTask, testTask2, testTask3;
@@ -32,9 +34,14 @@ public class TaskTest {
 	@Before
 	public void setUp() {
 
+		myCompany = Company.getTheInstance();
+		myProjRep = myCompany.getProjectsRepository();
+
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
+
+		myProjRep.addProjectToProjectRepository(myProject);
 
 		collab1 = myProject.createProjectCollaborator(user1, 5);
 		collab2 = myProject.createProjectCollaborator(user2, 5);
@@ -47,6 +54,9 @@ public class TaskTest {
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.add(Calendar.MONTH, 1);
 
+		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
+		myProject.setStartdate(projStartDate);
+
 		testTask = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
 		testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
 		testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
@@ -54,6 +64,8 @@ public class TaskTest {
 
 	@After
 	public void breakDown() {
+		Company.clear();
+		myProjRep = null;
 		user1 = null;
 		user2 = null;
 		myProject = null;
@@ -317,54 +329,97 @@ public class TaskTest {
 		testTask2.removeProjectCollaboratorFromTask(collab2);
 		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
 	}
-	
+
 	/**
-	 * Tests the dependence of Task2 from Task1. This method will create the dependence of testTask2 to testTask and increment 10 days to the estimatedStartDate of Task1. This new date corresponds to the estimatedStartDate of Task2.
+	 * Tests the dependence of Task2 from Task1. This method will create the
+	 * dependence of testTask2 to testTask and increment 10 days to the
+	 * estimatedStartDate of Task1. This new date corresponds to the
+	 * estimatedStartDate of Task2.
 	 */
-	
+
 	@Test
 	public void testDependeceOfTasks() {
-		
-		//set testTask estimated start date
-		Calendar dateTask1= Calendar.getInstance();
+
+		// set testTask estimated start date
+		Calendar dateTask1 = Calendar.getInstance();
 		dateTask1.set(2017, Calendar.DECEMBER, 02);
 		testTask.setEstimatedTaskStartDate(dateTask1);
-		
-		//instantiate dependence of Task2 to Task1 in parameter taskDependence and sets the estimated task start date of testTask2 to the estimated task start date of testTask plus 10 days
+
+		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
+		// the estimated task start date of testTask2 to the estimated task start date
+		// of testTask plus 10 days
 		testTask2.createTaskDependence(testTask, 10);
-		
-		//set of the newEstimatedStartDateTestTask2 which corresponds to the estimated task start date of testTask plus 10 days
-		Calendar newEstimatedStartDateTestTask2= Calendar.getInstance();
+
+		// set of the newEstimatedStartDateTestTask2 which corresponds to the estimated
+		// task start date of testTask plus 10 days
+		Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
 		newEstimatedStartDateTestTask2.set(2017, Calendar.DECEMBER, 12);
-		
-		assertEquals(newEstimatedStartDateTestTask2,testTask2.getEstimatedTaskStartDate());
-		
+
+		assertEquals(newEstimatedStartDateTestTask2, testTask2.getEstimatedTaskStartDate());
+
 	}
-	
+
 	/**
-	 * Tests the dependence of Task2 from Task1. This method will create the dependence of testTask2 to testTask and increment 10 days to the estimatedStartDate of Task1. This new date corresponds to the estimatedStartDate of Task2. The turn of the Year is tested here.
+	 * Tests the dependence of Task2 from Task1. This method will create the
+	 * dependence of testTask2 to testTask and increment 10 days to the
+	 * estimatedStartDate of Task1. This new date corresponds to the
+	 * estimatedStartDate of Task2. The turn of the Year is tested here.
 	 */
-	
+
 	@Test
 	public void testDependeceOfTasksUponChangeOfYear() {
-		
-		//set testTask estimated start date
-		Calendar dateTask1= Calendar.getInstance();
+
+		// set testTask estimated start date
+		Calendar dateTask1 = Calendar.getInstance();
 		dateTask1.set(2017, Calendar.DECEMBER, 22);
 		testTask.setEstimatedTaskStartDate(dateTask1);
-		
-		//instantiate dependence of Task2 to Task1 in parameter taskDependence and sets the estimated task start date of testTask2 to the estimated task start date of testTask plus 10 days
+
+		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
+		// the estimated task start date of testTask2 to the estimated task start date
+		// of testTask plus 10 days
 		testTask2.createTaskDependence(testTask, 10);
-		
-		//set of the newEstimatedStartDateTestTask2 which corresponds to the estimated task start date of testTask plus 10 days which corresponds to changing the year from 2017 to 2018
-		Calendar newEstimatedStartDateTestTask2= Calendar.getInstance();
+
+		// set of the newEstimatedStartDateTestTask2 which corresponds to the estimated
+		// task start date of testTask plus 10 days which corresponds to changing the
+		// year from 2017 to 2018
+		Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
 		newEstimatedStartDateTestTask2.set(2018, Calendar.JANUARY, 01);
-		
-		assertEquals(newEstimatedStartDateTestTask2,testTask2.getEstimatedTaskStartDate());
-		
+
+		assertEquals(newEstimatedStartDateTestTask2, testTask2.getEstimatedTaskStartDate());
+
 	}
-	
-	
-	
+
+	@Test
+	public void testGetEstimatedStartDateWithoutInterval() {
+		assertEquals(estimatedTaskStartDate, testTask.getEstimatedTaskStartDate());
+	}
+
+	@Test
+	public void testGetEstimatedStartDateWithInterval() {
+
+		testTask.setStartDateInterval(10);
+
+		Calendar expectedStartDate = (Calendar) myProject.getStartdate().clone();
+		expectedStartDate.add(Calendar.DAY_OF_YEAR, 10);
+
+		assertEquals(expectedStartDate.get(Calendar.DAY_OF_YEAR),
+				testTask.getEstimatedTaskStartDate().get(Calendar.DAY_OF_YEAR));
+	}
+
+	@Test
+	public void testGetDeadlineWithoutInterval() {
+		assertEquals(taskDeadline, testTask.getTaskDeadline());
+	}
+
+	@Test
+	public void testGetDeadlineWithInterval() {
+
+		testTask.setDeadlineInterval(15);
+
+		Calendar expectedDeadline = (Calendar) myProject.getStartdate().clone();
+		expectedDeadline.add(Calendar.DAY_OF_YEAR, 15);
+
+		assertEquals(expectedDeadline.get(Calendar.DAY_OF_YEAR), testTask.getTaskDeadline().get(Calendar.DAY_OF_YEAR));
+	}
 
 }
