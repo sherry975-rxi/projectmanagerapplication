@@ -26,7 +26,9 @@ public class Task {
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
 	private int taskBudget;
-	private Task taskDependence; 
+	private Task taskDependence;
+	private Integer startDateInterval;
+	private Integer finishDateInterval;
 
 	/**
 	 * This Constructor creates a Task object with the mandatory parameters taskID
@@ -57,8 +59,9 @@ public class Task {
 		this.estimatedTaskStartDate = estimatedTaskStartDate;
 		this.taskDeadline = taskDeadline;
 		this.taskBudget = estimatedBudgetCostTask;
+		this.startDateInterval = null;
+		this.finishDateInterval = null;
 		this.taskDependence = null;
-
 	}
 
 	/**
@@ -77,7 +80,64 @@ public class Task {
 		this.finishDate = task.getFinishDate();
 		this.taskState = task.isTaskFinished();
 		this.taskTeam = task.copyListOfTaskCollaboratorsInTask(this.taskTeam);
+		this.reports = task.getReports();
+		this.estimatedTaskEffort = task.getEstimatedTaskEffort();
+		this.estimatedTaskStartDate = task.getEstimatedTaskStartDate();
+		this.taskDeadline = task.getTaskDeadline();
+		this.taskBudget = task.getTaskBudget();
+		this.taskDependence = task.taskDependence;
+		if (task.startDateInterval != null) {
+			this.startDateInterval = task.getStartDateInterval();
+		} else {
+			this.startDateInterval = null;
+		}
+		if (task.finishDateInterval != null) {
+			this.finishDateInterval = task.getFinishDateInterval();
+		} else {
+			this.finishDateInterval = null;
+		}
 	}
+
+	/**
+	 * Returns the interval between the start date of the project and the estimated
+	 * start date for the task.
+	 * 
+	 * @return startDateInterval
+	 */
+	public Integer getStartDateInterval() {
+		return (int) startDateInterval;
+	}
+
+	/**
+	 * Defines the interval between the start date of the project and the estimated
+	 * start date for the task to be a number provided.
+	 * 
+	 * @param newStartDateInterval
+	 */
+	public void setStartDateInterval(int newStartDateInterval) {
+		this.startDateInterval = newStartDateInterval;
+	}
+
+	/**
+	 * Returns the interval between the start date of the project and the estimated
+	 * finish date for the task.
+	 * 
+	 * @return finishDateInterval
+	 */
+	public Integer getFinishDateInterval() {
+		return (int) finishDateInterval;
+	}
+
+	/**
+	 * Defines the interval between the start date of the project and the estimated
+	 * finish date for the task to be a number provided.
+	 * 
+	 * @param newFinishDateInterval
+	 */
+	public void setFinishDateInterval(int newFinishDateInterval) {
+		this.finishDateInterval = newFinishDateInterval;
+	}
+	
 
 	/**
 	 * This method when called returns the Estimated Task Effort
@@ -98,12 +158,27 @@ public class Task {
 	}
 
 	/**
-	 * This method when called returns the Estimated Task Start Date
+	 * This method when called returns the Estimated Task Start Date if there is no
+	 * start date interval (that happens by default), returns the initial estimated
+	 * task start date. else, adds the interval to the project start date and
+	 * returns the result (new date).
+	 * 
+	 * The task ID is the same of the projID and so it can get the start date of the
+	 * project where the task is in.
 	 * 
 	 * @return estimatedTaskStartDate
 	 */
 	public Calendar getEstimatedTaskStartDate() {
-		return this.estimatedTaskStartDate;
+		if (this.startDateInterval == null) {
+			return this.estimatedTaskStartDate;
+		}
+		double d = Double.parseDouble(taskID);
+		int projId = (int) d;
+		Project proj = Company.getTheInstance().getProjectsRepository().getProjById(projId);
+		Calendar newEstimatedStartDate = (Calendar) proj.getStartdate().clone();
+		newEstimatedStartDate.add(Calendar.DAY_OF_YEAR, this.startDateInterval);
+		return newEstimatedStartDate;
+
 	}
 
 	/**
