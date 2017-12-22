@@ -119,36 +119,36 @@ public class UpdateUserInfoController_Test {
 		assertFalse(u1.getAddressList().get(0).getStreet() == "Testy Street2");
 	}
 
-	@Test
-	public void updateUserZipCode() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
-		
-		
-		controller.updateUser
-	}
-
-	@Test
-	public void updateUserCity() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
-		
-		
-		controller.updateUser
-	}
-
-	@Test
-	public void updateUserDistrict() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
-		
-		
-		controller.updateUser
-	}
-
-	@Test
-	public void updateUserCountry() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
-		
-		
-		controller.updateUser
-	}
+	// @Test
+	// public void updateUserZipCode() {
+	// UpdateUserInfoController controller = new UpdateUserInfoController();
+	//
+	//
+	// controller.updateUser
+	// }
+	//
+	// @Test
+	// public void updateUserCity() {
+	// UpdateUserInfoController controller = new UpdateUserInfoController();
+	//
+	//
+	// controller.updateUser
+	// }
+	//
+	// @Test
+	// public void updateUserDistrict() {
+	// UpdateUserInfoController controller = new UpdateUserInfoController();
+	//
+	//
+	// controller.updateUser
+	// }
+	//
+	// @Test
+	// public void updateUserCountry() {
+	// UpdateUserInfoController controller = new UpdateUserInfoController();
+	//
+	//
+	// controller.updateUser
+	// }
 
 }
