@@ -112,43 +112,55 @@ public class UpdateUserInfoController_Test {
 	public void updateUserStreet() {
 		UpdateUserInfoController controller = new UpdateUserInfoController();
 
-		assertFalse(u1.getAddressList().get(0).getStreet() == "Testy Street");
+		assertFalse(u1.searchUserAddress(address1).getStreet() == "Testy Street");
 
-		controller.updateUserStreet(u1, address1, "Testy Street2");
+		controller.updateUserStreet(u1, address1, "New Street");
 
-		assertFalse(u1.getAddressList().get(0).getStreet() == "Testy Street2");
+		assertFalse(u1.searchUserAddress(address1).getStreet() == "New Street");
 	}
 
-	// @Test
-	// public void updateUserZipCode() {
-	// UpdateUserInfoController controller = new UpdateUserInfoController();
-	//
-	//
-	// controller.updateUser
-	// }
-	//
-	// @Test
-	// public void updateUserCity() {
-	// UpdateUserInfoController controller = new UpdateUserInfoController();
-	//
-	//
-	// controller.updateUser
-	// }
-	//
-	// @Test
-	// public void updateUserDistrict() {
-	// UpdateUserInfoController controller = new UpdateUserInfoController();
-	//
-	//
-	// controller.updateUser
-	// }
-	//
-	// @Test
-	// public void updateUserCountry() {
-	// UpdateUserInfoController controller = new UpdateUserInfoController();
-	//
-	//
-	// controller.updateUser
-	// }
+	@Test
+	public void updateUserZipCode() {
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertFalse(u1.searchUserAddress(address1).getZipCode() == "2401-343");
+
+		controller.updateUserZipCode(u1, address1, "4510-532");
+
+		assertFalse(u1.searchUserAddress(address1).getZipCode() == "4510-532");
+	}
+
+	@Test
+	public void updateUserCity() {
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertFalse(u1.searchUserAddress(address1).getCity() == "Testburg");
+
+		controller.updateUserCity(u1, address1, "Gondomar");
+
+		assertFalse(u1.searchUserAddress(address1).getCity() == "Gondomar");
+	}
+
+	@Test
+	public void updateUserDistrict() {
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertFalse(u1.searchUserAddress(address1).getDistrict() == "Testo");
+
+		controller.updateUserDistrict(u1, address1, "Porto");
+
+		assertFalse(u1.searchUserAddress(address1).getDistrict() == "Porto");
+	}
+
+	@Test
+	public void updateUserCountry() {
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+		assertFalse(u1.searchUserAddress(address1).getCountry() == "Testistan");
+
+		controller.updateUserCountry(u1, address1, "Portugal");
+
+		assertFalse(u1.searchUserAddress(address1).getCountry() == "Portugal");
+	}
 
 }
