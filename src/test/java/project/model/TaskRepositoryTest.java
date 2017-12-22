@@ -773,7 +773,7 @@ public class TaskRepositoryTest {
 		listFinishedTasks.add(testTask2);
 
 		// Checks if both lists have the same tasks
-		assertEquals(listFinishedTasks, taskRepository.getFinishedTasksInDecreasingOrder(project));
+		assertEquals(listFinishedTasks, taskRepository.getFinishedTasks());
 
 	}
 
