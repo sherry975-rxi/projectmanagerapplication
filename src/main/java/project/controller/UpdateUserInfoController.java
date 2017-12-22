@@ -14,9 +14,6 @@ public class UpdateUserInfoController {
 	 * @param project
 	 * @param effort
 	 */
-	public UpdateUserInfoController() {
-
-	}
 
 	public void updateUserName(User user, String name) {
 
