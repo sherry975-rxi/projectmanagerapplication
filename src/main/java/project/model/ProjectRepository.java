@@ -172,6 +172,32 @@ public class ProjectRepository {
 		}
 		return unfinishedTasksOfSpecificUser;
 	}
+	
+	/**
+	 * This method returns all the Started tasks with state "unfinished" from all the
+	 * projects, that has a specific user associated to that task.
+	 * 
+	 * @param user
+	 *            user to search the tasks in which it is included
+	 * 
+	 * @return List of started but not finished tasks of a specific user
+	 */
+	public List<Task> getStartedNotFinishedUserTaskList(User user) {
+
+		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<>();
+		for (Project other : this.projectsRepository) {
+			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
+
+			if (toCheck != null) {
+				unfinishedTasksOfSpecificUser
+						.addAll(other.getTaskRepository().getStartedNotFinishedTasksFromProjectCollaborator(toCheck));
+			}
+		}
+		
+		
+		return unfinishedTasksOfSpecificUser;
+	}
+
 
 	/**
 	 * This method returns a list with the finished tasks of a certain user by
@@ -279,6 +305,27 @@ public class ProjectRepository {
 
 		return this.sortTaskListDecreasingOrder(finishedUserTaskListDecreasingOrder);
 	}
+	
+	
+	/**
+	 * This method returns a list with the started but not finished tasks of a certain user by
+	 * increasing order of deadline. First, this method creates a list which is a copy
+	 * of the started, unfinished task list of the user. This method just sorts the list by increasing order of deadline. It does not runs a cycle to compare the tasks, neither analysis the finishedTaskList in any way.
+	 * 
+	 * @param user
+	 * 
+	 * @return Returns a list with the all the user started, unfinished tasks sorted by
+	 *         increasing Deadline order.
+	 */
+	public List<Task> getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(User user) {
+
+		List<Task> incompleteUserTaskListIncreasingOrder = new ArrayList<>();
+		incompleteUserTaskListIncreasingOrder.addAll(this.getStartedNotFinishedUserTaskList(user));
+
+		return this.sortTaskListByDeadline(incompleteUserTaskListIncreasingOrder);
+	}
+	
+	
 
 	/**
 	 * This method returns a list with the tasks of a certain user by decreasing
@@ -299,6 +346,34 @@ public class ProjectRepository {
 		for (int i = 0; i < result.size(); i++) {
 			for (int j = i + 1; j < result.size(); j++) {
 				if (result.get(i).getFinishDate().before(result.get(j).getFinishDate())) {
+					Task h = new Task(result.get(i));
+					result.set(i, result.get(j));
+					result.set(j, h);
+				}
+			}
+
+		}
+		return result;
+	}
+	
+	// TODO implement verification of Null Deadlines
+	/**
+	 * This method returns a list with the tasks of a certain user by decreasing
+	 * order of date. First, this method creates a list which is a copy of the task
+	 * list of the user. This method just sorts the Task List by Deadline, increasing order.
+	 * 
+	 * @param toSort
+	 *            List of tasks to sort
+	 * 
+	 * @return sorted list
+	 * 
+	 */
+	public List<Task> sortTaskListByDeadline(List<Task> toSort) {
+		List<Task> result = new ArrayList<>();
+		result.addAll(toSort);
+		for (int i = 0; i < result.size(); i++) {
+			for (int j = i + 1; j < result.size(); j++) {
+				if (result.get(i).getTaskDeadline().after(result.get(j).getTaskDeadline())) {
 					Task h = new Task(result.get(i));
 					result.set(i, result.get(j));
 					result.set(j, h);
