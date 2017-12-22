@@ -422,4 +422,14 @@ public class TaskTest {
 		assertEquals(expectedDeadline.get(Calendar.DAY_OF_YEAR), testTask.getTaskDeadline().get(Calendar.DAY_OF_YEAR));
 	}
 
+	@Test
+	public void testGetDeadlineInterval() {
+		testTask.setDeadlineInterval(15);
+		assertEquals(15, (int) testTask.getDeadlineInterval());
+	}
+
+	@Test
+	public void testTaskDeadline() {
+		assertEquals(taskDeadline, testTask.getTaskDeadline());
+	}
 }
