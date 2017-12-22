@@ -296,4 +296,5 @@ public class UserTest {
 		assertEquals(Profile.VISITOR, u1.getUserProfile());
 
 	}
+
 }
