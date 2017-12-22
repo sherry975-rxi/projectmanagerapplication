@@ -405,50 +405,100 @@ public class TaskTest {
 
 	}
 
+	/**
+	 * Checks if the estimated task start date is the same that was introduced.
+	 */
 	@Test
 	public void testGetEstimatedStartDateWithoutInterval() {
 		assertEquals(estimatedTaskStartDate, testTask.getEstimatedTaskStartDate());
 	}
 
+	/**
+	 * This test checks if the estimated star date of task was changed because
+	 * of the interval that was introduced between the start date of the project and 
+	 * the task estimated start date.
+	 */
 	@Test
 	public void testGetEstimatedStartDateWithInterval() {
 
+		// adds interval of time between the start date of the project and the task estimated start date.
 		testTask.setStartDateInterval(10);
 
+		// simulates the new estimated start date for the task
 		Calendar expectedStartDate = (Calendar) myProject.getStartdate().clone();
 		expectedStartDate.add(Calendar.DAY_OF_YEAR, 10);
 
+		// compares the simulated date to the one that the method returns
 		assertEquals(expectedStartDate.get(Calendar.DAY_OF_YEAR),
 				testTask.getEstimatedTaskStartDate().get(Calendar.DAY_OF_YEAR));
 	}
 
+	/**
+	 * Checks if the estimated task start date is the same that was introduced in the beginning.
+	 */
 	@Test
 	public void testGetDeadlineWithoutInterval() {
 		assertEquals(taskDeadline, testTask.getTaskDeadline());
 	}
 
+	/**
+	 * This test checks if the estimated deadline date of task was changed because
+	 * of the interval that was introduced between the start date of the project and 
+	 * the task estimated deadline.
+	 */
 	@Test
 	public void testGetDeadlineWithInterval() {
-
+		
+		// adds interval of time between the start date of the project and the task estimated deadline.
 		testTask.setDeadlineInterval(15);
 
+		// simulates the new estimated deadline for the task
 		Calendar expectedDeadline = (Calendar) myProject.getStartdate().clone();
 		expectedDeadline.add(Calendar.DAY_OF_YEAR, 15);
-
+		
+		// compares the simulated date to the one that the method returns
 		assertEquals(expectedDeadline.get(Calendar.DAY_OF_YEAR), testTask.getTaskDeadline().get(Calendar.DAY_OF_YEAR));
 	}
 
+	/**
+	 * Checks if the task deadline interval is the same that was introduced.
+	 */
 	@Test
 	public void testGetDeadlineInterval() {
 		testTask.setDeadlineInterval(15);
 		assertEquals(15, (int) testTask.getDeadlineInterval());
 	}
 
+	/**
+	 * Checks if the task deadline date is the same that was introduced.
+	 */
 	@Test
 	public void testTaskDeadline() {
 		Calendar newTaskDeadline = Calendar.getInstance();
 		newTaskDeadline.add(Calendar.DAY_OF_MONTH, 5);
 		testTask2.setTaskDeadline(newTaskDeadline);
 		assertEquals(newTaskDeadline, testTask2.getTaskDeadline());
+	}
+	
+	/**
+	 * This test changes the task finish date, and checks the new finish date.
+	 */
+	@Test
+	public void testSetFinishDate() {
+	
+		taskDeadline.add(Calendar.DAY_OF_YEAR, -5);
+		testTask.setFinishDate(taskDeadline);
+		assertEquals(taskDeadline, testTask.getFinishDate());
+	}
+	
+	/**
+	 * Checks if the task start date interval is the same that was introduced.
+
+	 */
+	@Test
+	public void testGetStartDateInterval() {
+
+		testTask.setStartDateInterval(10);
+		assertEquals(10, (int)testTask.getStartDateInterval());
 	}
 }
