@@ -22,9 +22,13 @@ public class ProjectRepositoryTest {
 	ProjectCollaborator collab1;
 	ProjectCollaborator collab2;
 	ProjectCollaborator collab3;
+	ProjectCollaborator collab4;
+
 	TaskCollaborator taskWorker1;
 	TaskCollaborator taskWorker2;
 	TaskCollaborator taskWorker3;
+	TaskCollaborator taskWorker4;
+
 	Project project1;
 	Project project2;
 	Project project3;
@@ -35,6 +39,10 @@ public class ProjectRepositoryTest {
 	Task task1;
 	Task task2;
 	Task task3;
+	Task task4;
+	Task task5;
+	Task task6;
+
 	List<Project> expResultProjectList;
 	List<Task> expResultTaskList;
 	Calendar estimatedStartDate;
@@ -52,9 +60,17 @@ public class ProjectRepositoryTest {
 		collab1 = new ProjectCollaborator(user1, 1);
 		collab2 = new ProjectCollaborator(user2, 2);
 		collab3 = new ProjectCollaborator(user3, 3);
+
+		// Another collaborator in project 2
+		collab4 = new ProjectCollaborator(user1, 4);
+
 		taskWorker1 = new TaskCollaborator(collab1);
 		taskWorker2 = new TaskCollaborator(collab2);
 		taskWorker3 = new TaskCollaborator(collab3);
+
+		// User 1 is collab4 in project 2
+		taskWorker4 = new TaskCollaborator(collab4);
+
 		project1 = new Project(1, "name3", "description3", user1);
 		project2 = new Project(2, "name4", "description5", user2);
 		project3 = new Project(3, "name5", "description5", user3);
@@ -62,13 +78,35 @@ public class ProjectRepositoryTest {
 		project5 = new Project(5, "project5", "description5", user3);
 		project6 = new Project(6, "project6", "description5", user3);
 
+		// create a estimated Task Start Date
+		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
+		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
+		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
+		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 25);
+		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		// create a estimated Task Dead line Date
+		Calendar taskDeadlineDateTest = Calendar.getInstance();
+		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
+		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		Calendar taskDeadlineDate2 = Calendar.getInstance();
+		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
+		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
+		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
-		task1 = new Task(111, 222, "Task 1", 50, estimatedStartDate, taskDeadline, 2000);
+		task1 = new Task(111, 222, "Task 1", 50, estimatedStartDate, taskDeadlineDateTest, 2000);
 		task2 = new Task(112, 223, "Task 1", 50, estimatedStartDate, taskDeadline, 2000);
 		task3 = new Task(113, 224, "Task 1", 50, estimatedStartDate, taskDeadline, 2000);
+		task4 = new Task(213, 224, "Task 4", 50, estimatedStartDate, taskDeadlineDate2, 2000);
+		task5 = new Task(213, 224, "Task 5", 50, estimatedStartDate, taskDeadline, 2000);
+		task6 = new Task(213, 224, "Task 5", 50, estimatedStartDate, taskDeadlineDate2, 2000);
+
 		expResultProjectList = new ArrayList<Project>();
 		expResultTaskList = new ArrayList<Task>();
 	}
@@ -79,7 +117,7 @@ public class ProjectRepositoryTest {
 		projectRepository = null;
 		user1 = null;
 		user2 = null;
-		user2 = null;
+		user3 = null;
 		project1 = null;
 		project2 = null;
 		project3 = null;
@@ -90,6 +128,15 @@ public class ProjectRepositoryTest {
 		task1 = null;
 		task2 = null;
 		task3 = null;
+		task4 = null;
+		task5 = null;
+		task6 = null;
+
+		taskWorker1 = null;
+		taskWorker2 = null;
+		taskWorker3 = null;
+		taskWorker4 = null;
+
 	}
 
 	/**
@@ -635,6 +682,53 @@ public class ProjectRepositoryTest {
 
 		// verify if project1 it was add to project repository
 		assertTrue(projectRepository.isProjectInProjectRepository(project1));
+	}
+
+	@Test
+	public void getStartedNotFinishedUserTaskInIncreasingDeadlineOrder() {
+
+		// Adds project to project repository
+		projectRepository.addProjectToProjectRepository(project1);
+		projectRepository.addProjectToProjectRepository(project2);
+
+		// Adds user to project team
+		project1.addProjectCollaboratorToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab2);
+		project2.addProjectCollaboratorToProjectTeam(collab4);
+
+		// Adds tasks to project repository 1
+		project1.getTaskRepository().addProjectTask(task1);
+		project1.getTaskRepository().addProjectTask(task2);
+		project1.getTaskRepository().addProjectTask(task3);
+
+		// Adds tasks to project repository 2
+		project2.getTaskRepository().addProjectTask(task4);
+		project2.getTaskRepository().addProjectTask(task5);
+		project2.getTaskRepository().addProjectTask(task6);
+
+		// Adds user1 to tasks in Project 1
+		task1.addTaskCollaboratorToTask(taskWorker1);
+		task2.addTaskCollaboratorToTask(taskWorker1);
+		task3.addTaskCollaboratorToTask(taskWorker1);
+
+		// Adds user1 to tasks in Project 2
+		task4.addTaskCollaboratorToTask(taskWorker4);
+		task5.addTaskCollaboratorToTask(taskWorker4);
+		task6.addTaskCollaboratorToTask(taskWorker4);
+
+		task2.markTaskAsFinished();
+		task6.markTaskAsFinished();
+
+		// creates a new list of tasks in increasingDeadLineOrder
+		List<Task> startedNotFinishedTasksInOrder = new ArrayList<>();
+		startedNotFinishedTasksInOrder.add(task1);
+		startedNotFinishedTasksInOrder.add(task4);
+		startedNotFinishedTasksInOrder.add(task5);
+		startedNotFinishedTasksInOrder.add(task3);
+
+		assertEquals(startedNotFinishedTasksInOrder,
+				projectRepository.getStartedNotFinishedUserTaskInIncreasingDeadlineOrder(user1));
+
 	}
 
 }
