@@ -12,6 +12,7 @@ import org.junit.Test;
 import project.model.Company;
 import project.model.Profile;
 import project.model.User;
+import project.model.UserRepository;
 
 public class SearchUsersControllerTest {
 
@@ -22,42 +23,40 @@ public class SearchUsersControllerTest {
 	 * profile or by email
 	 *
 	 */
-
-	Company myCompany;
 	User newUser1;
 	User newUser2;
 	User newUser3;
+	UserRepository userRepository;
 	SearchUsersController searchController;
+	Company company;
 
 	@Before
 	public void setUp() {
 
-		// Creates a new Company
-		myCompany = Company.getTheInstance();
+		// Creates new company
+		company = Company.getTheInstance();
 
+		// Creates an UserRepository
+		userRepository = company.getUsersRepository();
+
+		// Creates a searchController
 		searchController = new SearchUsersController();
 
-		// Clears the UsersRepository list
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		// create user
+		newUser1 = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
+		// create user2
+		newUser2 = new User("João", "joao@gmail.com", "001", "Admin", "920000000");
 
-		// Creates 3 users
-		newUser1 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
-				"930000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
-		newUser2 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
-				"940000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
-		newUser3 = myCompany.getUsersRepository().createUser("Emanuel", "user4@sapo.com", "003", "Faz tudo",
-				"960000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
-
-		/* Adds the created users to the Company user list */
-		myCompany.getUsersRepository().addUserToUserRepository(newUser1);
-		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
-		myCompany.getUsersRepository().addUserToUserRepository(newUser3);
+		// create user3
+		newUser3 = new User("Miguel", "miguel@gmail.com", "001", "Admin", "920000000");
 
 	}
 
 	@After
 	public void tearDown() {
 		Company.clear();
+		userRepository = null;
+		searchController = null;
 		newUser1 = null;
 		newUser2 = null;
 		newUser3 = null;
@@ -74,9 +73,11 @@ public class SearchUsersControllerTest {
 
 	@Test
 	public void testSearchUsersControllerByProfile2() {
-		/* Adds the created users to the Company user list */
-		myCompany.getUsersRepository().addUserToUserRepository(newUser1);
-		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
+
+		/* Adds the created users to the user Repository */
+		userRepository.addUserToUserRepository(newUser1);
+		userRepository.addUserToUserRepository(newUser2);
+		userRepository.addUserToUserRepository(newUser3);
 
 		/* Set the newUser1 and newUser2 profile type to collaborator */
 		newUser1.setUserProfile(Profile.COLLABORATOR);
@@ -92,6 +93,11 @@ public class SearchUsersControllerTest {
 
 	@Test
 	public void testSearchUsersControllerByEmailThatDoesntExist() {
+
+		/* Adds the created users to the user Repository */
+		userRepository.addUserToUserRepository(newUser1);
+		userRepository.addUserToUserRepository(newUser2);
+		userRepository.addUserToUserRepository(newUser3);
 		/* Compares a search of a mail that doesn't exist with a empty List */
 		List<User> emptyList = new ArrayList<User>();
 		assertEquals(searchController.searchUsersByEmailController("yahoo"), emptyList);
@@ -100,10 +106,15 @@ public class SearchUsersControllerTest {
 
 	@Test
 	public void searchByEntireEmail() {
+
+		/* Adds the created users to the user Repository */
+		userRepository.addUserToUserRepository(newUser1);
+		userRepository.addUserToUserRepository(newUser2);
+		userRepository.addUserToUserRepository(newUser3);
 		/* Compares a search by entire mail address with a list with that mail */
 		List<User> testUsersEmail1 = new ArrayList<User>();
-		testUsersEmail1.add(newUser1);
-		assertEquals(searchController.searchUsersByEmailController("user2@gmail.com"), testUsersEmail1);
+		testUsersEmail1.add(newUser2);
+		assertEquals(searchController.searchUsersByEmailController("joao@gmail.com"), testUsersEmail1);
 	}
 
 }

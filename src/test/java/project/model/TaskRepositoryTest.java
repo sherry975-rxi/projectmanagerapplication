@@ -777,4 +777,66 @@ public class TaskRepositoryTest {
 
 	}
 	
+	@Test
+	public void testGetStartedNotFinishedTasksFromProjectCollaborator() {
+
+		// create star date to test
+		Calendar startDateTest = Calendar.getInstance();
+		startDateTest.set(Calendar.YEAR, 2017);
+		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
+		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
+		// Adds Tasks to TaskRepository
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask4);
+		taskRepository.addProjectTask(testTask5);
+		taskRepository.addProjectTask(testTask6);
+		taskRepository.addProjectTask(testTask7);
+
+		// Adds user1 to the Task
+		testTask.addTaskCollaboratorToTask(taskWorker1);
+		testTask2.addTaskCollaboratorToTask(taskWorker1);
+		testTask3.addTaskCollaboratorToTask(taskWorker1);
+		testTask4.addTaskCollaboratorToTask(taskWorker1);
+		testTask5.addTaskCollaboratorToTask(taskWorker1);
+		testTask6.addTaskCollaboratorToTask(taskWorker1);
+		testTask7.addTaskCollaboratorToTask(taskWorker1);
+
+		// start tasks
+		testTask2.setStartDate(startDateTest);
+		testTask3.setStartDate(startDateTest);
+		testTask4.setStartDate(startDateTest);
+		testTask5.setStartDate(startDateTest);
+		testTask6.setStartDate(startDateTest);
+		testTask7.setStartDate(startDateTest);
+
+		// Marks testTask2 and testTask4 as finished
+		testTask2.markTaskAsFinished();
+		testTask4.markTaskAsFinished();
+
+		/*
+		 * Creates a new list, and then added the tasks that have a start date but
+		 * weren't marked as finished
+		 * 
+		 */
+
+		List<Task> getStartedNotFinishedTasks = new ArrayList<Task>();
+
+		/*
+		 * Adds the started and not finished tasks to that list
+		 */
+		getStartedNotFinishedTasks.add(testTask3);
+		getStartedNotFinishedTasks.add(testTask5);
+		getStartedNotFinishedTasks.add(testTask6);
+		getStartedNotFinishedTasks.add(testTask7);
+
+		// Checks if both lists have the same tasks
+		assertEquals(getStartedNotFinishedTasks,
+				taskRepository.getStartedNotFinishedTasksFromProjectCollaborator(collab1));
+
+	}
+
 }

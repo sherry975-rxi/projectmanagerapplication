@@ -40,6 +40,7 @@ public class ListProjectCollaboratorsTest {
 		newUser3 = usersController.addNewUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "MuhPass", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		
+		projectController.setMyCompany(Critical);
 		project1 = projectController.createProject("testing", "testing a lot", userManager);
 		
 		

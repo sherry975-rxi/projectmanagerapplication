@@ -73,6 +73,26 @@ public class TaskRepository {
 		return unfinishedTaskList;
 
 	}
+	
+	/**
+	 * This method returns only the started but not finished tasks assigned to a ProjectCollaborator.
+	 * 
+	 * @return incompleteTaskList The list if tasks that are started but not finished
+	 */
+	public List<Task> getStartedNotFinishedTasksFromProjectCollaborator(ProjectCollaborator collab) {
+
+		List<Task> incompleteTaskList = new ArrayList<>();
+		incompleteTaskList.addAll(this.getAllTasksFromProjectCollaborator(collab));
+
+		for (Task other : this.getAllTasksFromProjectCollaborator(collab)) {
+			if (other.isTaskFinished() || other.getStartDate() == null) {
+				incompleteTaskList.remove(other);
+			}
+		}
+
+		return incompleteTaskList;
+
+	}
 
 	/**
 	 * This method returns only the finished tasks of a user in a project.

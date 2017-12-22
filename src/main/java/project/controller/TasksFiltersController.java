@@ -27,6 +27,19 @@ public class TasksFiltersController {
 		ProjectRepository myProjRep = this.myCompany.getProjectsRepository();
 		return myProjRep.getUnfinishedUserTaskList(myUser);
 	}
+	
+	
+	/**
+	 * This method returns all the started not finished Tasks the User has. - US203v2
+	 * 
+	 * @param myUser
+	 *            The User to search for it's unfinished tasks
+	 * @return Task List
+	 */
+	public List<Task> getUserStartedNotFinishedTaskListInIncreasingOrder(User myUser) {
+		ProjectRepository myProjRep = this.myCompany.getProjectsRepository();
+		return myProjRep.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(myUser);
+	}
 
 	/**
 	 * Returns the list of user finished tasks in decreasing order. - US210
@@ -51,7 +64,7 @@ public class TasksFiltersController {
 	 * @return Task List
 	 * 
 	 */
-	public List<Task> getFinishedUserTasksFromastMonthInDecreasingOrder(User myUser) {
+	public List<Task> getFinishedUserTasksFromLastMonthInDecreasingOrder(User myUser) {
 		ProjectRepository myProjRep = this.myCompany.getProjectsRepository();
 		return myProjRep.getFinishedUserTasksFromLastMonthInDecreasingOrder(myUser);
 	}
