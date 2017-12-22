@@ -73,11 +73,13 @@ public class TaskRepository {
 		return unfinishedTaskList;
 
 	}
-	
+
 	/**
-	 * This method returns only the started but not finished tasks assigned to a ProjectCollaborator.
+	 * This method returns only the started but not finished tasks assigned to a
+	 * ProjectCollaborator.
 	 * 
-	 * @return incompleteTaskList The list if tasks that are started but not finished
+	 * @return incompleteTaskList The list if tasks that are started but not
+	 *         finished
 	 */
 	public List<Task> getStartedNotFinishedTasksFromProjectCollaborator(ProjectCollaborator collab) {
 
@@ -310,26 +312,23 @@ public class TaskRepository {
 		}
 		return result;
 	}
-	
-	
+
 	/**
-	 * This method create a list of all tasks finished from project in decreasing order.
-	 * First creates a empty list, then add all finished tasks from the project using method getFinishedTasks.
-	 * At last, apply the sort by decreasing order to that list and return it.
-	 *
-	 * @param project
+	 * This method create a list of all tasks finished from project in decreasing
+	 * order. First creates a empty list, then add all finished tasks from the
+	 * project using method getFinishedTasks. At last, apply the sort by decreasing
+	 * order to that list and return it.
 	 * 
 	 * @return a list of tasks finished by decreasing order
 	 */
-	public List<Task> getFinishedTasksInDecreasingOrder(Project project) {
-		
+	public List<Task> getFinishedTasksInDecreasingOrder() {
+
 		List<Task> finishedTaskListDecreasingOrder = new ArrayList<>();
 		finishedTaskListDecreasingOrder.addAll(this.getFinishedTasks());
-		
+
 		return sortTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
 	}
 
-	
 	/**
 	 * this method create a list whit all unfinished tasks in project.
 	 * 
