@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.controller.CreateDependenceFromTaskController;
 import project.model.Company;
 import project.model.Project;
 import project.model.Task;
@@ -29,6 +30,8 @@ public class US342 {
 	Project project1;
 	Task task1;
 	Task task2;
+	Calendar estimatedTaskStartDate;
+	Calendar taskDeadline;
 
 	@Before
 	public void setUp() {
@@ -44,13 +47,11 @@ public class US342 {
 		project1 = myCompany.getProjectsRepository().createProject("name", "description", user1);
 
 		// Creates the dates to set as estimated start date and task deadline
-		Calendar estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.set(2017, Calendar.DECEMBER, 22);
-		Calendar taskDeadline = Calendar.getInstance();
 
-		// Creates the tasks
-		task1 = project1.getTaskRepository().createTask("description", 10, estimatedTaskStartDate, taskDeadline, 1000);
-		task2 = project1.getTaskRepository().createTask("descriptionA", 10, estimatedTaskStartDate, taskDeadline, 1000);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.set(2018, Calendar.DECEMBER, 22);
 
 	}
 
@@ -72,15 +73,9 @@ public class US342 {
 	@Test
 	public void US342_implementDependencyInTask() {
 
-		// set testTask estimated start date
-		Calendar dateTask1 = Calendar.getInstance();
-		dateTask1.set(2017, Calendar.DECEMBER, 22);
-		task1.setEstimatedTaskStartDate(dateTask1);
-
-		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
-		// the estimated task start date of testTask2 to the estimated task start date
-		// of testTask plus 10 days
-		task2.createTaskDependence(task1, 10);
+		// Creates the tasks
+		task1 = project1.getTaskRepository().createTask("description", 10, estimatedTaskStartDate, taskDeadline, 1000);
+		task2 = project1.getTaskRepository().createTask("descriptionA", 10, estimatedTaskStartDate, taskDeadline, 1000);
 
 		// set of the newEstimatedStartDateTestTask2 which corresponds to the estimated
 		// task start date of testTask plus 10 days which corresponds to changing the
@@ -88,7 +83,14 @@ public class US342 {
 		Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
 		newEstimatedStartDateTestTask2.set(2018, Calendar.JANUARY, 01);
 
-		assertEquals(newEstimatedStartDateTestTask2, task2.getEstimatedTaskStartDate());
+		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
+		// the estimated task start date of testTask2 to the estimated task start date
+		// of testTask plus 10 days, using the createDependenceFromTask Controller
+		CreateDependenceFromTaskController createTaskDependence = new CreateDependenceFromTaskController();
+		createTaskDependence.createDependenceFromTask(task2, task1, 10);
+
+		assertEquals(newEstimatedStartDateTestTask2.get(Calendar.DAY_OF_YEAR),
+				task2.getEstimatedTaskStartDate().get(Calendar.DAY_OF_YEAR));
 
 	}
 
