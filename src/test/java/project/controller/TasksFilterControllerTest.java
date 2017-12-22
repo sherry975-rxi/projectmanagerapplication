@@ -2,7 +2,9 @@ package project.controller;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +25,7 @@ public class TasksFilterControllerTest {
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
-	Task task1, task2, task3;
+	Task task1, task2, task3, task4, task5, task6;
 	TaskCollaborator taskCollab1, taskCollab2;
 
 	@Before
@@ -76,11 +78,20 @@ public class TasksFilterControllerTest {
 				10);
 		task3 = project1.getTaskRepository().createTask("Merge everything", 10, estimatedTaskStartDateTest,
 				taskDeadlineDateTest, 10);
+		task4 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		task5 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
+		task6 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+				10);
 
 		// add tasks to task repository of project 1
 		project1.getTaskRepository().addProjectTask(task1);
 		project1.getTaskRepository().addProjectTask(task2);
 		project1.getTaskRepository().addProjectTask(task3);
+		project1.getTaskRepository().addProjectTask(task4);
+		project1.getTaskRepository().addProjectTask(task5);
+		project1.getTaskRepository().addProjectTask(task6);
 
 		// add costPerEffort to users in project 1, resulting in a Project Collaborator
 		// for each one
@@ -124,6 +135,9 @@ public class TasksFilterControllerTest {
 		task1 = null;
 		task2 = null;
 		task3 = null;
+		task4 = null;
+		task5 = null;
+		task6 = null;
 		taskCollab1 = null;
 		taskCollab2 = null;
 		tasksFiltersController = null;
@@ -171,6 +185,70 @@ public class TasksFilterControllerTest {
 		assertEquals(task1, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder(user1).get(0));
 		assertEquals(task3, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder(user1).get(1));
 		assertEquals(task2, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder(user1).get(2));
+	}
+
+	/**
+	 * 
+	 * US370v02 - As Project Manager, I want to get a list of completed tasks in
+	 * descending order of completion date.
+	 */
+	@Test
+	public void test_getFinishedTasksInDescreasingOrder() {
+
+		// create an Task Finished Dates
+		Calendar taskFinihedDateTest1 = Calendar.getInstance();
+		taskFinihedDateTest1.set(Calendar.YEAR, 2017);
+		taskFinihedDateTest1.set(Calendar.MONTH, Calendar.DECEMBER);
+		taskFinihedDateTest1.set(Calendar.DAY_OF_MONTH, 18);
+		taskFinihedDateTest1.set(Calendar.HOUR_OF_DAY, 14);
+
+		Calendar taskFinihedDateTest2 = Calendar.getInstance();
+		taskFinihedDateTest2.set(Calendar.YEAR, 2017);
+		taskFinihedDateTest2.set(Calendar.MONTH, Calendar.DECEMBER);
+		taskFinihedDateTest2.set(Calendar.DAY_OF_MONTH, 19);
+		taskFinihedDateTest2.set(Calendar.HOUR_OF_DAY, 14);
+
+		Calendar taskFinihedDateTest3 = Calendar.getInstance();
+		taskFinihedDateTest3.set(Calendar.YEAR, 2017);
+		taskFinihedDateTest3.set(Calendar.MONTH, Calendar.DECEMBER);
+		taskFinihedDateTest3.set(Calendar.DAY_OF_MONTH, 20);
+		taskFinihedDateTest3.set(Calendar.HOUR_OF_DAY, 14);
+
+		// Sets all 4 tasks as finished
+		task4.setFinishDate(taskFinihedDateTest1);
+		task4.markTaskAsFinished();
+
+		task5.setFinishDate(taskFinihedDateTest2);
+		task5.markTaskAsFinished();
+
+		task6.setFinishDate(taskFinihedDateTest3);
+		task6.markTaskAsFinished();
+
+		// create a list and add task in creation order, to compare with the list
+		// given by method getProjectFinishedTaskList
+		List<Task> finishedTasks = new ArrayList<>();
+
+		finishedTasks.add(task1);
+		finishedTasks.add(task4);
+		finishedTasks.add(task5);
+		finishedTasks.add(task6);
+
+		// this assert confirm that the list of all finished task is in creation date
+		// order.
+		assertEquals(finishedTasks, tasksFiltersController.getProjectFinishedTaskList(project1));
+
+		// Create a list and add task in decreasing order, to compare with the list
+		// given by method getFinishedTasksInDescreasingOrder
+		List<Task> tasksInOrder = new ArrayList<>();
+
+		tasksInOrder.add(task1);
+		tasksInOrder.add(task6);
+		tasksInOrder.add(task5);
+		tasksInOrder.add(task4);
+
+		// this assert confirm that the list of all finished task is in finished date
+		// in decreasing order.
+		assertEquals(tasksInOrder, tasksFiltersController.getFinishedTasksInDescreasingOrder(project1));
 	}
 
 }
