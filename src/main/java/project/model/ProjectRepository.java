@@ -317,7 +317,7 @@ public class ProjectRepository {
 	 * @return Returns a list with the all the user started, unfinished tasks sorted by
 	 *         increasing Deadline order.
 	 */
-	public List<Task> getStartedNotFinishedUserTaskInIncreasingDeadlineOrder(User user) {
+	public List<Task> getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(User user) {
 
 		List<Task> incompleteUserTaskListIncreasingOrder = new ArrayList<>();
 		incompleteUserTaskListIncreasingOrder.addAll(this.getStartedNotFinishedUserTaskList(user));
