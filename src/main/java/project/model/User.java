@@ -254,4 +254,19 @@ public class User {
 
 	}
 
+	/**
+	 * this method search one specific address in user address list, if find one
+	 * match, the method return this specific address object.
+	 * 
+	 * @param findAddress
+	 * @return address
+	 */
+	public Address searchUserAddress(Address findAddress) {
+		for (Address other : this.addressList) {
+			if (other.equals(findAddress))
+				return other;
+		}
+		return null;
+	}
+
 }
