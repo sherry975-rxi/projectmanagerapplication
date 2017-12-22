@@ -26,16 +26,20 @@ public class Task {
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
 	private int taskBudget;
+	private Task taskDependence; 
 
 	/**
 	 * This Constructor creates a Task object with the mandatory parameters taskID
 	 * and description and non mandatory parameters creation date, start date,
 	 * finish date, task state (finished or unfinished) and task team
 	 * 
-	 * @param taskCounter
-	 * @param projId
-	 * @param description
-	 * 
+	 * @param taskCounter The Task counter in the Project in which it is included. This value is generated in the Creator of Task.
+	 * @param projId This is the Project ID to which this Task belongs to.
+	 * @param description Description of Task.
+	 * @param estimatedTaskEffort Value that corresponds to the effort associated with this Task.
+	 * @param estimatedTaskStartDate This value may have dependences if this Task has dependences.
+	 * @param taskDeadline Estimated finish Task date.
+	 * @param estimatedBudgetCostTask Value for the estimated cost of the Task.
 	 */
 	public Task(int taskCounter, int projId, String description, int estimatedTaskEffort,
 			Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedBudgetCostTask) {
@@ -53,6 +57,7 @@ public class Task {
 		this.estimatedTaskStartDate = estimatedTaskStartDate;
 		this.taskDeadline = taskDeadline;
 		this.taskBudget = estimatedBudgetCostTask;
+		this.taskDependence = null;
 
 	}
 
@@ -635,4 +640,20 @@ public class Task {
 		return taskCost;
 	}
 
+	
+	/**
+	 * This method creates a dependence between two tasks. It determines from which task the dependence is being created. It sets the estimated start date of the new task as the estimated start date of the parent task plus the number of days to be set. 
+	 * 
+	 * @param taskToEstablishDependenceUpon Parent Task from which dependence is established
+	 * @param incrementDays Number of days to increment the start date
+	 */
+	public void createTaskDependence(Task taskToEstablishDependenceUpon, int incrementDays) {
+		
+		this.taskDependence = taskToEstablishDependenceUpon;
+		
+		Calendar date = taskToEstablishDependenceUpon.getEstimatedTaskStartDate();
+		date.add(Calendar.DAY_OF_YEAR, incrementDays);
+		
+		this.setEstimatedTaskStartDate(date);	
+	} 
 }
