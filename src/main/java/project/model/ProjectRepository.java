@@ -1,6 +1,7 @@
 package project.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ProjectRepository {
@@ -403,6 +404,27 @@ public class ProjectRepository {
 			return true;
 
 		return false;
+	}
+
+	
+	/**
+	 * This method returns a set of Projects where a certain user was defined as Project Manager
+	 * 
+	 * @param projectManager User defined as Project Manager
+	 * 
+	 * @return List of Projects of a Project Manager
+	 * 
+	 */
+	public List<Project> getProjectsOfProjectManager(User projectManager) {
+
+		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
+
+		for (Project other : this.projectsRepository) {
+			if (other.isProjectManager(projectManager)) {
+				listOfProjectsOfProjectManager.add(other);
+			}
+		}
+		return listOfProjectsOfProjectManager;
 	}
 
 }
