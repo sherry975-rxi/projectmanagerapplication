@@ -43,7 +43,7 @@ public class SetUserProfileControllerTests {
 	public void testSetUserAsDirectorController() {
 		// given a User - newUser2 - asserts they start as Visitor when created
 		// and then creates the controller
-		assertEquals(newUser2.getUserProfile(), Profile.VISITOR);
+		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
 		SetUserProfileController testProfileController = new SetUserProfileController(newUser2);
 		
 		// sets newUser2 as Director and asserts its profile
@@ -53,14 +53,14 @@ public class SetUserProfileControllerTests {
 		//finally, asserts that no other Users were changed
 		// and that user repository contains the new director
 		assertTrue(Blip.getUsersRepository().searchUsersByProfile(Profile.DIRECTOR).contains(newUser2));
-		assertEquals(newUser3.getUserProfile(), Profile.VISITOR);
+		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
 	}
 	
 	@Test
 	public void testSetUserAsCollaboratorController() {
 		// given a User - newUser2 - asserts they start as Visitor when created
 		// and then creates the controller
-		assertEquals(newUser2.getUserProfile(), Profile.VISITOR);
+		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
 		SetUserProfileController testProfileController = new SetUserProfileController(newUser2);
 		
 		// sets newUser2 as Collaborator and asserts its profile
@@ -70,7 +70,7 @@ public class SetUserProfileControllerTests {
 		//finally, asserts that no other Users were changed
 		// and that user repository contains the new director
 		assertTrue(Blip.getUsersRepository().searchUsersByProfile(Profile.COLLABORATOR).contains(newUser2));
-		assertEquals(newUser3.getUserProfile(), Profile.VISITOR);
+		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
 	}
 
 }

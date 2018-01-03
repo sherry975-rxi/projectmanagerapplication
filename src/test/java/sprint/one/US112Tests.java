@@ -65,13 +65,13 @@ public class US112Tests {
 		assertTrue(Armis.getUsersRepository().getAllUsersFromRepository().contains(newUser2));
 		assertFalse(Armis.getUsersRepository().getAllUsersFromRepository().contains(newUser3));
 
-		assertEquals(newUser2.getUserProfile(), Profile.VISITOR);
+		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
 
 		Armis.getUsersRepository().addUserToUserRepository(newUser3);
 
 		newUser3.setUserProfile(Profile.COLLABORATOR);
 
-		assertEquals(newUser2.getUserProfile(), Profile.VISITOR);
+		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
 		assertEquals(newUser3.getUserProfile(), Profile.COLLABORATOR);
 
 		// newUser2 becomes Director

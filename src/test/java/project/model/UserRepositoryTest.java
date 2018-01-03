@@ -199,7 +199,7 @@ public class UserRepositoryTest {
 		List<User> testUsersWithProfileDirector = new ArrayList<>();
 		testUsersWithProfileDirector.add(user2);
 
-		assertEquals(testUsersWithProfileVisitor, userRep.searchUsersByProfile(Profile.VISITOR));
+		assertEquals(testUsersWithProfileVisitor, userRep.searchUsersByProfile(Profile.UNASSIGNED));
 		assertEquals(testUsersWithProfileDirector, userRep.searchUsersByProfile(Profile.DIRECTOR));
 	}
 
