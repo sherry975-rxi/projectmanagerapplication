@@ -452,12 +452,12 @@ public class ProjectRepositoryTest {
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
-		calendar1.set(2017, Calendar.NOVEMBER, 14);
+		calendar1.add(Calendar.MONTH, -1);
 		task1.setFinishDate(calendar1);
 		task1.markTaskAsFinished();
 
 		Calendar calendar2 = Calendar.getInstance();
-		calendar2.set(2017, Calendar.NOVEMBER, 13);
+		calendar2.add(Calendar.MONTH, -1);
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
@@ -509,12 +509,12 @@ public class ProjectRepositoryTest {
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
-		calendar1.set(2017, Calendar.NOVEMBER, 14);
+		calendar1.add(Calendar.MONTH, -1);
 		task1.setFinishDate(calendar1);
 		task1.markTaskAsFinished();
 
 		Calendar calendar2 = Calendar.getInstance();
-		calendar2.set(2017, Calendar.NOVEMBER, 13);
+		calendar2.add(Calendar.MONTH, -1);
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
@@ -558,12 +558,12 @@ public class ProjectRepositoryTest {
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
-		calendar1.set(2017, Calendar.NOVEMBER, 14);
+		calendar1.add(Calendar.MONTH, -1);
 		task1.setFinishDate(calendar1);
 		task1.markTaskAsFinished();
 
 		Calendar calendar2 = Calendar.getInstance();
-		calendar2.set(2017, Calendar.NOVEMBER, 13);
+		calendar2.add(Calendar.MONTH, -1);
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
@@ -602,12 +602,14 @@ public class ProjectRepositoryTest {
 
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
-		calendar1.set(2017, Calendar.NOVEMBER, 14);
+		calendar1.add(Calendar.MONTH, -1);
+		calendar1.set(Calendar.HOUR, 15);
 		task1.setFinishDate(calendar1);
 		task1.markTaskAsFinished();
 
 		Calendar calendar2 = Calendar.getInstance();
-		calendar2.set(2017, Calendar.NOVEMBER, 17);
+		calendar2.add(Calendar.MONTH, -1);
+		calendar2.set(Calendar.HOUR, 16);
 		task2.setFinishDate(calendar2);
 		task2.markTaskAsFinished();
 
