@@ -787,4 +787,26 @@ public class ProjectRepositoryTest {
 
 	}
 
+	/**
+	 * Tests the GetProjectOfProjectManager method
+	 * 
+	 */
+	@Test
+	public void testGetProjectsOfProjectManager() {
+
+		// Adds three project to the projectRepository
+		projectRepository.addProjectToProjectRepository(project2);
+		projectRepository.addProjectToProjectRepository(project5);
+		projectRepository.addProjectToProjectRepository(project6);
+
+		// Creates a list with the project from a certain Project Manager
+		List<Project> projectsOfProjectManager = new ArrayList<>();
+		projectsOfProjectManager.add(project5);
+		projectsOfProjectManager.add(project6);
+
+		// Asserts if the resulted list of the getProjectOfProjectManager method equals
+		// the list created with the project from which the user 3 is Project Manager
+		assertEquals(projectsOfProjectManager, projectRepository.getProjectsOfProjectManager(user3));
+	}
+
 }
