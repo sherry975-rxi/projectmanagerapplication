@@ -9,7 +9,7 @@ import project.model.User;
  * UI for updating User info US201 v2
  *
  */
-public class UpdateUserInfo {
+public class UpdateUserInfoUI {
 	User user;
 
 	/**
@@ -17,7 +17,7 @@ public class UpdateUserInfo {
 	 * 
 	 * @param user
 	 */
-	public UpdateUserInfo(User user) {
+	public UpdateUserInfoUI(User user) {
 		this.user = user;
 	}
 
