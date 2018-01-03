@@ -94,6 +94,7 @@ public class TaskRepositoryTest {
 		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
 		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 25);
 		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
 		// create a estimated Task Dead line Date
 		Calendar taskDeadlineDateTest = Calendar.getInstance();
 		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
@@ -264,10 +265,7 @@ public class TaskRepositoryTest {
 		testTask4.addTaskCollaboratorToTask(taskWorker1);
 		// create finished date to test
 		Calendar finishDateTest = Calendar.getInstance();
-		finishDateTest.set(Calendar.YEAR, 2017);
-		finishDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
-		finishDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		finishDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		finishDateTest.add(Calendar.MONTH, -1);
 
 		// finish tasks
 		testTask.setFinishDate(finishDateTest);
@@ -326,10 +324,7 @@ public class TaskRepositoryTest {
 
 		// create finished date to test
 		Calendar finishDateTest = Calendar.getInstance();
-		finishDateTest.set(Calendar.YEAR, 2017);
-		finishDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
-		finishDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		finishDateTest.set(Calendar.HOUR_OF_DAY, 15);
+		finishDateTest.add(Calendar.MONTH, -1);
 
 		// finish task
 		testTask.setFinishDate(finishDateTest);
@@ -606,12 +601,6 @@ public class TaskRepositoryTest {
 
 	@Test
 	public void testGetExpiredTasks() {
-		// create star date to test
-		Calendar startDateTest = Calendar.getInstance();
-		startDateTest.set(Calendar.YEAR, 2017);
-		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
-		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// Adds Tasks to TaskRepository
 		taskRepository.addProjectTask(testTask);
@@ -622,63 +611,11 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask2);
 		taskRepository.addProjectTask(testTask3);
 
-		// Adds user1 to the Task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask4.addTaskCollaboratorToTask(taskWorker1);
-		testTask5.addTaskCollaboratorToTask(taskWorker1);
-		testTask6.addTaskCollaboratorToTask(taskWorker1);
-		testTask7.addTaskCollaboratorToTask(taskWorker1);
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
-
 		// Marks testTask2 as finished
 		testTask2.markTaskAsFinished();
 
-		// start tasks
-		testTask4.setStartDate(startDateTest);
-		testTask5.setStartDate(startDateTest);
-		testTask6.setStartDate(startDateTest);
-		testTask7.setStartDate(startDateTest);
-
-		// create taskDeadLine for task4
-		Calendar taskDeadLine = Calendar.getInstance();
-		taskDeadLine.set(Calendar.YEAR, 2016);
-		taskDeadLine.set(Calendar.MONTH, Calendar.DECEMBER);
-		taskDeadLine.set(Calendar.DAY_OF_MONTH, 15);
-		taskDeadLine.set(Calendar.HOUR_OF_DAY, 14);
-
-		// create taskDeadLine for task3
-		Calendar taskDeadLine2 = Calendar.getInstance();
-		taskDeadLine2.set(Calendar.YEAR, 2019);
-		taskDeadLine2.set(Calendar.MONTH, Calendar.DECEMBER);
-		taskDeadLine2.set(Calendar.DAY_OF_MONTH, 15);
-		taskDeadLine2.set(Calendar.HOUR_OF_DAY, 14);
-
-		// create taskDeadLine for task
-		Calendar taskDeadLine3 = Calendar.getInstance();
-		taskDeadLine3.set(Calendar.YEAR, 2017);
-		taskDeadLine3.set(Calendar.MONTH, Calendar.DECEMBER);
-		taskDeadLine3.set(Calendar.DAY_OF_MONTH, 30);
-		taskDeadLine3.set(Calendar.HOUR_OF_DAY, 14);
-
-		// sets testTask4 with the date variable created before, that is already past
-		testTask4.setTaskDeadline(taskDeadLine);
-
-		/*
-		 * sets testTask3 with the date variable created before, that's still due until
-		 * 2019
-		 */
-		testTask3.setTaskDeadline(taskDeadLine2);
-
-		/*
-		 * sets testTask with the date variable created before, that's still due until
-		 * the end of this year
-		 */
-		testTask.setTaskDeadline(taskDeadLine3);
-
 		// Creates a new list, and then added the Expired tasks
 		List<Task> listExpiredTasks = new ArrayList<Task>();
-		listExpiredTasks.add(testTask4);
 		listExpiredTasks.add(testTask5);
 		listExpiredTasks.add(testTask6);
 		listExpiredTasks.add(testTask7);
