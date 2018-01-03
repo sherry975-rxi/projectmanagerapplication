@@ -8,7 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.controller.CreateDependenceFromTaskController;
+import project.controller.US342Controller;
 import project.model.Company;
 import project.model.Project;
 import project.model.Task;
@@ -86,7 +86,7 @@ public class US342 {
 		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
 		// the estimated task start date of testTask2 to the estimated task start date
 		// of testTask plus 10 days, using the createDependenceFromTask Controller
-		CreateDependenceFromTaskController createTaskDependence = new CreateDependenceFromTaskController();
+		US342Controller createTaskDependence = new US342Controller();
 		createTaskDependence.createDependenceFromTask(task2, task1, 10);
 
 		assertEquals(newEstimatedStartDateTestTask2.get(Calendar.DAY_OF_YEAR),

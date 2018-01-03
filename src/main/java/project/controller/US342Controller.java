@@ -9,7 +9,7 @@ import project.model.Task;
  *         createDependenceFromTask functionality.
  *
  */
-public class CreateDependenceFromTaskController {
+public class US342Controller {
 
 	/**
 	 * @param taskDependent
