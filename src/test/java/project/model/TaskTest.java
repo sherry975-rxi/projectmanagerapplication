@@ -64,7 +64,7 @@ public class TaskTest {
 	}
 
 	@After
-	public void breakDown() {
+	public void tearDown() {
 		Company.clear();
 		myProjRep = null;
 		user1 = null;
