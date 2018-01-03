@@ -16,28 +16,47 @@ import project.model.User;
  *
  */
 public class US342Controller {
-	
+
 	/**
-	 * This method returns a set of Projects where a certain user was defined as Project Manager
+	 * This method returns a set of Projects where a certain user was defined as
+	 * Project Manager
 	 * 
-	 * @param projectManager User defined as Project Manager
+	 * @param projectManager
+	 *            User defined as Project Manager
 	 * 
 	 * @return List of Projects of a Project Manager
 	 */
-	public List<Project> getProjectsfromUser (User projectManager) {
-		
+	public List<Project> getProjectsFromUser(User projectManager) {
+
 		Company singleCompany = Company.getTheInstance();
-		
-		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
-		
-		listOfProjectsOfProjectManager.addAll(singleCompany.getProjectsRepository().getProjectsOfProjectManager(projectManager));
-		
+
+		List<Project> listOfProjectsOfProjectManager = new ArrayList<Project>();
+
+		listOfProjectsOfProjectManager
+				.addAll(singleCompany.getProjectsRepository().getProjectsOfProjectManager(projectManager));
+
 		return listOfProjectsOfProjectManager;
 	}
-	
 
 	/**
-	 * This method creates the Dependence of a Task from another task and defines the number of days that must be spent util the dependent task starts.
+	 * This method returns the tasks from a specific project
+	 * 
+	 * @param projectToGetTasksFrom
+	 *            Project to get the tasks from
+	 * 
+	 * @return List of Tasks of the chosen Project
+	 */
+	public List<Task> getTasksFromAProject(Project projectToGetTasksFrom) {
+
+		List<Task> tasksFromProject = new ArrayList<Task>();
+		tasksFromProject.addAll(projectToGetTasksFrom.getTaskRepository().getProjectTaskRepository());
+
+		return tasksFromProject;
+	}
+
+	/**
+	 * This method creates the Dependence of a Task from another task and defines
+	 * the number of days that must be spent util the dependent task starts.
 	 * 
 	 * @param taskDependent
 	 *            Task that will be set as dependent from another one.
@@ -52,7 +71,5 @@ public class US342Controller {
 
 		taskDependent.createTaskDependence(taskReference, incrementDays);
 	}
-	
-	
 
 }
