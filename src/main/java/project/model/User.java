@@ -261,9 +261,9 @@ public class User {
 	 * @param findAddress
 	 * @return address
 	 */
-	public Address searchUserAddress(Address findAddress) {
+	public Address searchUserAddress(String street) {
 		for (Address other : this.addressList) {
-			if (other.equals(findAddress))
+			if (other.getStreet().equals(street))
 				return other;
 		}
 		return null;

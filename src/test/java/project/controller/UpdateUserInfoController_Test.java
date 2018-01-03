@@ -104,66 +104,66 @@ public class UpdateUserInfoController_Test {
 	public void addNewAddressTest() {
 		UpdateUserInfoController controller = new UpdateUserInfoController();
 
-		assertEquals(null, u1.searchUserAddress(address2));
+		assertEquals(null, u1.searchUserAddress(address2.getStreet()));
 
 		controller.addNewAddress(u1, address2);
 
-		assertEquals(address2, u1.searchUserAddress(address2));
+		assertEquals(address2, u1.searchUserAddress(address2.getStreet()));
 	}
 
 	@Test
 	public void updateUserStreet() {
 		UpdateUserInfoController controller = new UpdateUserInfoController();
 
-		assertEquals("Testy Street", u1.searchUserAddress(address1).getStreet());
+		assertEquals("Testy Street", u1.searchUserAddress(address1.getStreet()).getStreet());
 
-		controller.updateUserStreet(u1, address1, "New Street");
+		controller.updateUserStreet(u1, address1.getStreet(), "New Street");
 
-		assertEquals("New Street", u1.searchUserAddress(address1).getStreet());
+		assertEquals("New Street", u1.searchUserAddress(address1.getStreet()).getStreet());
 	}
 
 	@Test
 	public void updateUserZipCode() {
 		UpdateUserInfoController controller = new UpdateUserInfoController();
 
-		assertEquals("2401-343", u1.searchUserAddress(address1).getZipCode());
+		assertEquals("2401-343", u1.searchUserAddress(address1.getStreet()).getZipCode());
 
-		controller.updateUserZipCode(u1, address1, "4510-532");
+		controller.updateUserZipCode(u1, address1.getStreet(), "4510-532");
 
-		assertEquals("4510-532", u1.searchUserAddress(address1).getZipCode());
+		assertEquals("4510-532", u1.searchUserAddress(address1.getStreet()).getZipCode());
 	}
 
 	@Test
 	public void updateUserCity() {
 		UpdateUserInfoController controller = new UpdateUserInfoController();
 
-		assertEquals("Testburg", u1.searchUserAddress(address1).getCity());
+		assertEquals("Testburg", u1.searchUserAddress(address1.getStreet()).getCity());
 
-		controller.updateUserCity(u1, address1, "Gondomar");
+		controller.updateUserCity(u1, address1.getStreet(), "Gondomar");
 
-		assertEquals("Gondomar", u1.searchUserAddress(address1).getCity());
+		assertEquals("Gondomar", u1.searchUserAddress(address1.getStreet()).getCity());
 	}
 
 	@Test
 	public void updateUserDistrict() {
 		UpdateUserInfoController controller = new UpdateUserInfoController();
 
-		assertEquals("Testo", u1.searchUserAddress(address1).getDistrict());
+		assertEquals("Testo", u1.searchUserAddress(address1.getStreet()).getDistrict());
 
-		controller.updateUserDistrict(u1, address1, "Porto");
+		controller.updateUserDistrict(u1, address1.getStreet(), "Porto");
 
-		assertEquals("Porto", u1.searchUserAddress(address1).getDistrict());
+		assertEquals("Porto", u1.searchUserAddress(address1.getStreet()).getDistrict());
 	}
 
 	@Test
 	public void updateUserCountry() {
 		UpdateUserInfoController controller = new UpdateUserInfoController();
 
-		assertEquals("Testistan", u1.searchUserAddress(address1).getCountry());
+		assertEquals("Testistan", u1.searchUserAddress(address1.getStreet()).getCountry());
 
-		controller.updateUserCountry(u1, address1, "Portugal");
+		controller.updateUserCountry(u1, address1.getStreet(), "Portugal");
 
-		assertEquals("Portugal", u1.searchUserAddress(address1).getCountry());
+		assertEquals("Portugal", u1.searchUserAddress(address1.getStreet()).getCountry());
 	}
 
 }
