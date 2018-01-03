@@ -1,5 +1,7 @@
 package project.controller;
 
+import java.util.List;
+
 import project.model.Address;
 import project.model.User;
 
@@ -131,5 +133,13 @@ public class UpdateUserInfoController {
 	 */
 	public void updateUserCountry(User user, String street, String country) {
 		user.searchUserAddress(street).setCountry(country);
+	}
+	
+	/**
+	 * This method returns a list of all the addresses from a user
+	 * @param user
+	 */
+	public List<Address> getAllAddresses(User user) {
+		return user.getAddressList();
 	}
 }

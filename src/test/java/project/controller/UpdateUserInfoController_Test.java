@@ -165,5 +165,20 @@ public class UpdateUserInfoController_Test {
 
 		assertEquals("Portugal", u1.searchUserAddress(address1.getStreet()).getCountry());
 	}
+	
+	/**
+	 * This tests if address1 and andress2 are in user 1 list of addresses 
+	 */
+	@Test
+	public void getAllAddressesTest() {
+		UpdateUserInfoController controller = new UpdateUserInfoController();
+
+
+		//controller.addNewAddress(u1, address2);
+		
+		//assertTrue(address1.equals(controller.getAllAddresses(u1).get(0)));
+		//assertTrue(address2.equals(controller.getAllAddresses(u1).get(1)));
+		assertEquals(controller.getAllAddresses(u1).size(), 2);
+	}
 
 }
