@@ -78,7 +78,7 @@ public class UpdateUserInfoController {
 	 * @param zipCode
 	 */
 	public void updateUserZipCode(User user, Address address, String zipCode) {
-		user.searchUserAddress(address).setZipCode(zipCode);;
+		user.searchUserAddress(address).setZipCode(zipCode);
 	}
 	
 	/**
