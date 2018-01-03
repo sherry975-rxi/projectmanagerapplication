@@ -1,8 +1,10 @@
 package project.controller;
 
+import project.model.User;
+
 public class DoLoginController {
 
-	private String username;
+	private User username;
 	private String password;
 
 	/**
@@ -13,11 +15,16 @@ public class DoLoginController {
 	 * @param password
 	 *            Sets private variable password to inserted password by user
 	 */
-	public void doLogin(String username, String password) {
+	public boolean doLogin(User username, String password) {
 
 		this.username = username;
 		this.password = password;
+		boolean loginSuccess = false;
+		if (username.checkLogin(password) == true) {
+			loginSuccess = true;
+		}
 
+		return loginSuccess;
 	}
 
 	/**
