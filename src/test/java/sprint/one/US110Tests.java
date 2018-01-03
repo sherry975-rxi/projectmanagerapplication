@@ -61,7 +61,7 @@ public class US110Tests {
 		newUser2.setUserProfile(Profile.DIRECTOR);
 
 		assertEquals(newUser2.getUserProfile(), Profile.DIRECTOR);
-		assertEquals(newUser3.getUserProfile(), Profile.VISITOR);
+		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
 
 		// Sets another users as directors and confirms status
 		newUser3.setUserProfile(Profile.DIRECTOR);
@@ -71,8 +71,8 @@ public class US110Tests {
 
 		// tests changing to visitor
 
-		newUser3.setUserProfile(Profile.VISITOR);
-		assertEquals(newUser3.getUserProfile(), Profile.VISITOR);
+		newUser3.setUserProfile(Profile.UNASSIGNED);
+		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
 
 		// tests changing back to director
 		newUser3.setUserProfile(Profile.DIRECTOR);

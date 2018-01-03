@@ -9,6 +9,6 @@ package project.model;
 
 public enum Profile {
 
-	VISITOR, COLLABORATOR, DIRECTOR;
+	UNASSIGNED, COLLABORATOR, DIRECTOR;
 
 }

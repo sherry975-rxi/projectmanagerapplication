@@ -47,7 +47,7 @@ public class User {
 		this.function = function;
 		this.addressList = new ArrayList<>();
 		this.phone = phone;
-		this.userProfile = Profile.VISITOR;
+		this.userProfile = Profile.UNASSIGNED;
 		this.systemUserStateActive = true;
 	}
 

@@ -114,7 +114,7 @@ public class US201Tests {
 		String Number1 = newUserA.getPhone();
 		String Number2 = "91919199191";
 
-		assertEquals(newUserA.getUserProfile(), Profile.VISITOR);
+		assertEquals(newUserA.getUserProfile(), Profile.UNASSIGNED);
 
 		newUserA.setPhone(Number2);
 		assertFalse(newUserA.getPhone().equals(Number1));
