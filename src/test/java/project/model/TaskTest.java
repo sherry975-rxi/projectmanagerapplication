@@ -359,6 +359,7 @@ public class TaskTest {
 		// set testTask estimated start date
 		Calendar dateTask1 = Calendar.getInstance();
 		dateTask1.set(2017, Calendar.DECEMBER, 02);
+		dateTask1.set(Calendar.HOUR, 16);
 		testTask.setEstimatedTaskStartDate(dateTask1);
 
 		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
@@ -370,6 +371,7 @@ public class TaskTest {
 		// task start date of testTask plus 10 days
 		Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
 		newEstimatedStartDateTestTask2.set(2017, Calendar.DECEMBER, 12);
+		newEstimatedStartDateTestTask2.set(Calendar.HOUR, 16);
 
 		assertEquals(newEstimatedStartDateTestTask2, testTask2.getEstimatedTaskStartDate());
 
@@ -388,6 +390,7 @@ public class TaskTest {
 		// set testTask estimated start date
 		Calendar dateTask1 = Calendar.getInstance();
 		dateTask1.set(2017, Calendar.DECEMBER, 22);
+		dateTask1.set(Calendar.HOUR, 16);
 		testTask.setEstimatedTaskStartDate(dateTask1);
 
 		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
@@ -400,6 +403,7 @@ public class TaskTest {
 		// year from 2017 to 2018
 		Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
 		newEstimatedStartDateTestTask2.set(2018, Calendar.JANUARY, 01);
+		newEstimatedStartDateTestTask2.set(Calendar.HOUR, 16);
 
 		assertEquals(newEstimatedStartDateTestTask2, testTask2.getEstimatedTaskStartDate());
 
@@ -414,14 +418,15 @@ public class TaskTest {
 	}
 
 	/**
-	 * This test checks if the estimated star date of task was changed because
-	 * of the interval that was introduced between the start date of the project and 
+	 * This test checks if the estimated star date of task was changed because of
+	 * the interval that was introduced between the start date of the project and
 	 * the task estimated start date.
 	 */
 	@Test
 	public void testGetEstimatedStartDateWithInterval() {
 
-		// adds interval of time between the start date of the project and the task estimated start date.
+		// adds interval of time between the start date of the project and the task
+		// estimated start date.
 		testTask.setStartDateInterval(10);
 
 		// simulates the new estimated start date for the task
@@ -434,7 +439,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Checks if the estimated task start date is the same that was introduced in the beginning.
+	 * Checks if the estimated task start date is the same that was introduced in
+	 * the beginning.
 	 */
 	@Test
 	public void testGetDeadlineWithoutInterval() {
@@ -443,19 +449,20 @@ public class TaskTest {
 
 	/**
 	 * This test checks if the estimated deadline date of task was changed because
-	 * of the interval that was introduced between the start date of the project and 
+	 * of the interval that was introduced between the start date of the project and
 	 * the task estimated deadline.
 	 */
 	@Test
 	public void testGetDeadlineWithInterval() {
-		
-		// adds interval of time between the start date of the project and the task estimated deadline.
+
+		// adds interval of time between the start date of the project and the task
+		// estimated deadline.
 		testTask.setDeadlineInterval(15);
 
 		// simulates the new estimated deadline for the task
 		Calendar expectedDeadline = (Calendar) myProject.getStartdate().clone();
 		expectedDeadline.add(Calendar.DAY_OF_YEAR, 15);
-		
+
 		// compares the simulated date to the one that the method returns
 		assertEquals(expectedDeadline.get(Calendar.DAY_OF_YEAR), testTask.getTaskDeadline().get(Calendar.DAY_OF_YEAR));
 	}
@@ -479,26 +486,26 @@ public class TaskTest {
 		testTask2.setTaskDeadline(newTaskDeadline);
 		assertEquals(newTaskDeadline, testTask2.getTaskDeadline());
 	}
-	
+
 	/**
 	 * This test changes the task finish date, and checks the new finish date.
 	 */
 	@Test
 	public void testSetFinishDate() {
-	
+
 		taskDeadline.add(Calendar.DAY_OF_YEAR, -5);
 		testTask.setFinishDate(taskDeadline);
 		assertEquals(taskDeadline, testTask.getFinishDate());
 	}
-	
+
 	/**
 	 * Checks if the task start date interval is the same that was introduced.
-
+	 * 
 	 */
 	@Test
 	public void testGetStartDateInterval() {
 
 		testTask.setStartDateInterval(10);
-		assertEquals(10, (int)testTask.getStartDateInterval());
+		assertEquals(10, (int) testTask.getStartDateInterval());
 	}
 }
