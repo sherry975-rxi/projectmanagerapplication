@@ -21,7 +21,7 @@ public class UpdateUserInfo {
 		this.user = user;
 	}
 
-	public void ChooseWhatInfoToUpdate() {
+	public void chooseWhatInfoToUpdate() {
 		Scanner input = new Scanner(System.in);
 
 		System.out.println("Choose a field to update:");
@@ -32,21 +32,21 @@ public class UpdateUserInfo {
 		int choice = input.nextInt();
 		switch (choice) {
 		case 1:
-			String name = ConfirmAndUpdateInfo(input);
+			String name = confirmInfo(input);
 			if (!name.equals(null)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserName(user, name);
 			}
 			break;
 		case 2:
-			String email = ConfirmAndUpdateInfo(input);
+			String email = confirmInfo(input);
 			if (!email.equals(null)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserEmail(user, email);
 			}
 			break;
 		case 3:
-			String phone = ConfirmAndUpdateInfo(input);
+			String phone = confirmInfo(input);
 			if (!phone.equals(null)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
@@ -59,7 +59,7 @@ public class UpdateUserInfo {
 		}
 	}
 
-	private String ConfirmAndUpdateInfo(Scanner input) {
+	private String confirmInfo(Scanner input) {
 		System.out.println("New info:");
 		String info = input.nextLine();
 		System.out.println("Is this info correct? (y to confirm)");
