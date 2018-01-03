@@ -22,6 +22,7 @@ public class User {
 	private String phone;
 	private Profile userProfile;
 	private boolean systemUserStateActive;
+	private String password;
 
 	/**
 	 * Constructor of the class User. Every user has list of Addresses.
@@ -269,4 +270,16 @@ public class User {
 		return null;
 	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean checkLogin(String password) {
+		boolean found;
+		found = false;
+		if (password == this.password) {
+			found = true;
+		}
+		return found;
+	}
 }

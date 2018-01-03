@@ -7,15 +7,15 @@ import project.model.Profile;
 
 public class UserRegisterUI {
 	private static String name;
-	private String email;
+	private static String email;
 	private String idNumber;
 	private String function;
-	private String phone;
-	private String street;
-	private String zipCode;
-	private String city;
-	private String district;
-	private String country;
+	private static String phone;
+	private static String street;
+	private static String zipCode;
+	private static String city;
+	private static String district;
+	private static String country;
 	private Profile userProfile;
 	private boolean systemUserStateActive;
 	
@@ -28,10 +28,42 @@ public class UserRegisterUI {
 	}
 	
 	public static void main(String[] args) {
-		Scanner scannerName = new Scanner(System.in);
+		Scanner scannerInPut = new Scanner(System.in);
+		
 		System.out.println("Enter name: ");
-		name = scannerName.next();
+		name = scannerInPut.next();
 		System.out.println("Name accepted " + name);
+		
+		System.out.println("Enter email: ");
+		email = scannerInPut.next();
+		System.out.println("Email accepted " + email);
+		
+		System.out.println("Enter phone: ");
+		phone = scannerInPut.next();
+		System.out.println("Phone accepted " + phone);
+		
+		System.out.println("Enter street: ");
+		street = scannerInPut.next();
+		System.out.println("Street accepted " + street);
+		
+		System.out.println("Enter zipCode: ");
+		zipCode = scannerInPut.next();
+		System.out.println("ZipCode accepted " + zipCode);
+		
+		System.out.println("Enter city: ");
+		city = scannerInPut.next();
+		System.out.println("City accepted " + city);
+		
+		System.out.println("Enter district: ");
+		district = scannerInPut.next();
+		System.out.println("District accepted " + district);
+		
+		System.out.println("Enter country: ");
+		country = scannerInPut.next();
+		System.out.println("Country accepted " + country);
+		
+		
+		
 	}
 	
 	
