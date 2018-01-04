@@ -28,12 +28,10 @@ public class US342Controller {
 	 */
 	public List<Project> getProjectsFromUser(User projectManager) {
 
-		Company singleCompany = Company.getTheInstance();
-
-		List<Project> listOfProjectsOfProjectManager = new ArrayList<Project>();
+		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
 
 		listOfProjectsOfProjectManager
-				.addAll(singleCompany.getProjectsRepository().getProjectsOfProjectManager(projectManager));
+				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsOfProjectManager(projectManager));
 
 		return listOfProjectsOfProjectManager;
 	}
@@ -48,7 +46,8 @@ public class US342Controller {
 	 */
 	public List<Task> getTasksFromAProject(Project projectToGetTasksFrom) {
 
-		List<Task> tasksFromProject = new ArrayList<Task>();
+		List<Task> tasksFromProject = new ArrayList<>();
+
 		tasksFromProject.addAll(projectToGetTasksFrom.getTaskRepository().getProjectTaskRepository());
 
 		return tasksFromProject;
