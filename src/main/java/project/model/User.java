@@ -275,7 +275,7 @@ public class User {
 	public boolean checkLogin(String password) {
 		boolean found;
 		found = false;
-		if (password == this.password) {
+		if (this.password.equals(password)) {
 			found = true;
 		}
 		return found;
