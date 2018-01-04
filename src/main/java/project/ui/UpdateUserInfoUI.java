@@ -24,11 +24,16 @@ public class UpdateUserInfoUI {
 	public void chooseWhatInfoToUpdate() {
 		Scanner input = new Scanner(System.in);
 
+		String oldName = user.getName();
+		String oldEmail = user.getEmail();
+		String oldPhone = user.getPhone();
+	
+
 		System.out.println("Choose a field to update:");
-		System.out.println("1.Name");
-		System.out.println("2.Email");
-		System.out.println("3.Phone");
-		System.out.println("4.Address");
+		System.out.println("1. Name: " + oldName);
+		System.out.println("2. Email: " + oldEmail);
+		System.out.println("3. Phone: " + oldPhone);
+		System.out.println("4. Address");
 		int choice = input.nextInt();
 		switch (choice) {
 		case 1:
