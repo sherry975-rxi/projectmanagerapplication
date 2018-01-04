@@ -11,17 +11,16 @@ import project.model.User;
 
 public class MainMenuUI {
 
-	private static Company myCompany;
 	private static User user1;
-	private static User user;
-	private static Project project1;
-	private static Project project2;
-	private static Project project3;
-	private static Task task1;
-	private static Task task2;
 
 	public static void main(String[] args) {
-
+		Company myCompany;
+		Project project1;
+		Project project2;
+		Project project3;
+		Task task1;
+		Task task2;
+		
 		// Instantiates the company
 		myCompany = Company.getTheInstance();
 

@@ -38,26 +38,28 @@ public class UpdateUserInfoUI {
 		System.out.println();
 		// Selects the field according to user input
 		int choice = Integer.parseInt(input.nextLine());
+		final String newInfo = "New info: ";
+		final String updateSuccessful = "UPDATE SUCCESSFUL";
 		switch (choice) {
 		case 1:
 			// Updates name
 			String name = input.nextLine();
-			System.out.println("New info: " + name);
+			System.out.println(newInfo + name);
 			if (confirmInfo(input)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserName(user, name);
-				System.out.println("UPDATE SUCCESSFUL");
+				System.out.println(updateSuccessful);
 				System.out.println();
 			}
 			break;
 		case 2:
 			// Updates email
 			String email = input.nextLine();
-			System.out.println("New info: " + email);
+			System.out.println(newInfo + email);
 			if (confirmInfo(input)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				if (updater.updateUserEmail(user, email)) {
-					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println(updateSuccessful);
 				} else {
 					System.out.println("Invalid email. Try again.");
 				}
@@ -67,11 +69,11 @@ public class UpdateUserInfoUI {
 		case 3:
 			// Updates phone
 			String phone = input.nextLine();
-			System.out.println("New info: " + phone);
+			System.out.println(newInfo + phone);
 			if (confirmInfo(input)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
-				System.out.println("UPDATE SUCCESSFUL");
+				System.out.println(updateSuccessful);
 				System.out.println();
 			}
 			break;
@@ -103,50 +105,50 @@ public class UpdateUserInfoUI {
 			case 1:
 				// Updates street
 				String newStreet = input.nextLine();
-				System.out.println("New info: " + newStreet);
+				System.out.println(newInfo + newStreet);
 				if (confirmInfo(input)) {
 					updater.updateUserStreet(user, oldStreet, newStreet);
-					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println(updateSuccessful);
 					System.out.println();
 				}
 				break;
 			case 2:
 				// Updates zip code
 				String newZipCode = input.nextLine();
-				System.out.println("New info: " + newZipCode);
+				System.out.println(newInfo + newZipCode);
 				if (confirmInfo(input)) {
 					updater.updateUserZipCode(user, oldStreet, newZipCode);
-					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println(updateSuccessful);
 					System.out.println();
 				}
 				break;
 			case 3:
 				// Updates city
 				String newCity = input.nextLine();
-				System.out.println("New info: " + newCity);
+				System.out.println(newInfo + newCity);
 				if (confirmInfo(input)) {
 					updater.updateUserCity(user, oldStreet, newCity);
-					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println(updateSuccessful);
 					System.out.println();
 				}
 				break;
 			case 4:
 				// Updates district
 				String newDistrict = input.nextLine();
-				System.out.println("New info: " + newDistrict);
+				System.out.println(newInfo + newDistrict);
 				if (confirmInfo(input)) {
 					updater.updateUserDistrict(user, oldStreet, newDistrict);
-					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println(updateSuccessful);
 					System.out.println();
 				}
 				break;
 			case 5:
 				// Updates country
 				String newCountry = input.nextLine();
-				System.out.println("New info: " + newCountry);
+				System.out.println(newInfo + newCountry);
 				if (confirmInfo(input)) {
 					updater.updateUserCountry(user, oldStreet, newCountry);
-					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println(updateSuccessful);
 					System.out.println();
 				}
 				break;

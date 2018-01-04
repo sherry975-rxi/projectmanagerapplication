@@ -1,6 +1,5 @@
 package project.ui;
 
-import java.util.Calendar;
 import java.util.Scanner;
 
 import project.controller.US342Controller;
