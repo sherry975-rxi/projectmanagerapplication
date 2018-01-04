@@ -33,31 +33,31 @@ public class UpdateUserInfoUI {
 		switch (choice) {
 		case 1:
 			String name = confirmInfo(input);
-			if (name!=null) {
+			if (!(name == null)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserName(user, name);
 			}
 			break;
 		case 2:
 			String email = confirmInfo(input);
-			if (email!=null) {
+			if (!(email == null)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserEmail(user, email);
 			}
 			break;
 		case 3:
 			String phone = confirmInfo(input);
-			if (phone!=null) {
+			if (!(phone == null)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
 			}
 			break;
 		case 4:
 			UpdateUserInfoController updater = new UpdateUserInfoController();
-			
+
 			System.out.println("Please select the number of the address to update:");
-			for(int i = 0; i < updater.getAllAddresses(user).size(); i++) {
-				System.out.println((i+1) + ". " + updater.getAllAddresses(user).get(i).toString());
+			for (int i = 0; i < updater.getAllAddresses(user).size(); i++) {
+				System.out.println((i + 1) + ". " + updater.getAllAddresses(user).get(i).toString());
 			}
 			int nrAddress = input.nextInt();
 			String oldStreet = updater.getAllAddresses(user).get(nrAddress).getStreet();
@@ -72,41 +72,41 @@ public class UpdateUserInfoUI {
 			System.out.println("4. District: " + oldDistrict);
 			System.out.println("5. Country: " + oldCountry);
 			int nrField = input.nextInt();
-			//System.out.println("Please enter the new info:");
+			// System.out.println("Please enter the new info:");
 			switch (nrField) {
 			case 1:
 				String newStreet = confirmInfo(input);
-				if(newStreet!=null) {
-				updater.updateUserStreet(user, oldStreet, newStreet);
+				if (newStreet != null) {
+					updater.updateUserStreet(user, oldStreet, newStreet);
 				}
 				break;
 			case 2:
 				String newZipCode = confirmInfo(input);
-				if(newZipCode!=null) {
-				updater.updateUserZipCode(user, oldStreet, newZipCode);
+				if (newZipCode != null) {
+					updater.updateUserZipCode(user, oldStreet, newZipCode);
 				}
 				break;
 			case 3:
 				String newCity = confirmInfo(input);
-				if(newCity!=null) {
-				updater.updateUserCity(user, oldStreet, newCity);
+				if (newCity != null) {
+					updater.updateUserCity(user, oldStreet, newCity);
 				}
 				break;
 			case 4:
 				String newDistrict = confirmInfo(input);
-				if(newDistrict!=null) {
-				updater.updateUserDistrict(user, oldStreet, newDistrict);
+				if (newDistrict != null) {
+					updater.updateUserDistrict(user, oldStreet, newDistrict);
 				}
 				break;
 			case 5:
 				String newCountry = confirmInfo(input);
-				if(newCountry!=null) {
-				updater.updateUserCountry(user, oldStreet, newCountry);
+				if (newCountry != null) {
+					updater.updateUserCountry(user, oldStreet, newCountry);
 				}
 				break;
 			}
 			System.out.println("UPDATE SUCCESSFUL");
-					
+
 			break;
 		}
 	}
