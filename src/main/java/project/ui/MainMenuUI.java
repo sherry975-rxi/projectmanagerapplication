@@ -75,21 +75,19 @@ public class MainMenuUI {
 			case 102:
 				UserRegisterUI userRegister = new UserRegisterUI();
 				userRegister.userRegister();
-				mainMenu();
 				break;
-			/*
-			 * case 180: TODO insert Login UI break;
-			 */
+			case 180:
+				LoginUI doLogin = new LoginUI();
+				doLogin.doLogin();
+				break;
 			case 201:
 				UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
 				updateUserInfo.chooseWhatInfoToUpdate();
-				mainMenu();
 				break;
 			case 342:
 				DefineDependenciesBetweenTasksUI defineDependenciesBetweenTasksUI = new DefineDependenciesBetweenTasksUI(
 						user1);
 				defineDependenciesBetweenTasksUI.chooseProject();
-				mainMenu();
 				break;
 			case 998:
 				PrintUserInfoController userInfo = new PrintUserInfoController();

@@ -41,9 +41,19 @@ public class RegisterUserController {
 		}
 		else {
 		User newUser = UserRegistry.createUser(name, email, idNumber, function, phone, street, zipCode, city, district, country);
+		newUser.setPassword(password);
 		UserRegistry.addUserToUserRepository(newUser);
 		return newUser;
 		}
+	}
+	
+	public boolean isEmailValidController(String email) {
+		boolean validMail;
+		validMail = false;
+		if (Company.getTheInstance().getUsersRepository().isEmailAddressValid(email))
+			validMail = true;
+		return validMail;
+		
 	}
 	
 }
