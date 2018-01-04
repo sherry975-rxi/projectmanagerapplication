@@ -19,7 +19,7 @@ import project.model.TaskCollaborator;
 import project.model.User;
 
 /**
- * Tests US201 v2, US203 v2, US340 v2, US342 and US370 v2
+ * Tests US201 v2, 210 and US370 v2
  *
  */
 public class TasksFilterControllerTest {
