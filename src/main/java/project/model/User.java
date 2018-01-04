@@ -65,9 +65,7 @@ public class User {
 	 */
 	public Address createAddress(String street, String zipCode, String city, String district, String country) {
 
-		Address newAddress = new Address(street, zipCode, city, district, country);
-
-		return newAddress;
+		return new Address(street, zipCode, city, district, country);
 
 	}
 
