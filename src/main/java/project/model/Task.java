@@ -609,7 +609,7 @@ public class Task {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((taskID == null) ? 0 : taskID.hashCode());
+		result = prime * result + taskID.hashCode();
 		return result;
 	}
 
