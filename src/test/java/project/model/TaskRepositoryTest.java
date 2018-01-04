@@ -314,9 +314,14 @@ public class TaskRepositoryTest {
 	public void testGetTimeOnLastMonthProjectUserTask() {
 		// add task to task repository of the project
 		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
 
-		// add de user to the task
+		// add the user to the task
 		testTask.addTaskCollaboratorToTask(taskWorker1);
+		testTask.addTaskCollaboratorToTask(taskWorker2);
+		testTask2.addTaskCollaboratorToTask(taskWorker2);
+		testTask3.addTaskCollaboratorToTask(taskWorker1);
 
 		// create finished date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -343,7 +348,8 @@ public class TaskRepositoryTest {
 
 		// Checks if the 2 values are equal
 		assertEquals(5.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab1), 0.001);
-
+		// Checks if the 2 values are equal
+		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab2), 0.001);
 		// Expects 0, as collab3 belongs to another Project
 		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab3), 0.001);
 
@@ -782,6 +788,7 @@ public class TaskRepositoryTest {
 		// Checks if both lists have the same tasks
 		assertEquals(getStartedNotFinishedTasks,
 				taskRepository.getStartedNotFinishedTasksFromProjectCollaborator(collab1));
+		// Teste
 
 	}
 
