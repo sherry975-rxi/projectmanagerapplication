@@ -250,4 +250,18 @@ public class UpdateUserInfoController {
 	public String getZipCode(Address address) {
 		return address.getZipCode();
 	}
+
+	public void printAddressListWithIndex(User user) {
+		for (int i = 0; i < this.getAllAddresses(user).size(); i++) {
+			Address toShow = this.getAllAddresses(user).get(i);
+
+			System.out.println((i + 1) + ".");
+			System.out.println(this.getStreet(toShow));
+			System.out.println(this.getZipCode(toShow));
+			System.out.println(this.getCity(toShow));
+			System.out.println(this.getDistrict(toShow));
+			System.out.println(this.getCountry(toShow));
+			System.out.println();
+		}
+	}
 }

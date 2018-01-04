@@ -62,18 +62,7 @@ public class UpdateUserInfoUI {
 			UpdateUserInfoController updater = new UpdateUserInfoController();
 
 			System.out.println("Please select the number of the address to update:");
-			for (int i = 0; i < updater.getAllAddresses(user).size(); i++) {
-
-				Address toShow = updater.getAllAddresses(user).get(i);
-
-				System.out.println((i + 1) + ".");
-				System.out.println(updater.getStreet(toShow));
-				System.out.println(updater.getZipCode(toShow));
-				System.out.println(updater.getCity(toShow));
-				System.out.println(updater.getDistrict(toShow));
-				System.out.println(updater.getCountry(toShow));
-				System.out.println();
-			}
+			updater.printAddressListWithIndex(user);
 			int nrAddress = Integer.parseInt(input.nextLine());
 
 			Address chosen = updater.getAllAddresses(user).get(nrAddress - 1);
