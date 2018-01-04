@@ -36,6 +36,10 @@ public class ProjectRepositoryTest {
 	Project project5;
 	Project project6;
 
+	Project projectA;
+	Project projectB;
+	Project projectC;
+
 	Task task1;
 	Task task2;
 	Task task3;
@@ -77,12 +81,12 @@ public class ProjectRepositoryTest {
 		// User 1 is collab4 in project 2
 		taskWorker4 = new TaskCollaborator(collab4);
 
-		project1 = new Project(1, "name3", "description3", user1);
-		project2 = new Project(2, "name4", "description5", user2);
-		project3 = new Project(3, "name5", "description5", user3);
-		project4 = new Project(4, "project4", "description5", user3);
-		project5 = new Project(5, "project5", "description5", user3);
-		project6 = new Project(6, "project6", "description5", user3);
+		project1 = new Project(0, "name3", "description3", user1);
+		project2 = new Project(1, "name4", "description5", user2);
+		project3 = new Project(2, "name5", "description5", user3);
+		project4 = new Project(3, "project4", "description5", user3);
+		project5 = new Project(4, "project5", "description5", user3);
+		project6 = new Project(5, "project6", "description5", user3);
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -141,11 +145,15 @@ public class ProjectRepositoryTest {
 
 		expResultProjectList = new ArrayList<Project>();
 		expResultTaskList = new ArrayList<Task>();
+
+		// sets the Project Counter to 0
+		projectRepository.setProjCounter(0);
 	}
 
 	@After
 	public void tearDown() {
 
+		projectRepository.setProjCounter(0);
 		projectRepository = null;
 		user1 = null;
 		user2 = null;
@@ -156,6 +164,10 @@ public class ProjectRepositoryTest {
 		project4 = null;
 		project5 = null;
 		project6 = null;
+
+		projectA = null;
+		projectB = null;
+		projectC = null;
 
 		taskDeadlineDateTest = null;
 		taskDeadlineDateTest2 = null;
@@ -807,6 +819,26 @@ public class ProjectRepositoryTest {
 		// Asserts if the resulted list of the getProjectOfProjectManager method equals
 		// the list created with the project from which the user 3 is Project Manager
 		assertEquals(projectsOfProjectManager, projectRepository.getProjectsOfProjectManager(user3));
+	}
+
+	/**
+	 * Tests the getProjById method
+	 * 
+	 */
+	@Test
+	public void testGetProjectById() {
+
+		// Adds two project to the projectRepository
+		projectA = projectRepository.createProject("ProjA", "ProjectoA", user1);
+		projectB = projectRepository.createProject("ProjB", "ProjectoA", user1);
+		projectRepository.addProjectToProjectRepository(projectA);
+		projectRepository.addProjectToProjectRepository(projectB);
+		projectRepository.addProjectToProjectRepository(projectC);
+
+		// Asserts if the getProjById returns the expected Project
+		assertEquals(projectRepository.getProjById(0), projectA);
+		assertEquals(projectRepository.getProjById(1), projectB);
+
 	}
 
 }
