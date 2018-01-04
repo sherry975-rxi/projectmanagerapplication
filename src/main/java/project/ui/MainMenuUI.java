@@ -32,11 +32,11 @@ public class MainMenuUI {
 		myCompany.getUsersRepository().addUserToUserRepository(user1);
 
 		// Instantiates a project
-		project1 = myCompany.getProjectsRepository().createProject("ProjectA", "description", user1);
+		project1 = myCompany.getProjectsRepository().createProject("ProjectA", "descriptionA", user1);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
-		project2 = myCompany.getProjectsRepository().createProject("ProjectB", "description", user1);
+		project2 = myCompany.getProjectsRepository().createProject("ProjectB", "descriptionB", user1);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
-		project3 = myCompany.getProjectsRepository().createProject("ProjectC", "description", user1);
+		project3 = myCompany.getProjectsRepository().createProject("ProjectC", "descriptionC", user1);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project3);
 
 		// Instantiates the dates to set as estimated start date and task deadline

@@ -2,9 +2,7 @@ package project.ui;
 
 import java.util.Scanner;
 
-import project.controller.PrintUserInfoController;
 import project.controller.RegisterUserController;
-import project.model.User;
 
 /**
  * UI for register a user (US102)
@@ -12,32 +10,17 @@ import project.model.User;
  */
 public class UserRegisterUI {
 
-	/**
-	 * These fields are the data entered by user
-	 */
-	private String name;
-	private String email;
-	private String password;
-	private String idNumber;
-	private String function;
-	private String phone;
-	private String street;
-	private String zipCode;
-	private String city;
-	private String district;
-	private String country;
-
 	public void userRegister() {
 
 		Scanner scannerInput = new Scanner(System.in);
 		RegisterUserController registerUsercontroller1 = new RegisterUserController();
 
 		System.out.println("Enter name: ");
-		name = scannerInput.nextLine();
+		String name = scannerInput.nextLine();
 		System.out.println("Name accepted " + name);
 
 		System.out.println("Enter email: ");
-		email = scannerInput.nextLine();
+		String email = scannerInput.nextLine();
 		//It verifies if the email written by user is in a valid format and if not, the user must try another valid email address. 
 		//When the email address is valid, email is accepted and the next field (idNumber) is ready to be complete by the user.
 		while (!(registerUsercontroller1.isEmailValidController(email))) {
@@ -47,39 +30,39 @@ public class UserRegisterUI {
 		System.out.println("Email accepted " + email);
 	
 		System.out.println("Enter idNumber: ");
-		idNumber = scannerInput.nextLine();
+		String idNumber = scannerInput.nextLine();
 		System.out.println("IdNumber accepted " + idNumber);
 
 		System.out.println("Enter function: ");
-		function = scannerInput.nextLine();
+		String function = scannerInput.nextLine();
 		System.out.println("Function accepted " + function);
 
 		System.out.println("Enter phone: ");
-		phone = scannerInput.nextLine();
+		String phone = scannerInput.nextLine();
 		System.out.println("Phone accepted " + phone);
 
 		System.out.println("Enter password: ");
-		password = scannerInput.nextLine();
+		String password = scannerInput.nextLine();
 		System.out.println("Password accepted " + password);
 
 		System.out.println("Enter street: ");
-		street = scannerInput.nextLine();
+		String street = scannerInput.nextLine();
 		System.out.println("Street accepted " + street);
 
 		System.out.println("Enter zipCode: ");
-		zipCode = scannerInput.nextLine();
+		String zipCode = scannerInput.nextLine();
 		System.out.println("ZipCode accepted " + zipCode);
 
 		System.out.println("Enter city: ");
-		city = scannerInput.nextLine();
+		String city = scannerInput.nextLine();
 		System.out.println("City accepted " + city);
 
 		System.out.println("Enter district: ");
-		district = scannerInput.nextLine();
+		String district = scannerInput.nextLine();
 		System.out.println("District accepted " + district);
 
 		System.out.println("Enter country: ");
-		country = scannerInput.nextLine();
+		String country = scannerInput.nextLine();
 		System.out.println("Country accepted " + country);
 
 		System.out.println(
@@ -87,7 +70,7 @@ public class UserRegisterUI {
 		String answer = scannerInput.nextLine();
 
 		//In case user writes something different from "y" or "n"
-		while (!(answer.equalsIgnoreCase("n")) && !(answer.equalsIgnoreCase("y"))) {
+		while (!("n".equalsIgnoreCase(answer)) && !("y".equalsIgnoreCase(answer))) {
 			System.out.println("\nInvalid answer. Try again (\"y\" or \"n\")");
 			answer = scannerInput.nextLine();
 			}

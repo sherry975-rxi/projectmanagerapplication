@@ -6,7 +6,7 @@ import project.model.UserRepository;
 
 public class RegisterUserController {
 
-	UserRepository UserRegistry;
+	UserRepository userRegistry;
 	
 	/**
 	 * This constructor creates a user Registration controller.	 * 
@@ -14,7 +14,7 @@ public class RegisterUserController {
 	 */
 	public RegisterUserController() {
 		
-		this.UserRegistry=Company.getTheInstance().getUsersRepository();
+		this.userRegistry=Company.getTheInstance().getUsersRepository();
 		
 	
 	}
@@ -36,13 +36,13 @@ public class RegisterUserController {
 	 * @return the User if added successfully, null if the email already exists or is invalid
 	 */
 	public User addNewUser(String name, String email, String idNumber, String function, String phone, String password, String street, String zipCode, String city, String district, String country) {
-		if(!UserRegistry.isEmailAddressValid(email) || UserRegistry.getUserByEmail(email) !=null) {
+		if(!userRegistry.isEmailAddressValid(email) || userRegistry.getUserByEmail(email) !=null) {
 			return null;
 		}
 		else {
-		User newUser = UserRegistry.createUser(name, email, idNumber, function, phone, street, zipCode, city, district, country);
+		User newUser = userRegistry.createUser(name, email, idNumber, function, phone, street, zipCode, city, district, country);
 		newUser.setPassword(password);
-		UserRegistry.addUserToUserRepository(newUser);
+		userRegistry.addUserToUserRepository(newUser);
 		return newUser;
 		}
 	}
