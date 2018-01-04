@@ -218,8 +218,9 @@ public class TaskTest {
 		testTask.setDeadlineInterval(10);
 		testDupe = new Task(testTask);
 		assertTrue(testTask.equals(testDupe));
-		
-		// third, compare that two tasks are the same despite having different start dates
+
+		// third, compare that two tasks are the same despite having different start
+		// dates
 		Calendar startDate1 = Calendar.getInstance();
 		Calendar startDateDupe = Calendar.getInstance();
 		startDateDupe.add(Calendar.DAY_OF_MONTH, -5);
@@ -368,6 +369,9 @@ public class TaskTest {
 		Calendar dateTask1 = Calendar.getInstance();
 		dateTask1.set(2017, Calendar.DECEMBER, 02);
 		dateTask1.set(Calendar.HOUR, 16);
+		dateTask1.set(Calendar.MINUTE, 10);
+		dateTask1.set(Calendar.SECOND, 10);
+		dateTask1.set(Calendar.MILLISECOND, 100);
 		testTask.setEstimatedTaskStartDate(dateTask1);
 
 		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
@@ -380,6 +384,9 @@ public class TaskTest {
 		Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
 		newEstimatedStartDateTestTask2.set(2017, Calendar.DECEMBER, 12);
 		newEstimatedStartDateTestTask2.set(Calendar.HOUR, 16);
+		newEstimatedStartDateTestTask2.set(Calendar.MINUTE, 10);
+		newEstimatedStartDateTestTask2.set(Calendar.SECOND, 10);
+		newEstimatedStartDateTestTask2.set(Calendar.MILLISECOND, 100);
 
 		assertEquals(newEstimatedStartDateTestTask2, testTask2.getEstimatedTaskStartDate());
 
