@@ -113,7 +113,7 @@ public class Task {
 	 * @return startDateInterval
 	 */
 	public Integer getStartDateInterval() {
-		return (int) startDateInterval;
+		return startDateInterval;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Task {
 	 * @return finishDateInterval
 	 */
 	public Integer getDeadlineInterval() {
-		return (int) deadlineInterval;
+		return deadlineInterval;
 	}
 
 	/**
@@ -434,8 +434,8 @@ public class Task {
 
 		double timeSpentOnTask = 0.0;
 
-		for (Report reports : this.reports) {
-			timeSpentOnTask += reports.getReportedTime();
+		for (Report report : this.reports) {
+			timeSpentOnTask += report.getReportedTime();
 		}
 
 		return timeSpentOnTask;
@@ -454,9 +454,9 @@ public class Task {
 
 		double timeSpentByCollaboratorOnTask = 0.0;
 
-		for (Report reports : this.reports) {
-			if (reports.getTaskCollaborator().isProjectCollaboratorInTaskCollaborator(toCheck)) {
-				timeSpentByCollaboratorOnTask += reports.getReportedTime();
+		for (Report report : this.reports) {
+			if (report.getTaskCollaborator().isProjectCollaboratorInTaskCollaborator(toCheck)) {
+				timeSpentByCollaboratorOnTask += report.getReportedTime();
 			}
 		}
 

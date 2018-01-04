@@ -373,12 +373,9 @@ public class TaskRepository {
 		List<Task> expiredTasks = new ArrayList<>();
 		for (Task other : this.projectTasks) {
 			if (!other.isTaskFinished()) {
-				if (other.getTaskDeadline().get(Calendar.YEAR) < today.get(Calendar.YEAR)) {
+				if (other.getTaskDeadline().before(today)) {
 					expiredTasks.add(other);
-				} else if (other.getTaskDeadline().get(Calendar.DAY_OF_YEAR) < today.get(Calendar.DAY_OF_YEAR)
-						&& other.getTaskDeadline().get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
 
-					expiredTasks.add(other);
 				}
 			}
 		}
