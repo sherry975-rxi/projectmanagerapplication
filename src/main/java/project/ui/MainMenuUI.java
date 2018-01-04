@@ -73,9 +73,10 @@ public class MainMenuUI {
 				UserRegisterUI userRegister = new UserRegisterUI();
 				userRegister.userRegister();
 				break;
-			/*
-			 * case 180: TODO insert Login UI break;
-			 */
+			case 180:
+				LoginUI doLogin = new LoginUI();
+				doLogin.doLogin();
+				break;
 			case 201:
 				UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
 				updateUserInfo.chooseWhatInfoToUpdate();
