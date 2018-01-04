@@ -73,4 +73,15 @@ public class ProjectCollaboratorTest {
 		assertTrue(testMoar.equals(testingNonStop));// same user
 	}
 
+	/**
+	 * Tests hashcode class
+	 * 
+	 */
+	@Test
+	public void testHashCode() {
+		assertTrue(testMoar.hashCode() == testMoar.hashCode());
+		assertFalse(tester.hashCode() == testMoar.hashCode());
+
+	}
+
 }
