@@ -47,9 +47,11 @@ public class RegisterUserController {
 	}
 	
 	public boolean isEmailValidController(String email) {
+		boolean validMail;
+		validMail = false;
 		if (Company.getTheInstance().getUsersRepository().isEmailAddressValid(email))
-			return true;
-		return false;
+			validMail = true;
+		return validMail;
 		
 	}
 	
