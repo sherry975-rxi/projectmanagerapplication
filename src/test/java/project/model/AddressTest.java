@@ -1,6 +1,8 @@
 package project.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -78,6 +80,21 @@ public class AddressTest {
 
 		casa.setCountry("Portugal");
 		assertEquals("Portugal", casa.getCountry());
+
+	}
+
+	/**
+	 * Tests the HashCodes of Address class. They are the same if the streets are
+	 * the same
+	 */
+	@Test
+	public void testHashCode() {
+		Address casa = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
+		Address casa2 = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
+		Address casa3 = new Address("Rua Esquerda", "4356-245", "Gondomar", "Porto", "Portugal");
+
+		assertTrue(casa.hashCode() == casa2.hashCode());
+		assertFalse(casa.hashCode() == casa3.hashCode());
 
 	}
 
