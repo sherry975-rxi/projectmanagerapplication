@@ -3,6 +3,8 @@ package project.ui;
 import java.util.Calendar;
 import java.util.Scanner;
 
+import project.controller.GetUserInfoController;
+import project.model.Address;
 import project.model.Company;
 import project.model.Project;
 import project.model.Task;
@@ -54,8 +56,9 @@ public class MainMenuUI {
 			System.out.println("998 to view all users");
 			System.out.println("999 to view user's address");
 			System.out.println("0 to exit");
+			System.out.println();
 
-			int choice = input.nextInt();
+			int choice = Integer.parseInt(input.nextLine());
 			switch (choice) {
 			case 102:
 				UserRegisterUI userRegister = new UserRegisterUI();
@@ -71,6 +74,30 @@ public class MainMenuUI {
 				mainMenu();
 				break;
 			case 998:
+				GetUserInfoController userInfo = new GetUserInfoController();
+
+				for (User each : userInfo.getUsersList()) {
+					System.out.println(userInfo.getName(each));
+					System.out.println(userInfo.getIdNumber(each));
+					System.out.println(userInfo.getEmail(each));
+					System.out.println(userInfo.getPhone(each));
+					System.out.println(userInfo.getFunction(each));
+					System.out.println();
+				}
+				break;
+			case 999:
+				System.out.println("Please provide an email to select a user:");
+				String email = input.nextLine();
+				GetUserInfoController userAddressInfo = new GetUserInfoController();
+				User userToSearchAddress = userAddressInfo.getUserByEmailController(email);
+				for (Address each : userAddressInfo.getAllAddresses(userToSearchAddress)) {
+					System.out.println(userAddressInfo.getStreet(each));
+					System.out.println(userAddressInfo.getZipCode(each));
+					System.out.println(userAddressInfo.getCity(each));
+					System.out.println(userAddressInfo.getDistrict(each));
+					System.out.println(userAddressInfo.getCountry(each));
+					System.out.println();
+				}
 				break;
 			case 0:
 				condition = false;
