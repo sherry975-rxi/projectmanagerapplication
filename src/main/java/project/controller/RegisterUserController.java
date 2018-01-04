@@ -41,6 +41,7 @@ public class RegisterUserController {
 		}
 		else {
 		User newUser = UserRegistry.createUser(name, email, idNumber, function, phone, street, zipCode, city, district, country);
+		newUser.setPassword(password);
 		UserRegistry.addUserToUserRepository(newUser);
 		return newUser;
 		}
