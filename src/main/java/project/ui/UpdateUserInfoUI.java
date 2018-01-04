@@ -35,7 +35,7 @@ public class UpdateUserInfoUI {
 		System.out.println("3. Phone: " + oldPhone);
 		System.out.println("4. Address");
 		System.out.println();
-		int choice = input.nextInt();
+		int choice = Integer.parseInt(input.nextLine());
 		switch (choice) {
 		case 1:
 			String name = confirmInfo(input);
