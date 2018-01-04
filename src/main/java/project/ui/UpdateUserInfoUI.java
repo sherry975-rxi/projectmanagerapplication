@@ -41,8 +41,9 @@ public class UpdateUserInfoUI {
 		switch (choice) {
 		case 1:
 			// Updates name
-			String name = confirmInfo(input);
-			if (name != null) {
+			String name = input.nextLine();
+			System.out.println("New info: " + name);
+			if (confirmInfo(input)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserName(user, name);
 				System.out.println("UPDATE SUCCESSFUL");
@@ -51,18 +52,23 @@ public class UpdateUserInfoUI {
 			break;
 		case 2:
 			// Updates email
-			String email = confirmInfo(input);
-			if (email != null) {
+			String email = input.nextLine();
+			System.out.println("New info: " + email);
+			if (confirmInfo(input)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
-				updater.updateUserEmail(user, email);
-				System.out.println("UPDATE SUCCESSFUL");
+				if (updater.updateUserEmail(user, email)) {
+					System.out.println("UPDATE SUCCESSFUL");
+				} else {
+					System.out.println("Invalid email. Try again.");
+				}
 				System.out.println();
 			}
 			break;
 		case 3:
 			// Updates phone
-			String phone = confirmInfo(input);
-			if (phone != null) {
+			String phone = input.nextLine();
+			System.out.println("New info: " + phone);
+			if (confirmInfo(input)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
 				System.out.println("UPDATE SUCCESSFUL");
@@ -96,8 +102,9 @@ public class UpdateUserInfoUI {
 			switch (nrField) {
 			case 1:
 				// Updates street
-				String newStreet = confirmInfo(input);
-				if (newStreet != null) {
+				String newStreet = input.nextLine();
+				System.out.println("New info: " + newStreet);
+				if (confirmInfo(input)) {
 					updater.updateUserStreet(user, oldStreet, newStreet);
 					System.out.println("UPDATE SUCCESSFUL");
 					System.out.println();
@@ -105,8 +112,9 @@ public class UpdateUserInfoUI {
 				break;
 			case 2:
 				// Updates zip code
-				String newZipCode = confirmInfo(input);
-				if (newZipCode != null) {
+				String newZipCode = input.nextLine();
+				System.out.println("New info: " + newZipCode);
+				if (confirmInfo(input)) {
 					updater.updateUserZipCode(user, oldStreet, newZipCode);
 					System.out.println("UPDATE SUCCESSFUL");
 					System.out.println();
@@ -114,8 +122,9 @@ public class UpdateUserInfoUI {
 				break;
 			case 3:
 				// Updates city
-				String newCity = confirmInfo(input);
-				if (newCity != null) {
+				String newCity = input.nextLine();
+				System.out.println("New info: " + newCity);
+				if (confirmInfo(input)) {
 					updater.updateUserCity(user, oldStreet, newCity);
 					System.out.println("UPDATE SUCCESSFUL");
 					System.out.println();
@@ -123,8 +132,9 @@ public class UpdateUserInfoUI {
 				break;
 			case 4:
 				// Updates district
-				String newDistrict = confirmInfo(input);
-				if (newDistrict != null) {
+				String newDistrict = input.nextLine();
+				System.out.println("New info: " + newDistrict);
+				if (confirmInfo(input)) {
 					updater.updateUserDistrict(user, oldStreet, newDistrict);
 					System.out.println("UPDATE SUCCESSFUL");
 					System.out.println();
@@ -132,8 +142,9 @@ public class UpdateUserInfoUI {
 				break;
 			case 5:
 				// Updates country
-				String newCountry = confirmInfo(input);
-				if (newCountry != null) {
+				String newCountry = input.nextLine();
+				System.out.println("New info: " + newCountry);
+				if (confirmInfo(input)) {
 					updater.updateUserCountry(user, oldStreet, newCountry);
 					System.out.println("UPDATE SUCCESSFUL");
 					System.out.println();
@@ -145,14 +156,13 @@ public class UpdateUserInfoUI {
 		}
 	}
 
-	private String confirmInfo(Scanner input) {
-		System.out.println("New info:");
-		String info = input.nextLine();
+	private boolean confirmInfo(Scanner input) {
+		boolean result = false;
 		System.out.println("Press y to confirm change");
 		String yesOrNo = input.nextLine();
 		if (yesOrNo.equalsIgnoreCase("y")) {
-			return info;
+			result = true;
 		}
-		return null;
+		return result;
 	}
 }
