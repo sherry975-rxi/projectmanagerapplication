@@ -462,4 +462,13 @@ public class Project {
 		return reportedCost;
 	}
 
+	/**
+	 * This method returns the name of the project in a String
+	 * 
+	 * @return The name of the project
+	 */
+	public String getName() {
+		return this.name;
+	}
+
 }

@@ -495,4 +495,15 @@ public class ProjectTest {
 		p3 = new Project(1, "name3", "description4", user1);
 		assertTrue(p1.equals(p3));// same counter
 	}
+
+	/**
+	 * Tests the hashcode class
+	 * 
+	 */
+	@Test
+	public void testHashcode() {
+		assertTrue(p1.hashCode() == p1.hashCode());
+		assertFalse(p1.hashCode() == p2.hashCode());
+
+	}
 }
