@@ -79,26 +79,31 @@ public class UpdateUserInfoUI {
 				if(newStreet!=null) {
 				updater.updateUserStreet(user, oldStreet, newStreet);
 				}
+				break;
 			case 2:
 				String newZipCode = confirmInfo(input);
 				if(newZipCode!=null) {
 				updater.updateUserZipCode(user, oldStreet, newZipCode);
 				}
+				break;
 			case 3:
 				String newCity = confirmInfo(input);
 				if(newCity!=null) {
 				updater.updateUserCity(user, oldStreet, newCity);
 				}
+				break;
 			case 4:
 				String newDistrict = confirmInfo(input);
 				if(newDistrict!=null) {
 				updater.updateUserDistrict(user, oldStreet, newDistrict);
 				}
+				break;
 			case 5:
 				String newCountry = confirmInfo(input);
 				if(newCountry!=null) {
 				updater.updateUserCountry(user, oldStreet, newCountry);
 				}
+				break;
 			}
 			System.out.println("UPDATE SUCCESSFUL");
 					
