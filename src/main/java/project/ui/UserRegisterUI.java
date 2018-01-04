@@ -5,73 +5,69 @@ import java.util.Scanner;
 import project.controller.RegisterUserController;
 
 public class UserRegisterUI extends MainMenuUI {
-	
-	private String name;
-	private String email;
-	private String password;
-	private String idNumber;
-	private String function;
-	private String phone;
-	private String street;
-	private String zipCode;
-	private String city;
-	private String district;
-	private String country;
-
-	
-	public UserRegisterUI() {
-		// TODO Auto-generated constructor stub
-	}
 
  	public void userRegister() {
-		Scanner scannerInput = new Scanner(System.in);
+
+ 		String name;
+ 		String email;
+ 		String password;
+ 		String idNumber;
+ 		String function;
+ 		String phone;
+ 		String street;
+ 		String zipCode;
+ 		String city;
+ 		String district;
+ 		String country;
+		
+ 		Scanner scannerInput = new Scanner(System.in);
 		
  		System.out.println("Enter name: ");
-		name = scannerInput.next();
+		name = scannerInput.nextLine();
 		System.out.println("Name accepted " + name);
 		
 		System.out.println("Enter email: ");
-		email = scannerInput.next();
+		email = scannerInput.nextLine();
 		System.out.println("Email accepted " + email);
 		
 		System.out.println("Enter idNumber: ");
-		idNumber = scannerInput.next();
+		idNumber = scannerInput.nextLine();
 		System.out.println("IdNumber accepted " + idNumber);
 		
 		System.out.println("Enter function: ");
-		function = scannerInput.next();
+		function = scannerInput.nextLine();
 		System.out.println("Function accepted " + function);
 	
 		System.out.println("Enter phone: ");
-		phone = scannerInput.next();
+		phone = scannerInput.nextLine();
 		System.out.println("Phone accepted " + phone);
 		
 		System.out.println("Enter password: ");
-		password = scannerInput.next();
+		password = scannerInput.nextLine();
 		System.out.println("Password accepted " + password);
 		
 		System.out.println("Enter street: ");
-		street = scannerInput.next();
+		street = scannerInput.nextLine();
 		System.out.println("Street accepted " + street);
 		
 		System.out.println("Enter zipCode: ");
-		zipCode = scannerInput.next();
+		zipCode = scannerInput.nextLine();
 		System.out.println("ZipCode accepted " + zipCode);
 		
 		System.out.println("Enter city: ");
-		city = scannerInput.next();
+		city = scannerInput.nextLine();
 		System.out.println("City accepted " + city);
 		
 		System.out.println("Enter district: ");
-		district = scannerInput.next();
+		district = scannerInput.nextLine();
 		System.out.println("District accepted " + district);
 		
 		System.out.println("Enter country: ");
-		country = scannerInput.next();
+		country = scannerInput.nextLine();
 		System.out.println("Country accepted " + country);
 				
-		System.out.println("ACESS CONDITIONS. To proceed with registration you must accept access conditions (y to confirm; n to deny).");
-		String answer = scannerInput.next();
+		System.out.println("ACCESS CONDITIONS.\nTo proceed with registration you must accept access conditions (y to confirm; n to deny).");
+		String answer = scannerInput.nextLine();
 		
 		if(answer.equalsIgnoreCase("y")) {
 			System.out.println("Conditions accepted. Sucessful registration!");
