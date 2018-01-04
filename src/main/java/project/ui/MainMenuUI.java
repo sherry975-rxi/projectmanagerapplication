@@ -15,10 +15,10 @@ public class MainMenuUI {
 	private static User user1;
 	private static User user;
 	private static Project project1;
+	private static Project project2;
+	private static Project project3;
 	private static Task task1;
 	private static Task task2;
-	private static Calendar estimatedTaskStartDate = Calendar.getInstance();
-	private static Calendar taskDeadline = Calendar.getInstance();
 
 	public static void main(String[] args) {
 
@@ -28,11 +28,19 @@ public class MainMenuUI {
 		// Instantiate a user
 		user1 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"rua cinzenta", "6789-654", "porto", "porto", "portugal");
+		myCompany.getUsersRepository().addUserToUserRepository(user1);
 
 		// Instantiates a project
-		project1 = myCompany.getProjectsRepository().createProject("name", "description", user1);
+		project1 = myCompany.getProjectsRepository().createProject("ProjectA", "description", user1);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
+		project2 = myCompany.getProjectsRepository().createProject("ProjectB", "description", user1);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
+		project3 = myCompany.getProjectsRepository().createProject("ProjectC", "description", user1);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(project3);
 
 		// Instantiates the dates to set as estimated start date and task deadline
+		Calendar estimatedTaskStartDate = Calendar.getInstance();
+		Calendar taskDeadline = Calendar.getInstance();
 		estimatedTaskStartDate.set(2017, Calendar.DECEMBER, 22);
 		taskDeadline.set(2018, Calendar.DECEMBER, 22);
 
@@ -52,6 +60,7 @@ public class MainMenuUI {
 			System.out.println("102");
 			System.out.println("180");
 			System.out.println("201");
+			System.out.println("342");
 			System.out.println("998 to view all users");
 			System.out.println("999 to view user's address");
 			System.out.println("0 to exit");
@@ -70,6 +79,12 @@ public class MainMenuUI {
 			case 201:
 				UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
 				updateUserInfo.chooseWhatInfoToUpdate();
+				mainMenu();
+				break;
+			case 342:
+				DefineDependenciesBetweenTasksUI defineDependenciesBetweenTasksUI = new DefineDependenciesBetweenTasksUI(
+						user1);
+				defineDependenciesBetweenTasksUI.chooseProject();
 				mainMenu();
 				break;
 			case 998:

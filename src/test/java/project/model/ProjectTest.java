@@ -497,6 +497,20 @@ public class ProjectTest {
 	}
 
 	/**
+	 * Tests the getName method
+	 * 
+	 */
+	@Test
+	public void testGetName() {
+
+		// p1 name was set to "name3" on the setUp
+
+		String projectName = "name3";
+		assertEquals(p1.getName(), projectName);
+
+	}
+
+	/**
 	 * Tests the hashcode class
 	 * 
 	 */

@@ -2,6 +2,7 @@ package project.ui;
 
 import java.util.Scanner;
 
+import project.controller.PrintUserInfoController;
 import project.controller.RegisterUserController;
 import project.model.User;
 
@@ -80,13 +81,15 @@ public class UserRegisterUI {
 
 		if (answer.equalsIgnoreCase("y")) {
 			RegisterUserController controller = new RegisterUserController();
+			PrintUserInfoController userController = new PrintUserInfoController();
 
-			if (controller.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city, district,
-					country) == null) {
+			controller.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city, district,
+					country);
+
+			if (userController.getUserByEmailController(email) instanceof User) {
+				System.out.println("Register Successfully");
+			} else {
 				System.out.println("An error occurred in the registry");
-			} else if (controller.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city,
-					district, country) instanceof User) {
-				System.out.println("register successfully");
 			}
 
 		} else if (answer.equalsIgnoreCase("n")) {
