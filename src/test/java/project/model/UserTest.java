@@ -315,4 +315,25 @@ public class UserTest {
 		assertEquals(user2Address, u1.searchUserAddress(user2Address.getStreet()));
 	}
 
+	/**
+	 * Tests checkLogin method
+	 */
+	@Test
+
+	public void testCheckLogin() {
+
+		// Creates new user
+		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+		// Sets a new password for u1
+		u1.setPassword("123456");
+
+		// checks if the password matches the password registered by the user
+		assertTrue(u1.checkLogin("123456"));
+
+		// checks if a non correspondant password asserts false with the password
+		// registered by the user
+		assertFalse(u1.checkLogin("123"));
+
+	}
+
 }
