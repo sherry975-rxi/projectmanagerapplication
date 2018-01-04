@@ -10,7 +10,7 @@ import project.model.User;
  *
  */
 public class UpdateUserInfoUI {
-	User user;
+	private User user;
 
 	/**
 	 * Creates the UI
@@ -27,7 +27,6 @@ public class UpdateUserInfoUI {
 		String oldName = user.getName();
 		String oldEmail = user.getEmail();
 		String oldPhone = user.getPhone();
-	
 
 		System.out.println("Choose a field to update:");
 		System.out.println("1. Name: " + oldName);
@@ -38,21 +37,21 @@ public class UpdateUserInfoUI {
 		switch (choice) {
 		case 1:
 			String name = confirmInfo(input);
-			if (!(name == null)) {
+			if (name != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserName(user, name);
 			}
 			break;
 		case 2:
 			String email = confirmInfo(input);
-			if (!(email == null)) {
+			if (email != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserEmail(user, email);
 			}
 			break;
 		case 3:
 			String phone = confirmInfo(input);
-			if (!(phone == null)) {
+			if (phone != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
 			}
@@ -76,7 +75,7 @@ public class UpdateUserInfoUI {
 			System.out.println("3. City: " + oldCity);
 			System.out.println("4. District: " + oldDistrict);
 			System.out.println("5. Country: " + oldCountry);
-			int nrField = input.nextInt();
+			int nrField = Integer.parseInt(input.nextLine());
 			// System.out.println("Please enter the new info:");
 			switch (nrField) {
 			case 1:
