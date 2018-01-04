@@ -13,7 +13,7 @@ import project.model.User;
 public class UserRegisterUI {
 
 	/**
-	 * These fields are the data entered by the user
+	 * These fields are the data entered by user
 	 */
 	private String name;
 	private String email;
@@ -38,11 +38,12 @@ public class UserRegisterUI {
 
 		System.out.println("Enter email: ");
 		email = scannerInput.nextLine();
+		//It verifies if the email written by user is in a valid format and if not, the user must try another valid email address. 
+		//When the email address is valid, email is accepted and the next field (idNumber) is ready to be complete by the user.
 		while (!(registerUsercontroller1.isEmailValidController(email))) {
 			System.out.println("Invalid email. try again.");
 			email = scannerInput.nextLine();
 			}
-		
 		System.out.println("Email accepted " + email);
 	
 		System.out.println("Enter idNumber: ");
@@ -85,22 +86,20 @@ public class UserRegisterUI {
 				"ACCESS CONDITIONS.\nTo proceed with registration you must accept access conditions (y to confirm; n to deny).");
 		String answer = scannerInput.nextLine();
 
+		//In case user writes something different from "y" or "n"
+		while (!(answer.equalsIgnoreCase("n")) && !(answer.equalsIgnoreCase("y"))) {
+			System.out.println("\nInvalid answer. Try again (\"y\" or \"n\")");
+			answer = scannerInput.nextLine();
+			}
+		
 		if (answer.equalsIgnoreCase("y")) {
-			PrintUserInfoController userController = new PrintUserInfoController();
-
 			registerUsercontroller1.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city, district,
 					country);
-
-			if (userController.getUserByEmailController(email) instanceof User) {
-				System.out.println("Register Successfully");
-			} else {
-				System.out.println("An error occurred in the registry");
-			}
-
-		} else if (answer.equalsIgnoreCase("n")) {
+			System.out.println("Conditions accepted. Sucessfully register!");
+			
+		} else { //In case user choose "n".
 			System.out.println("Conditions not accepted");
-		} else {
-			System.out.println("Invalid answer");
 		}
+		
 	}
 }
