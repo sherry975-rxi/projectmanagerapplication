@@ -25,9 +25,10 @@ public class MainMenuUI {
 		// Instantiates the company
 		myCompany = Company.getTheInstance();
 
-		// Instantiate a user
+		// Instantiate a user and set its password
 		user1 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"rua cinzenta", "6789-654", "porto", "porto", "portugal");
+		user1.setPassword("manel123");
 		myCompany.getUsersRepository().addUserToUserRepository(user1);
 
 		// Instantiates a project
