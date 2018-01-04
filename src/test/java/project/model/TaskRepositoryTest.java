@@ -29,6 +29,7 @@ public class TaskRepositoryTest {
 	ProjectCollaborator collab3;
 
 	Project project;
+	Project project2;
 	ProjectRepository projectRepository;
 	TaskRepository taskRepository;
 	Task testTask;
@@ -59,10 +60,14 @@ public class TaskRepositoryTest {
 		// create user admin
 		userAdmin = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
+
+		// Creates one Project
+		project2 = projectRepository.createProject("Project2", "description2", userAdmin);
+
 		// create project collaborators
 		collab1 = new ProjectCollaborator(user1, 2);
 		collab2 = new ProjectCollaborator(user2, 3);
-		collab3 = new ProjectCollaborator(user3, 3);
+		collab3 = project2.createProjectCollaborator(user3, 3);
 
 		// create task workers
 		taskWorker1 = new TaskCollaborator(collab1);
@@ -134,6 +139,7 @@ public class TaskRepositoryTest {
 		testTask3 = null;
 		testTask4 = null;
 		project = null;
+		project2 = null;
 		projectRepository = null;
 		taskRepository = null;
 		userRepository = null;
@@ -338,7 +344,7 @@ public class TaskRepositoryTest {
 		// Checks if the 2 values are equal
 		assertEquals(5.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab1), 0.001);
 
-		// Expects 0, as collab3 didnt have any task associated to him
+		// Expects 0, as collab3 belongs to another Project
 		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab3), 0.001);
 
 	}
