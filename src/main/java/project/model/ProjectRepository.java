@@ -351,15 +351,21 @@ public class ProjectRepository {
 	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
-		for (int i = 0; i <= result.size()-2; i++) {
+		boolean cycle = true;
+		int i=0;
+		while(cycle) {
+			cycle=false;
+		
 			for (int j = i + 1; j < result.size(); j++) {
+				cycle=true;
 				if (result.get(i).getFinishDate().before(result.get(j).getFinishDate())) {
 					Task h = new Task(result.get(i));
 					result.set(i, result.get(j));
 					result.set(j, h);
 				}
 			}
-
+			i++;
+		
 		}
 		return result;
 	}
@@ -380,14 +386,20 @@ public class ProjectRepository {
 	public List<Task> sortTaskListByDeadline(List<Task> toSort) {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
-		for (int i = 0; i <= result.size()-2; i++) {
+		boolean cycle = true;
+		int i=0;
+		while(cycle) {
+			cycle=false;
+		
 			for (int j = i + 1; j < result.size(); j++) {
+				cycle=true;
 				if (result.get(i).getTaskDeadline().after(result.get(j).getTaskDeadline())) {
 					Task h = new Task(result.get(i));
 					result.set(i, result.get(j));
 					result.set(j, h);
 				}
 			}
+			i++;
 
 		}
 		return result;
