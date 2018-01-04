@@ -377,37 +377,7 @@ public class TaskTest {
 
 	}
 
-	/**
-	 * Tests the dependence of Task2 from Task1. This method will create the
-	 * dependence of testTask2 to testTask and increment 10 days to the
-	 * estimatedStartDate of Task1. This new date corresponds to the
-	 * estimatedStartDate of Task2. The turn of the Year is tested here.
-	 */
-
-	@Test
-	public void testDependeceOfTasksUponChangeOfYear() {
-
-		// set testTask estimated start date
-		Calendar dateTask1 = Calendar.getInstance();
-		dateTask1.set(2017, Calendar.DECEMBER, 22);
-		dateTask1.set(Calendar.HOUR, 16);
-		testTask.setEstimatedTaskStartDate(dateTask1);
-
-		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
-		// the estimated task start date of testTask2 to the estimated task start date
-		// of testTask plus 10 days
-		testTask2.createTaskDependence(testTask, 10);
-
-		// set of the newEstimatedStartDateTestTask2 which corresponds to the estimated
-		// task start date of testTask plus 10 days which corresponds to changing the
-		// year from 2017 to 2018
-		Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
-		newEstimatedStartDateTestTask2.set(2018, Calendar.JANUARY, 01);
-		newEstimatedStartDateTestTask2.set(Calendar.HOUR, 16);
-
-		assertEquals(newEstimatedStartDateTestTask2, testTask2.getEstimatedTaskStartDate());
-
-	}
+	
 
 	/**
 	 * Checks if the estimated task start date is the same that was introduced.
