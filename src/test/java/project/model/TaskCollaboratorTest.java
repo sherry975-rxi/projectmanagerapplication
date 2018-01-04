@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Calendar;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -179,6 +180,24 @@ public class TaskCollaboratorTest {
 		TaskCollaborator workerTester4 = null;
 		assertFalse(workerTester.equals(workerTester4));// using a null object
 		assertFalse(workerTester.equals(userTester));// using an object of a different class
+		// sets the finishDate for workerTester3 with the same as workerTester2. They
+		// are also the same user
+		workerTester3.addFinishDateForTaskCollaborator();
+		workerTester3.getFinishDate().add(Calendar.DAY_OF_MONTH, -5);
+		assertTrue(workerTester3.equals(workerTester2));
+	}
+
+	/**
+	 * Tests Hashcode
+	 */
+	@Test
+	public final void testHashCode() {
+		try {
+			assertEquals("", workerTester.hashCode());
+			Assert.fail("Should have thrown an exception");
+		} catch (Exception e) {
+			Assert.assertEquals("Exception message must be correct", null, e.getMessage());
+		}
 	}
 
 }
