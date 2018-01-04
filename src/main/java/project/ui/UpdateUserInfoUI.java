@@ -42,6 +42,8 @@ public class UpdateUserInfoUI {
 			if (name != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserName(user, name);
+				System.out.println("UPDATE SUCCESSFUL");
+				System.out.println();
 			}
 			break;
 		case 2:
@@ -49,6 +51,8 @@ public class UpdateUserInfoUI {
 			if (email != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserEmail(user, email);
+				System.out.println("UPDATE SUCCESSFUL");
+				System.out.println();
 			}
 			break;
 		case 3:
@@ -56,6 +60,8 @@ public class UpdateUserInfoUI {
 			if (phone != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
+				System.out.println("UPDATE SUCCESSFUL");
+				System.out.println();
 			}
 			break;
 		case 4:
@@ -85,34 +91,43 @@ public class UpdateUserInfoUI {
 				String newStreet = confirmInfo(input);
 				if (newStreet != null) {
 					updater.updateUserStreet(user, oldStreet, newStreet);
+					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println();
 				}
 				break;
 			case 2:
 				String newZipCode = confirmInfo(input);
 				if (newZipCode != null) {
 					updater.updateUserZipCode(user, oldStreet, newZipCode);
+					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println();
 				}
 				break;
 			case 3:
 				String newCity = confirmInfo(input);
 				if (newCity != null) {
 					updater.updateUserCity(user, oldStreet, newCity);
+					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println();
 				}
 				break;
 			case 4:
 				String newDistrict = confirmInfo(input);
 				if (newDistrict != null) {
 					updater.updateUserDistrict(user, oldStreet, newDistrict);
+					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println();
 				}
 				break;
 			case 5:
 				String newCountry = confirmInfo(input);
 				if (newCountry != null) {
 					updater.updateUserCountry(user, oldStreet, newCountry);
+					System.out.println("UPDATE SUCCESSFUL");
+					System.out.println();
 				}
 				break;
 			}
-			System.out.println("UPDATE SUCCESSFUL");
 
 			break;
 		}
@@ -120,7 +135,6 @@ public class UpdateUserInfoUI {
 
 	private String confirmInfo(Scanner input) {
 		System.out.println("New info:");
-		input.nextLine();
 		String info = input.nextLine();
 		System.out.println("Press y to confirm change");
 		String yesOrNo = input.nextLine();
