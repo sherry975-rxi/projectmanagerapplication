@@ -89,11 +89,13 @@ public class AddressTest {
 	 */
 	@Test
 	public void testHashCode() {
+
 		Address casa = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
 		Address casa2 = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
 		Address casa3 = new Address("Rua Esquerda", "4356-245", "Gondomar", "Porto", "Portugal");
 
 		assertTrue(casa.hashCode() == casa2.hashCode());
+		assertTrue(casa.hashCode() == casa.hashCode());
 		assertFalse(casa.hashCode() == casa3.hashCode());
 
 	}
