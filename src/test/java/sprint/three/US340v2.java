@@ -16,6 +16,14 @@ import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
 
+/**
+ * US340 v2 - Como Gestor de projeto quero poder criar uma tarefa,
+ *  incluindo eventualmente as datas previstas de início e fim em 
+ *  relação à data de início do projeto.
+ *  
+ * @author Group 3
+ *
+ */
 public class US340v2 {
 
 	Company myCompany;
@@ -25,39 +33,41 @@ public class US340v2 {
 	Task testTask, testTask2, testTask3;
 	ProjectCollaborator collab1, collab2, collab3;
 	Calendar estimatedTaskStartDate, taskDeadline;
-	TaskCollaborator tWorker1, tWorker2, tWorker3;
+	TaskCollaborator tCollab1, tCollab2, tWorker3;
 	double expectedCost;
 
 	@Before
 	public void setUp() {
 
+		//create company
 		myCompany = Company.getTheInstance();
+		//create project repository
 		myProjRep = myCompany.getProjectsRepository();
-
+		// create users
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
+		//create project
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
-
+		//add project to project repository
 		myProjRep.addProjectToProjectRepository(myProject);
-
+		// add cost per effort in users, creating Project Collaborators for each one
 		collab1 = myProject.createProjectCollaborator(user1, 5);
 		collab2 = myProject.createProjectCollaborator(user2, 5);
 
-		tWorker1 = new TaskCollaborator(collab1);
-		tWorker2 = new TaskCollaborator(collab2);
-
+		// create dates for task
 		estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.add(Calendar.MONTH, -1);
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.add(Calendar.MONTH, 1);
-
+		// create a new start date for project, (same of the startdate of task)
 		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
 		myProject.setStartdate(projStartDate);
-
+		// create tasks with the dates previously prepared
 		testTask = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
-		testTask.addProjectCollaboratorToTask(collab1);
 		testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
 		testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
+		// add user to task
+		testTask.addProjectCollaboratorToTask(collab1);
 
 	}
 
@@ -74,14 +84,16 @@ public class US340v2 {
 		collab1 = null;
 		collab2 = null;
 		collab3 = null;
-		tWorker1 = null;
-		tWorker2 = null;
+		tCollab1 = null;
+		tCollab2 = null;
 		expectedCost = 0;
 
 	}
 
 	/**
-	 * Checks if the task start date interval is the same that was introduced.
+	 * This test defines an interval between the Task start date and 
+	 * the Project start date.
+	 * Checks if that interval is the same that was introduced.
 	 * 
 	 */
 	@Test
@@ -90,11 +102,21 @@ public class US340v2 {
 		testTask.setStartDateInterval(10);
 		assertEquals(10, (int) testTask.getStartDateInterval());
 	}
-
+	
 	/**
-	 * This test checks if the estimated star date of task was changed because of
-	 * the interval that was introduced between the start date of the project and
+	 * Checks if the Task start date is the same that was introduced in
+	 * the beginning.
+	 */
+	@Test
+	public void testGetEstimatedStartDateWithoutInterval() {
+		assertEquals(estimatedTaskStartDate, testTask.getEstimatedTaskStartDate());
+		
+	}
+	/**
+	 * This test defines an interval between the start date of the project and
 	 * the task estimated start date.
+	 * Then changes the start date of Project.
+	 * Checks if the Task start date was also changed.
 	 */
 	@Test
 	public void testGetEstimatedStartDateWithInterval() {
@@ -103,7 +125,9 @@ public class US340v2 {
 		// estimated start date.
 		testTask.setStartDateInterval(10);
 
-		// simulates the new estimated start date for the task
+		// create expected new Task start date after define the interval
+		// Start date of project and task were previously before
+		// now the task start date is 10 days after the project
 		Calendar expectedStartDate = (Calendar) myProject.getStartdate().clone();
 		expectedStartDate.add(Calendar.DAY_OF_YEAR, 10);
 
@@ -112,16 +136,11 @@ public class US340v2 {
 				testTask.getEstimatedTaskStartDate().get(Calendar.DAY_OF_YEAR));
 	}
 	
-	/**
-	 * Checks if the estimated task start date is the same that was introduced.
-	 */
-	@Test
-	public void testGetEstimatedStartDateWithoutInterval() {
-		assertEquals(estimatedTaskStartDate, testTask.getEstimatedTaskStartDate());
-	}
 
 	/**
-	 * Checks if the task deadline interval is the same that was introduced.
+	 * This test defines an interval between the Task deadline and 
+	 * the Project start date.
+	 * Checks if that interval is the same that was introduced.
 	 */
 	@Test
 	public void testGetDeadlineInterval() {
@@ -129,19 +148,9 @@ public class US340v2 {
 		assertEquals(15, (int) testTask.getDeadlineInterval());
 	}
 
-	/**
-	 * Checks if the task deadline date is the same that was introduced.
-	 */
-	@Test
-	public void testTaskDeadline() {
-		Calendar newTaskDeadline = Calendar.getInstance();
-		newTaskDeadline.add(Calendar.DAY_OF_MONTH, 5);
-		testTask2.setTaskDeadline(newTaskDeadline);
-		assertEquals(newTaskDeadline, testTask2.getTaskDeadline());
-	}
 
 	/**
-	 * Checks if the estimated task start date is the same that was introduced in
+	 * Checks if the task deadline is the same that was introduced in
 	 * the beginning.
 	 */
 	@Test
