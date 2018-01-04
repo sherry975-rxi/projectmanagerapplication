@@ -744,7 +744,8 @@ public class TaskRepositoryTest {
 
 		// start tasks
 		testTask.setStartDate(startDateTest);
-		testTask2.setStartDate(startDateTest);
+		// testTask2 won't have a startDate
+		// testTask2.setStartDate(startDateTest);
 		testTask3.setStartDate(startDateTest);
 		testTask4.setStartDate(startDateTest);
 		testTask5.setStartDate(startDateTest);
