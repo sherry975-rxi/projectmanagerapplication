@@ -324,10 +324,10 @@ public class ProjectTest {
 		// asserts the project team still contains both users
 		assertEquals(2, p1.getProjectTeam().size());
 		assertTrue(projectCollaborator2.equals(p1.getProjectTeam().get(0)));
-		
+
 		// asserts the active project team contains only user1
 		assertEquals(1, p1.getActiveProjectTeam().size());
-		
+
 		// asserts the removed user was also removed from their tasks
 		assertTrue(p1.getTaskRepository().getAllTasksFromProjectCollaborator(projectCollaborator1).get(0).getTaskTeam()
 				.get(1).isTaskCollaboratorActiveInTask());
@@ -468,6 +468,17 @@ public class ProjectTest {
 		// Tries to find an user that doesnt belong to a project. The method returns
 		// null
 		assertEquals(null, p1.findProjectCollaborator(user3));
+	}
+
+	/**
+	 * Tests the Set and Get Finish Dates of a project
+	 */
+
+	@Test
+	public void testSetAndGetFinishDate() {
+		p1.setFinishdate(taskDeadline);
+		assertEquals(p1.getFinishdate(), taskDeadline);
+
 	}
 
 	/**
