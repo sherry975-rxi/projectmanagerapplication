@@ -89,12 +89,57 @@ public class AddressTest {
 	 */
 	@Test
 	public void testHashCode() {
+
 		Address casa = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
 		Address casa2 = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
 		Address casa3 = new Address("Rua Esquerda", "4356-245", "Gondomar", "Porto", "Portugal");
+		Address casa4 = new Address(null, "4356-245", "Gondomar", "Porto", "Portugal");
 
 		assertTrue(casa.hashCode() == casa2.hashCode());
-		assertFalse(casa.hashCode() == casa3.hashCode());
+		assertTrue(casa.hashCode() == casa.hashCode());
+		assertFalse(casa.hashCode() == casa4.hashCode());
+		assertTrue(casa4.hashCode() == casa4.hashCode());
+
+	}
+
+	/**
+	 * Tests equals method in the Adress Class
+	 */
+	@Test
+	public void testEquals() {
+
+		ProjectRepository projectRep = new ProjectRepository();
+		// This two addresses are the same
+		Address casa = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
+		Address casa2 = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
+
+		// This address is null
+		Address casa3 = null;
+
+		// This two addresses have null streets
+		Address casa4 = new Address(null, "4356-245", "Gondomar", "Porto", "Portugal");
+		Address casa5 = new Address(null, "4356-245", "Gondomar", "Porto", "Portugal");
+
+		// This address has a different street
+		Address casa6 = new Address("Rua Esquerda", "4356-245", "Gondomar", "Porto", "Portugal");
+
+		// The two objects have the same attributes
+		assertTrue(casa.equals(casa2));
+
+		// Casa3 is a null object
+		assertFalse(casa.equals(casa3));
+
+		// projectRep is an instance of another class
+		assertFalse(casa.equals(projectRep));
+
+		// Both addresses have null streets
+		assertTrue(casa4.equals(casa5));
+
+		// One address has a null address, and other does not
+		assertFalse(casa4.equals(casa));
+
+		// Addresses have differente streets
+		assertFalse(casa6.equals(casa));
 
 	}
 

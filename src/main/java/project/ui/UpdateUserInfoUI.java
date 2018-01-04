@@ -3,6 +3,7 @@ package project.ui;
 import java.util.Scanner;
 
 import project.controller.UpdateUserInfoController;
+import project.model.Address;
 import project.model.User;
 
 /**
@@ -10,7 +11,7 @@ import project.model.User;
  *
  */
 public class UpdateUserInfoUI {
-	User user;
+	private User user;
 
 	/**
 	 * Creates the UI
@@ -23,36 +24,36 @@ public class UpdateUserInfoUI {
 
 	public void chooseWhatInfoToUpdate() {
 		Scanner input = new Scanner(System.in);
-
-		String oldName = user.getName();
-		String oldEmail = user.getEmail();
-		String oldPhone = user.getPhone();
-	
+		UpdateUserInfoController getInfo = new UpdateUserInfoController();
+		String oldName = getInfo.getName(user);
+		String oldEmail = getInfo.getEmail(user);
+		String oldPhone = getInfo.getPhone(user);
 
 		System.out.println("Choose a field to update:");
 		System.out.println("1. Name: " + oldName);
 		System.out.println("2. Email: " + oldEmail);
 		System.out.println("3. Phone: " + oldPhone);
 		System.out.println("4. Address");
+		System.out.println();
 		int choice = input.nextInt();
 		switch (choice) {
 		case 1:
 			String name = confirmInfo(input);
-			if (!(name == null)) {
+			if (name != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserName(user, name);
 			}
 			break;
 		case 2:
 			String email = confirmInfo(input);
-			if (!(email == null)) {
+			if (email != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserEmail(user, email);
 			}
 			break;
 		case 3:
 			String phone = confirmInfo(input);
-			if (!(phone == null)) {
+			if (phone != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
 			}
@@ -62,22 +63,34 @@ public class UpdateUserInfoUI {
 
 			System.out.println("Please select the number of the address to update:");
 			for (int i = 0; i < updater.getAllAddresses(user).size(); i++) {
-				System.out.println((i + 1) + ". " + updater.getAllAddresses(user).get(i).toString());
+
+				Address toShow = updater.getAllAddresses(user).get(i);
+
+				System.out.println((i + 1) + ".");
+				System.out.println(updater.getStreet(toShow));
+				System.out.println(updater.getZipCode(toShow));
+				System.out.println(updater.getCity(toShow));
+				System.out.println(updater.getDistrict(toShow));
+				System.out.println(updater.getCountry(toShow));
+				System.out.println();
 			}
-			int nrAddress = input.nextInt();
-			String oldStreet = updater.getAllAddresses(user).get(nrAddress).getStreet();
-			String oldZipCode = updater.getAllAddresses(user).get(nrAddress).getZipCode();
-			String oldCity = updater.getAllAddresses(user).get(nrAddress).getCity();
-			String oldDistrict = updater.getAllAddresses(user).get(nrAddress).getDistrict();
-			String oldCountry = updater.getAllAddresses(user).get(nrAddress).getCountry();
+			int nrAddress = Integer.parseInt(input.nextLine());
+
+			Address chosen = updater.getAllAddresses(user).get(nrAddress - 1);
+
+			String oldStreet = updater.getStreet(chosen);
+			String oldZipCode = updater.getZipCode(chosen);
+			String oldCity = updater.getCity(chosen);
+			String oldDistrict = updater.getDistrict(chosen);
+			String oldCountry = updater.getCountry(chosen);
 			System.out.println("Please select the number of the field to update:");
 			System.out.println("1. Street: " + oldStreet);
 			System.out.println("2. ZipCode: " + oldZipCode);
 			System.out.println("3. City: " + oldCity);
 			System.out.println("4. District: " + oldDistrict);
 			System.out.println("5. Country: " + oldCountry);
-			int nrField = input.nextInt();
-			// System.out.println("Please enter the new info:");
+			System.out.println();
+			int nrField = Integer.parseInt(input.nextLine());
 			switch (nrField) {
 			case 1:
 				String newStreet = confirmInfo(input);

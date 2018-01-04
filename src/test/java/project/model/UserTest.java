@@ -336,4 +336,32 @@ public class UserTest {
 
 	}
 
+	/**
+	 * Tests HashCode
+	 */
+	@Test
+	public void testHashCode() {
+
+		// Creates 2 users with the same email, and different names, and one user with
+		// differentEmail
+		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+		User u2 = new User("Miguel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+		User uDifferent = new User("Afonso", "afonso@gmail.com", "01", "Porteiro", "910000000");
+
+		assertTrue(u1.hashCode() == u2.hashCode());
+		assertFalse(u1.hashCode() == uDifferent.hashCode());
+
+		// Creates 2 users with the the same attributes
+		User u3 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+		User u4 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+		assertTrue(u3.hashCode() == u4.hashCode());
+
+		// Creates 2 users with the null parameters on the email field
+		User u5 = new User("Daniel", null, "01", "Porteiro", "910000000");
+		User u6 = new User("Daniel", null, "01", "Porteiro", "910000000");
+		assertTrue(u5.hashCode() == u6.hashCode());
+		assertFalse(u1.hashCode() == u6.hashCode());
+
+	}
+
 }

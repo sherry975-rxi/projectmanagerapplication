@@ -3,6 +3,8 @@ package project.ui;
 import java.util.Calendar;
 import java.util.Scanner;
 
+import project.controller.GetUserInfoController;
+import project.model.Address;
 import project.model.Company;
 import project.model.Project;
 import project.model.Task;
@@ -16,8 +18,8 @@ public class MainMenuUI {
 	private static Project project1;
 	private static Task task1;
 	private static Task task2;
-	private static Calendar estimatedTaskStartDate;
-	private static Calendar taskDeadline;
+	private static Calendar estimatedTaskStartDate = Calendar.getInstance();
+	private static Calendar taskDeadline = Calendar.getInstance();
 
 	public static void main(String[] args) {
 
@@ -32,9 +34,7 @@ public class MainMenuUI {
 		project1 = myCompany.getProjectsRepository().createProject("name", "description", user1);
 
 		// Instantiates the dates to set as estimated start date and task deadline
-		estimatedTaskStartDate = Calendar.getInstance();
 		estimatedTaskStartDate.set(2017, Calendar.DECEMBER, 22);
-		taskDeadline = Calendar.getInstance();
 		taskDeadline.set(2018, Calendar.DECEMBER, 22);
 
 		// Instantiates the tasks
@@ -47,32 +47,63 @@ public class MainMenuUI {
 	public static void mainMenu() {
 
 		Scanner input = new Scanner(System.in);
+		boolean condition = true;
+		do {
+			System.out.println("Choose a user story:");
+			System.out.println("102");
+			System.out.println("180");
+			System.out.println("201");
+			System.out.println("998 to view all users");
+			System.out.println("999 to view user's address");
+			System.out.println("0 to exit");
+			System.out.println();
 
-		System.out.println("Choose a user story:");
-		System.out.println("102");
-		System.out.println("180");
-		System.out.println("201");
-		System.out.println("0 to exit");
+			int choice = Integer.parseInt(input.nextLine());
+			switch (choice) {
+			case 102:
+				UserRegisterUI userRegister = new UserRegisterUI();
+				userRegister.userRegister();
+				mainMenu();
+				break;
+			/*
+			 * case 180: TODO insert Login UI break;
+			 */
+			case 201:
+				UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
+				updateUserInfo.chooseWhatInfoToUpdate();
+				mainMenu();
+				break;
+			case 998:
+				GetUserInfoController userInfo = new GetUserInfoController();
 
-		int choice = input.nextInt();
-		switch (choice) {
-		case 102:
-			UserRegisterUI userRegister = new UserRegisterUI();
-			userRegister.userRegister();
-			mainMenu();
-			break;
-		/*
-		 * case 180: TODO insert Login UI break;
-		 */
-		case 201:
-			UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
-			updateUserInfo.chooseWhatInfoToUpdate();
-			mainMenu();
-			break;
-		case 0:
-			// TODO method to close menu
-			break;
-		}
+				for (User each : userInfo.getUsersList()) {
+					System.out.println(userInfo.getName(each));
+					System.out.println(userInfo.getIdNumber(each));
+					System.out.println(userInfo.getEmail(each));
+					System.out.println(userInfo.getPhone(each));
+					System.out.println(userInfo.getFunction(each));
+					System.out.println();
+				}
+				break;
+			case 999:
+				System.out.println("Please provide an email to select a user:");
+				String email = input.nextLine();
+				GetUserInfoController userAddressInfo = new GetUserInfoController();
+				User userToSearchAddress = userAddressInfo.getUserByEmailController(email);
+				for (Address each : userAddressInfo.getAllAddresses(userToSearchAddress)) {
+					System.out.println(userAddressInfo.getStreet(each));
+					System.out.println(userAddressInfo.getZipCode(each));
+					System.out.println(userAddressInfo.getCity(each));
+					System.out.println(userAddressInfo.getDistrict(each));
+					System.out.println(userAddressInfo.getCountry(each));
+					System.out.println();
+				}
+				break;
+			case 0:
+				condition = false;
+				break;
+			}
+		} while (condition);
 	}
 
 }
