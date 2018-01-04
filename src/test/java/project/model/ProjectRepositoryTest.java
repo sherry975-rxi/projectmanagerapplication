@@ -833,11 +833,12 @@ public class ProjectRepositoryTest {
 		projectB = projectRepository.createProject("ProjB", "ProjectoA", user1);
 		projectRepository.addProjectToProjectRepository(projectA);
 		projectRepository.addProjectToProjectRepository(projectB);
-		projectRepository.addProjectToProjectRepository(projectC);
+		// projectRepository.addProjectToProjectRepository(projectC);
 
 		// Asserts if the getProjById returns the expected Project
 		assertEquals(projectRepository.getProjById(0), projectA);
 		assertEquals(projectRepository.getProjById(1), projectB);
+		assertEquals(projectRepository.getProjById(3), null);
 
 	}
 
