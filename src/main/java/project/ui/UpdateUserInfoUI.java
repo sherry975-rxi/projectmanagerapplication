@@ -33,28 +33,75 @@ public class UpdateUserInfoUI {
 		switch (choice) {
 		case 1:
 			String name = confirmInfo(input);
-			if (!name.equals(null)) {
+			if (name!=null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserName(user, name);
 			}
 			break;
 		case 2:
 			String email = confirmInfo(input);
-			if (!email.equals(null)) {
+			if (email!=null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserEmail(user, email);
 			}
 			break;
 		case 3:
 			String phone = confirmInfo(input);
-			if (!phone.equals(null)) {
+			if (phone!=null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
 			}
 			break;
 		case 4:
-			System.out.println("Please choose which address to update:");
-			input.nextLine();
+			UpdateUserInfoController updater = new UpdateUserInfoController();
+			
+			System.out.println("Please select the number of the address to update:");
+			for(int i = 0; i < updater.getAllAddresses(user).size(); i++) {
+				System.out.println((i+1) + ". " + updater.getAllAddresses(user).get(i).toString());
+			}
+			int nrAddress = input.nextInt();
+			String oldStreet = updater.getAllAddresses(user).get(nrAddress).getStreet();
+			String oldZipCode = updater.getAllAddresses(user).get(nrAddress).getZipCode();
+			String oldCity = updater.getAllAddresses(user).get(nrAddress).getCity();
+			String oldDistrict = updater.getAllAddresses(user).get(nrAddress).getDistrict();
+			String oldCountry = updater.getAllAddresses(user).get(nrAddress).getCountry();
+			System.out.println("Please select the number of the field to update:");
+			System.out.println("1. Street: " + oldStreet);
+			System.out.println("2. ZipCode: " + oldZipCode);
+			System.out.println("3. City: " + oldCity);
+			System.out.println("4. District: " + oldDistrict);
+			System.out.println("5. Country: " + oldCountry);
+			int nrField = input.nextInt();
+			//System.out.println("Please enter the new info:");
+			switch (nrField) {
+			case 1:
+				String newStreet = confirmInfo(input);
+				if(newStreet!=null) {
+				updater.updateUserStreet(user, oldStreet, newStreet);
+				}
+			case 2:
+				String newZipCode = confirmInfo(input);
+				if(newZipCode!=null) {
+				updater.updateUserZipCode(user, oldStreet, newZipCode);
+				}
+			case 3:
+				String newCity = confirmInfo(input);
+				if(newCity!=null) {
+				updater.updateUserCity(user, oldStreet, newCity);
+				}
+			case 4:
+				String newDistrict = confirmInfo(input);
+				if(newDistrict!=null) {
+				updater.updateUserDistrict(user, oldStreet, newDistrict);
+				}
+			case 5:
+				String newCountry = confirmInfo(input);
+				if(newCountry!=null) {
+				updater.updateUserCountry(user, oldStreet, newCountry);
+				}
+			}
+			System.out.println("UPDATE SUCCESSFUL");
+					
 			break;
 		}
 	}
@@ -62,10 +109,10 @@ public class UpdateUserInfoUI {
 	private String confirmInfo(Scanner input) {
 		System.out.println("New info:");
 		String info = input.nextLine();
-		System.out.println("Is this info correct? (y to confirm)");
 		System.out.println(info);
+		System.out.println("Is this info correct? (y to confirm)");
 		String yesOrNo = input.nextLine();
-		if (yesOrNo.equals("y")) {
+		if (yesOrNo.equalsIgnoreCase("y")) {
 			return info;
 		}
 		return null;
