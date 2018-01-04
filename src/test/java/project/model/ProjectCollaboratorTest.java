@@ -11,14 +11,18 @@ import org.junit.Test;
 public class ProjectCollaboratorTest {
 
 	User tester, testerTwo;
-	ProjectCollaborator testMoar, testEvenMoar;
+	ProjectCollaborator testMoar, testEvenMoar, testCollaboratorNull, testCollaboratorNull2;
 
 	@Before
 	public void SetUp() {
 		tester = new User("pepe", "trollolol@mail.com", "12", "hue", "12356");
 		testerTwo = new User("pepe", "lolno@mail.com", "12", "hue", "12356");
+
 		testMoar = new ProjectCollaborator(tester, 100000);
 		testEvenMoar = new ProjectCollaborator(testerTwo, 100000);
+		testCollaboratorNull = new ProjectCollaborator(null, 100000);
+		testCollaboratorNull2 = new ProjectCollaborator(null, 100000);
+
 	}
 
 	@After
@@ -27,6 +31,8 @@ public class ProjectCollaboratorTest {
 		testerTwo = null;
 		testMoar = null;
 		testEvenMoar = null;
+		testCollaboratorNull = null;
+		testCollaboratorNull2 = null;
 	}
 
 	/**
@@ -82,6 +88,8 @@ public class ProjectCollaboratorTest {
 		assertTrue(testMoar.hashCode() == testMoar.hashCode());
 		assertFalse(tester.hashCode() == testMoar.hashCode());
 
+		assertTrue(testCollaboratorNull.hashCode() == testCollaboratorNull2.hashCode());
+		assertFalse(testMoar.hashCode() == testCollaboratorNull.hashCode());
 	}
 
 }
