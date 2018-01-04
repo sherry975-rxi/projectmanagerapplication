@@ -160,7 +160,7 @@ public class UpdateUserInfoUI {
 		boolean result = false;
 		System.out.println("Press y to confirm change");
 		String yesOrNo = input.nextLine();
-		if (yesOrNo.equalsIgnoreCase("y")) {
+		if ("y".equalsIgnoreCase(yesOrNo)) {
 			result = true;
 		}
 		return result;

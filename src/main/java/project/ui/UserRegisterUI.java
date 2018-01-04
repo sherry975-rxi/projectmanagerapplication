@@ -75,7 +75,7 @@ public class UserRegisterUI {
 			answer = scannerInput.nextLine();
 			}
 		
-		if (answer.equalsIgnoreCase("y")) {
+		if ("y".equalsIgnoreCase(answer)) {
 			registerUsercontroller1.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city, district,
 					country);
 			System.out.println("Conditions accepted. Sucessfully register!");
