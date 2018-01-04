@@ -351,7 +351,7 @@ public class ProjectRepository {
 	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
-		for (int i = 0; i < result.size(); i++) {
+		for (int i = 0; i <= result.size()-2; i++) {
 			for (int j = i + 1; j < result.size(); j++) {
 				if (result.get(i).getFinishDate().before(result.get(j).getFinishDate())) {
 					Task h = new Task(result.get(i));
@@ -380,7 +380,7 @@ public class ProjectRepository {
 	public List<Task> sortTaskListByDeadline(List<Task> toSort) {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
-		for (int i = 0; i < result.size(); i++) {
+		for (int i = 0; i <= result.size()-2; i++) {
 			for (int j = i + 1; j < result.size(); j++) {
 				if (result.get(i).getTaskDeadline().after(result.get(j).getTaskDeadline())) {
 					Task h = new Task(result.get(i));

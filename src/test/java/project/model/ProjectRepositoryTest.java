@@ -720,6 +720,7 @@ public class ProjectRepositoryTest {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
+		assertEquals(expResultTaskList.size(), projectRepository.sortTaskListDecreasingOrder(toBeSorted).size());
 		assertEquals(expResultTaskList, projectRepository.sortTaskListDecreasingOrder(toBeSorted));
 	}
 
@@ -797,7 +798,9 @@ public class ProjectRepositoryTest {
 
 		assertEquals(startedNotFinishedTasksInOrder,
 				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1));
-
+		assertEquals(startedNotFinishedTasksInOrder.size(),
+				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1).size());
+		
 		// clears the list
 		startedNotFinishedTasksInOrder.clear();
 		// The method returns an empty list, if the user is null
