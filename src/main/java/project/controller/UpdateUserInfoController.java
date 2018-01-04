@@ -3,6 +3,7 @@ package project.controller;
 import java.util.List;
 
 import project.model.Address;
+import project.model.Company;
 import project.model.User;
 
 public class UpdateUserInfoController {
@@ -36,9 +37,13 @@ public class UpdateUserInfoController {
 	 * @param user
 	 * @param email
 	 */
-	public void updateUserEmail(User user, String email) {
-
-		user.setEmail(email);
+	public boolean updateUserEmail(User user, String email) {
+		boolean result = false;
+		if (Company.getTheInstance().getUsersRepository().isEmailAddressValid(email)) {
+			user.setEmail(email);
+			result = true;
+		}
+		return result;
 	}
 
 	/**
@@ -53,7 +58,6 @@ public class UpdateUserInfoController {
 		user.setPassword(password);
 	}
 
-	
 	/**
 	 * This method controls the update of user's phone by calling the method
 	 * setPhone that set this parameter of user's data.

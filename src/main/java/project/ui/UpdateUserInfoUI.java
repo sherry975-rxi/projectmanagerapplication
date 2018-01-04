@@ -54,8 +54,11 @@ public class UpdateUserInfoUI {
 			String email = confirmInfo(input);
 			if (email != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
-				updater.updateUserEmail(user, email);
-				System.out.println("UPDATE SUCCESSFUL");
+				if (updater.updateUserEmail(user, email)) {
+					System.out.println("UPDATE SUCCESSFUL");
+				} else {
+					System.out.println("Invalid email. Try again.");
+				}
 				System.out.println();
 			}
 			break;
