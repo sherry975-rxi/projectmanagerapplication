@@ -25,19 +25,22 @@ public class UpdateUserInfoUI {
 	public void chooseWhatInfoToUpdate() {
 		Scanner input = new Scanner(System.in);
 		UpdateUserInfoController getInfo = new UpdateUserInfoController();
+
 		String oldName = getInfo.getName(user);
 		String oldEmail = getInfo.getEmail(user);
 		String oldPhone = getInfo.getPhone(user);
-
+		// Presents the updatable fields
 		System.out.println("Choose a field to update:");
 		System.out.println("1. Name: " + oldName);
 		System.out.println("2. Email: " + oldEmail);
 		System.out.println("3. Phone: " + oldPhone);
 		System.out.println("4. Address");
 		System.out.println();
+		// Picks the field according to user input
 		int choice = Integer.parseInt(input.nextLine());
 		switch (choice) {
 		case 1:
+			// Update name
 			String name = confirmInfo(input);
 			if (name != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
@@ -47,6 +50,7 @@ public class UpdateUserInfoUI {
 			}
 			break;
 		case 2:
+			// Update email
 			String email = confirmInfo(input);
 			if (email != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
@@ -56,6 +60,7 @@ public class UpdateUserInfoUI {
 			}
 			break;
 		case 3:
+			// Update phone
 			String phone = confirmInfo(input);
 			if (phone != null) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
