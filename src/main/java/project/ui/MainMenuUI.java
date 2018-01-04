@@ -25,9 +25,10 @@ public class MainMenuUI {
 		// Instantiates the company
 		myCompany = Company.getTheInstance();
 
-		// Instantiate a user
+		// Instantiate a user and set its password
 		user1 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"rua cinzenta", "6789-654", "porto", "porto", "portugal");
+		user1.setPassword("manel123");
 		myCompany.getUsersRepository().addUserToUserRepository(user1);
 
 		// Instantiates a project
@@ -55,7 +56,7 @@ public class MainMenuUI {
 
 		Scanner input = new Scanner(System.in);
 		boolean condition = true;
-		do {
+		while (condition) {
 			System.out.println("Choose a user story:");
 			System.out.println("102");
 			System.out.println("180");
@@ -71,7 +72,6 @@ public class MainMenuUI {
 			case 102:
 				UserRegisterUI userRegister = new UserRegisterUI();
 				userRegister.userRegister();
-				mainMenu();
 				break;
 			/*
 			 * case 180: TODO insert Login UI break;
@@ -79,13 +79,11 @@ public class MainMenuUI {
 			case 201:
 				UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
 				updateUserInfo.chooseWhatInfoToUpdate();
-				mainMenu();
 				break;
 			case 342:
 				DefineDependenciesBetweenTasksUI defineDependenciesBetweenTasksUI = new DefineDependenciesBetweenTasksUI(
 						user1);
 				defineDependenciesBetweenTasksUI.chooseProject();
-				mainMenu();
 				break;
 			case 998:
 				PrintUserInfoController userInfo = new PrintUserInfoController();
@@ -102,7 +100,7 @@ public class MainMenuUI {
 				condition = false;
 				break;
 			}
-		} while (condition);
+		}
 	}
 
 }

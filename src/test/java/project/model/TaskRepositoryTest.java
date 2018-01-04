@@ -744,12 +744,14 @@ public class TaskRepositoryTest {
 
 		// start tasks
 		testTask.setStartDate(startDateTest);
-		testTask2.setStartDate(startDateTest);
+		// testTask2 won't have a startDate
+		// testTask2.setStartDate(startDateTest);
 		testTask3.setStartDate(startDateTest);
 		testTask4.setStartDate(startDateTest);
 		testTask5.setStartDate(startDateTest);
 		testTask6.setStartDate(startDateTest);
-		testTask7.setStartDate(startDateTest);
+
+		// testTask7.setStartDate(startDateTest);
 
 		// Marks testTask2 and testTask4 as finished
 		testTask2.markTaskAsFinished();
@@ -770,7 +772,6 @@ public class TaskRepositoryTest {
 		getStartedNotFinishedTasks.add(testTask3);
 		getStartedNotFinishedTasks.add(testTask5);
 		getStartedNotFinishedTasks.add(testTask6);
-		getStartedNotFinishedTasks.add(testTask7);
 
 		// Checks if both lists have the same tasks
 		assertEquals(getStartedNotFinishedTasks,

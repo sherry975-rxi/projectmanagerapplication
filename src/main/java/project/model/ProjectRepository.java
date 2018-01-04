@@ -400,10 +400,7 @@ public class ProjectRepository {
 	 */
 	public boolean isProjectInProjectRepository(Project project) {
 
-		if (this.projectsRepository.contains(project))
-			return true;
-
-		return false;
+		return this.projectsRepository.contains(project);
 	}
 
 	
