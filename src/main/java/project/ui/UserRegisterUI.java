@@ -30,6 +30,7 @@ public class UserRegisterUI {
 	public void userRegister() {
 
 		Scanner scannerInput = new Scanner(System.in);
+		RegisterUserController registerUsercontroller1 = new RegisterUserController();
 
 		System.out.println("Enter name: ");
 		name = scannerInput.nextLine();
@@ -37,8 +38,13 @@ public class UserRegisterUI {
 
 		System.out.println("Enter email: ");
 		email = scannerInput.nextLine();
+		while (!(registerUsercontroller1.isEmailValidController(email))) {
+			System.out.println("Invalid email. try again.");
+			email = scannerInput.nextLine();
+			}
+		
 		System.out.println("Email accepted " + email);
-
+	
 		System.out.println("Enter idNumber: ");
 		idNumber = scannerInput.nextLine();
 		System.out.println("IdNumber accepted " + idNumber);
@@ -80,10 +86,9 @@ public class UserRegisterUI {
 		String answer = scannerInput.nextLine();
 
 		if (answer.equalsIgnoreCase("y")) {
-			RegisterUserController controller = new RegisterUserController();
 			PrintUserInfoController userController = new PrintUserInfoController();
 
-			controller.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city, district,
+			registerUsercontroller1.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city, district,
 					country);
 
 			if (userController.getUserByEmailController(email) instanceof User) {
