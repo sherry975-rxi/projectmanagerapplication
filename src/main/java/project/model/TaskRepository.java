@@ -382,4 +382,23 @@ public class TaskRepository {
 		return expiredTasks;
 	}
 
+	/**
+	 * This method returns the a Task by taskID
+	 * 
+	 * @param taskID 
+	 * 
+	 * @return A task by a Task ID
+	 */
+	public Task getTaskByID(String taskID) {
+		
+		for (Task other : projectTasks) {
+			if(other.getTaskID().equals(taskID)) {
+				return other;
+			}
+			
+		}
+		return null;
+		
+	}
+
 }

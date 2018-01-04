@@ -42,12 +42,14 @@ public class MainMenuUI {
 		// Instantiates the dates to set as estimated start date and task deadline
 		Calendar estimatedTaskStartDate = Calendar.getInstance();
 		Calendar taskDeadline = Calendar.getInstance();
-		estimatedTaskStartDate.set(2017, Calendar.DECEMBER, 22);
+		estimatedTaskStartDate.set(2018, Calendar.NOVEMBER, 22);
 		taskDeadline.set(2018, Calendar.DECEMBER, 22);
 
 		// Instantiates the tasks
-		task1 = project1.getTaskRepository().createTask("description", 10, estimatedTaskStartDate, taskDeadline, 1000);
-		task2 = project1.getTaskRepository().createTask("descriptionA", 10, estimatedTaskStartDate, taskDeadline, 1000);
+		task1 = project1.getTaskRepository().createTask("Tarefa aaaa", 10, estimatedTaskStartDate, taskDeadline, 1000);
+		task2 = project1.getTaskRepository().createTask("Tarefa bbbb", 10, estimatedTaskStartDate, taskDeadline, 1000);
+		project1.getTaskRepository().addProjectTask(task1);
+		project1.getTaskRepository().addProjectTask(task2);
 
 		mainMenu();
 	}
