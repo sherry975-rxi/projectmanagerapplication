@@ -56,7 +56,7 @@ public class MainMenuUI {
 
 		Scanner input = new Scanner(System.in);
 		boolean condition = true;
-		do {
+		while (condition) {
 			System.out.println("Choose a user story:");
 			System.out.println("102");
 			System.out.println("180");
@@ -103,7 +103,7 @@ public class MainMenuUI {
 				condition = false;
 				break;
 			}
-		} while (condition);
+		}
 	}
 
 }

@@ -209,10 +209,17 @@ public class TaskTest {
 	 */
 	@Test
 	public void testSecondConstructor() {
-		testTask.setStartDateInterval(5);
-		testTask.setDeadlineInterval(10);
+		// first, clone and compare a task without start date and deadline intervals
 		Task testDupe = new Task(testTask);
 		assertTrue(testTask.equals(testDupe));
+
+		// second, clone and compare a task with start date and deadline intervals
+		testTask.setStartDateInterval(5);
+		testTask.setDeadlineInterval(10);
+		testDupe = new Task(testTask);
+		assertTrue(testTask.equals(testDupe));
+		
+		// third, compare that two tasks are the same despite having different start dates
 		Calendar startDate1 = Calendar.getInstance();
 		Calendar startDateDupe = Calendar.getInstance();
 		startDateDupe.add(Calendar.DAY_OF_MONTH, -5);
