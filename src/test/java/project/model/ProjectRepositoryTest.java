@@ -19,6 +19,7 @@ public class ProjectRepositoryTest {
 	User user2;
 	User user3;
 	User userNotCollaborator;
+	User nullUser;
 	ProjectCollaborator collab1;
 	ProjectCollaborator collab2;
 	ProjectCollaborator collab3;
@@ -796,6 +797,12 @@ public class ProjectRepositoryTest {
 
 		assertEquals(startedNotFinishedTasksInOrder,
 				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1));
+
+		// clears the list
+		startedNotFinishedTasksInOrder.clear();
+		// The method returns an empty list, if the user is null
+		assertEquals(startedNotFinishedTasksInOrder,
+				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(nullUser));
 
 	}
 
