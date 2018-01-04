@@ -3,8 +3,7 @@ package project.ui;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import project.controller.GetUserInfoController;
-import project.model.Address;
+import project.controller.PrintUserInfoController;
 import project.model.Company;
 import project.model.Project;
 import project.model.Task;
@@ -74,30 +73,15 @@ public class MainMenuUI {
 				mainMenu();
 				break;
 			case 998:
-				GetUserInfoController userInfo = new GetUserInfoController();
-
-				for (User each : userInfo.getUsersList()) {
-					System.out.println(userInfo.getName(each));
-					System.out.println(userInfo.getIdNumber(each));
-					System.out.println(userInfo.getEmail(each));
-					System.out.println(userInfo.getPhone(each));
-					System.out.println(userInfo.getFunction(each));
-					System.out.println();
-				}
+				PrintUserInfoController userInfo = new PrintUserInfoController();
+				userInfo.printAllUsersInfo();
 				break;
 			case 999:
 				System.out.println("Please provide an email to select a user:");
 				String email = input.nextLine();
-				GetUserInfoController userAddressInfo = new GetUserInfoController();
+				PrintUserInfoController userAddressInfo = new PrintUserInfoController();
 				User userToSearchAddress = userAddressInfo.getUserByEmailController(email);
-				for (Address each : userAddressInfo.getAllAddresses(userToSearchAddress)) {
-					System.out.println(userAddressInfo.getStreet(each));
-					System.out.println(userAddressInfo.getZipCode(each));
-					System.out.println(userAddressInfo.getCity(each));
-					System.out.println(userAddressInfo.getDistrict(each));
-					System.out.println(userAddressInfo.getCountry(each));
-					System.out.println();
-				}
+				userAddressInfo.printAllAddressesFromUser(userToSearchAddress);
 				break;
 			case 0:
 				condition = false;

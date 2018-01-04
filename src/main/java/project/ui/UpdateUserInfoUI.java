@@ -131,9 +131,9 @@ public class UpdateUserInfoUI {
 
 	private String confirmInfo(Scanner input) {
 		System.out.println("New info:");
+		input.nextLine();
 		String info = input.nextLine();
-		System.out.println(info);
-		System.out.println("Is this info correct? (y to confirm)");
+		System.out.println("Press y to confirm change");
 		String yesOrNo = input.nextLine();
 		if (yesOrNo.equalsIgnoreCase("y")) {
 			return info;
