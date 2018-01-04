@@ -61,6 +61,7 @@ public class TaskTest {
 		testTask.addProjectCollaboratorToTask(collab1);
 		testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
 		testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
+
 	}
 
 	@After
@@ -377,8 +378,6 @@ public class TaskTest {
 
 	}
 
-	
-
 	/**
 	 * Checks if the estimated task start date is the same that was introduced.
 	 */
@@ -477,5 +476,17 @@ public class TaskTest {
 
 		testTask.setStartDateInterval(10);
 		assertEquals(10, (int) testTask.getStartDateInterval());
+	}
+
+	/**
+	 * Tests the HashCodes of each Task
+	 * 
+	 */
+	@Test
+	public void testHashcode() {
+
+		assertTrue(testTask.hashCode() == testTask.hashCode());
+		assertFalse(testTask.hashCode() == testTask2.hashCode());
+
 	}
 }
