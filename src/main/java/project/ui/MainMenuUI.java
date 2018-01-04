@@ -45,36 +45,38 @@ public class MainMenuUI {
 	public static void mainMenu() {
 
 		Scanner input = new Scanner(System.in);
+		boolean condition = true;
+		do {
+			System.out.println("Choose a user story:");
+			System.out.println("102");
+			System.out.println("180");
+			System.out.println("201");
+			System.out.println("998 to view all users");
+			System.out.println("999 to view user's address");
+			System.out.println("0 to exit");
 
-		System.out.println("Choose a user story:");
-		System.out.println("102");
-		System.out.println("180");
-		System.out.println("201");
-		System.out.println("998 to view all users");
-		System.out.println("999 to view user's address");
-		System.out.println("0 to exit");
-
-		int choice = input.nextInt();
-		switch (choice) {
-		case 102:
-			UserRegisterUI userRegister = new UserRegisterUI();
-			userRegister.userRegister();
-			mainMenu();
-			break;
-		/*
-		 * case 180: TODO insert Login UI break;
-		 */
-		case 201:
-			UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
-			updateUserInfo.chooseWhatInfoToUpdate();
-			mainMenu();
-			break;
-		case 998:
-			break;
-		case 0:
-			// TODO method to close menu
-			break;
-		}
+			int choice = input.nextInt();
+			switch (choice) {
+			case 102:
+				UserRegisterUI userRegister = new UserRegisterUI();
+				userRegister.userRegister();
+				mainMenu();
+				break;
+			/*
+			 * case 180: TODO insert Login UI break;
+			 */
+			case 201:
+				UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
+				updateUserInfo.chooseWhatInfoToUpdate();
+				mainMenu();
+				break;
+			case 998:
+				break;
+			case 0:
+				condition = false;
+				break;
+			}
+		} while (condition);
 	}
 
 }
