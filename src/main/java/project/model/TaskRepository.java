@@ -115,8 +115,8 @@ public class TaskRepository {
 	}
 
 	/**
-	 * This method returns a list with the finished tasks from the month provided by
-	 * the user
+	 * This method returns a list of all tasks finished a number of months ago by given user.
+	 * Given a negative "monthsAgo" input, Returns ALL finished tasks of said user
 	 * 
 	 * @param user
 	 *            user who is in the tasks
@@ -171,10 +171,7 @@ public class TaskRepository {
 		lastMonth.addAll(this.getFinishedTasksFromProjectCollaboratorInGivenMonth(collab, 1));
 		double totalTime = 0;
 		for (Task test : lastMonth) {
-			if (test.isProjectCollaboratorInTaskTeam(collab)) {
-				totalTime = totalTime + test.getTimeSpentByProjectCollaboratorOntask(collab);
-
-			}
+			totalTime = totalTime + test.getTimeSpentByProjectCollaboratorOntask(collab);
 		}
 		return totalTime;
 	}
