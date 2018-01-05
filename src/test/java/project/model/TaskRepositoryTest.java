@@ -62,6 +62,7 @@ public class TaskRepositoryTest {
 				"Test", "Testo", "Testistan");
 
 		// Creates one Project
+		project = projectRepository.createProject("name3", "description4", userAdmin);
 		project2 = projectRepository.createProject("Project2", "description2", userAdmin);
 
 		// create project collaborators
@@ -86,8 +87,6 @@ public class TaskRepositoryTest {
 		user3.setUserProfile(Profile.COLLABORATOR);
 
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
-		// create project
-		project = projectRepository.createProject("name3", "description4", userAdmin);
 		// add user to project team
 		project.addProjectCollaboratorToProjectTeam(collab1);
 		project.addProjectCollaboratorToProjectTeam(collab2);
@@ -792,4 +791,32 @@ public class TaskRepositoryTest {
 
 	}
 
+	/**
+	 * Tests the getTaskByID method by creating 4 tasks that are equal to the tasks
+	 * resulted from the getTaskByID, and asserting if they are equal to the
+	 * original.
+	 * 
+	 */
+	@Test
+	public void getTaskByID() {
+
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+
+		// The TaskID is set automatically, so the the first task is 1.1, the second
+		// task is 1.2 and so on.
+		Task expResultTask = new Task(taskRepository.getTaskByID("1.1"));
+		Task expResultTask2 = new Task(taskRepository.getTaskByID("1.2"));
+		Task expResultTask3 = new Task(taskRepository.getTaskByID("1.3"));
+		Task expResultTask4 = new Task(taskRepository.getTaskByID("1.4"));
+
+		// Asserts if the task that resulted from the getTaskByID is equal to the
+		// expected task
+		assertEquals(testTask, expResultTask);
+		assertEquals(testTask2, expResultTask2);
+		assertEquals(testTask3, expResultTask3);
+		assertEquals(testTask4, expResultTask4);
+	}
 }

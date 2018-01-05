@@ -20,7 +20,7 @@ public class MainMenuUI {
 		Project project3;
 		Task task1;
 		Task task2;
-		
+
 		// Instantiates the company
 		myCompany = Company.getTheInstance();
 
@@ -41,7 +41,7 @@ public class MainMenuUI {
 		// Instantiates the dates to set as estimated start date and task deadline
 		Calendar estimatedTaskStartDate = Calendar.getInstance();
 		Calendar taskDeadline = Calendar.getInstance();
-		estimatedTaskStartDate.set(2018, Calendar.NOVEMBER, 22);
+		estimatedTaskStartDate.set(2018, Calendar.JANUARY, 5);
 		taskDeadline.set(2018, Calendar.DECEMBER, 22);
 
 		// Instantiates the tasks
@@ -58,14 +58,14 @@ public class MainMenuUI {
 		Scanner input = new Scanner(System.in);
 		boolean condition = true;
 		while (condition) {
-			System.out.println("Choose a user story:");
-			System.out.println("102");
-			System.out.println("180");
-			System.out.println("201");
-			System.out.println("342");
-			System.out.println("998 to view all users");
-			System.out.println("999 to view user's address");
-			System.out.println("0 to exit");
+			System.out.println("Please select a user story:");
+			System.out.println("102 - Regist user");
+			System.out.println("180 - Login");
+			System.out.println("201 - Update user info");
+			System.out.println("342 - Create dependencies between tasks");
+			System.out.println("998 - View all users");
+			System.out.println("999 - View user address");
+			System.out.println("0 - EXIT");
 			System.out.println();
 
 			String choice = input.nextLine();
