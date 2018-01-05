@@ -1,6 +1,9 @@
 package project.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import project.model.Company;
@@ -16,7 +19,7 @@ import project.model.User;
  *
  */
 public class US342Controller {
-	
+
 	int projectIDtoInstantiate;
 
 	/**
@@ -24,10 +27,9 @@ public class US342Controller {
 	 * 
 	 */
 	public US342Controller() {
-		
+
 	}
 
-	
 	/**
 	 * Constructor
 	 * 
@@ -67,7 +69,8 @@ public class US342Controller {
 	public List<Task> getTasksFromAProject() {
 
 		List<Task> tasksFromProject = new ArrayList<>();
-		Project projectToGetTasks = Company.getTheInstance().getProjectsRepository().getProjById(this.projectIDtoInstantiate);
+		Project projectToGetTasks = Company.getTheInstance().getProjectsRepository()
+				.getProjById(this.projectIDtoInstantiate);
 
 		tasksFromProject.addAll(projectToGetTasks.getTaskRepository().getProjectTaskRepository());
 
@@ -88,9 +91,11 @@ public class US342Controller {
 	 *            dependent task
 	 */
 	public void createDependenceFromTask(String taskDependentID, String taskReferenceID, int incrementDays) {
-		
-		Task taskDependent = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate).getTaskRepository().getTaskByID(taskDependentID);
-		Task taskReference = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate).getTaskRepository().getTaskByID(taskReferenceID);
+
+		Task taskDependent = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate)
+				.getTaskRepository().getTaskByID(taskDependentID);
+		Task taskReference = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate)
+				.getTaskRepository().getTaskByID(taskReferenceID);
 
 		taskDependent.createTaskDependence(taskReference, incrementDays);
 	}
@@ -104,5 +109,32 @@ public class US342Controller {
 		this.projectIDtoInstantiate = userInputForProjectID;
 	}
 
+	public String getTaskDependentEstimatedStartDate(String taskDependentID) {
+
+		Task taskToGetEstimatedStartDate = Company.getTheInstance().getProjectsRepository()
+				.getProjById(projectIDtoInstantiate).getTaskRepository().getTaskByID(taskDependentID);
+
+		Calendar aaa = Calendar.getInstance();
+		aaa = taskToGetEstimatedStartDate.getEstimatedTaskStartDate();
+		Date estimatedStartDate = aaa.getTime();
+		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String estimatedStartDateString = newDateFormat.format(estimatedStartDate).toString();
+
+		return estimatedStartDateString;
+	}
+
+	public String getTaskReferenceEstimatedStartDate(String taskReferenceID) {
+
+		Task taskToGetEstimatedStartDate = Company.getTheInstance().getProjectsRepository()
+				.getProjById(projectIDtoInstantiate).getTaskRepository().getTaskByID(taskReferenceID);
+
+		Calendar aaa = Calendar.getInstance();
+		aaa = taskToGetEstimatedStartDate.getEstimatedTaskStartDate();
+		Date estimatedStartDate = aaa.getTime();
+		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String estimatedStartDateString = newDateFormat.format(estimatedStartDate).toString();
+
+		return estimatedStartDateString;
+	}
 
 }
