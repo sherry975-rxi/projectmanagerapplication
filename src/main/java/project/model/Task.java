@@ -26,7 +26,7 @@ public class Task {
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
 	private int taskBudget;
-	private Task taskDependence;
+	private Task taskDependency;
 	private Integer startDateInterval;
 	private Integer deadlineInterval;
 
@@ -69,7 +69,7 @@ public class Task {
 		this.taskBudget = estimatedBudgetCostTask;
 		this.startDateInterval = null;
 		this.deadlineInterval = null;
-		this.taskDependence = null;
+		this.taskDependency = null;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class Task {
 		this.estimatedTaskStartDate = task.getEstimatedTaskStartDate();
 		this.taskDeadline = task.getTaskDeadline();
 		this.taskBudget = task.getTaskBudget();
-		this.taskDependence = task.taskDependence;
+		this.taskDependency = task.taskDependency;
 		if (task.startDateInterval != null) {
 			this.startDateInterval = task.getStartDateInterval();
 		} else {
@@ -750,9 +750,10 @@ public class Task {
 	 */
 	public void createTaskDependence(Task taskToEstablishDependenceUpon, int incrementDays) {
 
-		this.taskDependence = taskToEstablishDependenceUpon;
+		this.taskDependency = taskToEstablishDependenceUpon;
 
-		Calendar date = taskToEstablishDependenceUpon.getEstimatedTaskStartDate();
+		Calendar date = Calendar.getInstance();
+		date = (Calendar) taskToEstablishDependenceUpon.getEstimatedTaskStartDate().clone();
 		date.add(Calendar.DAY_OF_YEAR, incrementDays);
 
 		this.setEstimatedTaskStartDate(date);

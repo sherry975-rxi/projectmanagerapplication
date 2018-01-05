@@ -25,10 +25,21 @@ public class UserRegisterUI {
 		// user must try another valid email address.
 		// When the email address is valid, email is accepted and the next field
 		// (idNumber) is ready to be complete by the user.
-		while (!(registerUsercontroller1.isEmailValidController(email))) {
-			System.out.println("Invalid email. try again.");
-			email = scannerInput.nextLine();
+		while (!(registerUsercontroller1.isEmailValidController(email))
+				|| (registerUsercontroller1.isUserInUserRepository(email))) {
+
+			if (!(registerUsercontroller1.isEmailValidController(email))) {
+				System.out.println("Invalid email. try again.");
+				email = scannerInput.nextLine();
+			}
+
+			if (registerUsercontroller1.isUserInUserRepository(email)) {
+				System.out.println("User already exists. Try again.");
+				email = scannerInput.nextLine();
+			}
+
 		}
+
 		System.out.println("Email accepted " + email);
 
 		System.out.println("Enter idNumber: ");
@@ -79,19 +90,10 @@ public class UserRegisterUI {
 
 		if ("y".equalsIgnoreCase(answer)) {
 
-			if (registerUsercontroller1.isUserInUserRepository(email)) {
-				System.out.println("User already exists. Try again");
-				answer = scannerInput.nextLine();
+			registerUsercontroller1.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city,
+					district, country);
 
-			} else if (!registerUsercontroller1.isUserEmailValid(email)) {
-				System.out.println("Email is invalid");
-				answer = scannerInput.nextLine();
-			} else {
-				registerUsercontroller1.addNewUser(name, email, idNumber, function, phone, password, street, zipCode,
-						city, district, country);
-
-				System.out.println("Conditions accepted. Sucessfully register!");
-			}
+			System.out.println("Conditions accepted. Sucessfully register!");
 
 		} else { // In case user choose "n".
 			System.out.println("Conditions not accepted");

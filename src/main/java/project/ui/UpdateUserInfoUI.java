@@ -26,14 +26,14 @@ public class UpdateUserInfoUI {
 		Scanner input = new Scanner(System.in);
 		UpdateUserInfoController getInfo = new UpdateUserInfoController();
 
-		String oldName = getInfo.getName(user);
-		String oldEmail = getInfo.getEmail(user);
-		String oldPhone = getInfo.getPhone(user);
+		String currentName = getInfo.getName(user);
+		String currentEmail = getInfo.getEmail(user);
+		String currentPhone = getInfo.getPhone(user);
 		// Presents the updatable fields
 		System.out.println("Please select the number of the field to update:");
-		System.out.println("1. Name: " + oldName);
-		System.out.println("2. Email: " + oldEmail);
-		System.out.println("3. Phone: " + oldPhone);
+		System.out.println("1. Name: " + currentName);
+		System.out.println("2. Email: " + currentEmail);
+		System.out.println("3. Phone: " + currentPhone);
 		System.out.println("4. Address");
 		System.out.println();
 		// Selects the field according to user input
@@ -91,17 +91,17 @@ public class UpdateUserInfoUI {
 			// Chooses address
 			Address chosen = updater.getAllAddresses(user).get(nrAddress - 1);
 			// Shows fields of the address
-			String oldStreet = updater.getStreet(chosen);
-			String oldZipCode = updater.getZipCode(chosen);
-			String oldCity = updater.getCity(chosen);
-			String oldDistrict = updater.getDistrict(chosen);
-			String oldCountry = updater.getCountry(chosen);
+			String currentStreet = updater.getStreet(chosen);
+			String currentZipCode = updater.getZipCode(chosen);
+			String currentCity = updater.getCity(chosen);
+			String currentDistrict = updater.getDistrict(chosen);
+			String currentCountry = updater.getCountry(chosen);
 			System.out.println("Please select the number of the field to update:");
-			System.out.println("1. Street: " + oldStreet);
-			System.out.println("2. ZipCode: " + oldZipCode);
-			System.out.println("3. City: " + oldCity);
-			System.out.println("4. District: " + oldDistrict);
-			System.out.println("5. Country: " + oldCountry);
+			System.out.println("1. Street: " + currentStreet);
+			System.out.println("2. ZipCode: " + currentZipCode);
+			System.out.println("3. City: " + currentCity);
+			System.out.println("4. District: " + currentDistrict);
+			System.out.println("5. Country: " + currentCountry);
 			System.out.println();
 			// Selects the field
 			int nrField = Integer.parseInt(input.nextLine());
@@ -112,7 +112,7 @@ public class UpdateUserInfoUI {
 				String newStreet = input.nextLine();
 				System.out.println(newInfo + newStreet);
 				if (confirmInfo(input)) {
-					updater.updateUserStreet(user, oldStreet, newStreet);
+					updater.updateUserStreet(user, currentStreet, newStreet);
 					System.out.println(updateSuccessful);
 					System.out.println();
 				}
@@ -123,7 +123,7 @@ public class UpdateUserInfoUI {
 				String newZipCode = input.nextLine();
 				System.out.println(newInfo + newZipCode);
 				if (confirmInfo(input)) {
-					updater.updateUserZipCode(user, oldStreet, newZipCode);
+					updater.updateUserZipCode(user, currentStreet, newZipCode);
 					System.out.println(updateSuccessful);
 					System.out.println();
 				}
@@ -134,7 +134,7 @@ public class UpdateUserInfoUI {
 				String newCity = input.nextLine();
 				System.out.println(newInfo + newCity);
 				if (confirmInfo(input)) {
-					updater.updateUserCity(user, oldStreet, newCity);
+					updater.updateUserCity(user, currentStreet, newCity);
 					System.out.println(updateSuccessful);
 					System.out.println();
 				}
@@ -145,7 +145,7 @@ public class UpdateUserInfoUI {
 				String newDistrict = input.nextLine();
 				System.out.println(newInfo + newDistrict);
 				if (confirmInfo(input)) {
-					updater.updateUserDistrict(user, oldStreet, newDistrict);
+					updater.updateUserDistrict(user, currentStreet, newDistrict);
 					System.out.println(updateSuccessful);
 					System.out.println();
 				}
@@ -156,7 +156,7 @@ public class UpdateUserInfoUI {
 				String newCountry = input.nextLine();
 				System.out.println(newInfo + newCountry);
 				if (confirmInfo(input)) {
-					updater.updateUserCountry(user, oldStreet, newCountry);
+					updater.updateUserCountry(user, currentStreet, newCountry);
 					System.out.println(updateSuccessful);
 					System.out.println();
 				}

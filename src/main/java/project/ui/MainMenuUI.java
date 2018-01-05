@@ -20,7 +20,7 @@ public class MainMenuUI {
 		Project project3;
 		Task task1;
 		Task task2;
-		
+
 		// Instantiates the company
 		myCompany = Company.getTheInstance();
 
@@ -41,7 +41,7 @@ public class MainMenuUI {
 		// Instantiates the dates to set as estimated start date and task deadline
 		Calendar estimatedTaskStartDate = Calendar.getInstance();
 		Calendar taskDeadline = Calendar.getInstance();
-		estimatedTaskStartDate.set(2018, Calendar.NOVEMBER, 22);
+		estimatedTaskStartDate.set(2018, Calendar.JANUARY, 5);
 		taskDeadline.set(2018, Calendar.DECEMBER, 22);
 
 		// Instantiates the tasks
