@@ -68,37 +68,37 @@ public class MainMenuUI {
 			System.out.println("0 to exit");
 			System.out.println();
 
-			int choice = Integer.parseInt(input.nextLine());
+			String choice = input.nextLine();
 			switch (choice) {
-			case 102:
+			case "102":
 				UserRegisterUI userRegister = new UserRegisterUI();
 				userRegister.userRegister();
 				break;
-			case 180:
+			case "180":
 				LoginUI doLogin = new LoginUI();
 				doLogin.doLogin();
 				break;
-			case 201:
+			case "201":
 				UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
 				updateUserInfo.chooseWhatInfoToUpdate();
 				break;
-			case 342:
+			case "342":
 				DefineDependenciesBetweenTasksUI defineDependenciesBetweenTasksUI = new DefineDependenciesBetweenTasksUI(
 						user1);
 				defineDependenciesBetweenTasksUI.chooseProject();
 				break;
-			case 998:
+			case "998":
 				PrintUserInfoController userInfo = new PrintUserInfoController();
 				userInfo.printAllUsersInfo();
 				break;
-			case 999:
+			case "999":
 				System.out.println("Please provide an email to select a user:");
 				String email = input.nextLine();
 				PrintUserInfoController userAddressInfo = new PrintUserInfoController();
 				User userToSearchAddress = userAddressInfo.getUserByEmailController(email);
 				userAddressInfo.printAllAddressesFromUser(userToSearchAddress);
 				break;
-			case 0:
+			case "0":
 				condition = false;
 				break;
 			}
