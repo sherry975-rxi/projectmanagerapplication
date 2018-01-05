@@ -73,11 +73,7 @@ public class RegisterUserController {
 	}
 
 	public boolean isEmailValidController(String email) {
-		boolean validMail;
-		validMail = false;
-		if (this.userRegistry.isEmailAddressValid(email))
-			validMail = true;
-		return validMail;
+		return this.userRegistry.isEmailAddressValid(email);
 
 	}
 
