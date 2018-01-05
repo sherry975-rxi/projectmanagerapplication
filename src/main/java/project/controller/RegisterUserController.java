@@ -60,9 +60,7 @@ public class RegisterUserController {
 
 	public boolean isUserInUserRepository(String email) {
 
-		if (userRegistry.getUserByEmail(email) == null)
-			return false;
-		return true;
+		return userRegistry.getUserByEmail(email) != null;
 
 	}
 
@@ -77,7 +75,7 @@ public class RegisterUserController {
 	public boolean isEmailValidController(String email) {
 		boolean validMail;
 		validMail = false;
-		if (Company.getTheInstance().getUsersRepository().isEmailAddressValid(email))
+		if (this.userRegistry.isEmailAddressValid(email))
 			validMail = true;
 		return validMail;
 
