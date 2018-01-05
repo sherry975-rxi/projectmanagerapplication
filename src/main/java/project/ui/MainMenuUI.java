@@ -58,14 +58,14 @@ public class MainMenuUI {
 		Scanner input = new Scanner(System.in);
 		boolean condition = true;
 		while (condition) {
-			System.out.println("Choose a user story:");
-			System.out.println("102");
-			System.out.println("180");
-			System.out.println("201");
-			System.out.println("342");
-			System.out.println("998 to view all users");
-			System.out.println("999 to view user's address");
-			System.out.println("0 to exit");
+			System.out.println("Please select a user story:");
+			System.out.println("102 - Regist user");
+			System.out.println("180 - Login");
+			System.out.println("201 - Update user info");
+			System.out.println("342 - Create dependencies between tasks");
+			System.out.println("998 - View all users");
+			System.out.println("999 - View user address");
+			System.out.println("0 - EXIT");
 			System.out.println();
 
 			String choice = input.nextLine();
