@@ -37,13 +37,19 @@ public class UpdateUserInfoController {
 	 * @param user
 	 * @param email
 	 */
-	public boolean updateUserEmail(User user, String email) {
-		boolean result = false;
-		if (Company.getTheInstance().getUsersRepository().isEmailAddressValid(email)) {
-			user.setEmail(email);
-			result = true;
-		}
-		return result;
+	public void updateUserEmail(User user, String email) {
+		user.setEmail(email);
+	}
+
+	public boolean isEmailValid(String email) {
+
+		return Company.getTheInstance().getUsersRepository().isEmailAddressValid(email);
+
+	}
+
+	public boolean isEmailAlreadyInUse(String email) {
+
+		return Company.getTheInstance().getUsersRepository().getUserByEmail(email) != null;
 	}
 
 	/**

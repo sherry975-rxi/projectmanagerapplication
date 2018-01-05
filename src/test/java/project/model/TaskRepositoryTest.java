@@ -818,5 +818,6 @@ public class TaskRepositoryTest {
 		assertEquals(testTask2, expResultTask2);
 		assertEquals(testTask3, expResultTask3);
 		assertEquals(testTask4, expResultTask4);
+		assertEquals(taskRepository.getTaskByID("1.9"), null);
 	}
 }
