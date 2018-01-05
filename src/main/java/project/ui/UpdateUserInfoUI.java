@@ -30,7 +30,7 @@ public class UpdateUserInfoUI {
 		String oldEmail = getInfo.getEmail(user);
 		String oldPhone = getInfo.getPhone(user);
 		// Presents the updatable fields
-		System.out.println("Choose a field to update:");
+		System.out.println("Please select the number of the field to update:");
 		System.out.println("1. Name: " + oldName);
 		System.out.println("2. Email: " + oldEmail);
 		System.out.println("3. Phone: " + oldPhone);
@@ -40,7 +40,7 @@ public class UpdateUserInfoUI {
 		int choice = Integer.parseInt(input.nextLine());
 		final String inputNewInfo = "Please insert the new info:";
 		final String newInfo = "New info: ";
-		final String updateSuccessful = "UPDATE SUCCESSFUL";
+		final String updateSuccessful = "-----UPDATE SUCCESSFUL-----";
 		switch (choice) {
 		case 1:
 			// Updates name
@@ -173,6 +173,8 @@ public class UpdateUserInfoUI {
 		String yesOrNo = input.nextLine();
 		if ("y".equalsIgnoreCase(yesOrNo)) {
 			result = true;
+		} else {
+			System.out.println("-----UPDATE DISCARDED-----\n");
 		}
 		return result;
 	}
