@@ -48,9 +48,8 @@ public class DefineDependenciesBetweenTasksUI {
 
 		int userInputForProjectID = Integer.parseInt(input.nextLine());
 
-		
 		us342Controller.setProjectID(userInputForProjectID);
-		
+
 		// print tasks
 		int taskListSize = us342Controller.getTasksFromAProject().size();
 
@@ -63,28 +62,37 @@ public class DefineDependenciesBetweenTasksUI {
 			System.out.println(taskName + " " + "taskID: " + taskID);
 
 		}
-		
+
 		System.out.println();
-		
+
 		System.out.println("Choose dependent task: ");
-		
+
 		String userInputForDependentTaskID = input.nextLine();
-		
+
 		System.out.println("Choose main task: ");
-		
+
 		String userInputForMainTaskID = input.nextLine();
-		
+
 		System.out.println("Choose number of days to create dependence: ");
-		
+
 		int userInputForIncrementDays = Integer.parseInt(input.nextLine());
-		
-		us342Controller.createDependenceFromTask(userInputForDependentTaskID, userInputForMainTaskID, userInputForIncrementDays);
-		
+
+		us342Controller.createDependenceFromTask(userInputForDependentTaskID, userInputForMainTaskID,
+				userInputForIncrementDays);
+
 		System.out.println();
-		
+
 		System.out.println("Dependency successfully created.");
-		
+
+		String estStartDateMainTask = us342Controller.getTaskReferenceEstimatedStartDate(userInputForMainTaskID);
+		String estStarDateDependentTask = us342Controller
+				.getTaskDependentEstimatedStartDate(userInputForDependentTaskID);
+
+		System.out.println("The estimated start date of main task is: " + estStartDateMainTask + " "
+				+ "and the estimated start date of the dependent task is: " + estStarDateDependentTask);
+
 		System.out.println();
+
 	}
 
 }
