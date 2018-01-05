@@ -386,25 +386,25 @@ public class Project {
 		return inactiveCollaborators;
 	}
 
-	/* *//**
+	 /**
 			 * This method allows removing a Project Collaborator from a Project Team and
 			 * includes removing that Project Collaborator from all Tasks in this Project
 			 *
 			 * @param collaboratorToRemoveFromProjectTeam
 			 *            Collaborator to remove from project
-			 *//*
-				 * 
-				 * private void removeCollaboratorFromProjectTeam(ProjectCollaborator
-				 * collaboratorToRemoveFromProjectTeam) { // REFACTOR TO
-				 * removeProjectCollaboratorFromProjectTeam
-				 * 
-				 * if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
-				 * collaboratorToRemoveFromProjectTeam.setState(false); for (Task otherTask :
-				 * this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
-				 * otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); } }
-				 * 
-				 * }
-				 */
+			 */
+		/*		  
+				  private void removeCollaboratorFromProjectTeam(ProjectCollaborator
+				  collaboratorToRemoveFromProjectTeam) { // REFACTOR TO
+				  removeProjectCollaboratorFromProjectTeam
+				  
+				  if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
+				  collaboratorToRemoveFromProjectTeam.setState(false); for (Task otherTask :
+				  this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
+				  otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); } }
+				  
+				  }*/
+				 
 
 	/**
 	 * This method allows the inactivation of a User from a Project Team which
