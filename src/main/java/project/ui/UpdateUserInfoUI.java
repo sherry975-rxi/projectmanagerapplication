@@ -61,10 +61,13 @@ public class UpdateUserInfoUI {
 			System.out.println(newInfo + email);
 			if (confirmInfo(input)) {
 				UpdateUserInfoController updater = new UpdateUserInfoController();
-				if (updater.updateUserEmail(user, email)) {
-					System.out.println(updateSuccessful);
+				if (updater.isEmailValid(email)) {
+					System.out.println("Invalid email.");
+				} else if (updater.isEmailAlreadyInUse(email)) {
+					System.out.println("Email is already in use.");
 				} else {
-					System.out.println("Invalid email. Try again.");
+					updater.updateUserEmail(user, email);
+					System.out.println(updateSuccessful);
 				}
 				System.out.println();
 			}
