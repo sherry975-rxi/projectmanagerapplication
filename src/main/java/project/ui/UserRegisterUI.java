@@ -10,6 +10,8 @@ import project.controller.RegisterUserController;
  */
 public class UserRegisterUI {
 
+	//TODO os termos e condições devem aparecer no início do registo e não no fim
+	
 	public void userRegister() {
 
 		Scanner scannerInput = new Scanner(System.in);

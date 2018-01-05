@@ -17,7 +17,7 @@ public class DoLoginController {
 	 *            Sets private variable password to inserted password by user
 	 */
 	public boolean doLogin(String email, String password) {
-		this.username = Company.getTheInstance().getUsersRepository().getUserByEmail(email);
+		this.username = Company.getTheInstance().getUsersRepository().getUserByEmail(email); //TODO está a passar nos testes e não devia - confirmar antes se user existe ou não
 		this.password = password;
 		boolean loginSuccess = false;
 		if (username.checkLogin(password) == true) {
