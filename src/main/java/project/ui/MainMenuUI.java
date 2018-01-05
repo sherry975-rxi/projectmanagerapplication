@@ -59,7 +59,7 @@ public class MainMenuUI {
 		boolean condition = true;
 		while (condition) {
 			System.out.println("Please select a user story:");
-			System.out.println("102 - Regist user");
+			System.out.println("102 - User Registration");
 			System.out.println("180 - Login");
 			System.out.println("201 - Update user info");
 			System.out.println("342 - Create dependencies between tasks");
