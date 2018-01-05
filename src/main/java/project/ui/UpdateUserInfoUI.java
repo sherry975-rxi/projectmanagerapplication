@@ -38,11 +38,13 @@ public class UpdateUserInfoUI {
 		System.out.println();
 		// Selects the field according to user input
 		int choice = Integer.parseInt(input.nextLine());
+		final String inputNewInfo = "Please insert the new info:";
 		final String newInfo = "New info: ";
 		final String updateSuccessful = "UPDATE SUCCESSFUL";
 		switch (choice) {
 		case 1:
 			// Updates name
+			System.out.println(inputNewInfo);
 			String name = input.nextLine();
 			System.out.println(newInfo + name);
 			if (confirmInfo(input)) {
@@ -54,6 +56,7 @@ public class UpdateUserInfoUI {
 			break;
 		case 2:
 			// Updates email
+			System.out.println(inputNewInfo);
 			String email = input.nextLine();
 			System.out.println(newInfo + email);
 			if (confirmInfo(input)) {
@@ -68,6 +71,7 @@ public class UpdateUserInfoUI {
 			break;
 		case 3:
 			// Updates phone
+			System.out.println(inputNewInfo);
 			String phone = input.nextLine();
 			System.out.println(newInfo + phone);
 			if (confirmInfo(input)) {
@@ -104,6 +108,7 @@ public class UpdateUserInfoUI {
 			switch (nrField) {
 			case 1:
 				// Updates street
+				System.out.println(inputNewInfo);
 				String newStreet = input.nextLine();
 				System.out.println(newInfo + newStreet);
 				if (confirmInfo(input)) {
@@ -114,6 +119,7 @@ public class UpdateUserInfoUI {
 				break;
 			case 2:
 				// Updates zip code
+				System.out.println(inputNewInfo);
 				String newZipCode = input.nextLine();
 				System.out.println(newInfo + newZipCode);
 				if (confirmInfo(input)) {
@@ -124,6 +130,7 @@ public class UpdateUserInfoUI {
 				break;
 			case 3:
 				// Updates city
+				System.out.println(inputNewInfo);
 				String newCity = input.nextLine();
 				System.out.println(newInfo + newCity);
 				if (confirmInfo(input)) {
@@ -134,6 +141,7 @@ public class UpdateUserInfoUI {
 				break;
 			case 4:
 				// Updates district
+				System.out.println(inputNewInfo);
 				String newDistrict = input.nextLine();
 				System.out.println(newInfo + newDistrict);
 				if (confirmInfo(input)) {
@@ -144,6 +152,7 @@ public class UpdateUserInfoUI {
 				break;
 			case 5:
 				// Updates country
+				System.out.println(inputNewInfo);
 				String newCountry = input.nextLine();
 				System.out.println(newInfo + newCountry);
 				if (confirmInfo(input)) {
