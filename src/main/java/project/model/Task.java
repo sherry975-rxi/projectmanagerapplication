@@ -765,10 +765,17 @@ public class Task {
 		this.setEstimatedTaskStartDate(date);
 	}
 	
+	/**
+	 * This method returns the current state of the task.
+	 * @return taskState
+	 */
 	public TaskStateInterface getTaskState() {
 		return this.taskState;
 	}
 	
+	/**
+	 * This method defines the state of the task.
+	 */
 	public void setTaskState(TaskStateInterface newStateTask) {
 		taskState = newStateTask;
 	}
