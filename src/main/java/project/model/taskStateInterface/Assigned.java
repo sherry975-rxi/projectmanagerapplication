@@ -5,14 +5,14 @@ import project.model.Task;
 public class Assigned implements TaskStateInterface {
 
 	private Task toUpdate;
-	
+
 	public Assigned(Task toUpdateState) {
-		this.toUpdate=toUpdateState;
+		this.toUpdate = toUpdateState;
 	}
-	
+
 	@Override
 	public boolean isValid() {
-		if(!toUpdate.getTaskState().isTransitionToAssignedPossible())
+		if (!toUpdate.getTaskState().isTransitionToAssignedPossible())// Isto não está a confirmar nada de relevante...
 			return false;
 		else
 			return toUpdate.doesTaskTeamHaveActiveUsers();
@@ -25,26 +25,26 @@ public class Assigned implements TaskStateInterface {
 	// TODO create Created State Task Constructor!
 	@Override
 	public void changeToPlanned() {
-//		Created toValidateTask = new Created(toUpdate);
-//		
-//		if(toValidateTask.isValid())
-//			toUpdate.setTaskState(new Created());
+		// Created toValidateTask = new Created(toUpdate);
+		//
+		// if(toValidateTask.isValid())
+		// toUpdate.setTaskState(new Created());
 	}
 
 	@Override
-	public void changeToAssigned() {		
+	public void changeToAssigned() {
 	}
 
 	// TODO create Ready State Task Constructor!
 	@Override
 	public void changeToReady() {
-//		Ready toValidateTask = new Ready(toUpdate);
-//		
-//		if(toValidateTask.isValid())
-//			toUpdate.setTaskState(new Ready());		
+		// Ready toValidateTask = new Ready(toUpdate);
+		//
+		// if(toValidateTask.isValid())
+		// toUpdate.setTaskState(new Ready());
 	}
 
-	// TODO  Can Task skip Ready State if it has no dependencies?
+	// TODO Can Task skip Ready State if it has no dependencies?
 	@Override
 	public void changeToOnGoing() {
 	}
@@ -59,7 +59,7 @@ public class Assigned implements TaskStateInterface {
 
 	@Override
 	public void changeToFinished() {
-		
+
 	}
 
 	@Override
