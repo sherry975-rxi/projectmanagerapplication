@@ -74,7 +74,7 @@ public interface TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
-	public boolean isTransitionToCancelled();
+	public boolean isTransitionToCancelledPossible();
 
 	/**
 	 * This method verifies if the transition to the “Finished” state of a Task is
