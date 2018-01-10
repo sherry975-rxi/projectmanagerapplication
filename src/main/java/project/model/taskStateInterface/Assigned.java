@@ -12,10 +12,7 @@ public class Assigned implements TaskStateInterface {
 
 	@Override
 	public boolean isValid() {
-		if (!toUpdate.getTaskState().isTransitionToAssignedPossible())// Isto não está a confirmar nada de relevante...
-			return false;
-		else
-			return toUpdate.doesTaskTeamHaveActiveUsers();
+		return toUpdate.doesTaskTeamHaveActiveUsers();
 	}
 
 	@Override
@@ -25,9 +22,9 @@ public class Assigned implements TaskStateInterface {
 	// TODO create Created State Task Constructor!
 	@Override
 	public void changeToPlanned() {
-		// Created toValidateTask = new Created(toUpdate);
+		// TaskStateInterface updatedState = new Created(toUpdate);
 		//
-		// if(toValidateTask.isValid())
+		// if(updatedState.isValid() && isTransitionToCreatedPossible())
 		// toUpdate.setTaskState(new Created());
 	}
 
@@ -38,9 +35,9 @@ public class Assigned implements TaskStateInterface {
 	// TODO create Ready State Task Constructor!
 	@Override
 	public void changeToReady() {
-		// Ready toValidateTask = new Ready(toUpdate);
+		// TaskStateInterface updatedState = new Ready(toUpdate);
 		//
-		// if(toValidateTask.isValid())
+		// if(updatedState.isValid() && isTransitionToReadyPossible())
 		// toUpdate.setTaskState(new Ready());
 	}
 
