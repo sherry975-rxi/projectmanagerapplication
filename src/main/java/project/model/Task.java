@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import project.model.taskStateInterface.Created;
+import project.model.taskStateInterface.TaskStateInterface;
+
 /**
  * Class that allows building and accessing Task attributes.
  * 
@@ -21,7 +24,8 @@ public class Task {
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
-	private boolean taskState;
+	private boolean taskStatus;
+	private TaskStateInterface taskState;
 	private int estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
@@ -60,7 +64,7 @@ public class Task {
 		this.creationDate = Calendar.getInstance();
 		this.startDate = null;
 		this.finishDate = null;
-		this.taskState = false;
+		this.taskStatus = false;
 		this.taskTeam = new ArrayList<>();
 		this.reports = new ArrayList<>();
 		this.estimatedTaskEffort = estimatedTaskEffort;
@@ -70,6 +74,7 @@ public class Task {
 		this.startDateInterval = null;
 		this.deadlineInterval = null;
 		this.taskDependency = null;
+		this.taskState = new Created();
 	}
 
 	/**
@@ -86,7 +91,7 @@ public class Task {
 		this.creationDate = task.creationDate;
 		this.startDate = task.getStartDate();
 		this.finishDate = task.getFinishDate();
-		this.taskState = task.isTaskFinished();
+		this.taskStatus = task.isTaskFinished();
 		this.taskTeam = task.copyListOfTaskCollaboratorsInTask(this.taskTeam);
 		this.reports = task.getReports();
 		this.estimatedTaskEffort = task.getEstimatedTaskEffort();
@@ -94,6 +99,7 @@ public class Task {
 		this.taskDeadline = task.getTaskDeadline();
 		this.taskBudget = task.getTaskBudget();
 		this.taskDependency = task.taskDependency;
+		this.taskState = task.getTaskState();
 		if (task.startDateInterval != null) {
 			this.startDateInterval = task.getStartDateInterval();
 		} else {
@@ -336,7 +342,7 @@ public class Task {
 	 * @return TRUE if finished FALSE if unfinished
 	 */
 	public boolean isTaskFinished() {
-		return this.taskState;
+		return this.taskStatus;
 	}
 
 	/**
@@ -345,7 +351,7 @@ public class Task {
 	 * 
 	 */
 	public void markTaskAsFinished() {
-		this.taskState = true;
+		this.taskStatus = true;
 	}
 
 	/**
@@ -757,5 +763,13 @@ public class Task {
 		date.add(Calendar.DAY_OF_YEAR, incrementDays);
 
 		this.setEstimatedTaskStartDate(date);
+	}
+	
+	public TaskStateInterface getTaskState() {
+		return this.taskState;
+	}
+	
+	public void setTaskState(TaskStateInterface newStateTask) {
+		taskState = newStateTask;
 	}
 }
