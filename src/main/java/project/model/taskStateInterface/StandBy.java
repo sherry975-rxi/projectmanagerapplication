@@ -18,12 +18,8 @@ public class StandBy implements TaskStateInterface {
 	 * @return true if possible, false if not
 	 */
 	public boolean isValid() {
-		boolean returnState = false;
-		if (task.getTaskState() == new OnGoing()) {
-			returnState = true;
 
-		}
-		return returnState;
+		return (!task.doesTaskTeamHaveActiveUsers());
 
 	}
 
