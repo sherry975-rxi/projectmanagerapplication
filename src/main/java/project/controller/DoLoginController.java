@@ -17,25 +17,16 @@ public class DoLoginController {
 	 *            Sets private variable password to inserted password by user
 	 */
 	public boolean doLogin(String email, String password) {
-		this.username = Company.getTheInstance().getUsersRepository().getUserByEmail(email); //TODO está a passar nos testes e não devia - confirmar antes se user existe ou não
+		this.username = Company.getTheInstance().getUsersRepository().getUserByEmail(email);
 		this.password = password;
 		boolean loginSuccess = false;
-		if (username.checkLogin(password) == true) {
-			loginSuccess = true;
+		if (Company.getTheInstance().getUsersRepository().isUserinUserRepository(username)) {
+			if (username.checkLogin(password) == true) {
+				loginSuccess = true;
+			}
 		}
 
 		return loginSuccess;
-	}
-
-	/**
-	 * this method does logOut of user. Sets the private variables of
-	 * DoLoginController to null
-	 */
-	public void doLogOut() {
-
-		this.username = null;
-		this.password = null;
-
 	}
 
 }
