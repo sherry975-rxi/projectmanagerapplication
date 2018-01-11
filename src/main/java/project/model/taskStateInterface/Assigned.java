@@ -10,91 +10,165 @@ public class Assigned implements TaskStateInterface {
 		this.toUpdate = toUpdateState;
 	}
 
-	@Override
+	/**
+	 * This method checks if a transition to a certain state is valid, checking if the task has active users
+	 * 
+	 * @return True if valid, False if not
+	 */
 	public boolean isValid() {
 		return toUpdate.doesTaskTeamHaveActiveUsers();
 	}
 
-	@Override
+	/**
+	 * This method changes the state of a Task to the "Created" state - does nothing in Assigned state
+	 * 
+	 * @return Void
+	 */
 	public void changeToCreated() {
 	}
 
-	// TODO create Created State Task Constructor!
-	@Override
+	/**
+	 * This method changes the state of a Task to the "Planned" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToPlanned() {
-		// TaskStateInterface updatedState = new Created(toUpdate);
-		//
-		// if(updatedState.isValid() && isTransitionToCreatedPossible())
-		// toUpdate.setTaskState(new Created());
+		 TaskStateInterface updatedState = new Planned(toUpdate);
+		
+		 if(updatedState.isValid() && isTransitionToCreatedPossible())
+		 toUpdate.setTaskState(updatedState);
 	}
 
-	@Override
+	/**
+	 * This method changes the state of a Task to the "Assigned" state - does nothing in Assigned state
+	 * 
+	 * @return Void
+	 */
 	public void changeToAssigned() {
 	}
 
-	// TODO create Ready State Task Constructor!
-	@Override
+	/**
+	 * This method changes the state of a Task to the "Ready" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToReady() {
-		// TaskStateInterface updatedState = new Ready(toUpdate);
-		//
-		// if(updatedState.isValid() && isTransitionToReadyPossible())
-		// toUpdate.setTaskState(new Ready());
+		 TaskStateInterface updatedState = new Ready(toUpdate);
+		
+		 if(updatedState.isValid() && isTransitionToReadyPossible())
+		 toUpdate.setTaskState(updatedState);
 	}
 
+	/**
+	 * This method changes the state of a Task to the "OnGoing" state - does nothing in Assigned state
+	 * 
+	 * @return Void
+	 */
 	// TODO Can Task skip Ready State if it has no dependencies?
-	@Override
 	public void changeToOnGoing() {
 	}
 
-	@Override
+	/**
+	 * This method changes the state of a Task to the "StandBy" state - does nothing in Assigned state
+	 * 
+	 * @return Void
+	 */
 	public void changeToStandBy() {
 	}
 
-	@Override
+	/**
+	 * This method changes the state of a Task to the "Cancelled" state - does nothing in Assigned state
+	 * 
+	 * @return Void
+	 */
 	public void changeToCancelled() {
 	}
 
-	@Override
+	/**
+	 * This method changes the state of a Task to the "Finished" state - does nothing in Assigned state
+	 * 
+	 * @return Void
+	 */
 	public void changeToFinished() {
 
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Created” state of a Task is
+	 * possible
+	 * 
+	 * @return false
+	 */
 	public boolean isTransitionToCreatedPossible() {
 		return false;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Planned” state of a Task is
+	 * possible
+	 * 
+	 * @return true
+	 */
 	public boolean isTransitionToPlannedPossible() {
 		return true;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Assigned” state of a Task is
+	 * possible
+	 * 
+	 * @return false
+	 */
 	public boolean isTransitionToAssignedPossible() {
 		return false;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Ready” state of a Task is
+	 * possible
+	 * 
+	 * @return true
+	 */
 	public boolean isTransitionToReadyPossible() {
 		return true;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “OnGoing” state of a Task is
+	 * possible
+	 * 
+	 * @return false
+	 */
 	public boolean isTransitionToOnGoingPossible() {
 		return false;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “StandBy” state of a Task is
+	 * possible
+	 * 
+	 * @return false
+	 */
 	public boolean isTransitionToStandByPossible() {
 		return false;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Cancelled” state of a Task is
+	 * possible
+	 * 
+	 * @return false
+	 */
 	public boolean isTransitionToCancelledPossible() {
 		return false;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Finished” state of a Task is
+	 * possible
+	 * 
+	 * @return false
+	 */
 	public boolean isTransitionToFinishedPossible() {
 		return false;
 	}
