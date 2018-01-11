@@ -64,7 +64,7 @@ public class Task {
 		this.startDateInterval = null;
 		this.deadlineInterval = null;
 		this.taskDependency = null;
-		this.taskState = new Created();
+		this.taskState = new Created(this);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class Task {
 		this.startDateInterval = null;
 		this.deadlineInterval = null;
 		this.taskDependency = null;
-		this.taskState = new Created();
+		this.taskState = new Created(this);
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class Task {
 		this.creationDate = task.creationDate;
 		this.startDate = task.getStartDate();
 		this.finishDate = task.getFinishDate();
-		this.taskStatus = task.isTaskFinished();
+		this.taskState = task.getTaskState();
 		this.taskTeam = task.copyListOfTaskCollaboratorsInTask(this.taskTeam);
 		this.reports = task.getReports();
 		this.estimatedTaskEffort = task.getEstimatedTaskEffort();
