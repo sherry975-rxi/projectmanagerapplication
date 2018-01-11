@@ -31,6 +31,13 @@ public class Finished implements TaskStateInterface {
 	}
 
 	public void changeToOnGoing() {
+		if (isTransitionToOnGoingPossible()) {
+			TaskStateInterface OnGoing1 = new OnGoing(tarefa);
+			if (OnGoing1.isValid()) {
+				tarefa.setTaskState(OnGoing1);
+			}
+		}
+
 	}
 
 	public void changeToStandBy() {
@@ -59,7 +66,7 @@ public class Finished implements TaskStateInterface {
 	}
 
 	public boolean isTransitionToOnGoingPossible() {
-		return false;
+		return true;
 	}
 
 	public boolean isTransitionToStandByPossible() {
