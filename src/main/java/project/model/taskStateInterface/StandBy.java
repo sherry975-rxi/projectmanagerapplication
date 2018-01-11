@@ -6,6 +6,13 @@ public class StandBy implements TaskStateInterface {
 
 	Task task;
 
+	/**
+	 * Constructor of StandBy class
+	 * 
+	 * @param t
+	 *            The task that will be associated to the parameter Task of the
+	 *            instance of the object StandBy
+	 */
 	public StandBy(Task t) {
 		this.task = t;
 	}
@@ -120,7 +127,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Created” state of a Task is
 	 * possible
 	 * 
-	 * @return false
+	 * @return False
 	 */
 	public boolean isTransitionToCreatedPossible() {
 
@@ -144,7 +151,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Assigned” state of a Task is
 	 * possible
 	 * 
-	 * @return false
+	 * @return False
 	 */
 	public boolean isTransitionToAssignedPossible() {
 
@@ -156,7 +163,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Ready” state of a Task is
 	 * possible
 	 * 
-	 * @return false
+	 * @return False
 	 */
 	public boolean isTransitionToReadyPossible() {
 
@@ -168,12 +175,11 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “OnGoing” state of a Task is
 	 * possible
 	 * 
-	 * @return True if ProjectCollaborator added active Project Collaborators to the
-	 *         team, False if not
+	 * @return True
 	 */
 	public boolean isTransitionToOnGoingPossible() {
 
-		return (task.doesTaskTeamHaveActiveUsers());
+		return true;
 
 	}
 
@@ -181,7 +187,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “StandBy" state of a Task is
 	 * possible
 	 * 
-	 * @return false
+	 * @return False
 	 */
 	public boolean isTransitionToStandByPossible() {
 
@@ -193,7 +199,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Cancelled” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE
+	 * @return True
 	 */
 	public boolean isTransitionToCancelledPossible() {
 
@@ -205,7 +211,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Cancelled” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE
+	 * @return True
 	 */
 	public boolean isTransitionToFinishedPossible() {
 

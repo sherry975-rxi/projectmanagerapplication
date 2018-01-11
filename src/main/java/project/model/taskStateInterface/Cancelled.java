@@ -1,7 +1,23 @@
 package project.model.taskStateInterface;
 
+import project.model.Task;
+
 public class Cancelled implements TaskStateInterface {
 
+	Task task;
+	
+	public Cancelled (Task taskToUpdate) {
+		this.task = taskToUpdate;
+	}
+	
+	public Cancelled () {
+	}
+	
+	/**
+	 * This method verifies if the State "Cancelled" requirements are suitable to a specif task.
+	 * 
+	 * @return true if is possible, false if not
+	 */
 	public boolean isValid() {
 		return false; //TODO fazer quando a respectiva US estiver implementada no model 
 	}
@@ -22,6 +38,8 @@ public class Cancelled implements TaskStateInterface {
 
 	public void changeToFinished(){}
 
+	
+	//TODO atualizar estes métodos qd as US estiverem implementadas
 	public boolean isTransitionToCreatedPossible(){
 		return false;
 	}
