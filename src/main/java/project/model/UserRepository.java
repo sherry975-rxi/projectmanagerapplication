@@ -74,7 +74,7 @@ public class UserRepository {
 	 *         in company
 	 */
 	public boolean isUserinUserRepository(User addedUser) {
-	
+
 		return this.usersRepository.contains(addedUser);
 	}
 

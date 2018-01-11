@@ -24,7 +24,7 @@ public class Task {
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
-	private boolean taskStatus;
+	private boolean taskStatus; // is going to be deleted.
 	private TaskStateInterface taskState;
 	private int estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;
@@ -35,6 +35,41 @@ public class Task {
 	private Integer deadlineInterval;
 
 	/**
+	 * This constructor creates a task with the mandatory fields taskCounter, projId
+	 * and description. However, the description is the only parameter that will be
+	 * set by the user. The other two fields are automatically introduced by the
+	 * creator pattern of the task.
+	 * 
+	 * @param taskCounter
+	 *            Task counter in relation to the project
+	 * @param projId
+	 *            Id of the project to which the task belongs to
+	 * @param description
+	 *            Description of the task set by the user
+	 */
+	public Task(int taskCounter, int projId, String description) {
+		Integer taskNumber = (Integer) taskCounter;
+		Integer projCode = (Integer) projId;
+		this.taskID = projCode.toString() + "." + taskNumber.toString();
+		this.description = description;
+		this.creationDate = Calendar.getInstance();
+		this.startDate = null;
+		this.finishDate = null;
+		this.taskTeam = new ArrayList<>();
+		this.reports = new ArrayList<>();
+		this.estimatedTaskEffort = 0;
+		this.estimatedTaskStartDate = null;
+		this.taskDeadline = null;
+		this.taskBudget = 0;
+		this.startDateInterval = null;
+		this.deadlineInterval = null;
+		this.taskDependency = null;
+		this.taskState = new Created(this);
+	}
+
+	/**
+	 * This constructor is going to be deleted soon.
+	 * 
 	 * This Constructor creates a Task object with the mandatory parameters taskID
 	 * and description and non mandatory parameters creation date, start date,
 	 * finish date, task state (finished or unfinished) and task team
@@ -74,7 +109,7 @@ public class Task {
 		this.startDateInterval = null;
 		this.deadlineInterval = null;
 		this.taskDependency = null;
-		this.taskState = new Created();
+		this.taskState = new Created(this);
 	}
 
 	/**
@@ -91,7 +126,7 @@ public class Task {
 		this.creationDate = task.creationDate;
 		this.startDate = task.getStartDate();
 		this.finishDate = task.getFinishDate();
-		this.taskStatus = task.isTaskFinished();
+		this.taskState = task.getTaskState();
 		this.taskTeam = task.copyListOfTaskCollaboratorsInTask(this.taskTeam);
 		this.reports = task.getReports();
 		this.estimatedTaskEffort = task.getEstimatedTaskEffort();
@@ -764,15 +799,25 @@ public class Task {
 
 		this.setEstimatedTaskStartDate(date);
 	}
-	
+
 	/**
 	 * This method returns the current state of the task.
+	 * 
 	 * @return taskState
 	 */
 	public TaskStateInterface getTaskState() {
 		return this.taskState;
 	}
 	
+	/**
+	 * This method returns the name of the task's current state.
+	 * @return String taskState
+	 */
+	public String viewTaskStateName() {
+		return this.taskState.getClass().getSimpleName();
+	}
+	
+
 	/**
 	 * This method defines the state of the task.
 	 */
