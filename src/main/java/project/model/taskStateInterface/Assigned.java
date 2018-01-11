@@ -33,10 +33,13 @@ public class Assigned implements TaskStateInterface {
 	 * @return Void
 	 */
 	public void changeToPlanned() {
-		 TaskStateInterface updatedState = new Planned(toUpdate);
-		
-		 if(updatedState.isValid() && isTransitionToCreatedPossible())
-		 toUpdate.setTaskState(updatedState);
+		 
+		 if (!this.isValid()) {
+			 TaskStateInterface updatedState = new Planned(toUpdate);
+			
+			 if(updatedState.isValid() && isTransitionToPlannedPossible())
+			 toUpdate.setTaskState(updatedState);
+		 }
 	}
 
 	/**
