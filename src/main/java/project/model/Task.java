@@ -57,10 +57,10 @@ public class Task {
 		this.finishDate = null;
 		this.taskTeam = new ArrayList<>();
 		this.reports = new ArrayList<>();
-		this.estimatedTaskEffort = 0;
+		this.estimatedTaskEffort = null;
 		this.estimatedTaskStartDate = null;
 		this.taskDeadline = null;
-		this.taskBudget = 0;
+		this.taskBudget = null;
 		this.startDateInterval = null;
 		this.deadlineInterval = null;
 		this.taskDependency = null;
