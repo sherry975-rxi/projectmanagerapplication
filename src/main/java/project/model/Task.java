@@ -26,10 +26,10 @@ public class Task {
 	private Calendar finishDate;
 	private boolean taskStatus; // is going to be deleted.
 	private TaskStateInterface taskState;
-	private int estimatedTaskEffort;
+	private Integer estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
-	private int taskBudget;
+	private Integer taskBudget;
 	private Task taskDependency;
 	private Integer startDateInterval;
 	private Integer deadlineInterval;
@@ -808,15 +808,15 @@ public class Task {
 	public TaskStateInterface getTaskState() {
 		return this.taskState;
 	}
-	
+
 	/**
 	 * This method returns the name of the task's current state.
+	 * 
 	 * @return String taskState
 	 */
 	public String viewTaskStateName() {
 		return this.taskState.getClass().getSimpleName();
 	}
-	
 
 	/**
 	 * This method defines the state of the task.
