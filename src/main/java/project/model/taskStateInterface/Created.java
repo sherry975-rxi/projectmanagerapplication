@@ -1,6 +1,5 @@
 package project.model.taskStateInterface;
 
-
 import project.model.Task;
 
 public class Created implements TaskStateInterface {
@@ -8,27 +7,36 @@ public class Created implements TaskStateInterface {
 	Task task;
 
 	/**
+	 * Constructor for State "Created".
+	 */
+	public Created() {
+	}
+
+	/**
 	 * Constructor to create State Created
 	 * 
-	 * @param task Task to set State upon
+	 * @param task
+	 *            Task to set State upon
 	 */
 	public Created(Task task) {
 		this.task = task;
 	}
-	
+
 	/**
-	 * This method verifies if the State "Created" requirements are fulfilled for a specific Task. The requirements are If the taskID and the description of the task is not null, the task is created.
+	 * This method verifies if the State "Created" requirements are fulfilled for a
+	 * specific Task. The requirements are If the taskID and the description of the
+	 * task is not null, the task is created.
 	 * 
 	 * @return TRUE if Valid, FALSE if it is Not Valid
 	 */
 	public boolean isValid() {
-		boolean valid = false; 
-		
-		if( task.getTaskID() != null && task.getDescription() != null)
+		boolean valid = false;
+
+		if (task.getTaskID() != null && task.getDescription() != null)
 			return valid;
 		else
 			return valid;
-	
+
 	}
 
 	/**
@@ -55,14 +63,14 @@ public class Created implements TaskStateInterface {
 	 * This method changes the state of a Task to the "Assigned" state
 	 * 
 	 */
-	public void changeToAssigned() {	
+	public void changeToAssigned() {
 	}
 
 	/**
 	 * This method changes the state of a Task to the "Ready" state
 	 * 
 	 */
-	public void changeToReady() {	
+	public void changeToReady() {
 	}
 
 	/**
@@ -140,7 +148,7 @@ public class Created implements TaskStateInterface {
 	 * This method verifies if the transition to the “OnGoing” state of a Task is
 	 * possible
 	 * 
-		 * @return TRUE if possible, FALSE if not
+	 * @return TRUE if possible, FALSE if not
 	 */
 	public boolean isTransitionToOnGoingPossible() {
 		boolean transitionState = false;
