@@ -3,17 +3,23 @@
  */
 package project.model.states;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.model.taskStateInterface.Finished;
+import project.model.taskStateInterface.Planned;
+import project.model.taskStateInterface.Ready;
+import project.model.taskStateInterface.TaskStateInterface;
 
 public class ReadyTaskTest {
 
@@ -23,6 +29,9 @@ public class ReadyTaskTest {
 	Task neededTask;
 	Calendar estimatedTaskStartDate;
 	Calendar taskDeadline;
+	TaskStateInterface readyState;
+	TaskStateInterface plannedState;
+	TaskStateInterface finishedState;
 
 	/**
 	 * Sets up the necessary parameters to do the tests
@@ -32,8 +41,8 @@ public class ReadyTaskTest {
 
 		// Creates the main task to be tested, as well as a task used solely to check
 		// the dependencies
-		// TODO mainTask = new Task(1, 1, "Task 1");
-		// TODO needeTask = new Task(1, 1, "Task 1");
+		mainTask = new Task(1, 1, "Task 1");
+		neededTask = new Task(1, 1, "Task 1");
 
 		// Creates the estimated Start Date and estimated Finish Date (Dealine)
 		estimatedTaskStartDate = Calendar.getInstance();
@@ -56,6 +65,13 @@ public class ReadyTaskTest {
 		testPCollab = new ProjectCollaborator(testUser, 5);
 		mainTask.addProjectCollaboratorToTask(testPCollab);
 
+		// Creates the states
+		readyState = new Ready(mainTask);
+		plannedState = new Planned(neededTask);
+
+		// Sets the states for the tasks
+		mainTask.setTaskState(readyState);
+		neededTask.setTaskState(plannedState);
 	}
 
 	/**
@@ -69,33 +85,100 @@ public class ReadyTaskTest {
 		neededTask = null;
 		estimatedTaskStartDate = null;
 		taskDeadline = null;
+		readyState = null;
+		plannedState = null;
+		finishedState = null;
 
 	}
 
 	/**
-	 * Test method for {@link project.model.taskStateInterface.Ready#isValid()}.
+	 * Tests if the isValid method returns false when the task still has ongoing
+	 * dependencies
 	 */
+	@Ignore
+	@Test
+	public final void testIsNotValid() {
+		assertFalse(mainTask.getTaskState().isValid());
+	}
+
+	/**
+	 * Tests if the isValid method returns true when the task doesn't have ongoing
+	 * dependencies
+	 */
+	@Ignore
 	@Test
 	public final void testIsValid() {
-		fail("Not yet implemented"); // TODO
+		finishedState = new Finished(neededTask);
+		neededTask.setTaskState(finishedState);
+		assertTrue(mainTask.getTaskState().isValid());
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.model.taskStateInterface.Ready#changeToPlanned()}.
+	 * Tests if the task changes to planned
 	 */
+	@Ignore
 	@Test
 	public final void testChangeToPlanned() {
-		fail("Not yet implemented"); // TODO
+
+		// Removes the user from the task team
+		mainTask.removeProjectCollaboratorFromTask(testPCollab);
+		// Changes the state to planned and tests it
+		mainTask.getTaskState().changeToPlanned();
+		assertTrue(mainTask.viewTaskStateName().equals("Planned"));
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.model.taskStateInterface.Ready#changeToOnGoing()}.
+	 * Tests if the task fails to change to planned
 	 */
+	@Ignore
+	@Test
+	public final void testChangeToPlannedFailed() {
+		// Should fail as there is still a user in the task team~
+		mainTask.getTaskState().changeToPlanned();
+		assertFalse(mainTask.viewTaskStateName().equals("Planned"));
+	}
+
+	/**
+	 * Tests if the task changes to ongoing
+	 */
+	@Ignore
 	@Test
 	public final void testChangeToOnGoing() {
-		fail("Not yet implemented"); // TODO
+		// Sets a start date
+		mainTask.setStartDate(Calendar.getInstance());
+		// Changes the state to ongoing and tests it
+		mainTask.getTaskState().changeToOnGoing();
+		assertTrue(mainTask.viewTaskStateName().equals("OnGoing"));
+	}
+
+	/**
+	 * Tests if the task fails to change to ongoing
+	 */
+	@Ignore
+	@Test
+	public final void testChangeToOnGoingFailed() {
+		// Should fail as the task doesn't have a start date
+		mainTask.getTaskState().changeToOnGoing();
+		assertFalse(mainTask.viewTaskStateName().equals("OnGoing"));
+	}
+
+	/**
+	 * Tests the ability of the task to change state
+	 */
+	@Ignore
+	@Test
+	public final void testPossibleTransitions() {
+		// Tests the impossible transitions
+		assertFalse(mainTask.getTaskState().isTransitionToCreatedPossible());
+		assertFalse(mainTask.getTaskState().isTransitionToAssignedPossible());
+		assertFalse(mainTask.getTaskState().isTransitionToReadyPossible());
+		assertFalse(mainTask.getTaskState().isTransitionToStandByPossible());
+		assertFalse(mainTask.getTaskState().isTransitionToCancelledPossible());
+		assertFalse(mainTask.getTaskState().isTransitionToFinishedPossible());
+
+		// Tests the possible transitions
+		assertTrue(mainTask.getTaskState().isTransitionToPlannedPossible());
+		assertTrue(mainTask.getTaskState().isTransitionToOnGoingPossible());
 	}
 
 }

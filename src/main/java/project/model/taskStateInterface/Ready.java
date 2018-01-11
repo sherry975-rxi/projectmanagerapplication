@@ -20,11 +20,12 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isValid() {
+		boolean valid = false;
 		// TODO isto da task dependency tem de ser visto
-		// if (toUpdate.getTaskDependency.isEmpty()) {
-		// return true;
+		// if (toUpdate.hasNonFinishedTasksInDependency()) {
+		// valid=true;
 		// }
-		return false;
+		return valid;
 	}
 
 	/**
@@ -124,7 +125,8 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isTransitionToCreatedPossible() {
-		return false;
+		boolean valid = false;
+		return valid;
 	}
 
 	/**
@@ -135,7 +137,8 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isTransitionToPlannedPossible() {
-		return true;
+		boolean valid = true;
+		return valid;
 	}
 
 	/**
@@ -146,7 +149,8 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isTransitionToAssignedPossible() {
-		return false;
+		boolean valid = false;
+		return valid;
 	}
 
 	/**
@@ -157,7 +161,8 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isTransitionToReadyPossible() {
-		return false;
+		boolean valid = false;
+		return valid;
 	}
 
 	/**
@@ -168,7 +173,8 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isTransitionToOnGoingPossible() {
-		return true;
+		boolean valid = true;
+		return valid;
 	}
 
 	/**
@@ -179,7 +185,8 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isTransitionToStandByPossible() {
-		return false;
+		boolean valid = false;
+		return valid;
 	}
 
 	/**
@@ -190,7 +197,8 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isTransitionToCancelledPossible() {
-		return false;
+		boolean valid = false;
+		return valid;
 	}
 
 	/**
@@ -201,6 +209,7 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isTransitionToFinishedPossible() {
-		return false;
+		boolean valid = false;
+		return valid;
 	}
 }
