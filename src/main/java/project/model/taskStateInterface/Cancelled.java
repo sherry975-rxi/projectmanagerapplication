@@ -10,6 +10,9 @@ public class Cancelled implements TaskStateInterface {
 		this.task = taskToUpdate;
 	}
 	
+	public Cancelled () {
+	}
+	
 	/**
 	 * This method verifies if the State "Cancelled" requirements are suitable to a specif task.
 	 * 
