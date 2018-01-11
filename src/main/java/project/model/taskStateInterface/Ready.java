@@ -36,6 +36,12 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public void changeToCreated() {
+		if (isTransitionToCreatedPossible()) {
+
+			TaskStateInterface stateCreated = new Created(toUpdate);
+			if (stateCreated.isValid())
+				toUpdate.setTaskState(stateCreated);
+		}
 	}
 
 	/**
@@ -60,6 +66,12 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public void changeToAssigned() {
+		if (isTransitionToAssignedPossible()) {
+
+			TaskStateInterface stateAssigned = new Assigned(toUpdate);
+			if (stateAssigned.isValid())
+				toUpdate.setTaskState(stateAssigned);
+		}
 	}
 
 	/**
@@ -70,6 +82,12 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public void changeToReady() {
+		if (isTransitionToReadyPossible()) {
+
+			TaskStateInterface stateReady = new Ready(toUpdate);
+			if (stateReady.isValid())
+				toUpdate.setTaskState(stateReady);
+		}
 	}
 
 	/**
@@ -94,6 +112,12 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public void changeToStandBy() {
+		if (isTransitionToStandByPossible()) {
+
+			TaskStateInterface stateStandBy = new StandBy(toUpdate);
+			if (stateStandBy.isValid())
+				toUpdate.setTaskState(stateStandBy);
+		}
 	}
 
 	/**
@@ -104,6 +128,12 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public void changeToCancelled() {
+		if (isTransitionToCancelledPossible()) {
+
+			TaskStateInterface stateCancelled = new Cancelled(toUpdate);
+			if (stateCancelled.isValid())
+				toUpdate.setTaskState(stateCancelled);
+		}
 	}
 
 	/**
@@ -114,6 +144,12 @@ public class Ready implements TaskStateInterface {
 	 */
 	@Override
 	public void changeToFinished() {
+		if (isTransitionToFinishedPossible()) {
+
+			TaskStateInterface stateFinished = new Finished(toUpdate);
+			if (stateFinished.isValid())
+				toUpdate.setTaskState(stateFinished);
+		}
 
 	}
 
