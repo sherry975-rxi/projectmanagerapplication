@@ -7,12 +7,6 @@ public class Created implements TaskStateInterface {
 	Task task;
 
 	/**
-	 * Constructor for State "Created".
-	 */
-	public Created() {
-	}
-
-	/**
 	 * Constructor to create State Created
 	 * 
 	 * @param task
@@ -32,9 +26,11 @@ public class Created implements TaskStateInterface {
 	public boolean isValid() {
 		boolean valid = false;
 
-		if (task.getTaskID() != null && task.getDescription() != null)
+		if (task.getTaskID() != null && task.getDescription() != null) 
+		{
+			valid = true;
 			return valid;
-		else
+		} else
 			return valid;
 
 	}
@@ -44,6 +40,12 @@ public class Created implements TaskStateInterface {
 	 * 
 	 */
 	public void changeToCreated() {
+		if (isTransitionToCreatedPossible()) {
+
+			TaskStateInterface stateCreated = new Created(task);
+			if (stateCreated.isValid())
+				task.setTaskState(stateCreated);
+		}
 	}
 
 	/**
@@ -64,6 +66,12 @@ public class Created implements TaskStateInterface {
 	 * 
 	 */
 	public void changeToAssigned() {
+		if (isTransitionToAssignedPossible()) {
+
+			TaskStateInterface stateAssigned = new Assigned(task);
+			if (stateAssigned.isValid())
+				task.setTaskState(stateAssigned);
+		}
 	}
 
 	/**
@@ -71,6 +79,12 @@ public class Created implements TaskStateInterface {
 	 * 
 	 */
 	public void changeToReady() {
+		if (isTransitionToReadyPossible()) {
+
+			TaskStateInterface stateReady = new Ready(task);
+			if (stateReady.isValid())
+				task.setTaskState(stateReady);
+		}
 	}
 
 	/**
@@ -78,6 +92,12 @@ public class Created implements TaskStateInterface {
 	 * 
 	 */
 	public void changeToOnGoing() {
+		if (isTransitionToOnGoingPossible()) {
+
+			TaskStateInterface stateOnGoing = new OnGoing(task);
+			if (stateOnGoing.isValid())
+				task.setTaskState(stateOnGoing);
+		}
 	}
 
 	/**
@@ -85,6 +105,12 @@ public class Created implements TaskStateInterface {
 	 * 
 	 */
 	public void changeToStandBy() {
+		if (isTransitionToStandByPossible()) {
+
+			TaskStateInterface stateStandBy = new StandBy(task);
+			if (stateStandBy.isValid())
+				task.setTaskState(stateStandBy);
+		}
 	}
 
 	/**
@@ -92,6 +118,12 @@ public class Created implements TaskStateInterface {
 	 * 
 	 */
 	public void changeToCancelled() {
+		if (isTransitionToCancelledPossible()) {
+
+			TaskStateInterface stateCancelled = new Cancelled(task);
+			if (stateCancelled.isValid())
+				task.setTaskState(stateCancelled);
+		}
 	}
 
 	/**
@@ -99,6 +131,12 @@ public class Created implements TaskStateInterface {
 	 * 
 	 */
 	public void changeToFinished() {
+		if (isTransitionToFinishedPossible()) {
+
+			TaskStateInterface stateFinished = new Finished(task);
+			if (stateFinished.isValid())
+				task.setTaskState(stateFinished);
+		}
 	}
 
 	/**
