@@ -7,12 +7,6 @@ public class Created implements TaskStateInterface {
 	Task task;
 
 	/**
-	 * Constructor for State "Created".
-	 */
-	public Created() {
-	}
-
-	/**
 	 * Constructor to create State Created
 	 * 
 	 * @param task
@@ -32,9 +26,11 @@ public class Created implements TaskStateInterface {
 	public boolean isValid() {
 		boolean valid = false;
 
-		if (task.getTaskID() != null && task.getDescription() != null)
+		if (task.getTaskID() != null && task.getDescription() != null) 
+		{
+			valid = true;
 			return valid;
-		else
+		} else
 			return valid;
 
 	}
