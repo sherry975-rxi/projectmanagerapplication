@@ -17,7 +17,7 @@ public class Cancelled implements TaskStateInterface {
 	 */
 	public boolean isValid() {
 		boolean validation = false;
-		if(task.getTaskState() == new OnGoing(task) || task.getTaskState() == new StandBy(task)) {
+		if(task.getFinishDate() == null && task.getStartDate()!= null) {
 			validation = true;
 		}
 		return validation;
