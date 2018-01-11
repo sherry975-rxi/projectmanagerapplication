@@ -12,8 +12,8 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method verifies if the transition to "StandBy" State is possible. If the
-	 * state of the task is set to "OnGoing", the transition is possible, else, the
-	 * method returns false
+	 * state of the task is set to "OnGoing" and doesn't have any active users, the
+	 * method returns true, else, returns false
 	 * 
 	 * @return true if possible, false if not
 	 */
@@ -23,26 +23,56 @@ public class StandBy implements TaskStateInterface {
 
 	}
 
+	/**
+	 * This method changes the state of a Task to the "Created" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToCreated() {
 
 	}
 
+	/**
+	 * This method changes the state of a Task to the "Planned" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToPlanned() {
 
 	}
 
+	/**
+	 * This method changes the state of a Task to the "Assigned" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToAssigned() {
 
 	}
 
+	/**
+	 * This method changes the state of a Task to the "Ready" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToReady() {
 
 	}
 
+	/**
+	 * This method changes the state of a Task to the "OnGoing" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToOnGoing() {
 
 	}
 
+	/**
+	 * This method changes the state of a Task to the "StandBy" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToStandBy() {
 
 		if (isTransitionToStandByPossible()) {
@@ -54,10 +84,20 @@ public class StandBy implements TaskStateInterface {
 
 	}
 
+	/**
+	 * This method changes the state of a Task to the "Cancelled" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToCancelled() {
 
 	}
 
+	/**
+	 * This method changes the state of a Task to the "Finished" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToFinished() {
 
 	}

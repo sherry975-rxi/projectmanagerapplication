@@ -2,22 +2,67 @@ package project.model.taskStateInterface;
 
 public interface TaskStateInterface {
 
+	/**
+	 * This method checks if a transition to a certain state is valid
+	 * 
+	 * @return True if valid, False if not
+	 */
 	public boolean isValid();
 
+	/**
+	 * This method changes the state of a Task to the "Created" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToCreated();
 
+	/**
+	 * This method changes the state of a Task to the "Planned" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToPlanned();
 
+	/**
+	 * This method changes the state of a Task to the "Assigned" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToAssigned();
 
+	/**
+	 * This method changes the state of a Task to the "Ready" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToReady();
 
+	/**
+	 * This method changes the state of a Task to the "OnGoing" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToOnGoing();
 
+	/**
+	 * This method changes the state of a Task to the "StandBy" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToStandBy();
 
+	/**
+	 * This method changes the state of a Task to the "Cancelled" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToCancelled();
 
+	/**
+	 * This method changes the state of a Task to the "Finished" state
+	 * 
+	 * @return Void
+	 */
 	public void changeToFinished();
 
 	/**
