@@ -17,6 +17,7 @@ import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.taskStateInterface.OnGoing;
 import project.model.taskStateInterface.StandBy;
 
 public class StandByTests {
@@ -32,6 +33,7 @@ public class StandByTests {
 	double expectedCost;
 	StandBy stateTestTask1;
 	StandBy stateTestTask2;
+	OnGoing stateTestTask3;
 	String stateToCompare;
 	Calendar taskStartDate;
 	Calendar taskFinishDate;
@@ -187,8 +189,22 @@ public class StandByTests {
 
 		// Initiates stateTestTask1
 		stateTestTask1 = new StandBy(testTask);
+		stateTestTask3 = new OnGoing(testTask);
+
 		testTask.setStartDate(taskStartDate);
 		testTask.setTaskState(stateTestTask1);
+
+		/*
+		 * Tests if its possible to change to state OnGoing. Expects true
+		 */
+		assertTrue(stateTestTask1.isTransitionToOnGoingPossible());
+		String stateToCompare = "StandBy";
+
+		/*
+		 * State won't change, because task doesn't have active users
+		 */
+		stateTestTask1.changeToOnGoing();
+		assertEquals(stateToCompare, testTask.viewTaskStateName());
 
 		/*
 		 * Adds two ProjectCollaborators to the task,
@@ -198,21 +214,38 @@ public class StandByTests {
 		testTask.addProjectCollaboratorToTask(collab2);
 
 		/*
-		 * Tests if its possible to change to state OnGoing. Expects true
+		 * Remove ProjectCollaborators from task,
+		 * 
 		 */
-		assertTrue(stateTestTask1.isTransitionToOnGoingPossible());
-		String stateToCompare = "OnGoing";
-
-		stateTestTask1.changeToOnGoing();
-		assertEquals(stateToCompare, testTask.viewTaskStateName());
-
 		testTask.removeProjectCollaboratorFromTask(collab1);
 		testTask.removeProjectCollaboratorFromTask(collab2);
 
 		/*
-		 * Tests if its possible to change to state OnGoing Expects True, since it's
-		 * possible. It no longer has active users, so its false
+		 * Tries to change the state of the Task to OnGoing
 		 */
+		stateTestTask1.changeToOnGoing();
+
+		/*
+		 * Task state will still be standby, because users are not active in the project
+		 */
+		assertEquals(stateToCompare, testTask.viewTaskStateName());
+
+		/*
+		 * Adds again two ProjectCollaborators to the task
+		 * 
+		 */
+		testTask.addProjectCollaboratorToTask(collab1);
+		testTask.addProjectCollaboratorToTask(collab2);
+		/*
+		 * Changes String value to "OnGoing"
+		 */
+		stateToCompare = "OnGoing";
+
+		/*
+		 * State will change, because task has now two project collaborators
+		 */
+		stateTestTask1.changeToOnGoing();
+		assertEquals(stateToCompare, testTask.viewTaskStateName());
 
 	}
 
