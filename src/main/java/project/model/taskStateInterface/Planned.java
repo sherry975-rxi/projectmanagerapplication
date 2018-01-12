@@ -28,57 +28,108 @@ public class Planned implements TaskStateInterface {
 	}
 
 	
+	/**
+	 * This method changes the state of a Task to the "Created" state.
+	 * 
+	 */
 	public void changeToCreated() {
-		// TODO Auto-generated method stub
-		
+		if (isTransitionToCreatedPossible()) {
+
+			TaskStateInterface stateCreated = new Created(task);
+			if (stateCreated.isValid())
+				task.setTaskState(stateCreated);
+		}
 	}
 
-	
+	/**
+	 * This method changes the state of a Task to the "Planned" state
+	 * 
+	 */
 	public void changeToPlanned() {
-		// TODO Auto-generated method stub
-		
+		if (isTransitionToPlannedPossible()) {
+
+			TaskStateInterface statePlanned = new Planned(task);
+			if (statePlanned.isValid())
+				task.setTaskState(statePlanned);
+		}
 	}
 
-	
+	/**
+	 * This method changes the state of a Task to the "Assigned" state
+	 * 
+	 */
 	public void changeToAssigned() {
-		
 		if (isTransitionToAssignedPossible()) {
 
 			TaskStateInterface stateAssigned = new Assigned(task);
 			if (stateAssigned.isValid())
 				task.setTaskState(stateAssigned);
 		}
-		
 	}
 
-	
+	/**
+	 * This method changes the state of a Task to the "Ready" state
+	 * 
+	 */
 	public void changeToReady() {
-		// TODO Auto-generated method stub
-		
+		if (isTransitionToReadyPossible()) {
+
+			TaskStateInterface stateReady = new Ready(task);
+			if (stateReady.isValid())
+				task.setTaskState(stateReady);
+		}
 	}
 
-	@Override
+	/**
+	 * This method changes the state of a Task to the "OnGoing" state.
+	 * 
+	 */
 	public void changeToOnGoing() {
-		// TODO Auto-generated method stub
-		
+		if (isTransitionToOnGoingPossible()) {
+
+			TaskStateInterface stateOnGoing = new OnGoing(task);
+			if (stateOnGoing.isValid())
+				task.setTaskState(stateOnGoing);
+		}
 	}
 
-	@Override
+	/**
+	 * This method changes the state of a Task to the "StandBy" state.
+	 * 
+	 */
 	public void changeToStandBy() {
-		// TODO Auto-generated method stub
-		
+		if (isTransitionToStandByPossible()) {
+
+			TaskStateInterface stateStandBy = new StandBy(task);
+			if (stateStandBy.isValid())
+				task.setTaskState(stateStandBy);
+		}
 	}
 
-	@Override
+	/**
+	 * This method changes the state of a Task to the "Cancelled" state.
+	 * 
+	 */
 	public void changeToCancelled() {
-		// TODO Auto-generated method stub
-		
+		if (isTransitionToCancelledPossible()) {
+
+			TaskStateInterface stateCancelled = new Cancelled(task);
+			if (stateCancelled.isValid())
+				task.setTaskState(stateCancelled);
+		}
 	}
 
-	@Override
+	/**
+	 * This method changes the state of a Task to the "Finished" state.
+	 * 
+	 */
 	public void changeToFinished() {
-		// TODO Auto-generated method stub
-		
+		if (isTransitionToFinishedPossible()) {
+
+			TaskStateInterface stateFinished = new Finished(task);
+			if (stateFinished.isValid())
+				task.setTaskState(stateFinished);
+		}
 	}
 
 	@Override
