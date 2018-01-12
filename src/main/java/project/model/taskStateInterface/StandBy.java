@@ -18,13 +18,6 @@ public class StandBy implements TaskStateInterface {
 	}
 
 	/**
-	 * Empty Constructor of StandBy class
-	 * 
-	 */
-	public StandBy() {
-	}
-
-	/**
 	 * This method verifies if the transition to "StandBy" State is possible. If the
 	 * state of the task is set to "OnGoing" and doesn't have any active users and
 	 * doesnt have any finish date, the method returns true, else, returns false
@@ -45,8 +38,6 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method changes the state of a Task to the "Created" state
-	 * 
-	 * @return Void
 	 */
 	public void changeToCreated() {
 
@@ -61,8 +52,6 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method changes the state of a Task to the "Planned" state
-	 * 
-	 * @return Void
 	 */
 	public void changeToPlanned() {
 
@@ -77,8 +66,6 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method changes the state of a Task to the "Assigned" state
-	 * 
-	 * @return Void
 	 */
 	public void changeToAssigned() {
 
@@ -93,8 +80,6 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method changes the state of a Task to the "Ready" state
-	 * 
-	 * @return Void
 	 */
 	public void changeToReady() {
 
@@ -109,8 +94,6 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method changes the state of a Task to the "OnGoing" state
-	 * 
-	 * @return Void
 	 */
 	public void changeToOnGoing() {
 
@@ -125,8 +108,6 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method changes the state of a Task to the "StandBy" state
-	 * 
-	 * @return Void
 	 */
 	public void changeToStandBy() {
 
@@ -134,8 +115,6 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method changes the state of a Task to the "Cancelled" state
-	 * 
-	 * @return Void
 	 */
 	public void changeToCancelled() {
 
@@ -151,7 +130,6 @@ public class StandBy implements TaskStateInterface {
 	/**
 	 * This method changes the state of a Task to the "Finished" state
 	 * 
-	 * @return Void
 	 */
 	public void changeToFinished() {
 
@@ -167,8 +145,6 @@ public class StandBy implements TaskStateInterface {
 	/**
 	 * This method verifies if the transition to the “Created” state of a Task is
 	 * possible
-	 * 
-	 * @return False
 	 */
 	public boolean isTransitionToCreatedPossible() {
 
@@ -181,7 +157,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Planned” state of a Task is
 	 * possible
 	 * 
-	 * @return false
+	 * @return FALSE
 	 */
 	public boolean isTransitionToPlannedPossible() {
 
@@ -194,7 +170,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Assigned” state of a Task is
 	 * possible
 	 * 
-	 * @return False
+	 * @return FALSE
 	 */
 	public boolean isTransitionToAssignedPossible() {
 
@@ -207,7 +183,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Ready” state of a Task is
 	 * possible
 	 * 
-	 * @return False
+	 * @return FALSE
 	 */
 	public boolean isTransitionToReadyPossible() {
 
@@ -220,7 +196,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “OnGoing” state of a Task is
 	 * possible
 	 * 
-	 * @return True
+	 * @return TRUE
 	 */
 	public boolean isTransitionToOnGoingPossible() {
 
@@ -233,7 +209,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “StandBy" state of a Task is
 	 * possible
 	 * 
-	 * @return False
+	 * @return FALSE
 	 */
 	public boolean isTransitionToStandByPossible() {
 
@@ -246,7 +222,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Cancelled” state of a Task is
 	 * possible
 	 * 
-	 * @return True
+	 * @return TRUE
 	 */
 	public boolean isTransitionToCancelledPossible() {
 
@@ -259,7 +235,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method verifies if the transition to the “Cancelled” state of a Task is
 	 * possible
 	 * 
-	 * @return True
+	 * @return TRUE
 	 */
 	public boolean isTransitionToFinishedPossible() {
 
