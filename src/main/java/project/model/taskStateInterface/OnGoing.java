@@ -134,8 +134,8 @@ public class OnGoing implements TaskStateInterface {
 	 * @return false 
 	 */
 	public boolean isTransitionToCreatedPossible() {
-		return false;
-		
+		boolean valid = false;
+		return valid;
 	}
 
 	/**
@@ -145,8 +145,8 @@ public class OnGoing implements TaskStateInterface {
 	 * @return  false
 	 */
 	public boolean isTransitionToPlannedPossible() {
-		return false;
-		
+		boolean valid = false;
+		return valid;
 	}
 
 	/**
@@ -156,8 +156,8 @@ public class OnGoing implements TaskStateInterface {
 	 * @return false 
 	 */
 	public boolean isTransitionToAssignedPossible() {
-		return false;
-		
+		boolean valid = false;
+		return valid;
 	}
 
 	/**
@@ -167,7 +167,8 @@ public class OnGoing implements TaskStateInterface {
 	 * @return false 
 	 */
 	public boolean isTransitionToReadyPossible() {
-		return false;
+		boolean valid = false;
+		return valid;
 		
 	}
 
@@ -178,7 +179,8 @@ public class OnGoing implements TaskStateInterface {
 	 * @return false
 	 */
 	public boolean isTransitionToOnGoingPossible() {
-		return false;
+		boolean valid = false;
+		return valid;
 		
 	}
 
@@ -189,7 +191,8 @@ public class OnGoing implements TaskStateInterface {
 	 * @return true 
 	 */
 	public boolean isTransitionToStandByPossible() {
-		return true;
+		boolean valid = true;
+		return valid;
 		
 	}
 
@@ -200,7 +203,8 @@ public class OnGoing implements TaskStateInterface {
 	 * @return true
 	 */
 	public boolean isTransitionToCancelledPossible() {
-		return true;
+		boolean valid = true;
+		return valid;
 		
 	}
 
@@ -211,8 +215,8 @@ public class OnGoing implements TaskStateInterface {
 	 * @return true
 	 */
 	public boolean isTransitionToFinishedPossible() {
-		return true;
-		
+		boolean valid = true;
+		return valid;
 	}
 	
 	
