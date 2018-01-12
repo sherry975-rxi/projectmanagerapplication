@@ -63,7 +63,7 @@ public class Task {
 		this.taskBudget = 0;
 		this.startDateInterval = null;
 		this.deadlineInterval = null;
-		this.taskDependency = null;
+		this.taskDependency = new ArrayList<>();
 		this.taskState = new Created(this);
 	}
 
