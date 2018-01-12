@@ -132,57 +132,91 @@ public class Planned implements TaskStateInterface {
 		}
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Created” state of a Task is
+	 * possible.
+	 * 
+	 * @return TRUE if possible, FALSE if not
+	 */
 	public boolean isTransitionToCreatedPossible() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Planned” state of a Task is
+	 * possible.
+	 * 
+	 * @return TRUE if possible, FALSE if not
+	 */
 	public boolean isTransitionToPlannedPossible() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean transitionState = false;
+		return transitionState;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Assigned” state of a Task is
+	 * possible
+	 * 
+	 * @return TRUE if possible, FALSE if not
+	 */
 	public boolean isTransitionToAssignedPossible() {
-		return false;
+		boolean transitionState = true;
+		return transitionState;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “Ready” state of a Task is
+	 * possible
+	 * 
+	 * @return TRUE if possible, FALSE if not
+	 */
 	public boolean isTransitionToReadyPossible() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean transitionState = false;
+		return transitionState;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “OnGoing” state of a Task is
+	 * possible
+	 * 
+	 * @return TRUE if possible, FALSE if not
+	 */
 	public boolean isTransitionToOnGoingPossible() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean transitionState = false;
+		return transitionState;
 	}
 
-	@Override
+	/**
+	 * This method verifies if the transition to the “StandBy” state of a Task is
+	 * possible
+	 * 
+	 * @return TRUE if possible, FALSE if not
+	 */
 	public boolean isTransitionToStandByPossible() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean transitionState = false;
+		return transitionState;
 	}
 
-	public boolean isTransitionToCancelled() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isTransitionToFinishedPossible() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
+	/**
+	 * This method verifies if the transition to the “Cancelled” state of a Task is
+	 * possible
+	 * 
+	 * @return TRUE if possible, FALSE if not
+	 */
 	public boolean isTransitionToCancelledPossible() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean transitionState = false;
+		return transitionState;
+	}
+
+	/**
+	 * This method verifies if the transition to the “Finished” state of a Task is
+	 * possible
+	 * 
+	 * @return TRUE if possible, FALSE if not
+	 */
+	public boolean isTransitionToFinishedPossible() {
+		boolean transitionState = false;
+		return transitionState;
 	}
 	
 
