@@ -26,14 +26,20 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method verifies if the transition to "StandBy" State is possible. If the
-	 * state of the task is set to "OnGoing" and doesn't have any active users, the
-	 * method returns true, else, returns false
+	 * state of the task is set to "OnGoing" and doesn't have any active users and
+	 * doesnt have any finish date, the method returns true, else, returns false
 	 * 
 	 * @return true if possible, false if not
 	 */
 	public boolean isValid() {
 
-		return (!task.doesTaskTeamHaveActiveUsers());
+		boolean isValid = false;
+
+		if (!task.doesTaskTeamHaveActiveUsers() && task.getFinishDate() == null) {
+			isValid = true;
+		}
+
+		return isValid;
 
 	}
 
