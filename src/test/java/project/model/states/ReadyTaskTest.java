@@ -114,6 +114,17 @@ public class ReadyTaskTest {
 	}
 
 	/**
+	 * Tests if the task fails to change to created
+	 */
+	@Ignore
+	@Test
+	public final void testChangeToCreatedFailed() {
+		// Should fail as a ready task shouldn't change to created
+		mainTask.getTaskState().changeToCreated();
+		assertFalse(mainTask.viewTaskStateName().equals("Created"));
+	}
+
+	/**
 	 * Tests if the task changes to planned
 	 */
 	@Ignore
@@ -133,9 +144,32 @@ public class ReadyTaskTest {
 	@Ignore
 	@Test
 	public final void testChangeToPlannedFailed() {
-		// Should fail as there is still a user in the task team~
+		// Should fail as there is still a user in the task team
 		mainTask.getTaskState().changeToPlanned();
 		assertFalse(mainTask.viewTaskStateName().equals("Planned"));
+	}
+
+	/**
+	 * Tests if the task fails to change to assigned
+	 */
+	@Ignore
+	@Test
+	public final void testChangeToAssignedFailed() {
+		// Should fail as a ready task shouldn't change to assigned
+		mainTask.getTaskState().changeToAssigned();
+		assertFalse(mainTask.viewTaskStateName().equals("Assigned"));
+	}
+
+	/**
+	 * Tests if the task "fails" to change to ready
+	 */
+	@Ignore
+	@Test
+	public final void testChangeToReadyFailed() {
+		// Should not fail nor succeed per se, as it's the same state as the one the
+		// task is already in
+		mainTask.getTaskState().changeToReady();
+		assertTrue(mainTask.viewTaskStateName().equals("Ready"));
 	}
 
 	/**
@@ -160,6 +194,39 @@ public class ReadyTaskTest {
 		// Should fail as the task doesn't have a start date
 		mainTask.getTaskState().changeToOnGoing();
 		assertFalse(mainTask.viewTaskStateName().equals("OnGoing"));
+	}
+
+	/**
+	 * Tests if the task fails to change to standby
+	 */
+	@Ignore
+	@Test
+	public final void testChangeToStandByFailed() {
+		// Should fail as a ready task shouldn't change to standby
+		mainTask.getTaskState().changeToStandBy();
+		assertFalse(mainTask.viewTaskStateName().equals("StandBy"));
+	}
+
+	/**
+	 * Tests if the task fails to change to cancelled
+	 */
+	@Ignore
+	@Test
+	public final void testChangeToCancelledFailed() {
+		// Should fail as a ready task shouldn't change to cancelled
+		mainTask.getTaskState().changeToCancelled();
+		assertFalse(mainTask.viewTaskStateName().equals("Cancelled"));
+	}
+
+	/**
+	 * Tests if the task fails to change to finished
+	 */
+	@Ignore
+	@Test
+	public final void testChangeToFinishedFailed() {
+		// Should fail as a ready task shouldn't change to finished
+		mainTask.getTaskState().changeToAssigned();
+		assertFalse(mainTask.viewTaskStateName().equals("Finished"));
 	}
 
 	/**
