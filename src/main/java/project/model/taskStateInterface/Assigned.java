@@ -16,7 +16,7 @@ public class Assigned implements TaskStateInterface {
 	 * @return True if valid, False if not
 	 */
 	public boolean isValid() {
-		return (toUpdate.hasActiveDependencies() && toUpdate.doesTaskTeamHaveActiveUsers());
+		return (!toUpdate.hasActiveDependencies() && toUpdate.doesTaskTeamHaveActiveUsers());
 	}
 
 	/**
