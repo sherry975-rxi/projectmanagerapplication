@@ -12,6 +12,7 @@ public class Planned implements TaskStateInterface {
 
 	/**
 	 * This method verifies if the State "Planned" requirements are fulfilled for a specific Task. 
+	 * It has to have estimated dates and no users working on it.
 	 * If so, it returns true,
 	 * If not, it returns false
 	 * 
@@ -19,7 +20,7 @@ public class Planned implements TaskStateInterface {
 	 */
 	public boolean isValid () {
 		boolean validation = false;
-		if(task.getEstimatedTaskStartDate()!=null && task.getTaskDeadline()!=null) {
+		if(task.getEstimatedTaskStartDate()!=null && task.getTaskDeadline()!=null && !task.doesTaskTeamHaveActiveUsers()) {
 			validation = true;
 		}
 
