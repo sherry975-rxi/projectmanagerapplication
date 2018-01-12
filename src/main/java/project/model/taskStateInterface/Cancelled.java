@@ -17,7 +17,7 @@ public class Cancelled implements TaskStateInterface {
 	 */
 	public boolean isValid() {
 		boolean validation = false;
-		if(task.getFinishDate() == null && task.getStartDate()!= null) {
+		if(task.getFinishDate() == null) {
 			validation = true;
 		}
 		return validation;
@@ -97,9 +97,6 @@ public class Cancelled implements TaskStateInterface {
 			}
 		}
 	}
-
-	
-	//TODO atualizar estes métodos qd as US estiverem implementadas
 	
 	/**
 	 * This method verifies if the transition from "Cancelled" to the “Created” state of a Task is
@@ -176,6 +173,6 @@ public class Cancelled implements TaskStateInterface {
 	 * @return true if possible, false if not
 	 */
 	public boolean isTransitionToFinishedPossible(){
-		return false;
+		return true;
 	}
 }

@@ -16,7 +16,7 @@ public class Assigned implements TaskStateInterface {
 	 * @return True if valid, False if not
 	 */
 	public boolean isValid() {
-		return toUpdate.doesTaskTeamHaveActiveUsers();
+		return (!toUpdate.hasActiveDependencies() && toUpdate.doesTaskTeamHaveActiveUsers());
 	}
 
 	/**
@@ -34,12 +34,11 @@ public class Assigned implements TaskStateInterface {
 	 */
 	public void changeToPlanned() {
 		 
-		 if (!this.isValid()) {
 			 TaskStateInterface updatedState = new Planned(toUpdate);
 			
 			 if(updatedState.isValid() && isTransitionToPlannedPossible())
 			 toUpdate.setTaskState(updatedState);
-		 }
+		 
 	}
 
 	/**
