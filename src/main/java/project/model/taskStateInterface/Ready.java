@@ -21,10 +21,9 @@ public class Ready implements TaskStateInterface {
 	@Override
 	public boolean isValid() {
 		boolean valid = false;
-		// TODO isto da task dependency tem de ser visto
-		// if (toUpdate.hasNonFinishedTasksInDependency()) {
-		// valid=true;
-		// }
+		if (!toUpdate.hasActiveDependencies()) {
+			valid = true;
+		}
 		return valid;
 	}
 

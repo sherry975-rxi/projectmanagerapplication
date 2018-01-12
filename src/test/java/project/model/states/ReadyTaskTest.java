@@ -10,7 +10,6 @@ import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import project.model.ProjectCollaborator;
@@ -27,7 +26,8 @@ public class ReadyTaskTest {
 	ProjectCollaborator testPCollab;
 	Task mainTask;
 	Task neededTask;
-	Calendar estimatedTaskStartDate;
+	Calendar estimatedTaskStartDateMainTask;
+	Calendar estimatedTaskStartDateNeededTask;
 	Calendar taskDeadline;
 	TaskStateInterface readyState;
 	TaskStateInterface plannedState;
@@ -44,13 +44,16 @@ public class ReadyTaskTest {
 		mainTask = new Task(1, 1, "Task 1");
 		neededTask = new Task(1, 1, "Task 1");
 
-		// Creates the estimated Start Date and estimated Finish Date (Dealine)
-		estimatedTaskStartDate = Calendar.getInstance();
-		taskDeadline = (Calendar) estimatedTaskStartDate.clone();
+		// Creates the estimated Start Dates and estimated Finish Date (Dealine)
+		estimatedTaskStartDateMainTask = Calendar.getInstance();
+		estimatedTaskStartDateNeededTask = (Calendar) estimatedTaskStartDateMainTask.clone();
+		estimatedTaskStartDateNeededTask.add(Calendar.DAY_OF_MONTH, -5);
+		taskDeadline = (Calendar) estimatedTaskStartDateMainTask.clone();
 		taskDeadline.add(Calendar.DAY_OF_MONTH, 30);
 
 		// Sets up the estimated Start Dates for both tasks
-		neededTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		mainTask.setEstimatedTaskStartDate(estimatedTaskStartDateMainTask);
+		neededTask.setEstimatedTaskStartDate(estimatedTaskStartDateNeededTask);
 		mainTask.createTaskDependence(neededTask);
 
 		// Sets some of the conditions that should already be met by the task when it is
@@ -83,7 +86,8 @@ public class ReadyTaskTest {
 		testPCollab = null;
 		mainTask = null;
 		neededTask = null;
-		estimatedTaskStartDate = null;
+		estimatedTaskStartDateMainTask = null;
+		estimatedTaskStartDateNeededTask = null;
 		taskDeadline = null;
 		readyState = null;
 		plannedState = null;
@@ -95,7 +99,7 @@ public class ReadyTaskTest {
 	 * Tests if the isValid method returns false when the task still has ongoing
 	 * dependencies
 	 */
-	@Ignore
+
 	@Test
 	public final void testIsNotValid() {
 		assertFalse(mainTask.getTaskState().isValid());
@@ -105,7 +109,7 @@ public class ReadyTaskTest {
 	 * Tests if the isValid method returns true when the task doesn't have ongoing
 	 * dependencies
 	 */
-	@Ignore
+
 	@Test
 	public final void testIsValid() {
 		finishedState = new Finished(neededTask);
@@ -116,7 +120,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task fails to change to created
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToCreatedFailed() {
 		// Should fail as a ready task shouldn't change to created
@@ -127,7 +131,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task changes to planned
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToPlanned() {
 
@@ -141,7 +145,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task fails to change to planned
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToPlannedFailed() {
 		// Should fail as there is still a user in the task team
@@ -152,7 +156,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task fails to change to assigned
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToAssignedFailed() {
 		// Should fail as a ready task shouldn't change to assigned
@@ -163,7 +167,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task "fails" to change to ready
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToReadyFailed() {
 		// Should not fail nor succeed per se, as it's the same state as the one the
@@ -175,7 +179,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task changes to ongoing
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToOnGoing() {
 		// Sets a start date
@@ -188,7 +192,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task fails to change to ongoing
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToOnGoingFailed() {
 		// Should fail as the task doesn't have a start date
@@ -199,7 +203,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task fails to change to standby
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToStandByFailed() {
 		// Should fail as a ready task shouldn't change to standby
@@ -210,7 +214,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task fails to change to cancelled
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToCancelledFailed() {
 		// Should fail as a ready task shouldn't change to cancelled
@@ -221,7 +225,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests if the task fails to change to finished
 	 */
-	@Ignore
+
 	@Test
 	public final void testChangeToFinishedFailed() {
 		// Should fail as a ready task shouldn't change to finished
@@ -232,7 +236,7 @@ public class ReadyTaskTest {
 	/**
 	 * Tests the ability of the task to change state
 	 */
-	@Ignore
+
 	@Test
 	public final void testPossibleTransitions() {
 		// Tests the impossible transitions
