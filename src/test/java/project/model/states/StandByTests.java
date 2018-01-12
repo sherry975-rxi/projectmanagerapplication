@@ -82,6 +82,13 @@ public class StandByTests {
 		taskStartDate.set(Calendar.DAY_OF_MONTH, 04);
 		taskStartDate.set(Calendar.HOUR_OF_DAY, 14);
 
+		// creates a task finish date
+		taskFinishDate = Calendar.getInstance();
+		taskStartDate.set(Calendar.YEAR, 2018);
+		taskStartDate.set(Calendar.MONTH, Calendar.FEBRUARY);
+		taskStartDate.set(Calendar.DAY_OF_MONTH, 04);
+		taskStartDate.set(Calendar.HOUR_OF_DAY, 14);
+
 		// Creates 3 different Tasks instances
 		testTask = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
 		testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
@@ -107,6 +114,7 @@ public class StandByTests {
 		stateTestTask1 = null;
 		stateTestTask2 = null;
 		taskStartDate = null;
+		taskFinishDate = null;
 
 	}
 
