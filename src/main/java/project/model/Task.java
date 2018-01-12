@@ -30,7 +30,7 @@ public class Task {
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
 	private Integer taskBudget;
-	private Task taskDependency;
+	private List<Task> taskDependency;
 	private Integer startDateInterval;
 	private Integer deadlineInterval;
 
@@ -779,25 +779,38 @@ public class Task {
 	}
 
 	/**
-	 * This method creates a dependence between two tasks. It determines from which
-	 * task the dependence is being created. It sets the estimated start date of the
-	 * new task as the estimated start date of the parent task plus the number of
-	 * days to be set.
+	 * This method creates a dependence between tasks. It determines from which task
+	 * the dependence is being created. Checks if the estimated this Task estimated
+	 * start date is after the one on which this task depends, and adds it if this
+	 * is confirmed
 	 * 
 	 * @param taskToEstablishDependenceUpon
 	 *            Parent Task from which dependence is established
-	 * @param incrementDays
-	 *            Number of days to increment the start date
 	 */
-	public void createTaskDependence(Task taskToEstablishDependenceUpon, int incrementDays) {
+	public void createTaskDependence(Task taskToEstablishDependenceUpon) {
 
-		this.taskDependency = taskToEstablishDependenceUpon;
+		// Este if talvez estivesse melhor num controller...
+		if (this.estimatedTaskStartDate.after(taskToEstablishDependenceUpon.getEstimatedTaskStartDate())) {
+			this.taskDependency.add(taskToEstablishDependenceUpon);
+		}
+	}
 
-		Calendar date = Calendar.getInstance();
-		date = (Calendar) taskToEstablishDependenceUpon.getEstimatedTaskStartDate().clone();
-		date.add(Calendar.DAY_OF_YEAR, incrementDays);
-
-		this.setEstimatedTaskStartDate(date);
+	/**
+	 * Checks if the task has active dependencies
+	 * 
+	 * @return True if there are active dependencies, false if not
+	 */
+	public boolean hasActiveDependencies() {
+		boolean result = false;
+		if (this.hasDependencies()) {
+			for (Task other : this.taskDependency) {
+				if (!other.viewTaskStateName().equals("Finished") && !other.viewTaskStateName().equals("Cancelled")) {
+					result = true;
+					break;
+				}
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -823,5 +836,14 @@ public class Task {
 	 */
 	public void setTaskState(TaskStateInterface newStateTask) {
 		taskState = newStateTask;
+	}
+
+	/**
+	 * Checks if the task has any dependencies, active or not
+	 * 
+	 * @return True if there are any dependencies, false if not
+	 */
+	public boolean hasDependencies() {
+		return !this.taskDependency.isEmpty();
 	}
 }

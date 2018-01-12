@@ -374,10 +374,16 @@ public class TaskTest {
 		dateTask1.set(Calendar.MILLISECOND, 100);
 		testTask.setEstimatedTaskStartDate(dateTask1);
 
+		// Confirms that the task has no dependencies
+		assertFalse(testTask2.hasDependencies());
+
 		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
 		// the estimated task start date of testTask2 to the estimated task start date
 		// of testTask plus 10 days
-		testTask2.createTaskDependence(testTask, 10);
+		testTask2.createTaskDependence(testTask);
+
+		// Confirms that the task has active dependencies
+		assertTrue(testTask2.hasActiveDependencies());
 
 		// set of the newEstimatedStartDateTestTask2 which corresponds to the estimated
 		// task start date of testTask plus 10 days

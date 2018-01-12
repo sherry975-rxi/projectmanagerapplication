@@ -97,7 +97,7 @@ public class US342Controller {
 		Task taskReference = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate)
 				.getTaskRepository().getTaskByID(taskReferenceID);
 
-		taskDependent.createTaskDependence(taskReference, incrementDays);
+		taskDependent.createTaskDependence(taskReference);
 	}
 
 	/**
