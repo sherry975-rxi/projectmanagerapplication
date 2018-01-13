@@ -23,72 +23,36 @@ public class Cancelled implements TaskStateInterface {
 		return validation;
 	}
 
-	/**
-	 * This method changes the task's state from "Cancelled" to "Created", if this transition is possible. 
-	 */
 	public void changeToCreated() {
-		if (isTransitionToCreatedPossible()) {
-			TaskStateInterface Created1 = new Created(task);
-			if (Created1.isValid()) {
-				task.setTaskState(Created1);
-			}
-		}
 	}
 
 	public void changeToPlanned(){
-		if (isTransitionToPlannedPossible()) {
-			TaskStateInterface Planned1 = new Planned(task);
-			if (Planned1.isValid()) {
-				task.setTaskState(Planned1);
-			}
-		}
 	}
 
 	public void changeToAssigned(){
-		if (isTransitionToAssignedPossible()) {
-			TaskStateInterface Assigned1 = new Assigned(task);
-			if (Assigned1.isValid()) {
-				task.setTaskState(Assigned1);
-			}
-		}
+		
 	}
 
 	public void changeToReady(){
-		if (isTransitionToReadyPossible()) {
-			TaskStateInterface Ready1 = new Ready(task);
-			if (Ready1.isValid()) {
-				task.setTaskState(Ready1);
-			}
-		}
+		
 	}
 
 	public void changeToOnGoing(){
-		if (isTransitionToOnGoingPossible()) {
-			TaskStateInterface OnGoing1 = new OnGoing(task);
-			if (OnGoing1.isValid()) {
-				task.setTaskState(OnGoing1);
-			}
-		}
+		
 	}
 
 	public void changeToStandBy(){
-		if (isTransitionToStandByPossible()) {
-			TaskStateInterface StandBy1 = new StandBy(task);
-			if (StandBy1.isValid()) {
-				task.setTaskState(StandBy1);
-			}
-		}
+		
 	}
 
 	public void changeToCancelled(){
-		if (isTransitionToCancelledPossible()) {
-			TaskStateInterface Cancelled1 = new Cancelled(task);
-			if (Cancelled1.isValid()) {
-				task.setTaskState(Cancelled1);
-			}
-		}
+		
 	}
 
+	/**
+	 * This method changes the state of a Task from "Cancelled" to the "Finished" state,
+	 * if it's possible
+	 */
 	public void changeToFinished(){
 		if (isTransitionToFinishedPossible()) {
 			TaskStateInterface Finished1 = new Finished(task);
