@@ -15,8 +15,9 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return True if valid, False if not
 	 */
+	// TODO what happens when the finished dependency of a "ready" task reverts to Unfinished?
 	public boolean isValid() {
-		return (!toUpdate.hasActiveDependencies() && toUpdate.doesTaskTeamHaveActiveUsers());
+		return toUpdate.doesTaskTeamHaveActiveUsers();
 	}
 
 	/**

@@ -385,16 +385,21 @@ public class TaskTest {
 		// Confirms that the task has active dependencies
 		assertTrue(testTask2.hasActiveDependencies());
 
-		// set of the newEstimatedStartDateTestTask2 which corresponds to the estimated
-		// task start date of testTask plus 10 days
-		Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
-		newEstimatedStartDateTestTask2.set(2017, Calendar.DECEMBER, 12);
-		newEstimatedStartDateTestTask2.set(Calendar.HOUR, 16);
-		newEstimatedStartDateTestTask2.set(Calendar.MINUTE, 10);
-		newEstimatedStartDateTestTask2.set(Calendar.SECOND, 10);
-		newEstimatedStartDateTestTask2.set(Calendar.MILLISECOND, 100);
-
-		assertEquals(newEstimatedStartDateTestTask2, testTask2.getEstimatedTaskStartDate());
+		// Task dependencies no longer update Start Date!!!
+		
+		
+//		// set of the newEstimatedStartDateTestTask2 which corresponds to the estimated
+//		// task start date of testTask plus 10 days
+//		Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
+//		newEstimatedStartDateTestTask2.set(2017, Calendar.DECEMBER, 12);
+//		newEstimatedStartDateTestTask2.set(Calendar.HOUR, 16);
+//		newEstimatedStartDateTestTask2.set(Calendar.MINUTE, 10);
+//		newEstimatedStartDateTestTask2.set(Calendar.SECOND, 10);
+//		newEstimatedStartDateTestTask2.set(Calendar.MILLISECOND, 100);
+//
+//		
+//		
+//		assertEquals(newEstimatedStartDateTestTask2.DAY_OF_YEAR, testTask2.getEstimatedTaskStartDate().DAY_OF_YEAR);
 
 	}
 
