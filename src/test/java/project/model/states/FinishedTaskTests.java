@@ -114,8 +114,8 @@ public class FinishedTaskTests {
 	}
 
 	/**
-	 * This tests that a Finished task without finish date can't change to Finished
-	 * state (stands Cancelled)
+	 * This tests that a Finished task with finish date can't change to OnGoing
+	 * state (stands Finished)
 	 */
 	@Test
 	public final void testCantChangeToOngoing() {
@@ -124,7 +124,7 @@ public class FinishedTaskTests {
 	}
 
 	/**
-	 * This tests if a Finished task with finish date is invalid
+	 * This tests if a Finished task without finish date is invalid
 	 */
 	@Test
 	public final void testIsNotValid() {
@@ -134,7 +134,8 @@ public class FinishedTaskTests {
 	}
 
 	/**
-	 * This tests that a Finished task with finish date can change to Finished state
+	 * This tests that a Finished task without finish date can change to OnGoing
+	 * state
 	 */
 	@Test
 	public final void testchangeToOngoing() {
