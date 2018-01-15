@@ -29,6 +29,7 @@ public class Project {
 	private int budget;
 	private Calendar startdate;
 	private Calendar finishdate;
+	private List<TaskTeamRequest> pendingTaskAssignementRequests;
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
 	public static final int EXECUTION = 2; // execução
@@ -59,6 +60,7 @@ public class Project {
 		this.finishdate = null;
 		this.taskRepository = new TaskRepository(projectIdCode);
 		this.projectTeam = new ArrayList<>();
+		this.pendingTaskAssignementRequests = new ArrayList<>();
 	}
 
 	/**
@@ -386,25 +388,25 @@ public class Project {
 		return inactiveCollaborators;
 	}
 
-	 /**
-			 * This method allows removing a Project Collaborator from a Project Team and
-			 * includes removing that Project Collaborator from all Tasks in this Project
-			 *
-			 * @param collaboratorToRemoveFromProjectTeam
-			 *            Collaborator to remove from project
-			 */
-		/*		  
-				  private void removeCollaboratorFromProjectTeam(ProjectCollaborator
-				  collaboratorToRemoveFromProjectTeam) { // REFACTOR TO
-				  removeProjectCollaboratorFromProjectTeam
-				  
-				  if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
-				  collaboratorToRemoveFromProjectTeam.setState(false); for (Task otherTask :
-				  this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
-				  otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); } }
-				  
-				  }*/
-				 
+	/**
+	 * This method allows removing a Project Collaborator from a Project Team and
+	 * includes removing that Project Collaborator from all Tasks in this Project
+	 *
+	 * @param collaboratorToRemoveFromProjectTeam
+	 *            Collaborator to remove from project
+	 */
+	/*
+	 * private void removeCollaboratorFromProjectTeam(ProjectCollaborator
+	 * collaboratorToRemoveFromProjectTeam) { // REFACTOR TO
+	 * removeProjectCollaboratorFromProjectTeam
+	 * 
+	 * if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
+	 * collaboratorToRemoveFromProjectTeam.setState(false); for (Task otherTask :
+	 * this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
+	 * otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); } }
+	 * 
+	 * }
+	 */
 
 	/**
 	 * This method allows the inactivation of a User from a Project Team which
@@ -469,6 +471,77 @@ public class Project {
 	 */
 	public String getName() {
 		return this.name;
+	}
+
+	/**
+	 * Creates a new request.
+	 * 
+	 * @param projCollab
+	 *            Projector collaborator that started the request
+	 * @param task
+	 *            Task chosen by the project collaborator
+	 */
+	public TaskTeamRequest createTaskAssignementRequest(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest newRequest = new TaskTeamRequest(projCollab, task);
+		return newRequest;
+	}
+
+	/**
+	 * Adds request to the pending task assignement requests
+	 * 
+	 * @param request
+	 *            Request to add to the pending task assignement requests list
+	 */
+	public void addTaskAssignementRequest(TaskTeamRequest request) {
+		this.pendingTaskAssignementRequests.add(request);
+	}
+
+	/**
+	 * Removes request to add a certain project collaborator to a specific task
+	 * team.
+	 * 
+	 * @param request
+	 *            Request to remove from the list
+	 */
+
+	public void deleteTaskAssignementRequest(TaskTeamRequest request) {
+		this.pendingTaskAssignementRequests.remove(request);
+	}
+
+	/**
+	 * Returns the relevant info in the form of a list of strings
+	 * 
+	 * @return toString List of strings which contains the info about the task and
+	 *         the project collaborator for each request
+	 */
+	public List<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
+		List<String> toString = new ArrayList<>();
+		for (TaskTeamRequest req : this.pendingTaskAssignementRequests) {
+			toString.add(req.getProjCollab().getUserFromProjectCollaborator().getName().toString() + "\n"
+					+ req.getProjCollab().getUserFromProjectCollaborator().getEmail().toString() + "\n"
+					+ req.getTask().getTaskID().toString() + "\n" + req.getTask().getDescription().toString());
+		}
+		return toString;
+	}
+
+	/**
+	 * Checks if a certain request already exists
+	 * 
+	 * @param projCollab
+	 *            Projector collaborator that wants to create the request
+	 * @param task
+	 *            Task chosen by the project collaborator
+	 * @return True if request already exists, false if not
+	 */
+	public boolean isAssignementRequestAlreadyCreated(TaskTeamRequest request) {
+		boolean result = false;
+		for (TaskTeamRequest req : this.pendingTaskAssignementRequests) {
+			if (req.equals(request)) {
+				result = true;
+				break;
+			}
+		}
+		return result;
 	}
 
 }

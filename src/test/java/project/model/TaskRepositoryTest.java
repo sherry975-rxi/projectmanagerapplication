@@ -12,6 +12,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.model.taskStateInterface.Assigned;
+import project.model.taskStateInterface.Created;
+import project.model.taskStateInterface.Finished;
+import project.model.taskStateInterface.OnGoing;
+import project.model.taskStateInterface.Planned;
+import project.model.taskStateInterface.Ready;
+import project.model.taskStateInterface.StandBy;
+
 public class TaskRepositoryTest {
 
 	UserRepository userRepository;
@@ -819,5 +827,113 @@ public class TaskRepositoryTest {
 		assertEquals(testTask3, expResultTask3);
 		assertEquals(testTask4, expResultTask4);
 		assertEquals(taskRepository.getTaskByID("1.9"), null);
+	}
+
+	/**
+	 * Tests the deleteTask method. If the State of the task is set to "Assigned",
+	 * "Planned", "Created" or "Ready", the task can be deleted, else, the task
+	 * won't be deleted
+	 * 
+	 */
+	@Test
+	public void deleteTaskTest() {
+
+		// Creates 7 different State Objects
+
+		OnGoing OnGoingTest = new OnGoing(testTask);
+		Assigned AssignedTest = new Assigned(testTask);
+		Created CreatedTest = new Created(testTask);
+		Finished FinishedTest = new Finished(testTask);
+		Planned PlannedTest = new Planned(testTask);
+		Ready ReadyTest = new Ready(testTask);
+		StandBy StandByTest = new StandBy(testTask);
+
+		// Adds 5 tasks to the TaskRepository
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+		taskRepository.addProjectTask(testTask4);
+		taskRepository.addProjectTask(testTask5);
+
+		/*
+		 * States on which the task can be deleted - "ASSIGNED", "PLANNED" , "CREATED" ,
+		 * "READY"
+		 */
+
+		// Sets the taskSate to "OnGoing"
+		testTask.setTaskState(OnGoingTest);
+
+		// Tries to delete the task
+		taskRepository.deleteTask(testTask);
+
+		// The task won't be deleted because the state of the Task is set to "OnGoing"
+		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask));
+
+		// Sets the taskState to "ASSIGNED"
+		testTask.setTaskState(AssignedTest);
+
+		// Tries to delete the testTask
+		taskRepository.deleteTask(testTask);
+
+		// The task was deleted from the task repository
+		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask));
+
+		// Verifies if task2 is in the TaskRepository
+		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask2));
+
+		// sets the task State to "Created"
+		testTask2.setTaskState(CreatedTest);
+
+		// Tries to delete the testTask2
+		taskRepository.deleteTask(testTask2);
+
+		// Task2 was sucessfully deleted
+		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask2));
+
+		// Verifies if task3 is in the TaskRepository
+		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask3));
+
+		// sets the task State to "Finished"
+		testTask3.setTaskState(FinishedTest);
+
+		// Tries to delete the testTask3
+		taskRepository.deleteTask(testTask3);
+
+		// Task3 wasn't deleted from the repository
+		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask3));
+
+		// Sets the state of testTask3 to "Planned"
+		testTask3.setTaskState(PlannedTest);
+
+		// Tries to delete the testTask3
+		taskRepository.deleteTask(testTask3);
+
+		// Task3 was sucessfully deleted from the TaskRepository
+		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask3));
+
+		// Verifies if task4 is in the TaskRepository
+		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask4));
+
+		// Sets the state of testTask4 to "Ready"
+		testTask4.setTaskState(ReadyTest);
+
+		// Tries to delete the testTask4
+		taskRepository.deleteTask(testTask4);
+
+		// Task4 was sucessfully deleted from the TaskRepository
+		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask4));
+
+		// Verifies if task5 is in the TaskRepository
+		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask5));
+
+		// Sets the state of testTask5 to "StandBy"
+		testTask5.setTaskState(ReadyTest);
+
+		// Tries to delete the testTask5
+		taskRepository.deleteTask(testTask5);
+
+		// Task5 was sucessfully deleted from the TaskRepository
+		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask5));
+
 	}
 }

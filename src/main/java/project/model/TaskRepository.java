@@ -115,8 +115,9 @@ public class TaskRepository {
 	}
 
 	/**
-	 * This method returns a list of all tasks finished a number of months ago by given user.
-	 * Given a negative "monthsAgo" input, Returns ALL finished tasks of said user
+	 * This method returns a list of all tasks finished a number of months ago by
+	 * given user. Given a negative "monthsAgo" input, Returns ALL finished tasks of
+	 * said user
 	 * 
 	 * @param user
 	 *            user who is in the tasks
@@ -382,20 +383,53 @@ public class TaskRepository {
 	/**
 	 * This method returns the a Task by taskID
 	 * 
-	 * @param taskID 
+	 * @param taskID
 	 * 
 	 * @return A task by a Task ID
 	 */
 	public Task getTaskByID(String taskID) {
-		
+
 		for (Task other : projectTasks) {
-			if(other.getTaskID().equals(taskID)) {
+			if (other.getTaskID().equals(taskID)) {
 				return other;
 			}
-			
+
 		}
 		return null;
-		
+
+	}
+
+	/**
+	 * This method deletes a task from the task the repository if the state if the
+	 * task hasn't started
+	 * 
+	 * @param taskToDelete
+	 *            the task that will be removed from the task Repository
+	 * 
+	 */
+	public void deleteTask(Task taskToDelete) {
+
+		if (this.projectTasks.contains(taskToDelete)) {
+
+			switch (taskToDelete.viewTaskStateName()) {
+			case "Assigned":
+				this.projectTasks.remove(taskToDelete);
+				break;
+			case "Planned":
+				this.projectTasks.remove(taskToDelete);
+				break;
+			case "Created":
+				this.projectTasks.remove(taskToDelete);
+				break;
+			case "Ready":
+				this.projectTasks.remove(taskToDelete);
+				break;
+			default:
+				break;
+
+			}
+
+		}
 	}
 
 }
