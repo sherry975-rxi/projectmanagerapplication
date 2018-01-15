@@ -12,6 +12,7 @@ public class Report {
 	private int reportedTime;
 	private TaskCollaborator taskCollaborator;
 	private int cost;
+	private String reportID;
 
 	/**
 	 * This method creates a report
@@ -62,6 +63,24 @@ public class Report {
 	 */
 	public TaskCollaborator getTaskCollaborator() {
 		return this.taskCollaborator;
+	}
+	
+	/**
+	 * This method returns the report ID of the specif report
+	 * 
+	 * @return reportID
+	 */
+	public String getReportID() {
+		return this.reportID;
+	}
+	
+	/**
+	 * This method sets the report ID with the new value "newReportID"
+	 * 
+	 * @param newReportID
+	 */
+	public void setReportID(String newReportID) {
+		this.reportID = newReportID;
 	}
 
 }
