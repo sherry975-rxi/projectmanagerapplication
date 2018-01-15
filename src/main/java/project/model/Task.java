@@ -848,4 +848,12 @@ public class Task {
 	public boolean hasDependencies() {
 		return !this.taskDependency.isEmpty();
 	}
+
+	/**
+	 * This method removes the finish date from the task
+	 * 
+	 */
+	public void removeFinishDate() {
+		this.finishDate = null;
+	}
 }
