@@ -28,6 +28,7 @@ public class Task {
 	private TaskStateInterface taskState;
 	private Integer estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;
+	private Calendar cancelledDate;
 	private Calendar taskDeadline;
 	private Integer taskBudget;
 	private List<Task> taskDependency;
@@ -65,6 +66,7 @@ public class Task {
 		this.deadlineInterval = null;
 		this.taskDependency = new ArrayList<>();
 		this.taskState = new Created(this);
+		this.cancelledDate = null;
 	}
 
 	/**
@@ -845,5 +847,13 @@ public class Task {
 	 */
 	public boolean hasDependencies() {
 		return !this.taskDependency.isEmpty();
+	}
+
+	/**
+	 * This method removes the finish date from the task
+	 * 
+	 */
+	public void removeFinishDate() {
+		this.finishDate = null;
 	}
 }
