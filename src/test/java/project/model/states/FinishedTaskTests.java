@@ -1,5 +1,7 @@
 package project.model.states;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
@@ -27,12 +29,9 @@ public class FinishedTaskTests {
 	Calendar estimatedTaskStartDate, taskDeadline;
 	TaskCollaborator tWorker1, tWorker2, tWorker3;
 	double expectedCost;
-	TaskStateInterface antigo;
-	TaskStateInterface novo;
+	TaskStateInterface previousState;
+	TaskStateInterface newState;
 
-	/**
-	 * 
-	 */
 	@Before
 	public void setUp() {
 
@@ -51,24 +50,37 @@ public class FinishedTaskTests {
 		tWorker1 = new TaskCollaborator(collab1);
 		tWorker2 = new TaskCollaborator(collab2);
 
-		/*
-		 * estimatedTaskStartDate = Calendar.getInstance();
-		 * estimatedTaskStartDate.add(Calendar.MONTH, -1); taskDeadline =
-		 * Calendar.getInstance(); taskDeadline.add(Calendar.MONTH, 1);
-		 */
+		testTask = new Task(1, 1, "Tarefa para teste de cancelled state");
 
-		/*
-		 * Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
-		 * myProject.setStartdate(projStartDate);
-		 */
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask.setTaskDeadline(taskDeadline);
 
-		testTask = new Task(1, 1, "Tarefa para teste de finish date state");
+		testTask.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
 		testTask.addProjectCollaboratorToTask(collab2);
-		/*
-		 * testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline,
-		 * 0); testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate,
-		 * taskDeadline, 0);
-		 */
+		testTask.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setStartDate(projStartDate);
+		testTask.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setFinishDate(testDate);
+		testTask.getTaskState().changeToFinished();
+
+		// assures that the taskTest state is Finished
+		assertEquals("Finished", testTask.viewTaskStateName());
 
 	}
 
@@ -91,20 +103,43 @@ public class FinishedTaskTests {
 
 	}
 
+	/**
+	 * This tests if a Finished task is valid
+	 */
 	@Test
-	public final void test1() {
-		antigo = testTask.getTaskState();
-		testTask.getTaskState().changeToFinished();
-		novo = testTask.getTaskState();
-		assertTrue(antigo.equals(novo));
+	public final void testIsValid() {
+		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setFinishDate(testDate);
+		assertTrue(testTask.getTaskState().isValid());
 	}
 
+	/**
+	 * This tests that a Finished task without finish date can't change to Finished
+	 * state (stands Cancelled)
+	 */
 	@Test
-	public final void test2() {
-		antigo = testTask.getTaskState();
-		testTask.setFinishDate();
-		testTask.getTaskState().changeToFinished();
-		novo = testTask.getTaskState();
-		assertTrue(antigo.equals(novo));
+	public final void testCantChangeToOngoing() {
+		testTask.getTaskState().changeToOnGoing();
+		assertEquals("Finished", testTask.viewTaskStateName());
+	}
+
+	/**
+	 * This tests if a Finished task with finish date is invalid
+	 */
+	@Test
+	public final void testIsNotValid() {
+		testTask.removeFinishDate();
+		assertEquals("Finished", testTask.viewTaskStateName());
+		assertFalse(testTask.getTaskState().isValid());
+	}
+
+	/**
+	 * This tests that a Finished task with finish date can change to Finished state
+	 */
+	@Test
+	public final void testchangeToOngoing() {
+		testTask.removeFinishDate();
+		testTask.getTaskState().changeToOnGoing();
+		assertEquals("OnGoing", testTask.viewTaskStateName());
 	}
 }
