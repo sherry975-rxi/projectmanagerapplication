@@ -30,6 +30,7 @@ public class Project {
 	private Calendar startdate;
 	private Calendar finishdate;
 	private List<TaskTeamRequest> pendingTaskAssignementRequests;
+	private List<TaskTeamRequest> pendingTaskRemovalRequests;
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
 	public static final int EXECUTION = 2; // execução
@@ -481,7 +482,7 @@ public class Project {
 	 * @param task
 	 *            Task chosen by the project collaborator
 	 */
-	public TaskTeamRequest createTaskAssignementRequest(ProjectCollaborator projCollab, Task task) {
+	public TaskTeamRequest createTaskTeamRequest(ProjectCollaborator projCollab, Task task) {
 		TaskTeamRequest newRequest = new TaskTeamRequest(projCollab, task);
 		return newRequest;
 	}
@@ -495,6 +496,16 @@ public class Project {
 	public void addTaskAssignementRequest(TaskTeamRequest request) {
 		this.pendingTaskAssignementRequests.add(request);
 	}
+	
+	/**
+	 * Adds request of removal to the list of pending task removal requests
+	 * 
+	 * @param request
+	 *            Request to add to the list of pending task removal requests 
+	 */
+	public void addTaskRemovalRequest(TaskTeamRequest request) {
+		this.pendingTaskRemovalRequests.add(request);
+	}
 
 	/**
 	 * Removes request to add a certain project collaborator to a specific task
@@ -506,6 +517,18 @@ public class Project {
 
 	public void deleteTaskAssignementRequest(TaskTeamRequest request) {
 		this.pendingTaskAssignementRequests.remove(request);
+	}
+	
+	/**
+	 * Removes the removal request of a certain project collaborator to a specific task
+	 * team.
+	 * 
+	 * @param request
+	 *            TaskTeamRequest to remove from the list
+	 */
+
+	public void deleteTaskRemovalRequest(TaskTeamRequest request) {
+		this.pendingTaskRemovalRequests.remove(request);
 	}
 
 	/**
@@ -538,6 +561,21 @@ public class Project {
 	public List<TaskTeamRequest> getAssignmentRequestsList() {
 		return this.pendingTaskAssignementRequests;
 	}
+	
+	// TODO Do we use this method give the Removal requests to the controller, or
+		// create a method in Project that handles the approvals/rejections by receiving
+		// index numbers from the controller?
+		/**
+		 * Returns the list of Task removal requests by collaborators, to be handled
+		 * by the model or controller
+		 * 
+		 * @return List of TaskTeamRequest Objects from all users asking to be assigned
+		 *         to a certain task
+		 */
+
+		public List<TaskTeamRequest> getRemovalRequestsList() {
+			return this.pendingTaskRemovalRequests;
+		}
 
 	/**
 	 * Checks if a certain request already exists
@@ -551,6 +589,26 @@ public class Project {
 	public boolean isAssignementRequestAlreadyCreated(TaskTeamRequest request) {
 		boolean result = false;
 		for (TaskTeamRequest req : this.pendingTaskAssignementRequests) {
+			if (req.equals(request)) {
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Checks if a certain request already exists
+	 * 
+	 * @param projCollab
+	 *            Projector collaborator that wants to create the request
+	 * @param task
+	 *            Task chosen by the project collaborator
+	 * @return True if request already exists, false if not
+	 */
+	public boolean isRemovalRequestAlreadyCreated(TaskTeamRequest request) {
+		boolean result = false;
+		for (TaskTeamRequest req : this.pendingTaskRemovalRequests) {
 			if (req.equals(request)) {
 				result = true;
 				break;
