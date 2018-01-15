@@ -12,6 +12,7 @@ public class Report {
 	private int reportedTime;
 	private TaskCollaborator taskCollaborator;
 	private int cost;
+	private String reportID;
 
 	/**
 	 * This method creates a report
@@ -62,6 +63,10 @@ public class Report {
 	 */
 	public TaskCollaborator getTaskCollaborator() {
 		return this.taskCollaborator;
+	}
+	
+	public String getReportID() {
+		return this.reportID;
 	}
 
 }
