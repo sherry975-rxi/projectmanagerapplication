@@ -524,6 +524,19 @@ public class Project {
 		return toString;
 	}
 
+	// TODO
+	/**
+	 * Returns the list of Task assigment requests by collaborators, to be handled
+	 * by the model or controller
+	 * 
+	 * @return List of TaskTeamRequest Objects from all users asking to be assigned
+	 *         to a certain task
+	 */
+
+	public List<TaskTeamRequest> getAssignmentRequestsList() {
+		return this.pendingTaskAssignementRequests;
+	}
+
 	/**
 	 * Checks if a certain request already exists
 	 * 
