@@ -520,4 +520,51 @@ public class ProjectTest {
 		assertFalse(p1.hashCode() == p2.hashCode());
 
 	}
+
+	/**
+	 * Tests the creation of a new request
+	 * 
+	 */
+	@Test
+	public void testCreateTaskAssignementRequest() {
+		TaskTeamRequest newRequest = p1.createTaskAssignementRequest(projectCollaborator1, task1);
+		assertTrue(newRequest != null);
+	}
+
+	/**
+	 * Tests the addition of a new request to the Assignement Request List
+	 * 
+	 */
+	@Test
+	public void testAddTaskAssignementRequest() {
+		TaskTeamRequest newRequest = p1.createTaskAssignementRequest(projectCollaborator1, task1);
+		p1.addTaskAssignementRequest(newRequest);
+		assertTrue(p1.isAssignementRequestAlreadyCreated(newRequest));
+	}
+
+	/**
+	 * Tests the deletion of a request from the Assignement Request List
+	 * 
+	 */
+	@Test
+	public void testDeleteTaskAssignementRequest() {
+		TaskTeamRequest newRequest = p1.createTaskAssignementRequest(projectCollaborator1, task1);
+		p1.addTaskAssignementRequest(newRequest);
+		assertTrue(p1.isAssignementRequestAlreadyCreated(newRequest));
+		p1.deleteTaskAssignementRequest(newRequest);
+		assertFalse(p1.isAssignementRequestAlreadyCreated(newRequest));
+	}
+
+	/**
+	 * Tests the string representation of the Assignement Request List
+	 * 
+	 */
+	@Test
+	public void testViewTaskAssignementRequest() {
+		TaskTeamRequest newRequest = p1.createTaskAssignementRequest(projectCollaborator1, task1);
+		p1.addTaskAssignementRequest(newRequest);
+		String result = "name" + "\n" + "email" + "\n" + "1.1" + "\n" + "description";
+		assertTrue(p1.viewPendingTaskAssignementRequests().get(0).equals(result));
+	}
+
 }
