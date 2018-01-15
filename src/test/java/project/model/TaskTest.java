@@ -516,6 +516,9 @@ public class TaskTest {
 
 	}
 
+	/**
+	 * Tests the removal of the finish date of testTask
+	 */
 	@Test
 	public void testRemoveFinishDate() {
 		testTask.removeFinishDate();
