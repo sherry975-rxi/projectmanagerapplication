@@ -1,6 +1,8 @@
 package project.model.states;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
@@ -16,10 +18,9 @@ import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.taskStateInterface.OnGoing;
-import project.model.taskStateInterface.StandBy;
 
 public class OnGoingTaskTest {
-	
+
 	Company myCompany;
 	ProjectRepository myProjectRepository;
 	User user1, user2;
@@ -38,11 +39,11 @@ public class OnGoingTaskTest {
 	@Before
 	public void setUp() {
 
-		//Creates a Company and a project repository within the company
+		// Creates a Company and a project repository within the company
 		myCompany = Company.getTheInstance();
 		myProjectRepository = myCompany.getProjectsRepository();
 
-		// Creates 3 users: User1 and User2 
+		// Creates 3 users: User1 and User2
 		user1 = new User("Ana", "ana@company.com", "66", "Dev", "1234567");
 		user2 = new User("Nuno", "nuno@mail.com", "666", "Tester", "1234567");
 
@@ -105,248 +106,248 @@ public class OnGoingTaskTest {
 
 	}
 
-
 	@Test
 	public void testOnGoingTask() {
-		
+
 	}
-	
-	//Transition into "OnGoing" state is possible is the task has a startDate defined and if the project
-	//has active users 
-	
+
+	// Transition into "OnGoing" state is possible is the task has a startDate
+	// defined and if the project
+	// has active users
+
 	/**
-	 * Tests if the isValid method returns false when the task has non active users and
-	 * true if the task has active users
+	 * Tests if the isValid method returns false when the task has non active users
+	 * and true if the task has active users
 	 * 
 	 */
-	
+
 	@Test
 	public void testIsValid() {
-		
-		//task 1 has 0 active users
+
+		// task 1 has 0 active users
 		OnGoingTask1 = new OnGoing(task1);
-		
+
 		/*
 		 * OnGoingTask1 has 0 active users, so the method will return false
 		 */
 		assertFalse(OnGoingTask1.isValid());
-		
-		//Added collaborators to task 1 
+
+		// Added collaborators to task 1
 		task1.addProjectCollaboratorToTask(collab1);
 		task1.addProjectCollaboratorToTask(collab2);
-		
+
 		/*
 		 * OnGoingTask1 still has 2 active users, but does not have a start date, so it
 		 * will return false
 		 *
 		 */
-		
+
 		assertFalse(OnGoingTask1.isValid());
-		
+
 		/*
-		 * OnGoingTask1 still has 2 active users, and has a start date, so it
-		 * will return true
-		 */		
+		 * OnGoingTask1 still has 2 active users, and has a start date, so it will
+		 * return true
+		 */
 		task1.setStartDate(taskStartDate);
-		
+
 		assertTrue(OnGoingTask1.isValid());
-		
+
 		/*
 		 * Sets a Finish Date for task1
 		 */
-		
+
 		task1.setFinishDate();
-		
+
 		/*
-		 * OnGoingTask1 has 2 active users, has a start date and now has a finish date so it
-		 * will return false
+		 * OnGoingTask1 has 2 active users, has a start date and now has a finish date
+		 * so it will return false
 		 */
-		
+
 		assertFalse(OnGoingTask1.isValid());
-		
-					
+
 	}
 
 	@Test
 	public void testChangeToCreated() {
-	
+
 	}
 
 	@Test
 	public void testChangeToPlanned() {
-		
+
 	}
 
 	@Test
 	public void testChangeToAssigned() {
-		
+
 	}
 
 	@Test
 	public void testChangeToReady() {
-		
+
 	}
 
 	@Test
 	public void testChangeToOnGoing() {
-		
+
 	}
 
 	@Test
 	public void testChangeToStandBy() {
 		// Initiates stateTestTask1
-				OnGoingTask1 = new OnGoing(task1);
-				task1.setStartDate(taskStartDate);
-				task1.setTaskState(OnGoingTask1);
+		OnGoingTask1 = new OnGoing(task1);
+		task1.setStartDate(taskStartDate);
+		task1.setTaskState(OnGoingTask1);
 
-				/*
-				 * Adds two ProjectCollaborators to the task,
-				 * 
-				 */
-				task1.addProjectCollaboratorToTask(collab1);
-				task2.addProjectCollaboratorToTask(collab2);
+		/*
+		 * Adds two ProjectCollaborators to the task,
+		 * 
+		 */
+		task1.addProjectCollaboratorToTask(collab1);
+		task2.addProjectCollaboratorToTask(collab2);
 
-				/*
-				 * Checks if its possible to change to state "StandBy" from state"OnGoing
-				 */
-				assertTrue(OnGoingTask1.isTransitionToStandByPossible());
+		/*
+		 * Checks if its possible to change to state "StandBy" from state"OnGoing
+		 */
+		assertTrue(OnGoingTask1.isTransitionToStandByPossible());
 
-				/*
-				 * Creates a String that will be compared with the result of the method
-				 * viewTaskStateName()
-				 */
-				String stateToCompare = "OnGoing";
+		/*
+		 * Creates a String that will be compared with the result of the method
+		 * viewTaskStateName()
+		 */
+		String stateToCompare = "OnGoing";
 
-				/*
-				 * Tries to change to state "StandBy. State won't change because
-				 * ProjectCollaborators are active in the project
-				 */
-				OnGoingTask1.changeToStandBy();
+		/*
+		 * Tries to change to state "StandBy. State won't change because
+		 * ProjectCollaborators are active in the project
+		 */
+		OnGoingTask1.changeToStandBy();
 
-				/*
-				 * Didn't change state, because projectCollaborators are still active
-				 */
-				assertEquals(stateToCompare, task1.viewTaskStateName());
+		/*
+		 * Didn't change state, because projectCollaborators are still active
+		 */
+		assertEquals(stateToCompare, task1.viewTaskStateName());
 
-				/*
-				 * Removed project collaborators from Task
-				 */
-				task1.removeProjectCollaboratorFromTask(collab1);
-				task1.removeProjectCollaboratorFromTask(collab2);
+		/*
+		 * Removed project collaborators from Task
+		 */
+		task1.removeProjectCollaboratorFromTask(collab1);
+		task1.removeProjectCollaboratorFromTask(collab2);
 
-				/*
-				 * Tries to change to state "StandBy. State will change because task doesnt have
-				 * a finish date and doesn't have any active Project Collaborator in the task
-				 */
-				OnGoingTask1.changeToStandBy();
-				/*
-				 * Changes String values to "StandBy"
-				 */
-				stateToCompare = "StandBy";
+		/*
+		 * Tries to change to state "StandBy. State will change because task doesnt have
+		 * a finish date and doesn't have any active Project Collaborator in the task
+		 */
+		OnGoingTask1.changeToStandBy();
+		/*
+		 * Changes String values to "StandBy"
+		 */
+		stateToCompare = "StandBy";
 
-				/*
-				 * Tests if its possible to change to state "StandBy Expects True. State will
-				 * change because project Collaborators are no longer project in the task
-				 */
-				assertEquals(stateToCompare, task1.viewTaskStateName());
+		/*
+		 * Tests if its possible to change to state "StandBy Expects True. State will
+		 * change because project Collaborators are no longer project in the task
+		 */
+		assertEquals(stateToCompare, task1.viewTaskStateName());
 
 	}
 
 	@Test
 	public void testChangeToCancelled() {
-		
+
 		// Initiates stateTestTask1
 		OnGoingTask1 = new OnGoing(task1);
-				task1.setStartDate(taskStartDate);
-				task1.setTaskState(OnGoingTask1);
+		task1.setStartDate(taskStartDate);
+		task1.setTaskState(OnGoingTask1);
 
-				/*
-				 * Adds two ProjectCollaborators to the task,
-				 * 
-				 */
-				task1.addProjectCollaboratorToTask(collab1);
-				task1.addProjectCollaboratorToTask(collab2);
+		/*
+		 * Adds two ProjectCollaborators to the task,
+		 * 
+		 */
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.addProjectCollaboratorToTask(collab2);
 
-				/*
-				 * Checks if its possible to change to state "Cancelled" from state "OnGoing"
-				 */
-				assertTrue(OnGoingTask1.isTransitionToCancelledPossible());
+		/*
+		 * Checks if its possible to change to state "Cancelled" from state "OnGoing"
+		 */
+		assertTrue(OnGoingTask1.isTransitionToCancelledPossible());
 
-				/*
-				 * Creates a String that will be compared with the result of the method
-				 * viewTaskStateName()
-				 */
-				String stateToCompare = "Cancelled";
+		/*
+		 * Creates a String that will be compared with the result of the method
+		 * viewTaskStateName()
+		 */
+		String stateToCompare = "Cancelled";
 
-				/*
-				 * Tries to change to state "Cancelled". State won't change because
-				 * ProjectCollaborators are active in the project
-				 */
-				OnGoingTask1.changeToCancelled();
+		/*
+		 * Tries to change to state "Cancelled". State won't change because
+		 * ProjectCollaborators are active in the project
+		 */
+		OnGoingTask1.changeToCancelled();
 
-				/*
-				 * The state changed sucessfully
-				 */
-				assertEquals(stateToCompare, task1.viewTaskStateName());
+		/*
+		 * The state changed sucessfully
+		 */
+		assertEquals(stateToCompare, task1.viewTaskStateName());
 	}
+
 	@Test
 	public void testChangeToFinished() {
-	
+
 		// Initiates stateTestTask1
-			OnGoingTask1 = new OnGoing(task1);
-				task1.setStartDate(taskStartDate);
-				task1.setTaskState(OnGoingTask1);
+		OnGoingTask1 = new OnGoing(task1);
+		task1.setStartDate(taskStartDate);
+		task1.setTaskState(OnGoingTask1);
 
-				/*
-				 * Adds two ProjectCollaborators to the task,
-				 * 
-				 */
-				task1.addProjectCollaboratorToTask(collab1);
-				task1.addProjectCollaboratorToTask(collab2);
+		/*
+		 * Adds two ProjectCollaborators to the task,
+		 * 
+		 */
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.addProjectCollaboratorToTask(collab2);
 
-				/*
-				 * Checks if its possible to change to state "Finished" from state "OnGoing"
-				 */
-				assertTrue(OnGoingTask1.isTransitionToFinishedPossible());
+		/*
+		 * Checks if its possible to change to state "Finished" from state "OnGoing"
+		 */
+		assertTrue(OnGoingTask1.isTransitionToFinishedPossible());
 
-				/*
-				 * Creates a String that will be compared with the result of the method
-				 * viewTaskStateName()
-				 */
-				String stateToCompare = "OnGoing";
+		/*
+		 * Creates a String that will be compared with the result of the method
+		 * viewTaskStateName()
+		 */
+		String stateToCompare = "OnGoing";
 
-				/*
-				 * Tries to change to state "Finished". State won't change because the Task
-				 * doesn't have a finish date
-				 */
-				OnGoingTask1.changeToFinished();
+		/*
+		 * Tries to change to state "Finished". State won't change because the Task
+		 * doesn't have a finish date
+		 */
+		OnGoingTask1.changeToFinished();
 
-				/*
-				 * The state of the task didn't change
-				 */
-				assertEquals(stateToCompare, task1.viewTaskStateName());
+		/*
+		 * The state of the task didn't change
+		 */
+		assertEquals(stateToCompare, task1.viewTaskStateName());
 
-				/*
-				 * Sets a finish date for the task
-				 */
-				task1.setFinishDate();
+		/*
+		 * Sets a finish date for the task
+		 */
+		task1.setFinishDate();
 
-				/*
-				 * Changes string values to "Finished"
-				 */
-				stateToCompare = "Finished";
+		/*
+		 * Changes string values to "Finished"
+		 */
+		stateToCompare = "Finished";
 
-				/*
-				 * Tries to change to state "Finished". State wll change because the Task has a
-				 * finish date
-				 */
+		/*
+		 * Tries to change to state "Finished". State wll change because the Task has a
+		 * finish date
+		 */
 
-				OnGoingTask1.changeToFinished();
+		OnGoingTask1.changeToFinished();
 
-				/*
-				 * The state of the task changed sucessfully
-				 */
-				assertEquals(stateToCompare, task1.viewTaskStateName());
+		/*
+		 * The state of the task changed sucessfully
+		 */
+		assertEquals(stateToCompare, task1.viewTaskStateName());
 
 	}
 
@@ -356,36 +357,36 @@ public class OnGoingTaskTest {
 
 	@Test
 	public void testIsTransitionToPlannedPossible() {
-		
+
 	}
 
 	@Test
 	public void testIsTransitionToAssignedPossible() {
-		
+
 	}
 
 	@Test
 	public void testIsTransitionToReadyPossible() {
-		
+
 	}
 
 	@Test
 	public void testIsTransitionToOnGoingPossible() {
-		
+
 	}
 
 	@Test
 	public void testIsTransitionToStandByPossible() {
-		
+
 	}
 
 	@Test
 	public void testIsTransitionToCancelledPossible() {
 	}
-	
+
 	@Test
 	public void testIsTransitionToFinishedPossible() {
-		
+
 	}
 
 }
