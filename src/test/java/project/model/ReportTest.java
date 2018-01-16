@@ -20,7 +20,6 @@ public class ReportTest {
 	TaskRepository taskRepository;
 	Report report;
 	int timeToCompare;
-	String newReportID;
 
 	@Before
 	public void setUp() {
@@ -36,9 +35,6 @@ public class ReportTest {
 		t1 = p1.getTaskRepository().createTask("description", 0, estimatedStartDate, taskDeadline, 0);
 		p1.getTaskRepository().addProjectTask(t1);
 		timeToCompare = 0;
-		newReportID = "123";
-		
-
 	}
 
 	@After
@@ -52,7 +48,6 @@ public class ReportTest {
 		taskRepository = null;
 		report = null;
 		timeToCompare = 0;
-		newReportID = null;
 	}
 
 	/**
@@ -99,21 +94,4 @@ public class ReportTest {
 		// Compares the two values
 		assertEquals(report.getTaskCollaborator(), taskWorker1);
 	}
-	
-	/**
-	 * Tests the getReportID method in Report class
-	 */
-	@Test
-	public void testGetReportID() {
-
-		// Creates a new report instance;
-		report = new Report(taskWorker1);
-		
-		// Sets the IDReport to newReportID ("123")
-		report.setReportID(newReportID);
-
-		// Compares the two values
-		assertEquals(report.getReportID(), "123");
-	}
-
 }
