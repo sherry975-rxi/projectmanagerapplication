@@ -123,16 +123,20 @@ public class Ready implements TaskStateInterface {
 	 * This method changes the state of a Task to the "Cancelled" state. It does
 	 * nothing in this state.
 	 * 
-	 * @return Void
+	 * @return TRUE if state was changed and FALSE if state was not changed
 	 */
-	@Override
-	public void changeToCancelled() {
+	public boolean changeToCancelled() {
+
+		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
 
 			TaskStateInterface stateCancelled = new Cancelled(toUpdate);
 			if (stateCancelled.isValid())
 				toUpdate.setTaskState(stateCancelled);
+			condition = true;
+			return condition;
 		}
+		return condition;
 	}
 
 	/**
