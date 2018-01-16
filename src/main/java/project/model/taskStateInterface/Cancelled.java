@@ -17,7 +17,7 @@ public class Cancelled implements TaskStateInterface {
 	 */
 	public boolean isValid() {
 		boolean validation = false;
-		if(task.getFinishDate() == null) {
+		if(task.getFinishDate() == null && task.getCancelDate() == null) {
 			validation = true;
 		}
 		return validation;
@@ -46,10 +46,8 @@ public class Cancelled implements TaskStateInterface {
 	}
 
 	public boolean changeToCancelled() {
-
 		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
-
 			TaskStateInterface stateCancelled = new Cancelled(task);
 			if (stateCancelled.isValid())
 				task.setTaskState(stateCancelled);
@@ -63,13 +61,17 @@ public class Cancelled implements TaskStateInterface {
 	 * This method changes the state of a Task from "Cancelled" to the "Finished" state,
 	 * if it's possible
 	 */
-	public void changeToFinished(){
+	public boolean changeToFinished(){
+		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
 			TaskStateInterface Finished1 = new Finished(task);
 			if (Finished1.isValid()) {
 				task.setTaskState(Finished1);
+				condition = true;
+				return condition;
 			}
 		}
+		return condition;
 	}
 	
 	/**

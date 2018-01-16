@@ -146,14 +146,18 @@ public class Ready implements TaskStateInterface {
 	 * @return Void
 	 */
 	@Override
-	public void changeToFinished() {
+	public boolean changeToFinished() {
+		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
 
 			TaskStateInterface stateFinished = new Finished(toUpdate);
-			if (stateFinished.isValid())
+			if (stateFinished.isValid()) {
 				toUpdate.setTaskState(stateFinished);
+				condition = true;
+				return condition;
+			}
 		}
-
+		return condition;
 	}
 
 	/**

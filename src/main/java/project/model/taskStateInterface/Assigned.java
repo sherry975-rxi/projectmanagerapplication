@@ -93,8 +93,9 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToFinished() {
-
+	public boolean changeToFinished(){
+		boolean condition = false;
+		return condition;
 	}
 
 	/**
