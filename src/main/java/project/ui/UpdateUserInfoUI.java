@@ -2,7 +2,7 @@ package project.ui;
 
 import java.util.Scanner;
 
-import project.controller.UpdateUserInfoController;
+import project.controller.US201and202UpdateUserInfoController;
 import project.model.Address;
 import project.model.User;
 
@@ -24,7 +24,7 @@ public class UpdateUserInfoUI {
 
 	public void chooseWhatInfoToUpdate() {
 		Scanner input = new Scanner(System.in);
-		UpdateUserInfoController getInfo = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController getInfo = new US201and202UpdateUserInfoController();
 
 		String currentName = getInfo.getName(user);
 		String currentEmail = getInfo.getEmail(user);
@@ -48,7 +48,7 @@ public class UpdateUserInfoUI {
 			String name = input.nextLine();
 			System.out.println(newInfo + name);
 			if (confirmInfo(input)) {
-				UpdateUserInfoController updater = new UpdateUserInfoController();
+				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 				updater.updateUserName(user, name);
 				System.out.println(updateSuccessful);
 				System.out.println();
@@ -60,7 +60,7 @@ public class UpdateUserInfoUI {
 			String email = input.nextLine();
 			System.out.println(newInfo + email);
 			if (confirmInfo(input)) {
-				UpdateUserInfoController updater = new UpdateUserInfoController();
+				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 				if (updater.isEmailValid(email)) {
 					System.out.println("Invalid email.");
 				} else if (updater.isEmailAlreadyInUse(email)) {
@@ -78,7 +78,7 @@ public class UpdateUserInfoUI {
 			String phone = input.nextLine();
 			System.out.println(newInfo + phone);
 			if (confirmInfo(input)) {
-				UpdateUserInfoController updater = new UpdateUserInfoController();
+				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
 				System.out.println(updateSuccessful);
 				System.out.println();
@@ -86,7 +86,7 @@ public class UpdateUserInfoUI {
 			break;
 		case 4:
 			// Updates address
-			UpdateUserInfoController updater = new UpdateUserInfoController();
+			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			// Shows all addresses
 			System.out.println("Please select the number of the address to update:");
 			updater.printAddressListWithIndex(user);

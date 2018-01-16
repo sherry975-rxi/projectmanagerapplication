@@ -18,7 +18,7 @@ import project.model.User;
  *         createDependenceFromTask functionality.
  *
  */
-public class US342Controller {
+public class US342CreateTaskDependencyController {
 
 	int projectIDtoInstantiate;
 
@@ -26,7 +26,7 @@ public class US342Controller {
 	 * Constructor
 	 * 
 	 */
-	public US342Controller() {
+	public US342CreateTaskDependencyController() {
 
 	}
 
@@ -35,7 +35,7 @@ public class US342Controller {
 	 * 
 	 * @param projectIDtoInstantiate
 	 */
-	public US342Controller(String projectIDtoInstantiate) {
+	public US342CreateTaskDependencyController(String projectIDtoInstantiate) {
 		this.projectIDtoInstantiate = 0;
 	}
 

@@ -55,7 +55,7 @@ public class UpdateUserInfoController_Test {
 	@Test
 	public void updateUserName() {
 		// create controller
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertTrue(u1.getName() == "Daniel");
 
@@ -70,7 +70,7 @@ public class UpdateUserInfoController_Test {
 	@Test
 	public void updateUserEmail() {
 		// create controller
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertTrue(u1.getEmail() == "user2@gmail.com");
 
@@ -85,7 +85,7 @@ public class UpdateUserInfoController_Test {
 	@Test
 	public void updateUserPhone() {
 		// create controller
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertTrue(u1.getPhone() == "930000000");
 
@@ -102,7 +102,7 @@ public class UpdateUserInfoController_Test {
 	 */
 	@Test
 	public void addNewAddressTest() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals(null, u1.searchUserAddress(address2.getStreet()));
 
@@ -113,7 +113,7 @@ public class UpdateUserInfoController_Test {
 
 	@Test
 	public void updateUserStreet() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("Testy Street", u1.searchUserAddress(address1.getStreet()).getStreet());
 
@@ -124,7 +124,7 @@ public class UpdateUserInfoController_Test {
 
 	@Test
 	public void updateUserZipCode() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("2401-343", u1.searchUserAddress(address1.getStreet()).getZipCode());
 
@@ -135,7 +135,7 @@ public class UpdateUserInfoController_Test {
 
 	@Test
 	public void updateUserCity() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("Testburg", u1.searchUserAddress(address1.getStreet()).getCity());
 
@@ -146,7 +146,7 @@ public class UpdateUserInfoController_Test {
 
 	@Test
 	public void updateUserDistrict() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("Testo", u1.searchUserAddress(address1.getStreet()).getDistrict());
 
@@ -157,7 +157,7 @@ public class UpdateUserInfoController_Test {
 
 	@Test
 	public void updateUserCountry() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("Testistan", u1.searchUserAddress(address1.getStreet()).getCountry());
 
@@ -171,7 +171,7 @@ public class UpdateUserInfoController_Test {
 	 */
 	@Test
 	public void getAllAddressesTest() {
-		UpdateUserInfoController controller = new UpdateUserInfoController();
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 
 		//controller.addNewAddress(u1, address2);
