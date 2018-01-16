@@ -63,7 +63,7 @@ public interface TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToFinished();
+	public boolean changeToFinished();
 
 	/**
 	 * This method verifies if the transition to the “Created” state of a Task is

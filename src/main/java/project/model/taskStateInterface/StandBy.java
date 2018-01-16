@@ -133,15 +133,17 @@ public class StandBy implements TaskStateInterface {
 	 * This method changes the state of a Task to the "Finished" state
 	 * 
 	 */
-	public void changeToFinished() {
-
+	public boolean changeToFinished() {
+		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
 			TaskStateInterface taskInterface = new Finished(task);
-			if (taskInterface.isValid())
+			if (taskInterface.isValid()) {
 				task.setTaskState(taskInterface);
-
+				condition = true;
+				return condition;
+			}
 		}
-
+		return condition;
 	}
 
 	/**

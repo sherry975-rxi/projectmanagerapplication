@@ -132,13 +132,17 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToFinished() {
+	public boolean changeToFinished() {
+		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
 			TaskStateInterface Finished1 = new OnGoing(tarefa);
 			if (Finished1.isValid()) {
 				tarefa.setTaskState(Finished1);
+				condition = true;
+				return condition;
 			}
 		}
+		return condition;
 	}
 
 	/**

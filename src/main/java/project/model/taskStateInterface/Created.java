@@ -135,13 +135,16 @@ public class Created implements TaskStateInterface {
 	 * This method changes the state of a Task to the "Finished" state.
 	 * 
 	 */
-	public void changeToFinished() {
+	public boolean changeToFinished() {
+		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
-
 			TaskStateInterface stateFinished = new Finished(task);
-			if (stateFinished.isValid())
+			if (stateFinished.isValid()) {
 				task.setTaskState(stateFinished);
+				return condition;
+			}
 		}
+		return condition;
 	}
 
 	/**
