@@ -550,14 +550,4 @@ public class TaskTest {
 		
 		
 	}
-	
-	/**
-	 * Tests that cannot change a reported time if the report is empty
-	 */
-	@Test
-	public void testCantChangeReportedTimeIfReportIsEmpty() {
-		
-		assertFalse(testTask.changeReportedTime(10, 0));
-		
-	}
 }
