@@ -6,17 +6,7 @@ import project.model.Address;
 import project.model.Company;
 import project.model.User;
 
-public class UpdateUserInfoController {
-
-	/**
-	 * This controller update user info
-	 * 
-	 * respond to US 201/202
-	 * 
-	 * @param user
-	 * @param project
-	 * @param effort
-	 */
+public class US201and202UpdateUserInfoController {
 
 	/**
 	 * This method controls the update of user's name by calling the method setName

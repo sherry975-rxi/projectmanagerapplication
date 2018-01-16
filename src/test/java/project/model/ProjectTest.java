@@ -522,33 +522,22 @@ public class ProjectTest {
 	}
 
 	/**
-	 * Tests the creation of a new request
-	 * 
-	 */
-	@Test
-	public void testCreateTaskAssignementRequest() {
-		TaskTeamRequest newRequest = p1.createTaskTeamRequest(projectCollaborator1, task1);
-		assertTrue(newRequest != null);
-	}
-
-	/**
-	 * Tests the addition of a new request to the Assignement Request List
+	 * Tests the creation and addition of a new request to the Assignment Request
+	 * List
 	 * 
 	 */
 	@Test
 	public void testAddTaskAssignementRequest() {
-		TaskTeamRequest newRequest = p1.createTaskTeamRequest(projectCollaborator1, task1);
-		p1.getAssignmentRequestsList().add(newRequest);
-		assertTrue(p1.isAssignementRequestAlreadyCreated(newRequest));
+		assertTrue(p1.createTaskAssignementRequest(projectCollaborator1, task1));
 	}
 
 	/**
-	 * Tests the deletion of a request from the Assignement Request List
+	 * Tests the deletion of a request from the Assignment Request List
 	 * 
 	 */
 	@Test
 	public void testDeleteTaskAssignementRequest() {
-		p1.addTaskAssignementRequest(projectCollaborator1, task1);
+		p1.createTaskAssignementRequest(projectCollaborator1, task1);
 		TaskTeamRequest newRequest = new TaskTeamRequest(projectCollaborator1, task1);
 		assertTrue(p1.isAssignementRequestAlreadyCreated(newRequest));
 		p1.deleteTaskAssignementRequest(newRequest);
@@ -561,7 +550,7 @@ public class ProjectTest {
 	 */
 	@Test
 	public void testViewTaskAssignementRequest() {
-		p1.addTaskAssignementRequest(projectCollaborator1, task1);
+		p1.createTaskAssignementRequest(projectCollaborator1, task1);
 		String result = "name" + "\n" + "email" + "\n" + "1.1" + "\n" + "description";
 		assertTrue(p1.viewPendingTaskAssignementRequests().get(0).equals(result));
 	}

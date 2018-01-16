@@ -33,7 +33,7 @@ public class Task {
 	private List<Task> taskDependency;
 	private Integer startDateInterval;
 	private Integer deadlineInterval;
-	public Calendar cancelDate;
+	private Calendar cancelDate;
 
 
 	/**

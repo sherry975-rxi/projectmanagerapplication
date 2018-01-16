@@ -2,7 +2,7 @@ package project.ui;
 
 import java.util.Scanner;
 
-import project.controller.US342Controller;
+import project.controller.US342CreateTaskDependencyController;
 import project.model.User;
 
 /**
@@ -29,7 +29,7 @@ public class DefineDependenciesBetweenTasksUI {
 
 		System.out.println("Choose a project: ");
 
-		US342Controller us342Controller = new US342Controller();
+		US342CreateTaskDependencyController us342Controller = new US342CreateTaskDependencyController();
 
 		int projectListSize = us342Controller.getProjectsFromUser(user).size();
 

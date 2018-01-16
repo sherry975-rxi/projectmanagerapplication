@@ -475,28 +475,15 @@ public class Project {
 	}
 
 	/**
-	 * Creates a new request.
-	 * 
-	 * @param projCollab
-	 *            Projector collaborator that started the request
-	 * @param task
-	 *            Task chosen by the project collaborator
-	 */
-	public TaskTeamRequest createTaskTeamRequest(ProjectCollaborator projCollab, Task task) {
-		TaskTeamRequest newRequest = new TaskTeamRequest(projCollab, task);
-		return newRequest;
-	}
-
-	/**
-	 * Creates a new assignement request, and adds the request to the list of
-	 * pending task assignement requests if it isn't already created
+	 * Creates a new assignment request, and adds the request to the list of pending
+	 * task assignment requests if it isn't already created
 	 * 
 	 * @param request
-	 *            Request to add to the pending task assignement requests list
+	 *            Request to add to the pending task assignment requests list
 	 * @return True if it adds, false if there is already an equal request
 	 */
-	public boolean addTaskAssignementRequest(ProjectCollaborator projCollab, Task task) {// uso de if incorreto?
-		TaskTeamRequest newReq = createTaskTeamRequest(projCollab, task);
+	public boolean createTaskAssignementRequest(ProjectCollaborator projCollab, Task task) {// uso de if incorreto?
+		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
 		if (!this.isAssignementRequestAlreadyCreated(newReq)) {
 			return this.pendingTaskAssignementRequests.add(newReq);
 		}
@@ -511,8 +498,8 @@ public class Project {
 	 *            Request to add to the list of pending task removal requests
 	 * @return True if it adds, false if there is already an equal request
 	 */
-	public boolean addTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
-		TaskTeamRequest newReq = createTaskTeamRequest(projCollab, task);
+	public boolean createTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
 		if (!this.isAssignementRequestAlreadyCreated(newReq)) {
 			return this.pendingTaskRemovalRequests.add(newReq);
 		}
