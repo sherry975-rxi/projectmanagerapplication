@@ -116,15 +116,18 @@ public class StandBy implements TaskStateInterface {
 	/**
 	 * This method changes the state of a Task to the "Cancelled" state
 	 */
-	public void changeToCancelled() {
+	public boolean changeToCancelled() {
 
+		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
-			TaskStateInterface taskInterface = new Cancelled(task);
-			if (taskInterface.isValid())
-				task.setTaskState(taskInterface);
 
+			TaskStateInterface stateCancelled = new Cancelled(task);
+			if (stateCancelled.isValid())
+				task.setTaskState(stateCancelled);
+			condition = true;
+			return condition;
 		}
-
+		return condition;
 	}
 
 	/**

@@ -113,13 +113,18 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToCancelled() {
+	public boolean changeToCancelled() {
+
+		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
-			TaskStateInterface Cancelled1 = new Cancelled(tarefa);
-			if (Cancelled1.isValid()) {
-				tarefa.setTaskState(Cancelled1);
-			}
+
+			TaskStateInterface stateCancelled = new Cancelled(tarefa);
+			if (stateCancelled.isValid())
+				tarefa.setTaskState(stateCancelled);
+			condition = true;
+			return condition;
 		}
+		return condition;
 	}
 
 	/**

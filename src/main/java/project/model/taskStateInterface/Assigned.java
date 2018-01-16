@@ -84,7 +84,8 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToCancelled() {
+	public boolean changeToCancelled() {
+		return false;
 	}
 
 	/**
