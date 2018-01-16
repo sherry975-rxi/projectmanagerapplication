@@ -164,6 +164,33 @@ public class StandByTests {
 
 		assertTrue(stateTestTask1.isValid());
 
+		// Initiates stateTestTask2
+		stateTestTask2 = new StandBy(testTask2);
+		/*
+		 * Checks if transition is valid in testTask2
+		 */
+		assertTrue(stateTestTask2.isValid());
+
+		/*
+		 * sets a finish date for testTask2
+		 */
+
+		testTask2.setFinishDate();
+
+		/*
+		 * Transition is not valid anymore
+		 */
+		assertFalse(stateTestTask2.isValid());
+
+		// Adds a Project Collaborator to testTask2
+
+		testTask2.addProjectCollaboratorToTask(collab1);
+
+		/*
+		 * Transition is still not valid
+		 */
+		assertFalse(stateTestTask2.isValid());
+
 	}
 
 	@Test

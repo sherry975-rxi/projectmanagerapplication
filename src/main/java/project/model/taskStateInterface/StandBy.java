@@ -111,6 +111,13 @@ public class StandBy implements TaskStateInterface {
 	 */
 	public void changeToStandBy() {
 
+		if (isTransitionToStandByPossible()) {
+			TaskStateInterface taskInterface = new StandBy(task);
+			if (taskInterface.isValid())
+				task.setTaskState(taskInterface);
+
+		}
+
 	}
 
 	/**
@@ -140,7 +147,6 @@ public class StandBy implements TaskStateInterface {
 			if (taskInterface.isValid()) {
 				task.setTaskState(taskInterface);
 				condition = true;
-				return condition;
 			}
 		}
 		return condition;
