@@ -125,7 +125,6 @@ public class StandBy implements TaskStateInterface {
 			if (stateCancelled.isValid())
 				task.setTaskState(stateCancelled);
 			condition = true;
-			return condition;
 		}
 		return condition;
 	}
