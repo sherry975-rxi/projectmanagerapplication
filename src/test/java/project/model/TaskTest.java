@@ -550,4 +550,17 @@ public class TaskTest {
 		
 		
 	}
+	
+	/**
+	 * Tests the get and set of cancel date
+	 */
+	@Test
+	public void testGetCancelDate() {
+		//asserts that the testTask don't have a cancel date defined
+		assertEquals(testTask.getCancelDate(), null);
+		
+		//set the testTask cancel date and then assert that this date exists
+		testTask.setCancelDate();
+		assertTrue(testTask.getCancelDate()!= null);
+	}
 }

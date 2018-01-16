@@ -35,6 +35,7 @@ public class Task {
 	private Integer deadlineInterval;
 	public Calendar cancelDate;
 
+
 	/**
 	 * This constructor creates a task with the mandatory fields taskCounter, projId
 	 * and description. However, the description is the only parameter that will be
@@ -878,6 +879,10 @@ public class Task {
 	
 	public void setCancelDate() {
 		this.cancelDate = Calendar.getInstance();
+	}
+	
+	public Calendar getCancelDate() {
+		return cancelDate;
 	}
 	
 }
