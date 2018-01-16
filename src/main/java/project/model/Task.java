@@ -448,6 +448,25 @@ public class Task {
 
 	}
 
+	
+	/**
+	 * This method set the parameter "reportedTime" of a specific report.
+	 * 
+	 * @param newTime for report.
+	 * @param reportIndex is the index of report (from report list of the task).
+	 */
+	public boolean changeReportedTime(int newTime, int reportIndex) {
+		
+		if(this.reports.size() > reportIndex && reportIndex >= 0) {
+			Report reportToSet = this.reports.get(reportIndex);
+			if(reportToSet != null) {
+				reportToSet.setReportedTime(newTime);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * This method removes the user from a task. It checks first if the user is in
 	 * the task team (List of users in Task), and deactivates it from the team.
