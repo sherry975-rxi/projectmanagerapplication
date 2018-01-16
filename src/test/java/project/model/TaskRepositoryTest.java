@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.model.taskStateInterface.Assigned;
+import project.model.taskStateInterface.Cancelled;
 import project.model.taskStateInterface.Created;
 import project.model.taskStateInterface.Finished;
 import project.model.taskStateInterface.OnGoing;
@@ -49,6 +50,7 @@ public class TaskRepositoryTest {
 	Task testTask7;
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
+	Calendar startDateTest;
 
 	@Before
 	public void setUp() {
@@ -100,6 +102,10 @@ public class TaskRepositoryTest {
 		project.addProjectCollaboratorToProjectTeam(collab2);
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
+
+		// create a estimated Task Start Date
+		Calendar startDateTest = Calendar.getInstance();
+
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
@@ -934,6 +940,97 @@ public class TaskRepositoryTest {
 
 		// Task5 was sucessfully deleted from the TaskRepository
 		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask5));
+
+	}
+
+	/**
+	 * this test verify if the method getCancelledTasks return the correct list of
+	 * cancelled tasks.
+	 * 
+	 */
+	@Test
+	public void getCancelledTasksTest() {
+
+		// Adds 5 tasks to the TaskRepository
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+
+		// Creates State Objects planned for task.
+		Planned PlannedTestTask = new Planned(testTask);
+		Planned PlannedTestTask2 = new Planned(testTask2);
+		Planned PlannedTestTask3 = new Planned(testTask3);
+
+		// set estimated task start date and task dead line to tasks
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		testTask.setTaskDeadline(taskDeadlineDateTest);
+
+		testTask2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		testTask2.setTaskDeadline(taskDeadlineDateTest);
+
+		testTask3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		testTask3.setTaskDeadline(taskDeadlineDateTest);
+
+		// set active user
+		testTask.addTaskCollaboratorToTask(taskWorker1);
+		testTask2.addTaskCollaboratorToTask(taskWorker1);
+		testTask3.addTaskCollaboratorToTask(taskWorker1);
+
+		// Sets the tasks to "Planned"
+		testTask.setTaskState(PlannedTestTask);
+		testTask2.setTaskState(PlannedTestTask2);
+		testTask3.setTaskState(PlannedTestTask3);
+
+		// Creates State Objects assigned for task.
+		Assigned AssignedTestTask = new Assigned(testTask);
+		Assigned AssignedTestTask2 = new Assigned(testTask2);
+		Assigned AssignedTestTask3 = new Assigned(testTask3);
+
+		// Sets the tasks to "Assigned"
+		testTask.setTaskState(AssignedTestTask);
+		testTask2.setTaskState(AssignedTestTask2);
+		testTask3.setTaskState(AssignedTestTask3);
+
+		// Creates State Objects Ready for task.
+		Ready ReadyTestTask = new Ready(testTask);
+		Ready ReadyTestTask2 = new Ready(testTask2);
+		Ready ReadyTestTask3 = new Ready(testTask3);
+
+		// set start date
+		testTask.setStartDate(startDateTest);
+		testTask2.setStartDate(startDateTest);
+		testTask3.setStartDate(startDateTest);
+
+		// Sets the tasks to "Ready"
+		testTask.setTaskState(ReadyTestTask);
+		testTask2.setTaskState(ReadyTestTask2);
+		testTask3.setTaskState(ReadyTestTask3);
+
+		// Creates State Objects OnGoing for task.
+		OnGoing onGoingTestTask = new OnGoing(testTask);
+		OnGoing onGoingTestTask2 = new OnGoing(testTask2);
+		OnGoing onGoingTestTask3 = new OnGoing(testTask3);
+
+		// Sets the tasks to "onGoing"
+		testTask.setTaskState(onGoingTestTask);
+		testTask2.setTaskState(onGoingTestTask2);
+		testTask3.setTaskState(onGoingTestTask3);
+
+		// Creates State Objects Cancelled for task.
+		Cancelled cancelledTestTask = new Cancelled(testTask);
+		Cancelled cancelledTestTask2 = new Cancelled(testTask2);
+
+		// Sets the tasks to "cancelled"
+		testTask.setTaskState(cancelledTestTask);
+		testTask2.setTaskState(cancelledTestTask2);
+
+		// create list with cancelled task to compare
+		List<Task> cancelledTaskToCompare = new ArrayList<Task>();
+
+		cancelledTaskToCompare.add(testTask);
+		cancelledTaskToCompare.add(testTask2);
+
+		assertEquals(cancelledTaskToCompare, taskRepository.getCancelledTasks());
 
 	}
 }

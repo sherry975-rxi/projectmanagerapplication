@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import project.model.taskStateInterface.Cancelled;
+
 public class TaskRepository {
 
 	private int taskCounter;
@@ -430,6 +432,22 @@ public class TaskRepository {
 			}
 
 		}
+	}
+
+	/**
+	 * This method returns the cancelled tasks from this project
+	 * 
+	 * @return List of cancelled Tasks
+	 */
+	public List<Task> getCancelledTasks() {
+		List<Task> cancelledTasksFromProject = new ArrayList<>();
+
+		for (Task other : this.projectTasks) {
+			if (other.getTaskState() instanceof Cancelled) {
+				cancelledTasksFromProject.add(other);
+			}
+		}
+		return cancelledTasksFromProject;
 	}
 
 }
