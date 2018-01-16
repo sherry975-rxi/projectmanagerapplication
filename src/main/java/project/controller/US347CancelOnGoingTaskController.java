@@ -4,7 +4,6 @@
 package project.controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import project.model.Company;
@@ -69,23 +68,20 @@ public class US347CancelOnGoingTaskController {
 		List<Task> tasksFromProject = new ArrayList<>();
 		Project projectToGetTasks = Company.getTheInstance().getProjectsRepository()
 				.getProjById(this.projectIDtoInstantiate);
-		
 
 		tasksFromProject.addAll(projectToGetTasks.getTaskRepository().getProjectTaskRepository());
-		
 
 		return tasksFromProject;
 	}
 
-	
-	public String viewTaskState (String taskID) {
-		
-		Task taskToGetByID = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate).getTaskRepository().getTaskByID(taskID);
-		
+	public String viewTaskState(String taskID) {
+
+		Task taskToGetByID = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate)
+				.getTaskRepository().getTaskByID(taskID);
+
 		return taskToGetByID.viewTaskStateName();
-	} 
-	
-	
+	}
+
 	/**
 	 * This method changes the state of a Task from OnGoing to Cancelled
 	 * 
@@ -100,17 +96,15 @@ public class US347CancelOnGoingTaskController {
 
 		boolean cancelled = false;
 
-		if (task.getTaskState().changeToCancelled()) 
-		{
+		if (task.getTaskState().changeToCancelled()) {
 			task.setCancelDate();
-			
+
 			cancelled = true;
 			return cancelled;
 		}
-		
+
 		return cancelled;
 	};
-	
 
 	/**
 	 * Sets the ProjectID to the User Input For ProjectID
