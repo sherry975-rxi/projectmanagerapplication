@@ -488,23 +488,35 @@ public class Project {
 	}
 
 	/**
-	 * Adds request to the pending task assignement requests
+	 * Creates a new assignement request, and adds the request to the list of
+	 * pending task assignement requests if it isn't already created
 	 * 
 	 * @param request
 	 *            Request to add to the pending task assignement requests list
+	 * @return True if it adds, false if there is already an equal request
 	 */
-	public void addTaskAssignementRequest(TaskTeamRequest request) {
-		this.pendingTaskAssignementRequests.add(request);
+	public boolean addTaskAssignementRequest(ProjectCollaborator projCollab, Task task) {// uso de if incorreto?
+		TaskTeamRequest newReq = createTaskTeamRequest(projCollab, task);
+		if (!this.isAssignementRequestAlreadyCreated(newReq)) {
+			return this.pendingTaskAssignementRequests.add(newReq);
+		}
+		return false;
 	}
-	
+
 	/**
-	 * Adds request of removal to the list of pending task removal requests
+	 * Creates a new removal request, and adds the request to the list of pending
+	 * task removal requests if it isn't already created
 	 * 
 	 * @param request
-	 *            Request to add to the list of pending task removal requests 
+	 *            Request to add to the list of pending task removal requests
+	 * @return True if it adds, false if there is already an equal request
 	 */
-	public void addTaskRemovalRequest(TaskTeamRequest request) {
-		this.pendingTaskRemovalRequests.add(request);
+	public boolean addTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest newReq = createTaskTeamRequest(projCollab, task);
+		if (!this.isAssignementRequestAlreadyCreated(newReq)) {
+			return this.pendingTaskRemovalRequests.add(newReq);
+		}
+		return false;
 	}
 
 	/**
@@ -518,10 +530,10 @@ public class Project {
 	public void deleteTaskAssignementRequest(TaskTeamRequest request) {
 		this.pendingTaskAssignementRequests.remove(request);
 	}
-	
+
 	/**
-	 * Removes the removal request of a certain project collaborator to a specific task
-	 * team.
+	 * Removes the removal request of a certain project collaborator to a specific
+	 * task team.
 	 * 
 	 * @param request
 	 *            TaskTeamRequest to remove from the list
@@ -561,21 +573,21 @@ public class Project {
 	public List<TaskTeamRequest> getAssignmentRequestsList() {
 		return this.pendingTaskAssignementRequests;
 	}
-	
-	// TODO Do we use this method give the Removal requests to the controller, or
-		// create a method in Project that handles the approvals/rejections by receiving
-		// index numbers from the controller?
-		/**
-		 * Returns the list of Task removal requests by collaborators, to be handled
-		 * by the model or controller
-		 * 
-		 * @return List of TaskTeamRequest Objects from all users asking to be assigned
-		 *         to a certain task
-		 */
 
-		public List<TaskTeamRequest> getRemovalRequestsList() {
-			return this.pendingTaskRemovalRequests;
-		}
+	// TODO Do we use this method give the Removal requests to the controller, or
+	// create a method in Project that handles the approvals/rejections by receiving
+	// index numbers from the controller?
+	/**
+	 * Returns the list of Task removal requests by collaborators, to be handled by
+	 * the model or controller
+	 * 
+	 * @return List of TaskTeamRequest Objects from all users asking to be assigned
+	 *         to a certain task
+	 */
+
+	public List<TaskTeamRequest> getRemovalRequestsList() {
+		return this.pendingTaskRemovalRequests;
+	}
 
 	/**
 	 * Checks if a certain request already exists
@@ -587,16 +599,9 @@ public class Project {
 	 * @return True if request already exists, false if not
 	 */
 	public boolean isAssignementRequestAlreadyCreated(TaskTeamRequest request) {
-		boolean result = false;
-		for (TaskTeamRequest req : this.pendingTaskAssignementRequests) {
-			if (req.equals(request)) {
-				result = true;
-				break;
-			}
-		}
-		return result;
+		return this.pendingTaskAssignementRequests.contains(request);
 	}
-	
+
 	/**
 	 * Checks if a certain request already exists
 	 * 
@@ -607,14 +612,7 @@ public class Project {
 	 * @return True if request already exists, false if not
 	 */
 	public boolean isRemovalRequestAlreadyCreated(TaskTeamRequest request) {
-		boolean result = false;
-		for (TaskTeamRequest req : this.pendingTaskRemovalRequests) {
-			if (req.equals(request)) {
-				result = true;
-				break;
-			}
-		}
-		return result;
+		return this.pendingTaskRemovalRequests.contains(request);
 	}
 
 }
