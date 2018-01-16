@@ -126,15 +126,18 @@ public class OnGoing implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */	
-	public void changeToCancelled() {
-		
+	public boolean changeToCancelled() {
+
+		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
-            
-            TaskStateInterface stateCancelled = new Cancelled(task);
-            if( stateCancelled.isValid() )
-                task.setTaskState( stateCancelled );
-        }
-		
+
+			TaskStateInterface stateCancelled = new Cancelled(task);
+			if (stateCancelled.isValid())
+				task.setTaskState(stateCancelled);
+			condition = true;
+			return condition;
+		}
+		return condition;
 	}
 	
 	/**
