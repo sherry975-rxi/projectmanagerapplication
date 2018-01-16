@@ -56,7 +56,7 @@ public interface TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToCancelled();
+	public boolean changeToCancelled();
 
 	/**
 	 * This method changes the state of a Task to the "Finished" state

@@ -110,13 +110,18 @@ public class Planned implements TaskStateInterface {
 	 * This method changes the state of a Task to the "Cancelled" state.
 	 * 
 	 */
-	public void changeToCancelled() {
+public boolean changeToCancelled() {
+		
+		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
 
 			TaskStateInterface stateCancelled = new Cancelled(task);
 			if (stateCancelled.isValid())
 				task.setTaskState(stateCancelled);
+			condition = true;
+			return condition;
 		}
+		return condition;
 	}
 
 	/**

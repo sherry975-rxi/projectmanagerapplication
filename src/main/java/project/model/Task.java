@@ -33,6 +33,7 @@ public class Task {
 	private List<Task> taskDependency;
 	private Integer startDateInterval;
 	private Integer deadlineInterval;
+	public Calendar cancelDate;
 
 	/**
 	 * This constructor creates a task with the mandatory fields taskCounter, projId
@@ -65,6 +66,7 @@ public class Task {
 		this.deadlineInterval = null;
 		this.taskDependency = new ArrayList<>();
 		this.taskState = new Created(this);
+		this.cancelDate = null;
 	}
 
 	/**
@@ -873,4 +875,9 @@ public class Task {
 	public void removeFinishDate() {
 		this.finishDate = null;
 	}
+	
+	public void setCancelDate() {
+		this.cancelDate = Calendar.getInstance();
+	}
+	
 }
