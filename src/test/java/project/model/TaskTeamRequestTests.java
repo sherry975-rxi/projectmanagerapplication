@@ -1,12 +1,12 @@
 package project.model;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TaskTeamRequestTests {
@@ -77,56 +77,40 @@ public class TaskTeamRequestTests {
 		chosenTask = null;
 	}
 
-	// TODO validate names of methods
-
 	// Given a Project Collaborator and task:
 	// this test validates the data when a new Request is created
-	@Ignore
 	@Test
 	public void createRequest() {
-		// TaskTeamRequest firstRequest= new TaskTeamRequest(teamTesterCollaborator,
-		// chosenTask);
-		//
-		//
-		// assertTrue(firstRequest.viewCollaboratorName().equals(teamTesterName));
-		// assertTrue(firstRequest.viewCollaboratorID().equals(teamTesterID));
-		// assertFalse(firstRequest.viewCollaboratorID().equals(teamTesterName));
-		//
-		// assertTrue(firstRequest.viewTaskID().equals(taskIDnumber));
-		// assertTrue(firstRequest.viewTaskName().equals(taskDescription));
-		//
-		fail("Not yet implemented");
-	}
+		TaskTeamRequest firstRequest = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
 
-	// TODO validate names of methods
+		assertTrue(firstRequest.getProjCollab().getUserFromProjectCollaborator().getName().equals(teamTesterName));
+		assertTrue(firstRequest.getProjCollab().getUserFromProjectCollaborator().getIdNumber().equals(teamTesterID));
+		assertFalse(firstRequest.getProjCollab().getUserFromProjectCollaborator().getIdNumber().equals(teamTesterName));
+
+		assertTrue(firstRequest.getTask().getTaskID().equals(taskIDnumber));
+		assertTrue(firstRequest.getTask().getDescription().equals(taskDescription));
+
+	}
 
 	// Given three requests (two equal and one different) validates if the Equals
 	// override works as expected
-	@Ignore
 	@Test
 	public void testRequestEquals() {
-		// // given two Task Team Requests using the same collaborator and task
-		// // asserts if they're equal
-		// TaskTeamRequest firstRequest= new TaskTeamRequest(teamTesterCollaborator,
-		// chosenTask);
-		// TaskTeamRequest secondRequest= new TaskTeamRequest(teamTesterCollaborator,
-		// chosenTask);
-		//
-		// assertTrue(firstRequest.equals(secondRequest));
-		// assertTrue(firstRequest.equals(secondRequest));
-		//
-		// // given a different task, this test creates a new request
-		// // asserts the new request is different when compared to the first one
-		// Task differentTask =
-		// testProject.getTaskRepository().createTask(taskDescription, 2000,
-		// estimatedStartDate,
-		// estimatedTaskDeadline, 200000);
-		// TaskTeamRequest differentRequest= new TaskTeamRequest(teamTesterCollaborator,
-		// differentTask);
-		//
-		// assertFalse(firstRequest.equals(differentRequest));
+		// given two Task Team Requests using the same collaborator and task
+		// asserts if they're equal
+		TaskTeamRequest firstRequest = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
+		TaskTeamRequest secondRequest = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
 
-		fail("Not yet implemented");
+		assertTrue(firstRequest.equals(secondRequest));
+		assertTrue(firstRequest.equals(secondRequest));
+
+		// given a different task, this test creates a new request
+		// asserts the new request is different when compared to the first one
+		Task differentTask = testProject.getTaskRepository().createTask(taskDescription, 2000, estimatedStartDate,
+				estimatedTaskDeadline, 200000);
+		TaskTeamRequest differentRequest = new TaskTeamRequest(teamTesterCollaborator, differentTask);
+
+		assertFalse(firstRequest.equals(differentRequest));
 
 	}
 
