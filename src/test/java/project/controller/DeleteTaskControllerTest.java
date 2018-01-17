@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +39,7 @@ public class DeleteTaskControllerTest {
 	Planned taskStatePlanned;
 	Ready taskStateReady;
 	StandBy taskStateStandBy;
+	CreateTaskController testControl;
 
 	@Before
 	public void setUp() {
@@ -83,32 +82,19 @@ public class DeleteTaskControllerTest {
 		project = null;
 		projectRepository = null;
 		userRepository = null;
+		testControl = null;
 	}
 
 	@Test
-	public void testDeleteTaskController() {
+	public void testDeleteTaskSetToCreatedStateControllerTest() {
 		// asserts which user is the Project Manager
 		assertFalse(project.isProjectManager(user1));
 		assertTrue(project.isProjectManager(userAdmin));
 
-		// creates the Controller and asserts the list of unstarted tasks starts at 0
-		CreateTaskController testControl = new CreateTaskController(project);
-
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(), 10);
-		testTask2 = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(), 10);
-		testTask3 = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(), 10);
-		testTask4 = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(), 10);
-		testTask5 = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(), 10);
-		testTask6 = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(), 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		project.getTaskRepository().addProjectTask(testTask);
 
-		// creates different TaskStates variables
-		taskStateStandBy = new StandBy(testTask3);
-		taskStateReady = new Ready(testTask4);
-		taskStateCancelled = new Cancelled(testTask5);
-		taskStateFinished = new Finished(testTask5);
-		taskStateOnGoing = new OnGoing(testTask5);
-		taskStatePlanned = new Planned(testTask5);
 		taskStateAssigned = new Assigned(testTask6);
 
 		// Creates an int that olds the projectID Code
@@ -116,11 +102,6 @@ public class DeleteTaskControllerTest {
 
 		// Creates a string that holds the value of tasks id
 		String taskId = testTask.getTaskID();
-		String taskId2 = testTask2.getTaskID();
-		String taskId3 = testTask3.getTaskID();
-		String taskId4 = testTask4.getTaskID();
-		String taskId5 = testTask5.getTaskID();
-		String taskId6 = testTask6.getTaskID();
 
 		// creates the Controller
 		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
@@ -133,91 +114,243 @@ public class DeleteTaskControllerTest {
 		// Checks if the task is successfully deleted
 		assertTrue(controllerDelete.deleteTask(projectCode, taskId));
 
-		// Deleted the task from the task repository
-		assertEquals(project.getTaskRepository().getTaskByID(taskId), null);
-
-		testTask3.setTaskState(taskStateStandBy);
-
-		// Checks if the task is successfully deleted
-		assertFalse(controllerDelete.deleteTask(projectCode, taskId3));
-
-		/*
-		 * Sets the state of the task4 to state "Ready". Task can be deleted
-		 */
-		testTask4.setTaskState(taskStateReady);
-
-		// Verifies that the testTask state is set to "Ready"
-		assertEquals(testTask4.viewTaskStateName(), "Ready");
-
-		// Checks if the task is successfully deleted
-		assertTrue(controllerDelete.deleteTask(projectCode, taskId4));
-
-		testTask5.setTaskState(taskStateCancelled);
-
-		// Verifies that the testTask state is set to "Cancelled"
-		assertEquals(testTask5.viewTaskStateName(), "Cancelled");
-
-		/*
-		 * Checks if the task is deleted. It can't, because it's state is set to
-		 * "Cancelled"
-		 */
-		assertFalse(controllerDelete.deleteTask(projectCode, taskId5));
-
-		/*
-		 * Sets the TaskState to finished
-		 */
-		testTask5.setTaskState(taskStateFinished);
-
-		// Verifies that the testTask state is set to "Finished"
-		assertEquals(testTask5.viewTaskStateName(), "Finished");
-
-		/*
-		 * Checks if the task is deleted. It can't, because it's state is set to
-		 * "Finished"
-		 */
-		assertFalse(controllerDelete.deleteTask(projectCode, taskId5));
-
-		/*
-		 * Sets the TaskState to "OnGoing"
-		 */
-		testTask5.setTaskState(taskStateOnGoing);
-
-		// Verifies that the testTask state is set to "OnGoing"
-		assertEquals(testTask5.viewTaskStateName(), "OnGoing");
-
-		/*
-		 * Checks if the task is deleted. It can't, because it's state is set to
-		 * "OnGoing"
-		 */
-		assertFalse(controllerDelete.deleteTask(projectCode, taskId5));
-
-		/*
-		 * Sets the TaskState to Planned
-		 */
-		testTask5.setTaskState(taskStatePlanned);
-
-		/*
-		 * Checks if the task is deleted.
-		 */
-		assertTrue(controllerDelete.deleteTask(projectCode, taskId5));
-
-		/*
-		 * Sets the TaskState to Assigned
-		 */
-		testTask6.setTaskState(taskStateAssigned);
-
-		// Verifies that the testTask state is set to "Assigned"
-		assertEquals(testTask6.viewTaskStateName(), "Assigned");
-
-		/*
-		 * Checks if the task is deleted.
-		 */
-		assertTrue(controllerDelete.deleteTask(projectCode, taskId6));
-
-		/*
-		 * The task doesn't exist in the repository anymore, so it will return false
-		 */
-		assertFalse(controllerDelete.deleteTask(projectCode, taskId6));
 	}
 
+	@Test
+	public void testDeleteTaskSetToPlannedStateControllerTest() {
+
+		// asserts which user is the Project Manager
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		project.getTaskRepository().addProjectTask(testTask);
+
+		taskStatePlanned = new Planned(testTask);
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+
+		// Creates a string that holds the value of tasks id
+		String taskId = testTask.getTaskID();
+
+		// creates the Controller
+		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
+
+		testTask.setTaskState(taskStatePlanned);
+
+		// Verifies that the testTask state is set to "Planned"
+		assertEquals(testTask.viewTaskStateName(), "Planned");
+
+		assertEquals(project.getTaskRepository().getTaskByID(taskId), testTask);
+
+		// Checks if the task is successfully deleted
+		assertTrue(controllerDelete.deleteTask(projectCode, taskId));
+
+	}
+
+	@Test
+	public void testDeleteTaskSetToAssignedStateControllerTest() {
+
+		// asserts which user is the Project Manager
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		project.getTaskRepository().addProjectTask(testTask);
+
+		taskStateAssigned = new Assigned(testTask);
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+
+		// Creates a string that holds the value of tasks id
+		String taskId = testTask.getTaskID();
+
+		// creates the Controller
+		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
+
+		testTask.setTaskState(taskStateAssigned);
+
+		// Verifies that the testTask state is set to "Assigned"
+		assertEquals(testTask.viewTaskStateName(), "Assigned");
+
+		assertEquals(project.getTaskRepository().getTaskByID(taskId), testTask);
+
+		// Checks if the task is successfully deleted
+		assertTrue(controllerDelete.deleteTask(projectCode, taskId));
+
+	}
+
+	@Test
+	public void testDeleteTaskSetToCancelledStateControllerTest() {
+
+		// asserts which user is the Project Manager
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		project.getTaskRepository().addProjectTask(testTask);
+
+		taskStateCancelled = new Cancelled(testTask);
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+
+		// Creates a string that holds the value of tasks id
+		String taskId = testTask.getTaskID();
+
+		// creates the Controller
+		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
+
+		testTask.setTaskState(taskStateCancelled);
+
+		// Verifies that the testTask state is set to "Cancelled"
+		assertEquals(testTask.viewTaskStateName(), "Cancelled");
+
+		assertEquals(project.getTaskRepository().getTaskByID(taskId), testTask);
+
+		// Checks if the task wasn't deleted
+		assertFalse(controllerDelete.deleteTask(projectCode, taskId));
+
+	}
+
+	@Test
+	public void testDeleteTaskSetToFinishedStateControllerTest() {
+
+		// asserts which user is the Project Manager
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		project.getTaskRepository().addProjectTask(testTask);
+
+		taskStateFinished = new Finished(testTask);
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+
+		// Creates a string that holds the value of tasks id
+		String taskId = testTask.getTaskID();
+
+		// creates the Controller
+		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
+
+		testTask.setTaskState(taskStateFinished);
+
+		// Verifies that the testTask state is set to "Finished"
+		assertEquals(testTask.viewTaskStateName(), "Finished");
+
+		assertEquals(project.getTaskRepository().getTaskByID(taskId), testTask);
+
+		// Checks if the task wasn't deleted
+		assertFalse(controllerDelete.deleteTask(projectCode, taskId));
+
+	}
+
+	@Test
+	public void testDeleteTaskSetToOnGoingStateControllerTest() {
+
+		// asserts which user is the Project Manager
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		project.getTaskRepository().addProjectTask(testTask);
+
+		taskStateOnGoing = new OnGoing(testTask);
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+
+		// Creates a string that holds the value of tasks id
+		String taskId = testTask.getTaskID();
+
+		// creates the Controller
+		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
+
+		testTask.setTaskState(taskStateOnGoing);
+
+		// Verifies that the testTask state is set to "OnGoing"
+		assertEquals(testTask.viewTaskStateName(), "OnGoing");
+
+		assertEquals(project.getTaskRepository().getTaskByID(taskId), testTask);
+
+		// Checks if the task wasn't deleted
+		assertFalse(controllerDelete.deleteTask(projectCode, taskId));
+
+	}
+
+	@Test
+	public void testDeleteTaskSetToReadyControllerTest() {
+
+		// asserts which user is the Project Manager
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		project.getTaskRepository().addProjectTask(testTask);
+
+		taskStateReady = new Ready(testTask);
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+
+		// Creates a string that holds the value of tasks id
+		String taskId = testTask.getTaskID();
+
+		// creates the Controller
+		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
+
+		testTask.setTaskState(taskStateReady);
+
+		// Verifies that the testTask state is set to "OnGoing"
+		assertEquals(testTask.viewTaskStateName(), "Ready");
+
+		assertEquals(project.getTaskRepository().getTaskByID(taskId), testTask);
+
+		// Checks if the task was deleted
+		assertTrue(controllerDelete.deleteTask(projectCode, taskId));
+
+	}
+
+	@Test
+	public void testDeleteTaskSetToStandByControllerTest() {
+
+		// asserts which user is the Project Manager
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		project.getTaskRepository().addProjectTask(testTask);
+
+		taskStateStandBy = new StandBy(testTask);
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+
+		// Creates a string that holds the value of tasks id
+		String taskId = testTask.getTaskID();
+
+		// creates the Controller
+		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
+
+		testTask.setTaskState(taskStateStandBy);
+
+		// Verifies that the testTask state is set to "StandBy"
+		assertEquals(testTask.viewTaskStateName(), "StandBy");
+
+		assertEquals(project.getTaskRepository().getTaskByID(taskId), testTask);
+
+		// Checks if the task wasn't deleted
+		assertFalse(controllerDelete.deleteTask(projectCode, taskId));
+
+	}
 }
