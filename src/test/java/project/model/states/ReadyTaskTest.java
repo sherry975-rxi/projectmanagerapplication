@@ -184,6 +184,9 @@ public class ReadyTaskTest {
 	public final void testChangeToOnGoing() {
 		// Sets a start date
 		mainTask.setStartDate(Calendar.getInstance());
+		// Finishes the needed task so the main task has no dependencies
+		finishedState = new Finished(neededTask);
+		neededTask.setTaskState(finishedState);
 		// Changes the state to ongoing and tests it
 		mainTask.getTaskState().changeToOnGoing();
 		assertTrue(mainTask.viewTaskStateName().equals("OnGoing"));
@@ -195,7 +198,7 @@ public class ReadyTaskTest {
 
 	@Test
 	public final void testChangeToOnGoingFailed() {
-		// Should fail as the task doesn't have a start date
+		// Should fail as the task doesn't have a start date and has active dependencies
 		mainTask.getTaskState().changeToOnGoing();
 		assertFalse(mainTask.viewTaskStateName().equals("OnGoing"));
 	}
