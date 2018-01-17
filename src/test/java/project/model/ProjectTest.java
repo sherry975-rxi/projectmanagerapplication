@@ -566,4 +566,149 @@ public class ProjectTest {
 		assertTrue(p1.viewPendingTaskAssignementRequests().get(0).equals(result));
 	}
 
+	/**
+	 * Test the getter of a removal from task request
+	 */
+	@Test
+	public void testGetRemovalRequestsList() {
+		// no request added, so size should be zero
+		assertEquals(0, p1.getRemovalRequestsList().size());
+
+	}
+
+	/**
+	 * Tests the creation and addition of a new request to the Removal Request List
+	 * 
+	 */
+	@Test
+	public void testCreateTaskRemovalRequest() {
+		// if doesn't exist allows to create the request
+		assertTrue(p1.createTaskRemovalRequest(projectCollaborator1, task1));
+		// if exists it doesn't allow to create the request
+		assertFalse(p1.createTaskRemovalRequest(projectCollaborator1, task1));
+
+	}
+
+	/**
+	 * If a Removal request already exists then the method confirms that it exists
+	 * 
+	 */
+	@Test
+	public void testIsRemovalRequestAlreadyCreated() {
+
+		// create and add removal request of certain project collaborator and certain
+		// task
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+
+		// checks if the removal request was added to the list
+		assertTrue(p1.isRemovalRequestAlreadyCreated(projectCollaborator1, task1));
+
+	}
+
+	/**
+	 * Test the getter of a removal from task request
+	 */
+	@Test
+	public void testGetRemovalTaskTeamRequest() {
+		// create and add a request of certain project collaborator and certain task OK
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+		// create a similar request of the one created
+		TaskTeamRequest expectedRequest = new TaskTeamRequest(projectCollaborator1, task1);
+		TaskTeamRequest req = p1.getRemovalTaskTeamRequest(projectCollaborator1, task1);
+		// if the info are the same, the objects should be considered the same
+		assertTrue(req.equals(expectedRequest));
+
+	}
+
+	/**
+	 * Tests the remove of an existing request in the Task Removal Request List
+	 */
+	@Test
+	public void testDeleteTaskRemovalRequest() {
+		// create a removal request of certain project collaborator and certain task
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+		// delete the request added to the task removal list
+		assertTrue(p1.deleteTaskRemovalRequest(projectCollaborator1, task1));
+	}
+
+	/**
+	 * Tests the string representation of a request from the Removal Request List
+	 * 
+	 */
+	@Test
+	public void testViewTaskRemovalRequest() {
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+		String result = "name" + "\n" + "email" + "\n" + "1.1" + "\n" + "description";
+		assertTrue(p1.viewPendingTaskRemovalRequests().get(0).equals(result));
+	}
+
+	/**
+	 * Tests if removeAllRequestsWithASpecificTaskFromAssignementRequests() actually
+	 * removes the requests chosen from the assignement requests list
+	 */
+	@Test
+	public void testRemoveAssignementRequestsWithACertainTask() {
+		p1.createTaskAssignementRequest(projectCollaborator1, task1);
+		p1.createTaskAssignementRequest(projectCollaborator2, task1);
+		p1.createTaskAssignementRequest(projectCollaborator3, task1);
+		p1.createTaskAssignementRequest(projectCollaborator4, task1);
+		p1.createTaskAssignementRequest(projectCollaborator1, task2);
+		p1.createTaskAssignementRequest(projectCollaborator1, task3);
+		p1.createTaskAssignementRequest(projectCollaborator2, task2);
+		p1.createTaskAssignementRequest(projectCollaborator3, task2);
+
+		p1.removeAllRequestsWithASpecificTaskFromAssignementRequests(task1);
+
+		assertEquals(4, p1.getAssignmentRequestsList().size());
+	}
+
+	/**
+	 * Tests if removeAllRequestsWithASpecificTaskFromRemovalRequests() actually
+	 * removes the requests chosen from the removal requests list
+	 */
+	@Test
+	public void testRemoveRemovalRequestsWithACertainTask() {
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+		p1.createTaskRemovalRequest(projectCollaborator2, task1);
+		p1.createTaskRemovalRequest(projectCollaborator3, task1);
+		p1.createTaskRemovalRequest(projectCollaborator4, task1);
+		p1.createTaskRemovalRequest(projectCollaborator1, task2);
+		p1.createTaskRemovalRequest(projectCollaborator1, task3);
+		p1.createTaskRemovalRequest(projectCollaborator2, task2);
+		p1.createTaskRemovalRequest(projectCollaborator3, task2);
+
+		p1.removeAllRequestsWithASpecificTaskFromRemovalRequests(task1);
+
+		assertEquals(4, p1.getRemovalRequestsList().size());
+	}
+
+	/**
+	 * Tests if removeAllRequestsWithASpecificTask() actually removes the requests
+	 * chosen from the both the requests list
+	 */
+	@Test
+	public void testRemoveAllRequestsWithACertainTask() {
+		p1.createTaskAssignementRequest(projectCollaborator1, task1);
+		p1.createTaskAssignementRequest(projectCollaborator2, task1);
+		p1.createTaskAssignementRequest(projectCollaborator3, task1);
+		p1.createTaskAssignementRequest(projectCollaborator4, task1);
+		p1.createTaskAssignementRequest(projectCollaborator1, task2);
+		p1.createTaskAssignementRequest(projectCollaborator1, task3);
+		p1.createTaskAssignementRequest(projectCollaborator2, task2);
+		p1.createTaskAssignementRequest(projectCollaborator3, task2);
+
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+		p1.createTaskRemovalRequest(projectCollaborator2, task1);
+		p1.createTaskRemovalRequest(projectCollaborator3, task1);
+		p1.createTaskRemovalRequest(projectCollaborator4, task1);
+		p1.createTaskRemovalRequest(projectCollaborator1, task2);
+		p1.createTaskRemovalRequest(projectCollaborator1, task3);
+		p1.createTaskRemovalRequest(projectCollaborator2, task2);
+		p1.createTaskRemovalRequest(projectCollaborator3, task2);
+
+		p1.removeAllRequestsWithASpecificTask(task1);
+
+		assertEquals(4, p1.getAssignmentRequestsList().size());
+		assertEquals(4, p1.getRemovalRequestsList().size());
+	}
 }

@@ -62,6 +62,7 @@ public class Project {
 		this.taskRepository = new TaskRepository(projectIdCode);
 		this.projectTeam = new ArrayList<>();
 		this.pendingTaskAssignementRequests = new ArrayList<>();
+		this.pendingTaskRemovalRequests = new ArrayList<>();
 	}
 
 	/**
@@ -497,7 +498,7 @@ public class Project {
 	 */
 	public boolean createTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
-		if (!this.isRemovalRequestAlreadyCreated(newReq)) {
+		if (!this.isRemovalRequestAlreadyCreated(projCollab, task)) {
 			return this.pendingTaskRemovalRequests.add(newReq);
 		}
 		return false;
@@ -523,8 +524,9 @@ public class Project {
 	 *            TaskTeamRequest to remove from the list
 	 */
 
-	public void deleteTaskRemovalRequest(TaskTeamRequest request) {
-		this.pendingTaskRemovalRequests.remove(request);
+	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest request = getRemovalTaskTeamRequest(projCollab, task);
+		return this.pendingTaskRemovalRequests.remove(request);
 	}
 
 	/**
@@ -636,7 +638,8 @@ public class Project {
 	 *            Task chosen by the project collaborator
 	 * @return True if request already exists, false if not
 	 */
-	public boolean isRemovalRequestAlreadyCreated(TaskTeamRequest request) {
+	public boolean isRemovalRequestAlreadyCreated(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest request = new TaskTeamRequest(projCollab, task);
 		return this.pendingTaskRemovalRequests.contains(request);
 	}
 
@@ -659,6 +662,52 @@ public class Project {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * Searches the assignement request list for the task selected. If it finds any
+	 * request with this task, removes it from the list.
+	 * 
+	 * @param task
+	 *            Task to remove from the assignement request list
+	 */
+	public void removeAllRequestsWithASpecificTaskFromAssignementRequests(Task task) {
+		ArrayList<TaskTeamRequest> assignementCopy = new ArrayList<>();
+		assignementCopy.addAll(this.pendingTaskAssignementRequests);
+		for (int i = assignementCopy.size() - 1; i >= 0; i--) {
+			if (assignementCopy.get(i).getTask().equals(task)) {
+				this.pendingTaskAssignementRequests.remove(this.pendingTaskAssignementRequests.get(i));
+			}
+		}
+	}
+
+	/**
+	 * Searches the removal request list for the task selected. If it finds any
+	 * request with this task, removes it from the list.
+	 * 
+	 * @param task
+	 *            Task to remove from the removal request list
+	 */
+	public void removeAllRequestsWithASpecificTaskFromRemovalRequests(Task task) {
+		ArrayList<TaskTeamRequest> removalCopy = new ArrayList<>();
+		removalCopy.addAll(this.pendingTaskRemovalRequests);
+		for (int i = removalCopy.size() - 1; i >= 0; i--) {
+			if (removalCopy.get(i).getTask().equals(task)) {
+				this.pendingTaskRemovalRequests.remove(this.pendingTaskRemovalRequests.get(i));
+			}
+		}
+	}
+
+	/**
+	 * Searches both request lists for the task selected. If it finds any request
+	 * with this task, removes it from the list.
+	 * 
+	 * @param task
+	 *            Task to remove from the request lists
+	 */
+	public void removeAllRequestsWithASpecificTask(Task task) {
+		this.removeAllRequestsWithASpecificTaskFromAssignementRequests(task);
+		this.removeAllRequestsWithASpecificTaskFromRemovalRequests(task);
 	}
 
 }

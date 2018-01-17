@@ -10,7 +10,6 @@ import static org.junit.Assert.assertTrue;
 //
 
 import java.util.Calendar;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -525,42 +524,53 @@ public class TaskTest {
 		testTask.removeFinishDate();
 		assertEquals(null, testTask.getFinishDate());
 	}
-	
+
 	/**
 	 * Tests the change of reported time
 	 */
 	@Test
 	public void testChangeReportedTime() {
-		//add three reports to reports's list
+		// add three reports to reports's list
 		testTask.createReport(tWorker1);
 		testTask.createReport(tWorker1);
 		testTask.createReport(tWorker1);
-		
-		//change reportedTime to 10 of report with index 0
+
+		// change reportedTime to 10 of report with index 0
 		assertTrue(testTask.changeReportedTime(10, 0));
-		
-		//change reportedTime to 20 of report with index 1
+
+		// change reportedTime to 20 of report with index 1
 		assertTrue(testTask.changeReportedTime(20, 1));
-		
-		//asserts that cannot change a reported time if the index is outside of the limit (bigger than list size)
+
+		// asserts that cannot change a reported time if the index is outside of the
+		// limit (bigger than list size)
 		assertFalse(testTask.changeReportedTime(30, 3));
-		
-		//asserts that cannot change a reported time if the index is outside of the limit (less than zero)
+
+		// asserts that cannot change a reported time if the index is outside of the
+		// limit (less than zero)
 		assertFalse(testTask.changeReportedTime(30, -1));
-		
-		
+
 	}
-	
+
 	/**
 	 * Tests the get and set of cancel date
 	 */
 	@Test
 	public void testGetCancelDate() {
-		//asserts that the testTask don't have a cancel date defined
+		// asserts that the testTask don't have a cancel date defined
 		assertEquals(testTask.getCancelDate(), null);
-		
-		//set the testTask cancel date and then assert that this date exists
+
+		// set the testTask cancel date and then assert that this date exists
 		testTask.setCancelDate();
-		assertTrue(testTask.getCancelDate()!= null);
+		assertTrue(testTask.getCancelDate() != null);
+	}
+
+	/**
+	 * Tests if the this method actually empties the task team
+	 */
+	@Test
+	public void testRemoveAllCollaboratorsFromTaskTeam() {
+		testTask.addProjectCollaboratorToTask(collab2);
+		testTask.removeAllCollaboratorsFromTaskTeam();
+		assertFalse(testTask.doesTaskTeamHaveActiveUsers());
 	}
 }
