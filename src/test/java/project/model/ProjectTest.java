@@ -588,5 +588,22 @@ public class ProjectTest {
 		assertFalse(p1.createTaskRemovalRequest(projectCollaborator1, task1));
 		
 	}
+	
+	/**
+	 * If a Removal request already exists then 
+	 * the method confirms that it exists
+	 *  
+	 */
+	@Test
+	public void testIsRemovalRequestAlreadyCreated() {
+		
+		// create and add removal request of certain project collaborator and certain task
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+
+		// checks if the removal request was added to the list
+		assertTrue(p1.isRemovalRequestAlreadyCreated(projectCollaborator1, task1));
+		
+
+	}
 
 }
