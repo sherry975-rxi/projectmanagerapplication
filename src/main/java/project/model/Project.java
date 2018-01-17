@@ -536,7 +536,7 @@ public class Project {
 	public List<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
 		List<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskAssignementRequests) {
-			toString.add(req.getStringRepresentation());
+			toString.add(req.viewStringRepresentation());
 		}
 		return toString;
 	}

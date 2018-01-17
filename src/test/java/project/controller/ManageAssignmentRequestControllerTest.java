@@ -40,7 +40,6 @@ public class ManageAssignmentRequestControllerTest {
 
 	@Before
 	public void setUp() {
-		Company.clear();
 		spaceX = Company.getTheInstance();
 		// creates test users for a manager and collaborator.
 		// declares the collaborator's relevant data as Strings to facilitate assertions
@@ -80,6 +79,7 @@ public class ManageAssignmentRequestControllerTest {
 
 	@After
 	public void breakDown() {
+		Company.clear();
 		spaceX = null;
 
 		managerTester = null;
@@ -154,15 +154,16 @@ public class ManageAssignmentRequestControllerTest {
 		// least one assignment request exists
 		assertEquals(testProject.getAssignmentRequestsList().size(), 1);
 		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
+		assignmentRequestsController.selectAssignmentRequest(0);
 
 		// given the approval method, confirms that the collaborator was added to the
 		// team, and the request was deleted from the list
-		assertTrue(assignmentRequestsController.approveAssignmentRequest(0));
+		assertTrue(assignmentRequestsController.approveAssignmentRequest());
 		assertTrue(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
 		assertEquals(testProject.getAssignmentRequestsList().size(), 0);
 
-		// then, attempts to approve a request when none should exist
-		assertFalse(assignmentRequestsController.approveAssignmentRequest(0));
+		// then, attempts to select a request when none should exist
+		assertFalse(assignmentRequestsController.selectAssignmentRequest(0));
 		System.out.println("");
 	}
 
@@ -177,16 +178,17 @@ public class ManageAssignmentRequestControllerTest {
 		// least one assignment request exists
 		assertEquals(testProject.getAssignmentRequestsList().size(), 1);
 		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
+		assignmentRequestsController.selectAssignmentRequest(0);
 
 		// given the rejection method, confirms that the collaborator wasn't added to
 		// the
 		// team, and the request was deleted from the list
-		assertTrue(assignmentRequestsController.rejectAssignmentRequest(0));
+		assertTrue(assignmentRequestsController.rejectAssignmentRequest());
 		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
 		assertEquals(testProject.getAssignmentRequestsList().size(), 0);
 
-		// then, attempts to reject a request when none should exist
-		assertFalse(assignmentRequestsController.approveAssignmentRequest(0));
+		// then, attempts to select a request when none should exist
+		assertFalse(assignmentRequestsController.selectAssignmentRequest(0));
 		System.out.println("");
 	}
 

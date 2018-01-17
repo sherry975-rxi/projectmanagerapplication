@@ -59,11 +59,13 @@ public class ManageAssigmentRequestController {
 
 		if (index >= 0 && index < toSelectRequest.getAssignmentRequestsList().size()) {
 			this.selectedAdditionRequest = toSelectRequest.getAssignmentRequestsList().get(index);
-			System.out.println("Selected: " + this.selectedAdditionRequest.toString());
+			System.out.println("Selected: " + this.selectedAdditionRequest.viewStringRepresentation());
+			System.out.println("");
 			return true;
 		} else {
 			this.selectedAdditionRequest = null;
 			System.out.println("Request not found!");
+			System.out.println();
 			return false;
 		}
 
@@ -79,9 +81,9 @@ public class ManageAssigmentRequestController {
 	 * @return returns true or false if the request was found and approved
 	 *         successfully
 	 */
-	public boolean approveAssignmentRequest(int index) {
+	public boolean approveAssignmentRequest() {
 
-		if (selectAssignmentRequest(index)) {
+		if (selectedAdditionRequest != null) {
 			selectedAdditionRequest.getTask().addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
 
 			deleteRequest();
@@ -102,9 +104,9 @@ public class ManageAssigmentRequestController {
 	 * @return returns true or false if the request was found and rejected
 	 *         successfully
 	 */
-	public boolean rejectAssignmentRequest(int index) {
+	public boolean rejectAssignmentRequest() {
 
-		if (selectAssignmentRequest(index)) {
+		if (selectedAdditionRequest != null) {
 
 			System.out.println("Request rejected!");
 			deleteRequest();
