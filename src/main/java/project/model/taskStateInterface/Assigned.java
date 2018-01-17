@@ -4,10 +4,10 @@ import project.model.Task;
 
 public class Assigned implements TaskStateInterface {
 
-	private Task toUpdate;
+	private Task task;
 
-	public Assigned(Task toUpdateState) {
-		this.toUpdate = toUpdateState;
+	public Assigned(Task taskToUpdate) {
+		this.task = taskToUpdate;
 	}
 
 	/**
@@ -17,7 +17,7 @@ public class Assigned implements TaskStateInterface {
 	 */
 	// TODO what happens when the finished dependency of a "ready" task reverts to Unfinished?
 	public boolean isValid() {
-		return toUpdate.doesTaskTeamHaveActiveUsers();
+		return task.doesTaskTeamHaveActiveUsers();
 	}
 
 	/**
@@ -25,7 +25,15 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToCreated() {
+	public boolean changeToCreated() {
+		boolean condition = false;
+		if (isTransitionToCreatedPossible()) {
+			TaskStateInterface stateCreated = new Created(task);
+			if (stateCreated.isValid())
+				task.setTaskState(stateCreated);
+				condition = true;
+		}
+		return condition;
 	}
 
 	/**
@@ -33,13 +41,15 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToPlanned() {
-		 
-			 TaskStateInterface updatedState = new Planned(toUpdate);
-			
-			 if(updatedState.isValid() && isTransitionToPlannedPossible())
-			 toUpdate.setTaskState(updatedState);
-		 
+	public boolean changeToPlanned() {
+		boolean condition = false;
+		if (isTransitionToPlannedPossible()) {
+			TaskStateInterface statePlanned = new Planned(task);
+			if (statePlanned.isValid())
+				task.setTaskState(statePlanned);
+				condition = true;
+		}
+		return condition; 
 	}
 
 	/**
@@ -47,7 +57,15 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToAssigned() {
+	public boolean changeToAssigned() {
+		boolean condition = false;
+		if (isTransitionToAssignedPossible()) {
+			TaskStateInterface stateAssigned = new Assigned(task);
+			if (stateAssigned.isValid())
+				task.setTaskState(stateAssigned);
+				condition = true;
+		}
+		return condition; 
 	}
 
 	/**
@@ -55,11 +73,15 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToReady() {
-		 TaskStateInterface updatedState = new Ready(toUpdate);
-		
-		 if(updatedState.isValid() && isTransitionToReadyPossible())
-		 toUpdate.setTaskState(updatedState);
+	public boolean changeToReady() {
+		boolean condition = false;
+		if (isTransitionToReadyPossible()) {
+			TaskStateInterface stateReady = new Ready(task);
+			if (stateReady.isValid())
+				task.setTaskState(stateReady);
+				condition = true;
+		}
+		return condition; 
 	}
 
 	/**
@@ -68,7 +90,15 @@ public class Assigned implements TaskStateInterface {
 	 * @return Void
 	 */
 	// TODO Can Task skip Ready State if it has no dependencies?
-	public void changeToOnGoing() {
+	public boolean changeToOnGoing() {
+		boolean condition = false;
+		if (isTransitionToOnGoingPossible()) {
+			TaskStateInterface stateOnGoing = new OnGoing(task);
+			if (stateOnGoing.isValid())
+				task.setTaskState(stateOnGoing);
+				condition = true;
+		}
+		return condition; 
 	}
 
 	/**
@@ -76,7 +106,15 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToStandBy() {
+	public boolean changeToStandBy() {
+		boolean condition = false;
+		if (isTransitionToStandByPossible()) {
+			TaskStateInterface stateStandBy = new StandBy(task);
+			if (stateStandBy.isValid())
+				task.setTaskState(stateStandBy);
+				condition = true;
+		}
+		return condition; 
 	}
 
 	/**
@@ -85,7 +123,14 @@ public class Assigned implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToCancelled() {
-		return false;
+		boolean condition = false;
+		if (isTransitionToCancelledPossible()) {
+			TaskStateInterface stateCancelled = new Cancelled(task);
+			if (stateCancelled.isValid())
+				task.setTaskState(stateCancelled);
+			condition = true;
+		}
+		return condition;
 	}
 
 	/**
@@ -95,6 +140,13 @@ public class Assigned implements TaskStateInterface {
 	 */
 	public boolean changeToFinished(){
 		boolean condition = false;
+		if (isTransitionToFinishedPossible()) {
+			TaskStateInterface Finished1 = new Finished(task);
+			if (Finished1.isValid()) {
+				task.setTaskState(Finished1);
+				condition = true;
+			}
+		}
 		return condition;
 	}
 

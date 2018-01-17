@@ -538,10 +538,21 @@ public class ProjectTest {
 	@Test
 	public void testDeleteTaskAssignementRequest() {
 		p1.createTaskAssignementRequest(projectCollaborator1, task1);
-		TaskTeamRequest newRequest = new TaskTeamRequest(projectCollaborator1, task1);
-		assertTrue(p1.isAssignementRequestAlreadyCreated(newRequest));
-		p1.deleteTaskAssignementRequest(newRequest);
-		assertFalse(p1.isAssignementRequestAlreadyCreated(newRequest));
+		assertTrue(p1.isAssignementRequestAlreadyCreated(projectCollaborator1, task1));
+		TaskTeamRequest req = p1.getAssignementTaskTeamRequest(projectCollaborator1, task1);
+		p1.deleteTaskAssignementRequest(req);
+		assertFalse(p1.isAssignementRequestAlreadyCreated(projectCollaborator1, task1));
+	}
+
+	/**
+	 * Tests if the isAssignementAlreadyCreated returns the correct value for each
+	 * situation
+	 */
+	@Test
+	public void testIsAssignementAlreadyCreated() {
+		p1.createTaskAssignementRequest(projectCollaborator1, task1);
+		assertTrue(p1.isAssignementRequestAlreadyCreated(projectCollaborator1, task1));
+		assertFalse(p1.isAssignementRequestAlreadyCreated(projectCollaborator3, task4));
 	}
 
 	/**

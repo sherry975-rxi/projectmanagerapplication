@@ -4,10 +4,10 @@ import project.model.Task;
 
 public class Finished implements TaskStateInterface {
 
-	Task tarefa;
+	Task task;
 
-	public Finished(Task tarefa) {
-		this.tarefa = tarefa;
+	public Finished(Task taskToUpdate) {
+		this.task = taskToUpdate;
 	}
 
 	/**
@@ -17,7 +17,7 @@ public class Finished implements TaskStateInterface {
 	 */
 	public boolean isValid() {
 		boolean valid = false;
-		if (tarefa.getFinishDate() != null) {
+		if (task.getFinishDate() != null) {
 			valid = true;
 		}
 		return valid;
@@ -28,13 +28,15 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToCreated() {
+	public boolean changeToCreated() {
+		boolean condition = false;
 		if (isTransitionToCreatedPossible()) {
-			TaskStateInterface Created1 = new OnGoing(tarefa);
-			if (Created1.isValid()) {
-				tarefa.setTaskState(Created1);
-			}
+			TaskStateInterface stateCreated = new Created(task);
+			if (stateCreated.isValid())
+				task.setTaskState(stateCreated);
+				condition = true;
 		}
+		return condition;
 	}
 
 	/**
@@ -42,13 +44,15 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToPlanned() {
+	public boolean changeToPlanned() {
+		boolean condition = false;
 		if (isTransitionToPlannedPossible()) {
-			TaskStateInterface Planned1 = new OnGoing(tarefa);
-			if (Planned1.isValid()) {
-				tarefa.setTaskState(Planned1);
-			}
+			TaskStateInterface statePlanned = new Planned(task);
+			if (statePlanned.isValid())
+				task.setTaskState(statePlanned);
+				condition = true;
 		}
+		return condition; 
 	}
 
 	/**
@@ -56,13 +60,15 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToAssigned() {
+	public boolean changeToAssigned() {
+		boolean condition = false;
 		if (isTransitionToAssignedPossible()) {
-			TaskStateInterface Assigned1 = new OnGoing(tarefa);
-			if (Assigned1.isValid()) {
-				tarefa.setTaskState(Assigned1);
-			}
+			TaskStateInterface stateAssigned = new Assigned(task);
+			if (stateAssigned.isValid())
+				task.setTaskState(stateAssigned);
+				condition = true;
 		}
+		return condition; 
 	}
 
 	/**
@@ -70,13 +76,15 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToReady() {
+	public boolean changeToReady() {
+		boolean condition = false;
 		if (isTransitionToReadyPossible()) {
-			TaskStateInterface Ready1 = new OnGoing(tarefa);
-			if (Ready1.isValid()) {
-				tarefa.setTaskState(Ready1);
-			}
+			TaskStateInterface stateReady = new Ready(task);
+			if (stateReady.isValid())
+				task.setTaskState(stateReady);
+				condition = true;
 		}
+		return condition; 
 	}
 
 	/**
@@ -84,14 +92,15 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToOnGoing() {
+	public boolean changeToOnGoing() {
+		boolean condition = false;
 		if (isTransitionToOnGoingPossible()) {
-			TaskStateInterface OnGoing1 = new OnGoing(tarefa);
-			if (OnGoing1.isValid()) {
-				tarefa.setTaskState(OnGoing1);
-			}
+			TaskStateInterface stateOnGoing = new OnGoing(task);
+			if (stateOnGoing.isValid())
+				task.setTaskState(stateOnGoing);
+				condition = true;
 		}
-
+		return condition; 
 	}
 
 	/**
@@ -99,13 +108,15 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToStandBy() {
+	public boolean changeToStandBy() {
+		boolean condition = false;
 		if (isTransitionToStandByPossible()) {
-			TaskStateInterface StandBy1 = new StandBy(tarefa);
-			if (StandBy1.isValid()) {
-				tarefa.setTaskState(StandBy1);
-			}
+			TaskStateInterface stateStandBy = new StandBy(task);
+			if (stateStandBy.isValid())
+				task.setTaskState(stateStandBy);
+				condition = true;
 		}
+		return condition;
 	}
 
 	/**
@@ -114,15 +125,12 @@ public class Finished implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToCancelled() {
-
 		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
-
-			TaskStateInterface stateCancelled = new Cancelled(tarefa);
+			TaskStateInterface stateCancelled = new Cancelled(task);
 			if (stateCancelled.isValid())
-				tarefa.setTaskState(stateCancelled);
+				task.setTaskState(stateCancelled);
 			condition = true;
-			return condition;
 		}
 		return condition;
 	}
@@ -135,11 +143,10 @@ public class Finished implements TaskStateInterface {
 	public boolean changeToFinished() {
 		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
-			TaskStateInterface Finished1 = new OnGoing(tarefa);
+			TaskStateInterface Finished1 = new Finished(task);
 			if (Finished1.isValid()) {
-				tarefa.setTaskState(Finished1);
+				task.setTaskState(Finished1);
 				condition = true;
-				return condition;
 			}
 		}
 		return condition;
