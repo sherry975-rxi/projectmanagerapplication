@@ -524,8 +524,9 @@ public class Project {
 	 *            TaskTeamRequest to remove from the list
 	 */
 
-	public void deleteTaskRemovalRequest(TaskTeamRequest request) {
-		this.pendingTaskRemovalRequests.remove(request);
+	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest request = getRemovalTaskTeamRequest(projCollab, task); 
+		return this.pendingTaskRemovalRequests.remove(request);
 	}
 
 	/**
