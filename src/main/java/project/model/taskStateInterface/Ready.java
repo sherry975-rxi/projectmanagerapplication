@@ -4,13 +4,13 @@ import project.model.Task;
 
 public class Ready implements TaskStateInterface {
 
-	private Task toUpdate;
+	private Task task;
 
 	public Ready() {
 	}
 
-	public Ready(Task toUpdateState) {
-		this.toUpdate = toUpdateState;
+	public Ready(Task taskToUpdate) {
+		this.task = taskToUpdate;
 	}
 
 	/**
@@ -18,10 +18,9 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return True if valid, False if not
 	 */
-	@Override
 	public boolean isValid() {
 		boolean valid = false;
-		if (!toUpdate.hasActiveDependencies()) {
+		if (!task.hasActiveDependencies()) {
 			valid = true;
 		}
 		return valid;
@@ -33,14 +32,15 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	@Override
-	public void changeToCreated() {
+	public boolean changeToCreated() {
+		boolean condition = false;
 		if (isTransitionToCreatedPossible()) {
-
-			TaskStateInterface stateCreated = new Created(toUpdate);
+			TaskStateInterface stateCreated = new Created(task);
 			if (stateCreated.isValid())
-				toUpdate.setTaskState(stateCreated);
+				task.setTaskState(stateCreated);
+				condition = true;
 		}
+		return condition;
 	}
 
 	/**
@@ -48,13 +48,15 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	@Override
-	public void changeToPlanned() {
+	public boolean changeToPlanned() {
+		boolean condition = false;
 		if (isTransitionToPlannedPossible()) {
-			TaskStateInterface plannedState = new Planned(toUpdate);
-			if (plannedState.isValid())
-				toUpdate.setTaskState(plannedState);
+			TaskStateInterface statePlanned = new Planned(task);
+			if (statePlanned.isValid())
+				task.setTaskState(statePlanned);
+				condition = true;
 		}
+		return condition; 
 	}
 
 	/**
@@ -63,14 +65,15 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	@Override
-	public void changeToAssigned() {
+	public boolean changeToAssigned() {
+		boolean condition = false;
 		if (isTransitionToAssignedPossible()) {
-
-			TaskStateInterface stateAssigned = new Assigned(toUpdate);
+			TaskStateInterface stateAssigned = new Assigned(task);
 			if (stateAssigned.isValid())
-				toUpdate.setTaskState(stateAssigned);
+				task.setTaskState(stateAssigned);
+				condition = true;
 		}
+		return condition; 
 	}
 
 	/**
@@ -79,14 +82,15 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	@Override
-	public void changeToReady() {
+	public boolean changeToReady() {
+		boolean condition = false;
 		if (isTransitionToReadyPossible()) {
-
-			TaskStateInterface stateReady = new Ready(toUpdate);
+			TaskStateInterface stateReady = new Ready(task);
 			if (stateReady.isValid())
-				toUpdate.setTaskState(stateReady);
+				task.setTaskState(stateReady);
+				condition = true;
 		}
+		return condition; 
 	}
 
 	/**
@@ -94,13 +98,15 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	@Override
-	public void changeToOnGoing() {
+	public boolean changeToOnGoing() {
+		boolean condition = false;
 		if (isTransitionToOnGoingPossible()) {
-			TaskStateInterface onGoingState = new OnGoing(toUpdate);
-			if (onGoingState.isValid())
-				toUpdate.setTaskState(onGoingState);
+			TaskStateInterface stateOnGoing = new OnGoing(task);
+			if (stateOnGoing.isValid())
+				task.setTaskState(stateOnGoing);
+				condition = true;
 		}
+		return condition; 
 	}
 
 	/**
@@ -109,14 +115,15 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	@Override
-	public void changeToStandBy() {
+	public boolean changeToStandBy() {
+		boolean condition = false;
 		if (isTransitionToStandByPossible()) {
-
-			TaskStateInterface stateStandBy = new StandBy(toUpdate);
+			TaskStateInterface stateStandBy = new StandBy(task);
 			if (stateStandBy.isValid())
-				toUpdate.setTaskState(stateStandBy);
+				task.setTaskState(stateStandBy);
+				condition = true;
 		}
+		return condition;
 	}
 
 	/**
@@ -126,15 +133,12 @@ public class Ready implements TaskStateInterface {
 	 * @return TRUE if state was changed and FALSE if state was not changed
 	 */
 	public boolean changeToCancelled() {
-
 		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
-
-			TaskStateInterface stateCancelled = new Cancelled(toUpdate);
+			TaskStateInterface stateCancelled = new Cancelled(task);
 			if (stateCancelled.isValid())
-				toUpdate.setTaskState(stateCancelled);
+				task.setTaskState(stateCancelled);
 			condition = true;
-			return condition;
 		}
 		return condition;
 	}
@@ -145,16 +149,13 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	@Override
 	public boolean changeToFinished() {
 		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
-
-			TaskStateInterface stateFinished = new Finished(toUpdate);
-			if (stateFinished.isValid()) {
-				toUpdate.setTaskState(stateFinished);
+			TaskStateInterface Finished1 = new OnGoing(task);
+			if (Finished1.isValid()) {
+				task.setTaskState(Finished1);
 				condition = true;
-				return condition;
 			}
 		}
 		return condition;
@@ -166,10 +167,8 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
-	@Override
 	public boolean isTransitionToCreatedPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 	}
 
 	/**
@@ -178,10 +177,8 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return true
 	 */
-	@Override
 	public boolean isTransitionToPlannedPossible() {
-		boolean valid = true;
-		return valid;
+		return true;
 	}
 
 	/**
@@ -190,10 +187,8 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
-	@Override
 	public boolean isTransitionToAssignedPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 	}
 
 	/**
@@ -202,10 +197,8 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
-	@Override
 	public boolean isTransitionToReadyPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 	}
 
 	/**
@@ -214,10 +207,8 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return true
 	 */
-	@Override
 	public boolean isTransitionToOnGoingPossible() {
-		boolean valid = true;
-		return valid;
+		return true;
 	}
 
 	/**
@@ -226,10 +217,8 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
-	@Override
 	public boolean isTransitionToStandByPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 	}
 
 	/**
@@ -238,10 +227,8 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
-	@Override
 	public boolean isTransitionToCancelledPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 	}
 
 	/**
@@ -250,9 +237,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
-	@Override
 	public boolean isTransitionToFinishedPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 	}
 }

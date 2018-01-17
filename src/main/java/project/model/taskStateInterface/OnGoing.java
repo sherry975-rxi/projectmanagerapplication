@@ -12,9 +12,9 @@ public class OnGoing implements TaskStateInterface {
 		
 	}
 	
-	public OnGoing(Task t){
+	public OnGoing(Task taskToUpdate){
 	  
-		this.task = t;
+		this.task = taskToUpdate;
 	}
 	
 	/**
@@ -38,14 +38,15 @@ public class OnGoing implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */		
-	public void changeToCreated() {
+	public boolean changeToCreated() {
+		boolean condition = false;
 		if (isTransitionToCreatedPossible()) {
-
 			TaskStateInterface stateCreated = new Created(task);
 			if (stateCreated.isValid())
 				task.setTaskState(stateCreated);
+				condition = true;
 		}
-	
+		return condition;
 	}
 	
 	/**
@@ -53,16 +54,15 @@ public class OnGoing implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToPlanned() {
+	public boolean changeToPlanned() {
+		boolean condition = false;
 		if (isTransitionToPlannedPossible()) {
-
 			TaskStateInterface statePlanned = new Planned(task);
 			if (statePlanned.isValid())
 				task.setTaskState(statePlanned);
+				condition = true;
 		}
-		
-
-		
+		return condition; 
 	}
 
 	/**
@@ -70,15 +70,15 @@ public class OnGoing implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToAssigned() {
+	public boolean changeToAssigned() {
+		boolean condition = false;
 		if (isTransitionToAssignedPossible()) {
-
 			TaskStateInterface stateAssigned = new Assigned(task);
 			if (stateAssigned.isValid())
 				task.setTaskState(stateAssigned);
+				condition = true;
 		}
-		
-		
+		return condition; 
 	}
 
 	/**
@@ -86,14 +86,15 @@ public class OnGoing implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToReady() {
+	public boolean changeToReady() {
+		boolean condition = false;
 		if (isTransitionToReadyPossible()) {
-
 			TaskStateInterface stateReady = new Ready(task);
 			if (stateReady.isValid())
 				task.setTaskState(stateReady);
+				condition = true;
 		}
-		
+		return condition; 
 	}
 	
 	/**
@@ -101,8 +102,15 @@ public class OnGoing implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToOnGoing() {
-		
+	public boolean changeToOnGoing() {
+		boolean condition = false;
+		if (isTransitionToOnGoingPossible()) {
+			TaskStateInterface stateOnGoing = new OnGoing(task);
+			if (stateOnGoing.isValid())
+				task.setTaskState(stateOnGoing);
+				condition = true;
+		}
+		return condition; 
 	}
 	
 	/**
@@ -110,15 +118,15 @@ public class OnGoing implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToStandBy() {
-		
+	public boolean changeToStandBy() {
+		boolean condition = false;
 		if (isTransitionToStandByPossible()) {
-	            
-	            TaskStateInterface stateStandBy = new StandBy(task);
-	            if( stateStandBy.isValid() )
-	                task.setTaskState(stateStandBy);
-	        }
-	    
+			TaskStateInterface stateStandBy = new StandBy(task);
+			if (stateStandBy.isValid())
+				task.setTaskState(stateStandBy);
+				condition = true;
+		}
+		return condition;
 	    }
 	
 	/**
@@ -127,15 +135,12 @@ public class OnGoing implements TaskStateInterface {
 	 * @return Void
 	 */	
 	public boolean changeToCancelled() {
-
 		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
-
 			TaskStateInterface stateCancelled = new Cancelled(task);
 			if (stateCancelled.isValid())
 				task.setTaskState(stateCancelled);
 			condition = true;
-			return condition;
 		}
 		return condition;
 	}
@@ -146,15 +151,12 @@ public class OnGoing implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToFinished() {
-			boolean condition = false;
+		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
-			
-			TaskStateInterface stateFinished = new Finished(task);
-			
-			if (stateFinished.isValid()) {
-				task.setTaskState( stateFinished );
+			TaskStateInterface Finished1 = new Finished(task);
+			if (Finished1.isValid()) {
+				task.setTaskState(Finished1);
 				condition = true;
-				return condition;
 			}
 		}
 		return condition;
@@ -170,8 +172,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return false 
 	 */
 	public boolean isTransitionToCreatedPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 	}
 
 	/**
@@ -181,8 +182,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return  false
 	 */
 	public boolean isTransitionToPlannedPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 	}
 
 	/**
@@ -192,8 +192,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return false 
 	 */
 	public boolean isTransitionToAssignedPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 	}
 
 	/**
@@ -203,8 +202,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return false 
 	 */
 	public boolean isTransitionToReadyPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 		
 	}
 
@@ -215,8 +213,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return false
 	 */
 	public boolean isTransitionToOnGoingPossible() {
-		boolean valid = false;
-		return valid;
+		return false;
 		
 	}
 
@@ -227,8 +224,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return true 
 	 */
 	public boolean isTransitionToStandByPossible() {
-		boolean valid = true;
-		return valid;
+		return true;
 		
 	}
 
@@ -239,8 +235,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return true
 	 */
 	public boolean isTransitionToCancelledPossible() {
-		boolean valid = true;
-		return valid;
+		return true;
 		
 	}
 
@@ -251,8 +246,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return true
 	 */
 	public boolean isTransitionToFinishedPossible() {
-		boolean valid = true;
-		return valid;
+		return true;
 	}
 	
 	
