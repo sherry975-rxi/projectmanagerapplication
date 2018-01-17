@@ -1,12 +1,17 @@
 package project.controller;
 
+import project.model.Company;
 import project.model.Project;
+import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskRepository;
 
 public class DeleteTaskController {
 
 	private TaskRepository taskRepository;
+	private ProjectRepository projectRepository;
+	private Project project;
+	private Company company;
 
 	/**
 	 * 
@@ -28,17 +33,25 @@ public class DeleteTaskController {
 	 */
 
 	/**
+	 * @param proj
+	 *            The Project that will be associated to the Controller
+	 */
+	public DeleteTaskController(int projId) {
+
+		company = Company.getTheInstance();
+		projectRepository = company.getProjectsRepository();
+		project = projectRepository.getProjById(projId);
+		taskRepository = project.getTaskRepository();
+
+	}
+
+	/**
 	 * @param projectID
 	 *            The ProjectId that contains the task that the ProjectManager wants
 	 *            to delete
 	 * @param taskID
 	 *            The ID of the task that will be deleted
 	 */
-
-	public DeleteTaskController(Project proj) {
-
-		this.taskRepository = proj.getTaskRepository();
-	}
 
 	public boolean deleteTask(int projectID, String taskID) {
 

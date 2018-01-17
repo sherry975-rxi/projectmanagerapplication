@@ -70,6 +70,7 @@ public class DeleteTaskControllerTest {
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
 		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
+		projectRepository.addProjectToProjectRepository(project);
 
 	}
 
@@ -90,7 +91,7 @@ public class DeleteTaskControllerTest {
 		assertFalse(project.isProjectManager(user1));
 		assertTrue(project.isProjectManager(userAdmin));
 
-		// creates the Controller and asserts the list of unstrarted tasks starts at 0
+		// creates the Controller and asserts the list of unstarted tasks starts at 0
 		CreateTaskController testControl = new CreateTaskController(project);
 
 		// creates and adds a task using the controller and asserts a task was added
@@ -121,8 +122,8 @@ public class DeleteTaskControllerTest {
 		String taskId5 = testTask5.getTaskID();
 		String taskId6 = testTask6.getTaskID();
 
-		// creates the Controller and asserts the list of unstrarted tasks starts at 0
-		DeleteTaskController controllerDelete = new DeleteTaskController(project);
+		// creates the Controller
+		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
 
 		// Verifies that the testTask state is set to "Created"
 		assertEquals(testTask.viewTaskStateName(), "Created");
