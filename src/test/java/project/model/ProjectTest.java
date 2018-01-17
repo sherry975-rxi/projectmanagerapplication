@@ -615,8 +615,9 @@ public class ProjectTest {
 		p1.createTaskRemovalRequest(projectCollaborator1, task1);
 		// create a similar request of the one created
 		TaskTeamRequest expectedRequest = new TaskTeamRequest(projectCollaborator1, task1);
+		TaskTeamRequest req = p1.getRemovalTaskTeamRequest(projectCollaborator1, task1);
 		//if the info are the same, the objects should be considered the same
-		assertTrue(p1.getRemovalTaskTeamRequest(projectCollaborator1, task1).equals(expectedRequest));
+		assertTrue(req.equals(expectedRequest));
 		
 	}
 	
