@@ -1,15 +1,20 @@
 package project.controller;
 
-import java.util.InputMismatchException;
-
-import project.model.Company;
+import project.model.Project;
 import project.model.Task;
+import project.model.TaskRepository;
 
 public class DeleteTaskController {
 
-	private Task taskToDelete;
+	private TaskRepository taskRepository;
 
 	/**
+	 * 
+	 * 
+	 * US 345 - Como Gestor de projeto, quero poder eliminar uma tarefa não
+	 * iniciada.
+	 * 
+	 * 
 	 * 
 	 * This controller allows a Project Manager to delete a task from the Task
 	 * Repository The "State" of the Task must be set to
@@ -18,7 +23,7 @@ public class DeleteTaskController {
 	 * 
 	 * Otherwise the task can't be deleted from the task repository.
 	 * 
-	 * The ta
+	 * 
 	 *
 	 */
 
@@ -29,20 +34,40 @@ public class DeleteTaskController {
 	 * @param taskID
 	 *            The ID of the task that will be deleted
 	 */
-	public void deleteTask(int projectID, String taskID) {
 
-		try {
-			taskToDelete = Company.getTheInstance().getProjectsRepository().getProjById(projectID).getTaskRepository()
-					.getTaskByID(taskID);
+	public DeleteTaskController(Project proj) {
+
+		this.taskRepository = proj.getTaskRepository();
+	}
+
+	public boolean deleteTask(int projectID, String taskID) {
+
+		/*
+		 * Creates a variable that returns if the task was deleted
+		 */
+		boolean wasTaskDeleted = false;
+
+		/*
+		 * Finds the task by it's id
+		 */
+		Task taskToDelete = this.taskRepository.getTaskByID(taskID);
+
+		/*
+		 * If the taskID matches a task in the repository, the task will be deleted,
+		 * else, this method will return false
+		 */
+		if (taskToDelete != null) {
 
 			// Deletes the task from the task Repository
-			Company.getTheInstance().getProjectsRepository().getProjById(projectID).getTaskRepository()
-					.deleteTask(taskToDelete);
-
-		} catch (InputMismatchException e) {
-			System.out.println("The ID of the task doesn't exist in the Project. Please, try again");
+			wasTaskDeleted = this.taskRepository.deleteTask(taskToDelete);
 
 		}
+
+		else {
+			wasTaskDeleted = false;
+		}
+
+		return wasTaskDeleted;
 
 	}
 
