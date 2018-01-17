@@ -525,8 +525,19 @@ public class Project {
 	 */
 
 	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
+
+		Boolean deleteStatus = false;
+
 		TaskTeamRequest request = getRemovalTaskTeamRequest(projCollab, task);
-		return this.pendingTaskRemovalRequests.remove(request);
+
+		for (TaskTeamRequest other : this.pendingTaskRemovalRequests) {
+			if (other.equals(request)) {
+				this.pendingTaskRemovalRequests.remove(other);
+
+				deleteStatus = true;
+			}
+		}
+		return deleteStatus;
 	}
 
 	/**
