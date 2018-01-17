@@ -15,6 +15,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.model.taskStateInterface.Cancelled;
+import project.model.taskStateInterface.Finished;
+import project.model.taskStateInterface.StandBy;
+
 /**
  * @author Group 3
  *
@@ -29,6 +33,10 @@ public class TaskTest {
 	ProjectCollaborator collab1, collab2, collab3;
 	Calendar estimatedTaskStartDate, taskDeadline;
 	TaskCollaborator tWorker1, tWorker2, tWorker3;
+	Finished finishedTaskState;
+	StandBy standByTaskState;
+	Cancelled cancelledTaskState;
+
 	double expectedCost;
 
 	@Before
@@ -60,6 +68,7 @@ public class TaskTest {
 		testTask = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
 		testTask.addProjectCollaboratorToTask(collab1);
 		testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
+		myProject.getTaskRepository().addProjectTask(testTask2);
 		testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
 
 	}
@@ -305,6 +314,12 @@ public class TaskTest {
 
 		// Checks if the two values are the smae
 		assertEquals(expectedCost, testTask2.getTaskCost(), 0.001);
+
+		finishedTaskState = new Finished(testTask2);
+		testTask2.setTaskState(finishedTaskState);
+		assertFalse(testTask2.createReport(tWorker1));
+
+		assertEquals(testTask2.viewTaskStateName(), "Finished");
 
 	}
 
@@ -572,5 +587,51 @@ public class TaskTest {
 		testTask.addProjectCollaboratorToTask(collab2);
 		testTask.removeAllCollaboratorsFromTaskTeam();
 		assertFalse(testTask.doesTaskTeamHaveActiveUsers());
+	}
+
+	/**
+	 * Tests if the this method actually empties the task team
+	 */
+	@Test
+	public void testCreateReportNotPossible() {
+		// Adds two users to the task
+		testTask2.addTaskCollaboratorToTask(tWorker1);
+
+		finishedTaskState = new Finished(testTask2);
+		testTask2.setTaskState(finishedTaskState);
+		assertFalse(testTask2.createReport(tWorker1));
+
+		/*
+		 * Checks that the tastState is set to Finished
+		 */
+		assertEquals(testTask2.viewTaskStateName(), "Finished");
+
+		/*
+		 * Creates a StandBy State object
+		 */
+		standByTaskState = new StandBy(testTask2);
+
+		/*
+		 * sets testTask2 to StandBy State
+		 */
+		testTask2.setTaskState(standByTaskState);
+
+		/*
+		 * Checks that its not possible to add a report to a task set to "StandBy"
+		 */
+		assertFalse(testTask2.createReport(tWorker1));
+
+		cancelledTaskState = new Cancelled(testTask2);
+
+		/*
+		 * sets testTask2 to Cancelled State
+		 */
+		testTask2.setTaskState(cancelledTaskState);
+
+		/*
+		 * Checks that its not possible to add a report to a task set to "Cancelled"
+		 */
+		assertFalse(testTask2.createReport(tWorker1));
+
 	}
 }

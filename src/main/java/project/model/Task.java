@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import project.model.taskStateInterface.Cancelled;
 import project.model.taskStateInterface.Created;
+import project.model.taskStateInterface.Finished;
+import project.model.taskStateInterface.StandBy;
 import project.model.taskStateInterface.TaskStateInterface;
 
 /**
@@ -449,10 +452,26 @@ public class Task {
 	 * 
 	 * @return report
 	 */
-	public void createReport(TaskCollaborator taskCollaborator) {
+	public boolean createReport(TaskCollaborator taskCollaborator) {
+		boolean wasReportCreated = true;
 
-		Report report = new Report(taskCollaborator);
-		this.reports.add(report);
+		if (this.getTaskState() instanceof Finished) {
+			wasReportCreated = false;
+
+		} else if (this.getTaskState() instanceof Cancelled) {
+			wasReportCreated = false;
+
+		} else if (this.getTaskState() instanceof StandBy) {
+			wasReportCreated = false;
+
+		} else {
+			Report report = new Report(taskCollaborator);
+			this.reports.add(report);
+			wasReportCreated = true;
+
+		}
+
+		return wasReportCreated;
 
 	}
 
