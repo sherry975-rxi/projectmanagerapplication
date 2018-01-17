@@ -8,7 +8,9 @@ import java.util.List;
 
 import project.model.Company;
 import project.model.Project;
+import project.model.ProjectRepository;
 import project.model.Task;
+import project.model.TaskRepository;
 import project.model.User;
 
 /**
@@ -16,7 +18,11 @@ import project.model.User;
  *
  */
 public class US377CollectionOfCancelledTasksFromAProject {
-	int projectIDtoInstantiate;
+	private int projectIDtoInstantiate = 0;
+	private TaskRepository taskRepository;
+	private ProjectRepository projectRepository;
+	private Project project;
+	private Company company;
 
 	/**
 	 * Constructor
@@ -30,23 +36,26 @@ public class US377CollectionOfCancelledTasksFromAProject {
 	 * 
 	 * @param projectIDtoInstantiate
 	 */
-	public US377CollectionOfCancelledTasksFromAProject(String projectIDtoInstantiate) {
-		this.projectIDtoInstantiate = 0;
+	public US377CollectionOfCancelledTasksFromAProject(int projectIDtoInstantiate) {
+		this.projectIDtoInstantiate = projectIDtoInstantiate;
+		company = Company.getTheInstance();
+		projectRepository = company.getProjectsRepository();
+		project = projectRepository.getProjById(projectIDtoInstantiate);
+		taskRepository = project.getTaskRepository();
 	}
 
 	/**
-	 * This method returns a set of Projects where a certain user was defined as
-	 * Project Manager
+	 * This method returns a set of Projects where a certain user
 	 * 
-	 * @param projectManager
-	 *            User defined as Project Manager
+	 * @param user
 	 * 
-	 * @return List of Projects of a Project Manager
+	 * @return List of Projects of User
 	 */
 	public List<Project> getProjectsFromUser(User user) {
 		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
-		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsOfProjectManager(user));
+
+		listOfProjectsOfProjectManager.addAll(projectRepository.getProjectsFromUser(user));
+
 		return listOfProjectsOfProjectManager;
 	}
 
@@ -57,8 +66,7 @@ public class US377CollectionOfCancelledTasksFromAProject {
 	 */
 	public List<Task> getCancelledTasksFromAProject() {
 
-		Project projectToGetTasks = Company.getTheInstance().getProjectsRepository()
-				.getProjById(this.projectIDtoInstantiate);
+		Project projectToGetTasks = projectRepository.getProjById(this.projectIDtoInstantiate);
 
 		return projectToGetTasks.getTaskRepository().getCancelledTasks();
 	}

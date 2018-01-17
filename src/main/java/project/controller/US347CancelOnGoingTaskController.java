@@ -50,7 +50,7 @@ public class US347CancelOnGoingTaskController {
 		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
 
 		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsOfProjectManager(user));
+				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsFromUser(user));
 
 		return listOfProjectsOfProjectManager;
 	}
