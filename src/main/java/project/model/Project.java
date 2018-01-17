@@ -497,7 +497,7 @@ public class Project {
 	 */
 	public boolean createTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
-		if (!this.isRemovalRequestAlreadyCreated(newReq)) {
+		if (!this.isRemovalRequestAlreadyCreated(projCollab, task)) {
 			return this.pendingTaskRemovalRequests.add(newReq);
 		}
 		return false;
