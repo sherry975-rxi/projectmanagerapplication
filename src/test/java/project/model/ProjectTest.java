@@ -630,5 +630,16 @@ public class ProjectTest {
 		// delete the request added to the task removal list
 		assertTrue(p1.deleteTaskRemovalRequest(projectCollaborator1, task1));
 	}
+	
+	/**
+	 * Tests the string representation of a request from the Removal Request List
+	 * 
+	 */
+	@Test
+	public void testViewTaskRemovalRequest() {
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+		String result = "name" + "\n" + "email" + "\n" + "1.1" + "\n" + "description";
+		assertTrue(p1.viewPendingTaskRemovalRequests().get(0).equals(result));
+	}
 
 }
