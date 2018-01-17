@@ -575,5 +575,18 @@ public class ProjectTest {
 		assertEquals(0, p1.getRemovalRequestsList().size());
 		
 	}
+	
+	/**
+	 * Tests the creation and addition of a new request to the Removal Request List
+	 * 
+	 */
+	@Test
+	public void testCreateTaskRemovalRequest() {
+		// if doesn't exist allows to create the request
+		assertTrue(p1.createTaskRemovalRequest(projectCollaborator1, task1));	
+		// if exists it doesn't allow to create the request
+		assertFalse(p1.createTaskRemovalRequest(projectCollaborator1, task1));
+		
+	}
 
 }
