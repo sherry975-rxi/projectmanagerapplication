@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import project.model.taskStateInterface.Created;
+import project.model.taskStateInterface.Finished;
 import project.model.taskStateInterface.TaskStateInterface;
 
 /**
@@ -24,7 +25,6 @@ public class Task {
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
-	private boolean taskStatus; // is going to be deleted.
 	private TaskStateInterface taskState;
 	private Integer estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;
@@ -101,7 +101,6 @@ public class Task {
 		this.creationDate = Calendar.getInstance();
 		this.startDate = null;
 		this.finishDate = null;
-		this.taskStatus = false;
 		this.taskTeam = new ArrayList<>();
 		this.reports = new ArrayList<>();
 		this.estimatedTaskEffort = estimatedTaskEffort;
@@ -374,21 +373,29 @@ public class Task {
 	}
 
 	/**
-	 * This method returns the task state.
+	 * This method confirms if the task state is Finished
 	 * 
-	 * @return TRUE if finished FALSE if unfinished
+	 * @return TRUE if task's state is finished FALSE if task's state isn't finished
 	 */
 	public boolean isTaskFinished() {
-		return this.taskStatus;
+		boolean isFinished = false;
+		if(this.getTaskState() instanceof Finished) {
+			isFinished = true;
+		}
+		return isFinished;
 	}
 
 	/**
-	 * This method changes the task state to finished by altering the task boolean
-	 * to TRUE
+	 * This method changes the task state to finished if the task have a finishDate
+	 * and confirms if the task have the conditions to change (using changeToFinished
+	 * method implemented in states machine)
 	 * 
 	 */
 	public void markTaskAsFinished() {
-		this.taskStatus = true;
+		if(this.finishDate == null) {
+			this.setFinishDate();
+			this.taskState.changeToFinished();
+		}
 	}
 
 	/**
