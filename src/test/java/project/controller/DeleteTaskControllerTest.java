@@ -353,4 +353,44 @@ public class DeleteTaskControllerTest {
 		assertFalse(controllerDelete.deleteTask(projectCode, taskId));
 
 	}
+
+	@Test
+	public void testDeleteNullTaskControllerTest() {
+
+		// asserts which user is the Project Manager
+		assertFalse(project.isProjectManager(user1));
+		assertTrue(project.isProjectManager(userAdmin));
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		project.getTaskRepository().addProjectTask(testTask);
+
+		taskStateReady = new Ready(testTask);
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+
+		// Creates a string that holds the value of tasks id
+		String taskId = testTask.getTaskID();
+
+		// creates the Controller
+		DeleteTaskController controllerDelete = new DeleteTaskController(projectCode);
+
+		testTask.setTaskState(taskStateReady);
+
+		// Verifies that the testTask state is set to "OnGoing"
+		assertEquals(testTask.viewTaskStateName(), "Ready");
+
+		assertEquals(project.getTaskRepository().getTaskByID(taskId), testTask);
+
+		// Checks if the task was deleted
+		assertTrue(controllerDelete.deleteTask(projectCode, taskId));
+
+		/*
+		 * Checks if the task was deleted. Task doesn't exist anymore in the repository,
+		 * so it wasn't deleted
+		 */
+		assertFalse(controllerDelete.deleteTask(projectCode, taskId));
+
+	}
 }
