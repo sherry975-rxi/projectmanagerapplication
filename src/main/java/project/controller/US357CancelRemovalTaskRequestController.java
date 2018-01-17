@@ -58,7 +58,7 @@ public class US357CancelRemovalTaskRequestController {
 	 * @param requestData
 	 *            Information of the request chosen by the user.
 	 */
-	public void setRequestDataString(String requestData) {
+	public void setTaskIDandUserEmailWithRequestString(String requestData) {
 
 		String[] parts = requestData.split("\n");
 		String userName = parts[0];
@@ -76,7 +76,7 @@ public class US357CancelRemovalTaskRequestController {
 	 * 
 	 * @return TRUE if is valid FALSE if it is not valid.
 	 */
-	private boolean isTaskIDValid() {
+	public boolean isTaskIDValid() {
 
 		Project projectToGetRequests = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
 		Boolean isTaskValid = false;
@@ -94,7 +94,7 @@ public class US357CancelRemovalTaskRequestController {
 	 * 
 	 * @return TRUE if is valid FALSE if it is not valid.
 	 */
-	private boolean isUserEmailValid() {
+	public boolean isEmailFromAUser() {
 
 		Boolean isUserEmailValid = false;
 
@@ -120,7 +120,7 @@ public class US357CancelRemovalTaskRequestController {
 		boolean removalAccepted = false;
 
 		// This condition certifies that the userEmail and TaskID are valid
-		if (this.isTaskIDValid() == true && this.isUserEmailValid() == true) {
+		if (this.isTaskIDValid() == true && this.isEmailFromAUser() == true) {
 
 			// Gets the user with the user email
 			User userToRemoveFromTask = Company.getTheInstance().getUsersRepository().getUserByEmail(userEmail);
@@ -130,6 +130,7 @@ public class US357CancelRemovalTaskRequestController {
 			ProjectCollaborator projectCollaboratorFromUser = project.findProjectCollaborator(userToRemoveFromTask);
 			// Gets the task from the task Id
 			Task taskToRemoveFrom = project.getTaskRepository().getTaskByID(taskID);
+
 			// Removes the project Collaborator correspondent to the user from task.
 			taskToRemoveFrom.removeProjectCollaboratorFromTask(projectCollaboratorFromUser);
 
@@ -154,7 +155,7 @@ public class US357CancelRemovalTaskRequestController {
 
 		boolean removalCancelled = false;
 		// This condition certifies that the userEmail and TaskID are valid
-		if (this.isTaskIDValid() == true && this.isUserEmailValid() == true) {
+		if (this.isTaskIDValid() == true && this.isEmailFromAUser() == true) {
 
 			// Gets the user with the user email
 			User userToRemoveFromTask = Company.getTheInstance().getUsersRepository().getUserByEmail(userEmail);
