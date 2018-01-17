@@ -525,7 +525,7 @@ public class Project {
 	 */
 
 	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
-		TaskTeamRequest request = getRemovalTaskTeamRequest(projCollab, task); 
+		TaskTeamRequest request = getRemovalTaskTeamRequest(projCollab, task);
 		return this.pendingTaskRemovalRequests.remove(request);
 	}
 
@@ -665,6 +665,40 @@ public class Project {
 	}
 
 	/**
+	 * Searches the assignement request list for the task selected. If it finds any
+	 * request with this task, removes it from the list.
+	 * 
+	 * @param task
+	 *            Task to remove from the assignement request list
+	 */
+	public void removeAllRequestsWithASpecificTaskFromAssignementRequests(Task task) {
+		ArrayList<TaskTeamRequest> assignementCopy = new ArrayList<>();
+		assignementCopy.addAll(this.pendingTaskAssignementRequests);
+		for (int i = assignementCopy.size() - 1; i >= 0; i--) {
+			if (assignementCopy.get(i).getTask().equals(task)) {
+				this.pendingTaskAssignementRequests.remove(this.pendingTaskAssignementRequests.get(i));
+			}
+		}
+	}
+
+	/**
+	 * Searches the removal request list for the task selected. If it finds any
+	 * request with this task, removes it from the list.
+	 * 
+	 * @param task
+	 *            Task to remove from the removal request list
+	 */
+	public void removeAllRequestsWithASpecificTaskFromRemovalRequests(Task task) {
+		ArrayList<TaskTeamRequest> removalCopy = new ArrayList<>();
+		removalCopy.addAll(this.pendingTaskRemovalRequests);
+		for (int i = removalCopy.size() - 1; i >= 0; i--) {
+			if (removalCopy.get(i).getTask().equals(task)) {
+				this.pendingTaskRemovalRequests.remove(this.pendingTaskRemovalRequests.get(i));
+			}
+		}
+	}
+
+	/**
 	 * Searches both request lists for the task selected. If it finds any request
 	 * with this task, removes it from the list.
 	 * 
@@ -672,18 +706,8 @@ public class Project {
 	 *            Task to remove from the request lists
 	 */
 	public void removeAllRequestsWithASpecificTask(Task task) {
-
-		for (TaskTeamRequest other : this.pendingTaskAssignementRequests) {
-			if (other.getTask().equals(task)) {
-				this.pendingTaskAssignementRequests.remove(other);
-			}
-		}
-
-		for (TaskTeamRequest other : this.pendingTaskRemovalRequests) {
-			if (other.getTask().equals(task)) {
-				this.pendingTaskRemovalRequests.remove(other);
-			}
-		}
+		this.removeAllRequestsWithASpecificTaskFromAssignementRequests(task);
+		this.removeAllRequestsWithASpecificTaskFromRemovalRequests(task);
 	}
 
 }
