@@ -11,7 +11,6 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.TaskCollaborator;
-import project.model.User;
 
 /**
  * @author Group3
@@ -38,22 +37,6 @@ public class US362RemoveTaskFromProjectCollaborator {
 	}
 
 	/**
-	 * This method returns a set of Projects where a certain user was defined as
-	 * Project Manager
-	 * 
-	 * @param projectManager
-	 *            User defined as Project Manager
-	 * 
-	 * @return List of Projects of a Project Manager
-	 */
-	public List<Project> getProjectsFromUser(User user) {
-		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
-		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsFromUser(user));
-		return listOfProjectsOfProjectManager;
-	}
-	
-	/**
 	 * This method returns the tasks from a specific project
 	 * 
 	 * @param userInputForProjectID
@@ -71,7 +54,7 @@ public class US362RemoveTaskFromProjectCollaborator {
 
 		return tasksFromProject;
 	}
-	
+
 	/**
 	 * This method returns the List of Collaborators from a specific task
 	 * 
@@ -80,35 +63,37 @@ public class US362RemoveTaskFromProjectCollaborator {
 	 * 
 	 * @return List of Collaborators from a chosen Task
 	 */
-	public List<TaskCollaborator> getTaskCollaboratorsFromTask(String taskID){
-		
-		Task taskToGetListOfCollaborator = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate)
-				.getTaskRepository().getTaskByID(taskID);
-		
-		return taskToGetListOfCollaborator.getTaskTeam();	
+	public List<TaskCollaborator> getTaskCollaboratorsFromTask(String taskID) {
+
+		Task taskToGetListOfCollaborator = Company.getTheInstance().getProjectsRepository()
+				.getProjById(projectIDtoInstantiate).getTaskRepository().getTaskByID(taskID);
+
+		return taskToGetListOfCollaborator.getTaskTeam();
 	}
-	
+
 	/**
 	 * This method removes a collaborator from the Task Team of a specific task
 	 * 
 	 * @param taskCollaboratorToRemoveFromTaskTeam
 	 *            task Collaborator To Remove From TaskTeam of a specific task
-	 * @param taskID           
+	 * @param taskID
 	 *            Task ID to get the collaborators associated with a specific task
-	 * @return TRUE if collaborator is removed and FALSE if collaborator is not removed
+	 * @return TRUE if collaborator is removed and FALSE if collaborator is not
+	 *         removed
 	 */
-	public boolean removeCollaboratorFromTask (TaskCollaborator taskCollaboratorToRemoveFromTaskTeam, String taskID) {
-		
-		Task taskToGetListOfCollaborator = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate)
-				.getTaskRepository().getTaskByID(taskID);
-		
-		ProjectCollaborator projCollaboratorToRemoveFromTaskTeam = taskCollaboratorToRemoveFromTaskTeam.getProjectCollaboratorFromTaskCollaborator();
-		
+	public boolean removeCollaboratorFromTask(TaskCollaborator taskCollaboratorToRemoveFromTaskTeam, String taskID) {
+
+		Task taskToGetListOfCollaborator = Company.getTheInstance().getProjectsRepository()
+				.getProjById(projectIDtoInstantiate).getTaskRepository().getTaskByID(taskID);
+
+		ProjectCollaborator projCollaboratorToRemoveFromTaskTeam = taskCollaboratorToRemoveFromTaskTeam
+				.getProjectCollaboratorFromTaskCollaborator();
+
 		boolean removed = false;
-		if (taskToGetListOfCollaborator.removeProjectCollaboratorFromTask(projCollaboratorToRemoveFromTaskTeam)){
+		if (taskToGetListOfCollaborator.removeProjectCollaboratorFromTask(projCollaboratorToRemoveFromTaskTeam)) {
 			removed = true;
 		}
 		return removed;
 	}
-	
+
 }
