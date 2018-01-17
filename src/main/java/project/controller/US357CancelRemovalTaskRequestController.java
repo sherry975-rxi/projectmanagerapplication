@@ -6,7 +6,6 @@ import project.model.Company;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
-import project.model.TaskTeamRequest;
 import project.model.User;
 
 /**
@@ -134,11 +133,8 @@ public class US357CancelRemovalTaskRequestController {
 			// Removes the project Collaborator correspondent to the user from task.
 			taskToRemoveFrom.removeProjectCollaboratorFromTask(projectCollaboratorFromUser);
 
-			// Gets the TaskRemovalrequest and deletes it from the pendingRemovalRequestList
-			TaskTeamRequest requestToDelete = project.getRemovalTaskTeamRequest(projectCollaboratorFromUser,
-					taskToRemoveFrom);
-
-			project.deleteTaskRemovalRequest(requestToDelete);
+			// Deletes the request from the pendingRemovalRequestList
+			project.deleteTaskRemovalRequest(projectCollaboratorFromUser, taskToRemoveFrom);
 
 			removalAccepted = true;
 
@@ -168,9 +164,9 @@ public class US357CancelRemovalTaskRequestController {
 			ProjectCollaborator projectCollaboratorFromUser = project.findProjectCollaborator(userToRemoveFromTask);
 			// Gets the task from the task Id
 			Task task = project.getTaskRepository().getTaskByID(this.taskID);
-			// Gets the TaskRemovalrequest and deletes it from the pendingRemovalRequestList
-			TaskTeamRequest requestToDelete = project.getRemovalTaskTeamRequest(projectCollaboratorFromUser, task);
-			project.deleteTaskRemovalRequest(requestToDelete);
+			// Deletes the request from the pendingRemovalRequestList
+
+			project.deleteTaskRemovalRequest(projectCollaboratorFromUser, task);
 
 			removalCancelled = true;
 		}
