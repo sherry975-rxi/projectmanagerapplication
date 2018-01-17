@@ -800,7 +800,7 @@ public class ProjectRepositoryTest {
 				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1));
 		assertEquals(startedNotFinishedTasksInOrder.size(),
 				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1).size());
-		
+
 		// clears the list
 		startedNotFinishedTasksInOrder.clear();
 		// The method returns an empty list, if the user is null
@@ -810,25 +810,29 @@ public class ProjectRepositoryTest {
 	}
 
 	/**
-	 * Tests the GetProjectOfProjectManager method
+	 * Tests the GetProjectFromUser method
 	 * 
 	 */
 	@Test
-	public void testGetProjectsOfProjectManager() {
+	public void testGetProjectsFromUser() {
 
 		// Adds three project to the projectRepository
 		projectRepository.addProjectToProjectRepository(project2);
 		projectRepository.addProjectToProjectRepository(project5);
 		projectRepository.addProjectToProjectRepository(project6);
 
-		// Creates a list with the project from a certain Project Manager
+		// add user to projects
+		project5.addProjectCollaboratorToProjectTeam(collab1);
+		project6.addProjectCollaboratorToProjectTeam(collab1);
+
+		// Creates a list with the project from a user
 		List<Project> projectsOfProjectManager = new ArrayList<>();
 		projectsOfProjectManager.add(project5);
 		projectsOfProjectManager.add(project6);
 
 		// Asserts if the resulted list of the getProjectOfProjectManager method equals
 		// the list created with the project from which the user 3 is Project Manager
-		assertEquals(projectsOfProjectManager, projectRepository.getProjectsOfProjectManager(user3));
+		assertEquals(projectsOfProjectManager, projectRepository.getProjectsFromUser(user1));
 	}
 
 	/**
