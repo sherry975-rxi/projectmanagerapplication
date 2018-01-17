@@ -397,8 +397,8 @@ public class Task {
 	 * 
 	 * @param projCollaborator
 	 */
-	public void addProjectCollaboratorToTask(ProjectCollaborator projCollaborator) {
-		addTaskCollaboratorToTask(createTaskCollaborator(projCollaborator));
+	public boolean addProjectCollaboratorToTask(ProjectCollaborator projCollaborator) {
+		return addTaskCollaboratorToTask(createTaskCollaborator(projCollaborator));
 
 	}
 
@@ -413,13 +413,19 @@ public class Task {
 	 * 
 	 * 
 	 */
-	public void addTaskCollaboratorToTask(TaskCollaborator taskCollaborator) {
+	public boolean addTaskCollaboratorToTask(TaskCollaborator taskCollaborator) {
+		boolean wasTheTaskAddedToCollaborator = false;
 		if (!isProjectCollaboratorInTaskTeam(taskCollaborator.getProjectCollaboratorFromTaskCollaborator())) {
 			this.taskTeam.add(taskCollaborator);
+			wasTheTaskAddedToCollaborator = true;
 		} else if (!isProjectCollaboratorActiveInTaskTeam(
 				taskCollaborator.getProjectCollaboratorFromTaskCollaborator())) {
 			this.taskTeam.add(taskCollaborator);
+			wasTheTaskAddedToCollaborator = true;
+
 		}
+
+		return wasTheTaskAddedToCollaborator;
 
 	}
 
@@ -889,6 +895,14 @@ public class Task {
 
 	public Calendar getCancelDate() {
 		return cancelDate;
+	}
+
+	public boolean doesTaskCollaboratorBelongsToTaskTeam(TaskCollaborator taskCollaborator) {
+		Boolean doesTaskCollaboratorBelongsToTeam = false;
+		if (taskTeam.contains(taskCollaborator) && taskCollaborator.isTaskCollaboratorActiveInTask()) {
+			doesTaskCollaboratorBelongsToTeam = true;
+		}
+		return doesTaskCollaboratorBelongsToTeam;
 	}
 
 }
