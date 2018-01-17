@@ -92,7 +92,7 @@ public class DeleteTaskControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		taskStateAssigned = new Assigned(testTask6);
@@ -124,7 +124,7 @@ public class DeleteTaskControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		taskStatePlanned = new Planned(testTask);
@@ -158,7 +158,7 @@ public class DeleteTaskControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		taskStateAssigned = new Assigned(testTask);
@@ -192,7 +192,7 @@ public class DeleteTaskControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		taskStateCancelled = new Cancelled(testTask);
@@ -226,7 +226,7 @@ public class DeleteTaskControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		taskStateFinished = new Finished(testTask);
@@ -260,7 +260,7 @@ public class DeleteTaskControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		taskStateOnGoing = new OnGoing(testTask);
@@ -294,7 +294,7 @@ public class DeleteTaskControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		taskStateReady = new Ready(testTask);
@@ -328,7 +328,7 @@ public class DeleteTaskControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		taskStateStandBy = new StandBy(testTask);
@@ -362,7 +362,7 @@ public class DeleteTaskControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		taskStateReady = new Ready(testTask);

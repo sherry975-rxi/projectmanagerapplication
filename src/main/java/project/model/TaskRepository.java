@@ -36,7 +36,7 @@ public class TaskRepository {
 		taskCounter++;
 		return newTask;
 	}
-	
+
 	/**
 	 * Creates an instance of Task in the state CREATED
 	 * 
@@ -45,9 +45,9 @@ public class TaskRepository {
 	 * @return the task created
 	 */
 
-	public Task createTask(String description, int estimatedTaskEffort, int estimatedBudgetCostTask) {
-		
-		Task newTask = new Task(estimatedTaskEffort, estimatedBudgetCostTask, description);
+	public Task createTask(String description) {
+
+		Task newTask = new Task(this.taskCounter, this.projId, description);
 
 		taskCounter++;
 		return newTask;

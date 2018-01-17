@@ -85,7 +85,7 @@ public class AssignTaskToCollaboratorControllerTest {
 		assertTrue(project.isProjectManager(userAdmin));
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls", 10, 10);
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
 		project.getTaskRepository().addProjectTask(testTask);
 
 		// Creates an int that holds the projectID Code
