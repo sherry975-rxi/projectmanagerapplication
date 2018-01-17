@@ -636,7 +636,8 @@ public class Project {
 	 *            Task chosen by the project collaborator
 	 * @return True if request already exists, false if not
 	 */
-	public boolean isRemovalRequestAlreadyCreated(TaskTeamRequest request) {
+	public boolean isRemovalRequestAlreadyCreated(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest request = new TaskTeamRequest(projCollab, task);
 		return this.pendingTaskRemovalRequests.contains(request);
 	}
 
