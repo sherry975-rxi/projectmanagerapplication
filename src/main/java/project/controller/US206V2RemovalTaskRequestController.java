@@ -46,9 +46,9 @@ public class US206V2RemovalTaskRequestController {
 
 		Project project = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
 		Task taskBeRemovedOf = project.getTaskRepository().getTaskByID(this.taskID);
-
-		if (taskBeRemovedOf != null) {
-			ProjectCollaborator projectCollaborator = project.findProjectCollaborator(this.user);
+		ProjectCollaborator projectCollaborator = project.findProjectCollaborator(this.user);
+		if (taskBeRemovedOf != null && !project.isRemovalRequestAlreadyCreated(projectCollaborator, taskBeRemovedOf)) {
+			
 			project.createTaskRemovalRequest(projectCollaborator, taskBeRemovedOf);
 			createdSucess = true;
 		}
