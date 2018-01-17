@@ -53,7 +53,7 @@ public class US342CreateTaskDependencyController {
 		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
 
 		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsOfProjectManager(projectManager));
+				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsFromUser(projectManager));
 
 		return listOfProjectsOfProjectManager;
 	}

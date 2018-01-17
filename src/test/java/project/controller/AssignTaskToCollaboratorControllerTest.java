@@ -93,7 +93,7 @@ public class AssignTaskToCollaboratorControllerTest {
 		String taskId = testTask.getTaskID();
 
 		// creates the Controller
-		AssignTaskToCollaboratorController controllerAssignTaskToProjectCollaborator = new AssignTaskToCollaboratorController(
+		AssignTaskToCollaboratorsController controllerAssignTaskToProjectCollaborator = new AssignTaskToCollaboratorsController(
 				projectCode);
 
 		/*

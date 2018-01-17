@@ -45,17 +45,17 @@ public class US377CollectionOfCancelledTasksFromAProject {
 	}
 
 	/**
-	 * This method returns a set of Projects where a certain user was defined as
-	 * Project Manager
+	 * This method returns a set of Projects where a certain user
 	 * 
-	 * @param projectManager
-	 *            User defined as Project Manager
+	 * @param user
 	 * 
-	 * @return List of Projects of a Project Manager
+	 * @return List of Projects of User
 	 */
 	public List<Project> getProjectsFromUser(User user) {
 		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
-		listOfProjectsOfProjectManager.addAll(projectRepository.getProjectsOfProjectManager(user));
+
+		listOfProjectsOfProjectManager.addAll(projectRepository.getProjectsFromUser(user));
+
 		return listOfProjectsOfProjectManager;
 	}
 
