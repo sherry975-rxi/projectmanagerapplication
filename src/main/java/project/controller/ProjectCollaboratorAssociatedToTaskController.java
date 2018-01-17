@@ -57,7 +57,12 @@ public class ProjectCollaboratorAssociatedToTaskController {
 	 */
 	public boolean markTaskAsFinishedController(Task taskToMarkAsFinished) {
 		taskToMarkAsFinished.setFinishDate();
+		taskToMarkAsFinished.removeAllCollaboratorsFromTaskTeam();
 
+		Project selectedProjet = Company.getTheInstance().getProjectsRepository().getProjById(projectID);
+		if (selectedProjet != null) {
+			selectedProjet.removeAllRequestsWithASpecificTask(taskToMarkAsFinished);
+		}
 		return taskToMarkAsFinished.getTaskState().changeToFinished();
 
 	}
