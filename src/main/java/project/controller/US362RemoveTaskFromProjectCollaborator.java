@@ -9,8 +9,10 @@ import java.util.List;
 import project.model.Company;
 import project.model.Project;
 import project.model.ProjectCollaborator;
+import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskCollaborator;
+import project.model.TaskRepository;
 
 /**
  * @author Group3
@@ -19,6 +21,10 @@ import project.model.TaskCollaborator;
 public class US362RemoveTaskFromProjectCollaborator {
 
 	int projectIDtoInstantiate;
+	private TaskRepository taskRepository;
+	private ProjectRepository projectRepository;
+	private Project project;
+	private Company company;
 
 	/**
 	 * Constructor
@@ -32,8 +38,12 @@ public class US362RemoveTaskFromProjectCollaborator {
 	 * 
 	 * @param projectIDtoInstantiate
 	 */
-	public US362RemoveTaskFromProjectCollaborator(String projectIDtoInstantiate) {
-		this.projectIDtoInstantiate = 0;
+	public US362RemoveTaskFromProjectCollaborator(int projectIDtoInstantiate) {
+		this.projectIDtoInstantiate = projectIDtoInstantiate;
+		company = Company.getTheInstance();
+		projectRepository = company.getProjectsRepository();
+		project = projectRepository.getProjById(projectIDtoInstantiate);
+		taskRepository = project.getTaskRepository();
 	}
 
 	/**
@@ -47,8 +57,8 @@ public class US362RemoveTaskFromProjectCollaborator {
 	public List<Task> getTasksFromAProject() {
 
 		List<Task> tasksFromProject = new ArrayList<>();
-		Project projectToGetTasks = Company.getTheInstance().getProjectsRepository()
-				.getProjById(this.projectIDtoInstantiate);
+
+		Project projectToGetTasks = projectRepository.getProjById(this.projectIDtoInstantiate);
 
 		tasksFromProject.addAll(projectToGetTasks.getTaskRepository().getProjectTaskRepository());
 
