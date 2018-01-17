@@ -59,4 +59,17 @@ public class TaskTeamRequest {
 		return true;
 	}
 
+	/**
+	 * Takes the attributes of the request and converts the name and email of the
+	 * collaborator and the id and description of the task into a string
+	 * 
+	 * @return The string representation
+	 */
+	public String getStringRepresentation() {
+		String result = this.projCollab.getUserFromProjectCollaborator().getName().toString() + "\n"
+				+ this.projCollab.getUserFromProjectCollaborator().getEmail().toString() + "\n"
+				+ this.task.getTaskID().toString() + "\n" + this.task.getDescription().toString();
+		return result;
+	}
+
 }
