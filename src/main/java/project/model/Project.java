@@ -541,6 +541,48 @@ public class Project {
 		return toString;
 	}
 
+	/**
+	 * Returns the relevant info in the form of a list of strings of the pending
+	 * task removal requests
+	 * 
+	 * @return toString List of strings which contains the info about the task and
+	 *         the project collaborator for each request
+	 */
+	public List<String> viewPendingTaskRemovalRequests() {
+		List<String> toString = new ArrayList<>();
+		for (TaskTeamRequest req : this.pendingTaskRemovalRequests) {
+			toString.add(req.getProjCollab().getUserFromProjectCollaborator().getName().toString() + "\n"
+					+ req.getProjCollab().getUserFromProjectCollaborator().getEmail().toString() + "\n"
+					+ req.getTask().getTaskID().toString() + "\n" + req.getTask().getDescription().toString());
+		}
+		return toString;
+	}
+
+	/**
+	 * This method receives a Project Collaborator and a Task, creates a new
+	 * TaskTeamRequest with those objects and searches if there's a removal request
+	 * equal to the created one, in the pending removal requests list.
+	 * 
+	 * @param projCollaborator
+	 *            Project Collaborator to create the request
+	 * @param task
+	 *            Task to create the request
+	 * 
+	 * @return Returns the removal request within the list if it exists or NULL if
+	 *         it does not
+	 */
+	public TaskTeamRequest getRemovalTaskTeamRequest(ProjectCollaborator projCollaborator, Task task) {
+
+		TaskTeamRequest removalRequestToFind = new TaskTeamRequest(projCollaborator, task);
+		for (TaskTeamRequest other : this.pendingTaskRemovalRequests) {
+			if (removalRequestToFind.equals(other)) {
+				return other;
+			}
+		}
+
+		return null;
+	}
+
 	// TODO Do we use this method give the Assignment requests to the controller, or
 	// create a method in Project that handles the approvals/rejections by recieving
 	// index numbers from the controller?

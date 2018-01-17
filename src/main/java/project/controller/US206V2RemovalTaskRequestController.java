@@ -8,9 +8,12 @@ import project.model.User;
 
 /**
  * @author Group 3
+ * 
+ *         This Class responds to the USComo colaborador, eu pretendo remover
+ *         uma tarefa que consta na minha lista de tarefas.
  *
  */
-public class US206V2RemoveTaskRequestController {
+public class US206V2RemovalTaskRequestController {
 
 	int projectID;
 	String taskID;
@@ -26,7 +29,7 @@ public class US206V2RemoveTaskRequestController {
 	 * @param taskID
 	 *            Task ID of the task that the user wants to be removed from
 	 */
-	public US206V2RemoveTaskRequestController(User user, int projectID, String taskID) {
+	public US206V2RemovalTaskRequestController(User user, int projectID, String taskID) {
 		this.user = user;
 		this.projectID = projectID;
 		this.taskID = taskID;
@@ -39,12 +42,17 @@ public class US206V2RemoveTaskRequestController {
 	 */
 	public boolean createRequest() {
 
+		boolean createdSucess = false;
+
 		Project project = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
 		Task taskBeRemovedOf = project.getTaskRepository().getTaskByID(this.taskID);
-		ProjectCollaborator projectCollaborator = project.findProjectCollaborator(this.user);
 
-		return project.createTaskRemovalRequest(projectCollaborator, taskBeRemovedOf);
-
+		if (taskBeRemovedOf != null) {
+			ProjectCollaborator projectCollaborator = project.findProjectCollaborator(this.user);
+			project.createTaskRemovalRequest(projectCollaborator, taskBeRemovedOf);
+			createdSucess = true;
+		}
+		return createdSucess;
 	}
 
 }
