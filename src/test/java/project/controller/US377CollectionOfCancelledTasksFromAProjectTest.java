@@ -1,7 +1,6 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +38,7 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 	ProjectCollaborator collab1;
 
 	Project project;
+	Project project2;
 
 	Task testTask;
 	Task testTask2;
@@ -67,9 +67,11 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 
 		// Creates one Project
 		project = myCompany.getProjectsRepository().createProject("name3", "description4", userAdmin);
+		project2 = myCompany.getProjectsRepository().createProject("name1", "description4", userAdmin);
 
 		// add project to project repository
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
 
 		// create project collaborators
 		collab1 = new ProjectCollaborator(user1, 2);
@@ -88,6 +90,7 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 
 		// add user to project team
 		project.addProjectCollaboratorToProjectTeam(collab1);
+		project2.addProjectCollaboratorToProjectTeam(collab1);
 
 		// create a estimated Task Start Date
 		Calendar startDateTest = Calendar.getInstance();
@@ -203,11 +206,9 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		taskRepository = null;
 		taskWorker1 = null;
 		collab1 = null;
-	}
-
-	@Test
-	public final void testGetProjectsFromUser() {
-		fail("Not yet implemented"); // TODO
+		estimatedTaskStartDateTest = null;
+		taskDeadlineDateTest = null;
+		startDateTest = null;
 	}
 
 	/**
