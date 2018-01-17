@@ -49,7 +49,7 @@ public class US362RemoveTaskFromProjectCollaborator {
 	public List<Project> getProjectsFromUser(User user) {
 		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
 		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsOfProjectManager(user));
+				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsFromUser(user));
 		return listOfProjectsOfProjectManager;
 	}
 	
