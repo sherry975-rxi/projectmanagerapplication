@@ -114,4 +114,11 @@ public class TaskTeamRequestTests {
 
 	}
 
+	@Test
+	public void testStringRepresentation() {
+		TaskTeamRequest request = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
+		String result = teamTesterName + "\n" + "collab@mail.mail" + "\n" + taskIDnumber + "\n" + taskDescription;
+		assertTrue(request.viewStringRepresentation().equals(result));
+	}
+
 }

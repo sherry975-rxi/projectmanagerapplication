@@ -10,6 +10,12 @@ public class DeleteTaskController {
 
 	/**
 	 * 
+	 * 
+	 * US 345 - Como Gestor de projeto, quero poder eliminar uma tarefa não
+	 * iniciada.
+	 * 
+	 * 
+	 * 
 	 * This controller allows a Project Manager to delete a task from the Task
 	 * Repository The "State" of the Task must be set to
 	 * 
@@ -53,7 +59,7 @@ public class DeleteTaskController {
 		if (taskToDelete != null) {
 
 			// Deletes the task from the task Repository
-			return this.taskRepository.deleteTask(taskToDelete);
+			wasTaskDeleted = this.taskRepository.deleteTask(taskToDelete);
 
 		}
 

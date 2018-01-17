@@ -33,7 +33,7 @@ public class DeleteTaskControllerTest {
 	User userAdmin;
 	Project project;
 	ProjectRepository projectRepository;
-	Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6;
+	Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6, testTask7;
 	Assigned taskStateAssigned;
 	Cancelled taskStateCancelled;
 	Finished taskStateFinished;
@@ -213,6 +213,10 @@ public class DeleteTaskControllerTest {
 		 */
 		assertTrue(controllerDelete.deleteTask(projectCode, taskId6));
 
+		/*
+		 * The task doesn't exist in the repository anymore, so it will return false
+		 */
+		assertFalse(controllerDelete.deleteTask(projectCode, taskId6));
 	}
 
 }

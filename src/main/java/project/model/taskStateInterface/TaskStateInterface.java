@@ -14,42 +14,42 @@ public interface TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	public void changeToCreated();
+	public boolean changeToCreated();
 
 	/**
 	 * This method changes the state of a Task to the "Planned" state
 	 * 
 	 * @return Void
 	 */
-	public void changeToPlanned();
+	public boolean changeToPlanned();
 
 	/**
 	 * This method changes the state of a Task to the "Assigned" state
 	 * 
 	 * @return Void
 	 */
-	public void changeToAssigned();
+	public boolean changeToAssigned();
 
 	/**
 	 * This method changes the state of a Task to the "Ready" state
 	 * 
 	 * @return Void
 	 */
-	public void changeToReady();
+	public boolean changeToReady();
 
 	/**
 	 * This method changes the state of a Task to the "OnGoing" state
 	 * 
 	 * @return Void
 	 */
-	public void changeToOnGoing();
+	public boolean changeToOnGoing();
 
 	/**
 	 * This method changes the state of a Task to the "StandBy" state
 	 * 
 	 * @return Void
 	 */
-	public void changeToStandBy();
+	public boolean changeToStandBy();
 
 	/**
 	 * This method changes the state of a Task to the "Cancelled" state
