@@ -40,30 +40,13 @@ public class ProjectCollaboratorAssociatedToTaskController {
 
 	public boolean createTaskWorkerRemovalRequestController(Task taskToRemove, ProjectCollaborator collaborator) {
 		Project selectedProject = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-		if (selectedProject != null) {
+		if (selectedProject != null && !selectedProject.isRemovalRequestAlreadyCreated(collaborator, taskToRemove)) {
 			return selectedProject.createTaskRemovalRequest(collaborator, taskToRemove);
 		} else
 			return false;
 
 	}
 
-	// TODO implement method in task to remove all collaborators from the task and
-	// to clear the list of requests related to it
-	/**
-	 * @param taskToMarkAsFinished
-	 *            The task that will be marked as finished
-	 * 
-	 * @return true or false if the Task state was successfully marked as finished
-	 */
-	public boolean markTaskAsFinishedController(Task taskToMarkAsFinished) {
-		taskToMarkAsFinished.setFinishDate();
-
-		return taskToMarkAsFinished.getTaskState().changeToFinished();
-
-	}
-
-	// TODO this method requires a validation that an assignment request from the
-	// same user doesn't already exist
 	/**
 	 * This method receives the task and projectCollaborator data of the user
 	 * wishing to join the task team. It attempts to create a report for the
@@ -80,10 +63,29 @@ public class ProjectCollaboratorAssociatedToTaskController {
 			ProjectCollaborator collaborator) {
 		Project selectedProject = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
 
-		if (selectedProject != null) {
+		if (selectedProject != null
+				&& !selectedProject.isAssignementRequestAlreadyCreated(collaborator, taskToAssociateColaborator)) {
 			return selectedProject.createTaskAssignementRequest(collaborator, taskToAssociateColaborator);
 		} else
 			return false;
+	}
+
+	/**
+	 * @param taskToMarkAsFinished
+	 *            The task that will be marked as finished
+	 * 
+	 * @return true or false if the Task state was successfully marked as finished
+	 */
+	public boolean markTaskAsFinishedController(Task taskToMarkAsFinished) {
+		taskToMarkAsFinished.setFinishDate();
+		taskToMarkAsFinished.removeAllCollaboratorsFromTaskTeam();
+
+		Project selectedProjet = Company.getTheInstance().getProjectsRepository().getProjById(projectID);
+		if (selectedProjet != null) {
+			selectedProjet.removeAllRequestsWithASpecificTask(taskToMarkAsFinished);
+		}
+		return taskToMarkAsFinished.getTaskState().changeToFinished();
+
 	}
 
 }

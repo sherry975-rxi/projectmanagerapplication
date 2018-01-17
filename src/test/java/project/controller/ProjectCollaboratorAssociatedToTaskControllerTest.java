@@ -16,11 +16,14 @@ import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.taskStateInterface.OnGoing;
+import project.model.taskStateInterface.TaskStateInterface;
 
 public class ProjectCollaboratorAssociatedToTaskControllerTest {
 
 	/**
-	 * 
+	 * Tests Controller for US204v2 and 206v2, which contain functions a project
+	 * collaborator can perform on Tasks he's associated to
 	 */
 	Company critical;
 
@@ -54,12 +57,16 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 		finishDateA.clear();
 		finishDateA.set(2017, 05, 16);
 		taskA = project1.getTaskRepository().createTask("Test dis pls", 100, startDateA, finishDateA, 15000);
+		taskA.setStartDate(startDateA);
 
 		// Creates a project collaborator
 		projCollab1 = project1.createProjectCollaborator(newUserA, 250);
 
 		// Creates a taks worker
 		taskWorker1 = taskA.createTaskCollaborator(projCollab1);
+
+		TaskStateInterface taskAongoing = new OnGoing(taskA);
+		taskA.setTaskState(taskAongoing);
 
 		// creates the controller
 		taskController = new ProjectCollaboratorAssociatedToTaskController(project1.getIdCode());
@@ -100,11 +107,8 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 		// Attempts to add the same request, asserting false
 		// then confirms the list still contains one assignment request
 
-		// TODO this method requires a validation that the same collaboration cannot add
-		// multiple requests to join the same task!!
-		// assertFalse(taskController.createTaskWorkerAssignmentRequestController(taskA,
-		// projCollab1));
-		// assertEquals(project1.getAssignmentRequestsList().size(), 1);
+		assertFalse(taskController.createTaskWorkerAssignmentRequestController(taskA, projCollab1));
+		assertEquals(project1.getAssignmentRequestsList().size(), 1);
 
 		// Checks if projCollab1 remains not associated to the Task
 		assertFalse(taskA.isProjectCollaboratorActiveInTaskTeam(projCollab1));
@@ -156,13 +160,12 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 		assertFalse(taskA.viewTaskStateName().equals("Finished"));
 
 		// Marks taskA as finished
-		taskController.markTaskAsFinishedController(taskA);
+		assertTrue(taskController.markTaskAsFinishedController(taskA));
 
 		// Checks if taskA is finished. Result is true
-		// TODO missing methods to remove task team from a task that will be finished
 
-		// assertTrue(taskA.viewTaskStateName().equals("Finished"));
-		// assertFalse(taskA.doesTaskTeamHaveActiveUsers());
+		assertTrue(taskA.viewTaskStateName().equals("Finished"));
+		assertFalse(taskA.doesTaskTeamHaveActiveUsers());
 
 	}
 

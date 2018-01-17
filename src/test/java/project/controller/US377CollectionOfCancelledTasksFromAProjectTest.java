@@ -117,9 +117,9 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create 4 tasks
-		testTask = taskRepository.createTask("Test dis agen pls", 10, 10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, 10);
-		testTask3 = taskRepository.createTask("Test moar yeh", 10, 10);
+		testTask = taskRepository.createTask("Test dis agen pls");
+		testTask2 = taskRepository.createTask("Test dis agen pls");
+		testTask3 = taskRepository.createTask("Test moar yeh");
 
 		// Adds 5 tasks to the TaskRepository
 		taskRepository.addProjectTask(testTask);
