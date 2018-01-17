@@ -752,20 +752,46 @@ public class Task {
 		this.finishDate = null;
 	}
 
+	/**
+	 * This method sets the cancel date for the task
+	 * 
+	 */
 	public void setCancelDate() {
 		this.cancelDate = Calendar.getInstance();
 	}
 
+	/**
+	 * This method gets the cancel date of the task
+	 * 
+	 */
 	public Calendar getCancelDate() {
 		return cancelDate;
 	}
 
+	/**
+	 * This checks if a collaborator is already in the task team
+	 * 
+	 * @param taskCollaborator
+	 *            Task collaborator that will be searched
+	 * 
+	 * @return True if the collaborator is in the task team, false if not
+	 */
 	public boolean doesTaskCollaboratorBelongsToTaskTeam(TaskCollaborator taskCollaborator) {
 		Boolean doesTaskCollaboratorBelongsToTeam = false;
 		if (taskTeam.contains(taskCollaborator) && taskCollaborator.isTaskCollaboratorActiveInTask()) {
 			doesTaskCollaboratorBelongsToTeam = true;
 		}
 		return doesTaskCollaboratorBelongsToTeam;
+	}
+
+	/**
+	 * This method removes all users from a task.
+	 * 
+	 */
+	public void removeAllCollaboratorsFromTaskTeam() {
+		for (TaskCollaborator other : taskTeam) {
+			other.addFinishDateForTaskCollaborator();
+		}
 	}
 
 }

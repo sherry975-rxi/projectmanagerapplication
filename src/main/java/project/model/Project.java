@@ -661,4 +661,26 @@ public class Project {
 		return result;
 	}
 
+	/**
+	 * Searches both request lists for the task selected. If it finds any request
+	 * with this task, removes it from the list.
+	 * 
+	 * @param task
+	 *            Task to remove from the request lists
+	 */
+	public void removeAllRequestsWithASpecificTask(Task task) {
+
+		for (TaskTeamRequest other : this.pendingTaskAssignementRequests) {
+			if (other.getTask().equals(task)) {
+				this.pendingTaskAssignementRequests.remove(other);
+			}
+		}
+
+		for (TaskTeamRequest other : this.pendingTaskRemovalRequests) {
+			if (other.getTask().equals(task)) {
+				this.pendingTaskRemovalRequests.remove(other);
+			}
+		}
+	}
+
 }

@@ -566,4 +566,33 @@ public class ProjectTest {
 		assertTrue(p1.viewPendingTaskAssignementRequests().get(0).equals(result));
 	}
 
+	/**
+	 * Tests if removeAllRequestsWithASpecificTask() actually removes all the
+	 * requests chosen
+	 */
+	@Test
+	public void testRemoveAllRequestsWithACertainTask() {
+		p1.createTaskAssignementRequest(projectCollaborator1, task1);
+		p1.createTaskAssignementRequest(projectCollaborator2, task1);
+		p1.createTaskAssignementRequest(projectCollaborator3, task1);
+		p1.createTaskAssignementRequest(projectCollaborator4, task1);
+		p1.createTaskAssignementRequest(projectCollaborator1, task2);
+		p1.createTaskAssignementRequest(projectCollaborator1, task3);
+		p1.createTaskAssignementRequest(projectCollaborator2, task2);
+		p1.createTaskAssignementRequest(projectCollaborator3, task2);
+
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+		p1.createTaskRemovalRequest(projectCollaborator2, task1);
+		p1.createTaskRemovalRequest(projectCollaborator3, task1);
+		p1.createTaskRemovalRequest(projectCollaborator4, task1);
+		p1.createTaskRemovalRequest(projectCollaborator1, task2);
+		p1.createTaskRemovalRequest(projectCollaborator1, task3);
+		p1.createTaskRemovalRequest(projectCollaborator2, task2);
+		p1.createTaskRemovalRequest(projectCollaborator3, task2);
+
+		p1.removeAllRequestsWithASpecificTask(task1);
+
+		assertEquals(4, p1.getAssignmentRequestsList().size());
+		assertEquals(4, p1.getRemovalRequestsList().size());
+	}
 }
