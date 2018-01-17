@@ -58,7 +58,7 @@ public class ChangeReportedTimeInTaskControllerTest {
 		// add project collaborator to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
 		// create task
-		testTask = project1.getTaskRepository().createTask("Tarefa para testar controlador", 0, 0);
+		testTask = project1.getTaskRepository().createTask("Tarefa para testar controlador");
 		// add task to project
 		project1.getTaskRepository().addProjectTask(testTask);
 		// create task collaborator
