@@ -605,5 +605,19 @@ public class ProjectTest {
 		
 
 	}
+	
+	/**
+	 * Test the getter of a removal from task request
+	 */
+	@Test
+	public void testGetRemovalTaskTeamRequest() {
+		// create and add a request of certain project collaborator and certain task				OK
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);
+		// create a similar request of the one created
+		TaskTeamRequest expectedRequest = new TaskTeamRequest(projectCollaborator1, task1);
+		//if the info are the same, the objects should be considered the same
+		assertTrue(p1.getRemovalTaskTeamRequest(projectCollaborator1, task1).equals(expectedRequest));
+		
+	}
 
 }
