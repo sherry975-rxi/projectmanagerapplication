@@ -62,6 +62,7 @@ public class Project {
 		this.taskRepository = new TaskRepository(projectIdCode);
 		this.projectTeam = new ArrayList<>();
 		this.pendingTaskAssignementRequests = new ArrayList<>();
+		this.pendingTaskRemovalRequests = new ArrayList<>();
 	}
 
 	/**
@@ -497,7 +498,7 @@ public class Project {
 	 */
 	public boolean createTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
-		if (!this.isRemovalRequestAlreadyCreated(newReq)) {
+		if (!this.isRemovalRequestAlreadyCreated(projCollab, task)) {
 			return this.pendingTaskRemovalRequests.add(newReq);
 		}
 		return false;
@@ -523,8 +524,9 @@ public class Project {
 	 *            TaskTeamRequest to remove from the list
 	 */
 
-	public void deleteTaskRemovalRequest(TaskTeamRequest request) {
-		this.pendingTaskRemovalRequests.remove(request);
+	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest request = getRemovalTaskTeamRequest(projCollab, task); 
+		return this.pendingTaskRemovalRequests.remove(request);
 	}
 
 	/**
@@ -636,7 +638,8 @@ public class Project {
 	 *            Task chosen by the project collaborator
 	 * @return True if request already exists, false if not
 	 */
-	public boolean isRemovalRequestAlreadyCreated(TaskTeamRequest request) {
+	public boolean isRemovalRequestAlreadyCreated(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest request = new TaskTeamRequest(projCollab, task);
 		return this.pendingTaskRemovalRequests.contains(request);
 	}
 
