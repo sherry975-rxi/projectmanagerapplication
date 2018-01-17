@@ -565,5 +565,15 @@ public class ProjectTest {
 		String result = "name" + "\n" + "email" + "\n" + "1.1" + "\n" + "description";
 		assertTrue(p1.viewPendingTaskAssignementRequests().get(0).equals(result));
 	}
+	
+	/**
+	 * Test the getter of a removal from task request
+	 */
+	@Test
+	public void testGetRemovalRequestsList() {
+		// no request added, so size should be zero
+		assertEquals(0, p1.getRemovalRequestsList().size());
+		
+	}
 
 }

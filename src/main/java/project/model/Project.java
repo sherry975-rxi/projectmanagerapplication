@@ -62,6 +62,7 @@ public class Project {
 		this.taskRepository = new TaskRepository(projectIdCode);
 		this.projectTeam = new ArrayList<>();
 		this.pendingTaskAssignementRequests = new ArrayList<>();
+		this.pendingTaskRemovalRequests = new ArrayList<>();
 	}
 
 	/**
