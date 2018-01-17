@@ -409,29 +409,34 @@ public class TaskRepository {
 	 *            the task that will be removed from the task Repository
 	 * 
 	 */
-	public void deleteTask(Task taskToDelete) {
+	public boolean deleteTask(Task taskToDelete) {
 
-		if (this.projectTasks.contains(taskToDelete)) {
+		boolean wasTaskDeleted = false;
 
-			switch (taskToDelete.viewTaskStateName()) {
-			case "Assigned":
-				this.projectTasks.remove(taskToDelete);
-				break;
-			case "Planned":
-				this.projectTasks.remove(taskToDelete);
-				break;
-			case "Created":
-				this.projectTasks.remove(taskToDelete);
-				break;
-			case "Ready":
-				this.projectTasks.remove(taskToDelete);
-				break;
-			default:
-				break;
+		switch (taskToDelete.viewTaskStateName()) {
+		case "Assigned":
+			this.projectTasks.remove(taskToDelete);
+			wasTaskDeleted = true;
+			break;
 
-			}
+		case "Planned":
+			this.projectTasks.remove(taskToDelete);
+			wasTaskDeleted = true;
+			break;
+		case "Created":
+			this.projectTasks.remove(taskToDelete);
+			wasTaskDeleted = true;
+			break;
+		case "Ready":
+			this.projectTasks.remove(taskToDelete);
+			wasTaskDeleted = true;
+			break;
+		default:
+			break;
 
 		}
+		return wasTaskDeleted;
+
 	}
 
 	/**

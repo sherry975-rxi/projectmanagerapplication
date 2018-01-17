@@ -484,10 +484,7 @@ public class Project {
 	 */
 	public boolean createTaskAssignementRequest(ProjectCollaborator projCollab, Task task) {// uso de if incorreto?
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
-		if (!this.isAssignementRequestAlreadyCreated(newReq)) {
-			return this.pendingTaskAssignementRequests.add(newReq);
-		}
-		return false;
+		return this.pendingTaskAssignementRequests.add(newReq);
 	}
 
 	/**
@@ -500,7 +497,7 @@ public class Project {
 	 */
 	public boolean createTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
-		if (!this.isAssignementRequestAlreadyCreated(newReq)) {
+		if (!this.isRemovalRequestAlreadyCreated(newReq)) {
 			return this.pendingTaskRemovalRequests.add(newReq);
 		}
 		return false;
@@ -539,11 +536,51 @@ public class Project {
 	public List<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
 		List<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskAssignementRequests) {
+			toString.add(req.getStringRepresentation());
+		}
+		return toString;
+	}
+
+	/**
+	 * Returns the relevant info in the form of a list of strings of the pending
+	 * task removal requests
+	 * 
+	 * @return toString List of strings which contains the info about the task and
+	 *         the project collaborator for each request
+	 */
+	public List<String> viewPendingTaskRemovalRequests() {
+		List<String> toString = new ArrayList<>();
+		for (TaskTeamRequest req : this.pendingTaskRemovalRequests) {
 			toString.add(req.getProjCollab().getUserFromProjectCollaborator().getName().toString() + "\n"
 					+ req.getProjCollab().getUserFromProjectCollaborator().getEmail().toString() + "\n"
 					+ req.getTask().getTaskID().toString() + "\n" + req.getTask().getDescription().toString());
 		}
 		return toString;
+	}
+
+	/**
+	 * This method receives a Project Collaborator and a Task, creates a new
+	 * TaskTeamRequest with those objects and searches if there's a removal request
+	 * equal to the created one, in the pending removal requests list.
+	 * 
+	 * @param projCollaborator
+	 *            Project Collaborator to create the request
+	 * @param task
+	 *            Task to create the request
+	 * 
+	 * @return Returns the removal request within the list if it exists or NULL if
+	 *         it does not
+	 */
+	public TaskTeamRequest getRemovalTaskTeamRequest(ProjectCollaborator projCollaborator, Task task) {
+
+		TaskTeamRequest removalRequestToFind = new TaskTeamRequest(projCollaborator, task);
+		for (TaskTeamRequest other : this.pendingTaskRemovalRequests) {
+			if (removalRequestToFind.equals(other)) {
+				return other;
+			}
+		}
+
+		return null;
 	}
 
 	// TODO Do we use this method give the Assignment requests to the controller, or
@@ -585,7 +622,8 @@ public class Project {
 	 *            Task chosen by the project collaborator
 	 * @return True if request already exists, false if not
 	 */
-	public boolean isAssignementRequestAlreadyCreated(TaskTeamRequest request) {
+	public boolean isAssignementRequestAlreadyCreated(ProjectCollaborator projCollab, Task task) {
+		TaskTeamRequest request = new TaskTeamRequest(projCollab, task);
 		return this.pendingTaskAssignementRequests.contains(request);
 	}
 
@@ -600,6 +638,27 @@ public class Project {
 	 */
 	public boolean isRemovalRequestAlreadyCreated(TaskTeamRequest request) {
 		return this.pendingTaskRemovalRequests.contains(request);
+	}
+
+	/**
+	 * Gets the request associated with the project collaborator and task provided
+	 * 
+	 * @param projCollaborator
+	 *            Project Collaborator to search
+	 * @param task
+	 *            Task to search
+	 * @return The request associated with the data provided, if it exists, else
+	 *         return null.
+	 */
+	public TaskTeamRequest getAssignementTaskTeamRequest(ProjectCollaborator projCollaborator, Task task) {
+		TaskTeamRequest result = null;
+		TaskTeamRequest assignementRequestToFind = new TaskTeamRequest(projCollaborator, task);
+		for (TaskTeamRequest other : this.pendingTaskAssignementRequests) {
+			if (assignementRequestToFind.equals(other)) {
+				result = other;
+			}
+		}
+		return result;
 	}
 
 }
