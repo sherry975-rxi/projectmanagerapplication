@@ -1,7 +1,6 @@
 package project.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class ProjectRepository {
@@ -352,12 +351,12 @@ public class ProjectRepository {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
 		boolean cycle = true;
-		int i=0;
-		while(cycle) {
-			cycle=false;
-		
+		int i = 0;
+		while (cycle) {
+			cycle = false;
+
 			for (int j = i + 1; j < result.size(); j++) {
-				cycle=true;
+				cycle = true;
 				if (result.get(i).getFinishDate().before(result.get(j).getFinishDate())) {
 					Task h = new Task(result.get(i));
 					result.set(i, result.get(j));
@@ -365,7 +364,7 @@ public class ProjectRepository {
 				}
 			}
 			i++;
-		
+
 		}
 		return result;
 	}
@@ -387,12 +386,12 @@ public class ProjectRepository {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
 		boolean cycle = true;
-		int i=0;
-		while(cycle) {
-			cycle=false;
-		
+		int i = 0;
+		while (cycle) {
+			cycle = false;
+
 			for (int j = i + 1; j < result.size(); j++) {
-				cycle=true;
+				cycle = true;
 				if (result.get(i).getTaskDeadline().after(result.get(j).getTaskDeadline())) {
 					Task h = new Task(result.get(i));
 					result.set(i, result.get(j));
@@ -415,25 +414,24 @@ public class ProjectRepository {
 		return this.projectsRepository.contains(project);
 	}
 
-	
 	/**
-	 * This method returns a set of Projects where a certain user was defined as Project Manager
+	 * This method returns a set of Projects where a certain user
 	 * 
-	 * @param projectManager User defined as Project Manager
+	 * @param User
 	 * 
-	 * @return List of Projects of a Project Manager
+	 * @return List of Projects of a User
 	 * 
 	 */
-	public List<Project> getProjectsOfProjectManager(User projectManager) {
+	public List<Project> getProjectsFromUser(User user) {
 
-		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
+		List<Project> listOfProjectsOfUser = new ArrayList<>();
 
 		for (Project other : this.projectsRepository) {
-			if (other.isProjectManager(projectManager)) {
-				listOfProjectsOfProjectManager.add(other);
+			if (other.isUserInProjectTeam(user)) {
+				listOfProjectsOfUser.add(other);
 			}
 		}
-		return listOfProjectsOfProjectManager;
+		return listOfProjectsOfUser;
 	}
 
 }
