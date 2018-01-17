@@ -3,7 +3,6 @@
  */
 package project.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import project.model.Company;
@@ -11,14 +10,13 @@ import project.model.Project;
 import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskRepository;
-import project.model.User;
 
 /**
  * @author Group 3
  *
  */
 public class US377CollectionOfCancelledTasksFromAProject {
-	private int projectIDtoInstantiate = 0;
+	private int projectIDtoInstantiate;
 	private TaskRepository taskRepository;
 	private ProjectRepository projectRepository;
 	private Project project;
@@ -42,21 +40,6 @@ public class US377CollectionOfCancelledTasksFromAProject {
 		projectRepository = company.getProjectsRepository();
 		project = projectRepository.getProjById(projectIDtoInstantiate);
 		taskRepository = project.getTaskRepository();
-	}
-
-	/**
-	 * This method returns a set of Projects where a certain user
-	 * 
-	 * @param user
-	 * 
-	 * @return List of Projects of User
-	 */
-	public List<Project> getProjectsFromUser(User user) {
-		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
-
-		listOfProjectsOfProjectManager.addAll(projectRepository.getProjectsFromUser(user));
-
-		return listOfProjectsOfProjectManager;
 	}
 
 	/**
