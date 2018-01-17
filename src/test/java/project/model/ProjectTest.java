@@ -619,5 +619,16 @@ public class ProjectTest {
 		assertTrue(p1.getRemovalTaskTeamRequest(projectCollaborator1, task1).equals(expectedRequest));
 		
 	}
+	
+	/**
+	 * Tests the remove of an existing request in the Task Removal Request List
+	 */
+	@Test
+	public void testDeleteTaskRemovalRequest() {
+		// create a removal request of certain project collaborator and certain task
+		p1.createTaskRemovalRequest(projectCollaborator1, task1);	
+		// delete the request added to the task removal list
+		assertTrue(p1.deleteTaskRemovalRequest(projectCollaborator1, task1));
+	}
 
 }
