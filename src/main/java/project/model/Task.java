@@ -790,7 +790,9 @@ public class Task {
 	 */
 	public void removeAllCollaboratorsFromTaskTeam() {
 		for (TaskCollaborator other : taskTeam) {
-			other.addFinishDateForTaskCollaborator();
+			if (other.isTaskCollaboratorActiveInTask()) {
+				other.addFinishDateForTaskCollaborator();
+			}
 		}
 	}
 
