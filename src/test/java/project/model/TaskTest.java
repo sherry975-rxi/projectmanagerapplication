@@ -45,22 +45,20 @@ public class TaskTest {
 
 		collab1 = myProject.createProjectCollaborator(user1, 5);
 		collab2 = myProject.createProjectCollaborator(user2, 5);
+		
+		myProject.addProjectCollaboratorToProjectTeam(collab1);
+		myProject.addProjectCollaboratorToProjectTeam(collab2);
 
 		tWorker1 = new TaskCollaborator(collab1);
 		tWorker2 = new TaskCollaborator(collab2);
+		
 
-		estimatedTaskStartDate = Calendar.getInstance();
-		estimatedTaskStartDate.add(Calendar.MONTH, -1);
-		taskDeadline = Calendar.getInstance();
-		taskDeadline.add(Calendar.MONTH, 1);
-
-		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
+		Calendar projStartDate = Calendar.getInstance();
 		myProject.setStartdate(projStartDate);
-
-		testTask = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
-		testTask.addProjectCollaboratorToTask(collab1);
-		testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
-		testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
+		
+		testTask = new Task(1, 1, "Description of task");
+		testTask2 = new Task(2, 2, "Description of task");
+		testTask3 = new Task(3, 3, "Description of task 3");
 
 	}
 
@@ -89,7 +87,8 @@ public class TaskTest {
 	 */
 	@Test
 	public void testTaskConstructor() {
-
+		testTask.addTaskCollaboratorToTask(tWorker1);
+		
 		assertTrue(testTask.getDescription().equals(testTask2.getDescription()));
 		assertFalse(testTask.getDescription().equals(testTask3.getDescription()));
 	}
@@ -153,8 +152,36 @@ public class TaskTest {
 	 */
 	@Test
 	public void testIsFinished() {
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask.setTaskDeadline(taskDeadline);
+
+		testTask.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask.addProjectCollaboratorToTask(collab2);
+		testTask.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setStartDate(projStartDate);
+		testTask.getTaskState().changeToOnGoing();
+		
 		assertFalse(testTask.isTaskFinished());
 		testTask.markTaskAsFinished();
+		
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setFinishDate(testDate);
+		testTask.markTaskAsFinished();
+		
 		assertTrue(testTask.isTaskFinished());
 	}
 
@@ -364,7 +391,7 @@ public class TaskTest {
 
 	@Test
 	public void testDependeceOfTasks() {
-
+		
 		// set testTask estimated start date
 		Calendar dateTask1 = Calendar.getInstance();
 		dateTask1.set(2017, Calendar.DECEMBER, 02);
@@ -380,6 +407,8 @@ public class TaskTest {
 		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
 		// the estimated task start date of testTask2 to the estimated task start date
 		// of testTask plus 10 days
+		
+		testTask2.setEstimatedTaskStartDate(Calendar.getInstance());
 		testTask2.createTaskDependence(testTask);
 
 		// Confirms that the task has active dependencies
@@ -487,6 +516,10 @@ public class TaskTest {
 	 */
 	@Test
 	public void testSetFinishDate() {
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
 
 		taskDeadline.add(Calendar.DAY_OF_YEAR, -5);
 		testTask.setFinishDate(taskDeadline);
