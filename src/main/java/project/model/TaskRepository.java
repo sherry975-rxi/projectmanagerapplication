@@ -45,7 +45,7 @@ public class TaskRepository {
 	 * @return the task created
 	 */
 
-	public Task createTaskk(String description, int estimatedTaskEffort, int estimatedBudgetCostTask) {
+	public Task createTask(String description, int estimatedTaskEffort, int estimatedBudgetCostTask) {
 		
 		Task newTask = new Task(estimatedTaskEffort, estimatedBudgetCostTask, description);
 
