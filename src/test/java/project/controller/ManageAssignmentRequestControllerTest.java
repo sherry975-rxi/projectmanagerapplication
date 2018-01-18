@@ -8,7 +8,6 @@ import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import project.model.Company;
@@ -211,7 +210,6 @@ public class ManageAssignmentRequestControllerTest {
 
 	// This test validates the Task state update when a Collaborator is approved to
 	// join a task that has no team
-	@Ignore
 	@Test
 	public void validateTaskStateUpdatedTest() {
 		System.out.println("====== Testing updateState() Method Called =======");
@@ -227,7 +225,6 @@ public class ManageAssignmentRequestControllerTest {
 
 	// This test validates the Task state update is NOT called when a Collaborator
 	// is approved to join a task that already has a team
-	@Ignore
 	@Test
 	public void validateTaskStateNOTupdatedTest() {
 		System.out.println("====== Testing updateState() Method Not Called =======");
