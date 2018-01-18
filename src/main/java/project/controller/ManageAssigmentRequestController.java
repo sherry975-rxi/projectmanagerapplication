@@ -8,20 +8,27 @@ import project.model.Project;
 import project.model.TaskTeamRequest;
 
 public class ManageAssigmentRequestController {
-
 	int projectID;
+	Project selectedProject;
 	TaskTeamRequest selectedAdditionRequest;
 
 	/*
-	 * This controller manages Addition Requests by Project Collaborators
-	 * 
-	 * respond to US 204v2
+	 * This controller manages Addition Requests by Project Collaborators * respond
+	 * to US 204v2
 	 * 
 	 * @param ProjectID - the ID of the selected Project
 	 * 
 	 */
 	public ManageAssigmentRequestController(int selectedProjectID) {
 		this.projectID = selectedProjectID;
+		this.selectedProject = null;
+		this.selectedAdditionRequest = null;
+	}
+
+	// TODO this method is a PLACEHOLDER
+	public Boolean doesProjectExist() {
+		Project selectedProject = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
+		return selectedProject != null;
 	}
 
 	/**
@@ -33,14 +40,12 @@ public class ManageAssigmentRequestController {
 	 *         list if the project is null
 	 */
 	public List<String> showAllAssignmentRequests() {
-		Project toViewRequests = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-
-		if (toViewRequests == null) {
+		if (doesProjectExist()) {
 			System.out.println("Project Not found!");
 			List<String> empty = new ArrayList<>();
 			return empty;
 		} else {
-			return toViewRequests.viewPendingTaskAssignementRequests();
+			return this.selectedProject.viewPendingTaskAssignementRequests();
 		}
 	}
 
@@ -54,21 +59,21 @@ public class ManageAssigmentRequestController {
 	 * 
 	 * @return returns true if request us found, false if not
 	 */
-	public boolean selectAssignmentRequest(int index) {
-		Project toSelectRequest = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-
-		if (index >= 0 && index < toSelectRequest.getAssignmentRequestsList().size()) {
-			this.selectedAdditionRequest = toSelectRequest.getAssignmentRequestsList().get(index);
-			System.out.println("Selected: " + this.selectedAdditionRequest.viewStringRepresentation());
-			System.out.println("");
-			return true;
-		} else {
-			this.selectedAdditionRequest = null;
-			System.out.println("Request not found!");
-			System.out.println();
-			return false;
+	public boolean selectAssignmentRequest(int index) {// dependendo de como isto é apresentado ao user, pode ser
+														// preciso meter (index-1)
+		boolean confirmation = false;
+		if (doesProjectExist()) {
+			if (index >= 0 && index < selectedProject.getAssignmentRequestsList().size()) {
+				this.selectedAdditionRequest = selectedProject.getAssignmentRequestsList().get(index);
+				System.out.println("Selected: " + this.selectedAdditionRequest.viewStringRepresentation());
+				System.out.println("");
+				confirmation = true;
+			} else {
+				System.out.println("Request not found!");
+				System.out.println();
+			}
 		}
-
+		return confirmation;
 	}
 
 	/**
@@ -82,16 +87,14 @@ public class ManageAssigmentRequestController {
 	 *         successfully
 	 */
 	public boolean approveAssignmentRequest() {
-
 		if (selectedAdditionRequest != null) {
 			selectedAdditionRequest.getTask().addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
-
+			updateTaskState();
 			deleteRequest();
 			System.out.println("Request approved!");
 			return true;
 		} else
 			return false;
-
 	}
 
 	/**
@@ -105,15 +108,26 @@ public class ManageAssigmentRequestController {
 	 *         successfully
 	 */
 	public boolean rejectAssignmentRequest() {
-
 		if (selectedAdditionRequest != null) {
-
 			System.out.println("Request rejected!");
 			deleteRequest();
 			return true;
 		} else
 			return false;
+	}
 
+	// TODO this method may be REMOVED once UpdateState is implemented in TaskState
+	// Interface
+	public void updateTaskState() {
+		switch (this.selectedAdditionRequest.getTask().viewTaskStateName()) {
+		case "Planned":
+			selectedAdditionRequest.getTask().getTaskState().changeToAssigned();
+			selectedAdditionRequest.getTask().getTaskState().changeToReady();
+			break;
+		case "StandBy":
+			selectedAdditionRequest.getTask().getTaskState().changeToOnGoing();
+			break;
+		}
 	}
 
 	/**
@@ -123,8 +137,6 @@ public class ManageAssigmentRequestController {
 	 */
 	public void deleteRequest() {
 		Project toDeleteRequest = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-
 		toDeleteRequest.deleteTaskAssignementRequest(this.selectedAdditionRequest);
 	}
-
 }
