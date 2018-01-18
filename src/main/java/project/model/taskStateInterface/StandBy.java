@@ -40,60 +40,28 @@ public class StandBy implements TaskStateInterface {
 	 * This method changes the state of a Task to the "Created" state
 	 */
 	public boolean changeToCreated() {
-		boolean condition = false;
-		if (isTransitionToCreatedPossible()) {
-			TaskStateInterface stateCreated = new Created(task);
-			if (stateCreated.isValid()) {
-				task.setTaskState(stateCreated);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
 	 * This method changes the state of a Task to the "Planned" state
 	 */
 	public boolean changeToPlanned() {
-		boolean condition = false;
-		if (isTransitionToPlannedPossible()) {
-			TaskStateInterface statePlanned = new Planned(task);
-			if (statePlanned.isValid()) {
-				task.setTaskState(statePlanned);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
 	 * This method changes the state of a Task to the "Assigned" state
 	 */
 	public boolean changeToAssigned() {
-		boolean condition = false;
-		if (isTransitionToAssignedPossible()) {
-			TaskStateInterface stateAssigned = new Assigned(task);
-			if (stateAssigned.isValid()) {
-				task.setTaskState(stateAssigned);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
 	 * This method changes the state of a Task to the "Ready" state
 	 */
 	public boolean changeToReady() {
-		boolean condition = false;
-		if (isTransitionToReadyPossible()) {
-			TaskStateInterface stateReady = new Ready(task);
-			if (stateReady.isValid()) {
-				task.setTaskState(stateReady);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -115,15 +83,7 @@ public class StandBy implements TaskStateInterface {
 	 * This method changes the state of a Task to the "StandBy" state
 	 */
 	public boolean changeToStandBy() {
-		boolean condition = false;
-		if (isTransitionToStandByPossible()) {
-			TaskStateInterface stateStandBy = new StandBy(task);
-			if (stateStandBy.isValid()) {
-				task.setTaskState(stateStandBy);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
