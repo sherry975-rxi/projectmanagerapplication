@@ -14,15 +14,17 @@ public class UserRegisterUI {
 
 		Scanner scannerInput = new Scanner(System.in);
 		US101RegisterUserController registerUsercontroller1 = new US101RegisterUserController();
-		
+
 		System.out.println("USER REGISTRATION");
 		System.out.println();
 
-		// Terms and Conditions are exposed before login, depends on confirmation to proceed for registration
-		System.out.println("TERMS AND CONDITIONS: \r\n"  
+		// Terms and Conditions are exposed before login, depends on confirmation to
+		// proceed for registration
+		System.out.println("TERMS AND CONDITIONS: \r\n" + "\r\n"
 				+ "By using this application, you agree to be bound by, and to comply with these Terms and Conditions.\r\n"
 				+ "If you do not agree to these Terms and Conditions, please do not use this application.\r\n"
 				+ "To proceed with registration you must accept access conditions (y to confirm; n to deny).");
+		System.out.println();
 
 		String answer = scannerInput.nextLine();
 
@@ -33,11 +35,14 @@ public class UserRegisterUI {
 		}
 
 		if ("y".equalsIgnoreCase(answer)) {
+			System.out.println();
 
 			System.out.println("Conditions accepted.");
 			System.out.println("-------------");
 
 		} else { // In case user choose "n".
+			System.out.println();
+
 			System.out.println("Conditions not accepted.");
 
 			System.out.println();
@@ -49,7 +54,7 @@ public class UserRegisterUI {
 		System.out.println("Enter name: ");
 		String name = scannerInput.nextLine();
 
-		System.out.println("Name accepted: " + name + "." );
+		System.out.println("Name accepted: " + name + ".");
 		System.out.println();
 
 		System.out.println("Enter email: ");
@@ -94,7 +99,7 @@ public class UserRegisterUI {
 
 		System.out.println("Enter password: ");
 		String password = scannerInput.nextLine();
-		System.out.println("Password accepted: " + password);
+		System.out.println("Password accepted: ");
 		System.out.println();
 
 		System.out.println("Enter street: ");
@@ -150,6 +155,8 @@ public class UserRegisterUI {
 		} else { // In case user choose "n".
 			System.out.println();
 			System.out.println("-----REGISTER CANCELLED-----");
+			System.out.println();
+
 		}
 
 	}

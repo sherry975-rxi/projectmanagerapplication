@@ -33,13 +33,13 @@ public class UpdateUserInfoUI {
 		System.out.println("UPDATE USER INFO");
 		System.out.println();
 
-		System.out.println("PLEASE, SELECT THE NUMBER OF THE FIELD TO UPDATE");
+		System.out.println("PLEASE, SELECT THE NUMBER OF THE FIELD TO UPDATE:");
 		System.out.println();
 
 		System.out.println("[1] Name: " + currentName);
 		System.out.println("[2] Email: " + currentEmail);
 		System.out.println("[3] Phone: " + currentPhone);
-		System.out.println("[4] Address");
+		System.out.println("[4] Address List");
 		System.out.println("[5] Add New Adress");
 
 		System.out.println("______________________________________________");
@@ -57,9 +57,9 @@ public class UpdateUserInfoUI {
 		switch (choice) {
 		case "1":
 			// Updates name
-			System.out.println(inputNewInfo);
+			System.out.println("Please, insert new name");
 			String name = input.nextLine();
-			System.out.println(newInfo + name);
+			System.out.println("New Name:" + name);
 			if (confirmInfo(input)) {
 				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 				updater.updateUserName(user, name);
@@ -69,9 +69,9 @@ public class UpdateUserInfoUI {
 			break;
 		case "2":
 			// Updates email
-			System.out.println(inputNewInfo);
+			System.out.println("Please, insert new email");
 			String email = input.nextLine();
-			System.out.println(newInfo + email);
+			System.out.println("New Email: " + email);
 			if (confirmInfo(input)) {
 				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 				if (!updater.isEmailValid(email)) {
@@ -88,9 +88,9 @@ public class UpdateUserInfoUI {
 			break;
 		case "3":
 			// Updates phone
-			System.out.println(inputNewInfo);
+			System.out.println("Please, insert new phone number");
 			String phone = input.nextLine();
-			System.out.println(newInfo + phone);
+			System.out.println("New phone number: " + phone);
 			if (confirmInfo(input)) {
 				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 				updater.updateUserPhone(user, phone);
@@ -178,6 +178,8 @@ public class UpdateUserInfoUI {
 					System.out.println();
 				}
 				break;
+			default:
+				MainMenuUI.mainMenu();
 
 			}
 
@@ -223,11 +225,27 @@ public class UpdateUserInfoUI {
 
 				addAdress.addNewAddress(user, newAddress);
 				break;
+			case 2:
+				System.out.println("The user cancelled the process of adding a new address");
+				System.out.println();
+
+				addAdress.addNewAddress(user, newAddress);
+				break;
 
 			}
 			break;
-		case "6":
+
+		case "m":
 			MainMenuUI.mainMenu();
+			break;
+		case "M":
+			MainMenuUI.mainMenu();
+			break;
+		case "e":
+			System.exit(0);
+			break;
+		case "E":
+			System.exit(0);
 			break;
 		}
 
