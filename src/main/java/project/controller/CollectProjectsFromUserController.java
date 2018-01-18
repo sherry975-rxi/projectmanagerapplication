@@ -9,12 +9,14 @@ import project.model.User;
 
 public class CollectProjectsFromUserController {
 
+	User user;
+
 	/**
 	 * Constructor
 	 * 
 	 */
-	public CollectProjectsFromUserController() {
-
+	public CollectProjectsFromUserController(User user) {
+		this.user = user;
 	}
 
 	/**
@@ -26,12 +28,12 @@ public class CollectProjectsFromUserController {
 	 * 
 	 * @return List of Projects of a Project Manager
 	 */
-	public List<Project> getProjectsFromUser(User user) {
+	public List<Project> getProjectsFromUser() {
 
 		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
 
 		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsFromUser(user));
+				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsFromUser(this.user));
 
 		return listOfProjectsOfProjectManager;
 	}
