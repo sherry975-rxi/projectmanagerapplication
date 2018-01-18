@@ -25,16 +25,6 @@ public class ListUsersControllerTest {
 		// create company
 		Critical = Company.getTheInstance();
 
-		// creates user four users
-		user1 = Critical.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
-				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		user2 = Critical.getUsersRepository().createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey",
-				"920000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser2 = Critical.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
-				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser3 = Critical.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
-				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-
 		// create a list to compare
 		testList = new ArrayList<User>();
 	}
@@ -54,6 +44,16 @@ public class ListUsersControllerTest {
 
 	@Test
 	public void testListUsersController() {
+
+		// creates user four users
+		user1 = Critical.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
+				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		user2 = Critical.getUsersRepository().createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey",
+				"920000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		newUser2 = Critical.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
+				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		newUser3 = Critical.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
 		// adds all but newUser3 to the UserRepository and test List
 		Critical.getUsersRepository().addUserToUserRepository(user1);
