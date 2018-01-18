@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import project.model.Company;
@@ -15,19 +16,22 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.model.taskStateInterface.Planned;
+import project.model.taskStateInterface.Ready;
+import project.model.taskStateInterface.TaskStateInterface;
 
 public class ManageAssignmentRequestControllerTest {
 
 	Company spaceX;
 
-	User managerTester;
-
 	String teamTesterName, teamTesterID;
-	User teamTester;
+
+	User managerTester, teamTester, teamPermanentMember;
 
 	Project testProject;
 
 	ProjectCollaborator teamTesterCollaborator;
+	ProjectCollaborator teamPermanentCollaborator;
 
 	Calendar estimatedStartDate;
 	Calendar estimatedTaskDeadline;
@@ -35,6 +39,7 @@ public class ManageAssignmentRequestControllerTest {
 	String taskDescription;
 	String taskIDnumber;
 	Task taskWithNoTeam;
+	TaskStateInterface testingTaskState;
 
 	ManageAssigmentRequestController assignmentRequestsController;
 
@@ -50,13 +55,18 @@ public class ManageAssignmentRequestControllerTest {
 
 		teamTester = new User(teamTesterName, "collab@mail.mail", teamTesterID, "function", "123456789");
 
+		teamPermanentMember = new User("Mr permanent", "permie@mail.mail", "33333", "placeholding", "98644");
+
 		spaceX.getUsersRepository().addUserToUserRepository(managerTester);
 		spaceX.getUsersRepository().addUserToUserRepository(teamTester);
+		spaceX.getUsersRepository().addUserToUserRepository(teamPermanentMember);
 
 		// creates a new test project, and adds the test Collaborator to the team
 		testProject = new Project(1, "testing proj", "shoot rocket... again", managerTester);
 		teamTesterCollaborator = new ProjectCollaborator(teamTester, 2000);
+		teamPermanentCollaborator = new ProjectCollaborator(teamPermanentMember, 2000);
 		testProject.addProjectCollaboratorToProjectTeam(teamTesterCollaborator);
+		testProject.addProjectCollaboratorToProjectTeam(teamPermanentCollaborator);
 		spaceX.getProjectsRepository().addProjectToProjectRepository(testProject);
 
 		// creates two estimated dates and uses them to generate a task
@@ -72,6 +82,9 @@ public class ManageAssignmentRequestControllerTest {
 				estimatedTaskDeadline, 200000);
 		taskIDnumber = taskWithNoTeam.getTaskID();
 
+		testingTaskState = new Planned(taskWithNoTeam);
+		taskWithNoTeam.setTaskState(testingTaskState);
+
 		testProject.createTaskAssignementRequest(teamTesterCollaborator, taskWithNoTeam);
 		assignmentRequestsController = new ManageAssigmentRequestController(testProject.getIdCode());
 
@@ -83,6 +96,8 @@ public class ManageAssignmentRequestControllerTest {
 		spaceX = null;
 
 		managerTester = null;
+
+		teamPermanentMember = null;
 
 		teamTesterName = null;
 		teamTesterID = null;
@@ -98,6 +113,8 @@ public class ManageAssignmentRequestControllerTest {
 		taskDescription = null;
 		taskIDnumber = null;
 		taskWithNoTeam = null;
+
+		testingTaskState = null;
 
 		assignmentRequestsController = null;
 	}
@@ -192,4 +209,41 @@ public class ManageAssignmentRequestControllerTest {
 		System.out.println("");
 	}
 
+	// This test validates the Task state update when a Collaborator is approved to
+	// join a task that has no team
+	@Ignore
+	@Test
+	public void validateTaskStateUpdatedTest() {
+		System.out.println("====== Testing updateState() Method Called =======");
+		System.out.println("");
+		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Planned"));
+
+		assignmentRequestsController.selectAssignmentRequest(0);
+
+		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
+
+		System.out.println("");
+	}
+
+	// This test validates the Task state update is NOT called when a Collaborator
+	// is approved to join a task that already has a team
+	@Ignore
+	@Test
+	public void validateTaskStateNOTupdatedTest() {
+		System.out.println("====== Testing updateState() Method Not Called =======");
+		System.out.println("");
+
+		taskWithNoTeam.addProjectCollaboratorToTask(teamPermanentCollaborator);
+
+		testingTaskState = new Ready(taskWithNoTeam);
+
+		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
+
+		assignmentRequestsController.selectAssignmentRequest(0);
+
+		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
+		assertEquals(taskWithNoTeam.getTaskTeam().size(), 2);
+
+		System.out.println("");
+	}
 }
