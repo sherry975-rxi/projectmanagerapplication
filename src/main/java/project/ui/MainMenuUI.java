@@ -96,7 +96,14 @@ public class MainMenuUI {
 				String email = input.nextLine();
 				PrintUserInfoController userAddressInfo = new PrintUserInfoController();
 				User userToSearchAddress = userAddressInfo.getUserByEmailController(email);
-				userAddressInfo.printAllAddressesFromUser(userToSearchAddress);
+				if (userToSearchAddress != null) {
+					userAddressInfo.printAllAddressesFromUser(userToSearchAddress);
+				} else {
+					System.out.println();
+					System.out.println("User doesn't exist");
+					System.out.println();
+				}
+
 				break;
 			case "0":
 				condition = false;

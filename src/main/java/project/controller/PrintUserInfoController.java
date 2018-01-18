@@ -35,7 +35,13 @@ public class PrintUserInfoController {
 	 */
 	public User getUserByEmailController(String emailToSearch) {
 
-		return Company.getTheInstance().getUsersRepository().getUserByEmail(emailToSearch);
+		User user = null;
+		if (Company.getTheInstance().getUsersRepository().getUserByEmail(emailToSearch) != null) {
+
+			user = Company.getTheInstance().getUsersRepository().getUserByEmail(emailToSearch);
+		}
+
+		return user;
 
 	}
 
