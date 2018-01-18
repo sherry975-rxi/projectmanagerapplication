@@ -40,7 +40,7 @@ public class ManageAssigmentRequestController {
 	 *         list if the project is null
 	 */
 	public List<String> showAllAssignmentRequests() {
-		if (doesProjectExist()) {
+		if (!doesProjectExist()) {
 			System.out.println("Project Not found!");
 			List<String> empty = new ArrayList<>();
 			return empty;

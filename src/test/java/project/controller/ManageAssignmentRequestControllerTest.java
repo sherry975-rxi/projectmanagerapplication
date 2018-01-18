@@ -217,6 +217,7 @@ public class ManageAssignmentRequestControllerTest {
 		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Planned"));
 
 		assignmentRequestsController.selectAssignmentRequest(0);
+		assignmentRequestsController.approveAssignmentRequest();
 
 		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
 
@@ -233,6 +234,8 @@ public class ManageAssignmentRequestControllerTest {
 		taskWithNoTeam.addProjectCollaboratorToTask(teamPermanentCollaborator);
 
 		testingTaskState = new Ready(taskWithNoTeam);
+
+		taskWithNoTeam.setTaskState(testingTaskState);
 
 		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
 
