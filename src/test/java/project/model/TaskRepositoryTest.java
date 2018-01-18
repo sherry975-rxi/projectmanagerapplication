@@ -48,9 +48,9 @@ public class TaskRepositoryTest {
 	Task testTask5;
 	Task testTask6;
 	Task testTask7;
-	Calendar estimatedTaskStartDateTest;
-	Calendar taskDeadlineDateTest;
+	Calendar estimatedTaskStartDate, taskDeadline;
 	Calendar startDateTest;
+
 
 	@Before
 	public void setUp() {
@@ -245,14 +245,72 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// adds the user to the task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
 		testTask2.addTaskCollaboratorToTask(taskWorker1);
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
 		testTask4.addTaskCollaboratorToTask(taskWorker1);
 
+		//testTask - set state as Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask.setTaskDeadline(taskDeadline);
+
+		testTask.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask.addProjectCollaboratorToTask(collab1);
+		testTask.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setStartDate(projStartDate);
+		testTask.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setFinishDate(testDate);
+		testTask.getTaskState().changeToFinished();
+		
+
+		//testTask3 - set state as Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask3.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask3.setTaskDeadline(taskDeadline);
+
+		testTask3.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask3.addProjectCollaboratorToTask(collab1);
+		testTask3.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask3.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask3.setStartDate(projStartDate);
+		testTask3.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		testTask3.setFinishDate(testDate);
+		testTask3.getTaskState().changeToFinished();
+		
 		// Marks task and task3 as finished
 		testTask.markTaskAsFinished();
 		testTask3.markTaskAsFinished();
+		
+		// assures that the taskTest state is Finished
+		assertEquals("Finished", testTask.viewTaskStateName());
+		// assures that the taskTest3 state is Finished
+		assertEquals("Finished", testTask3.viewTaskStateName());
 
 		// create a list and add task to compare to unfinished task list
 		List<Task> test = new ArrayList<Task>();
@@ -501,32 +559,82 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask4);
 
 		// Adds user1 to the Task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
 		testTask4.addTaskCollaboratorToTask(taskWorker1);
 
-		// create finished date to test
-		Calendar startDateTest = Calendar.getInstance();
-		startDateTest.set(Calendar.YEAR, 2017);
-		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
-		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		//testTask - set state as OnGoing
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask.setTaskDeadline(taskDeadline);
 
-		// create finished date to test
-		Calendar finishDateTest = Calendar.getInstance();
-		finishDateTest.set(Calendar.YEAR, 2017);
-		finishDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
-		finishDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		finishDateTest.set(Calendar.HOUR_OF_DAY, 15);
+		testTask.getTaskState().changeToPlanned();
 
-		// start task
-		testTask.setStartDate(startDateTest);
-		testTask2.setStartDate(startDateTest);
-		testTask3.setStartDate(startDateTest);
+		// necessary to pass from "Planned" to "Assigned"
+		testTask.addProjectCollaboratorToTask(collab1);
+		testTask.getTaskState().changeToAssigned();
 
-		// Sets finish date to testTask3
-		testTask3.setFinishDate(finishDateTest);
+		// pass from "Assigned" to "Ready"
+		testTask.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setStartDate(projStartDate);
+		testTask.getTaskState().changeToOnGoing();
+		
+		
+		//testTask2 - set state as OnGoing
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask2.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask2.setTaskDeadline(taskDeadline);
+
+		testTask2.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask2.addProjectCollaboratorToTask(collab1);
+		testTask2.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask2.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask2.setStartDate(projStartDate);
+		testTask2.getTaskState().changeToOnGoing();
+		
+		
+		
+		//testTask3 - set state as Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask3.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask3.setTaskDeadline(taskDeadline);
+
+		testTask3.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask3.addProjectCollaboratorToTask(collab1);
+		testTask3.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask3.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask3.setStartDate(projStartDate);
+		testTask3.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask3.setFinishDate(testDate);
+		testTask3.getTaskState().changeToFinished();
 
 		// Marks testTask3 as finished
 		testTask3.markTaskAsFinished();
@@ -550,38 +658,69 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 
 		// Adds user1 to the Task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
 		testTask3.addTaskCollaboratorToTask(taskWorker1);
 
-		// create star date to test
-		Calendar startDateTest = Calendar.getInstance();
-		startDateTest.set(Calendar.YEAR, 2017);
-		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
-		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		//testTask - set state as Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask.setTaskDeadline(taskDeadline);
 
-		// create finished date to test
-		Calendar finishDateTest = Calendar.getInstance();
-		finishDateTest.set(Calendar.YEAR, 2017);
-		finishDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
-		finishDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		finishDateTest.set(Calendar.HOUR_OF_DAY, 15);
+		testTask.getTaskState().changeToPlanned();
 
-		// start task
-		testTask.setStartDate(startDateTest);
-		testTask2.setStartDate(startDateTest);
-		testTask3.setStartDate(startDateTest);
+		// necessary to pass from "Planned" to "Assigned"
+		testTask.addProjectCollaboratorToTask(collab1);
+		testTask.getTaskState().changeToAssigned();
 
-		// set finished task
-		testTask.setFinishDate(finishDateTest);
-		testTask2.setFinishDate(finishDateTest);
+		// pass from "Assigned" to "Ready"
+		testTask.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setStartDate(projStartDate);
+		testTask.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setFinishDate(testDate);
+		testTask.getTaskState().changeToFinished();
+		
+		
+		//testTask2 - set state as Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask2.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask2.setTaskDeadline(taskDeadline);
+
+		testTask2.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask2.addProjectCollaboratorToTask(collab1);
+		testTask2.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask2.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask2.setStartDate(projStartDate);
+		testTask2.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		testTask2.setFinishDate(testDate);
+		testTask2.getTaskState().changeToFinished();
+				
 
 		// mark task as Finished
 		testTask.markTaskAsFinished();
 		testTask2.markTaskAsFinished();
 
-		// Creates a new list, and then added the unfished task
+		// Creates a new list, and then added the finished tasks
 		List<Task> listFinishedTasks = new ArrayList<Task>();
 		listFinishedTasks.add(testTask);
 		listFinishedTasks.add(testTask2);
@@ -697,34 +836,66 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask2);
 		taskRepository.addProjectTask(testTask3);
 
-		// Adds user1 to the Task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
 		testTask3.addTaskCollaboratorToTask(taskWorker1);
 
-		// create star date to test
-		Calendar startDateTest = Calendar.getInstance();
-		startDateTest.set(Calendar.YEAR, 2017);
-		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
-		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		//testTask - set state as Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask.setTaskDeadline(taskDeadline);
 
-		// create finished date to test
-		Calendar finishDateTest = Calendar.getInstance();
-		finishDateTest.set(Calendar.YEAR, 2017);
-		finishDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
-		finishDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		finishDateTest.set(Calendar.HOUR_OF_DAY, 15);
+		testTask.getTaskState().changeToPlanned();
 
-		// start task
-		testTask.setStartDate(startDateTest);
-		testTask2.setStartDate(startDateTest);
-		testTask3.setStartDate(startDateTest);
+		// necessary to pass from "Planned" to "Assigned"
+		testTask.addTaskCollaboratorToTask(taskWorker1);
+		testTask.getTaskState().changeToAssigned();
 
-		// set finished task
-		testTask.setFinishDate(finishDateTest);
-		testTask2.setFinishDate(finishDateTest);
+		// pass from "Assigned" to "Ready"
+		testTask.getTaskState().changeToReady();
 
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setStartDate(projStartDate);
+		testTask.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setFinishDate(testDate);
+		testTask.getTaskState().changeToFinished();
+		
+		//testTask2 - set state as Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask2.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask2.setTaskDeadline(taskDeadline);
+
+		testTask2.getTaskState().changeToPlanned();
+		
+		
+		// necessary to pass from "Planned" to "Assigned"
+		testTask2.addTaskCollaboratorToTask(taskWorker1);
+		testTask2.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask2.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask2.setStartDate(projStartDate);
+		testTask2.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		testTask2.setFinishDate(testDate);
+		testTask2.getTaskState().changeToFinished();
+
+		// assures that the taskTest state is Finished
+		assertEquals("Finished", testTask2.viewTaskStateName());
+		
 		// mark task as Finished
 		testTask.markTaskAsFinished();
 		testTask2.markTaskAsFinished();
@@ -742,7 +913,7 @@ public class TaskRepositoryTest {
 	@Test
 	public void testGetStartedNotFinishedTasksFromProjectCollaborator() {
 
-		// create star date to test
+		// create start date to test
 		Calendar startDateTest = Calendar.getInstance();
 		startDateTest.set(Calendar.YEAR, 2017);
 		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
@@ -758,41 +929,167 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask6);
 		taskRepository.addProjectTask(testTask7);
 
-		// Adds user1 to the Task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
-		testTask4.addTaskCollaboratorToTask(taskWorker1);
-		testTask5.addTaskCollaboratorToTask(taskWorker1);
-		testTask6.addTaskCollaboratorToTask(taskWorker1);
+		// Adds user1 to the Task7
 		testTask7.addTaskCollaboratorToTask(taskWorker1);
 
-		// start tasks
-		testTask.setStartDate(startDateTest);
-		// testTask2 won't have a startDate
-		// testTask2.setStartDate(startDateTest);
-		testTask3.setStartDate(startDateTest);
-		testTask4.setStartDate(startDateTest);
-		testTask5.setStartDate(startDateTest);
-		testTask6.setStartDate(startDateTest);
+		
+		//testTask - set state as OnGoing
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask.setTaskDeadline(taskDeadline);
 
-		// testTask7.setStartDate(startDateTest);
+		testTask.getTaskState().changeToPlanned();
 
+		// necessary to pass from "Planned" to "Assigned"
+		testTask.addProjectCollaboratorToTask(collab1);
+		testTask.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask.setStartDate(projStartDate);
+		testTask.getTaskState().changeToOnGoing();
+		
+		
+		//testTask3 - set state as OnGoing
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask3.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask3.setTaskDeadline(taskDeadline);
+
+		testTask3.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask3.addProjectCollaboratorToTask(collab1);
+		testTask3.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask3.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask3.setStartDate(projStartDate);
+		testTask3.getTaskState().changeToOnGoing();
+		
+		
+		//testTask5 - set state as OnGoing
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask5.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask5.setTaskDeadline(taskDeadline);
+
+		testTask5.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask5.addProjectCollaboratorToTask(collab1);
+		testTask5.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask5.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask5.setStartDate(projStartDate);
+		testTask5.getTaskState().changeToOnGoing();
+		
+		
+		//testTask6 - set state as OnGoing
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask6.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask6.setTaskDeadline(taskDeadline);
+
+		testTask6.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask6.addProjectCollaboratorToTask(collab1);
+		testTask6.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask6.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask6.setStartDate(projStartDate);
+		testTask6.getTaskState().changeToOnGoing();
+		
+		
+		//testTask2 - set state as Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask2.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask2.setTaskDeadline(taskDeadline);
+
+		testTask2.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		testTask2.addProjectCollaboratorToTask(collab1);
+		testTask2.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		testTask2.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask2.setStartDate(projStartDate);
+		testTask2.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
+		testTask2.setFinishDate(testDate);
+		testTask2.getTaskState().changeToFinished();
+		
+		
+		//testTask4 - set state as Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedTaskStartDate = Calendar.getInstance();
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
+		testTask4.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		testTask4.setTaskDeadline(taskDeadline);
+	
+		testTask4.getTaskState().changeToPlanned();
+	
+		// necessary to pass from "Planned" to "Assigned"
+		testTask4.addProjectCollaboratorToTask(collab1);
+		testTask4.getTaskState().changeToAssigned();
+	
+		// pass from "Assigned" to "Ready"
+		testTask4.getTaskState().changeToReady();
+	
+		// necessary to pass from "Ready" to "OnGoing"
+		testTask4.setStartDate(projStartDate);
+		testTask4.getTaskState().changeToOnGoing();
+	
+		// pass from "OnGoing" to "Finished"
+		testTask4.setFinishDate(testDate);
+		testTask4.getTaskState().changeToFinished();
+		
 		// Marks testTask2 and testTask4 as finished
 		testTask2.markTaskAsFinished();
 		testTask4.markTaskAsFinished();
 
-		/*
-		 * Creates a new list, and then added the tasks that have a start date but
-		 * weren't marked as finished
-		 * 
-		 */
-
+		// Creates a new list, and then added the tasks that have a start date but
+		// weren't marked as finished
 		List<Task> getStartedNotFinishedTasks = new ArrayList<Task>();
 
-		/*
-		 * Adds the started and not finished tasks to that list
-		 */
+		//Adds the started and not finished tasks to that list
+		
 		getStartedNotFinishedTasks.add(testTask);
 		getStartedNotFinishedTasks.add(testTask3);
 		getStartedNotFinishedTasks.add(testTask5);
@@ -801,7 +1098,6 @@ public class TaskRepositoryTest {
 		// Checks if both lists have the same tasks
 		assertEquals(getStartedNotFinishedTasks,
 				taskRepository.getStartedNotFinishedTasksFromProjectCollaborator(collab1));
-		// Teste
 
 	}
 
@@ -962,14 +1258,14 @@ public class TaskRepositoryTest {
 		Planned PlannedTestTask3 = new Planned(testTask3);
 
 		// set estimated task start date and task dead line to tasks
-		testTask.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		testTask.setTaskDeadline(taskDeadlineDateTest);
+		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		testTask.setTaskDeadline(taskDeadline);
 
-		testTask2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		testTask2.setTaskDeadline(taskDeadlineDateTest);
+		testTask2.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		testTask2.setTaskDeadline(taskDeadline);
 
-		testTask3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		testTask3.setTaskDeadline(taskDeadlineDateTest);
+		testTask3.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		testTask3.setTaskDeadline(taskDeadline);
 
 		// set active user
 		testTask.addTaskCollaboratorToTask(taskWorker1);

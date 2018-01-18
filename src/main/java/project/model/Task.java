@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import project.model.taskStateInterface.Cancelled;
 import project.model.taskStateInterface.Created;
 import project.model.taskStateInterface.Finished;
+import project.model.taskStateInterface.StandBy;
 import project.model.taskStateInterface.TaskStateInterface;
 
 /**
@@ -379,7 +381,7 @@ public class Task {
 	 */
 	public boolean isTaskFinished() {
 		boolean isFinished = false;
-		if(this.getTaskState() instanceof Finished) {
+		if (this.getTaskState() instanceof Finished) {
 			isFinished = true;
 		}
 		return isFinished;
@@ -387,12 +389,12 @@ public class Task {
 
 	/**
 	 * This method changes the task state to finished if the task have a finishDate
-	 * and confirms if the task have the conditions to change (using changeToFinished
-	 * method implemented in states machine)
+	 * and confirms if the task have the conditions to change (using
+	 * changeToFinished method implemented in states machine)
 	 * 
 	 */
 	public void markTaskAsFinished() {
-		if(this.finishDate == null) {
+		if (this.finishDate == null) {
 			this.setFinishDate();
 			this.taskState.changeToFinished();
 		}
@@ -456,10 +458,26 @@ public class Task {
 	 * 
 	 * @return report
 	 */
-	public void createReport(TaskCollaborator taskCollaborator) {
+	public boolean createReport(TaskCollaborator taskCollaborator) {
+		boolean wasReportCreated = true;
 
-		Report report = new Report(taskCollaborator);
-		this.reports.add(report);
+		if (this.getTaskState() instanceof Finished) {
+			wasReportCreated = false;
+
+		} else if (this.getTaskState() instanceof Cancelled) {
+			wasReportCreated = false;
+
+		} else if (this.getTaskState() instanceof StandBy) {
+			wasReportCreated = false;
+
+		} else {
+			Report report = new Report(taskCollaborator);
+			this.reports.add(report);
+			wasReportCreated = true;
+
+		}
+
+		return wasReportCreated;
 
 	}
 

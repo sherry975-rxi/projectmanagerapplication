@@ -15,6 +15,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.model.taskStateInterface.Cancelled;
+import project.model.taskStateInterface.Finished;
+import project.model.taskStateInterface.StandBy;
+
 /**
  * @author Group 3
  *
@@ -29,6 +33,10 @@ public class TaskTest {
 	ProjectCollaborator collab1, collab2, collab3;
 	Calendar estimatedTaskStartDate, taskDeadline;
 	TaskCollaborator tWorker1, tWorker2, tWorker3;
+	Finished finishedTaskState;
+	StandBy standByTaskState;
+	Cancelled cancelledTaskState;
+
 	double expectedCost;
 
 	@Before
@@ -45,17 +53,16 @@ public class TaskTest {
 
 		collab1 = myProject.createProjectCollaborator(user1, 5);
 		collab2 = myProject.createProjectCollaborator(user2, 5);
-		
+
 		myProject.addProjectCollaboratorToProjectTeam(collab1);
 		myProject.addProjectCollaboratorToProjectTeam(collab2);
 
 		tWorker1 = new TaskCollaborator(collab1);
 		tWorker2 = new TaskCollaborator(collab2);
-		
 
 		Calendar projStartDate = Calendar.getInstance();
 		myProject.setStartdate(projStartDate);
-		
+
 		testTask = new Task(1, 1, "Description of task");
 		testTask2 = new Task(2, 2, "Description of task");
 		testTask3 = new Task(3, 3, "Description of task 3");
@@ -88,7 +95,7 @@ public class TaskTest {
 	@Test
 	public void testTaskConstructor() {
 		testTask.addTaskCollaboratorToTask(tWorker1);
-		
+
 		assertTrue(testTask.getDescription().equals(testTask2.getDescription()));
 		assertFalse(testTask.getDescription().equals(testTask3.getDescription()));
 	}
@@ -173,15 +180,15 @@ public class TaskTest {
 		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
 		testTask.setStartDate(projStartDate);
 		testTask.getTaskState().changeToOnGoing();
-		
+
 		assertFalse(testTask.isTaskFinished());
 		testTask.markTaskAsFinished();
-		
+
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
 		testTask.setFinishDate(testDate);
 		testTask.markTaskAsFinished();
-		
+
 		assertTrue(testTask.isTaskFinished());
 	}
 
@@ -333,6 +340,12 @@ public class TaskTest {
 		// Checks if the two values are the smae
 		assertEquals(expectedCost, testTask2.getTaskCost(), 0.001);
 
+		finishedTaskState = new Finished(testTask2);
+		testTask2.setTaskState(finishedTaskState);
+		assertFalse(testTask2.createReport(tWorker1));
+
+		assertEquals(testTask2.viewTaskStateName(), "Finished");
+
 	}
 
 	/**
@@ -391,7 +404,7 @@ public class TaskTest {
 
 	@Test
 	public void testDependeceOfTasks() {
-		
+
 		// set testTask estimated start date
 		Calendar dateTask1 = Calendar.getInstance();
 		dateTask1.set(2017, Calendar.DECEMBER, 02);
@@ -407,7 +420,7 @@ public class TaskTest {
 		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
 		// the estimated task start date of testTask2 to the estimated task start date
 		// of testTask plus 10 days
-		
+
 		testTask2.setEstimatedTaskStartDate(Calendar.getInstance());
 		testTask2.createTaskDependence(testTask);
 
@@ -605,5 +618,51 @@ public class TaskTest {
 		testTask.addProjectCollaboratorToTask(collab2);
 		testTask.removeAllCollaboratorsFromTaskTeam();
 		assertFalse(testTask.doesTaskTeamHaveActiveUsers());
+	}
+
+	/**
+	 * Tests if the this method actually empties the task team
+	 */
+	@Test
+	public void testCreateReportNotPossible() {
+		// Adds two users to the task
+		testTask2.addTaskCollaboratorToTask(tWorker1);
+
+		finishedTaskState = new Finished(testTask2);
+		testTask2.setTaskState(finishedTaskState);
+		assertFalse(testTask2.createReport(tWorker1));
+
+		/*
+		 * Checks that the tastState is set to Finished
+		 */
+		assertEquals(testTask2.viewTaskStateName(), "Finished");
+
+		/*
+		 * Creates a StandBy State object
+		 */
+		standByTaskState = new StandBy(testTask2);
+
+		/*
+		 * sets testTask2 to StandBy State
+		 */
+		testTask2.setTaskState(standByTaskState);
+
+		/*
+		 * Checks that its not possible to add a report to a task set to "StandBy"
+		 */
+		assertFalse(testTask2.createReport(tWorker1));
+
+		cancelledTaskState = new Cancelled(testTask2);
+
+		/*
+		 * sets testTask2 to Cancelled State
+		 */
+		testTask2.setTaskState(cancelledTaskState);
+
+		/*
+		 * Checks that its not possible to add a report to a task set to "Cancelled"
+		 */
+		assertFalse(testTask2.createReport(tWorker1));
+
 	}
 }
