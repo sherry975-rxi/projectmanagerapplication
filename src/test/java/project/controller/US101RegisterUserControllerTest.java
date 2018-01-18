@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -10,7 +11,7 @@ import org.junit.Test;
 import project.model.Company;
 import project.model.User;
 
-public class RegisterUserControllerTest {
+public class US101RegisterUserControllerTest {
 
 	Company Critical;
 	User user1, user2, user3;
@@ -44,7 +45,7 @@ public class RegisterUserControllerTest {
 	@Test
 	public void testUserRegistrationController() {
 		// creates the controller and asserts the list of users starts at 0
-		RegisterUserController testUserRegistrationController = new RegisterUserController();
+		US101RegisterUserController testUserRegistrationController = new US101RegisterUserController();
 		assertEquals(Critical.getUsersRepository().getAllUsersFromRepository().size(), 0);
 
 		// Checks if the user1 is in the UserRepository
@@ -71,6 +72,23 @@ public class RegisterUserControllerTest {
 		assertEquals(testUserRegistrationController.isUserEmailValid(user3.getEmail()), false);
 		// verifies if the addNewUser method returns false when user email is valid
 		assertEquals(testUserRegistrationController.isUserEmailValid(user1.getEmail()), true);
+
+	}
+
+	@Test
+	public void isUserEmailValidRegistrationController() {
+
+		// Creates a valid email
+		String email = new String("validEmail@gmail.com");
+
+		// creates the controller and asserts the list of users starts at 0
+		US101RegisterUserController testUserRegistrationController = new US101RegisterUserController();
+
+		assertTrue(testUserRegistrationController.isEmailValidController(email));
+
+		// Changes string value to invalid email
+		email = "invalid";
+		assertFalse(testUserRegistrationController.isEmailValidController(email));
 
 	}
 
