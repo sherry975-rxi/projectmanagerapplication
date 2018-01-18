@@ -14,9 +14,12 @@ public class UserRegisterUI {
 
 		Scanner scannerInput = new Scanner(System.in);
 		US101RegisterUserController registerUsercontroller1 = new US101RegisterUserController();
+		
+		System.out.println("USER REGISTRATION");
+		System.out.println();
 
-		// Presentation of Terms and Conditions before login
-		System.out.println("ACCESS CONDITIONS. \n 1. YOUR AGREEMENT\r\n"
+		// Terms and Conditions are exposed before login, depends on confirmation to proceed for registration
+		System.out.println("TERMS AND CONDITIONS: \r\n"  
 				+ "By using this application, you agree to be bound by, and to comply with these Terms and Conditions.\r\n"
 				+ "If you do not agree to these Terms and Conditions, please do not use this application.\r\n"
 				+ "To proceed with registration you must accept access conditions (y to confirm; n to deny).");
@@ -32,6 +35,7 @@ public class UserRegisterUI {
 		if ("y".equalsIgnoreCase(answer)) {
 
 			System.out.println("Conditions accepted.");
+			System.out.println("-------------");
 
 		} else { // In case user choose "n".
 			System.out.println("Conditions not accepted.");
@@ -45,7 +49,8 @@ public class UserRegisterUI {
 		System.out.println("Enter name: ");
 		String name = scannerInput.nextLine();
 
-		System.out.println("Name accepted: " + name);
+		System.out.println("Name accepted: " + name + "." );
+		System.out.println();
 
 		System.out.println("Enter email: ");
 		String email = scannerInput.nextLine();
@@ -57,12 +62,12 @@ public class UserRegisterUI {
 				|| (registerUsercontroller1.isUserInUserRepository(email))) {
 
 			if (!(registerUsercontroller1.isEmailValidController(email))) {
-				System.out.println("Invalid email. try again.");
+				System.out.println("Invalid email, try again.");
 				email = scannerInput.nextLine();
 			}
 
 			else if (registerUsercontroller1.isUserInUserRepository(email)) {
-				System.out.println("User already exists. Try again.");
+				System.out.println("User already exists, try again.");
 				email = scannerInput.nextLine();
 			} else {
 				break;
@@ -71,54 +76,64 @@ public class UserRegisterUI {
 
 		}
 		System.out.println("Email accepted: " + email);
+		System.out.println();
 		System.out.println("Enter idNumber: ");
 		String idNumber = scannerInput.nextLine();
 		System.out.println("IdNumber accepted: " + idNumber);
+		System.out.println();
 
 		System.out.println("Enter function: ");
 		String function = scannerInput.nextLine();
 		System.out.println("Function accepted: " + function);
+		System.out.println();
 
 		System.out.println("Enter phone: ");
 		String phone = scannerInput.nextLine();
 		System.out.println("Phone accepted: " + phone);
+		System.out.println();
 
 		System.out.println("Enter password: ");
 		String password = scannerInput.nextLine();
 		System.out.println("Password accepted: " + password);
+		System.out.println();
 
 		System.out.println("Enter street: ");
 		String street = scannerInput.nextLine();
 		System.out.println("Street accepted: " + street);
+		System.out.println();
 
 		System.out.println("Enter zipCode: ");
 		String zipCode = scannerInput.nextLine();
 		System.out.println("ZipCode accepted: " + zipCode);
+		System.out.println();
 
 		System.out.println("Enter city: ");
 		String city = scannerInput.nextLine();
 		System.out.println("City accepted: " + city);
+		System.out.println();
 
 		System.out.println("Enter district: ");
 		String district = scannerInput.nextLine();
 		System.out.println("District accepted: " + district);
+		System.out.println();
 
 		System.out.println("Enter country: ");
 		String country = scannerInput.nextLine();
 		System.out.println("Country accepted: " + country);
+		System.out.println();
 
 		System.out.println("Confirm if your data is correct: ");
 		System.out.println();
-		System.out.println("Nome: " + name);
-		System.out.println("Email: " + email);
-		System.out.println("IdNumber: " + idNumber);
-		System.out.println("Function: " + function);
-		System.out.println("Phone: " + phone);
-		System.out.println("Street: " + street);
-		System.out.println("ZipCode: " + zipCode);
-		System.out.println("City: " + city);
-		System.out.println("District: " + district);
-		System.out.println("Country: " + country);
+		System.out.println("             " + "[1] Nome: " + name);
+		System.out.println("             " + "[2] Email: " + email);
+		System.out.println("             " + "[3] IdNumber: " + idNumber);
+		System.out.println("             " + "[4] Function: " + function);
+		System.out.println("             " + "[5] Phone: " + phone);
+		System.out.println("             " + "[6] Street: " + street);
+		System.out.println("             " + "[7] ZipCode: " + zipCode);
+		System.out.println("             " + "[8] City: " + city);
+		System.out.println("             " + "[9] District: " + district);
+		System.out.println("             " + "[10] Country: " + country);
 
 		System.out.println();
 		System.out.println("Is your data correct? (y to confirm; n to deny)");
@@ -129,12 +144,12 @@ public class UserRegisterUI {
 			registerUsercontroller1.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city,
 					district, country);
 			System.out.println();
-			System.out.println("Register Successful.");
+			System.out.println("-----REGISTER SUCCESSFUL-----");
 			System.out.println();
 
 		} else { // In case user choose "n".
 			System.out.println();
-			System.out.println("Register cancelled.");
+			System.out.println("-----REGISTER CANCELLED-----");
 		}
 
 	}
