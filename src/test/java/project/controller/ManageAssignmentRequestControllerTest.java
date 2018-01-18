@@ -240,6 +240,7 @@ public class ManageAssignmentRequestControllerTest {
 		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
 
 		assignmentRequestsController.selectAssignmentRequest(0);
+		assignmentRequestsController.approveAssignmentRequest();
 
 		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
 		assertEquals(taskWithNoTeam.getTaskTeam().size(), 2);

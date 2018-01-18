@@ -27,7 +27,8 @@ public class ManageAssigmentRequestController {
 
 	// TODO this method is a PLACEHOLDER
 	public Boolean doesProjectExist() {
-		Project selectedProject = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
+		Project newProject = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
+		this.selectedProject = newProject;
 		return selectedProject != null;
 	}
 
