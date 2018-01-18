@@ -4,7 +4,7 @@ import project.model.Company;
 import project.model.User;
 import project.model.UserRepository;
 
-public class RegisterUserController {
+public class US101RegisterUserController {
 
 	UserRepository userRegistry;
 
@@ -12,7 +12,7 @@ public class RegisterUserController {
 	 * This constructor creates a user Registration controller. *
 	 * 
 	 */
-	public RegisterUserController() {
+	public US101RegisterUserController() {
 
 		this.userRegistry = Company.getTheInstance().getUsersRepository();
 
