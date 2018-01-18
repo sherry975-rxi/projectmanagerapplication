@@ -1,6 +1,6 @@
 package project.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import project.controller.ListUsersController;
 
 import project.model.Company;
 import project.model.User;
@@ -36,7 +34,7 @@ public class ListUsersControllerTest {
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		newUser3 = Critical.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		
+
 		// create a list to compare
 		testList = new ArrayList<User>();
 	}
@@ -50,25 +48,23 @@ public class ListUsersControllerTest {
 		newUser2 = null;
 		newUser3 = null;
 		testList = null;
+		listUsersController = null;
 
 	}
-	
+
 	@Test
 	public void testListUsersController() {
-		// first, asserts the ListUsersController returns an empty list
-		assertEquals(testList, listUsersController.listUsersController());
-		assertEquals(listUsersController.listUsersController().size(), 0);
-		
+
 		// adds all but newUser3 to the UserRepository and test List
 		Critical.getUsersRepository().addUserToUserRepository(user1);
 		Critical.getUsersRepository().addUserToUserRepository(user2);
 		Critical.getUsersRepository().addUserToUserRepository(newUser2);
-		
+
 		testList.add(user1);
 		testList.add(user2);
 		testList.add(newUser2);
-		
-		// finally, asserts the listUsersController returns only the three Users added 
+
+		// finally, asserts the listUsersController returns only the three Users added
 		assertEquals(testList, listUsersController.listUsersController());
 	}
 
