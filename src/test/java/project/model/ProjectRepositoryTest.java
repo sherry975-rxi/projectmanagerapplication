@@ -58,6 +58,7 @@ public class ProjectRepositoryTest {
 	Calendar taskDeadlineDateTest4;
 	Calendar taskDeadlineDateTest5;
 	Calendar taskDeadlineDateTest6;
+	Calendar estimatedTaskStartDateTest;
 
 	@Before
 	public void setUp() {
@@ -90,44 +91,44 @@ public class ProjectRepositoryTest {
 		project6 = new Project(5, "project6", "description5", user3);
 
 		// create a estimated Task Start Date
-		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
+		estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
 		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
 		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 25);
 		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
 		// create a estimated Task Dead line Date
 		// last deadline
-		Calendar taskDeadlineDateTest = Calendar.getInstance();
+		taskDeadlineDateTest = Calendar.getInstance();
 		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 		// first deadline
-		Calendar taskDeadlineDateTest2 = Calendar.getInstance();
+		taskDeadlineDateTest2 = Calendar.getInstance();
 		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 15);
 		// second deadline
-		Calendar taskDeadlineDateTest3 = Calendar.getInstance();
+		taskDeadlineDateTest3 = Calendar.getInstance();
 		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 16);
 		// third deadline
-		Calendar taskDeadlineDateTest4 = Calendar.getInstance();
+		taskDeadlineDateTest4 = Calendar.getInstance();
 		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 17);
 		// fourth deadline
-		Calendar taskDeadlineDateTest6 = Calendar.getInstance();
+		taskDeadlineDateTest6 = Calendar.getInstance();
 		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 18);
 		// fifth deadline
-		Calendar taskDeadlineDateTest5 = Calendar.getInstance();
+		taskDeadlineDateTest5 = Calendar.getInstance();
 		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
@@ -141,8 +142,8 @@ public class ProjectRepositoryTest {
 		task2 = new Task(112, 223, "Task 1", 50, estimatedTaskStartDateTest, taskDeadlineDateTest2, 2000);
 		task3 = new Task(113, 224, "Task 1", 50, estimatedTaskStartDateTest, taskDeadlineDateTest3, 2000);
 		task4 = new Task(213, 224, "Task 4", 50, estimatedTaskStartDateTest, taskDeadlineDateTest4, 2000);
-		task5 = new Task(213, 224, "Task 5", 50, estimatedTaskStartDateTest, taskDeadlineDateTest5, 2000);
-		task6 = new Task(213, 224, "Task 5", 50, estimatedTaskStartDateTest, taskDeadlineDateTest6, 2000);
+		task5 = new Task(289, 2245, "Task 5", 50, estimatedTaskStartDateTest, taskDeadlineDateTest5, 2000);
+		task6 = new Task(584, 285, "Task 5", 50, estimatedTaskStartDateTest, taskDeadlineDateTest6, 2000);
 
 		expResultProjectList = new ArrayList<Project>();
 		expResultTaskList = new ArrayList<Task>();
@@ -417,13 +418,21 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// Adds user to tasks.
-		task1.addTaskCollaboratorToTask(taskWorker1);
 		task2.addTaskCollaboratorToTask(taskWorker1);
 		task3.addTaskCollaboratorToTask(taskWorker1);
 
 		// Marks tasks as finished
+		task1.setEstimatedTaskStartDate(estimatedStartDate);
+		task1.setTaskDeadline(taskDeadlineDateTest);
+		task1.getTaskState().changeToPlanned();
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.getTaskState().changeToAssigned();
+		task1.getTaskState().changeToReady();
+		Calendar startDateTask1 = estimatedStartDate;
+		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
+		task1.setStartDate(startDateTask1);
+		task1.getTaskState().changeToOnGoing();
 		task1.markTaskAsFinished();
-		task1.setFinishDate();
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task2);
@@ -765,7 +774,6 @@ public class ProjectRepositoryTest {
 
 		// Adds user1 to tasks in Project 1
 		task1.addTaskCollaboratorToTask(taskWorker1);
-		task2.addTaskCollaboratorToTask(taskWorker1);
 		task3.addTaskCollaboratorToTask(taskWorker1);
 
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -784,9 +792,30 @@ public class ProjectRepositoryTest {
 		// Adds user1 to tasks in Project 2
 		task4.addTaskCollaboratorToTask(taskWorker4);
 		task5.addTaskCollaboratorToTask(taskWorker4);
-		task6.addTaskCollaboratorToTask(taskWorker4);
 
+		// Marks tasks as finished
+		task2.setEstimatedTaskStartDate(estimatedStartDate);
+		task2.setTaskDeadline(taskDeadlineDateTest);
+		task2.getTaskState().changeToPlanned();
+		task2.addProjectCollaboratorToTask(collab1);
+		task2.getTaskState().changeToAssigned();
+		task2.getTaskState().changeToReady();
+		Calendar startDateTask1 = estimatedStartDate;
+		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
+		task2.setStartDate(startDateTask1);
+		task2.getTaskState().changeToOnGoing();
 		task2.markTaskAsFinished();
+
+		task6.setEstimatedTaskStartDate(estimatedStartDate);
+		task6.setTaskDeadline(taskDeadlineDateTest);
+		task6.getTaskState().changeToPlanned();
+		task6.addProjectCollaboratorToTask(collab1);
+		task6.getTaskState().changeToAssigned();
+		task6.getTaskState().changeToReady();
+		Calendar startDateTask2 = estimatedStartDate;
+		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
+		task6.setStartDate(startDateTask2);
+		task6.getTaskState().changeToOnGoing();
 		task6.markTaskAsFinished();
 
 		// creates a new list of tasks in increasingDeadLineOrder
