@@ -43,9 +43,10 @@ public class StandBy implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToCreatedPossible()) {
 			TaskStateInterface stateCreated = new Created(task);
-			if (stateCreated.isValid())
+			if (stateCreated.isValid()) {
 				task.setTaskState(stateCreated);
 				condition = true;
+			}
 		}
 		return condition;
 	}
@@ -57,11 +58,12 @@ public class StandBy implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToPlannedPossible()) {
 			TaskStateInterface statePlanned = new Planned(task);
-			if (statePlanned.isValid())
+			if (statePlanned.isValid()) {
 				task.setTaskState(statePlanned);
 				condition = true;
+			}
 		}
-		return condition; 
+		return condition;
 	}
 
 	/**
@@ -71,11 +73,12 @@ public class StandBy implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToAssignedPossible()) {
 			TaskStateInterface stateAssigned = new Assigned(task);
-			if (stateAssigned.isValid())
+			if (stateAssigned.isValid()) {
 				task.setTaskState(stateAssigned);
 				condition = true;
+			}
 		}
-		return condition; 
+		return condition;
 	}
 
 	/**
@@ -85,11 +88,12 @@ public class StandBy implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToReadyPossible()) {
 			TaskStateInterface stateReady = new Ready(task);
-			if (stateReady.isValid())
+			if (stateReady.isValid()) {
 				task.setTaskState(stateReady);
 				condition = true;
+			}
 		}
-		return condition; 
+		return condition;
 	}
 
 	/**
@@ -99,11 +103,12 @@ public class StandBy implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToOnGoingPossible()) {
 			TaskStateInterface stateOnGoing = new OnGoing(task);
-			if (stateOnGoing.isValid())
+			if (stateOnGoing.isValid()) {
 				task.setTaskState(stateOnGoing);
 				condition = true;
+			}
 		}
-		return condition; 
+		return condition;
 	}
 
 	/**
@@ -113,9 +118,10 @@ public class StandBy implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToStandByPossible()) {
 			TaskStateInterface stateStandBy = new StandBy(task);
-			if (stateStandBy.isValid())
+			if (stateStandBy.isValid()) {
 				task.setTaskState(stateStandBy);
 				condition = true;
+			}
 		}
 		return condition;
 	}
@@ -127,9 +133,10 @@ public class StandBy implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToCancelledPossible()) {
 			TaskStateInterface stateCancelled = new Cancelled(task);
-			if (stateCancelled.isValid())
+			if (stateCancelled.isValid()) {
 				task.setTaskState(stateCancelled);
-			condition = true;
+				condition = true;
+			}
 		}
 		return condition;
 	}

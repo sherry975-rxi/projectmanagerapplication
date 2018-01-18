@@ -3,31 +3,30 @@ package project.model.taskStateInterface;
 import project.model.Task;
 
 public class Planned implements TaskStateInterface {
-	
+
 	Task task;
-	
-	public Planned (Task taskToUpdate) {
+
+	public Planned(Task taskToUpdate) {
 		this.task = taskToUpdate;
 	}
 
 	/**
-	 * This method verifies if the State "Planned" requirements are fulfilled for a specific Task. 
-	 * It has to have estimated dates and no users working on it.
-	 * If so, it returns true,
-	 * If not, it returns false
+	 * This method verifies if the State "Planned" requirements are fulfilled for a
+	 * specific Task. It has to have estimated dates and no users working on it. If
+	 * so, it returns true, If not, it returns false
 	 * 
 	 * @return true if is Valid, false if not
 	 */
-	public boolean isValid () {
+	public boolean isValid() {
 		boolean validation = false;
-		if(task.getEstimatedTaskStartDate()!=null && task.getTaskDeadline()!=null && !task.doesTaskTeamHaveActiveUsers()) {
+		if (task.getEstimatedTaskStartDate() != null && task.getTaskDeadline() != null
+				&& !task.doesTaskTeamHaveActiveUsers()) {
 			validation = true;
 		}
 
 		return validation;
 	}
 
-	
 	/**
 	 * This method changes the state of a Task to the "Created" state.
 	 * 
@@ -36,9 +35,10 @@ public class Planned implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToCreatedPossible()) {
 			TaskStateInterface stateCreated = new Created(task);
-			if (stateCreated.isValid())
+			if (stateCreated.isValid()) {
 				task.setTaskState(stateCreated);
 				condition = true;
+			}
 		}
 		return condition;
 	}
@@ -51,11 +51,12 @@ public class Planned implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToPlannedPossible()) {
 			TaskStateInterface statePlanned = new Planned(task);
-			if (statePlanned.isValid())
+			if (statePlanned.isValid()) {
 				task.setTaskState(statePlanned);
 				condition = true;
+			}
 		}
-		return condition; 
+		return condition;
 	}
 
 	/**
@@ -66,11 +67,12 @@ public class Planned implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToAssignedPossible()) {
 			TaskStateInterface stateAssigned = new Assigned(task);
-			if (stateAssigned.isValid())
+			if (stateAssigned.isValid()) {
 				task.setTaskState(stateAssigned);
 				condition = true;
+			}
 		}
-		return condition; 
+		return condition;
 	}
 
 	/**
@@ -81,11 +83,12 @@ public class Planned implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToReadyPossible()) {
 			TaskStateInterface stateReady = new Ready(task);
-			if (stateReady.isValid())
+			if (stateReady.isValid()) {
 				task.setTaskState(stateReady);
 				condition = true;
+			}
 		}
-		return condition; 
+		return condition;
 	}
 
 	/**
@@ -96,11 +99,12 @@ public class Planned implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToOnGoingPossible()) {
 			TaskStateInterface stateOnGoing = new OnGoing(task);
-			if (stateOnGoing.isValid())
+			if (stateOnGoing.isValid()) {
 				task.setTaskState(stateOnGoing);
 				condition = true;
+			}
 		}
-		return condition; 
+		return condition;
 	}
 
 	/**
@@ -111,9 +115,10 @@ public class Planned implements TaskStateInterface {
 		boolean condition = false;
 		if (isTransitionToStandByPossible()) {
 			TaskStateInterface stateStandBy = new StandBy(task);
-			if (stateStandBy.isValid())
+			if (stateStandBy.isValid()) {
 				task.setTaskState(stateStandBy);
 				condition = true;
+			}
 		}
 		return condition;
 	}
@@ -122,15 +127,16 @@ public class Planned implements TaskStateInterface {
 	 * This method changes the state of a Task to the "Cancelled" state.
 	 * 
 	 */
-public boolean changeToCancelled() {
-	boolean condition = false;
-	if (isTransitionToCancelledPossible()) {
-		TaskStateInterface stateCancelled = new Cancelled(task);
-		if (stateCancelled.isValid())
-			task.setTaskState(stateCancelled);
-		condition = true;
-	}
-	return condition;
+	public boolean changeToCancelled() {
+		boolean condition = false;
+		if (isTransitionToCancelledPossible()) {
+			TaskStateInterface stateCancelled = new Cancelled(task);
+			if (stateCancelled.isValid()) {
+				task.setTaskState(stateCancelled);
+				condition = true;
+			}
+		}
+		return condition;
 	}
 
 	/**
@@ -229,6 +235,5 @@ public boolean changeToCancelled() {
 	public boolean isTransitionToFinishedPossible() {
 		return false;
 	}
-	
 
 }
