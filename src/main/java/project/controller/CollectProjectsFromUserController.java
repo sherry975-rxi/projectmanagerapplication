@@ -9,7 +9,7 @@ import project.model.User;
 
 public class CollectProjectsFromUserController {
 
-	User user;
+	private User user;
 
 	/**
 	 * Constructor
