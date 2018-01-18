@@ -40,15 +40,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToCreated() {
-		boolean condition = false;
-		if (isTransitionToCreatedPossible()) {
-			TaskStateInterface stateCreated = new Created(task);
-			if (stateCreated.isValid()) {
-				task.setTaskState(stateCreated);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -57,15 +49,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToPlanned() {
-		boolean condition = false;
-		if (isTransitionToPlannedPossible()) {
-			TaskStateInterface statePlanned = new Planned(task);
-			if (statePlanned.isValid()) {
-				task.setTaskState(statePlanned);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -74,15 +58,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToAssigned() {
-		boolean condition = false;
-		if (isTransitionToAssignedPossible()) {
-			TaskStateInterface stateAssigned = new Assigned(task);
-			if (stateAssigned.isValid()) {
-				task.setTaskState(stateAssigned);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -91,15 +67,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToReady() {
-		boolean condition = false;
-		if (isTransitionToReadyPossible()) {
-			TaskStateInterface stateReady = new Ready(task);
-			if (stateReady.isValid()) {
-				task.setTaskState(stateReady);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -108,15 +76,7 @@ public class OnGoing implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToOnGoing() {
-		boolean condition = false;
-		if (isTransitionToOnGoingPossible()) {
-			TaskStateInterface stateOnGoing = new OnGoing(task);
-			if (stateOnGoing.isValid()) {
-				task.setTaskState(stateOnGoing);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**

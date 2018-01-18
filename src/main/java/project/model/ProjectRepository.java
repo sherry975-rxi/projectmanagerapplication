@@ -434,4 +434,25 @@ public class ProjectRepository {
 		return listOfProjectsOfUser;
 	}
 
+	/**
+	 * This method returns a set of Projects where a certain user is the project
+	 * manager
+	 * 
+	 * @param User
+	 * 
+	 * @return List of Projects of a User
+	 * 
+	 */
+	public List<Project> getProjectsFromProjectManager(User user) {
+
+		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
+
+		for (Project other : this.projectsRepository) {
+			if (other.isProjectManager(user)) {
+				listOfProjectsOfProjectManager.add(other);
+			}
+		}
+		return listOfProjectsOfProjectManager;
+	}
+
 }
