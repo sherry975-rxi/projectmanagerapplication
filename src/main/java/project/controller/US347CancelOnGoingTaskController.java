@@ -8,8 +8,8 @@ import java.util.List;
 
 import project.model.Company;
 import project.model.Project;
+import project.model.ProjectRepository;
 import project.model.Task;
-import project.model.User;
 
 /**
  * @author Group3
@@ -17,7 +17,10 @@ import project.model.User;
  */
 public class US347CancelOnGoingTaskController {
 
-	int projectIDtoInstantiate;
+	int projectIDtoInstantiate = 0;
+	private ProjectRepository projectRepository;
+	private Project project;
+	private Company company;
 
 	/**
 	 * Constructor
@@ -32,28 +35,14 @@ public class US347CancelOnGoingTaskController {
 	 * 
 	 * @param projectIDtoInstantiate
 	 */
-	public US347CancelOnGoingTaskController(String projectIDtoInstantiate) {
-		this.projectIDtoInstantiate = 0;
+	public US347CancelOnGoingTaskController(int projectIDtoInstantiate) {
+		this.projectIDtoInstantiate = projectIDtoInstantiate;
+		company = Company.getTheInstance();
+		projectRepository = company.getProjectsRepository();
+		project = projectRepository.getProjById(projectIDtoInstantiate);
+		project.getTaskRepository();
 	}
 
-	/**
-	 * This method returns a set of Projects where a certain user was defined as
-	 * Project Manager
-	 * 
-	 * @param projectManager
-	 *            User defined as Project Manager
-	 * 
-	 * @return List of Projects of a Project Manager
-	 */
-	public List<Project> getProjectsFromUser(User user) {
-
-		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
-
-		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsFromUser(user));
-
-		return listOfProjectsOfProjectManager;
-	}
 
 	/**
 	 * This method returns the tasks from a specific project
@@ -74,6 +63,14 @@ public class US347CancelOnGoingTaskController {
 		return tasksFromProject;
 	}
 
+	
+	/**
+	 * Returns a string with the state of a certain Task 
+	 * 
+	 * @param taskID Task to get state info
+	 * 
+	 * @return task state as a string
+	 */
 	public String viewTaskState(String taskID) {
 
 		Task taskToGetByID = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate)
@@ -91,27 +88,15 @@ public class US347CancelOnGoingTaskController {
 	 */
 	public boolean cancelOnGoingTask(String taskIDtoSetState) {
 
-		Task task = Company.getTheInstance().getProjectsRepository().getProjById(projectIDtoInstantiate)
+		Task task = projectRepository.getProjById(this.projectIDtoInstantiate)
 				.getTaskRepository().getTaskByID(taskIDtoSetState);
 
 		boolean cancelled = false;
 
 		if (task.getTaskState().changeToCancelled()) {
 			task.setCancelDate();
-
 			cancelled = true;
-			return cancelled;
 		}
-
 		return cancelled;
-	};
-
-	/**
-	 * Sets the ProjectID to the User Input For ProjectID
-	 * 
-	 * @param userInputForProjectID
-	 */
-	public void setProjectID(int userInputForProjectID) {
-		this.projectIDtoInstantiate = userInputForProjectID;
 	}
 }
