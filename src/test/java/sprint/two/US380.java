@@ -63,12 +63,6 @@ public class US380 {
 		
 		projectCollab2 = project.createProjectCollaborator(user2, 15);
 
-//		// Creates the dates
-//		estimatedStartDate = Calendar.getInstance();
-//		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
-//		taskDeadline = Calendar.getInstance();
-//		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
-
 		// Creates the tasks and adds the tasks to the task repository
 		
 		project.getTaskRepository().addProjectTask(
@@ -83,12 +77,6 @@ public class US380 {
 		testTask = project.getTaskRepository().getProjectTaskRepository().get(0);
 		testTask2 = project.getTaskRepository().getProjectTaskRepository().get(1);
 		testTask3 = project.getTaskRepository().getProjectTaskRepository().get(2);
-//			
-//		
-//		project.getTaskRepository().addProjectTask(testTask);
-//		project.getTaskRepository().addProjectTask(testTask2);
-//		project.getTaskRepository().addProjectTask(testTask3);
-//
 
 		// Creates the expResult list
 		expResult = new ArrayList<Task>();
