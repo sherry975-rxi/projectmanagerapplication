@@ -19,7 +19,7 @@ import project.model.taskStateInterface.Planned;
 import project.model.taskStateInterface.Ready;
 import project.model.taskStateInterface.TaskStateInterface;
 
-public class ManageAssignmentRequestControllerTest {
+public class US356ManageAssignmentRequestControllerTest {
 
 	Company spaceX;
 
@@ -40,7 +40,7 @@ public class ManageAssignmentRequestControllerTest {
 	Task taskWithNoTeam;
 	TaskStateInterface testingTaskState;
 
-	ManageAssigmentRequestController assignmentRequestsController;
+	US356ManageAssigmentRequestController assignmentRequestsController;
 
 	@Before
 	public void setUp() {
@@ -85,7 +85,7 @@ public class ManageAssignmentRequestControllerTest {
 		taskWithNoTeam.setTaskState(testingTaskState);
 
 		testProject.createTaskAssignementRequest(teamTesterCollaborator, taskWithNoTeam);
-		assignmentRequestsController = new ManageAssigmentRequestController(testProject.getIdCode());
+		assignmentRequestsController = new US356ManageAssigmentRequestController(testProject.getIdCode());
 
 	}
 
@@ -136,7 +136,7 @@ public class ManageAssignmentRequestControllerTest {
 		// asserts that an invalid project ID will return an empty List instead of a
 		// Null
 		int invalidProjectID = 0;
-		assignmentRequestsController = new ManageAssigmentRequestController(invalidProjectID);
+		assignmentRequestsController = new US356ManageAssigmentRequestController(invalidProjectID);
 
 		assertEquals(assignmentRequestsController.showAllAssignmentRequests().size(), 0);
 

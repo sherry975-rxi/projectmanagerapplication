@@ -7,7 +7,7 @@ import project.model.Company;
 import project.model.Project;
 import project.model.TaskTeamRequest;
 
-public class ManageAssigmentRequestController {
+public class US356ManageAssigmentRequestController {
 	int projectID;
 	Project selectedProject;
 	TaskTeamRequest selectedAdditionRequest;
@@ -19,7 +19,7 @@ public class ManageAssigmentRequestController {
 	 * @param ProjectID - the ID of the selected Project
 	 * 
 	 */
-	public ManageAssigmentRequestController(int selectedProjectID) {
+	public US356ManageAssigmentRequestController(int selectedProjectID) {
 		this.projectID = selectedProjectID;
 		this.selectedProject = null;
 		this.selectedAdditionRequest = null;
