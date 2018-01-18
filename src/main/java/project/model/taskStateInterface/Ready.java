@@ -33,15 +33,7 @@ public class Ready implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToCreated() {
-		boolean condition = false;
-		if (isTransitionToCreatedPossible()) {
-			TaskStateInterface stateCreated = new Created(task);
-			if (stateCreated.isValid()) {
-				task.setTaskState(stateCreated);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -68,15 +60,7 @@ public class Ready implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToAssigned() {
-		boolean condition = false;
-		if (isTransitionToAssignedPossible()) {
-			TaskStateInterface stateAssigned = new Assigned(task);
-			if (stateAssigned.isValid()) {
-				task.setTaskState(stateAssigned);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -86,15 +70,7 @@ public class Ready implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToReady() {
-		boolean condition = false;
-		if (isTransitionToReadyPossible()) {
-			TaskStateInterface stateReady = new Ready(task);
-			if (stateReady.isValid()) {
-				task.setTaskState(stateReady);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -121,15 +97,7 @@ public class Ready implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToStandBy() {
-		boolean condition = false;
-		if (isTransitionToStandByPossible()) {
-			TaskStateInterface stateStandBy = new StandBy(task);
-			if (stateStandBy.isValid()) {
-				task.setTaskState(stateStandBy);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -139,15 +107,7 @@ public class Ready implements TaskStateInterface {
 	 * @return TRUE if state was changed and FALSE if state was not changed
 	 */
 	public boolean changeToCancelled() {
-		boolean condition = false;
-		if (isTransitionToCancelledPossible()) {
-			TaskStateInterface stateCancelled = new Cancelled(task);
-			if (stateCancelled.isValid()) {
-				task.setTaskState(stateCancelled);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
@@ -157,15 +117,7 @@ public class Ready implements TaskStateInterface {
 	 * @return Void
 	 */
 	public boolean changeToFinished() {
-		boolean condition = false;
-		if (isTransitionToFinishedPossible()) {
-			TaskStateInterface Finished1 = new OnGoing(task);
-			if (Finished1.isValid()) {
-				task.setTaskState(Finished1);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
