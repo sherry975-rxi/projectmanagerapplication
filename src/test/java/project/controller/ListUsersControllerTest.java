@@ -45,6 +45,10 @@ public class ListUsersControllerTest {
 	@Test
 	public void testListUsersController() {
 
+		Company.clear();
+		Critical = Company.getTheInstance();
+		Critical.getUsersRepository().getAllUsersFromRepository().clear();
+
 		// creates user four users
 		user1 = Critical.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
@@ -66,6 +70,7 @@ public class ListUsersControllerTest {
 
 		// finally, asserts the listUsersController returns only the three Users added
 		assertEquals(testList, listUsersController.listUsersController());
+		assertEquals(listUsersController.listUsersController().size(), 3);
 	}
 
 }
