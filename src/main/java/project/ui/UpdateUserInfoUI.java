@@ -223,8 +223,9 @@ public class UpdateUserInfoUI {
 
 				addAdress.addNewAddress(user, newAddress);
 				break;
-			
+
 			}
+			break;
 		case "6":
 			MainMenuUI.mainMenu();
 			break;
