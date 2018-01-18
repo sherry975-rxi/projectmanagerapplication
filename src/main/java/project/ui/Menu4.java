@@ -12,7 +12,6 @@ import project.model.User;
 public class Menu4 {
 
 	private User user;
-	private Scanner scannerInput = new Scanner(System.in);
 
 	/**
 	 * Creates the UI
@@ -21,9 +20,11 @@ public class Menu4 {
 	 */
 	public Menu4(User user) {
 		this.user = user;
+
 	}
 
 	public void displayOptions() {
+		Scanner scannerInput = new Scanner(System.in);
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();
@@ -59,10 +60,10 @@ public class Menu4 {
 		case "B":
 			// Menu3 menuThree = new Menu3();
 			// // TODO when this menu is done is necessary to include a method.
-			// break;
+			break;
 		case "M":
-			MainMenuUI mainMenuUI = new MainMenuUI();
-			mainMenuUI.mainMenu();
+			MainMenuUI.mainMenu();
+
 			break;
 		case "E":
 			System.exit(0);
