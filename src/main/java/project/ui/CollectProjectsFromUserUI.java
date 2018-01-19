@@ -69,15 +69,13 @@ public class CollectProjectsFromUserUI {
 			int projectIDCode = ii.getIdCode();
 			String projectIDCodeToString = String.valueOf(projectIDCode);
 			if (option.equals(projectIDCodeToString)) {
-				System.out.println("bjksdgfha");
-				Menu4 menu = new Menu4(user);
-				menu.displayOptions();
 				// TODO
 				// ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI
 				// (projectIDCode);
 				// projectViewMenuUI.projectDataDisplay();
 			} else if (option.equals("B")) {
-				// TODO link to menu 3
+				CollaboratorMainMenuUI menu = new CollaboratorMainMenuUI(user);
+				menu.displayOptions();
 			} else if (option.equals("M")) {
 				MainMenuUI.mainMenu();
 			} else if (option.equals("E")) {
