@@ -769,4 +769,40 @@ public class ProjectTest {
 		assertEquals(4, p1.getAssignmentRequestsList().size());
 		assertEquals(4, p1.getRemovalRequestsList().size());
 	}
+	
+	/**
+	 * Tests the Set and Get of project's description
+	 */
+	@Test
+	public void testSetAndGetProjectDescription() {
+		//asserts that the project's description is "description4", which 
+		//is defined when the project is created
+		assertEquals(p1.getProjectDescription(), "description4");
+		
+		//sets the project's description to "Projecto de tratamento de dados"
+		p1.setProjectDescription("Projecto de tratamento de dados");
+		
+		//asserts that project's description change to "Projecto de tratamento de dados"
+		assertEquals(p1.getProjectDescription(), "Projecto de tratamento de dados");
+
+	}
+	
+	
+	/**
+	 * Tests the Set and Get of project's description
+	 */
+	@Test
+	public void testSetAndGetProjectManager() {
+		//asserts that the project's manager is user1, which 
+		//is defined when the project is created
+		assertEquals(p1.getProjectManager(), user1);
+		
+		//sets the project's manager to user2
+		p1.setProjectManager(user2);
+		
+		//asserts that project's manager change to user2
+		assertEquals(p1.getProjectManager(), user2);
+
+	}
+
 }

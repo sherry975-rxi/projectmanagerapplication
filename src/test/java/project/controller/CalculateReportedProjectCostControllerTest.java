@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
@@ -24,24 +25,25 @@ public class CalculateReportedProjectCostControllerTest {
 	 * This class tests the CalculateReportedProjectCostController class
 	 *
 	 */
-	User user1;
-	User user2;
-	User user3;
-	User user4;
+	Company blip;
+	User userDaniel;
+	User userJonny;
+	User userMike;
+	User userAna;
 	User projectManager;
 	Project project;
-	ProjectCollaborator projectUser1;
-	ProjectCollaborator projectUser2;
-	ProjectCollaborator projectUser3;
-	ProjectCollaborator projectUser4;
+	ProjectCollaborator projectUserDaniel;
+	ProjectCollaborator projectUserJonny;
+	ProjectCollaborator projectUserMike;
+	ProjectCollaborator projectUserAna;
 	ProjectRepository projectRepository;
 	TaskRepository taskRepository;
 	Task testTask;
 	Task testTask2;
-	TaskCollaborator taskWorker1;
-	TaskCollaborator taskWorker2;
-	TaskCollaborator taskWorker3;
-	TaskCollaborator taskWorker4;
+	TaskCollaborator taskWorkerDaniel;
+	TaskCollaborator taskWorkerJonny;
+	TaskCollaborator taskWorkerMike;
+	TaskCollaborator taskWorkerAna;
 	CalculateReportedProjectCostController controllerCost;
 
 	double totalCost;
@@ -49,42 +51,49 @@ public class CalculateReportedProjectCostControllerTest {
 	@Before
 	public void setUp() {
 
-		// Creates a CalculateReportedProjectCostController
-		controllerCost = new CalculateReportedProjectCostController();
+		blip = Company.getTheInstance();
 
 		// create user
-		user1 = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
+		userDaniel = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
 		// create user2
-		user2 = new User("João", "joao@gmail.com", "001", "Admin", "920000000");
+		userJonny = new User("João", "joao@gmail.com", "002", "Not Admin", "920000000");
 
 		// create user3
-		user3 = new User("Miguel", "miguel@gmail.com", "001", "Admin", "920000000");
+		userMike = new User("Miguel", "miguel@gmail.com", "003", "Not Admin", "920000000");
 
 		// create user4
-		user4 = new User("Ana", "ana@gmail.com", "001", "Admin", "920000000");
+		userAna = new User("Ana", "ana@gmail.com", "004", "Not Admin", "920000000");
 
 		// create projectManager
-		projectManager = new User("João", "joao@gmail.com", "001", "Admin", "920000000");
+		projectManager = new User("Manager boi", "manger@gmail.com", "005", "Kinda Admin", "920000000");
+
+		// adds all users to user list
+		blip.getUsersRepository().addUserToUserRepository(userDaniel);
+		blip.getUsersRepository().addUserToUserRepository(userJonny);
+		blip.getUsersRepository().addUserToUserRepository(userMike);
+		blip.getUsersRepository().addUserToUserRepository(userAna);
+		blip.getUsersRepository().addUserToUserRepository(projectManager);
 
 		// set user as collaborator
-		user1.setUserProfile(Profile.COLLABORATOR);
-		user2.setUserProfile(Profile.COLLABORATOR);
-		user3.setUserProfile(Profile.COLLABORATOR);
-		user4.setUserProfile(Profile.COLLABORATOR);
+		userDaniel.setUserProfile(Profile.COLLABORATOR);
+		userJonny.setUserProfile(Profile.COLLABORATOR);
+		userMike.setUserProfile(Profile.COLLABORATOR);
+		userAna.setUserProfile(Profile.COLLABORATOR);
 
-		// create project
-		project = new Project(0, "name3", "description4", projectManager);
+		// create project and add it to project list
+		project = new Project(0, "Make things", "Test: CalculateReportedProjectCost", projectManager);
+		blip.getProjectsRepository().addProjectToProjectRepository(project);
 
 		// creates 4 Project Collaborators and adds them to the project
-		projectUser1 = project.createProjectCollaborator(user1, 10);
-		projectUser2 = project.createProjectCollaborator(user2, 20);
-		projectUser3 = project.createProjectCollaborator(user3, 5);
-		projectUser4 = project.createProjectCollaborator(user4, 3);
+		projectUserDaniel = project.createProjectCollaborator(userDaniel, 10);
+		projectUserJonny = project.createProjectCollaborator(userJonny, 20);
+		projectUserMike = project.createProjectCollaborator(userMike, 5);
+		projectUserAna = project.createProjectCollaborator(userAna, 3);
 
-		project.addProjectCollaboratorToProjectTeam(projectUser1);
-		project.addProjectCollaboratorToProjectTeam(projectUser2);
-		project.addProjectCollaboratorToProjectTeam(projectUser3);
-		project.addProjectCollaboratorToProjectTeam(projectUser4);
+		project.addProjectCollaboratorToProjectTeam(projectUserDaniel);
+		project.addProjectCollaboratorToProjectTeam(projectUserJonny);
+		project.addProjectCollaboratorToProjectTeam(projectUserMike);
+		project.addProjectCollaboratorToProjectTeam(projectUserAna);
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -102,8 +111,7 @@ public class CalculateReportedProjectCostControllerTest {
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 
-		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
+		testTask = taskRepository.createTask("Testin once", 10, estimatedTaskStartDateTest, taskDeadlineDateTest, 10);
 		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
 
@@ -112,10 +120,10 @@ public class CalculateReportedProjectCostControllerTest {
 		taskRepository.addProjectTask(testTask2);
 
 		// Creates 4 Task Workers
-		taskWorker1 = testTask.createTaskCollaborator(projectUser1);
-		taskWorker2 = testTask2.createTaskCollaborator(projectUser2);
-		taskWorker3 = testTask.createTaskCollaborator(projectUser3);
-		taskWorker4 = testTask2.createTaskCollaborator(projectUser4);
+		taskWorkerDaniel = testTask.createTaskCollaborator(projectUserDaniel);
+		taskWorkerJonny = testTask2.createTaskCollaborator(projectUserJonny);
+		taskWorkerMike = testTask.createTaskCollaborator(projectUserMike);
+		taskWorkerAna = testTask2.createTaskCollaborator(projectUserAna);
 
 		// create variable to calculate total cost reported to project
 		totalCost = 0.0;
@@ -125,18 +133,20 @@ public class CalculateReportedProjectCostControllerTest {
 	@After
 	public void tearDown() {
 
-		user1 = null;
-		user2 = null;
-		user3 = null;
-		user4 = null;
-		projectUser1 = null;
-		projectUser2 = null;
-		projectUser3 = null;
-		projectUser4 = null;
-		taskWorker1 = null;
-		taskWorker2 = null;
-		taskWorker3 = null;
-		taskWorker4 = null;
+		Company.clear();
+		blip = null;
+		userDaniel = null;
+		userJonny = null;
+		userMike = null;
+		userAna = null;
+		projectUserDaniel = null;
+		projectUserJonny = null;
+		projectUserMike = null;
+		projectUserAna = null;
+		taskWorkerDaniel = null;
+		taskWorkerJonny = null;
+		taskWorkerMike = null;
+		taskWorkerAna = null;
 		testTask = null;
 		testTask2 = null;
 		project = null;
@@ -151,31 +161,32 @@ public class CalculateReportedProjectCostControllerTest {
 	public void calculateReportedProjectCostControllerTest() {
 
 		// Adds users to the respective tasks
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask.addTaskCollaboratorToTask(taskWorker2);
-		testTask2.addTaskCollaboratorToTask(taskWorker3);
-		testTask2.addTaskCollaboratorToTask(taskWorker4);
+		testTask.addTaskCollaboratorToTask(taskWorkerDaniel);
+		testTask.addTaskCollaboratorToTask(taskWorkerJonny);
+		testTask2.addTaskCollaboratorToTask(taskWorkerMike);
+		testTask2.addTaskCollaboratorToTask(taskWorkerAna);
 		// Task worker sets the hours spent on the task
-		testTask.createReport(taskWorker1);
+		testTask.createReport(taskWorkerDaniel);
 		testTask.getReports().get(0).setReportedTime(5);
-		testTask.createReport(taskWorker2);
-		testTask.getReports().get(0).setReportedTime(10);
-		testTask2.createReport(taskWorker3);
+		testTask.createReport(taskWorkerJonny);
+		testTask.getReports().get(1).setReportedTime(10);
+		testTask2.createReport(taskWorkerMike);
 		testTask2.getReports().get(0).setReportedTime(2);
-		testTask2.createReport(taskWorker4);
-		testTask2.getReports().get(0).setReportedTime(3);
+		testTask2.createReport(taskWorkerAna);
+		testTask2.getReports().get(1).setReportedTime(3);
 
 		// Calculates the value of the project - Equals to to the sum of the total hours
-		// spent times the cost of the TaskWorker
+		// spent times the cost of each TaskWorker
 
-		totalCost += testTask.getReports().get(0).getReportedTime()
-				* taskWorker1.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
-		totalCost += testTask.getReports().get(1).getReportedTime()
-				* taskWorker2.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
-		totalCost += testTask2.getReports().get(0).getReportedTime()
-				* taskWorker3.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
-		totalCost += testTask2.getReports().get(1).getReportedTime()
-				* taskWorker4.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+		int danielCost = 5 * taskWorkerDaniel.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+		int jonnyCost = 10 * taskWorkerJonny.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+		int mikeCost = 2 * taskWorkerMike.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+		int anaCost = 3 * taskWorkerAna.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+
+		totalCost = danielCost + jonnyCost + mikeCost + anaCost;
+
+		// Creates a CalculateReportedProjectCostController
+		controllerCost = new CalculateReportedProjectCostController();
 
 		// Compares the 2 values
 		assertEquals(totalCost, controllerCost.calculateReportedProjectCostController(project), 0.01);

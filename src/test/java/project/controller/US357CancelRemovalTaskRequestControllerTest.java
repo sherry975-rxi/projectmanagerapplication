@@ -108,6 +108,19 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		Company.clear();
 		projectA = null;
+		userDaniel = null;
+		userRui = null;
+		projectRepository = null;
+		userRepository = null;
+		userRuiProjectCollaborator = null;
+		taskA = null;
+		taskB = null;
+		taskC = null;
+		stringRequest1 = null;
+		stringRequest2 = null;
+		userRuiTaskCollaborator = null;
+		pendingRemovalRequests = null;
+		us357Controller = null;
 
 	}
 
