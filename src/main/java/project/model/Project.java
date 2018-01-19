@@ -150,6 +150,16 @@ public class Project {
 	public void setProjectManager(User newProjectManager) {
 		this.projectManager = newProjectManager;
 	}
+	
+	
+	/**
+	 * Get the users that is Project's Manager
+	 * 
+	 * @return projectManager
+	 */
+	public User getProjectManager() {
+		return this.projectManager;
+	}
 
 	/**
 	 * This method returns the Task Repository for this specific Project
@@ -158,6 +168,25 @@ public class Project {
 	 */
 	public TaskRepository getTaskRepository() {
 		return taskRepository;
+	}
+
+	/**
+	 * Get the project's description
+	 * 
+	 * @return description of project (String)
+	 */
+	public String getProjectDescription() {
+		return this.description;
+	}
+	
+	/**
+	 * This method allows to set the project's description
+	 * 
+	 * @param newDescription to set
+	 *            
+	 */
+	public void setProjectDescription(String newDescription) {
+		this.description = newDescription;
 	}
 
 	/**
