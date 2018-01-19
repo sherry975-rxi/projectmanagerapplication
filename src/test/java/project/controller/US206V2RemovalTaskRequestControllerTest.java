@@ -3,9 +3,9 @@ package project.controller;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,35 +64,50 @@ public class US206V2RemovalTaskRequestControllerTest {
 		// Creates the tasks and adds them to the projectTasks
 		taskA = projectA.getTaskRepository().createTask("Implementar US100");
 		projectA.getTaskRepository().addProjectTask(taskA);
-		
+
 		taskB = projectA.getTaskRepository().createTask("Implementar US200");
 		projectA.getTaskRepository().addProjectTask(taskB);
-		
+
 		taskC = projectA.getTaskRepository().createTask("Implementar US300");
 		projectA.getTaskRepository().addProjectTask(taskC);
 
 		// Adds the project collaborator to the tasks
 		taskA.addProjectCollaboratorToTask(userRuiCollaborator);
 		taskB.addProjectCollaboratorToTask(userRuiCollaborator);
-		//taskC.addProjectCollaboratorToTask(userRuiCollaborator);
+		// taskC.addProjectCollaboratorToTask(userRuiCollaborator);
 
+	}
 
+	@After
+	public void tearDown() {
+		Company.clear();
+		company = null;
+		userDaniel = null;
+		userRui = null;
+		projectRepository = null;
+		userRepository = null;
+		projectA = null;
+		userRuiCollaborator = null;
+		taskA = null;
+		taskB = null;
+		taskC = null;
+		stringRequest1 = null;
+		stringRequest2 = null;
+		pendingRemovalRequests = null;
+		us206v2Controller = null;
+	}
 
-	
-}
-	
 	@Test
 	public void testCreateRequest() {
 		// Creates the US206V2RemovalTaskRequestController
 		// to create a request to remove from first task added - taskA (Task ID = 1.1)
-		us206v2Controller = new US206V2RemovalTaskRequestController(userRui,1, "1.1");
+		us206v2Controller = new US206V2RemovalTaskRequestController(userRui, 1, "1.1");
 		// Creates the removal requests from userRui and TaskA
 		assertTrue(us206v2Controller.createRequest());
 		// Try to create again the same request
 		// it should not be allowed
 		assertFalse(us206v2Controller.createRequest());
-		
+
 	}
-	
-	
+
 }
