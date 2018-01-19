@@ -9,7 +9,7 @@ import project.model.User;
  *
  */
 
-public class Menu4 {
+public class CollaboratorMainMenuUI {
 
 	private User user;
 
@@ -18,7 +18,7 @@ public class Menu4 {
 	 * 
 	 * @param user
 	 */
-	public Menu4(User user) {
+	public CollaboratorMainMenuUI(User user) {
 		this.user = user;
 
 	}
@@ -32,6 +32,7 @@ public class Menu4 {
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
 
+		System.out.println("\n");
 		System.out.println("[1] Update User Register Info");
 		System.out.println("[2] Projects");
 		System.out.println("[3] Tasks\n");
