@@ -53,10 +53,7 @@ public class Menu4 {
 			collectProjectsFromUserUI.collectProjectsFromUser();
 			break;
 		case "3":
-			UserTasksFunctionalitiesMenuUI userTasksFunctionalitiesMenuUI = new UserTasksFunctionalitiesMenuUI(
-					this.user);
-			userTasksFunctionalitiesMenuUI.chooseFunctionality();
-			break;
+
 		case "B":
 			// Menu3 menuThree = new Menu3();
 			// // TODO when this menu is done is necessary to include a method.
