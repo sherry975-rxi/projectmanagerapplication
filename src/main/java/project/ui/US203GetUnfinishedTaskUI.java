@@ -2,28 +2,17 @@ package project.ui;
 
 import java.util.Scanner;
 
+import project.controller.US203GetUnfinishedTaskByUser;
 import project.model.User;
 
-/**
- * @author group3
- *
- */
-
-public class Menu4 {
-
+public class US203GetUnfinishedTaskUI {
 	private User user;
 
-	/**
-	 * Creates the UI
-	 * 
-	 * @param user
-	 */
-	public Menu4(User user) {
+	public void displayOptions(User user) {
 		this.user = user;
-
-	}
-
-	public void displayOptions() {
+		US203GetUnfinishedTaskByUser unfinishedTaskByUser = new US203GetUnfinishedTaskByUser();
+		int t;
+		t = 0;
 		Scanner scannerInput = new Scanner(System.in);
 
 		String myname = user.getName();
@@ -32,10 +21,12 @@ public class Menu4 {
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
 
-		System.out.println("[1] Update User Register Info");
-		System.out.println("[2] Projects");
-		System.out.println("[3] Tasks\n");
-		System.out.println("Please choose an option: \n");
+		for (int i = 0; i < unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).size(); i++) {
+			t = t + 1;
+			System.out.println("[" + t + "] " + " "
+					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID() + " "
+					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getDescription());
+		}
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
@@ -44,15 +35,6 @@ public class Menu4 {
 		String option = scannerInput.nextLine().toUpperCase();
 
 		switch (option) {
-		case "1":
-			UpdateUserInfoUI updateUserInfoUI = new UpdateUserInfoUI(this.user);
-			updateUserInfoUI.chooseWhatInfoToUpdate();
-			break;
-		case "2":
-			CollectProjectsFromUserUI collectProjectsFromUserUI = new CollectProjectsFromUserUI(this.user);
-			collectProjectsFromUserUI.collectProjectsFromUser();
-			break;
-		case "3":
 
 		case "B":
 			// Menu3 menuThree = new Menu3();
@@ -66,4 +48,5 @@ public class Menu4 {
 			System.exit(0);
 		}
 	}
+
 }
