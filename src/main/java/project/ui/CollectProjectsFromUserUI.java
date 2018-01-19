@@ -43,13 +43,10 @@ public class CollectProjectsFromUserUI {
 		CollectProjectsFromUserController collectProjectsFromUserController = new CollectProjectsFromUserController(
 				user);
 
-		List<Project> listOfProjectsFromUser = new ArrayList<>();
-		listOfProjectsFromUser.addAll(collectProjectsFromUserController.getProjectsFromUser());
-
-		// show all projects from a user
-		for (Project ii : listOfProjectsFromUser) {
-			System.out.println("[" + ii.getIdCode() + "]" + " " + ii.getName());
+		for (int i = 0; i < collectProjectsFromUserController.getProjectsFromUserAndProjectManager().size(); i++) {
+			System.out.println(collectProjectsFromUserController.getProjectsFromUserAndProjectManager().get(i));
 		}
+		// show all projects from a user
 
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
@@ -64,12 +61,20 @@ public class CollectProjectsFromUserUI {
 		listOfOptionsToCompare.add("M");
 		listOfOptionsToCompare.add("E");
 
+		List<Project> listOfProjectsFromUser = new ArrayList<>();
+		listOfProjectsFromUser.addAll(collectProjectsFromUserController.getProjectsFromUser());
+		listOfProjectsFromUser.addAll(collectProjectsFromUserController.getProjectsFromProjectManager());
+
 		for (Project ii : listOfProjectsFromUser) {
 			int projectIDCode = ii.getIdCode();
 			String projectIDCodeToString = String.valueOf(projectIDCode);
 			if (option.equals(projectIDCodeToString)) {
+				System.out.println("bjksdgfha");
+				Menu4 menu = new Menu4(user);
+				menu.displayOptions();
 				// TODO
-				// ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI (projectIDCode);
+				// ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI
+				// (projectIDCode);
 				// projectViewMenuUI.projectDataDisplay();
 			} else if (option.equals("B")) {
 				// TODO link to menu 3
