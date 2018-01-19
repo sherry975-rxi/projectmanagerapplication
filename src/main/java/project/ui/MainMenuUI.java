@@ -121,6 +121,8 @@ public class MainMenuUI {
 
 				break;
 			case "5":
+				CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(user1);
+				collaboratorMenu.displayOptions();
 
 				break;
 			case "E":
