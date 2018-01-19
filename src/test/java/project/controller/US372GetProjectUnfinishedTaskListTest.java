@@ -1,4 +1,4 @@
-package sprint.three;
+package project.controller;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.controller.US203GetUserStartedNotFinishedTaskListInIncreasingOrderController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
@@ -17,13 +16,9 @@ import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
 
-/**
- * Tests US203v2
- *
- */
-public class US203v2 {
+public class US372GetProjectUnfinishedTaskListTest {
 
-	US203GetUserStartedNotFinishedTaskListInIncreasingOrderController tasksFiltersController;
+	US372GetProjectUnfinishedTaskListController tasksFiltersController;
 	Company company1;
 	User user1, user2, user3;
 	Project project1;
@@ -113,30 +108,27 @@ public class US203v2 {
 		project1.addProjectCollaboratorToProjectTeam(projCollab1);
 		project1.addProjectCollaboratorToProjectTeam(projCollab2);
 
-		// create Task Collaborator to register the period that the user was in the task
-		// while he was active in project 1
-		taskCollab1 = task1.createTaskCollaborator(projCollab1);
-		taskCollab2 = task2.createTaskCollaborator(projCollab2);
-		taskCollab3 = task3.createTaskCollaborator(projCollab2);
-		taskCollab4 = task4.createTaskCollaborator(projCollab2);
-		taskCollab5 = task5.createTaskCollaborator(projCollab2);
-		taskCollab6 = task6.createTaskCollaborator(projCollab2);
-
-		// associate Task Collaborators to task (info project collaborator + period he
-		// was in the task)
-		task1.addTaskCollaboratorToTask(taskCollab1);
-		task2.addTaskCollaboratorToTask(taskCollab2);
-		task3.addTaskCollaboratorToTask(taskCollab3);
-		task4.addTaskCollaboratorToTask(taskCollab4);
-		task5.addTaskCollaboratorToTask(taskCollab5);
-		task6.addTaskCollaboratorToTask(taskCollab6);
-
-		// defines finish date to task, and mark it as Finished
-		task1.setFinishDate();
+		// defines finish date to task, and mark it as Finished7
+		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task1.setTaskDeadline(taskDeadlineDateTest1);
+		task1.getTaskState().changeToPlanned();
+		task1.addProjectCollaboratorToTask(projCollab1);
+		task1.getTaskState().changeToAssigned();
+		task1.getTaskState().changeToReady();
+		Calendar startDateTask1 = estimatedTaskStartDateTest;
+		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
+		task1.setStartDate(startDateTask1);
+		task1.getTaskState().changeToOnGoing();
 		task1.markTaskAsFinished();
 
+		task2.setStartDate(Calendar.getInstance());
+		task3.setStartDate(Calendar.getInstance());
+		task4.setStartDate(Calendar.getInstance());
+		task5.setStartDate(Calendar.getInstance());
+		task6.setStartDate(Calendar.getInstance());
+
 		// creates the controller
-		tasksFiltersController = new US203GetUserStartedNotFinishedTaskListInIncreasingOrderController();
+		tasksFiltersController = new US372GetProjectUnfinishedTaskListController();
 	}
 
 	@After
@@ -164,29 +156,9 @@ public class US203v2 {
 		tasksFiltersController = null;
 	}
 
-	/**
-	 * 
-	 * US203v02 - Como colaborador, eu pretendo consultar a minha lista de tarefas
-	 * iniciadas mas não concluidas de modo a saber o que tenho para fazer hoje. Se
-	 * tiverem data limite quero-as ordenadas por ordem crescente de data limite
-	 */
-
 	@Test
-	public void testGetUserStartedNotFinishedTaskList() {
-		Calendar startDateTest = Calendar.getInstance();
-		startDateTest.add(Calendar.YEAR, 2016);
-		task1.setStartDate(startDateTest);
-		task2.setStartDate(startDateTest);
-		task3.setStartDate(startDateTest);
-		task4.setStartDate(startDateTest);
-		task5.setStartDate(startDateTest);
-		task6.setStartDate(startDateTest);
-
-		// asserts the list contains five tasks, and the first two are the ones with the
-		// earliest deadline
-		assertEquals(5, tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).size());
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(0), task3);
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(1), task6);
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(2), task2);
+	public final void testGetProjectUnfinishedTaskList() {
+		assertEquals(5, tasksFiltersController.getProjectUnfinishedTaskList(project1).size());
 	}
+
 }
