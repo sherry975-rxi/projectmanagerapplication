@@ -1,9 +1,7 @@
 package project.ui;
 
-import java.util.Calendar;
 import java.util.Scanner;
 
-import project.controller.PrintUserInfoController;
 import project.model.Company;
 import project.model.Project;
 import project.model.Task;
@@ -24,30 +22,26 @@ public class MainMenuUI {
 		// Instantiates the company
 		myCompany = Company.getTheInstance();
 
-		// Instantiate a user and set its password
-		user1 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
-				"rua cinzenta", "6789-654", "porto", "porto", "portugal");
-		user1.setPassword("manel123");
+		// Instantiate a user, set its password and add it to the company
+		user1 = myCompany.getUsersRepository().createUser("Aluno do Grupo 3", "aluno_3_@gmail.com", "010", "Estudante", "937653635",
+				"Avenida dos Aliados", "4400-654", "Porto", "Porto", "Portugal");
+		user1.setPassword("switch");
 		myCompany.getUsersRepository().addUserToUserRepository(user1);
 
-		// Instantiates a project
-		project1 = myCompany.getProjectsRepository().createProject("ProjectA", "descriptionA", user1);
+		// Instantiates a project and add it to the company
+		project1 = myCompany.getProjectsRepository().createProject("Projeto GP", "Aplicação para Gestão de Projetos", user1);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
-		project2 = myCompany.getProjectsRepository().createProject("ProjectB", "descriptionB", user1);
+		
+		project2 = myCompany.getProjectsRepository().createProject("Projeto Apostas", "Plataforma Web para Apostas", user1);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
-		project3 = myCompany.getProjectsRepository().createProject("ProjectC", "descriptionC", user1);
+		
+		project3 = myCompany.getProjectsRepository().createProject("Projeto HomeBanking", "Aplicação iOS para HomeBanking", user1);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project3);
 
-		// Instantiates the dates to set as estimated start date and task deadline
-		Calendar estimatedTaskStartDate = Calendar.getInstance();
-		Calendar taskDeadline = Calendar.getInstance();
-		estimatedTaskStartDate.set(2018, Calendar.JANUARY, 5);
-		taskDeadline.set(2018, Calendar.DECEMBER, 22);
-
-		// Instantiates the tasks
-		task1 = project1.getTaskRepository().createTask("Tarefa aaaa", 10, estimatedTaskStartDate, taskDeadline, 1000);
-		task2 = project1.getTaskRepository().createTask("Tarefa bbbb", 10, estimatedTaskStartDate, taskDeadline, 1000);
+		// Instantiates a task
+		task1 = project1.getTaskRepository().createTask("Desenvolver código para responder à US399");
 		project1.getTaskRepository().addProjectTask(task1);
+		task2 = project1.getTaskRepository().createTask("Desenvolver código para responder à US122");
 		project1.getTaskRepository().addProjectTask(task2);
 
 		mainMenu();
@@ -58,56 +52,45 @@ public class MainMenuUI {
 		Scanner input = new Scanner(System.in);
 		boolean condition = true;
 		while (condition) {
-			System.out.println("Please select a user story:");
-			System.out.println("102 - User Registration");
-			System.out.println("180 - Login");
-			System.out.println("201 - Update user info");
-			System.out.println("342 - Create dependencies between tasks");
-			System.out.println("998 - View all users");
-			System.out.println("999 - View user address");
-			System.out.println("0 - EXIT");
+			
+			System.out.println();
+			System.out.println("                 MAIN MENU");
+			System.out.println("______________________________________________");
+			System.out.println("[1] New Registration");
+			System.out.println("[2] Login");
+			System.out.println("[3] Administrator");
+			System.out.println("[4] Director");
+			System.out.println("[5] Collaborator");
+			System.out.println("______________________________________________");
+			System.out.println("[6] Exit");
 			System.out.println();
 
 			String choice = input.nextLine();
 			switch (choice) {
-			case "102":
+			case "1":
 				UserRegisterUI userRegister = new UserRegisterUI();
 				userRegister.userRegister();
 				break;
-			case "180":
+			case "2":
 				LoginUI doLogin = new LoginUI();
 				doLogin.doLogin();
 				break;
-			case "201":
-				UpdateUserInfoUI updateUserInfo = new UpdateUserInfoUI(user1);
-				updateUserInfo.chooseWhatInfoToUpdate();
+			case "3":
+				
 				break;
-			case "342":
-				DefineDependenciesBetweenTasksUI defineDependenciesBetweenTasksUI = new DefineDependenciesBetweenTasksUI(
-						user1);
-				defineDependenciesBetweenTasksUI.chooseProject();
+			case "4":
+				
 				break;
-			case "998":
-				PrintUserInfoController userInfo = new PrintUserInfoController();
-				userInfo.printAllUsersInfo();
+			case "5":
+				
 				break;
-			case "999":
-				System.out.println("Please provide an email to select a user:");
-				String email = input.nextLine();
-				PrintUserInfoController userAddressInfo = new PrintUserInfoController();
-				User userToSearchAddress = userAddressInfo.getUserByEmailController(email);
-				if (userToSearchAddress != null) {
-					userAddressInfo.printAllAddressesFromUser(userToSearchAddress);
-				} else {
-					System.out.println();
-					System.out.println("User doesn't exist");
-					System.out.println();
-				}
-
-				break;
-			case "0":
+			case "6":
+				System.out.println();
+				System.out.println("--YOU HAVE EXIT FROM MAIN MENU--");
 				condition = false;
+				
 				break;
+			
 			}
 		}
 	}

@@ -27,6 +27,7 @@ public class ChangeReportedTimeInTaskControllerTest {
 	Project project1;
 	ProjectRepository projectRepository;
 	Task testTask;
+	US208ChangeReportedTimeInTaskController controller;
 
 	@Before
 	public void setUp() {
@@ -77,6 +78,7 @@ public class ChangeReportedTimeInTaskControllerTest {
 	@After
 	public void tearDown() {
 		Company.clear();
+		myCompany = null;
 		userRepository = null;
 		user1 = null;
 		userAdmin = null;
@@ -85,6 +87,7 @@ public class ChangeReportedTimeInTaskControllerTest {
 		project1 = null;
 		projectRepository = null;
 		testTask = null;
+		controller = null;
 
 	}
 
@@ -117,7 +120,7 @@ public class ChangeReportedTimeInTaskControllerTest {
 	@Test
 	public void testController() {
 		// create controller
-		US208ChangeReportedTimeInTaskController controller = new US208ChangeReportedTimeInTaskController();
+		controller = new US208ChangeReportedTimeInTaskController();
 		controller.correctReportedTimeInTaskController(0, 45, 0, "daniel@gmail.com");
 		assertTrue(controller.correctReportedTimeInTaskController(0, 45, 0, "daniel@gmail.com"));
 		assertEquals(45, project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).getReports()
