@@ -69,7 +69,7 @@ public class ProjectTest {
 		task2 = p1.getTaskRepository().createTask("description2", 0, null, null, 0);
 		p1.getTaskRepository().addProjectTask(task2);
 
-		//task2 state to Finished
+		// task2 state to Finished
 		// necessary to pass from "Created" to "Planned"
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.add(Calendar.MONTH, -1);
@@ -99,11 +99,39 @@ public class ProjectTest {
 
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task2.viewTaskStateName());
-		task2.markTaskAsFinished();
 
 		task3 = p1.getTaskRepository().createTask("description3", 0, null, null, 0);
-		task3.markTaskAsFinished();
 
+		// task3 state to Finished
+		// necessary to pass from "Created" to "Planned"
+		estimatedStartDate = Calendar.getInstance();
+		estimatedStartDate.add(Calendar.MONTH, -1);
+		task3.setEstimatedTaskStartDate(estimatedStartDate);
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
+		task3.setTaskDeadline(taskDeadline);
+
+		task3.getTaskState().changeToPlanned();
+
+		// necessary to pass from "Planned" to "Assigned"
+		task3.addProjectCollaboratorToTask(projectCollaborator2);
+		task3.getTaskState().changeToAssigned();
+
+		// pass from "Assigned" to "Ready"
+		task3.getTaskState().changeToReady();
+
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar projStartDate3 = (Calendar) estimatedStartDate.clone();
+		task3.setStartDate(projStartDate3);
+		task3.getTaskState().changeToOnGoing();
+
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate3 = (Calendar) estimatedStartDate.clone();
+		task3.setFinishDate(testDate3);
+		task3.getTaskState().changeToFinished();
+
+		// assures that the taskTest state is Finished
+		assertEquals("Finished", task2.viewTaskStateName());
 		task4 = p1.getTaskRepository().createTask("description11111", 0, estimatedStartDate, taskDeadline, 0);
 
 	}
@@ -299,8 +327,8 @@ public class ProjectTest {
 		p1.getTaskRepository().addProjectTask(task1);
 		p1.getTaskRepository().addProjectTask(task2);
 		p1.getTaskRepository().addProjectTask(task3);
-		task2.setFinishDate();
-		task3.setFinishDate();
+		task2.markTaskAsFinished();
+		task3.markTaskAsFinished();
 		task2.getFinishDate().set(Calendar.MONTH, test.get(Calendar.MONTH) - 1);
 		task3.getFinishDate().set(Calendar.MONTH, test.get(Calendar.MONTH));
 		assertEquals(task3, p1.getTaskRepository()

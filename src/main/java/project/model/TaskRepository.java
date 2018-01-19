@@ -105,7 +105,8 @@ public class TaskRepository {
 		incompleteTaskList.addAll(this.getAllTasksFromProjectCollaborator(collab));
 
 		for (Task other : this.getAllTasksFromProjectCollaborator(collab)) {
-			if (other.isTaskFinished() || other.getStartDate() == null) {
+			if (other.viewTaskStateName().equals("Finished") || other.viewTaskStateName().equals("Cancelled")
+					|| other.getStartDate() == null) {
 				incompleteTaskList.remove(other);
 			}
 		}
@@ -150,7 +151,7 @@ public class TaskRepository {
 		List<Task> lastMonthFinishedTaskList = new ArrayList<>();
 
 		for (Task other : this.getAllTasksFromProjectCollaborator(collab)) {
-			if (other.getFinishDate() != null) {
+			if (other.viewTaskStateName().equals("Finished")) {
 				if (monthsAgo < 0) {
 					lastMonthFinishedTaskList.add(other);
 				} else if (other.getFinishDate().get(Calendar.MONTH) == givenMonth.get(Calendar.MONTH)) {
@@ -354,7 +355,8 @@ public class TaskRepository {
 		List<Task> allUnFinishedTasks = new ArrayList<>();
 
 		for (Task other : this.getProjectTaskRepository()) {
-			if (!other.isTaskFinished() && other.getStartDate() != null) {
+			if (!other.viewTaskStateName().equals("Finished") && !other.viewTaskStateName().equals("Cancelled")
+					&& other.getStartDate() != null) {
 				allUnFinishedTasks.add(other);
 			}
 
