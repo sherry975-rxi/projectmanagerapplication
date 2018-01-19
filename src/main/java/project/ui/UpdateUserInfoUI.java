@@ -105,7 +105,7 @@ public class UpdateUserInfoUI {
 			System.out.println("Please select the number of the address to update:");
 			int i = 0;
 
-			for (Address address : updater.getAddressListWithIndex(user)) {
+			for (Address address : updater.getAllAddresses(user)) {
 				System.out.println();
 
 				System.out.println("[" + (i + 1) + "].");

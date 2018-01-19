@@ -1,6 +1,5 @@
 package project.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import project.model.Address;
@@ -265,18 +264,4 @@ public class US201and202UpdateUserInfoController {
 		return address.getZipCode();
 	}
 
-	/**
-	 * @param user
-	 *            the user to retrieve the Address List
-	 * @return A list with all the Addresses of the user
-	 */
-	public List<Address> getAddressListWithIndex(User user) {
-		List<Address> addressList = new ArrayList<>();
-		for (int i = 0; i < this.getAllAddresses(user).size(); i++) {
-
-			addressList.add(this.getAllAddresses(user).get(i));
-
-		}
-		return addressList;
-	}
 }

@@ -300,4 +300,26 @@ public class US201and202UpdateUserInfoController_Test {
 
 	}
 
+	@Test
+	public void searchUserAddress() {
+		// create controller
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
+		// create a new address
+		address1 = u1.createAddress("Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		address2 = u1.createAddress("Testy Street2", "2401-342", "Testburg2", "Testo2", "Testistan2");
+
+		// Adds address 1 to User1
+		u1.addAddress(address1);
+
+		// Checks if the searchUserAddress method in returns the address
+		assertEquals(controller.searchUserAddress(u1, "Testy Street"), address1);
+
+		/*
+		 * Checks if the method in the controller returns null when it doesn't find a
+		 * street;
+		 */
+		assertEquals(controller.searchUserAddress(u1, "NullStreet"), null);
+
+	}
+
 }
