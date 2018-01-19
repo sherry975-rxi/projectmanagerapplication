@@ -40,7 +40,7 @@ public class UpdateUserInfoUI {
 		System.out.println("[2] Email: " + currentEmail);
 		System.out.println("[3] Phone: " + currentPhone);
 		System.out.println("[4] Address List");
-		System.out.println("[5] Add New Adress");
+		System.out.println("[5] Add New Address");
 
 		System.out.println("______________________________________________");
 		System.out.println();
@@ -103,87 +103,121 @@ public class UpdateUserInfoUI {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			// Shows all addresses
 			System.out.println("Please select the number of the address to update:");
-			updater.printAddressListWithIndex(user);
-			int nrAddress = Integer.parseInt(input.nextLine());
-			// Chooses address
-			Address chosen = updater.getAllAddresses(user).get(nrAddress - 1);
-			// Shows fields of the address
-			String currentStreet = updater.getStreet(chosen);
-			String currentZipCode = updater.getZipCode(chosen);
-			String currentCity = updater.getCity(chosen);
-			String currentDistrict = updater.getDistrict(chosen);
-			String currentCountry = updater.getCountry(chosen);
-			System.out.println("Please select the number of the field to update:");
-			System.out.println("1. Street: " + currentStreet);
-			System.out.println("2. ZipCode: " + currentZipCode);
-			System.out.println("3. City: " + currentCity);
-			System.out.println("4. District: " + currentDistrict);
-			System.out.println("5. Country: " + currentCountry);
-			System.out.println();
-			// Selects the field
-			int nrField = Integer.parseInt(input.nextLine());
-			switch (nrField) {
-			case 1:
-				// Updates street
-				System.out.println(inputNewInfo);
-				String newStreet = input.nextLine();
-				System.out.println(newInfo + newStreet);
-				if (confirmInfo(input)) {
-					updater.updateUserStreet(user, currentStreet, newStreet);
-					System.out.println(updateSuccessful);
-					System.out.println();
-				}
-				break;
-			case 2:
-				// Updates zip code
-				System.out.println(inputNewInfo);
-				String newZipCode = input.nextLine();
-				System.out.println(newInfo + newZipCode);
-				if (confirmInfo(input)) {
-					updater.updateUserZipCode(user, currentStreet, newZipCode);
-					System.out.println(updateSuccessful);
-					System.out.println();
-				}
-				break;
-			case 3:
-				// Updates city
-				System.out.println(inputNewInfo);
-				String newCity = input.nextLine();
-				System.out.println(newInfo + newCity);
-				if (confirmInfo(input)) {
-					updater.updateUserCity(user, currentStreet, newCity);
-					System.out.println(updateSuccessful);
-					System.out.println();
-				}
-				break;
-			case 4:
-				// Updates district
-				System.out.println(inputNewInfo);
-				String newDistrict = input.nextLine();
-				System.out.println(newInfo + newDistrict);
-				if (confirmInfo(input)) {
-					updater.updateUserDistrict(user, currentStreet, newDistrict);
-					System.out.println(updateSuccessful);
-					System.out.println();
-				}
-				break;
-			case 5:
-				// Updates country
-				System.out.println(inputNewInfo);
-				String newCountry = input.nextLine();
-				System.out.println(newInfo + newCountry);
-				if (confirmInfo(input)) {
-					updater.updateUserCountry(user, currentStreet, newCountry);
-					System.out.println(updateSuccessful);
-					System.out.println();
-				}
-				break;
-			default:
-				MainMenuUI.mainMenu();
+			int i = 0;
+
+			for (Address address : updater.getAddressListWithIndex(user)) {
+				System.out.println();
+
+				System.out.println("[" + (i + 1) + "].");
+				System.out.println();
+
+				System.out.println("Street:    " + updater.getStreet(address));
+				System.out.println("ZipCode:   " + updater.getZipCode(address));
+				System.out.println("City:      " + updater.getCity(address));
+				System.out.println("District:  " + updater.getDistrict(address));
+				System.out.println("Country:   " + updater.getCountry(address));
+				System.out.println();
+				i++;
 
 			}
 
+			String nrAddress = input.nextLine();
+			if (Integer.parseInt(nrAddress) > updater.getAllAddresses(user).size()) {
+				System.out.println();
+
+				System.out.println("Process Cancelled");
+				System.out.println();
+				;
+				MainMenuUI.mainMenu();
+			} else {
+
+				// Chooses address
+				Address chosen = updater.getAllAddresses(user).get(Integer.parseInt(nrAddress) - 1);
+				// Shows fields of the address
+				String currentStreet = updater.getStreet(chosen);
+				String currentZipCode = updater.getZipCode(chosen);
+				String currentCity = updater.getCity(chosen);
+				String currentDistrict = updater.getDistrict(chosen);
+				String currentCountry = updater.getCountry(chosen);
+				System.out.println("Please select the number of the field to update:");
+				System.out.println("[1] Street: " + currentStreet);
+				System.out.println("[2] ZipCode: " + currentZipCode);
+				System.out.println("[3] City: " + currentCity);
+				System.out.println("[4] District: " + currentDistrict);
+				System.out.println("[5] Country: " + currentCountry);
+				System.out.println();
+				// Selects the field
+				String nrField = input.nextLine();
+				switch (nrField) {
+				case "1":
+					// Updates street
+					System.out.println(inputNewInfo);
+					String newStreet = input.nextLine();
+					System.out.println(newInfo + newStreet);
+					if (confirmInfo(input)) {
+						updater.updateUserStreet(user, currentStreet, newStreet);
+						System.out.println(updateSuccessful);
+						System.out.println();
+					}
+					break;
+				case "2":
+					// Updates zip code
+					System.out.println(inputNewInfo);
+					String newZipCode = input.nextLine();
+					System.out.println(newInfo + newZipCode);
+					if (confirmInfo(input)) {
+						updater.updateUserZipCode(user, currentStreet, newZipCode);
+						System.out.println(updateSuccessful);
+						System.out.println();
+					}
+					break;
+				case "3":
+					// Updates city
+					System.out.println(inputNewInfo);
+					String newCity = input.nextLine();
+					System.out.println(newInfo + newCity);
+					if (confirmInfo(input)) {
+						updater.updateUserCity(user, currentStreet, newCity);
+						System.out.println(updateSuccessful);
+						System.out.println();
+					}
+					break;
+				case "4":
+					// Updates district
+					System.out.println(inputNewInfo);
+					String newDistrict = input.nextLine();
+					System.out.println(newInfo + newDistrict);
+					if (confirmInfo(input)) {
+						updater.updateUserDistrict(user, currentStreet, newDistrict);
+						System.out.println(updateSuccessful);
+						System.out.println();
+					}
+					break;
+				case "5":
+					// Updates country
+					System.out.println(inputNewInfo);
+					String newCountry = input.nextLine();
+					System.out.println(newInfo + newCountry);
+					if (confirmInfo(input)) {
+						updater.updateUserCountry(user, currentStreet, newCountry);
+						System.out.println(updateSuccessful);
+						System.out.println();
+					}
+					break;
+				default:
+					System.out.println("");
+
+					System.out.println("Process Cancelled");
+					System.out.println("");
+
+					MainMenuUI.mainMenu();
+					break;
+
+				}
+
+			}
 			break;
+
 		case "5":
 			US201and202UpdateUserInfoController addAdress = new US201and202UpdateUserInfoController();
 			// Adds new street
@@ -217,22 +251,32 @@ public class UpdateUserInfoUI {
 
 			System.out.println("Press 1 to confirm, 2 to cancel");
 
-			int confirmation = Integer.parseInt(input.nextLine());
+			String confirmation = input.nextLine();
 			switch (confirmation) {
-			case 1:
+			case "1":
 				System.out.println("New Adress was added successfully");
 				System.out.println();
 
 				addAdress.addNewAddress(user, newAddress);
 				break;
-			case 2:
-				System.out.println("The user cancelled the process of adding a new address");
+			case "2":
+				System.out.println("The user cancelled the process of adding a new Address");
 				System.out.println();
+				MainMenuUI.mainMenu();
 
-				addAdress.addNewAddress(user, newAddress);
 				break;
+			default:
+				System.out.println("The user cancelled the process of adding a new Address");
+
+				System.out.println();
+				MainMenuUI.mainMenu();
 
 			}
+			break;
+		default:
+			System.out.println("The user cancelled the process");
+			System.out.println();
+
 			break;
 
 		case "m":
