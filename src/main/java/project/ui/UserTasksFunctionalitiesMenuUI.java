@@ -3,6 +3,7 @@
  */
 package project.ui;
 
+import project.model.Task;
 import project.model.User;
 
 /**
@@ -18,7 +19,7 @@ public class UserTasksFunctionalitiesMenuUI {
 	 * 
 	 * @param user
 	 */
-	public UserTasksFunctionalitiesMenuUI(User user) {
+	public UserTasksFunctionalitiesMenuUI(User user, Task choosedTask) {
 		this.user = user;
 	}
 
