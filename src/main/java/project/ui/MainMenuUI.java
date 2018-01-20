@@ -1,7 +1,9 @@
 package project.ui;
 
+import java.util.Calendar;
 import java.util.Scanner;
 
+import project.controller.PrintProjectInfoController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
@@ -57,6 +59,18 @@ public class MainMenuUI {
 		project3 = myCompany.getProjectsRepository().createProject("Projeto HomeBanking",
 				"Aplicação iOS para HomeBanking", user1);
 
+		//Add data to project1
+		//add start date to project
+		Calendar startDate = Calendar.getInstance();
+		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
+		project1.setStartdate(startDate);
+		
+		//add finish date to project
+		Calendar finishDate = Calendar.getInstance();
+		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
+		project1.setFinishdate(finishDate);
+		
+		
 		// addition of projects to the company
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
@@ -83,6 +97,9 @@ public class MainMenuUI {
 		task2 = project1.getTaskRepository().createTask("Desenvolver código para responder à US122");
 		project1.getTaskRepository().addProjectTask(task2);
 
+//		project1.setStartdate(Calendar.getInstance());
+//		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project1);
+//		System.out.println("Start date: " + projectInfo.printProjectStartDateInfo());
 		mainMenu();
 	}
 
