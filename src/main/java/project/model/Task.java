@@ -489,16 +489,17 @@ public class Task {
 	 * @param reportIndex
 	 *            is the index of report (from report list of the task).
 	 */
-	public boolean changeReportedTime(int newTime, int reportIndex) {
-
-		if (this.reports.size() > reportIndex && reportIndex >= 0) {
-			Report reportToSet = this.reports.get(reportIndex);
-			if (reportToSet != null) {
-				reportToSet.setReportedTime(newTime);
-				return true;
+	public boolean changeReportedTime(int newTime, String userEmail) {
+		boolean wasReportUpdated = false;
+		for (Report other : this.reports) {
+			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
+					.getUserFromProjectCollaborator().getEmail() == userEmail) {
+				other.setReportedTime(newTime);
+				wasReportUpdated = true;
 			}
 		}
-		return false;
+
+		return wasReportUpdated;
 	}
 
 	/**
