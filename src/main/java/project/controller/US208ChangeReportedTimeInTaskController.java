@@ -1,41 +1,58 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import project.model.Company;
+import project.model.ProjectRepository;
+import project.model.Task;
 import project.model.User;
+import project.model.UserRepository;
 
 public class US208ChangeReportedTimeInTaskController {
-	private int reportIndex;
-	private int newTime;
-	private int taskIndex;
+
 	private User username;
+	private UserRepository userRepository;
+	private Company company;
+	private ProjectRepository projectRepository;
 
 	/**
 	 * This method is used to allow a user to change a reported time in a task.
 	 * 
 	 * @param taskIndex
-	 *            int used to select a task from list of tasks
+	 *            String used to select a task from list of tasks
 	 * @param newTime
 	 *            int used to set a new time of a task report
-	 * @param reportIndex
-	 *            int used to selec a report from a lst of reports
 	 * @param email
 	 *            string defining an email that will be used to retrieve the
 	 *            respective user
 	 * @return returns a boolean to confirm if the operation was sucessfull
 	 */
-	public boolean correctReportedTimeInTaskController(int taskIndex, int newTime, int reportIndex, String email) {
-		boolean taskCorrected = false;
-		this.reportIndex = reportIndex;
-		this.newTime = newTime;
-		this.taskIndex = taskIndex;
-		this.username = Company.getTheInstance().getUsersRepository().getUserByEmail(email);
-		if (Company.getTheInstance().getUsersRepository().isUserinUserRepository(username)) {
-			Company.getTheInstance().getProjectsRepository().getUserTasks(username).get(taskIndex)
-					.changeReportedTime(newTime, reportIndex);
-			taskCorrected = true;
-		}
-		return taskCorrected;
+	public boolean correctReportedTimeInTaskController(String taskIndex, int newTime, String email) {
 
+		boolean wasTaskCorrected = false;
+
+		this.company = Company.getTheInstance();
+		this.projectRepository = company.getProjectsRepository();
+		this.userRepository = company.getUsersRepository();
+		this.username = userRepository.getUserByEmail(email);
+		for (int i = 0; i < projectRepository.getUserTasks(username).size(); i++) {
+			if (projectRepository.getUserTasks(username).get(i).getTaskID().equals(taskIndex)) {
+				wasTaskCorrected = projectRepository.getUserTasks(username).get(i).changeReportedTime(newTime, email);
+			}
+		}
+		return wasTaskCorrected;
+	}
+
+	public List<String> getOnGoingIDTasksOfUser(String email) {
+		List<String> taskIdList = new ArrayList<>();
+
+		for (Task other : this.projectRepository.getOnGoingUserTasks(this.username)) {
+			taskIdList.add(other.getTaskID());
+
+		}
+
+		return taskIdList;
 	}
 
 }
