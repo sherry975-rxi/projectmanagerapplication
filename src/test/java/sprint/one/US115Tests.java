@@ -58,18 +58,17 @@ public class US115Tests {
 
 		assertTrue(newUser2.isUserActive());
 
-		newUser2.setUserState(false);
-		newUser3.setUserState(false);
+		newUser2.changeUserState();
+		newUser3.changeUserState();
 
 		assertFalse(newUser2.isUserActive());
 		assertFalse(newUser3.isUserActive());
 
-		newUser2.setUserState(true);
-		newUser3.setUserState(true);
+		newUser2.changeUserState();
+		newUser3.changeUserState();
 
 		assertTrue(newUser2.isUserActive());
 		assertTrue(newUser3.isUserActive());
 	}
-	
 
 }

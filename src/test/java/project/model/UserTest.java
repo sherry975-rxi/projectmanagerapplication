@@ -194,7 +194,7 @@ public class UserTest {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
-		u1.setUserState(false);
+		u1.changeUserState();
 
 		assertEquals(u1.isUserActive(), false);
 	}
@@ -207,7 +207,11 @@ public class UserTest {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
-		u1.setUserState(true);
+		u1.changeUserState();
+
+		assertEquals(u1.isUserActive(), false);
+
+		u1.changeUserState();
 
 		assertEquals(u1.isUserActive(), true);
 
