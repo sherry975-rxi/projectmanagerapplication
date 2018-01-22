@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import project.controller.TasksFiltersController;
+import project.controller.US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController;
 import project.model.Task;
 import project.model.User;
 
@@ -19,7 +19,7 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 	}
 
 	public void viewLastMonthFinishedTasks() {
-		TasksFiltersController viewTasksFinishedLastMonth = new TasksFiltersController();
+		US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController viewTasksFinishedLastMonth = new US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController();
 		List<Task> lastMonthFinishedTasks = viewTasksFinishedLastMonth
 				.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
 
