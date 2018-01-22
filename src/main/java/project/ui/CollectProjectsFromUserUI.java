@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import project.ui.CollaboratorMainMenuUI;
 import project.controller.CollectProjectsFromUserController;
 import project.model.Project;
 import project.model.User;
@@ -70,14 +69,14 @@ public class CollectProjectsFromUserUI {
 			int projectIDCode = ii.getIdCode();
 			String projectIDCodeToString = String.valueOf(projectIDCode);
 			if (option.equals(projectIDCodeToString)) {
-				 ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI(ii, user);
-				 projectViewMenuUI.projectDataDisplay();
-			} else if (option.equals("B")) {
+				ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI(ii, user);
+				projectViewMenuUI.projectDataDisplay();
+			} else if ("B".equals(option)) {
 				CollaboratorMainMenuUI menu = new CollaboratorMainMenuUI(user);
 				menu.displayOptions();
-			} else if (option.equals("M")) {
+			} else if ("M".equals(option)) {
 				MainMenuUI.mainMenu();
-			} else if (option.equals("E")) {
+			} else if ("E".equals(option)) {
 				System.exit(0);
 			}
 			listOfOptionsToCompare.add(projectIDCodeToString);
