@@ -62,10 +62,12 @@ public class CollaboratorMainMenuUI {
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
-
 			break;
 		case "E":
 			System.exit(0);
+			break;
+		default:
+			displayOptions();
 		}
 	}
 }

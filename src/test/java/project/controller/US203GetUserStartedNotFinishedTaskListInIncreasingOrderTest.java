@@ -67,6 +67,9 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		Calendar taskDeadlineDateTest4 = Calendar.getInstance();
 		taskDeadlineDateTest4.set(Calendar.YEAR, 2019);
 		taskDeadlineDateTest4.set(Calendar.MONTH, Calendar.APRIL);
+		Calendar taskDeadlineDateTest6 = Calendar.getInstance();
+		taskDeadlineDateTest6.set(Calendar.YEAR, 2019);
+		taskDeadlineDateTest6.set(Calendar.MONTH, Calendar.MAY);
 
 		// create a Date before to the previous Dead line created in order to result in
 		// an expired Task
@@ -85,8 +88,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 				taskExpiredDeadlineDateTest, 10);
 		task4 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest,
 				taskDeadlineDateTest3, 10);
-		task5 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest,
-				taskDeadlineDateTest4, 10);
+		task5 = project1.getTaskRepository().createTask("Testing a task with deadlinenull");
 		task6 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest,
 				taskExpiredDeadlineDateTest, 10);
 
@@ -189,8 +191,10 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		// asserts the list contains five tasks, and the first two are the ones with the
 		// earliest deadline
 		assertEquals(5, tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).size());
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(0), task3);
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(1), task6);
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(2), task2);
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(0), task2);
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(1), task3);
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(2), task4);
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(3), task6);
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(4), task5);
 	}
 }

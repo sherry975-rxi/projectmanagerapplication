@@ -459,7 +459,7 @@ public class ProjectRepository {
 		List<Project> listOfProjectsOfUser = new ArrayList<>();
 
 		for (Project other : this.projectsRepository) {
-			if (other.isUserInProjectTeam(user)) {
+			if (other.isUserInProjectTeam(user) || other.isProjectManager(user)) {
 				listOfProjectsOfUser.add(other);
 			}
 		}

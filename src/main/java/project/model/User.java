@@ -191,9 +191,13 @@ public class User {
 	 *            State of the user to be set
 	 * 
 	 */
-	public void setUserState(Boolean state) {
+	public void changeUserState() {
 
-		this.systemUserStateActive = state;
+		if (this.systemUserStateActive) {
+			this.systemUserStateActive = false;
+		} else {
+			this.systemUserStateActive = true;
+		}
 
 	}
 

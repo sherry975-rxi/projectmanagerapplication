@@ -58,7 +58,6 @@ public class UserTasksFunctionalitiesMenuUI {
 	public void chooseFunctionality() {
 
 		Scanner scannerInput = new Scanner(System.in);
-
 		String option = scannerInput.nextLine().toUpperCase();
 
 		switch (option) {
@@ -66,11 +65,11 @@ public class UserTasksFunctionalitiesMenuUI {
 			US203GetUnfinishedTaskUI unfinishedTasksFromUser = new US203GetUnfinishedTaskUI();
 			unfinishedTasksFromUser.displayOptions(this.user);
 			break;
-		// case "2":
-		// US203ViewFinishedTasksFromUser finishedTasksFromUser = new
-		// US203ViewFinishedTasksFromUser(this.user);
-		// finishedTasksFromUser.displayfinishedTasksFromUser();
-		// break;
+		case "2":
+			US210GetAllFinishedUserTasksInDecreasingOrderUI finishedTasksFromUserDecreasingOrder = new US210GetAllFinishedUserTasksInDecreasingOrderUI(
+					this.user);
+			finishedTasksFromUserDecreasingOrder.getAllFinishedUserTasksInDecreasingOrderUI();
+			break;
 		case "3":
 			US211GetFinishedUserTasksFromLastMonthDecreasingOrder userTasksLastMonthDecreasingOrder = new US211GetFinishedUserTasksFromLastMonthDecreasingOrder(
 					this.user);

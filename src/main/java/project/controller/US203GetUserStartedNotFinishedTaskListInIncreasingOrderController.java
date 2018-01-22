@@ -1,5 +1,6 @@
 package project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import project.model.Company;
@@ -24,7 +25,22 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 	 * @return Task List
 	 */
 	public List<Task> getUserStartedNotFinishedTaskListInIncreasingOrder(User myUser) {
-		return this.myProjRepo.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(myUser);
+		List<Task> myUnfinishedAllTasks = new ArrayList<>();
+		List<Task> myUnfinishedTasksWDeadline = new ArrayList<>();
+		List<Task> myUnfinishedAllTasksWODeadline = new ArrayList<>();
+		myUnfinishedAllTasks = myProjRepo.getUnfinishedUserTaskList(myUser);
+
+		for (Task other : myUnfinishedAllTasks) {
+			if (other.getTaskDeadline() != null) {
+				myUnfinishedTasksWDeadline.add(other);
+			} else {
+				myUnfinishedAllTasksWODeadline.add(other);
+			}
+		}
+		myProjRepo.sortTaskListByDeadline(myUnfinishedTasksWDeadline);
+		myUnfinishedTasksWDeadline.addAll(myUnfinishedAllTasksWODeadline);
+		myUnfinishedAllTasks = myUnfinishedTasksWDeadline;
+		return myUnfinishedAllTasks;
 	}
 
 }
