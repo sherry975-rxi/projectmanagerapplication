@@ -15,6 +15,7 @@ import project.model.taskStateInterface.OnGoing;
 public class MainMenuUI {
 
 	private static Company myCompany;
+	private static User userAdmin;
 	private static User user1;
 	private static User user2;
 	private static User projectManager;
@@ -33,6 +34,9 @@ public class MainMenuUI {
 		myCompany = Company.getTheInstance();
 
 		// Instantiate the users, sets their passwords
+		userAdmin = myCompany.getUsersRepository().createUser("John Cena", "admin@gmail.com", "001", "Admin grupo 3",
+				"917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		userAdmin.setPassword("123456");
 		user1 = myCompany.getUsersRepository().createUser("Joao Silva", "aluno_3_@gmail.com", "010",
 				"Estudante Grupo 3", "937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		user1.setPassword("switch");
@@ -43,6 +47,7 @@ public class MainMenuUI {
 		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "aluno_1_@gmail.com", "012",
 				"Estudante Grupo 3", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Matosinhos", "Portugal");
 		// addition of users to the company
+		myCompany.getUsersRepository().addUserToUserRepository(userAdmin);
 		myCompany.getUsersRepository().addUserToUserRepository(user1);
 		myCompany.getUsersRepository().addUserToUserRepository(user2);
 		myCompany.getUsersRepository().addUserToUserRepository(projectManager);
@@ -146,7 +151,8 @@ public class MainMenuUI {
 				doLogin.doLogin();
 				break;
 			case "3":
-
+				AdminMenuUI adminMenu = new AdminMenuUI(userAdmin);
+				adminMenu.adminMenu();
 				break;
 			case "4":
 
