@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +13,12 @@ import org.junit.Test;
 import project.model.Company;
 import project.model.User;
 
-public class ListUsersControllerTest {
+public class US130ListUsersControllerTest {
 
 	Company Critical;
 	User user1, user2, newUser2, newUser3;
-	List<User> testList;
-	ListUsersController listUsersController = new ListUsersController();
+	List<String> testList;
+	US130ListUsersController listUsersController = new US130ListUsersController();
 
 	@Before
 	public void setUp() {
@@ -26,7 +27,7 @@ public class ListUsersControllerTest {
 		Critical = Company.getTheInstance();
 
 		// create a list to compare
-		testList = new ArrayList<User>();
+		testList = new ArrayList<>();
 	}
 
 	@After
@@ -64,9 +65,14 @@ public class ListUsersControllerTest {
 		Critical.getUsersRepository().addUserToUserRepository(user2);
 		Critical.getUsersRepository().addUserToUserRepository(newUser2);
 
-		testList.add(user1);
-		testList.add(user2);
-		testList.add(newUser2);
+		// creates a string matching user1's data and asserts as true
+		String user1String = "001 - Unassigned: Daniel (daniel@gmail.com; 920000000) - Porteiro";
+		assertTrue(user1String.equals(listUsersController.userDataToString(user1)));
+
+		// creates Strings for all Users and adds them to testList
+		testList.add("1:: " + user1String);
+		testList.add("2:: " + listUsersController.userDataToString(user2));
+		testList.add("3:: " + listUsersController.userDataToString(newUser2));
 
 		// finally, asserts the listUsersController returns only the three Users added
 		assertEquals(testList, listUsersController.listUsersController());
