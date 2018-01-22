@@ -482,12 +482,14 @@ public class Task {
 	}
 
 	/**
-	 * This method set the parameter "reportedTime" of a specific report.
+	 * 
+	 * This method changes the reportedTime of a Task by a given TaskCollaborator
 	 * 
 	 * @param newTime
-	 *            for report.
-	 * @param reportIndex
-	 *            is the index of report (from report list of the task).
+	 *            The updated time of the report
+	 * @param userEmail
+	 *            The userEmail to update it's reportedTime
+	 * @return TRUE if the Report is updated, FALSE if Not
 	 */
 	public boolean changeReportedTime(int newTime, String userEmail) {
 		boolean wasReportUpdated = false;
@@ -500,6 +502,22 @@ public class Task {
 		}
 
 		return wasReportUpdated;
+	}
+
+	/**
+	 * @param userEmail
+	 *            The UserEmail that the method will look for it's report
+	 * @return The reported time by a task collaborator
+	 */
+	public int getReportedTimeByTaskCollaborator(String userEmail) {
+		int reportedTime = 0;
+		for (Report other : this.reports) {
+			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
+					.getUserFromProjectCollaborator().getEmail() == userEmail) {
+				reportedTime = other.getReportedTime();
+			}
+		}
+		return reportedTime;
 	}
 
 	/**

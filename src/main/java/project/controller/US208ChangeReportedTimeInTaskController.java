@@ -44,6 +44,11 @@ public class US208ChangeReportedTimeInTaskController {
 		return wasTaskCorrected;
 	}
 
+	/**
+	 * @param email
+	 *            The email of the user to search his associated tasks ID
+	 * @return A list of Strings that contains the tasks IDs associated to him
+	 */
 	public List<String> getOnGoingIDTasksOfUser(String email) {
 		List<String> taskIdList = new ArrayList<>();
 
@@ -53,6 +58,25 @@ public class US208ChangeReportedTimeInTaskController {
 		}
 
 		return taskIdList;
+	}
+
+	/**
+	 * @param email
+	 *            The email of the user to search his associated tasks ID
+	 * @param taskIndex
+	 *            The task to look for it's report
+	 * @return The reported time by a given TaskCollaborator
+	 */
+	public int getReportedTimeByCollaboratorController(String email, String taskIndex) {
+		int reportedTimeByCollaborator = 0;
+		for (int i = 0; i < projectRepository.getUserTasks(username).size(); i++) {
+			if (projectRepository.getUserTasks(username).get(i).getTaskID().equals(taskIndex)) {
+				reportedTimeByCollaborator = projectRepository.getUserTasks(username).get(i)
+						.getReportedTimeByTaskCollaborator(email);
+			}
+		}
+
+		return reportedTimeByCollaborator;
 	}
 
 }
