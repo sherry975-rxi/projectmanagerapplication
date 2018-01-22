@@ -45,6 +45,14 @@ public class US130ListUsersController {
 
 	}
 
+	/**
+	 * This is a utility method that converts a User object into a String of data,
+	 * to be displayed in the UI
+	 * 
+	 * @param User
+	 *            to be converted
+	 * @return String of the user's data
+	 */
 	public String userDataToString(User toConvert) {
 		String profile = "";
 		switch (toConvert.getUserProfile()) {

@@ -8,7 +8,7 @@ import project.model.User;
 
 public class US130ListUsersUI {
 
-	public void displayUsersList(User user) {
+	public User displayUsersList(User user) {
 
 		Scanner input = new Scanner(System.in);
 		US130ListUsersController controller = new US130ListUsersController();
@@ -20,6 +20,7 @@ public class US130ListUsersUI {
 		System.out.println("Please choose a user (If a valid number isn't provided, no user will be selected.):");
 		int index = Integer.parseInt(input.nextLine());
 		user = controller.selectUser(index);// check later
+		return user;
 	}
 
 }
