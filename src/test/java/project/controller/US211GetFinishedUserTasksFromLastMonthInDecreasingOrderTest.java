@@ -196,8 +196,15 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		finishOverwrite.add(Calendar.MONTH, -5);
 		task3.setFinishDate(finishOverwrite);
 
-		assertEquals(task1, tasksFiltersController.getFinishedUserTasksFromLastMonthInDecreasingOrder(user1).get(0));
-		assertEquals(task3, tasksFiltersController.getFinishedUserTasksFromLastMonthInDecreasingOrder(user1).get(1));
+		String task1String = tasksFiltersController.convertCalendarToString(task1.getFinishDate()) + ": name3 - "
+				+ task1.getDescription();
+		String task3String = tasksFiltersController.convertCalendarToString(task3.getFinishDate()) + ": name3 - "
+				+ task3.getDescription();
+
+		assertEquals(task1String,
+				tasksFiltersController.getFinishedUserTasksFromLastMonthInDecreasingOrder(user1).get(0));
+		assertEquals(task3String,
+				tasksFiltersController.getFinishedUserTasksFromLastMonthInDecreasingOrder(user1).get(1));
 		assertEquals(2, tasksFiltersController.getFinishedUserTasksFromLastMonthInDecreasingOrder(user1).size());
 	}
 
