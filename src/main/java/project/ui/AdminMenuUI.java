@@ -57,7 +57,6 @@ public class AdminMenuUI {
 				else {
 					US115andUS116SetUserStateUI changeUserStateUI = new US115andUS116SetUserStateUI();
 					changeUserStateUI.changeUserState(selectedUser);
-					System.out.println("Not yet implemented!");
 				}
 				break;
 
@@ -65,7 +64,8 @@ public class AdminMenuUI {
 				if (selectedUser == null)
 					System.out.println("No user selected!");
 				else {
-					System.out.println("Not yet implemented!");
+					US110andUS112SetUserProfileUI changeUserProfileUI = new US110andUS112SetUserProfileUI();
+					changeUserProfileUI.changeUserProfile(selectedUser);
 				}
 				break;
 
