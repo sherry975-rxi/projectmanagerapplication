@@ -96,12 +96,17 @@ public class MainMenuUI {
 		// Instantiates a task
 		task1 = project1.getTaskRepository().createTask("Desenvolver código para responder à US399");
 		project1.getTaskRepository().addProjectTask(task1);
-		task1.addProjectCollaboratorToTask(projcollab1);
+		// Creates a new taksCollaborator
+		tWorker1 = new TaskCollaborator(projcollab1);
+		// Adds the taskCollaborator to task1
+		task1.addTaskCollaboratorToTask(tWorker1);
+
 		OnGoing onGoingState = new OnGoing(task1);
 		task1.setTaskState(onGoingState);
-		tWorker1 = new TaskCollaborator(projcollab1);
 
 		task1.createReport(tWorker1);
+		task1.getReports().get(0).setReportedTime(20);
+
 		task2 = project1.getTaskRepository().createTask("Desenvolver código para responder à US122");
 		project1.getTaskRepository().addProjectTask(task2);
 
