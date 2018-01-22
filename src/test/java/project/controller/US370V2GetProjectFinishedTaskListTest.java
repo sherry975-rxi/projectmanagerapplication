@@ -1,4 +1,4 @@
-package sprint.three;
+package project.controller;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.controller.TasksFiltersController;
+import project.controller.US370GetProjectFinishedTaskListController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
@@ -23,9 +23,9 @@ import project.model.User;
  * US370 v2
  *
  */
-public class US370v2 {
+public class US370V2GetProjectFinishedTaskListTest {
 
-	TasksFiltersController tasksFiltersController;
+	US370GetProjectFinishedTaskListController tasksFiltersController;
 	Company company1;
 	User user1, user2, user3;
 	Project project1;
@@ -97,10 +97,8 @@ public class US370v2 {
 		task2.addTaskCollaboratorToTask(taskCollab2);
 		task3.addTaskCollaboratorToTask(taskCollab3);
 
-
 		// creates the controller
-		tasksFiltersController = new TasksFiltersController();
-		tasksFiltersController.setMyCompany(company1);
+		tasksFiltersController = new US370GetProjectFinishedTaskListController();
 	}
 
 	@After
@@ -135,7 +133,7 @@ public class US370v2 {
 	 */
 	@Test
 	public void test_getFinishedTasksInDescreasingOrder() {
-		
+
 		// set testTask1 as finished
 		// necessary to pass from "Created" to "Planned"
 		estimatedTaskStartDate = Calendar.getInstance();
@@ -164,8 +162,7 @@ public class US370v2 {
 		task1.getTaskState().changeToFinished();
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task1.viewTaskStateName());
-				
-		
+
 		// set testTask6 as finished
 		// necessary to pass from "Created" to "Planned"
 		estimatedTaskStartDate = Calendar.getInstance();
@@ -193,8 +190,7 @@ public class US370v2 {
 		task6.getTaskState().changeToFinished();
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task6.viewTaskStateName());
-		
-		
+
 		// set testTask5 as finished
 		// necessary to pass from "Created" to "Planned"
 		estimatedTaskStartDate = Calendar.getInstance();
@@ -226,7 +222,6 @@ public class US370v2 {
 		task5.getTaskState().changeToFinished();
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task5.viewTaskStateName());
-		
 
 		// set testTask4 as finished
 		// necessary to pass from "Created" to "Planned"
@@ -255,8 +250,7 @@ public class US370v2 {
 		task4.getTaskState().changeToFinished();
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task4.viewTaskStateName());
-		
-		
+
 		// create a list and add task in creation order, to compare with the list
 		// given by method getProjectFinishedTaskList
 		List<Task> finishedTasks = new ArrayList<>();

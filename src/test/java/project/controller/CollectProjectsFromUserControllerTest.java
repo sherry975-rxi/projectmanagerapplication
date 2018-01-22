@@ -88,7 +88,9 @@ public class CollectProjectsFromUserControllerTest {
 
 	@After
 	public void tearDown() {
+		Company.clear();
 		user1 = null;
+		userAdmin = null;
 		project = null;
 		project2 = null;
 		taskRepository = null;
@@ -115,5 +117,44 @@ public class CollectProjectsFromUserControllerTest {
 
 		assertEquals(projectsFromUser, controller.getProjectsFromUser());
 
+	}
+
+	/**
+	 * this test verify if the list of projects is equals to the list created.
+	 */
+	@Test
+	public final void testGetProjectsFromProjectManager() {
+
+		// create controller
+
+		CollectProjectsFromUserController controller2 = new CollectProjectsFromUserController(this.userAdmin);
+
+		// create list with cancelled task to compare
+		List<Project> projectsFromUser = new ArrayList<Project>();
+
+		// add task to the list
+		projectsFromUser.add(project);
+		projectsFromUser.add(project2);
+
+		assertEquals(projectsFromUser, controller2.getProjectsFromProjectManager());
+
+	}
+
+	/**
+	 * 
+	 */
+	@Test
+	public final void testGetProjectsFromUserAndProjectManager() {
+
+		// create controller
+		CollectProjectsFromUserController controller3 = new CollectProjectsFromUserController(this.userAdmin);
+
+		// create list with cancelled task to compare
+		List<String> projectsToString = new ArrayList<String>();
+
+		projectsToString.add("[1] name3 - PM ");
+		projectsToString.add("[2] name1 - PM ");
+
+		assertEquals(projectsToString, controller3.getProjectsFromUserAndProjectManager());
 	}
 }

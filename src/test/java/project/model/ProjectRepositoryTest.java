@@ -373,16 +373,29 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task2);
 		project1.getTaskRepository().addProjectTask(task3);
 
-		// Adds user to tasks.
-		task1.addTaskCollaboratorToTask(taskWorker1);
-		task2.addTaskCollaboratorToTask(taskWorker1);
-		task3.addTaskCollaboratorToTask(taskWorker1);
+		// prepare the tasks
+		task1.getTaskState().changeToPlanned();
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.addProjectCollaboratorToTask(collab2);
+		task1.getTaskState().changeToAssigned();
+		task1.getTaskState().changeToReady();
+		Calendar startDatetask = task1.getEstimatedTaskStartDate();
+		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
+		task1.setStartDate(startDatetask);
+		task1.getTaskState().changeToOnGoing();
+		task1.setFinishDate(taskDeadlineDateTest3);
+		task1.getTaskState().changeToFinished();
 
-		// Marks tasks as finished
-		task1.markTaskAsFinished();
-		task1.setFinishDate();
-		task3.markTaskAsFinished();
-		task3.setFinishDate();
+		task3.getTaskState().changeToPlanned();
+		task3.addProjectCollaboratorToTask(collab1);
+		task3.getTaskState().changeToAssigned();
+		task3.getTaskState().changeToReady();
+		Calendar startDateTask3 = task3.getEstimatedTaskStartDate();
+		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
+		task3.setStartDate(startDatetask);
+		task3.getTaskState().changeToOnGoing();
+		task3.setFinishDate(taskDeadlineDateTest3);
+		task3.getTaskState().changeToFinished();
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task1);
@@ -467,26 +480,54 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task2);
 		project1.getTaskRepository().addProjectTask(task3);
 
-		// Adds user to tasks.
-		task1.addTaskCollaboratorToTask(taskWorker1);
-		task2.addTaskCollaboratorToTask(taskWorker1);
-		task3.addTaskCollaboratorToTask(taskWorker1);
+		// create finished date to test
+		Calendar startDateTest = Calendar.getInstance();
+		startDateTest.set(Calendar.YEAR, 2017);
+		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
+		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// Marks tasks as finished
-		Calendar calendar1 = Calendar.getInstance();
-		calendar1.add(Calendar.MONTH, -1);
-		task1.setFinishDate(calendar1);
-		task1.markTaskAsFinished();
+		// create finished date to test
+		Calendar finishDateTest = Calendar.getInstance();
+		finishDateTest.add(Calendar.MONTH, -1);
+		Calendar finishDateTest2 = Calendar.getInstance();
+		finishDateTest2.add(Calendar.MONTH, -2);
 
-		Calendar calendar2 = Calendar.getInstance();
-		calendar2.add(Calendar.MONTH, -1);
-		task2.setFinishDate(calendar2);
-		task2.markTaskAsFinished();
+		// prepare the tasks
+		task1.getTaskState().changeToPlanned();
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.addProjectCollaboratorToTask(collab2);
+		task1.getTaskState().changeToAssigned();
+		task1.getTaskState().changeToReady();
+		Calendar startDatetask = task1.getEstimatedTaskStartDate();
+		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
+		task1.setStartDate(startDatetask);
+		task1.getTaskState().changeToOnGoing();
+		task1.setFinishDate(finishDateTest);
+		task1.getTaskState().changeToFinished();
 
-		Calendar calendar3 = Calendar.getInstance();
-		calendar3.set(2017, Calendar.SEPTEMBER, 17);
-		task3.setFinishDate(calendar3);
-		task3.markTaskAsFinished();
+		task2.getTaskState().changeToPlanned();
+		task2.addProjectCollaboratorToTask(collab2);
+		task2.addProjectCollaboratorToTask(collab1);
+		task2.getTaskState().changeToAssigned();
+		task2.getTaskState().changeToReady();
+		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
+		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
+		task2.setStartDate(startDatetask);
+		task2.getTaskState().changeToOnGoing();
+		task2.setFinishDate(finishDateTest);
+		task2.getTaskState().changeToFinished();
+
+		task3.getTaskState().changeToPlanned();
+		task3.addProjectCollaboratorToTask(collab1);
+		task3.getTaskState().changeToAssigned();
+		task3.getTaskState().changeToReady();
+		Calendar startDateTask3 = task3.getEstimatedTaskStartDate();
+		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
+		task3.setStartDate(startDatetask);
+		task3.getTaskState().changeToOnGoing();
+		task3.setFinishDate(finishDateTest2);
+		task3.getTaskState().changeToFinished();
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task1);
@@ -518,10 +559,6 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task1);
 		project1.getTaskRepository().addProjectTask(task2);
 
-		// Adds user to tasks.
-		task1.addTaskCollaboratorToTask(taskWorker1);
-		task2.addTaskCollaboratorToTask(taskWorker1);
-
 		// Sets a startDate for the tasks
 
 		Calendar startDate = Calendar.getInstance();
@@ -532,19 +569,38 @@ public class ProjectRepositoryTest {
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
 		calendar1.add(Calendar.MONTH, -1);
-		task1.setFinishDate(calendar1);
-		task1.markTaskAsFinished();
 
 		Calendar calendar2 = Calendar.getInstance();
 		calendar2.add(Calendar.MONTH, -1);
-		task2.setFinishDate(calendar2);
-		task2.markTaskAsFinished();
 
-		task1.createReport(taskWorker1);
-		task2.createReport(taskWorker1);
-
+		// prepare the tasks
+		task1.getTaskState().changeToPlanned();
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.addProjectCollaboratorToTask(collab2);
+		task1.getTaskState().changeToAssigned();
+		task1.getTaskState().changeToReady();
+		Calendar startDatetask = task1.getEstimatedTaskStartDate();
+		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
+		task1.setStartDate(startDatetask);
+		task1.getTaskState().changeToOnGoing();
+		task1.createReport(task1.getTaskTeam().get(0));
 		task1.getReports().get(0).setReportedTime(5);
+		task1.setFinishDate(calendar1);
+		task1.getTaskState().changeToFinished();
+
+		task2.getTaskState().changeToPlanned();
+		task2.addProjectCollaboratorToTask(collab2);
+		task2.addProjectCollaboratorToTask(collab1);
+		task2.getTaskState().changeToAssigned();
+		task2.getTaskState().changeToReady();
+		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
+		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
+		task2.setStartDate(startDatetask);
+		task2.getTaskState().changeToOnGoing();
+		task2.createReport(task2.getTaskTeam().get(1));
 		task2.getReports().get(0).setReportedTime(10);
+		task2.setFinishDate(calendar2);
+		task2.getTaskState().changeToFinished();
 
 		assertEquals(15.0, projectRepository.getTotalTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
@@ -556,7 +612,6 @@ public class ProjectRepositoryTest {
 	 */
 	@Test
 	public void testGetAverageTimeLastMonthFinishedTasksUser() {
-
 		// Adds project to project repository
 		projectRepository.addProjectToProjectRepository(project1);
 
@@ -566,10 +621,6 @@ public class ProjectRepositoryTest {
 		// Adds tasks to project repository.
 		project1.getTaskRepository().addProjectTask(task1);
 		project1.getTaskRepository().addProjectTask(task2);
-
-		// Adds user to tasks.
-		task1.addTaskCollaboratorToTask(taskWorker1);
-		task2.addTaskCollaboratorToTask(taskWorker1);
 
 		// Sets a startDate for the tasks
 
@@ -581,20 +632,38 @@ public class ProjectRepositoryTest {
 		// Marks tasks as finished
 		Calendar calendar1 = Calendar.getInstance();
 		calendar1.add(Calendar.MONTH, -1);
-		task1.setFinishDate(calendar1);
-		task1.markTaskAsFinished();
 
 		Calendar calendar2 = Calendar.getInstance();
 		calendar2.add(Calendar.MONTH, -1);
-		task2.setFinishDate(calendar2);
-		task2.markTaskAsFinished();
 
-		task1.createReport(taskWorker1);
-		task2.createReport(taskWorker1);
-
+		// prepare the tasks
+		task1.getTaskState().changeToPlanned();
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.addProjectCollaboratorToTask(collab2);
+		task1.getTaskState().changeToAssigned();
+		task1.getTaskState().changeToReady();
+		Calendar startDatetask = task1.getEstimatedTaskStartDate();
+		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
+		task1.setStartDate(startDatetask);
+		task1.getTaskState().changeToOnGoing();
+		task1.createReport(task1.getTaskTeam().get(0));
 		task1.getReports().get(0).setReportedTime(5);
-		task2.getReports().get(0).setReportedTime(10);
+		task1.setFinishDate(calendar1);
+		task1.getTaskState().changeToFinished();
 
+		task2.getTaskState().changeToPlanned();
+		task2.addProjectCollaboratorToTask(collab2);
+		task2.addProjectCollaboratorToTask(collab1);
+		task2.getTaskState().changeToAssigned();
+		task2.getTaskState().changeToReady();
+		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
+		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
+		task2.setStartDate(startDatetask);
+		task2.getTaskState().changeToOnGoing();
+		task2.createReport(task2.getTaskTeam().get(1));
+		task2.getReports().get(0).setReportedTime(10);
+		task2.setFinishDate(calendar2);
+		task2.getTaskState().changeToFinished();
 		assertEquals(7.5, projectRepository.getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
 
@@ -617,28 +686,56 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task2);
 		project1.getTaskRepository().addProjectTask(task3);
 
-		// Adds user to tasks.
-		task1.addTaskCollaboratorToTask(taskWorker1);
-		task2.addTaskCollaboratorToTask(taskWorker1);
-		task3.addTaskCollaboratorToTask(taskWorker1);
+		// create finished date to test
+		Calendar startDateTest = Calendar.getInstance();
+		startDateTest.set(Calendar.YEAR, 2017);
+		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
+		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// Marks tasks as finished
-		Calendar calendar1 = Calendar.getInstance();
-		calendar1.add(Calendar.MONTH, -1);
-		calendar1.set(Calendar.HOUR, 15);
-		task1.setFinishDate(calendar1);
-		task1.markTaskAsFinished();
+		// create finished date to test
+		Calendar finishDateTest = Calendar.getInstance();
+		finishDateTest.add(Calendar.MONTH, -1);
+		Calendar finishDateTest2 = Calendar.getInstance();
+		finishDateTest2.add(Calendar.MONTH, -2);
 
-		Calendar calendar2 = Calendar.getInstance();
-		calendar2.add(Calendar.MONTH, -1);
-		calendar2.set(Calendar.HOUR, 16);
-		task2.setFinishDate(calendar2);
-		task2.markTaskAsFinished();
+		// prepare the tasks
+		task1.getTaskState().changeToPlanned();
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.addProjectCollaboratorToTask(collab2);
+		task1.getTaskState().changeToAssigned();
+		task1.getTaskState().changeToReady();
+		Calendar startDatetask = task1.getEstimatedTaskStartDate();
+		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
+		task1.setStartDate(startDatetask);
+		task1.getTaskState().changeToOnGoing();
+		task1.setFinishDate(finishDateTest);
+		task1.getFinishDate().set(Calendar.DAY_OF_MONTH, 10);
+		task1.getTaskState().changeToFinished();
 
-		Calendar calendar3 = Calendar.getInstance();
-		calendar3.set(2017, Calendar.SEPTEMBER, 17);
-		task3.setFinishDate(calendar3);
-		task3.markTaskAsFinished();
+		task2.getTaskState().changeToPlanned();
+		task2.addProjectCollaboratorToTask(collab2);
+		task2.addProjectCollaboratorToTask(collab1);
+		task2.getTaskState().changeToAssigned();
+		task2.getTaskState().changeToReady();
+		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
+		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
+		task2.setStartDate(startDatetask);
+		task2.getTaskState().changeToOnGoing();
+		task2.setFinishDate(finishDateTest);
+		task2.getFinishDate().set(Calendar.DAY_OF_MONTH, 15);
+		task2.getTaskState().changeToFinished();
+
+		task3.getTaskState().changeToPlanned();
+		task3.addProjectCollaboratorToTask(collab1);
+		task3.getTaskState().changeToAssigned();
+		task3.getTaskState().changeToReady();
+		Calendar startDateTask3 = task3.getEstimatedTaskStartDate();
+		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
+		task3.setStartDate(startDatetask);
+		task3.getTaskState().changeToOnGoing();
+		task3.setFinishDate(finishDateTest2);
+		task3.getTaskState().changeToFinished();
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task2);
@@ -666,26 +763,55 @@ public class ProjectRepositoryTest {
 		project1.getTaskRepository().addProjectTask(task2);
 		project1.getTaskRepository().addProjectTask(task3);
 
-		// Adds user to tasks.
-		task1.addTaskCollaboratorToTask(taskWorker1);
-		task2.addTaskCollaboratorToTask(taskWorker1);
-		task3.addTaskCollaboratorToTask(taskWorker1);
+		// create finished date to test
+		Calendar startDateTest = Calendar.getInstance();
+		startDateTest.set(Calendar.YEAR, 2017);
+		startDateTest.set(Calendar.MONTH, Calendar.NOVEMBER);
+		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// Marks tasks as finished
-		Calendar calendar1 = Calendar.getInstance();
-		calendar1.set(2017, Calendar.NOVEMBER, 14);
-		task1.setFinishDate(calendar1);
-		task1.markTaskAsFinished();
+		// create finished date to test
+		Calendar finishDateTest = Calendar.getInstance();
+		finishDateTest.add(Calendar.MONTH, -1);
 
-		Calendar calendar2 = Calendar.getInstance();
-		calendar2.set(2017, Calendar.NOVEMBER, 17);
-		task2.setFinishDate(calendar2);
-		task2.markTaskAsFinished();
+		// prepare the tasks
+		task1.getTaskState().changeToPlanned();
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.addProjectCollaboratorToTask(collab2);
+		task1.getTaskState().changeToAssigned();
+		task1.getTaskState().changeToReady();
+		Calendar startDatetask = task1.getEstimatedTaskStartDate();
+		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
+		task1.setStartDate(startDatetask);
+		task1.getTaskState().changeToOnGoing();
+		task1.setFinishDate(finishDateTest);
+		task1.getFinishDate().set(Calendar.DAY_OF_MONTH, 10);
+		task1.getTaskState().changeToFinished();
 
-		Calendar calendar3 = Calendar.getInstance();
-		calendar3.set(2017, Calendar.SEPTEMBER, 17);
-		task3.setFinishDate(calendar3);
-		task3.markTaskAsFinished();
+		task2.getTaskState().changeToPlanned();
+		task2.addProjectCollaboratorToTask(collab2);
+		task2.addProjectCollaboratorToTask(collab1);
+		task2.getTaskState().changeToAssigned();
+		task2.getTaskState().changeToReady();
+		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
+		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
+		task2.setStartDate(startDatetask);
+		task2.getTaskState().changeToOnGoing();
+		task2.setFinishDate(finishDateTest);
+		task2.getFinishDate().set(Calendar.DAY_OF_MONTH, 15);
+		task2.getTaskState().changeToFinished();
+
+		task3.getTaskState().changeToPlanned();
+		task3.addProjectCollaboratorToTask(collab1);
+		task3.getTaskState().changeToAssigned();
+		task3.getTaskState().changeToReady();
+		Calendar startDateTask3 = task3.getEstimatedTaskStartDate();
+		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
+		task3.setStartDate(startDatetask);
+		task3.getTaskState().changeToOnGoing();
+		task3.setFinishDate(finishDateTest);
+		task3.getFinishDate().set(Calendar.DAY_OF_MONTH, 5);
+		task3.getTaskState().changeToFinished();
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task2);

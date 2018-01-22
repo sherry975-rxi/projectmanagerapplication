@@ -1,4 +1,4 @@
-package sprint.one;
+package project.controller;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,13 +14,14 @@ import project.model.Company;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.ProjectRepository;
+import project.model.Report;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.TaskRepository;
 import project.model.User;
 import project.model.UserRepository;
 
-public class US216Tests {
+public class US216AverageTimeSpentOnTaskLastMonthTests {
 
 	/**
 	 * Tests US216
@@ -70,13 +71,13 @@ public class US216Tests {
 
 		// Generate a Start Calendar
 		Calendar startDate = Calendar.getInstance();
-		startDate.add(Calendar.MONTH, -3);
+		startDate.set(Calendar.YEAR, 2017);
 
 		// Generates a Finish Calendar
 		Calendar finishDate = Calendar.getInstance();
-		finishDate.add(Calendar.MONTH, -1);
+		finishDate.add(Calendar.MONTH, -2);
 		Calendar otherFinishDate = Calendar.getInstance();
-		otherFinishDate.add(Calendar.MONTH, -2);
+		otherFinishDate.add(Calendar.MONTH, -1);
 
 		// Four new tasks were created and added to project1
 		task1 = myProject.getTaskRepository().createTask("Task 1", 1, startDate, finishDate, 10);
@@ -106,21 +107,45 @@ public class US216Tests {
 		// create task workers
 		taskWorker1 = task1.createTaskCollaborator(projectCollaborator1);
 
-		// Associates users to tasks
-		task1.addTaskCollaboratorToTask(taskWorker1);
-		task2.addTaskCollaboratorToTask(taskWorker1);
-		task3.addTaskCollaboratorToTask(taskWorker1);
-		task4.addTaskCollaboratorToTask(taskWorker1);
+		// defines finish date to task, and mark it as Finished
+		task1.setEstimatedTaskStartDate(startDate);
+		task1.setTaskDeadline(finishDate);
+		task1.getTaskState().changeToPlanned();
+		task1.addProjectCollaboratorToTask(projectCollaborator1);
+		task1.getTaskState().changeToAssigned();
+		task1.getTaskState().changeToReady();
+		Calendar startDateTask1 = startDate;
+		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
+		task1.setStartDate(startDateTask1);
+		task1.getTaskState().changeToOnGoing();
+		task1.setFinishDate(finishDate);
+		task1.getTaskState().changeToFinished();
 
-		// Finish dates were attributed to each task
-		task1.setFinishDate(otherFinishDate);
-		task2.setFinishDate(finishDate);
-		task3.setFinishDate(finishDate);
+		task2.setEstimatedTaskStartDate(startDate);
+		task2.setTaskDeadline(finishDate);
+		task2.getTaskState().changeToPlanned();
+		task2.addProjectCollaboratorToTask(projectCollaborator1);
+		task2.getTaskState().changeToAssigned();
+		task2.getTaskState().changeToReady();
+		Calendar startDateTask2 = startDate;
+		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
+		task2.setStartDate(startDateTask1);
+		task2.getTaskState().changeToOnGoing();
+		task2.setFinishDate(otherFinishDate);
+		task2.getTaskState().changeToFinished();
 
-		// Tasks were marked as Finished.
-		task1.markTaskAsFinished();
-		task2.markTaskAsFinished();
-		task3.markTaskAsFinished();
+		task3.setEstimatedTaskStartDate(startDate);
+		task3.setTaskDeadline(finishDate);
+		task3.getTaskState().changeToPlanned();
+		task3.addProjectCollaboratorToTask(projectCollaborator1);
+		task3.getTaskState().changeToAssigned();
+		task3.getTaskState().changeToReady();
+		Calendar startDateTask3 = startDate;
+		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
+		task3.setStartDate(startDateTask1);
+		task3.getTaskState().changeToOnGoing();
+		task3.setFinishDate(otherFinishDate);
+		task3.getTaskState().changeToFinished();
 
 		// List to compare to the getLastMonthFinishedUserTaskList.
 		List<Task> expResult = new ArrayList<Task>();
@@ -150,17 +175,19 @@ public class US216Tests {
 	@Test
 	public void getAverageTimeLastMonthFinishedTasksUser() {
 
-		// Calculate expected Total time spent in task 2 and task3, by calling the
-		// method getTimeSpentOnTask
-		double expectTotalTime = (task2.getTimeSpentByProjectCollaboratorOntask(projectCollaborator1)
-				+ task3.getTimeSpentByProjectCollaboratorOntask(projectCollaborator1));
-		// Calculate expected Average total time spent in task 2 and task3, by dividing
-		// the total time spent on these tasks and
-		// dividing by the number of tasks (in the case 2 tasks).
-		double expectAverageTime = expectTotalTime / 2;
+		US216AverageTimeSpentOnTaskLastMonthController controller = new US216AverageTimeSpentOnTaskLastMonthController();
 
-		assertEquals(expectAverageTime,
-				myCompany.getProjectsRepository().getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
+		Report report2 = new Report(taskWorker1);
+		task2.getReports().add(report2);
+		task2.changeReportedTime(5, "daniel@gmail.com");
+
+		Report report3 = new Report(taskWorker1);
+		task3.getReports().add(report3);
+		task3.changeReportedTime(10, "daniel@gmail.com");
+
+		double expectAverageTime = 7.5;
+
+		assertEquals(expectAverageTime, controller.getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 
 	}
 }

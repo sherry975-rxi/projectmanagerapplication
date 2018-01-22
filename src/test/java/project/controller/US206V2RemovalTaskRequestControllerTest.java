@@ -1,8 +1,10 @@
 package project.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -100,13 +102,62 @@ public class US206V2RemovalTaskRequestControllerTest {
 	@Test
 	public void testCreateRequest() {
 		// Creates the US206V2RemovalTaskRequestController
-		// to create a request to remove from first task added - taskA (Task ID = 1.1)
-		us206v2Controller = new US206V2RemovalTaskRequestController(userRui, 1, "1.1");
+		// to create a request to remove from first task added - taskA (Task ID = 1.1,
+		// projectID = 1)
+		us206v2Controller = new US206V2RemovalTaskRequestController(userRui);
+		us206v2Controller.setProjectID(1);
+		us206v2Controller.setTaskID("1.1");
+
 		// Creates the removal requests from userRui and TaskA
 		assertTrue(us206v2Controller.createRequest());
-		// Try to create again the same request
+		// Tries to create again the same request
 		// it should not be allowed
 		assertFalse(us206v2Controller.createRequest());
+	}
+
+	/**
+	 * Tests the setTaskIDandProjectID
+	 */
+	@Test
+	public void testSetProjectIDFromTask() {
+
+		// Creates the string with a task description and task id
+		String taskID = "5.3";
+
+		// Instantiates the controller
+		us206v2Controller = new US206V2RemovalTaskRequestController(userRui);
+		// Calls the method setTaskIDandProjectID
+		us206v2Controller.setProjectIDFromTaskID(taskID);
+
+		// Expected result
+		Integer projectID = 5;
+
+		assertEquals(projectID, us206v2Controller.getProjectID());
+	}
+
+	/**
+	 * Tests the getUnfinishedTasksFromUser method that has to return a list from
+	 * string
+	 */
+	@Test
+	public void testGetUnfinishedTaskFromUser() {
+
+		// Instantiates the controller
+		us206v2Controller = new US206V2RemovalTaskRequestController(userRui);
+
+		//// Creates the strings with a task description and task id
+		String taskIDandDescription1 = "[1.1] Implementar US100";
+		String taskIDandDescription2 = "[1.2] Implementar US200";
+
+		// List with the expected result strings
+		List<String> expResult = new ArrayList<>();
+		expResult.add(taskIDandDescription1);
+		expResult.add(taskIDandDescription2);
+
+		// List that results from the call of the method getUnfinishedTaskListFromUser
+		List<String> UnfinishedTasksFromUser = us206v2Controller.getUnfinishedTaskListFromUser();
+
+		assertEquals(expResult, UnfinishedTasksFromUser);
 
 	}
 
