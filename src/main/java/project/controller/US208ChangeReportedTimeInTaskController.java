@@ -44,7 +44,7 @@ public class US208ChangeReportedTimeInTaskController {
 		return wasTaskCorrected;
 	}
 
-	public List<String> getOnGoingIDTasksOfUser(String email) {
+	public List<String> getOnGoingIDTasksOfUser() {
 		List<String> taskIdList = new ArrayList<>();
 
 		for (Task other : this.projectRepository.getOnGoingUserTasks(this.username)) {
