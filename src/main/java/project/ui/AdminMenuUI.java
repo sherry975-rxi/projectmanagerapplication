@@ -10,7 +10,8 @@ public class AdminMenuUI {
 	User selectedUser;
 
 	String options = "[1] - view all users \n" + "[2] - search users by profile \n" + "[3] - search Users by Email \n"
-			+ "[4] - manage selected user\n" + "[H] - view commands \n" + "[E] - exit to main menu";
+			+ "[4] - manage selected user state\n" + "[5] - manage selected user profile\n" + "[H] - view commands \n"
+			+ "[E] - exit to main menu";
 
 	String command;
 
@@ -31,7 +32,7 @@ public class AdminMenuUI {
 				System.out.println("User selected!");
 				System.out.println(selectedUser.getIdNumber() + ": " + selectedUser.getName() + "("
 						+ selectedUser.getEmail() + ")");
-				System.out.println("(press [4] to manage, else, choose a different command)");
+				System.out.println("(User management commands enabled!)");
 				System.out.println("");
 			}
 
@@ -51,6 +52,16 @@ public class AdminMenuUI {
 				break;
 
 			case "4":
+				if (selectedUser == null)
+					System.out.println("No user selected!");
+				else {
+					US115andUS116SetUserStateUI changeUserStateUI = new US115andUS116SetUserStateUI();
+					changeUserStateUI.changeUserState(selectedUser);
+					System.out.println("Not yet implemented!");
+				}
+				break;
+
+			case "5":
 				if (selectedUser == null)
 					System.out.println("No user selected!");
 				else {
