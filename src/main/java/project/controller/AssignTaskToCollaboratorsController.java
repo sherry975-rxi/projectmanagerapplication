@@ -6,6 +6,7 @@ import project.model.ProjectCollaborator;
 import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskRepository;
+import project.model.User;
 
 public class AssignTaskToCollaboratorsController {
 
@@ -13,6 +14,7 @@ public class AssignTaskToCollaboratorsController {
 	private ProjectRepository projectRepository;
 	private Project project;
 	private Company company;
+	private Integer projectID;
 
 	/**
 	 * 
@@ -46,6 +48,44 @@ public class AssignTaskToCollaboratorsController {
 	}
 
 	/**
+	 * Constructor that receives a string TaskID
+	 * 
+	 * @param taskID
+	 *            ID of a Task
+	 */
+	public AssignTaskToCollaboratorsController(String taskID) {
+
+		setProjectIDFromTaskID(taskID);
+		project = projectRepository.getProjById(this.projectID);
+
+	}
+
+	/**
+	 * This method gets the ProjectID by splitting the taskID in two.
+	 * 
+	 * @param taskDetails
+	 *            String with the taskID
+	 */
+	public void setProjectIDFromTaskID(String taskID) {
+
+		String[] partsTask = taskID.split("\\.");
+		String projectID = partsTask[0];
+		String taskCounter = partsTask[1];
+
+		setProjectID(Integer.parseInt(projectID));
+	}
+
+	/**
+	 * This method sets the projectID directly from an int received
+	 * 
+	 * @param projectID
+	 *            ProjectID to set
+	 */
+	public void setProjectID(int projectID) {
+		this.projectID = projectID;
+	}
+
+	/**
 	 * @param taskID
 	 *            The id of the task that will be assigned to the TaaskCollaborator
 	 * @param taskCollaborator
@@ -72,6 +112,36 @@ public class AssignTaskToCollaboratorsController {
 		// Returns true if the ProjectCollaborator was successfully added to the
 		// TaskTeams
 		return wasTheTaskAddedToCollaborator;
+
+	}
+
+	/**
+	 * This method returns the project collaborator of a project from a user
+	 * 
+	 * @param user
+	 *            User to get project collaborator
+	 * @return Project collaborator of a project from a user
+	 */
+	public ProjectCollaborator getProjectCollaboratorFromUser(User user) {
+
+		ProjectCollaborator projcollab;
+
+		projcollab = project.getProjectCollaboratorFromUser(user);
+
+		return projcollab;
+	}
+
+	/**
+	 * This method retrieves a Task from its ID
+	 * 
+	 * @param taskID
+	 *            TaskID to get the Task from
+	 * 
+	 * @return Task from taskID
+	 */
+	public Task getTaskByTaskID(String taskID) {
+		Task taskToAddCollaborator = taskRepository.getTaskByID(taskID);
+		return taskToAddCollaborator;
 
 	}
 
