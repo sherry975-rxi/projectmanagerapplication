@@ -44,6 +44,7 @@ public class UserTasksFunctionalitiesMenuUI {
 		System.out.println("[5] View average time spent by task in the last month");
 		System.out.println("[6] Mark task as finished");
 		System.out.println("[7] Remove Task from my list");
+		System.out.println("[8] Update Task Report");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
 		System.out.println("[E] Exit \n");
@@ -90,6 +91,10 @@ public class UserTasksFunctionalitiesMenuUI {
 		case "7":
 			US206V2RemovalTaskRequestUI removalTaskFromUserList = new US206V2RemovalTaskRequestUI(this.user);
 			removalTaskFromUserList.displayTasksFromUser();
+			break;
+		case "8":
+			US208ChangeReportedTimeInTask updateTaskReport = new US208ChangeReportedTimeInTask();
+			updateTaskReport.changeReportedTime();
 			break;
 		case "B":
 			// Menu3 menuThree = new Menu3();
