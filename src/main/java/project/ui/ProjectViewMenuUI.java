@@ -4,13 +4,15 @@ import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
 import project.model.Project;
+import project.model.Task;
 import project.model.User;
 
 public class ProjectViewMenuUI {
 
 	private Project project;
 	private User user;
-
+	private Task task;
+	
 	public ProjectViewMenuUI(Project project, User user) {
 
 		this.project = project;
@@ -64,10 +66,18 @@ public class ProjectViewMenuUI {
 				break;
 			default:
 				int taskPosition = projectInfo.getTasksIDs().indexOf(choice);
-				if (taskPosition >= 0) {
-					UserTasksFunctionalitiesMenuUI nextMenu = new UserTasksFunctionalitiesMenuUI(user);
-					nextMenu.chooseFunctionality();
-				} else {
+
+				if(taskPosition >= 0) {
+					Task choosedTask = projectInfo.getTasks().get(taskPosition);
+					TaskDetailsUI userTasks = new TaskDetailsUI(task);
+					userTasks.taskDataDisplay();
+				}				
+				else {
+//
+//				if (taskPosition >= 0) {
+//					UserTasksFunctionalitiesMenuUI nextMenu = new UserTasksFunctionalitiesMenuUI(user);
+//					nextMenu.chooseFunctionality();
+//				} else {
 					System.out.println("Please choose a valid option: ");
 					System.out.println("");
 					ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(project, user);

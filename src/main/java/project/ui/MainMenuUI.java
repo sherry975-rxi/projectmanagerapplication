@@ -3,17 +3,19 @@ package project.ui;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import project.controller.PrintProjectInfoController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
+import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.taskStateInterface.OnGoing;
 
 public class MainMenuUI {
 
 	private static Company myCompany;
+	private static User userAdmin;
 	private static User user1;
 	private static User user2;
 	private static User projectManager;
@@ -32,6 +34,9 @@ public class MainMenuUI {
 		myCompany = Company.getTheInstance();
 
 		// Instantiate the users, sets their passwords
+		userAdmin = myCompany.getUsersRepository().createUser("John Cena", "admin@gmail.com", "001", "Admin grupo 3",
+				"917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		userAdmin.setPassword("123456");
 		user1 = myCompany.getUsersRepository().createUser("Joao Silva", "aluno_3_@gmail.com", "010",
 				"Estudante Grupo 3", "937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		user1.setPassword("switch");
@@ -42,6 +47,7 @@ public class MainMenuUI {
 		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "aluno_1_@gmail.com", "012",
 				"Estudante Grupo 3", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Matosinhos", "Portugal");
 		// addition of users to the company
+		myCompany.getUsersRepository().addUserToUserRepository(userAdmin);
 		myCompany.getUsersRepository().addUserToUserRepository(user1);
 		myCompany.getUsersRepository().addUserToUserRepository(user2);
 		myCompany.getUsersRepository().addUserToUserRepository(projectManager);
@@ -59,18 +65,19 @@ public class MainMenuUI {
 		project3 = myCompany.getProjectsRepository().createProject("Projeto HomeBanking",
 				"Aplicação iOS para HomeBanking", user1);
 
-		//Add data to project1
-		//add start date to project
+		TaskCollaborator tWorker1;
+
+		// Add data to project1
+		// add start date to project
 		Calendar startDate = Calendar.getInstance();
 		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
 		project1.setStartdate(startDate);
-		
-		//add finish date to project
+
+		// add finish date to project
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
 		project1.setFinishdate(finishDate);
-		
-		
+
 		// addition of projects to the company
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
@@ -94,12 +101,24 @@ public class MainMenuUI {
 		// Instantiates a task
 		task1 = project1.getTaskRepository().createTask("Desenvolver código para responder à US399");
 		project1.getTaskRepository().addProjectTask(task1);
+		// Creates a new taksCollaborator
+		tWorker1 = new TaskCollaborator(projcollab1);
+		// Adds the taskCollaborator to task1
+		task1.addTaskCollaboratorToTask(tWorker1);
+
+		OnGoing onGoingState = new OnGoing(task1);
+		task1.setTaskState(onGoingState);
+
+		task1.createReport(tWorker1);
+		task1.getReports().get(0).setReportedTime(20);
+
 		task2 = project1.getTaskRepository().createTask("Desenvolver código para responder à US122");
 		project1.getTaskRepository().addProjectTask(task2);
 
-//		project1.setStartdate(Calendar.getInstance());
-//		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project1);
-//		System.out.println("Start date: " + projectInfo.printProjectStartDateInfo());
+		// project1.setStartdate(Calendar.getInstance());
+		// PrintProjectInfoController projectInfo = new
+		// PrintProjectInfoController(project1);
+		// System.out.println("Start date: " + projectInfo.printProjectStartDateInfo());
 		mainMenu();
 	}
 
@@ -132,7 +151,8 @@ public class MainMenuUI {
 				doLogin.doLogin();
 				break;
 			case "3":
-
+				AdminMenuUI adminMenu = new AdminMenuUI(userAdmin);
+				adminMenu.adminMenu();
 				break;
 			case "4":
 

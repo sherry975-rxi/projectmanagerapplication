@@ -42,8 +42,6 @@ public class UserTasksFunctionalitiesMenuUI {
 		System.out.println("[3] View finished tasks in the last month : Decreasing order");
 		System.out.println("[4] View total time spent on tasks in the last month");
 		System.out.println("[5] View average time spent by task in the last month");
-		System.out.println("[6] Mark task as finished");
-		System.out.println("[7] Remove Task from my list");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
 		System.out.println("[E] Exit \n");
@@ -60,7 +58,6 @@ public class UserTasksFunctionalitiesMenuUI {
 	public void chooseFunctionality() {
 
 		Scanner scannerInput = new Scanner(System.in);
-
 		String option = scannerInput.nextLine().toUpperCase();
 
 		switch (option) {
@@ -68,12 +65,15 @@ public class UserTasksFunctionalitiesMenuUI {
 			US203GetUnfinishedTaskUI unfinishedTasksFromUser = new US203GetUnfinishedTaskUI();
 			unfinishedTasksFromUser.displayOptions(this.user);
 			break;
-		// case "2":
-		// US203ViewFinishedTasksFromUser finishedTasksFromUser = new
-		// US203ViewFinishedTasksFromUser(this.user);
-		// finishedTasksFromUser.displayfinishedTasksFromUser();
-		// break;
+		case "2":
+			US210GetAllFinishedUserTasksInDecreasingOrderUI finishedTasksFromUserDecreasingOrder = new US210GetAllFinishedUserTasksInDecreasingOrderUI(
+					this.user);
+			finishedTasksFromUserDecreasingOrder.getAllFinishedUserTasksInDecreasingOrderUI();
+			break;
 		case "3":
+			US211GetFinishedUserTasksFromLastMonthDecreasingOrder userTasksLastMonthDecreasingOrder = new US211GetFinishedUserTasksFromLastMonthDecreasingOrder(
+					this.user);
+			userTasksLastMonthDecreasingOrder.viewLastMonthFinishedTasks();
 			break;
 		case "4":
 			US215TotalTimeSpentOnTaskLastMonthUI totalTimeSpentOnTasksLastMonthUi = new US215TotalTimeSpentOnTaskLastMonthUI();
@@ -83,17 +83,9 @@ public class UserTasksFunctionalitiesMenuUI {
 			US216AverageTimeSpentByTaskLastMonthUI averegeTimeSpentOnTasksLastMonthUi = new US216AverageTimeSpentByTaskLastMonthUI();
 			averegeTimeSpentOnTasksLastMonthUi.displayAveregeTimeSpentByTaskLastMonth();
 			break;
-		// case "6":
-		// US205MarkTaskAsFinished markTaskAsFinished = new
-		// US205MarkTaskAsFinished(this.user);
-		// markTaskAsFinished.chooseTaskToMarkAsFinished();
-		case "7":
-			US206V2RemovalTaskRequestUI removalTaskFromUserList = new US206V2RemovalTaskRequestUI(this.user);
-			removalTaskFromUserList.displayTasksFromUser();
-			break;
 		case "B":
-			// Menu3 menuThree = new Menu3();
-			// // TODO when this menu is done is necessary to include a method.
+			CollaboratorMainMenuUI collaboratorMainMenu = new CollaboratorMainMenuUI(this.user);
+			collaboratorMainMenu.displayOptions();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
@@ -101,7 +93,10 @@ public class UserTasksFunctionalitiesMenuUI {
 		case "E":
 			System.exit(0);
 			break;
+
+		default:
+			System.out.println("Error! Option not valid. Please insert an option again.");
+			displayFunctionalities();
 		}
 	}
-
 }

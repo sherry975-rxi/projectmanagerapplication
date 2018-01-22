@@ -343,7 +343,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		// create list of tasks to compare to taskRepository of project
 		List<Task> allTasksInProject1Test = new ArrayList<>();
 		List<Task> allTasksInProject1 = uS205MarkTaskAsFinishedCollaborator
-				.getUnfinishedTasksOfProjectFromCollaboratorr(0);
+				.getUnfinishedTasksOfProjectFromCollaborator(1);
 
 		// add task to the list allTasksInTest
 		allTasksInProject1Test.add(task1);
@@ -359,9 +359,9 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		// create controller
 		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
-		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaboratorr(0);
+		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(1);
 
-		Task taskToBeMarked = uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished(0);
+		Task taskToBeMarked = uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished("1.1");
 
 		assertEquals(task1, taskToBeMarked);
 	}
@@ -371,8 +371,8 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		// create controller
 		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
-		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaboratorr(0);
-		uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished(0);
+		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(1);
+		uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished("1.1");
 		uS205MarkTaskAsFinishedCollaborator.markTaskAsFinished();
 
 		assertEquals("Finished", task1.viewTaskStateName());
