@@ -18,8 +18,12 @@ public class US130ListUsersUI {
 		}
 
 		System.out.println("Please choose a user (If a valid number isn't provided, no user will be selected.):");
-		int index = Integer.parseInt(input.nextLine());
-		user = controller.selectUser(index);// check later
+		if (input.hasNextInt()) {
+			int index = Integer.parseInt(input.nextLine());
+			user = controller.selectUser(index);// check later
+		} else {
+			System.out.println("Not a number!");
+		}
 		return user;
 	}
 
