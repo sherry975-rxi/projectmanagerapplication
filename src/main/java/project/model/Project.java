@@ -150,8 +150,7 @@ public class Project {
 	public void setProjectManager(User newProjectManager) {
 		this.projectManager = newProjectManager;
 	}
-	
-	
+
 	/**
 	 * Get the users that is Project's Manager
 	 * 
@@ -178,12 +177,13 @@ public class Project {
 	public String getProjectDescription() {
 		return this.description;
 	}
-	
+
 	/**
 	 * This method allows to set the project's description
 	 * 
-	 * @param newDescription to set
-	 *            
+	 * @param newDescription
+	 *            to set
+	 * 
 	 */
 	public void setProjectDescription(String newDescription) {
 		this.description = newDescription;
@@ -737,6 +737,17 @@ public class Project {
 	public void removeAllRequestsWithASpecificTask(Task task) {
 		this.removeAllRequestsWithASpecificTaskFromAssignementRequests(task);
 		this.removeAllRequestsWithASpecificTaskFromRemovalRequests(task);
+	}
+
+	public ProjectCollaborator getProjectCollaboratorFromUser(User user) {
+
+		for (ProjectCollaborator other : projectTeam) {
+			if (other.getUserFromProjectCollaborator().equals(user)) {
+				return other;
+			}
+		}
+		return null;
+
 	}
 
 }
