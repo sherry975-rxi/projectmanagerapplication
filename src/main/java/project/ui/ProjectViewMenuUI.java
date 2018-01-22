@@ -64,20 +64,20 @@ public class ProjectViewMenuUI {
 				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 				System.exit(0);
 				break;
-//			default:
-//				int taskPosition = projectInfo.getTasksIDs().indexOf(choice);
-//				if(taskPosition >= 0) {
-//					Task choosedTask = projectInfo.getTasks().get(taskPosition);
-//					TaskDetailsUI userTasks = new TaskDetailsUI(choosedTask);
-//					userTasks.taskDataDisplay();
-//				}				
-//				else {
-//					System.out.println("Please choose a valid option: ");
-//					System.out.println("");
-//					ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(project, user);
-//					myAtualUIView.projectDataDisplay();
-//				}
-//				break;
+			default:
+				int taskPosition = projectInfo.getTasksIDs().indexOf(choice);
+				if(taskPosition >= 0) {
+					Task choosedTask = projectInfo.getTasks().get(taskPosition);
+					TaskDetailsUI userTasks = new TaskDetailsUI(choosedTask);
+					userTasks.taskDataDisplay();
+				}				
+				else {
+					System.out.println("Please choose a valid option: ");
+					System.out.println("");
+					ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(project, user);
+					myAtualUIView.projectDataDisplay();
+				}
+				break;
 			}
 		}
 	}
