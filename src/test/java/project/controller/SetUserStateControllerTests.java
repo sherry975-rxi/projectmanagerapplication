@@ -1,6 +1,7 @@
 package project.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,7 +11,6 @@ import project.model.Company;
 import project.model.User;
 
 public class SetUserStateControllerTests {
-
 
 	Company myCompany;
 	User newUser2;
@@ -33,30 +33,30 @@ public class SetUserStateControllerTests {
 		Company.clear();
 		newUser2 = null;
 	}
-	
+
 	@Test
 	public void testSetUserAsInactiveController() {
 		// Asserts the User starts as Active and creates the User State Controller
 		assertTrue(newUser2.isUserActive());
-		SetUserStateController testUserStateController = new SetUserStateController(newUser2);
-		
+		US115andUS116SetUserStateController testUserStateController = new US115andUS116SetUserStateController();
+
 		// Uses the controller to deactivate the user and confirms its state.
-		testUserStateController.setUserAsInactive();
+		testUserStateController.changeUserState(newUser2);
 		assertFalse(newUser2.isUserActive());
 	}
-	
+
 	@Test
 	public void testSetUserAsActiveController() {
 		// Asserts the User starts as Active and creates the User State Controller
 		assertTrue(newUser2.isUserActive());
-		SetUserStateController testUserStateController = new SetUserStateController(newUser2);
-		
+		US115andUS116SetUserStateController testUserStateController = new US115andUS116SetUserStateController();
+
 		// Uses the controller to deactivate the user and confirms its state.
-		testUserStateController.setUserAsInactive();
+		testUserStateController.changeUserState(newUser2);
 		assertFalse(newUser2.isUserActive());
-		
+
 		// Uses the controller to reactivate the user and confirms its state.
-		testUserStateController.setUserAsActive();
+		testUserStateController.changeUserState(newUser2);
 		assertTrue(newUser2.isUserActive());
 	}
 

@@ -37,8 +37,7 @@ public class US116Tests {
 		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
 		myCompany.getUsersRepository().addUserToUserRepository(newUser3);
 
-		newUser2.setUserState(false);
-		newUser3.setUserState(true);
+		newUser2.changeUserState();
 	}
 
 	@After
@@ -57,11 +56,9 @@ public class US116Tests {
 		assertFalse(newUser2.isUserActive());
 		assertTrue(newUser3.isUserActive());
 
-		newUser2.setUserState(true);
+		newUser2.changeUserState();
 
 		assertTrue(newUser2.isUserActive());
 	}
-	
-
 
 }
