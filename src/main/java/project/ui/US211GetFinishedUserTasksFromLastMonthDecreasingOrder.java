@@ -1,11 +1,9 @@
 package project.ui;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import project.controller.US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController;
-import project.model.Task;
 import project.model.User;
 
 public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
@@ -20,7 +18,7 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 
 	public void viewLastMonthFinishedTasks() {
 		US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController viewTasksFinishedLastMonth = new US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController();
-		List<Task> lastMonthFinishedTasks = viewTasksFinishedLastMonth
+		List<String> lastMonthFinishedTasks = viewTasksFinishedLastMonth
 				.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
 
 		if (lastMonthFinishedTasks.size() == 0)
@@ -29,11 +27,7 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 		else {
 			System.out.println("Last month, you completed the following Tasks:");
 
-			for (Task other : lastMonthFinishedTasks) {
-				Calendar finishDate = other.getFinishDate();
-				date = sdf.format(finishDate.getTime());
-				System.out.println(date + " - " + other.getDescription());
-			}
+			System.out.println(lastMonthFinishedTasks);
 		}
 		System.out.println("");
 
