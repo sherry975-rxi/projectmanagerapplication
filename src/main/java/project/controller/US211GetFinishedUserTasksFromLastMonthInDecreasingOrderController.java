@@ -69,7 +69,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
 	 */
 	public String viewProjectNameFromTaskID(Task toSeeProject) {
 		String projectName = "404 Project Not found!";
-		String[] splitTaskID = toSeeProject.getTaskID().split(".");
+		String[] splitTaskID = toSeeProject.getTaskID().split("\\.");
 		int projectID = Integer.parseInt(splitTaskID[0]);
 		Project projectContainingTask = myProjRepo.getProjById(projectID);
 		if (projectContainingTask != null) {
