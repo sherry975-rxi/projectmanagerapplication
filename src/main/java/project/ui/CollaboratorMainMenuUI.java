@@ -54,10 +54,11 @@ public class CollaboratorMainMenuUI {
 			collectProjectsFromUserUI.collectProjectsFromUser();
 			break;
 		case "3":
+			UserTasksFunctionalitiesMenuUI tasksFunctionalities = new UserTasksFunctionalitiesMenuUI(user);
+			tasksFunctionalities.displayFunctionalities();
+			break;
 
 		case "B":
-			// Menu3 menuThree = new Menu3();
-			// // TODO when this menu is done is necessary to include a method.
 			break;
 		case "M":
 			MainMenuUI.mainMenu();

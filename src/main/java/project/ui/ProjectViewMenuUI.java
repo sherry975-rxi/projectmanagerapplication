@@ -19,6 +19,7 @@ public class ProjectViewMenuUI {
 	}
 
 	public void projectDataDisplay() {
+
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		Scanner scannerInput = new Scanner(System.in);
@@ -73,7 +74,7 @@ public class ProjectViewMenuUI {
 		int taskPosition = projectInfo.getTasksIDs().indexOf(choice);
 		if (taskPosition >= 0) {
 			Task choosedTask = projectInfo.getTasks().get(taskPosition);
-			UserTasksFunctionalitiesMenuUI nextMenu = new UserTasksFunctionalitiesMenuUI(user, choosedTask);
+			UserTasksFunctionalitiesMenuUI nextMenu = new UserTasksFunctionalitiesMenuUI(user);
 			nextMenu.chooseFunctionality();
 		} else {
 			System.out.println("Please choose a valid option: ");

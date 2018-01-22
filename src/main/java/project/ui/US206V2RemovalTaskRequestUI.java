@@ -71,7 +71,7 @@ public class US206V2RemovalTaskRequestUI {
 		String yerOrNo = input.nextLine();
 
 		if (yerOrNo.equalsIgnoreCase("y")) {
-			if (createRequest(taskID) == true) {
+			if (createRequest(taskID)) {
 				System.out.println("Your task removal is pending Project Manager approval");
 				backToMenu();
 			} else {
@@ -129,6 +129,11 @@ public class US206V2RemovalTaskRequestUI {
 			break;
 		case "E":
 			System.exit(0);
+			break;
+		default:
+			System.out.println("Invalid option, please choose again.");
+			backToMenu();
+			break;
 		}
 	}
 }
