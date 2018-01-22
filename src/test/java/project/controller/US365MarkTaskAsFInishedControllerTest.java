@@ -319,7 +319,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 	@Test
 	public void testGetProjectsFromProjectManager1() {
 		// create controller
-		US365MarkTaskAsFinishedController us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedController();
+		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
 
 		// create list of tasks to compare to taskRepository of project
 		List<Project> allProjectsInTest = new ArrayList<>();
@@ -331,19 +331,19 @@ public class US365MarkTaskAsFInishedControllerTest {
 		// compares the list of tasks created to compare with the list of tasks in the
 		// task repository obtained by using the controller
 		assertEquals(allProjectsInTest,
-				us365MarkTaskAsFinishedController.getProjectsFromProjectCollaborator(projectManager));
+				us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager));
 	}
 
 	@Test
 	public void testGetTasksFromProject1Manager1() {
 		// create controller
-		US365MarkTaskAsFinishedController us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedController();
-		us365MarkTaskAsFinishedController.getProjectsFromProjectCollaborator(projectManager);
+		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
+		us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager);
 
 		// create list of tasks to compare to taskRepository of project
 		List<Task> allTasksInProject1Test = new ArrayList<>();
 		List<Task> allTasksInProject1 = us365MarkTaskAsFinishedController
-				.getUnfinishedTasksOfProjectFromProjectCollaborator(0);
+				.getUnfinishedTasksOfProjectFromProjectManager(0);
 
 		// add task to the list allTasksInTest
 		allTasksInProject1Test.add(task1);
@@ -358,9 +358,9 @@ public class US365MarkTaskAsFInishedControllerTest {
 	@Test
 	public void testSelectTask1FromProject1Manager1Finished() {
 		// create controller
-		US365MarkTaskAsFinishedController us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedController();
-		us365MarkTaskAsFinishedController.getProjectsFromProjectCollaborator(projectManager);
-		us365MarkTaskAsFinishedController.getUnfinishedTasksOfProjectFromProjectCollaborator(0);
+		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
+		us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager);
+		us365MarkTaskAsFinishedController.getUnfinishedTasksOfProjectFromProjectManager(0);
 
 		Task taskToBeMarked = us365MarkTaskAsFinishedController.getTaskToBeMarkedFinished(0);
 
@@ -370,9 +370,9 @@ public class US365MarkTaskAsFInishedControllerTest {
 	@Test
 	public void testSetTask1FromProject1Manager1Finished() {
 		// create controller
-		US365MarkTaskAsFinishedController us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedController();
-		us365MarkTaskAsFinishedController.getProjectsFromProjectCollaborator(projectManager);
-		us365MarkTaskAsFinishedController.getUnfinishedTasksOfProjectFromProjectCollaborator(0);
+		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
+		us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager);
+		us365MarkTaskAsFinishedController.getUnfinishedTasksOfProjectFromProjectManager(0);
 		us365MarkTaskAsFinishedController.getTaskToBeMarkedFinished(0);
 		us365MarkTaskAsFinishedController.markTaskAsFinished();
 
