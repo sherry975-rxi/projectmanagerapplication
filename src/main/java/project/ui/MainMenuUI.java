@@ -3,7 +3,6 @@ package project.ui;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import project.controller.PrintProjectInfoController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
@@ -25,6 +24,8 @@ public class MainMenuUI {
 	private static ProjectCollaborator projcollab3;
 	private static Task task1;
 	private static Task task2;
+	private static final String ESTUDANTE_GRUPO_3 = "Estudante Grupo 3";
+	private static final String PORTUGAL = "Portugal";
 
 	public static void main(String[] args) {
 
@@ -32,15 +33,15 @@ public class MainMenuUI {
 		myCompany = Company.getTheInstance();
 
 		// Instantiate the users, sets their passwords
-		user1 = myCompany.getUsersRepository().createUser("Joao Silva", "aluno_3_@gmail.com", "010",
-				"Estudante Grupo 3", "937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		user1 = myCompany.getUsersRepository().createUser("Joao Silva", "aluno_3_@gmail.com", "010", ESTUDANTE_GRUPO_3,
+				"937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", PORTUGAL);
 		user1.setPassword("switch");
 		user2 = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "aluno_2_@gmail.com", "011",
-				"Estudante Grupo 3", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Matosinhos",
-				"Portugal");
+				ESTUDANTE_GRUPO_3, "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Matosinhos",
+				PORTUGAL);
 		user2.setPassword("tirapicos");
 		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "aluno_1_@gmail.com", "012",
-				"Estudante Grupo 3", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Matosinhos", "Portugal");
+				ESTUDANTE_GRUPO_3, "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Matosinhos", PORTUGAL);
 		// addition of users to the company
 		myCompany.getUsersRepository().addUserToUserRepository(user1);
 		myCompany.getUsersRepository().addUserToUserRepository(user2);
@@ -59,18 +60,17 @@ public class MainMenuUI {
 		project3 = myCompany.getProjectsRepository().createProject("Projeto HomeBanking",
 				"Aplicação iOS para HomeBanking", user1);
 
-		//Add data to project1
-		//add start date to project
+		// Add data to project1
+		// add start date to project
 		Calendar startDate = Calendar.getInstance();
 		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
 		project1.setStartdate(startDate);
-		
-		//add finish date to project
+
+		// add finish date to project
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
 		project1.setFinishdate(finishDate);
-		
-		
+
 		// addition of projects to the company
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
@@ -97,9 +97,10 @@ public class MainMenuUI {
 		task2 = project1.getTaskRepository().createTask("Desenvolver código para responder à US122");
 		project1.getTaskRepository().addProjectTask(task2);
 
-//		project1.setStartdate(Calendar.getInstance());
-//		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project1);
-//		System.out.println("Start date: " + projectInfo.printProjectStartDateInfo());
+		// project1.setStartdate(Calendar.getInstance());
+		// PrintProjectInfoController projectInfo = new
+		// PrintProjectInfoController(project1);
+		// System.out.println("Start date: " + projectInfo.printProjectStartDateInfo());
 		mainMenu();
 	}
 

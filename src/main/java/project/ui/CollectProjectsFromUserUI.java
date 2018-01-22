@@ -71,13 +71,19 @@ public class CollectProjectsFromUserUI {
 			if (option.equals(projectIDCodeToString)) {
 				ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI(ii, user);
 				projectViewMenuUI.projectDataDisplay();
-			} else if ("B".equals(option)) {
-				CollaboratorMainMenuUI menu = new CollaboratorMainMenuUI(user);
-				menu.displayOptions();
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
-			} else if ("E".equals(option)) {
-				System.exit(0);
+			} else {
+				switch (option) {
+				case "B":
+					CollaboratorMainMenuUI menu = new CollaboratorMainMenuUI(user);
+					menu.displayOptions();
+					break;
+				case "M":
+					MainMenuUI.mainMenu();
+					break;
+				case "E":
+					System.exit(0);
+					break;
+				}
 			}
 			listOfOptionsToCompare.add(projectIDCodeToString);
 		}
