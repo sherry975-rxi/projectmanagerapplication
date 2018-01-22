@@ -150,21 +150,19 @@ public class PrintProjectInfoControllerTest {
 		assertEquals(controller.printProjectDescriptionInfo(), "Este projeto está focado na gestão.");
 	}
 
-	/*
-	 * @Test public void testPrintProjectStartDateInfo() { //create controller
-	 * PrintProjectInfoController controller = new
-	 * PrintProjectInfoController(project);
-	 * 
-	 * assertEquals(controller.printProjectStartDateInfo(),
-	 * "Mon, 2 Jan 2017 12:31:00"); }
-	 * 
-	 * @Test public void testPrintProjectFinishDateInfo() { //create controller
-	 * PrintProjectInfoController controller = new
-	 * PrintProjectInfoController(project);
-	 * 
-	 * assertEquals(controller.printProjectFinishDateInfo(),
-	 * "Thu, 2 Feb 2017 12:31:00"); }
-	 */
+	@Test
+	public void testPrintProjectStartDateInfo() { // create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
+
+		assertEquals(controller.printProjectStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
+	}
+
+	@Test
+	public void testPrintProjectFinishDateInfo() { // create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
+
+		assertEquals(controller.printProjectFinishDateInfo(), "Thu, 2 Feb 2017 12:31:00");
+	}
 
 	@Test
 	public void testPrintProjectManagerInfo() {
