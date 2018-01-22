@@ -46,6 +46,7 @@ public class US208ChangeReportedTimeInTaskController {
 		for (int i = 0; i < projectRepository.getUserTasks(username).size(); i++) {
 			if (projectRepository.getUserTasks(username).get(i).getTaskID().equals(taskIndex)) {
 				wasTaskCorrected = projectRepository.getUserTasks(username).get(i).changeReportedTime(newTime, email);
+				;
 			}
 		}
 		return wasTaskCorrected;
@@ -82,6 +83,7 @@ public class US208ChangeReportedTimeInTaskController {
 			if (projectRepository.getUserTasks(username).get(i).getTaskID().equals(taskIndex)) {
 				reportedTimeByCollaborator = projectRepository.getUserTasks(username).get(i)
 						.getReportedTimeByTaskCollaborator(email);
+				break;
 			}
 		}
 
