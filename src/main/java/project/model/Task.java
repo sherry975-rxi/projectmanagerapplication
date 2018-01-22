@@ -495,7 +495,7 @@ public class Task {
 		boolean wasReportUpdated = false;
 		for (Report other : this.reports) {
 			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
-					.getUserFromProjectCollaborator().getEmail() == userEmail) {
+					.getUserFromProjectCollaborator().getEmail().equals(userEmail)) {
 				other.setReportedTime(newTime);
 				wasReportUpdated = true;
 			}
@@ -513,7 +513,7 @@ public class Task {
 		int reportedTime = 0;
 		for (Report other : this.reports) {
 			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
-					.getUserFromProjectCollaborator().getEmail() == userEmail) {
+					.getUserFromProjectCollaborator().getEmail().equals(userEmail)) {
 				reportedTime = other.getReportedTime();
 			}
 		}

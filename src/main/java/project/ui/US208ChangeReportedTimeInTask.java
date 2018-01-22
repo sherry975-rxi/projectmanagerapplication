@@ -10,6 +10,7 @@ public class US208ChangeReportedTimeInTask {
 	public void changeReportedTime() {
 
 		boolean wasTaskUpdated;
+		String idTask;
 		US208ChangeReportedTimeInTaskController changeReportedTimeController;
 		SearchUsersController searchUserByEmail = new SearchUsersController();
 
@@ -28,27 +29,37 @@ public class US208ChangeReportedTimeInTask {
 			for (String taskId : changeReportedTimeController.getOnGoingIDTasksOfUser()) {
 				System.out.println("TaskID: " + "[" + taskId + "]");
 			}
+			System.out.println();
+
 			System.out.println("Type the ID of the task you want change it's reported time:");
 			System.out.println();
+
 			String taskID = input.next();
+			System.out.println("Reported time to the task:  "
+					+ changeReportedTimeController.getReportedTimeByCollaboratorController(taskID));
+
 			System.out.println("Type the new reported time:");
+			System.out.println();
 			String newTime = input.next();
-			int newTimeToInt = 0;
+			int newTimeToInt;
 			try {
 				newTimeToInt = Integer.parseInt(newTime);
-			} catch (NumberFormatException e) {
-				System.out.println("The user didn't type a valid ID");
-				return;
-			}
-			wasTaskUpdated = changeReportedTimeController.correctReportedTimeInTaskController(taskID, newTimeToInt);
-			System.out.println();
-			if (wasTaskUpdated) {
-				System.out.println("The task report was updated sucessfully.");
-				System.out.println(changeReportedTimeController.getReportedTimeByCollaboratorController(taskID));
-			} else {
-				System.out.println("The task report couldn't be updated");
 
+				System.out.println();
+				wasTaskUpdated = changeReportedTimeController.correctReportedTimeInTaskController(taskID, newTimeToInt);
+
+				if (wasTaskUpdated) {
+					System.out.println("The task report was updated sucessfully.");
+					System.out.println(changeReportedTimeController.getReportedTimeByCollaboratorController(taskID));
+				} else {
+					System.out.println("The task report couldn't be updated");
+					System.out.println(changeReportedTimeController.getReportedTimeByCollaboratorController(taskID));
+
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Number not valid");
 			}
+
 		}
 
 		else {

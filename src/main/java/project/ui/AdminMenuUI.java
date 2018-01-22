@@ -40,9 +40,9 @@ public class AdminMenuUI {
 
 			switch (command) {
 			case "1":
-				System.out.println("Not yet implemented!");
+				US130ListUsersUI listUsersUI = new US130ListUsersUI();
+				selectedUser = listUsersUI.displayUsersList(selectedUser);
 				break;
-
 			case "2":
 				System.out.println("Not yet implemented!");
 				break;

@@ -38,4 +38,31 @@ public class SearchUsersController {
 
 	}
 
+	/**
+	 * This is a utility method that converts a User object into a String of data,
+	 * to be displayed in the UI
+	 * 
+	 * @param User
+	 *            to be converted
+	 * @return String of the user's data
+	 */
+	public String userDataToString(User toConvert) {
+		String profile = "";
+		switch (toConvert.getUserProfile()) {
+		case DIRECTOR:
+			profile = "Director";
+			break;
+		case COLLABORATOR:
+			profile = "Collaborator";
+			break;
+		default:
+			profile = "Unassigned";
+		}
+
+		String data = toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " ("
+				+ toConvert.getEmail() + "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
+
+		return data;
+	}
+
 }
