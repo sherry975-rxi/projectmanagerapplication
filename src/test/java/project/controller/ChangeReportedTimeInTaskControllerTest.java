@@ -121,9 +121,9 @@ public class ChangeReportedTimeInTaskControllerTest {
 	@Test
 	public void testController() {
 		// create controller
-		controller = new US208ChangeReportedTimeInTaskController();
-		controller.correctReportedTimeInTaskController("1.1", 45, "daniel@gmail.com");
-		assertTrue(controller.correctReportedTimeInTaskController("1.1", 45, "daniel@gmail.com"));
+		controller = new US208ChangeReportedTimeInTaskController("daniel@gmail.com");
+		controller.correctReportedTimeInTaskController("1.1", 45);
+		assertTrue(controller.correctReportedTimeInTaskController("1.1", 45));
 
 		assertEquals(45, project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).getReports()
 				.get(0).getReportedTime());

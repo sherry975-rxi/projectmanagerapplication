@@ -15,6 +15,16 @@ public class US208ChangeReportedTimeInTaskController {
 	private UserRepository userRepository;
 	private Company company;
 	private ProjectRepository projectRepository;
+	private String email;
+
+	public US208ChangeReportedTimeInTaskController(String email) {
+		this.company = Company.getTheInstance();
+		this.projectRepository = company.getProjectsRepository();
+		this.userRepository = company.getUsersRepository();
+		this.username = userRepository.getUserByEmail(email);
+		this.email = email;
+
+	}
 
 	/**
 	 * This method is used to allow a user to change a reported time in a task.
@@ -27,15 +37,12 @@ public class US208ChangeReportedTimeInTaskController {
 	 *            string defining an email that will be used to retrieve the
 	 *            respective user
 	 * @return returns a boolean to confirm if the operation was sucessfull
+	 * 
 	 */
-	public boolean correctReportedTimeInTaskController(String taskIndex, int newTime, String email) {
+	public boolean correctReportedTimeInTaskController(String taskIndex, int newTime) {
 
 		boolean wasTaskCorrected = false;
 
-		this.company = Company.getTheInstance();
-		this.projectRepository = company.getProjectsRepository();
-		this.userRepository = company.getUsersRepository();
-		this.username = userRepository.getUserByEmail(email);
 		for (int i = 0; i < projectRepository.getUserTasks(username).size(); i++) {
 			if (projectRepository.getUserTasks(username).get(i).getTaskID().equals(taskIndex)) {
 				wasTaskCorrected = projectRepository.getUserTasks(username).get(i).changeReportedTime(newTime, email);
@@ -49,7 +56,9 @@ public class US208ChangeReportedTimeInTaskController {
 	 *            The email of the user to search his associated tasks ID
 	 * @return A list of Strings that contains the tasks IDs associated to him
 	 */
-	public List<String> getOnGoingIDTasksOfUser(String email) {
+
+	public List<String> getOnGoingIDTasksOfUser() {
+
 		List<String> taskIdList = new ArrayList<>();
 
 		for (Task other : this.projectRepository.getOnGoingUserTasks(this.username)) {
@@ -67,7 +76,7 @@ public class US208ChangeReportedTimeInTaskController {
 	 *            The task to look for it's report
 	 * @return The reported time by a given TaskCollaborator
 	 */
-	public int getReportedTimeByCollaboratorController(String email, String taskIndex) {
+	public int getReportedTimeByCollaboratorController(String taskIndex) {
 		int reportedTimeByCollaborator = 0;
 		for (int i = 0; i < projectRepository.getUserTasks(username).size(); i++) {
 			if (projectRepository.getUserTasks(username).get(i).getTaskID().equals(taskIndex)) {
