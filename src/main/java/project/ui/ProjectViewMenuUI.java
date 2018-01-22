@@ -11,6 +11,7 @@ public class ProjectViewMenuUI {
 
 	private Project project;
 	private User user;
+	private Task task;
 	
 	public ProjectViewMenuUI(Project project, User user) {
 		
@@ -66,8 +67,8 @@ public class ProjectViewMenuUI {
 				int taskPosition = projectInfo.getTasksIDs().indexOf(choice);
 				if(taskPosition >= 0) {
 					Task choosedTask = projectInfo.getTasks().get(taskPosition);
-					UserTasksFunctionalitiesMenuUI nextMenu = new UserTasksFunctionalitiesMenuUI(user, choosedTask);
-					nextMenu.chooseFunctionality();
+					TaskDetailsUI userTasks = new TaskDetailsUI(task);
+					userTasks.taskDataDisplay();
 				}				
 				else {
 					System.out.println("Please choose a valid option: ");
