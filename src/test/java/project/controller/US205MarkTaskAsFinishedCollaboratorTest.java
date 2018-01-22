@@ -22,7 +22,7 @@ import project.model.taskStateInterface.OnGoing;
 import project.model.taskStateInterface.Planned;
 import project.model.taskStateInterface.Ready;
 
-public class US365MarkTaskAsFInishedControllerTest {
+public class US205MarkTaskAsFinishedCollaboratorTest {
 
 	/**
 	 * This class tests the methods that are called in Controller to execute the
@@ -317,37 +317,36 @@ public class US365MarkTaskAsFInishedControllerTest {
 	}
 
 	@Test
-	public void testGetProjectsFromProjectManager1() {
+	public void testGetProjectsFromProjectCollaborator1() {
 		// create controller
-		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
+		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
 
 		// create list of tasks to compare to taskRepository of project
 		List<Project> allProjectsInTest = new ArrayList<>();
 
 		// add task to the list allTasksInTest
 		allProjectsInTest.add(project1);
+		allProjectsInTest.add(project2);
 		allProjectsInTest.add(project3);
 
 		// compares the list of tasks created to compare with the list of tasks in the
 		// task repository obtained by using the controller
-		assertEquals(allProjectsInTest,
-				us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager));
+		assertEquals(allProjectsInTest, uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1));
 	}
 
 	@Test
-	public void testGetTasksFromProject1Manager1() {
+	public void testGetTasksFromProject1Collaborator1() {
 		// create controller
-		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
-		us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager);
+		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
+		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
 
 		// create list of tasks to compare to taskRepository of project
 		List<Task> allTasksInProject1Test = new ArrayList<>();
-		List<Task> allTasksInProject1 = us365MarkTaskAsFinishedController
-				.getUnfinishedTasksOfProjectFromProjectManager(0);
+		List<Task> allTasksInProject1 = uS205MarkTaskAsFinishedCollaborator
+				.getUnfinishedTasksOfProjectFromCollaborator(1);
 
 		// add task to the list allTasksInTest
 		allTasksInProject1Test.add(task1);
-		allTasksInProject1Test.add(task2);
 
 		// compares the list of tasks created to compare with the list of tasks in the
 		// task repository obtained by using the controller
@@ -358,11 +357,11 @@ public class US365MarkTaskAsFInishedControllerTest {
 	@Test
 	public void testSelectTask1FromProject1Manager1Finished() {
 		// create controller
-		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
-		us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager);
-		us365MarkTaskAsFinishedController.getUnfinishedTasksOfProjectFromProjectManager(0);
+		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
+		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
+		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(1);
 
-		Task taskToBeMarked = us365MarkTaskAsFinishedController.getTaskToBeMarkedFinished(0);
+		Task taskToBeMarked = uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished("1.1");
 
 		assertEquals(task1, taskToBeMarked);
 	}
@@ -370,11 +369,11 @@ public class US365MarkTaskAsFInishedControllerTest {
 	@Test
 	public void testSetTask1FromProject1Manager1Finished() {
 		// create controller
-		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
-		us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager);
-		us365MarkTaskAsFinishedController.getUnfinishedTasksOfProjectFromProjectManager(0);
-		us365MarkTaskAsFinishedController.getTaskToBeMarkedFinished(0);
-		us365MarkTaskAsFinishedController.markTaskAsFinished();
+		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
+		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
+		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(1);
+		uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished("1.1");
+		uS205MarkTaskAsFinishedCollaborator.markTaskAsFinished();
 
 		assertEquals("Finished", task1.viewTaskStateName());
 	}

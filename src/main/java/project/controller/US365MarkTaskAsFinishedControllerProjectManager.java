@@ -9,33 +9,33 @@ import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.User;
 
-public class US365MarkTaskAsFinishedController {
+public class US365MarkTaskAsFinishedControllerProjectManager {
 	private User username;
 	private int projectIndex;
 	private int taskIndex;
 	private Task taskToBeMarked;
 	private ProjectRepository projectList;
 
-	public List<Project> getProjectsFromProjectCollaborator(User user) {
-		List<Project> projectsThatImProjectCollaborator = new ArrayList<>();
+	public List<Project> getProjectsFromProjectManager(User user) {
+		List<Project> projectsThatImProjectManager = new ArrayList<>();
 		this.username = user;
 		projectList = Company.getTheInstance().getProjectsRepository();
-		projectsThatImProjectCollaborator.addAll(projectList.getProjectsFromProjectManager(this.username));
-		return projectsThatImProjectCollaborator;
+		projectsThatImProjectManager.addAll(projectList.getProjectsFromProjectManager(this.username));
+		return projectsThatImProjectManager;
 	}
 
-	public List<Task> getUnfinishedTasksOfProjectFromProjectCollaborator(int projectIndex) {
+	public List<Task> getUnfinishedTasksOfProjectFromProjectManager(int projectIndex) {
 		List<Task> unfinishedTaskFromProject = new ArrayList<>();
 		this.projectIndex = projectIndex;
-		List<Project> projectsThatImProjectCollaborator = getProjectsFromProjectCollaborator(this.username);
-		unfinishedTaskFromProject = projectsThatImProjectCollaborator.get(this.projectIndex).getTaskRepository()
+		List<Project> projectsThatImProjectManager = getProjectsFromProjectManager(this.username);
+		unfinishedTaskFromProject = projectsThatImProjectManager.get(this.projectIndex).getTaskRepository()
 				.getUnFinishedTasks();
 		return unfinishedTaskFromProject;
 	}
 
 	public Task getTaskToBeMarkedFinished(int taskIndex) {
 		this.taskIndex = taskIndex;
-		List<Task> unfinishedTaskFromProject = getUnfinishedTasksOfProjectFromProjectCollaborator(this.projectIndex);
+		List<Task> unfinishedTaskFromProject = getUnfinishedTasksOfProjectFromProjectManager(this.projectIndex);
 		taskToBeMarked = unfinishedTaskFromProject.get(this.taskIndex);
 		return taskToBeMarked;
 	}

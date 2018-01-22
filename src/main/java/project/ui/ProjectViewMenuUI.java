@@ -14,17 +14,18 @@ public class ProjectViewMenuUI {
 	private Task task;
 	
 	public ProjectViewMenuUI(Project project, User user) {
-		
+
 		this.project = project;
 		this.user = user;
 	}
-	
+
 	public void projectDataDisplay() {
+
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
-		
+
 		Scanner scannerInput = new Scanner(System.in);
 		boolean condition = true;
-		
+
 		while (condition) {
 			System.out.println("PROJECT " + projectInfo.printProjectNameInfo());
 
@@ -38,18 +39,18 @@ public class ProjectViewMenuUI {
 			System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 			System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 			System.out.println("");
-			System.out.println("TASKS OF "+ projectInfo.printProjectNameInfo() + ":");
-			
+			System.out.println("TASKS OF " + projectInfo.printProjectNameInfo() + ":");
+
 			for (int i = 0; i < projectInfo.getProjectTaskList().size(); i++) {
 				System.out.println(projectInfo.getProjectTaskList().get(i));
 			}
-			
+
 			System.out.println("To see task's details, choose the task ID number.");
 			System.out.println("");
 			System.out.println("[B] Back");
 			System.out.println("[M] MainMenu");
 			System.out.println("[E] Exit");
-			
+
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "B":
@@ -65,12 +66,18 @@ public class ProjectViewMenuUI {
 				break;
 			default:
 				int taskPosition = projectInfo.getTasksIDs().indexOf(choice);
+
 				if(taskPosition >= 0) {
 					Task choosedTask = projectInfo.getTasks().get(taskPosition);
 					TaskDetailsUI userTasks = new TaskDetailsUI(task);
 					userTasks.taskDataDisplay();
 				}				
 				else {
+//
+//				if (taskPosition >= 0) {
+//					UserTasksFunctionalitiesMenuUI nextMenu = new UserTasksFunctionalitiesMenuUI(user);
+//					nextMenu.chooseFunctionality();
+//				} else {
 					System.out.println("Please choose a valid option: ");
 					System.out.println("");
 					ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(project, user);

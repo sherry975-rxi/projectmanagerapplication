@@ -45,7 +45,7 @@ public class TaskTest {
 		myCompany = Company.getTheInstance();
 		myProjRep = myCompany.getProjectsRepository();
 
-		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
+		user1 = new User("pepe", "user@gmail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
 
@@ -582,18 +582,16 @@ public class TaskTest {
 		testTask.createReport(tWorker1);
 
 		// change reportedTime to 10 of report with index 0
-		assertTrue(testTask.changeReportedTime(10, 0));
+		assertTrue(testTask.changeReportedTime(10, "user@gmail.com"));
 
 		// change reportedTime to 20 of report with index 1
-		assertTrue(testTask.changeReportedTime(20, 1));
+		assertTrue(testTask.changeReportedTime(20, "user@gmail.com"));
 
-		// asserts that cannot change a reported time if the index is outside of the
-		// limit (bigger than list size)
-		assertFalse(testTask.changeReportedTime(30, 3));
-
-		// asserts that cannot change a reported time if the index is outside of the
-		// limit (less than zero)
-		assertFalse(testTask.changeReportedTime(30, -1));
+		/*
+		 * asserts that cannot change a reported time with an email that doesnt exist in
+		 * the TaskTeam
+		 */
+		assertFalse(testTask.changeReportedTime(30, "invalidEmail@gmail.com"));
 
 	}
 

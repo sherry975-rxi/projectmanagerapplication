@@ -3,6 +3,8 @@ package project.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import project.model.taskStateInterface.OnGoing;
+
 public class ProjectRepository {
 
 	private List<Project> projectsRepository;
@@ -128,6 +130,36 @@ public class ProjectRepository {
 
 			if (toCheck != null) {
 				tasksOfSpecificUser.addAll(other.getTaskRepository().getAllTasksFromProjectCollaborator(toCheck));
+			}
+		}
+
+		return tasksOfSpecificUser;
+	}
+
+	/**
+	 * This method returns all the tasks from all the projects that are set to the
+	 * state "OnGoing"
+	 * 
+	 * @param User
+	 *            user to search the OnGoing tasks in which it is included
+	 * 
+	 * @return Returns the user OnGoing task list.
+	 */
+	public List<Task> getOnGoingUserTasks(User user) {
+		List<Task> tasksOfSpecificUser = new ArrayList<>();
+
+		for (Project other : this.projectsRepository) {
+			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
+
+			if (toCheck != null) {
+				tasksOfSpecificUser.addAll(other.getTaskRepository().getAllTasksFromProjectCollaborator(toCheck));
+			}
+		}
+
+		for (Task other : tasksOfSpecificUser) {
+			if (!(other.getTaskState() instanceof OnGoing)) {
+				tasksOfSpecificUser.remove(other);
+
 			}
 		}
 
@@ -427,7 +459,7 @@ public class ProjectRepository {
 		List<Project> listOfProjectsOfUser = new ArrayList<>();
 
 		for (Project other : this.projectsRepository) {
-			if (other.isUserInProjectTeam(user)) {
+			if (other.isUserInProjectTeam(user) || other.isProjectManager(user)) {
 				listOfProjectsOfUser.add(other);
 			}
 		}

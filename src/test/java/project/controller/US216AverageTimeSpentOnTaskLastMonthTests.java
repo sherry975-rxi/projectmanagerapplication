@@ -179,11 +179,11 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 
 		Report report2 = new Report(taskWorker1);
 		task2.getReports().add(report2);
-		task2.changeReportedTime(5, 0);
+		task2.changeReportedTime(5, "daniel@gmail.com");
 
 		Report report3 = new Report(taskWorker1);
 		task3.getReports().add(report3);
-		task3.changeReportedTime(10, 0);
+		task3.changeReportedTime(10, "daniel@gmail.com");
 
 		double expectAverageTime = 7.5;
 
