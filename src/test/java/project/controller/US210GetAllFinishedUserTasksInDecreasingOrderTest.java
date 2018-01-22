@@ -185,18 +185,53 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 		task2.addProjectCollaboratorToTask(projCollab1);
 		task3.addProjectCollaboratorToTask(projCollab1);
 
-		// Tasks completed x days ago
+		// Change finish date in tasks
 		Calendar finishOverwrite = Calendar.getInstance();
-		finishOverwrite.add(Calendar.DAY_OF_MONTH, -5); // five days before
-		task1.setFinishDate(finishOverwrite);
-		finishOverwrite.add(Calendar.DAY_OF_MONTH, -10); // fifteen days before
-		task2.setFinishDate(finishOverwrite);
-		finishOverwrite.add(Calendar.DAY_OF_MONTH, 5); // ten days before
-		task3.setFinishDate(finishOverwrite);
+		
+		finishOverwrite.set(Calendar.YEAR, 2018);
+		finishOverwrite.set(Calendar.MONTH, 0);
+		finishOverwrite.set(Calendar.DAY_OF_MONTH, 16);
 
-		assertEquals(task1, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder().get(0));
-		assertEquals(task3, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder().get(1));
-		assertEquals(task2, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder().get(2));
+		task1.setFinishDate(finishOverwrite);
+				
+		finishOverwrite.set(Calendar.DAY_OF_MONTH, 6);
+		task2.setFinishDate(finishOverwrite);
+		
+		finishOverwrite.set(Calendar.DAY_OF_MONTH, 11);
+		task3.setFinishDate(finishOverwrite);
+		
+		// Create Strings representing the info shown of each task
+		String one = "[1.1] 16/01/2018 - Do this";
+		String two = "[1.2] 06/01/2018 - Do that";
+		String three = "[1.3] 11/01/2018 - Merge everything";
+
+
+		assertEquals(one, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder().get(0));
+		
+		assertEquals(three, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder().get(1));
+
+		assertEquals(two, tasksFiltersController.getAllFinishedUserTasksInDecreasingOrder().get(2));
+
+	}
+	
+	/**
+	 * Tests the conversion of a date in calendar to a string
+	 */
+	@Test
+	public void testConvertCalendarToString() {
+		Calendar date = Calendar.getInstance();
+		date.set(2018, 0, 21);
+		
+		assertEquals( "21/01/2018", tasksFiltersController.convertCalendarToString(date));
+		
+	}
+	
+	/**
+	 * Checks if the name of a user is the same used in the creator.
+	 */
+	@Test
+	public void testPrintUserNameInfo() {
+		assertEquals("Juni", tasksFiltersController.printUserNameInfo());
 	}
 
 }
