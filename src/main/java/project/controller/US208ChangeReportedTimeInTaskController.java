@@ -71,6 +71,21 @@ public class US208ChangeReportedTimeInTaskController {
 	}
 
 	/**
+	 * This method checks if a task exist in any project by checking it's ID in
+	 * every project
+	 * 
+	 * @param taskID
+	 *            The id of the project to search for
+	 * 
+	 * @return TRUE if if finds a match, FALSE if not
+	 */
+	public boolean doesTaskIdExist(String taskID) {
+		boolean doesTaskExist = false;
+		doesTaskExist = this.projectRepository.doesTaskIdExists(taskID);
+		return doesTaskExist;
+	}
+
+	/**
 	 * @param email
 	 *            The email of the user to search his associated tasks ID
 	 * @param taskIndex

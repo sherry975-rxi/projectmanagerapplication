@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
-import project.controller.US206V2RemovalTaskRequestController;
+import project.controller.US206CancelRemovalTaskRequestController;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
-public class UI206CancelRemovalTaskRequestUI {
+public class US206CancelRemovalTaskRequestUI {
 	User user;
 	String taskID;
 	Integer projID;
@@ -23,7 +23,7 @@ public class UI206CancelRemovalTaskRequestUI {
 	 * @param taskID
 	 *            Task to add to user task list
 	 */
-	public UI206CancelRemovalTaskRequestUI(User user, String taskID) {
+	public US206CancelRemovalTaskRequestUI(User user, String taskID) {
 
 		this.user = user;
 		this.taskID = taskID;
@@ -32,7 +32,7 @@ public class UI206CancelRemovalTaskRequestUI {
 
 	public void cancelRemovalTaskRequestUI() {
 
-		US206V2RemovalTaskRequestController controller = new US206V2RemovalTaskRequestController(this.user);
+		US206CancelRemovalTaskRequestController controller = new US206CancelRemovalTaskRequestController(this.user);
 		controller.setProjectIDFromTaskID(taskID);
 		projID = controller.getProjectID();
 
@@ -62,19 +62,19 @@ public class UI206CancelRemovalTaskRequestUI {
 		if (yerOrNo.equalsIgnoreCase("y")) {
 			if (controller.createRequest() == true) {
 				System.out.println("Your task removal is pending Project Manager approval");
-				// TaskDetailsUI taskDetailsUI = new
-				// TaskDetailsUI(assignTaskToCollaboratorsController.getTaskByTaskID(this.taskID));
-				// taskDetailsUI.taskDataDisplay();
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(controller.getTaskByTaskID(this.taskID, this.projID),
+						controller.getProjectByProjectID(projID), this.user);
+				taskDetailsUI.taskDataDisplay();
 			} else {
 				System.out.println("[ERROR!: Please choose a valid Task]");
-				// TaskDetailsUI taskDetailsUI = new
-				// TaskDetailsUI(assignTaskToCollaboratorsController.getTaskByTaskID(this.taskID));
-				// taskDetailsUI.taskDataDisplay();
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(controller.getTaskByTaskID(this.taskID, this.projID),
+						controller.getProjectByProjectID(projID), this.user);
+				taskDetailsUI.taskDataDisplay();
 			}
 		} else {
-			// TaskDetailsUI taskDetailsUI = new
-			// TaskDetailsUI(assignTaskToCollaboratorsController.getTaskByTaskID(this.taskID));
-			// taskDetailsUI.taskDataDisplay();
+			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(controller.getTaskByTaskID(this.taskID, this.projID),
+					controller.getProjectByProjectID(projID), this.user);
+			taskDetailsUI.taskDataDisplay();
 		}
 	}
 }

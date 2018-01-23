@@ -16,7 +16,7 @@ import project.model.User;
  *         uma tarefa que consta na minha lista de tarefas.
  *
  */
-public class US206V2RemovalTaskRequestController {
+public class US206CancelRemovalTaskRequestController {
 
 	private Integer projectID;
 	private String taskID;
@@ -32,7 +32,7 @@ public class US206V2RemovalTaskRequestController {
 	 * @param taskID
 	 *            Task ID of the task that the user wants to be removed from
 	 */
-	public US206V2RemovalTaskRequestController(User user) {
+	public US206CancelRemovalTaskRequestController(User user) {
 		this.user = user;
 		this.projectID = null;
 		this.taskID = null;
@@ -129,6 +129,35 @@ public class US206V2RemovalTaskRequestController {
 	 */
 	public Integer getProjectID() {
 		return this.projectID;
+	}
+
+	/**
+	 * This method retrieves a Task from its ID
+	 * 
+	 * @param taskID
+	 * @param projectID
+	 *            TaskID to get the Task from
+	 * 
+	 * @return Task from taskID
+	 */
+	public Task getTaskByTaskID(String taskID, Integer projectID) {
+		Task taskToAddCollaborator = Company.getTheInstance().getProjectsRepository().getProjById(projectID)
+				.getTaskRepository().getTaskByID(taskID);
+		return taskToAddCollaborator;
+
+	}
+
+	/**
+	 * This method retrieves a Project from its ID
+	 * 
+	 * @param projectID
+	 * 
+	 * @return Project from ProjectID
+	 */
+	public Project getProjectByProjectID(Integer projectID) {
+		Project project = Company.getTheInstance().getProjectsRepository().getProjById(projectID);
+
+		return project;
 	}
 
 }

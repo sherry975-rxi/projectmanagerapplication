@@ -2,7 +2,7 @@ package project.ui;
 
 import java.util.Scanner;
 
-import project.controller.SearchUsersController;
+import project.controller.US135andUS136SearchUsersController;
 import project.controller.US208ChangeReportedTimeInTaskController;
 
 public class US208ChangeReportedTimeInTaskUI {
@@ -12,7 +12,7 @@ public class US208ChangeReportedTimeInTaskUI {
 		boolean wasTaskUpdated;
 		String idTask;
 		US208ChangeReportedTimeInTaskController changeReportedTimeController;
-		SearchUsersController searchUserByEmail = new SearchUsersController();
+		US135andUS136SearchUsersController searchUserByEmail = new US135andUS136SearchUsersController();
 
 		Scanner input = new Scanner(System.in);
 		System.out.println("Change Task Reported Time");
@@ -35,8 +35,13 @@ public class US208ChangeReportedTimeInTaskUI {
 			System.out.println();
 
 			String taskID = input.next();
+			if (!changeReportedTimeController.doesTaskIdExist(taskID)) {
+				System.out.println("Task doesn't exist");
+				return;
+			}
 			System.out.println("Reported time to the task:  "
 					+ changeReportedTimeController.getReportedTimeByCollaboratorController(taskID));
+			System.out.println();
 
 			System.out.println("Type the new reported time:");
 			System.out.println();
@@ -50,6 +55,8 @@ public class US208ChangeReportedTimeInTaskUI {
 
 				if (wasTaskUpdated) {
 					System.out.println("The task report was updated sucessfully.");
+					System.out.println();
+
 					System.out.println("New reported time: "
 							+ changeReportedTimeController.getReportedTimeByCollaboratorController(taskID));
 				} else {

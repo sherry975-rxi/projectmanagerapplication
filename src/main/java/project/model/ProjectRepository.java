@@ -189,6 +189,28 @@ public class ProjectRepository {
 	}
 
 	/**
+	 * This method returns all the tasks from all the projects that are set to the
+	 * state "OnGoing" and don't have a report by a given user
+	 * 
+	 * @param User
+	 *            user to search the OnGoing tasks in which it is included
+	 * 
+	 * @return Returns the user OnGoing task list without reports
+	 */
+	public List<Task> getOnGoingUserUnreportedTasks(User user) {
+		List<Task> tasksOfSpecificUser = new ArrayList<>();
+		tasksOfSpecificUser = getOnGoingUserTasks(user);
+		for (Task other : tasksOfSpecificUser) {
+			if (other.doesTaskHaveReportByGivenUser(user.getEmail())) {
+				tasksOfSpecificUser.remove(other);
+			}
+		}
+
+		return tasksOfSpecificUser;
+
+	}
+
+	/**
 	 * This method returns all the tasks with state "finished" from all the
 	 * projects, that has a specific user associated to that task, no matter if the
 	 * project is active or not.
@@ -507,6 +529,24 @@ public class ProjectRepository {
 			}
 		}
 		return listOfProjectsOfProjectManager;
+	}
+
+	/**
+	 * This method checks if a task exist in any project by checking it's ID in
+	 * every project
+	 * 
+	 * @param taskID
+	 *            The id of the project to search for
+	 * 
+	 * @return TRUE if if finds a match, FALSE if not
+	 */
+	public boolean doesTaskIdExists(String taskID) {
+		boolean doesTaskIdExist = false;
+		for (Project p : this.projectsRepository) {
+			if (p.getTaskRepository().getTaskByID(taskID) != null)
+				doesTaskIdExist = true;
+		}
+		return doesTaskIdExist;
 	}
 
 }
