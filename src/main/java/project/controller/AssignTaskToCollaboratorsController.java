@@ -145,4 +145,11 @@ public class AssignTaskToCollaboratorsController {
 
 	}
 
+	/**
+	 * @return projectId
+	 */
+	public Integer getProjectID() {
+		return this.projectID;
+	}
+
 }
