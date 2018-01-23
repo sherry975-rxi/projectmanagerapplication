@@ -1,7 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -123,7 +123,7 @@ public class ChangeReportedTimeInTaskControllerTest {
 		// create controller
 		controller = new US208ChangeReportedTimeInTaskController("daniel@gmail.com");
 		controller.correctReportedTimeInTaskController("1.1", 45);
-		assertFalse(controller.correctReportedTimeInTaskController("1.1", 45));
+		assertTrue(controller.correctReportedTimeInTaskController("1.1", 45));
 
 		assertEquals(45, project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).getReports()
 				.get(0).getReportedTime());
