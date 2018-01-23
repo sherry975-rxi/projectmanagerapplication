@@ -82,20 +82,16 @@ public class US204v2ConfirmTaskAssignmentToCollaboratorUI {
 			if (assignTaskToCollaboratorsController.assignTaskToProjectCollaboratorController(taskID,
 					projcollab) == true) {
 				System.out.println("Your were successfully assigned to this task");
-				// TODO release this commented code when TaskDetailsUI is ready
-				// TaskDetailsUI taskDetailsUI = new
-				// TaskDetailsUI(assignTaskToCollaboratorsController.getTaskByTaskID(this.taskID));
-				// taskDetailsUI.taskDataDisplay();
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user);
+				taskDetailsUI.taskDataDisplay();
 			} else {
 				System.out.println("Your were not assigned to this task");
-				// TaskDetailsUI taskDetailsUI = new
-				// TaskDetailsUI(assignTaskToCollaboratorsController.getTaskByTaskID(this.taskID));
-				// taskDetailsUI.taskDataDisplay();
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user);
+				taskDetailsUI.taskDataDisplay();
 			}
 		} else {
-			// TaskDetailsUI taskDetailsUI = new
-			// TaskDetailsUI(assignTaskToCollaboratorsController.getTaskByTaskID(this.taskID));
-			// taskDetailsUI.taskDataDisplay();
+			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user);
+			taskDetailsUI.taskDataDisplay();
 		}
 	}
 
