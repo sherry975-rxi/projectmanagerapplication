@@ -19,7 +19,6 @@ public class AdminMenuUI {
 		this.adminLoggedIn = admin;
 	}
 
-	// TODO implement missing options
 	public void adminMenu() {
 		Scanner input = new Scanner(System.in);
 

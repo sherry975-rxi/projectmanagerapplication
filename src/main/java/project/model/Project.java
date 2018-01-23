@@ -225,6 +225,26 @@ public class Project {
 		return this.status;
 	}
 
+	public String getProjectStatusName() {
+		switch (status) {
+		case 0:
+			return "Planning";
+		case 1:
+			return "Initiation";
+		case 2:
+			return "Execution";
+		case 3:
+			return "Delivery";
+		case 4:
+			return "Review";
+		case 5:
+			return "Closed";
+		default:
+			return "Unknown";
+
+		}
+	}
+
 	/**
 	 * This method allows the setting of the Project status, regardless of how it is
 	 * previously instanced
