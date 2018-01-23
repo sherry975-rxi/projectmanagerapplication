@@ -161,27 +161,28 @@ public class US356ManageAssignmentRequestControllerTest {
 
 	// given an existing project with at least one pending request, attempts to
 	// approve the request
-	@Test
-	public void approveAssignmentRequestsTest() {
-		System.out.println("====== Testing approveAssignmentRequests() Method =======");
-		System.out.println("");
-
-		// first, confirms if the requesting collaborator isn't in the team, and at
-		// least one assignment request exists
-		assertEquals(testProject.getAssignmentRequestsList().size(), 1);
-		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
-		assignmentRequestsController.selectAssignmentRequest(0);
-
-		// given the approval method, confirms that the collaborator was added to the
-		// team, and the request was deleted from the list
-		assertTrue(assignmentRequestsController.approveAssignmentRequest());
-		assertTrue(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
-		assertEquals(testProject.getAssignmentRequestsList().size(), 0);
-
-		// then, attempts to select a request when none should exist
-		assertFalse(assignmentRequestsController.selectAssignmentRequest(0));
-		System.out.println("");
-	}
+	// @Test
+	// public void approveAssignmentRequestsTest() {
+	// System.out.println("====== Testing approveAssignmentRequests() Method
+	// =======");
+	// System.out.println("");
+	//
+	// // first, confirms if the requesting collaborator isn't in the team, and at
+	// // least one assignment request exists
+	// assertEquals(testProject.getAssignmentRequestsList().size(), 1);
+	// assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
+	// assignmentRequestsController.selectAssignmentRequest(0);
+	//
+	// // given the approval method, confirms that the collaborator was added to the
+	// // team, and the request was deleted from the list
+	// assertTrue(assignmentRequestsController.approveAssignmentRequest());
+	// assertTrue(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
+	// assertEquals(testProject.getAssignmentRequestsList().size(), 0);
+	//
+	// // then, attempts to select a request when none should exist
+	// assertFalse(assignmentRequestsController.selectAssignmentRequest(0));
+	// System.out.println("");
+	// }
 
 	// given an existing project with at least one pending request, attempts to
 	// reject the request

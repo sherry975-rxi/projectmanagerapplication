@@ -5,18 +5,16 @@ import java.util.Scanner;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US205MarkTaskAsFinishedCollaborator;
-import project.model.Project;
-import project.model.Task;
 import project.model.User;
 
 public class TaskDetailsUI {
 	private User user;
-	private Project project;
-	private Task task;
+	private Integer projectID;
+	private String taskID;
 
-	public TaskDetailsUI(Task task, Project project, User user) {
-		this.task = task;
-		this.project = project;
+	public TaskDetailsUI(String taskID, Integer projectID, User user) {
+		this.taskID = taskID;
+		this.projectID = projectID;
 		this.user = user;
 	}
 
@@ -26,8 +24,10 @@ public class TaskDetailsUI {
 	 * the user's input
 	 */
 	public void taskDataDisplay() {
-		PrintTaskInfoController taskInfo = new PrintTaskInfoController(task);
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		PrintTaskInfoController taskInfo = new PrintTaskInfoController(this.taskID, this.projectID);
+		taskInfo.setProjectAndTask();
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
+		projectInfo.setProject();
 
 		System.out.println("");
 		System.out.println("*** " + taskInfo.printTaskNameInfo().toUpperCase() + " ***");
@@ -54,13 +54,13 @@ public class TaskDetailsUI {
 		case "1":
 			US205MarkTaskAsFinishedCollaborator taskToMark = new US205MarkTaskAsFinishedCollaborator();
 			taskToMark.getProjectsThatIAmCollaborator(this.user);
-			taskToMark.getUnfinishedTasksOfProjectFromCollaborator(this.project.getIdCode());
-			taskToMark.getTaskToBeMarkedFinished(this.task.getTaskID());
+			taskToMark.getUnfinishedTasksOfProjectFromCollaborator(this.projectID);
+			taskToMark.getTaskToBeMarkedFinished(this.taskID);
 			taskToMark.markTaskAsFinished();
 			System.out.println("---- SUCESS Task Marked As Finished ----");
 			break;
 		case "P":
-			ProjectViewMenuUI previousMenu = new ProjectViewMenuUI(project, user);
+			ProjectViewMenuUI previousMenu = new ProjectViewMenuUI(this.projectID, user);
 			previousMenu.projectDataDisplay();
 			break;
 		case "B":
@@ -77,7 +77,7 @@ public class TaskDetailsUI {
 		default:
 			System.out.println("Please choose a valid option: ");
 			System.out.println("");
-			TaskDetailsUI myAtualUIView = new TaskDetailsUI(task, project, user);
+			TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user);
 			myAtualUIView.taskDataDisplay();
 			break;
 		}

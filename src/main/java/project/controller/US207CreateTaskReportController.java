@@ -56,7 +56,7 @@ public class US207CreateTaskReportController {
 
 		List<String> taskIdList = new ArrayList<>();
 
-		for (Task other : this.projectRepository.getOnGoingUserUnreportedaTasks(this.username)) {
+		for (Task other : this.projectRepository.getOnGoingUserReportedTasks(this.username)) {
 			taskIdList.add(other.getTaskID());
 
 		}
