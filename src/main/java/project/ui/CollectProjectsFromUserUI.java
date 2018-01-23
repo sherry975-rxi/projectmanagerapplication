@@ -68,6 +68,7 @@ public class CollectProjectsFromUserUI {
 		for (Project ii : listOfProjectsFromUser) {
 			int projectIDCode = ii.getIdCode();
 			String projectIDCodeToString = String.valueOf(projectIDCode);
+
 			if (option.equals(projectIDCodeToString)) {
 				ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI(ii.getIdCode(), user);
 				projectViewMenuUI.projectDataDisplay();
