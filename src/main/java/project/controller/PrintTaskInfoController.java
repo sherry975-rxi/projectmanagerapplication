@@ -25,6 +25,7 @@ public class PrintTaskInfoController {
 	public PrintTaskInfoController(String taskID, Integer projeID) {
 		this.taskID = taskID;
 		this.projeID = projeID;
+		setProjectAndTask();
 	}
 
 	public void setProjectAndTask() {
