@@ -57,6 +57,7 @@ public class PrintTaskInfoController {
 	 * @return String task's state
 	 */
 	public String printTaskStateInfo() {
+
 		return this.task.viewTaskStateName();
 	}
 
