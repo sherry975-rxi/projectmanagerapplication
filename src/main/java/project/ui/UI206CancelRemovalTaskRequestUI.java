@@ -8,7 +8,7 @@ import project.controller.US206V2RemovalTaskRequestController;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
-public class CancelRemovalTaskRequestUI {
+public class UI206CancelRemovalTaskRequestUI {
 	User user;
 	String taskID;
 	Integer projID;
@@ -23,7 +23,7 @@ public class CancelRemovalTaskRequestUI {
 	 * @param taskID
 	 *            Task to add to user task list
 	 */
-	public CancelRemovalTaskRequestUI(User user, String taskID) {
+	public UI206CancelRemovalTaskRequestUI(User user, String taskID) {
 
 		this.user = user;
 		this.taskID = taskID;

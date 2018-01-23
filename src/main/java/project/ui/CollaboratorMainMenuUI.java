@@ -46,7 +46,7 @@ public class CollaboratorMainMenuUI {
 
 		switch (option) {
 		case "1":
-			UpdateUserInfoUI updateUserInfoUI = new UpdateUserInfoUI(this.user);
+			US201and202UpdateUserInfoUI updateUserInfoUI = new US201and202UpdateUserInfoUI(this.user);
 			updateUserInfoUI.chooseWhatInfoToUpdate();
 			break;
 		case "2":
