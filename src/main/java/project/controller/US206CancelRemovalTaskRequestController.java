@@ -147,4 +147,17 @@ public class US206CancelRemovalTaskRequestController {
 
 	}
 
+	/**
+	 * This method retrieves a Project from its ID
+	 * 
+	 * @param projectID
+	 * 
+	 * @return Project from ProjectID
+	 */
+	public Project getProjectByProjectID(Integer projectID) {
+		Project project = Company.getTheInstance().getProjectsRepository().getProjById(projectID);
+
+		return project;
+	}
+
 }
