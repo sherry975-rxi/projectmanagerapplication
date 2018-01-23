@@ -1,8 +1,5 @@
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import project.model.Company;
 import project.model.ProjectRepository;
 import project.model.Task;
@@ -16,6 +13,7 @@ public class US207CreateTaskReportController {
 	private Company company;
 	private ProjectRepository projectRepository;
 	private String email;
+	private Task task;
 
 	/**
 	 * Constructor of US207CreateTaskReportController
@@ -23,60 +21,68 @@ public class US207CreateTaskReportController {
 	 * @param email
 	 *            The email of the user that will create a task report
 	 */
-	public US207CreateTaskReportController(String email) {
+	public US207CreateTaskReportController(String email, String taskID) {
 		this.company = Company.getTheInstance();
 		this.projectRepository = company.getProjectsRepository();
 		this.userRepository = company.getUsersRepository();
 		this.username = userRepository.getUserByEmail(email);
 		this.email = email;
+		for (Task other : projectRepository.getUserTasks(username)) {
+			if (other.getTaskID().equals(taskID)) {
+				task = other;
+			}
+		}
 
 	}
 
-	public boolean createReportController(String taskIndex, int newTime) {
+	public boolean createReportController(int newTime) {
 
 		boolean wasReportCreated = false;
 
-		for (Task other : projectRepository.getUserTasks(username)) {
-			if (other.getTaskID().equals(taskIndex)) {
-				other.createReport(other.getTaskCollaboratorByEmail(email));
-				wasReportCreated = other.createReport(other.getTaskCollaboratorByEmail(email));
-			}
+		if (!task.doesTaskHaveReportByGivenUser(email)) {
+
+			task.createReport(task.getTaskCollaboratorByEmail(email));
+
+			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
+		} else if (task.doesTaskHaveReportByGivenUser(email)) {
+
+			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
+
+		} else {
+			wasReportCreated = false;
 		}
 		return wasReportCreated;
+
 	}
 
 	/**
 	 * @param email
 	 *            The email of the user to search his associated tasks ID
-	 * @return A list of Strings that contains the tasks IDs associated to him that
-	 *         are set to the state "OnGoing", and don0t have any report
+	 * @param taskIndex
+	 *            The task to look for it's report
+	 * @return The reported time by a given TaskCollaborator
 	 */
+	public int getReportedTimeByCollaborator() {
+		int reportedTimeByCollaborator = 0;
 
-	public List<String> getOnGoingUnreportedTasksOfUser() {
+		reportedTimeByCollaborator = task.getReportedTimeByTaskCollaborator(email);
 
-		List<String> taskIdList = new ArrayList<>();
-
-		for (Task other : this.projectRepository.getOnGoingUserUnreportedaTasks(this.username)) {
-			taskIdList.add(other.getTaskID());
-
-		}
-
-		return taskIdList;
+		return reportedTimeByCollaborator;
 	}
 
 	/**
-	 * This method checks if a task exist in any project by checking it's ID in
-	 * every project
-	 * 
-	 * @param taskID
-	 *            The id of the project to search for
-	 * 
-	 * @return TRUE if if finds a match, FALSE if not
+	 * @param email
+	 *            The email of the user to search his name
+	 * @param taskIndex
+	 *            The task to look for it's report
+	 * @return The reporter Name
 	 */
-	public boolean doesTaskIdExist(String taskID) {
-		boolean doesTaskExist = false;
-		doesTaskExist = this.projectRepository.doesTaskIdExists(taskID);
-		return doesTaskExist;
+	public String getReportedCollaboratorName() {
+		String reporterName = new String();
+
+		reporterName = task.getReporterName(email);
+
+		return reporterName;
 	}
 
 }
