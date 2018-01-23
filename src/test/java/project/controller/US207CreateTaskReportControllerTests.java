@@ -1,7 +1,6 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -94,7 +93,7 @@ public class US207CreateTaskReportControllerTests {
 		// Sets taskA to state "OnGoing"
 		taskA.setTaskState(taskState);
 
-		createReportController = new US207CreateTaskReportController("rui@gmail.com");
+		createReportController = new US207CreateTaskReportController("rui@gmail.com", taskA.getTaskID());
 
 	}
 
@@ -124,15 +123,9 @@ public class US207CreateTaskReportControllerTests {
 		String getTaskId = taskA.getTaskID();
 
 		/*
-		 * Couldn't create a report, because ther's no such task ID
-		 */
-
-		assertFalse(createReportController.createReportController("UnexistentTaskID", 20));
-
-		/*
 		 * Created a report sucessfully, because the taskID exists
 		 */
-		assertTrue(createReportController.createReportController(getTaskId, 20));
+		assertTrue(createReportController.createReportController(20));
 
 	}
 
@@ -146,18 +139,18 @@ public class US207CreateTaskReportControllerTests {
 		/*
 		 * Creates a report to TaskA
 		 */
-		createReportController.createReportController(getTaskId, 20);
+		createReportController.createReportController(20);
 
 		// checks if the report returns the updated time
-		assertEquals(createReportController.getReportedTimeByCollaborator(getTaskId), 20);
+		assertEquals(createReportController.getReportedTimeByCollaborator(), 20);
 
 		// Updates the report time
-		createReportController.createReportController(getTaskId, 40);
+		createReportController.createReportController(40);
 		// Checks that the report size didn't increase;
 		assertEquals(taskA.getReports().size(), 1);
 
 		// Checks that the report time got updated;
-		assertEquals(createReportController.getReportedTimeByCollaborator(getTaskId), 40);
+		assertEquals(createReportController.getReportedTimeByCollaborator(), 40);
 
 	}
 

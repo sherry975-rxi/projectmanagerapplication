@@ -21,13 +21,21 @@ public class US207CreateTaskReportUI {
 	public void createReport() {
 
 		Scanner input = new Scanner(System.in);
+		if (createReportController.getReportedCollaboratorName().equals("")) {
+			System.out.println("The User still didn't create a Report.");
 
-		System.out.println("Reported Time to the Task:");
-		System.out.println(createReportController.getReportedTimeByCollaborator());
+		} else {
+			System.out.println("Report by: ");
+			System.out.println(createReportController.getReportedCollaboratorName());
+			System.out.println("");
 
-		System.out.println("");
+			System.out.println("Reported Time to the Task:");
+			System.out.println(createReportController.getReportedTimeByCollaborator());
+			System.out.println("");
 
-		System.out.println("Update Task Report:");
+			System.out.println("Update Task Report:");
+		}
+
 		System.out.println("");
 		System.out.println("Type a report time to the task:");
 		System.out.println();
@@ -42,6 +50,7 @@ public class US207CreateTaskReportUI {
 			if (wasReportCreated) {
 				System.out.println("The task report was updated sucessfully.");
 				System.out.println();
+				System.out.println("Report by: " + createReportController.getReportedCollaboratorName());
 
 				System.out.println("Reported time: " + createReportController.getReportedTimeByCollaborator());
 			} else {
