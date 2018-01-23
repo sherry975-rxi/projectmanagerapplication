@@ -14,7 +14,7 @@ import project.model.User;
  *
  */
 
-public class ConfirmTaskAssignmentToCollaborator {
+public class US256ConfirmTaskAssignmentToCollaboratorUI {
 
 	User user;
 	String taskID;
@@ -30,7 +30,7 @@ public class ConfirmTaskAssignmentToCollaborator {
 	 * @param taskID
 	 *            Task to add to user task list
 	 */
-	public ConfirmTaskAssignmentToCollaborator(User user, String taskID) {
+	public US256ConfirmTaskAssignmentToCollaboratorUI(User user, String taskID) {
 
 		this.user = user;
 		this.taskID = taskID;

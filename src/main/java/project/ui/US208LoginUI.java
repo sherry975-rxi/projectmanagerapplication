@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import project.controller.DoLoginController;
 
-public class LoginUI {
+public class US208LoginUI {
 
 	public void doLogin() {
 		Scanner input = new Scanner(System.in);

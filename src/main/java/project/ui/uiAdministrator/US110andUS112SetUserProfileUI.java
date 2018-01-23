@@ -1,4 +1,4 @@
-package project.ui;
+package project.ui.uiAdministrator;
 
 import java.util.Scanner;
 
