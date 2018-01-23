@@ -19,7 +19,7 @@ import project.model.Task;
 import project.model.User;
 import project.model.UserRepository;
 
-public class US206V2RemovalTaskRequestControllerTest {
+public class US206CancelRemovalTaskRequestControllerTest {
 
 	Company company;
 	User userDaniel;
@@ -34,7 +34,7 @@ public class US206V2RemovalTaskRequestControllerTest {
 	String stringRequest1;
 	String stringRequest2;
 	List<String> pendingRemovalRequests;
-	US206V2RemovalTaskRequestController us206v2Controller;
+	US206CancelRemovalTaskRequestController us206v2Controller;
 
 	@Before
 	public void setUp() {
@@ -104,7 +104,7 @@ public class US206V2RemovalTaskRequestControllerTest {
 		// Creates the US206V2RemovalTaskRequestController
 		// to create a request to remove from first task added - taskA (Task ID = 1.1,
 		// projectID = 1)
-		us206v2Controller = new US206V2RemovalTaskRequestController(userRui);
+		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
 		us206v2Controller.setProjectID(1);
 		us206v2Controller.setTaskID("1.1");
 
@@ -125,7 +125,7 @@ public class US206V2RemovalTaskRequestControllerTest {
 		String taskID = "5.3";
 
 		// Instantiates the controller
-		us206v2Controller = new US206V2RemovalTaskRequestController(userRui);
+		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
 		// Calls the method setTaskIDandProjectID
 		us206v2Controller.setProjectIDFromTaskID(taskID);
 
@@ -143,7 +143,7 @@ public class US206V2RemovalTaskRequestControllerTest {
 	public void testGetUnfinishedTaskFromUser() {
 
 		// Instantiates the controller
-		us206v2Controller = new US206V2RemovalTaskRequestController(userRui);
+		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
 
 		//// Creates the strings with a task description and task id
 		String taskIDandDescription1 = "[1.1] Implementar US100";
@@ -159,6 +159,17 @@ public class US206V2RemovalTaskRequestControllerTest {
 
 		assertEquals(expResult, UnfinishedTasksFromUser);
 
+	}
+
+	@Test
+	public void testGetTaskByTaskID() {
+		// Instantiates the controller
+		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
+		us206v2Controller.setTaskID(taskA.getTaskID());
+		us206v2Controller.setProjectID(projectA.getIdCode());
+
+		assertEquals(taskA,
+				us206v2Controller.getTaskByTaskID(us206v2Controller.getTaskID(), us206v2Controller.getProjectID()));
 	}
 
 }
