@@ -152,13 +152,4 @@ public class AssignTaskToCollaboratorsController {
 		return this.projectID;
 	}
 
-	/**
-	 * This method returns a project using the projectID
-	 * 
-	 * @return Project that corresponds to a certain projectID
-	 */
-	public Project getProjectByProjectID() {
-		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-		return project;
-	}
 }
