@@ -458,6 +458,7 @@ public class Task {
 	 * 
 	 * @return report
 	 */
+
 	public boolean createReport(TaskCollaborator taskCollaborator) {
 		boolean wasReportCreated = true;
 
@@ -520,6 +521,19 @@ public class Task {
 
 		return hasUserReport;
 
+	}
+
+	public TaskCollaborator getTaskCollaboratorByEmail(String email) {
+		TaskCollaborator taskCollaborator = null;
+		for (TaskCollaborator other : this.getTaskTeam()) {
+			if (other.getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail()
+					.equals(email)) {
+				taskCollaborator = other;
+			}
+
+		}
+
+		return taskCollaborator;
 	}
 
 	/**

@@ -10,7 +10,7 @@ public class AdminMenuUI {
 	User selectedUser;
 
 	String options = "[1] - view all users \n" + "[2] - search users by profile or email \n"
-			+ "[3] - manage selected user profile \n" + "[4] - manage selected user state\n" + "[H] - view commands \n"
+			+ "[3] - manage selected user profile \n" + "[4] - manage selected user state\n"
 			+ "[E] - exit to main menu";
 
 	String command;
