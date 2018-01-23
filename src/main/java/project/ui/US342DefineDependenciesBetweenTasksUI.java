@@ -1,9 +1,11 @@
 package project.ui;
 
+import java.util.List;
 import java.util.Scanner;
 
 import project.controller.US342CreateTaskDependencyController;
-import project.model.User;
+import project.model.Project;
+import project.model.Task;
 
 /**
  * @author group3
@@ -11,13 +13,13 @@ import project.model.User;
  */
 public class US342DefineDependenciesBetweenTasksUI {
 
-	private User user;
+	private Project project;
 
 	/**
 	 * @param user
 	 */
-	public US342DefineDependenciesBetweenTasksUI(User user) {
-		this.user = user;
+	public US342DefineDependenciesBetweenTasksUI(Project project) {
+		this.project = project;
 	}
 
 	/**
@@ -25,74 +27,93 @@ public class US342DefineDependenciesBetweenTasksUI {
 	 */
 	public void chooseProject() {
 
-		Scanner input = new Scanner(System.in);
+		boolean checkA = true;
+		boolean checkB = true;
+		boolean checkC = true;
+		int daughterTask = 0;
+		int motherTask = 0;
+		int incrementDays = 0;
 
-		System.out.println("Choose a project: ");
+		Scanner scannerInput = new Scanner(System.in);
+		US342CreateTaskDependencyController us342Controller = new US342CreateTaskDependencyController(project);
+		List<Task> projTaskList = us342Controller.getTasksFromAProject();
 
-		US342CreateTaskDependencyController us342Controller = new US342CreateTaskDependencyController();
+		for (int i = 0; i < us342Controller.getTasksFromAProject().size(); i++) {
+			System.out.println("[" + i + 1 + "] " + " " + projTaskList.get(i).getTaskID() + " "
+					+ projTaskList.get(i).getDescription());
+			System.out.println();
+		}
+		System.out.println("___________________________________________________");
+		System.out.println();
 
-		int projectListSize = us342Controller.getProjectsFromUser(user).size();
-
-		// show of all projects where user is Project Manager
-		for (int indexProject = 0; indexProject < projectListSize; indexProject++) {
-
-			String projectName = us342Controller.getProjectsFromUser(user).get(indexProject).getName();
-			int projectID = us342Controller.getProjectsFromUser(user).get(indexProject).getIdCode();
-			String projectIDString = Integer.toString(projectID);
-
-			System.out.println(projectName + " " + "ProjectID: " + projectIDString);
-
+		while (checkA) {
+			System.out.println("Choose a \"daughter\" task: ");
+			System.out.println("(Inputing any non-number will exit this menu.)");
+			if (scannerInput.hasNextInt()) {
+				daughterTask = Integer.parseInt(scannerInput.nextLine());
+				if (daughterTask <= projTaskList.size()) {
+					checkA = false;
+				} else {
+					System.out.println("Invalid number!");
+				}
+			} else {
+				System.out.println("Not a number. Exiting menu.");
+				checkB = false;
+				checkC = false;
+			}
 		}
 
-		System.out.println();
-
-		int userInputForProjectID = Integer.parseInt(input.nextLine());
-
-		us342Controller.setProjectID(userInputForProjectID);
-
-		// print tasks
-		int taskListSize = us342Controller.getTasksFromAProject().size();
-
-		// show task list from Project input by User
-		for (int indexTask = 0; indexTask < taskListSize; indexTask++) {
-
-			String taskName = us342Controller.getTasksFromAProject().get(indexTask).getDescription();
-			String taskID = us342Controller.getTasksFromAProject().get(indexTask).getTaskID();
-
-			System.out.println(taskName + " " + "taskID: " + taskID);
-
+		while (checkB) {
+			System.out.println("Choose a \"mother\" task: ");
+			System.out.println("(Inputing any non-number will exit this menu.)");
+			if (scannerInput.hasNextInt()) {
+				motherTask = Integer.parseInt(scannerInput.nextLine());
+				if (motherTask == daughterTask) {
+					System.out.println("You chose the same task in both cases.");
+					System.out.println("Impossible dependency!");
+				} else if (motherTask <= projTaskList.size()) {
+					checkA = false;
+				} else {
+					System.out.println("Invalid number!");
+				}
+			} else {
+				System.out.println("Not a number. Exiting menu.");
+				checkC = false;
+			}
 		}
 
-		System.out.println();
+		while (checkC) {
+			System.out.println("Choose how many days there are between the start of the \"mother\" task" + "\n"
+					+ "and the start of the \"daughter\" task: ");
+			System.out.println("(Inputing any non-number will exit this menu.)");
+			if (scannerInput.hasNextInt()) {
+				incrementDays = Integer.parseInt(scannerInput.nextLine());
+				String estStartDateMainTask = us342Controller
+						.getTaskReferenceEstimatedStartDate(projTaskList.get(motherTask - 1).getTaskID());
+				String estStarDateDependentTask = us342Controller
+						.getTaskDependentEstimatedStartDate(projTaskList.get(daughterTask - 1).getTaskID());
 
-		System.out.println("Choose dependent task: ");
+				System.out.println("The estimated start date of main task is: " + estStartDateMainTask + " "
+						+ "and the estimated start date of the dependent task is: " + estStarDateDependentTask);
+				System.out.println("Are you sure you want to create this dependency?");
+				System.out.println("Press Y to confirm");
+				String choice = scannerInput.nextLine();
 
-		String userInputForDependentTaskID = input.nextLine();
+				if ("Y".equalsIgnoreCase(choice)) {
+					us342Controller.createDependenceFromTask(projTaskList.get(daughterTask - 1).getTaskID(),
+							projTaskList.get(motherTask - 1).getTaskID(), incrementDays);
+					System.out.println("Dependency successfully created.");
 
-		System.out.println("Choose main task: ");
+				} else {
+					System.out.println("Task dependency creation cancelled!");
+					System.out.println("Exiting menu.");
+				}
 
-		String userInputForMainTaskID = input.nextLine();
-
-		System.out.println("Choose number of days to create dependence: ");
-
-		int userInputForIncrementDays = Integer.parseInt(input.nextLine());
-
-		us342Controller.createDependenceFromTask(userInputForDependentTaskID, userInputForMainTaskID,
-				userInputForIncrementDays);
-
-		System.out.println();
-
-		System.out.println("Dependency successfully created.");
-
-		String estStartDateMainTask = us342Controller.getTaskReferenceEstimatedStartDate(userInputForMainTaskID);
-		String estStarDateDependentTask = us342Controller
-				.getTaskDependentEstimatedStartDate(userInputForDependentTaskID);
-
-		System.out.println("The estimated start date of main task is: " + estStartDateMainTask + " "
-				+ "and the estimated start date of the dependent task is: " + estStarDateDependentTask);
-
-		System.out.println();
+			} else {
+				System.out.println("Not a number. Exiting menu.");
+				checkC = false;
+			}
+		}
 
 	}
-
 }
