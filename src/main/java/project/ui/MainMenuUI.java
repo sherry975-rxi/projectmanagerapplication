@@ -142,7 +142,7 @@ public class MainMenuUI {
 			System.out.println("[E] Exit");
 			System.out.println();
 
-			String choice = input.nextLine();
+			String choice = input.nextLine().toUpperCase();
 			switch (choice) {
 			case "1":
 				US101UserRegisterUI userRegister = new US101UserRegisterUI();
