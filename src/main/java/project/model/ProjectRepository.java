@@ -509,4 +509,22 @@ public class ProjectRepository {
 		return listOfProjectsOfProjectManager;
 	}
 
+	/**
+	 * This method checks if a task exist in any project by checking it's ID in
+	 * every project
+	 * 
+	 * @param taskID
+	 *            The id of the project to search for
+	 * 
+	 * @return TRUE if if finds a match, FALSE if not
+	 */
+	public boolean doesTaskIdExists(String taskID) {
+		boolean doesTaskIdExist = false;
+		for (Project p : this.projectsRepository) {
+			if (p.getTaskRepository().getTaskByID(taskID) != null)
+				doesTaskIdExist = true;
+		}
+		return doesTaskIdExist;
+	}
+
 }
