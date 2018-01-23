@@ -2,6 +2,7 @@ package project.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -9,150 +10,157 @@ import project.model.Company;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
+import project.model.TaskRepository;
+
 
 public class PrintProjectInfoController {
 
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	Integer projID;
+	
+	public PrintProjectInfoController(Project project) {
+		this.project = project;
+	}
 
 	public PrintProjectInfoController(Integer projID) {
 		this.projID = projID;
+		project = getProjectByProjectID();
 	}
-
-	public void setProject() {
-		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projID);
-	}
-
+	
 	/**
-	 * This method get the project's name and return it as a String
+	 *This method get the project's name and return it as a String
 	 *
-	 * @return String project's name
+	 *@return String project's name
 	 */
 	public String printProjectNameInfo() {
 		return this.project.getName();
 	}
-
+	
 	/**
-	 * This method get the project's ID and return it as a String
+	 *This method get the project's ID and return it as a String
 	 *
-	 * @return String project's ID
+	 *@return String project's ID
 	 */
 	public String printProjectIDCodeInfo() {
-		return String.valueOf(this.projID);
+		return String.valueOf(this.project.getIdCode());
 	}
-
+	
 	/**
-	 * This method get the project's status and return it as a String
+	 *This method get the project's status and return it as a String
 	 *
-	 * @return String project's status
+	 *@return String project's status
 	 */
 	public String printProjectStatusInfo() {
 		return String.valueOf(this.project.getProjectStatus());
 	}
-
+	
 	/**
-	 * This method get the project's description and return it as a String
+	 *This method get the project's description and return it as a String
 	 *
-	 * @return String project's description
+	 *@return String project's description
 	 */
 	public String printProjectDescriptionInfo() {
 		return this.project.getProjectDescription();
 	}
-
+	
 	/**
-	 * This method get the project's start date and return it as a String
+	 *This method get the project's start date and return it as a String
 	 *
-	 * @return String project's start date
+	 *@return String project's start date
 	 */
 	public String printProjectStartDateInfo() {
 		Calendar startDate = this.project.getStartdate();
 		return this.dateFormat.format(startDate.getTime());
 	}
-
+	
 	/**
-	 * This method get the project's finish date and return it as a String
+	 *This method get the project's finish date and return it as a String
 	 *
-	 * @return String project's finish date
+	 *@return String project's finish date
 	 */
 	public String printProjectFinishDateInfo() {
 		Calendar finishDate = this.project.getFinishdate();
 		return this.dateFormat.format(finishDate.getTime());
 	}
-
+	
 	/**
-	 * This method get the project's manager and return it as a String
+	 *This method get the project's manager and return it as a String
 	 *
-	 * @return String project's manager
+	 *@return String project's manager
 	 */
 	public String printProjectManagerInfo() {
 		return this.project.getProjectManager().getName();
 	}
-
+	
 	/**
-	 * This method get the project's team and return it as a String (names of
-	 * members separeted by commas)
+	 *This method get the project's team and return it as a String (names of members separeted by commas)
 	 *
-	 * @return String project's team
+	 *@return String project's team
 	 */
 	public String printProjectTeamInfo() {
 		List<ProjectCollaborator> projectTeam = this.project.getProjectTeam();
-		List<String> team = new ArrayList<>();
+		List<String> team = new ArrayList<>(); 
 		for (ProjectCollaborator projectMember : projectTeam) {
 			team.add(projectMember.getUserFromProjectCollaborator().getName());
 		}
 		return String.join(", ", team);
 	}
-
+	
 	/**
-	 * This method get the project's budget and return it as a String
+	 *This method get the project's budget and return it as a String
 	 *
-	 * @return String project's budget
+	 *@return String project's budget
 	 */
 	public String printProjectBudgetInfo() {
 		return String.valueOf(this.project.getProjectBudget());
 	}
-
+	
 	/**
-	 * This method get the project's task list and return it as a list of Strings
+	 *This method get the project's task list and return it as a list of Strings
 	 *
-	 * @return List of Strings of project's task (task ID + task description)
+	 *@return List of Strings of project's task (task ID + task description)
 	 */
-	public List<String> getProjectTaskList() {
-		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode())
-				.getTaskRepository().getProjectTaskRepository();
+	public List<String> getProjectTaskList(){
+		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode()).getTaskRepository().getProjectTaskRepository();
 		List<String> projectTaskList = new ArrayList<>();
 		for (Task projectTask : taskList) {
 			String[] stringList = projectTask.getTaskID().split("\\.");
 			projectTaskList.add("[" + stringList[0] + "." + stringList[1] + "]" + " " + projectTask.getDescription());
 		}
-		return projectTaskList;
+	return projectTaskList;
 	}
-
+	
 	/**
-	 * This method get the project's task list IDs and return it as a list of
-	 * Strings
+	 *This method get the project's task list IDs and return it as a list of Strings
 	 *
-	 * @return List of Strings of project's task IDs
+	 *@return List of Strings of project's task IDs
 	 */
-	public List<String> getTasksIDs() {
-		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.projID)
-				.getTaskRepository().getProjectTaskRepository();
+	public List<String> getTasksIDs(){
+		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode()).getTaskRepository().getProjectTaskRepository();
 		List<String> projectTasksID = new ArrayList<>();
 		for (Task projectTask : taskList) {
 			projectTasksID.add(projectTask.getTaskID());
 		}
 		return projectTasksID;
 	}
-
+	
 	/**
-	 * This method get the project's task list
+	 *This method get the project's task list
 	 *
-	 * @return List of project's task
+	 *@return List of project's task
 	 */
-	public List<Task> getTasks() {
-		return Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode())
-				.getTaskRepository().getProjectTaskRepository();
+	public List<Task> getTasks(){
+		return Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode()).getTaskRepository().getProjectTaskRepository();
 	}
-
+	
+	/**
+	 *This method get the project by project ID
+	 *
+	 *@return Project
+	 */
+	private Project getProjectByProjectID() {
+		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projID);
+		return project;
+	}
 }

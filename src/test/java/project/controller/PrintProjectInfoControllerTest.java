@@ -31,7 +31,6 @@ public class PrintProjectInfoControllerTest {
 	Calendar startDate, finishDate;
 	TaskRepository taskRepository;
 	Task task1, task2, task3;
-	PrintProjectInfoController controller;
 
 	@Before
 	public void setUp() {
@@ -57,9 +56,6 @@ public class PrintProjectInfoControllerTest {
 		// Creates one Project
 		project = myCompany.getProjectsRepository().createProject("Projeto de gestão",
 				"Este projeto está focado na gestão.", joaoPM);
-
-		project.setProjectBudget(1000);
-		project.setProjectStatus(3);
 
 		// add project to project repository
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project);
@@ -103,11 +99,6 @@ public class PrintProjectInfoControllerTest {
 		task1.addProjectCollaboratorToTask(collab1);
 		task2.addProjectCollaboratorToTask(collab1);
 		task3.addProjectCollaboratorToTask(collab2);
-
-		// Instantiates de controller
-		controller = new PrintProjectInfoController(project.getIdCode());
-		controller.setProject();
-
 	}
 
 	@After
@@ -130,6 +121,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testPrintProjectNameInfo() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		assertEquals(controller.printProjectNameInfo(), "Projeto de gestão");
 	}
@@ -139,6 +132,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testPrintProjectIDCodeInfo() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		assertEquals(controller.printProjectIDCodeInfo(), "1");
 	}
@@ -148,8 +143,11 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testPrintProjectStatusInfo() {
-
-		assertEquals(controller.printProjectStatusInfo(), "3");
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
+		// set project status to 1
+		project.setProjectStatus(1);
+		assertEquals(controller.printProjectStatusInfo(), "1");
 	}
 
 	/**
@@ -157,6 +155,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testPrintProjectDescriptionInfo() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		assertEquals(controller.printProjectDescriptionInfo(), "Este projeto está focado na gestão.");
 	}
@@ -166,6 +166,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testPrintProjectStartDateInfo() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		assertEquals(controller.printProjectStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
 	}
@@ -175,6 +177,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testPrintProjectFinishDateInfo() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		assertEquals(controller.printProjectFinishDateInfo(), "Thu, 2 Feb 2017 12:31:00");
 	}
@@ -184,6 +188,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testPrintProjectManagerInfo() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		assertEquals(controller.printProjectManagerInfo(), "João");
 	}
@@ -193,6 +199,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testPrintProjectTeamInfo() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		assertEquals(controller.printProjectTeamInfo(), "Daniel, João");
 	}
@@ -202,7 +210,11 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testPrintProjectBudgetInfo() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
+		// set project budget to 1000
+		project.setProjectBudget(1000);
 		assertEquals(controller.printProjectBudgetInfo(), "1000");
 	}
 
@@ -211,6 +223,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testGetProjectTaskList() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		// create a list of Strings with ID and description of task, to compare in
 		// assert
@@ -227,6 +241,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testGetTasksIDs() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		// create a list of Strings with ID of task, to compare in assert
 		List<String> toCompare = new ArrayList<>();
@@ -242,6 +258,8 @@ public class PrintProjectInfoControllerTest {
 	 */
 	@Test
 	public void testGetTasks() {
+		// create controller
+		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		// create a list of tasks, to compare in assert
 		List<Task> toCompare = new ArrayList<>();
@@ -259,7 +277,6 @@ public class PrintProjectInfoControllerTest {
 
 		// create controller
 		PrintProjectInfoController controller = new PrintProjectInfoController(projectID);
-		controller.setProject();
 
 		String projectName = controller.printProjectNameInfo();
 

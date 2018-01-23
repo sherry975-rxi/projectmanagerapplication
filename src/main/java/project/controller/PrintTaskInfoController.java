@@ -25,12 +25,8 @@ public class PrintTaskInfoController {
 	public PrintTaskInfoController(String taskID, Integer projeID) {
 		this.taskID = taskID;
 		this.projeID = projeID;
-	}
-
-	public void setProjectAndTask() {
 		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projeID);
-		this.task = Company.getTheInstance().getProjectsRepository().getProjById(this.projeID).getTaskRepository()
-				.getTaskByID(this.taskID);
+		this.task = project.getTaskRepository().getTaskByID(this.taskID);
 	}
 
 	/**
@@ -149,4 +145,5 @@ public class PrintTaskInfoController {
 	public String printProjectNameInfo() {
 		return this.project.getName();
 	}
+
 }

@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.jackrabbit.webdav.version.report.Report;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,10 +16,12 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.ProjectRepository;
 import project.model.Task;
+import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.UserRepository;
+import project.model.taskStateInterface.OnGoing;
 
-public class US206CancelRemovalTaskRequestControllerTest {
+public class US207CreateTaskReportControllerTests {
 
 	Company company;
 	User userDaniel;
@@ -34,7 +36,10 @@ public class US206CancelRemovalTaskRequestControllerTest {
 	String stringRequest1;
 	String stringRequest2;
 	List<String> pendingRemovalRequests;
-	US206CancelRemovalTaskRequestController us206v2Controller;
+	US207CreateTaskReportController createReportController;
+	OnGoing taskState;
+	Report taskReport;
+	TaskCollaborator taskCollab;
 
 	@Before
 	public void setUp() {
@@ -74,9 +79,22 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		projectA.getTaskRepository().addProjectTask(taskC);
 
 		// Adds the project collaborator to the tasks
-		taskA.addProjectCollaboratorToTask(userRuiCollaborator);
 		taskB.addProjectCollaboratorToTask(userRuiCollaborator);
+
+		// Creates a taskCollaborator in taskA
+		taskCollab = taskA.createTaskCollaborator(userRuiCollaborator);
+		// Adds the taskCollaborator to taskA
+		taskA.addTaskCollaboratorToTask(taskCollab);
+
 		// taskC.addProjectCollaboratorToTask(userRuiCollaborator);
+
+		// Creates a Task State
+		taskState = new OnGoing(taskA);
+
+		// Sets taskA to state "OnGoing"
+		taskA.setTaskState(taskState);
+
+		createReportController = new US207CreateTaskReportController("rui@gmail.com");
 
 	}
 
@@ -96,80 +114,51 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		stringRequest1 = null;
 		stringRequest2 = null;
 		pendingRemovalRequests = null;
-		us206v2Controller = null;
+		createReportController = null;
+		taskState = null;
 	}
 
 	@Test
-	public void testCreateRequest() {
-		// Creates the US206V2RemovalTaskRequestController
-		// to create a request to remove from first task added - taskA (Task ID = 1.1,
-		// projectID = 1)
-		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
-		us206v2Controller.setProjectID(1);
-		us206v2Controller.setTaskID("1.1");
+	public void testCreateReportController() {
 
-		// Creates the removal requests from userRui and TaskA
-		assertTrue(us206v2Controller.createRequest());
-		// Tries to create again the same request
-		// it should not be allowed
-		assertFalse(us206v2Controller.createRequest());
-	}
+		String getTaskId = taskA.getTaskID();
 
-	/**
-	 * Tests the setTaskIDandProjectID
-	 */
-	@Test
-	public void testSetProjectIDFromTask() {
+		/*
+		 * Couldn't create a report, because ther's no such task ID
+		 */
 
-		// Creates the string with a task description and task id
-		String taskID = "5.3";
+		assertFalse(createReportController.createReportController("UnexistentTaskID", 20));
 
-		// Instantiates the controller
-		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
-		// Calls the method setTaskIDandProjectID
-		us206v2Controller.setProjectIDFromTaskID(taskID);
-
-		// Expected result
-		Integer projectID = 5;
-
-		assertEquals(projectID, us206v2Controller.getProjectID());
-	}
-
-	/**
-	 * Tests the getUnfinishedTasksFromUser method that has to return a list from
-	 * string
-	 */
-	@Test
-	public void testGetUnfinishedTaskFromUser() {
-
-		// Instantiates the controller
-		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
-
-		//// Creates the strings with a task description and task id
-		String taskIDandDescription1 = "[1.1] Implementar US100";
-		String taskIDandDescription2 = "[1.2] Implementar US200";
-
-		// List with the expected result strings
-		List<String> expResult = new ArrayList<>();
-		expResult.add(taskIDandDescription1);
-		expResult.add(taskIDandDescription2);
-
-		// List that results from the call of the method getUnfinishedTaskListFromUser
-		List<String> UnfinishedTasksFromUser = us206v2Controller.getUnfinishedTaskListFromUser();
-
-		assertEquals(expResult, UnfinishedTasksFromUser);
+		/*
+		 * Created a report sucessfully, because the taskID exists
+		 */
+		assertTrue(createReportController.createReportController(getTaskId, 20));
 
 	}
 
 	@Test
-	public void testGetTaskByTaskID() {
-		// Instantiates the controller
-		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
-		us206v2Controller.setTaskID(taskA.getTaskID());
-		us206v2Controller.setProjectID(projectA.getIdCode());
+	public void testGetReportedTimeByCollaborator() {
+		/*
+		 * Gets the Id of the task
+		 */
+		String getTaskId = taskA.getTaskID();
 
-		assertEquals(taskA,
-				us206v2Controller.getTaskByTaskID(us206v2Controller.getTaskID(), us206v2Controller.getProjectID()));
+		/*
+		 * Creates a report to TaskA
+		 */
+		createReportController.createReportController(getTaskId, 20);
+
+		// checks if the report returns the updated time
+		assertEquals(createReportController.getReportedTimeByCollaborator(getTaskId), 20);
+
+		// Updates the report time
+		createReportController.createReportController(getTaskId, 40);
+		// Checks that the report size didn't increase;
+		assertEquals(taskA.getReports().size(), 1);
+
+		// Checks that the report time got updated;
+		assertEquals(createReportController.getReportedTimeByCollaborator(getTaskId), 40);
+
 	}
 
 }

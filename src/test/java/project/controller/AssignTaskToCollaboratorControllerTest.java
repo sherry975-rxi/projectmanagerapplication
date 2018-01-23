@@ -155,11 +155,6 @@ public class AssignTaskToCollaboratorControllerTest {
 		Integer um = 1;
 		assertEquals(um, controllerAssignTaskToProjectCollaborator.getProjectID());
 
-		/*
-		 * Get task my task ID
-		 */
-		assertEquals(testTask, controllerAssignTaskToProjectCollaborator.getTaskByTaskID(testTask.getTaskID()));
-
 	}
 
 }
