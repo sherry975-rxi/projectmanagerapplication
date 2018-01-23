@@ -161,38 +161,29 @@ public class PrintProjectInfoControllerTest {
 		assertEquals(controller.printProjectDescriptionInfo(), "Este projeto está focado na gestão.");
 	}
 
+	/**
+	 * Tests if the method of controller gets the project's start date
+	 */
 	@Test
-	public void testPrintProjectStartDateInfo() { // create controller
+	public void testPrintProjectStartDateInfo() {
+		// create controller
 		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		assertEquals(controller.printProjectStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
 	}
 
+	/**
+	 * Tests if the method of controller gets the project's finish date
+	 */
 	@Test
-	public void testPrintProjectFinishDateInfo() { // create controller
+	public void testPrintProjectFinishDateInfo() {
+		// create controller
 		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
 		assertEquals(controller.printProjectFinishDateInfo(), "Thu, 2 Feb 2017 12:31:00");
 	}
+
 	/**
-	 * Tests if the method of controller gets the project's start date
-	 */	
-	@Test public void testPrintProjectStartDateInfo() {
-		//create controller
-		 PrintProjectInfoController controller = new PrintProjectInfoController(project);
-		
-		 assertEquals(controller.printProjectStartDateInfo(), "Mon, 2 Jan 2017 12:31:00"); }
-		 
-	/**
-	 * Tests if the method of controller gets the project's finish date
-	 */
-	 @Test public void testPrintProjectFinishDateInfo() { 
-		 //create controller
-		 PrintProjectInfoController controller = new PrintProjectInfoController(project);
-		 
-		 assertEquals(controller.printProjectFinishDateInfo(), "Thu, 2 Feb 2017 12:31:00"); }
-		 
-	 /**
 	 * Tests if the method of controller gets the project's manager
 	 */
 	@Test
@@ -204,7 +195,7 @@ public class PrintProjectInfoControllerTest {
 	}
 
 	/**
-	 * Tests if the method of controller gets the project's team 
+	 * Tests if the method of controller gets the project's team
 	 */
 	@Test
 	public void testPrintProjectTeamInfo() {
@@ -222,11 +213,11 @@ public class PrintProjectInfoControllerTest {
 		// create controller
 		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
-		//set project budget to 1000
+		// set project budget to 1000
 		project.setProjectBudget(1000);
 		assertEquals(controller.printProjectBudgetInfo(), "1000");
 	}
-	
+
 	/**
 	 * Tests if the method of controller gets the project's task list
 	 */
@@ -235,7 +226,8 @@ public class PrintProjectInfoControllerTest {
 		// create controller
 		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
-		//create a list of Strings with ID and description of task, to compare in assert
+		// create a list of Strings with ID and description of task, to compare in
+		// assert
 		List<String> toCompare = new ArrayList<>();
 		toCompare.add("[1.1] First task");
 		toCompare.add("[1.2] Second task");
@@ -252,7 +244,7 @@ public class PrintProjectInfoControllerTest {
 		// create controller
 		PrintProjectInfoController controller = new PrintProjectInfoController(project);
 
-		//create a list of Strings with ID of task, to compare in assert
+		// create a list of Strings with ID of task, to compare in assert
 		List<String> toCompare = new ArrayList<>();
 		toCompare.add("1.1");
 		toCompare.add("1.2");
@@ -268,8 +260,8 @@ public class PrintProjectInfoControllerTest {
 	public void testGetTasks() {
 		// create controller
 		PrintProjectInfoController controller = new PrintProjectInfoController(project);
-		
-		//create a list of tasks, to compare in assert
+
+		// create a list of tasks, to compare in assert
 		List<Task> toCompare = new ArrayList<>();
 		toCompare.add(task1);
 		toCompare.add(task2);
@@ -288,7 +280,7 @@ public class PrintProjectInfoControllerTest {
 
 		String projectName = controller.printProjectNameInfo();
 
-		assertEquals("PROJETO DE GESTÃO", projectName);
+		assertEquals("Projeto de gestão", projectName);
 
 	}
 
