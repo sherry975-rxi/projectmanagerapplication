@@ -9,8 +9,8 @@ public class AdminMenuUI {
 	User adminLoggedIn;
 	User selectedUser;
 
-	String options = "[1] - view all users \n" + "[2] - search users by profile \n" + "[3] - search Users by Email \n"
-			+ "[4] - manage selected user state\n" + "[5] - manage selected user profile\n" + "[H] - view commands \n"
+	String options = "[1] - view all users \n" + "[2] - search users by profile or email \n"
+			+ "[3] - manage selected user profile \n" + "[4] - manage selected user state\n" + "[H] - view commands \n"
 			+ "[E] - exit to main menu";
 
 	String command;
@@ -45,11 +45,17 @@ public class AdminMenuUI {
 				selectedUser = listUsersUI.displayUsersList(selectedUser);
 				break;
 			case "2":
-				System.out.println("Not yet implemented!");
+				US135andUS136ListUsersUI searchUsersUI = new US135andUS136ListUsersUI();
+				selectedUser = searchUsersUI.displayUsersList(selectedUser);
 				break;
 
 			case "3":
-				System.out.println("Not yet implemented!");
+				if (selectedUser == null)
+					System.out.println("No user selected!");
+				else {
+					US110andUS112SetUserProfileUI changeUserProfileUI = new US110andUS112SetUserProfileUI();
+					changeUserProfileUI.changeUserProfile(selectedUser);
+				}
 				break;
 
 			case "4":
@@ -58,15 +64,6 @@ public class AdminMenuUI {
 				else {
 					US115andUS116SetUserStateUI changeUserStateUI = new US115andUS116SetUserStateUI();
 					changeUserStateUI.changeUserState(selectedUser);
-				}
-				break;
-
-			case "5":
-				if (selectedUser == null)
-					System.out.println("No user selected!");
-				else {
-					US110andUS112SetUserProfileUI changeUserProfileUI = new US110andUS112SetUserProfileUI();
-					changeUserProfileUI.changeUserProfile(selectedUser);
 				}
 				break;
 
