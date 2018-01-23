@@ -506,6 +506,24 @@ public class Task {
 
 	/**
 	 * @param userEmail
+	 *            The user to search for
+	 * @return TRUE if the task already has a report by a given user, FALSE, if not
+	 */
+	public boolean doesTaskHaveReportByGivenUser(String userEmail) {
+		boolean hasUserReport = false;
+		for (Report other : this.reports) {
+			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
+					.getUserFromProjectCollaborator().getEmail().equals(userEmail)) {
+				hasUserReport = true;
+			}
+		}
+
+		return hasUserReport;
+
+	}
+
+	/**
+	 * @param userEmail
 	 *            The UserEmail that the method will look for it's report
 	 * @return The reported time by a task collaborator
 	 */
