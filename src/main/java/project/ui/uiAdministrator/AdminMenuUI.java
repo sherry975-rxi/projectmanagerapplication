@@ -71,6 +71,7 @@ public class AdminMenuUI {
 
 			case "e":
 				System.out.println("Returning to main menu...");
+				System.out.println("");
 				cycle = false;
 				break;
 
