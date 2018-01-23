@@ -109,6 +109,7 @@ public class MainMenuUI {
 
 		OnGoing onGoingState = new OnGoing(task1);
 		task1.setTaskState(onGoingState);
+		task1.setStartDate(startDate);
 
 		task1.createReport(tWorker1);
 		task1.getReports().get(0).setReportedTime(20);
