@@ -200,9 +200,11 @@ public class ProjectRepository {
 	public List<Task> getOnGoingUserUnreportedTasks(User user) {
 		List<Task> tasksOfSpecificUser = new ArrayList<>();
 		tasksOfSpecificUser = getOnGoingUserTasks(user);
-		for (Task other : tasksOfSpecificUser) {
-			if (other.doesTaskHaveReportByGivenUser(user.getEmail())) {
-				tasksOfSpecificUser.remove(other);
+		if (!tasksOfSpecificUser.isEmpty()) {
+			for (Task other : tasksOfSpecificUser) {
+				if (other.doesTaskHaveReportByGivenUser(user.getEmail())) {
+					tasksOfSpecificUser.remove(other);
+				}
 			}
 		}
 
