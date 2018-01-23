@@ -1,5 +1,6 @@
 package project.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -75,6 +76,7 @@ public class AssignTaskToCollaboratorControllerTest {
 		projectRepository = null;
 		userRepository = null;
 		projCollaborator = null;
+
 	}
 
 	@Test
@@ -141,5 +143,18 @@ public class AssignTaskToCollaboratorControllerTest {
 		assertFalse(controllerAssignTaskToProjectCollaborator.assignTaskToProjectCollaboratorController("NullTask",
 				nullProjectCollaborator));
 
+		/*
+		 * Gets a project collaborator from a user using the controller
+		 */
+		assertEquals(projCollaborator, controllerAssignTaskToProjectCollaborator.getProjectCollaboratorFromUser(user1));
+
+		/*
+		 * Gets the ID of a Project using the controller
+		 */
+		controllerAssignTaskToProjectCollaborator.setProjectID(1);
+		Integer um = 1;
+		assertEquals(um, controllerAssignTaskToProjectCollaborator.getProjectID());
+
 	}
+
 }

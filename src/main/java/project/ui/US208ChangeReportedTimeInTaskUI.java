@@ -5,7 +5,7 @@ import java.util.Scanner;
 import project.controller.SearchUsersController;
 import project.controller.US208ChangeReportedTimeInTaskController;
 
-public class US208ChangeReportedTimeInTask {
+public class US208ChangeReportedTimeInTaskUI {
 
 	public void changeReportedTime() {
 
@@ -50,7 +50,8 @@ public class US208ChangeReportedTimeInTask {
 
 				if (wasTaskUpdated) {
 					System.out.println("The task report was updated sucessfully.");
-					System.out.println(changeReportedTimeController.getReportedTimeByCollaboratorController(taskID));
+					System.out.println("New reported time: "
+							+ changeReportedTimeController.getReportedTimeByCollaboratorController(taskID));
 				} else {
 					System.out.println("The task report couldn't be updated");
 					System.out.println(changeReportedTimeController.getReportedTimeByCollaboratorController(taskID));

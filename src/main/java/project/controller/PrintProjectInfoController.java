@@ -17,9 +17,15 @@ public class PrintProjectInfoController {
 
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+	Integer projID;
 	
 	public PrintProjectInfoController(Project project) {
 		this.project = project;
+	}
+
+	public PrintProjectInfoController(Integer projID) {
+		this.projID = projID;
+		project = getProjectByProjectID();
 	}
 	
 	/**
@@ -146,5 +152,15 @@ public class PrintProjectInfoController {
 	 */
 	public List<Task> getTasks(){
 		return Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode()).getTaskRepository().getProjectTaskRepository();
+	}
+	
+	/**
+	 *This method get the project by project ID
+	 *
+	 *@return Project
+	 */
+	private Project getProjectByProjectID() {
+		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projID);
+		return project;
 	}
 }

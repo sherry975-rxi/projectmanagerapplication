@@ -11,6 +11,7 @@ import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.taskStateInterface.OnGoing;
+import project.ui.uiAdministrator.AdminMenuUI;
 
 public class MainMenuUI {
 
@@ -144,11 +145,11 @@ public class MainMenuUI {
 			String choice = input.nextLine();
 			switch (choice) {
 			case "1":
-				UserRegisterUI userRegister = new UserRegisterUI();
+				US101UserRegisterUI userRegister = new US101UserRegisterUI();
 				userRegister.userRegister();
 				break;
 			case "2":
-				LoginUI doLogin = new LoginUI();
+				US208LoginUI doLogin = new US208LoginUI();
 				doLogin.doLogin();
 				break;
 			case "3":

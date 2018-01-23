@@ -6,15 +6,24 @@ package project.ui;
 import java.util.Scanner;
 
 import project.controller.AssignTaskToCollaboratorsController;
+import project.controller.PrintProjectInfoController;
+import project.controller.PrintTaskInfoController;
+import project.controller.US206V2RemovalTaskRequestController;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
 /**
+ * In this UI the user (project collaborator) confirms his intention to assign
+ * himself to a task as task collaborator. If he confirms this intent, an
+ * assignment request is sent to the project manager of this project and if the
+ * project manager confirms the assignment, the UI returns a message confirming
+ * the effectiveness of this addition.
+ * 
  * @author Group3
  *
  */
 
-public class ConfirmTaskAssignmentToCollaborator {
+public class US204v2ConfirmTaskAssignmentToCollaboratorUI {
 
 	User user;
 	String taskID;
@@ -30,7 +39,7 @@ public class ConfirmTaskAssignmentToCollaborator {
 	 * @param taskID
 	 *            Task to add to user task list
 	 */
-	public ConfirmTaskAssignmentToCollaborator(User user, String taskID) {
+	public US204v2ConfirmTaskAssignmentToCollaboratorUI(User user, String taskID) {
 
 		this.user = user;
 		this.taskID = taskID;
@@ -38,7 +47,18 @@ public class ConfirmTaskAssignmentToCollaborator {
 
 	public void confirmTaskAssignmentToCollaborator() {
 
-		// TODO PROJECT INFO
+		US206V2RemovalTaskRequestController controller = new US206V2RemovalTaskRequestController(this.user);
+		controller.setProjectIDFromTaskID(taskID);
+		projID = controller.getProjectID();
+
+		PrintProjectInfoController printProjectInfoController = new PrintProjectInfoController(this.projID);
+		String projectName = printProjectInfoController.printProjectNameInfo();
+		PrintTaskInfoController printTaskInfoController = new PrintTaskInfoController(this.taskID, this.projID);
+		String taskName = printTaskInfoController.printTaskNameInfo();
+
+		System.out.println("PROJECT - " + projectName);
+		System.out.println("__________________________________________________");
+		System.out.println("Task - " + taskName + "\n");
 
 		Scanner input = new Scanner(System.in);
 
@@ -62,6 +82,7 @@ public class ConfirmTaskAssignmentToCollaborator {
 			if (assignTaskToCollaboratorsController.assignTaskToProjectCollaboratorController(taskID,
 					projcollab) == true) {
 				System.out.println("Your were successfully assigned to this task");
+				// TODO release this commented code when TaskDetailsUI is ready
 				// TaskDetailsUI taskDetailsUI = new
 				// TaskDetailsUI(assignTaskToCollaboratorsController.getTaskByTaskID(this.taskID));
 				// taskDetailsUI.taskDataDisplay();

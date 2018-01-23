@@ -36,7 +36,7 @@ public class US208ChangeReportedTimeInTaskController {
 	 * @param email
 	 *            string defining an email that will be used to retrieve the
 	 *            respective user
-	 * @return returns a boolean to confirm if the operation was sucessfull
+	 * @return returns a boolean to confirm if the operation was successfull
 	 * 
 	 */
 	public boolean correctReportedTimeInTaskController(String taskIndex, int newTime) {
@@ -62,7 +62,7 @@ public class US208ChangeReportedTimeInTaskController {
 
 		List<String> taskIdList = new ArrayList<>();
 
-		for (Task other : this.projectRepository.getOnGoingUserTasks(this.username)) {
+		for (Task other : this.projectRepository.getOnGoingUserReportedTasks(this.username)) {
 			taskIdList.add(other.getTaskID());
 
 		}
