@@ -1,4 +1,4 @@
-package project.ui;
+package project.ui.uiCollaborator;
 
 
 import java.util.Scanner;
@@ -6,6 +6,7 @@ import java.util.Scanner;
 import project.controller.US210GetAllFinishedUserTasksInDecreasingOrderController;
 import project.model.Task;
 import project.model.User;
+import project.ui.MainMenuUI;
 
 public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 	User currentUser;

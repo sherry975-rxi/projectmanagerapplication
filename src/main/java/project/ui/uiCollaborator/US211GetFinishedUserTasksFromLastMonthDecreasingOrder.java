@@ -1,4 +1,4 @@
-package project.ui;
+package project.ui.uiCollaborator;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

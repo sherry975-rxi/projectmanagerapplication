@@ -1,7 +1,7 @@
 /**
  * 
  */
-package project.ui;
+package project.ui.uiCollaborator;
 
 import java.util.Scanner;
 

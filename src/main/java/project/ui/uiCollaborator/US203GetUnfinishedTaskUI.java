@@ -1,9 +1,10 @@
-package project.ui;
+package project.ui.uiCollaborator;
 
 import java.util.Scanner;
 
 import project.controller.US203GetUnfinishedTaskByUser;
 import project.model.User;
+import project.ui.MainMenuUI;
 
 public class US203GetUnfinishedTaskUI {
 	private User user;

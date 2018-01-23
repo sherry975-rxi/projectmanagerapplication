@@ -12,6 +12,10 @@ import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.taskStateInterface.OnGoing;
 import project.ui.uiAdministrator.AdminMenuUI;
+import project.ui.uiCollaborator.CollaboratorMainMenuUI;
+import project.ui.uiCollaborator.DirectorMenuUI;
+import project.ui.uiCollaborator.US101UserRegisterUI;
+import project.ui.uiCollaborator.US208LoginUI;
 
 public class MainMenuUI {
 

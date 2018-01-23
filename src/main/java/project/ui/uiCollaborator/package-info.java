@@ -1,4 +1,4 @@
 /**
  * Package location for UI classes.
  */
-package project.ui;
+package project.ui.uiCollaborator;

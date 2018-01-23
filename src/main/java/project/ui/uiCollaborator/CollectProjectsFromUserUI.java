@@ -1,7 +1,7 @@
 /**
  * 
  */
-package project.ui;
+package project.ui.uiCollaborator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.Scanner;
 import project.controller.CollectProjectsFromUserController;
 import project.model.Project;
 import project.model.User;
+import project.ui.MainMenuUI;
 
 /**
  * This UI shows all projects from a user

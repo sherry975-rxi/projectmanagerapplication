@@ -1,4 +1,4 @@
-package project.ui;
+package project.ui.uiCollaborator;
 
 import java.util.List;
 import java.util.Scanner;

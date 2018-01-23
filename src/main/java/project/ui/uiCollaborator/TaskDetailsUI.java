@@ -1,4 +1,4 @@
-package project.ui;
+package project.ui.uiCollaborator;
 
 import java.util.Scanner;
 
@@ -6,6 +6,7 @@ import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US205MarkTaskAsFinishedCollaborator;
 import project.model.User;
+import project.ui.MainMenuUI;
 
 public class TaskDetailsUI {
 	private User user;
