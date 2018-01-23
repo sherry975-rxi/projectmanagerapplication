@@ -22,7 +22,10 @@ public class PrintProjectInfoController {
 
 	public PrintProjectInfoController(Integer projID) {
 		this.projID = projID;
-		project = getProjectByProjectID();
+	}
+
+	public void setProject() {
+		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projID);
 	}
 
 	/**
@@ -169,7 +172,9 @@ public class PrintProjectInfoController {
 	 * @return List of Strings of project's task IDs
 	 */
 	public List<String> getTasksIDs() {
+
 		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode())
+
 				.getTaskRepository().getProjectTaskRepository();
 		List<String> projectTasksID = new ArrayList<>();
 		for (Task projectTask : taskList) {
@@ -188,13 +193,4 @@ public class PrintProjectInfoController {
 				.getTaskRepository().getProjectTaskRepository();
 	}
 
-	/**
-	 * This method get the project by project ID
-	 *
-	 * @return Project
-	 */
-	private Project getProjectByProjectID() {
-		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projID);
-		return project;
-	}
 }
