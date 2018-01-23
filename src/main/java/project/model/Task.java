@@ -773,11 +773,7 @@ public class Task {
 	 *            Parent Task from which dependence is established
 	 */
 	public void createTaskDependence(Task taskToEstablishDependenceUpon) {
-
-		// Este if talvez estivesse melhor num controller...
-		if (this.estimatedTaskStartDate.after(taskToEstablishDependenceUpon.getEstimatedTaskStartDate())) {
-			this.taskDependency.add(taskToEstablishDependenceUpon);
-		}
+		this.taskDependency.add(taskToEstablishDependenceUpon);
 	}
 
 	/**

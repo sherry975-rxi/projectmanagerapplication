@@ -65,24 +65,23 @@ public class US342CreateTaskDependencyController {
 		Task taskReference = project.getTaskRepository().getTaskByID(taskReferenceID);
 
 		taskDependent.createTaskDependence(taskReference);
+
+		Calendar newEstimatedStartDate = (Calendar) taskReference.getEstimatedTaskStartDate().clone();
+		newEstimatedStartDate.add(Calendar.DAY_OF_MONTH, incrementDays);
+		taskDependent.setEstimatedTaskStartDate(newEstimatedStartDate);
 	}
 
-	public String getTaskDependentEstimatedStartDate(String taskDependentID) {
+	public void createDependenceFromTaskWithoutEstimatedStartDate(String taskDependentID, String taskReferenceID) {
+
+		Task taskDependent = project.getTaskRepository().getTaskByID(taskDependentID);
+		Task taskReference = project.getTaskRepository().getTaskByID(taskReferenceID);
+
+		taskDependent.createTaskDependence(taskReference);
+	}
+
+	public String getTaskEstimatedStartDateString(String taskDependentID) {
 
 		Task taskToGetEstimatedStartDate = project.getTaskRepository().getTaskByID(taskDependentID);
-
-		Calendar aaa = Calendar.getInstance();
-		aaa = taskToGetEstimatedStartDate.getEstimatedTaskStartDate();
-		Date estimatedStartDate = aaa.getTime();
-		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		String estimatedStartDateString = newDateFormat.format(estimatedStartDate).toString();
-
-		return estimatedStartDateString;
-	}
-
-	public String getTaskReferenceEstimatedStartDate(String taskReferenceID) {
-
-		Task taskToGetEstimatedStartDate = project.getTaskRepository().getTaskByID(taskReferenceID);
 
 		Calendar aaa = Calendar.getInstance();
 		aaa = taskToGetEstimatedStartDate.getEstimatedTaskStartDate();

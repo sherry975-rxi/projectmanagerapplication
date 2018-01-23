@@ -1,6 +1,9 @@
 package project.controller;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,6 +28,7 @@ public class US342CreateTaskDependencyTest {
 	Task taskB;
 	Task taskC;
 	User user;
+	US342CreateTaskDependencyController controller;
 
 	@Before
 	public void setUp() {
@@ -43,7 +47,8 @@ public class US342CreateTaskDependencyTest {
 		user = userRepo.getUserByEmail("ugandan@nackls.com");
 
 		// Add a project to the project repository
-		projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user);
+		projRepo.addProjectToProjectRepository(
+				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user));
 		proj = projRepo.getAllProjects().get(0);
 
 		// Initialize Task Repository
@@ -51,17 +56,20 @@ public class US342CreateTaskDependencyTest {
 
 		// Create and add tasks to Task Repository
 		taskA = new Task(1, 1, "Faind fek quin!");
-		taskB = new Task(1, 2, "Spit on non-beleevahs!");
-		taskC = new Task(1, 3, "Follou da wae!");
+		taskB = new Task(2, 1, "Spit on non-beleevahs!");
+		taskC = new Task(3, 1, "Follou da wae!");
 		taskRepo.addProjectTask(taskA);
 		taskRepo.addProjectTask(taskB);
 		taskRepo.addProjectTask(taskC);
+
+		// Initialize Controller
+		controller = new US342CreateTaskDependencyController(proj);
 
 	}
 
 	@After
 	public void tearDown() {
-		myComp.clear();
+		Company.clear();
 		projRepo = null;
 		userRepo = null;
 		taskRepo = null;
@@ -70,26 +78,53 @@ public class US342CreateTaskDependencyTest {
 		taskB = null;
 		taskC = null;
 		user = null;
+		controller = null;
 	}
 
 	@Test
 	public final void testGetTasksFromAProject() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(3, controller.getTasksFromAProject().size());
 	}
 
 	@Test
-	public final void testCreateDependenceFromTask() {
-		fail("Not yet implemented"); // TODO
+	public final void testCreateDependenceFromTaskWithEstimatedStartDate() {
+
+		// Give estimated start date to task C
+		taskC.setEstimatedTaskStartDate(Calendar.getInstance());
+
+		// Create dependency
+		controller.createDependenceFromTask("1.2", "1.3", 20);
+
+		assertTrue(taskB.hasDependencies());
+		assertTrue(taskB.getEstimatedTaskStartDate() != null);
+
+		// Make sure the date is set correctly
+		Calendar referenceDate = (Calendar) taskC.getEstimatedTaskStartDate().clone();
+		referenceDate.add(Calendar.DAY_OF_MONTH, 20);
+		assertTrue(taskB.getEstimatedTaskStartDate().equals(referenceDate));
 	}
 
 	@Test
-	public final void testGetTaskDependentEstimatedStartDate() {
-		fail("Not yet implemented"); // TODO
+	public final void testCreateDependenceFromTaskNoEstimatedStartDate() {
+		// Create dependency without estimated start date
+		controller.createDependenceFromTaskWithoutEstimatedStartDate("1.2", "1.3");
+		assertTrue(taskB.hasDependencies());
+		assertTrue(taskB.getEstimatedTaskStartDate() == null);
 	}
 
 	@Test
-	public final void testGetTaskReferenceEstimatedStartDate() {
-		fail("Not yet implemented"); // TODO
+	public final void testGetTaskEstimatedStartDateString() {
+		// Give estimated start date to task B
+		taskB.setEstimatedTaskStartDate(Calendar.getInstance());
+
+		// Set a specific date to avoid future failures
+		taskB.getEstimatedTaskStartDate().set(Calendar.DAY_OF_MONTH, 13);
+		taskB.getEstimatedTaskStartDate().set(Calendar.MONTH, 5);
+		taskB.getEstimatedTaskStartDate().set(Calendar.YEAR, 2005);
+
+		String date = controller.getTaskEstimatedStartDateString("1.2");
+
+		assertTrue("13/06/2005".equals(date));
 	}
 
 }
