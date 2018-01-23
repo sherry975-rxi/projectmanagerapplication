@@ -16,6 +16,10 @@ public class PrintProjectInfoController {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	Integer projID;
 
+	public PrintProjectInfoController(Project project) {
+		this.project = project;
+	}
+
 	public PrintProjectInfoController(Integer projID) {
 		this.projID = projID;
 	}
@@ -30,6 +34,7 @@ public class PrintProjectInfoController {
 	 * @return String project's name
 	 */
 	public String printProjectNameInfo() {
+
 		return this.project.getName();
 	}
 
@@ -39,7 +44,8 @@ public class PrintProjectInfoController {
 	 * @return String project's ID
 	 */
 	public String printProjectIDCodeInfo() {
-		return String.valueOf(this.projID);
+
+		return String.valueOf(this.project.getIdCode());
 	}
 
 	/**
@@ -48,7 +54,13 @@ public class PrintProjectInfoController {
 	 * @return String project's status
 	 */
 	public String printProjectStatusInfo() {
-		return String.valueOf(this.project.getProjectStatus());
+		String toPrint = "---";
+
+		if (String.valueOf(this.project.getProjectStatus()) != null) {
+			toPrint = String.valueOf(this.project.getProjectStatus());
+		}
+
+		return toPrint;
 	}
 
 	/**
@@ -57,6 +69,7 @@ public class PrintProjectInfoController {
 	 * @return String project's description
 	 */
 	public String printProjectDescriptionInfo() {
+
 		return this.project.getProjectDescription();
 	}
 
@@ -67,7 +80,14 @@ public class PrintProjectInfoController {
 	 */
 	public String printProjectStartDateInfo() {
 		Calendar startDate = this.project.getStartdate();
-		return this.dateFormat.format(startDate.getTime());
+
+		String toPrint = "---";
+
+		if (startDate != null) {
+			toPrint = this.dateFormat.format(startDate.getTime());
+		}
+
+		return toPrint;
 	}
 
 	/**
@@ -77,7 +97,14 @@ public class PrintProjectInfoController {
 	 */
 	public String printProjectFinishDateInfo() {
 		Calendar finishDate = this.project.getFinishdate();
-		return this.dateFormat.format(finishDate.getTime());
+
+		String toPrint = "---";
+
+		if (finishDate != null) {
+			toPrint = this.dateFormat.format(finishDate.getTime());
+		}
+
+		return toPrint;
 	}
 
 	/**
@@ -86,6 +113,7 @@ public class PrintProjectInfoController {
 	 * @return String project's manager
 	 */
 	public String printProjectManagerInfo() {
+
 		return this.project.getProjectManager().getName();
 	}
 
@@ -97,7 +125,9 @@ public class PrintProjectInfoController {
 	 */
 	public String printProjectTeamInfo() {
 		List<ProjectCollaborator> projectTeam = this.project.getProjectTeam();
+
 		List<String> team = new ArrayList<>();
+
 		for (ProjectCollaborator projectMember : projectTeam) {
 			team.add(projectMember.getUserFromProjectCollaborator().getName());
 		}
@@ -110,7 +140,13 @@ public class PrintProjectInfoController {
 	 * @return String project's budget
 	 */
 	public String printProjectBudgetInfo() {
-		return String.valueOf(this.project.getProjectBudget());
+		String toPrint = "---";
+
+		if (String.valueOf(this.project.getProjectBudget()) != null) {
+			toPrint = String.valueOf(this.project.getProjectBudget());
+		}
+
+		return toPrint;
 	}
 
 	/**
@@ -136,7 +172,9 @@ public class PrintProjectInfoController {
 	 * @return List of Strings of project's task IDs
 	 */
 	public List<String> getTasksIDs() {
-		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.projID)
+
+		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode())
+
 				.getTaskRepository().getProjectTaskRepository();
 		List<String> projectTasksID = new ArrayList<>();
 		for (Task projectTask : taskList) {
