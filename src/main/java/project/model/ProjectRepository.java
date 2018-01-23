@@ -167,6 +167,28 @@ public class ProjectRepository {
 	}
 
 	/**
+	 * This method returns all the tasks from all the projects that are set to the
+	 * state "OnGoing" and have a report by a given user
+	 * 
+	 * @param User
+	 *            user to search the OnGoing tasks in which it is included
+	 * 
+	 * @return Returns the user OnGoing task list.
+	 */
+	public List<Task> getOnGoingUserReportedTasks(User user) {
+		List<Task> tasksOfSpecificUser = new ArrayList<>();
+		tasksOfSpecificUser = getOnGoingUserTasks(user);
+		for (Task other : tasksOfSpecificUser) {
+			if (!other.doesTaskHaveReportByGivenUser(user.getEmail())) {
+				tasksOfSpecificUser.remove(other);
+			}
+		}
+
+		return tasksOfSpecificUser;
+
+	}
+
+	/**
 	 * This method returns all the tasks with state "finished" from all the
 	 * projects, that has a specific user associated to that task, no matter if the
 	 * project is active or not.

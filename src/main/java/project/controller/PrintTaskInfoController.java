@@ -13,15 +13,15 @@ import project.model.TaskCollaborator;
 public class PrintTaskInfoController {
 
 	private Task task;
-	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	private String taskID;
 	private Integer projeID;
+	private Project project;
 
 	public PrintTaskInfoController(Task task) {
 		this.task = task;
 	}
-
+	
 	public PrintTaskInfoController(String taskID, Integer projeID) {
 		this.taskID = taskID;
 		this.projeID = projeID;
@@ -29,22 +29,39 @@ public class PrintTaskInfoController {
 		this.task = project.getTaskRepository().getTaskByID(this.taskID);
 	}
 
+	
+	/**
+	 *This method get the task's name and return it as a String
+	 *
+	 *@return String task's name
+	 */
 	public String printTaskNameInfo() {
-		return this.task.getDescription().toUpperCase();
+		return this.task.getDescription();
 	}
-
-	public String printProjectNameInfo() {
-		return this.project.getName();
-	}
-
+	
+	/**
+	 *This method get the task's ID and return it as a String
+	 *
+	 *@return String task's ID
+	 */
 	public String printTaskIDCodeInfo() {
 		return this.task.getTaskID();
 	}
-
+	
+	/**
+	 *This method get the task's state and return it as a String
+	 *
+	 *@return String task's state
+	 */
 	public String printTaskStateInfo() {
 		return this.task.viewTaskStateName();
 	}
-
+	
+	/**
+	 *This method get the task's estimated start date and return it as a String
+	 *
+	 *@return String task's estimated start date
+	 */
 	public String printTaskEstimatedStartDateInfo() {
 		Calendar estimatedStartDate = this.task.getEstimatedTaskStartDate();
 		String toPrint = "---";
@@ -53,7 +70,12 @@ public class PrintTaskInfoController {
 		}
 		return toPrint;
 	}
-
+	
+	/**
+	 *This method get the task's start date and return it as a String
+	 *
+	 *@return String task's start date
+	 */
 	public String printTaskStartDateInfo() {
 		Calendar startDate = this.task.getStartDate();
 		String toPrint = "---";
@@ -63,6 +85,12 @@ public class PrintTaskInfoController {
 		return toPrint;
 	}
 
+	
+	/**
+	 *This method get the task's deadline and return it as a String
+	 *
+	 *@return String task's deadline
+	 */
 	public String printTaskDeadlineInfo() {
 		Calendar deadlineDate = this.task.getTaskDeadline();
 		String toPrint = "---";
@@ -72,6 +100,11 @@ public class PrintTaskInfoController {
 		return toPrint;
 	}
 
+	/**
+	 *This method get the task's finish date and return it as a String
+	 *
+	 *@return String task's finish date
+	 */
 	public String printTaskFinishDateInfo() {
 		Calendar finishDate = this.task.getFinishDate();
 		String toPrint = "---";
@@ -81,6 +114,11 @@ public class PrintTaskInfoController {
 		return toPrint;
 	}
 
+	/**
+	 *This method get the task's team and return it as a String (team members separeted by commas)
+	 *
+	 *@return String task's team
+	 */
 	public String printTaskTeamInfo() {
 		List<TaskCollaborator> projectTeam = this.task.getTaskTeam();
 		List<String> team = new ArrayList<>();
@@ -91,6 +129,12 @@ public class PrintTaskInfoController {
 		return String.join(", ", team);
 	}
 
+	
+	/**
+	 *This method get the task's budget and return it as a String
+	 *
+	 *@return String task's budget
+	 */
 	public String printTaskBudgetInfo() {
 		return String.valueOf(this.task.getTaskBudget());
 	}

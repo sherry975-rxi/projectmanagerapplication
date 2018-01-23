@@ -113,27 +113,62 @@ public class US203v2 {
 		project1.addProjectCollaboratorToProjectTeam(projCollab1);
 		project1.addProjectCollaboratorToProjectTeam(projCollab2);
 
-		// create Task Collaborator to register the period that the user was in the task
-		// while he was active in project 1
-		taskCollab1 = task1.createTaskCollaborator(projCollab1);
-		taskCollab2 = task2.createTaskCollaborator(projCollab2);
-		taskCollab3 = task3.createTaskCollaborator(projCollab2);
-		taskCollab4 = task4.createTaskCollaborator(projCollab2);
-		taskCollab5 = task5.createTaskCollaborator(projCollab2);
-		taskCollab6 = task6.createTaskCollaborator(projCollab2);
+		// set the state of the tasks
+		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task1.setTaskDeadline(taskDeadlineDateTest1);
+		task1.getTaskState().changeToPlanned();
 
-		// associate Task Collaborators to task (info project collaborator + period he
-		// was in the task)
-		task1.addTaskCollaboratorToTask(taskCollab1);
-		task2.addTaskCollaboratorToTask(taskCollab2);
-		task3.addTaskCollaboratorToTask(taskCollab3);
-		task4.addTaskCollaboratorToTask(taskCollab4);
-		task5.addTaskCollaboratorToTask(taskCollab5);
-		task6.addTaskCollaboratorToTask(taskCollab6);
+		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task2.setTaskDeadline(taskDeadlineDateTest4);
+		task2.getTaskState().changeToPlanned();
+		task2.addProjectCollaboratorToTask(projCollab1);
+		task2.getTaskState().changeToAssigned();
+		task2.getTaskState().changeToReady();
+		Calendar startDateTask2 = estimatedTaskStartDateTest;
+		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
+		task2.setStartDate(startDateTask2);
+		task2.getTaskState().changeToOnGoing();
 
-		// defines finish date to task, and mark it as Finished
-		task1.setFinishDate();
-		task1.markTaskAsFinished();
+		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task3.setTaskDeadline(taskDeadlineDateTest1);
+		task3.getTaskState().changeToPlanned();
+		task3.addProjectCollaboratorToTask(projCollab1);
+		task3.getTaskState().changeToAssigned();
+		task3.getTaskState().changeToReady();
+		Calendar startDateTask3 = estimatedTaskStartDateTest;
+		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
+		task3.setStartDate(startDateTask3);
+		task3.getTaskState().changeToOnGoing();
+
+		task4.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task4.setTaskDeadline(taskDeadlineDateTest1);
+		task4.getTaskState().changeToPlanned();
+		task4.addProjectCollaboratorToTask(projCollab1);
+		task4.getTaskState().changeToAssigned();
+		task4.getTaskState().changeToReady();
+
+		task5.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task5.setTaskDeadline(taskDeadlineDateTest1);
+		task5.getTaskState().changeToPlanned();
+		task5.addProjectCollaboratorToTask(projCollab1);
+		task5.getTaskState().changeToAssigned();
+		task5.getTaskState().changeToReady();
+		Calendar startDateTask5 = estimatedTaskStartDateTest;
+		startDateTask5.add(Calendar.DAY_OF_MONTH, 60);
+		task5.setStartDate(startDateTask5);
+		task5.getTaskState().changeToOnGoing();
+		task5.markTaskAsFinished();
+
+		task6.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task6.setTaskDeadline(taskDeadlineDateTest2);
+		task6.getTaskState().changeToPlanned();
+		task6.addProjectCollaboratorToTask(projCollab1);
+		task6.getTaskState().changeToAssigned();
+		task6.getTaskState().changeToReady();
+		Calendar startDateTask6 = estimatedTaskStartDateTest;
+		startDateTask6.add(Calendar.DAY_OF_MONTH, 60);
+		task6.setStartDate(startDateTask6);
+		task6.getTaskState().changeToOnGoing();
 
 		// creates the controller
 		tasksFiltersController = new US203GetUserStartedNotFinishedTaskListInIncreasingOrderController();
@@ -173,20 +208,12 @@ public class US203v2 {
 
 	@Test
 	public void testGetUserStartedNotFinishedTaskList() {
-		Calendar startDateTest = Calendar.getInstance();
-		startDateTest.add(Calendar.YEAR, 2016);
-		task1.setStartDate(startDateTest);
-		task2.setStartDate(startDateTest);
-		task3.setStartDate(startDateTest);
-		task4.setStartDate(startDateTest);
-		task5.setStartDate(startDateTest);
-		task6.setStartDate(startDateTest);
 
 		// asserts the list contains five tasks, and the first two are the ones with the
 		// earliest deadline
-		assertEquals(5, tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).size());
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(0), task3);
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(1), task6);
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user2).get(2), task2);
+		assertEquals(3, tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).size());
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(0), task3);
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(1), task6);
+		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(2), task2);
 	}
 }

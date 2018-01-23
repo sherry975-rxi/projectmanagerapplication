@@ -25,10 +25,10 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 	 * @return Task List
 	 */
 	public List<Task> getUserStartedNotFinishedTaskListInIncreasingOrder(User myUser) {
-		List<Task> myUnfinishedAllTasks = new ArrayList<>();
+
+		List<Task> myUnfinishedAllTasks = myProjRepo.getStartedNotFinishedUserTaskList(myUser);
 		List<Task> myUnfinishedTasksWDeadline = new ArrayList<>();
 		List<Task> myUnfinishedAllTasksWODeadline = new ArrayList<>();
-		myUnfinishedAllTasks = myProjRepo.getUnfinishedUserTaskList(myUser);
 
 		for (Task other : myUnfinishedAllTasks) {
 			if (other.getTaskDeadline() != null) {
@@ -37,9 +37,8 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 				myUnfinishedAllTasksWODeadline.add(other);
 			}
 		}
-		myProjRepo.sortTaskListByDeadline(myUnfinishedTasksWDeadline);
-		myUnfinishedTasksWDeadline.addAll(myUnfinishedAllTasksWODeadline);
-		myUnfinishedAllTasks = myUnfinishedTasksWDeadline;
+		myUnfinishedAllTasks = myProjRepo.sortTaskListByDeadline(myUnfinishedTasksWDeadline);
+		myUnfinishedAllTasks.addAll(myUnfinishedAllTasksWODeadline);
 		return myUnfinishedAllTasks;
 	}
 
