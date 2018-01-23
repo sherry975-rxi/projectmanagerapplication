@@ -24,6 +24,8 @@ public class US130ListUsersUI {
 		} else {
 			System.out.println("Not a number!");
 		}
+		System.out.println("Returning to admin menu...");
+		System.out.println("");
 		return user;
 	}
 

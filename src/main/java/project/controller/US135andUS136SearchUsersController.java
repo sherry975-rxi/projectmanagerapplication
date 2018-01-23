@@ -7,7 +7,7 @@ import project.model.Company;
 import project.model.Profile;
 import project.model.User;
 
-public class SearchUsersController {
+public class US135andUS136SearchUsersController {
 
 	List<User> userList;
 	User selectedUser = null;

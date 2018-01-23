@@ -15,7 +15,7 @@ import project.model.Profile;
 import project.model.User;
 import project.model.UserRepository;
 
-public class SearchUsersControllerTest {
+public class US135andUS136SearchUsersControllerTest {
 
 	/**
 	 * Controller SearchUsersController
@@ -28,7 +28,7 @@ public class SearchUsersControllerTest {
 	User newUser2;
 	User newUser3;
 	UserRepository userRepository;
-	SearchUsersController searchController;
+	US135andUS136SearchUsersController searchController;
 	Company company;
 
 	@Before
@@ -54,7 +54,7 @@ public class SearchUsersControllerTest {
 		userRepository.addUserToUserRepository(newUser3);
 
 		// Creates a searchController
-		searchController = new SearchUsersController();
+		searchController = new US135andUS136SearchUsersController();
 
 	}
 
