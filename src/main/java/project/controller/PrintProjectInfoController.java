@@ -16,12 +16,13 @@ public class PrintProjectInfoController {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	Integer projID;
 
-	public PrintProjectInfoController(Integer projID) {
-		this.projID = projID;
+	public PrintProjectInfoController(Project project) {
+		this.project = project;
 	}
 
-	public void setProject() {
-		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projID);
+	public PrintProjectInfoController(Integer projID) {
+		this.projID = projID;
+		project = getProjectByProjectID();
 	}
 
 	/**
@@ -41,7 +42,7 @@ public class PrintProjectInfoController {
 	 */
 	public String printProjectIDCodeInfo() {
 
-		return String.valueOf(this.projID);
+		return String.valueOf(this.project.getIdCode());
 	}
 
 	/**
@@ -121,6 +122,7 @@ public class PrintProjectInfoController {
 	 */
 	public String printProjectTeamInfo() {
 		List<ProjectCollaborator> projectTeam = this.project.getProjectTeam();
+
 		List<String> team = new ArrayList<>();
 
 		for (ProjectCollaborator projectMember : projectTeam) {
@@ -167,7 +169,7 @@ public class PrintProjectInfoController {
 	 * @return List of Strings of project's task IDs
 	 */
 	public List<String> getTasksIDs() {
-		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.projID)
+		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode())
 				.getTaskRepository().getProjectTaskRepository();
 		List<String> projectTasksID = new ArrayList<>();
 		for (Task projectTask : taskList) {
@@ -186,4 +188,13 @@ public class PrintProjectInfoController {
 				.getTaskRepository().getProjectTaskRepository();
 	}
 
+	/**
+	 * This method get the project by project ID
+	 *
+	 * @return Project
+	 */
+	private Project getProjectByProjectID() {
+		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projID);
+		return project;
+	}
 }

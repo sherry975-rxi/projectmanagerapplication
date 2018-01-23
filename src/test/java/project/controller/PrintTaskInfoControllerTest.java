@@ -29,7 +29,6 @@ public class PrintTaskInfoControllerTest {
 	Calendar startDate, finishDate;
 	TaskRepository taskRepository;
 	Task task1, task2, task3;
-	PrintTaskInfoController controller;
 
 	@Before
 	public void setUp() {
@@ -55,7 +54,6 @@ public class PrintTaskInfoControllerTest {
 		// Creates one Project
 		project = myCompany.getProjectsRepository().createProject("Projeto de gestão",
 				"Este projeto está focado na gestão.", joaoPM);
-		project.setProjectBudget(3000);
 
 		// add project to project repository
 		myCompany.getProjectsRepository().addProjectToProjectRepository(project);
@@ -97,13 +95,9 @@ public class PrintTaskInfoControllerTest {
 
 		// add project's collaborators to tasks
 		task1.addProjectCollaboratorToTask(collab1);
-		task3.addProjectCollaboratorToTask(collab2);
+		task1.addProjectCollaboratorToTask(collab2);
 		task2.addProjectCollaboratorToTask(collab1);
-		task2.addProjectCollaboratorToTask(collab2);
-
-		// Instantiates the controller
-		controller = new PrintTaskInfoController("1.1", 1);
-		controller.setProjectAndTask();
+		task3.addProjectCollaboratorToTask(collab2);
 	}
 
 	@After
@@ -126,13 +120,16 @@ public class PrintTaskInfoControllerTest {
 	 */
 	@Test
 	public void testPrintTaskNameInfo() {
+		// create controller
+		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
 
 		assertEquals(controller.printTaskNameInfo(), "First task");
 	}
 
+	// ver porque está a falhar
 	// @Test
 	// public void testPrintProjectNameInfo() {
-	// // create controller
+	// //create controller
 	// PrintTaskInfoController controller = new PrintTaskInfoController(task1);
 	//
 	// assertEquals(controller.printProjectNameInfo(), "Projeto de gestão");
@@ -143,6 +140,9 @@ public class PrintTaskInfoControllerTest {
 	 */
 	@Test
 	public void testPrintTaskIDCodeInfo() {
+		// create controller
+		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
+
 		assertEquals(controller.printTaskIDCodeInfo(), "1.1");
 	}
 
@@ -151,6 +151,9 @@ public class PrintTaskInfoControllerTest {
 	 */
 	@Test
 	public void testPrintTaskStateInfo() {
+		// create controller
+		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
+
 		assertEquals(controller.printTaskStateInfo(), "Created");
 	}
 
@@ -239,12 +242,28 @@ public class PrintTaskInfoControllerTest {
 	 */
 	@Test
 	public void testPrintTaskTeamInfo() {
+		// create controller
+		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
 
-		assertEquals(controller.printTaskTeamInfo(), "Daniel");
+		assertEquals(controller.printTaskTeamInfo(), "Daniel, João");
+	}
+
+	/**
+	 * Tests if the method of controller gets the task's budget
+	 */
+	@Test
+	public void testPrintTaskBudgetInfo() {
+		// create controller
+		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
+
+		task1.setTaskBudget(1000);
+		assertEquals(controller.printTaskBudgetInfo(), "1000");
 	}
 
 	@Test
 	public void testPrintInfoFromTask() {
+		// create controller
+		PrintTaskInfoController controller = new PrintTaskInfoController(task1.getTaskID(), project.getIdCode());
 
 		String projectName = controller.printProjectNameInfo();
 		assertEquals("Projeto de gestão", projectName);

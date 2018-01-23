@@ -552,6 +552,18 @@ public class Task {
 		return reportedTime;
 	}
 
+	public String getReporterName(String userEmail) {
+		String reporterName = new String("");
+		for (Report other : this.reports) {
+			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
+					.getUserFromProjectCollaborator().getEmail().equals(userEmail)) {
+				reporterName = other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
+						.getUserFromProjectCollaborator().getName();
+			}
+		}
+		return reporterName;
+	}
+
 	/**
 	 * This method removes the user from a task. It checks first if the user is in
 	 * the task team (List of users in Task), and deactivates it from the team.

@@ -131,4 +131,20 @@ public class US206CancelRemovalTaskRequestController {
 		return this.projectID;
 	}
 
+	/**
+	 * This method retrieves a Task from its ID
+	 * 
+	 * @param taskID
+	 * @param projectID
+	 *            TaskID to get the Task from
+	 * 
+	 * @return Task from taskID
+	 */
+	public Task getTaskByTaskID(String taskID, Integer projectID) {
+		Task taskToAddCollaborator = Company.getTheInstance().getProjectsRepository().getProjById(projectID)
+				.getTaskRepository().getTaskByID(taskID);
+		return taskToAddCollaborator;
+
+	}
+
 }
