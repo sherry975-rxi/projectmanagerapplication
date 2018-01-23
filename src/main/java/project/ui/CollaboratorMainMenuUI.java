@@ -33,10 +33,10 @@ public class CollaboratorMainMenuUI {
 		System.out.println("___________________________________________________");
 
 		System.out.println("\n");
+		System.out.println("Please choose an option:");
 		System.out.println("[1] Update User Register Info");
 		System.out.println("[2] Projects");
 		System.out.println("[3] Tasks\n");
-		System.out.println("Please choose an option: \n");
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
@@ -64,6 +64,7 @@ public class CollaboratorMainMenuUI {
 			MainMenuUI.mainMenu();
 			break;
 		case "E":
+			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 			System.exit(0);
 			break;
 		default:
