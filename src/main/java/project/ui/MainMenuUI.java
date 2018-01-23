@@ -17,6 +17,7 @@ public class MainMenuUI {
 
 	private static Company myCompany;
 	private static User userAdmin;
+	private static User userDirector;
 	private static User user1;
 	private static User user2;
 	private static User projectManager;
@@ -38,6 +39,10 @@ public class MainMenuUI {
 		userAdmin = myCompany.getUsersRepository().createUser("John Cena", "admin@gmail.com", "001", "Admin grupo 3",
 				"917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userAdmin.setPassword("123456");
+		userDirector = myCompany.getUsersRepository().createUser("Jane Doe", "director@gmail.com", "002",
+				"Director grupo 3", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		userDirector.setPassword("abcdef");
+
 		user1 = myCompany.getUsersRepository().createUser("Joao Silva", "aluno_3_@gmail.com", "010",
 				"Estudante Grupo 3", "937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		user1.setPassword("switch");
@@ -49,11 +54,13 @@ public class MainMenuUI {
 				"Estudante Grupo 3", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Matosinhos", "Portugal");
 		// addition of users to the company
 		myCompany.getUsersRepository().addUserToUserRepository(userAdmin);
+		myCompany.getUsersRepository().addUserToUserRepository(userDirector);
 		myCompany.getUsersRepository().addUserToUserRepository(user1);
 		myCompany.getUsersRepository().addUserToUserRepository(user2);
 		myCompany.getUsersRepository().addUserToUserRepository(projectManager);
 
 		// set user as collaborator
+		userDirector.setUserProfile(Profile.DIRECTOR);
 		user1.setUserProfile(Profile.COLLABORATOR);
 		user2.setUserProfile(Profile.COLLABORATOR);
 		projectManager.setUserProfile(Profile.COLLABORATOR);
@@ -135,8 +142,8 @@ public class MainMenuUI {
 			System.out.println("______________________________________________");
 			System.out.println("[1] New Registration");
 			System.out.println("[2] Login");
-			System.out.println("[3] Administrator");
-			System.out.println("[4] Director");
+			System.out.println("[3] Administrator (Demo mode - John Cena)");
+			System.out.println("[4] Director (Demo mode - Jane Doe)");
 			System.out.println("[5] Collaborator");
 			System.out.println("______________________________________________");
 			System.out.println("[E] Exit");
@@ -156,9 +163,13 @@ public class MainMenuUI {
 				AdminMenuUI adminMenu = new AdminMenuUI(userAdmin);
 				adminMenu.adminMenu();
 				break;
-			case "4":
 
+			case "4":
+				userDirector.setUserProfile(Profile.DIRECTOR);
+				DirectorMenuUI directorMenu = new DirectorMenuUI(userDirector);
+				directorMenu.directorMenu();
 				break;
+
 			case "5":
 				CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(user1);
 				collaboratorMenu.displayOptions();

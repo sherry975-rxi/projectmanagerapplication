@@ -27,13 +27,14 @@ public class AdminMenuUI {
 		while (cycle) {
 
 			if (selectedUser != null) {
+				System.out.println("");
 				System.out.println("User selected!");
 				System.out.println(selectedUser.getIdNumber() + ": " + selectedUser.getName() + "("
 						+ selectedUser.getEmail() + ")");
 				System.out.println("(User management commands enabled!)");
-				System.out.println("");
 			}
 
+			System.out.println("");
 			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName() + ". Please choose a command:");
 			System.out.println(options);
 
@@ -74,9 +75,7 @@ public class AdminMenuUI {
 				break;
 
 			default:
-				System.out.println("Invalid input.");
-				System.out.println("Please choose a command:");
-				System.out.println(options);
+				System.out.println("Invalid input!");
 				break;
 
 			}
