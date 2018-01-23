@@ -10,7 +10,6 @@ public class US208ChangeReportedTimeInTaskUI {
 	public void changeReportedTime() {
 
 		boolean wasTaskUpdated;
-		String idTask;
 		US208ChangeReportedTimeInTaskController changeReportedTimeController;
 		US135andUS136SearchUsersController searchUserByEmail = new US135andUS136SearchUsersController();
 
@@ -23,7 +22,7 @@ public class US208ChangeReportedTimeInTaskUI {
 		if (!searchUserByEmail.searchUsersByEmailController(userEmail).isEmpty()) {
 			changeReportedTimeController = new US208ChangeReportedTimeInTaskController(userEmail);
 			System.out.println();
-			System.out.println("List of active tasks:");
+			System.out.println("List of active tasks with reports:");
 			System.out.println();
 
 			for (String taskId : changeReportedTimeController.getOnGoingIDTasksOfUser()) {

@@ -13,6 +13,7 @@ public class US207CreateTaskReportController {
 	private Company company;
 	private ProjectRepository projectRepository;
 	private String email;
+	private Task task;
 
 	/**
 	 * Constructor of US207CreateTaskReportController
@@ -20,34 +21,38 @@ public class US207CreateTaskReportController {
 	 * @param email
 	 *            The email of the user that will create a task report
 	 */
-	public US207CreateTaskReportController(String email) {
+	public US207CreateTaskReportController(String email, String taskID) {
 		this.company = Company.getTheInstance();
 		this.projectRepository = company.getProjectsRepository();
 		this.userRepository = company.getUsersRepository();
 		this.username = userRepository.getUserByEmail(email);
 		this.email = email;
+		for (Task other : projectRepository.getUserTasks(username)) {
+			if (other.getTaskID().equals(taskID) && !other.doesTaskHaveReportByGivenUser(email)) {
+				task = other;
+			}
+		}
 
 	}
 
-	public boolean createReportController(String taskIndex, int newTime) {
+	public boolean createReportController(int newTime) {
 
 		boolean wasReportCreated = false;
 
-		for (Task other : projectRepository.getUserTasks(username)) {
-			if (other.getTaskID().equals(taskIndex) && !other.doesTaskHaveReportByGivenUser(email)) {
+		if (!task.doesTaskHaveReportByGivenUser(email)) {
 
-				other.createReport(other.getTaskCollaboratorByEmail(email));
+			task.createReport(task.getTaskCollaboratorByEmail(email));
 
-				wasReportCreated = other.changeReportedTime(newTime, username.getEmail());
-			} else if (other.doesTaskHaveReportByGivenUser(email)) {
+			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
+		} else if (task.doesTaskHaveReportByGivenUser(email)) {
 
-				wasReportCreated = other.changeReportedTime(newTime, username.getEmail());
+			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
 
-			} else {
-				break;
-			}
+		} else {
+			wasReportCreated = false;
 		}
 		return wasReportCreated;
+
 	}
 
 	/**
@@ -57,16 +62,11 @@ public class US207CreateTaskReportController {
 	 *            The task to look for it's report
 	 * @return The reported time by a given TaskCollaborator
 	 */
-	public int getReportedTimeByCollaborator(String taskIndex) {
+	public int getReportedTimeByCollaborator() {
 		int reportedTimeByCollaborator = 0;
-		for (int i = 0; i < projectRepository.getUserTasks(username).size(); i++) {
-			if (projectRepository.getUserTasks(username).get(i).getTaskID().equals(taskIndex)) {
-				reportedTimeByCollaborator = projectRepository.getUserTasks(username).get(i)
-						.getReportedTimeByTaskCollaborator(email);
-				break;
-			}
+		{
+			reportedTimeByCollaborator = task.getReportedTimeByTaskCollaborator(email);
 		}
-
 		return reportedTimeByCollaborator;
 	}
 

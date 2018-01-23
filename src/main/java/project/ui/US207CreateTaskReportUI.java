@@ -14,7 +14,7 @@ public class US207CreateTaskReportUI {
 	public US207CreateTaskReportUI(String email, String taskID) {
 
 		this.email = email;
-		this.createReportController = new US207CreateTaskReportController(email);
+		this.createReportController = new US207CreateTaskReportController(email, taskID);
 		this.taskID = taskID;
 	}
 
@@ -23,7 +23,7 @@ public class US207CreateTaskReportUI {
 		Scanner input = new Scanner(System.in);
 
 		System.out.println("Reported Time to the Task:");
-		System.out.println(createReportController.getReportedTimeByCollaborator(taskID));
+		System.out.println(createReportController.getReportedTimeByCollaborator());
 
 		System.out.println("");
 
@@ -37,13 +37,13 @@ public class US207CreateTaskReportUI {
 			newTimeToInt = Integer.parseInt(newTime);
 
 			System.out.println();
-			wasReportCreated = createReportController.createReportController(taskID, newTimeToInt);
+			wasReportCreated = createReportController.createReportController(newTimeToInt);
 
 			if (wasReportCreated) {
 				System.out.println("The task report was updated sucessfully.");
 				System.out.println();
 
-				System.out.println("Reported time: " + createReportController.getReportedTimeByCollaborator(taskID));
+				System.out.println("Reported time: " + createReportController.getReportedTimeByCollaborator());
 			} else {
 				System.out.println("The task report couldn't be updated");
 
