@@ -1,6 +1,6 @@
 package project.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
 
@@ -29,7 +29,7 @@ public class PrintTaskInfoControllerTest {
 	Calendar startDate, finishDate;
 	TaskRepository taskRepository;
 	Task task1, task2, task3;
-	
+
 	@Before
 	public void setUp() {
 		// create company
@@ -114,101 +114,114 @@ public class PrintTaskInfoControllerTest {
 		task3 = null;
 		collab1 = null;
 	}
-	
+
 	@Test
 	public void testPrintTaskNameInfo() {
-		//create controller
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
+
 		assertEquals(controller.printTaskNameInfo(), "FIRST TASK");
 	}
-	
-	//ver porque está a falhar
-//	@Test
-//	public void testPrintProjectNameInfo() {
-//		//create controller
-//		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-//		
-//		assertEquals(controller.printProjectNameInfo(), "Projeto de gestão");
-//	}
+
+	// ver porque está a falhar
+	// @Test
+	// public void testPrintProjectNameInfo() {
+	// //create controller
+	// PrintTaskInfoController controller = new PrintTaskInfoController(task1);
+	//
+	// assertEquals(controller.printProjectNameInfo(), "Projeto de gestão");
+	// }
 
 	@Test
 	public void testPrintTaskIDCodeInfo() {
-		//create controller
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
+
 		assertEquals(controller.printTaskIDCodeInfo(), "1.1");
 	}
-	
+
 	@Test
 	public void testPrintTaskStateInfo() {
-		//create controller
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
+
 		assertEquals(controller.printTaskStateInfo(), "Created");
 	}
-	
-	 @Test public void testPrintEstimatedTaskStartDateInfo() {
-		//create controller
+
+	@Test
+	public void testPrintEstimatedTaskStartDateInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
-		assertEquals(controller.printTaskEstimatedStartDateInfo(),"---");
-		
+
+		assertEquals(controller.printTaskEstimatedStartDateInfo(), "---");
+
 		Calendar estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
 		task1.setEstimatedTaskStartDate(estimatedStartDate);
-		assertEquals(controller.printTaskEstimatedStartDateInfo(),"Mon, 2 Jan 2017 12:31:00"); 
-		}
-	
-	 @Test public void testPrintTaskStartDateInfo() {
-		//create controller
+		assertEquals(controller.printTaskEstimatedStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
+	}
+
+	@Test
+	public void testPrintTaskStartDateInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
-		assertEquals(controller.printTaskStartDateInfo(),"---");
-		
+
+		assertEquals(controller.printTaskStartDateInfo(), "---");
+
 		Calendar startDate = Calendar.getInstance();
 		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
 		task1.setStartDate(startDate);
-		assertEquals(controller.printTaskStartDateInfo(),"Mon, 2 Jan 2017 12:31:00"); 
+		assertEquals(controller.printTaskStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
 	}
 
-	 @Test public void testPrintTaskDeadlineInfo() {
-		//create controller
+	@Test
+	public void testPrintTaskDeadlineInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
+
 		assertEquals(controller.printTaskDeadlineInfo(), "---");
-		
+
 		Calendar estimatedFinishDate = Calendar.getInstance();
 		estimatedFinishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
 		task1.setTaskDeadline(estimatedFinishDate);
-		assertEquals(controller.printTaskDeadlineInfo(),"Thu, 2 Feb 2017 12:31:00"); 
+		assertEquals(controller.printTaskDeadlineInfo(), "Thu, 2 Feb 2017 12:31:00");
 	}
-	 
-	 @Test public void testPrintTaskFinishDateInfo() {
-		//create controller
+
+	@Test
+	public void testPrintTaskFinishDateInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
+
 		assertEquals(controller.printTaskDeadlineInfo(), "---");
-		
+
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
 		task1.setFinishDate(finishDate);
-		assertEquals(controller.printTaskFinishDateInfo(),"Thu, 2 Feb 2017 12:31:00"); 
+		assertEquals(controller.printTaskFinishDateInfo(), "Thu, 2 Feb 2017 12:31:00");
 	}
-	 
-	 @Test
-		public void testPrintTaskTeamInfo() {
-		//create controller
+
+	@Test
+	public void testPrintTaskTeamInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
 
 		assertEquals(controller.printTaskTeamInfo(), "Daniel, João");
-		}
-	 
-	 @Test
-		public void testPrintTaskBudgetInfo() {
-		//create controller
+	}
+
+	@Test
+	public void testPrintTaskBudgetInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
 		task1.setTaskBudget(1000);
 		assertEquals(controller.printTaskBudgetInfo(), "1000");
-		}
+	}
+
+	@Test
+	public void testPrintInfoFromTask() {
+		// create controller
+		PrintTaskInfoController controller = new PrintTaskInfoController(task1.getTaskID(), project.getIdCode());
+
+		String projectName = controller.printProjectNameInfo();
+		assertEquals("Projeto de gestão", projectName);
+	}
 }
