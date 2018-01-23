@@ -8,7 +8,7 @@ import java.util.Scanner;
 import project.controller.AssignTaskToCollaboratorsController;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
-import project.controller.US206V2RemovalTaskRequestController;
+import project.controller.US206CancelRemovalTaskRequestController;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
@@ -47,7 +47,7 @@ public class US204v2ConfirmTaskAssignmentToCollaboratorUI {
 
 	public void confirmTaskAssignmentToCollaborator() {
 
-		US206V2RemovalTaskRequestController controller = new US206V2RemovalTaskRequestController(this.user);
+		US206CancelRemovalTaskRequestController controller = new US206CancelRemovalTaskRequestController(this.user);
 		controller.setProjectIDFromTaskID(taskID);
 		projID = controller.getProjectID();
 

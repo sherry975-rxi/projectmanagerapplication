@@ -21,7 +21,7 @@ public class PrintTaskInfoController {
 	public PrintTaskInfoController(Task task) {
 		this.task = task;
 	}
-	
+
 	public PrintTaskInfoController(String taskID, Integer projeID) {
 		this.taskID = taskID;
 		this.projeID = projeID;
@@ -29,38 +29,37 @@ public class PrintTaskInfoController {
 		this.task = project.getTaskRepository().getTaskByID(this.taskID);
 	}
 
-	
 	/**
-	 *This method get the task's name and return it as a String
+	 * This method get the task's name and return it as a String
 	 *
-	 *@return String task's name
+	 * @return String task's name
 	 */
 	public String printTaskNameInfo() {
 		return this.task.getDescription();
 	}
-	
+
 	/**
-	 *This method get the task's ID and return it as a String
+	 * This method get the task's ID and return it as a String
 	 *
-	 *@return String task's ID
+	 * @return String task's ID
 	 */
 	public String printTaskIDCodeInfo() {
 		return this.task.getTaskID();
 	}
-	
+
 	/**
-	 *This method get the task's state and return it as a String
+	 * This method get the task's state and return it as a String
 	 *
-	 *@return String task's state
+	 * @return String task's state
 	 */
 	public String printTaskStateInfo() {
 		return this.task.viewTaskStateName();
 	}
-	
+
 	/**
-	 *This method get the task's estimated start date and return it as a String
+	 * This method get the task's estimated start date and return it as a String
 	 *
-	 *@return String task's estimated start date
+	 * @return String task's estimated start date
 	 */
 	public String printTaskEstimatedStartDateInfo() {
 		Calendar estimatedStartDate = this.task.getEstimatedTaskStartDate();
@@ -70,11 +69,11 @@ public class PrintTaskInfoController {
 		}
 		return toPrint;
 	}
-	
+
 	/**
-	 *This method get the task's start date and return it as a String
+	 * This method get the task's start date and return it as a String
 	 *
-	 *@return String task's start date
+	 * @return String task's start date
 	 */
 	public String printTaskStartDateInfo() {
 		Calendar startDate = this.task.getStartDate();
@@ -85,11 +84,10 @@ public class PrintTaskInfoController {
 		return toPrint;
 	}
 
-	
 	/**
-	 *This method get the task's deadline and return it as a String
+	 * This method get the task's deadline and return it as a String
 	 *
-	 *@return String task's deadline
+	 * @return String task's deadline
 	 */
 	public String printTaskDeadlineInfo() {
 		Calendar deadlineDate = this.task.getTaskDeadline();
@@ -101,9 +99,9 @@ public class PrintTaskInfoController {
 	}
 
 	/**
-	 *This method get the task's finish date and return it as a String
+	 * This method get the task's finish date and return it as a String
 	 *
-	 *@return String task's finish date
+	 * @return String task's finish date
 	 */
 	public String printTaskFinishDateInfo() {
 		Calendar finishDate = this.task.getFinishDate();
@@ -115,9 +113,10 @@ public class PrintTaskInfoController {
 	}
 
 	/**
-	 *This method get the task's team and return it as a String (team members separeted by commas)
+	 * This method get the task's team and return it as a String (team members
+	 * separeted by commas)
 	 *
-	 *@return String task's team
+	 * @return String task's team
 	 */
 	public String printTaskTeamInfo() {
 		List<TaskCollaborator> projectTeam = this.task.getTaskTeam();
@@ -129,14 +128,22 @@ public class PrintTaskInfoController {
 		return String.join(", ", team);
 	}
 
-	
 	/**
-	 *This method get the task's budget and return it as a String
+	 * This method get the task's budget and return it as a String
 	 *
-	 *@return String task's budget
+	 * @return String task's budget
 	 */
 	public String printTaskBudgetInfo() {
 		return String.valueOf(this.task.getTaskBudget());
+	}
+
+	/**
+	 * this method get the name of project associated with taskiD.
+	 * 
+	 * @return name of project associated with taskID
+	 */
+	public String printProjectNameInfo() {
+		return this.project.getName();
 	}
 
 }

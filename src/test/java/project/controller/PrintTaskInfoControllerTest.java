@@ -1,6 +1,6 @@
 package project.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
 
@@ -29,7 +29,7 @@ public class PrintTaskInfoControllerTest {
 	Calendar startDate, finishDate;
 	TaskRepository taskRepository;
 	Task task1, task2, task3;
-	
+
 	@Before
 	public void setUp() {
 		// create company
@@ -114,132 +114,158 @@ public class PrintTaskInfoControllerTest {
 		task3 = null;
 		collab1 = null;
 	}
-	
+
 	/**
 	 * Tests if the method of controller gets the task's name
 	 */
 	@Test
 	public void testPrintTaskNameInfo() {
-		//create controller
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
+
 		assertEquals(controller.printTaskNameInfo(), "First task");
 	}
+
+	// ver porque está a falhar
+	// @Test
+	// public void testPrintProjectNameInfo() {
+	// //create controller
+	// PrintTaskInfoController controller = new PrintTaskInfoController(task1);
+	//
+	// assertEquals(controller.printProjectNameInfo(), "Projeto de gestão");
+	// }
 
 	/**
 	 * Tests if the method of controller gets the task's ID
 	 */
 	@Test
 	public void testPrintTaskIDCodeInfo() {
-		//create controller
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
+
 		assertEquals(controller.printTaskIDCodeInfo(), "1.1");
 	}
-	
+
 	/**
 	 * Tests if the method of controller gets the task's state
 	 */
 	@Test
 	public void testPrintTaskStateInfo() {
-		//create controller
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
+
 		assertEquals(controller.printTaskStateInfo(), "Created");
 	}
-	
+
 	/**
 	 * Tests if the method of controller gets the task's estimated start date
 	 */
-	 @Test public void testPrintEstimatedTaskStartDateInfo() {
-		//create controller
+	@Test
+	public void testPrintEstimatedTaskStartDateInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
-		//asserts that the task1 don't have a estimated start date
-		assertEquals(controller.printTaskEstimatedStartDateInfo(),"---");
-		
-		//create a calendar date to set task's estimated start date
+
+		assertEquals(controller.printTaskEstimatedStartDateInfo(), "---");
+
+		// asserts that the task1 don't have a estimated start date
+		assertEquals(controller.printTaskEstimatedStartDateInfo(), "---");
+
+		// create a calendar date to set task's estimated start date
 		Calendar estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
 		task1.setEstimatedTaskStartDate(estimatedStartDate);
-		//asserts that the task1 have the estimated start date that are previous set
-		assertEquals(controller.printTaskEstimatedStartDateInfo(),"Mon, 2 Jan 2017 12:31:00"); 
-		}
-	
-	 /**
-		 * Tests if the method of controller gets the task's start date
-		 */
-	 @Test public void testPrintTaskStartDateInfo() {
-		//create controller
+		// asserts that the task1 have the estimated start date that are previous set
+		assertEquals(controller.printTaskEstimatedStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
+	}
+
+	/**
+	 * Tests if the method of controller gets the task's start date
+	 */
+	@Test
+	public void testPrintTaskStartDateInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
-		//asserts that the task1 don't have a start date
-		assertEquals(controller.printTaskStartDateInfo(),"---");
-		
-		//create a calendar date to set task's start date
+
+		assertEquals(controller.printTaskStartDateInfo(), "---");
+
+		// asserts that the task1 don't have a start date
+		assertEquals(controller.printTaskStartDateInfo(), "---");
+
+		// create a calendar date to set task's start date
 		Calendar startDate = Calendar.getInstance();
 		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
 		task1.setStartDate(startDate);
-		//asserts that the task1 have the start date that are previous set
-		assertEquals(controller.printTaskStartDateInfo(),"Mon, 2 Jan 2017 12:31:00"); 
+		// asserts that the task1 have the start date that are previous set
+		assertEquals(controller.printTaskStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
 	}
 
-	 /**
-		 * Tests if the method of controller gets the task's deadline
-		 */
-	 @Test public void testPrintTaskDeadlineInfo() {
-		//create controller
+	/**
+	 * Tests if the method of controller gets the task's deadline
+	 */
+	@Test
+	public void testPrintTaskDeadlineInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
-		//asserts that the task1 don't have a deadline
+
+		// asserts that the task1 don't have a deadline
 		assertEquals(controller.printTaskDeadlineInfo(), "---");
-		
-		//create a calendar date to set task's deadline
+
+		// create a calendar date to set task's deadline
 		Calendar estimatedFinishDate = Calendar.getInstance();
 		estimatedFinishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
 		task1.setTaskDeadline(estimatedFinishDate);
-		//asserts that the task1 have the deadline that are previous set
-		assertEquals(controller.printTaskDeadlineInfo(),"Thu, 2 Feb 2017 12:31:00"); 
+		// asserts that the task1 have the deadline that are previous set
+		assertEquals(controller.printTaskDeadlineInfo(), "Thu, 2 Feb 2017 12:31:00");
 	}
-	 
-	 /**
-		 * Tests if the method of controller gets the task's finish date
-		 */
-	 @Test public void testPrintTaskFinishDateInfo() {
-		//create controller
+
+	/**
+	 * Tests if the method of controller gets the task's finish date
+	 */
+	@Test
+	public void testPrintTaskFinishDateInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
-		//asserts that the task1 don't have a finish date
+
+		// asserts that the task1 don't have a finish date
 		assertEquals(controller.printTaskDeadlineInfo(), "---");
-		
-		//create a calendar date to set task's finish date
+
+		// create a calendar date to set task's finish date
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
 		task1.setFinishDate(finishDate);
-		//asserts that the task1 have the finish date that are previous set
-		assertEquals(controller.printTaskFinishDateInfo(),"Thu, 2 Feb 2017 12:31:00"); 
+		// asserts that the task1 have the finish date that are previous set
+		assertEquals(controller.printTaskFinishDateInfo(), "Thu, 2 Feb 2017 12:31:00");
 	}
-	 
-	 /**
-		 * Tests if the method of controller gets the task's team
-		 */
-	 @Test
-		public void testPrintTaskTeamInfo() {
-		//create controller
+
+	/**
+	 * Tests if the method of controller gets the task's team
+	 */
+	@Test
+	public void testPrintTaskTeamInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
 
 		assertEquals(controller.printTaskTeamInfo(), "Daniel, João");
-		}
-	
-	 /**
-		 * Tests if the method of controller gets the task's budget
-		 */
-	 @Test
-		public void testPrintTaskBudgetInfo() {
-		//create controller
+	}
+
+	/**
+	 * Tests if the method of controller gets the task's budget
+	 */
+	@Test
+	public void testPrintTaskBudgetInfo() {
+		// create controller
 		PrintTaskInfoController controller = new PrintTaskInfoController(task1);
-		
+
 		task1.setTaskBudget(1000);
 		assertEquals(controller.printTaskBudgetInfo(), "1000");
-		}
+	}
+
+	@Test
+	public void testPrintInfoFromTask() {
+		// create controller
+		PrintTaskInfoController controller = new PrintTaskInfoController(task1.getTaskID(), project.getIdCode());
+
+		String projectName = controller.printProjectNameInfo();
+		assertEquals("Projeto de gestão", projectName);
+	}
 }
