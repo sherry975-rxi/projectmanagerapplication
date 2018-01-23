@@ -5,14 +5,12 @@ import java.util.Scanner;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US206CancelRemovalTaskRequestController;
-import project.model.ProjectCollaborator;
 import project.model.User;
 
 public class US206CancelRemovalTaskRequestUI {
 	User user;
 	String taskID;
 	Integer projID;
-	ProjectCollaborator projcollab;
 
 	/**
 	 * Constructor
@@ -27,7 +25,7 @@ public class US206CancelRemovalTaskRequestUI {
 
 		this.user = user;
 		this.taskID = taskID;
-		this.projID = 0;
+		this.projID = null;
 	}
 
 	public void cancelRemovalTaskRequestUI() {
@@ -62,15 +60,15 @@ public class US206CancelRemovalTaskRequestUI {
 		if (yerOrNo.equalsIgnoreCase("y")) {
 			if (controller.createRequest() == true) {
 				System.out.println("Your task removal is pending Project Manager approval");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(controller.getTaskByTaskID(this.taskID, this.projID));
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user);
 				taskDetailsUI.taskDataDisplay();
 			} else {
 				System.out.println("[ERROR!: Please choose a valid Task]");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(controller.getTaskByTaskID(this.taskID, this.projID));
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user);
 				taskDetailsUI.taskDataDisplay();
 			}
 		} else {
-			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(controller.getTaskByTaskID(this.taskID, this.projID));
+			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user);
 			taskDetailsUI.taskDataDisplay();
 		}
 	}

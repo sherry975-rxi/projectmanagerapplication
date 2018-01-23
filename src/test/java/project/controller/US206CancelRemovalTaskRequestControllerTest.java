@@ -161,15 +161,4 @@ public class US206CancelRemovalTaskRequestControllerTest {
 
 	}
 
-	@Test
-	public void testGetTaskByTaskID() {
-		// Instantiates the controller
-		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
-		us206v2Controller.setTaskID(taskA.getTaskID());
-		us206v2Controller.setProjectID(projectA.getIdCode());
-
-		assertEquals(taskA,
-				us206v2Controller.getTaskByTaskID(us206v2Controller.getTaskID(), us206v2Controller.getProjectID()));
-	}
-
 }
