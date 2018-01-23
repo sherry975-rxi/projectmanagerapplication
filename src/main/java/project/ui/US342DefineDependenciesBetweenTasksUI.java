@@ -9,14 +9,14 @@ import project.model.User;
  * @author group3
  *
  */
-public class DefineDependenciesBetweenTasksUI {
+public class US342DefineDependenciesBetweenTasksUI {
 
 	private User user;
 
 	/**
 	 * @param user
 	 */
-	public DefineDependenciesBetweenTasksUI(User user) {
+	public US342DefineDependenciesBetweenTasksUI(User user) {
 		this.user = user;
 	}
 

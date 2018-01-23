@@ -1,14 +1,30 @@
+/**
+ * 
+ */
 package project.ui;
 
 import java.util.Scanner;
 
+import project.controller.AssignTaskToCollaboratorsController;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US206V2RemovalTaskRequestController;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
-public class CancelRemovalTaskRequestUI {
+/**
+ * In this UI the user (project collaborator) confirms his intention to assign
+ * himself to a task as task collaborator. If he confirms this intent, an
+ * assignment request is sent to the project manager of this project and if the
+ * project manager confirms the assignment, the UI returns a message confirming
+ * the effectiveness of this addition.
+ * 
+ * @author Group3
+ *
+ */
+
+public class US204v2ConfirmTaskAssignmentToCollaboratorUI {
+
 	User user;
 	String taskID;
 	Integer projID;
@@ -23,14 +39,13 @@ public class CancelRemovalTaskRequestUI {
 	 * @param taskID
 	 *            Task to add to user task list
 	 */
-	public CancelRemovalTaskRequestUI(User user, String taskID) {
+	public US204v2ConfirmTaskAssignmentToCollaboratorUI(User user, String taskID) {
 
 		this.user = user;
 		this.taskID = taskID;
-		this.projID = 0;
 	}
 
-	public void cancelRemovalTaskRequestUI() {
+	public void confirmTaskAssignmentToCollaborator() {
 
 		US206V2RemovalTaskRequestController controller = new US206V2RemovalTaskRequestController(this.user);
 		controller.setProjectIDFromTaskID(taskID);
@@ -47,11 +62,15 @@ public class CancelRemovalTaskRequestUI {
 
 		Scanner input = new Scanner(System.in);
 
-		System.out.println("Are you sure you want to remove yourself from this task ? \n");
-		System.out.println("[Y] to remove");
-		System.out.println("[N] to cancel\n");
+		System.out.println("Are you sure you want to assign yourself to this task ? \n");
+		System.out.println("[Y] to add \n");
+		System.out.println("[N] to cancel \n");
 
 		String yerOrNo = input.nextLine();
+
+		AssignTaskToCollaboratorsController assignTaskToCollaboratorsController = new AssignTaskToCollaboratorsController(
+				this.taskID);
+		projcollab = assignTaskToCollaboratorsController.getProjectCollaboratorFromUser(this.user);
 
 		// In case user writes something different from "y" or "n"
 		while (!("n".equalsIgnoreCase(yerOrNo)) && !("y".equalsIgnoreCase(yerOrNo))) {
@@ -60,13 +79,15 @@ public class CancelRemovalTaskRequestUI {
 		}
 
 		if (yerOrNo.equalsIgnoreCase("y")) {
-			if (controller.createRequest() == true) {
-				System.out.println("Your task removal is pending Project Manager approval");
+			if (assignTaskToCollaboratorsController.assignTaskToProjectCollaboratorController(taskID,
+					projcollab) == true) {
+				System.out.println("Your were successfully assigned to this task");
+				// TODO release this commented code when TaskDetailsUI is ready
 				// TaskDetailsUI taskDetailsUI = new
 				// TaskDetailsUI(assignTaskToCollaboratorsController.getTaskByTaskID(this.taskID));
 				// taskDetailsUI.taskDataDisplay();
 			} else {
-				System.out.println("[ERROR!: Please choose a valid Task]");
+				System.out.println("Your were not assigned to this task");
 				// TaskDetailsUI taskDetailsUI = new
 				// TaskDetailsUI(assignTaskToCollaboratorsController.getTaskByTaskID(this.taskID));
 				// taskDetailsUI.taskDataDisplay();
@@ -77,4 +98,5 @@ public class CancelRemovalTaskRequestUI {
 			// taskDetailsUI.taskDataDisplay();
 		}
 	}
+
 }
