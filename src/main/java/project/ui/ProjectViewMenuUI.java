@@ -19,16 +19,19 @@ public class ProjectViewMenuUI {
 		this.user = user;
 	}
 
+	/**
+	 * This method executes all options to execute through this UI
+	 * Presents the project details and the task's list of project
+	 * Uses a switch case to treat the user's input
+	 */
 	public void projectDataDisplay() {
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		Scanner scannerInput = new Scanner(System.in);
-		boolean condition = true;
 
-		while (condition) {
-			System.out.println("PROJECT " + projectInfo.printProjectNameInfo());
-
+			System.out.println("");
+			System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 			System.out.println("______________________________________________");
 			System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
 			System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
@@ -39,7 +42,7 @@ public class ProjectViewMenuUI {
 			System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 			System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 			System.out.println("");
-			System.out.println("TASKS OF " + projectInfo.printProjectNameInfo() + ":");
+			System.out.println("TASKS OF " + projectInfo.printProjectNameInfo().toUpperCase() + ":");
 
 			for (int i = 0; i < projectInfo.getProjectTaskList().size(); i++) {
 				System.out.println(projectInfo.getProjectTaskList().get(i));
@@ -68,7 +71,7 @@ public class ProjectViewMenuUI {
 				int taskPosition = projectInfo.getTasksIDs().indexOf(choice);
 				if(taskPosition >= 0) {
 					Task choosedTask = projectInfo.getTasks().get(taskPosition);
-					TaskDetailsUI userTasks = new TaskDetailsUI(choosedTask);
+					TaskDetailsUI userTasks = new TaskDetailsUI(choosedTask, project, user);
 					userTasks.taskDataDisplay();
 				}				
 				else {
@@ -79,6 +82,5 @@ public class ProjectViewMenuUI {
 				}
 				break;
 			}
-		}
 	}
 }

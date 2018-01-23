@@ -107,7 +107,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		project1.addProjectCollaboratorToProjectTeam(projCollab1);
 		project1.addProjectCollaboratorToProjectTeam(projCollab2);
 
-		// defines finish date to task, and mark it as Finished7
+		// defines finish date to task, and mark it as Finished
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task1.setTaskDeadline(taskDeadlineDateTest1);
 		task1.getTaskState().changeToPlanned();

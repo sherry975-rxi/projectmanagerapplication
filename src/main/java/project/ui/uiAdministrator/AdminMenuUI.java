@@ -21,8 +21,6 @@ public class AdminMenuUI {
 
 	// TODO implement missing options
 	public void adminMenu() {
-		System.out.println("Welcome to admin menu, " + adminLoggedIn.getName() + ". Please choose a command:");
-		System.out.println(options);
 		Scanner input = new Scanner(System.in);
 
 		boolean cycle = true;
@@ -35,6 +33,9 @@ public class AdminMenuUI {
 				System.out.println("(User management commands enabled!)");
 				System.out.println("");
 			}
+
+			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName() + ". Please choose a command:");
+			System.out.println(options);
 
 			command = input.nextLine().toLowerCase();
 
@@ -71,15 +72,14 @@ public class AdminMenuUI {
 
 			case "e":
 				System.out.println("Returning to main menu...");
+				System.out.println("");
 				cycle = false;
 				break;
 
-			case "h":
-				System.out.println(options);
-				break;
-
 			default:
+				System.out.println("Invalid input.");
 				System.out.println("Please choose a command:");
+				System.out.println(options);
 				break;
 
 			}
