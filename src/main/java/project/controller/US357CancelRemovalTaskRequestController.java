@@ -17,21 +17,20 @@ import project.model.User;
  */
 public class US357CancelRemovalTaskRequestController {
 
-	int projectID;
-	String taskID;
-	String userEmail;
+	Project project;
+	Task task;
+	User userToRemove;
 
 	/**
 	 * Constructor to instantiate a new US357CancelRemoveTaskRequestController
 	 * 
-	 * @param projectID
-	 *            Project ID of the project that the user wants to see the removal
-	 *            task request list
+	 * @param project
+	 *            project to show the removal task requests
 	 */
-	public US357CancelRemovalTaskRequestController(int projectID) {
-		this.projectID = projectID;
-		this.taskID = null;
-		this.userEmail = null;
+	public US357CancelRemovalTaskRequestController(Project project) {
+		this.project = project;
+		this.task = null;
+		this.userToRemove = null;
 	}
 
 	/**
@@ -43,9 +42,7 @@ public class US357CancelRemovalTaskRequestController {
 	 */
 	public List<String> viewPendingRemovalRequests() {
 
-		Project projectToGetRequests = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-
-		List<String> listOfPendingRemovalRequests = projectToGetRequests.viewPendingTaskRemovalRequests();
+		List<String> listOfPendingRemovalRequests = project.viewPendingTaskRemovalRequests();
 
 		return listOfPendingRemovalRequests;
 	}
@@ -53,7 +50,7 @@ public class US357CancelRemovalTaskRequestController {
 	/**
 	 * This method receives a string with the information of a certain removal
 	 * request and divides it in order to get the user email and task ID. Then it
-	 * sets the parameters userEmail and taskID from this class with those values.
+	 * sets the parameters user and task from this class with those values.
 	 * 
 	 * @param requestData
 	 *            Information of the request chosen by the user.
@@ -66,43 +63,8 @@ public class US357CancelRemovalTaskRequestController {
 		String taskID = parts[2];
 		String taskDescription = parts[3];
 
-		this.userEmail = userEmail;
-		this.taskID = taskID;
-	}
-
-	/**
-	 * This method checks if the task returned by the getProjById method is not
-	 * null.
-	 * 
-	 * @return TRUE if is valid FALSE if it is not valid.
-	 */
-	public boolean isTaskIDValid() {
-
-		Project projectToGetRequests = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-		Boolean isTaskValid = false;
-
-		if (projectToGetRequests.getTaskRepository().getTaskByID(this.taskID) != null) {
-			isTaskValid = true;
-		}
-
-		return isTaskValid;
-	}
-
-	/**
-	 * This method checks if the user returned by the getUserByEmail method is not
-	 * null.
-	 * 
-	 * @return TRUE if is valid FALSE if it is not valid.
-	 */
-	public boolean isEmailFromAUser() {
-
-		Boolean isUserEmailValid = false;
-
-		if (Company.getTheInstance().getUsersRepository().getUserByEmail(this.userEmail) != null) {
-			isUserEmailValid = true;
-		}
-
-		return isUserEmailValid;
+		this.userToRemove = Company.getTheInstance().getUsersRepository().getUserByEmail(userEmail);
+		this.task = project.getTaskRepository().getTaskByID(taskID);
 	}
 
 	/**
@@ -110,38 +72,19 @@ public class US357CancelRemovalTaskRequestController {
 	 * task. By accepting, the user gets removed from the task team and the task
 	 * request gets deleted from the pending removal request list.
 	 * 
-	 * @param requestData
-	 *            Information of the request chosen by the user.
-	 * 
 	 * @return TRUE if the user removal was successfully done or FALSE if not.
 	 */
-	public boolean acceptRemovalRequestFromTask(String requestData) {
+	public boolean acceptRemovalRequestFromTask() {
 
-		boolean removalAccepted = false;
+		// Gets the project collaborator correspondent to the user
+		ProjectCollaborator projectCollaboratorFromUser = project.findProjectCollaborator(this.userToRemove);
 
-		// This condition certifies that the userEmail and TaskID are valid
-		if (this.isTaskIDValid() == true && this.isEmailFromAUser() == true) {
+		// Removes the project Collaborator correspondent to the user from task.
+		this.task.removeProjectCollaboratorFromTask(projectCollaboratorFromUser);
 
-			// Gets the user with the user email
-			User userToRemoveFromTask = Company.getTheInstance().getUsersRepository().getUserByEmail(userEmail);
-			// Gets the project with the project ID
-			Project project = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-			// Gets the project collaborator correspondent to the user
-			ProjectCollaborator projectCollaboratorFromUser = project.findProjectCollaborator(userToRemoveFromTask);
-			// Gets the task from the task Id
-			Task taskToRemoveFrom = project.getTaskRepository().getTaskByID(taskID);
+		// Deletes the request from the pendingRemovalRequestList
+		return project.deleteTaskRemovalRequest(projectCollaboratorFromUser, this.task);
 
-			// Removes the project Collaborator correspondent to the user from task.
-			taskToRemoveFrom.removeProjectCollaboratorFromTask(projectCollaboratorFromUser);
-
-			// Deletes the request from the pendingRemovalRequestList
-			project.deleteTaskRemovalRequest(projectCollaboratorFromUser, taskToRemoveFrom);
-
-			removalAccepted = true;
-
-		}
-
-		return removalAccepted;
 	}
 
 	/**
@@ -153,25 +96,10 @@ public class US357CancelRemovalTaskRequestController {
 	 */
 	public boolean cancelRemovalRequestFromTask() {
 
-		boolean removalCancelled = false;
-		// This condition certifies that the userEmail and TaskID are valid
-		if (this.isTaskIDValid() == true && this.isEmailFromAUser() == true) {
+		// Gets the project collaborator correspondent to the user
+		ProjectCollaborator projectCollaboratorFromUser = project.findProjectCollaborator(this.userToRemove);
 
-			// Gets the user with the user email
-			User userToRemoveFromTask = Company.getTheInstance().getUsersRepository().getUserByEmail(userEmail);
-			// Gets the project with the project ID
-			Project project = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-			// Gets the project collaborator correspondent to the user
-			ProjectCollaborator projectCollaboratorFromUser = project.findProjectCollaborator(userToRemoveFromTask);
-			// Gets the task from the task Id
-			Task task = project.getTaskRepository().getTaskByID(this.taskID);
-			// Deletes the request from the pendingRemovalRequestList
+		return project.deleteTaskRemovalRequest(projectCollaboratorFromUser, this.task);
 
-			project.deleteTaskRemovalRequest(projectCollaboratorFromUser, task);
-
-			removalCancelled = true;
-		}
-
-		return removalCancelled;
 	}
 }
