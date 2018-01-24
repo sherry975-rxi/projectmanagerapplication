@@ -10,11 +10,13 @@ import org.junit.Test;
 
 import project.model.Company;
 import project.model.User;
+import project.model.UserRepository;
 
 public class US101RegisterUserControllerTest {
 
 	Company Critical;
 	User user1, user2, user3;
+	UserRepository userRepository;
 
 	@Before
 	public void setUp() {
@@ -25,6 +27,9 @@ public class US101RegisterUserControllerTest {
 		// create user
 		user1 = Critical.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		
+		user3 = Critical.getUsersRepository().createUser("João", "joão.gmail.com", "034", "Testes", "919876787",
+				"Street", "2401-343", "Testburg", "Testo", "Testistan");
 
 	}
 
@@ -73,6 +78,26 @@ public class US101RegisterUserControllerTest {
 		// verifies if the addNewUser method returns false when user email is valid
 		assertEquals(testUserRegistrationController.isUserEmailValid(user1.getEmail()), true);
 
+	}
+	
+	@Test
+	public void wasUserAddedTest() {
+	
+		US101RegisterUserController testUserRegistrationController = new US101RegisterUserController();	
+		
+		testUserRegistrationController.addNewUser("Daniel", "danicom", "001", "Porteiro", "920000000", "Password",
+				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+					
+		assertTrue(testUserRegistrationController.wasUserAdded(true));
+		
+		
+		//user 3 was created, added and email was set as invalid
+		
+		testUserRegistrationController.addNewUser("João", "joão@gmail.com", "034", "Testes", "919876787", "Password",
+				"Street", "2401-343", "Testburg", "Testo", "Testistan");
+			
+		assertTrue(testUserRegistrationController.wasUserAdded(true));
+		
 	}
 
 	@Test
