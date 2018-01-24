@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import project.model.Company;
+import project.model.EffortUnit;
 import project.model.Project;
 import project.model.User;
 
@@ -19,6 +20,7 @@ public class US301CreateProjectController {
 	Company myCompany = Company.getTheInstance();
 	List<User> activeCollaboratorList;
 	User selectedUser = null;
+	Project createdProject = null;
 
 	/**
 	 * Constructor for project creation controller
@@ -42,11 +44,11 @@ public class US301CreateProjectController {
 	 */
 	public Project createProject(String name, String description, User projectManager) {
 
-		Project newProject = myCompany.getProjectsRepository().createProject(name, description, projectManager);
+		createdProject = myCompany.getProjectsRepository().createProject(name, description, projectManager);
 
-		myCompany.getProjectsRepository().addProjectToProjectRepository(newProject);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(createdProject);
 
-		return newProject;
+		return createdProject;
 	}
 
 	/**
@@ -83,6 +85,29 @@ public class US301CreateProjectController {
 		}
 		return selectedUser;
 
+	}
+
+	/**
+	 * This method changes the effort Units from the default (hours) to
+	 * person/Month. It can only be called after a project has been created
+	 * 
+	 */
+	public void changeEffortUnitToPersonMonth() {
+
+		createdProject.setEffortUnit(EffortUnit.PERSON_MONTH);
+
+	}
+
+	/**
+	 * This method is called after the project is created and sets the project's
+	 * budget as the chosen value. By default, budget is set to "0"
+	 * 
+	 * @param Integer
+	 *            value that will become the project's budget
+	 */
+	public void changeBudget(int budget) {
+
+		createdProject.setProjectBudget(budget);
 	}
 
 	/**

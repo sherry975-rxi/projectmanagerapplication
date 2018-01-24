@@ -52,9 +52,7 @@ public class US380GetProjectExpiredTaskListController {
 	public String splitStringByFirstSpace(String string) {
 
 		String[] partsTask = string.split(" ");
-		String firstPartOfString = partsTask[0];
-
-		return firstPartOfString;
+		return partsTask[0];
 	}
 
 }
