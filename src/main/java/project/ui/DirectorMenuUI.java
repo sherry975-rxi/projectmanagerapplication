@@ -67,6 +67,7 @@ public class DirectorMenuUI {
 
 			default:
 				System.out.println("Invalid input!");
+				System.out.println("");
 				break;
 			}
 

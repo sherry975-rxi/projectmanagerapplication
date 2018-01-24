@@ -15,9 +15,10 @@ public class US130ListUsersUI {
 		List<String> usersList = controller.listUsersController();
 		for (int i = 0; i < usersList.size(); i++) {
 			System.out.println(usersList.get(i));
+			System.out.println("");
 		}
 
-		System.out.println("Please choose a user (If a valid number isn't provided, no user will be selected.):");
+		System.out.println("Please choose user's index (If a valid number isn't provided, no user will be selected.):");
 		if (input.hasNextInt()) {
 			int index = Integer.parseInt(input.nextLine());
 			user = controller.selectUser(index);// check later

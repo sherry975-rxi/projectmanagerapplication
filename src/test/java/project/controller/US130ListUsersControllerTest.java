@@ -73,9 +73,9 @@ public class US130ListUsersControllerTest {
 		assertTrue(user1String.equals(listUsersController.userDataToString(user1)));
 
 		// creates Strings for all Users and adds them to testList
-		testList.add("1:: " + user1String);
-		testList.add("2:: " + listUsersController.userDataToString(user2));
-		testList.add("3:: " + listUsersController.userDataToString(newUser2));
+		testList.add("::Index 1:: \n" + user1String);
+		testList.add("::Index 2:: \n" + listUsersController.userDataToString(user2));
+		testList.add("::Index 3:: \n" + listUsersController.userDataToString(newUser2));
 
 		// finally, asserts the listUsersController returns only the three Users added
 		assertEquals(testList, listUsersController.listUsersController());

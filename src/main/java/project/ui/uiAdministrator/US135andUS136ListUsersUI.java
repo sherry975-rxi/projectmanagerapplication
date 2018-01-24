@@ -41,17 +41,25 @@ public class US135andUS136ListUsersUI {
 			break;
 		}
 
-		for (String other : searchList) {
-			System.out.println(other);
+		if (searchList.size() == 0) {
+			System.out.println("No users found!");
+			System.out.println("");
+		} else {
+			for (String other : searchList) {
+				System.out.println(other);
+				System.out.println("");
+			}
+
+			System.out.println(
+					"Please choose a user's index (If a valid number isn't provided, no user will be selected.):");
+			if (input.hasNextInt()) {
+				int index = Integer.parseInt(input.nextLine());
+				user = controller.selectUser(index);// check later
+			} else {
+				System.out.println("Not a number!");
+			}
 		}
 
-		System.out.println("Please choose a user (If a valid number isn't provided, no user will be selected.):");
-		if (input.hasNextInt()) {
-			int index = Integer.parseInt(input.nextLine());
-			user = controller.selectUser(index);// check later
-		} else {
-			System.out.println("Not a number!");
-		}
 		System.out.println("Returning to admin menu...");
 		System.out.println("");
 		return user;

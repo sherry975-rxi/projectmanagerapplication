@@ -22,7 +22,7 @@ public class US130ListUsersController {
 
 		for (int i = 0; i < userList.size(); i++) {
 			Integer showIndex = i + 1;
-			String toShowUser = showIndex.toString() + ":: " + userDataToString(userList.get(i));
+			String toShowUser = "::Index " + showIndex.toString() + ":: \n" + userDataToString(userList.get(i));
 			userListAsString.add(toShowUser);
 		}
 
