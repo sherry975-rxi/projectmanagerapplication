@@ -70,6 +70,11 @@ public class TaskDetailsUI {
 					user, taskID);
 			createAssignmentRequest.confirmTaskAssignmentToCollaborator();
 			break;
+		case "3":
+			US206CancelRemovalTaskRequestUI createCollabRemovalRequest = new US206CancelRemovalTaskRequestUI(user,
+					taskID);
+			createCollabRemovalRequest.cancelRemovalTaskRequestUI();
+			break;
 		case "P":
 			ProjectViewMenuUI previousMenu = new ProjectViewMenuUI(this.projectID, user);
 			previousMenu.projectDataDisplay();
