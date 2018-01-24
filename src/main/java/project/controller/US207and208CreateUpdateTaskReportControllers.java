@@ -35,6 +35,14 @@ public class US207and208CreateUpdateTaskReportControllers {
 
 	}
 
+	/**
+	 * This controller creates or updates a Report with a given time
+	 * 
+	 * @param newTime
+	 *            The time associated to the report
+	 * 
+	 * @return TRUE if the report is created, FALSE if not
+	 */
 	public boolean createReportController(int newTime) {
 
 		boolean wasReportCreated = false;
@@ -44,12 +52,10 @@ public class US207and208CreateUpdateTaskReportControllers {
 			task.createReport(task.getTaskCollaboratorByEmail(email));
 
 			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
-		} else if (task.doesTaskHaveReportByGivenUser(email)) {
-
+		} else {
+			task.changeReportedTime(newTime, username.getEmail());
 			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
 
-		} else {
-			wasReportCreated = false;
 		}
 		return wasReportCreated;
 

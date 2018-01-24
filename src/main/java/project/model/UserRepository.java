@@ -92,6 +92,25 @@ public class UserRepository {
 	}
 
 	/**
+	 * This method returns a list of all active collaborators (usersRepository)
+	 * 
+	 * @return allCollaborators This is the copy of the List of all Users in the
+	 *         repository
+	 */
+	public List<User> getAllActiveCollaboratorsFromRepository() {
+
+		List<User> allCollaborators = new ArrayList<>();
+		for (User other : this.usersRepository) {
+			if (other.isUserActive() && other.getUserProfile().equals(Profile.COLLABORATOR)) {
+				allCollaborators.add(other);
+			}
+		}
+
+		return allCollaborators;
+
+	}
+
+	/**
 	 * This method allows the Administrator to access the user list and search users
 	 * by parts of email. This is achieved by using the .contains() method.
 	 *

@@ -44,7 +44,6 @@ public class ListProjectCollaboratorsTest {
 		newUser2 = Critical.getUsersRepository().getAllUsersFromRepository().get(2);
 		newUser3 = Critical.getUsersRepository().getAllUsersFromRepository().get(3);
 
-		projectController.setMyCompany(Critical);
 		project1 = projectController.createProject("testing", "testing a lot", userManager);
 
 	}

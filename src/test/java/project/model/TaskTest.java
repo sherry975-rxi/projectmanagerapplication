@@ -613,8 +613,15 @@ public class TaskTest {
 	 */
 	@Test
 	public void testRemoveAllCollaboratorsFromTaskTeam() {
+		// Adds 2 collabs to testTask
 		testTask.addProjectCollaboratorToTask(collab2);
+		testTask.addProjectCollaboratorToTask(collab1);
+
+		// Removes collab2 from testTask
+		testTask.removeProjectCollaboratorFromTask(collab2);
+		// Removes All Collaborators from TaskTeam
 		testTask.removeAllCollaboratorsFromTaskTeam();
+
 		assertFalse(testTask.doesTaskTeamHaveActiveUsers());
 	}
 
@@ -662,5 +669,80 @@ public class TaskTest {
 		 */
 		assertFalse(testTask2.createReport(tWorker1));
 
+	}
+
+	/*
+	 * Tests the getTaskCollaboratorByEmail
+	 */
+	@Test
+	public void testGetTaskCollaboratorByEmail() {
+
+		// Adds collab1(tWorker1) to the task
+		testTask2.addProjectCollaboratorToTask(collab1);
+
+		// Checks if the method returns tWorker1
+		assertEquals(testTask2.getTaskCollaboratorByEmail("user@gmail.com"), tWorker1);
+
+		// Checks in an inexistent email returns null
+		assertEquals(testTask2.getTaskCollaboratorByEmail("null@gmail.com"), null);
+
+	}
+
+	@Test
+	public void doesTaskHaveReportByGivenUser() {
+		// Adds collab1(tWorker1) to the task
+		testTask2.addProjectCollaboratorToTask(collab1);
+
+		// Creates a report by tWorker1
+		testTask2.createReport(tWorker1);
+
+		// Checks if the task a report by its user
+		assertTrue(testTask2.doesTaskHaveReportByGivenUser("user@gmail.com"));
+
+		// checks that the task doesnt have a report by an email from an user that
+		// doesn't exist in the task
+		assertFalse(testTask2.doesTaskHaveReportByGivenUser("nullr@gmail.com"));
+
+	}
+
+	@Test
+	public void getReportedTimeByTaskCollaborator() {
+
+		// Adds collab1(tWorker1) to the task
+		testTask2.addProjectCollaboratorToTask(collab1);
+
+		// Creates a report by tWorker1
+		testTask2.createReport(tWorker1);
+
+		// updates the report time
+		testTask2.changeReportedTime(20, "user@gmail.com");
+
+		// Checks if the task
+		assertEquals(testTask2.getReportedTimeByTaskCollaborator("user@gmail.com"), 20);
+
+		// Checks if the task a report by its user
+		assertEquals(testTask2.getReportedTimeByTaskCollaborator("null@gmail.com"), 0);
+
+	}
+
+	@Test
+
+	public void getReportedNameByTaskCollaborator() {
+
+		// Adds collab1(tWorker1) to the task
+		testTask2.addProjectCollaboratorToTask(collab1);
+
+		// Creates a report by tWorker1
+		testTask2.createReport(tWorker1);
+
+		// updates the report time
+		testTask2.changeReportedTime(20, "user@gmail.com");
+
+		// Checks the getReporterName method
+		assertEquals(testTask2.getReporterName("user@gmail.com"), "pepe");
+
+		// Checks if the getReporterName returns an empty string when it doesnt have an
+		// user with given email
+		assertEquals(testTask2.getReporterName("null@gmail.com"), "");
 	}
 }
