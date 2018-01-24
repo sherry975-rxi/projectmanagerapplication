@@ -32,15 +32,7 @@ public class US215TotalTimeSpentOnTaskLastMonthController {
 	 */
 	public double getTotalTimeOfFinishedTasksFromUserLastMonth(User user) {
 
-		if (myProjRepo.getUserTasks(user) != null) {
-
-			return myProjRepo.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
-
-		}
-
-		else
-
-			return 0;
+		return myProjRepo.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
 	}
 
 }
