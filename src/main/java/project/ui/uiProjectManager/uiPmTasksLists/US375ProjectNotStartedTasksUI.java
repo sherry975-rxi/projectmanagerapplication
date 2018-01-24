@@ -85,8 +85,7 @@ public class US375ProjectNotStartedTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			US375ProjectNotStartedTasksUI projectNotStartedTasksUI = new US375ProjectNotStartedTasksUI();
-			projectNotStartedTasksUI.projectNotStartedTasksUI(this.project, this.user);
+			this.projectNotStartedTasksUI(this.project, this.user);
 		}
 	}
 
