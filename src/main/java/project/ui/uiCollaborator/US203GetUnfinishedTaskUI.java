@@ -24,8 +24,8 @@ public class US203GetUnfinishedTaskUI {
 
 		for (int i = 0; i < unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).size(); i++) {
 			t = t + 1;
-			System.out.println("[" + t + "] " + " "
-					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID() + " "
+			System.out.println("["
+					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID() + "]" + " "
 					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getDescription());
 		}
 		System.out.println("___________________________________________________");

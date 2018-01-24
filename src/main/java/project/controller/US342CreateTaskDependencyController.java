@@ -41,7 +41,7 @@ public class US342CreateTaskDependencyController {
 
 		List<Task> tasksFromProject = new ArrayList<>();
 
-		tasksFromProject.addAll(project.getTaskRepository().getProjectTaskRepository());
+		tasksFromProject = project.getTaskRepository().getProjectTaskRepository();
 
 		return tasksFromProject;
 	}
@@ -90,6 +90,22 @@ public class US342CreateTaskDependencyController {
 		String estimatedStartDateString = newDateFormat.format(estimatedStartDate).toString();
 
 		return estimatedStartDateString;
+	}
+
+	public boolean projectContainsSelectedTask(String id) {
+		boolean result = false;
+		for (int i = 0; i < project.getTaskRepository().getProjectTaskRepository().size(); i++) {
+			if (id.equals(project.getTaskRepository().getProjectTaskRepository().get(i).getTaskID())) {
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
+
+	public Task getTaskByID(String id) {
+		Task result = project.getTaskRepository().getTaskByID(id);
+		return result;
 	}
 
 }
