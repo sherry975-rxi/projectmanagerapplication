@@ -1,6 +1,10 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import project.model.Company;
+import project.model.EffortUnit;
 import project.model.Project;
 import project.model.User;
 
@@ -13,7 +17,10 @@ import project.model.User;
  */
 public class US301CreateProjectController {
 
-	Company myCompany;
+	Company myCompany = Company.getTheInstance();
+	List<User> activeCollaboratorList;
+	User selectedUser = null;
+	Project createdProject = null;
 
 	/**
 	 * Constructor for project creation controller
@@ -37,19 +44,86 @@ public class US301CreateProjectController {
 	 */
 	public Project createProject(String name, String description, User projectManager) {
 
-		Project newProject = myCompany.getProjectsRepository().createProject(name, description, projectManager);
+		createdProject = myCompany.getProjectsRepository().createProject(name, description, projectManager);
 
-		myCompany.getProjectsRepository().addProjectToProjectRepository(newProject);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(createdProject);
 
-		return newProject;
+		return createdProject;
 	}
 
 	/**
-	 * Sets the company used in this class.
+	 * This controller returns a list of all activeCollaborators in the User
+	 * Repository
 	 * 
-	 * @param companyToSet
+	 * @return List<User> a copy of the User database
 	 */
-	public void setMyCompany(Company companyToSet) {
-		this.myCompany = companyToSet;
+	public List<String> listActiveCollaborators() {
+		this.activeCollaboratorList = myCompany.getUsersRepository().getAllActiveCollaboratorsFromRepository();
+		List<String> userListAsString = new ArrayList<>();
+
+		for (int i = 0; i < activeCollaboratorList.size(); i++) {
+			Integer showIndex = i + 1;
+			String toShowUser = "::Collaborator nº" + showIndex.toString() + ":: \n"
+					+ userDataToString(activeCollaboratorList.get(i));
+			userListAsString.add(toShowUser);
+		}
+
+		return userListAsString;
+
 	}
+
+	/**
+	 * This method selects a User and returns it to the UI, to be assigned as
+	 * ProjectManager by the Director
+	 * 
+	 * @return User to be Returned and handled by the Director
+	 */
+	public User selectCollaborator(int index) {
+		int actualIndex = index - 1;
+		if (actualIndex >= 0 && actualIndex < activeCollaboratorList.size()) {
+			selectedUser = activeCollaboratorList.get(actualIndex);
+		}
+		return selectedUser;
+
+	}
+
+	/**
+	 * This method changes the effort Units from the default (hours) to
+	 * person/Month. It can only be called after a project has been created
+	 * 
+	 */
+	public void changeEffortUnitToPersonMonth() {
+
+		createdProject.setEffortUnit(EffortUnit.PERSON_MONTH);
+
+	}
+
+	/**
+	 * This method is called after the project is created and sets the project's
+	 * budget as the chosen value. By default, budget is set to "0"
+	 * 
+	 * @param Integer
+	 *            value that will become the project's budget
+	 */
+	public void changeBudget(int budget) {
+
+		createdProject.setProjectBudget(budget);
+	}
+
+	/**
+	 * This is a utility method that converts a User object into a String of data,
+	 * to be displayed in the UI
+	 * 
+	 * @param User
+	 *            to be converted
+	 * @return String of the user's data
+	 */
+	public String userDataToString(User toConvert) {
+
+		String data = toConvert.getIdNumber() + ": " + toConvert.getName() + " (" + toConvert.getEmail() + "; "
+				+ toConvert.getPhone() + ") - " + toConvert.getFunction();
+
+		return data;
+	}
+
 }

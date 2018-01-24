@@ -8,6 +8,10 @@ import project.ui.MainMenuUI;
 
 public class US203GetUnfinishedTaskUI {
 	private User user;
+	private Boolean isPreviousUIFromTasks;
+	
+	private String[] split;
+	private int projID;
 
 	public void displayOptions(User user) {
 		this.user = user;
@@ -38,16 +42,32 @@ public class US203GetUnfinishedTaskUI {
 		switch (option) {
 
 		case "B":
-			// Menu3 menuThree = new Menu3();
-			// // TODO when this menu is done is necessary to include a method.
+			UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
+			previousMenu.displayFunctionalities();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
-
 			break;
 		case "E":
 			System.exit(0);
+			break;
+		default:
+			try {
+				split = option.split("\\.");
+				projID = Integer.valueOf(split[0]);
+
+				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, this.user, this.isPreviousUIFromTasks);
+				taskSelected.taskDataDisplay();
+			}
+
+			catch (NullPointerException npe) {
+				System.out.println("Please choose a valid option: ");
+				System.out.println("");
+				US203GetUnfinishedTaskUI unfinishedTaskByUser1 = new US203GetUnfinishedTaskUI();
+				unfinishedTaskByUser1.displayOptions(this.user);
+			}
+
+			break;
 		}
 	}
-
 }

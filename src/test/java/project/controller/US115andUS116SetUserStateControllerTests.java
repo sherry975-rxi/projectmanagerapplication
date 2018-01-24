@@ -8,9 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.model.Company;
+import project.model.Profile;
 import project.model.User;
 
 public class US115andUS116SetUserStateControllerTests {
+
+	Profile director = Profile.DIRECTOR;
+	Profile collaborator = Profile.COLLABORATOR;
 
 	Company myCompany;
 	User newUser2;
@@ -58,6 +62,14 @@ public class US115andUS116SetUserStateControllerTests {
 		// Uses the controller to reactivate the user and confirms its state.
 		testUserStateController.changeUserState();
 		assertTrue(newUser2.isUserActive());
+	}
+
+	@Test
+	public void userDataAsString() {
+		US115andUS116SetUserStateController testUserStateController = new US115andUS116SetUserStateController(newUser2);
+		assertTrue("(ACTIVE)".equals(testUserStateController.userStateAsString()));
+		testUserStateController.changeUserState();
+		assertTrue("(DISABLED)".equals(testUserStateController.userStateAsString()));
 	}
 
 }

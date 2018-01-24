@@ -365,6 +365,23 @@ public class TaskRepository {
 	}
 
 	/**
+	 * This method returns all OnGoing Tasks
+	 * 
+	 * @return List with the tasks set to "OnGoing" state
+	 */
+	public List<Task> getOnGoingTasks() {
+		List<Task> allOnGoing = new ArrayList<>();
+
+		for (Task other : this.getProjectTaskRepository()) {
+			if (other.viewTaskStateName().equals("OnGoing")) {
+				allOnGoing.add(other);
+			}
+
+		}
+		return allOnGoing;
+	}
+
+	/**
 	 * this method create a list with all unstarted tasks in project.
 	 * 
 	 * @return allUnstartedTasks
@@ -391,9 +408,10 @@ public class TaskRepository {
 		List<Task> expiredTasks = new ArrayList<>();
 		for (Task other : this.projectTasks) {
 			if (!other.isTaskFinished()) {
-				if (other.getTaskDeadline().before(today)) {
-					expiredTasks.add(other);
-
+				if (other.getTaskDeadline() != null) {
+					if (other.getTaskDeadline().before(today)) {
+						expiredTasks.add(other);
+					}
 				}
 			}
 		}

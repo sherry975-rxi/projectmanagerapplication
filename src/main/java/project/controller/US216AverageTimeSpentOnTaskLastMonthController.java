@@ -32,15 +32,7 @@ public class US216AverageTimeSpentOnTaskLastMonthController {
 	 */
 	public double getAverageTimeOfFinishedTasksFromUserLastMonth(User user) {
 
-		if (myProjRepo.getUserTasks(user) != null) {
-
-			return myProjRepo.getAverageTimeOfFinishedTasksFromUserLastMonth(user);
-
-		}
-
-		else
-
-			return 0;
+		return myProjRepo.getAverageTimeOfFinishedTasksFromUserLastMonth(user);
 	}
 
 }

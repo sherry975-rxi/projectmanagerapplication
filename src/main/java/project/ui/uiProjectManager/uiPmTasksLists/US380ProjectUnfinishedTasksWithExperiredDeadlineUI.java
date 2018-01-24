@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
-import project.controller.US375GetProjectNotStartedTaskListController;
+import project.controller.US380GetProjectExpiredTaskListController;
 import project.model.Project;
 import project.model.User;
 import project.ui.MainMenuUI;
 import project.ui.uiProjectManager.ProjectManagerMainMenuUI;
 
-public class US375ProjectNotStartedTasksUI {
+public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 	private Project project;
 	private User user;
 
-	public void projectNotStartedTasksUI(Project project, User user) {
+	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
 
 		this.project = project;
 		this.user = user;
@@ -38,15 +38,15 @@ public class US375ProjectNotStartedTasksUI {
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
 		System.out.println("___________________________________________________");
-		System.out.println("                NOT STARTED TASKS");
+		System.out.println("     UNFINISHED TASKS WITH EXPIRED DEADLINE");
 		System.out.println("___________________________________________________");
 
-		US375GetProjectNotStartedTaskListController controller = new US375GetProjectNotStartedTaskListController();
+		US380GetProjectExpiredTaskListController controller = new US380GetProjectExpiredTaskListController();
 
 		List<String> listOfExpiredTaskID = new ArrayList<>();
 
-		for (int i = 0; i < controller.getProjectNotStartedTaskList(this.project).size(); i++) {
-			String taskInfo = controller.getProjectNotStartedTaskList(this.project).get(i);
+		for (int i = 0; i < controller.getUnfinishedTaskListWithExpiredDeadline(this.project).size(); i++) {
+			String taskInfo = controller.getUnfinishedTaskListWithExpiredDeadline(this.project).get(i);
 			System.out.println(taskInfo);
 			listOfExpiredTaskID.add(controller.splitStringByFirstSpace(taskInfo));
 		}
@@ -85,7 +85,7 @@ public class US375ProjectNotStartedTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.projectNotStartedTasksUI(this.project, this.user);
+			this.displayUnfinishedTasksWithExpiredDeadline(this.project, this.user);
 		}
 	}
 

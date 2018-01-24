@@ -47,7 +47,8 @@ public class DirectorMenuUI {
 				break;
 
 			case "2":
-				System.out.println("Not yet implemented!");
+				US301CreateProjectUI createProject = new US301CreateProjectUI();
+				createProject.createProject();
 				break;
 
 			case "3":

@@ -817,6 +817,36 @@ public class ProjectTest {
 		// appropriately
 		p1.setProjectStatus(Project.EXECUTION);
 		assertTrue(p1.getProjectStatusName().equals("Execution"));
+		p1.setProjectStatus(Project.CLOSE);
+		assertTrue(p1.getProjectStatusName().equals("Closed"));
+		p1.setProjectStatus(Project.DELIVERY);
+		assertTrue(p1.getProjectStatusName().equals("Delivery"));
+		p1.setProjectStatus(Project.EXECUTION);
+		assertTrue(p1.getProjectStatusName().equals("Execution"));
+		p1.setProjectStatus(Project.REVIEW);
+		assertTrue(p1.getProjectStatusName().equals("Review"));
+		p1.setProjectStatus(Project.INITIATION);
+		assertTrue(p1.getProjectStatusName().equals("Initiation"));
+		p1.setProjectStatus(Project.REVIEW);
+		assertTrue(p1.getProjectStatusName().equals("Review"));
+
+	}
+
+	@Test
+	public void getPendingTaskRemovalRequests() {
+		List<TaskTeamRequest> listOfPendingRequests = new ArrayList<>();
+		assertEquals(p1.getPendingTaskAssignementRequests(), listOfPendingRequests);
+
+		// Creates a TaskAssignementRequest
+		p1.createTaskAssignementRequest(projectCollaborator1, task1);
+		TaskTeamRequest newReq = new TaskTeamRequest(projectCollaborator1, task1);
+
+		/*
+		 * Cannot test because the equals method doesn't allow me to test the
+		 * gePendingTasksRequests with a new created request
+		 * 
+		 */
+
 	}
 
 }
