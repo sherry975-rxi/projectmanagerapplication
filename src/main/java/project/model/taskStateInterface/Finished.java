@@ -15,6 +15,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return True if valid, False if not
 	 */
+	@Override
 	public boolean isValid() {
 		boolean valid = false;
 		if (task.getFinishDate() != null) {
@@ -28,6 +29,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToCreated() {
 		return false;
 	}
@@ -37,6 +39,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToPlanned() {
 		return false;
 	}
@@ -46,6 +49,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToAssigned() {
 		return false;
 	}
@@ -55,6 +59,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToReady() {
 		return false;
 	}
@@ -64,6 +69,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToOnGoing() {
 		boolean condition = false;
 		if (isTransitionToOnGoingPossible()) {
@@ -81,6 +87,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToStandBy() {
 		return false;
 	}
@@ -90,6 +97,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToCancelled() {
 		return false;
 	}
@@ -99,6 +107,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToFinished() {
 		return false;
 	}
@@ -109,6 +118,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToCreatedPossible() {
 		return false;
 	}
@@ -119,6 +129,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToPlannedPossible() {
 		return false;
 	}
@@ -129,6 +140,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToAssignedPossible() {
 		return false;
 	}
@@ -139,6 +151,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToReadyPossible() {
 		return false;
 	}
@@ -149,6 +162,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToOnGoingPossible() {
 		return true;
 	}
@@ -159,6 +173,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToStandByPossible() {
 		return false;
 	}
@@ -169,6 +184,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToCancelledPossible() {
 		return false;
 	}
@@ -179,6 +195,7 @@ public class Finished implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToFinishedPossible() {
 		return false;
 	}

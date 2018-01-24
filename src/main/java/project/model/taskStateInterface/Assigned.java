@@ -18,6 +18,7 @@ public class Assigned implements TaskStateInterface {
 	 */
 	// TODO what happens when the finished dependency of a "ready" task reverts to
 	// Unfinished?
+	@Override
 	public boolean isValid() {
 		return task.doesTaskTeamHaveActiveUsers();
 	}
@@ -28,6 +29,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToCreated() {
 		return false;
 	}
@@ -37,6 +39,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToPlanned() {
 		boolean condition = false;
 		if (isTransitionToPlannedPossible()) {
@@ -55,6 +58,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToAssigned() {
 		return false;
 	}
@@ -64,6 +68,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToReady() {
 		boolean condition = false;
 		if (isTransitionToReadyPossible()) {
@@ -83,6 +88,7 @@ public class Assigned implements TaskStateInterface {
 	 * @return Void
 	 */
 	// TODO Can Task skip Ready State if it has no dependencies?
+	@Override
 	public boolean changeToOnGoing() {
 		return false;
 	}
@@ -93,6 +99,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToStandBy() {
 		return false;
 	}
@@ -103,6 +110,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToCancelled() {
 		return false;
 	}
@@ -113,6 +121,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToFinished() {
 		return false;
 	}
@@ -123,6 +132,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToCreatedPossible() {
 		return false;
 	}
@@ -133,6 +143,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return true
 	 */
+	@Override
 	public boolean isTransitionToPlannedPossible() {
 		return true;
 	}
@@ -143,6 +154,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToAssignedPossible() {
 		return false;
 	}
@@ -153,6 +165,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return true
 	 */
+	@Override
 	public boolean isTransitionToReadyPossible() {
 		return true;
 	}
@@ -163,6 +176,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToOnGoingPossible() {
 		return false;
 	}
@@ -173,6 +187,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToStandByPossible() {
 		return false;
 	}
@@ -183,6 +198,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToCancelledPossible() {
 		return false;
 	}
@@ -193,6 +209,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToFinishedPossible() {
 		return false;
 	}

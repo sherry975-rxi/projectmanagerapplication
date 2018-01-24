@@ -8,7 +8,6 @@ import java.util.Scanner;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US204v2createRequestAddCollaboratorToTaskTeamController;
-import project.controller.US206CancelRemovalTaskRequestController;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
@@ -23,7 +22,7 @@ import project.model.User;
  *
  */
 
-public class US204v2ConfirmTaskAssignmentToCollaboratorUI {
+public class US204v2CreateTaskAssignmentToCollaboratorUI {
 
 	User user;
 	String taskID;
@@ -39,18 +38,14 @@ public class US204v2ConfirmTaskAssignmentToCollaboratorUI {
 	 * @param taskID
 	 *            Task to add to user task list
 	 */
-	public US204v2ConfirmTaskAssignmentToCollaboratorUI(User user, String taskID) {
+	public US204v2CreateTaskAssignmentToCollaboratorUI(User user, String taskID) {
 
 		this.user = user;
 		this.taskID = taskID;
 		this.projID = null;
 	}
 
-	public void confirmTaskAssignmentToCollaborator() {
-
-		US206CancelRemovalTaskRequestController control = new US206CancelRemovalTaskRequestController(this.user);
-		control.setProjectIDFromTaskID(taskID);
-		projID = control.getProjectID();
+	public void createTaskAssignment() {
 
 		PrintProjectInfoController printProjectInfoController = new PrintProjectInfoController(this.projID);
 		String projectName = printProjectInfoController.printProjectNameInfo();

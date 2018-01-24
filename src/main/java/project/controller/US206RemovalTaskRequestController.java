@@ -16,7 +16,7 @@ import project.model.User;
  *         uma tarefa que consta na minha lista de tarefas.
  *
  */
-public class US206CancelRemovalTaskRequestController {
+public class US206RemovalTaskRequestController {
 
 	private Integer projectID;
 	private String taskID;
@@ -32,7 +32,7 @@ public class US206CancelRemovalTaskRequestController {
 	 * @param taskID
 	 *            Task ID of the task that the user wants to be removed from
 	 */
-	public US206CancelRemovalTaskRequestController(User user) {
+	public US206RemovalTaskRequestController(User user) {
 		this.user = user;
 		this.projectID = null;
 		this.taskID = null;

@@ -51,8 +51,8 @@ public class Task {
 	 *            Description of the task set by the user
 	 */
 	public Task(int taskCounter, int projId, String description) {
-		Integer taskNumber = (Integer) taskCounter;
-		Integer projCode = (Integer) projId;
+		Integer taskNumber = taskCounter;
+		Integer projCode = projId;
 		this.taskID = projCode.toString() + "." + taskNumber.toString();
 		this.description = description;
 		this.creationDate = Calendar.getInstance();
@@ -96,8 +96,8 @@ public class Task {
 	 */
 	public Task(int taskCounter, int projId, String description, int estimatedTaskEffort,
 			Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedBudgetCostTask) {
-		Integer taskNumber = (Integer) taskCounter;
-		Integer projCode = (Integer) projId;
+		Integer taskNumber = taskCounter;
+		Integer projCode = projId;
 		this.taskID = projCode.toString() + "." + taskNumber.toString();
 		this.description = description;
 		this.creationDate = Calendar.getInstance();

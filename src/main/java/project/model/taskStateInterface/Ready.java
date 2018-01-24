@@ -18,6 +18,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return True if valid, False if not
 	 */
+	@Override
 	public boolean isValid() {
 		boolean valid = false;
 		if (!task.hasActiveDependencies()) {
@@ -32,6 +33,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToCreated() {
 		return false;
 	}
@@ -41,6 +43,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToPlanned() {
 		boolean condition = false;
 		if (isTransitionToPlannedPossible()) {
@@ -59,6 +62,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToAssigned() {
 		return false;
 	}
@@ -69,6 +73,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToReady() {
 		return false;
 	}
@@ -78,6 +83,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToOnGoing() {
 		boolean condition = false;
 		if (isTransitionToOnGoingPossible()) {
@@ -96,6 +102,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToStandBy() {
 		return false;
 	}
@@ -106,6 +113,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return TRUE if state was changed and FALSE if state was not changed
 	 */
+	@Override
 	public boolean changeToCancelled() {
 		return false;
 	}
@@ -116,6 +124,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
+	@Override
 	public boolean changeToFinished() {
 		return false;
 	}
@@ -126,6 +135,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToCreatedPossible() {
 		return false;
 	}
@@ -136,6 +146,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return true
 	 */
+	@Override
 	public boolean isTransitionToPlannedPossible() {
 		return true;
 	}
@@ -146,6 +157,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToAssignedPossible() {
 		return false;
 	}
@@ -156,6 +168,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToReadyPossible() {
 		return false;
 	}
@@ -166,6 +179,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return true
 	 */
+	@Override
 	public boolean isTransitionToOnGoingPossible() {
 		return true;
 	}
@@ -176,6 +190,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToStandByPossible() {
 		return false;
 	}
@@ -186,6 +201,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToCancelledPossible() {
 		return false;
 	}
@@ -196,6 +212,7 @@ public class Ready implements TaskStateInterface {
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean isTransitionToFinishedPossible() {
 		return false;
 	}

@@ -1,7 +1,5 @@
 package project.model;
 
-import java.util.Calendar;
-
 /**
  * 
  * This Class Stores Reported Information associated with a Task Collaborator

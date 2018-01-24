@@ -16,6 +16,7 @@ public class Cancelled implements TaskStateInterface {
 	 * 
 	 * @return true if is possible, false if not
 	 */
+	@Override
 	public boolean isValid() {
 		boolean validation = false;
 		if (task.getFinishDate() == null && task.getCancelDate() == null) {
@@ -24,31 +25,38 @@ public class Cancelled implements TaskStateInterface {
 		return validation;
 	}
 
+	@Override
 	public boolean changeToCreated() {
 		return false;
 	}
 
+	@Override
 	public boolean changeToPlanned() {
 		return false;
 	}
 
+	@Override
 	public boolean changeToAssigned() {
 		return false;
 
 	}
 
+	@Override
 	public boolean changeToReady() {
 		return false;
 	}
 
+	@Override
 	public boolean changeToOnGoing() {
 		return false;
 	}
 
+	@Override
 	public boolean changeToStandBy() {
 		return false;
 	}
 
+	@Override
 	public boolean changeToCancelled() {
 		return false;
 	}
@@ -57,6 +65,7 @@ public class Cancelled implements TaskStateInterface {
 	 * This method changes the state of a Task from "Cancelled" to the "Finished"
 	 * state, if it's possible
 	 */
+	@Override
 	public boolean changeToFinished() {
 		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
@@ -75,6 +84,7 @@ public class Cancelled implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToCreatedPossible() {
 		return false;
 	}
@@ -85,6 +95,7 @@ public class Cancelled implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToPlannedPossible() {
 		return false;
 	}
@@ -95,6 +106,7 @@ public class Cancelled implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToAssignedPossible() {
 		return false;
 	}
@@ -105,6 +117,7 @@ public class Cancelled implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToReadyPossible() {
 		return false;
 	}
@@ -115,6 +128,7 @@ public class Cancelled implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToOnGoingPossible() {
 		return false;
 	}
@@ -125,6 +139,7 @@ public class Cancelled implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToStandByPossible() {
 		return false;
 	}
@@ -135,6 +150,7 @@ public class Cancelled implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToCancelledPossible() {
 		return false;
 	}
@@ -145,6 +161,7 @@ public class Cancelled implements TaskStateInterface {
 	 * 
 	 * @return true if possible, false if not
 	 */
+	@Override
 	public boolean isTransitionToFinishedPossible() {
 		return true;
 	}

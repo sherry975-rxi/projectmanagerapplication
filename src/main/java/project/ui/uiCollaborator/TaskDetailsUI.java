@@ -66,12 +66,12 @@ public class TaskDetailsUI {
 			System.out.println("---- SUCCESS Task Marked As Finished ----");
 			break;
 		case "2":
-			US204v2ConfirmTaskAssignmentToCollaboratorUI createAssignmentRequest = new US204v2ConfirmTaskAssignmentToCollaboratorUI(
+			US204v2CreateTaskAssignmentToCollaboratorUI createAssignmentRequest = new US204v2CreateTaskAssignmentToCollaboratorUI(
 					user, taskID);
-			createAssignmentRequest.confirmTaskAssignmentToCollaborator();
+			createAssignmentRequest.createTaskAssignment();
 			break;
 		case "3":
-			US206CancelRemovalTaskRequestUI createCollabRemovalRequest = new US206CancelRemovalTaskRequestUI(user,
+			US206CreateRemovalTaskRequestUI createCollabRemovalRequest = new US206CreateRemovalTaskRequestUI(user,
 					taskID);
 			createCollabRemovalRequest.cancelRemovalTaskRequestUI();
 			break;

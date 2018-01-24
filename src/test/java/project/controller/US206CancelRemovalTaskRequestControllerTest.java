@@ -34,7 +34,7 @@ public class US206CancelRemovalTaskRequestControllerTest {
 	String stringRequest1;
 	String stringRequest2;
 	List<String> pendingRemovalRequests;
-	US206CancelRemovalTaskRequestController us206v2Controller;
+	US206RemovalTaskRequestController us206v2Controller;
 
 	@Before
 	public void setUp() {
@@ -104,7 +104,7 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		// Creates the US206V2RemovalTaskRequestController
 		// to create a request to remove from first task added - taskA (Task ID = 1.1,
 		// projectID = 1)
-		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
+		us206v2Controller = new US206RemovalTaskRequestController(userRui);
 		us206v2Controller.setProjectID(1);
 		us206v2Controller.setTaskID("1.1");
 
@@ -125,7 +125,7 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		String taskID = "5.3";
 
 		// Instantiates the controller
-		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
+		us206v2Controller = new US206RemovalTaskRequestController(userRui);
 		// Calls the method setTaskIDandProjectID
 		us206v2Controller.setProjectIDFromTaskID(taskID);
 
@@ -143,7 +143,7 @@ public class US206CancelRemovalTaskRequestControllerTest {
 	public void testGetUnfinishedTaskFromUser() {
 
 		// Instantiates the controller
-		us206v2Controller = new US206CancelRemovalTaskRequestController(userRui);
+		us206v2Controller = new US206RemovalTaskRequestController(userRui);
 
 		//// Creates the strings with a task description and task id
 		String taskIDandDescription1 = "[1.1] Implementar US100";

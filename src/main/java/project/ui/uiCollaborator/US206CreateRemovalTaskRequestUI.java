@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
-import project.controller.US206CancelRemovalTaskRequestController;
+import project.controller.US206RemovalTaskRequestController;
 import project.model.User;
 
-public class US206CancelRemovalTaskRequestUI {
+public class US206CreateRemovalTaskRequestUI {
 	User user;
 	String taskID;
 	Integer projID;
@@ -21,7 +21,7 @@ public class US206CancelRemovalTaskRequestUI {
 	 * @param taskID
 	 *            Task to add to user task list
 	 */
-	public US206CancelRemovalTaskRequestUI(User user, String taskID) {
+	public US206CreateRemovalTaskRequestUI(User user, String taskID) {
 
 		this.user = user;
 		this.taskID = taskID;
@@ -30,7 +30,7 @@ public class US206CancelRemovalTaskRequestUI {
 
 	public void cancelRemovalTaskRequestUI() {
 
-		US206CancelRemovalTaskRequestController controller = new US206CancelRemovalTaskRequestController(this.user);
+		US206RemovalTaskRequestController controller = new US206RemovalTaskRequestController(this.user);
 		controller.setProjectIDFromTaskID(taskID);
 		projID = controller.getProjectID();
 
