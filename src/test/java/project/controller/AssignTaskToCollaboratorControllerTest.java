@@ -157,4 +157,45 @@ public class AssignTaskToCollaboratorControllerTest {
 
 	}
 
+	@Test
+	public void getTaskByTaskId() {
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
+		project.getTaskRepository().addProjectTask(testTask);
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+		String taskId = testTask.getTaskID();
+
+		// Creates an assignTasktOProjectCollaborator controller
+		AssignTaskToCollaboratorsController controllerAssignTaskToProjectCollaborator = new AssignTaskToCollaboratorsController(
+				projectCode);
+
+		// checks if the method returns a task by it's ID
+		assertEquals(controllerAssignTaskToProjectCollaborator.getTaskByTaskID("1.1"), testTask);
+
+	}
+
+	@Test
+	public void setProjectIDFromTaskID() {
+
+		// creates and adds a task using the controller and asserts a task was added
+		testTask = project.getTaskRepository().createTask("Test dis agen pls");
+		project.getTaskRepository().addProjectTask(testTask);
+		Integer projId = 1;
+
+		// Creates an int that holds the projectID Code
+		int projectCode = project.getIdCode();
+		String taskId = testTask.getTaskID();
+
+		// Creates an assignTasktOProjectCollaborator controller
+		AssignTaskToCollaboratorsController controllerAssignTaskToProjectCollaborator = new AssignTaskToCollaboratorsController(
+				projectCode);
+
+		controllerAssignTaskToProjectCollaborator.setProjectIDFromTaskID(taskId);
+		assertEquals(controllerAssignTaskToProjectCollaborator.getProjectID(), projId);
+
+	}
+
 }

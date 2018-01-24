@@ -8,9 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.model.Company;
+import project.model.Profile;
 import project.model.User;
 
 public class US115andUS116SetUserStateControllerTests {
+
+	Profile director = Profile.DIRECTOR;
+	Profile collaborator = Profile.COLLABORATOR;
 
 	Company myCompany;
 	User newUser2;
