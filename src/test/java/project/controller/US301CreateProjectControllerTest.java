@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.model.Company;
+import project.model.EffortUnit;
 import project.model.Profile;
 import project.model.Project;
 import project.model.User;
@@ -26,6 +27,7 @@ public class US301CreateProjectControllerTest {
 	Company c1;
 	User u1;
 	US301CreateProjectController createNewProject;
+	Project newProject;
 
 	@Before
 	public void setUp() {
@@ -49,6 +51,7 @@ public class US301CreateProjectControllerTest {
 		c1 = null;
 		u1 = null;
 		createNewProject = null;
+		newProject = null;
 	}
 
 	/**
@@ -71,7 +74,7 @@ public class US301CreateProjectControllerTest {
 		createNewProject = new US301CreateProjectController();
 
 		// Creates the project using the controller
-		Project newProject = createNewProject.createProject("name", "description", u1);
+		newProject = createNewProject.createProject("name", "description", u1);
 
 		// List with a project to compare
 		List<Project> projectList = new ArrayList<Project>();
@@ -82,6 +85,37 @@ public class US301CreateProjectControllerTest {
 
 		// Asserts if the user u1 is the project manager
 		assertTrue(newProject.isProjectManager(u1));
+
+	}
+
+	/**
+	 * This test confirms that Budget and effort Units setters are working
+	 * correctly.
+	 * 
+	 */
+	@Test
+	public void testSetBudgetAndEffortUnits() {
+		// Creates the controller to create a project
+		createNewProject = new US301CreateProjectController();
+
+		// Creates the project using the controller
+		newProject = createNewProject.createProject("name", "description", u1);
+
+		// asserts the created project starts with default
+		assertEquals(newProject.getProjectBudget(), 0);
+		assertTrue(newProject.getEffortUnit().equals(EffortUnit.HOURS));
+
+		// then calls both setBudget and changeEffortUnits methods
+		// and asserts both values have been changed successfully
+		createNewProject.changeEffortUnitToPersonMonth();
+		createNewProject.changeBudget(123456);
+		assertEquals(newProject.getProjectBudget(), 123456);
+		assertTrue(newProject.getEffortUnit().equals(EffortUnit.PERSON_MONTH));
+
+		// finally, attempts to call the changeEffortUnit() method again
+		// and that the project remains measured in "Person_Month"
+		createNewProject.changeEffortUnitToPersonMonth();
+		assertTrue(newProject.getEffortUnit().equals(EffortUnit.PERSON_MONTH));
 
 	}
 
