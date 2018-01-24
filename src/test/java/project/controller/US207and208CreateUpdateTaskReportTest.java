@@ -26,7 +26,7 @@ public class US207and208CreateUpdateTaskReportTest {
 	Project project1;
 	ProjectRepository projectRepository;
 	Task testTask;
-	US207and208CreateUpdateTaskReportController controller;
+	US207and208CreateUpdateTaskReportControllers controller;
 
 	@Before
 	public void setUp() {
@@ -120,7 +120,7 @@ public class US207and208CreateUpdateTaskReportTest {
 	@Test
 	public void testController() {
 		// create controller
-		controller = new US207and208CreateUpdateTaskReportController("daniel@gmail.com", testTask.getTaskID());
+		controller = new US207and208CreateUpdateTaskReportControllers("daniel@gmail.com", testTask.getTaskID());
 		// Creates int time to report
 		int timeToReport = 50;
 

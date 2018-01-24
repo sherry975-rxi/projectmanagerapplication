@@ -2,19 +2,19 @@ package project.ui.uiCollaborator;
 
 import java.util.Scanner;
 
-import project.controller.US207and208CreateUpdateTaskReportController;
+import project.controller.US207and208CreateUpdateTaskReportControllers;
 
 public class US207And208CreateUpdateTaskReportUI {
 
 	private String email;
 	private boolean wasReportCreated;
 	private String taskID;
-	US207and208CreateUpdateTaskReportController createReportController;
+	US207and208CreateUpdateTaskReportControllers createReportController;
 
 	public US207And208CreateUpdateTaskReportUI(String email, String taskID) {
 
 		this.email = email;
-		this.createReportController = new US207and208CreateUpdateTaskReportController(email, taskID);
+		this.createReportController = new US207and208CreateUpdateTaskReportControllers(email, taskID);
 		this.taskID = taskID;
 	}
 
