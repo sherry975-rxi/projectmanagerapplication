@@ -8,6 +8,10 @@ import project.ui.MainMenuUI;
 
 public class US203GetUnfinishedTaskUI {
 	private User user;
+	private Boolean isPreviousUIFromTasks;
+	private Integer projectID;
+	private String[] split;
+	private int projID;
 
 	public void displayOptions(User user) {
 		this.user = user;
@@ -18,7 +22,8 @@ public class US203GetUnfinishedTaskUI {
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();
-
+		String taskIdentifier = null;
+		
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
 
@@ -27,6 +32,8 @@ public class US203GetUnfinishedTaskUI {
 			System.out.println("["
 					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID() + "]" + " "
 					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getDescription());
+			
+			taskIdentifier = ( t + unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID()).toString();
 		}
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
@@ -34,12 +41,12 @@ public class US203GetUnfinishedTaskUI {
 		System.out.println("[E] Exit \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
-
+		
 		switch (option) {
-
+		
 		case "B":
-			// Menu3 menuThree = new Menu3();
-			// // TODO when this menu is done is necessary to include a method.
+			UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
+			previousMenu.displayFunctionalities();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
@@ -47,6 +54,24 @@ public class US203GetUnfinishedTaskUI {
 			break;
 		case "E":
 			System.exit(0);
+			
+		default:
+			try {
+				split = option.split("\\.");
+				projID = Integer.valueOf(split[0]);
+
+				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, this.user, this.isPreviousUIFromTasks);
+				taskSelected.taskDataDisplay();
+			}
+
+			catch (NullPointerException npe) {
+				System.out.println("Please choose a valid option: ");
+				System.out.println("");
+				US203GetUnfinishedTaskUI unfinishedTaskByUser1 = new US203GetUnfinishedTaskUI();
+				unfinishedTaskByUser1.displayOptions(this.user);
+			}
+
+			break;
 		}
 	}
 

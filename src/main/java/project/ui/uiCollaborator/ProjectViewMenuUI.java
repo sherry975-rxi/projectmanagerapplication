@@ -11,10 +11,11 @@ public class ProjectViewMenuUI {
 	private Integer projectID;
 	private User user;
 	private String taskID;
-
+	private Boolean isPreviousUIFromTasks;
+	
 	public ProjectViewMenuUI(Integer projectID, User user) {
 		this.user = user;
-		this.projectID = projectID;
+		this.projectID = projectID;	
 	}
 
 	/**
@@ -68,10 +69,11 @@ public class ProjectViewMenuUI {
 			break;
 		default:
 			try {
-				TaskDetailsUI userTasks = new TaskDetailsUI(choice, this.projectID, this.user);
+				this.isPreviousUIFromTasks = true; 
+				TaskDetailsUI userTasks = new TaskDetailsUI(choice, this.projectID, this.user, this.isPreviousUIFromTasks);
+//				userTasks.setIsPreviousUIFromTasks(true);
 				userTasks.taskDataDisplay();
 			}
-
 			catch (NullPointerException npe) {
 				System.out.println("Please choose a valid option: ");
 				System.out.println("");
