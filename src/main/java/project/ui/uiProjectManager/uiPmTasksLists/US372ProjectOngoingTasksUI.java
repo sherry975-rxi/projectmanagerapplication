@@ -1,46 +1,33 @@
 package project.ui.uiProjectManager.uiPmTasksLists;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
-import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US372GetProjectUnfinishedTaskListController;
 import project.model.Project;
 import project.model.User;
 import project.ui.MainMenuUI;
-import project.ui.uiCollaborator.CollectProjectsFromUserUI;
-import project.ui.uiCollaborator.ProjectViewMenuUI;
+import project.ui.uiProjectManager.ProjectManagerMainMenuUI;
 
 public class US372ProjectOngoingTasksUI {
 
-	private Integer projectID;
-	private Project proj;
+	private Project project;
 	private User user;
 
-	public US372ProjectOngoingTasksUI(Integer projectID, User user) {
+	public void displayOnGoingTasksOfProject(Project project, User user) {
 
+		this.project = project;
 		this.user = user;
-		this.projectID = projectID;
-
-	}
-
-	/**
-	 * This method executes all options to execute through this UI Presents the
-	 * project details and the task's list of project Uses a switch case to treat
-	 * the user's input
-	 */
-
-	public void projectDataDisplay() {
-
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
-		projectInfo.setProject();
-		US372GetProjectUnfinishedTaskListController OnGoing = new US372GetProjectUnfinishedTaskListController();
 
 		Scanner scannerInput = new Scanner(System.in);
 
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
-		System.out.println("______________________________________________");
+		System.out.println("___________________________________________________");
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
 		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
@@ -49,47 +36,56 @@ public class US372ProjectOngoingTasksUI {
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
-		System.out.println("TASKS OF " + projectInfo.printProjectNameInfo().toUpperCase() + ":");
+		System.out.println("___________________________________________________");
+		System.out.println("     ON GOING TASKS");
+		System.out.println("___________________________________________________");
 
-		for (int i = 0; i < OnGoing.getProjectUnfinishedTaskList(this.proj).size(); i++) {
-			System.out.println("[" + OnGoing.getProjectUnfinishedTaskList(this.proj).get(i).getTaskID() + "] "
-					+ OnGoing.getProjectUnfinishedTaskList(this.proj).get(i).getDescription());
+		US372GetProjectUnfinishedTaskListController controller = new US372GetProjectUnfinishedTaskListController();
+
+		List<String> listOfOnGoingTasks = new ArrayList<>();
+
+		for (int i = 0; i < controller.getProjectUnfinishedTaskList(this.project).size(); i++) {
+			String taskInfo = controller.getOnGoingTaskListId(this.project).get(i);
+			System.out.println(taskInfo);
+			listOfOnGoingTasks.add(controller.splitStringByFirstSpace(taskInfo));
 		}
 
-		System.out.println("To see task's details, choose the task ID number.");
-		System.out.println("");
+		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		System.out.println("[E] Exit \n");
 
-		String choice = scannerInput.nextLine().toUpperCase();
-		switch (choice) {
-		case "B":
-			CollectProjectsFromUserUI previousMenu = new CollectProjectsFromUserUI(user);
-			previousMenu.collectProjectsFromUser();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			System.exit(0);
-			break;
-		default:
-			try {
-				US367MarkFinishedTaskAsUnfinishedController taskToMarkAsUnfinished = new US367MarkFinishedTaskAsUnfinishedController(
-						this.proj, choice);
-				taskToMarkAsUnfinished.markFinishedTaskAsUnfinished();
+		String option = scannerInput.nextLine().toUpperCase();
+
+		// creation of a list with the options B,E and M
+		List<String> listOfOptionsToCompare = new ArrayList<>();
+		listOfOptionsToCompare.add("B");
+		listOfOptionsToCompare.add("M");
+		listOfOptionsToCompare.add("E");
+
+		for (String ii : listOfOnGoingTasks) {
+
+			if (option.equals(ii)) {
+				// TODO
+			} else if (option.equals("B")) {
+				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
+						this.project);
+				projectManagerMainMenuUI.displayOptions();
+
+			} else if (option.equals("M")) {
+				MainMenuUI.mainMenu();
+			} else if (option.equals("E")) {
+				System.exit(0);
 			}
+			listOfOptionsToCompare.add(ii);
+		}
 
-			catch (NullPointerException npe) {
-				System.out.println("Please choose a valid option: ");
-				System.out.println("");
-				ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(projectID, user);
-				myAtualUIView.projectDataDisplay();
-			}
-
-			break;
+		// In case the user input is an invalid option, the console shows a message and
+		// returns to the beginning of this same menu
+		if (!(listOfOptionsToCompare.contains(option))) {
+			System.out.println("Please choose a valid option: ");
+			this.displayOnGoingTasksOfProject(project, user);
 		}
 	}
+
 }

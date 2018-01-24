@@ -29,6 +29,7 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 	Task taskB;
 	Task taskC;
 	User user;
+	User nullUser;
 	US215TotalTimeSpentOnTaskLastMonthController controller;
 
 	@Before
@@ -120,6 +121,10 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		Report reportC = taskC.getReports().get(0);
 		reportC.setReportedTime(25);
 		assertEquals(50, controller.getTotalTimeOfFinishedTasksFromUserLastMonth(user), 0.000001);
+
+		// Test for null user
+		assertEquals(controller.getTotalTimeOfFinishedTasksFromUserLastMonth(nullUser), 0, 0.0001);
+
 	}
 
 }
