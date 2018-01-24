@@ -8,6 +8,8 @@ import project.ui.MainMenuUI;
 
 public class US203GetUnfinishedTaskUI {
 	private User user;
+	private String[] split;
+	private int projID;
 
 	public void displayOptions(User user) {
 		this.user = user;
@@ -47,7 +49,23 @@ public class US203GetUnfinishedTaskUI {
 			break;
 		case "E":
 			System.exit(0);
+		default:
+			try {
+				split = option.split("\\.");
+				projID = Integer.valueOf(split[0]);
+
+				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, this.user);
+				taskSelected.taskDataDisplay();
+			}
+
+			catch (NullPointerException npe) {
+				System.out.println("Please choose a valid option: ");
+				System.out.println("");
+				US203GetUnfinishedTaskUI unfinishedTaskByUser1 = new US203GetUnfinishedTaskUI();
+				unfinishedTaskByUser1.displayOptions(this.user);
+			}
+
+			break;
 		}
 	}
-
 }
