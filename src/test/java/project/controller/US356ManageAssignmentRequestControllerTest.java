@@ -16,7 +16,6 @@ import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
 import project.model.taskStateInterface.Planned;
-import project.model.taskStateInterface.Ready;
 import project.model.taskStateInterface.TaskStateInterface;
 
 public class US356ManageAssignmentRequestControllerTest {
@@ -85,7 +84,7 @@ public class US356ManageAssignmentRequestControllerTest {
 		taskWithNoTeam.setTaskState(testingTaskState);
 
 		testProject.createTaskAssignementRequest(teamTesterCollaborator, taskWithNoTeam);
-		assignmentRequestsController = new US356ManageAssigmentRequestController(testProject.getIdCode());
+		assignmentRequestsController = new US356ManageAssigmentRequestController(testProject);
 
 	}
 
@@ -122,8 +121,6 @@ public class US356ManageAssignmentRequestControllerTest {
 	// requests converted to String
 	@Test
 	public void showAssignmentRequestsTest() {
-		System.out.println("====== Testing showAssignmentRequests() Method =======");
-		System.out.println();
 
 		String expectedAssignmentRequest = teamTesterName + "\n" + "collab@mail.mail" + "\n" + taskIDnumber + "\n"
 				+ "dont blow up rocket";
@@ -133,69 +130,68 @@ public class US356ManageAssignmentRequestControllerTest {
 
 		assertTrue(assignmentRequestsController.showAllAssignmentRequests().get(0).equals(expectedAssignmentRequest));
 
-		// asserts that an invalid project ID will return an empty List instead of a
-		// Null
-		int invalidProjectID = 0;
-		assignmentRequestsController = new US356ManageAssigmentRequestController(invalidProjectID);
-
-		assertEquals(assignmentRequestsController.showAllAssignmentRequests().size(), 0);
-
-		System.out.println("");
 	}
 
-	// given an existing project with at least one pending request
+	/**
+	 * Tests the approveAssignmentRequest
+	 */
 	@Test
-	public void selectAssignmentRequestsTest() {
-		System.out.println("====== Testing selectAssignmentRequests() Method =======");
-		System.out.println("");
+	public void acceptAssignmentRequestTest() {
 
-		// when the index number exists, asserts the request can be selected and printed
-		// onto the console
-		assertTrue(assignmentRequestsController.selectAssignmentRequest(0));
+		// first, confirms that there is only one assignment request in the list
+		assertEquals(testProject.getAssignmentRequestsList().size(), 1);
 
-		// when the index number doesn't exist, asserts the selection method returns
-		// false
-		assertFalse(assignmentRequestsController.selectAssignmentRequest(5));
-		System.out.println("");
+		// Sets the controller request
+		assignmentRequestsController.setSelectedAdditionRequest(0);
+
+		// accepts the requests
+		assignmentRequestsController.approveAssignmentRequest();
+
+		// first, confirms that the list is now empty
+		assertEquals(testProject.getAssignmentRequestsList().size(), 0);
+
 	}
 
-	// given an existing project with at least one pending request, attempts to
-	// approve the request
-	// @Test
-	// public void approveAssignmentRequestsTest() {
-	// System.out.println("====== Testing approveAssignmentRequests() Method
-	// =======");
-	// System.out.println("");
-	//
-	// // first, confirms if the requesting collaborator isn't in the team, and at
-	// // least one assignment request exists
-	// assertEquals(testProject.getAssignmentRequestsList().size(), 1);
-	// assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
-	// assignmentRequestsController.selectAssignmentRequest(0);
-	//
-	// // given the approval method, confirms that the collaborator was added to the
-	// // team, and the request was deleted from the list
-	// assertTrue(assignmentRequestsController.approveAssignmentRequest());
-	// assertTrue(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
-	// assertEquals(testProject.getAssignmentRequestsList().size(), 0);
-	//
-	// // then, attempts to select a request when none should exist
-	// assertFalse(assignmentRequestsController.selectAssignmentRequest(0));
-	// System.out.println("");
-	// }
+	/**
+	 * Tests the approveAssignmentRequest with a null object
+	 */
+	@Test
+	public void acceptNullRequest() {
 
-	// given an existing project with at least one pending request, attempts to
-	// reject the request
+		// Sets the controller request as null
+		testProject.getAssignmentRequestsList().add(null);
+
+		// Tries to approve and fails
+		assertFalse(assignmentRequestsController.approveAssignmentRequest());
+
+	}
+
+	/**
+	 * Tests the rejectAssignmentRequest with a null object
+	 */
+	@Test
+	public void rejectNullRequest() {
+
+		// Sets the controller request as null
+		testProject.getAssignmentRequestsList().add(null);
+
+		// Tries to reject and fails
+		assertFalse(assignmentRequestsController.rejectAssignmentRequest());
+
+	}
+
+	/**
+	 * Tests the reject assignment request
+	 */
 	@Test
 	public void rejectAssignmentRequestsTest() {
-		System.out.println("====== Testing rejectAssignmentRequests() Method =======");
-		System.out.println("");
 
 		// first, confirms if the requesting collaborator isn't in the team, and at
 		// least one assignment request exists
 		assertEquals(testProject.getAssignmentRequestsList().size(), 1);
 		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
-		assignmentRequestsController.selectAssignmentRequest(0);
+		assignmentRequestsController.setSelectedAdditionRequest(0);
+		;
 
 		// given the rejection method, confirms that the collaborator wasn't added to
 		// the
@@ -204,48 +200,5 @@ public class US356ManageAssignmentRequestControllerTest {
 		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
 		assertEquals(testProject.getAssignmentRequestsList().size(), 0);
 
-		// then, attempts to select a request when none should exist
-		assertFalse(assignmentRequestsController.selectAssignmentRequest(0));
-		System.out.println("");
-	}
-
-	// This test validates the Task state update when a Collaborator is approved to
-	// join a task that has no team
-	@Test
-	public void validateTaskStateUpdatedTest() {
-		System.out.println("====== Testing updateState() Method Called =======");
-		System.out.println("");
-		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Planned"));
-
-		assignmentRequestsController.selectAssignmentRequest(0);
-		assignmentRequestsController.approveAssignmentRequest();
-
-		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
-
-		System.out.println("");
-	}
-
-	// This test validates the Task state update is NOT called when a Collaborator
-	// is approved to join a task that already has a team
-	@Test
-	public void validateTaskStateNOTupdatedTest() {
-		System.out.println("====== Testing updateState() Method Not Called =======");
-		System.out.println("");
-
-		taskWithNoTeam.addProjectCollaboratorToTask(teamPermanentCollaborator);
-
-		testingTaskState = new Ready(taskWithNoTeam);
-
-		taskWithNoTeam.setTaskState(testingTaskState);
-
-		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
-
-		assignmentRequestsController.selectAssignmentRequest(0);
-		assignmentRequestsController.approveAssignmentRequest();
-
-		assertTrue(taskWithNoTeam.viewTaskStateName().equals("Ready"));
-		assertEquals(taskWithNoTeam.getTaskTeam().size(), 2);
-
-		System.out.println("");
 	}
 }
