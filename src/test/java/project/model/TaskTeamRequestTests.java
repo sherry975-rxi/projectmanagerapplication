@@ -14,11 +14,13 @@ public class TaskTeamRequestTests {
 	User managerTester;
 
 	String teamTesterName, teamTesterID;
-	User teamTester;
+	User teamTester, teamTester2;
 
 	Project testProject;
 
 	ProjectCollaborator teamTesterCollaborator;
+	ProjectCollaborator teamTesterCollaboratorNull;
+	ProjectCollaborator teamTesterOtherCollab;
 
 	Calendar estimatedStartDate;
 	Calendar estimatedTaskDeadline;
@@ -37,10 +39,15 @@ public class TaskTeamRequestTests {
 		teamTesterID = "22222";
 
 		teamTester = new User(teamTesterName, "collab@mail.mail", teamTesterID, "function", "123456789");
+		teamTester2 = new User("name2", "colla2b@mail.mail", teamTesterID, "function", "123456789");
 
 		// creates a new test project, and adds the test Collaborator to the team
 		testProject = new Project(1, "testing requests", "description4", managerTester);
 		teamTesterCollaborator = new ProjectCollaborator(teamTester, 2000);
+		teamTesterOtherCollab = new ProjectCollaborator(teamTester2, 2000);
+		teamTesterCollaboratorNull = null;
+		ProjectCollaborator teamTesterCollaboratorNull;
+
 		testProject.addProjectCollaboratorToProjectTeam(teamTesterCollaborator);
 
 		// creates two estimated dates and uses them to generate a task
@@ -100,9 +107,16 @@ public class TaskTeamRequestTests {
 		// asserts if they're equal
 		TaskTeamRequest firstRequest = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
 		TaskTeamRequest secondRequest = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
+		TaskTeamRequest thirdRequest = new TaskTeamRequest(teamTesterCollaboratorNull, chosenTask);
+		TaskTeamRequest fourthRequest = new TaskTeamRequest(teamTesterOtherCollab, chosenTask);
 
 		assertTrue(firstRequest.equals(secondRequest));
 		assertTrue(firstRequest.equals(secondRequest));
+		assertFalse((firstRequest).equals(null));
+		assertFalse((firstRequest).equals("anotherObject"));
+		assertFalse((firstRequest).equals(thirdRequest));
+
+		assertFalse((firstRequest).equals(fourthRequest));
 
 		// given a different task, this test creates a new request
 		// asserts the new request is different when compared to the first one

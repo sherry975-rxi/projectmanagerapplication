@@ -857,22 +857,6 @@ public class Task {
 	}
 
 	/**
-	 * This checks if a collaborator is already in the task team
-	 * 
-	 * @param taskCollaborator
-	 *            Task collaborator that will be searched
-	 * 
-	 * @return True if the collaborator is in the task team, false if not
-	 */
-	public boolean doesTaskCollaboratorBelongsToTaskTeam(TaskCollaborator taskCollaborator) {
-		Boolean doesTaskCollaboratorBelongsToTeam = false;
-		if (taskTeam.contains(taskCollaborator) && taskCollaborator.isTaskCollaboratorActiveInTask()) {
-			doesTaskCollaboratorBelongsToTeam = true;
-		}
-		return doesTaskCollaboratorBelongsToTeam;
-	}
-
-	/**
 	 * This method removes all users from a task.
 	 * 
 	 */

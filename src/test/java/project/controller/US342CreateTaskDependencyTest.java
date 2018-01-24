@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
@@ -55,12 +56,13 @@ public class US342CreateTaskDependencyTest {
 		taskRepo = proj.getTaskRepository();
 
 		// Create and add tasks to Task Repository
+		// Task A isn't added to test the method that checks if the list contains a
+		// certain task
 		taskA = new Task(1, 1, "Faind fek quin!");
 		taskB = new Task(2, 1, "Spit on non-beleevahs!");
 		taskC = new Task(3, 1, "Follou da wae!");
-		taskRepo.addProjectTask(taskA);
-		taskRepo.addProjectTask(taskB);
 		taskRepo.addProjectTask(taskC);
+		taskRepo.addProjectTask(taskB);
 
 		// Initialize Controller
 		controller = new US342CreateTaskDependencyController(proj);
@@ -83,7 +85,7 @@ public class US342CreateTaskDependencyTest {
 
 	@Test
 	public final void testGetTasksFromAProject() {
-		assertEquals(3, controller.getTasksFromAProject().size());
+		assertEquals(2, controller.getTasksFromAProject().size());
 	}
 
 	@Test
@@ -125,6 +127,21 @@ public class US342CreateTaskDependencyTest {
 		String date = controller.getTaskEstimatedStartDateString("1.2");
 
 		assertTrue("13/06/2005".equals(date));
+	}
+
+	@Test
+	public final void testGetTaskByID() {
+
+		assertEquals(taskB, controller.getTaskByID("1.2"));
+		assertEquals(taskC, controller.getTaskByID("1.3"));
+
+	}
+
+	@Test
+	public final void projectContainsSelectedTask() {
+
+		assertTrue(controller.projectContainsSelectedTask("1.2"));
+		assertFalse(controller.projectContainsSelectedTask("1.1"));
 	}
 
 }
