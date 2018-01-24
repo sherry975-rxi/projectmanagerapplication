@@ -833,7 +833,11 @@ public class Task {
 	 * 
 	 */
 	public void removeFinishDate() {
-		this.finishDate = null;
+		if (this.finishDate != null) {
+			this.finishDate = null;
+			this.taskState.changeToOnGoing();
+		}
+
 	}
 
 	/**
