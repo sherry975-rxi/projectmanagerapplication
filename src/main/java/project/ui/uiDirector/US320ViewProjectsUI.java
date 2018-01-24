@@ -1,4 +1,4 @@
-package project.ui;
+package project.ui.uiDirector;
 
 import java.util.List;
 import java.util.Scanner;

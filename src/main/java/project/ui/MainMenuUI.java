@@ -15,6 +15,7 @@ import project.ui.uiAdministrator.AdminMenuUI;
 import project.ui.uiCollaborator.CollaboratorMainMenuUI;
 import project.ui.uiCollaborator.US101UserRegisterUI;
 import project.ui.uiCollaborator.US208LoginUI;
+import project.ui.uiDirector.DirectorMenuUI;
 
 public class MainMenuUI {
 
@@ -121,6 +122,12 @@ public class MainMenuUI {
 		OnGoing onGoingState = new OnGoing(task1);
 		task1.setTaskState(onGoingState);
 		task1.setStartDate(startDate);
+
+		// create task deadline
+		Calendar taskDeadlineDate = Calendar.getInstance();
+		taskDeadlineDate.set(Calendar.YEAR, 2017);
+		taskDeadlineDate.set(Calendar.MONTH, Calendar.FEBRUARY);
+		task1.setTaskDeadline(taskDeadlineDate);
 
 		task1.createReport(tWorker1);
 		task1.getReports().get(0).setReportedTime(20);

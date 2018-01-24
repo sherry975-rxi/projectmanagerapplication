@@ -214,4 +214,36 @@ public class UserRepositoryTest {
 		assertEquals(userRep.isEmailAddressValid(user5.getEmail()), false);
 	}
 
+	/**
+	 * This tests checks if the getAllActiveCollaborators() method returns only
+	 * active Collaborators
+	 */
+	@Test
+	public void testGetAllActiveCollaborators() {
+
+		userRep.addUserToUserRepository(user1);
+		userRep.addUserToUserRepository(user2);
+		userRep.addUserToUserRepository(user4);
+		userRep.addUserToUserRepository(user5);
+
+		// given four users, sets the first three users as collaborator, and the fourth
+		// as director
+		user1.setUserProfile(Profile.COLLABORATOR);
+		user2.setUserProfile(Profile.COLLABORATOR);
+		user4.setUserProfile(Profile.COLLABORATOR);
+		user5.setUserProfile(Profile.DIRECTOR);
+
+		// when three of the users are active collaborators, asserts the total list
+		// contains 4 users
+		// and that the active Collaborators list has 3 users
+		assertEquals(userRep.getAllUsersFromRepository().size(), 4);
+		assertEquals(userRep.getAllActiveCollaboratorsFromRepository().size(), 3);
+
+		// then, sets the first user as inactive, asserts its state was change
+		// and finally, confirms the active collaborators list contains 2 users
+		user1.changeUserState();
+		assertFalse(user1.isUserActive());
+		assertEquals(userRep.getAllActiveCollaboratorsFromRepository().size(), 2);
+	}
+
 }

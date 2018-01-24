@@ -10,6 +10,8 @@ public class US203GetUnfinishedTaskUI {
 	private User user;
 	private Boolean isPreviousUIFromTasks;
 	private Integer projectID;
+	private String[] split;
+	private int projID;
 
 	public void displayOptions(User user) {
 		this.user = user;
@@ -27,8 +29,8 @@ public class US203GetUnfinishedTaskUI {
 
 		for (int i = 0; i < unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).size(); i++) {
 			t = t + 1;
-			System.out.println("[" + t + "] " + " "
-					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID() + " "
+			System.out.println("["
+					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID() + "]" + " "
 					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getDescription());
 			
 			taskIdentifier = ( t + unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID()).toString();
@@ -55,19 +57,20 @@ public class US203GetUnfinishedTaskUI {
 			
 		default:
 			try {
-				
-				if (option == taskIdentifier) {
-				this.isPreviousUIFromTasks = true; 
-				TaskDetailsUI userTasks1 = new TaskDetailsUI(taskIdentifier, this.projectID, this.user, this.isPreviousUIFromTasks);
-				userTasks1.taskDataDisplay();				
-				}
+				split = option.split("\\.");
+				projID = Integer.valueOf(split[0]);
+
+				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, this.user, this.isPreviousUIFromTasks);
+				taskSelected.taskDataDisplay();
 			}
+
 			catch (NullPointerException npe) {
 				System.out.println("Please choose a valid option: ");
 				System.out.println("");
-				ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(projectID, user);
-				myAtualUIView.projectDataDisplay();
+				US203GetUnfinishedTaskUI unfinishedTaskByUser1 = new US203GetUnfinishedTaskUI();
+				unfinishedTaskByUser1.displayOptions(this.user);
 			}
+
 			break;
 		}
 	}

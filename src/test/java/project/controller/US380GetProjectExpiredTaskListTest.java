@@ -152,7 +152,9 @@ public class US380GetProjectExpiredTaskListTest {
 
 	@Test
 	public final void testGetProjectExpiredTaskList() {
-		assertEquals(2, tasksFiltersController.getProjectExpiredTaskList(project1).size());
+
+		assertEquals(2, tasksFiltersController.getUnfinishedTaskListWithExpiredDeadline(project1).size());
+
 	}
 
 }

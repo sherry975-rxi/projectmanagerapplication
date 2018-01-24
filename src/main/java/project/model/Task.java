@@ -833,7 +833,11 @@ public class Task {
 	 * 
 	 */
 	public void removeFinishDate() {
-		this.finishDate = null;
+		if (this.finishDate != null) {
+			this.finishDate = null;
+			this.taskState.changeToOnGoing();
+		}
+
 	}
 
 	/**
@@ -850,22 +854,6 @@ public class Task {
 	 */
 	public Calendar getCancelDate() {
 		return cancelDate;
-	}
-
-	/**
-	 * This checks if a collaborator is already in the task team
-	 * 
-	 * @param taskCollaborator
-	 *            Task collaborator that will be searched
-	 * 
-	 * @return True if the collaborator is in the task team, false if not
-	 */
-	public boolean doesTaskCollaboratorBelongsToTaskTeam(TaskCollaborator taskCollaborator) {
-		Boolean doesTaskCollaboratorBelongsToTeam = false;
-		if (taskTeam.contains(taskCollaborator) && taskCollaborator.isTaskCollaboratorActiveInTask()) {
-			doesTaskCollaboratorBelongsToTeam = true;
-		}
-		return doesTaskCollaboratorBelongsToTeam;
 	}
 
 	/**
