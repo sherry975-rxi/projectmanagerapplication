@@ -126,6 +126,7 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 
 	@After
 	public void tearDown() {
+		Company.clear();
 		user1 = null;
 		testTask = null;
 		testTask2 = null;

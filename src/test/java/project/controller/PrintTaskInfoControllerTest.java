@@ -108,6 +108,7 @@ public class PrintTaskInfoControllerTest {
 
 	@After
 	public void tearDown() {
+		Company.clear();
 		user1 = null;
 		joaoPM = null;
 		project = null;

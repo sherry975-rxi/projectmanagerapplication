@@ -112,6 +112,7 @@ public class PrintProjectInfoControllerTest {
 
 	@After
 	public void tearDown() {
+		Company.clear();
 		user1 = null;
 		joaoPM = null;
 		project = null;
