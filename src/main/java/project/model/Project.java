@@ -770,4 +770,18 @@ public class Project {
 
 	}
 
+	/**
+	 * @return the pendingTaskAssignementRequests
+	 */
+	public List<TaskTeamRequest> getPendingTaskAssignementRequests() {
+		return pendingTaskAssignementRequests;
+	}
+
+	/**
+	 * @return the pendingTaskRemovalRequests
+	 */
+	public List<TaskTeamRequest> getPendingTaskRemovalRequests() {
+		return pendingTaskRemovalRequests;
+	}
+
 }

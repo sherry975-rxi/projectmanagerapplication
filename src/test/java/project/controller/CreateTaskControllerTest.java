@@ -1,6 +1,8 @@
 package project.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
@@ -55,7 +57,6 @@ public class CreateTaskControllerTest {
 		// create project
 		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
 
-
 	}
 
 	@After
@@ -67,26 +68,27 @@ public class CreateTaskControllerTest {
 		projectRepository = null;
 		userRepository = null;
 	}
-	
-	
+
 	@Test
 	public void testTaskController() {
 		// asserts which user is the Project Manager
 		assertFalse(project.isProjectManager(user1));
 		assertTrue(project.isProjectManager(userAdmin));
-		
+
 		// creates the Controller and asserts the list of unstrarted tasks starts at 0
 		CreateTaskController testControl = new CreateTaskController(project);
 		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 0);
-		
+
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(),
-		10);
+		testTask = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(), 10);
 		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 1);
-		
+
 		// asserts the added task matches the added task
 		assertTrue(project.getTaskRepository().getUnstartedTasks().get(0).getDescription().equals("Test dis agen pls"));
 		assertFalse(project.getTaskRepository().getUnstartedTasks().get(0).getDescription().equals(""));
+
+		// Tests the get Task Repository
+		assertEquals(testControl.getTaskRepository(), project.getTaskRepository());
 	}
 
 }

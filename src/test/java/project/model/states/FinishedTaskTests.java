@@ -1,7 +1,6 @@
 package project.model.states;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
@@ -129,8 +128,8 @@ public class FinishedTaskTests {
 	@Test
 	public final void testIsNotValid() {
 		testTask.removeFinishDate();
-		assertEquals("Finished", testTask.viewTaskStateName());
-		assertFalse(testTask.getTaskState().isValid());
+		assertEquals("OnGoing", testTask.viewTaskStateName());
+		assertTrue(testTask.getTaskState().isValid());
 	}
 
 	/**

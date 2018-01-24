@@ -104,8 +104,7 @@ public class US342CreateTaskDependencyController {
 	}
 
 	public Task getTaskByID(String id) {
-		Task result = project.getTaskRepository().getTaskByID(id);
-		return result;
+		return project.getTaskRepository().getTaskByID(id);
 	}
 
 }

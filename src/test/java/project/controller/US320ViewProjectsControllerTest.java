@@ -137,6 +137,7 @@ public class US320ViewProjectsControllerTest {
 		projectListsController.viewAllProjects();
 
 		assertEquals(projectListsController.selectProject(0), null);
+		assertEquals(projectListsController.selectProject(-1), null);
 
 	}
 
