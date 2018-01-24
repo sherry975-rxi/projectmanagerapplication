@@ -122,6 +122,12 @@ public class MainMenuUI {
 		task1.setTaskState(onGoingState);
 		task1.setStartDate(startDate);
 
+		// create task deadline
+		Calendar taskDeadlineDate = Calendar.getInstance();
+		taskDeadlineDate.set(Calendar.YEAR, 2017);
+		taskDeadlineDate.set(Calendar.MONTH, Calendar.FEBRUARY);
+		task1.setTaskDeadline(taskDeadlineDate);
+
 		task1.createReport(tWorker1);
 		task1.getReports().get(0).setReportedTime(20);
 

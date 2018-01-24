@@ -29,31 +29,19 @@ public class US115andUS116SetUserStateController {
 	}
 
 	/**
-	 * This is a simple utility method to convert the User's data into a String to
+	 * This is a simple utility method to convert the User's state into a String to
 	 * be displayed in the UI
 	 * 
-	 * @return the String with the User's ID, name, state, profile
+	 * @return the String with the User's state
 	 */
-	public String userDataAsString() {
-		String output = toChangeState.getIdNumber() + " (";
+	public String userStateAsString() {
+		String output;
 
-		if (toChangeState.isUserActive())
-			output += "ACTIVE) - ";
-		else
-			output += "DISABLED) - ";
-
-		switch (toChangeState.getUserProfile()) {
-		case DIRECTOR:
-			output += "Director";
-			break;
-		case COLLABORATOR:
-			output += "Collaborator";
-			break;
-		default:
-			output += "Unassigned";
+		if (toChangeState.isUserActive()) {
+			output = "(ACTIVE)";
+		} else {
+			output = "(DISABLED)";
 		}
-
-		output += ": " + toChangeState.getName();
 
 		return output;
 	}

@@ -11,7 +11,7 @@ import project.model.Company;
 import project.model.Profile;
 import project.model.User;
 
-public class SetUserProfileControllerTests {
+public class US110andUS112SetUserProfileControllerTests {
 
 	Company Blip;
 	User newUser2, newUser3;
@@ -70,6 +70,16 @@ public class SetUserProfileControllerTests {
 		// and that user repository contains the new director
 		assertTrue(Blip.getUsersRepository().searchUsersByProfile(Profile.COLLABORATOR).contains(newUser2));
 		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
+	}
+
+	@Test
+	public void testUserProfileAsString() {
+		US110andUS112SetUserProfileController testProfileController = new US110andUS112SetUserProfileController();
+		assertTrue("Unassigned".equals(testProfileController.userProfileAsString(newUser2)));
+		testProfileController.setUserAsCollaborator(newUser2);
+		assertTrue("Collaborator".equals(testProfileController.userProfileAsString(newUser2)));
+		testProfileController.setUserAsDirector(newUser2);
+		assertTrue("Director".equals(testProfileController.userProfileAsString(newUser2)));
 	}
 
 }
