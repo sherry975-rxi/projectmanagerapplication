@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -67,11 +68,7 @@ public class US207and208CreateUpdateTaskReportTest {
 		// assign task collaborator to task
 		project1.getTaskRepository().getAllTasksWithoutCollaboratorsAssigned().get(0)
 				.addTaskCollaboratorToTask(taskCollab1);
-		// create a task report
-		project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).createReport(taskCollab1);
-		// set the time in task report to 10
-		project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).getReports().get(0)
-				.setReportedTime(10);
+
 	}
 
 	@After
@@ -96,8 +93,7 @@ public class US207and208CreateUpdateTaskReportTest {
 	 */
 	@Test
 	public void test() {
-		assertEquals(10, project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).getReports()
-				.get(0).getReportedTime());
+
 	}
 
 	/*
@@ -106,10 +102,7 @@ public class US207and208CreateUpdateTaskReportTest {
 	 */
 	@Test
 	public void test2() {
-		project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).changeReportedTime(20,
-				"daniel@gmail.com");
-		assertEquals(20, project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).getReports()
-				.get(0).getReportedTime());
+
 	}
 
 	/*
@@ -130,14 +123,41 @@ public class US207and208CreateUpdateTaskReportTest {
 		// Checks if both values are the same
 		assertEquals(controller.getReportedTimeByCollaborator(), timeToReport);
 
+		// Changes the time report to 20
+		project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).changeReportedTime(20,
+				"daniel@gmail.com");
+
+		// Checks if the method to check report time returns the updated time set
+		// previously
+		assertEquals(20, project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).getReports()
+				.get(0).getReportedTime());
+
+		// create controller with an invalid ID
+		controller = new US207and208CreateUpdateTaskReportControllers("daniel@gmail.com", "invalidID");
+
 	}
 
 	@Test
 	public void testGetReportCollaboratorName() {
 		// create controller
 		controller = new US207and208CreateUpdateTaskReportControllers("daniel@gmail.com", testTask.getTaskID());
+		// Creates a report to the task
+		controller.createReportController(20);
 		// Checks if the method returns the name of the collaborator
 		assertEquals(controller.getReportedCollaboratorName(), "Daniel");
+	}
+
+	@Test
+
+	public void testCreateReportController() {
+		// create controller
+		controller = new US207and208CreateUpdateTaskReportControllers("daniel@gmail.com", testTask.getTaskID());
+
+		// Creates a report
+		assertTrue(controller.createReportController(20));
+
+		// updates the report, because a report already exists by the same TaskCollabor
+		assertTrue(controller.createReportController(30));
 	}
 
 }

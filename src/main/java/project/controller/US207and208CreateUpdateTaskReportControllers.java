@@ -52,12 +52,10 @@ public class US207and208CreateUpdateTaskReportControllers {
 			task.createReport(task.getTaskCollaboratorByEmail(email));
 
 			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
-		} else if (task.doesTaskHaveReportByGivenUser(email)) {
-
+		} else {
+			task.changeReportedTime(newTime, username.getEmail());
 			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
 
-		} else {
-			wasReportCreated = false;
 		}
 		return wasReportCreated;
 
