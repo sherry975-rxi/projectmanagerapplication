@@ -33,13 +33,13 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 *            The ProjectId that corresponds to the taskID that the User wants
 	 *            to add himself to
 	 */
-	public US204v2createRequestAddCollaboratorToTaskTeamController(int projId) {
-
-		company = Company.getTheInstance();
-		projectRepository = company.getProjectsRepository();
-		project = projectRepository.getProjById(projId);
-
-	}
+	// public US204v2createRequestAddCollaboratorToTaskTeamController(int projId) {
+	//
+	// company = Company.getTheInstance();
+	// projectRepository = company.getProjectsRepository();
+	// project = projectRepository.getProjById(projId);
+	//
+	// }
 
 	/**
 	 * Constructor
