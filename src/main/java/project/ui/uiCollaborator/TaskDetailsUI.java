@@ -47,6 +47,7 @@ public class TaskDetailsUI {
 		System.out.println("[1] Mark task as completed");
 		System.out.println("[2] Request assignment to task team");
 		System.out.println("[3] Request task team unassignment");
+		System.out.println("[4] Update task report");
 		System.out.println("______________________________________________");
 		System.out.println("[P] Back to " + projectInfo.printProjectNameInfo());
 		System.out.println("[B] Back to my tasks");
@@ -76,6 +77,11 @@ public class TaskDetailsUI {
 		case "B":
 			UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
 			userTasks.displayFunctionalities();
+			break;
+		case "4":
+			US207And208CreateUpdateTaskReportUI reportUI = new US207And208CreateUpdateTaskReportUI(user.getEmail(),
+					taskID);
+			reportUI.createReport();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();

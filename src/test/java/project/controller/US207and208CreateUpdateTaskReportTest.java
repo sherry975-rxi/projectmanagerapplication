@@ -1,7 +1,6 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,7 +16,7 @@ import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.UserRepository;
 
-public class ChangeReportedTimeInTaskControllerTest {
+public class US207and208CreateUpdateTaskReportTest {
 	Company myCompany;
 	UserRepository userRepository;
 	User user1;
@@ -27,7 +26,7 @@ public class ChangeReportedTimeInTaskControllerTest {
 	Project project1;
 	ProjectRepository projectRepository;
 	Task testTask;
-	US208ChangeReportedTimeInTaskController controller;
+	US207and208CreateUpdateTaskReportController controller;
 
 	@Before
 	public void setUp() {
@@ -121,12 +120,15 @@ public class ChangeReportedTimeInTaskControllerTest {
 	@Test
 	public void testController() {
 		// create controller
-		controller = new US208ChangeReportedTimeInTaskController("daniel@gmail.com");
-		controller.correctReportedTimeInTaskController("1.1", 45);
-		assertTrue(controller.correctReportedTimeInTaskController("1.1", 45));
+		controller = new US207and208CreateUpdateTaskReportController("daniel@gmail.com", testTask.getTaskID());
+		// Creates int time to report
+		int timeToReport = 50;
 
-		assertEquals(45, project1.getTaskRepository().getAllTasksFromProjectCollaborator(collab1).get(0).getReports()
-				.get(0).getReportedTime());
+		// Creates a report to the task
+		controller.createReportController(timeToReport);
+
+		// Checks if both values are the same
+		assertEquals(controller.getReportedTimeByCollaborator(), timeToReport);
 
 	}
 
