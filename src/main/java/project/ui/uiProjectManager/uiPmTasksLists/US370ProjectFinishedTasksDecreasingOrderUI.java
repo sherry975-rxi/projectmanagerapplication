@@ -55,7 +55,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 					+ projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj).get(i).getDescription());
 		}
 
-		System.out.println("To see task's details, choose the task ID number.");
+		System.out.println("To roll back a task from Finish back to Ongoing, choose the task ID number.");
 		System.out.println("");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
