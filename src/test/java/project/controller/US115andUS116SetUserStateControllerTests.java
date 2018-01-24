@@ -60,4 +60,12 @@ public class US115andUS116SetUserStateControllerTests {
 		assertTrue(newUser2.isUserActive());
 	}
 
+	@Test
+	public void userDataAsString() {
+		US115andUS116SetUserStateController testUserStateController = new US115andUS116SetUserStateController(newUser2);
+		assertTrue("(ACTIVE)".equals(testUserStateController.userStateAsString()));
+		testUserStateController.changeUserState();
+		assertTrue("(DISABLED)".equals(testUserStateController.userStateAsString()));
+	}
+
 }
