@@ -33,6 +33,7 @@ public class MainMenuUI {
 	private static ProjectCollaborator projcollab3;
 	private static Task task1;
 	private static Task task2;
+	private static Task task3;
 
 	public static void main(String[] args) {
 
@@ -122,12 +123,48 @@ public class MainMenuUI {
 		task1.setTaskState(onGoingState);
 		task1.setStartDate(startDate);
 
+		// create task deadline
+		Calendar taskDeadlineDate = Calendar.getInstance();
+		taskDeadlineDate.set(Calendar.YEAR, 2017);
+		taskDeadlineDate.set(Calendar.MONTH, Calendar.FEBRUARY);
+		task1.setTaskDeadline(taskDeadlineDate);
+
 		task1.createReport(tWorker1);
 		task1.getReports().get(0).setReportedTime(20);
 
 		task2 = project1.getTaskRepository().createTask("Desenvolver código para responder à US122");
 		project1.getTaskRepository().addProjectTask(task2);
 
+		
+		// Instantiates a task
+		task3 = project1.getTaskRepository().createTask("Fazer refator");
+		project1.getTaskRepository().addProjectTask(task3);
+		// Creates a new taksCollaborator
+		tWorker1 = new TaskCollaborator(projcollab1);
+		// necessary to pass from "Created" to "Planned"
+		startDate = Calendar.getInstance();
+		startDate.add(Calendar.MONTH, -1);
+		task3.setEstimatedTaskStartDate(startDate);
+		finishDate = Calendar.getInstance();
+		finishDate.add(Calendar.MONTH, 1);
+		task3.setTaskDeadline(finishDate);
+		task3.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		task3.addProjectCollaboratorToTask(projcollab1);
+		task3.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		task3.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar projStartDate = (Calendar) startDate.clone();
+		task3.setStartDate(startDate);
+		task3.getTaskState().changeToOnGoing();
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate = (Calendar) finishDate.clone();
+		task3.setFinishDate(testDate);
+		task3.getTaskState().changeToFinished();
+		// Adds the taskCollaborator to task3
+		task3.addTaskCollaboratorToTask(tWorker1);
+		
 		// project1.setStartdate(Calendar.getInstance());
 		// PrintProjectInfoController projectInfo = new
 		// PrintProjectInfoController(project1);
