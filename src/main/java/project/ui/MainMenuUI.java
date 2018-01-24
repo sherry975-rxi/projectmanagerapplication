@@ -137,6 +137,8 @@ public class MainMenuUI {
 
 	public static void mainMenu() {
 
+		printImage();
+
 		Scanner input = new Scanner(System.in);
 		boolean condition = true;
 		while (condition) {
@@ -190,4 +192,49 @@ public class MainMenuUI {
 		}
 	}
 
+	public static void printImage() {
+
+		System.out.println(
+				"                                                                                                  ");
+		System.out.println(
+				"                                                                                                    ");
+		System.out.println(
+				"                                                                                                    ");
+		System.out.println(
+				"              ://-           `.--.`                                            `://.                ");
+		System.out.println(
+				"            .dmmmmh`        -//////.                                          /mmmmms               ");
+		System.out.println(
+				"            :mmmmmm-        ///////:                                          smmmmmm               ");
+		System.out.println(
+				"             hNmdy:         ./++++/.                  `       `               `ohmNm/               ");
+		System.out.println(
+				"            oNNm-   ////+++++++++++++++++++/          ssssssss-      /ssssyyyo   oNNm-              ");
+		System.out.println(
+				"           +NNNNm-  /++++++++++++++++++++++/          sssssssy       .yyyyyyyo  oNNNNm.             ");
+		System.out.println(
+				"          :NNNNNNm//+++++++++++++++++++++++/          ssssssss+.    .oyyyyyyys/sNNNNNNd`            ");
+		System.out.println(
+				"         -NNNsmNNNNNmmdo+++++++++++++++++++/      ``  ssyyyyyyyysoosyyyyyyhmmNNNNNNymNNh            ");
+		System.out.println(
+				"        `mNNd`.+osyhmNNs+++++++++++++/.   `-   `+ssss/syyyyyyyyyyyyyyyyyyydNNmhys+/`:NNNs           ");
+		System.out.println(
+				"        `NNNNs`     ++++++++++++++o++          syyyyyyyyyyyyyyyyyyyyyyyyyyyyys     :dNNNy           ");
+		System.out.println(
+				"         NNmmNNo`   ++++++++oooooooo+`         oyyyyyyyyyyyyyyyyyyyyyyyyyyyyys   .yNNdNNs           ");
+		System.out.println(
+				"         mMm`sMMh   ++ooooooooooooooo+:.`.-:    :+oo+:yyyyyyyyyyyyyyyyyyyyyyys  .NMm/:MMo           ");
+		System.out.println(
+				"        yMMy .MMm   +oooooooo/-..:+oooooooo+         `yyyyyyyyyyyyyyyyyyyyhhhs  :MMd .NMN/          ");
+		System.out.println(
+				"      `hMMd` :MMM   oooooooo.      :ooooooo+          yyyyyyyyyyyyyyhhhhhhhhhs  /MMm  -NMM+         ");
+		System.out.println(
+				"     `dMMm`  /MMM`  oooooooo       .ooooooo+          yyyyyyyyhhhhhhhhhhhhhhhs  oMMM   /MMMo        ");
+		System.out.println(
+				"    `:dmm: ``/dmh` `oooooooo/`   `.oooooooo+         `yyyyyyyyyyyyyyyyyyyyyyys  /mmh.`  ommy.``     ");
+		System.out.println(
+				"                                                                                                    ");
+		System.out.println(
+				"                                                                                                    ");
+	}
 }
