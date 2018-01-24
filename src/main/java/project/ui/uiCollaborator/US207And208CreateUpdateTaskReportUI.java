@@ -2,19 +2,19 @@ package project.ui.uiCollaborator;
 
 import java.util.Scanner;
 
-import project.controller.US207CreateTaskReportController;
+import project.controller.US207and208CreateUpdateTaskReportController;
 
-public class US207CreateTaskReportUI {
+public class US207And208CreateUpdateTaskReportUI {
 
 	private String email;
 	private boolean wasReportCreated;
 	private String taskID;
-	US207CreateTaskReportController createReportController;
+	US207and208CreateUpdateTaskReportController createReportController;
 
-	public US207CreateTaskReportUI(String email, String taskID) {
+	public US207And208CreateUpdateTaskReportUI(String email, String taskID) {
 
 		this.email = email;
-		this.createReportController = new US207CreateTaskReportController(email, taskID);
+		this.createReportController = new US207and208CreateUpdateTaskReportController(email, taskID);
 		this.taskID = taskID;
 	}
 
@@ -25,12 +25,13 @@ public class US207CreateTaskReportUI {
 			System.out.println("The User still didn't create a Report.");
 
 		} else {
-			System.out.println("Report by: ");
-			System.out.println(createReportController.getReportedCollaboratorName());
+			System.out.println("______________________________________________");
 			System.out.println("");
 
-			System.out.println("Reported Time to the Task:");
-			System.out.println(createReportController.getReportedTimeByCollaborator());
+			System.out.println("Report by:     " + createReportController.getReportedCollaboratorName());
+			System.out.println("Reported time: " + createReportController.getReportedTimeByCollaborator());
+			System.out.println("");
+			System.out.println("______________________________________________");
 			System.out.println("");
 
 			System.out.println("Update Task Report:");

@@ -44,6 +44,7 @@ public class TaskDetailsUI {
 		System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
 		System.out.println("");
 		System.out.println("[1] Mark task as completed");
+		System.out.println("[U] Update task report");
 		System.out.println("[P] Back to " + projectInfo.printProjectNameInfo());
 		System.out.println("[B] Back to my tasks");
 		System.out.println("[M] MainMenu");
@@ -67,6 +68,11 @@ public class TaskDetailsUI {
 		case "B":
 			UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
 			userTasks.displayFunctionalities();
+			break;
+		case "U":
+			US207And208CreateUpdateTaskReportUI reportUI = new US207And208CreateUpdateTaskReportUI(user.getEmail(),
+					taskID);
+			reportUI.createReport();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
