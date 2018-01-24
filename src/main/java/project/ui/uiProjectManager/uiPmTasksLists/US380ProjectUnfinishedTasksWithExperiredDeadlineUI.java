@@ -16,7 +16,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 	private Project project;
 	private User user;
 
-	public void displayUnfinishedTasksWithExperiredDeadline(Project project, User user) {
+	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
 
 		this.project = project;
 		this.user = user;
@@ -38,7 +38,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
 		System.out.println("___________________________________________________");
-		System.out.println("     UNFINISHED TASKS WITH EXPERIRED DEADLINE");
+		System.out.println("     UNFINISHED TASKS WITH EXPIRED DEADLINE");
 		System.out.println("___________________________________________________");
 
 		US380GetProjectExpiredTaskListController controller = new US380GetProjectExpiredTaskListController();
@@ -85,7 +85,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.displayUnfinishedTasksWithExperiredDeadline(this.project, this.user);
+			this.displayUnfinishedTasksWithExpiredDeadline(this.project, this.user);
 		}
 	}
 

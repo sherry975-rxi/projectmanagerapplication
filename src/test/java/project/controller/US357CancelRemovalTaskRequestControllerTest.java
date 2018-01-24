@@ -96,7 +96,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		pendingRemovalRequests.add(stringRequest2);
 
 		// Creates the US357CancelRemovalTaskRequestController
-		us357Controller = new US357CancelRemovalTaskRequestController(1);
+		us357Controller = new US357CancelRemovalTaskRequestController(projectA);
 
 		// Creates the taskCollaborator
 		userRuiTaskCollaborator = taskA.getTaskTeam().get(0);
@@ -135,34 +135,6 @@ public class US357CancelRemovalTaskRequestControllerTest {
 	}
 
 	/**
-	 * Tests the isTaskIDValid. First the controller calls the
-	 * setRequestDataFromString method, that sets the parameters taskID and
-	 * userEmail of the US357 controller. Then it asserts if isTaskIDValid returns
-	 * TRUE.
-	 */
-	@Test
-	public void isTaskIDValid() {
-
-		us357Controller.setTaskIDandUserEmailWithRequestString(stringRequest1);
-		assertTrue(us357Controller.isTaskIDValid());
-
-	}
-
-	/**
-	 * Tests the setRequestDataString method by calling the method and asserting if
-	 * the taskID corresponds to a real task and if the user email corresponds to a
-	 * user. By returning true, it means that the parameters were set by the method
-	 * setTaskIDandUserEmailWithRequestString
-	 */
-	@Test
-	public void testSetRequestDataString() {
-
-		us357Controller.setTaskIDandUserEmailWithRequestString(stringRequest1);
-		assertTrue(us357Controller.isTaskIDValid());
-		assertTrue(us357Controller.isEmailFromAUser());
-	}
-
-	/**
 	 * Tests the AcceptRemovalRequestFromTask method which has to remove the user
 	 * from the task(the taskCollaborator gets a finishDate) and removes the request
 	 * from the pending task removal request list.
@@ -178,7 +150,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		assertEquals(2, pendingRemovalListSizeBefore);
 
 		// AcceptRemovalRequestFromTask method call.
-		us357Controller.acceptRemovalRequestFromTask(stringRequest1);
+		us357Controller.acceptRemovalRequestFromTask();
 
 		// Assert: the taskCollaborator correspondent to the user has to have a finish
 		// date and the pendinfRemovalListSize is 1

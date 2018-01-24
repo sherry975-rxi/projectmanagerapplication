@@ -222,7 +222,7 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		// create controller
 
 		US377CollectionOfCancelledTasksFromAProject controllerUS377 = new US377CollectionOfCancelledTasksFromAProject(
-				project.getIdCode());
+				project);
 
 		// create list with cancelled task to compare
 		List<Task> cancelledTaskToCompare = new ArrayList<Task>();

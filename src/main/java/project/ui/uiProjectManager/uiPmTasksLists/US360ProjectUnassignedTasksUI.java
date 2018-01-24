@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
-import project.controller.US377CollectionOfCancelledTasksFromAProject;
+import project.controller.US360GetProjectTasksWithoutCollaboratorsAssignedController;
 import project.model.Project;
 import project.model.User;
 import project.ui.MainMenuUI;
 import project.ui.uiProjectManager.ProjectManagerMainMenuUI;
 
-public class US377ProjectCancelledTasks {
+public class US360ProjectUnassignedTasksUI {
 
 	private Project project;
 	private User user;
 
-	public void displayCancelledTasksOfProject(Project project, User user) {
+	public void projectUnassignedTasksUI(Project project, User user) {
 
 		this.project = project;
 		this.user = user;
@@ -32,23 +32,23 @@ public class US377ProjectCancelledTasks {
 		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
 		System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo());
+		System.out.println("FINISH DATE: " + projectInfo.printProjectFinishDateInfo());
 		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
 		System.out.println("___________________________________________________");
-		System.out.println("     CANCELLED TASKS");
+		System.out.println("                 UNASSIGNED TASKS");
 		System.out.println("___________________________________________________");
 
-		US377CollectionOfCancelledTasksFromAProject controller = new US377CollectionOfCancelledTasksFromAProject(
-				project);
+		US360GetProjectTasksWithoutCollaboratorsAssignedController controller = new US360GetProjectTasksWithoutCollaboratorsAssignedController();
 
-		List<String> listOfCancelledTasks = new ArrayList<>();
+		List<String> listOfExpiredTaskID = new ArrayList<>();
 
-		for (int i = 0; i < controller.getCancelledTasksFromAProject().size(); i++) {
-			String taskInfo = controller.getCancelledTaskListId(project).get(i);
+		for (int i = 0; i < controller.getProjectNotAssignedTaskList(this.project).size(); i++) {
+			String taskInfo = controller.getProjectNotAssignedTaskList(this.project).get(i);
 			System.out.println(taskInfo);
-			listOfCancelledTasks.add(controller.splitStringByFirstSpace(taskInfo));
+			listOfExpiredTaskID.add(controller.splitStringByFirstSpace(taskInfo));
 		}
 
 		System.out.println("___________________________________________________");
@@ -64,7 +64,7 @@ public class US377ProjectCancelledTasks {
 		listOfOptionsToCompare.add("M");
 		listOfOptionsToCompare.add("E");
 
-		for (String ii : listOfCancelledTasks) {
+		for (String ii : listOfExpiredTaskID) {
 
 			if (option.equals(ii)) {
 				// TODO
@@ -85,7 +85,7 @@ public class US377ProjectCancelledTasks {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.displayCancelledTasksOfProject(project, user);
+			this.projectUnassignedTasksUI(this.project, this.user);
 		}
 	}
 

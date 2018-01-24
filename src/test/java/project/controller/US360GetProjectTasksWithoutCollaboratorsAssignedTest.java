@@ -142,7 +142,7 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedTest {
 		task2.addProjectCollaboratorToTask(projCollab1);
 		task4.addProjectCollaboratorToTask(projCollab2);
 
-		assertEquals(4, tasksFiltersController.getProjectTasksWithoutCollaboratorsAssigned(project1).size());
+		assertEquals(4, tasksFiltersController.getProjectNotAssignedTaskList(project1).size());
 	}
 
 }

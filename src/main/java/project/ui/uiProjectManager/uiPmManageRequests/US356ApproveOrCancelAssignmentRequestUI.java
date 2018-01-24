@@ -2,46 +2,46 @@ package project.ui.uiProjectManager.uiPmManageRequests;
 
 import java.util.Scanner;
 
-import project.controller.US357CancelRemovalTaskRequestController;
+import project.controller.US356ManageAssigmentRequestController;
 import project.model.Project;
 import project.model.User;
 import project.ui.MainMenuUI;
 import project.ui.uiCollaborator.CollectProjectsFromUserUI;
 
-public class US357ApproveOrCancelRemovalRequestUI {
+public class US356ApproveOrCancelAssignmentRequestUI {
 
 	Project project;
 	User user;
 
 	/**
-	 * Constructor to instantiate a new US357ApproveOrCancelRemvalRequestUI
+	 * Constructor to instantiate a new US357ApproveOrCancelAssignmentRequestUI
 	 * 
 	 * @param user
 	 *            User Project Manager
 	 * @param project
 	 *            Project where the user is Project manager
 	 */
-	public US357ApproveOrCancelRemovalRequestUI(User user, Project project) {
+	public US356ApproveOrCancelAssignmentRequestUI(User user, Project project) {
 		this.project = project;
 		this.user = user;
 	}
 
 	/**
-	 * Displays the removal task requests and the options available to the user
+	 * Displays the assignment task requests and the options available to the user
 	 */
-	public void displayRemovalTaskRequests() {
+	public void displayAssignmentTaskRequests() {
 
 		boolean condition = true;
 		while (condition) {
 
-			System.out.println("\n    TASKS REMOVAL REQUESTS PENDING APPROVAL      ");
+			System.out.println("\n   TASK ASSIGNMENT REQUESTS : PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");
 
-			US357CancelRemovalTaskRequestController cancelRequest = new US357CancelRemovalTaskRequestController(
+			US356ManageAssigmentRequestController assignmentRequest = new US356ManageAssigmentRequestController(
 					this.project);
 			int number = 1;
 
-			for (String other : cancelRequest.viewPendingRemovalRequests()) {
+			for (String other : assignmentRequest.showAllAssignmentRequests()) {
 				System.out.println("[" + number + "]" + "Request: " + other);
 				System.out.println("==========================================\n");
 				number++;
@@ -52,17 +52,17 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			System.out.println("[M] MainMenu");
 			System.out.println("[E] Exit");
 
-			chooseOption(cancelRequest);
+			chooseOption(assignmentRequest);
 		}
 	}
 
 	/**
 	 * Switch case that allows the user to choose a functionality
 	 * 
-	 * @param cancelRequest
-	 *            US357CancelRemovalTaskRequestController previously instantiated
+	 * @param assignmentRequest
+	 *            US356ManageAssigmentRequestController previously instantiated
 	 */
-	private void chooseOption(US357CancelRemovalTaskRequestController cancelRequest) {
+	private void chooseOption(US356ManageAssigmentRequestController assignmentRequest) {
 
 		Scanner input = new Scanner(System.in);
 
@@ -71,7 +71,7 @@ public class US357ApproveOrCancelRemovalRequestUI {
 		switch (choice) {
 
 		case "C":
-			chooseRequest(cancelRequest);
+			chooseRequest(assignmentRequest);
 			break;
 		case "B":
 			CollectProjectsFromUserUI previousMenu = new CollectProjectsFromUserUI(user);
@@ -86,23 +86,23 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			break;
 		default:
 			System.out.println("Choose a valid option");
-			displayRemovalTaskRequests();
+			displayAssignmentTaskRequests();
 		}
 	}
 
 	/**
 	 * Method that allows the user to choose a request
 	 * 
-	 * @param cancelRequest
-	 *            US357CancelRemovalTaskRequestController previously instantiated
+	 * @param assignmentRequest
+	 *            US356ManageAssigmentRequestController previously instantiated
 	 */
-	private void chooseRequest(US357CancelRemovalTaskRequestController cancelRequest) {
+	private void chooseRequest(US356ManageAssigmentRequestController assignmentRequest) {
 
 		System.out.println("\n                 CHOOSE A REQUEST:                  ");
 
 		Scanner input = new Scanner(System.in);
 		String choice = input.nextLine();
-		int listSize = cancelRequest.viewPendingRemovalRequests().size();
+		int listSize = assignmentRequest.showAllAssignmentRequests().size();
 
 		// Guarantees that the input is valid
 		try {
@@ -110,30 +110,30 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			Integer choiceInt = Integer.parseInt(choice);
 
 			if (choiceInt > 0 && choiceInt <= listSize) {
-				chooseApproveOrDisaprove(cancelRequest, choiceInt);
+				chooseApproveOrDisaprove(assignmentRequest, choiceInt);
 			}
 
 			else {
 				System.out.println("----CHOOSE A VALID REQUEST----");
-				displayRemovalTaskRequests();
+				displayAssignmentTaskRequests();
 			}
 		}
 
 		catch (NumberFormatException npe) {
 			System.out.println("----CHOOSE A VALID REQUEST----");
-			displayRemovalTaskRequests();
+			displayAssignmentTaskRequests();
 		}
 	}
 
 	/**
 	 * Method that allows the user to choose to approve or cancel a specific request
 	 * 
-	 * @param cancelRequest
-	 *            US357CancelRemovalTaskRequestController previously instantiated
+	 * @param assignmentRequest
+	 *            US356ManageAssigmentRequestController previously instantiated
 	 * @param request
 	 *            Index of the chosen request
 	 */
-	private void chooseApproveOrDisaprove(US357CancelRemovalTaskRequestController cancelRequest, int request) {
+	private void chooseApproveOrDisaprove(US356ManageAssigmentRequestController assignmentRequest, int request) {
 
 		Scanner input = new Scanner(System.in);
 
@@ -151,20 +151,19 @@ public class US357ApproveOrCancelRemovalRequestUI {
 
 		if (yerOrNo.equalsIgnoreCase("y")) {
 			request = request - 1;
-			String requestInfo = cancelRequest.viewPendingRemovalRequests().get(request);
-			cancelRequest.setTaskIDandUserEmailWithRequestString(requestInfo);
-			if (cancelRequest.acceptRemovalRequestFromTask()) {
+			assignmentRequest.setSelectedAdditionRequest(request);
+			if (assignmentRequest.approveAssignmentRequest()) {
 				System.out.println("----REQUEST APPROVED----");
 				System.out.println("--User deleted from task--");
-				displayRemovalTaskRequests();
+				displayAssignmentTaskRequests();
 			}
 		}
 
 		else {
 			System.out.println("----REQUEST CANCELLED----");
 			System.out.println("--User not deleted from task--");
-			cancelRequest.cancelRemovalRequestFromTask();
-			displayRemovalTaskRequests();
+			assignmentRequest.approveAssignmentRequest();
+			displayAssignmentTaskRequests();
 		}
 	}
 }

@@ -1,35 +1,25 @@
 package project.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import project.model.Company;
 import project.model.Project;
 import project.model.TaskTeamRequest;
 
 public class US356ManageAssigmentRequestController {
-	int projectID;
+
 	Project selectedProject;
 	TaskTeamRequest selectedAdditionRequest;
 
 	/*
 	 * This controller manages Addition Requests by Project Collaborators * respond
-	 * to US 204v2
+	 * to US 356
 	 * 
 	 * @param ProjectID - the ID of the selected Project
 	 * 
 	 */
-	public US356ManageAssigmentRequestController(int selectedProjectID) {
-		this.projectID = selectedProjectID;
-		this.selectedProject = null;
+	public US356ManageAssigmentRequestController(Project project) {
+		this.selectedProject = project;
 		this.selectedAdditionRequest = null;
-	}
-
-	// TODO this method is a PLACEHOLDER
-	public Boolean doesProjectExist() {
-		Project newProject = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-		this.selectedProject = newProject;
-		return selectedProject != null;
 	}
 
 	/**
@@ -41,40 +31,21 @@ public class US356ManageAssigmentRequestController {
 	 *         list if the project is null
 	 */
 	public List<String> showAllAssignmentRequests() {
-		if (!doesProjectExist()) {
-			System.out.println("Project Not found!");
-			List<String> empty = new ArrayList<>();
-			return empty;
-		} else {
-			return this.selectedProject.viewPendingTaskAssignementRequests();
-		}
+
+		List<String> listOfPendingAssignmentRequests = selectedProject.viewPendingTaskAssignementRequests();
+
+		return listOfPendingAssignmentRequests;
 	}
 
 	/**
-	 * This method selects the addition request from the list, converting its index
-	 * into a TaskTeamRequest to be handled by the controller. If index is invalid,
-	 * returns false
+	 * Sets the seletedAdditionRequest. The result is equal to the
+	 * getPendingTaskAssigmentRequest().get(index)
 	 * 
-	 * @param int
-	 *            Index - the index number of the selected request
-	 * 
-	 * @return returns true if request us found, false if not
+	 * @param index
+	 *            Index of the request.
 	 */
-	public boolean selectAssignmentRequest(int index) {// dependendo de como isto é apresentado ao user, pode ser
-														// preciso meter (index-1)
-		boolean confirmation = false;
-		if (doesProjectExist()) {
-			if (index >= 0 && index < selectedProject.getAssignmentRequestsList().size()) {
-				this.selectedAdditionRequest = selectedProject.getAssignmentRequestsList().get(index);
-				System.out.println("Selected: " + this.selectedAdditionRequest.viewStringRepresentation());
-				System.out.println("");
-				confirmation = true;
-			} else {
-				System.out.println("Request not found!");
-				System.out.println();
-			}
-		}
-		return confirmation;
+	public void setSelectedAdditionRequest(int index) {
+		this.selectedAdditionRequest = selectedProject.getPendingTaskAssignementRequests().get(index);
 	}
 
 	/**
@@ -92,7 +63,6 @@ public class US356ManageAssigmentRequestController {
 			selectedAdditionRequest.getTask().addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
 			updateTaskState();
 			deleteRequest();
-			System.out.println("Request approved!");
 			return true;
 		} else
 			return false;
@@ -110,7 +80,6 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public boolean rejectAssignmentRequest() {
 		if (selectedAdditionRequest != null) {
-			System.out.println("Request rejected!");
 			deleteRequest();
 			return true;
 		} else
@@ -137,7 +106,6 @@ public class US356ManageAssigmentRequestController {
 	 * 
 	 */
 	public void deleteRequest() {
-		Project toDeleteRequest = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
-		toDeleteRequest.deleteTaskAssignementRequest(this.selectedAdditionRequest);
+		selectedProject.deleteTaskAssignementRequest(this.selectedAdditionRequest);
 	}
 }
