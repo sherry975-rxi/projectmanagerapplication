@@ -1011,4 +1011,12 @@ public class ProjectRepositoryTest {
 
 	}
 
+	/*
+	 * Tests the getOnGoingUserTasks
+	 */
+	@Test
+	public void getOnGoingUserReportedTasks() {
+
+	}
+
 }

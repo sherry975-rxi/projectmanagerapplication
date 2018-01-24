@@ -132,4 +132,12 @@ public class US207and208CreateUpdateTaskReportTest {
 
 	}
 
+	@Test
+	public void testGetReportCollaboratorName() {
+		// create controller
+		controller = new US207and208CreateUpdateTaskReportControllers("daniel@gmail.com", testTask.getTaskID());
+		// Checks if the method returns the name of the collaborator
+		assertEquals(controller.getReportedCollaboratorName(), "Daniel");
+	}
+
 }

@@ -35,6 +35,14 @@ public class US207and208CreateUpdateTaskReportControllers {
 
 	}
 
+	/**
+	 * This controller creates or updates a Report with a given time
+	 * 
+	 * @param newTime
+	 *            The time associated to the report
+	 * 
+	 * @return TRUE if the report is created, FALSE if not
+	 */
 	public boolean createReportController(int newTime) {
 
 		boolean wasReportCreated = false;
