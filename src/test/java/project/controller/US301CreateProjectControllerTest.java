@@ -20,7 +20,7 @@ import project.model.User;
  *         Tests the Create Project Controller.
  *
  */
-public class CreateProjectControllerTest {
+public class US301CreateProjectControllerTest {
 
 	Company c1;
 	User u1;
@@ -63,7 +63,7 @@ public class CreateProjectControllerTest {
 		assertEquals(emptyProjectList, c1.getProjectsRepository());
 
 		// Creates the controller to create a project
-		CreateProjectController createNewProject = new CreateProjectController();
+		US301CreateProjectController createNewProject = new US301CreateProjectController();
 
 		// Creates the project using the controller
 		Project newProject = createNewProject.createProject("name", "description", u1);

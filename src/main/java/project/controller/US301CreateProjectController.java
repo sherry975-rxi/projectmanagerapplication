@@ -11,14 +11,14 @@ import project.model.User;
  *         Project.
  *
  */
-public class CreateProjectController {
+public class US301CreateProjectController {
 
 	Company myCompany;
 
 	/**
 	 * Constructor for project creation controller
 	 */
-	public CreateProjectController() {
+	public US301CreateProjectController() {
 	}
 
 	/**

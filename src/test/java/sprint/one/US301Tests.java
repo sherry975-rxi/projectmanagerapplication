@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 
-import project.controller.CreateProjectController;
+import project.controller.US301CreateProjectController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
@@ -77,7 +77,7 @@ public class US301Tests {
 		assertEquals(emptyProjectList, c1.getProjectsRepository());
 
 		// Creates the controller to create a project
-		CreateProjectController createNewProject = new CreateProjectController();
+		US301CreateProjectController createNewProject = new US301CreateProjectController();
 
 		// Creates the project using the controller
 		Project newProject = createNewProject.createProject("name", "description", u2);

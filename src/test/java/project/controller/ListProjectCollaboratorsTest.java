@@ -19,7 +19,7 @@ public class ListProjectCollaboratorsTest {
 	Project project1;
 	ListProjectCollaboratorController listCollaboratorsController = new ListProjectCollaboratorController();
 	US101RegisterUserController usersController = new US101RegisterUserController();
-	CreateProjectController projectController = new CreateProjectController();
+	US301CreateProjectController projectController = new US301CreateProjectController();
 	AddColaboratorToProjectTeamController addCollaboratorController = new AddColaboratorToProjectTeamController();
 	RemoveCollaboratorFromProjectController removeCollaboratorController = new RemoveCollaboratorFromProjectController();
 
