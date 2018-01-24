@@ -10,6 +10,7 @@ import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.taskStateInterface.Cancelled;
 import project.model.taskStateInterface.OnGoing;
 import project.ui.uiAdministrator.AdminMenuUI;
 import project.ui.uiCollaborator.CollaboratorMainMenuUI;
@@ -34,6 +35,7 @@ public class MainMenuUI {
 	private static Task task1;
 	private static Task task2;
 	private static Task task3;
+	private static Task task4;
 
 	public static void main(String[] args) {
 
@@ -135,7 +137,6 @@ public class MainMenuUI {
 		task2 = project1.getTaskRepository().createTask("Desenvolver código para responder à US122");
 		project1.getTaskRepository().addProjectTask(task2);
 
-		
 		// Instantiates a task
 		task3 = project1.getTaskRepository().createTask("Fazer refator");
 		project1.getTaskRepository().addProjectTask(task3);
@@ -164,7 +165,13 @@ public class MainMenuUI {
 		task3.getTaskState().changeToFinished();
 		// Adds the taskCollaborator to task3
 		task3.addTaskCollaboratorToTask(tWorker1);
-		
+
+		// Creates a task4 and sets it to cancelled
+		task4 = project1.getTaskRepository().createTask("Cancelled Task");
+		project1.getTaskRepository().addProjectTask(task4);
+		Cancelled cancelledState = new Cancelled(task4);
+		task4.setTaskState(cancelledState);
+
 		// project1.setStartdate(Calendar.getInstance());
 		// PrintProjectInfoController projectInfo = new
 		// PrintProjectInfoController(project1);
