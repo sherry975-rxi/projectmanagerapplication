@@ -85,9 +85,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			US380ProjectUnfinishedTasksWithExperiredDeadlineUI projectUnfinishedTasksWithExperiredDeadlineUI = new US380ProjectUnfinishedTasksWithExperiredDeadlineUI();
-			projectUnfinishedTasksWithExperiredDeadlineUI.displayUnfinishedTasksWithExperiredDeadline(this.project,
-					this.user);
+			this.displayUnfinishedTasksWithExperiredDeadline(this.project, this.user);
 		}
 	}
 
