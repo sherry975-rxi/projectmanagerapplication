@@ -105,11 +105,6 @@ public class OnGoingTaskTest {
 	}
 
 
-	@Test
-	public void testOnGoingTask() {
-		
-	}
-	
 	//Transition into "OnGoing" state is possible is the task has a startDate defined and if the project
 	//has active users 
 	

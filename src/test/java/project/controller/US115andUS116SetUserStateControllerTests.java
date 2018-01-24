@@ -1,6 +1,5 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -67,26 +66,10 @@ public class US115andUS116SetUserStateControllerTests {
 
 	@Test
 	public void userDataAsString() {
-		US115andUS116SetUserStateController controller = new US115andUS116SetUserStateController(newUser2);
-		assertEquals(controller.userDataAsString(), "001 (ACTIVE) - Unassigned: Manel");
-
-		// Changes the user State
-		newUser2.changeUserState();
-
-		// Checks if the user state changed
-		assertEquals(controller.userDataAsString(), "001 (DISABLED) - Unassigned: Manel");
-
-		// Sets user profile to director
-		newUser2.setUserProfile(director);
-
-		// Checks if returns profile as director
-		assertEquals(controller.userDataAsString(), "001 (DISABLED) - Director: Manel");
-
-		// Changes the user state to collaborator
-		newUser2.setUserProfile(collaborator);
-		// Checks if returns profile as Collaborator
-		assertEquals(controller.userDataAsString(), "001 (DISABLED) - Collaborator: Manel");
-
+		US115andUS116SetUserStateController testUserStateController = new US115andUS116SetUserStateController(newUser2);
+		assertTrue("(ACTIVE)".equals(testUserStateController.userStateAsString()));
+		testUserStateController.changeUserState();
+		assertTrue("(DISABLED)".equals(testUserStateController.userStateAsString()));
 	}
 
 }

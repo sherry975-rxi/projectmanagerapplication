@@ -28,7 +28,8 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 	Task taskA;
 	Task taskB;
 	Task taskC;
-	User user;
+	User userA;
+	User userB;
 	US215TotalTimeSpentOnTaskLastMonthController controller;
 
 	@Before
@@ -45,15 +46,20 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		// Add user to User Repository
 		userRepo.addUserToUserRepository(userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337",
 				"Follower of da wae", "919898997", "Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA"));
-		user = userRepo.getUserByEmail("ugandan@nackls.com");
+		userA = userRepo.getUserByEmail("ugandan@nackls.com");
+
+		userRepo.addUserToUserRepository(
+				userRepo.createUser("Fek Quin2", "ugandan2@nackls.com", "cluck13372", "Follower of da wae2",
+						"9198989972", "Debil Strit2", "SP1T-0N-H1M2", "NacklsCiti2", "QuinLend2", "UGANDA2"));
+		userB = userRepo.getUserByEmail("ugandan2@nackls.com");
 
 		// Add a project to the project repository
 		projRepo.addProjectToProjectRepository(
-				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user));
+				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", userA));
 		proj = projRepo.getAllProjects().get(0);
 
 		// Add user to proj
-		proj.addUserToProjectTeam(user, 5);
+		proj.addUserToProjectTeam(userA, 5);
 
 		// Initialize Task Repository
 		taskRepo = proj.getTaskRepository();
@@ -67,9 +73,9 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		taskRepo.addProjectTask(taskC);
 
 		// Add User to tasks
-		taskA.addProjectCollaboratorToTask(proj.getProjectCollaboratorFromUser(user));
-		taskB.addProjectCollaboratorToTask(proj.getProjectCollaboratorFromUser(user));
-		taskC.addProjectCollaboratorToTask(proj.getProjectCollaboratorFromUser(user));
+		taskA.addProjectCollaboratorToTask(proj.getProjectCollaboratorFromUser(userA));
+		taskB.addProjectCollaboratorToTask(proj.getProjectCollaboratorFromUser(userA));
+		taskC.addProjectCollaboratorToTask(proj.getProjectCollaboratorFromUser(userA));
 
 		// Create reports in the tasks
 		taskA.createReport(taskA.getTaskCollaboratorByEmail("ugandan@nackls.com"));
@@ -106,20 +112,23 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		taskA = null;
 		taskB = null;
 		taskC = null;
-		user = null;
+		userA = null;
 		controller = null;
 	}
 
 	@Test
 	public final void testGetTotalTimeOfFinishedTasksFromUserLastMonth() {
-		assertEquals(0, controller.getTotalTimeOfFinishedTasksFromUserLastMonth(user), 0.000001);
+
+		assertEquals(0, controller.getTotalTimeOfFinishedTasksFromUserLastMonth(userA), 0.000001);
+		assertEquals(0, controller.getTotalTimeOfFinishedTasksFromUserLastMonth(userB), 0.000001);
+
 		Report reportA = taskA.getReports().get(0);
 		reportA.setReportedTime(10);
 		Report reportB = taskB.getReports().get(0);
 		reportB.setReportedTime(15);
 		Report reportC = taskC.getReports().get(0);
 		reportC.setReportedTime(25);
-		assertEquals(50, controller.getTotalTimeOfFinishedTasksFromUserLastMonth(user), 0.000001);
+		assertEquals(50, controller.getTotalTimeOfFinishedTasksFromUserLastMonth(userA), 0.000001);
 	}
 
 }
