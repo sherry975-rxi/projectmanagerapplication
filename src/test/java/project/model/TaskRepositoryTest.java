@@ -1198,7 +1198,8 @@ public class TaskRepositoryTest {
 		Finished FinishedTest = new Finished(testTask);
 		Planned PlannedTest = new Planned(testTask);
 		Ready ReadyTest = new Ready(testTask);
-		StandBy StandByTest = new StandBy(testTask);
+		StandBy StandByTest = new StandBy(testTask6);
+		Cancelled CancelledTest = new Cancelled(testTask6);
 
 		// Adds 5 tasks to the TaskRepository
 		taskRepository.addProjectTask(testTask);
@@ -1206,6 +1207,7 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		taskRepository.addProjectTask(testTask5);
+		taskRepository.addProjectTask(testTask6);
 
 		/*
 		 * States on which the task can be deleted - "ASSIGNED", "PLANNED" , "CREATED" ,
@@ -1216,7 +1218,7 @@ public class TaskRepositoryTest {
 		testTask.setTaskState(OnGoingTest);
 
 		// Tries to delete the task
-		taskRepository.deleteTask(testTask);
+		assertFalse(taskRepository.deleteTask(testTask));
 
 		// The task won't be deleted because the state of the Task is set to "OnGoing"
 		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask));
@@ -1225,7 +1227,7 @@ public class TaskRepositoryTest {
 		testTask.setTaskState(AssignedTest);
 
 		// Tries to delete the testTask
-		taskRepository.deleteTask(testTask);
+		assertTrue(taskRepository.deleteTask(testTask));
 
 		// The task was deleted from the task repository
 		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask));
@@ -1237,7 +1239,7 @@ public class TaskRepositoryTest {
 		testTask2.setTaskState(CreatedTest);
 
 		// Tries to delete the testTask2
-		taskRepository.deleteTask(testTask2);
+		assertTrue(taskRepository.deleteTask(testTask2));
 
 		// Task2 was sucessfully deleted
 		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask2));
@@ -1249,7 +1251,7 @@ public class TaskRepositoryTest {
 		testTask3.setTaskState(FinishedTest);
 
 		// Tries to delete the testTask3
-		taskRepository.deleteTask(testTask3);
+		assertFalse(taskRepository.deleteTask(testTask3));
 
 		// Task3 wasn't deleted from the repository
 		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask3));
@@ -1270,7 +1272,7 @@ public class TaskRepositoryTest {
 		testTask4.setTaskState(ReadyTest);
 
 		// Tries to delete the testTask4
-		taskRepository.deleteTask(testTask4);
+		assertTrue(taskRepository.deleteTask(testTask4));
 
 		// Task4 was sucessfully deleted from the TaskRepository
 		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask4));
@@ -1282,10 +1284,32 @@ public class TaskRepositoryTest {
 		testTask5.setTaskState(ReadyTest);
 
 		// Tries to delete the testTask5
-		taskRepository.deleteTask(testTask5);
+		assertTrue(taskRepository.deleteTask(testTask5));
 
 		// Task5 was sucessfully deleted from the TaskRepository
 		assertFalse(taskRepository.getProjectTaskRepository().contains(testTask5));
+
+		// Sets testTak6 to state "StandBy"
+		testTask6.setTaskState(StandByTest);
+		// Verifies if task6 is in the TaskRepository
+		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask6));
+
+		// Tries to delete the testTask6
+		assertFalse(taskRepository.deleteTask(testTask6));
+
+		// Task6 couldn't deleted from the TaskRepository because its set to state
+		// "StandBy2
+		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask6));
+
+		// Sets testTak6 to state "Cancelled"
+		testTask6.setTaskState(CancelledTest);
+
+		// Tries to delete the testTask6
+		assertFalse(taskRepository.deleteTask(testTask6));
+
+		// Task6 couldn't deleted from the TaskRepository because it's set to state
+		// "Cancelled"
+		assertTrue(taskRepository.getProjectTaskRepository().contains(testTask6));
 
 	}
 
