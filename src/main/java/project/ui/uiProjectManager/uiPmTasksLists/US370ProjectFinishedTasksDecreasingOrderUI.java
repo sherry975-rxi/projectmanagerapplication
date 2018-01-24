@@ -46,8 +46,9 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-		System.out.println("");
-		System.out.println("TASKS OF " + projectInfo.printProjectNameInfo().toUpperCase() + ":");
+		System.out.println("______________________________________________");
+		System.out.println("               FINISHED TASKS                 ");
+		System.out.println("______________________________________________");
 
 		for (int i = 0; i < projectFinishedTaskList.getProjectFinishedTaskList(this.proj).size(); i++) {
 			System.out.println("["
