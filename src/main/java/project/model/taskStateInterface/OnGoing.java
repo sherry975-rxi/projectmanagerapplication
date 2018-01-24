@@ -8,10 +8,6 @@ public class OnGoing implements TaskStateInterface {
 
 	Task task;
 
-	public OnGoing() {
-
-	}
-
 	public OnGoing(Task taskToUpdate) {
 
 		this.task = taskToUpdate;
