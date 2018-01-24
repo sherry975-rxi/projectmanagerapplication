@@ -8,6 +8,8 @@ import project.ui.MainMenuUI;
 
 public class US203GetUnfinishedTaskUI {
 	private User user;
+	private Boolean isPreviousUIFromTasks;
+	private Integer projectID;
 
 	public void displayOptions(User user) {
 		this.user = user;
@@ -18,7 +20,8 @@ public class US203GetUnfinishedTaskUI {
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();
-
+		String taskIdentifier = null;
+		
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
 
@@ -27,6 +30,8 @@ public class US203GetUnfinishedTaskUI {
 			System.out.println("[" + t + "] " + " "
 					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID() + " "
 					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getDescription());
+			
+			taskIdentifier = ( t + unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID()).toString();
 		}
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
@@ -34,12 +39,12 @@ public class US203GetUnfinishedTaskUI {
 		System.out.println("[E] Exit \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
-
+		
 		switch (option) {
-
+		
 		case "B":
-			// Menu3 menuThree = new Menu3();
-			// // TODO when this menu is done is necessary to include a method.
+			UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
+			previousMenu.displayFunctionalities();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
@@ -47,6 +52,23 @@ public class US203GetUnfinishedTaskUI {
 			break;
 		case "E":
 			System.exit(0);
+			
+		default:
+			try {
+				
+				if (option == taskIdentifier) {
+				this.isPreviousUIFromTasks = true; 
+				TaskDetailsUI userTasks1 = new TaskDetailsUI(taskIdentifier, this.projectID, this.user, this.isPreviousUIFromTasks);
+				userTasks1.taskDataDisplay();				
+				}
+			}
+			catch (NullPointerException npe) {
+				System.out.println("Please choose a valid option: ");
+				System.out.println("");
+				ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(projectID, user);
+				myAtualUIView.projectDataDisplay();
+			}
+			break;
 		}
 	}
 
