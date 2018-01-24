@@ -15,7 +15,11 @@ import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.taskStateInterface.Finished;
 import project.model.taskStateInterface.OnGoing;
+import project.model.taskStateInterface.Planned;
+import project.model.taskStateInterface.Ready;
+import project.model.taskStateInterface.TaskStateInterface;
 
 public class OnGoingTaskTest {
 	
@@ -23,7 +27,7 @@ public class OnGoingTaskTest {
 	ProjectRepository myProjectRepository;
 	User user1, user2;
 	Project myProject;
-	Task task1, task2, task3;
+	Task task1, task2, task3, neededTask;
 	ProjectCollaborator collab1, collab2;
 	Calendar estimatedTaskStartDate, taskDeadline;
 	TaskCollaborator tWorker1, tWorker2;
@@ -33,9 +37,12 @@ public class OnGoingTaskTest {
 	String stateToCompare;
 	Calendar taskStartDate;
 	Calendar taskFinishDate;
+	TaskStateInterface readyState;
+	TaskStateInterface plannedState;
+	TaskStateInterface finishedState;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 
 		//Creates a Company and a project repository within the company
 		myCompany = Company.getTheInstance();
@@ -80,11 +87,11 @@ public class OnGoingTaskTest {
 		task1 = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
 		task2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
 		task3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
-
+		
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
 		Company.clear();
 		myProjectRepository = null;
 		user1 = null;
@@ -101,6 +108,9 @@ public class OnGoingTaskTest {
 		OnGoingTask1 = null;
 		OnGoingTask2 = null;
 		taskStartDate = null;
+		readyState = null;
+		plannedState = null;
+		finishedState = null;
 
 	}
 
@@ -115,7 +125,7 @@ public class OnGoingTaskTest {
 	 */
 	
 	@Test
-	public void testIsValid() {
+	public void testIsNotValid() {
 		
 		//task 1 has 0 active users
 		OnGoingTask1 = new OnGoing(task1);
@@ -138,12 +148,18 @@ public class OnGoingTaskTest {
 		assertFalse(OnGoingTask1.isValid());
 		
 		/*
-		 * OnGoingTask1 still has 2 active users, and has a start date, so it
-		 * will return true
-		 */		
-		task1.setStartDate(taskStartDate);
+		 * OnGoingTask1 still has 2 active users, and a start date, but has active dependencies so it
+		 * will return false
+		 *
+		 */
 		
-		assertTrue(OnGoingTask1.isValid());
+		task1.createTaskDependence(neededTask);
+		
+		// Creates the states
+		readyState = new Ready(task1);
+		plannedState = new Planned(neededTask);
+
+		assertFalse(OnGoingTask1.isValid());
 		
 		/*
 		 * Sets a Finish Date for task1
@@ -159,6 +175,30 @@ public class OnGoingTaskTest {
 		assertFalse(OnGoingTask1.isValid());
 		
 					
+	}
+	
+	@Test
+	public void testIsValid() {
+		
+		//task 1 has 0 active users
+		OnGoingTask1 = new OnGoing(task1);
+				
+		//Added collaborators to task 1 
+		task1.addProjectCollaboratorToTask(collab1);
+		task1.addProjectCollaboratorToTask(collab2);
+		
+					
+		/*
+		 * OnGoingTask1 still has 2 active users, and has a start date and does not have active dependencies, so it
+		 * will return true
+		 */		
+		task1.setStartDate(taskStartDate);
+		
+		finishedState = new Finished(neededTask);
+		//neededTask.setTaskState(finishedState);
+				
+		assertTrue(OnGoingTask1.isValid());
+		
 	}
 
 	@Test
