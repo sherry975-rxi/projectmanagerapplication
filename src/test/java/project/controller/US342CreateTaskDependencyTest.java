@@ -127,4 +127,12 @@ public class US342CreateTaskDependencyTest {
 		assertTrue("13/06/2005".equals(date));
 	}
 
+	@Test
+	public final void testGetTaskByID() {
+
+		assertEquals(taskA, controller.getTaskByID("1.1"));
+		assertEquals(taskB, controller.getTaskByID("1.2"));
+		assertEquals(taskC, controller.getTaskByID("1.3"));
+	}
+
 }
