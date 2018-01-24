@@ -30,9 +30,10 @@ public class TaskDetailsUI {
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
 		projectInfo.setProject();
 
+		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
 		System.out.println("");
+		System.out.println("                     TASK                    ");
 		System.out.println("*** " + taskInfo.printTaskNameInfo().toUpperCase() + " ***");
-		System.out.println("In " + projectInfo.printProjectNameInfo());
 		System.out.println("______________________________________________");
 		System.out.println("ID: " + taskInfo.printTaskIDCodeInfo());
 		System.out.println("STATUS: " + taskInfo.printTaskStateInfo());
@@ -44,6 +45,9 @@ public class TaskDetailsUI {
 		System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
 		System.out.println("");
 		System.out.println("[1] Mark task as completed");
+		System.out.println("[2] Request assignment to task team");
+		System.out.println("[3] Request task team unassignment");
+		System.out.println("______________________________________________");
 		System.out.println("[P] Back to " + projectInfo.printProjectNameInfo());
 		System.out.println("[B] Back to my tasks");
 		System.out.println("[M] MainMenu");
@@ -58,7 +62,12 @@ public class TaskDetailsUI {
 			taskToMark.getUnfinishedTasksOfProjectFromCollaborator(this.projectID);
 			taskToMark.getTaskToBeMarkedFinished(this.taskID);
 			taskToMark.markTaskAsFinished();
-			System.out.println("---- SUCESS Task Marked As Finished ----");
+			System.out.println("---- SUCCESS Task Marked As Finished ----");
+			break;
+		case "2":
+			US204v2ConfirmTaskAssignmentToCollaboratorUI createAssignmentRequest = new US204v2ConfirmTaskAssignmentToCollaboratorUI(
+					user, taskID);
+			createAssignmentRequest.confirmTaskAssignmentToCollaborator();
 			break;
 		case "P":
 			ProjectViewMenuUI previousMenu = new ProjectViewMenuUI(this.projectID, user);
