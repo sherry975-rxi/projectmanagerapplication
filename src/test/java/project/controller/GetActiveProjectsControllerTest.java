@@ -66,6 +66,7 @@ public class GetActiveProjectsControllerTest {
 		project5 = null;
 		activeProjectsList = null;
 		controller = null;
+		projectRepository = null;
 
 	}
 
