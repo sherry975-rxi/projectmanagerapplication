@@ -15,6 +15,7 @@ import project.ui.uiAdministrator.AdminMenuUI;
 import project.ui.uiCollaborator.CollaboratorMainMenuUI;
 import project.ui.uiCollaborator.US101UserRegisterUI;
 import project.ui.uiCollaborator.US208LoginUI;
+import project.ui.uiDirector.DirectorMenuUI;
 
 public class MainMenuUI {
 
