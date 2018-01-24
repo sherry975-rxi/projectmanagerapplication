@@ -56,7 +56,7 @@ public class US203GetUnfinishedTaskUI {
 				split = option.split("\\.");
 				projID = Integer.valueOf(split[0]);
 
-				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, this.user);
+				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, this.user, this.isPreviousUIFromTasks);
 				taskSelected.taskDataDisplay();
 			}
 
