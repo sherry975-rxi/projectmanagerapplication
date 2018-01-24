@@ -73,7 +73,6 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 		String[] partsTask = taskID.split("\\.");
 		String projectID = partsTask[0];
-		String taskCounter = partsTask[1];
 
 		setProjectID(Integer.parseInt(projectID));
 	}
