@@ -8,6 +8,8 @@ import project.ui.MainMenuUI;
 
 public class US203GetUnfinishedTaskUI {
 	private User user;
+	private Boolean isPreviousUIFromTasks;
+	
 	private String[] split;
 	private int projID;
 
@@ -40,8 +42,8 @@ public class US203GetUnfinishedTaskUI {
 		switch (option) {
 
 		case "B":
-			// Menu3 menuThree = new Menu3();
-			// // TODO when this menu is done is necessary to include a method.
+			UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
+			previousMenu.displayFunctionalities();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
