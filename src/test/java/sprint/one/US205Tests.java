@@ -70,18 +70,18 @@ public class US205Tests {
 		// create project
 		testProj = projectRepository.createProject("name3", "description4", newUser3);
 
-//		// create a estimated Task Start Date
-//		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
-//		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
-//		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
-//		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 10);
-//		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
-//		// create a estimated Task Start Date
-//		Calendar taskDeadlineDateTest = Calendar.getInstance();
-//		taskDeadlineDateTest.set(Calendar.YEAR, 2017);
-//		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
-//		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 20);
-//		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		// // create a estimated Task Start Date
+		// Calendar estimatedTaskStartDateTest = Calendar.getInstance();
+		// estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
+		// estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		// estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 10);
+		// estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
+		// // create a estimated Task Start Date
+		// Calendar taskDeadlineDateTest = Calendar.getInstance();
+		// taskDeadlineDateTest.set(Calendar.YEAR, 2017);
+		// taskDeadlineDateTest.set(Calendar.MONTH, Calendar.DECEMBER);
+		// taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 20);
+		// taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create taskRepository
 		taskRepository = testProj.getTaskRepository();
@@ -105,15 +105,21 @@ public class US205Tests {
 	public void tearDown() {
 
 		Company.clear();
+		userRepository = null;
+		projectRepository = null;
 		taskRepository = null;
+		projectUser1 = null;
+		projectUser2 = null;
 		newUser2 = null;
 		newUser3 = null;
 		testProj = null;
 		testTask = null;
 		testTask2 = null;
-		projectUser1 = null;
-		projectUser2 = null;
 		typeOfUser = 0;
+		taskWorker1 = null;
+		taskWorker2 = null;
+		estimatedTaskStartDate = null;
+		taskDeadline = null;
 	}
 
 	/**
@@ -136,7 +142,7 @@ public class US205Tests {
 		testTask.setTaskDeadline(taskDeadline);
 
 		testTask.getTaskState().changeToPlanned();
-		
+
 		// necessary to pass from "Planned" to "Assigned"
 		testTask.addProjectCollaboratorToTask(projectUser1);
 		testTask.getTaskState().changeToAssigned();
@@ -159,7 +165,7 @@ public class US205Tests {
 
 		// Marks testTask as finished
 		testTask.markTaskAsFinished();
-		
+
 		// testTask2 state set to Finished
 		// necessary to pass from "Created" to "Planned"
 		estimatedTaskStartDate = Calendar.getInstance();
@@ -170,7 +176,7 @@ public class US205Tests {
 		testTask2.setTaskDeadline(taskDeadline);
 
 		testTask2.getTaskState().changeToPlanned();
-		
+
 		// necessary to pass from "Planned" to "Assigned"
 		testTask2.addProjectCollaboratorToTask(projectUser1);
 		testTask2.getTaskState().changeToAssigned();

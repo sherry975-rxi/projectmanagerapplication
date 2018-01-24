@@ -82,6 +82,9 @@ public class US204Tests {
 		project1 = null;
 		taskA = null;
 		taskB = null;
+		projCollab1 = null;
+		projCollab2 = null;
+		taskWorker1 = null;
 
 	}
 

@@ -119,6 +119,8 @@ public class PrintTaskInfoControllerTest {
 		task2 = null;
 		task3 = null;
 		collab1 = null;
+		collab2 = null;
+		controller = null;
 	}
 
 	/**

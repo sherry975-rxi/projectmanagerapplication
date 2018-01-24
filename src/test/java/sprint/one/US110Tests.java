@@ -1,6 +1,7 @@
 package sprint.one;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +48,7 @@ public class US110Tests {
 		Company.clear();
 		newUser2 = null;
 		newUser3 = null;
+		typeOfUser = 0;
 
 	}
 
@@ -79,7 +81,5 @@ public class US110Tests {
 		assertEquals(newUser3.getUserProfile(), Profile.DIRECTOR);
 
 	}
-	
-
 
 }

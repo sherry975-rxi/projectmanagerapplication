@@ -104,6 +104,9 @@ public class US320Tests {
 	@After
 	public void tearDown() {
 		Company.clear();
+		userRepository = null;
+		projectRepository = null;
+		projectCollaborator = null;
 		user1 = null;
 		user2 = null;
 		project1 = null;

@@ -83,6 +83,8 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 		project1 = null;
 		taskA = null;
 		taskController = null;
+		projCollab1 = null;
+		taskWorker1 = null;
 
 	}
 

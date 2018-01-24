@@ -61,6 +61,8 @@ public class US135Tests {
 		newUser2 = null;
 		newUser3 = null;
 		newUser4 = null;
+		userRepository = null;
+		projectRepository = null;
 	}
 
 	@Test

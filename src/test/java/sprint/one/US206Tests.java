@@ -111,6 +111,8 @@ public class US206Tests {
 	public void tearDown() {
 		Company.clear();
 		taskRepository = null;
+		userRepository = null;
+		projectRepository = null;
 		newUser2 = null;
 		newUser3 = null;
 		testProj = null;
@@ -120,6 +122,8 @@ public class US206Tests {
 		projectUser2 = null;
 		typeOfUser = 0;
 		listToCompare = null;
+		taskWorker1 = null;
+		taskWorker2 = null;
 	}
 
 	/**
