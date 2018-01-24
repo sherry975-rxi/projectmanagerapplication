@@ -26,7 +26,7 @@ public class PrintProjectInfoController {
 	}
 
 	public void setProject() {
-		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projID);
+		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode());
 	}
 
 	/**

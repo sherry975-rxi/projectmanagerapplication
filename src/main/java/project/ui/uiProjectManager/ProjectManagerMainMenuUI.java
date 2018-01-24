@@ -6,6 +6,7 @@ import project.controller.PrintProjectInfoController;
 import project.model.Project;
 import project.model.User;
 import project.ui.MainMenuUI;
+import project.ui.uiCollaborator.CollectProjectsFromUserUI;
 
 
 public class ProjectManagerMainMenuUI {
@@ -109,6 +110,8 @@ public class ProjectManagerMainMenuUI {
 
 
 		case "B":
+			CollectProjectsFromUserUI backUI = new CollectProjectsFromUserUI(this.projectManager);
+			backUI.collectProjectsFromUser();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
