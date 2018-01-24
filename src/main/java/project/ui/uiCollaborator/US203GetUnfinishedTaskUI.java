@@ -45,10 +45,10 @@ public class US203GetUnfinishedTaskUI {
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
-
 			break;
 		case "E":
 			System.exit(0);
+			break;
 		default:
 			try {
 				split = option.split("\\.");
