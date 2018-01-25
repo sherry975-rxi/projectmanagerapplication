@@ -1,7 +1,6 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
@@ -156,12 +155,6 @@ public class US375GetProjectNotStartedTaskListTest {
 	@Test
 	public final void testGetProjectNotStartedTaskList() {
 		assertEquals(3, tasksFiltersController.getProjectNotStartedTaskList(project1).size());
-	}
-
-	@Test
-	public final void testSplitStringByFirstSpace() {
-		String input = "Test me master!";
-		assertTrue("Test".equals(tasksFiltersController.splitStringByFirstSpace(input)));
 	}
 
 }
