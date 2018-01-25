@@ -18,7 +18,7 @@ public class US302ChangeProjectManagerUI {
 		System.out.println(toChangeManager.getProjectManager().getName() + " currently manages Project "
 				+ toChangeManager.getName());
 		System.out.println("Would you like to assign a different manager?");
-		System.out.println("(Press [Y] to change, anything else to exit)");
+		System.out.println("(Press [Y] to change, anything else to cancel)");
 		System.out.println("");
 
 		command = input.nextLine().toUpperCase();
@@ -53,7 +53,7 @@ public class US302ChangeProjectManagerUI {
 			}
 		}
 
-		System.out.println("Returning to director menu...");
+		System.out.println("Returning to Director Menu...");
 		System.out.println("");
 
 	}
