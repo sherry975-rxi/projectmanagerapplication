@@ -4,8 +4,12 @@ import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
+import project.controller.US204v2createRequestAddCollaboratorToTaskTeamController;
 import project.controller.US205MarkTaskAsFinishedCollaborator;
+import project.model.TaskRepository;
 import project.model.User;
+import project.model.ProjectCollaborator;
+import project.model.Task;
 import project.ui.console.MainMenuUI;
 
 public class TaskDetailsUI {
@@ -13,6 +17,8 @@ public class TaskDetailsUI {
 	private Integer projectID;
 	private String taskID;
 	private Boolean isPreviousUIFromTasks;
+	private TaskRepository taskRepository;
+	private Task task;
 
 	public TaskDetailsUI(String taskID, Integer projectID, User user, Boolean previous) {
 		this.taskID = taskID;
@@ -62,12 +68,21 @@ public class TaskDetailsUI {
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "1":
+				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember = new US204v2createRequestAddCollaboratorToTaskTeamController(this.taskID, this.user);
+				task = controllerMember.getTaskByTaskID(this.taskID);
+				ProjectCollaborator projCollaborator = new ProjectCollaborator(this.user, this.projectID);
+				
+				if(!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator)) {
+					System.out.println("You can't do it because you aren't assigned to this task.");
+				}
+				else {
 				US205MarkTaskAsFinishedCollaborator taskToMark = new US205MarkTaskAsFinishedCollaborator();
 				taskToMark.getProjectsThatIAmCollaborator(this.user);
 				taskToMark.getUnfinishedTasksOfProjectFromCollaborator(this.projectID);
 				taskToMark.getTaskToBeMarkedFinished(this.taskID);
 				taskToMark.markTaskAsFinished();
 				System.out.println("---- SUCCESS Task Marked As Finished ----");
+				}
 				break;
 			case "2":
 				US204v2CreateTaskAssignmentToCollaboratorUI createAssignmentRequest = new US204v2CreateTaskAssignmentToCollaboratorUI(
@@ -75,9 +90,18 @@ public class TaskDetailsUI {
 				createAssignmentRequest.createTaskAssignment();
 				break;
 			case "3":
+				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember1 = new US204v2createRequestAddCollaboratorToTaskTeamController(this.taskID, this.user);
+				task = controllerMember1.getTaskByTaskID(this.taskID);
+				ProjectCollaborator projCollaborator1 = new ProjectCollaborator(this.user, this.projectID);
+				
+				if(!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator1)) {
+					System.out.println("You can't do it because you aren't assigned to this task.");
+				}
+				else {
 				US206CreateRemovalTaskRequestUI createCollabRemovalRequest = new US206CreateRemovalTaskRequestUI(user,
 						taskID);
 				createCollabRemovalRequest.cancelRemovalTaskRequestUI();
+				}
 				break;
 			case "B":
 				if (this.isPreviousUIFromTasks == true) {
@@ -89,9 +113,18 @@ public class TaskDetailsUI {
 				}
 				break;
 			case "4":
+				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember2 = new US204v2createRequestAddCollaboratorToTaskTeamController(this.taskID, this.user);
+				task = controllerMember2.getTaskByTaskID(this.taskID);
+				ProjectCollaborator projCollaborator2 = new ProjectCollaborator(this.user, this.projectID);
+				
+				if(!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator2)) {
+					System.out.println("You can't do it because you aren't assigned to this task.");
+				}
+				else {
 				US207And208CreateUpdateTaskReportUI reportUI = new US207And208CreateUpdateTaskReportUI(user.getEmail(),
 						taskID);
 				reportUI.createReport();
+				}
 				break;
 			case "M":
 				MainMenuUI.mainMenu();
