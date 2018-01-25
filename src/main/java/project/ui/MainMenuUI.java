@@ -36,6 +36,7 @@ public class MainMenuUI {
 	private static Task task2;
 	private static Task task3;
 	private static Task task4;
+	private static Task task5;
 
 	public static void main(String[] args) {
 
@@ -171,6 +172,26 @@ public class MainMenuUI {
 		project1.getTaskRepository().addProjectTask(task4);
 		Cancelled cancelledState = new Cancelled(task4);
 		task4.setTaskState(cancelledState);
+		
+		//Create task5 of project3
+		task5 = project3.getTaskRepository().createTask("Implementar sistema de segurança");
+		project3.getTaskRepository().addProjectTask(task5);
+		// necessary to pass from "Created" to "Planned"
+		startDate = Calendar.getInstance();
+		startDate.add(Calendar.MONTH, -1);
+		task5.setEstimatedTaskStartDate(startDate);
+		finishDate = Calendar.getInstance();
+		finishDate.add(Calendar.MONTH, 1);
+		task5.setTaskDeadline(finishDate);
+		task5.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		task5.addProjectCollaboratorToTask(projcollab3);
+		task5.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		task5.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		task5.setStartDate(startDate);
+		task5.getTaskState().changeToOnGoing();
 
 		// project1.setStartdate(Calendar.getInstance());
 		// PrintProjectInfoController projectInfo = new
