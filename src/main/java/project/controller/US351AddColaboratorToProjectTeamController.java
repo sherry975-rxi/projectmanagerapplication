@@ -41,4 +41,22 @@ public class US351AddColaboratorToProjectTeamController {
 		return Company.getTheInstance().getProjectsRepository().getActiveProjects();
 	}
 
+	public Project searchProjectByID(int id) {
+		for (Project other : this.getAllProjects()) {
+			if (id == other.getIdCode()) {
+				return other;
+			}
+		}
+		return null;
+	}
+
+	public User searchUserByID(String id) {
+		for (User other : this.getAllUsers()) {
+			if (id.equals(other.getIdNumber())) {
+				return other;
+			}
+		}
+		return null;
+	}
+
 }
