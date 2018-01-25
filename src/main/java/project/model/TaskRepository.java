@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import project.model.taskStateInterface.Cancelled;
+import project.model.taskStateInterface.Finished;
 
 public class TaskRepository {
 
@@ -506,4 +507,24 @@ public class TaskRepository {
 		return reportTaskCost;
 	}
 
+	/**
+	 * This method returns a list of tasks that can be associated to
+	 * TaskDependencies
+	 * 
+	 * @return A list of tasks that can be associated to a TaskDependency
+	 */
+	public List<Task> getTaskListOfWhichDependenciesCanBeCreated() {
+		List<Task> validTasks = new ArrayList<>();
+		validTasks.addAll(projectTasks);
+		for (Task other : this.projectTasks) {
+			if (other.getTaskState() instanceof Finished) {
+				validTasks.remove(other);
+			}
+			if (other.getTaskState() instanceof Cancelled) {
+				validTasks.remove(other);
+			}
+			return validTasks;
+		}
+		return validTasks;
+	}
 }

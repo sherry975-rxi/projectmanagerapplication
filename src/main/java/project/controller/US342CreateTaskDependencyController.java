@@ -41,7 +41,7 @@ public class US342CreateTaskDependencyController {
 
 		List<Task> tasksFromProject = new ArrayList<>();
 
-		tasksFromProject = project.getTaskRepository().getProjectTaskRepository();
+		tasksFromProject = project.getTaskRepository().getTaskListOfWhichDependenciesCanBeCreated();
 
 		return tasksFromProject;
 	}
@@ -59,24 +59,19 @@ public class US342CreateTaskDependencyController {
 	 *            reference task in order to set the estimated start date of the
 	 *            dependent task
 	 */
-	public void createDependenceFromTask(String taskDependentID, String taskReferenceID, int incrementDays) {
+	public boolean createDependenceFromTask(String taskDependentID, String taskReferenceID, int incrementDays) {
+
+		boolean wasTaskDependencyCreated = false;
 
 		Task taskDependent = project.getTaskRepository().getTaskByID(taskDependentID);
 		Task taskReference = project.getTaskRepository().getTaskByID(taskReferenceID);
 
-		taskDependent.createTaskDependence(taskReference);
+		taskDependent.createTaskDependence(taskReference, incrementDays);
 
-		Calendar newEstimatedStartDate = (Calendar) taskReference.getEstimatedTaskStartDate().clone();
-		newEstimatedStartDate.add(Calendar.DAY_OF_MONTH, incrementDays);
-		taskDependent.setEstimatedTaskStartDate(newEstimatedStartDate);
-	}
+		wasTaskDependencyCreated = taskDependent.createTaskDependence(taskReference, incrementDays);
 
-	public void createDependenceFromTaskWithoutEstimatedStartDate(String taskDependentID, String taskReferenceID) {
+		return wasTaskDependencyCreated;
 
-		Task taskDependent = project.getTaskRepository().getTaskByID(taskDependentID);
-		Task taskReference = project.getTaskRepository().getTaskByID(taskReferenceID);
-
-		taskDependent.createTaskDependence(taskReference);
 	}
 
 	public String getTaskEstimatedStartDateString(String taskDependentID) {
@@ -85,9 +80,14 @@ public class US342CreateTaskDependencyController {
 
 		Calendar aaa = Calendar.getInstance();
 		aaa = taskToGetEstimatedStartDate.getEstimatedTaskStartDate();
-		Date estimatedStartDate = aaa.getTime();
-		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		String estimatedStartDateString = newDateFormat.format(estimatedStartDate).toString();
+		String estimatedStartDateString = new String();
+		if (aaa != null) {
+			Date estimatedStartDate = aaa.getTime();
+			SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			estimatedStartDateString = newDateFormat.format(estimatedStartDate).toString();
+		} else {
+			estimatedStartDateString = "No estimated start date";
+		}
 
 		return estimatedStartDateString;
 	}
