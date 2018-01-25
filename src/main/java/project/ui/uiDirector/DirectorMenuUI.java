@@ -13,7 +13,7 @@ public class DirectorMenuUI {
 
 	String options = "[1] - View projects \n" + "[2] - Create a project \n"
 			+ "[3] - Change selected project's manager \n" + "______________________________________________\n"
-			+ "[B] - Return to main menu" + "[E] - Exit from Application";
+			+ "[B] - Return to main menu\n" + "[E] - Exit from Application";
 
 	String command;
 
