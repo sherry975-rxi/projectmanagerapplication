@@ -23,7 +23,7 @@ public class US302ChangeProjectManagerUI {
 
 		command = input.nextLine().toUpperCase();
 
-		if (command.equals("Y")) {
+		if ("Y".equals(command)) {
 			US302ChangeProjectManagerController changeManagerController = new US302ChangeProjectManagerController(
 					toChangeManager);
 			System.out.println("Select a collaborator from the list:");

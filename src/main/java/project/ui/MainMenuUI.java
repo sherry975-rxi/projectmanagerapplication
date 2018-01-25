@@ -23,19 +23,20 @@ public class MainMenuUI {
 	private static Company myCompany;
 	private static User userAdmin;
 	private static User userDirector;
-	private static User user1;
-	private static User user2;
+	private static User userJSilva;
+	private static User userATirapicos;
 	private static User projectManager;
-	private static Project project1;
-	private static Project project2;
-	private static Project project3;
-	private static ProjectCollaborator projcollab1;
-	private static ProjectCollaborator projcollab2;
-	private static ProjectCollaborator projcollab3;
-	private static Task task1;
-	private static Task task2;
-	private static Task task3;
-	private static Task task4;
+	private static Project projectGP;
+	private static Project projectApostas;
+	private static Project projectHomeBanking;
+	private static ProjectCollaborator projcollabJSilva;
+	private static ProjectCollaborator projcollabATirapicos;
+	private static ProjectCollaborator projcollabManager;
+	private static Task taskGP1;
+	private static Task taskGP2;
+	private static Task taskGP3;
+	private static Task taskGP4;
+	private static Task taskHB5;
 
 	public static void main(String[] args) {
 
@@ -50,127 +51,149 @@ public class MainMenuUI {
 				"Director grupo 3", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userDirector.setPassword("abcdef");
 
-		user1 = myCompany.getUsersRepository().createUser("Joao Silva", "aluno_3_@gmail.com", "010",
+		userJSilva = myCompany.getUsersRepository().createUser("Joao Silva", "aluno_3_@gmail.com", "010",
 				"Estudante Grupo 3", "937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
-		user1.setPassword("switch");
-		user2 = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "aluno_2_@gmail.com", "011",
+		userJSilva.setPassword("switch");
+		userATirapicos = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "aluno_2_@gmail.com", "011",
 				"Estudante Grupo 3", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Matosinhos",
 				"Portugal");
-		user2.setPassword("tirapicos");
+		userATirapicos.setPassword("tirapicos");
 		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "aluno_1_@gmail.com", "012",
 				"Estudante Grupo 3", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Matosinhos", "Portugal");
 		// addition of users to the company
 		myCompany.getUsersRepository().addUserToUserRepository(userAdmin);
 		myCompany.getUsersRepository().addUserToUserRepository(userDirector);
-		myCompany.getUsersRepository().addUserToUserRepository(user1);
-		myCompany.getUsersRepository().addUserToUserRepository(user2);
+		myCompany.getUsersRepository().addUserToUserRepository(userJSilva);
+		myCompany.getUsersRepository().addUserToUserRepository(userATirapicos);
 		myCompany.getUsersRepository().addUserToUserRepository(projectManager);
 
 		// set user as collaborator
 		userDirector.setUserProfile(Profile.DIRECTOR);
-		user1.setUserProfile(Profile.COLLABORATOR);
-		user2.setUserProfile(Profile.COLLABORATOR);
+		userJSilva.setUserProfile(Profile.COLLABORATOR);
+		userATirapicos.setUserProfile(Profile.COLLABORATOR);
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 
 		// Instantiates a project and add it to the company
-		project1 = myCompany.getProjectsRepository().createProject("Projeto GP", "Aplicação para Gestão de Projetos",
+		projectGP = myCompany.getProjectsRepository().createProject("Projeto GP", "Aplicação para Gestão de Projetos",
 				projectManager);
-		project2 = myCompany.getProjectsRepository().createProject("Projeto Apostas", "Plataforma Web para Apostas",
-				projectManager);
-		project3 = myCompany.getProjectsRepository().createProject("Projeto HomeBanking",
-				"Aplicação iOS para HomeBanking", user1);
+		projectApostas = myCompany.getProjectsRepository().createProject("Projeto Apostas",
+				"Plataforma Web para Apostas", projectManager);
+		projectHomeBanking = myCompany.getProjectsRepository().createProject("Projeto HomeBanking",
+				"Aplicação iOS para HomeBanking", userJSilva);
 
-		TaskCollaborator tWorker1;
+		TaskCollaborator tWorkerJSilva;
+		TaskCollaborator tWorkerATirapicos;
 
 		// Add data to project1
 		// add start date to project
 		Calendar startDate = Calendar.getInstance();
 		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
-		project1.setStartdate(startDate);
+		projectGP.setStartdate(startDate);
 
 		// add finish date to project
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
-		project1.setFinishdate(finishDate);
+		projectGP.setFinishdate(finishDate);
 
 		// addition of projects to the company
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project3);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(projectGP);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(projectApostas);
+		myCompany.getProjectsRepository().addProjectToProjectRepository(projectHomeBanking);
 
 		// Create Project collaborators
-		projcollab1 = new ProjectCollaborator(user1, 2);
-		projcollab2 = new ProjectCollaborator(user2, 2);
-		projcollab3 = new ProjectCollaborator(projectManager, 2);
+		projcollabJSilva = new ProjectCollaborator(userJSilva, 2);
+		projcollabATirapicos = new ProjectCollaborator(userATirapicos, 2);
+		projcollabManager = new ProjectCollaborator(projectManager, 2);
 
-		// addition of ProjectCollaborators 1 and 2 to project1 and project2
-		project1.addProjectCollaboratorToProjectTeam(projcollab1);
-		project1.addProjectCollaboratorToProjectTeam(projcollab2);
-		project2.addProjectCollaboratorToProjectTeam(projcollab1);
-		project2.addProjectCollaboratorToProjectTeam(projcollab2);
+		// addition of ProjectCollaborators 1 and 2 to projectGP and projectApostas
+		projectGP.addProjectCollaboratorToProjectTeam(projcollabJSilva);
+		projectGP.addProjectCollaboratorToProjectTeam(projcollabATirapicos);
+		projectApostas.addProjectCollaboratorToProjectTeam(projcollabJSilva);
+		projectApostas.addProjectCollaboratorToProjectTeam(projcollabATirapicos);
 
-		// addition of ProjectCollaborators 2 and 3(user projectManager) to project3
-		project3.addProjectCollaboratorToProjectTeam(projcollab2);
-		project3.addProjectCollaboratorToProjectTeam(projcollab3);
+		// addition of ProjectCollaborators 2 and 3(user projectManager) to
+		// projectHomeBanking
+		projectHomeBanking.addProjectCollaboratorToProjectTeam(projcollabATirapicos);
+		projectHomeBanking.addProjectCollaboratorToProjectTeam(projcollabManager);
 
 		// Instantiates a task
-		task1 = project1.getTaskRepository().createTask("Desenvolver código para responder à US399");
-		project1.getTaskRepository().addProjectTask(task1);
+		taskGP1 = projectGP.getTaskRepository().createTask("Desenvolver código para responder à US399");
+		projectGP.getTaskRepository().addProjectTask(taskGP1);
 		// Creates a new taksCollaborator
-		tWorker1 = new TaskCollaborator(projcollab2);
+		tWorkerJSilva = new TaskCollaborator(projcollabJSilva);
 		// Adds the taskCollaborator to task1
-		task1.addTaskCollaboratorToTask(tWorker1);
+		taskGP1.addTaskCollaboratorToTask(tWorkerJSilva);
 
-		OnGoing onGoingState = new OnGoing(task1);
-		task1.setTaskState(onGoingState);
-		task1.setStartDate(startDate);
+		OnGoing onGoingState = new OnGoing(taskGP1);
+		taskGP1.setTaskState(onGoingState);
+		taskGP1.setStartDate(startDate);
 
 		// create task deadline
 		Calendar taskDeadlineDate = Calendar.getInstance();
 		taskDeadlineDate.set(Calendar.YEAR, 2017);
 		taskDeadlineDate.set(Calendar.MONTH, Calendar.FEBRUARY);
-		task1.setTaskDeadline(taskDeadlineDate);
+		taskGP1.setTaskDeadline(taskDeadlineDate);
 
-		task1.createReport(tWorker1);
-		task1.getReports().get(0).setReportedTime(20);
+		taskGP1.createReport(tWorkerJSilva);
+		taskGP1.getReports().get(0).setReportedTime(20);
 
-		task2 = project1.getTaskRepository().createTask("Desenvolver código para responder à US122");
-		project1.getTaskRepository().addProjectTask(task2);
+		taskGP2 = projectGP.getTaskRepository().createTask("Desenvolver código para responder à US122");
+		projectGP.getTaskRepository().addProjectTask(taskGP2);
 
 		// Instantiates a task
-		task3 = project1.getTaskRepository().createTask("Fazer refator");
-		project1.getTaskRepository().addProjectTask(task3);
+		taskGP3 = projectGP.getTaskRepository().createTask("Fazer refator");
+		projectGP.getTaskRepository().addProjectTask(taskGP3);
 		// Creates a new taksCollaborator
-		tWorker1 = new TaskCollaborator(projcollab1);
+		tWorkerATirapicos = new TaskCollaborator(projcollabATirapicos);
 		// necessary to pass from "Created" to "Planned"
 		startDate = Calendar.getInstance();
 		startDate.add(Calendar.MONTH, -1);
-		task3.setEstimatedTaskStartDate(startDate);
+		taskGP3.setEstimatedTaskStartDate(startDate);
 		finishDate = Calendar.getInstance();
 		finishDate.add(Calendar.MONTH, 1);
-		task3.setTaskDeadline(finishDate);
-		task3.getTaskState().changeToPlanned();
+		taskGP3.setTaskDeadline(finishDate);
+		taskGP3.getTaskState().changeToPlanned();
 		// necessary to pass from "Planned" to "Assigned"
-		task3.addProjectCollaboratorToTask(projcollab1);
-		task3.getTaskState().changeToAssigned();
+		taskGP3.addProjectCollaboratorToTask(projcollabJSilva);
+		taskGP3.getTaskState().changeToAssigned();
 		// pass from "Assigned" to "Ready"
-		task3.getTaskState().changeToReady();
+		taskGP3.getTaskState().changeToReady();
 		// necessary to pass from "Ready" to "OnGoing"
 		Calendar projStartDate = (Calendar) startDate.clone();
-		task3.setStartDate(startDate);
-		task3.getTaskState().changeToOnGoing();
+		taskGP3.setStartDate(startDate);
+		taskGP3.getTaskState().changeToOnGoing();
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate = (Calendar) finishDate.clone();
-		task3.setFinishDate(testDate);
-		task3.getTaskState().changeToFinished();
-		// Adds the taskCollaborator to task3
-		task3.addTaskCollaboratorToTask(tWorker1);
+		taskGP3.setFinishDate(testDate);
+		taskGP3.getTaskState().changeToFinished();
+		// Adds the taskCollaborator to taskGP3
+		taskGP3.addTaskCollaboratorToTask(tWorkerATirapicos);
 
-		// Creates a task4 and sets it to cancelled
-		task4 = project1.getTaskRepository().createTask("Cancelled Task");
-		project1.getTaskRepository().addProjectTask(task4);
-		Cancelled cancelledState = new Cancelled(task4);
-		task4.setTaskState(cancelledState);
+		// Creates a taskGP4 and sets it to cancelled
+		taskGP4 = projectGP.getTaskRepository().createTask("Cancelled Task");
+		projectGP.getTaskRepository().addProjectTask(taskGP4);
+		Cancelled cancelledState = new Cancelled(taskGP4);
+		taskGP4.setTaskState(cancelledState);
+
+		// Create taskHB5 of projectHomeBanking
+		taskHB5 = projectHomeBanking.getTaskRepository().createTask("Implementar sistema de segurança");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB5);
+		// necessary to pass from "Created" to "Planned"
+		startDate = Calendar.getInstance();
+		startDate.add(Calendar.MONTH, -1);
+		taskHB5.setEstimatedTaskStartDate(startDate);
+		finishDate = Calendar.getInstance();
+		finishDate.add(Calendar.MONTH, 1);
+		taskHB5.setTaskDeadline(finishDate);
+		taskHB5.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB5.addProjectCollaboratorToTask(projcollabManager);
+		taskHB5.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB5.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB5.setStartDate(startDate);
+		taskHB5.getTaskState().changeToOnGoing();
 
 		// project1.setStartdate(Calendar.getInstance());
 		// PrintProjectInfoController projectInfo = new
@@ -221,8 +244,8 @@ public class MainMenuUI {
 				break;
 
 			case "5":
-				user1.setUserProfile(Profile.COLLABORATOR);
-				CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(user1);
+				userJSilva.setUserProfile(Profile.COLLABORATOR);
+				CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(userJSilva);
 				collaboratorMenu.displayOptions();
 
 				break;

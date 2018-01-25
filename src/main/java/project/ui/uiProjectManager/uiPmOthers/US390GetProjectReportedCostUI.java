@@ -20,6 +20,7 @@ public class US390GetProjectReportedCostUI {
 
 		this.project = project;
 		this.user = user;
+		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
 
@@ -27,7 +28,7 @@ public class US390GetProjectReportedCostUI {
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
 		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
@@ -37,9 +38,9 @@ public class US390GetProjectReportedCostUI {
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("     PROJECT COST");
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 
 		CalculateReportedProjectCostController controller = new CalculateReportedProjectCostController();
 
@@ -59,7 +60,7 @@ public class US390GetProjectReportedCostUI {
 			System.out.println();
 		}
 
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("[M] MainMenu");
 		System.out.println("[E] Exit \n");
 
