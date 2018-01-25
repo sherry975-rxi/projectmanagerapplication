@@ -1,4 +1,4 @@
-package project.ui.uiCollaborator;
+package project.ui.uiProjectManager.uiPmOthers;
 
 import java.util.List;
 import java.util.Scanner;
@@ -35,6 +35,10 @@ public class US342DefineDependenciesBetweenTasksUI {
 		int incrementDays = 0;
 
 		Scanner scannerInput = new Scanner(System.in);
+
+		System.out.println("                  CREATE TASK DEPENDENCY");
+		System.out.println("______________________________________________");
+		System.out.println();
 		US342CreateTaskDependencyController us342Controller = new US342CreateTaskDependencyController(project);
 		List<Task> projTaskList = us342Controller.getTasksFromAProject();
 
@@ -43,8 +47,6 @@ public class US342DefineDependenciesBetweenTasksUI {
 					+ projTaskList.get(i).getDescription());
 			System.out.println();
 		}
-		System.out.println("___________________________________________________");
-		System.out.println();
 
 		while (checkA) {
 			System.out.println("Choose a \"daughter\" task by inputing its ID: ");
@@ -91,14 +93,20 @@ public class US342DefineDependenciesBetweenTasksUI {
 		}
 
 		if (checkC) {
-			if (us342Controller.getTaskByID(motherTask).getEstimatedTaskStartDate() != null) {
+			if (us342Controller.getTaskByID(motherTask).getTaskDeadline() != null) {
 				boolean checkD = true;
 				while (checkD) {
 					System.out.println("Choose how many days there are between the start of the \"mother\" task" + "\n"
 							+ "and the start of the \"daughter\" task: ");
 					System.out.println("(Inputing any non-number will exit this menu.)");
+					System.out
+							.println("If you type a negative value, the estimated start date of the daughter task will "
+									+ "be set to the same day of the estimated finish date of the task mother");
+
 					if (scannerInput.hasNextInt()) {
 						incrementDays = Integer.parseInt(scannerInput.nextLine());
+						us342Controller.createDependenceFromTask(daughterTask, motherTask, incrementDays);
+
 						String estStartDateMainTask = us342Controller.getTaskEstimatedStartDateString(motherTask);
 						String estStarDateDependentTask = us342Controller.getTaskEstimatedStartDateString(daughterTask);
 
@@ -106,6 +114,8 @@ public class US342DefineDependenciesBetweenTasksUI {
 								+ "and the estimated start date of the dependent task is: " + estStarDateDependentTask);
 						System.out.println("Are you sure you want to create this dependency?");
 						System.out.println("Press Y to confirm");
+						System.out.println();
+
 						String choice = scannerInput.nextLine();
 
 						if ("Y".equalsIgnoreCase(choice)) {
@@ -133,22 +143,8 @@ public class US342DefineDependenciesBetweenTasksUI {
 					}
 				}
 			} else {
-				boolean checkD = true;
-				while (checkD) {
-					System.out.println("Are you sure you want to create this dependency?");
-					System.out.println("Press Y to confirm");
-					String choice = scannerInput.nextLine();
-
-					if ("Y".equalsIgnoreCase(choice)) {
-						us342Controller.createDependenceFromTaskWithoutEstimatedStartDate(daughterTask, motherTask);
-						System.out.println("Dependency successfully created.");
-						checkD = false;
-					} else {
-						System.out.println("Task dependency creation cancelled!");
-						System.out.println("Exiting menu.");
-						checkD = false;
-					}
-				}
+				System.out.println(
+						"You must first set an estimated Finish Date for the Main Task so that a dependency can be created");
 			}
 		}
 

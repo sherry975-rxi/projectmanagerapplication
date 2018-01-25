@@ -39,7 +39,7 @@ public class DeleteTaskControllerTest {
 	Planned taskStatePlanned;
 	Ready taskStateReady;
 	StandBy taskStateStandBy;
-	CreateTaskController testControl;
+	US340CreateTaskController testControl;
 
 	@Before
 	public void setUp() {
