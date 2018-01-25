@@ -148,4 +148,19 @@ public class US135andUS136SearchUsersControllerTest {
 		assertEquals(searchController.selectUser(1), newUser2);
 	}
 
+	@Test
+	public void testUserDataToString() {
+
+		String result = "001 - Unassigned: Daniel (daniel@gmail.com; 910000000) - collaborator";
+		assertTrue(result.equals(searchController.userDataToString(newUser1)));
+
+		newUser1.setUserProfile(Profile.COLLABORATOR);
+		result = "001 - Collaborator: Daniel (daniel@gmail.com; 910000000) - collaborator";
+		assertTrue(result.equals(searchController.userDataToString(newUser1)));
+
+		newUser1.setUserProfile(Profile.DIRECTOR);
+		result = "001 - Director: Daniel (daniel@gmail.com; 910000000) - collaborator";
+		assertTrue(result.equals(searchController.userDataToString(newUser1)));
+	}
+
 }
