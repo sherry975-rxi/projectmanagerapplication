@@ -46,13 +46,15 @@ public class US320ViewProjectsControllerTest {
 
 		// creates a string from activeProject's overview data, to be compared with the
 		// various tests
-		activeProjectData = "===== ";
+		activeProjectData = "==============================\n";
+		activeProjectData += "===== ";
 		activeProjectData += "1";
-		activeProjectData += " - Active Project =====";
+		activeProjectData += " - Active Project =====\n";
+		activeProjectData += "==============================";
 		activeProjectData += "\n - Status: Execution";
 		activeProjectData += "\n - Manager: Daniel";
 		activeProjectData += "\n - Description: this Project is active";
-		activeProjectData += "\n ==========";
+		activeProjectData += "\n==============================";
 
 	}
 
@@ -65,6 +67,21 @@ public class US320ViewProjectsControllerTest {
 		activeManager = null;
 		inactiveManager = null;
 		projectListsController = null;
+	}
+
+	/**
+	 * This test confirms the header generation is working correctly, given "=" and
+	 */
+	@Test
+	public void generateHeaderTest() {
+		projectListsController = new US320ViewProjectsController();
+
+		String headerChar = "=";
+		int headerSize = 20;
+		String expectedHeader = "====================";
+
+		assertTrue(expectedHeader.equals(projectListsController.generateHeader(headerChar, headerSize)));
+
 	}
 
 	/**
@@ -93,7 +110,7 @@ public class US320ViewProjectsControllerTest {
 
 		// also asserts that the contents of index 0 matches the data of the only active
 		// project
-		assertTrue(projectListsController.viewAllProjects().get(0).equals("::Index 1:: \n" + activeProjectData));
+		assertTrue(projectListsController.viewAllProjects().get(0).equals("::Project nº1:: \n" + activeProjectData));
 	}
 
 	/**

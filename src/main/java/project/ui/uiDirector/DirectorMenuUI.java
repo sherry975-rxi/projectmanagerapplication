@@ -2,6 +2,7 @@ package project.ui.uiDirector;
 
 import java.util.Scanner;
 
+import project.controller.PrintProjectInfoController;
 import project.model.Project;
 import project.model.User;
 
@@ -10,8 +11,9 @@ public class DirectorMenuUI {
 	User directorLoggedIn;
 	Project selectedProject = null;
 
-	String options = "[1] - view projects \n" + "[2] - create a project \n"
-			+ "[3] - Change selected project's manager \n" + "[E] - exit to main menu";
+	String options = "[1] - View projects \n" + "[2] - Create a project \n"
+			+ "[3] - Change selected project's manager \n" + "______________________________________________"
+			+ "[E] - Exit to main menu";
 
 	String command;
 
@@ -26,14 +28,33 @@ public class DirectorMenuUI {
 		boolean cycle = true;
 		while (cycle) {
 
+			System.out.println("Welcome to director menu, " + directorLoggedIn.getName());
+			System.out.println("______________________________________________");
+
+			System.out.println("");
+
 			if (selectedProject != null) {
-				System.out.println("Project selected!");
-				System.out.println(selectedProject.getIdCode() + " (" + selectedProject.getProjectStatusName() + ") - "
-						+ selectedProject.getName());
+				System.out.println("> Project selected!!");
+				System.out.println("");
+
+				PrintProjectInfoController projectInfo = new PrintProjectInfoController(selectedProject);
+
+				System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
+				System.out.println("___________________________________________________");
+				System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
+				System.out.println("STATUS: " + selectedProject.getProjectStatusName());
+				System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
+				System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo());
+				System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
+				System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
+				System.out.println("EFFORT UNITS: " + selectedProject.getEffortUnit().toString());
+				System.out.println("");
+				System.out.println("___________________________________________________");
+
 				System.out.println("(Change project management command enabled)");
 				System.out.println("");
 			}
-			System.out.println("Welcome to director menu, " + directorLoggedIn.getName());
+
 			System.out.println("Please choose a command:");
 			System.out.println(options);
 			System.out.println("");
@@ -56,7 +77,8 @@ public class DirectorMenuUI {
 					System.out.println("Please select a project first");
 					System.out.println("");
 				} else {
-					System.out.println("Not yet implemented!");
+					US302ChangeProjectManagerUI changeManager = new US302ChangeProjectManagerUI();
+					changeManager.changeProjectManager(selectedProject);
 				}
 				break;
 

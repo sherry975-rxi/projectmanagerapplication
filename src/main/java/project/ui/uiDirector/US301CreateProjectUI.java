@@ -85,7 +85,6 @@ public class US301CreateProjectUI {
 				System.out.println("(Currently:" + effortUnitName + ")");
 				System.out.println("");
 				dataInput = dataIn.nextLine();
-				System.out.println(dataInput);
 				if (dataInput.equals("0")) {
 					if (effortUnitName.equals("Hours")) {
 						effortUnitName = "Person/Month";
