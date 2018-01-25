@@ -782,6 +782,7 @@ public class Task {
 			this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
 			if (daysToPostpone >= 0) {
 				this.estimatedTaskStartDate.add(Calendar.DAY_OF_YEAR, daysToPostpone);
+				wasDependencyCreated = true;
 			}
 
 		}
