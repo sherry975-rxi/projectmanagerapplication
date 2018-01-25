@@ -215,14 +215,16 @@ public class MainMenuUI {
 			System.out.println("______________________________________________");
 			System.out.println("[1] New Registration");
 			System.out.println("[2] Login");
-			System.out.println("[3] Administrator (Demo mode - Teresa Ribeiro Cena)");
-			System.out.println("[4] Director (Demo mode - Roberto Santos)");
-			System.out.println("[5] Collaborator (Demo mode - João Silva)");
+			System.out.println("[3] Administrator");
+			System.out.println("[4] Director");
+			System.out.println("[5] Collaborator");
 			System.out.println("______________________________________________");
 			System.out.println("[E] Exit");
 			System.out.println();
+			System.out.println("Please select an option:");
 
 			String choice = input.nextLine().toUpperCase();
+			System.out.println();
 			switch (choice) {
 			case "1":
 				US101UserRegisterUI userRegister = new US101UserRegisterUI();
