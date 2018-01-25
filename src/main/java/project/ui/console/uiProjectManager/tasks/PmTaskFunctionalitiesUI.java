@@ -20,7 +20,7 @@ public class PmTaskFunctionalitiesUI {
 		this.project = project;
 		this.user = user;
 	}
-	
+
 	public void taskDataDisplay() {
 		PrintTaskInfoController taskInfo = new PrintTaskInfoController(this.taskID, this.project.getIdCode());
 		taskInfo.setProjectAndTask();
@@ -57,16 +57,16 @@ public class PmTaskFunctionalitiesUI {
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "1":
-				US361AssignUserToTaskUI case1UI = new US361AssignUserToTaskUI();
-				//add UI method
+				// US361AssignUserToTaskUI case1UI = new US361AssignUserToTaskUI();
+				// add UI method
 				break;
 			case "2":
 				US362RemoveUserFromTaskUI case2UI = new US362RemoveUserFromTaskUI();
-				//add UI method
+				// add UI method
 				break;
 			case "3":
 				US365MarkTaskAsFinishedUI case3UI = new US365MarkTaskAsFinishedUI();
-				//add UI method
+				// add UI method
 				break;
 			case "4":
 				// ver se é suposto ter a cancel ou não
@@ -86,7 +86,8 @@ public class PmTaskFunctionalitiesUI {
 			default:
 				System.out.println("Please choose a valid option.");
 				System.out.println("");
-				PmTaskFunctionalitiesUI myAtualUIView = new PmTaskFunctionalitiesUI(this.taskID, this.project, this.user);
+				PmTaskFunctionalitiesUI myAtualUIView = new PmTaskFunctionalitiesUI(this.taskID, this.project,
+						this.user);
 				myAtualUIView.taskDataDisplay();
 				break;
 			}
