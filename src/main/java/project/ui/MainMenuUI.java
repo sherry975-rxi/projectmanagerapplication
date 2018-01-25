@@ -117,7 +117,7 @@ public class MainMenuUI {
 		task1 = project1.getTaskRepository().createTask("Desenvolver código para responder à US399");
 		project1.getTaskRepository().addProjectTask(task1);
 		// Creates a new taksCollaborator
-		tWorker1 = new TaskCollaborator(projcollab1);
+		tWorker1 = new TaskCollaborator(projcollab2);
 		// Adds the taskCollaborator to task1
 		task1.addTaskCollaboratorToTask(tWorker1);
 
