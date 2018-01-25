@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
-import project.controller.US377CollectionOfCancelledTasksFromAProject;
+import project.controller.US377CollectionOfCancelledTasksFromAProjectController;
 import project.model.Project;
 import project.model.User;
 import project.ui.MainMenuUI;
@@ -40,7 +40,7 @@ public class US377ProjectCancelledTasks {
 		System.out.println("     CANCELLED TASKS");
 		System.out.println("___________________________________________________");
 
-		US377CollectionOfCancelledTasksFromAProject controller = new US377CollectionOfCancelledTasksFromAProject(
+		US377CollectionOfCancelledTasksFromAProjectController controller = new US377CollectionOfCancelledTasksFromAProjectController(
 				project);
 
 		List<String> listOfCancelledTasks = new ArrayList<>();

@@ -20,6 +20,8 @@ public class TaskTeamRequestTests {
 
 	ProjectCollaborator teamTesterCollaborator;
 	ProjectCollaborator teamTesterCollaboratorNull;
+	ProjectCollaborator teamTesterCollaboratorOtherNull;
+
 	ProjectCollaborator teamTesterOtherCollab;
 
 	Calendar estimatedStartDate;
@@ -28,6 +30,7 @@ public class TaskTeamRequestTests {
 	String taskDescription;
 	String taskIDnumber;
 	Task chosenTask;
+	Task nullTask;
 
 	@Before
 	public void setUp() {
@@ -109,6 +112,10 @@ public class TaskTeamRequestTests {
 		TaskTeamRequest secondRequest = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
 		TaskTeamRequest thirdRequest = new TaskTeamRequest(teamTesterCollaboratorNull, chosenTask);
 		TaskTeamRequest fourthRequest = new TaskTeamRequest(teamTesterOtherCollab, chosenTask);
+		TaskTeamRequest fifthRequest = new TaskTeamRequest(teamTesterOtherCollab, chosenTask);
+		TaskTeamRequest sixthRequest = new TaskTeamRequest(teamTesterCollaboratorNull, chosenTask);
+		TaskTeamRequest seventhRequest = new TaskTeamRequest(teamTesterCollaboratorNull, nullTask);
+		TaskTeamRequest eightRequest = new TaskTeamRequest(teamTesterCollaboratorNull, nullTask);
 
 		assertTrue(firstRequest.equals(secondRequest));
 		assertTrue(firstRequest.equals(secondRequest));
@@ -126,6 +133,27 @@ public class TaskTeamRequestTests {
 
 		assertFalse(firstRequest.equals(differentRequest));
 
+		/*
+		 * Sets Proj Collab to NULL
+		 */
+		teamTesterCollaborator = null;
+		assertFalse(firstRequest.equals(fourthRequest));
+
+		// tests with two nulls project collaborators
+		assertTrue(thirdRequest.equals(sixthRequest));
+
+		/*
+		 * Asserts with a null task to check if returns false with a request with a not
+		 * NULL task
+		 */
+
+		assertFalse(seventhRequest.equals(sixthRequest));
+
+		/*
+		 * Checks if it returns true when both requests have NULL tasks
+		 */
+		assertTrue(seventhRequest.equals(eightRequest));
+
 	}
 
 	@Test
@@ -133,6 +161,30 @@ public class TaskTeamRequestTests {
 		TaskTeamRequest request = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
 		String result = teamTesterName + "\n" + "collab@mail.mail" + "\n" + taskIDnumber + "\n" + taskDescription;
 		assertTrue(request.viewStringRepresentation().equals(result));
+	}
+
+	@Test
+	public void testHashCode() {
+		/*
+		 * Creates 4 taskRequests, two have the same atrributes, one has a null
+		 * collaborator, and other a null task
+		 * 
+		 */
+
+		TaskTeamRequest request = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
+		TaskTeamRequest request2 = new TaskTeamRequest(teamTesterCollaborator, chosenTask);
+		TaskTeamRequest request3 = new TaskTeamRequest(teamTesterCollaboratorNull, chosenTask);
+		TaskTeamRequest request4 = new TaskTeamRequest(teamTesterCollaboratorNull, nullTask);
+
+		// Checks if both Hashcodes are the same
+		assertTrue(request.hashCode() == request2.hashCode());
+
+		// Collaborator is NULL, so it will return false
+		assertFalse(request.hashCode() == request3.hashCode());
+
+		// Task and collaborator are NULL, so it will return false
+		assertFalse(request.hashCode() == request4.hashCode());
+
 	}
 
 }

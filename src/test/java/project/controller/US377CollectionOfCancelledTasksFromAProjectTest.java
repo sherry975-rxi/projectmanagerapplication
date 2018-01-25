@@ -49,7 +49,7 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 	Calendar taskDeadlineDateTest;
 	Calendar startDateTest;
 
-	US377CollectionOfCancelledTasksFromAProject controller;
+	US377CollectionOfCancelledTasksFromAProjectController controller;
 
 	@Before
 	public void setUp() {
@@ -198,7 +198,7 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		testTask2.setTaskState(cancelledTestTask2);
 
 		// Creates the controller to be tested
-		controller = new US377CollectionOfCancelledTasksFromAProject(project);
+		controller = new US377CollectionOfCancelledTasksFromAProjectController(project);
 	}
 
 	@After

@@ -16,7 +16,7 @@ import project.model.TaskRepository;
  * @author Group 3
  *
  */
-public class US377CollectionOfCancelledTasksFromAProject {
+public class US377CollectionOfCancelledTasksFromAProjectController {
 	private int projectIDtoInstantiate;
 	private TaskRepository taskRepository;
 	private ProjectRepository projectRepository;
@@ -28,7 +28,7 @@ public class US377CollectionOfCancelledTasksFromAProject {
 	 * 
 	 * @param projectIDtoInstantiate
 	 */
-	public US377CollectionOfCancelledTasksFromAProject(Project project) {
+	public US377CollectionOfCancelledTasksFromAProjectController(Project project) {
 		this.project = project;
 		taskRepository = project.getTaskRepository();
 	}
@@ -54,18 +54,18 @@ public class US377CollectionOfCancelledTasksFromAProject {
 	 */
 	public List<String> getCancelledTaskListId(Project proj) {
 
-		List<Task> taskListOnGoing = proj.getTaskRepository().getCancelledTasks();
-		List<String> taskListToPrint = new ArrayList<>();
+		List<Task> taskListCanceleld = proj.getTaskRepository().getCancelledTasks();
+		List<String> taskCanceleldListToPrint = new ArrayList<>();
 
-		for (int i = 0; i < taskListOnGoing.size(); i++) {
+		for (int i = 0; i < taskListCanceleld.size(); i++) {
 
-			String taskDescription = taskListOnGoing.get(i).getDescription();
-			String taskID = "[" + taskListOnGoing.get(i).getTaskID() + "]";
+			String taskDescription = taskListCanceleld.get(i).getDescription();
+			String taskID = "[" + taskListCanceleld.get(i).getTaskID() + "]";
 			String taskIDandDescription = taskID + " " + taskDescription;
-			taskListToPrint.add(taskIDandDescription);
+			taskCanceleldListToPrint.add(taskIDandDescription);
 		}
 
-		return taskListToPrint;
+		return taskCanceleldListToPrint;
 	}
 
 	/**
@@ -77,8 +77,8 @@ public class US377CollectionOfCancelledTasksFromAProject {
 	 */
 	public String splitStringByFirstSpace(String string) {
 
-		String[] partsTask = string.split(" ");
-		String firstPartOfString = partsTask[0];
+		String[] partsCancelledTask = string.split(" ");
+		String firstPartOfString = partsCancelledTask[0];
 
 		return firstPartOfString;
 	}

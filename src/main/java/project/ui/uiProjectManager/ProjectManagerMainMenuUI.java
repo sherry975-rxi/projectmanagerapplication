@@ -7,6 +7,14 @@ import project.model.Project;
 import project.model.User;
 import project.ui.MainMenuUI;
 import project.ui.uiCollaborator.CollectProjectsFromUserUI;
+import project.ui.uiProjectManager.uiPmManageRequests.US356ApproveOrCancelAssignmentRequestUI;
+import project.ui.uiProjectManager.uiPmManageRequests.US357ApproveOrCancelRemovalRequestUI;
+import project.ui.uiProjectManager.uiPmTasksLists.US360ProjectUnassignedTasksUI;
+import project.ui.uiProjectManager.uiPmTasksLists.US370ProjectFinishedTasksDecreasingOrderUI;
+import project.ui.uiProjectManager.uiPmTasksLists.US372ProjectOngoingTasksUI;
+import project.ui.uiProjectManager.uiPmTasksLists.US375ProjectNotStartedTasksUI;
+import project.ui.uiProjectManager.uiPmTasksLists.US377ProjectCancelledTasks;
+import project.ui.uiProjectManager.uiPmTasksLists.US380ProjectUnfinishedTasksWithExperiredDeadlineUI;
 
 
 public class ProjectManagerMainMenuUI {
@@ -63,22 +71,28 @@ public class ProjectManagerMainMenuUI {
 
 		switch (option) {
 		case "A1":
-			
+			US372ProjectOngoingTasksUI optionA1 = new US372ProjectOngoingTasksUI();
+			optionA1.displayOnGoingTasksOfProject(this.project, this.projectManager);
 			break;
 		case "A2":
-			
+			US380ProjectUnfinishedTasksWithExperiredDeadlineUI optionA2 = new US380ProjectUnfinishedTasksWithExperiredDeadlineUI();
+			optionA2.displayUnfinishedTasksWithExpiredDeadline(this.project, this.projectManager);
 			break;
 		case "A3":
-			
+			US370ProjectFinishedTasksDecreasingOrderUI optionA3 = new US370ProjectFinishedTasksDecreasingOrderUI(this.project.getIdCode(), this.projectManager);
+			optionA3.projectDataDisplay();
 			break;
 		case "A4":
-			
+			US375ProjectNotStartedTasksUI optionA4 = new US375ProjectNotStartedTasksUI();
+			optionA4.projectNotStartedTasksUI(this.project, this.projectManager);
 			break;
 		case "A5":
-			
+			US360ProjectUnassignedTasksUI optionA5 = new US360ProjectUnassignedTasksUI();
+			optionA5.projectUnassignedTasksUI(this.project, this.projectManager);
 			break;
 		case "A6":
-			
+			US377ProjectCancelledTasks optionA6 = new US377ProjectCancelledTasks();
+			optionA6.displayCancelledTasksOfProject(this.project, this.projectManager);
 			break;
 		case "A7":
 			
@@ -93,10 +107,12 @@ public class ProjectManagerMainMenuUI {
 			
 			break;
 		case "C1":
-			
+			US356ApproveOrCancelAssignmentRequestUI optionC1 = new US356ApproveOrCancelAssignmentRequestUI(this.projectManager, this.project);
+			optionC1.displayAssignmentTaskRequests();
 			break;
 		case "C2":
-			
+			US357ApproveOrCancelRemovalRequestUI optionC2 = new US357ApproveOrCancelRemovalRequestUI(this.projectManager, this.project);
+			optionC2.displayRemovalTaskRequests();
 			break;
 		case "D1":
 			
