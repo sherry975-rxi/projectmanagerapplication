@@ -53,12 +53,14 @@ public class US207And208CreateUpdateTaskReportUI {
 		case "B":
 			TaskDetailsUI previousUIView = new TaskDetailsUI(this.taskID, this.projectID, user, this.isPreviousUIFromTasks);
 			previousUIView.taskDataDisplay();
+			break;
 		case "M":
 			MainMenuUI.mainMenu();
 			break;
 		case "E":
 			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 			System.exit(0);
+			break;
 		default:
 			int newTimeToInt;
 			try {
@@ -80,6 +82,7 @@ public class US207And208CreateUpdateTaskReportUI {
 			} catch (NumberFormatException e) {
 				System.out.println("Number not valid");
 			}
+			break;
 
 		}
 			
