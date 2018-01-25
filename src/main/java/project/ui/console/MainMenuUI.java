@@ -311,6 +311,26 @@ public class MainMenuUI {
 		taskHB7.setStartDate(startDate);
 		taskHB7.getTaskState().changeToOnGoing();
 
+		// Task 3.8 (taskHB8) set to cancelled
+		taskHB8.setEstimatedTaskStartDate(estimatedStartDate4);
+		taskHB8.setTaskDeadline(estimatedFinishDate4);
+		taskHB8.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB8.addProjectCollaboratorToTask(projcollabManager);
+		taskHB8.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB8.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB8.setStartDate(startDate);
+		taskHB8.getTaskState().changeToOnGoing();
+		// necessary to pass from "OnGoing" to "Finished"
+		Calendar cancelDate = Calendar.getInstance();
+		cancelDate.add(Calendar.YEAR, 2018);
+		cancelDate.add(Calendar.MONTH, -1);
+		cancelDate.add(Calendar.DAY_OF_MONTH, 8);
+		taskHB8.setFinishDate(cancelDate);
+		taskHB8.getTaskState().changeToCancelled();
+
 		mainMenu();
 	}
 
