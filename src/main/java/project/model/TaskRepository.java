@@ -491,4 +491,20 @@ public class TaskRepository {
 		return cancelledTasksFromProject;
 	}
 
+	/**
+	 * @return The cost reported to each task in the TaskRepository
+	 */
+
+	public List<String> getReportedCostOfEachTask() {
+		List<String> reportTaskCost = new ArrayList<>();
+		int taskIndex = 0;
+
+		for (Task other : this.getProjectTaskRepository()) {
+			reportTaskCost.add(String.valueOf(other.getTaskCost()));
+
+		}
+
+		return reportTaskCost;
+	}
+
 }

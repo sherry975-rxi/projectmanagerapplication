@@ -31,7 +31,7 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 	Project project1;
 	Task taskA;
 
-	ProjectCollaborator projCollab1;
+	ProjectCollaborator projCollab1, projCollabNull;
 	TaskCollaborator taskWorker1;
 	ProjectCollaboratorAssociatedToTaskController taskController;
 
@@ -110,10 +110,14 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 		// then confirms the list still contains one assignment request
 
 		assertFalse(taskController.createTaskWorkerAssignmentRequestController(taskA, projCollab1));
+
 		assertEquals(project1.getAssignmentRequestsList().size(), 1);
 
 		// Checks if projCollab1 remains not associated to the Task
 		assertFalse(taskA.isProjectCollaboratorActiveInTaskTeam(projCollab1));
+
+		// Checks if it returns false with a NULL projectCollab
+		assertFalse(taskController.createTaskWorkerAssignmentRequestController(taskA, projCollabNull));
 
 	}
 
