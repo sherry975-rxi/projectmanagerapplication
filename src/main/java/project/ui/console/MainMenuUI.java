@@ -36,7 +36,15 @@ public class MainMenuUI {
 	private static Task taskGP2;
 	private static Task taskGP3;
 	private static Task taskGP4;
+	private static Task taskHB1;
+	private static Task taskHB2;
+	private static Task taskHB3;
+	private static Task taskHB4;
 	private static Task taskHB5;
+	private static Task taskHB6;
+	private static Task taskHB7;
+	private static Task taskHB8;
+	private static Task taskHB9;
 
 	public static void main(String[] args) {
 
@@ -87,12 +95,12 @@ public class MainMenuUI {
 		// Add data to project1
 		// add start date to project
 		Calendar startDate = Calendar.getInstance();
-		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
+		startDate.set(2018, Calendar.JANUARY, 23, 12, 31, 00);
 		projectGP.setStartdate(startDate);
 
 		// add finish date to project
 		Calendar finishDate = Calendar.getInstance();
-		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
+		finishDate.set(2018, Calendar.FEBRUARY, 2, 12, 31, 00);
 		projectGP.setFinishdate(finishDate);
 
 		// addition of projects to the company
@@ -176,29 +184,26 @@ public class MainMenuUI {
 		taskGP4.setTaskState(cancelledState);
 
 		// Create taskHB5 of projectHomeBanking
+		taskHB1 = projectHomeBanking.getTaskRepository().createTask("Criar indicadores de acesso");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB1);
+		taskHB2 = projectHomeBanking.getTaskRepository()
+				.createTask("Permitir diferentes configurações para pagina pessoal");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB2);
+		taskHB3 = projectHomeBanking.getTaskRepository().createTask("Permitir ligação a sites de noticias");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB3);
+		taskHB4 = projectHomeBanking.getTaskRepository().createTask("Alterar configurações para acesso");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB4);
 		taskHB5 = projectHomeBanking.getTaskRepository().createTask("Implementar sistema de segurança");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB5);
-		// necessary to pass from "Created" to "Planned"
-		startDate = Calendar.getInstance();
-		startDate.add(Calendar.MONTH, -1);
-		taskHB5.setEstimatedTaskStartDate(startDate);
-		finishDate = Calendar.getInstance();
-		finishDate.add(Calendar.MONTH, 1);
-		taskHB5.setTaskDeadline(finishDate);
-		taskHB5.getTaskState().changeToPlanned();
-		// necessary to pass from "Planned" to "Assigned"
-		taskHB5.addProjectCollaboratorToTask(projcollabManager);
-		taskHB5.getTaskState().changeToAssigned();
-		// pass from "Assigned" to "Ready"
-		taskHB5.getTaskState().changeToReady();
-		// necessary to pass from "Ready" to "OnGoing"
-		taskHB5.setStartDate(startDate);
-		taskHB5.getTaskState().changeToOnGoing();
+		taskHB6 = projectHomeBanking.getTaskRepository().createTask("Mostrar vista de administrador");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB6);
+		taskHB7 = projectHomeBanking.getTaskRepository().createTask("Permitir alteração de dados de cliente");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB7);
+		taskHB8 = projectHomeBanking.getTaskRepository().createTask("Gerar relatórios de investimentos");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB8);
+		taskHB9 = projectHomeBanking.getTaskRepository().createTask("Criar botão personalizar");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB9);
 
-		// project1.setStartdate(Calendar.getInstance());
-		// PrintProjectInfoController projectInfo = new
-		// PrintProjectInfoController(project1);
-		// System.out.println("Start date: " + projectInfo.printProjectStartDateInfo());
 		mainMenu();
 	}
 
