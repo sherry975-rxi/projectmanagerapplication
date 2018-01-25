@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +21,7 @@ import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.UserRepository;
 
-public class AssignTaskToCollaboratorControllerTest {
+public class US361AssignTaskToCollaboratorControllerTest {
 
 	Company myCompany;
 	UserRepository userRepository;
@@ -30,6 +33,7 @@ public class AssignTaskToCollaboratorControllerTest {
 	ProjectCollaborator projCollaborator;
 	TaskCollaborator taskCollaborator;
 	ProjectCollaborator nullProjectCollaborator;
+	US361AssignTaskToCollaboratorsController controller;
 
 	@Before
 	public void setUp() {
@@ -64,6 +68,10 @@ public class AssignTaskToCollaboratorControllerTest {
 		project.addProjectCollaboratorToProjectTeam(projCollaborator);
 		nullProjectCollaborator = null;
 
+		// creates the task
+		testTask = project.getTaskRepository().createTask("Task AAAA");
+		controller = new US361AssignTaskToCollaboratorsController(project, testTask);
+
 	}
 
 	@After
@@ -79,123 +87,45 @@ public class AssignTaskToCollaboratorControllerTest {
 
 	}
 
+	/**
+	 * Tests the assignCollaboratorToTask
+	 */
 	@Test
 	public void assignTaskToCollaboratorControllerTest() {
+		controller.setUserToAddToTask(0);
+		assertTrue(controller.assignCollaboratorToTask());
 
-		// asserts which user is the Project Manager
-		assertFalse(project.isProjectManager(user1));
-		assertTrue(project.isProjectManager(userAdmin));
-
-		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls");
-		project.getTaskRepository().addProjectTask(testTask);
-
-		// Creates an int that holds the projectID Code
-		int projectCode = project.getIdCode();
-		String taskId = testTask.getTaskID();
-
-		// creates the Controller
-		AssignTaskToCollaboratorsController controllerAssignTaskToProjectCollaborator = new AssignTaskToCollaboratorsController(
-				projectCode);
-
-		/*
-		 * Checks that its possible to add a Task to the ProjectCollaborator
-		 */
-		assertTrue(controllerAssignTaskToProjectCollaborator.assignTaskToProjectCollaboratorController(taskId,
-				projCollaborator));
-
-		/*
-		 * It's not possible to add a ProjectCollaborator to the task, because he
-		 * already belongs to the task team
-		 */
-		assertFalse(controllerAssignTaskToProjectCollaborator.assignTaskToProjectCollaboratorController(taskId,
-				projCollaborator));
-
-		/*
-		 * Deactives the user from the Task
-		 */
-		testTask.removeProjectCollaboratorFromTask(projCollaborator);
-
-		/*
-		 * Checks that its possible to add the ProjectCollaborator again to the task
-		 */
-		assertTrue(controllerAssignTaskToProjectCollaborator.assignTaskToProjectCollaboratorController(taskId,
-				projCollaborator));
-
-		/*
-		 * Tries to assign a task to a ProjectCollaborator to a Task that doesn't exist
-		 * Returns false
-		 */
-		assertFalse(controllerAssignTaskToProjectCollaborator.assignTaskToProjectCollaboratorController("NullTask",
-				projCollaborator));
-
-		/*
-		 * Tries to assign a task to a ProjectCollaborator that doesn't exist Returns
-		 * false
-		 */
-		assertFalse(controllerAssignTaskToProjectCollaborator.assignTaskToProjectCollaboratorController(taskId,
-				nullProjectCollaborator));
-
-		/*
-		 * Tries to assign a task to a ProjectCollaborator that doesn't exist to a task
-		 * that doesn't exist false
-		 */
-		assertFalse(controllerAssignTaskToProjectCollaborator.assignTaskToProjectCollaboratorController("NullTask",
-				nullProjectCollaborator));
-
-		/*
-		 * Gets a project collaborator from a user using the controller
-		 */
-		assertEquals(projCollaborator, controllerAssignTaskToProjectCollaborator.getProjectCollaboratorFromUser(user1));
-
-		/*
-		 * Gets the ID of a Project using the controller
-		 */
-		controllerAssignTaskToProjectCollaborator.setProjectID(1);
-		Integer um = 1;
-		assertEquals(um, controllerAssignTaskToProjectCollaborator.getProjectID());
-
+		controller.setUserToAddToTask(0);
+		assertFalse(controller.assignCollaboratorToTask());
 	}
 
+	/**
+	 * Tests the setProjectCollaborator and getProjectCollaborator
+	 */
 	@Test
-	public void getTaskByTaskId() {
+	public void setProjectCollaborator() {
 
-		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls");
-		project.getTaskRepository().addProjectTask(testTask);
+		// asserts that the projectCollaborator is null
+		assertEquals(controller.getUserToAddToTask(), null);
 
-		// Creates an int that holds the projectID Code
-		int projectCode = project.getIdCode();
-		String taskId = testTask.getTaskID();
-
-		// Creates an assignTasktOProjectCollaborator controller
-		AssignTaskToCollaboratorsController controllerAssignTaskToProjectCollaborator = new AssignTaskToCollaboratorsController(
-				projectCode);
-
-		// checks if the method returns a task by it's ID
-		assertEquals(controllerAssignTaskToProjectCollaborator.getTaskByTaskID("1.1"), testTask);
-
+		// sets the projectCollaborator and then checks if is equal to the
+		// projCollaborator
+		controller.setUserToAddToTask(0);
+		assertEquals(controller.getUserToAddToTask(), projCollaborator);
 	}
 
+	/**
+	 * Tests the getProjectActiveTeam
+	 */
 	@Test
-	public void setProjectIDFromTaskID() {
+	public void getProjectActiveTeam() {
 
-		// creates and adds a task using the controller and asserts a task was added
-		testTask = project.getTaskRepository().createTask("Test dis agen pls");
-		project.getTaskRepository().addProjectTask(testTask);
-		Integer projId = 1;
+		String info = "Name: " + user1.getName() + "\n" + "Email: " + user1.getEmail() + "\n" + "Function: "
+				+ user1.getFunction();
 
-		// Creates an int that holds the projectID Code
-		int projectCode = project.getIdCode();
-		String taskId = testTask.getTaskID();
+		List<String> expResult = new ArrayList<>();
+		expResult.add(info);
 
-		// Creates an assignTasktOProjectCollaborator controller
-		AssignTaskToCollaboratorsController controllerAssignTaskToProjectCollaborator = new AssignTaskToCollaboratorsController(
-				projectCode);
-
-		controllerAssignTaskToProjectCollaborator.setProjectIDFromTaskID(taskId);
-		assertEquals(controllerAssignTaskToProjectCollaborator.getProjectID(), projId);
-
+		assertEquals(expResult, controller.getProjectActiveTeam());
 	}
-
 }
