@@ -102,7 +102,7 @@ public class TaskDetailsUI {
 				condition = false;
 				break;
 			default:
-				System.out.println("Please choose a valid option: ");
+				System.out.println("Please choose a valid option.");
 				System.out.println("");
 				TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user,
 						this.isPreviousUIFromTasks);

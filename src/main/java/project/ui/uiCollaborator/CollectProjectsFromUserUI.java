@@ -11,6 +11,7 @@ import project.controller.CollectProjectsFromUserController;
 import project.model.Project;
 import project.model.User;
 import project.ui.MainMenuUI;
+import project.ui.uiProjectManager.ProjectManagerMainMenuUI;
 
 /**
  * This UI shows all projects from a user
@@ -66,14 +67,20 @@ public class CollectProjectsFromUserUI {
 		listOfProjectsFromUser.addAll(collectProjectsFromUserController.getProjectsFromUser());
 		listOfProjectsFromUser.addAll(collectProjectsFromUserController.getProjectsFromProjectManager());
 
-		for (Project ii : listOfProjectsFromUser) {
-			int projectIDCode = ii.getIdCode();
+		for (Project project : listOfProjectsFromUser) {
+			int projectIDCode = project.getIdCode();
 			String projectIDCodeToString = String.valueOf(projectIDCode);
 
 			if (option.equals(projectIDCodeToString)) {
-				ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI(ii.getIdCode(), user);
+				if(this.user.equals(project.getProjectManager())) {
+					ProjectManagerMainMenuUI pmMenu = new ProjectManagerMainMenuUI(this.user, project);
+					pmMenu.displayOptions();
+				}
+				else {
+				ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI(project.getIdCode(), user);
 				projectViewMenuUI.projectDataDisplay();
-			} else if (option.equals("B")) {
+				}
+			} else if (option.equals("B")) { 
 				CollaboratorMainMenuUI menu = new CollaboratorMainMenuUI(user);
 				menu.displayOptions();
 			} else if (option.equals("M")) {

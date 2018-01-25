@@ -54,11 +54,11 @@ public class US206CreateRemovalTaskRequestUI {
 
 		// In case user writes something different from "y" or "n"
 		while (!("n".equalsIgnoreCase(yerOrNo)) && !("y".equalsIgnoreCase(yerOrNo))) {
-			System.out.println("\nInvalid answer. Try again (\"y\" or \"n\")");
-			yerOrNo = input.nextLine();
+			System.out.println("\nInvalid answer. Try again (\"Y\" or \"N\")");
+			yerOrNo = input.nextLine().toUpperCase();
 		}
 
-		if (yerOrNo.equalsIgnoreCase("y")) {
+		if (yerOrNo.equalsIgnoreCase("Y")) {
 			if (controller.createRequest() == true) {
 				System.out.println("Your task removal is pending Project Manager approval");
 				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user, this.isPreviousUIFromTasks);
