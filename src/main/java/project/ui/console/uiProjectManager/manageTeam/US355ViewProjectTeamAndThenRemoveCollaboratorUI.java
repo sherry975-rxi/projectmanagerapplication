@@ -83,10 +83,10 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 				}
 				if (yesOrNo.equalsIgnoreCase("y")) {
 					if (controller.removeCollaboratorFromProjectTeam(listOfUser.get(i)) == true) {
-						System.out.println("Your remove user from Project");
+						System.out.println("You removed the user from this Project.");
 						this.viewProjectTeamAndThenRemoveCollaboratorUI(this.project, this.user);
 					} else {
-						System.out.println("Your request was not done.");
+						System.out.println("Your request was not successful.");
 						this.viewProjectTeamAndThenRemoveCollaboratorUI(this.project, this.user);
 					}
 
