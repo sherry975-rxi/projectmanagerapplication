@@ -46,11 +46,10 @@ public class US375ProjectNotStartedTasksUI {
 
 		List<String> listOfExpiredTaskID = new ArrayList<>();
 
-		for (int i = 0; i < controller.getProjectNotStartedTaskList(this.project).size(); i++) {
+		for (int i = 0; i < controller.getProjectNotStartedTasks(this.project).size(); i++) {
 			String taskInfo = controller.getProjectNotStartedTaskList(this.project).get(i);
-			// System.out.println(taskInfo);
-			//
-			// listOfExpiredTaskID.add(controller.getProjectNotStartedTaskList(this.project).get(i);
+			System.out.println(taskInfo);
+			listOfExpiredTaskID.add(controller.getProjectNotStartedTasks(this.project).get(i).getTaskID());
 		}
 
 		System.out.println("___________________________________________________");

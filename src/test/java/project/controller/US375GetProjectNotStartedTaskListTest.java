@@ -2,7 +2,9 @@ package project.controller;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -155,6 +157,16 @@ public class US375GetProjectNotStartedTaskListTest {
 	@Test
 	public final void testGetProjectNotStartedTaskList() {
 		assertEquals(3, tasksFiltersController.getProjectNotStartedTaskList(project1).size());
+	}
+
+	@Test
+	public final void testGetProjectNotStartedTasks() {
+		List<Task> listToCompare = new ArrayList<Task>();
+		listToCompare.add(task2);
+		listToCompare.add(task5);
+		listToCompare.add(task6);
+
+		assertEquals(listToCompare, tasksFiltersController.getProjectNotStartedTasks(project1));
 	}
 
 }
