@@ -497,7 +497,6 @@ public class TaskRepository {
 
 	public List<String> getReportedCostOfEachTask() {
 		List<String> reportTaskCost = new ArrayList<>();
-		int taskIndex = 0;
 
 		for (Task other : this.getProjectTaskRepository()) {
 			reportTaskCost.add(String.valueOf(other.getTaskCost()));
