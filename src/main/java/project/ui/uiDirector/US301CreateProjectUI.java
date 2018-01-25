@@ -1,5 +1,6 @@
 package project.ui.uiDirector;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,8 +24,11 @@ public class US301CreateProjectUI {
 		US301CreateProjectController controller = new US301CreateProjectController();
 		Scanner mainComm = new Scanner(System.in);
 		Scanner dataIn = new Scanner(System.in);
+
+		String hoursString = "Hours";
+
 		boolean cycle = true;
-		List<String> projectCollaborators;
+		List<String> projectCollaborators = new ArrayList<>();
 
 		System.out.println("To create a project, input the following fields:");
 		System.out.println(viewOptions());
@@ -53,73 +57,19 @@ public class US301CreateProjectUI {
 				break;
 
 			case "3":
-				projectCollaborators = controller.listActiveCollaborators();
-				if (projectCollaborators.size() == 0) {
-					System.out.println("No Collaborators available, project creation impossible!!");
-					cycle = false;
-
-				} else {
-					System.out.println("Please select a collaborator:");
-					System.out.println("");
-					for (String other : projectCollaborators) {
-						System.out.println(other);
-						System.out.println("");
-					}
-					System.out.println(
-							"(Type only the number from the list, invalid number won't change current selection");
-
-					if (dataIn.hasNextInt()) {
-						projectManager = controller.selectCollaborator(dataIn.nextInt());
-					}
-
-					else {
-						dataInput = dataIn.nextLine();
-						System.out.println("Not a number!");
-						System.out.println("");
-					}
-				}
+				this.caseThree(projectCollaborators, controller, cycle, dataIn);
 				break;
 
 			case "4":
-				System.out.println("Press [0] to change the effort Unit of your project:");
-				System.out.println("(Currently:" + effortUnitName + ")");
-				System.out.println("");
-				dataInput = dataIn.nextLine();
-				if (dataInput.equals("0")) {
-					if (effortUnitName.equals("Hours")) {
-						effortUnitName = "Person/Month";
-					} else
-						effortUnitName = "Hours";
-				}
+				this.caseFour(dataIn, hoursString);
 				break;
 
 			case "5":
-				System.out.println("Please type the budget of your project:");
-				System.out.println("(Currently:" + budget + ")");
-				System.out.println("");
-				if (dataIn.hasNextInt())
-					budget = dataIn.nextInt();
-				else {
-					dataInput = dataIn.nextLine();
-					System.out.println("Not a number!");
-				}
+				this.caseFive(dataIn);
 				break;
 
 			case "C":
-				if (projectManager == null) {
-					System.out.println("Please select a Project Manager first!");
-					System.out.println("");
-				} else {
-					controller.createProject(projectName, projectDescription, projectManager);
-					controller.changeBudget(budget);
-					if (effortUnitName.equals("Person/Month")) {
-						controller.changeEffortUnitToPersonMonth();
-					}
-					cycle = false;
-					System.out.println("Project created!");
-					System.out.println("");
-
-				}
+				this.caseC(cycle, controller);
 				break;
 
 			case "E":
@@ -152,6 +102,77 @@ public class US301CreateProjectUI {
 		options += "\n[E] - exit to director menu";
 
 		return options;
+	}
+
+	private void caseThree(List<String> projectCollaborators, US301CreateProjectController controller, boolean cycle,
+			Scanner dataIn) {
+		projectCollaborators = controller.listActiveCollaborators();
+		if (projectCollaborators.size() == 0) {
+			System.out.println("No Collaborators available, project creation impossible!!");
+			cycle = false;
+
+		} else {
+			System.out.println("Please select a collaborator:");
+			System.out.println("");
+			for (String other : projectCollaborators) {
+				System.out.println(other);
+				System.out.println("");
+			}
+			System.out.println("(Type only the number from the list, invalid number won't change current selection");
+
+			if (dataIn.hasNextInt()) {
+				projectManager = controller.selectCollaborator(dataIn.nextInt());
+			}
+
+			else {
+				dataInput = dataIn.nextLine();
+				System.out.println("Not a number!");
+				System.out.println("");
+			}
+		}
+
+	}
+
+	private void caseFour(Scanner dataIn, String hoursString) {
+		System.out.println("Press [0] to change the effort Unit of your project:");
+		System.out.println("(Currently:" + effortUnitName + ")");
+		System.out.println("");
+		dataInput = dataIn.nextLine();
+		if (dataInput.equals("0")) {
+			if (effortUnitName.equals(hoursString)) {
+				effortUnitName = "Person/Month";
+			} else
+				effortUnitName = hoursString;
+		}
+	}
+
+	private void caseFive(Scanner dataIn) {
+		System.out.println("Please type the budget of your project:");
+		System.out.println("(Currently:" + budget + ")");
+		System.out.println("");
+		if (dataIn.hasNextInt())
+			budget = dataIn.nextInt();
+		else {
+			dataInput = dataIn.nextLine();
+			System.out.println("Not a number!");
+		}
+	}
+
+	private void caseC(boolean cycle, US301CreateProjectController controller) {
+		if (projectManager == null) {
+			System.out.println("Please select a Project Manager first!");
+			System.out.println("");
+		} else {
+			controller.createProject(projectName, projectDescription, projectManager);
+			controller.changeBudget(budget);
+			if (effortUnitName.equals("Person/Month")) {
+				controller.changeEffortUnitToPersonMonth();
+			}
+			cycle = false;
+			System.out.println("Project created!");
+			System.out.println("");
+
+		}
 	}
 
 }
