@@ -51,13 +51,13 @@ public class MainMenuUI {
 				"Director", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userDirector.setPassword("abcdef");
 
-		userJSilva = myCompany.getUsersRepository().createUser("João Silva", "aluno_3_@gmail.com", "010", "Comercial",
+		userJSilva = myCompany.getUsersRepository().createUser("João Silva", "jsilva@gmail.com", "010", "Comercial",
 				"937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userJSilva.setPassword("switch");
-		userATirapicos = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "aluno_2_@gmail.com", "011",
+		userATirapicos = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
 				"Comercial", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Porto", "Portugal");
 		userATirapicos.setPassword("tirapicos");
-		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "aluno_1_@gmail.com", "012",
+		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "spereira@gmail.com", "012",
 				"Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
 				"Portugal");
 		// addition of users to the company
@@ -74,11 +74,11 @@ public class MainMenuUI {
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 
 		// Instantiates a project and add it to the company
-		projectGP = myCompany.getProjectsRepository().createProject("Projeto GP", "Aplicação para Gestão de Projetos",
-				projectManager);
-		projectApostas = myCompany.getProjectsRepository().createProject("Projeto Apostas",
+		projectGP = myCompany.getProjectsRepository().createProject("Gestão de Projetos",
+				"Aplicação para Gestão de Projetos", projectManager);
+		projectApostas = myCompany.getProjectsRepository().createProject("Apostas Online",
 				"Plataforma Web para Apostas", projectManager);
-		projectHomeBanking = myCompany.getProjectsRepository().createProject("Projeto HomeBanking",
+		projectHomeBanking = myCompany.getProjectsRepository().createProject("HomeBanking",
 				"Aplicação iOS para HomeBanking", userJSilva);
 
 		TaskCollaborator tWorkerJSilva;
@@ -222,6 +222,7 @@ public class MainMenuUI {
 			System.out.println("[E] Exit");
 			System.out.println();
 			System.out.println("Please select an option:");
+			System.out.println();
 
 			String choice = input.nextLine().toUpperCase();
 			System.out.println();
