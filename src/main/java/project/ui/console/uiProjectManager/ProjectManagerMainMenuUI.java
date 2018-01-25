@@ -9,6 +9,11 @@ import project.ui.console.MainMenuUI;
 import project.ui.console.uiCollaborator.CollectProjectsFromUserUI;
 import project.ui.console.uiProjectManager.manageRequests.US356ApproveOrCancelAssignmentRequestUI;
 import project.ui.console.uiProjectManager.manageRequests.US357ApproveOrCancelRemovalRequestUI;
+import project.ui.console.uiProjectManager.manageTeam.US351AddCollaboratorToProjectTeamUI;
+import project.ui.console.uiProjectManager.manageTeam.US355ViewProjectTeamAndThenRemoveCollaboratorUI;
+import project.ui.console.uiProjectManager.others.US340CreateTaskUI;
+import project.ui.console.uiProjectManager.others.US342DefineDependenciesBetweenTasksUI;
+import project.ui.console.uiProjectManager.others.US390GetProjectReportedCostUI;
 import project.ui.console.uiProjectManager.taskLists.US360ProjectUnassignedTasksUI;
 import project.ui.console.uiProjectManager.taskLists.US370ProjectFinishedTasksDecreasingOrderUI;
 import project.ui.console.uiProjectManager.taskLists.US372ProjectOngoingTasksUI;
@@ -98,10 +103,12 @@ public class ProjectManagerMainMenuUI {
 			
 			break;
 		case "B1":
-			
+			US355ViewProjectTeamAndThenRemoveCollaboratorUI optionB1 = new US355ViewProjectTeamAndThenRemoveCollaboratorUI();
+			optionB1.viewProjectTeamAndThenRemoveCollaboratorUI(this.project, this.projectManager);
 			break;
 		case "B2":
-			
+			US351AddCollaboratorToProjectTeamUI optionB2 = new US351AddCollaboratorToProjectTeamUI();
+			optionB2.addCollaboratorToProjectTeam();
 			break;
 		case "B3":
 			
@@ -115,13 +122,16 @@ public class ProjectManagerMainMenuUI {
 			optionC2.displayRemovalTaskRequests();
 			break;
 		case "D1":
-			
+			US390GetProjectReportedCostUI optionD1 = new US390GetProjectReportedCostUI();
+			optionD1.displayProjectCost(this.project, this.projectManager);
 			break;
 		case "D2":
-			
+			US340CreateTaskUI optionD2 = new US340CreateTaskUI(this.projectManager, this.project);
+			optionD2.createTask();
 			break;
 		case "D3":
-			
+			US342DefineDependenciesBetweenTasksUI optionD3 = new US342DefineDependenciesBetweenTasksUI(this.project);
+			optionD3.chooseProject();
 			break;
 
 
