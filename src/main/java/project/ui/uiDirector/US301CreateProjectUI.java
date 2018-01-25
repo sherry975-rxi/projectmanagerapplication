@@ -122,10 +122,15 @@ public class US301CreateProjectUI {
 				}
 				break;
 
-			case "E":
+			case "B":
 				System.out.println("Project creation cancelled!");
 				System.out.println("");
 				cycle = false;
+				break;
+
+			case "E":
+				System.out.println("--YOU HAVE EXITDE FROM APPLICATION--");
+				System.exit(0);
 				break;
 
 			default:
@@ -147,9 +152,10 @@ public class US301CreateProjectUI {
 		options += "\n[3] - Project Manager: " + projectManagerName;
 		options += "\n[4] - Project Effort Unit: " + effortUnitName;
 		options += "\n[5] - Project Budget: " + budget;
-		options += "\n[any key] - view Data and commands";
-		options += "\n[C] - create Project with chosen data";
-		options += "\n[E] - exit to director menu";
+		options += "\n[any key] - View Data and commands";
+		options += "\n[C] - Create Project with chosen data";
+		options += "\n[B] - Cancel and return to director menu";
+		options += "\n[E] - Exit from application";
 
 		return options;
 	}

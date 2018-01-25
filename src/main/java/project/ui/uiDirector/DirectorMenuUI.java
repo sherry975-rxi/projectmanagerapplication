@@ -12,8 +12,8 @@ public class DirectorMenuUI {
 	Project selectedProject = null;
 
 	String options = "[1] - View projects \n" + "[2] - Create a project \n"
-			+ "[3] - Change selected project's manager \n" + "______________________________________________"
-			+ "[E] - Exit to main menu";
+			+ "[3] - Change selected project's manager \n" + "______________________________________________\n"
+			+ "[B] - Return to main menu" + "[E] - Exit from Application";
 
 	String command;
 
@@ -81,10 +81,14 @@ public class DirectorMenuUI {
 				}
 				break;
 
-			case "e":
+			case "b":
 				System.out.println("Returning to main menu...");
 				System.out.println("");
 				cycle = false;
+				break;
+			case "e":
+				System.out.println("--YOU HAVE EXITDE FROM APPLICATION--");
+				System.exit(0);
 				break;
 
 			default:
