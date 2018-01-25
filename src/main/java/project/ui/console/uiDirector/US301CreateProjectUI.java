@@ -38,7 +38,7 @@ public class US301CreateProjectUI {
 				projectManagerName = projectManager.getName();
 			}
 
-			System.out.println("Choose a command:");
+			System.out.println("Please choose a command to input a field:");
 			mainCommand = mainComm.nextLine().toUpperCase();
 
 			switch (mainCommand) {
@@ -77,7 +77,7 @@ public class US301CreateProjectUI {
 				break;
 
 			case "E":
-				System.out.println("--YOU HAVE EXITDE FROM APPLICATION--");
+				System.out.println("--YOU HAVE EXITED FROM APPLICATION--");
 				System.exit(0);
 				break;
 
@@ -108,8 +108,8 @@ public class US301CreateProjectUI {
 		options += "\n[5] - Project Budget: " + budget;
 		options += "\n[any key] - View Data and commands";
 		options += "\n[C] - Create Project with chosen data";
-		options += "\n[B] - Cancel and return to director menu";
-		options += "\n[E] - Exit from application";
+		options += "\n[B] - Cancel Project creation and return to Director Menu";
+		options += "\n[E] - Exit";
 
 		return options;
 	}
@@ -174,6 +174,7 @@ public class US301CreateProjectUI {
 		if (dataInput.equals("0")) {
 			if (effortUnitName.equals(hoursString)) {
 				effortUnitName = "Person/Month";
+				System.out.println("The effort Unit of this project changed to Person/Month.");
 			} else
 				effortUnitName = hoursString;
 		}
