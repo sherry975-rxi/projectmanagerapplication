@@ -298,6 +298,19 @@ public class MainMenuUI {
 		taskHB6.setFinishDate(finishDate1);
 		taskHB6.getTaskState().changeToFinished();
 
+		// Task 3.7 (taskHB7) set to ongoing with expired deadline
+		taskHB7.setEstimatedTaskStartDate(estimatedStartDate4);
+		taskHB7.setTaskDeadline(estimatedFinishDate4);
+		taskHB7.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB7.addProjectCollaboratorToTask(projcollabManager);
+		taskHB7.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB7.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB7.setStartDate(startDate);
+		taskHB7.getTaskState().changeToOnGoing();
+
 		mainMenu();
 	}
 
