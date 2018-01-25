@@ -12,7 +12,7 @@ public class TaskDetailsUI {
 	private User user;
 	private Integer projectID;
 	private String taskID;
-	public Boolean isPreviousUIFromTasks;
+	private Boolean isPreviousUIFromTasks;
 
 	public TaskDetailsUI(String taskID, Integer projectID, User user, Boolean previous) {
 		this.taskID = taskID;
@@ -80,7 +80,7 @@ public class TaskDetailsUI {
 				createCollabRemovalRequest.cancelRemovalTaskRequestUI();
 				break;
 			case "B":
-				if (this.isPreviousUIFromTasks = true) {
+				if (this.isPreviousUIFromTasks == true) {
 					ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
 					projectView.projectDataDisplay();
 				} else {
