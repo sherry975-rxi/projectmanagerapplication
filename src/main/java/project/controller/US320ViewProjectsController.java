@@ -19,8 +19,7 @@ public class US320ViewProjectsController {
 
 		for (int i = 0; i < chosenList.size(); i++) {
 			Integer showIndex = i + 1;
-			String toShowProject = "::Project nº" + showIndex.toString() + ":: \n"
-					+ overviewProjectAsString(chosenList.get(i));
+			String toShowProject = "[" + showIndex.toString() + "] \n" + overviewProjectAsString(chosenList.get(i));
 			allProjectsList.add(toShowProject);
 		}
 
@@ -33,8 +32,7 @@ public class US320ViewProjectsController {
 
 		for (int i = 0; i < chosenList.size(); i++) {
 			Integer showIndex = i + 1;
-			String toShowProject = "::Project nº" + showIndex.toString() + ":: \n"
-					+ overviewProjectAsString(chosenList.get(i));
+			String toShowProject = "[" + showIndex.toString() + "] \n" + overviewProjectAsString(chosenList.get(i));
 			activeProjectsList.add(toShowProject);
 		}
 

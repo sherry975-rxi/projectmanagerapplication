@@ -98,7 +98,7 @@ public class US135andUS136SearchUsersControllerTest {
 		 * Compares a search of collaborator with a list where two collaborators exist
 		 */
 		List<String> collaboratorstest = new ArrayList<>();
-		collaboratorstest.add("::User nº1:: \n" + newUser1String);
+		collaboratorstest.add("[1] \n" + newUser1String);
 
 		assertEquals(searchController.searchUsersByProfileController(Profile.COLLABORATOR), collaboratorstest);
 	}
@@ -126,7 +126,7 @@ public class US135andUS136SearchUsersControllerTest {
 
 		/* Compares a search by entire mail address with a list with that mail */
 		List<String> testUsersEmail1 = new ArrayList<>();
-		testUsersEmail1.add("::User nº1:: \n" + searchController.userDataToString(newUser2));
+		testUsersEmail1.add("[1] \n" + searchController.userDataToString(newUser2));
 		assertEquals(searchController.searchUsersByEmailController("joao@gmail.com"), testUsersEmail1);
 
 		assertEquals(searchController.searchUsersByEmailController("joao@gmail.com").size(), 1);
