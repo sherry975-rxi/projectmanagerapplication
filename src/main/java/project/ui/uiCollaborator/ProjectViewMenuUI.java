@@ -71,7 +71,6 @@ public class ProjectViewMenuUI {
 			try {
 				this.isPreviousUIFromTasks = true; 
 				TaskDetailsUI userTasks = new TaskDetailsUI(choice, this.projectID, this.user, this.isPreviousUIFromTasks);
-//				userTasks.setIsPreviousUIFromTasks(true);
 				userTasks.taskDataDisplay();
 			}
 			catch (NullPointerException npe) {

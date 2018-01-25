@@ -1,6 +1,10 @@
 package project.controller;
 
+import java.util.List;
+
 import project.model.Project;
+import project.model.Task;
+import project.model.TaskCollaborator;
 import project.model.User;
 
 public class AddColaboratorToProjectTeamController {
