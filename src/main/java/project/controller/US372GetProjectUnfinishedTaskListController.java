@@ -40,14 +40,14 @@ public class US372GetProjectUnfinishedTaskListController {
 		for (int i = 0; i < taskListOnGoing.size(); i++) {
 
 			String taskOnGoingDescription = taskListOnGoing.get(i).getDescription();
-			String taskID = "[" + taskListOnGoing.get(i).getTaskID() + "]";
-			String taskIDandDescription = taskID + " " + taskOnGoingDescription;
+			String taskID = taskListOnGoing.get(i).getTaskID();
+			String taskIDandDescription = "[" + taskID + "]" + " " + taskOnGoingDescription;
 			taskListOnGoingToPrint.add(taskIDandDescription);
 		}
 
 		return taskListOnGoingToPrint;
 	}
-
+	
 	/**
 	 * This method splits a Sting by the space and only return the left part of the
 	 * string until the first space
@@ -57,8 +57,8 @@ public class US372GetProjectUnfinishedTaskListController {
 	 */
 	public String splitStringByFirstSpace(String string) {
 
-		String[] partsTask = string.split(" ");
-		String firstPartOfString = partsTask[0];
+		String[] partsCancelledTask = string.split(" ");
+		String firstPartOfString = partsCancelledTask[0];
 
 		return firstPartOfString;
 	}

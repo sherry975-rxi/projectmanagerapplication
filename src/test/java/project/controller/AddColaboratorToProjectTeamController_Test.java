@@ -101,7 +101,7 @@ public class AddColaboratorToProjectTeamController_Test {
 	@Test
 	public void addColaboratorToProjectTeam_Test() {
 		// create controller
-		AddColaboratorToProjectTeamController controller = new AddColaboratorToProjectTeamController();
+		US351AddColaboratorToProjectTeamController controller = new US351AddColaboratorToProjectTeamController();
 
 		assertFalse(contextualProject.isUserInProjectTeam(u1));
 

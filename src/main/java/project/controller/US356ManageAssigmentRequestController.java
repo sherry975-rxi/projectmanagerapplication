@@ -61,7 +61,6 @@ public class US356ManageAssigmentRequestController {
 	public boolean approveAssignmentRequest() {
 		if (selectedAdditionRequest != null) {
 			selectedAdditionRequest.getTask().addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
-			updateTaskState();
 			deleteRequest();
 			return true;
 		} else
@@ -84,20 +83,6 @@ public class US356ManageAssigmentRequestController {
 			return true;
 		} else
 			return false;
-	}
-
-	// TODO this method may be REMOVED once UpdateState is implemented in TaskState
-	// Interface
-	public void updateTaskState() {
-		switch (this.selectedAdditionRequest.getTask().viewTaskStateName()) {
-		case "Planned":
-			selectedAdditionRequest.getTask().getTaskState().changeToAssigned();
-			selectedAdditionRequest.getTask().getTaskState().changeToReady();
-			break;
-		case "StandBy":
-			selectedAdditionRequest.getTask().getTaskState().changeToOnGoing();
-			break;
-		}
 	}
 
 	/**

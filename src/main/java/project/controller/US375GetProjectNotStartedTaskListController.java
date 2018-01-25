@@ -33,19 +33,4 @@ public class US375GetProjectNotStartedTaskListController {
 
 		return taskListToPrint;
 	}
-
-	/**
-	 * This method splits a Sting by the space and only return the left part of the
-	 * string until the first space
-	 * 
-	 * @param string
-	 *            String to split
-	 */
-	public String splitStringByFirstSpace(String string) {
-
-		String[] partsTask = string.split(" ");
-		String firstPartOfString = partsTask[0];
-
-		return firstPartOfString;
-	}
 }

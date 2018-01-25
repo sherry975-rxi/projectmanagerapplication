@@ -8,6 +8,8 @@ import java.util.List;
 import project.model.taskStateInterface.Cancelled;
 import project.model.taskStateInterface.Created;
 import project.model.taskStateInterface.Finished;
+import project.model.taskStateInterface.OnGoing;
+import project.model.taskStateInterface.Ready;
 import project.model.taskStateInterface.StandBy;
 import project.model.taskStateInterface.TaskStateInterface;
 
@@ -771,9 +773,84 @@ public class Task {
 	 * 
 	 * @param taskToEstablishDependenceUpon
 	 *            Parent Task from which dependence is established
+	 * @return TRUE if the task dependency was created, FALSE if not
 	 */
-	public void createTaskDependence(Task taskToEstablishDependenceUpon) {
+
+	public boolean createTaskDependence(Task taskToEstablishDependenceUpon, int daysToPostpone) {
+		boolean wasDependencyCreated = false;
+		if (this.isCreatingTaskDependencyValid(taskToEstablishDependenceUpon)) {
+			this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
+			if (daysToPostpone >= 0) {
+				this.estimatedTaskStartDate.add(Calendar.DAY_OF_YEAR, daysToPostpone);
+				wasDependencyCreated = true;
+			}
+
+		}
 		this.taskDependency.add(taskToEstablishDependenceUpon);
+
+		return wasDependencyCreated;
+
+	}
+
+	/**
+	 * This method removes a dependency of a task
+	 * 
+	 * @param taskToEstablishDependenceUpon
+	 *            The task to remove the task dependency from the TaskDependency
+	 *            List
+	 * 
+	 * @return
+	 * 
+	 * 		TRUE if the dependency is removed, FALSE if not
+	 */
+	public boolean removeTaskDependence(Task taskToEstablishDependenceUpon) {
+		boolean wasDependencyRemoved = false;
+		for (Task other : this.taskDependency) {
+			if (taskToEstablishDependenceUpon.equals(other)) {
+				this.taskDependency.remove(other);
+				wasDependencyRemoved = true;
+			}
+		}
+		return wasDependencyRemoved = true;
+	}
+
+	/**
+	 * @param taskToEstablishDependenceUpon
+	 *            The other task to check if its possible to create a task
+	 *            dependence
+	 * @return TRUE is it's possible to create a task Dependency, FALSE if not
+	 */
+	public boolean isCreatingTaskDependencyValid(Task taskToEstablishDependenceUpon) {
+
+		boolean isDependencyValid = true;
+
+		/*
+		 * Checks the state of this task
+		 */
+		if (this.getTaskState() instanceof OnGoing)
+			isDependencyValid = false;
+		if (this.getTaskState() instanceof Cancelled)
+			isDependencyValid = false;
+		if (this.getTaskState() instanceof Finished)
+			isDependencyValid = false;
+		if (this.getTaskState() instanceof StandBy)
+			isDependencyValid = false;
+		if (this.getTaskState() instanceof Ready)
+			isDependencyValid = false;
+
+		if (this.equals(taskToEstablishDependenceUpon))
+			isDependencyValid = false;
+
+		/*
+		 * Checks the state of the other task
+		 */
+		if (taskToEstablishDependenceUpon.getTaskState() instanceof Cancelled)
+			isDependencyValid = false;
+		if (taskToEstablishDependenceUpon.taskDeadline == null)
+			isDependencyValid = false;
+
+		return isDependencyValid;
+
 	}
 
 	/**
