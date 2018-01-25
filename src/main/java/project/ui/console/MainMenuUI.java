@@ -44,22 +44,22 @@ public class MainMenuUI {
 		myCompany = Company.getTheInstance();
 
 		// Instantiate the users, sets their passwords
-		userAdmin = myCompany.getUsersRepository().createUser("John Cena", "admin@gmail.com", "001", "Admin grupo 3",
-				"917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		userAdmin = myCompany.getUsersRepository().createUser("Teresa Ribeiro", "admin@gmail.com", "001",
+				"Administrator", "917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userAdmin.setPassword("123456");
-		userDirector = myCompany.getUsersRepository().createUser("Jane Doe", "director@gmail.com", "002",
-				"Director grupo 3", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		userDirector = myCompany.getUsersRepository().createUser("Roberto Santos", "director@gmail.com", "002",
+				"Director", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userDirector.setPassword("abcdef");
 
-		userJSilva = myCompany.getUsersRepository().createUser("Joao Silva", "aluno_3_@gmail.com", "010",
-				"Estudante Grupo 3", "937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		userJSilva = myCompany.getUsersRepository().createUser("João Silva", "aluno_3_@gmail.com", "010", "Comercial",
+				"937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userJSilva.setPassword("switch");
 		userATirapicos = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "aluno_2_@gmail.com", "011",
-				"Estudante Grupo 3", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Matosinhos",
-				"Portugal");
+				"Comercial", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Porto", "Portugal");
 		userATirapicos.setPassword("tirapicos");
 		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "aluno_1_@gmail.com", "012",
-				"Estudante Grupo 3", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Matosinhos", "Portugal");
+				"Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
+				"Portugal");
 		// addition of users to the company
 		myCompany.getUsersRepository().addUserToUserRepository(userAdmin);
 		myCompany.getUsersRepository().addUserToUserRepository(userDirector);
@@ -215,8 +215,8 @@ public class MainMenuUI {
 			System.out.println("______________________________________________");
 			System.out.println("[1] New Registration");
 			System.out.println("[2] Login");
-			System.out.println("[3] Administrator (Demo mode - John Cena)");
-			System.out.println("[4] Director (Demo mode - Jane Doe)");
+			System.out.println("[3] Administrator (Demo mode - Teresa Ribeiro Cena)");
+			System.out.println("[4] Director (Demo mode - Roberto Santos)");
 			System.out.println("[5] Collaborator (Demo mode - João Silva)");
 			System.out.println("______________________________________________");
 			System.out.println("[E] Exit");
