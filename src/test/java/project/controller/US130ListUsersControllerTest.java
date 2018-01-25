@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.model.Company;
+import project.model.Profile;
 import project.model.User;
 
 public class US130ListUsersControllerTest {
@@ -96,6 +97,21 @@ public class US130ListUsersControllerTest {
 		// user 0)
 		// it must be equal to User 1
 		assertEquals(listUsersController.selectUser(1), user1);
+	}
+
+	@Test
+	public void testUserDataToString() {
+
+		String result = "001 - Unassigned: Daniel (daniel@gmail.com; 920000000) - Porteiro";
+		assertTrue(result.equals(listUsersController.userDataToString(user1)));
+
+		user1.setUserProfile(Profile.COLLABORATOR);
+		result = "001 - Collaborator: Daniel (daniel@gmail.com; 920000000) - Porteiro";
+		assertTrue(result.equals(listUsersController.userDataToString(user1)));
+
+		user1.setUserProfile(Profile.DIRECTOR);
+		result = "001 - Director: Daniel (daniel@gmail.com; 920000000) - Porteiro";
+		assertTrue(result.equals(listUsersController.userDataToString(user1)));
 	}
 
 }
