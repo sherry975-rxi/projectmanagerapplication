@@ -42,7 +42,7 @@ public class US302ChangeProjectManagerController {
 
 		for (int i = 0; i < activeCollaboratorList.size(); i++) {
 			Integer showIndex = i + 1;
-			String toShowUser = "::Collaborator nº" + showIndex.toString() + ":: \n"
+			String toShowUser = "[" + showIndex.toString() + "] \n"
 					+ collaboratorInfoToString(activeCollaboratorList.get(i));
 			collabListAsString.add(toShowUser);
 		}
