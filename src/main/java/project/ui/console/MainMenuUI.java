@@ -270,6 +270,34 @@ public class MainMenuUI {
 		taskHB5.setStartDate(startDate);
 		taskHB5.getTaskState().changeToOnGoing();
 
+		// Task 3.6 (taskHB6) set to finished
+		Calendar estimatedStartDate4 = Calendar.getInstance();
+		estimatedStartDate4.add(Calendar.YEAR, 2018);
+		estimatedStartDate4.add(Calendar.MONTH, -1);
+		estimatedStartDate4.add(Calendar.DAY_OF_MONTH, 6);
+		taskHB6.setEstimatedTaskStartDate(estimatedStartDate4);
+		Calendar estimatedFinishDate4 = Calendar.getInstance();
+		estimatedFinishDate4.add(Calendar.YEAR, 2018);
+		estimatedFinishDate4.add(Calendar.MONTH, -1);
+		estimatedFinishDate4.add(Calendar.DAY_OF_MONTH, 17);
+		taskHB6.setTaskDeadline(estimatedFinishDate4);
+		taskHB6.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB6.addProjectCollaboratorToTask(projcollabManager);
+		taskHB6.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB6.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB6.setStartDate(startDate);
+		taskHB6.getTaskState().changeToOnGoing();
+		// necessary to pass from "OnGoing" to "Finished"
+		Calendar finishDate1 = Calendar.getInstance();
+		finishDate1.add(Calendar.YEAR, 2018);
+		finishDate1.add(Calendar.MONTH, -1);
+		finishDate1.add(Calendar.DAY_OF_MONTH, 13);
+		taskHB6.setFinishDate(finishDate1);
+		taskHB6.getTaskState().changeToFinished();
+
 		mainMenu();
 	}
 
