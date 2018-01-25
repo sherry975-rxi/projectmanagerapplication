@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,6 +48,8 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 	Calendar startDateTest;
+
+	US377CollectionOfCancelledTasksFromAProject controller;
 
 	@Before
 	public void setUp() {
@@ -194,6 +197,8 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		testTask.setTaskState(cancelledTestTask);
 		testTask2.setTaskState(cancelledTestTask2);
 
+		// Creates the controller to be tested
+		controller = new US377CollectionOfCancelledTasksFromAProject(project);
 	}
 
 	@After
@@ -219,11 +224,6 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 	@Test
 	public final void testGetCancelledTasksFromAProject() {
 
-		// create controller
-
-		US377CollectionOfCancelledTasksFromAProject controllerUS377 = new US377CollectionOfCancelledTasksFromAProject(
-				project);
-
 		// create list with cancelled task to compare
 		List<Task> cancelledTaskToCompare = new ArrayList<Task>();
 
@@ -231,8 +231,22 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		cancelledTaskToCompare.add(testTask);
 		cancelledTaskToCompare.add(testTask2);
 
-		assertEquals(cancelledTaskToCompare, controllerUS377.getCancelledTasksFromAProject());
+		assertEquals(cancelledTaskToCompare, controller.getCancelledTasksFromAProject());
 
+	}
+
+	@Test
+	public final void testGetCancelledTaskListId() {
+		String result = "[1.1] Test dis agen pls";
+		assertTrue(result.equals(controller.getCancelledTaskListId(project).get(0)));
+		result = "[1.2] Test dis agen pls";
+		assertTrue(result.equals(controller.getCancelledTaskListId(project).get(1)));
+	}
+
+	@Test
+	public final void testSplitStringByFirstSpace() {
+		String input = "Test me master!";
+		assertTrue("Test".equals(controller.splitStringByFirstSpace(input)));
 	}
 
 }
