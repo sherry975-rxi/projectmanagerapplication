@@ -331,6 +331,22 @@ public class MainMenuUI {
 		taskHB8.setFinishDate(cancelDate);
 		taskHB8.getTaskState().changeToCancelled();
 
+		// Task 3.9 (taskHB9) set to standby
+		taskHB9.setEstimatedTaskStartDate(estimatedStartDate4);
+		taskHB9.setTaskDeadline(estimatedFinishDate4);
+		taskHB9.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB9.addProjectCollaboratorToTask(projcollabManager);
+		taskHB9.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB9.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB9.setStartDate(startDate);
+		taskHB9.getTaskState().changeToOnGoing();
+		// necessary to pass from "OnGoing" to "StandBy"
+		taskHB9.removeAllCollaboratorsFromTaskTeam();
+		taskHB9.getTaskState().changeToStandBy();
+
 		mainMenu();
 	}
 
