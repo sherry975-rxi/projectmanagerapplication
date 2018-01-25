@@ -98,20 +98,13 @@ public class US342CreateTaskDependencyTest {
 		controller.createDependenceFromTask("1.2", "1.3", 20);
 
 		assertTrue(taskB.hasDependencies());
-		assertTrue(taskB.getEstimatedTaskStartDate() != null);
-
-		// Make sure the date is set correctly
-		Calendar referenceDate = (Calendar) taskC.getEstimatedTaskStartDate().clone();
-		referenceDate.add(Calendar.DAY_OF_MONTH, 20);
-		assertTrue(taskB.getEstimatedTaskStartDate().equals(referenceDate));
-	}
-
-	@Test
-	public final void testCreateDependenceFromTaskNoEstimatedStartDate() {
-		// Create dependency without estimated start date
-		controller.createDependenceFromTaskWithoutEstimatedStartDate("1.2", "1.3");
-		assertTrue(taskB.hasDependencies());
 		assertTrue(taskB.getEstimatedTaskStartDate() == null);
+		/*
+		 * // Make sure the date is set correctly Calendar referenceDate = (Calendar)
+		 * taskC.getEstimatedTaskStartDate().clone();
+		 * referenceDate.add(Calendar.DAY_OF_MONTH, 20);
+		 * assertTrue(taskB.getEstimatedTaskStartDate().equals(referenceDate));
+		 */
 	}
 
 	@Test

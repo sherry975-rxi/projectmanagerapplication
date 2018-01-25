@@ -9,6 +9,16 @@ import project.model.Task;
 public class US375GetProjectNotStartedTaskListController {
 
 	/**
+	 * this method return the list of unstarted tasks
+	 * 
+	 * @param proj
+	 * @return
+	 */
+	public List<Task> getProjectNotStartedTasks(Project proj) {
+		return proj.getTaskRepository().getUnstartedTasks();
+	}
+
+	/**
 	 * This methods gets all the not started task and returns the Tasks with these
 	 * conditions in the form of a List of Strings, with the taskId and Description
 	 * of each task.

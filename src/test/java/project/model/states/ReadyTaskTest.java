@@ -54,7 +54,7 @@ public class ReadyTaskTest {
 		// Sets up the estimated Start Dates for both tasks
 		mainTask.setEstimatedTaskStartDate(estimatedTaskStartDateMainTask);
 		neededTask.setEstimatedTaskStartDate(estimatedTaskStartDateNeededTask);
-		mainTask.createTaskDependence(neededTask);
+		mainTask.createTaskDependence(neededTask, 10);
 
 		// Sets some of the conditions that should already be met by the task when it is
 		// ready

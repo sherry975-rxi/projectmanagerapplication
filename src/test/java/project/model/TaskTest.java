@@ -422,7 +422,7 @@ public class TaskTest {
 		// of testTask plus 10 days
 
 		testTask2.setEstimatedTaskStartDate(Calendar.getInstance());
-		testTask2.createTaskDependence(testTask);
+		testTask2.createTaskDependence(testTask, 10);
 
 		// Confirms that the task has active dependencies
 		assertTrue(testTask2.hasActiveDependencies());
