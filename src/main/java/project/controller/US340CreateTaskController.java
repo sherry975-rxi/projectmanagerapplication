@@ -1,5 +1,6 @@
 package project.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -7,18 +8,18 @@ import project.model.TaskRepository;
 import project.model.Project;
 import project.model.Task;
 
-public class CreateTaskController {
+public class US340CreateTaskController {
 	
 	private TaskRepository taskRepository;
 	
 	// TODO must receive the project the User manages
 	/**
-	 * This constructor creates a target controller. Currently, it recieves a project but it should recieve a Project Controller or Project Manager controller
+	 * This constructor creates a target controller. Currently, it receives a project but it should receive a Project Controller or Project Manager controller
 	 * 
 	 * 
 	 * @param target Task Repository
 	 */
-	public CreateTaskController(Project target) {
+	public US340CreateTaskController(Project target) {
 		
 		this.taskRepository=target.getTaskRepository();
 	}
@@ -42,6 +43,8 @@ public class CreateTaskController {
 		taskRepository.addProjectTask(newTask);
 
 		return newTask;
+	
 	}
-
+	
 }
+
