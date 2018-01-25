@@ -12,15 +12,15 @@ public class TaskDetailsUI {
 	private User user;
 	private Integer projectID;
 	private String taskID;
-	public Boolean isPreviousUIFromTasks; 
+	public Boolean isPreviousUIFromTasks;
 
 	public TaskDetailsUI(String taskID, Integer projectID, User user, Boolean previous) {
 		this.taskID = taskID;
 		this.projectID = projectID;
 		this.user = user;
-		this.isPreviousUIFromTasks = previous; 
+		this.isPreviousUIFromTasks = previous;
 	}
-	
+
 	/**
 	 * This method executes all options to execute through this UI Presents the task
 	 * details and the options about this specific task Uses a switch case to treat
@@ -57,7 +57,7 @@ public class TaskDetailsUI {
 			System.out.println("[B] Back");
 			System.out.println("[M] MainMenu");
 			System.out.println("[E] Exit");
-	
+
 			Scanner scannerInput = new Scanner(System.in);
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
@@ -71,7 +71,7 @@ public class TaskDetailsUI {
 				break;
 			case "2":
 				US204v2CreateTaskAssignmentToCollaboratorUI createAssignmentRequest = new US204v2CreateTaskAssignmentToCollaboratorUI(
-						user, taskID);
+						user, taskID, projectID);
 				createAssignmentRequest.createTaskAssignment();
 				break;
 			case "3":
@@ -80,13 +80,12 @@ public class TaskDetailsUI {
 				createCollabRemovalRequest.cancelRemovalTaskRequestUI();
 				break;
 			case "B":
-				if(this.isPreviousUIFromTasks = true) {
-				ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
-				projectView.projectDataDisplay();
-				} 
-				else { 
-				UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
-				userTasks.displayFunctionalities();
+				if (this.isPreviousUIFromTasks = true) {
+					ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
+					projectView.projectDataDisplay();
+				} else {
+					UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
+					userTasks.displayFunctionalities();
 				}
 				break;
 			case "4":
@@ -105,7 +104,8 @@ public class TaskDetailsUI {
 			default:
 				System.out.println("Please choose a valid option: ");
 				System.out.println("");
-				TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user, this.isPreviousUIFromTasks);
+				TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user,
+						this.isPreviousUIFromTasks);
 				myAtualUIView.taskDataDisplay();
 				break;
 			}
