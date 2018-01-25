@@ -13,7 +13,7 @@ public class DirectorMenuUI {
 
 	String options = "[1] - View projects \n" + "[2] - Create a project \n"
 			+ "[3] - Change selected project's manager \n" + "______________________________________________\n"
-			+ "[B] - Return to main menu\n" + "[E] - Exit from Application";
+			+ "[B] Back\n" + "[E] Exit";
 
 	String command;
 
@@ -26,8 +26,10 @@ public class DirectorMenuUI {
 
 		boolean cycle = true;
 		while (cycle) {
-
-			System.out.println("Welcome to director menu, " + directorLoggedIn.getName());
+			System.out.println("");
+			System.out.println(
+					"———————————————————————————————————————————MENU DIRECTOR——————————————————————————————————————————————————");
+			System.out.println("Welcome to Director Menu, " + directorLoggedIn.getName());
 			System.out.println("______________________________________________");
 
 			System.out.println("");
@@ -53,8 +55,8 @@ public class DirectorMenuUI {
 				System.out.println("(Change project management command enabled)");
 				System.out.println("");
 			}
-
-			System.out.println("Please choose a command:");
+			System.out.println("");
+			System.out.println("Please choose a command to input a field:");
 			System.out.println(options);
 			System.out.println("");
 
@@ -82,12 +84,12 @@ public class DirectorMenuUI {
 				break;
 
 			case "b":
-				System.out.println("Returning to main menu...");
+				System.out.println("Returning to Director Menu...");
 				System.out.println("");
 				cycle = false;
 				break;
 			case "e":
-				System.out.println("--YOU HAVE EXITDE FROM APPLICATION--");
+				System.out.println("--YOU HAVE EXITED FROM APPLICATION--");
 				System.exit(0);
 				break;
 
