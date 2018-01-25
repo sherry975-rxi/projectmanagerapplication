@@ -216,6 +216,23 @@ public class MainMenuUI {
 		taskHB2.setTaskDeadline(finishDate);
 		taskHB2.getTaskState().changeToPlanned();
 
+		// Task 3.3 (taskHB3) set to assigned
+		// necessary to pass from "Created" to "Planned"
+		Calendar estimatedStartDate = Calendar.getInstance();
+		estimatedStartDate.add(Calendar.YEAR, 2018);
+		estimatedStartDate.add(Calendar.MONTH, -1);
+		estimatedStartDate.add(Calendar.DAY_OF_MONTH, 5);
+		taskHB3.setEstimatedTaskStartDate(estimatedStartDate);
+		Calendar estimatedFinishDate1 = Calendar.getInstance();
+		estimatedFinishDate1.add(Calendar.YEAR, 2018);
+		estimatedFinishDate1.add(Calendar.MONTH, -1);
+		estimatedFinishDate1.add(Calendar.DAY_OF_MONTH, 6);
+		taskHB3.setTaskDeadline(estimatedFinishDate1);
+		taskHB3.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB3.addProjectCollaboratorToTask(projcollabManager);
+		taskHB3.getTaskState().changeToAssigned();
+
 		mainMenu();
 	}
 
