@@ -19,7 +19,7 @@ public class US320ViewProjectsController {
 
 		for (int i = 0; i < chosenList.size(); i++) {
 			Integer showIndex = i + 1;
-			String toShowProject = "::Index " + showIndex.toString() + ":: \n"
+			String toShowProject = "::Project nº" + showIndex.toString() + ":: \n"
 					+ overviewProjectAsString(chosenList.get(i));
 			allProjectsList.add(toShowProject);
 		}
@@ -33,7 +33,7 @@ public class US320ViewProjectsController {
 
 		for (int i = 0; i < chosenList.size(); i++) {
 			Integer showIndex = i + 1;
-			String toShowProject = "::Index " + showIndex.toString() + ":: \n"
+			String toShowProject = "::Project nº" + showIndex.toString() + ":: \n"
 					+ overviewProjectAsString(chosenList.get(i));
 			activeProjectsList.add(toShowProject);
 		}
@@ -58,18 +58,37 @@ public class US320ViewProjectsController {
 	 * @return a String with the Project's data
 	 */
 	public String overviewProjectAsString(Project toView) {
-		String output = "===== ";
-		Integer ID = toView.getIdCode();
+
+		Integer IDnumber = toView.getIdCode();
+		String ID = IDnumber.toString();
 		String status = toView.getProjectStatusName();
 
-		output += ID.toString();
-		output += " - " + toView.getName() + " =====";
+		int headerSize = 15 + ID.length() + toView.getName().length();
+
+		String headerChar = "=";
+		String header = generateHeader(headerChar, headerSize);
+
+		String output = header + "\n";
+		output += "===== ";
+		output += IDnumber.toString();
+		output += " - " + toView.getName() + " =====\n";
+		output += header;
 		output += "\n - Status: " + status;
 		output += "\n - Manager: " + toView.getProjectManager().getName();
 		output += "\n - Description: " + toView.getProjectDescription();
-		output += "\n ==========";
+		output += "\n" + header;
 
 		return output;
+	}
+
+	public String generateHeader(String toRepeat, int repeat) {
+		String header = "";
+
+		for (int i = 0; i < repeat; i++) {
+			header += toRepeat;
+		}
+
+		return header;
 	}
 
 }

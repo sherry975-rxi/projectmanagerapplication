@@ -215,7 +215,7 @@ public class MainMenuUI {
 			System.out.println("[2] Login");
 			System.out.println("[3] Administrator (Demo mode - John Cena)");
 			System.out.println("[4] Director (Demo mode - Jane Doe)");
-			System.out.println("[5] Collaborator");
+			System.out.println("[5] Collaborator (Demo mode - João Silva)");
 			System.out.println("______________________________________________");
 			System.out.println("[E] Exit");
 			System.out.println();
@@ -242,6 +242,7 @@ public class MainMenuUI {
 				break;
 
 			case "5":
+				user1.setUserProfile(Profile.COLLABORATOR);
 				CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(user1);
 				collaboratorMenu.displayOptions();
 

@@ -31,7 +31,7 @@ public class US135andUS136SearchUsersController {
 
 		for (int i = 0; i < userList.size(); i++) {
 			Integer showIndex = i + 1;
-			String toShowUser = "::Index " + showIndex.toString() + ":: \n" + userDataToString(userList.get(i));
+			String toShowUser = "::User nº" + showIndex.toString() + ":: \n" + userDataToString(userList.get(i));
 			userListAsString.add(toShowUser);
 		}
 
@@ -52,7 +52,7 @@ public class US135andUS136SearchUsersController {
 
 		for (int i = 0; i < userList.size(); i++) {
 			Integer showIndex = i + 1;
-			String toShowUser = "::Index " + showIndex.toString() + ":: \n" + userDataToString(userList.get(i));
+			String toShowUser = "::User nº" + showIndex.toString() + ":: \n" + userDataToString(userList.get(i));
 			userListAsString.add(toShowUser);
 		}
 

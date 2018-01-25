@@ -98,7 +98,7 @@ public class US135andUS136SearchUsersControllerTest {
 		 * Compares a search of collaborator with a list where two collaborators exist
 		 */
 		List<String> collaboratorstest = new ArrayList<>();
-		collaboratorstest.add("::Index 1:: \n" + newUser1String);
+		collaboratorstest.add("::User nº1:: \n" + newUser1String);
 
 		assertEquals(searchController.searchUsersByProfileController(Profile.COLLABORATOR), collaboratorstest);
 	}
@@ -126,7 +126,7 @@ public class US135andUS136SearchUsersControllerTest {
 
 		/* Compares a search by entire mail address with a list with that mail */
 		List<String> testUsersEmail1 = new ArrayList<>();
-		testUsersEmail1.add("::Index 1:: \n" + searchController.userDataToString(newUser2));
+		testUsersEmail1.add("::User nº1:: \n" + searchController.userDataToString(newUser2));
 		assertEquals(searchController.searchUsersByEmailController("joao@gmail.com"), testUsersEmail1);
 
 		assertEquals(searchController.searchUsersByEmailController("joao@gmail.com").size(), 1);
@@ -146,6 +146,21 @@ public class US135andUS136SearchUsersControllerTest {
 		// user 0)
 		// it must be equal to newUser2
 		assertEquals(searchController.selectUser(1), newUser2);
+	}
+
+	@Test
+	public void testUserDataToString() {
+
+		String result = "001 - Unassigned: Daniel (daniel@gmail.com; 910000000) - collaborator";
+		assertTrue(result.equals(searchController.userDataToString(newUser1)));
+
+		newUser1.setUserProfile(Profile.COLLABORATOR);
+		result = "001 - Collaborator: Daniel (daniel@gmail.com; 910000000) - collaborator";
+		assertTrue(result.equals(searchController.userDataToString(newUser1)));
+
+		newUser1.setUserProfile(Profile.DIRECTOR);
+		result = "001 - Director: Daniel (daniel@gmail.com; 910000000) - collaborator";
+		assertTrue(result.equals(searchController.userDataToString(newUser1)));
 	}
 
 }
