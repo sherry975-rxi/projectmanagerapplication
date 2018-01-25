@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
@@ -15,6 +16,7 @@ import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.taskStateInterface.OnGoing;
 
 public class US372GetProjectUnfinishedTaskListTest {
 
@@ -121,11 +123,30 @@ public class US372GetProjectUnfinishedTaskListTest {
 		task1.getTaskState().changeToOnGoing();
 		task1.markTaskAsFinished();
 
-		task2.setStartDate(Calendar.getInstance());
+		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task2.setTaskDeadline(taskDeadlineDateTest1);
+		task2.getTaskState().changeToPlanned();
+		task2.addProjectCollaboratorToTask(projCollab1);
+		task2.getTaskState().changeToAssigned();
+		task2.getTaskState().changeToReady();
+		Calendar startDateTask2 = estimatedTaskStartDateTest;
+		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
+		task2.setStartDate(startDateTask2);
+		task2.getTaskState().changeToOnGoing();
+		task2.markTaskAsFinished();
+
 		task3.setStartDate(Calendar.getInstance());
+		OnGoing stateTask3 = new OnGoing(task3);
+		task3.setTaskState(stateTask3);
 		task4.setStartDate(Calendar.getInstance());
+		OnGoing stateTask4 = new OnGoing(task4);
+		task4.setTaskState(stateTask4);
 		task5.setStartDate(Calendar.getInstance());
+		OnGoing stateTask5 = new OnGoing(task5);
+		task5.setTaskState(stateTask5);
 		task6.setStartDate(Calendar.getInstance());
+		OnGoing stateTask6 = new OnGoing(task6);
+		task6.setTaskState(stateTask6);
 
 		// creates the controller
 		tasksFiltersController = new US372GetProjectUnfinishedTaskListController();
@@ -158,7 +179,25 @@ public class US372GetProjectUnfinishedTaskListTest {
 
 	@Test
 	public final void testGetProjectUnfinishedTaskList() {
-		assertEquals(5, tasksFiltersController.getProjectUnfinishedTaskList(project1).size());
+		assertEquals(4, tasksFiltersController.getProjectUnfinishedTaskList(project1).size());
+	}
+
+	@Test
+	public final void testGetOnGoingTaskListId() {
+		String result = "[1.3] Merge everything";
+		assertTrue(result.equals(tasksFiltersController.getOnGoingTaskListId(project1).get(0)));
+		result = "[1.4] Do this";
+		assertTrue(result.equals(tasksFiltersController.getOnGoingTaskListId(project1).get(1)));
+		result = "[1.5] Do this";
+		assertTrue(result.equals(tasksFiltersController.getOnGoingTaskListId(project1).get(2)));
+		result = "[1.6] Do this";
+		assertTrue(result.equals(tasksFiltersController.getOnGoingTaskListId(project1).get(3)));
+	}
+
+	@Test
+	public final void testSplitStringByFirstSpace() {
+		String input = "Test me master!";
+		assertTrue("Test".equals(tasksFiltersController.splitStringByFirstSpace(input)));
 	}
 
 }
