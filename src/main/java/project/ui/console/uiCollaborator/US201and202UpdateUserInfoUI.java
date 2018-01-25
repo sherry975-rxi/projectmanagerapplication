@@ -121,102 +121,117 @@ public class US201and202UpdateUserInfoUI {
 				i++;
 
 			}
+			System.out.println("___________________________________________________");
+			System.out.println("If you select an invalid number the menu returns back");
+			
+
 
 			String nrAddress = input.nextLine();
-			if (Integer.parseInt(nrAddress) > updater.getAllAddresses(user).size()) {
-				System.out.println();
-
-				System.out.println("Process Cancelled");
-				System.out.println();
-				;
-				MainMenuUI.mainMenu();
-			} else {
-
-				// Chooses address
-				Address chosen = updater.getAllAddresses(user).get(Integer.parseInt(nrAddress) - 1);
-				// Shows fields of the address
-				String currentStreet = updater.getStreet(chosen);
-				String currentZipCode = updater.getZipCode(chosen);
-				String currentCity = updater.getCity(chosen);
-				String currentDistrict = updater.getDistrict(chosen);
-				String currentCountry = updater.getCountry(chosen);
-				System.out.println("Please select the number of the field to update:");
-				System.out.println("[1] Street: " + currentStreet);
-				System.out.println("[2] ZipCode: " + currentZipCode);
-				System.out.println("[3] City: " + currentCity);
-				System.out.println("[4] District: " + currentDistrict);
-				System.out.println("[5] Country: " + currentCountry);
-				System.out.println();
-				// Selects the field
-				String nrField = input.nextLine();
-				switch (nrField) {
-				case "1":
-					// Updates street
-					System.out.println(inputNewInfo);
-					String newStreet = input.nextLine();
-					System.out.println(newInfo + newStreet);
-					if (confirmInfo(input)) {
-						updater.updateUserStreet(user, currentStreet, newStreet);
-						System.out.println(updateSuccessful);
-						System.out.println();
-					}
-					break;
-				case "2":
-					// Updates zip code
-					System.out.println(inputNewInfo);
-					String newZipCode = input.nextLine();
-					System.out.println(newInfo + newZipCode);
-					if (confirmInfo(input)) {
-						updater.updateUserZipCode(user, currentStreet, newZipCode);
-						System.out.println(updateSuccessful);
-						System.out.println();
-					}
-					break;
-				case "3":
-					// Updates city
-					System.out.println(inputNewInfo);
-					String newCity = input.nextLine();
-					System.out.println(newInfo + newCity);
-					if (confirmInfo(input)) {
-						updater.updateUserCity(user, currentStreet, newCity);
-						System.out.println(updateSuccessful);
-						System.out.println();
-					}
-					break;
-				case "4":
-					// Updates district
-					System.out.println(inputNewInfo);
-					String newDistrict = input.nextLine();
-					System.out.println(newInfo + newDistrict);
-					if (confirmInfo(input)) {
-						updater.updateUserDistrict(user, currentStreet, newDistrict);
-						System.out.println(updateSuccessful);
-						System.out.println();
-					}
-					break;
-				case "5":
-					// Updates country
-					System.out.println(inputNewInfo);
-					String newCountry = input.nextLine();
-					System.out.println(newInfo + newCountry);
-					if (confirmInfo(input)) {
-						updater.updateUserCountry(user, currentStreet, newCountry);
-						System.out.println(updateSuccessful);
-						System.out.println();
-					}
-					break;
-				default:
-					System.out.println("");
+			try {
+				
+				Integer nrAdressInt = Integer.parseInt(nrAddress);
+				
+				if (nrAdressInt > updater.getAllAddresses(user).size()) {
+					System.out.println();
 
 					System.out.println("Process Cancelled");
-					System.out.println("");
+					System.out.println();
+					
+					
+				} else {
 
-					MainMenuUI.mainMenu();
-					break;
+					// Chooses address
+					Address chosen = updater.getAllAddresses(user).get(Integer.parseInt(nrAddress) - 1);
+					// Shows fields of the address
+					String currentStreet = updater.getStreet(chosen);
+					String currentZipCode = updater.getZipCode(chosen);
+					String currentCity = updater.getCity(chosen);
+					String currentDistrict = updater.getDistrict(chosen);
+					String currentCountry = updater.getCountry(chosen);
+					System.out.println("Please select the number of the field to update:");
+					System.out.println("[1] Street: " + currentStreet);
+					System.out.println("[2] ZipCode: " + currentZipCode);
+					System.out.println("[3] City: " + currentCity);
+					System.out.println("[4] District: " + currentDistrict);
+					System.out.println("[5] Country: " + currentCountry);
+					System.out.println();
+					// Selects the field
+					String nrField = input.nextLine();
+					switch (nrField) {
+					case "1":
+						// Updates street
+						System.out.println(inputNewInfo);
+						String newStreet = input.nextLine();
+						System.out.println(newInfo + newStreet);
+						if (confirmInfo(input)) {
+							updater.updateUserStreet(user, currentStreet, newStreet);
+							System.out.println(updateSuccessful);
+							System.out.println();
+						}
+						break;
+					case "2":
+						// Updates zip code
+						System.out.println(inputNewInfo);
+						String newZipCode = input.nextLine();
+						System.out.println(newInfo + newZipCode);
+						if (confirmInfo(input)) {
+							updater.updateUserZipCode(user, currentStreet, newZipCode);
+							System.out.println(updateSuccessful);
+							System.out.println();
+						}
+						break;
+					case "3":
+						// Updates city
+						System.out.println(inputNewInfo);
+						String newCity = input.nextLine();
+						System.out.println(newInfo + newCity);
+						if (confirmInfo(input)) {
+							updater.updateUserCity(user, currentStreet, newCity);
+							System.out.println(updateSuccessful);
+							System.out.println();
+						}
+						break;
+					case "4":
+						// Updates district
+						System.out.println(inputNewInfo);
+						String newDistrict = input.nextLine();
+						System.out.println(newInfo + newDistrict);
+						if (confirmInfo(input)) {
+							updater.updateUserDistrict(user, currentStreet, newDistrict);
+							System.out.println(updateSuccessful);
+							System.out.println();
+						}
+						break;
+					case "5":
+						// Updates country
+						System.out.println(inputNewInfo);
+						String newCountry = input.nextLine();
+						System.out.println(newInfo + newCountry);
+						if (confirmInfo(input)) {
+							updater.updateUserCountry(user, currentStreet, newCountry);
+							System.out.println(updateSuccessful);
+							System.out.println();
+						}
+						break;
+					default:
+						System.out.println("");
 
+						System.out.println("Process Cancelled");
+						System.out.println("");
+
+						MainMenuUI.mainMenu();
+						break;
+						}
+					}
 				}
-
-			}
+					
+					
+				catch (NumberFormatException npe) {
+					System.out.println("Invalid input!");
+					chooseWhatInfoToUpdate();
+				}
+				
+			
 			break;
 
 		case "5":

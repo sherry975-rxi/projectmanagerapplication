@@ -44,22 +44,22 @@ public class MainMenuUI {
 		myCompany = Company.getTheInstance();
 
 		// Instantiate the users, sets their passwords
-		userAdmin = myCompany.getUsersRepository().createUser("John Cena", "admin@gmail.com", "001", "Admin grupo 3",
-				"917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		userAdmin = myCompany.getUsersRepository().createUser("Teresa Ribeiro", "admin@gmail.com", "001",
+				"Administrator", "917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userAdmin.setPassword("123456");
-		userDirector = myCompany.getUsersRepository().createUser("Jane Doe", "director@gmail.com", "002",
-				"Director grupo 3", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		userDirector = myCompany.getUsersRepository().createUser("Roberto Santos", "director@gmail.com", "002",
+				"Director", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userDirector.setPassword("abcdef");
 
-		userJSilva = myCompany.getUsersRepository().createUser("Joao Silva", "aluno_3_@gmail.com", "010",
-				"Estudante Grupo 3", "937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+		userJSilva = myCompany.getUsersRepository().createUser("João Silva", "jsilva@gmail.com", "010", "Comercial",
+				"937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userJSilva.setPassword("switch");
-		userATirapicos = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "aluno_2_@gmail.com", "011",
-				"Estudante Grupo 3", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Matosinhos",
-				"Portugal");
+		userATirapicos = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
+				"Comercial", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Porto", "Portugal");
 		userATirapicos.setPassword("tirapicos");
-		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "aluno_1_@gmail.com", "012",
-				"Estudante Grupo 3", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Matosinhos", "Portugal");
+		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "spereira@gmail.com", "012",
+				"Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
+				"Portugal");
 		// addition of users to the company
 		myCompany.getUsersRepository().addUserToUserRepository(userAdmin);
 		myCompany.getUsersRepository().addUserToUserRepository(userDirector);
@@ -74,11 +74,11 @@ public class MainMenuUI {
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 
 		// Instantiates a project and add it to the company
-		projectGP = myCompany.getProjectsRepository().createProject("Projeto GP", "Aplicação para Gestão de Projetos",
-				projectManager);
-		projectApostas = myCompany.getProjectsRepository().createProject("Projeto Apostas",
+		projectGP = myCompany.getProjectsRepository().createProject("Gestão de Projetos",
+				"Aplicação para Gestão de Projetos", projectManager);
+		projectApostas = myCompany.getProjectsRepository().createProject("Apostas Online",
 				"Plataforma Web para Apostas", projectManager);
-		projectHomeBanking = myCompany.getProjectsRepository().createProject("Projeto HomeBanking",
+		projectHomeBanking = myCompany.getProjectsRepository().createProject("HomeBanking",
 				"Aplicação iOS para HomeBanking", userJSilva);
 
 		TaskCollaborator tWorkerJSilva;
@@ -215,14 +215,17 @@ public class MainMenuUI {
 			System.out.println("______________________________________________");
 			System.out.println("[1] New Registration");
 			System.out.println("[2] Login");
-			System.out.println("[3] Administrator (Demo mode - John Cena)");
-			System.out.println("[4] Director (Demo mode - Jane Doe)");
-			System.out.println("[5] Collaborator (Demo mode - João Silva)");
+			System.out.println("[3] Administrator");
+			System.out.println("[4] Director");
+			System.out.println("[5] Collaborator");
 			System.out.println("______________________________________________");
 			System.out.println("[E] Exit");
 			System.out.println();
+			System.out.println("Please select an option:");
+			System.out.println();
 
 			String choice = input.nextLine().toUpperCase();
+			System.out.println();
 			switch (choice) {
 			case "1":
 				US101UserRegisterUI userRegister = new US101UserRegisterUI();

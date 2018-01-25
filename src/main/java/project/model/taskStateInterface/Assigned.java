@@ -11,8 +11,8 @@ public class Assigned implements TaskStateInterface {
 	}
 
 	/**
-	 * This method checks if a transition to a certain state is valid, checking if
-	 * the task has active users
+	 * This method verifies if the State "Assigned" requirements are fulfilled for a
+	 * specific Task. It has to have at least one active user.
 	 * 
 	 * @return True if valid, False if not
 	 */

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import project.controller.US301CreateProjectController;
+import project.model.EffortUnit;
 import project.model.User;
 
 public class US301CreateProjectUI {
@@ -11,11 +12,13 @@ public class US301CreateProjectUI {
 	String projectName = "(Insert Name)";
 	String projectDescription = "(Insert Description)";
 	String projectManagerName = "(Select Manager)";
-	String effortUnitName = "Hours";
+
+	EffortUnit currentEffortUnit = EffortUnit.HOURS;
+
 	Integer budget = 0;
 	User projectManager = null;
 
-	boolean cycle = true;
+	boolean isProjectCreationOngoing = true;
 
 	String mainCommand;
 	String dataInput;
@@ -26,19 +29,13 @@ public class US301CreateProjectUI {
 		Scanner mainComm = new Scanner(System.in);
 		Scanner dataIn = new Scanner(System.in);
 
-		String hoursString = "Hours";
-
 		System.out.println("To create a project, input the following fields:");
 		System.out.println(viewOptions());
 		System.out.println("");
 
-		while (cycle) {
+		while (isProjectCreationOngoing) {
 
-			if (projectManager != null) {
-				projectManagerName = projectManager.getName();
-			}
-
-			System.out.println("Choose a command:");
+			System.out.println("Please choose a command to input a field:");
 			mainCommand = mainComm.nextLine().toUpperCase();
 
 			switch (mainCommand) {
@@ -59,7 +56,7 @@ public class US301CreateProjectUI {
 				break;
 
 			case "4":
-				dataIn = this.caseFour(dataIn, hoursString);
+				dataIn = this.caseFour(dataIn);
 				break;
 
 			case "5":
@@ -73,11 +70,11 @@ public class US301CreateProjectUI {
 			case "B":
 				System.out.println("Project creation cancelled!");
 				System.out.println("");
-				cycle = false;
+				isProjectCreationOngoing = false;
 				break;
 
 			case "E":
-				System.out.println("--YOU HAVE EXITDE FROM APPLICATION--");
+				System.out.println("--YOU HAVE EXITED FROM APPLICATION--");
 				System.exit(0);
 				break;
 
@@ -104,12 +101,12 @@ public class US301CreateProjectUI {
 		String options = "[1] - Project Name: " + projectName;
 		options += "\n[2] - Project Description: " + projectDescription;
 		options += "\n[3] - Project Manager: " + projectManagerName;
-		options += "\n[4] - Project Effort Unit: " + effortUnitName;
+		options += "\n[4] - Project Effort Unit: " + currentEffortUnit.toString();
 		options += "\n[5] - Project Budget: " + budget;
 		options += "\n[any key] - View Data and commands";
 		options += "\n[C] - Create Project with chosen data";
-		options += "\n[B] - Cancel and return to director menu";
-		options += "\n[E] - Exit from application";
+		options += "\n[B] - Cancel Project creation and return to Director Menu";
+		options += "\n[E] - Exit";
 
 		return options;
 	}
@@ -130,7 +127,7 @@ public class US301CreateProjectUI {
 
 		if (projectCollaborators.isEmpty()) {
 			System.out.println("No Collaborators available, project creation impossible!!");
-			cycle = false;
+			isProjectCreationOngoing = false;
 
 		} else {
 			System.out.println("Please select a collaborator:");
@@ -144,6 +141,10 @@ public class US301CreateProjectUI {
 			if (dataIn.hasNextInt()) {
 				projectManager = controller.selectCollaborator(dataIn.nextInt());
 				dataInput = dataIn.nextLine();
+
+				if (projectManager != null) {
+					projectManagerName = projectManager.getName();
+				}
 			}
 
 			else {
@@ -166,16 +167,20 @@ public class US301CreateProjectUI {
 	 * @return the given scanner, so its input can be refreshed and not read by the
 	 *         next scanner
 	 */
-	private Scanner caseFour(Scanner dataIn, String hoursString) {
+	private Scanner caseFour(Scanner dataIn) {
 		System.out.println("Press [0] to change the effort Unit of your project:");
-		System.out.println("(Currently:" + effortUnitName + ")");
+		System.out.println("(Currently: " + currentEffortUnit.toString() + ")");
 		System.out.println("");
 		dataInput = dataIn.nextLine();
 		if (dataInput.equals("0")) {
-			if (effortUnitName.equals(hoursString)) {
-				effortUnitName = "Person/Month";
-			} else
-				effortUnitName = hoursString;
+			if (currentEffortUnit.equals(EffortUnit.HOURS)) {
+				currentEffortUnit = EffortUnit.PERSON_MONTH;
+				System.out.println("The effort Unit of this project changed to Person/Month.");
+			} else {
+				currentEffortUnit = EffortUnit.HOURS;
+				System.out.println("The effort Unit of this project changed to Hours.");
+			}
+			System.out.println("");
 		}
 		return dataIn;
 	}
@@ -203,6 +208,14 @@ public class US301CreateProjectUI {
 		return dataIn;
 	}
 
+	/**
+	 * This case attempts to create the project with the data provided. Should a
+	 * project manager not exit, creation will fail and return to data submission
+	 * form
+	 * 
+	 * @param controller
+	 */
+
 	private void caseC(US301CreateProjectController controller) {
 		if (projectManager == null) {
 			System.out.println("Please select a Project Manager first!");
@@ -210,12 +223,12 @@ public class US301CreateProjectUI {
 		} else {
 			controller.createProject(projectName, projectDescription, projectManager);
 			controller.changeBudget(budget);
-			if (effortUnitName.equals("Person/Month")) {
+			if (currentEffortUnit.equals(EffortUnit.PERSON_MONTH)) {
 				controller.changeEffortUnitToPersonMonth();
 			}
 			System.out.println("Project created!");
 			System.out.println("");
-			cycle = false;
+			isProjectCreationOngoing = false;
 
 		}
 	}

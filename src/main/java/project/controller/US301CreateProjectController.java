@@ -63,8 +63,7 @@ public class US301CreateProjectController {
 
 		for (int i = 0; i < activeCollaboratorList.size(); i++) {
 			Integer showIndex = i + 1;
-			String toShowUser = "::Collaborator nº" + showIndex.toString() + ":: \n"
-					+ userDataToString(activeCollaboratorList.get(i));
+			String toShowUser = "[" + showIndex.toString() + "] \n" + userDataToString(activeCollaboratorList.get(i));
 			userListAsString.add(toShowUser);
 		}
 

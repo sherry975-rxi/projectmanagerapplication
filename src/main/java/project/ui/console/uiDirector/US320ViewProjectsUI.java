@@ -42,7 +42,7 @@ public class US320ViewProjectsUI {
 			}
 
 		}
-		System.out.println("Returning to director menu...");
+		System.out.println("Returning to Director Menu...");
 		System.out.println("");
 
 		return selectedProject;

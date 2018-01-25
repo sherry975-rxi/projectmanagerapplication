@@ -37,8 +37,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
-		System.out.println("___________________________________________________");
-		System.out.println("                   PROJECT TEAM");
+		System.out.println(" Project Team");
 		System.out.println("___________________________________________________");
 
 		US355ViewProjectTeamAndThenRemoveCollaboratorController controller = new US355ViewProjectTeamAndThenRemoveCollaboratorController(
@@ -52,8 +51,9 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 			System.out.println(projectCollaboratorName);
 			listOfProjectCollaboratorsName.add(String.valueOf(indexName));
 		}
-		System.out.println("\nChoose an collaborator to remove");
-		System.out.println("___________________________________________________");
+		System.out.println();
+		System.out.println("\nChoose an collaborator to remove or choose an option:");
+		System.out.println("_______________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
 		System.out.println("[E] Exit \n");

@@ -110,7 +110,7 @@ public class US320ViewProjectsControllerTest {
 
 		// also asserts that the contents of index 0 matches the data of the only active
 		// project
-		assertTrue(projectListsController.viewAllProjects().get(0).equals("::Project nº1:: \n" + activeProjectData));
+		assertTrue(projectListsController.viewAllProjects().get(0).equals("[1] \n" + activeProjectData));
 	}
 
 	/**
