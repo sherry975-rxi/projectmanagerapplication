@@ -204,6 +204,18 @@ public class MainMenuUI {
 		taskHB9 = projectHomeBanking.getTaskRepository().createTask("Criar botão personalizar");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB9);
 
+		// Task 3.1 (taskHB1) is in state created
+
+		// Task 3.2 (taskHB2) set to planned
+		// necessary to pass from "Created" to "Planned"
+		startDate = Calendar.getInstance();
+		startDate.add(Calendar.MONTH, -1);
+		taskHB2.setEstimatedTaskStartDate(startDate);
+		finishDate = Calendar.getInstance();
+		finishDate.add(Calendar.MONTH, 1);
+		taskHB2.setTaskDeadline(finishDate);
+		taskHB2.getTaskState().changeToPlanned();
+
 		mainMenu();
 	}
 
