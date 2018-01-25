@@ -24,29 +24,28 @@ public class US372GetProjectUnfinishedTaskListController {
 	}
 
 	/**
-	 * This methods gets all the unfinished tasks with expired deadline and returns
-	 * the Tasks with these conditions in the form of a List of Strings, with the
-	 * taskId and Description of each task.
+	 * This methods gets all the onGoing tasks in the form of a List of Strings,
+	 * with the taskId and Description of each task.
 	 * 
 	 * @param proj
-	 *            The project to search for its expired Tasks
+	 *            The project to search for its OnGoing tasks
 	 * 
 	 * @return Task List
 	 */
 	public List<String> getOnGoingTaskListId(Project proj) {
 
 		List<Task> taskListOnGoing = proj.getTaskRepository().getOnGoingTasks();
-		List<String> taskListToPrint = new ArrayList<>();
+		List<String> taskListOnGoingToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListOnGoing.size(); i++) {
 
-			String taskDescription = taskListOnGoing.get(i).getDescription();
+			String taskOnGoingDescription = taskListOnGoing.get(i).getDescription();
 			String taskID = "[" + taskListOnGoing.get(i).getTaskID() + "]";
-			String taskIDandDescription = taskID + " " + taskDescription;
-			taskListToPrint.add(taskIDandDescription);
+			String taskIDandDescription = taskID + " " + taskOnGoingDescription;
+			taskListOnGoingToPrint.add(taskIDandDescription);
 		}
 
-		return taskListToPrint;
+		return taskListOnGoingToPrint;
 	}
 
 	/**
