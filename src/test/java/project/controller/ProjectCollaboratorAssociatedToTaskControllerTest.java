@@ -116,9 +116,6 @@ public class ProjectCollaboratorAssociatedToTaskControllerTest {
 		// Checks if projCollab1 remains not associated to the Task
 		assertFalse(taskA.isProjectCollaboratorActiveInTaskTeam(projCollab1));
 
-		// Checks if it returns false with a NULL projectCollab
-		assertFalse(taskController.createTaskWorkerAssignmentRequestController(taskA, projCollabNull));
-
 	}
 
 	/*
