@@ -41,15 +41,7 @@ public class Created implements TaskStateInterface {
 	 */
 	@Override
 	public boolean changeToCreated() {
-		boolean condition = false;
-		if (isTransitionToCreatedPossible()) {
-			TaskStateInterface stateCreated = new Created(task);
-			if (stateCreated.isValid()) {
-				task.setTaskState(stateCreated);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
