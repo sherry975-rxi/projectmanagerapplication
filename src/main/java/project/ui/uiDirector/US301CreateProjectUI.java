@@ -1,6 +1,5 @@
 package project.ui.uiDirector;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +15,8 @@ public class US301CreateProjectUI {
 	Integer budget = 0;
 	User projectManager = null;
 
+	boolean cycle = true;
+
 	String mainCommand;
 	String dataInput;
 
@@ -26,9 +27,6 @@ public class US301CreateProjectUI {
 		Scanner dataIn = new Scanner(System.in);
 
 		String hoursString = "Hours";
-
-		boolean cycle = true;
-		List<String> projectCollaborators = new ArrayList<>();
 
 		System.out.println("To create a project, input the following fields:");
 		System.out.println(viewOptions());
@@ -57,19 +55,19 @@ public class US301CreateProjectUI {
 				break;
 
 			case "3":
-				this.caseThree(projectCollaborators, controller, cycle, dataIn);
+				dataIn = this.caseThree(controller, dataIn);
 				break;
 
 			case "4":
-				this.caseFour(dataIn, hoursString);
+				dataIn = this.caseFour(dataIn, hoursString);
 				break;
 
 			case "5":
-				this.caseFive(dataIn);
+				dataIn = this.caseFive(dataIn);
 				break;
 
 			case "C":
-				this.caseC(cycle, controller);
+				this.caseC(controller);
 				break;
 
 			case "B":
@@ -96,6 +94,12 @@ public class US301CreateProjectUI {
 
 	}
 
+	/**
+	 * This method displays the available commands, as well as the data already
+	 * inputed in each of the fields
+	 * 
+	 * @return a String of all commands and data to be used in Project creation
+	 */
 	private String viewOptions() {
 		String options = "[1] - Project Name: " + projectName;
 		options += "\n[2] - Project Description: " + projectDescription;
@@ -110,10 +114,21 @@ public class US301CreateProjectUI {
 		return options;
 	}
 
-	private void caseThree(List<String> projectCollaborators, US301CreateProjectController controller, boolean cycle,
-			Scanner dataIn) {
-		projectCollaborators = controller.listActiveCollaborators();
-		if (projectCollaborators.size() == 0) {
+	/**
+	 * Case three deals with the selection of a project manager. It receives the
+	 * controller and the data Input Scanner, and executes the Project Manager
+	 * selection method
+	 * 
+	 * @param controller
+	 * @param dataIn
+	 * 
+	 * @return the given scanner, so its input can be refreshed and not read by the
+	 *         next scanner
+	 */
+	private Scanner caseThree(US301CreateProjectController controller, Scanner dataIn) {
+		List<String> projectCollaborators = controller.listActiveCollaborators();
+
+		if (projectCollaborators.isEmpty()) {
 			System.out.println("No Collaborators available, project creation impossible!!");
 			cycle = false;
 
@@ -128,6 +143,7 @@ public class US301CreateProjectUI {
 
 			if (dataIn.hasNextInt()) {
 				projectManager = controller.selectCollaborator(dataIn.nextInt());
+				dataInput = dataIn.nextLine();
 			}
 
 			else {
@@ -136,10 +152,21 @@ public class US301CreateProjectUI {
 				System.out.println("");
 			}
 		}
+		return dataIn;
 
 	}
 
-	private void caseFour(Scanner dataIn, String hoursString) {
+	/**
+	 * Case four deals with the selection of effort units. It receives the scanner
+	 * and current Effort Units as String, and executes the selection method
+	 * 
+	 * @param dataIn
+	 * @param hourString
+	 * 
+	 * @return the given scanner, so its input can be refreshed and not read by the
+	 *         next scanner
+	 */
+	private Scanner caseFour(Scanner dataIn, String hoursString) {
 		System.out.println("Press [0] to change the effort Unit of your project:");
 		System.out.println("(Currently:" + effortUnitName + ")");
 		System.out.println("");
@@ -150,21 +177,33 @@ public class US301CreateProjectUI {
 			} else
 				effortUnitName = hoursString;
 		}
+		return dataIn;
 	}
 
-	private void caseFive(Scanner dataIn) {
+	/**
+	 * Case five deals with the selection of budget. It receives the scanner and,
+	 * and executes the selection method
+	 * 
+	 * @param dataIn
+	 * 
+	 * @return the given scanner, so its input can be refreshed and not read by the
+	 *         next scanner
+	 */
+	private Scanner caseFive(Scanner dataIn) {
 		System.out.println("Please type the budget of your project:");
 		System.out.println("(Currently:" + budget + ")");
 		System.out.println("");
-		if (dataIn.hasNextInt())
+		if (dataIn.hasNextInt()) {
 			budget = dataIn.nextInt();
-		else {
+			dataInput = dataIn.nextLine();
+		} else {
 			dataInput = dataIn.nextLine();
 			System.out.println("Not a number!");
 		}
+		return dataIn;
 	}
 
-	private void caseC(boolean cycle, US301CreateProjectController controller) {
+	private void caseC(US301CreateProjectController controller) {
 		if (projectManager == null) {
 			System.out.println("Please select a Project Manager first!");
 			System.out.println("");
@@ -174,9 +213,9 @@ public class US301CreateProjectUI {
 			if (effortUnitName.equals("Person/Month")) {
 				controller.changeEffortUnitToPersonMonth();
 			}
-			cycle = false;
 			System.out.println("Project created!");
 			System.out.println("");
+			cycle = false;
 
 		}
 	}
