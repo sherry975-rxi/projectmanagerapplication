@@ -21,7 +21,6 @@ public class DirectorMenuUI {
 		this.directorLoggedIn = admin;
 	}
 
-	// TODO implement missing options!
 	public void directorMenu() {
 		Scanner input = new Scanner(System.in);
 
