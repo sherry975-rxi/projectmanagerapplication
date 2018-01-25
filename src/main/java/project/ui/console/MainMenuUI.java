@@ -252,6 +252,24 @@ public class MainMenuUI {
 		// pass from "Assigned" to "Ready"
 		taskHB4.getTaskState().changeToReady();
 
+		// Task 3.5 (taskHB5) set to ongoing
+		// necessary to pass from "Created" to "Planned"
+		startDate = Calendar.getInstance();
+		startDate.add(Calendar.MONTH, -1);
+		taskHB5.setEstimatedTaskStartDate(startDate);
+		Calendar estimatedFinishDate = Calendar.getInstance();
+		estimatedFinishDate.add(Calendar.MONTH, 1);
+		taskHB5.setTaskDeadline(finishDate);
+		taskHB5.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB5.addProjectCollaboratorToTask(projcollabManager);
+		taskHB5.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB5.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB5.setStartDate(startDate);
+		taskHB5.getTaskState().changeToOnGoing();
+
 		mainMenu();
 	}
 
