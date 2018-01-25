@@ -11,7 +11,7 @@ public class AdminMenuUI {
 
 	String options = "[1] - view all users \n" + "[2] - search users by profile or email \n"
 			+ "[3] - manage selected user profile \n" + "[4] - manage selected user state\n"
-			+ "[E] - exit to main menu";
+			+ "______________________________________________" + "[E] - exit to main menu";
 
 	String command;
 
@@ -25,15 +25,18 @@ public class AdminMenuUI {
 		boolean cycle = true;
 		while (cycle) {
 
+			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName());
+			System.out.println("______________________________________________");
+
 			if (selectedUser != null) {
-				System.out.println("User selected!");
+				System.out.println("> User selected!");
 				System.out.println(selectedUser.getIdNumber() + ": " + selectedUser.getName() + "("
 						+ selectedUser.getEmail() + ")");
 				System.out.println("(User management commands enabled!)");
 				System.out.println("");
 			}
 
-			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName() + ". Please choose a command:");
+			System.out.println("Please choose a command:");
 			System.out.println(options);
 			System.out.println("");
 
