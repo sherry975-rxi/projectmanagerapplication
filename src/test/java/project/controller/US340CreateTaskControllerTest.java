@@ -18,7 +18,7 @@ import project.model.Task;
 import project.model.User;
 import project.model.UserRepository;
 
-public class CreateTaskControllerTest {
+public class US340CreateTaskControllerTest {
 
 	Company myCompany;
 	UserRepository userRepository;
@@ -75,8 +75,8 @@ public class CreateTaskControllerTest {
 		assertFalse(project.isProjectManager(user1));
 		assertTrue(project.isProjectManager(userAdmin));
 
-		// creates the Controller and asserts the list of unstrarted tasks starts at 0
-		CreateTaskController testControl = new CreateTaskController(project);
+		// creates the Controller and asserts the list of unstarted tasks starts at 0
+		US340CreateTaskController testControl = new US340CreateTaskController(project);
 		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 0);
 
 		// creates and adds a task using the controller and asserts a task was added

@@ -10,6 +10,7 @@ import project.model.Project;
 import project.model.User;
 import project.ui.MainMenuUI;
 import project.ui.uiProjectManager.ProjectManagerMainMenuUI;
+import project.ui.uiProjectManager.uiPmTask.PmTaskFunctionalitiesUI;
 
 public class US372ProjectOngoingTasksUI {
 
@@ -47,7 +48,7 @@ public class US372ProjectOngoingTasksUI {
 		for (int i = 0; i < controller.getProjectUnfinishedTaskList(this.project).size(); i++) {
 			String taskInfo = controller.getOnGoingTaskListId(this.project).get(i);
 			System.out.println(taskInfo);
-			listOfOnGoingTasks.add(controller.splitStringByFirstSpace(taskInfo));
+			listOfOnGoingTasks.add(controller.getProjectUnfinishedTaskList(this.project).get(i).getTaskID());
 		}
 
 		System.out.println("___________________________________________________");
@@ -66,7 +67,9 @@ public class US372ProjectOngoingTasksUI {
 		for (String ii : listOfOnGoingTasks) {
 
 			if (option.equals(ii)) {
-				// TODO
+
+				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
+				taskFuntionatities.taskDataDisplay();
 			} else if (option.equals("B")) {
 				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
 						this.project);
