@@ -1,0 +1,95 @@
+package project.ui.console.uiProjectManager.tasks;
+
+import java.util.Scanner;
+
+import project.controller.PrintProjectInfoController;
+import project.controller.PrintTaskInfoController;
+import project.model.Project;
+import project.model.User;
+import project.ui.console.MainMenuUI;
+import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
+
+public class PmTaskFunctionalitiesUI {
+
+	private Project project;
+	private String taskID;
+	private User user;
+
+	public PmTaskFunctionalitiesUI(String taskID, Project project, User user) {
+		this.taskID = taskID;
+		this.project = project;
+		this.user = user;
+	}
+	
+	public void taskDataDisplay() {
+		PrintTaskInfoController taskInfo = new PrintTaskInfoController(this.taskID, this.project.getIdCode());
+		taskInfo.setProjectAndTask();
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project.getIdCode());
+		projectInfo.setProject();
+
+		boolean condition = true;
+		while (condition) {
+			System.out.println("");
+			System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
+			System.out.println("");
+			System.out.println("                     TASK                    ");
+			System.out.println("*** " + taskInfo.printTaskNameInfo().toUpperCase() + " ***");
+			System.out.println("______________________________________________");
+			System.out.println("ID: " + taskInfo.printTaskIDCodeInfo());
+			System.out.println("STATUS: " + taskInfo.printTaskStateInfo());
+			System.out.println("ESTIMATED START DATE: " + taskInfo.printTaskEstimatedStartDateInfo());
+			System.out.println("START DATE: " + taskInfo.printTaskStartDateInfo());
+			System.out.println("DEADLINE: " + taskInfo.printTaskDeadlineInfo());
+			System.out.println("FINISH DATE: " + taskInfo.printTaskFinishDateInfo());
+			System.out.println("TASK TEAM: " + taskInfo.printTaskTeamInfo());
+			System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
+			System.out.println("");
+			System.out.println("[1] Assign User");
+			System.out.println("[2] Remove User");
+			System.out.println("[3] Mark task as finished");
+			System.out.println("[4] Cancel task");
+			System.out.println("______________________________________________");
+			System.out.println("[B] Back");
+			System.out.println("[M] MainMenu");
+			System.out.println("[E] Exit");
+
+			Scanner scannerInput = new Scanner(System.in);
+			String choice = scannerInput.nextLine().toUpperCase();
+			switch (choice) {
+			case "1":
+				US361AssignUserToTaskUI case1UI = new US361AssignUserToTaskUI();
+				//add UI method
+				break;
+			case "2":
+				US362RemoveUserFromTaskUI case2UI = new US362RemoveUserFromTaskUI();
+				//add UI method
+				break;
+			case "3":
+				US365MarkTaskAsFinishedUI case3UI = new US365MarkTaskAsFinishedUI();
+				//add UI method
+				break;
+			case "4":
+				// ver se é suposto ter a cancel ou não
+				break;
+			case "B":
+				ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(this.user, this.project);
+				previousMenu.displayOptions();
+				break;
+			case "M":
+				MainMenuUI.mainMenu();
+				break;
+			case "E":
+				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
+				System.exit(0);
+				condition = false;
+				break;
+			default:
+				System.out.println("Please choose a valid option.");
+				System.out.println("");
+				PmTaskFunctionalitiesUI myAtualUIView = new PmTaskFunctionalitiesUI(this.taskID, this.project, this.user);
+				myAtualUIView.taskDataDisplay();
+				break;
+			}
+		}
+	}
+}
