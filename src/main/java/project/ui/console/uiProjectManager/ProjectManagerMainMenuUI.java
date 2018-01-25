@@ -21,11 +21,10 @@ import project.ui.console.uiProjectManager.taskLists.US375ProjectNotStartedTasks
 import project.ui.console.uiProjectManager.taskLists.US377ProjectCancelledTasks;
 import project.ui.console.uiProjectManager.taskLists.US380ProjectUnfinishedTasksWithExperiredDeadlineUI;
 
-
 public class ProjectManagerMainMenuUI {
 	private User projectManager;
 	private Project project;
-	
+
 	/**
 	 * Creates the UI
 	 * 
@@ -35,39 +34,50 @@ public class ProjectManagerMainMenuUI {
 		this.projectManager = user;
 		this.project = project;
 
-	}	
-	
+	}
+
 	public void displayOptions() {
-		
+
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
 		projectInfo.setProject();
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		System.out.println("———————————————————————————————————————————MENU PROJECT MANAGER——————————————————————————————————————————————————");
-		System.out.println("                               PROJECT " + projectInfo.printProjectNameInfo().toUpperCase() + " - " + "PROJECT MANAGER " + projectInfo.printProjectManagerInfo()); // OU projectManager.getName()
+		System.out.println(
+				"———————————————————————————————————————————MENU PROJECT MANAGER——————————————————————————————————————————————————");
+		System.out.println("                               Project " + projectInfo.printProjectNameInfo().toUpperCase()
+				+ " - " + "Project Manager " + projectInfo.printProjectManagerInfo()); // OU projectManager.getName()
 		System.out.println("");
-		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo() + "        " + "STATUS: " + projectInfo.printProjectStatusInfo());
+		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo() + "        " + "STATUS: "
+				+ projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
-		System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo() + "        " + "FINISH DATE: " + projectInfo.printProjectFinishDateInfo());
+		System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo() + "        " + "FINISH DATE: "
+				+ projectInfo.printProjectFinishDateInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
 		System.out.println("TASKS LIST:                                                                TEAM:");
-		
-		System.out.println("    [A1] - Unfinished                                                         [B1] - View Project Team");
-		System.out.println("    [A2] - Unfinished  w/ expired Finish Date or Deadline                     [B2] - Add Collaborator");
-		System.out.println("    [A3] - Finished by Decreasing order of Finish Date                        [B3] - Show Unassigned Collaborators");
+
+		System.out.println(
+				"    [A1] - Unfinished                                                         [B1] - View Project Team");
+		System.out.println(
+				"    [A2] - Unfinished  w/ expired Finish Date or Deadline                     [B2] - Add Collaborator");
+		System.out.println(
+				"    [A3] - Finished by Decreasing order of Finish Date                        [B3] - Show Unassigned Collaborators");
 		System.out.println("    [A4] - Not Started");
 		System.out.println("    [A5] - Not Assigned");
 		System.out.println("    [A6] - Cancelled");
 		System.out.println("    [A7] - All Tasks");
 		System.out.println("");
 		System.out.println("REQUESTS:                                                                  OTHERS:");
-		System.out.println("    [C1] - View Assignment Requests                                           [D1] - View Project Cost");
-		System.out.println("    [C2] - View Removal Requests                                              [D2] - Create Task");
-		System.out.println("                                                                              [D3] - Create Dependency");
+		System.out.println(
+				"    [C1] - View Assignment Requests                                           [D1] - View Project Cost");
+		System.out.println(
+				"    [C2] - View Removal Requests                                              [D2] - Create Task");
+		System.out.println(
+				"                                                                              [D3] - Create Dependency");
 		System.out.println("");
-		System.out.println("_________________________________________________________________________________________________________________");
+		System.out.println(
+				"_________________________________________________________________________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
 		System.out.println("[E] Exit \n");
@@ -84,7 +94,8 @@ public class ProjectManagerMainMenuUI {
 			optionA2.displayUnfinishedTasksWithExpiredDeadline(this.project, this.projectManager);
 			break;
 		case "A3":
-			US370ProjectFinishedTasksDecreasingOrderUI optionA3 = new US370ProjectFinishedTasksDecreasingOrderUI(this.project.getIdCode(), this.projectManager);
+			US370ProjectFinishedTasksDecreasingOrderUI optionA3 = new US370ProjectFinishedTasksDecreasingOrderUI(
+					this.project.getIdCode(), this.projectManager);
 			optionA3.projectDataDisplay();
 			break;
 		case "A4":
@@ -100,7 +111,7 @@ public class ProjectManagerMainMenuUI {
 			optionA6.displayCancelledTasksOfProject(this.project, this.projectManager);
 			break;
 		case "A7":
-			
+
 			break;
 		case "B1":
 			US355ViewProjectTeamAndThenRemoveCollaboratorUI optionB1 = new US355ViewProjectTeamAndThenRemoveCollaboratorUI();
@@ -111,14 +122,16 @@ public class ProjectManagerMainMenuUI {
 			optionB2.addCollaboratorToProjectTeam();
 			break;
 		case "B3":
-			
+
 			break;
 		case "C1":
-			US356ApproveOrCancelAssignmentRequestUI optionC1 = new US356ApproveOrCancelAssignmentRequestUI(this.projectManager, this.project);
+			US356ApproveOrCancelAssignmentRequestUI optionC1 = new US356ApproveOrCancelAssignmentRequestUI(
+					this.projectManager, this.project);
 			optionC1.displayAssignmentTaskRequests();
 			break;
 		case "C2":
-			US357ApproveOrCancelRemovalRequestUI optionC2 = new US357ApproveOrCancelRemovalRequestUI(this.projectManager, this.project);
+			US357ApproveOrCancelRemovalRequestUI optionC2 = new US357ApproveOrCancelRemovalRequestUI(
+					this.projectManager, this.project);
 			optionC2.displayRemovalTaskRequests();
 			break;
 		case "D1":
@@ -133,7 +146,6 @@ public class ProjectManagerMainMenuUI {
 			US342DefineDependenciesBetweenTasksUI optionD3 = new US342DefineDependenciesBetweenTasksUI(this.project);
 			optionD3.chooseProject();
 			break;
-
 
 		case "B":
 			CollectProjectsFromUserUI backUI = new CollectProjectsFromUserUI(this.projectManager);
