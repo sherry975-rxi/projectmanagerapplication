@@ -20,6 +20,7 @@ public class US377ProjectCancelledTasks {
 
 		this.project = project;
 		this.user = user;
+		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
 
@@ -27,7 +28,7 @@ public class US377ProjectCancelledTasks {
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
 		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
@@ -36,9 +37,9 @@ public class US377ProjectCancelledTasks {
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("     CANCELLED TASKS");
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 
 		US377CollectionOfCancelledTasksFromAProjectController controller = new US377CollectionOfCancelledTasksFromAProjectController(
 				project);
@@ -51,7 +52,7 @@ public class US377ProjectCancelledTasks {
 			listOfCancelledTasks.add(controller.splitStringByFirstSpace(taskInfo));
 		}
 
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
 		System.out.println("[E] Exit \n");

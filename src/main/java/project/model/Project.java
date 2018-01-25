@@ -466,18 +466,25 @@ public class Project {
 	 * 
 	 * @param collaboratorToRemoveFromProjectTeam
 	 *            Collaborator to remove from project
+	 * 
+	 * @return remove
 	 */
 
-	public void removeProjectCollaboratorFromProjectTeam(User collaboratorToRemoveFromProjectTeam) {
+	public boolean removeProjectCollaboratorFromProjectTeam(User collaboratorToRemoveFromProjectTeam) {
+		boolean remove = false;
 		for (ProjectCollaborator other : projectTeam) {
 			if (other.getUserFromProjectCollaborator().equals(collaboratorToRemoveFromProjectTeam)) {
+
 				other.setState(false);
+
 				for (Task otherTask : this.taskRepository.getAllTasksFromProjectCollaborator(other)) {
 					otherTask.removeProjectCollaboratorFromTask(other);
 				}
+				remove = true;
 			}
 
 		}
+		return remove;
 	}
 
 	/**

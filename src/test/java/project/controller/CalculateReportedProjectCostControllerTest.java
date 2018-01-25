@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -220,6 +221,15 @@ public class CalculateReportedProjectCostControllerTest {
 		controllerCost = new CalculateReportedProjectCostController();
 		assertEquals(reportedCost, controllerCost.calculeReportedCostOfEachTaskController(project));
 
+	}
+
+	@Test
+	public void testGetTaskId() {
+		// Creates a CalculateReportedProjectCostController
+		controllerCost = new CalculateReportedProjectCostController();
+
+		assertTrue("0.1".equals(controllerCost.getTaskId(project).get(0)));
+		assertTrue("0.2".equals(controllerCost.getTaskId(project).get(1)));
 	}
 
 }
