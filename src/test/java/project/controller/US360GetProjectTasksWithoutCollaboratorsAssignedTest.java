@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
@@ -143,6 +144,12 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedTest {
 		task4.addProjectCollaboratorToTask(projCollab2);
 
 		assertEquals(4, tasksFiltersController.getProjectNotAssignedTaskList(project1).size());
+	}
+
+	@Test
+	public final void testSplitStringByFirstSpace() {
+		String input = "Test me master!";
+		assertTrue("Test".equals(tasksFiltersController.splitStringByFirstSpace(input)));
 	}
 
 }

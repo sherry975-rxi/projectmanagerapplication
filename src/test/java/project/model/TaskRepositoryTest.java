@@ -1403,4 +1403,38 @@ public class TaskRepositoryTest {
 		assertEquals(cancelledTaskToCompare, taskRepository.getCancelledTasks());
 
 	}
+
+	/**
+	 * this test verify if the method getTaskCost
+	 * 
+	 */
+	@Test
+	public void getTaskCostsTest() {
+
+		// Adds 3 tasks to the TaskRepository
+		taskRepository.addProjectTask(testTask);
+		taskRepository.addProjectTask(testTask2);
+		taskRepository.addProjectTask(testTask3);
+
+		// creates a TaskReport (TaskWorker as an indexWork of 2)
+		testTask.createReport(taskWorker1);
+
+		// Updates report Time to 30
+		testTask.changeReportedTime(30, "daniel@gmail.com");
+
+		// Creates a new list of ReporCcost
+		List<String> reportedCost = new ArrayList<>();
+		double reportCost = 60;
+
+		/*
+		 * Adds the value of TaskWorker*Time spend (60) Other tasks have no reports
+		 */
+
+		reportedCost.add((String.valueOf(reportCost)));
+		reportedCost.add("0.0");
+		reportedCost.add("0.0");
+
+		assertEquals(project.getTaskRepository().getReportedCostOfEachTask(), reportedCost);
+
+	}
 }

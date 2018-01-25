@@ -16,6 +16,7 @@ import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
 import project.model.taskStateInterface.Planned;
+import project.model.taskStateInterface.StandBy;
 import project.model.taskStateInterface.TaskStateInterface;
 
 public class US356ManageAssignmentRequestControllerTest {
@@ -36,8 +37,8 @@ public class US356ManageAssignmentRequestControllerTest {
 
 	String taskDescription;
 	String taskIDnumber;
-	Task taskWithNoTeam;
-	TaskStateInterface testingTaskState;
+	Task taskWithNoTeam, standByTask;
+	TaskStateInterface testingTaskState, testingTaskStateB;
 
 	US356ManageAssigmentRequestController assignmentRequestsController;
 
@@ -86,6 +87,14 @@ public class US356ManageAssignmentRequestControllerTest {
 		testProject.createTaskAssignementRequest(teamTesterCollaborator, taskWithNoTeam);
 		assignmentRequestsController = new US356ManageAssigmentRequestController(testProject);
 
+		String taskDescriptionB = "do blow up rocket!";
+		standByTask = testProject.getTaskRepository().createTask(taskDescriptionB, 2000, estimatedStartDate,
+				estimatedTaskDeadline, 200000);
+
+		testingTaskStateB = new StandBy(standByTask);
+		standByTask.setTaskState(testingTaskStateB);
+
+		testProject.createTaskAssignementRequest(teamTesterCollaborator, standByTask);
 	}
 
 	@After
@@ -125,8 +134,8 @@ public class US356ManageAssignmentRequestControllerTest {
 		String expectedAssignmentRequest = teamTesterName + "\n" + "collab@mail.mail" + "\n" + taskIDnumber + "\n"
 				+ "dont blow up rocket";
 
-		assertEquals(testProject.getAssignmentRequestsList().size(), 1);
-		assertEquals(assignmentRequestsController.showAllAssignmentRequests().size(), 1);
+		assertEquals(testProject.getAssignmentRequestsList().size(), 2);
+		assertEquals(assignmentRequestsController.showAllAssignmentRequests().size(), 2);
 
 		assertTrue(assignmentRequestsController.showAllAssignmentRequests().get(0).equals(expectedAssignmentRequest));
 
@@ -139,8 +148,18 @@ public class US356ManageAssignmentRequestControllerTest {
 	public void acceptAssignmentRequestTest() {
 
 		// first, confirms that there is only one assignment request in the list
+		assertEquals(testProject.getAssignmentRequestsList().size(), 2);
+
+		// Sets the controller request
+		assignmentRequestsController.setSelectedAdditionRequest(0);
+
+		// accepts the requests
+		assignmentRequestsController.approveAssignmentRequest();
+
+		// first, confirms that the list is now empty
 		assertEquals(testProject.getAssignmentRequestsList().size(), 1);
 
+		// Now we test the same for a StandBy Task
 		// Sets the controller request
 		assignmentRequestsController.setSelectedAdditionRequest(0);
 
@@ -188,7 +207,7 @@ public class US356ManageAssignmentRequestControllerTest {
 
 		// first, confirms if the requesting collaborator isn't in the team, and at
 		// least one assignment request exists
-		assertEquals(testProject.getAssignmentRequestsList().size(), 1);
+		assertEquals(testProject.getAssignmentRequestsList().size(), 2);
 		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
 		assignmentRequestsController.setSelectedAdditionRequest(0);
 		;
@@ -198,7 +217,7 @@ public class US356ManageAssignmentRequestControllerTest {
 		// team, and the request was deleted from the list
 		assertTrue(assignmentRequestsController.rejectAssignmentRequest());
 		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
-		assertEquals(testProject.getAssignmentRequestsList().size(), 0);
+		assertEquals(testProject.getAssignmentRequestsList().size(), 1);
 
 	}
 }

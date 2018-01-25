@@ -9,9 +9,10 @@ public class AdminMenuUI {
 	User adminLoggedIn;
 	User selectedUser;
 
-	String options = "[1] - view all users \n" + "[2] - search users by profile or email \n"
-			+ "[3] - manage selected user profile \n" + "[4] - manage selected user state\n"
-			+ "[E] - exit to main menu";
+	String options = "[1] - View all users \n" + "[2] - Search users by profile or email \n"
+			+ "[3] - Manage selected user profile \n" + "[4] - Manage selected user state\n"
+			+ "______________________________________________\n" + "[B] - Return to main menu\n"
+			+ "[E] - Exit from application";
 
 	String command;
 
@@ -25,15 +26,18 @@ public class AdminMenuUI {
 		boolean cycle = true;
 		while (cycle) {
 
+			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName());
+			System.out.println("______________________________________________");
+
 			if (selectedUser != null) {
-				System.out.println("User selected!");
+				System.out.println("> User selected!");
 				System.out.println(selectedUser.getIdNumber() + ": " + selectedUser.getName() + "("
 						+ selectedUser.getEmail() + ")");
 				System.out.println("(User management commands enabled!)");
 				System.out.println("");
 			}
 
-			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName() + ". Please choose a command:");
+			System.out.println("Please choose a command:");
 			System.out.println(options);
 			System.out.println("");
 
@@ -67,10 +71,15 @@ public class AdminMenuUI {
 				}
 				break;
 
-			case "e":
+			case "b":
 				System.out.println("Returning to main menu...");
 				System.out.println("");
 				cycle = false;
+				break;
+
+			case "e":
+				System.out.println("--YOU HAVE EXITED FROM APPLICATION--");
+				System.exit(0);
 				break;
 
 			default:

@@ -2,7 +2,9 @@ package project.controller;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -190,6 +192,33 @@ public class CalculateReportedProjectCostControllerTest {
 
 		// Compares the 2 values
 		assertEquals(totalCost, controllerCost.calculateReportedProjectCostController(project), 0.01);
+
+	}
+
+	@Test
+	public void getReportedTimeOfAllTasks() {
+		// Adds users to the respective tasks
+		testTask.addTaskCollaboratorToTask(taskWorkerDaniel);
+		testTask.addTaskCollaboratorToTask(taskWorkerJonny);
+		testTask2.addTaskCollaboratorToTask(taskWorkerMike);
+		testTask2.addTaskCollaboratorToTask(taskWorkerAna);
+		// Task worker sets the hours spent on the task
+		testTask.createReport(taskWorkerDaniel);
+		testTask.getReports().get(0).setReportedTime(5);
+		testTask.createReport(taskWorkerJonny);
+		testTask.getReports().get(1).setReportedTime(10);
+
+		// Creates a new list of ReporCcost
+		List<String> reportedCost = new ArrayList<>();
+
+		// Task1 has a report of 5*10 + 10*20
+		reportedCost.add("250.0");
+		// Task2 has no reports
+		reportedCost.add("0.0");
+
+		// Creates a CalculateReportedProjectCostController
+		controllerCost = new CalculateReportedProjectCostController();
+		assertEquals(reportedCost, controllerCost.calculeReportedCostOfEachTaskController(project));
 
 	}
 
