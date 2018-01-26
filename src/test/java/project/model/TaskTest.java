@@ -16,7 +16,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.model.taskStateInterface.Cancelled;
+import project.model.taskStateInterface.Created;
 import project.model.taskStateInterface.Finished;
+import project.model.taskStateInterface.OnGoing;
+import project.model.taskStateInterface.Ready;
 import project.model.taskStateInterface.StandBy;
 
 /**
@@ -748,6 +751,145 @@ public class TaskTest {
 	}
 
 	@Test
+	public void isCreatingTaskDependencyValid() {
+
+		OnGoing onGoing1 = new OnGoing(testTask2);
+		Finished finished1 = new Finished(testTask2);
+		Ready ready1 = new Ready(testTask2);
+		Cancelled cancelled1 = new Cancelled(testTask2);
+		StandBy standBy1 = new StandBy(testTask2);
+		Created created1 = new Created(testTask2);
+
+		Created created2 = new Created(testTask2);
+		Cancelled cancelled2 = new Cancelled(testTask);
+
+		testTask2.setTaskState(created2);
+
+		// Asserts false, because both tasks are the same
+		assertFalse(testTask.isCreatingTaskDependencyValid(testTask));
+
+		/*
+		 * Its not possible to create a task dependency with a task without task
+		 * deadline
+		 */
+
+		testTask2.setTaskDeadline(null);
+		assertFalse(testTask.isCreatingTaskDependencyValid(testTask2));
+
+		// Sets a task deadline
+		testTask2.setTaskDeadline(Calendar.getInstance());
+
+		// Sets testTask2 to OnGoing
+		testTask2.setTaskState(onGoing1);
+
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * onGoing
+		 */
+		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+
+		// Sets testTask2 to Cancelled
+		testTask2.setTaskState(cancelled1);
+
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Cancelled
+		 */
+		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+
+		// Sets testTask2 to Ready
+		testTask2.setTaskState(ready1);
+
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Ready
+		 */
+		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+
+		// Sets testTask2 to Cancelled
+		testTask2.setTaskState(finished1);
+
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Cancelled
+		 */
+		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+
+		// Sets testTask2 to StandBy
+		testTask2.setTaskState(standBy1);
+
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Standby
+		 */
+		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+
+		/*
+		 * Sets a task deadline to testTask
+		 */
+		testTask.setTaskDeadline(Calendar.getInstance());
+
+		/*
+		 * Changes testTaskState to "CREATED"
+		 */
+		testTask2.setTaskState(created1);
+
+		/*
+		 * Its possible to create task dependency
+		 */
+		assertTrue(testTask2.isCreatingTaskDependencyValid(testTask));
+
+		// Sets mother task to "CANCELLED"
+		testTask.setTaskState(cancelled2);
+
+		/*
+		 * It's not possible to create a task dependency with a mother task set to
+		 * Cancelled
+		 */
+		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+
+	}
+
+	@Test
+	public void createRemoveTaskDependencyTest() {
+
+		OnGoing onGoing1 = new OnGoing(testTask2);
+		Finished finished1 = new Finished(testTask2);
+		Ready ready1 = new Ready(testTask2);
+		Cancelled cancelled1 = new Cancelled(testTask2);
+		StandBy standBy1 = new StandBy(testTask2);
+		Created created1 = new Created(testTask2);
+
+		Created created2 = new Created(testTask2);
+		Cancelled cancelled2 = new Cancelled(testTask);
+
+		testTask2.setTaskState(created2);
+
+		// Sets a task deadline
+		testTask2.setTaskDeadline(Calendar.getInstance());
+
+		// Checks if its possible to remove a task dependency
+		assertTrue(testTask.createTaskDependence(testTask2, 10));
+
+		/*
+		 * It's not possible to create task dependency because testTask1 doesn't have
+		 * the requirements to be a mother task
+		 */
+		assertFalse(testTask2.createTaskDependence(testTask, 10));
+
+		/*
+		 * Checks if its possible to remove the task dependency
+		 */
+		assertTrue(testTask.removeTaskDependence(testTask2));
+
+		/*
+		 * Checks if its possible to remove the task dependency It won't be because
+		 * dependency doesn't exist anymore
+		 */
+		testTask.removeTaskDependence(testTask2);
+
+		assertFalse(testTask.removeTaskDependence(testTask2));
+	}
 
 	public void testClearCancelDate() {
 

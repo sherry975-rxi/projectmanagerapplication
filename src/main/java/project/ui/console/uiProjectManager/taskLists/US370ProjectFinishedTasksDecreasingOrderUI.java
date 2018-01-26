@@ -1,11 +1,13 @@
 package project.ui.console.uiProjectManager.taskLists;
 
+import java.util.List;
 import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US370GetProjectFinishedTaskListController;
 import project.model.Project;
+import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.uiCollaborator.CollectProjectsFromUserUI;
@@ -50,10 +52,11 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 		System.out.println("               FINISHED TASKS                 ");
 		System.out.println("______________________________________________");
 
-		for (int i = 0; i < projectFinishedTaskList.getProjectFinishedTaskList(this.proj).size(); i++) {
-			System.out.println("["
-					+ projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj).get(i).getTaskID() + "] "
-					+ projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj).get(i).getDescription());
+		List<Task> finishedTasksDecreasingOrder = projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj);
+
+		for (int i = 0; i < finishedTasksDecreasingOrder.size(); i++) {
+			System.out.println("[" + finishedTasksDecreasingOrder.get(i).getTaskID() + "] "
+					+ finishedTasksDecreasingOrder.get(i).getDescription());
 		}
 
 		System.out.println("To roll back a task from Finish back to Ongoing, choose the task ID number.");
