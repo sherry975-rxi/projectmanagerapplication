@@ -127,7 +127,7 @@ public class CollectProjectsFromUserControllerTest {
 
 		// create controller
 
-		CollectProjectsFromUserController controller2 = new CollectProjectsFromUserController(this.userAdmin);
+		CollectProjectsFromUserController controller2 = new CollectProjectsFromUserController(userAdmin);
 
 		// create list with cancelled task to compare
 		List<Project> projectsFromUser = new ArrayList<Project>();
@@ -155,6 +155,14 @@ public class CollectProjectsFromUserControllerTest {
 		projectsToString.add("[1] name3 - PM ");
 		projectsToString.add("[2] name1 - PM ");
 
-		assertEquals(projectsToString, controller3.getProjectsFromUserAndProjectManager());
+		CollectProjectsFromUserController controller4 = new CollectProjectsFromUserController(this.user1);
+
+		// create list with cancelled task to compare
+		List<String> projectsToString2 = new ArrayList<String>();
+
+		projectsToString2.add("[1] name3");
+		projectsToString2.add("[2] name1");
+		assertEquals(projectsToString2, controller4.getProjectsFromUserAndProjectManager());
+
 	}
 }

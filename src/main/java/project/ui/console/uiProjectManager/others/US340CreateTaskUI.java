@@ -83,27 +83,42 @@ public class US340CreateTaskUI {
 		String description = scannerInput.nextLine();
 
 		System.out.println("Enter estimated task effort: ");
-		int estimatedTaskEffort = scannerInput.nextInt();
-				
-		System.out.println("Enter estimated task start date: ");
-		Calendar estimatedTaskStartDate = Calendar.getInstance();
-		System.out.println(estimatedTaskStartDate.toString());
-	   
-	 	System.out.println("Enter task deadline: ");
-	 	Calendar taskDeadline = Calendar.getInstance();
-	 	System.out.println(taskDeadline.toString());
-
-		System.out.println("Enter estimated cost: ");
-		int estimatedCost = scannerInput.nextInt();
-		System.out.println();
+		Scanner estimatedTaskEffort = new Scanner(System.in);
+		int number;
+		do {
+		   System.out.println("Please enter a positive number!");
+		   while (!estimatedTaskEffort.hasNextInt()) {
+		       System.out.println("That's not a number!");
+		       estimatedTaskEffort.next(); // this is important!
+		   }
+		   number = estimatedTaskEffort.nextInt();
+		   estimatedTaskEffort.nextLine();
+		} while (number <= 0);
+		System.out.println("Thank you! Got " + number);
+			
 		
-		System.out.println("Confirm if your data is correct: ");
+		System.out.println("Enter estimated cost: ");
+		Scanner estimatedCost = new Scanner(System.in);
+		int cost;
+		do {
+			 System.out.println("Please enter a positive number!");
+			   while (!estimatedCost.hasNextInt()) {
+			       System.out.println("That's not a number!");
+			       estimatedCost.next(); // this is important!
+			   }
+			   cost = estimatedCost.nextInt();
+			   estimatedCost.nextLine();
+		} while (cost <= 0);
+		System.out.println("Thank you! Got " + cost);
+			
+		
 		System.out.println();
+		System.out.println("You added the following data for the task: ");
 		System.out.println("             " + "[1] Task description: " + description);
-		System.out.println("             " + "[2] Estimated task effort: " + estimatedTaskEffort);
-		System.out.println("             " + "[3] Estimated task start date: " + estimatedTaskStartDate);
-		System.out.println("             " + "[4] Task deadline: " + taskDeadline);
-		System.out.println("             " + "[5] Estimated Cost: " + estimatedCost);
+		System.out.println("             " + "[2] Estimated task effort: " + number);
+		//System.out.println("             " + "[3] Estimated task start date: " + estimatedTaskStartDate);
+		//System.out.println("             " + "[4] Task deadline: " + taskDeadline);
+		System.out.println("             " + "[5] Estimated Cost: " + cost);
 		
 		System.out.println();
 		System.out.println("Is your data correct? (y to confirm; n to deny)");
@@ -111,7 +126,7 @@ public class US340CreateTaskUI {
 		String confirm = scannerInput.nextLine();
 
 		if ("y".equalsIgnoreCase(confirm)) {
-			createTaskController.addTask(description, estimatedTaskEffort, estimatedTaskStartDate, taskDeadline, estimatedCost);
+			createTaskController.addTask(description, number, cost);
 			System.out.println();
 			System.out.println("Task was successfully added to this project.");
 			System.out.println();

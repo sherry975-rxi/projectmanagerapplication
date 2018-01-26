@@ -80,7 +80,7 @@ public class US340CreateTaskControllerTest {
 		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 0);
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = testControl.addTask("Test dis agen pls", 10, Calendar.getInstance(), Calendar.getInstance(), 10);
+		testTask = testControl.addTask("Test dis agen pls", 10, 10);
 		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 1);
 
 		// asserts the added task matches the added task

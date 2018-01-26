@@ -1,8 +1,5 @@
 package project.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 
 import project.model.TaskRepository;
 import project.model.Project;
@@ -37,8 +34,8 @@ public class US340CreateTaskController {
 	 * @param estimatedCost
 	 * @return the added task
 	 */
-	public Task addTask(String taskDescription, int estimatedTaskEffort, Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedCost) {
-		Task newTask = taskRepository.createTask(taskDescription, estimatedTaskEffort, estimatedTaskStartDate, taskDeadline, estimatedCost);
+	public Task addTask(String description, int estimatedTaskEffort, int estimatedCost) {
+		Task newTask = taskRepository.createTask(description);
 		
 		taskRepository.addProjectTask(newTask);
 
