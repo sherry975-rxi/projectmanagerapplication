@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 	Calendar startDateTest;
+	US362RemoveTaskFromProjectCollaborator controller;
 
 	@Before
 	public void setUp() {
@@ -98,6 +100,9 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		project.addProjectCollaboratorToProjectTeam(collab1);
 		project2.addProjectCollaboratorToProjectTeam(collab1);
 
+		// adds user to task
+		testTask.addProjectCollaboratorToTask(collab1);
+
 		// create a estimated Task Start Date
 		Calendar startDateTest = Calendar.getInstance();
 
@@ -122,6 +127,9 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		taskExpiredDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
+		// Instantiates the controller
+		controller = new US362RemoveTaskFromProjectCollaborator(project, testTask);
+
 	}
 
 	@After
@@ -140,54 +148,51 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		startDateTest = null;
 	}
 
+	/**
+	 * Tests the getProjectCollaboratorsFromTask method
+	 */
 	@Test
-	public final void testGetTasksFromAProject() {
+	public void testGetProjectCollaboratorsFromTask() {
 
-		// create controller
-		US362RemoveTaskFromProjectCollaborator us362Controller = new US362RemoveTaskFromProjectCollaborator(
-				project.getIdCode());
+		String info = "Name: " + user1.getName() + "\n" + "Email: " + user1.getEmail() + "\n" + "Function: "
+				+ user1.getFunction();
 
-		// create list with cancelled task to compare
-		List<Task> taskFromProject = new ArrayList<Task>();
+		List<String> expResult = new ArrayList<>();
+		expResult.add(info);
 
-		// add task to the list
-		taskFromProject.add(testTask);
-		taskFromProject.add(testTask2);
-		taskFromProject.add(testTask3);
+		assertEquals(expResult, controller.getProjectCollaboratorsFromTask());
+	}
 
-		assertEquals(taskFromProject, us362Controller.getTasksFromAProject());
+	/**
+	 * Tests the getProjectCollaborator and setProjectCollaborator methods
+	 */
+	@Test
+	public void testSetandGetProjectCollaborator() {
+
+		// Asserts that the project collaborator is null
+		assertEquals(controller.getProjectCollaborator(), null);
+
+		// sets the projectCollaborator
+		controller.setProjectCollaborator(0);
+
+		// Asserts that the project collaborator is not equal to collab1
+		assertEquals(controller.getProjectCollaborator(), collab1);
 	}
 
 	@Test
-	public final void testGetTaskCollaboratorsFromTask() {
+	public void getRemoveProjectCollaboratorFromTask() {
 
-		// add task collaborator to task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
+		TaskCollaborator taskCollaborator = testTask.getTaskTeam().get(0);
 
-		// create controller
-		US362RemoveTaskFromProjectCollaborator us362Controller = new US362RemoveTaskFromProjectCollaborator(
-				project.getIdCode());
+		// Asserts that the task collaborator is active in the task
+		assertTrue(taskCollaborator.isTaskCollaboratorActiveInTask());
 
-		// create list with cancelled task to compare
-		List<TaskCollaborator> taskCollaborators = new ArrayList<TaskCollaborator>();
+		// Removes collaborator from the task
+		controller.setProjectCollaborator(0);
+		controller.removeCollaboratorFromTask();
 
-		// add task to the list
-		taskCollaborators.add(taskWorker1);
-
-		assertEquals(taskCollaborators, us362Controller.getTaskCollaboratorsFromTask(testTask.getTaskID()));
-	}
-
-	@Test
-	public final void testRemoveCollaboratorFromTask() {
-
-		// add task collaborator to task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-
-		// create controller
-		US362RemoveTaskFromProjectCollaborator us362Controller = new US362RemoveTaskFromProjectCollaborator(
-				project.getIdCode());
-
-		assertTrue(us362Controller.removeCollaboratorFromTask(taskWorker1, testTask.getTaskID()));
+		// Asserts that the task collaborator is not active in task
+		assertFalse(taskCollaborator.isTaskCollaboratorActiveInTask());
 
 	}
 
