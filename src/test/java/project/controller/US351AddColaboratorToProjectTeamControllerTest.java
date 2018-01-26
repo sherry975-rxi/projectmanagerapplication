@@ -80,18 +80,9 @@ public class US351AddColaboratorToProjectTeamControllerTest {
 	}
 
 	@Test
-	public final void testGetAllProjects() {
-		assertEquals(1, controller.getAllProjects().size());
-	}
-
-	@Test
-	public final void testSearchProjectByID() {
-		assertEquals(activeProj, controller.searchProjectByID(1));
-	}
-
-	@Test
 	public final void testSearchUserByID() {
 		assertEquals(activeUser, controller.searchUserByID("1234"));
+		assertEquals(null, controller.searchUserByID("1264"));
 	}
 
 }

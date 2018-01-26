@@ -9,7 +9,9 @@ public class US216AverageTimeSpentByTaskLastMonthUI {
 
 	User user;
 
-	public void displayAveregeTimeSpentByTaskLastMonth() {
+	public void displayAveregeTimeSpentByTaskLastMonth(User toViewTasks) {
+
+		this.user = toViewTasks;
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();
