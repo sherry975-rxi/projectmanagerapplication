@@ -116,7 +116,7 @@ public class ProjectManagerMainMenuUI {
 			break;
 		case "B2":
 			US351AddCollaboratorToProjectTeamUI optionB2 = new US351AddCollaboratorToProjectTeamUI();
-			optionB2.addCollaboratorToProjectTeam();
+			optionB2.addCollaboratorToProjectTeam(project);
 			break;
 		case "B3":
 			US360ViewCollaboratorsWithoutTasksUI optionB3 = new US360ViewCollaboratorsWithoutTasksUI(this.project,
