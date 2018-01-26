@@ -1,0 +1,43 @@
+package project.dto;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+public class userDTOTests {
+
+	userDTO user;
+
+	@Before
+	public void setUp() {
+
+		user = new userDTO("name", "email", "idNumber", "function", "phone", "password", "street", "zipCode", "city",
+				"district", "country");
+	}
+
+	@After
+	public void tearDown() {
+		user = null;
+	}
+
+	/**
+	 * Tests the getters of the userDTO class
+	 */
+	@Test
+	public void testGetters() {
+
+		assertEquals("name", user.getName());
+		assertEquals("email", user.getEmail());
+		assertEquals("idNumber", user.getIdNumber());
+		assertEquals("function", user.getFunction());
+		assertEquals("phone", user.getPhone());
+		assertEquals("password", user.getPassword());
+		assertEquals("street", user.getStreet());
+		assertEquals("zipCode", user.getZipCode());
+		assertEquals("city", user.getCity());
+		assertEquals("district", user.getDistrict());
+		assertEquals("country", user.getCountry());
+	}
+}
