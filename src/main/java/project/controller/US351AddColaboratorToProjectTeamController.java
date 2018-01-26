@@ -32,22 +32,14 @@ public class US351AddColaboratorToProjectTeamController {
 		return Company.getTheInstance().getUsersRepository().getAllActiveCollaboratorsFromRepository();
 	}
 
-	/**
-	 * Returns all the available projects
-	 *
-	 * @return List with all the available projects
-	 */
-	public List<Project> getAllProjects() {
-		return Company.getTheInstance().getProjectsRepository().getActiveProjects();
-	}
+	public boolean isUserAlreadyInProject(User user, Project project) {
 
-	public Project searchProjectByID(int id) {
-		for (Project other : this.getAllProjects()) {
-			if (id == other.getIdCode()) {
-				return other;
-			}
+		boolean result = false;
+		if (user != null) {
+			result = project.isUserActiveInProject(user);
 		}
-		return null;
+		return result;
+
 	}
 
 	public User searchUserByID(String id) {
