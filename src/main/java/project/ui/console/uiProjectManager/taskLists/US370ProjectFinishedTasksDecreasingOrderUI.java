@@ -10,8 +10,8 @@ import project.model.Project;
 import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.uiCollaborator.CollectProjectsFromUserUI;
 import project.ui.console.uiCollaborator.ProjectViewMenuUI;
+import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
 
 public class US370ProjectFinishedTasksDecreasingOrderUI {
 
@@ -68,8 +68,8 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 		String choice = scannerInput.nextLine().toUpperCase();
 		switch (choice) {
 		case "B":
-			CollectProjectsFromUserUI previousMenu = new CollectProjectsFromUserUI(user);
-			previousMenu.collectProjectsFromUser();
+			ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(user, proj);
+			previousMenu.displayOptions();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
