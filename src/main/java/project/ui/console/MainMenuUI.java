@@ -36,6 +36,8 @@ public class MainMenuUI {
 	private static Task taskGP2;
 	private static Task taskGP3;
 	private static Task taskGP4;
+	private static Task taskGP5;
+	private static Task taskGP6;
 	private static Task taskHB1;
 	private static Task taskHB2;
 	private static Task taskHB3;
@@ -149,11 +151,17 @@ public class MainMenuUI {
 		projectGP.getTaskRepository().addProjectTask(taskGP2);
 
 		// Instantiates a task
-		taskGP3 = projectGP.getTaskRepository().createTask("Fazer refator");
+		taskGP3 = projectGP.getTaskRepository().createTask("Fazer refatoração.");
 		projectGP.getTaskRepository().addProjectTask(taskGP3);
+		taskGP5 = projectGP.getTaskRepository().createTask("Adicionar colaboradores às tarefas planeadas.");
+		projectGP.getTaskRepository().addProjectTask(taskGP5);
+		taskGP6 = projectGP.getTaskRepository().createTask("Criar tarefas.");
+		projectGP.getTaskRepository().addProjectTask(taskGP6);
 		// Creates a new taksCollaborator
 		tWorkerATirapicos = new TaskCollaborator(projcollabATirapicos);
-		// necessary to pass from "Created" to "Planned"
+
+		// taskGP#3 changes to "Finished"
+		// changes from "Created" to "Planned"
 		startDate = Calendar.getInstance();
 		startDate.add(Calendar.MONTH, -1);
 		taskGP3.setEstimatedTaskStartDate(startDate);
@@ -176,6 +184,39 @@ public class MainMenuUI {
 		taskGP3.getTaskState().changeToFinished();
 		// Adds the taskCollaborator to taskGP3
 		taskGP3.addTaskCollaboratorToTask(tWorkerATirapicos);
+
+		// taskGP#5 changes to finished
+		// changes from "Created" to "Planned"
+		Calendar estimatstartDate2 = Calendar.getInstance();
+		estimatstartDate2.add(Calendar.YEAR, -1);
+		estimatstartDate2.add(Calendar.MONTH, -3);
+		estimatstartDate2.add(Calendar.DAY_OF_MONTH, 0);
+		taskGP5.setEstimatedTaskStartDate(estimatstartDate2);
+		Calendar finishDate2 = Calendar.getInstance();
+		finishDate2.add(Calendar.YEAR, -1);
+		finishDate2.add(Calendar.MONTH, -3);
+		finishDate2.add(Calendar.DAY_OF_MONTH, 6);
+		taskGP5.setTaskDeadline(finishDate2);
+		taskGP5.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskGP5.addProjectCollaboratorToTask(projcollabJSilva);
+		taskGP5.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskGP5.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar startDate2 = Calendar.getInstance();
+		startDate2.add(Calendar.YEAR, -1);
+		startDate2.add(Calendar.MONTH, -3);
+		startDate2.add(Calendar.DAY_OF_MONTH, 1);
+		taskGP5.setStartDate(startDate2);
+		taskGP5.getTaskState().changeToOnGoing();
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate2 = Calendar.getInstance();
+		testDate2.add(Calendar.YEAR, 0);
+		testDate2.add(Calendar.MONTH, -1);
+		testDate2.add(Calendar.DAY_OF_MONTH, 2);
+		taskGP5.setFinishDate(testDate2);
+		taskGP5.getTaskState().changeToFinished();
 
 		// Creates a taskGP4 and sets it to cancelled
 		taskGP4 = projectGP.getTaskRepository().createTask("Cancelled Task");
@@ -219,12 +260,10 @@ public class MainMenuUI {
 		// Task 3.3 (taskHB3) set to assigned
 		// necessary to pass from "Created" to "Planned"
 		Calendar estimatedStartDate = Calendar.getInstance();
-		estimatedStartDate.add(Calendar.YEAR, 2018);
 		estimatedStartDate.add(Calendar.MONTH, -1);
 		estimatedStartDate.add(Calendar.DAY_OF_MONTH, 5);
 		taskHB3.setEstimatedTaskStartDate(estimatedStartDate);
 		Calendar estimatedFinishDate1 = Calendar.getInstance();
-		estimatedFinishDate1.add(Calendar.YEAR, 2018);
 		estimatedFinishDate1.add(Calendar.MONTH, -1);
 		estimatedFinishDate1.add(Calendar.DAY_OF_MONTH, 6);
 		taskHB3.setTaskDeadline(estimatedFinishDate1);
@@ -236,12 +275,10 @@ public class MainMenuUI {
 		// Task 3.4 (taskHB4) set to ready
 		// necessary to pass from "Created" to "Planned"
 		Calendar estimatedStartDate2 = Calendar.getInstance();
-		estimatedStartDate2.add(Calendar.YEAR, 2018);
 		estimatedStartDate2.add(Calendar.MONTH, -1);
 		estimatedStartDate2.add(Calendar.DAY_OF_MONTH, 6);
 		taskHB4.setEstimatedTaskStartDate(estimatedStartDate2);
 		Calendar estimatedFinishDate2 = Calendar.getInstance();
-		estimatedFinishDate2.add(Calendar.YEAR, 2018);
 		estimatedFinishDate2.add(Calendar.MONTH, -1);
 		estimatedFinishDate2.add(Calendar.DAY_OF_MONTH, 7);
 		taskHB4.setTaskDeadline(estimatedFinishDate2);
@@ -272,13 +309,11 @@ public class MainMenuUI {
 
 		// Task 3.6 (taskHB6) set to finished
 		Calendar estimatedStartDate4 = Calendar.getInstance();
-		estimatedStartDate4.add(Calendar.YEAR, 2018);
 		estimatedStartDate4.add(Calendar.MONTH, -1);
 		estimatedStartDate4.add(Calendar.DAY_OF_MONTH, 6);
 		taskHB6.setEstimatedTaskStartDate(estimatedStartDate4);
 		Calendar estimatedFinishDate4 = Calendar.getInstance();
-		estimatedFinishDate4.add(Calendar.YEAR, 2018);
-		estimatedFinishDate4.add(Calendar.MONTH, -1);
+		estimatedFinishDate4.add(Calendar.MONTH, -3);
 		estimatedFinishDate4.add(Calendar.DAY_OF_MONTH, 17);
 		taskHB6.setTaskDeadline(estimatedFinishDate4);
 		taskHB6.getTaskState().changeToPlanned();
@@ -292,8 +327,7 @@ public class MainMenuUI {
 		taskHB6.getTaskState().changeToOnGoing();
 		// necessary to pass from "OnGoing" to "Finished"
 		Calendar finishDate1 = Calendar.getInstance();
-		finishDate1.add(Calendar.YEAR, 2018);
-		finishDate1.add(Calendar.MONTH, -1);
+		finishDate1.add(Calendar.MONTH, 0);
 		finishDate1.add(Calendar.DAY_OF_MONTH, 13);
 		taskHB6.setFinishDate(finishDate1);
 		taskHB6.getTaskState().changeToFinished();
@@ -325,7 +359,6 @@ public class MainMenuUI {
 		taskHB8.getTaskState().changeToOnGoing();
 		// necessary to pass from "OnGoing" to "Finished"
 		Calendar cancelDate = Calendar.getInstance();
-		cancelDate.add(Calendar.YEAR, 2018);
 		cancelDate.add(Calendar.MONTH, -1);
 		cancelDate.add(Calendar.DAY_OF_MONTH, 8);
 		taskHB8.setFinishDate(cancelDate);
