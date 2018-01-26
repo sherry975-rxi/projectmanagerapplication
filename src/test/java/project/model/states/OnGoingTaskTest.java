@@ -388,6 +388,12 @@ public class OnGoingTaskTest {
 		String stateToCompare = "Cancelled";
 
 		/*
+		 * Sets a cancel date for testTask1
+		 */
+
+		task1.setCancelDate();
+
+		/*
 		 * Tries to change to state "Cancelled". State won't change because
 		 * ProjectCollaborators are active in the project
 		 */
