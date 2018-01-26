@@ -67,7 +67,7 @@ public class PmTaskFunctionalitiesUI {
 				break;
 			case "3":
 				US365MarkTaskAsFinishedUI case3UI = new US365MarkTaskAsFinishedUI();
-				// add UI method
+				case3UI.markTaskAsFinished(taskID, project);
 				break;
 			case "4":
 				// ver se é suposto ter a cancel ou não
