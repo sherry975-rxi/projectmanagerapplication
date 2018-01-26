@@ -96,7 +96,7 @@ public class ProjectManagerMainMenuUI {
 			break;
 		case "A3":
 			US370ProjectFinishedTasksDecreasingOrderUI optionA3 = new US370ProjectFinishedTasksDecreasingOrderUI(
-					this.project.getIdCode(), this.projectManager);
+					this.project, this.projectManager);
 			optionA3.projectDataDisplay();
 			break;
 		case "A4":

@@ -17,9 +17,9 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	private Project proj;
 	private User user;
 
-	public US370ProjectFinishedTasksDecreasingOrderUI(Integer projectID, User user) {
+	public US370ProjectFinishedTasksDecreasingOrderUI(Project project, User user) {
 		this.user = user;
-		this.projectID = projectID;
+		this.proj = project;
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	 */
 	public void projectDataDisplay() {
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.proj.getIdCode());
 		projectInfo.setProject();
 		US370GetProjectFinishedTaskListController projectFinishedTaskList = new US370GetProjectFinishedTaskListController();
 
