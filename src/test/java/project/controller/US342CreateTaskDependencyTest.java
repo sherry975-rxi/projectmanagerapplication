@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +19,8 @@ import project.model.Task;
 import project.model.TaskRepository;
 import project.model.User;
 import project.model.UserRepository;
+import project.model.taskStateInterface.Created;
+import project.model.taskStateInterface.OnGoing;
 
 public class US342CreateTaskDependencyTest {
 
@@ -136,6 +140,105 @@ public class US342CreateTaskDependencyTest {
 
 		assertTrue(controller.projectContainsSelectedTask("1.2"));
 		assertFalse(controller.projectContainsSelectedTask("1.1"));
+	}
+
+	@Test
+	public void isTaskDependencyPossibleTest() {
+		// Adds taskA to TaskRepository
+		taskRepo.addProjectTask(taskA);
+
+		/*
+		 * Creates four tasks states
+		 */
+		OnGoing onGoing = new OnGoing(taskA);
+		Created created = new Created(taskA);
+
+		OnGoing onGoingB = new OnGoing(taskB);
+		Created createdB = new Created(taskB);
+
+		taskA.setTaskState(onGoing);
+		taskB.setTaskState(createdB);
+		taskA.setTaskDeadline(Calendar.getInstance());
+
+		// Checks if transition is valid
+		assertTrue(controller.isTaskDependencyPossible(taskB.getTaskID(), taskA.getTaskID()));
+
+		/*
+		 * Sets taskB to "OnGoing" Transition won't be valid
+		 */
+		taskB.setTaskState(onGoingB);
+		assertFalse(controller.isTaskDependencyPossible(taskB.getTaskID(), taskA.getTaskID()));
+
+	}
+
+	@Test
+	public void removeTaskDependency() {
+		// Adds taskA to TaskRepository
+		taskRepo.addProjectTask(taskA);
+
+		/*
+		 * Creates four tasks states
+		 */
+		OnGoing onGoing = new OnGoing(taskA);
+		Created created = new Created(taskA);
+
+		OnGoing onGoingB = new OnGoing(taskB);
+		Created createdB = new Created(taskB);
+
+		taskA.setTaskState(onGoing);
+		taskB.setTaskState(createdB);
+		taskA.setTaskDeadline(Calendar.getInstance());
+
+		// Creates a task dependency
+		controller.createDependenceFromTask(taskB.getTaskID(), taskA.getTaskID(), 10);
+
+		// Checks if it's possible to remove task dependency
+		assertTrue(controller.removeDependenceFromTask(taskB.getTaskID(), taskA.getTaskID()));
+
+		// Removes task dependency
+		controller.removeDependenceFromTask(taskB.getTaskID(), taskA.getTaskID());
+
+		/*
+		 * Dependency doesn't exist anymore, so it will return false
+		 */
+		assertFalse(controller.removeDependenceFromTask(taskB.getTaskID(), taskA.getTaskID()));
+
+	}
+
+	@Test
+	public void getTaskDeadlineString() {
+
+		// Adds taskA to TaskRepository
+		taskRepo.addProjectTask(taskA);
+
+		/*
+		 * Creates four tasks states
+		 */
+		OnGoing onGoing = new OnGoing(taskA);
+		Created created = new Created(taskA);
+
+		OnGoing onGoingB = new OnGoing(taskB);
+		Created createdB = new Created(taskB);
+
+		taskA.setTaskState(onGoing);
+		taskB.setTaskState(createdB);
+		taskA.setTaskDeadline(Calendar.getInstance());
+
+		// Creates a task dependency
+		controller.createDependenceFromTask(taskB.getTaskID(), taskA.getTaskID(), 10);
+
+		// Creates a string with the date of the moment
+		Calendar aaa = Calendar.getInstance();
+		aaa = taskA.getTaskDeadline();
+		String estimatedDeadlineString = new String();
+		Date estimatedDeadline = aaa.getTime();
+
+		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		estimatedDeadlineString = newDateFormat.format(estimatedDeadline).toString();
+
+		assertEquals(controller.getTaskDeadlineString(taskA.getTaskID()), estimatedDeadlineString);
+		assertEquals(controller.getTaskDeadlineString(taskB.getTaskID()), "No estimated deadline");
+
 	}
 
 }
