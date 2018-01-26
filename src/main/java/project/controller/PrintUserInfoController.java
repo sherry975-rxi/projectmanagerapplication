@@ -66,11 +66,11 @@ public class PrintUserInfoController {
 	 */
 	public void printAllActiveUsersInfo() {
 		for (User each : Company.getTheInstance().getUsersRepository().getAllActiveCollaboratorsFromRepository()) {
-			System.out.println(each.getName());
-			System.out.println(each.getIdNumber());
-			System.out.println(each.getEmail());
-			System.out.println(each.getPhone());
-			System.out.println(each.getFunction());
+			System.out.println("NAME " + each.getName());
+			System.out.println("ID: " + each.getIdNumber());
+			System.out.println("EMAIL: " + each.getEmail());
+			System.out.println("PHONE: " + each.getPhone());
+			System.out.println("FUNCTION: " + each.getFunction());
 			System.out.println();
 		}
 	}
