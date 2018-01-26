@@ -152,4 +152,9 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedTest {
 		assertTrue("Test".equals(tasksFiltersController.splitStringByFirstSpace(input)));
 	}
 
+	@Test
+	public final void testGetTasksWithoutCollaboratorsAssigned() {
+		assertEquals(6, tasksFiltersController.getProjectNotAssigned(project1).size());
+	}
+
 }

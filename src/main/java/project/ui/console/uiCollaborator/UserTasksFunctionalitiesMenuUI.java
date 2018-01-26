@@ -84,7 +84,7 @@ public class UserTasksFunctionalitiesMenuUI {
 			break;
 		case "5":
 			US216AverageTimeSpentByTaskLastMonthUI averegeTimeSpentOnTasksLastMonthUi = new US216AverageTimeSpentByTaskLastMonthUI();
-			averegeTimeSpentOnTasksLastMonthUi.displayAveregeTimeSpentByTaskLastMonth();
+			averegeTimeSpentOnTasksLastMonthUi.displayAveregeTimeSpentByTaskLastMonth(user);
 			break;
 		case "B":
 			CollaboratorMainMenuUI collaboratorMainMenu = new CollaboratorMainMenuUI(this.user);
