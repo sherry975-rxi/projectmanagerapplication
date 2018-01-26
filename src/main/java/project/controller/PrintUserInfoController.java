@@ -59,4 +59,19 @@ public class PrintUserInfoController {
 			System.out.println();
 		}
 	}
+
+	/**
+	 * Prints all the active users in the User Repository
+	 * 
+	 */
+	public void printAllActiveUsersInfo() {
+		for (User each : Company.getTheInstance().getUsersRepository().getAllActiveCollaboratorsFromRepository()) {
+			System.out.println(each.getName());
+			System.out.println(each.getIdNumber());
+			System.out.println(each.getEmail());
+			System.out.println(each.getPhone());
+			System.out.println(each.getFunction());
+			System.out.println();
+		}
+	}
 }

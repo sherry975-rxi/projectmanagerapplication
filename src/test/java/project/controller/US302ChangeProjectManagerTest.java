@@ -76,8 +76,7 @@ public class US302ChangeProjectManagerTest {
 		// then, asserts the index 0 of the actual list matches the first collaborator
 		String user1String = "001: Leonor (leonor@gmail.com; 930000000) - Empregado";
 
-		assertTrue(changeManagerController.listPossibleManagers().get(0)
-				.equals("::Collaborator nº1:: \n" + user1String));
+		assertTrue(changeManagerController.listPossibleManagers().get(0).equals("[1] \n" + user1String));
 
 	}
 

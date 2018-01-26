@@ -41,7 +41,7 @@ public class US135andUS136ListUsersUI {
 			break;
 		}
 
-		if (searchList.size() == 0) {
+		if (searchList.isEmpty()) {
 			System.out.println("No users found!");
 			System.out.println("");
 		} else {

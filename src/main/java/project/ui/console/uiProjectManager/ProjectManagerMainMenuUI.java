@@ -11,6 +11,7 @@ import project.ui.console.uiProjectManager.manageRequests.US356ApproveOrCancelAs
 import project.ui.console.uiProjectManager.manageRequests.US357ApproveOrCancelRemovalRequestUI;
 import project.ui.console.uiProjectManager.manageTeam.US351AddCollaboratorToProjectTeamUI;
 import project.ui.console.uiProjectManager.manageTeam.US355ViewProjectTeamAndThenRemoveCollaboratorUI;
+import project.ui.console.uiProjectManager.manageTeam.US360ViewCollaboratorsWithoutTasksUI;
 import project.ui.console.uiProjectManager.others.US340CreateTaskUI;
 import project.ui.console.uiProjectManager.others.US342DefineDependenciesBetweenTasksUI;
 import project.ui.console.uiProjectManager.others.US390GetProjectReportedCostUI;
@@ -122,7 +123,8 @@ public class ProjectManagerMainMenuUI {
 			optionB2.addCollaboratorToProjectTeam();
 			break;
 		case "B3":
-
+			US360ViewCollaboratorsWithoutTasksUI optionB3 = new US360ViewCollaboratorsWithoutTasksUI();
+			optionB3.viewUnassignedCollaborators(project);
 			break;
 		case "C1":
 			US356ApproveOrCancelAssignmentRequestUI optionC1 = new US356ApproveOrCancelAssignmentRequestUI(

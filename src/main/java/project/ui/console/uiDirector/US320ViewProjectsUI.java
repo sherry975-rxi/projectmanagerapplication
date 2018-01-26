@@ -23,7 +23,7 @@ public class US320ViewProjectsUI {
 			projectsList = controller.viewAllProjects();
 		}
 
-		if (projectsList.size() == 0) {
+		if (projectsList.isEmpty()) {
 			System.out.println("No projects listed!");
 			System.out.println("");
 		} else {
