@@ -8,7 +8,6 @@ import project.model.Project;
 import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
 
 public class US362RemoveUserFromTaskUI {
 
@@ -65,6 +64,9 @@ public class US362RemoveUserFromTaskUI {
 			switch (choice) {
 
 			case "B":
+				PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
+						this.user);
+				caseBack.taskDataDisplay();
 				break;
 			case "M":
 				MainMenuUI.mainMenu();
@@ -93,12 +95,15 @@ public class US362RemoveUserFromTaskUI {
 				removeColController.setProjectCollaborator(choiceInt - 1);
 				if (removeColController.removeCollaboratorFromTask()) {
 					System.out.println("--------USER REMOVED--------");
-					ProjectManagerMainMenuUI projectmanagerMenu = new ProjectManagerMainMenuUI(user, project);
-					projectmanagerMenu.displayOptions(); // to
+					PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
+							this.user);
+					caseBack.taskDataDisplay();
 
 				} else {
 					System.out.println("Choose a valid user!");
-					ProjectManagerMainMenuUI projectmanagerMenu = new ProjectManagerMainMenuUI(user, project);
+					PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
+							this.user);
+					caseBack.taskDataDisplay();
 				}
 			}
 		}
