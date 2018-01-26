@@ -6,7 +6,7 @@ import project.controller.US356ManageAssigmentRequestController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.uiCollaborator.CollectProjectsFromUserUI;
+import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
 
 public class US356ApproveOrCancelAssignmentRequestUI {
 
@@ -74,8 +74,8 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			chooseRequest(assignmentRequest);
 			break;
 		case "B":
-			CollectProjectsFromUserUI previousMenu = new CollectProjectsFromUserUI(user);
-			previousMenu.collectProjectsFromUser();
+			ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(user, project);
+			previousMenu.displayOptions();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
