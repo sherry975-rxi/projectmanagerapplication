@@ -5,9 +5,7 @@ package project.controller;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -227,29 +225,6 @@ public class US347CancelOnGoingTaskControllerTest {
 	}
 
 	/**
-	 * Test method that returns the collection of tasks in a project
-	 */
-	@Test
-	public void testGetTasksFromAProject() {
-
-		// create controller
-		US347CancelOnGoingTaskController uS347CancelOnGoingTaskController = new US347CancelOnGoingTaskController(
-				project1.getIdCode());
-
-		// create list of tasks to compare to taskRepository of project
-		List<Task> allTasksInTest = new ArrayList<>();
-
-		// add task to the list allTasksInTest
-		allTasksInTest.add(task1);
-		allTasksInTest.add(task2);
-		allTasksInTest.add(task3);
-
-		// compares the list of tasks created to compare with the list of tasks in the
-		// task repository obtained by using the controller
-		assertEquals(allTasksInTest, uS347CancelOnGoingTaskController.getTasksFromAProject());
-	}
-
-	/**
 	 * Test method that views the task state and returns this information in a
 	 * string format
 	 */
@@ -257,9 +232,9 @@ public class US347CancelOnGoingTaskControllerTest {
 	public void testViewTaskState() {
 		// create controller
 		US347CancelOnGoingTaskController uS347CancelOnGoingTaskController = new US347CancelOnGoingTaskController(
-				project1.getIdCode());
+				task1.getTaskID(), project1);
 
-		assertEquals("OnGoing", uS347CancelOnGoingTaskController.viewTaskState(task1.getTaskID()));
+		assertEquals("OnGoing", uS347CancelOnGoingTaskController.viewTaskState());
 	}
 
 	/**
@@ -271,7 +246,7 @@ public class US347CancelOnGoingTaskControllerTest {
 
 		// create controller
 		US347CancelOnGoingTaskController uS347CancelOnGoingTaskController = new US347CancelOnGoingTaskController(
-				project1.getIdCode());
+				task1.getTaskID(), project1);
 
 		// create state cancelled in task2
 		Cancelled cancelledTestTask = new Cancelled(task2);
@@ -282,7 +257,7 @@ public class US347CancelOnGoingTaskControllerTest {
 		// Sets a cancel date for the task1
 		task1.setCancelDate();
 		// use of control to set task1 to state cancelled
-		uS347CancelOnGoingTaskController.cancelOnGoingTask(task1.getTaskID());
+		uS347CancelOnGoingTaskController.cancelOnGoingTask();
 
 		// asserts that task1 has state cancelled
 		assertEquals("Cancelled", task1.viewTaskStateName());
