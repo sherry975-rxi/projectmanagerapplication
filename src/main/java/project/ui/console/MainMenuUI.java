@@ -110,11 +110,15 @@ public class MainMenuUI {
 		myCompany.getProjectsRepository().addProjectToProjectRepository(projectApostas);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(projectHomeBanking);
 
-		// set "EXECUTION" status of projects 
+		// set "EXECUTION" status of projects
 		projectGP.setProjectStatus(2);
 		projectApostas.setProjectStatus(2);
 		projectHomeBanking.setProjectStatus(2);
-		
+		Calendar projstartdate = Calendar.getInstance();
+		projstartdate.set(2017, 10, 05);
+		projectHomeBanking.setStartdate(projstartdate);
+		projectHomeBanking.setProjectBudget(5000);
+
 		// Create Project collaborators
 		projcollabJSilva = new ProjectCollaborator(userJSilva, 2);
 		projcollabATirapicos = new ProjectCollaborator(userATirapicos, 2);
@@ -305,6 +309,7 @@ public class MainMenuUI {
 		taskHB5.getTaskState().changeToPlanned();
 		// necessary to pass from "Planned" to "Assigned"
 		taskHB5.addProjectCollaboratorToTask(projcollabManager);
+		taskHB5.addProjectCollaboratorToTask(projcollabATirapicos);
 		taskHB5.getTaskState().changeToAssigned();
 		// pass from "Assigned" to "Ready"
 		taskHB5.getTaskState().changeToReady();
@@ -381,6 +386,11 @@ public class MainMenuUI {
 		// necessary to pass from "OnGoing" to "StandBy"
 		taskHB9.removeAllCollaboratorsFromTaskTeam();
 		taskHB9.getTaskState().changeToStandBy();
+
+		// Request assignment of collaborator to task 3.2 (taskHB2)
+		projectHomeBanking.createTaskAssignementRequest(projcollabATirapicos, taskHB2);
+
+		// Request of removal of collaborator
 
 		mainMenu();
 
