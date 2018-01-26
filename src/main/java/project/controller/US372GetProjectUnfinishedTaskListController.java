@@ -32,7 +32,7 @@ public class US372GetProjectUnfinishedTaskListController {
 	 * 
 	 * @return Task List
 	 */
-	public List<String> getOnGoingTaskListId(Project proj) {
+	public List<String> getUnfinishedTaskListId(Project proj) {
 
 		List<Task> taskListOnGoing = proj.getTaskRepository().getOnGoingTasks();
 		List<String> taskListOnGoingToPrint = new ArrayList<>();
@@ -47,7 +47,7 @@ public class US372GetProjectUnfinishedTaskListController {
 
 		return taskListOnGoingToPrint;
 	}
-	
+
 	/**
 	 * This method splits a Sting by the space and only return the left part of the
 	 * string until the first space

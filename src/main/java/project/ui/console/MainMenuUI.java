@@ -379,8 +379,8 @@ public class MainMenuUI {
 		// necessary to pass from "OnGoing" to "StandBy"
 		taskHB9.removeAllCollaboratorsFromTaskTeam();
 		taskHB9.getTaskState().changeToStandBy();
-
 		mainMenu();
+
 	}
 
 	public static void mainMenu() {

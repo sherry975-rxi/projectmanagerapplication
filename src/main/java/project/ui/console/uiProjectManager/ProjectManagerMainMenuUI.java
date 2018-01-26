@@ -67,7 +67,6 @@ public class ProjectManagerMainMenuUI {
 		System.out.println("    [A4] - Not Started");
 		System.out.println("    [A5] - Not Assigned");
 		System.out.println("    [A6] - Cancelled");
-		System.out.println("    [A7] - All Tasks");
 		System.out.println("");
 		System.out.println("REQUESTS:                                                                  OTHERS:");
 		System.out.println(
@@ -110,9 +109,6 @@ public class ProjectManagerMainMenuUI {
 		case "A6":
 			US377ProjectCancelledTasks optionA6 = new US377ProjectCancelledTasks();
 			optionA6.displayCancelledTasksOfProject(this.project, this.projectManager);
-			break;
-		case "A7":
-
 			break;
 		case "B1":
 			US355ViewProjectTeamAndThenRemoveCollaboratorUI optionB1 = new US355ViewProjectTeamAndThenRemoveCollaboratorUI();

@@ -38,7 +38,7 @@ public class US372ProjectOngoingTasksUI {
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
 		System.out.println("___________________________________________________");
-		System.out.println("     ON GOING TASKS");
+		System.out.println("     UNFINISHED TASKS");
 		System.out.println("___________________________________________________");
 
 		US372GetProjectUnfinishedTaskListController controller = new US372GetProjectUnfinishedTaskListController();
@@ -46,7 +46,7 @@ public class US372ProjectOngoingTasksUI {
 		List<String> listOfOnGoingTasks = new ArrayList<>();
 
 		for (int i = 0; i < controller.getProjectUnfinishedTaskList(this.project).size(); i++) {
-			String taskInfo = controller.getOnGoingTaskListId(this.project).get(i);
+			String taskInfo = controller.getUnfinishedTaskListId(this.project).get(i);
 			System.out.println(taskInfo);
 			listOfOnGoingTasks.add(controller.getProjectUnfinishedTaskList(this.project).get(i).getTaskID());
 		}

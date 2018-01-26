@@ -185,13 +185,13 @@ public class US372GetProjectUnfinishedTaskListTest {
 	@Test
 	public final void testGetOnGoingTaskListId() {
 		String result = "[1.3] Merge everything";
-		assertTrue(result.equals(tasksFiltersController.getOnGoingTaskListId(project1).get(0)));
+		assertTrue(result.equals(tasksFiltersController.getUnfinishedTaskListId(project1).get(0)));
 		result = "[1.4] Do this";
-		assertTrue(result.equals(tasksFiltersController.getOnGoingTaskListId(project1).get(1)));
+		assertTrue(result.equals(tasksFiltersController.getUnfinishedTaskListId(project1).get(1)));
 		result = "[1.5] Do this";
-		assertTrue(result.equals(tasksFiltersController.getOnGoingTaskListId(project1).get(2)));
+		assertTrue(result.equals(tasksFiltersController.getUnfinishedTaskListId(project1).get(2)));
 		result = "[1.6] Do this";
-		assertTrue(result.equals(tasksFiltersController.getOnGoingTaskListId(project1).get(3)));
+		assertTrue(result.equals(tasksFiltersController.getUnfinishedTaskListId(project1).get(3)));
 	}
 
 	@Test
