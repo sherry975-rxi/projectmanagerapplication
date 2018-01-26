@@ -36,7 +36,17 @@ public class MainMenuUI {
 	private static Task taskGP2;
 	private static Task taskGP3;
 	private static Task taskGP4;
+	private static Task taskGP5;
+	private static Task taskGP6;
+	private static Task taskHB1;
+	private static Task taskHB2;
+	private static Task taskHB3;
+	private static Task taskHB4;
 	private static Task taskHB5;
+	private static Task taskHB6;
+	private static Task taskHB7;
+	private static Task taskHB8;
+	private static Task taskHB9;
 
 	public static void main(String[] args) {
 
@@ -87,12 +97,12 @@ public class MainMenuUI {
 		// Add data to project1
 		// add start date to project
 		Calendar startDate = Calendar.getInstance();
-		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
+		startDate.set(2018, Calendar.JANUARY, 23, 12, 31, 00);
 		projectGP.setStartdate(startDate);
 
 		// add finish date to project
 		Calendar finishDate = Calendar.getInstance();
-		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
+		finishDate.set(2018, Calendar.FEBRUARY, 2, 12, 31, 00);
 		projectGP.setFinishdate(finishDate);
 
 		// addition of projects to the company
@@ -141,11 +151,17 @@ public class MainMenuUI {
 		projectGP.getTaskRepository().addProjectTask(taskGP2);
 
 		// Instantiates a task
-		taskGP3 = projectGP.getTaskRepository().createTask("Fazer refator");
+		taskGP3 = projectGP.getTaskRepository().createTask("Fazer refatoração.");
 		projectGP.getTaskRepository().addProjectTask(taskGP3);
+		taskGP5 = projectGP.getTaskRepository().createTask("Adicionar colaboradores às tarefas planeadas.");
+		projectGP.getTaskRepository().addProjectTask(taskGP5);
+		taskGP6 = projectGP.getTaskRepository().createTask("Criar tarefas.");
+		projectGP.getTaskRepository().addProjectTask(taskGP6);
 		// Creates a new taksCollaborator
 		tWorkerATirapicos = new TaskCollaborator(projcollabATirapicos);
-		// necessary to pass from "Created" to "Planned"
+
+		// taskGP#3 changes to "Finished"
+		// changes from "Created" to "Planned"
 		startDate = Calendar.getInstance();
 		startDate.add(Calendar.MONTH, -1);
 		taskGP3.setEstimatedTaskStartDate(startDate);
@@ -169,6 +185,39 @@ public class MainMenuUI {
 		// Adds the taskCollaborator to taskGP3
 		taskGP3.addTaskCollaboratorToTask(tWorkerATirapicos);
 
+		// taskGP#5 changes to finished
+		// changes from "Created" to "Planned"
+		Calendar estimatstartDate2 = Calendar.getInstance();
+		estimatstartDate2.add(Calendar.YEAR, -1);
+		estimatstartDate2.add(Calendar.MONTH, -3);
+		estimatstartDate2.add(Calendar.DAY_OF_MONTH, 0);
+		taskGP5.setEstimatedTaskStartDate(estimatstartDate2);
+		Calendar finishDate2 = Calendar.getInstance();
+		finishDate2.add(Calendar.YEAR, -1);
+		finishDate2.add(Calendar.MONTH, -3);
+		finishDate2.add(Calendar.DAY_OF_MONTH, 6);
+		taskGP5.setTaskDeadline(finishDate2);
+		taskGP5.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskGP5.addProjectCollaboratorToTask(projcollabJSilva);
+		taskGP5.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskGP5.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		Calendar startDate2 = Calendar.getInstance();
+		startDate2.add(Calendar.YEAR, -1);
+		startDate2.add(Calendar.MONTH, -3);
+		startDate2.add(Calendar.DAY_OF_MONTH, 1);
+		taskGP5.setStartDate(startDate2);
+		taskGP5.getTaskState().changeToOnGoing();
+		// pass from "OnGoing" to "Finished"
+		Calendar testDate2 = Calendar.getInstance();
+		testDate2.add(Calendar.YEAR, 0);
+		testDate2.add(Calendar.MONTH, -1);
+		testDate2.add(Calendar.DAY_OF_MONTH, 2);
+		taskGP5.setFinishDate(testDate2);
+		taskGP5.getTaskState().changeToFinished();
+
 		// Creates a taskGP4 and sets it to cancelled
 		taskGP4 = projectGP.getTaskRepository().createTask("Cancelled Task");
 		projectGP.getTaskRepository().addProjectTask(taskGP4);
@@ -176,14 +225,77 @@ public class MainMenuUI {
 		taskGP4.setTaskState(cancelledState);
 
 		// Create taskHB5 of projectHomeBanking
+		taskHB1 = projectHomeBanking.getTaskRepository().createTask("Criar indicadores de acesso");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB1);
+		taskHB2 = projectHomeBanking.getTaskRepository()
+				.createTask("Permitir diferentes configurações para pagina pessoal");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB2);
+		taskHB3 = projectHomeBanking.getTaskRepository().createTask("Permitir ligação a sites de noticias");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB3);
+		taskHB4 = projectHomeBanking.getTaskRepository().createTask("Alterar configurações para acesso");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB4);
 		taskHB5 = projectHomeBanking.getTaskRepository().createTask("Implementar sistema de segurança");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB5);
+		taskHB6 = projectHomeBanking.getTaskRepository().createTask("Mostrar vista de administrador");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB6);
+		taskHB7 = projectHomeBanking.getTaskRepository().createTask("Permitir alteração de dados de cliente");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB7);
+		taskHB8 = projectHomeBanking.getTaskRepository().createTask("Gerar relatórios de investimentos");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB8);
+		taskHB9 = projectHomeBanking.getTaskRepository().createTask("Criar botão personalizar");
+		projectHomeBanking.getTaskRepository().addProjectTask(taskHB9);
+
+		// Task 3.1 (taskHB1) is in state created
+
+		// Task 3.2 (taskHB2) set to planned
+		// necessary to pass from "Created" to "Planned"
+		startDate = Calendar.getInstance();
+		startDate.add(Calendar.MONTH, -1);
+		taskHB2.setEstimatedTaskStartDate(startDate);
+		finishDate = Calendar.getInstance();
+		finishDate.add(Calendar.MONTH, 1);
+		taskHB2.setTaskDeadline(finishDate);
+		taskHB2.getTaskState().changeToPlanned();
+
+		// Task 3.3 (taskHB3) set to assigned
+		// necessary to pass from "Created" to "Planned"
+		Calendar estimatedStartDate = Calendar.getInstance();
+		estimatedStartDate.add(Calendar.MONTH, -1);
+		estimatedStartDate.add(Calendar.DAY_OF_MONTH, 5);
+		taskHB3.setEstimatedTaskStartDate(estimatedStartDate);
+		Calendar estimatedFinishDate1 = Calendar.getInstance();
+		estimatedFinishDate1.add(Calendar.MONTH, -1);
+		estimatedFinishDate1.add(Calendar.DAY_OF_MONTH, 6);
+		taskHB3.setTaskDeadline(estimatedFinishDate1);
+		taskHB3.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB3.addProjectCollaboratorToTask(projcollabManager);
+		taskHB3.getTaskState().changeToAssigned();
+
+		// Task 3.4 (taskHB4) set to ready
+		// necessary to pass from "Created" to "Planned"
+		Calendar estimatedStartDate2 = Calendar.getInstance();
+		estimatedStartDate2.add(Calendar.MONTH, -1);
+		estimatedStartDate2.add(Calendar.DAY_OF_MONTH, 6);
+		taskHB4.setEstimatedTaskStartDate(estimatedStartDate2);
+		Calendar estimatedFinishDate2 = Calendar.getInstance();
+		estimatedFinishDate2.add(Calendar.MONTH, -1);
+		estimatedFinishDate2.add(Calendar.DAY_OF_MONTH, 7);
+		taskHB4.setTaskDeadline(estimatedFinishDate2);
+		taskHB4.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB4.addProjectCollaboratorToTask(projcollabManager);
+		taskHB4.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB4.getTaskState().changeToReady();
+
+		// Task 3.5 (taskHB5) set to ongoing
 		// necessary to pass from "Created" to "Planned"
 		startDate = Calendar.getInstance();
 		startDate.add(Calendar.MONTH, -1);
 		taskHB5.setEstimatedTaskStartDate(startDate);
-		finishDate = Calendar.getInstance();
-		finishDate.add(Calendar.MONTH, 1);
+		Calendar estimatedFinishDate = Calendar.getInstance();
+		estimatedFinishDate.add(Calendar.MONTH, 1);
 		taskHB5.setTaskDeadline(finishDate);
 		taskHB5.getTaskState().changeToPlanned();
 		// necessary to pass from "Planned" to "Assigned"
@@ -195,10 +307,79 @@ public class MainMenuUI {
 		taskHB5.setStartDate(startDate);
 		taskHB5.getTaskState().changeToOnGoing();
 
-		// project1.setStartdate(Calendar.getInstance());
-		// PrintProjectInfoController projectInfo = new
-		// PrintProjectInfoController(project1);
-		// System.out.println("Start date: " + projectInfo.printProjectStartDateInfo());
+		// Task 3.6 (taskHB6) set to finished
+		Calendar estimatedStartDate4 = Calendar.getInstance();
+		estimatedStartDate4.add(Calendar.MONTH, -1);
+		estimatedStartDate4.add(Calendar.DAY_OF_MONTH, 6);
+		taskHB6.setEstimatedTaskStartDate(estimatedStartDate4);
+		Calendar estimatedFinishDate4 = Calendar.getInstance();
+		estimatedFinishDate4.add(Calendar.MONTH, -3);
+		estimatedFinishDate4.add(Calendar.DAY_OF_MONTH, 17);
+		taskHB6.setTaskDeadline(estimatedFinishDate4);
+		taskHB6.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB6.addProjectCollaboratorToTask(projcollabManager);
+		taskHB6.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB6.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB6.setStartDate(startDate);
+		taskHB6.getTaskState().changeToOnGoing();
+		// necessary to pass from "OnGoing" to "Finished"
+		Calendar finishDate1 = Calendar.getInstance();
+		finishDate1.add(Calendar.MONTH, 0);
+		finishDate1.add(Calendar.DAY_OF_MONTH, 13);
+		taskHB6.setFinishDate(finishDate1);
+		taskHB6.getTaskState().changeToFinished();
+
+		// Task 3.7 (taskHB7) set to ongoing with expired deadline
+		taskHB7.setEstimatedTaskStartDate(estimatedStartDate4);
+		taskHB7.setTaskDeadline(estimatedFinishDate4);
+		taskHB7.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB7.addProjectCollaboratorToTask(projcollabManager);
+		taskHB7.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB7.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB7.setStartDate(startDate);
+		taskHB7.getTaskState().changeToOnGoing();
+
+		// Task 3.8 (taskHB8) set to cancelled
+		taskHB8.setEstimatedTaskStartDate(estimatedStartDate4);
+		taskHB8.setTaskDeadline(estimatedFinishDate4);
+		taskHB8.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB8.addProjectCollaboratorToTask(projcollabManager);
+		taskHB8.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB8.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB8.setStartDate(startDate);
+		taskHB8.getTaskState().changeToOnGoing();
+		// necessary to pass from "OnGoing" to "Finished"
+		Calendar cancelDate = Calendar.getInstance();
+		cancelDate.add(Calendar.MONTH, -1);
+		cancelDate.add(Calendar.DAY_OF_MONTH, 8);
+		taskHB8.setFinishDate(cancelDate);
+		taskHB8.getTaskState().changeToCancelled();
+
+		// Task 3.9 (taskHB9) set to standby
+		taskHB9.setEstimatedTaskStartDate(estimatedStartDate4);
+		taskHB9.setTaskDeadline(estimatedFinishDate4);
+		taskHB9.getTaskState().changeToPlanned();
+		// necessary to pass from "Planned" to "Assigned"
+		taskHB9.addProjectCollaboratorToTask(projcollabManager);
+		taskHB9.getTaskState().changeToAssigned();
+		// pass from "Assigned" to "Ready"
+		taskHB9.getTaskState().changeToReady();
+		// necessary to pass from "Ready" to "OnGoing"
+		taskHB9.setStartDate(startDate);
+		taskHB9.getTaskState().changeToOnGoing();
+		// necessary to pass from "OnGoing" to "StandBy"
+		taskHB9.removeAllCollaboratorsFromTaskTeam();
+		taskHB9.getTaskState().changeToStandBy();
+
 		mainMenu();
 	}
 
