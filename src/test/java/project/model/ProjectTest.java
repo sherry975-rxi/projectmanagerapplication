@@ -840,12 +840,20 @@ public class ProjectTest {
 		// Creates a TaskAssignementRequest
 		p1.createTaskAssignementRequest(projectCollaborator1, task1);
 		TaskTeamRequest newReq = new TaskTeamRequest(projectCollaborator1, task1);
+	}
 
-		/*
-		 * Cannot test because the equals method doesn't allow me to test the
-		 * gePendingTasksRequests with a new created request
-		 * 
-		 */
+	/**
+	 * Tests the getProjectCollaboratorsFromTask
+	 */
+	@Test
+	public void getProjectCollaboratorsFromTask() {
+
+		// Add projectCollaborator to task
+		p1.addProjectCollaboratorToProjectTeam(projectCollaborator2);
+		List<ProjectCollaborator> listOfProjectCollaboratorsFromTask = new ArrayList<>();
+		listOfProjectCollaboratorsFromTask.add(projectCollaborator2);
+
+		assertEquals(listOfProjectCollaboratorsFromTask, p1.getProjectCollaboratorsFromTask(task1));
 
 	}
 

@@ -791,4 +791,21 @@ public class Project {
 		return pendingTaskRemovalRequests;
 	}
 
+	/**
+	 * This method returns the List of Collaborators from a specific task
+	 * 
+	 * @return Returns a list with the task team
+	 */
+	public List<ProjectCollaborator> getProjectCollaboratorsFromTask(Task task) {
+
+		List<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
+		for (ProjectCollaborator other : this.getActiveProjectTeam()) {
+			if (task.isProjectCollaboratorActiveInTaskTeam(other)) {
+				collaboratorsFromTask.add(other);
+
+			}
+		}
+		return collaboratorsFromTask;
+	}
+
 }
