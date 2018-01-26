@@ -32,6 +32,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	public void projectDataDisplay() {
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.proj.getIdCode());
+		projectID = proj.getIdCode();
 		projectInfo.setProject();
 		US370GetProjectFinishedTaskListController projectFinishedTaskList = new US370GetProjectFinishedTaskListController();
 
