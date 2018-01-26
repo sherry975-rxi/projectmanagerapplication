@@ -120,4 +120,20 @@ public class CreatedTaskTests {
 		assertTrue(test2.isTransitionToPlannedPossible());
 	}
 
+	@Test
+	public final void testChangesTo() {
+		Created stateTask = new Created(testTask);
+		assertFalse(stateTask.changeToCreated());
+		assertFalse(stateTask.changeToAssigned());
+		assertFalse(stateTask.changeToReady());
+		assertFalse(stateTask.changeToCancelled());
+		assertFalse(stateTask.changeToFinished());
+		assertFalse(stateTask.isTransitionToCreatedPossible());
+		assertTrue(stateTask.isTransitionToPlannedPossible());
+		assertFalse(stateTask.isTransitionToAssignedPossible());
+		assertFalse(stateTask.isTransitionToStandByPossible());
+		assertFalse(stateTask.isTransitionToCancelledPossible());
+
+	}
+
 }
