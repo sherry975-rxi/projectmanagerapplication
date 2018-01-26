@@ -1,6 +1,7 @@
 package project.model.states;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
@@ -16,6 +17,7 @@ import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.taskStateInterface.Finished;
 import project.model.taskStateInterface.TaskStateInterface;
 
 public class FinishedTaskTests {
@@ -141,5 +143,22 @@ public class FinishedTaskTests {
 		testTask.removeFinishDate();
 		testTask.getTaskState().changeToOnGoing();
 		assertEquals("OnGoing", testTask.viewTaskStateName());
+	}
+
+	@Test
+	public final void testChangesTo() {
+		Finished stateTask = new Finished(testTask);
+		assertFalse(stateTask.changeToCreated());
+		assertFalse(stateTask.changeToPlanned());
+		assertFalse(stateTask.changeToAssigned());
+		assertFalse(stateTask.changeToReady());
+		assertFalse(stateTask.changeToCancelled());
+		assertFalse(stateTask.changeToFinished());
+		assertFalse(stateTask.isTransitionToCreatedPossible());
+		assertFalse(stateTask.isTransitionToPlannedPossible());
+		assertFalse(stateTask.isTransitionToAssignedPossible());
+		assertFalse(stateTask.isTransitionToStandByPossible());
+		assertFalse(stateTask.isTransitionToCancelledPossible());
+
 	}
 }
