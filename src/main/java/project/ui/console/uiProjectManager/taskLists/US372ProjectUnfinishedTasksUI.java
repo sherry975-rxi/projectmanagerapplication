@@ -12,7 +12,7 @@ import project.ui.console.MainMenuUI;
 import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
 import project.ui.console.uiProjectManager.tasks.PmTaskFunctionalitiesUI;
 
-public class US372ProjectOngoingTasksUI {
+public class US372ProjectUnfinishedTasksUI {
 
 	private Project project;
 	private User user;
