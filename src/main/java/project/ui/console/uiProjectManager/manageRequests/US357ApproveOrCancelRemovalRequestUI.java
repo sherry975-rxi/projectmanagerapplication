@@ -6,7 +6,7 @@ import project.controller.US357CancelRemovalTaskRequestController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.uiCollaborator.CollectProjectsFromUserUI;
+import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
 
 public class US357ApproveOrCancelRemovalRequestUI {
 
@@ -74,8 +74,8 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			chooseRequest(cancelRequest);
 			break;
 		case "B":
-			CollectProjectsFromUserUI previousMenu = new CollectProjectsFromUserUI(user);
-			previousMenu.collectProjectsFromUser();
+			ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(user, project);
+			previousMenu.displayOptions();
 			break;
 		case "M":
 			MainMenuUI.mainMenu();
