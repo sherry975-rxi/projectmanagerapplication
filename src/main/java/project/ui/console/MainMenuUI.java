@@ -110,6 +110,11 @@ public class MainMenuUI {
 		myCompany.getProjectsRepository().addProjectToProjectRepository(projectApostas);
 		myCompany.getProjectsRepository().addProjectToProjectRepository(projectHomeBanking);
 
+		// set "EXECUTION" status of projects 
+		projectGP.setProjectStatus(2);
+		projectApostas.setProjectStatus(2);
+		projectHomeBanking.setProjectStatus(2);
+		
 		// Create Project collaborators
 		projcollabJSilva = new ProjectCollaborator(userJSilva, 2);
 		projcollabATirapicos = new ProjectCollaborator(userATirapicos, 2);
