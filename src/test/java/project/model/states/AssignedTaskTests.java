@@ -47,6 +47,7 @@ public class AssignedTaskTests {
 		earlierStartDate.add(Calendar.DAY_OF_YEAR, -5);
 		dependency = new Task(01, 02, "dependency");
 		dependency.setEstimatedTaskStartDate(earlierStartDate);
+		dependency.setTaskDeadline(Calendar.getInstance());
 	}
 
 	@After
