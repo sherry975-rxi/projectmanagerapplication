@@ -1,7 +1,7 @@
 package project.controller;
 
+import project.dto.userDTO;
 import project.model.Company;
-import project.model.User;
 import project.model.UserRepository;
 
 public class US101RegisterUserController {
@@ -51,11 +51,10 @@ public class US101RegisterUserController {
 	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
 			String street, String zipCode, String city, String district, String country) {
 
-		User newUser = userRegistry.createUser(name, email, idNumber, function, phone, street, zipCode, city, district,
+		userDTO newUser = new userDTO(name, email, idNumber, function, phone, password, street, zipCode, city, district,
 				country);
-		newUser.setPassword(password);
-		userRegistry.addUserToUserRepository(newUser);
 
+		userRegistry.createUserWithDTO(newUser);
 	}
 
 	public boolean isUserInUserRepository(String email) {

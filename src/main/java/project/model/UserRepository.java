@@ -6,6 +6,8 @@ import java.util.List;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import project.dto.userDTO;
+
 /**
  * Class UserRepository that contains all lists and methods to build lists of
  * users
@@ -50,6 +52,31 @@ public class UserRepository {
 		newUser.addAddress(newAddress);
 
 		return newUser;
+	}
+
+	/**
+	 * Creates a user from a userDTO
+	 * 
+	 * @param userDTO
+	 *            UserDTO to create a user
+	 */
+	public void createUserWithDTO(userDTO userDTO) {
+
+		// Instantes the user
+		User newUser = new User(userDTO.name, userDTO.email, userDTO.idNumber, userDTO.function, userDTO.phone);
+
+		// Creates a new address
+		Address newAddress = newUser.createAddress(userDTO.street, userDTO.zipCode, userDTO.city, userDTO.district,
+				userDTO.country);
+
+		// Adds the address to user list
+		newUser.addAddress(newAddress);
+
+		// Sets the user password
+		newUser.setPassword(userDTO.password);
+
+		// Adds the user to User repository
+		addUserToUserRepository(newUser);
 	}
 
 	/**
