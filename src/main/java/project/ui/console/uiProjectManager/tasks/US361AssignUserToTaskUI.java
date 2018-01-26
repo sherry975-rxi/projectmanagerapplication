@@ -8,7 +8,6 @@ import project.model.Project;
 import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
 
 public class US361AssignUserToTaskUI {
 
@@ -57,6 +56,9 @@ public class US361AssignUserToTaskUI {
 			switch (choice) {
 
 			case "B":
+				PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
+						this.user);
+				caseBack.taskDataDisplay();
 				break;
 			case "M":
 				MainMenuUI.mainMenu();
@@ -85,12 +87,15 @@ public class US361AssignUserToTaskUI {
 				assignController.setUserToAddToTask(choiceInt - 1);
 				if (assignController.assignCollaboratorToTask()) {
 					System.out.println("--------USER ASSIGNED--------");
-					ProjectManagerMainMenuUI projectmanagerMenu = new ProjectManagerMainMenuUI(user, project);
-					projectmanagerMenu.displayOptions(); // to
+					PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
+							this.user);
+					caseBack.taskDataDisplay();
 
 				} else {
 					System.out.println("Choose a valid user!");
-					ProjectManagerMainMenuUI projectmanagerMenu = new ProjectManagerMainMenuUI(user, project);
+					PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
+							this.user);
+					caseBack.taskDataDisplay();
 				}
 			}
 		}
