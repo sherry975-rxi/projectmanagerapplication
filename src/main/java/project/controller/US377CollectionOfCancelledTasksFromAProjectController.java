@@ -24,16 +24,6 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	private Company company;
 
 	/**
-	 * this method return the list of cancelled tasks
-	 * 
-	 * @param proj
-	 * @return
-	 */
-	public List<Task> getProjectCancelledTasks(Project proj) {
-		return proj.getTaskRepository().getCancelledTasks();
-	}
-
-	/**
 	 * Constructor
 	 * 
 	 * @param projectIDtoInstantiate
@@ -41,6 +31,16 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	public US377CollectionOfCancelledTasksFromAProjectController(Project project) {
 		this.project = project;
 		taskRepository = project.getTaskRepository();
+	}
+
+	/**
+	 * this method return the list of cancelled tasks
+	 * 
+	 * @param proj
+	 * @return
+	 */
+	public List<Task> getProjectCancelledTasks(Project proj) {
+		return proj.getTaskRepository().getCancelledTasks();
 	}
 
 	/**

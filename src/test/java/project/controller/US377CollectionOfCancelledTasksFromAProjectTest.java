@@ -249,4 +249,9 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		assertTrue("Test".equals(controller.splitStringByFirstSpace(input)));
 	}
 
+	@Test
+	public final void getProjectCancelledTasks() {
+		assertEquals(2, controller.getProjectCancelledTasks(project).size());
+	}
+
 }
