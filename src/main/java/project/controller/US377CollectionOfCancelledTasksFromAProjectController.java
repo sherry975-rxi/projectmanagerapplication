@@ -24,6 +24,16 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	private Company company;
 
 	/**
+	 * this method return the list of cancelled tasks
+	 * 
+	 * @param proj
+	 * @return
+	 */
+	public List<Task> getProjectCancelledTasks(Project proj) {
+		return proj.getTaskRepository().getCancelledTasks();
+	}
+
+	/**
 	 * Constructor
 	 * 
 	 * @param projectIDtoInstantiate
