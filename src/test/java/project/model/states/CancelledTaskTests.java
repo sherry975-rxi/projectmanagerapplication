@@ -17,6 +17,11 @@ import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.taskStateInterface.Assigned;
+import project.model.taskStateInterface.Cancelled;
+import project.model.taskStateInterface.Finished;
+import project.model.taskStateInterface.Planned;
+import project.model.taskStateInterface.Ready;
 import project.model.taskStateInterface.TaskStateInterface;
 
 public class CancelledTaskTests {
@@ -141,6 +146,51 @@ public class CancelledTaskTests {
 	@Test
 	public final void testCantChangeToFinished() {
 		testTask.getTaskState().changeToFinished();
+		Finished taskState = new Finished(testTask);
+
 		assertEquals("Cancelled", testTask.viewTaskStateName());
+		assertFalse(taskState.isTransitionToFinishedPossible());
+
 	}
+
+	@Test
+	public final void testChangeToCreated() {
+		Cancelled taskState = new Cancelled(testTask);
+		assertFalse(taskState.changeToCreated());
+		assertFalse(taskState.isTransitionToCreatedPossible());
+
+	}
+
+	@Test
+	public final void testChangeToPlanned() {
+		Planned taskState = new Planned(testTask);
+		assertFalse(taskState.changeToCreated());
+		assertFalse(taskState.isTransitionToPlannedPossible());
+
+	}
+
+	@Test
+	public final void testChangeToAssigned() {
+		Assigned taskState = new Assigned(testTask);
+		assertFalse(taskState.changeToAssigned());
+		assertFalse(taskState.isTransitionToAssignedPossible());
+
+	}
+
+	@Test
+	public final void testChangeToReady() {
+		Ready taskState = new Ready(testTask);
+		assertFalse(taskState.changeToReady());
+		assertFalse(taskState.isTransitionToReadyPossible());
+
+	}
+
+	@Test
+	public final void testChangeToCancelled() {
+		Cancelled taskState = new Cancelled(testTask);
+		assertFalse(taskState.changeToReady());
+		assertFalse(taskState.isTransitionToAssignedPossible());
+
+	}
+
 }
