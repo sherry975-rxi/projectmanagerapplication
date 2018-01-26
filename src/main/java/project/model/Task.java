@@ -812,8 +812,9 @@ public class Task {
 		boolean wasDependencyRemoved = false;
 		for (Task other : this.taskDependency) {
 			if (taskToEstablishDependenceUpon.equals(other)) {
-				this.taskDependency.remove(other);
+				this.taskDependency.remove(taskToEstablishDependenceUpon);
 				wasDependencyRemoved = true;
+				break;
 			}
 		}
 		return wasDependencyRemoved;
