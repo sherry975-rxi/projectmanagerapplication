@@ -779,14 +779,19 @@ public class Task {
 	public boolean createTaskDependence(Task taskToEstablishDependenceUpon, int daysToPostpone) {
 		boolean wasDependencyCreated = false;
 		if (this.isCreatingTaskDependencyValid(taskToEstablishDependenceUpon)) {
+
 			this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
+			this.taskDependency.add(taskToEstablishDependenceUpon);
+
 			if (daysToPostpone >= 0) {
-				this.estimatedTaskStartDate.add(Calendar.DAY_OF_YEAR, daysToPostpone);
-				wasDependencyCreated = true;
+				this.estimatedTaskStartDate.add(Calendar.DATE, daysToPostpone);
+				this.taskDependency.add(taskToEstablishDependenceUpon);
+
 			}
 
+			wasDependencyCreated = true;
+
 		}
-		this.taskDependency.add(taskToEstablishDependenceUpon);
 
 		return wasDependencyCreated;
 
@@ -811,7 +816,7 @@ public class Task {
 				wasDependencyRemoved = true;
 			}
 		}
-		return wasDependencyRemoved = true;
+		return wasDependencyRemoved;
 	}
 
 	/**
@@ -823,6 +828,12 @@ public class Task {
 	public boolean isCreatingTaskDependencyValid(Task taskToEstablishDependenceUpon) {
 
 		boolean isDependencyValid = true;
+
+		for (Task other : this.taskDependency) {
+			if (other.equals(taskToEstablishDependenceUpon)) {
+				isDependencyValid = false;
+			}
+		}
 
 		/*
 		 * Checks the state of this task
