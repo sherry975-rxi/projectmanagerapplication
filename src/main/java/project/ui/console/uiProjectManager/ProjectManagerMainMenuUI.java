@@ -87,7 +87,7 @@ public class ProjectManagerMainMenuUI {
 		switch (option) {
 		case "A1":
 			US372ProjectOngoingTasksUI optionA1 = new US372ProjectOngoingTasksUI();
-			optionA1.displayOnGoingTasksOfProject(this.project, this.projectManager);
+			optionA1.displayUnfinishedOfProject(this.project, this.projectManager);
 			break;
 		case "A2":
 			US380ProjectUnfinishedTasksWithExperiredDeadlineUI optionA2 = new US380ProjectUnfinishedTasksWithExperiredDeadlineUI();

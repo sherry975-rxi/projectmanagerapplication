@@ -1,10 +1,10 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 	User user1, user2, projectManager, projectManager2;
 	Project project1, project2, project3;
 	ProjectCollaborator projCollab1, projCollab2;
-	Task task1, task2, task3, task4, task5, task6;
+	Task task1OnGoing, task2OnGoing, task3, task4, task5, task6;
 	TaskCollaborator taskCollab1, taskCollab2;
 	Planned PlannedTestTask;
 	Planned PlannedTestTask2;
@@ -67,6 +67,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 	Calendar taskExpiredDeadlineDateTest;
+	US365MarkTaskAsFinishedControllerProjectManager us365controller;
 
 	@Before
 	public void setUp() {
@@ -125,16 +126,16 @@ public class US365MarkTaskAsFInishedControllerTest {
 		project3.addProjectCollaboratorToProjectTeam(projCollab2);
 
 		// create tasks
-		task1 = project1.getTaskRepository().createTask("Create class User");
-		task2 = project1.getTaskRepository().createTask("Create class User");
+		task1OnGoing = project1.getTaskRepository().createTask("Create class User");
+		task2OnGoing = project1.getTaskRepository().createTask("Create class User");
 		task3 = project2.getTaskRepository().createTask("create test for method set name in class user");
 		task4 = project2.getTaskRepository().createTask("Create class User");
 		task5 = project3.getTaskRepository().createTask("Create class User");
 		task6 = project3.getTaskRepository().createTask("create test for method set name in class user");
 
 		// add tasks to task repository
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
+		project1.getTaskRepository().addProjectTask(task1OnGoing);
+		project1.getTaskRepository().addProjectTask(task2OnGoing);
 		project2.getTaskRepository().addProjectTask(task3);
 		project2.getTaskRepository().addProjectTask(task4);
 		project3.getTaskRepository().addProjectTask(task5);
@@ -165,21 +166,21 @@ public class US365MarkTaskAsFInishedControllerTest {
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// Creates State Objects planned for task.
-		PlannedTestTask = new Planned(task1);
-		PlannedTestTask2 = new Planned(task2);
+		PlannedTestTask = new Planned(task1OnGoing);
+		PlannedTestTask2 = new Planned(task2OnGoing);
 		PlannedTestTask3 = new Planned(task3);
 		PlannedTestTask4 = new Planned(task4);
 		PlannedTestTask5 = new Planned(task5);
 		PlannedTestTask6 = new Planned(task6);
 
 		// set estimated task start date and task dead line to tasks
-		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task1.setStartDate(estimatedTaskStartDateTest);
-		task1.setTaskDeadline(taskDeadlineDateTest);
+		task1OnGoing.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task1OnGoing.setStartDate(estimatedTaskStartDateTest);
+		task1OnGoing.setTaskDeadline(taskDeadlineDateTest);
 
-		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task2.setStartDate(estimatedTaskStartDateTest);
-		task2.setTaskDeadline(taskDeadlineDateTest);
+		task2OnGoing.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
+		task2OnGoing.setStartDate(estimatedTaskStartDateTest);
+		task2OnGoing.setTaskDeadline(taskDeadlineDateTest);
 
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task3.setStartDate(estimatedTaskStartDateTest);
@@ -198,8 +199,8 @@ public class US365MarkTaskAsFInishedControllerTest {
 		task6.setTaskDeadline(taskDeadlineDateTest);
 
 		// Sets the tasks to "Planned"
-		task1.setTaskState(PlannedTestTask);
-		task2.setTaskState(PlannedTestTask2);
+		task1OnGoing.setTaskState(PlannedTestTask);
+		task2OnGoing.setTaskState(PlannedTestTask2);
 		task3.setTaskState(PlannedTestTask3);
 		task4.setTaskState(PlannedTestTask4);
 		task5.setTaskState(PlannedTestTask5);
@@ -210,60 +211,53 @@ public class US365MarkTaskAsFInishedControllerTest {
 		taskCollab2 = new TaskCollaborator(projCollab2);
 
 		// set active user
-		task1.addTaskCollaboratorToTask(taskCollab1);
-		task2.addTaskCollaboratorToTask(taskCollab2);
+		task1OnGoing.addTaskCollaboratorToTask(taskCollab1);
+		task2OnGoing.addTaskCollaboratorToTask(taskCollab2);
 		task3.addTaskCollaboratorToTask(taskCollab1);
 		task4.addTaskCollaboratorToTask(taskCollab1);
 		task5.addTaskCollaboratorToTask(taskCollab2);
 		task6.addTaskCollaboratorToTask(taskCollab1);
 
 		// Creates State Objects assigned for task.
-		AssignedTestTask = new Assigned(task1);
-		AssignedTestTask2 = new Assigned(task2);
+		AssignedTestTask = new Assigned(task1OnGoing);
+		AssignedTestTask2 = new Assigned(task2OnGoing);
 		AssignedTestTask3 = new Assigned(task3);
 		AssignedTestTask4 = new Assigned(task4);
 		AssignedTestTask5 = new Assigned(task5);
 		AssignedTestTask6 = new Assigned(task6);
 
 		// Sets the tasks to "Assigned"
-		task1.setTaskState(AssignedTestTask);
-		task2.setTaskState(AssignedTestTask2);
+		task1OnGoing.setTaskState(AssignedTestTask);
+		task2OnGoing.setTaskState(AssignedTestTask2);
 		task3.setTaskState(AssignedTestTask3);
 		task4.setTaskState(AssignedTestTask4);
 		task5.setTaskState(AssignedTestTask5);
 		task6.setTaskState(AssignedTestTask6);
 
 		// Creates State Objects Ready for task.
-		ReadyTestTask = new Ready(task1);
-		ReadyTestTask2 = new Ready(task2);
+		ReadyTestTask = new Ready(task1OnGoing);
+		ReadyTestTask2 = new Ready(task2OnGoing);
 		ReadyTestTask3 = new Ready(task3);
 		ReadyTestTask4 = new Ready(task4);
 		ReadyTestTask5 = new Ready(task5);
 		ReadyTestTask6 = new Ready(task6);
 
 		// Sets the tasks to "Ready"
-		task1.setTaskState(ReadyTestTask);
-		task2.setTaskState(ReadyTestTask2);
+		task1OnGoing.setTaskState(ReadyTestTask);
+		task2OnGoing.setTaskState(ReadyTestTask2);
 		task3.setTaskState(ReadyTestTask3);
 		task4.setTaskState(ReadyTestTask4);
 		task5.setTaskState(ReadyTestTask5);
 		task6.setTaskState(ReadyTestTask6);
 
 		// Creates State Objects OnGoing for task.
-		onGoingTestTask = new OnGoing(task1);
-		onGoingTestTask2 = new OnGoing(task2);
-		onGoingTestTask3 = new OnGoing(task3);
-		onGoingTestTask4 = new OnGoing(task4);
-		onGoingTestTask5 = new OnGoing(task5);
-		onGoingTestTask6 = new OnGoing(task6);
+		onGoingTestTask = new OnGoing(task1OnGoing);
+		onGoingTestTask2 = new OnGoing(task2OnGoing);
 
 		// Sets the tasks to "onGoing"
-		task1.setTaskState(onGoingTestTask);
-		task2.setTaskState(onGoingTestTask2);
-		task3.setTaskState(onGoingTestTask3);
-		task4.setTaskState(onGoingTestTask4);
-		task5.setTaskState(onGoingTestTask5);
-		task6.setTaskState(onGoingTestTask6);
+		task1OnGoing.setTaskState(onGoingTestTask);
+		task2OnGoing.setTaskState(onGoingTestTask2);
+
 	}
 
 	@After
@@ -278,8 +272,8 @@ public class US365MarkTaskAsFInishedControllerTest {
 		project3 = null;
 		projCollab1 = null;
 		projCollab2 = null;
-		task1 = null;
-		task2 = null;
+		task1OnGoing = null;
+		task2OnGoing = null;
 		task3 = null;
 		task4 = null;
 		task5 = null;
@@ -314,68 +308,60 @@ public class US365MarkTaskAsFInishedControllerTest {
 		estimatedTaskStartDateTest = null;
 		taskDeadlineDateTest = null;
 		taskExpiredDeadlineDateTest = null;
+		us365controller = null;
 	}
 
 	@Test
-	public void testGetProjectsFromProjectManager1() {
-		// create controller
-		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
+	public void testCanTaskFinish() {
+		// create controller for ongoing task 1 (of project 1)
+		us365controller = new US365MarkTaskAsFinishedControllerProjectManager(task1OnGoing.getTaskID(), project1);
 
-		// create list of tasks to compare to taskRepository of project
-		List<Project> allProjectsInTest = new ArrayList<>();
+		assertTrue(us365controller.canTaskFinish());
 
-		// add task to the list allTasksInTest
-		allProjectsInTest.add(project1);
-		allProjectsInTest.add(project3);
+		// create controller for ready task 3 (of project 2)
+		us365controller = new US365MarkTaskAsFinishedControllerProjectManager(task3.getTaskID(), project2);
 
-		// compares the list of tasks created to compare with the list of tasks in the
-		// task repository obtained by using the controller
-		assertEquals(allProjectsInTest,
-				us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager));
+		assertFalse(us365controller.canTaskFinish());
+
+		// us365controller.getProjectsFromProjectManager(projectManager);
+		// us365controller.getUnfinishedTasksOfProjectFromProjectManager(0);
+		// us365controller.getTaskToBeMarkedFinished(0);
+		// us365controller.markTaskAsFinished();
+		//
+		// assertEquals("Finished", task1OnGoing.viewTaskStateName());
 	}
 
+	/**
+	 * 
+	 * this test asserts that a task starting as Ongoing can be marked as finish and
+	 * given a finish date
+	 * 
+	 */
 	@Test
-	public void testGetTasksFromProject1Manager1() {
-		// create controller
-		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
-		us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager);
+	public void testSetTaskAsFinished() {
 
-		// create list of tasks to compare to taskRepository of project
-		List<Task> allTasksInProject1Test = new ArrayList<>();
-		List<Task> allTasksInProject1 = us365MarkTaskAsFinishedController
-				.getUnfinishedTasksOfProjectFromProjectManager(0);
+		assertFalse(task1OnGoing.isTaskFinished());
+		assertTrue(task1OnGoing.getFinishDate() == null);
+		assertEquals("OnGoing", task1OnGoing.viewTaskStateName());
 
-		// add task to the list allTasksInTest
-		allTasksInProject1Test.add(task1);
-		allTasksInProject1Test.add(task2);
+		// create controller for ongoing task 1 (of project 1), and asserts Task1Ongoing
+		// has been properly marked as finished
+		us365controller = new US365MarkTaskAsFinishedControllerProjectManager(task1OnGoing.getTaskID(), project1);
 
-		// compares the list of tasks created to compare with the list of tasks in the
-		// task repository obtained by using the controller
-		assertEquals(allTasksInProject1Test, allTasksInProject1);
+		us365controller.setTaskAsFinished();
+
+		assertTrue(task1OnGoing.isTaskFinished());
+		assertTrue(task1OnGoing.getFinishDate() != null);
+		assertEquals("Finished", task1OnGoing.viewTaskStateName());
+
+		// create controller for ready task 3 (of project 2), then asserts task3 cannot
+		// be marked as finished, since it's not ongoing
+		us365controller = new US365MarkTaskAsFinishedControllerProjectManager(task3.getTaskID(), project2);
+
+		us365controller.setTaskAsFinished();
+
+		assertFalse(task3.isTaskFinished());
 
 	}
 
-	@Test
-	public void testSelectTask1FromProject1Manager1Finished() {
-		// create controller
-		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
-		us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager);
-		us365MarkTaskAsFinishedController.getUnfinishedTasksOfProjectFromProjectManager(0);
-
-		Task taskToBeMarked = us365MarkTaskAsFinishedController.getTaskToBeMarkedFinished(0);
-
-		assertEquals(task1, taskToBeMarked);
-	}
-
-	@Test
-	public void testSetTask1FromProject1Manager1Finished() {
-		// create controller
-		US365MarkTaskAsFinishedControllerProjectManager us365MarkTaskAsFinishedController = new US365MarkTaskAsFinishedControllerProjectManager();
-		us365MarkTaskAsFinishedController.getProjectsFromProjectManager(projectManager);
-		us365MarkTaskAsFinishedController.getUnfinishedTasksOfProjectFromProjectManager(0);
-		us365MarkTaskAsFinishedController.getTaskToBeMarkedFinished(0);
-		us365MarkTaskAsFinishedController.markTaskAsFinished();
-
-		assertEquals("Finished", task1.viewTaskStateName());
-	}
 }

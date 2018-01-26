@@ -30,15 +30,25 @@ public class UserRepository {
 	 * Creates an instance of User
 	 * 
 	 * @param name
+	 *            Name of the user
 	 * @param email
+	 *            Email of the user
 	 * @param idNumber
+	 *            idNumber of the user
 	 * @param function
+	 *            Function of the user
 	 * @param phone
+	 *            Phone of the user
 	 * @param street
+	 *            Street of the user
 	 * @param zipCode
+	 *            ZipCode of the user
 	 * @param city
+	 *            City of the user
 	 * @param district
+	 *            District of the user
 	 * @param country
+	 *            Country of the user
 	 * 
 	 * @return the User created and instantiated
 	 */
@@ -62,18 +72,19 @@ public class UserRepository {
 	 */
 	public void createUserWithDTO(userDTO userDTO) {
 
-		// Instantes the user
-		User newUser = new User(userDTO.name, userDTO.email, userDTO.idNumber, userDTO.function, userDTO.phone);
+		// Instantias the user
+		User newUser = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getIdNumber(), userDTO.getFunction(),
+				userDTO.getPhone());
 
 		// Creates a new address
-		Address newAddress = newUser.createAddress(userDTO.street, userDTO.zipCode, userDTO.city, userDTO.district,
-				userDTO.country);
+		Address newAddress = newUser.createAddress(userDTO.getStreet(), userDTO.getZipCode(), userDTO.getCity(),
+				userDTO.getDistrict(), userDTO.getCountry());
 
 		// Adds the address to user list
 		newUser.addAddress(newAddress);
 
 		// Sets the user password
-		newUser.setPassword(userDTO.password);
+		newUser.setPassword(userDTO.getPassword());
 
 		// Adds the user to User repository
 		addUserToUserRepository(newUser);
