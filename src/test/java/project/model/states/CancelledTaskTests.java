@@ -3,6 +3,7 @@ package project.model.states;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import java.util.Calendar;
 
 import org.junit.After;
@@ -30,7 +31,7 @@ public class CancelledTaskTests {
 	double expectedCost;
 	TaskStateInterface previousState;
 	TaskStateInterface newState;
-	
+
 	@Before
 	public void setUp() {
 
@@ -50,33 +51,35 @@ public class CancelledTaskTests {
 		tWorker2 = new TaskCollaborator(collab2);
 
 		testTask = new Task(1, 1, "Tarefa para teste de cancelled state");
-		
-		//necessary to pass from "Created" to "Planned"
+
+		// necessary to pass from "Created" to "Planned"
 		estimatedTaskStartDate = Calendar.getInstance();
-		estimatedTaskStartDate.add(Calendar.MONTH, -1); 
+		estimatedTaskStartDate.add(Calendar.MONTH, -1);
 		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
-		taskDeadline = Calendar.getInstance(); 
-		taskDeadline.add(Calendar.MONTH, 1);	
+		taskDeadline = Calendar.getInstance();
+		taskDeadline.add(Calendar.MONTH, 1);
 		testTask.setTaskDeadline(taskDeadline);
-		
+
 		testTask.getTaskState().changeToPlanned();
-		
-		//necessary to pass from "Planned" to "Assigned"
+
+		// necessary to pass from "Planned" to "Assigned"
 		testTask.addProjectCollaboratorToTask(collab2);
 		testTask.getTaskState().changeToAssigned();
-		
-		//pass from "Assigned" to "Ready"
+
+		// pass from "Assigned" to "Ready"
 		testTask.getTaskState().changeToReady();
-		
-		//necessary to pass from "Ready" to "OnGoing"
+
+		// necessary to pass from "Ready" to "OnGoing"
 		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
 		testTask.setStartDate(projStartDate);
 		testTask.getTaskState().changeToOnGoing();
-		
-		//pass from "OnGoing" to "Cancelled"
+
+		// Sets a cancel date for testTask
+		testTask.setCancelDate();
+		// pass from "OnGoing" to "Cancelled"
 		testTask.getTaskState().changeToCancelled();
-		
-		//assures that the taskTest state is Cancelled
+
+		// assures that the taskTest state is Cancelled
 		assertEquals("Cancelled", testTask.viewTaskStateName());
 
 	}
@@ -99,7 +102,7 @@ public class CancelledTaskTests {
 		expectedCost = 0;
 
 	}
-	
+
 	/**
 	 * This tests if a cancelled task is valid
 	 */
@@ -107,8 +110,7 @@ public class CancelledTaskTests {
 	public final void testIsValid() {
 		assertTrue(testTask.getTaskState().isValid());
 	}
-	
-	
+
 	/**
 	 * This tests if a cancelled task with finish date is invalid
 	 */
@@ -119,9 +121,10 @@ public class CancelledTaskTests {
 		assertEquals("Cancelled", testTask.viewTaskStateName());
 		assertFalse(testTask.getTaskState().isValid());
 	}
-	
+
 	/**
-	 * This tests that a Cancelled task with finish date can change to Finished state
+	 * This tests that a Cancelled task with finish date can change to Finished
+	 * state
 	 */
 	@Test
 	public final void testchangeToFinished() {
@@ -130,9 +133,9 @@ public class CancelledTaskTests {
 		testTask.getTaskState().changeToFinished();
 		assertEquals("Finished", testTask.viewTaskStateName());
 	}
-	
+
 	/**
-	 * This tests that a Cancelled task without finish date can't change to Finished 
+	 * This tests that a Cancelled task without finish date can't change to Finished
 	 * state (stands Cancelled)
 	 */
 	@Test
