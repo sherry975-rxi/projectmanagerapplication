@@ -50,7 +50,8 @@ public class US372ProjectUnfinishedTasksUI {
 			System.out.println(taskInfo);
 			listOfOnGoingTasks.add(controller.getProjectUnfinishedTaskList(this.project).get(i).getTaskID());
 		}
-
+		System.out.println();
+		System.out.println("Please choose a task to see more options:");
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
@@ -67,7 +68,6 @@ public class US372ProjectUnfinishedTasksUI {
 		for (String ii : listOfOnGoingTasks) {
 
 			if (option.equals(ii)) {
-
 				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
 				taskFuntionatities.taskDataDisplay();
 			} else if (option.equals("B")) {

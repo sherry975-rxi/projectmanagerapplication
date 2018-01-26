@@ -362,11 +362,8 @@ public class MainMenuUI {
 		// necessary to pass from "Ready" to "OnGoing"
 		taskHB8.setStartDate(startDate);
 		taskHB8.getTaskState().changeToOnGoing();
-		// necessary to pass from "OnGoing" to "Finished"
-		Calendar cancelDate = Calendar.getInstance();
-		cancelDate.add(Calendar.MONTH, -1);
-		cancelDate.add(Calendar.DAY_OF_MONTH, 8);
-		taskHB8.setFinishDate(cancelDate);
+		// necessary to pass from "OnGoing" to "Cancelled"
+		taskHB8.setCancelDate();
 		taskHB8.getTaskState().changeToCancelled();
 
 		// Task 3.9 (taskHB9) set to standby
@@ -384,6 +381,7 @@ public class MainMenuUI {
 		// necessary to pass from "OnGoing" to "StandBy"
 		taskHB9.removeAllCollaboratorsFromTaskTeam();
 		taskHB9.getTaskState().changeToStandBy();
+
 		mainMenu();
 
 	}
@@ -451,47 +449,20 @@ public class MainMenuUI {
 
 	public static void printImage() {
 
+		System.out.println();
+		System.out.println("");
+		System.out.println("");
+		System.out.println("          `.----..  ...    ...`   `..` .:-            `.----.`  ...    `..`           ");
+		System.out.println("         +dmddddhy  dmd`  +dddd`  /dd/ omd`  :++`    /hdmddddo `dmh    :mm/          ");
+		System.out.println("         mNd-.....  sNN-  dN/mN/  yNm. -/: `.sNN/.. /NNh-....` `mNd    /NN+       ");
+		System.out.println("         yNmyo:-`   :NN+ -Nm`yNh  mNy  smm`.ydNNhhs hNN:       `mNm++++yNN+        ");
+		System.out.println("         `:shdmmds` `mNh oNy /Nm`-NN/  yNN`  oNN-   hNN-       `mNmyyyyhNN+           ");
+		System.out.println("            `-sNN+  yNm`dN/ `mN/oNm`  yNN`  oNN-   sNN+        `mNd    /NN+       ");
+		System.out.println("        /+++++hNN/  /NNsNm`  hNhhNy   yNN`  oNNs/- -dNms++++/  `mNd    /NN+         ");
+		System.out.println("         oyhhhhhs/   `syyy+   -yyyy-   +yy`  `oyhy/  .+yhhhhyo `yys    -yy:           ");
 		System.out.println(
-				"                                                                                                  ");
-		System.out.println(
-				"                                                                                                    ");
-		System.out.println(
-				"                                                                                                    ");
-		System.out.println(
-				"              ://-           `.--.`                                            `://.                ");
-		System.out.println(
-				"            .dmmmmh`        -//////.                                          /mmmmms               ");
-		System.out.println(
-				"            :mmmmmm-        ///////:                                          smmmmmm               ");
-		System.out.println(
-				"             hNmdy:         ./++++/.                  `       `               `ohmNm/               ");
-		System.out.println(
-				"            oNNm-   ////+++++++++++++++++++/          ssssssss-      /ssssyyyo   oNNm-              ");
-		System.out.println(
-				"           +NNNNm-  /++++++++++++++++++++++/          sssssssy       .yyyyyyyo  oNNNNm.             ");
-		System.out.println(
-				"          :NNNNNNm//+++++++++++++++++++++++/          ssssssss+.    .oyyyyyyys/sNNNNNNd`            ");
-		System.out.println(
-				"         -NNNsmNNNNNmmdo+++++++++++++++++++/      ``  ssyyyyyyyysoosyyyyyyhmmNNNNNNymNNh            ");
-		System.out.println(
-				"        `mNNd`.+osyhmNNs+++++++++++++/.   `-   `+ssss/syyyyyyyyyyyyyyyyyyydNNmhys+/`:NNNs           ");
-		System.out.println(
-				"        `NNNNs`     ++++++++++++++o++          syyyyyyyyyyyyyyyyyyyyyyyyyyyyys     :dNNNy           ");
-		System.out.println(
-				"         NNmmNNo`   ++++++++oooooooo+`         oyyyyyyyyyyyyyyyyyyyyyyyyyyyyys   .yNNdNNs           ");
-		System.out.println(
-				"         mMm`sMMh   ++ooooooooooooooo+:.`.-:    :+oo+:yyyyyyyyyyyyyyyyyyyyyyys  .NMm/:MMo           ");
-		System.out.println(
-				"        yMMy .MMm   +oooooooo/-..:+oooooooo+         `yyyyyyyyyyyyyyyyyyyyhhhs  :MMd .NMN/          ");
-		System.out.println(
-				"      `hMMd` :MMM   oooooooo.      :ooooooo+          yyyyyyyyyyyyyyhhhhhhhhhs  /MMm  -NMM+         ");
-		System.out.println(
-				"     `dMMm`  /MMM`  oooooooo       .ooooooo+          yyyyyyyyhhhhhhhhhhhhhhhs  oMMM   /MMMo        ");
-		System.out.println(
-				"    `:dmm: ``/dmh` `oooooooo/`   `.oooooooo+         `yyyyyyyyyyyyyyyyyyyyyyys  /mmh.`  ommy.``     ");
-		System.out.println(
-				"                                                                                                    ");
-		System.out.println(
-				"                                                                                                    ");
+				"                                                                                                   ");
+		System.out.println("");
+		System.out.println("");
 	}
 }
