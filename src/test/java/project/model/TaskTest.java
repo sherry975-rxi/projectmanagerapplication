@@ -889,6 +889,16 @@ public class TaskTest {
 		testTask.removeTaskDependence(testTask2);
 
 		assertFalse(testTask.removeTaskDependence(testTask2));
+	}
 
+	public void testClearCancelDate() {
+
+		testTask.setCancelDate();
+
+		assertFalse(testTask.getCancelDate() == null);
+
+		testTask.cancelledDateClear();
+
+		assertTrue(testTask.getCancelDate() == null);
 	}
 }

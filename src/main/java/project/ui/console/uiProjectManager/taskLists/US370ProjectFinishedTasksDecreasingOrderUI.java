@@ -1,11 +1,13 @@
 package project.ui.console.uiProjectManager.taskLists;
 
+import java.util.List;
 import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US370GetProjectFinishedTaskListController;
 import project.model.Project;
+import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.uiCollaborator.CollectProjectsFromUserUI;
@@ -17,9 +19,9 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	private Project proj;
 	private User user;
 
-	public US370ProjectFinishedTasksDecreasingOrderUI(Integer projectID, User user) {
+	public US370ProjectFinishedTasksDecreasingOrderUI(Project project, User user) {
 		this.user = user;
-		this.projectID = projectID;
+		this.proj = project;
 	}
 
 	/**
@@ -29,7 +31,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	 */
 	public void projectDataDisplay() {
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.proj.getIdCode());
 		projectInfo.setProject();
 		US370GetProjectFinishedTaskListController projectFinishedTaskList = new US370GetProjectFinishedTaskListController();
 
@@ -50,10 +52,11 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 		System.out.println("               FINISHED TASKS                 ");
 		System.out.println("______________________________________________");
 
-		for (int i = 0; i < projectFinishedTaskList.getProjectFinishedTaskList(this.proj).size(); i++) {
-			System.out.println("["
-					+ projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj).get(i).getTaskID() + "] "
-					+ projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj).get(i).getDescription());
+		List<Task> finishedTasksDecreasingOrder = projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj);
+
+		for (int i = 0; i < finishedTasksDecreasingOrder.size(); i++) {
+			System.out.println("[" + finishedTasksDecreasingOrder.get(i).getTaskID() + "] "
+					+ finishedTasksDecreasingOrder.get(i).getDescription());
 		}
 
 		System.out.println("To roll back a task from Finish back to Ongoing, choose the task ID number.");

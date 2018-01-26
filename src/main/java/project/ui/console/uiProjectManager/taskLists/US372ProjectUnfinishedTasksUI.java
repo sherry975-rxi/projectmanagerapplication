@@ -12,12 +12,12 @@ import project.ui.console.MainMenuUI;
 import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
 import project.ui.console.uiProjectManager.tasks.PmTaskFunctionalitiesUI;
 
-public class US372ProjectOngoingTasksUI {
+public class US372ProjectUnfinishedTasksUI {
 
 	private Project project;
 	private User user;
 
-	public void displayOnGoingTasksOfProject(Project project, User user) {
+	public void displayUnfinishedOfProject(Project project, User user) {
 
 		this.project = project;
 		this.user = user;
@@ -50,7 +50,8 @@ public class US372ProjectOngoingTasksUI {
 			System.out.println(taskInfo);
 			listOfOnGoingTasks.add(controller.getProjectUnfinishedTaskList(this.project).get(i).getTaskID());
 		}
-
+		System.out.println();
+		System.out.println("Please choose a task to see more options:");
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
@@ -67,7 +68,6 @@ public class US372ProjectOngoingTasksUI {
 		for (String ii : listOfOnGoingTasks) {
 
 			if (option.equals(ii)) {
-
 				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
 				taskFuntionatities.taskDataDisplay();
 			} else if (option.equals("B")) {
@@ -87,7 +87,7 @@ public class US372ProjectOngoingTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.displayOnGoingTasksOfProject(project, user);
+			this.displayUnfinishedOfProject(project, user);
 		}
 	}
 

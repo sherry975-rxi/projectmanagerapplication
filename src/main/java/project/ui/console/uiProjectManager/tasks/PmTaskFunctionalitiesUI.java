@@ -5,6 +5,7 @@ import java.util.Scanner;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.model.Project;
+import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
@@ -14,11 +15,13 @@ public class PmTaskFunctionalitiesUI {
 	private Project project;
 	private String taskID;
 	private User user;
+	private Task task;
 
 	public PmTaskFunctionalitiesUI(String taskID, Project project, User user) {
 		this.taskID = taskID;
 		this.project = project;
 		this.user = user;
+		this.task = project.getTaskRepository().getTaskByID(taskID);
 	}
 
 	public void taskDataDisplay() {
@@ -57,20 +60,21 @@ public class PmTaskFunctionalitiesUI {
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "1":
-				// US361AssignUserToTaskUI case1UI = new US361AssignUserToTaskUI();
-				// add UI method
+				US361AssignUserToTaskUI case1UI = new US361AssignUserToTaskUI(this.project, this.task, this.user);
+				case1UI.displayUsersToAssign();
 				break;
 			case "2":
-				// US362RemoveUserFromTaskUI case2UI = new
-				// US362RemoveUserFromTaskUI(this.project,, this.user);
-				// add UI method
+				US362RemoveUserFromTaskUI case2UI = new US362RemoveUserFromTaskUI(this.project, this.task, this.user);
+				case2UI.displayUsersToRemove();
+
 				break;
 			case "3":
 				US365MarkTaskAsFinishedUI case3UI = new US365MarkTaskAsFinishedUI();
-				// add UI method
+				case3UI.markTaskAsFinished(taskID, project);
 				break;
 			case "4":
-				// ver se é suposto ter a cancel ou não
+				US347CancelOnGoingTaskUI us347UI = new US347CancelOnGoingTaskUI();
+				us347UI.cancelOnGoingTask(taskID, project);
 				break;
 			case "B":
 				ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(this.user, this.project);

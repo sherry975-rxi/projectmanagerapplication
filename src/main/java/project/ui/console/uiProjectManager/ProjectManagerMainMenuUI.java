@@ -17,7 +17,7 @@ import project.ui.console.uiProjectManager.others.US342DefineDependenciesBetween
 import project.ui.console.uiProjectManager.others.US390GetProjectReportedCostUI;
 import project.ui.console.uiProjectManager.taskLists.US360ProjectUnassignedTasksUI;
 import project.ui.console.uiProjectManager.taskLists.US370ProjectFinishedTasksDecreasingOrderUI;
-import project.ui.console.uiProjectManager.taskLists.US372ProjectOngoingTasksUI;
+import project.ui.console.uiProjectManager.taskLists.US372ProjectUnfinishedTasksUI;
 import project.ui.console.uiProjectManager.taskLists.US375ProjectNotStartedTasksUI;
 import project.ui.console.uiProjectManager.taskLists.US377ProjectCancelledTasks;
 import project.ui.console.uiProjectManager.taskLists.US380ProjectUnfinishedTasksWithExperiredDeadlineUI;
@@ -86,8 +86,8 @@ public class ProjectManagerMainMenuUI {
 
 		switch (option) {
 		case "A1":
-			US372ProjectOngoingTasksUI optionA1 = new US372ProjectOngoingTasksUI();
-			optionA1.displayOnGoingTasksOfProject(this.project, this.projectManager);
+			US372ProjectUnfinishedTasksUI optionA1 = new US372ProjectUnfinishedTasksUI();
+			optionA1.displayUnfinishedOfProject(this.project, this.projectManager);
 			break;
 		case "A2":
 			US380ProjectUnfinishedTasksWithExperiredDeadlineUI optionA2 = new US380ProjectUnfinishedTasksWithExperiredDeadlineUI();
@@ -95,7 +95,7 @@ public class ProjectManagerMainMenuUI {
 			break;
 		case "A3":
 			US370ProjectFinishedTasksDecreasingOrderUI optionA3 = new US370ProjectFinishedTasksDecreasingOrderUI(
-					this.project.getIdCode(), this.projectManager);
+					this.project, this.projectManager);
 			optionA3.projectDataDisplay();
 			break;
 		case "A4":
@@ -119,8 +119,9 @@ public class ProjectManagerMainMenuUI {
 			optionB2.addCollaboratorToProjectTeam();
 			break;
 		case "B3":
-			US360ViewCollaboratorsWithoutTasksUI optionB3 = new US360ViewCollaboratorsWithoutTasksUI();
-			optionB3.viewUnassignedCollaborators(this.project, this.projectManager);
+			US360ViewCollaboratorsWithoutTasksUI optionB3 = new US360ViewCollaboratorsWithoutTasksUI(this.project,
+					this.projectManager);
+			optionB3.viewUnassignedCollaborators();
 			break;
 		case "C1":
 			US356ApproveOrCancelAssignmentRequestUI optionC1 = new US356ApproveOrCancelAssignmentRequestUI(

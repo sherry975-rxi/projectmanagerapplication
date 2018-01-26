@@ -1,46 +1,53 @@
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import project.model.Company;
 import project.model.Project;
-import project.model.ProjectRepository;
 import project.model.Task;
-import project.model.User;
+import project.model.TaskRepository;
 
 public class US365MarkTaskAsFinishedControllerProjectManager {
-	private User username;
-	private int projectIndex;
-	private int taskIndex;
 	private Task taskToBeMarked;
-	private ProjectRepository projectList;
+	private TaskRepository projectTaskList;
 
-	public List<Project> getProjectsFromProjectManager(User user) {
-		List<Project> projectsThatImProjectManager = new ArrayList<>();
-		this.username = user;
-		projectList = Company.getTheInstance().getProjectsRepository();
-		projectsThatImProjectManager.addAll(projectList.getProjectsFromProjectManager(this.username));
-		return projectsThatImProjectManager;
+	public US365MarkTaskAsFinishedControllerProjectManager(String taskID, Project selectedProject) {
+		this.projectTaskList = selectedProject.getTaskRepository();
+		this.taskToBeMarked = projectTaskList.getTaskByID(taskID);
 	}
 
-	public List<Task> getUnfinishedTasksOfProjectFromProjectManager(int projectIndex) {
-		List<Task> unfinishedTaskFromProject = new ArrayList<>();
-		this.projectIndex = projectIndex;
-		List<Project> projectsThatImProjectManager = getProjectsFromProjectManager(this.username);
-		unfinishedTaskFromProject = projectsThatImProjectManager.get(this.projectIndex).getTaskRepository()
-				.getUnFinishedTasks();
-		return unfinishedTaskFromProject;
+	public boolean canTaskFinish() {
+		return taskToBeMarked.getTaskState().isTransitionToFinishedPossible();
 	}
 
-	public Task getTaskToBeMarkedFinished(int taskIndex) {
-		this.taskIndex = taskIndex;
-		List<Task> unfinishedTaskFromProject = getUnfinishedTasksOfProjectFromProjectManager(this.projectIndex);
-		taskToBeMarked = unfinishedTaskFromProject.get(this.taskIndex);
-		return taskToBeMarked;
-	}
-
-	public void markTaskAsFinished() {
+	public void setTaskAsFinished() {
 		taskToBeMarked.markTaskAsFinished();
 	}
+
+	/**
+	 * 
+	 * This methods are unnecessary in this controller, but they will be in a
+	 * different one
+	 * 
+	 * 
+	 * 
+	 * public List<Project> getProjectsFromProjectManager(User user) { List<Project>
+	 * projectsThatImProjectManager = new ArrayList<>(); this.username = user;
+	 * projectList = Company.getTheInstance().getProjectsRepository();
+	 * projectsThatImProjectManager.addAll(projectList.getProjectsFromProjectManager(this.username));
+	 * return projectsThatImProjectManager; }
+	 *
+	 *
+	 * 
+	 * public List<Task> getUnfinishedTasksOfProjectFromProjectManager(int
+	 * projectIndex) { List<Task> unfinishedTaskFromProject = new ArrayList<>();
+	 * this.projectIndex = projectIndex; List<Project> projectsThatImProjectManager
+	 * = getProjectsFromProjectManager(this.username); unfinishedTaskFromProject =
+	 * projectsThatImProjectManager.get(this.projectIndex).getTaskRepository()
+	 * .getUnFinishedTasks(); return unfinishedTaskFromProject; }
+	 *
+	 *
+	 * public Task getTaskToBeMarkedFinished(int taskIndex) { this.taskIndex =
+	 * taskIndex; taskToBeMarked = unfinishedTaskFromProject.get(this.taskIndex);
+	 * return taskToBeMarked; }
+	 *
+	 */
+
 }
