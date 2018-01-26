@@ -17,7 +17,7 @@ public class US372ProjectOngoingTasksUI {
 	private Project project;
 	private User user;
 
-	public void displayOnGoingTasksOfProject(Project project, User user) {
+	public void displayUnfinishedOfProject(Project project, User user) {
 
 		this.project = project;
 		this.user = user;
@@ -87,7 +87,7 @@ public class US372ProjectOngoingTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.displayOnGoingTasksOfProject(project, user);
+			this.displayUnfinishedOfProject(project, user);
 		}
 	}
 
