@@ -10,6 +10,7 @@ import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
+import project.ui.console.uiProjectManager.tasks.PmTaskFunctionalitiesUI;
 
 public class US377ProjectCancelledTasks {
 
@@ -49,7 +50,7 @@ public class US377ProjectCancelledTasks {
 		for (int i = 0; i < controller.getCancelledTasksFromAProject().size(); i++) {
 			String taskInfo = controller.getCancelledTaskListId(project).get(i);
 			System.out.println(taskInfo);
-			listOfCancelledTasks.add(controller.splitStringByFirstSpace(taskInfo));
+			listOfCancelledTasks.add(controller.getProjectCancelledTasks(this.project).get(i).getTaskID());
 		}
 
 		System.out.println(line);
@@ -68,7 +69,8 @@ public class US377ProjectCancelledTasks {
 		for (String ii : listOfCancelledTasks) {
 
 			if (option.equals(ii)) {
-				// TODO
+				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
+				taskFuntionatities.taskDataDisplay();
 			} else if (option.equals("B")) {
 				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
 						this.project);
