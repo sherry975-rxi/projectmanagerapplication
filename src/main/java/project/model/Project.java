@@ -609,9 +609,9 @@ public class Project {
 	public List<String> viewPendingTaskRemovalRequests() {
 		List<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskRemovalRequests) {
-			toString.add(req.getProjCollab().getUserFromProjectCollaborator().getName().toString() + "\n"
-					+ req.getProjCollab().getUserFromProjectCollaborator().getEmail().toString() + "\n"
-					+ req.getTask().getTaskID().toString() + "\n" + req.getTask().getDescription().toString());
+			toString.add(req.getProjCollab().getUserFromProjectCollaborator().getName() + "\n"
+					+ req.getProjCollab().getUserFromProjectCollaborator().getEmail() + "\n"
+					+ req.getTask().getTaskID() + "\n" + req.getTask().getDescription());
 		}
 		return toString;
 	}
