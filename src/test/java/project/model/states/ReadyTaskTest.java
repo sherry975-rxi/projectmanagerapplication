@@ -29,6 +29,8 @@ public class ReadyTaskTest {
 	Calendar estimatedTaskStartDateMainTask;
 	Calendar estimatedTaskStartDateNeededTask;
 	Calendar taskDeadline;
+	Calendar taskDeadline2;
+
 	TaskStateInterface readyState;
 	TaskStateInterface plannedState;
 	TaskStateInterface finishedState;
@@ -42,7 +44,7 @@ public class ReadyTaskTest {
 		// Creates the main task to be tested, as well as a task used solely to check
 		// the dependencies
 		mainTask = new Task(1, 1, "Task 1");
-		neededTask = new Task(1, 1, "Task 1");
+		neededTask = new Task(2, 2, "Task 1");
 
 		// Creates the estimated Start Dates and estimated Finish Date (Dealine)
 		estimatedTaskStartDateMainTask = Calendar.getInstance();
@@ -54,6 +56,10 @@ public class ReadyTaskTest {
 		// Sets up the estimated Start Dates for both tasks
 		mainTask.setEstimatedTaskStartDate(estimatedTaskStartDateMainTask);
 		neededTask.setEstimatedTaskStartDate(estimatedTaskStartDateNeededTask);
+		taskDeadline2 = Calendar.getInstance();
+		taskDeadline2.add(Calendar.DAY_OF_YEAR, 10);
+		neededTask.setTaskDeadline(taskDeadline2);
+
 		mainTask.createTaskDependence(neededTask, 10);
 
 		// Sets some of the conditions that should already be met by the task when it is

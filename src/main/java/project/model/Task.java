@@ -846,6 +846,7 @@ public class Task {
 			isDependencyValid = false;
 		if (this.getTaskState() instanceof StandBy)
 			isDependencyValid = false;
+
 		if (this.getTaskState() instanceof Ready)
 			isDependencyValid = false;
 
