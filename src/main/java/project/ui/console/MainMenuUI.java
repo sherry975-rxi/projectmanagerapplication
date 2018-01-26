@@ -390,7 +390,9 @@ public class MainMenuUI {
 		// Request assignment of collaborator to task 3.2 (taskHB2)
 		projectHomeBanking.createTaskAssignementRequest(projcollabATirapicos, taskHB2);
 
-		// Request of removal of collaborator
+		// Request of removal of collaborator projcollabATirapicos from task 3.5
+		// (taskHB5)
+		projectHomeBanking.createTaskRemovalRequest(projcollabATirapicos, taskHB5);
 
 		mainMenu();
 
