@@ -61,7 +61,8 @@ public class PmTaskFunctionalitiesUI {
 				// add UI method
 				break;
 			case "2":
-				US362RemoveUserFromTaskUI case2UI = new US362RemoveUserFromTaskUI();
+				// US362RemoveUserFromTaskUI case2UI = new
+				// US362RemoveUserFromTaskUI(this.project,, this.user);
 				// add UI method
 				break;
 			case "3":
