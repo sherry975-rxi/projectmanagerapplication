@@ -61,7 +61,7 @@ public class ProjectManagerMainMenuUI {
 		System.out.println(
 				"    [A1] - Unfinished                                                         [B1] - View Project Team");
 		System.out.println(
-				"    [A2] - Unfinished  w/ expired Finish Date or Deadline                     [B2] - Add Collaborator");
+				"    [A2] - Unfinished  w/ expired Deadline                                    [B2] - Add Collaborator");
 		System.out.println(
 				"    [A3] - Finished by Decreasing order of Finish Date                        [B3] - Show Unassigned Collaborators");
 		System.out.println("    [A4] - Not Started");

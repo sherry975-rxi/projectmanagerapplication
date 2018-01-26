@@ -586,6 +586,7 @@ public class Task {
 				removed = true;
 			}
 		}
+		this.taskState.changeToStandBy();
 		return removed;
 	}
 

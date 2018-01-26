@@ -31,6 +31,7 @@ public class US351AddCollaboratorToProjectTeamUI {
 		while (invalidInputA) {
 			System.out.println("Please choose a user (input its ID:");
 			System.out.println("Inputing [E] will exit this menu.");
+			System.out.println(line);
 			String userID = dataIn.nextLine();
 			if (userID.equals("E")) {
 				System.out.println("Assignment of user to project cancelled.");
@@ -53,7 +54,7 @@ public class US351AddCollaboratorToProjectTeamUI {
 
 		while (invalidInputB) {
 			System.out.println("Please input the cost per effort for the user selected:");
-			System.out.println("Inputing [-1] will exit this menu.");
+			System.out.println("Inputing [-1] will exit this menu.\n");
 			costPerEffort = dataIn.nextInt();
 			dataIn.nextLine();
 			if (costPerEffort != -1) {
@@ -68,15 +69,15 @@ public class US351AddCollaboratorToProjectTeamUI {
 
 		if (!invalidInputC)
 			System.out.println("Please input [Y] to confirm the addition of the user to the project team:");
-		System.out.println("Inputing anything else will cancel the addition.");
+		System.out.println("Inputing anything else will cancel the addition.\n");
 
 		String confirm = dataIn.nextLine();
 		if ("Y".equalsIgnoreCase(confirm)) {
 			controller.addUserToProjectTeam(user, project, costPerEffort);
-			System.out.println("User successfully added to the project.");
+			System.out.println("\nUser successfully added to the project.");
 			invalidInputC = true;
 		} else {
-			System.out.println("Assignment of user to project cancelled.");
+			System.out.println("\nAssignment of user to project cancelled.");
 			invalidInputC = true;
 		}
 	}

@@ -36,6 +36,7 @@ public class UserTasksFunctionalitiesMenuUI {
 		String function = user.getFunction().toUpperCase();
 
 		System.out.println("\n" + myname + " \n" + function);
+		System.out.println("                    MY TASKS");
 		System.out.println("___________________________________________________");
 
 		System.out.println("[1] View unfinished tasks");
@@ -43,11 +44,12 @@ public class UserTasksFunctionalitiesMenuUI {
 		System.out.println("[3] View finished tasks in the last month : Decreasing order");
 		System.out.println("[4] View total time spent on tasks in the last month");
 		System.out.println("[5] View average time spent by task in the last month");
+		System.out.println("");
+		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
 		System.out.println("[E] Exit \n");
 		System.out.println("Please choose an option: \n");
-		System.out.println("___________________________________________________");
 
 		chooseFunctionality();
 

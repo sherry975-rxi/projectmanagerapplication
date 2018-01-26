@@ -130,7 +130,13 @@ public class PrintProjectInfoController {
 		List<String> team = new ArrayList<>();
 
 		for (ProjectCollaborator projectMember : projectTeam) {
-			team.add(projectMember.getUserFromProjectCollaborator().getName());
+			String collaboratorActive;
+			if (projectMember.isProjectCollaboratorActive())
+				collaboratorActive = " [ACTIVE]";
+			else
+				collaboratorActive = " [INACTIVE]";
+
+			team.add(projectMember.getUserFromProjectCollaborator().getName() + collaboratorActive);
 		}
 		return String.join(", ", team);
 	}

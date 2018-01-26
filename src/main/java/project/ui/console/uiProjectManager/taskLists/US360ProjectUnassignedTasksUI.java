@@ -10,6 +10,7 @@ import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
+import project.ui.console.uiProjectManager.tasks.PmTaskFunctionalitiesUI;
 
 public class US360ProjectUnassignedTasksUI {
 
@@ -48,7 +49,7 @@ public class US360ProjectUnassignedTasksUI {
 		for (int i = 0; i < controller.getProjectNotAssignedTaskList(this.project).size(); i++) {
 			String taskInfo = controller.getProjectNotAssignedTaskList(this.project).get(i);
 			System.out.println(taskInfo);
-			listOfExpiredTaskID.add(controller.splitStringByFirstSpace(taskInfo));
+			listOfExpiredTaskID.add(controller.getProjectNotAssigned(this.project).get(i).getTaskID());
 		}
 
 		System.out.println("___________________________________________________");
@@ -67,7 +68,8 @@ public class US360ProjectUnassignedTasksUI {
 		for (String ii : listOfExpiredTaskID) {
 
 			if (option.equals(ii)) {
-				// TODO
+				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
+				taskFuntionatities.taskDataDisplay();
 			} else if (option.equals("B")) {
 				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
 						this.project);
