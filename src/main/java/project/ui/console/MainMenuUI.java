@@ -393,8 +393,11 @@ public class MainMenuUI {
 		// Request of removal of collaborator projcollabATirapicos from task 3.5
 		// (taskHB5)
 		projectHomeBanking.createTaskRemovalRequest(projcollabATirapicos, taskHB5);
-
-		mainMenu();
+		try {
+			mainMenu();
+		} catch (Exception e) {
+			System.out.println("The program has encountered an unexpected error. It will be terminated now.");
+		}
 
 	}
 
