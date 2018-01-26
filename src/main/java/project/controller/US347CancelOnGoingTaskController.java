@@ -18,14 +18,6 @@ public class US347CancelOnGoingTaskController {
 	/**
 	 * Constructor
 	 * 
-	 */
-	public US347CancelOnGoingTaskController() {
-
-	}
-
-	/**
-	 * Constructor
-	 * 
 	 * @param projectIDtoInstantiate
 	 */
 	public US347CancelOnGoingTaskController(String taskID, Project project) {

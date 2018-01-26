@@ -32,10 +32,10 @@ public class CollectProjectsFromUserController {
 		List<String> myProjects = new ArrayList<>();
 		ProjectRepository myProjRepo = Company.getTheInstance().getProjectsRepository();
 		for (Project ii : myProjRepo.getAllProjects()) {
-			if (ii.isUserActiveInProject(user)) {
-				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName());
-			} else if (ii.isProjectManager(user)) {
+			if (ii.isProjectManager(user)) {
 				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName() + " - PM ");
+			} else if (ii.isUserActiveInProject(user)) {
+				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName());
 			}
 		}
 		return myProjects;

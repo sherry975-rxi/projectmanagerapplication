@@ -40,9 +40,11 @@ public class US351AddCollaboratorToProjectTeamUI {
 				invalidInputC = true;
 			} else {
 				user = controller.searchUserByID(userID);
-				if (user != null) {
-					System.out.println("\nUser selected: " + userID +"\n");
+				if (!controller.isUserAlreadyInProject(user, project)) {
+					System.out.println("User selected: " + userID);
 					invalidInputA = false;
+				} else if (user != null) {
+					System.out.println("User is already in the project team");
 				} else {
 					System.out.println("Invalid ID provided. Please try again!");
 				}

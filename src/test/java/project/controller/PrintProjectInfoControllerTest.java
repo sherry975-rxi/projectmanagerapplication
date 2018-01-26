@@ -195,7 +195,7 @@ public class PrintProjectInfoControllerTest {
 	@Test
 	public void testPrintProjectTeamInfo() {
 
-		assertEquals(controller.printProjectTeamInfo(), "Daniel, João");
+		assertEquals(controller.printProjectTeamInfo(), "Daniel [ACTIVE], João [ACTIVE]");
 	}
 
 	/**

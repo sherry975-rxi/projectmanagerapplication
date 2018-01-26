@@ -1,6 +1,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -83,6 +84,15 @@ public class US351AddColaboratorToProjectTeamControllerTest {
 	public final void testSearchUserByID() {
 		assertEquals(activeUser, controller.searchUserByID("1234"));
 		assertEquals(null, controller.searchUserByID("1264"));
+	}
+
+	@Test
+	public final void testIsUserAlreadyInProject() {
+		assertFalse(controller.isUserAlreadyInProject(activeUser, activeProj));
+
+		controller.addUserToProjectTeam(activeUser, activeProj, 23);
+
+		assertTrue(controller.isUserAlreadyInProject(activeUser, activeProj));
 	}
 
 }

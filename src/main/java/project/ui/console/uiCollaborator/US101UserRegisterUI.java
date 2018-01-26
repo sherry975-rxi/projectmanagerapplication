@@ -99,7 +99,7 @@ public class US101UserRegisterUI {
 
 		System.out.println("Enter password: ");
 		String password = scannerInput.nextLine();
-		System.out.println("Password accepted: ");
+		System.out.println("Password accepted!");
 		System.out.println();
 
 		System.out.println("Enter street: ");

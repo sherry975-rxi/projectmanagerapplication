@@ -318,23 +318,28 @@ public class US203GetUnfinishedTaskTest {
 
 	@Test
 	public void test() {
-		US203GetUnfinishedTaskByUser unfinshedtask = new US203GetUnfinishedTaskByUser();
+		US203GetUnfinishedTaskByUser unfinishedtask = new US203GetUnfinishedTaskByUser();
 		int t = 0;
 		// create list of tasks to compare to taskRepository of project
 		List<Task> allTasksInTest = new ArrayList<>();
 		List<Task> allTasks = new ArrayList<>();
 
 		// add task to the list allTasksInTest
+		task1.setTaskDeadline(null);
+
 		allTasksInTest.add(task1);
 		allTasksInTest.add(task3);
 		allTasksInTest.add(task4);
 		allTasksInTest.add(task6);
-		allTasks = unfinshedtask.getUnfinishedTasksOfProjectCollaborator(user1);
+		allTasks = unfinishedtask.getUnfinishedTasksOfProjectCollaborator(user1);
 
 		// compares the list of tasks created to compare with the list of tasks in the
 		// task repository obtained by using the controller
 
 		assertEquals(allTasksInTest, allTasks);
+		
+		
+		
 	}
 
 }
