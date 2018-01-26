@@ -17,7 +17,7 @@ import project.ui.console.uiProjectManager.others.US342DefineDependenciesBetween
 import project.ui.console.uiProjectManager.others.US390GetProjectReportedCostUI;
 import project.ui.console.uiProjectManager.taskLists.US360ProjectUnassignedTasksUI;
 import project.ui.console.uiProjectManager.taskLists.US370ProjectFinishedTasksDecreasingOrderUI;
-import project.ui.console.uiProjectManager.taskLists.US372ProjectOngoingTasksUI;
+import project.ui.console.uiProjectManager.taskLists.US372ProjectUnfinishedTasksUI;
 import project.ui.console.uiProjectManager.taskLists.US375ProjectNotStartedTasksUI;
 import project.ui.console.uiProjectManager.taskLists.US377ProjectCancelledTasks;
 import project.ui.console.uiProjectManager.taskLists.US380ProjectUnfinishedTasksWithExperiredDeadlineUI;
@@ -86,7 +86,7 @@ public class ProjectManagerMainMenuUI {
 
 		switch (option) {
 		case "A1":
-			US372ProjectOngoingTasksUI optionA1 = new US372ProjectOngoingTasksUI();
+			US372ProjectUnfinishedTasksUI optionA1 = new US372ProjectUnfinishedTasksUI();
 			optionA1.displayUnfinishedOfProject(this.project, this.projectManager);
 			break;
 		case "A2":
