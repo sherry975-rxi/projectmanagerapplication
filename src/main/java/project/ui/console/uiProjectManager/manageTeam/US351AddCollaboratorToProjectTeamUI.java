@@ -2,8 +2,8 @@ package project.ui.console.uiProjectManager.manageTeam;
 
 import java.util.Scanner;
 
-import project.controller.PrintUserInfoController;
 import project.controller.US351AddColaboratorToProjectTeamController;
+import project.model.Company;
 import project.model.Project;
 import project.model.User;
 
@@ -15,7 +15,6 @@ public class US351AddCollaboratorToProjectTeamUI {
 	public void addCollaboratorToProjectTeam(Project project) {
 		String line = "______________________________________________";
 		US351AddColaboratorToProjectTeamController controller = new US351AddColaboratorToProjectTeamController();
-		PrintUserInfoController userInfoPrinter = new PrintUserInfoController();
 		Scanner dataIn = new Scanner(System.in);
 		boolean invalidInputA = true;
 		boolean invalidInputB = true;
@@ -24,7 +23,14 @@ public class US351AddCollaboratorToProjectTeamUI {
 		System.out.println(line);
 		System.out.println("USER LIST");
 		System.out.println(line);
-		userInfoPrinter.printAllActiveUsersInfo();
+		for (User each : Company.getTheInstance().getUsersRepository().getAllUsersFromRepository()) {
+			System.out.println(each.getName());
+			System.out.println(each.getIdNumber());
+			System.out.println(each.getEmail());
+			System.out.println(each.getPhone());
+			System.out.println(each.getFunction());
+			System.out.println();
+		}
 		System.out.println(line);
 		System.out.println("");
 
