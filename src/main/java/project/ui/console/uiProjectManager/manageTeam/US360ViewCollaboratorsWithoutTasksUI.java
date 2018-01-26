@@ -4,10 +4,12 @@ import java.util.List;
 
 import project.controller.US360ViewCollaboratorsWithoutTasksController;
 import project.model.Project;
+import project.model.User;
+import project.ui.console.uiProjectManager.ProjectManagerMainMenuUI;
 
 public class US360ViewCollaboratorsWithoutTasksUI {
 
-	public void viewUnassignedCollaborators(Project selectedProject) {
+	public void viewUnassignedCollaborators(Project selectedProject, User user) {
 
 		List<String> idleCollaboratorsInfo;
 
@@ -25,6 +27,8 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 				System.out.println("");
 			}
 		}
+		ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(user, selectedProject);
+		projectManagerMainMenuUI.displayOptions();
 
 	}
 }
