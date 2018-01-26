@@ -147,6 +147,10 @@ public class US342DefineDependenciesBetweenTasksUI {
 
 								System.out.println(
 										"Task Dependency couldn't be created. Please, check TaskDependency requirements to create Task Dependency");
+								System.out.println("The mother task has a Task Deadline");
+								System.out.println("The mother task is neither set to state FINISHED or CANCELLED");
+								System.out.println("The daughter task wasn't yet initiated");
+
 								checkD = false;
 
 							}
