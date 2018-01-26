@@ -104,7 +104,7 @@ public class TaskDetailsUI {
 				}
 				break;
 			case "B":
-				if (this.isPreviousUIFromTasks == true) {
+				if (this.isPreviousUIFromTasks) {
 					ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
 					projectView.projectDataDisplay();
 				} else {
