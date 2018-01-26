@@ -70,7 +70,8 @@ public class PmTaskFunctionalitiesUI {
 				// add UI method
 				break;
 			case "4":
-				// ver se é suposto ter a cancel ou não
+				US347CancelOnGoingTaskUI us347UI = new US347CancelOnGoingTaskUI();
+				us347UI.cancelOnGoingTask(taskID, project);
 				break;
 			case "B":
 				ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(this.user, this.project);

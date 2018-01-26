@@ -377,7 +377,10 @@ public class StandByTests {
 		/*
 		 * Tests if its possible to change to state Cancelled
 		 */
+		// sets a cancel date for testTask
+		testTask.setCancelDate();
 		testTask.setTaskState(stateTestTask1);
+
 		stateTestTask1.changeToCancelled();
 		assertEquals(stateToCompare, testTask.viewTaskStateName());
 		// TODO Cancelled Class is still returning false

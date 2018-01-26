@@ -7,8 +7,8 @@ import java.util.List;
 
 import project.model.Company;
 import project.model.Project;
+import project.model.ProjectCollaborator;
 import project.model.Task;
-import project.model.TaskCollaborator;
 
 public class PrintTaskInfoController {
 
@@ -125,11 +125,10 @@ public class PrintTaskInfoController {
 	 * @return String task's team
 	 */
 	public String printTaskTeamInfo() {
-		List<TaskCollaborator> projectTeam = this.task.getTaskTeam();
+		List<ProjectCollaborator> projectTeam = this.project.getProjectCollaboratorsFromTask(this.task);
 		List<String> team = new ArrayList<>();
-		for (TaskCollaborator projectMember : projectTeam) {
-			team.add(projectMember.getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator()
-					.getName());
+		for (ProjectCollaborator projectMember : projectTeam) {
+			team.add(projectMember.getUserFromProjectCollaborator().getName());
 		}
 		return String.join(", ", team);
 	}

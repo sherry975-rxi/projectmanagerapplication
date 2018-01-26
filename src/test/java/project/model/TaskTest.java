@@ -746,4 +746,17 @@ public class TaskTest {
 		// user with given email
 		assertEquals(testTask2.getReporterName("null@gmail.com"), "");
 	}
+
+	@Test
+
+	public void testClearCancelDate() {
+
+		testTask.setCancelDate();
+
+		assertFalse(testTask.getCancelDate() == null);
+
+		testTask.cancelledDateClear();
+
+		assertTrue(testTask.getCancelDate() == null);
+	}
 }

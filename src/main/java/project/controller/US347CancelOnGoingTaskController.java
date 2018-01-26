@@ -3,6 +3,7 @@
  */
 package project.controller;
 
+import project.model.Project;
 import project.model.Task;
 
 /**
@@ -11,7 +12,8 @@ import project.model.Task;
  */
 public class US347CancelOnGoingTaskController {
 
-	private Task task;
+	private String taskID;
+	private Project project;
 
 	/**
 	 * Constructor
@@ -26,8 +28,9 @@ public class US347CancelOnGoingTaskController {
 	 * 
 	 * @param projectIDtoInstantiate
 	 */
-	public US347CancelOnGoingTaskController(Task task) {
-		this.task = task;
+	public US347CancelOnGoingTaskController(String taskID, Project project) {
+		this.taskID = taskID;
+		this.project = project;
 	}
 
 	/**
@@ -39,7 +42,10 @@ public class US347CancelOnGoingTaskController {
 	 * @return task state as a string
 	 */
 	public String viewTaskState() {
-		return this.task.viewTaskStateName();
+
+		Task taskToGetByID = this.project.getTaskRepository().getTaskByID(taskID);
+
+		return taskToGetByID.viewTaskStateName();
 	}
 
 	/**
@@ -51,11 +57,14 @@ public class US347CancelOnGoingTaskController {
 	 */
 	public boolean cancelOnGoingTask() {
 
-		boolean cancelled = false;
+		Task task = this.project.getTaskRepository().getTaskByID(taskID);
 
+		boolean cancelled = false;
+		task.setCancelDate();
 		if (task.getTaskState().changeToCancelled()) {
-			task.setCancelDate();
 			cancelled = true;
+		} else {
+			task.cancelledDateClear();
 		}
 		return cancelled;
 	}

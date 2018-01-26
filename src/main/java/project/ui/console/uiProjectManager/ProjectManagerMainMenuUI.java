@@ -119,8 +119,9 @@ public class ProjectManagerMainMenuUI {
 			optionB2.addCollaboratorToProjectTeam();
 			break;
 		case "B3":
-			US360ViewCollaboratorsWithoutTasksUI optionB3 = new US360ViewCollaboratorsWithoutTasksUI();
-			optionB3.viewUnassignedCollaborators(project);
+			US360ViewCollaboratorsWithoutTasksUI optionB3 = new US360ViewCollaboratorsWithoutTasksUI(this.project,
+					this.projectManager);
+			optionB3.viewUnassignedCollaborators();
 			break;
 		case "C1":
 			US356ApproveOrCancelAssignmentRequestUI optionC1 = new US356ApproveOrCancelAssignmentRequestUI(

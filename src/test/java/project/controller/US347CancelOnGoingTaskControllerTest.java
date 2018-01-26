@@ -231,7 +231,8 @@ public class US347CancelOnGoingTaskControllerTest {
 	@Test
 	public void testViewTaskState() {
 		// create controller
-		US347CancelOnGoingTaskController uS347CancelOnGoingTaskController = new US347CancelOnGoingTaskController(task1);
+		US347CancelOnGoingTaskController uS347CancelOnGoingTaskController = new US347CancelOnGoingTaskController(
+				task1.getTaskID(), project1);
 
 		assertEquals("OnGoing", uS347CancelOnGoingTaskController.viewTaskState());
 	}
@@ -244,7 +245,8 @@ public class US347CancelOnGoingTaskControllerTest {
 	public void testCancelOnGoingTask() {
 
 		// create controller
-		US347CancelOnGoingTaskController uS347CancelOnGoingTaskController = new US347CancelOnGoingTaskController(task1);
+		US347CancelOnGoingTaskController uS347CancelOnGoingTaskController = new US347CancelOnGoingTaskController(
+				task1.getTaskID(), project1);
 
 		// create state cancelled in task2
 		Cancelled cancelledTestTask = new Cancelled(task2);
@@ -252,6 +254,8 @@ public class US347CancelOnGoingTaskControllerTest {
 		// Sets task2 to "cancelled"
 		task2.setTaskState(cancelledTestTask);
 
+		// Sets a cancel date for the task1
+		task1.setCancelDate();
 		// use of control to set task1 to state cancelled
 		uS347CancelOnGoingTaskController.cancelOnGoingTask();
 

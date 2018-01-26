@@ -957,4 +957,8 @@ public class Task {
 		}
 	}
 
+	public void cancelledDateClear() {
+		this.cancelDate = null;
+	}
+
 }

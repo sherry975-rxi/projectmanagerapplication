@@ -34,7 +34,7 @@ public class US372GetProjectUnfinishedTaskListController {
 	 */
 	public List<String> getUnfinishedTaskListId(Project proj) {
 
-		List<Task> taskListOnGoing = proj.getTaskRepository().getOnGoingTasks();
+		List<Task> taskListOnGoing = proj.getTaskRepository().getUnFinishedTasks();
 		List<String> taskListOnGoingToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListOnGoing.size(); i++) {
