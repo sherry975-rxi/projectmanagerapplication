@@ -43,8 +43,8 @@ public class US342DefineDependenciesBetweenTasksUI {
 		List<Task> projTaskList = us342Controller.getTasksFromAProject();
 
 		for (int i = 0; i < us342Controller.getTasksFromAProject().size(); i++) {
-			System.out.println("[" + i + 1 + "] " + " " + projTaskList.get(i).getTaskID() + " "
-					+ projTaskList.get(i).getDescription());
+			System.out
+					.println("[" + projTaskList.get(i).getTaskID() + "] " + " " + projTaskList.get(i).getDescription());
 			System.out.println();
 		}
 
