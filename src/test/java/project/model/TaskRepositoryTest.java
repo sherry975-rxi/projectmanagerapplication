@@ -115,7 +115,7 @@ public class TaskRepositoryTest {
 		// create a estimated Task Dead line Date
 		Calendar taskDeadlineDateTest = Calendar.getInstance();
 		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
@@ -145,6 +145,7 @@ public class TaskRepositoryTest {
 
 	@After
 	public void tearDown() {
+
 		user1 = null;
 		testTask = null;
 		testTask2 = null;
