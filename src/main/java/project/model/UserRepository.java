@@ -1,11 +1,12 @@
 package project.model;
 
-import project.dto.userDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import java.util.ArrayList;
-import java.util.List;
+
+import project.dto.userDTO;
 
 /**
  * Class UserRepository that contains all lists and methods to build lists of
@@ -104,9 +105,10 @@ public class UserRepository {
 	/**
 	 * This method allows the administrator to see if a given user already exists in
 	 * company
-	 *
-	 * @param addedUser
-	 * @return boolean; TRUE if user exists in company FALSE if user doesnt exist
+	 * 
+	 * @param user
+	 *            user
+	 * @return boolean; TRUE if user exists in company FALSE if user doesn’t exist
 	 *         in company
 	 */
 	public boolean isUserinUserRepository(User addedUser) {
@@ -121,7 +123,8 @@ public class UserRepository {
 	 */
 	public List<User> getAllUsersFromRepository() {
 
-		List<User> allUsers = new ArrayList<>(this.usersRepository);
+		List<User> allUsers = new ArrayList<>();
+		allUsers.addAll(this.usersRepository);
 		return allUsers;
 
 	}
@@ -159,9 +162,9 @@ public class UserRepository {
 
 		List<User> userListThatContainsPiecesOfEmailString = new ArrayList<>();
 
-		for (User anUsersRepository : this.usersRepository) {
-			if (anUsersRepository.getEmail().contains(partOfEmail)) {
-				userListThatContainsPiecesOfEmailString.add(anUsersRepository);
+		for (int i = 0; i < this.usersRepository.size(); i++) {
+			if (usersRepository.get(i).getEmail().contains(partOfEmail)) {
+				userListThatContainsPiecesOfEmailString.add(usersRepository.get(i));
 			}
 
 		}
@@ -182,9 +185,9 @@ public class UserRepository {
 	 */
 	public User getUserByEmail(String completeEmail) {
 
-		for (User anUsersRepository : this.usersRepository) {
-			if (anUsersRepository.getEmail().contains(completeEmail)) {
-				return anUsersRepository;
+		for (int i = 0; i < this.usersRepository.size(); i++) {
+			if (usersRepository.get(i).getEmail().contains(completeEmail)) {
+				return usersRepository.get(i);
 			}
 		}
 		return null;
@@ -203,19 +206,19 @@ public class UserRepository {
 
 		List<User> usersByProfileList = new ArrayList<>();
 
-        for (User anUsersRepository : this.usersRepository) {
-            if (anUsersRepository.getUserProfile() == searchProfile) {
-                usersByProfileList.add(anUsersRepository);
-            }
-        }
+		for (int i = 0; i < this.usersRepository.size(); i++) {
+			if (usersRepository.get(i).getUserProfile() == searchProfile) {
+				usersByProfileList.add(this.usersRepository.get(i));
+			}
+		}
 		return usersByProfileList;
 	}
 
 	/**
 	 * This method checks if an e-mail inserted by the user is valid or not
 	 * 
-	 * @param email
-	 *
+	 * @param String
+	 *            email
 	 * @return TRUE if email is valid FALSE if email is invalid
 	 */
 	public boolean isEmailAddressValid(String email) {
