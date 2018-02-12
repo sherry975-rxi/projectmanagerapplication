@@ -80,10 +80,6 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 		case "M":
 			MainMenuUI.mainMenu();
 			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			System.exit(0);
-			break;
 		default:
 			System.out.println("Choose a valid option");
 			displayAssignmentTaskRequests();
@@ -149,19 +145,19 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			yerOrNo = input.nextLine();
 		}
 
-		if (yerOrNo.equalsIgnoreCase("y")) {
-			request = request - 1;
-			assignmentRequest.setSelectedAdditionRequest(request);
+		if ("y".equalsIgnoreCase(yerOrNo)) {
+			int requestNumber = request - 1;
+			assignmentRequest.setSelectedAdditionRequest(requestNumber);
 			if (assignmentRequest.approveAssignmentRequest()) {
 				System.out.println("----REQUEST APPROVED----");
-				System.out.println("--User deleted from task--");
+				System.out.println("--User assigned to Task--");
 				displayAssignmentTaskRequests();
 			}
 		}
 
 		else {
 			System.out.println("----REQUEST CANCELLED----");
-			System.out.println("--User not deleted from task--");
+			System.out.println("--User not assigned to task--");
 			assignmentRequest.approveAssignmentRequest();
 			displayAssignmentTaskRequests();
 		}

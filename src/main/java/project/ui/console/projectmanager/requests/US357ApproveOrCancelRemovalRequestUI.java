@@ -80,10 +80,6 @@ public class US357ApproveOrCancelRemovalRequestUI {
 		case "M":
 			MainMenuUI.mainMenu();
 			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			System.exit(0);
-			break;
 		default:
 			System.out.println("Choose a valid option");
 			displayRemovalTaskRequests();
@@ -149,9 +145,9 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			yerOrNo = input.nextLine();
 		}
 
-		if (yerOrNo.equalsIgnoreCase("y")) {
-			request = request - 1;
-			String requestInfo = cancelRequest.viewPendingRemovalRequests().get(request);
+		if ("y".equalsIgnoreCase(yerOrNo)) {
+			int requestNumber = request - 1;
+			String requestInfo = cancelRequest.viewPendingRemovalRequests().get(requestNumber);
 			cancelRequest.setTaskIDandUserEmailWithRequestString(requestInfo);
 			if (cancelRequest.acceptRemovalRequestFromTask()) {
 				System.out.println("----REQUEST APPROVED----");
