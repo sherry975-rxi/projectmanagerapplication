@@ -8,12 +8,12 @@ import org.junit.Test;
 
 public class userDTOTests {
 
-	userDTO user;
+	UserDTO user;
 
 	@Before
 	public void setUp() {
 
-		user = new userDTO("name", "email", "idNumber", "function", "phone", "password", "street", "zipCode", "city",
+		user = new UserDTO("name", "email", "idNumber", "function", "phone", "password", "street", "zipCode", "city",
 				"district", "country");
 	}
 

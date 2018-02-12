@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.dto.userDTO;
+import project.dto.UserDTO;
 import project.model.Company;
 import project.model.UserRepository;
 
@@ -51,7 +51,7 @@ public class US101RegisterUserController {
 	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
 			String street, String zipCode, String city, String district, String country) {
 
-		userDTO newUser = new userDTO(name, email, idNumber, function, phone, password, street, zipCode, city, district,
+		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password, street, zipCode, city, district,
 				country);
 
 		userRegistry.createUserWithDTO(newUser);

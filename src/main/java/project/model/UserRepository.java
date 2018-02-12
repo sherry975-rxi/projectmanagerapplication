@@ -6,7 +6,7 @@ import java.util.List;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-import project.dto.userDTO;
+import project.dto.UserDTO;
 
 /**
  * Class UserRepository that contains all lists and methods to build lists of
@@ -70,7 +70,7 @@ public class UserRepository {
 	 * @param userDTO
 	 *            UserDTO to create a user
 	 */
-	public void createUserWithDTO(userDTO userDTO) {
+	public void createUserWithDTO(UserDTO userDTO) {
 
 		// Instantias the user
 		User newUser = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getIdNumber(), userDTO.getFunction(),

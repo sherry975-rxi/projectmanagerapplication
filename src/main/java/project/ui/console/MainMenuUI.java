@@ -12,11 +12,11 @@ import project.model.TaskCollaborator;
 import project.model.User;
 import project.model.taskStateInterface.Cancelled;
 import project.model.taskStateInterface.OnGoing;
-import project.ui.console.uiAdministrator.AdminMenuUI;
-import project.ui.console.uiCollaborator.CollaboratorMainMenuUI;
-import project.ui.console.uiCollaborator.US101UserRegisterUI;
-import project.ui.console.uiCollaborator.US208LoginUI;
-import project.ui.console.uiDirector.DirectorMenuUI;
+import project.ui.console.administrator.AdminMenuUI;
+import project.ui.console.collaborator.CollaboratorMainMenuUI;
+import project.ui.console.collaborator.US101UserRegisterUI;
+import project.ui.console.collaborator.US208LoginUI;
+import project.ui.console.director.DirectorMenuUI;
 
 public class MainMenuUI {
 
