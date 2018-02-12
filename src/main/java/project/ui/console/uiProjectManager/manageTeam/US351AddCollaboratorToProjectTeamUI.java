@@ -45,17 +45,7 @@ public class US351AddCollaboratorToProjectTeamUI {
 				invalidInputB = false;
 				invalidInputC = true;
 			} else {
-				user = controller.searchUserByID(userID);
-				if (!controller.isUserAlreadyInProject(user, project)) {
-					System.out.println("User selected: " + userID);
-					this.user = controller.searchUserByID(userID);
-					invalidInputA = false;
-				} else if (user != null) {
-					System.out.println("User is already in the project team");
-				} else {
-					System.out.println("Invalid ID provided. Please try again!");
-				}
-
+				invalidInputA = searchUserUI(controller, userID, project);
 			}
 		}
 
@@ -87,5 +77,21 @@ public class US351AddCollaboratorToProjectTeamUI {
 			System.out.println("\nAssignment of user to project cancelled.");
 			invalidInputC = true;
 		}
+	}
+
+	private boolean searchUserUI(US351AddColaboratorToProjectTeamController controller, String userID,
+			Project project) {
+		boolean result = true;
+		user = controller.searchUserByID(userID);
+		if (!controller.isUserAlreadyInProject(user, project)) {
+			System.out.println("User selected: " + userID);
+			this.user = controller.searchUserByID(userID);
+			result = false;
+		} else if (user != null) {
+			System.out.println("User is already in the project team");
+		} else {
+			System.out.println("Invalid ID provided. Please try again!");
+		}
+		return result;
 	}
 }

@@ -110,56 +110,8 @@ public class US342DefineDependenciesBetweenTasksUI {
 									+ "be set to the same day of the estimated finish date of the task mother");
 
 					if (scannerInput.hasNextInt()) {
-						incrementDays = Integer.parseInt(scannerInput.nextLine());
-						boolean wasDependencyCreated = us342Controller.createDependenceFromTask(daughterTask,
-								motherTask, incrementDays);
-						if (!wasDependencyCreated) {
-							System.out.println(
-									"It wasn't possible to create a Task Dependency. Please, check TaskDependency requirements to create Task Dependency");
-							System.out.println();
-							this.chooseProject();
-
-						}
-
-						String estStartDateMainTask = us342Controller.getTaskEstimatedStartDateString(motherTask);
-						String estStarDateDependentTask = us342Controller.getTaskEstimatedStartDateString(daughterTask);
-						String estDeadlineMainTask = us342Controller.getTaskDeadlineString(motherTask);
-
-						System.out.println("The estimated start date of main task is: " + estStartDateMainTask + "\n"
-								+ "and the estimated deadline  of main task is: " + estDeadlineMainTask);
-						System.out.println();
-
-						System.out.println(
-								"The estimated start date of the dependent task is: " + estStarDateDependentTask);
-						System.out.println();
-
-						System.out.println("Are you sure you want to create this dependency?");
-						System.out.println("Press Y to confirm");
-						String choice = scannerInput.nextLine();
-
-						if ("Y".equalsIgnoreCase(choice)) {
-							if (wasDependencyCreated) {
-								System.out.println("Dependency successfully created.");
-								checkD = false;
-
-							} else {
-								us342Controller.removeDependenceFromTask(daughterTask, motherTask);
-
-								System.out.println(
-										"Task Dependency couldn't be created. Please, check TaskDependency requirements to create Task Dependency");
-								System.out.println("The mother task has a Task Deadline");
-								System.out.println("The mother task is neither set to state FINISHED or CANCELLED");
-								System.out.println("The daughter task wasn't yet initiated");
-
-								checkD = false;
-
-							}
-
-						} else {
-							System.out.println("Task dependency creation cancelled!");
-							System.out.println("Exiting menu.");
-							checkD = false;
-						}
+						checkD = incrementDaysChoosing(incrementDays, scannerInput, us342Controller, daughterTask,
+								motherTask);
 
 					} else {
 						System.out.println("Invalid number!");
@@ -180,5 +132,59 @@ public class US342DefineDependenciesBetweenTasksUI {
 			}
 		}
 
+	}
+
+	private boolean incrementDaysChoosing(int incrementDays, Scanner scannerInput,
+			US342CreateTaskDependencyController us342Controller, String daughterTask, String motherTask) {
+		boolean result = true;
+		incrementDays = Integer.parseInt(scannerInput.nextLine());
+		boolean wasDependencyCreated = us342Controller.createDependenceFromTask(daughterTask, motherTask,
+				incrementDays);
+		if (!wasDependencyCreated) {
+			System.out.println(
+					"It wasn't possible to create a Task Dependency. Please, check TaskDependency requirements to create Task Dependency");
+			System.out.println();
+			this.chooseProject();
+
+		}
+
+		String estStartDateMainTask = us342Controller.getTaskEstimatedStartDateString(motherTask);
+		String estStarDateDependentTask = us342Controller.getTaskEstimatedStartDateString(daughterTask);
+		String estDeadlineMainTask = us342Controller.getTaskDeadlineString(motherTask);
+
+		System.out.println("The estimated start date of main task is: " + estStartDateMainTask + "\n"
+				+ "and the estimated deadline  of main task is: " + estDeadlineMainTask);
+		System.out.println();
+
+		System.out.println("The estimated start date of the dependent task is: " + estStarDateDependentTask);
+		System.out.println();
+
+		System.out.println("Are you sure you want to create this dependency?");
+		System.out.println("Press Y to confirm");
+		String choice = scannerInput.nextLine();
+
+		if ("Y".equalsIgnoreCase(choice)) {
+			if (wasDependencyCreated) {
+				System.out.println("Dependency successfully created.");
+				result = false;
+
+			} else {
+				us342Controller.removeDependenceFromTask(daughterTask, motherTask);
+
+				System.out.println(
+						"Task Dependency couldn't be created. Please, check TaskDependency requirements to create Task Dependency");
+				System.out.println("The mother task has a Task Deadline");
+				System.out.println("The mother task is neither set to state FINISHED or CANCELLED");
+				System.out.println("The daughter task wasn't yet initiated");
+
+				result = false;
+
+			}
+		} else {
+			System.out.println("Task dependency creation cancelled!");
+			System.out.println("Exiting menu.");
+			result = false;
+		}
+		return result;
 	}
 }
