@@ -33,6 +33,11 @@ public class US342DefineDependenciesBetweenTasksUI {
 		String daughterTask = "";
 		String motherTask = "";
 		int incrementDays = 0;
+		String invalidNumber = "Invalid number!";
+		String tryAgain = "Try again?";
+		String pressYToConfirm = "Press Y to confirm";
+		String creationCancelled = "Task dependency creation cancelled!";
+		String exitMenu = "Exiting menu.";
 
 		Scanner scannerInput = new Scanner(System.in);
 
@@ -54,14 +59,14 @@ public class US342DefineDependenciesBetweenTasksUI {
 			if (us342Controller.projectContainsSelectedTask(daughterTask)) {
 				checkA = false;
 			} else {
-				System.out.println("Invalid number!");
-				System.out.println("Try again?");
-				System.out.println("Press Y to confirm");
+				System.out.println(invalidNumber);
+				System.out.println(tryAgain);
+				System.out.println(pressYToConfirm);
 				String choice = scannerInput.nextLine();
 
 				if (!"Y".equalsIgnoreCase(choice)) {
-					System.out.println("Task dependency creation cancelled!");
-					System.out.println("Exiting menu.");
+					System.out.println(creationCancelled);
+					System.out.println(exitMenu);
 					checkA = false;
 					checkB = false;
 					checkC = false;
@@ -79,14 +84,14 @@ public class US342DefineDependenciesBetweenTasksUI {
 				checkB = false;
 
 			} else {
-				System.out.println("Invalid number!");
-				System.out.println("Try again?");
-				System.out.println("Press Y to confirm");
+				System.out.println(invalidNumber);
+				System.out.println(tryAgain);
+				System.out.println(pressYToConfirm);
 				String choice = scannerInput.nextLine();
 
 				if (!"Y".equalsIgnoreCase(choice)) {
-					System.out.println("Task dependency creation cancelled!");
-					System.out.println("Exiting menu.");
+					System.out.println(creationCancelled);
+					System.out.println(exitMenu);
 					checkB = false;
 					checkC = false;
 				}
@@ -111,17 +116,17 @@ public class US342DefineDependenciesBetweenTasksUI {
 
 					if (scannerInput.hasNextInt()) {
 						checkD = incrementDaysChoosing(incrementDays, scannerInput, us342Controller, daughterTask,
-								motherTask);
+								motherTask, pressYToConfirm, creationCancelled, exitMenu);
 
 					} else {
-						System.out.println("Invalid number!");
-						System.out.println("Try again?");
-						System.out.println("Press Y to confirm");
+						System.out.println(invalidNumber);
+						System.out.println(tryAgain);
+						System.out.println(pressYToConfirm);
 						String choice = scannerInput.nextLine();
 
 						if (!"Y".equalsIgnoreCase(choice)) {
-							System.out.println("Task dependency creation cancelled!");
-							System.out.println("Exiting menu.");
+							System.out.println(creationCancelled);
+							System.out.println(exitMenu);
 							checkD = false;
 						}
 					}
@@ -135,7 +140,8 @@ public class US342DefineDependenciesBetweenTasksUI {
 	}
 
 	private boolean incrementDaysChoosing(int incrementDays, Scanner scannerInput,
-			US342CreateTaskDependencyController us342Controller, String daughterTask, String motherTask) {
+			US342CreateTaskDependencyController us342Controller, String daughterTask, String motherTask,
+			String pressYToConfirm, String creationCancelled, String exitMenu) {
 		boolean result = true;
 		incrementDays = Integer.parseInt(scannerInput.nextLine());
 		boolean wasDependencyCreated = us342Controller.createDependenceFromTask(daughterTask, motherTask,
@@ -160,7 +166,7 @@ public class US342DefineDependenciesBetweenTasksUI {
 		System.out.println();
 
 		System.out.println("Are you sure you want to create this dependency?");
-		System.out.println("Press Y to confirm");
+		System.out.println(pressYToConfirm);
 		String choice = scannerInput.nextLine();
 
 		if ("Y".equalsIgnoreCase(choice)) {
@@ -181,8 +187,8 @@ public class US342DefineDependenciesBetweenTasksUI {
 
 			}
 		} else {
-			System.out.println("Task dependency creation cancelled!");
-			System.out.println("Exiting menu.");
+			System.out.println(creationCancelled);
+			System.out.println(exitMenu);
 			result = false;
 		}
 		return result;
