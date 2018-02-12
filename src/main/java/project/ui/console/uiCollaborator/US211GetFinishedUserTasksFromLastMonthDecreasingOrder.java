@@ -40,19 +40,28 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 
 		System.out.println("");
 
-		String choice = scannerInput.nextLine().toUpperCase();
-		switch (choice) {
-		case "B":
-			UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
-			previousMenu.displayFunctionalities();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			System.exit(0);
-			break;
+		boolean repeat = true;
+		while (repeat) {
+			String choice = scannerInput.nextLine().toUpperCase();
+			switch (choice) {
+			case "B":
+				UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
+				previousMenu.displayFunctionalities();
+				repeat = false;
+				break;
+			case "M":
+				MainMenuUI.mainMenu();
+				repeat = false;
+				break;
+			case "E":
+				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
+				repeat = false;
+				System.exit(0);
+				break;
+			default:
+				System.out.println("Invalid input. Please retry:");
+
+			}
 
 		}
 	}
