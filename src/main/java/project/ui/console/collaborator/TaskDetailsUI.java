@@ -94,27 +94,17 @@ public class TaskDetailsUI {
 						this.taskID, this.user);
 				task = controllerMember1.getTaskByTaskID(this.taskID);
 				ProjectCollaborator projCollaborator1 = new ProjectCollaborator(this.user, this.projectID);
-
 				checkAndAddRemovalRequest(projCollaborator1, cantDoIt);
-
 				break;
 			case "B":
-				if (this.isPreviousUIFromTasks) {
-					ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
-					projectView.projectDataDisplay();
-				} else {
-					UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
-					userTasks.displayFunctionalities();
-				}
+				goToPreviousUI(this.projectID, this.user);
 				break;
 			case "4":
 				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember2 = new US204v2createRequestAddCollaboratorToTaskTeamController(
 						this.taskID, this.user);
 				task = controllerMember2.getTaskByTaskID(this.taskID);
 				ProjectCollaborator projCollaborator2 = new ProjectCollaborator(this.user, this.projectID);
-
 				checkAndCreateReportRequest(projCollaborator2, cantDoIt);
-
 				break;
 			case "M":
 				MainMenuUI.mainMenu();
@@ -151,6 +141,18 @@ public class TaskDetailsUI {
 			US207And208CreateUpdateTaskReportUI reportUI = new US207And208CreateUpdateTaskReportUI(user.getEmail(),
 					taskID);
 			reportUI.createReport();
+		}
+	}
+
+	public void goToPreviousUI(Integer projectID, User user){
+		this.projectID = projectID;
+		this.user = user;
+		if (this.isPreviousUIFromTasks) {
+			ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
+			projectView.projectDataDisplay();
+		} else {
+			UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
+			userTasks.displayFunctionalities();
 		}
 	}
 }

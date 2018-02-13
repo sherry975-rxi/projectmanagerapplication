@@ -124,7 +124,7 @@ public class US340CreateTaskUI {
 		String confirm = scannerInput.nextLine();
 
 		if ("y".equalsIgnoreCase(confirm)) {
-			createTaskController.addTask(description, number, cost);
+			createTaskController.addTask(description);
 			System.out.println();
 			System.out.println("Task was successfully added to this project.");
 			System.out.println();

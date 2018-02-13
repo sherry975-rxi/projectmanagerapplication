@@ -26,7 +26,7 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 		System.out.println("Finished Tasks by Decreasing Order of:");
 		System.out.println(user.getName());
 		System.out.println("______________________________________________");
-		if (lastMonthFinishedTasks.size() == 0) {
+		if (lastMonthFinishedTasks.isEmpty()) {
 			System.out.println("You completed no Tasks last month!");
 
 		} else {
@@ -52,11 +52,6 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 			case "M":
 				MainMenuUI.mainMenu();
 				repeat = false;
-				break;
-			case "E":
-				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-				repeat = false;
-				System.exit(0);
 				break;
 			default:
 				System.out.println("Invalid input. Please retry:");

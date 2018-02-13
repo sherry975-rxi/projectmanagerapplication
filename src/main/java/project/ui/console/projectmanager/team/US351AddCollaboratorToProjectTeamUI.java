@@ -39,7 +39,7 @@ public class US351AddCollaboratorToProjectTeamUI {
 			System.out.println("Inputing [E] will exit this menu.");
 			System.out.println(line);
 			String userID = dataIn.nextLine();
-			if (userID.equals("E")) {
+			if ("E".equals(userID)) {
 				System.out.println("Assignment of user to project cancelled.");
 				invalidInputA = false;
 				invalidInputB = false;
@@ -72,10 +72,8 @@ public class US351AddCollaboratorToProjectTeamUI {
 		if ("Y".equalsIgnoreCase(confirm)) {
 			controller.addUserToProjectTeam(user, project, costPerEffort);
 			System.out.println("\nUser successfully added to the project.");
-			invalidInputC = true;
 		} else {
 			System.out.println("\nAssignment of user to project cancelled.");
-			invalidInputC = true;
 		}
 	}
 

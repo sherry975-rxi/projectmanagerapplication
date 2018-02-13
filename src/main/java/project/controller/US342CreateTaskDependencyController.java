@@ -38,9 +38,7 @@ public class US342CreateTaskDependencyController {
 	 */
 	public List<Task> getTasksFromAProject() {
 
-		List<Task> tasksFromProject = project.getTaskRepository().getTaskListOfWhichDependenciesCanBeCreated();
-
-		return tasksFromProject;
+		return project.getTaskRepository().getTaskListOfWhichDependenciesCanBeCreated();
 	}
 
 	/**
