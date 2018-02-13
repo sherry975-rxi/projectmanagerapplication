@@ -103,7 +103,6 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public void updateUserZipCode(User user, String street, String zipCode) {
 		user.searchUserAddress(street).setZipCode(zipCode);
-		;
 	}
 
 	/**
