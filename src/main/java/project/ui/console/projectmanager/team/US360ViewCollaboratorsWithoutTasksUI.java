@@ -43,7 +43,6 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 				"_________________________________________________________________________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
 
 		Scanner input = new Scanner(System.in);
 		String choice = input.nextLine().toUpperCase();
@@ -57,10 +56,7 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 		case "M":
 			MainMenuUI.mainMenu();
 			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			System.exit(0);
-			break;
+
 		default:
 			System.out.println("Please choose a valid option!");
 			viewUnassignedCollaborators();
