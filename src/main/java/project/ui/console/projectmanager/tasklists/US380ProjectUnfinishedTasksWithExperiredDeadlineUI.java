@@ -9,21 +9,14 @@ import project.controller.US380GetProjectExpiredTaskListController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 
 public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
-	private Project project;
-	private User user;
-
 	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
-
-		this.project = project;
-		this.user = user;
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -45,8 +38,8 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 		List<String> listOfExpiredTaskID = new ArrayList<>();
 
-		for (int i = 0; i < controller.getUnfinishedTaskListWithExpiredDeadline(this.project).size(); i++) {
-			String taskInfo = controller.getUnfinishedTaskListWithExpiredDeadline(this.project).get(i);
+		for (int i = 0; i < controller.getUnfinishedTaskListWithExpiredDeadline(project).size(); i++) {
+			String taskInfo = controller.getUnfinishedTaskListWithExpiredDeadline(project).get(i);
 			System.out.println(taskInfo);
 			listOfExpiredTaskID.add(controller.splitStringByFirstSpace(taskInfo));
 		}
@@ -66,17 +59,11 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 		for (String ii : listOfExpiredTaskID) {
 
-			if (option.equals(ii)) {
-				// TODO
-			} else if (option.equals("B")) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
-						this.project);
-				projectManagerMainMenuUI.displayOptions();
+			if (option.equals("B")) {
+				return;
 
 			} else if (option.equals("M")) {
 				MainMenuUI.mainMenu();
-			} else if (option.equals("E")) {
-				System.exit(0);
 			}
 			listOfOptionsToCompare.add(ii);
 		}
@@ -85,7 +72,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.displayUnfinishedTasksWithExpiredDeadline(this.project, this.user);
+			this.displayUnfinishedTasksWithExpiredDeadline(project, user);
 		}
 	}
 
