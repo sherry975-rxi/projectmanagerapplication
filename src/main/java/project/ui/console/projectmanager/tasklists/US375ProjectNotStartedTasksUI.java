@@ -14,17 +14,11 @@ import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 public class US375ProjectNotStartedTasksUI {
 
-	private Project project;
-	private User user;
-
 	public void projectNotStartedTasksUI(Project project, User user) {
-
-		this.project = project;
-		this.user = user;
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -46,10 +40,10 @@ public class US375ProjectNotStartedTasksUI {
 
 		List<String> listOfExpiredTaskID = new ArrayList<>();
 
-		for (int i = 0; i < controller.getProjectNotStartedTasks(this.project).size(); i++) {
-			String taskInfo = controller.getProjectNotStartedTaskList(this.project).get(i);
+		for (int i = 0; i < controller.getProjectNotStartedTasks(project).size(); i++) {
+			String taskInfo = controller.getProjectNotStartedTaskList(project).get(i);
 			System.out.println(taskInfo);
-			listOfExpiredTaskID.add(controller.getProjectNotStartedTasks(this.project).get(i).getTaskID());
+			listOfExpiredTaskID.add(controller.getProjectNotStartedTasks(project).get(i).getTaskID());
 		}
 
 		System.out.println("___________________________________________________");
@@ -67,19 +61,17 @@ public class US375ProjectNotStartedTasksUI {
 
 		for (String ii : listOfExpiredTaskID) {
 
-			if (option.equals(ii)) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
+			if ((ii.equals(option))) {
+				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
 				taskFuntionatities.taskDataDisplay();
-			} else if (option.equals("B")) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
-						this.project);
+			} else if ("B".equals(option)) {
+				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(user, project);
 				projectManagerMainMenuUI.displayOptions();
 
-			} else if (option.equals("M")) {
+			} else if ("M".equals(option)) {
 				MainMenuUI.mainMenu();
-			} else if (option.equals("E")) {
-				System.exit(0);
 			}
+
 			listOfOptionsToCompare.add(ii);
 		}
 
@@ -87,7 +79,7 @@ public class US375ProjectNotStartedTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.projectNotStartedTasksUI(this.project, this.user);
+			this.projectNotStartedTasksUI(project, user);
 		}
 	}
 

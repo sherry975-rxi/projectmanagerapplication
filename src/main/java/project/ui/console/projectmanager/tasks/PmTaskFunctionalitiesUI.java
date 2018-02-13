@@ -91,8 +91,7 @@ public class PmTaskFunctionalitiesUI {
 			default:
 				System.out.println("Please choose a valid option.");
 				System.out.println("");
-				PmTaskFunctionalitiesUI myAtualUIView = new PmTaskFunctionalitiesUI(this.taskID, this.project,
-						this.user);
+				PmTaskFunctionalitiesUI myAtualUIView = new PmTaskFunctionalitiesUI(this.taskID, this.project, this.user);
 				myAtualUIView.taskDataDisplay();
 				break;
 			}

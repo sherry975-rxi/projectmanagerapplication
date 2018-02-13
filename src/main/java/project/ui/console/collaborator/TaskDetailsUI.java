@@ -127,8 +127,7 @@ public class TaskDetailsUI {
 			default:
 				System.out.println("Please choose a valid option.");
 				System.out.println("");
-				TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user,
-						this.isPreviousUIFromTasks);
+				TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user, this.isPreviousUIFromTasks);
 				myAtualUIView.taskDataDisplay();
 				break;
 			}

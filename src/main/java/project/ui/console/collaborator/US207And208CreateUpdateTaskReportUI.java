@@ -62,31 +62,35 @@ public class US207And208CreateUpdateTaskReportUI {
 			System.exit(0);
 			break;
 		default:
-			int newTimeToInt;
-			try {
-				newTimeToInt = Integer.parseInt(newTime);
-	
-				System.out.println();
-				wasReportCreated = createReportController.createReportController(newTimeToInt);
-	
-				if (wasReportCreated) {
-					System.out.println("The task report was updated sucessfully.");
-					System.out.println();
-					System.out.println("Report by: " + createReportController.getReportedCollaboratorName());
-	
-					System.out.println("Reported time: " + createReportController.getReportedTimeByCollaborator());
-				} else {
-					System.out.println("The task report couldn't be updated");
-	
-				}
-			} catch (NumberFormatException e) {
-				System.out.println("Number not valid");
-			}
+			tryToUpdateTaskReport(newTime);
 			break;
 
 		}
 			
 		
+	}
+
+	public void tryToUpdateTaskReport(String newTime){
+		int newTimeToInt;
+		try {
+			newTimeToInt = Integer.parseInt(newTime);
+
+			System.out.println();
+			wasReportCreated = createReportController.createReportController(newTimeToInt);
+
+			if (wasReportCreated) {
+				System.out.println("The task report was updated sucessfully.");
+				System.out.println();
+				System.out.println("Report by: " + createReportController.getReportedCollaboratorName());
+
+				System.out.println("Reported time: " + createReportController.getReportedTimeByCollaborator());
+			} else {
+				System.out.println("The task report couldn't be updated");
+
+			}
+		} catch (NumberFormatException e) {
+			System.out.println("Number not valid");
+		}
 	}
 
 }
