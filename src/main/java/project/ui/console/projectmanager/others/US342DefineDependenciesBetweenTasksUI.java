@@ -32,7 +32,6 @@ public class US342DefineDependenciesBetweenTasksUI {
 		boolean checkC = true;
 		String daughterTask = "";
 		String motherTask = "";
-		int incrementDays = 0;
 		String invalidNumber = "Invalid number!";
 		String tryAgain = "Try again?";
 		String pressYToConfirm = "Press Y to confirm";
@@ -99,13 +98,13 @@ public class US342DefineDependenciesBetweenTasksUI {
 		}
 
 		if (checkC) {
-			incrementDaysChoosing(scannerInput, us342Controller, daughterTask, motherTask, pressYToConfirm,
+			incrementDaysInputing(scannerInput, us342Controller, daughterTask, motherTask, pressYToConfirm,
 					creationCancelled, exitMenu, invalidNumber, tryAgain);
 		}
 
 	}
 
-	private void incrementDaysChoosing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
+	private void incrementDaysInputing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
 			String daughterTask, String motherTask, String pressYToConfirm, String creationCancelled, String exitMenu,
 			String invalidNumber, String tryAgain) {
 		if (us342Controller.getTaskByID(motherTask).getTaskDeadline() != null) {
@@ -122,33 +121,41 @@ public class US342DefineDependenciesBetweenTasksUI {
 				System.out.println("If you type a negative value, the estimated start date of the daughter task will "
 						+ "be set to the same day of the estimated finish date of the task mother");
 
-				if (scannerInput.hasNextInt()) {
-					checkD = validIncrementDaysChoosing(scannerInput, us342Controller, daughterTask, motherTask,
-							pressYToConfirm, creationCancelled, exitMenu);
-
-				} else {
-					System.out.println(invalidNumber);
-					System.out.println(tryAgain);
-					System.out.println(pressYToConfirm);
-					String choice = scannerInput.nextLine();
-
-					if (!"Y".equalsIgnoreCase(choice)) {
-						System.out.println(creationCancelled);
-						System.out.println(exitMenu);
-						checkD = false;
-					}
-				}
+				incrementDaysChoosing(scannerInput, us342Controller, daughterTask, motherTask, checkD);
 			}
 		} else {
 			System.out.println(
 					"It wasn't possible to create a Task Dependency. Please, check TaskDependency requirements to create Task Dependency");
+			System.out.println();
+			System.out.println("The mother task has a Task Deadline");
+			System.out.println("The mother task is neither set to state FINISHED or CANCELLED");
+			System.out.println("The daughter task wasn't yet initiated");
 		}
 
 	}
 
+	private boolean incrementDaysChoosing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
+			String daughterTask, String motherTask, boolean checkD) {
+		if (scannerInput.hasNextInt()) {
+			checkD = validIncrementDaysChoosing(scannerInput, us342Controller, daughterTask, motherTask);
+
+		} else {
+			System.out.println("Invalid number!");
+			System.out.println("Try again?");
+			System.out.println("Press Y to confirm");
+			String choice = scannerInput.nextLine();
+
+			if (!"Y".equalsIgnoreCase(choice)) {
+				System.out.println("Task dependency creation cancelled!");
+				System.out.println("Exiting menu.");
+				checkD = false;
+			}
+		}
+		return checkD;
+	}
+
 	private boolean validIncrementDaysChoosing(Scanner scannerInput,
-			US342CreateTaskDependencyController us342Controller, String daughterTask, String motherTask,
-			String pressYToConfirm, String creationCancelled, String exitMenu) {
+			US342CreateTaskDependencyController us342Controller, String daughterTask, String motherTask) {
 		boolean result = true;
 		int incrementDaysInput = Integer.parseInt(scannerInput.nextLine());
 		boolean wasDependencyCreated = us342Controller.createDependenceFromTask(daughterTask, motherTask,
@@ -175,15 +182,15 @@ public class US342DefineDependenciesBetweenTasksUI {
 			System.out.println();
 
 			System.out.println("Are you sure you want to create this dependency?");
-			System.out.println(pressYToConfirm);
+			System.out.println("Press Y to confirm");
 			String choice = scannerInput.nextLine();
 
 			if ("Y".equalsIgnoreCase(choice)) {
 				System.out.println("Dependency successfully created.");
 
 			} else {
-				System.out.println(creationCancelled);
-				System.out.println(exitMenu);
+				System.out.println("Task dependency creation cancelled!");
+				System.out.println("Exiting menu.");
 				result = false;
 			}
 		}
