@@ -65,7 +65,7 @@ public class US340CreateTaskUI {
 			yerOrNo = input.nextLine();
 		}
 
-		if (yerOrNo.equalsIgnoreCase("y")) {
+		if ("y".equalsIgnoreCase(yerOrNo)) {
 			System.out.println();
 			System.out.println("Insert information relative to the task.");
 
