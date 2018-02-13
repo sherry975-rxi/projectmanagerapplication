@@ -37,7 +37,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	 */
 	public List<User> getActiveProjectCollaboratorFromTeam() {
 		List<ProjectCollaborator> projectTeam = this.proj.getActiveProjectTeam();
-		List<User> listOfUser = new ArrayList<User>();
+		List<User> listOfUser = new ArrayList<>();
 
 		for (int i = 0; i < projectTeam.size(); i++) {
 			User user = projectTeam.get(i).getUserFromProjectCollaborator();
@@ -81,9 +81,8 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	public String splitStringByFirstSpace(String string) {
 
 		String[] partsTask = string.split(" ");
-		String firstPartOfString = partsTask[0];
 
-		return firstPartOfString;
+		return partsTask[0];
 	}
 
 }
