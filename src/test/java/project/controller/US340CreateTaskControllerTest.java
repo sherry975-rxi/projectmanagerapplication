@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,7 +78,7 @@ public class US340CreateTaskControllerTest {
 		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 0);
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = testControl.addTask("Test dis agen pls", 10, 10);
+		testTask = testControl.addTask("Test dis agen pls");
 		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 1);
 
 		// asserts the added task matches the added task
