@@ -10,7 +10,6 @@ import project.model.User;
 public class US360ViewCollaboratorsWithoutTasksController {
 
 	private Project toSearch;
-	private List<ProjectCollaborator> activeProjectTeam;
 
 	/**
 	 * This controller receives a project and stores it in a private field
@@ -34,7 +33,7 @@ public class US360ViewCollaboratorsWithoutTasksController {
 	public List<String> showCollaboratorsWithoutTasks() {
 		List<String> idleProjectCollaborators = new ArrayList<>();
 
-		activeProjectTeam = toSearch.getActiveProjectTeam();
+		List<ProjectCollaborator> activeProjectTeam = toSearch.getActiveProjectTeam();
 
 		Integer index = 1;
 

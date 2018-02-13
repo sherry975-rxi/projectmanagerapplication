@@ -138,7 +138,7 @@ public class ProjectManagerMainMenuUI {
 			optionD1.displayProjectCost(this.project, this.projectManager);
 			break;
 		case "D2":
-			US340CreateTaskUI optionD2 = new US340CreateTaskUI(this.projectManager, this.project);
+			US340CreateTaskUI optionD2 = new US340CreateTaskUI(this.project);
 			optionD2.createTask();
 			break;
 		case "D3":

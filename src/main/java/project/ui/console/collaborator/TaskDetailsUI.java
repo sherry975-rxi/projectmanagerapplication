@@ -8,7 +8,6 @@ import project.controller.US204v2createRequestAddCollaboratorToTaskTeamControlle
 import project.controller.US205MarkTaskAsFinishedCollaborator;
 import project.model.ProjectCollaborator;
 import project.model.Task;
-import project.model.TaskRepository;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 
@@ -117,7 +116,8 @@ public class TaskDetailsUI {
 			default:
 				System.out.println("Please choose a valid option.");
 				System.out.println("");
-				TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user, this.isPreviousUIFromTasks);
+				TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user,
+						this.isPreviousUIFromTasks);
 				myAtualUIView.taskDataDisplay();
 				break;
 			}
@@ -144,7 +144,7 @@ public class TaskDetailsUI {
 		}
 	}
 
-	public void goToPreviousUI(Integer projectID, User user){
+	public void goToPreviousUI(Integer projectID, User user) {
 		this.projectID = projectID;
 		this.user = user;
 		if (this.isPreviousUIFromTasks) {

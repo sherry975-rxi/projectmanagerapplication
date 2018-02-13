@@ -5,7 +5,6 @@ import java.util.Scanner;
 import project.controller.PrintProjectInfoController;
 import project.controller.US340CreateTaskController;
 import project.model.Project;
-import project.model.User;
 import project.ui.console.MainMenuUI;
 
 /**
@@ -24,7 +23,7 @@ public class US340CreateTaskUI {
 
 	private Project project;
 
-	public US340CreateTaskUI(User user, Project project) {
+	public US340CreateTaskUI(Project project) {
 		this.project = project;
 	}
 
