@@ -33,11 +33,12 @@ public class US340CreateTaskUI {
 	public void createTask() {
 
 		String line = "___________________________________________________";
+		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
 
-		System.out.println("");
+		System.out.println(blank);
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
@@ -110,12 +111,12 @@ public class US340CreateTaskUI {
 
 		System.out.println();
 		System.out.println("You added the following data for the task: ");
-		System.out.println("             " + "[1] Task description: " + description);
-		System.out.println("             " + "[2] Estimated task effort: " + number);
+		System.out.println(blank + "[1] Task description: " + description);
+		System.out.println(blank + "[2] Estimated task effort: " + number);
 		// System.out.println(" " + "[3] Estimated task start date: " +
 		// estimatedTaskStartDate);
 		// System.out.println(" " + "[4] Task deadline: " + taskDeadline);
-		System.out.println("             " + "[5] Estimated Cost: " + cost);
+		System.out.println(blank + "[5] Estimated Cost: " + cost);
 
 		System.out.println();
 		System.out.println("Is your data correct? (y to confirm; n to deny)");
