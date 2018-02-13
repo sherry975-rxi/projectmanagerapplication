@@ -59,8 +59,8 @@ public class US206CreateRemovalTaskRequestUI {
 			yerOrNo = input.nextLine().toUpperCase();
 		}
 
-		if (yerOrNo.equalsIgnoreCase("Y")) {
-			if (controller.createRequest() == true) {
+		if ("Y".equalsIgnoreCase(yerOrNo)) {
+			if (controller.createRequest()) {
 				System.out.println("Your task removal is pending Project Manager approval");
 				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user,
 						this.isPreviousUIFromTasks);
