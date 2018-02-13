@@ -16,12 +16,12 @@ public class US360ProjectUnassignedTasksUI {
 	public void projectUnassignedTasksUI(Project project, User user) {
 
 		Scanner scannerInput = new Scanner(System.in);
-
+		String line = "___________________________________________________";
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
 		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
@@ -31,9 +31,9 @@ public class US360ProjectUnassignedTasksUI {
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("                 UNASSIGNED TASKS");
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 
 		US360GetProjectTasksWithoutCollaboratorsAssignedController controller = new US360GetProjectTasksWithoutCollaboratorsAssignedController();
 
@@ -45,7 +45,7 @@ public class US360ProjectUnassignedTasksUI {
 			listOfExpiredTaskID.add(controller.getProjectNotAssigned(project).get(i).getTaskID());
 		}
 
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
 		System.out.println("[E] Exit \n");
