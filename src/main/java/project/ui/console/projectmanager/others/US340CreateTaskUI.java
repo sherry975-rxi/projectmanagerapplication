@@ -23,10 +23,8 @@ import project.ui.console.MainMenuUI;
 public class US340CreateTaskUI {
 
 	private Project project;
-	private User user;
 
 	public US340CreateTaskUI(User user, Project project) {
-		this.user = user;
 		this.project = project;
 	}
 
@@ -136,16 +134,18 @@ public class US340CreateTaskUI {
 		}
 
 		System.out.println(line);
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back");
+		System.out.println("[M] MainMenu \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		if (option.equals("M")) {
-			MainMenuUI.mainMenu();
-		} else if (option.equals("E")) {
-			System.exit(0);
+		while ("M".equals(option) || "B".equals(option))
+			System.out.println("Please enter a valid option!");
 
+		if ("B".equals(option)) {
+			return;
+		} else if ("M".equals(option)) {
+			MainMenuUI.mainMenu();
 		}
 	}
 }
