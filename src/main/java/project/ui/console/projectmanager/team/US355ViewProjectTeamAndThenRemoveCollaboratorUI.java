@@ -9,21 +9,14 @@ import project.controller.US355ViewProjectTeamAndThenRemoveCollaboratorControlle
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 
 public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 
-	private Project project;
-	private User user;
-
 	public void viewProjectTeamAndThenRemoveCollaboratorUI(Project project, User user) {
-
-		this.project = project;
-		this.user = user;
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -41,7 +34,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		System.out.println("___________________________________________________");
 
 		US355ViewProjectTeamAndThenRemoveCollaboratorController controller = new US355ViewProjectTeamAndThenRemoveCollaboratorController(
-				this.project);
+				project);
 
 		List<String> listOfProjectCollaboratorsName = new ArrayList<>();
 
@@ -56,7 +49,6 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		System.out.println("_______________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
@@ -66,9 +58,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		listOfOptionsToCompare.add("M");
 		listOfOptionsToCompare.add("E");
 
-		List<User> listOfUser = new ArrayList<User>();
-
-		listOfUser = controller.getActiveProjectCollaboratorFromTeam();
+		List<User> listOfUser = controller.getActiveProjectCollaboratorFromTeam();
 
 		for (int i = 0; i < listOfUser.size(); i++) {
 			if (option.equals(String.valueOf(i + 1))) {
@@ -81,26 +71,22 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 					System.out.println("\nInvalid answer. Try again (\"y\" or \"n\")");
 					yesOrNo = scannerInput.nextLine();
 				}
-				if (yesOrNo.equalsIgnoreCase("y")) {
-					if (controller.removeCollaboratorFromProjectTeam(listOfUser.get(i)) == true) {
+				if ("y".equalsIgnoreCase(yesOrNo)) {
+					if (controller.removeCollaboratorFromProjectTeam(listOfUser.get(i))) {
 						System.out.println("You removed the user from this Project.");
-						this.viewProjectTeamAndThenRemoveCollaboratorUI(this.project, this.user);
+						this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
 					} else {
 						System.out.println("Your request was not successful.");
-						this.viewProjectTeamAndThenRemoveCollaboratorUI(this.project, this.user);
+						this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
 					}
 
 				}
 
-			} else if (option.equals("B")) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
-						this.project);
-				projectManagerMainMenuUI.displayOptions();
+			} else if ("B".equals(option)) {
+				return;
 
-			} else if (option.equals("M")) {
+			} else if ("M".equals(option)) {
 				MainMenuUI.mainMenu();
-			} else if (option.equals("E")) {
-				System.exit(0);
 			}
 			listOfOptionsToCompare.add(String.valueOf(i + 1));
 		}
@@ -109,7 +95,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.viewProjectTeamAndThenRemoveCollaboratorUI(this.project, this.user);
+			this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
 		}
 	}
 }
