@@ -99,47 +99,54 @@ public class US342DefineDependenciesBetweenTasksUI {
 		}
 
 		if (checkC) {
-			if (us342Controller.getTaskByID(motherTask).getTaskDeadline() != null) {
-				boolean checkD = true;
-				while (checkD) {
-					System.out.println();
-					System.out.println("Choose how many days there are between the start of the \"mother\" task" + "\n"
-							+ "and the start of the \"daughter\" task: ");
-					System.out.println();
-
-					System.out.println("(Inputing any non-number will exit this menu.)");
-					System.out.println();
-
-					System.out
-							.println("If you type a negative value, the estimated start date of the daughter task will "
-									+ "be set to the same day of the estimated finish date of the task mother");
-
-					if (scannerInput.hasNextInt()) {
-						checkD = incrementDaysChoosing(incrementDays, scannerInput, us342Controller, daughterTask,
-								motherTask, pressYToConfirm, creationCancelled, exitMenu);
-
-					} else {
-						System.out.println(invalidNumber);
-						System.out.println(tryAgain);
-						System.out.println(pressYToConfirm);
-						String choice = scannerInput.nextLine();
-
-						if (!"Y".equalsIgnoreCase(choice)) {
-							System.out.println(creationCancelled);
-							System.out.println(exitMenu);
-							checkD = false;
-						}
-					}
-				}
-			} else {
-				System.out.println(
-						"It wasn't possible to create a Task Dependency. Please, check TaskDependency requirements to create Task Dependency");
-			}
+			incrementDaysChoosing(incrementDays, scannerInput, us342Controller, daughterTask, motherTask,
+					pressYToConfirm, creationCancelled, exitMenu, invalidNumber, tryAgain);
 		}
 
 	}
 
-	private boolean incrementDaysChoosing(int incrementDays, Scanner scannerInput,
+	private void incrementDaysChoosing(int incrementDays, Scanner scannerInput,
+			US342CreateTaskDependencyController us342Controller, String daughterTask, String motherTask,
+			String pressYToConfirm, String creationCancelled, String exitMenu, String invalidNumber, String tryAgain) {
+		if (us342Controller.getTaskByID(motherTask).getTaskDeadline() != null) {
+			boolean checkD = true;
+			while (checkD) {
+				System.out.println();
+				System.out.println("Choose how many days there are between the start of the \"mother\" task" + "\n"
+						+ "and the start of the \"daughter\" task: ");
+				System.out.println();
+
+				System.out.println("(Inputing any non-number will exit this menu.)");
+				System.out.println();
+
+				System.out.println("If you type a negative value, the estimated start date of the daughter task will "
+						+ "be set to the same day of the estimated finish date of the task mother");
+
+				if (scannerInput.hasNextInt()) {
+					checkD = validIncrementDaysChoosing(incrementDays, scannerInput, us342Controller, daughterTask,
+							motherTask, pressYToConfirm, creationCancelled, exitMenu);
+
+				} else {
+					System.out.println(invalidNumber);
+					System.out.println(tryAgain);
+					System.out.println(pressYToConfirm);
+					String choice = scannerInput.nextLine();
+
+					if (!"Y".equalsIgnoreCase(choice)) {
+						System.out.println(creationCancelled);
+						System.out.println(exitMenu);
+						checkD = false;
+					}
+				}
+			}
+		} else {
+			System.out.println(
+					"It wasn't possible to create a Task Dependency. Please, check TaskDependency requirements to create Task Dependency");
+		}
+
+	}
+
+	private boolean validIncrementDaysChoosing(int incrementDays, Scanner scannerInput,
 			US342CreateTaskDependencyController us342Controller, String daughterTask, String motherTask,
 			String pressYToConfirm, String creationCancelled, String exitMenu) {
 		boolean result = true;
