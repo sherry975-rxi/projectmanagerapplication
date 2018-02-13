@@ -45,7 +45,8 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		switch (option.toUpperCase()) {
+		switch (option) {
+
 		case ("B"):
 			return;
 
