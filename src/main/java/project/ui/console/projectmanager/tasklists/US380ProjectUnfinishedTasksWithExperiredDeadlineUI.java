@@ -1,7 +1,5 @@
 package project.ui.console.projectmanager.tasklists;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
@@ -9,21 +7,14 @@ import project.controller.US380GetProjectExpiredTaskListController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 
 public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
-	private Project project;
-	private User user;
-
 	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
-
-		this.project = project;
-		this.user = user;
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -43,50 +34,29 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 		US380GetProjectExpiredTaskListController controller = new US380GetProjectExpiredTaskListController();
 
-		List<String> listOfExpiredTaskID = new ArrayList<>();
-
-		for (int i = 0; i < controller.getUnfinishedTaskListWithExpiredDeadline(this.project).size(); i++) {
-			String taskInfo = controller.getUnfinishedTaskListWithExpiredDeadline(this.project).get(i);
+		for (int i = 0; i < controller.getUnfinishedTaskListWithExpiredDeadline(project).size(); i++) {
+			String taskInfo = controller.getUnfinishedTaskListWithExpiredDeadline(project).get(i);
 			System.out.println(taskInfo);
-			listOfExpiredTaskID.add(controller.splitStringByFirstSpace(taskInfo));
 		}
 
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		// creation of a list with the options B,E and M
-		List<String> listOfOptionsToCompare = new ArrayList<>();
-		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
+		switch (option.toUpperCase()) {
+		case ("B"):
+			return;
 
-		for (String ii : listOfExpiredTaskID) {
+		case ("M"):
+			MainMenuUI.mainMenu();
 
-			if (option.equals(ii)) {
-				// TODO
-			} else if (option.equals("B")) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
-						this.project);
-				projectManagerMainMenuUI.displayOptions();
-
-			} else if (option.equals("M")) {
-				MainMenuUI.mainMenu();
-			} else if (option.equals("E")) {
-				System.exit(0);
-			}
-			listOfOptionsToCompare.add(ii);
-		}
-
-		// In case the user input is an invalid option, the console shows a message and
-		// returns to the beginning of this same menu
-		if (!(listOfOptionsToCompare.contains(option))) {
+		default:
 			System.out.println("Please choose a valid option: ");
-			this.displayUnfinishedTasksWithExpiredDeadline(this.project, this.user);
+			this.displayUnfinishedTasksWithExpiredDeadline(project, user);
 		}
+
 	}
 
 }
