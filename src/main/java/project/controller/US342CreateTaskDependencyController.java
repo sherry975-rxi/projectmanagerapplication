@@ -1,7 +1,6 @@
 package project.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -39,9 +38,7 @@ public class US342CreateTaskDependencyController {
 	 */
 	public List<Task> getTasksFromAProject() {
 
-		List<Task> tasksFromProject = new ArrayList<>();
-
-		tasksFromProject = project.getTaskRepository().getTaskListOfWhichDependenciesCanBeCreated();
+		List<Task> tasksFromProject = project.getTaskRepository().getTaskListOfWhichDependenciesCanBeCreated();
 
 		return tasksFromProject;
 	}
@@ -125,15 +122,14 @@ public class US342CreateTaskDependencyController {
 
 		Task taskToGetEstimatedStartDate = project.getTaskRepository().getTaskByID(taskDependentID);
 
-		Calendar aaa = Calendar.getInstance();
-		aaa = taskToGetEstimatedStartDate.getEstimatedTaskStartDate();
-		String estimatedStartDateString = new String();
-		if (aaa != null) {
-			Date estimatedStartDate = aaa.getTime();
+		Calendar calendar = taskToGetEstimatedStartDate.getEstimatedTaskStartDate();
+
+		String estimatedStartDateString = "No estimated start date";
+
+		if (calendar != null) {
+			Date estimatedStartDate = calendar.getTime();
 			SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-			estimatedStartDateString = newDateFormat.format(estimatedStartDate).toString();
-		} else {
-			estimatedStartDateString = "No estimated start date";
+			estimatedStartDateString = newDateFormat.format(estimatedStartDate);
 		}
 
 		return estimatedStartDateString;
@@ -148,15 +144,13 @@ public class US342CreateTaskDependencyController {
 
 		Task taskToGetDeadline = project.getTaskRepository().getTaskByID(taskDependentID);
 
-		Calendar aaa = Calendar.getInstance();
-		aaa = taskToGetDeadline.getTaskDeadline();
-		String estimatedDeadlineString = new String();
-		if (aaa != null) {
-			Date estimatedDeadline = aaa.getTime();
+		Calendar calendar = taskToGetDeadline.getTaskDeadline();
+
+		String estimatedDeadlineString = "No estimated deadline";
+		if (calendar != null) {
+			Date estimatedDeadline = calendar.getTime();
 			SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-			estimatedDeadlineString = newDateFormat.format(estimatedDeadline).toString();
-		} else {
-			estimatedDeadlineString = "No estimated deadline";
+			estimatedDeadlineString = newDateFormat.format(estimatedDeadline);
 		}
 
 		return estimatedDeadlineString;

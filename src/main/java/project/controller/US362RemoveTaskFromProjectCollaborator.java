@@ -16,7 +16,7 @@ import project.model.Task;
  */
 public class US362RemoveTaskFromProjectCollaborator {
 
-	private ProjectCollaborator projectCollaborator;;
+	private ProjectCollaborator projectCollaborator;
 	private Project project;
 	private Task task;
 
@@ -47,6 +47,7 @@ public class US362RemoveTaskFromProjectCollaborator {
 			String userInfo = "Name: " + userName + "\n" + "Email: " + userEmail + "\n" + "Function: " + userFunction;
 			taskTeam.add(userInfo);
 		}
+
 		return taskTeam;
 	}
 
