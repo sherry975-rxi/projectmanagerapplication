@@ -35,11 +35,12 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 		projectInfo.setProject();
 		US370GetProjectFinishedTaskListController projectFinishedTaskList = new US370GetProjectFinishedTaskListController();
 
+		String line = "___________________________________________________";
 		Scanner scannerInput = new Scanner(System.in);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
-		System.out.println("______________________________________________");
+		System.out.println(line);
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
 		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
@@ -48,9 +49,9 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-		System.out.println("______________________________________________");
+		System.out.println(line);
 		System.out.println("               FINISHED TASKS                 ");
-		System.out.println("______________________________________________");
+		System.out.println(line);
 
 		List<Task> finishedTasksDecreasingOrder = projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj);
 
