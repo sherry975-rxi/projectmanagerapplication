@@ -6,22 +6,15 @@ package project.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import project.model.Company;
 import project.model.Project;
-import project.model.ProjectRepository;
 import project.model.Task;
-import project.model.TaskRepository;
 
 /**
  * @author Group 3
  *
  */
 public class US377CollectionOfCancelledTasksFromAProjectController {
-	private int projectIDtoInstantiate;
-	private TaskRepository taskRepository;
-	private ProjectRepository projectRepository;
 	private Project project;
-	private Company company;
 
 	/**
 	 * Constructor
@@ -30,7 +23,6 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	 */
 	public US377CollectionOfCancelledTasksFromAProjectController(Project project) {
 		this.project = project;
-		taskRepository = project.getTaskRepository();
 	}
 
 	/**
@@ -88,8 +80,7 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	public String splitStringByFirstSpace(String string) {
 
 		String[] partsCancelledTask = string.split(" ");
-		String firstPartOfString = partsCancelledTask[0];
 
-		return firstPartOfString;
+		return partsCancelledTask[0];
 	}
 }
