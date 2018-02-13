@@ -9,22 +9,15 @@ import project.controller.US360GetProjectTasksWithoutCollaboratorsAssignedContro
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 public class US360ProjectUnassignedTasksUI {
 
-	private Project project;
-	private User user;
-
 	public void projectUnassignedTasksUI(Project project, User user) {
-
-		this.project = project;
-		this.user = user;
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -46,10 +39,10 @@ public class US360ProjectUnassignedTasksUI {
 
 		List<String> listOfExpiredTaskID = new ArrayList<>();
 
-		for (int i = 0; i < controller.getProjectNotAssignedTaskList(this.project).size(); i++) {
-			String taskInfo = controller.getProjectNotAssignedTaskList(this.project).get(i);
+		for (int i = 0; i < controller.getProjectNotAssignedTaskList(project).size(); i++) {
+			String taskInfo = controller.getProjectNotAssignedTaskList(project).get(i);
 			System.out.println(taskInfo);
-			listOfExpiredTaskID.add(controller.getProjectNotAssigned(this.project).get(i).getTaskID());
+			listOfExpiredTaskID.add(controller.getProjectNotAssigned(project).get(i).getTaskID());
 		}
 
 		System.out.println("___________________________________________________");
@@ -68,17 +61,13 @@ public class US360ProjectUnassignedTasksUI {
 		for (String ii : listOfExpiredTaskID) {
 
 			if (option.equals(ii)) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
+				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
 				taskFuntionatities.taskDataDisplay();
-			} else if (option.equals("B")) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
-						this.project);
-				projectManagerMainMenuUI.displayOptions();
+			} else if ("B".equals(option)) {
+				return;
 
-			} else if (option.equals("M")) {
+			} else if ("M".equals(option)) {
 				MainMenuUI.mainMenu();
-			} else if (option.equals("E")) {
-				System.exit(0);
 			}
 			listOfOptionsToCompare.add(ii);
 		}
@@ -87,7 +76,7 @@ public class US360ProjectUnassignedTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.projectUnassignedTasksUI(this.project, this.user);
+			this.projectUnassignedTasksUI(project, user);
 		}
 	}
 
