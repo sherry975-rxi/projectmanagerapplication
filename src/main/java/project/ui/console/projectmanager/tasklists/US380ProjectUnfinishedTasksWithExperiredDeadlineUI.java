@@ -52,10 +52,12 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 		case ("M"):
 			MainMenuUI.mainMenu();
+			break;
 
 		default:
 			System.out.println("Please choose a valid option: ");
 			this.displayUnfinishedTasksWithExpiredDeadline(project, user);
+			break;
 		}
 
 	}
