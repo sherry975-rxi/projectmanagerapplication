@@ -7,7 +7,6 @@ import project.controller.US360ViewCollaboratorsWithoutTasksController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 
 public class US360ViewCollaboratorsWithoutTasksUI {
 
@@ -49,10 +48,8 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 
 		switch (choice) {
 		case "B":
-			ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
-					this.selectedProject);
-			projectManagerMainMenuUI.displayOptions();
-			break;
+			return;
+
 		case "M":
 			MainMenuUI.mainMenu();
 			break;
