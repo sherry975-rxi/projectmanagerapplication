@@ -71,16 +71,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 					System.out.println("\nInvalid answer. Try again (\"y\" or \"n\")");
 					yesOrNo = scannerInput.nextLine();
 				}
-				if ("y".equalsIgnoreCase(yesOrNo)) {
-					if (controller.removeCollaboratorFromProjectTeam(listOfUser.get(i))) {
-						System.out.println("You removed the user from this Project.");
-						this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
-					} else {
-						System.out.println("Your request was not successful.");
-						this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
-					}
-
-				}
+				collaboratorRemovalUI(yesOrNo, controller, listOfUser, i, project, user);
 
 			} else if ("B".equals(option)) {
 				return;
@@ -96,6 +87,21 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
 			this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
+		}
+	}
+
+	private void collaboratorRemovalUI(String yesOrNo,
+			US355ViewProjectTeamAndThenRemoveCollaboratorController controller, List<User> listOfUser, int i,
+			Project project, User user) {
+		if ("y".equalsIgnoreCase(yesOrNo)) {
+			if (controller.removeCollaboratorFromProjectTeam(listOfUser.get(i))) {
+				System.out.println("You removed the user from this Project.");
+				this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
+			} else {
+				System.out.println("Your request was not successful.");
+				this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
+			}
+
 		}
 	}
 }
