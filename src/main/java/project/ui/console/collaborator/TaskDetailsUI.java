@@ -17,7 +17,6 @@ public class TaskDetailsUI {
 	private Integer projectID;
 	private String taskID;
 	private Boolean isPreviousUIFromTasks;
-	private TaskRepository taskRepository;
 	private Task task;
 
 	public TaskDetailsUI(String taskID, Integer projectID, User user, Boolean previous) {

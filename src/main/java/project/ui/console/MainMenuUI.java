@@ -18,9 +18,6 @@ import project.ui.console.collaborator.US101UserRegisterUI;
 import project.ui.console.collaborator.US208LoginUI;
 import project.ui.console.director.DirectorMenuUI;
 
-import java.util.Calendar;
-import java.util.Scanner;
-
 public class MainMenuUI {
 
 	private static Company myCompany;
@@ -185,7 +182,6 @@ public class MainMenuUI {
 		// pass from "Assigned" to "Ready"
 		taskGP3.getTaskState().changeToReady();
 		// necessary to pass from "Ready" to "OnGoing"
-		Calendar projStartDate = (Calendar) startDate.clone();
 		taskGP3.setStartDate(startDate);
 		taskGP3.getTaskState().changeToOnGoing();
 		// pass from "OnGoing" to "Finished"
@@ -455,6 +451,9 @@ public class MainMenuUI {
 
 				break;
 
+			default:
+				System.out.println("Choose a valid option:");
+				mainMenu();
 			}
 		}
 	}
