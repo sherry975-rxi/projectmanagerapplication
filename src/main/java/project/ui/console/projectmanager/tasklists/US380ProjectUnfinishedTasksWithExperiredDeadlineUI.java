@@ -1,7 +1,5 @@
 package project.ui.console.projectmanager.tasklists;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import project.controller.PrintProjectInfoController;
@@ -36,44 +34,29 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 		US380GetProjectExpiredTaskListController controller = new US380GetProjectExpiredTaskListController();
 
-		List<String> listOfExpiredTaskID = new ArrayList<>();
-
 		for (int i = 0; i < controller.getUnfinishedTaskListWithExpiredDeadline(project).size(); i++) {
 			String taskInfo = controller.getUnfinishedTaskListWithExpiredDeadline(project).get(i);
 			System.out.println(taskInfo);
-			listOfExpiredTaskID.add(controller.splitStringByFirstSpace(taskInfo));
 		}
 
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		// creation of a list with the options B,E and M
-		List<String> listOfOptionsToCompare = new ArrayList<>();
-		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
+		switch (option.toUpperCase()) {
+		case ("B"):
+			return;
 
-		for (String ii : listOfExpiredTaskID) {
+		case ("M"):
+			MainMenuUI.mainMenu();
 
-			if (option.equals("B")) {
-				return;
-
-			} else if (option.equals("M")) {
-				MainMenuUI.mainMenu();
-			}
-			listOfOptionsToCompare.add(ii);
-		}
-
-		// In case the user input is an invalid option, the console shows a message and
-		// returns to the beginning of this same menu
-		if (!(listOfOptionsToCompare.contains(option))) {
+		default:
 			System.out.println("Please choose a valid option: ");
 			this.displayUnfinishedTasksWithExpiredDeadline(project, user);
 		}
+
 	}
 
 }
