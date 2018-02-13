@@ -126,9 +126,9 @@ public class OnGoing implements TaskStateInterface {
 	public boolean changeToFinished() {
 		boolean condition = false;
 		if (isTransitionToFinishedPossible()) {
-			TaskStateInterface Finished1 = new Finished(task);
-			if (Finished1.isValid()) {
-				task.setTaskState(Finished1);
+			TaskStateInterface finishedState = new Finished(task);
+			if (finishedState.isValid()) {
+				task.setTaskState(finishedState);
 				condition = true;
 			}
 		}
