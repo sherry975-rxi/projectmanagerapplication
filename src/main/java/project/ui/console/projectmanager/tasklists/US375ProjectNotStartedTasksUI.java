@@ -17,12 +17,13 @@ public class US375ProjectNotStartedTasksUI {
 	public void projectNotStartedTasksUI(Project project, User user) {
 
 		Scanner scannerInput = new Scanner(System.in);
+		String line = "___________________________________________________";
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
 		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
@@ -32,9 +33,9 @@ public class US375ProjectNotStartedTasksUI {
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("                NOT STARTED TASKS");
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 
 		US375GetProjectNotStartedTaskListController controller = new US375GetProjectNotStartedTaskListController();
 
@@ -46,7 +47,7 @@ public class US375ProjectNotStartedTasksUI {
 			listOfExpiredTaskID.add(controller.getProjectNotStartedTasks(project).get(i).getTaskID());
 		}
 
-		System.out.println("___________________________________________________");
+		System.out.println(line);
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
 		System.out.println("[E] Exit \n");
