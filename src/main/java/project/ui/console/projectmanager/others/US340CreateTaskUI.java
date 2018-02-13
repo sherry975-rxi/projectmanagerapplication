@@ -140,8 +140,10 @@ public class US340CreateTaskUI {
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		while ("M".equals(option) || "B".equals(option))
+		while (!("M".equals(option)) && !("B".equals(option))) {
 			System.out.println("Please enter a valid option!");
+			option = scannerInput.nextLine().toUpperCase();
+		}
 
 		if ("B".equals(option)) {
 			return;
