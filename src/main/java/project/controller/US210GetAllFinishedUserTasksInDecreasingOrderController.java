@@ -36,13 +36,17 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 		return this.myUser.getName();
 	}
 	
+	/** Receives a gregorian calendar date
+	 * @param dateToConvert
+	 * @return date in string format
+	 */
 	public String convertCalendarToString(Calendar dateToConvert) {
-	
-			
+		String dateConverted = "No date";
+		if(dateToConvert != null) {
 			Date conversion = dateToConvert.getTime();
 			SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-			String dateConverted = newDateFormat.format(conversion).toString();
-	
+			dateConverted = newDateFormat.format(conversion);
+		}
 			return dateConverted;
 	}
 	
