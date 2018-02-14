@@ -98,15 +98,13 @@ public class US342DefineDependenciesBetweenTasksUI {
 		}
 
 		if (checkC) {
-			incrementDaysInputing(scannerInput, us342Controller, daughterTask, motherTask, pressYToConfirm,
-					creationCancelled, exitMenu, invalidNumber, tryAgain);
+			incrementDaysInputing(scannerInput, us342Controller, daughterTask, motherTask);
 		}
 
 	}
 
 	private void incrementDaysInputing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
-			String daughterTask, String motherTask, String pressYToConfirm, String creationCancelled, String exitMenu,
-			String invalidNumber, String tryAgain) {
+			String daughterTask, String motherTask) {
 		if (us342Controller.getTaskByID(motherTask).getTaskDeadline() != null) {
 			boolean checkD = true;
 			while (checkD) {
