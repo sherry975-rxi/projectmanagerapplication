@@ -31,7 +31,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		
 
 		String choice = scannerInput.nextLine().toUpperCase();
 		switch (choice) {
@@ -42,10 +42,9 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 		case "M":
 			MainMenuUI.mainMenu();
 			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			System.exit(0);
-			break;
+		default:
+			System.out.println("Invalid input. Please retry:");
+			getAllFinishedUserTasksInDecreasingOrderUI();
 
 		}
 	}
