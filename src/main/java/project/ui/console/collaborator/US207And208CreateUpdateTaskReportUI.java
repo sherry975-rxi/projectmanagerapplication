@@ -59,7 +59,6 @@ public class US207And208CreateUpdateTaskReportUI {
 			break;
 		case "E":
 			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			System.exit(0);
 			break;
 		default:
 			tryToUpdateTaskReport(newTime);
