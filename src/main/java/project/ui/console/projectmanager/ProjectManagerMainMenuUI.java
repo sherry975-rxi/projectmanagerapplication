@@ -79,8 +79,7 @@ public class ProjectManagerMainMenuUI {
 		System.out.println(
 				"_________________________________________________________________________________________________________________");
 		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[M] MainMenu \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
@@ -153,11 +152,9 @@ public class ProjectManagerMainMenuUI {
 		case "M":
 			MainMenuUI.mainMenu();
 			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			System.exit(0);
-			break;
+		
 		default:
+			System.out.println("Invalid input. Please retry:");
 			displayOptions();
 		}
 	}
