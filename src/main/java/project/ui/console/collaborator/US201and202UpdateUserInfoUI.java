@@ -2,6 +2,7 @@ package project.ui.console.collaborator;
 
 import java.util.Scanner;
 
+import java.lang.String;
 import project.controller.US201and202UpdateUserInfoController;
 import project.model.Address;
 import project.model.User;
@@ -51,7 +52,7 @@ public class US201and202UpdateUserInfoUI {
 		System.out.println();
 
 		// Selects the field according to user input
-		String choice = input.nextLine();
+		String choice = input.nextLine().toUpperCase();
 		final String inputNewInfo = "Please insert the new info:";
 		final String newInfo = "New info: ";
 		final String updateSuccessful = "-----UPDATE SUCCESSFUL-----";
@@ -61,7 +62,7 @@ public class US201and202UpdateUserInfoUI {
 			System.out.println("Please, insert new name");
 			String name = input.nextLine();
 			System.out.println("New Name:" + name);
-			if (confirmInfo(input)) {
+			if (confirmInfoYOrN(input)) {
 				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 				updater.updateUserName(user, name);
 				System.out.println(updateSuccessful);
@@ -73,31 +74,14 @@ public class US201and202UpdateUserInfoUI {
 			System.out.println("Please, insert new email");
 			String email = input.nextLine();
 			System.out.println("New Email: " + email);
-			if (confirmInfo(input)) {
-				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-				if (!updater.isEmailValid(email)) {
-
-					System.out.println("Invalid email.");
-				} else if (updater.isEmailAlreadyInUse(email)) {
-					System.out.println("Email is already in use.");
-				} else {
-					updater.updateUserEmail(user, email);
-					System.out.println(updateSuccessful);
-				}
-				System.out.println();
-			}
+			confirmInfoToUpdateEmail(input, email, updateSuccessful);
 			break;
 		case "3":
 			// Updates phone
 			System.out.println("Please, insert new phone number");
 			String phone = input.nextLine();
 			System.out.println("New phone number: " + phone);
-			if (confirmInfo(input)) {
-				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-				updater.updateUserPhone(user, phone);
-				System.out.println(updateSuccessful);
-				System.out.println();
-			}
+			confirmInfoToUpdatePhone(input,phone,updateSuccessful);
 			break;
 		case "4":
 			// Updates address
@@ -123,8 +107,6 @@ public class US201and202UpdateUserInfoUI {
 			}
 			System.out.println("___________________________________________________");
 			System.out.println("If you select an invalid number the menu returns back");
-			
-
 
 			String nrAddress = input.nextLine();
 			try {
@@ -136,7 +118,6 @@ public class US201and202UpdateUserInfoUI {
 
 					System.out.println("Process Cancelled");
 					System.out.println();
-					
 					
 				} else {
 
@@ -163,7 +144,7 @@ public class US201and202UpdateUserInfoUI {
 						System.out.println(inputNewInfo);
 						String newStreet = input.nextLine();
 						System.out.println(newInfo + newStreet);
-						if (confirmInfo(input)) {
+						if (confirmInfoYOrN(input)) {
 							updater.updateUserStreet(user, currentStreet, newStreet);
 							System.out.println(updateSuccessful);
 							System.out.println();
@@ -174,7 +155,7 @@ public class US201and202UpdateUserInfoUI {
 						System.out.println(inputNewInfo);
 						String newZipCode = input.nextLine();
 						System.out.println(newInfo + newZipCode);
-						if (confirmInfo(input)) {
+						if (confirmInfoYOrN(input)) {
 							updater.updateUserZipCode(user, currentStreet, newZipCode);
 							System.out.println(updateSuccessful);
 							System.out.println();
@@ -185,7 +166,7 @@ public class US201and202UpdateUserInfoUI {
 						System.out.println(inputNewInfo);
 						String newCity = input.nextLine();
 						System.out.println(newInfo + newCity);
-						if (confirmInfo(input)) {
+						if (confirmInfoYOrN(input)) {
 							updater.updateUserCity(user, currentStreet, newCity);
 							System.out.println(updateSuccessful);
 							System.out.println();
@@ -196,7 +177,7 @@ public class US201and202UpdateUserInfoUI {
 						System.out.println(inputNewInfo);
 						String newDistrict = input.nextLine();
 						System.out.println(newInfo + newDistrict);
-						if (confirmInfo(input)) {
+						if (confirmInfoYOrN(input)) {
 							updater.updateUserDistrict(user, currentStreet, newDistrict);
 							System.out.println(updateSuccessful);
 							System.out.println();
@@ -207,7 +188,7 @@ public class US201and202UpdateUserInfoUI {
 						System.out.println(inputNewInfo);
 						String newCountry = input.nextLine();
 						System.out.println(newInfo + newCountry);
-						if (confirmInfo(input)) {
+						if (confirmInfoYOrN(input)) {
 							updater.updateUserCountry(user, currentStreet, newCountry);
 							System.out.println(updateSuccessful);
 							System.out.println();
@@ -215,17 +196,14 @@ public class US201and202UpdateUserInfoUI {
 						break;
 					default:
 						System.out.println("");
-
 						System.out.println("Process Cancelled");
 						System.out.println("");
-
 						MainMenuUI.mainMenu();
 						break;
 						}
 					}
 				}
-					
-					
+
 				catch (NumberFormatException npe) {
 					System.out.println("Invalid input!");
 					chooseWhatInfoToUpdate();
@@ -265,10 +243,40 @@ public class US201and202UpdateUserInfoUI {
 			System.out.println("Country:    " + newCountry);
 			System.out.println();
 
-			System.out.println("Press 1 to confirm, 2 to cancel");
+			confirmOrCancelAddNewAddress(input, newAddress, addAdress);
+			break;
+		case "M":
+			MainMenuUI.mainMenu();
+			break;
+		case "E":
+			System.exit(0);
+			break;
+		default:
+			System.out.println("The user cancelled the process");
+			System.out.println();
+			break;
+		}
 
-			String confirmation = input.nextLine();
-			switch (confirmation) {
+
+	}
+
+	private boolean confirmInfoYOrN(Scanner input) {
+		boolean result = false;
+		System.out.println("Press y to confirm change");
+		String yesOrNo = input.nextLine();
+		if ("y".equalsIgnoreCase(yesOrNo)) {
+			result = true;
+		} else {
+			System.out.println("-----UPDATE DISCARDED-----\n");
+		}
+		return result;
+	}
+
+	private void confirmOrCancelAddNewAddress(Scanner input, Address newAddress, US201and202UpdateUserInfoController addAdress){
+		System.out.println("Press 1 to confirm, 2 to cancel");
+
+		String confirmation = input.nextLine();
+				switch (confirmation) {
 			case "1":
 				System.out.println("New Adress was added successfully");
 				System.out.println();
@@ -286,40 +294,31 @@ public class US201and202UpdateUserInfoUI {
 
 				System.out.println();
 				MainMenuUI.mainMenu();
-
-			}
-			break;
-		default:
-			System.out.println("The user cancelled the process");
-			System.out.println();
-
-			break;
-
-		case "m":
-			MainMenuUI.mainMenu();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "e":
-			System.exit(0);
-			break;
-		case "E":
-			System.exit(0);
-			break;
+				break;
 		}
-
 	}
 
-	private boolean confirmInfo(Scanner input) {
-		boolean result = false;
-		System.out.println("Press y to confirm change");
-		String yesOrNo = input.nextLine();
-		if ("y".equalsIgnoreCase(yesOrNo)) {
-			result = true;
-		} else {
-			System.out.println("-----UPDATE DISCARDED-----\n");
+	private void confirmInfoToUpdateEmail(Scanner input, String email, String updateSuccessful) {
+		if (confirmInfoYOrN(input)) {
+			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
+			if (!updater.isEmailValid(email)) {
+				System.out.println("Invalid email.");
+			} else if (updater.isEmailAlreadyInUse(email)) {
+				System.out.println("Email is already in use.");
+			} else {
+				updater.updateUserEmail(user, email);
+				System.out.println(updateSuccessful);
+			}
+			System.out.println();
 		}
-		return result;
+	}
+
+	private void confirmInfoToUpdatePhone(Scanner input, String phone, String updateSuccessful){
+		if (confirmInfoYOrN(input)) {
+			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
+			updater.updateUserPhone(user, phone);
+			System.out.println(updateSuccessful);
+			System.out.println();
+		}
 	}
 }

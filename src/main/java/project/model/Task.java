@@ -555,7 +555,7 @@ public class Task {
 	}
 
 	public String getReporterName(String userEmail) {
-		String reporterName = new String("");
+		String reporterName = "";
 		for (Report other : this.reports) {
 			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
 					.getUserFromProjectCollaborator().getEmail().equals(userEmail)) {
@@ -689,15 +689,13 @@ public class Task {
 	 *         team does not have the Project Collaborator active
 	 */
 	public boolean isProjectCollaboratorActiveInTaskTeam(ProjectCollaborator projCollaborator) {
+		boolean isActive = false;
 		for (TaskCollaborator other : taskTeam) {
-			if (other.getTaskCollaborator().equals(projCollaborator.getUserFromProjectCollaborator())) {
-				if (other.isTaskCollaboratorActiveInTask()) {
-					return true;
-				}
-
+			if (other.getTaskCollaborator().equals(projCollaborator.getUserFromProjectCollaborator()) && other.isTaskCollaboratorActiveInTask()) {
+				isActive = true;
 			}
 		}
-		return false;
+		return isActive;
 	}
 
 	/**
@@ -740,12 +738,7 @@ public class Task {
 	 * @return TRUE if task team is empty, FALSE if not.
 	 */
 	public boolean isTaskTeamEmpty() {
-
-		if (this.getTaskTeam().isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return this.getTaskTeam().isEmpty();
 	}
 
 	/**
@@ -876,7 +869,7 @@ public class Task {
 		boolean result = false;
 		if (this.hasDependencies()) {
 			for (Task other : this.taskDependency) {
-				if (!other.viewTaskStateName().equals("Finished") && !other.viewTaskStateName().equals("Cancelled")) {
+				if (!"Finished".equals(other.viewTaskStateName()) && !"Cancelled".equals(other.viewTaskStateName())) {
 					result = true;
 					break;
 				}
