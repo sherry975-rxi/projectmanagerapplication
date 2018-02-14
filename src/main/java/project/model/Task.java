@@ -753,8 +753,8 @@ public class Task {
 	public double getTaskCost() {
 		double taskCost = 0.0;
 
-		for (Report reports : this.reports) {
-			taskCost += reports.getReportedTime() * reports.getCost();
+		for (Report reported : this.reports) {
+			taskCost += reported.getReportedTime() * reported.getCost();
 		}
 		return taskCost;
 	}
