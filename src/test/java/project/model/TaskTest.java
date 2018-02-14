@@ -32,7 +32,7 @@ public class TaskTest {
 	ProjectRepository myProjRep;
 	User user1, user2;
 	Project myProject;
-	Task testTask, testTask2, testTask3;
+	Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6;
 	ProjectCollaborator collab1, collab2, collab3;
 	Calendar estimatedTaskStartDate, taskDeadline;
 	TaskCollaborator tWorker1, tWorker2, tWorker3;
@@ -66,9 +66,15 @@ public class TaskTest {
 		Calendar projStartDate = Calendar.getInstance();
 		myProject.setStartdate(projStartDate);
 
+		Calendar startDeadInterval = Calendar.getInstance();
+
 		testTask = new Task(1, 1, "Description of task");
 		testTask2 = new Task(2, 2, "Description of task");
 		testTask3 = new Task(3, 3, "Description of task 3");
+		testTask4 = new Task(testTask);
+		testTask5 = new Task(5, 1, "Description of task 5");
+		testTask5.setDeadlineInterval(startDeadInterval.DAY_OF_YEAR + 5);
+		testTask5.setStartDateInterval(startDeadInterval.DAY_OF_YEAR + 6);
 
 	}
 
@@ -82,6 +88,9 @@ public class TaskTest {
 		testTask = null;
 		testTask2 = null;
 		testTask3 = null;
+		testTask4 = null;
+		testTask5 = null;
+		testTask6 = null;
 		collab1 = null;
 		collab2 = null;
 		collab3 = null;
@@ -101,6 +110,38 @@ public class TaskTest {
 
 		assertTrue(testTask.getDescription().equals(testTask2.getDescription()));
 		assertFalse(testTask.getDescription().equals(testTask3.getDescription()));
+	}
+
+	@Test
+	public void testTaskConstructorDatesMutatorStartNull() {
+		Integer startDateTest = null;
+		testTask4.addTaskCollaboratorToTask(tWorker1);
+		assertEquals(testTask4.getStartDateInterval(), startDateTest);
+	}
+
+	@Test
+	public void testTaskConstructorDatesMutatorDeadNull() {
+		Integer deadlineDateTest = null;
+		testTask4.addTaskCollaboratorToTask(tWorker1);
+		assertEquals(testTask4.getDeadlineInterval(), deadlineDateTest);
+	}
+
+	@Test
+	public void estTaskConstructorDatesMutatorStartDate() {
+		testTask6 = new Task(testTask5);
+		Calendar startInterval = Calendar.getInstance();
+		Integer startDateTest = startInterval.DAY_OF_YEAR + 6;
+		testTask6.addTaskCollaboratorToTask(tWorker1);
+		assertEquals(testTask6.getStartDateInterval(), startDateTest);
+	}
+
+	@Test
+	public void estTaskConstructorDatesMutatorDeadDate() {
+		testTask6 = new Task(testTask5);
+		Calendar deadInterval = Calendar.getInstance();
+		Integer deadlineDateTest = deadInterval.DAY_OF_YEAR + 5;
+		testTask6.addTaskCollaboratorToTask(tWorker1);
+		assertEquals(testTask6.getDeadlineInterval(), deadlineDateTest);
 	}
 
 	@Test
