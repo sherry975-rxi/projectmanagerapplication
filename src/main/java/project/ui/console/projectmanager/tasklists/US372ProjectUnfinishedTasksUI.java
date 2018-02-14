@@ -71,15 +71,16 @@ public class US372ProjectUnfinishedTasksUI {
 			if (option.equals(ii)) {
 				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
 				taskFuntionatities.taskDataDisplay();
-			} else if (option.equals("B")) {
+			} else if ("B".equals(option)) {
 				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
 						this.project);
 				projectManagerMainMenuUI.displayOptions();
 
-			} else if (option.equals("M")) {
+			} else if ("M".equals(option)) {
 				MainMenuUI.mainMenu();
-			} else if (option.equals("E")) {
-				System.exit(0);
+			} else if ("E".equals(option)) {
+				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
+				break;
 			}
 			listOfOptionsToCompare.add(ii);
 		}

@@ -85,7 +85,6 @@ public class PmTaskFunctionalitiesUI {
 				break;
 			case "E":
 				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-				System.exit(0);
 				condition = false;
 				break;
 			default:

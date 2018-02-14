@@ -166,7 +166,7 @@ public class US301CreateProjectUI {
 		System.out.println("(Currently: " + currentEffortUnit.toString() + ")");
 		System.out.println("");
 		dataInput = dataIn.nextLine();
-		if (dataInput.equals("0")) {
+		if ("0".equals(dataInput)) {
 			if (currentEffortUnit.equals(EffortUnit.HOURS)) {
 				currentEffortUnit = EffortUnit.PERSON_MONTH;
 				System.out.println("The effort Unit of this project changed to Person/Month.");

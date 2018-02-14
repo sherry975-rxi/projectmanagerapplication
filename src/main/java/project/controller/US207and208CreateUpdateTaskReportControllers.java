@@ -84,10 +84,8 @@ public class US207and208CreateUpdateTaskReportControllers {
 	 * @return The reporter Name
 	 */
 	public String getReportedCollaboratorName() {
-		
-		String reporterName = task.getReporterName(email);
 
-		return reporterName;
+		return  task.getReporterName(email);
 	}
 
 }

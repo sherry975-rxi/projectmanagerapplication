@@ -58,9 +58,8 @@ public class US372GetProjectUnfinishedTaskListController {
 	public String splitStringByFirstSpace(String string) {
 
 		String[] partsCancelledTask = string.split(" ");
-		String firstPartOfString = partsCancelledTask[0];
 
-		return firstPartOfString;
+		return partsCancelledTask[0];
 	}
 
 }

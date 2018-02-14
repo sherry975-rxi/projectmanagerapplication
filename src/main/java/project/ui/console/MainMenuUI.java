@@ -32,19 +32,6 @@ public class MainMenuUI {
 	private static ProjectCollaborator projcollabJSilva;
 	private static ProjectCollaborator projcollabATirapicos;
 	private static ProjectCollaborator projcollabManager;
-	private static Task taskGP1;
-	private static Task taskGP2;
-	private static Task taskGP4;
-	private static Task taskGP5;
-	private static Task taskGP6;
-	private static Task taskHB1;
-	private static Task taskHB2;
-	private static Task taskHB3;
-	private static Task taskHB4;
-	private static Task taskHB6;
-	private static Task taskHB7;
-	private static Task taskHB8;
-	private static Task taskHB9;
 
 	public static void main(String[] args) {
 
@@ -134,7 +121,7 @@ public class MainMenuUI {
 		projectHomeBanking.addProjectCollaboratorToProjectTeam(projcollabManager);
 
 		// Instantiates a task
-		taskGP1 = projectGP.getTaskRepository().createTask("Desenvolver código para responder à US399");
+		Task taskGP1 = projectGP.getTaskRepository().createTask("Desenvolver código para responder à US399");
 		projectGP.getTaskRepository().addProjectTask(taskGP1);
 		// Creates a new taksCollaborator
 		tWorkerJSilva = new TaskCollaborator(projcollabJSilva);
@@ -154,15 +141,15 @@ public class MainMenuUI {
 		taskGP1.createReport(tWorkerJSilva);
 		taskGP1.getReports().get(0).setReportedTime(20);
 
-		taskGP2 = projectGP.getTaskRepository().createTask("Desenvolver código para responder à US122");
+		Task taskGP2 = projectGP.getTaskRepository().createTask("Desenvolver código para responder à US122");
 		projectGP.getTaskRepository().addProjectTask(taskGP2);
 
 		// Instantiates a task
 		Task taskGP3 = projectGP.getTaskRepository().createTask("Fazer refatoração.");
 		projectGP.getTaskRepository().addProjectTask(taskGP3);
-		taskGP5 = projectGP.getTaskRepository().createTask("Adicionar colaboradores às tarefas planeadas.");
+		Task taskGP5 = projectGP.getTaskRepository().createTask("Adicionar colaboradores às tarefas planeadas.");
 		projectGP.getTaskRepository().addProjectTask(taskGP5);
-		taskGP6 = projectGP.getTaskRepository().createTask("Criar tarefas.");
+		Task taskGP6 = projectGP.getTaskRepository().createTask("Criar tarefas.");
 		projectGP.getTaskRepository().addProjectTask(taskGP6);
 		// Creates a new taksCollaborator
 		tWorkerATirapicos = new TaskCollaborator(projcollabATirapicos);
@@ -225,30 +212,30 @@ public class MainMenuUI {
 		taskGP5.getTaskState().changeToFinished();
 
 		// Creates a taskGP4 and sets it to cancelled
-		taskGP4 = projectGP.getTaskRepository().createTask("Cancelled Task");
+		Task taskGP4 = projectGP.getTaskRepository().createTask("Cancelled Task");
 		projectGP.getTaskRepository().addProjectTask(taskGP4);
 		Cancelled cancelledState = new Cancelled(taskGP4);
 		taskGP4.setTaskState(cancelledState);
 
 		// Create taskHB5 of projectHomeBanking
-		taskHB1 = projectHomeBanking.getTaskRepository().createTask("Criar indicadores de acesso");
+		Task taskHB1 = projectHomeBanking.getTaskRepository().createTask("Criar indicadores de acesso");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB1);
-		taskHB2 = projectHomeBanking.getTaskRepository()
+		Task taskHB2 = projectHomeBanking.getTaskRepository()
 				.createTask("Permitir diferentes configurações para pagina pessoal");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB2);
-		taskHB3 = projectHomeBanking.getTaskRepository().createTask("Permitir ligação a sites de noticias");
+		Task taskHB3 = projectHomeBanking.getTaskRepository().createTask("Permitir ligação a sites de noticias");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB3);
-		taskHB4 = projectHomeBanking.getTaskRepository().createTask("Alterar configurações para acesso");
+		Task taskHB4 = projectHomeBanking.getTaskRepository().createTask("Alterar configurações para acesso");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB4);
 		Task taskHB5 = projectHomeBanking.getTaskRepository().createTask("Implementar sistema de segurança");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB5);
-		taskHB6 = projectHomeBanking.getTaskRepository().createTask("Mostrar vista de administrador");
+		Task taskHB6 = projectHomeBanking.getTaskRepository().createTask("Mostrar vista de administrador");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB6);
-		taskHB7 = projectHomeBanking.getTaskRepository().createTask("Permitir alteração de dados de cliente");
+		Task taskHB7 = projectHomeBanking.getTaskRepository().createTask("Permitir alteração de dados de cliente");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB7);
-		taskHB8 = projectHomeBanking.getTaskRepository().createTask("Gerar relatórios de investimentos");
+		Task taskHB8 = projectHomeBanking.getTaskRepository().createTask("Gerar relatórios de investimentos");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB8);
-		taskHB9 = projectHomeBanking.getTaskRepository().createTask("Criar botão personalizar");
+		Task taskHB9 = projectHomeBanking.getTaskRepository().createTask("Criar botão personalizar");
 		projectHomeBanking.getTaskRepository().addProjectTask(taskHB9);
 
 		// Task 3.1 (taskHB1) is in state created

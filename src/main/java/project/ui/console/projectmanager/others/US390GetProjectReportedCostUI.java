@@ -66,10 +66,10 @@ public class US390GetProjectReportedCostUI {
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		if (option.equals("M")) {
+		if ("M".equals(option)) {
 			MainMenuUI.mainMenu();
-		} else if (option.equals("E")) {
-			System.exit(0);
+		} else if ("E".equals(option)) {
+			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 		} else {
 			System.out.println("Please choose a valid option: ");
 			this.displayProjectCost(this.project, this.user);
