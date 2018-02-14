@@ -656,7 +656,7 @@ public class Project {
 		return this.pendingTaskAssignementRequests;
 	}
 
-	// TODO Do we use this method give the Removal requests to the controller, or
+	// Do we use this method give the Removal requests to the controller, or
 	// create a method in Project that handles the approvals/rejections by receiving
 	// index numbers from the controller?
 	/**
