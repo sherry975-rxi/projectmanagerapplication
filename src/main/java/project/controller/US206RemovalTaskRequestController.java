@@ -74,8 +74,8 @@ public class US206RemovalTaskRequestController {
 		for (int i = 0; i < usersTask.size(); i++) {
 
 			String taskDescription = usersTask.get(i).getDescription();
-			String taskID = "[" + usersTask.get(i).getTaskID() + "]";
-			String taskIDandDescription = taskID + " " + taskDescription;
+			String taskIDCode = "[" + usersTask.get(i).getTaskID() + "]";
+			String taskIDandDescription = taskIDCode + " " + taskDescription;
 			userTaskDetails.add(taskIDandDescription);
 		}
 
@@ -91,10 +91,9 @@ public class US206RemovalTaskRequestController {
 	public void setProjectIDFromTaskID(String taskID) {
 
 		String[] partsTask = taskID.split("\\.");
-		String projectID = partsTask[0];
-		String taskCounter = partsTask[1];
+		String projectIDCode = partsTask[0];
 
-		setProjectID(Integer.parseInt(projectID));
+		setProjectID(Integer.parseInt(projectIDCode));
 	}
 
 	/**

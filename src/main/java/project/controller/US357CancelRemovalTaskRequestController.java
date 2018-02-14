@@ -1,5 +1,6 @@
 package project.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import project.model.Company;
@@ -42,7 +43,8 @@ public class US357CancelRemovalTaskRequestController {
 	 */
 	public List<String> viewPendingRemovalRequests() {
 
-		List<String> listOfPendingRemovalRequests = project.viewPendingTaskRemovalRequests();
+		List<String> listOfPendingRemovalRequests = new ArrayList<>();
+		listOfPendingRemovalRequests.addAll(project.viewPendingTaskRemovalRequests());
 
 		return listOfPendingRemovalRequests;
 	}
@@ -58,10 +60,8 @@ public class US357CancelRemovalTaskRequestController {
 	public void setTaskIDandUserEmailWithRequestString(String requestData) {
 
 		String[] parts = requestData.split("\n");
-		String userName = parts[0];
 		String userEmail = parts[1];
 		String taskID = parts[2];
-		String taskDescription = parts[3];
 
 		this.userToRemove = Company.getTheInstance().getUsersRepository().getUserByEmail(userEmail);
 		this.task = project.getTaskRepository().getTaskByID(taskID);

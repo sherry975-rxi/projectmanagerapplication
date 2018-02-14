@@ -23,12 +23,6 @@ public class US301CreateProjectController {
 	Project createdProject = null;
 
 	/**
-	 * Constructor for project creation controller
-	 */
-	public US301CreateProjectController() {
-	}
-
-	/**
 	 * This method creates a project from the controller by calling the create
 	 * project method in project repository class, and adds it to the project
 	 * repository.

@@ -48,7 +48,6 @@ public class UserTasksFunctionalitiesMenuUI {
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
 		System.out.println("Please choose an option: \n");
 
 		chooseFunctionality();
@@ -87,14 +86,9 @@ public class UserTasksFunctionalitiesMenuUI {
 			averegeTimeSpentOnTasksLastMonthUi.displayAveregeTimeSpentByTaskLastMonth(user);
 			break;
 		case "B":
-			CollaboratorMainMenuUI collaboratorMainMenu = new CollaboratorMainMenuUI(this.user);
-			collaboratorMainMenu.displayOptions();
-			break;
+			return;
 		case "M":
 			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			System.exit(0);
 			break;
 
 		default:

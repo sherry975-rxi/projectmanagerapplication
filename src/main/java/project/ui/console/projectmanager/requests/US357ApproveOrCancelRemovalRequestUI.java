@@ -50,7 +50,6 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			System.out.println("[C] Choose a Request");
 			System.out.println("[B] Back");
 			System.out.println("[M] MainMenu");
-			System.out.println("[E] Exit");
 
 			chooseOption(cancelRequest);
 		}
