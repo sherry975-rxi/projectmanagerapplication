@@ -62,12 +62,7 @@ public class US201and202UpdateUserInfoUI {
 			System.out.println("Please, insert new name");
 			String name = input.nextLine();
 			System.out.println("New Name:" + name);
-			if (confirmInfoYOrN(input)) {
-				US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-				updater.updateUserName(user, name);
-				System.out.println(updateSuccessful);
-				System.out.println();
-			}
+			confirmInfoToUpdateName(input, name, updateSuccessful);
 			break;
 		case "2":
 			// Updates email
@@ -144,55 +139,35 @@ public class US201and202UpdateUserInfoUI {
 						System.out.println(inputNewInfo);
 						String newStreet = input.nextLine();
 						System.out.println(newInfo + newStreet);
-						if (confirmInfoYOrN(input)) {
-							updater.updateUserStreet(user, currentStreet, newStreet);
-							System.out.println(updateSuccessful);
-							System.out.println();
-						}
+						confirmInfoToUpdateStreet(input, currentStreet, newStreet, updateSuccessful);
 						break;
 					case "2":
 						// Updates zip code
 						System.out.println(inputNewInfo);
 						String newZipCode = input.nextLine();
 						System.out.println(newInfo + newZipCode);
-						if (confirmInfoYOrN(input)) {
-							updater.updateUserZipCode(user, currentStreet, newZipCode);
-							System.out.println(updateSuccessful);
-							System.out.println();
-						}
+						confirmInfoToUpdateZipCode(input, currentStreet, newZipCode, updateSuccessful);
 						break;
 					case "3":
 						// Updates city
 						System.out.println(inputNewInfo);
 						String newCity = input.nextLine();
 						System.out.println(newInfo + newCity);
-						if (confirmInfoYOrN(input)) {
-							updater.updateUserCity(user, currentStreet, newCity);
-							System.out.println(updateSuccessful);
-							System.out.println();
-						}
+						confirmInfoToUpdateCity(input, currentStreet, newCity, updateSuccessful);
 						break;
 					case "4":
 						// Updates district
 						System.out.println(inputNewInfo);
 						String newDistrict = input.nextLine();
 						System.out.println(newInfo + newDistrict);
-						if (confirmInfoYOrN(input)) {
-							updater.updateUserDistrict(user, currentStreet, newDistrict);
-							System.out.println(updateSuccessful);
-							System.out.println();
-						}
+						confirmInfoToUpdateDistrict(input, currentStreet, newDistrict, updateSuccessful);
 						break;
 					case "5":
 						// Updates country
 						System.out.println(inputNewInfo);
 						String newCountry = input.nextLine();
 						System.out.println(newInfo + newCountry);
-						if (confirmInfoYOrN(input)) {
-							updater.updateUserCountry(user, currentStreet, newCountry);
-							System.out.println(updateSuccessful);
-							System.out.println();
-						}
+						confirmInfoToUpdateCountry(input, currentStreet, newCountry, updateSuccessful);
 						break;
 					default:
 						System.out.println("");
@@ -260,6 +235,11 @@ public class US201and202UpdateUserInfoUI {
 
 	}
 
+	/**Method to check the answer Yes or No
+	 * If yes returns true
+	 * @param input
+	 * @return
+	 */
 	private boolean confirmInfoYOrN(Scanner input) {
 		boolean result = false;
 		System.out.println("Press y to confirm change");
@@ -272,6 +252,13 @@ public class US201and202UpdateUserInfoUI {
 		return result;
 	}
 
+	/**Method to check the answer Yes or No to add new address
+	 * If yes, adds new address to the address list
+	 * If not goes back to main menu
+	 * @param input
+	 * @param newAddress
+	 * @param addAdress
+	 */
 	private void confirmOrCancelAddNewAddress(Scanner input, Address newAddress, US201and202UpdateUserInfoController addAdress){
 		System.out.println("Press 1 to confirm, 2 to cancel");
 
@@ -298,6 +285,11 @@ public class US201and202UpdateUserInfoUI {
 		}
 	}
 
+	/** Method to change email
+	 * @param input
+	 * @param email
+	 * @param updateSuccessful (Message saying update successful)
+	 */
 	private void confirmInfoToUpdateEmail(Scanner input, String email, String updateSuccessful) {
 		if (confirmInfoYOrN(input)) {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
@@ -313,10 +305,104 @@ public class US201and202UpdateUserInfoUI {
 		}
 	}
 
+	/**Method to change phone number
+	 * @param input
+	 * @param phone
+	 * @param updateSuccessful (Message saying update successful)
+	 */
 	private void confirmInfoToUpdatePhone(Scanner input, String phone, String updateSuccessful){
 		if (confirmInfoYOrN(input)) {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			updater.updateUserPhone(user, phone);
+			System.out.println(updateSuccessful);
+			System.out.println();
+		}
+	}
+	
+	/**Method to change User Name
+	 * @param input
+	 * @param name
+	 * @param updateSuccessful (Message saying update successful)
+	 */
+	private void confirmInfoToUpdateName (Scanner input, String name, String updateSuccessful) {
+	if (confirmInfoYOrN(input)) {
+		US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
+		updater.updateUserName(user, name);
+		System.out.println(updateSuccessful);
+		System.out.println();
+	}
+	}
+	
+	/**Method to change Street of an existing Address
+	 * @param input
+	 * @param currentStreet
+	 * @param newStreet
+	 * @param updateSuccessful (Message saying update successful)
+	 */
+	private void confirmInfoToUpdateStreet (Scanner input, String currentStreet, String newStreet, String updateSuccessful) {
+		if (confirmInfoYOrN(input)) {
+			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
+			updater.updateUserStreet(user, currentStreet, newStreet);
+			System.out.println(updateSuccessful);
+			System.out.println();
+		}
+		}
+	
+	/**Method to change Zip Code of an existing Address
+	 * @param input
+	 * @param currentStreet
+	 * @param newZipCode
+	 * @param updateSuccessful (Message saying update successful)
+	 */
+	private void confirmInfoToUpdateZipCode (Scanner input, String currentStreet, String newZipCode, String updateSuccessful) {
+		if (confirmInfoYOrN(input)) {
+			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
+			updater.updateUserZipCode(user, currentStreet, newZipCode);
+			System.out.println(updateSuccessful);
+			System.out.println();
+		}
+		}
+	
+	/**Method to change City of an existing Address
+	 * @param input
+	 * @param currentStreet
+	 * @param newCity
+	 * @param updateSuccessful (Message saying update successful)
+	 */
+	private void confirmInfoToUpdateCity (Scanner input, String currentStreet, String newCity, String updateSuccessful) {
+		if (confirmInfoYOrN(input)) {
+			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
+			updater.updateUserCity(user, currentStreet, newCity);
+			System.out.println(updateSuccessful);
+			System.out.println();
+		}
+	}
+	
+	/**Method to change District of an existing Address
+	 * @param input
+	 * @param currentStreet
+	 * @param newDistrict
+	 * @param updateSuccessful (Message saying update successful)
+	 */
+	private void confirmInfoToUpdateDistrict (Scanner input, String currentStreet, String newDistrict, String updateSuccessful) {
+		if (confirmInfoYOrN(input)) {
+			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
+			updater.updateUserDistrict(user, currentStreet, newDistrict);
+			System.out.println(updateSuccessful);
+			System.out.println();
+		}
+	}
+	
+	/**Method to change Country of an existing Address
+	 * @param input
+	 * @param currentStreet
+	 * @param newCountry
+	 * @param updateSuccessful (Message saying update successful)
+	 */
+	private void confirmInfoToUpdateCountry (Scanner input, String currentStreet, String newCountry, String updateSuccessful) {
+		if (confirmInfoYOrN(input)) {
+			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
+			updater.updateUserCountry(user, currentStreet, newCountry);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
