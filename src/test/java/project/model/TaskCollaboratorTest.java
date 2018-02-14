@@ -46,8 +46,17 @@ public class TaskCollaboratorTest {
 	@After
 	public void tearDown() {
 		userTester = null;
+		userTester2 = null;
 		collabTester = null;
+		collabTester2 = null;
 		workerTester = null;
+		workerTester2 = null;
+		workerTester3 = null;
+		finishDate = null;
+		estimatedStartDate = null;
+		taskDeadline = null;
+		task1 = null;
+
 	}
 
 	/**

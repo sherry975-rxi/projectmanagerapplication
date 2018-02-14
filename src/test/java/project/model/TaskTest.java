@@ -94,7 +94,13 @@ public class TaskTest {
 		collab3 = null;
 		tWorker1 = null;
 		tWorker2 = null;
+		tWorker3 = null;
 		expectedCost = 0;
+		estimatedTaskStartDate = null;
+		taskDeadline = null;
+		finishedTaskState = null;
+		standByTaskState = null;
+		cancelledTaskState = null;
 
 	}
 
