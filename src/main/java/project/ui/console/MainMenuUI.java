@@ -411,7 +411,6 @@ public class MainMenuUI {
 			System.out.println("[4] Director");
 			System.out.println("[5] Collaborator");
 			System.out.println("______________________________________________");
-			System.out.println("[E] Exit");
 			System.out.println();
 			System.out.println("Please select an option:");
 			System.out.println();
@@ -442,12 +441,6 @@ public class MainMenuUI {
 				userJSilva.setUserProfile(Profile.COLLABORATOR);
 				CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(userJSilva);
 				collaboratorMenu.displayOptions();
-
-				break;
-			case "E":
-				System.out.println();
-				System.out.println("--YOU HAVE EXIT FROM MAIN MENU--");
-				condition = false;
 
 				break;
 

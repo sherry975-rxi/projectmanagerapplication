@@ -13,7 +13,7 @@ public class DirectorMenuUI {
 
 	String options = "[1] - View projects \n" + "[2] - Create a project \n"
 			+ "[3] - Change selected project's manager \n" + "______________________________________________\n"
-			+ "[B] Back\n" + "[E] Exit";
+			+ "[B] Back\n";
 
 	String command;
 
@@ -87,10 +87,6 @@ public class DirectorMenuUI {
 				System.out.println("Returning to Director Menu...");
 				System.out.println("");
 				cycle = false;
-				break;
-			case "e":
-				System.out.println("--YOU HAVE EXITED FROM APPLICATION--");
-				System.exit(0);
 				break;
 
 			default:

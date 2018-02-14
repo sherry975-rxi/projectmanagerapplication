@@ -73,11 +73,6 @@ public class US301CreateProjectUI {
 				isProjectCreationOngoing = false;
 				break;
 
-			case "E":
-				System.out.println("--YOU HAVE EXITED FROM APPLICATION--");
-				System.exit(0);
-				break;
-
 			default:
 				System.out.println("You have the following data:");
 				System.out.println(viewOptions());
@@ -106,7 +101,6 @@ public class US301CreateProjectUI {
 		options += "\n[any key] - View Data and commands";
 		options += "\n[C] - Create Project with chosen data";
 		options += "\n[B] - Cancel Project creation and return to Director Menu";
-		options += "\n[E] - Exit";
 
 		return options;
 	}

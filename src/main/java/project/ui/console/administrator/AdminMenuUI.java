@@ -11,7 +11,7 @@ public class AdminMenuUI {
 
 	String options = "[1] - View all users \n" + "[2] - Search users by profile or email \n"
 			+ "[3] - Manage selected user profile \n" + "[4] - Manage selected user state\n"
-			+ "______________________________________________\n" + "[B] Back\n" + "[E] Exit";
+			+ "______________________________________________\n" + "[B] Back\n";
 
 	String command;
 
@@ -76,11 +76,6 @@ public class AdminMenuUI {
 				System.out.println("Returning to main menu...");
 				System.out.println("");
 				cycle = false;
-				break;
-
-			case "e":
-				System.out.println("--YOU HAVE EXITED FROM APPLICATION--");
-				System.exit(0);
 				break;
 
 			default:
