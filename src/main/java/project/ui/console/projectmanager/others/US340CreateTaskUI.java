@@ -80,30 +80,16 @@ public class US340CreateTaskUI {
 
 		System.out.println("Enter estimated task effort: ");
 		Scanner estimatedTaskEffort = new Scanner(System.in);
-		int number;
-		do {
-			System.out.println("Please enter a positive number!");
-			while (!estimatedTaskEffort.hasNextInt()) {
-				System.out.println("That's not a number!");
-				estimatedTaskEffort.next(); // this is important!
-			}
-			number = estimatedTaskEffort.nextInt();
-			estimatedTaskEffort.nextLine();
-		} while (number <= 0);
+
+		int number = estimatedTaskEffortUI(estimatedTaskEffort);
+
 		System.out.println("Thank you! Got " + number);
 
 		System.out.println("Enter estimated cost: ");
 		Scanner estimatedCost = new Scanner(System.in);
-		int cost;
-		do {
-			System.out.println("Please enter a positive number!");
-			while (!estimatedCost.hasNextInt()) {
-				System.out.println("That's not a number!");
-				estimatedCost.next(); // this is important!
-			}
-			cost = estimatedCost.nextInt();
-			estimatedCost.nextLine();
-		} while (cost <= 0);
+
+		int cost = estimatedTaskCostUI(estimatedCost);
+
 		System.out.println("Thank you! Got " + cost);
 
 		System.out.println();
@@ -149,5 +135,35 @@ public class US340CreateTaskUI {
 		} else if ("M".equals(option)) {
 			MainMenuUI.mainMenu();
 		}
+	}
+
+	private int estimatedTaskEffortUI(Scanner estimatedTaskEffort) {
+		int result = 0;
+		do {
+			System.out.println("Please enter a positive number!");
+			while (!estimatedTaskEffort.hasNextInt()) {
+				System.out.println("That's not a number!");
+				estimatedTaskEffort.next(); // this is important!
+			}
+			result = estimatedTaskEffort.nextInt();
+			estimatedTaskEffort.nextLine();
+		} while (result <= 0);
+
+		return result;
+	}
+
+	private int estimatedTaskCostUI(Scanner estimatedCost) {
+		int result = 0;
+		do {
+			System.out.println("Please enter a positive number!");
+			while (!estimatedCost.hasNextInt()) {
+				System.out.println("That's not a number!");
+				estimatedCost.next(); // this is important!
+			}
+			result = estimatedCost.nextInt();
+			estimatedCost.nextLine();
+		} while (result <= 0);
+
+		return result;
 	}
 }
