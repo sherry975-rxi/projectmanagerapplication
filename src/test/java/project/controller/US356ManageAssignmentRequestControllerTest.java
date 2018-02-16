@@ -15,9 +15,9 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
-import project.model.taskStateInterface.Planned;
-import project.model.taskStateInterface.StandBy;
-import project.model.taskStateInterface.TaskStateInterface;
+import project.model.taskstateinterface.Planned;
+import project.model.taskstateinterface.StandBy;
+import project.model.taskstateinterface.TaskStateInterface;
 
 public class US356ManageAssignmentRequestControllerTest {
 

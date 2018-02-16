@@ -1,4 +1,4 @@
-package project.model.taskStateInterface;
+package project.model.taskstateinterface;
 
 import project.model.Task;
 

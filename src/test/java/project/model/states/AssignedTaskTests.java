@@ -12,9 +12,9 @@ import org.junit.Test;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
-import project.model.taskStateInterface.Assigned;
-import project.model.taskStateInterface.Finished;
-import project.model.taskStateInterface.TaskStateInterface;
+import project.model.taskstateinterface.Assigned;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.TaskStateInterface;
 
 public class AssignedTaskTests {
 

@@ -15,10 +15,10 @@ import org.junit.Test;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
-import project.model.taskStateInterface.Finished;
-import project.model.taskStateInterface.Planned;
-import project.model.taskStateInterface.Ready;
-import project.model.taskStateInterface.TaskStateInterface;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.Planned;
+import project.model.taskstateinterface.Ready;
+import project.model.taskstateinterface.TaskStateInterface;
 
 public class ReadyTaskTest {
 

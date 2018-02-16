@@ -1,36 +1,33 @@
-package project.model.taskStateInterface;
+package project.model.taskstateinterface;
 
 import project.model.Task;
 
-public class Planned implements TaskStateInterface {
+public class Assigned implements TaskStateInterface {
 
-	Task task;
+	private Task task;
 
-	public Planned(Task taskToUpdate) {
+	public Assigned(Task taskToUpdate) {
 		this.task = taskToUpdate;
 	}
 
 	/**
-	 * This method verifies if the State "Planned" requirements are fulfilled for a
-	 * specific Task. It has to have estimated dates and no users working on it. If
-	 * so, it returns true, If not, it returns false
+	 * This method verifies if the State "Assigned" requirements are fulfilled for a
+	 * specific Task. It has to have at least one active user.
 	 * 
-	 * @return true if is Valid, false if not
+	 * @return True if valid, False if not
 	 */
+	// TODO what happens when the finished dependency of a "ready" task reverts to
+	// Unfinished?
 	@Override
 	public boolean isValid() {
-		boolean validation = false;
-		if (task.getEstimatedTaskStartDate() != null && task.getTaskDeadline() != null
-				&& !task.doesTaskTeamHaveActiveUsers()) {
-			validation = true;
-		}
-
-		return validation;
+		return task.doesTaskTeamHaveActiveUsers();
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Created" state.
+	 * This method changes the state of a Task to the "Created" state - does nothing
+	 * in Assigned state
 	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToCreated() {
@@ -40,23 +37,15 @@ public class Planned implements TaskStateInterface {
 	/**
 	 * This method changes the state of a Task to the "Planned" state
 	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToPlanned() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Assigned" state
-	 * 
-	 */
-	@Override
-	public boolean changeToAssigned() {
 		boolean condition = false;
-		if (isTransitionToAssignedPossible()) {
-			TaskStateInterface stateAssigned = new Assigned(task);
-			if (stateAssigned.isValid()) {
-				task.setTaskState(stateAssigned);
+		if (isTransitionToPlannedPossible()) {
+			TaskStateInterface statePlanned = new Planned(task);
+			if (statePlanned.isValid()) {
+				task.setTaskState(statePlanned);
 				condition = true;
 			}
 		}
@@ -64,26 +53,51 @@ public class Planned implements TaskStateInterface {
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Ready" state
+	 * This method changes the state of a Task to the "Assigned" state - does
+	 * nothing in Assigned state
 	 * 
+	 * @return Void
 	 */
 	@Override
-	public boolean changeToReady() {
+	public boolean changeToAssigned() {
 		return false;
 	}
 
 	/**
-	 * This method changes the state of a Task to the "OnGoing" state.
+	 * This method changes the state of a Task to the "Ready" state
 	 * 
+	 * @return Void
 	 */
+	@Override
+	public boolean changeToReady() {
+		boolean condition = false;
+		if (isTransitionToReadyPossible()) {
+			TaskStateInterface stateReady = new Ready(task);
+			if (stateReady.isValid()) {
+				task.setTaskState(stateReady);
+				condition = true;
+			}
+		}
+		return condition;
+	}
+
+	/**
+	 * This method changes the state of a Task to the "OnGoing" state - does nothing
+	 * in Assigned state
+	 * 
+	 * @return Void
+	 */
+	// TODO Can Task skip Ready State if it has no dependencies?
 	@Override
 	public boolean changeToOnGoing() {
 		return false;
 	}
 
 	/**
-	 * This method changes the state of a Task to the "StandBy" state.
+	 * This method changes the state of a Task to the "StandBy" state - does nothing
+	 * in Assigned state
 	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToStandBy() {
@@ -91,8 +105,10 @@ public class Planned implements TaskStateInterface {
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Cancelled" state.
+	 * This method changes the state of a Task to the "Cancelled" state - does
+	 * nothing in Assigned state
 	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToCancelled() {
@@ -100,20 +116,21 @@ public class Planned implements TaskStateInterface {
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Finished" state.
+	 * This method changes the state of a Task to the "Finished" state - does
+	 * nothing in Assigned state
 	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToFinished() {
 		return false;
-
 	}
 
 	/**
 	 * This method verifies if the transition to the “Created” state of a Task is
-	 * possible.
+	 * possible
 	 * 
-	 * @return TRUE if possible, FALSE if not
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToCreatedPossible() {
@@ -122,42 +139,42 @@ public class Planned implements TaskStateInterface {
 
 	/**
 	 * This method verifies if the transition to the “Planned” state of a Task is
-	 * possible.
+	 * possible
 	 * 
-	 * @return TRUE if possible, FALSE if not
+	 * @return true
 	 */
 	@Override
 	public boolean isTransitionToPlannedPossible() {
-		return false;
+		return true;
 	}
 
 	/**
 	 * This method verifies if the transition to the “Assigned” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE if possible, FALSE if not
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToAssignedPossible() {
-		return true;
+		return false;
 	}
 
 	/**
 	 * This method verifies if the transition to the “Ready” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE if possible, FALSE if not
+	 * @return true
 	 */
 	@Override
 	public boolean isTransitionToReadyPossible() {
-		return false;
+		return true;
 	}
 
 	/**
 	 * This method verifies if the transition to the “OnGoing” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE if possible, FALSE if not
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToOnGoingPossible() {
@@ -168,7 +185,7 @@ public class Planned implements TaskStateInterface {
 	 * This method verifies if the transition to the “StandBy” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE if possible, FALSE if not
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToStandByPossible() {
@@ -179,7 +196,7 @@ public class Planned implements TaskStateInterface {
 	 * This method verifies if the transition to the “Cancelled” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE if possible, FALSE if not
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToCancelledPossible() {
@@ -190,7 +207,7 @@ public class Planned implements TaskStateInterface {
 	 * This method verifies if the transition to the “Finished” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE if possible, FALSE if not
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToFinishedPossible() {

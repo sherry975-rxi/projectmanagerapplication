@@ -17,10 +17,10 @@ import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
-import project.model.taskStateInterface.Assigned;
-import project.model.taskStateInterface.OnGoing;
-import project.model.taskStateInterface.Planned;
-import project.model.taskStateInterface.Ready;
+import project.model.taskstateinterface.Assigned;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Planned;
+import project.model.taskstateinterface.Ready;
 
 public class US205MarkTaskAsFinishedCollaboratorTest {
 

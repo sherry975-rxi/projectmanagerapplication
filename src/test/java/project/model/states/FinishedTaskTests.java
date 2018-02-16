@@ -17,8 +17,8 @@ import project.model.ProjectRepository;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
-import project.model.taskStateInterface.Finished;
-import project.model.taskStateInterface.TaskStateInterface;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.TaskStateInterface;
 
 public class FinishedTaskTests {
 	Company myCompany;

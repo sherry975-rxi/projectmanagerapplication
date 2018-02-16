@@ -11,7 +11,7 @@ import org.junit.Test;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
-import project.model.taskStateInterface.Planned;
+import project.model.taskstateinterface.Planned;
 
 public class PlannedTaskTests {
 

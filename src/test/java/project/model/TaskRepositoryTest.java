@@ -12,14 +12,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.model.taskStateInterface.Assigned;
-import project.model.taskStateInterface.Cancelled;
-import project.model.taskStateInterface.Created;
-import project.model.taskStateInterface.Finished;
-import project.model.taskStateInterface.OnGoing;
-import project.model.taskStateInterface.Planned;
-import project.model.taskStateInterface.Ready;
-import project.model.taskStateInterface.StandBy;
+import project.model.taskstateinterface.Assigned;
+import project.model.taskstateinterface.Cancelled;
+import project.model.taskstateinterface.Created;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Planned;
+import project.model.taskstateinterface.Ready;
+import project.model.taskstateinterface.StandBy;
 
 public class TaskRepositoryTest {
 

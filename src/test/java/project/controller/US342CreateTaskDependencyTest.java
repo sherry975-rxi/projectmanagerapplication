@@ -19,8 +19,8 @@ import project.model.Task;
 import project.model.TaskRepository;
 import project.model.User;
 import project.model.UserRepository;
-import project.model.taskStateInterface.Created;
-import project.model.taskStateInterface.OnGoing;
+import project.model.taskstateinterface.Created;
+import project.model.taskstateinterface.OnGoing;
 
 public class US342CreateTaskDependencyTest {
 

@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.model.Task;
-import project.model.taskStateInterface.Created;
+import project.model.taskstateinterface.Created;
 
 public class CreatedTaskTests {
 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import project.model.taskStateInterface.Cancelled;
-import project.model.taskStateInterface.Finished;
+import project.model.taskstateinterface.Cancelled;
+import project.model.taskstateinterface.Finished;
 
 public class TaskRepository {
 

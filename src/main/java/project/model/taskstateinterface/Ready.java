@@ -1,44 +1,37 @@
-package project.model.taskStateInterface;
+package project.model.taskstateinterface;
 
 import project.model.Task;
 
-public class StandBy implements TaskStateInterface {
+public class Ready implements TaskStateInterface {
 
 	private Task task;
 
-	/**
-	 * Constructor of StandBy class
-	 * 
-	 * @param t
-	 *            The task that will be associated to the parameter Task of the
-	 *            instance of the object StandBy
-	 */
-	public StandBy(Task taskToUpdate) {
+	public Ready() {
+	}
+
+	public Ready(Task taskToUpdate) {
 		this.task = taskToUpdate;
 	}
 
 	/**
-	 * This method verifies if the transition to "StandBy" State is possible. If the
-	 * state of the task is set to "OnGoing" and doesn't have any active users and
-	 * doesnt have any finish date, the method returns true, else, returns false
+	 * This method checks if a transition to a certain state is valid
 	 * 
-	 * @return true if possible, false if not
+	 * @return True if valid, False if not
 	 */
 	@Override
 	public boolean isValid() {
-
-		boolean isValid = false;
-
-		if (!task.doesTaskTeamHaveActiveUsers() && task.getFinishDate() == null) {
-			isValid = true;
+		boolean valid = false;
+		if (!task.hasActiveDependencies()) {
+			valid = true;
 		}
-
-		return isValid;
-
+		return valid;
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Created" state
+	 * This method changes the state of a Task to the "Created" state. It does
+	 * nothing in this state.
+	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToCreated() {
@@ -47,14 +40,27 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method changes the state of a Task to the "Planned" state
+	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToPlanned() {
-		return false;
+		boolean condition = false;
+		if (isTransitionToPlannedPossible()) {
+			TaskStateInterface statePlanned = new Planned(task);
+			if (statePlanned.isValid()) {
+				task.setTaskState(statePlanned);
+				condition = true;
+			}
+		}
+		return condition;
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Assigned" state
+	 * This method changes the state of a Task to the "Assigned" state. It does
+	 * nothing in this state.
+	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToAssigned() {
@@ -62,7 +68,10 @@ public class StandBy implements TaskStateInterface {
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Ready" state
+	 * This method changes the state of a Task to the "Ready" state. It does nothing
+	 * in this state.
+	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToReady() {
@@ -71,6 +80,8 @@ public class StandBy implements TaskStateInterface {
 
 	/**
 	 * This method changes the state of a Task to the "OnGoing" state
+	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToOnGoing() {
@@ -86,7 +97,10 @@ public class StandBy implements TaskStateInterface {
 	}
 
 	/**
-	 * This method changes the state of a Task to the "StandBy" state
+	 * This method changes the state of a Task to the "StandBy" state. It does
+	 * nothing in this state.
+	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToStandBy() {
@@ -94,129 +108,112 @@ public class StandBy implements TaskStateInterface {
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Cancelled" state
+	 * This method changes the state of a Task to the "Cancelled" state. It does
+	 * nothing in this state.
+	 * 
+	 * @return TRUE if state was changed and FALSE if state was not changed
 	 */
 	@Override
 	public boolean changeToCancelled() {
-		boolean condition = false;
-		if (isTransitionToCancelledPossible()) {
-			TaskStateInterface stateCancelled = new Cancelled(task);
-			if (stateCancelled.isValid()) {
-				task.setTaskState(stateCancelled);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Finished" state
+	 * This method changes the state of a Task to the "Finished" state. It does
+	 * nothing in this state.
 	 * 
+	 * @return Void
 	 */
 	@Override
 	public boolean changeToFinished() {
-		boolean condition = false;
-		if (isTransitionToFinishedPossible()) {
-			TaskStateInterface finishedState = new Finished(task);
-			if (finishedState.isValid()) {
-				task.setTaskState(finishedState);
-				condition = true;
-			}
-		}
-		return condition;
+		return false;
 	}
 
 	/**
 	 * This method verifies if the transition to the “Created” state of a Task is
 	 * possible
+	 * 
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToCreatedPossible() {
 		return false;
-
 	}
 
 	/**
 	 * This method verifies if the transition to the “Planned” state of a Task is
 	 * possible
 	 * 
-	 * @return FALSE
+	 * @return true
 	 */
 	@Override
 	public boolean isTransitionToPlannedPossible() {
-		return false;
-
+		return true;
 	}
 
 	/**
 	 * This method verifies if the transition to the “Assigned” state of a Task is
 	 * possible
 	 * 
-	 * @return FALSE
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToAssignedPossible() {
 		return false;
-
 	}
 
 	/**
 	 * This method verifies if the transition to the “Ready” state of a Task is
 	 * possible
 	 * 
-	 * @return FALSE
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToReadyPossible() {
 		return false;
-
 	}
 
 	/**
 	 * This method verifies if the transition to the “OnGoing” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE
+	 * @return true
 	 */
 	@Override
 	public boolean isTransitionToOnGoingPossible() {
 		return true;
-
 	}
 
 	/**
-	 * This method verifies if the transition to the “StandBy" state of a Task is
+	 * This method verifies if the transition to the “StandBy” state of a Task is
 	 * possible
 	 * 
-	 * @return FALSE
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToStandByPossible() {
 		return false;
-
 	}
 
 	/**
 	 * This method verifies if the transition to the “Cancelled” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToCancelledPossible() {
-		return true;
-
+		return false;
 	}
 
 	/**
-	 * This method verifies if the transition to the “Cancelled” state of a Task is
+	 * This method verifies if the transition to the “Finished” state of a Task is
 	 * possible
 	 * 
-	 * @return TRUE
+	 * @return false
 	 */
 	@Override
 	public boolean isTransitionToFinishedPossible() {
-		return true;
+		return false;
 	}
-
 }

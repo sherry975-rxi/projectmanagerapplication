@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import project.model.taskStateInterface.Cancelled;
-import project.model.taskStateInterface.Created;
-import project.model.taskStateInterface.Finished;
-import project.model.taskStateInterface.OnGoing;
-import project.model.taskStateInterface.Ready;
-import project.model.taskStateInterface.StandBy;
-import project.model.taskStateInterface.TaskStateInterface;
+import project.model.taskstateinterface.Cancelled;
+import project.model.taskstateinterface.Created;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Ready;
+import project.model.taskstateinterface.StandBy;
+import project.model.taskstateinterface.TaskStateInterface;
 
 /**
  * Class that allows building and accessing Task attributes.

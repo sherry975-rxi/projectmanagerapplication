@@ -16,7 +16,7 @@ import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
-import project.model.taskStateInterface.OnGoing;
+import project.model.taskstateinterface.OnGoing;
 
 public class US372GetProjectUnfinishedTaskListTest {
 

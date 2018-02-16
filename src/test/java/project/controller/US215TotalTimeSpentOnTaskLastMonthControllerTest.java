@@ -16,7 +16,7 @@ import project.model.Task;
 import project.model.TaskRepository;
 import project.model.User;
 import project.model.UserRepository;
-import project.model.taskStateInterface.Finished;
+import project.model.taskstateinterface.Finished;
 
 public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 
