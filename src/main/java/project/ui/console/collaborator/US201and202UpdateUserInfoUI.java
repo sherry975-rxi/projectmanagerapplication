@@ -51,8 +51,7 @@ public class US201and202UpdateUserInfoUI {
 
 		// Selects the field according to user input
 		String choice = input.nextLine().toUpperCase();
-		final String inputNewInfo = "Please insert the new info:";
-		final String newInfo = "New info: ";
+		
 		final String updateSuccessful = "-----UPDATE SUCCESSFUL-----";
 		switch (choice) {
 		case "1":
