@@ -7,14 +7,12 @@ import project.model.User;
 import project.ui.console.MainMenuUI;
 
 public class US203GetUnfinishedTaskUI {
-	private User user;
 	private Boolean isPreviousUIFromTasks;
-	
-	private String[] split;
 	private int projID;
 
-	public void displayOptions(User user) {
-		this.user = user;
+	public void displayOptions(User user1) {
+		String[] split;
+		User user = user1;
 		US203GetUnfinishedTaskByUser unfinishedTaskByUser = new US203GetUnfinishedTaskByUser();
 		int t;
 		t = 0;
@@ -56,7 +54,7 @@ public class US203GetUnfinishedTaskUI {
 				split = option.split("\\.");
 				projID = Integer.valueOf(split[0]);
 
-				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, this.user, this.isPreviousUIFromTasks);
+				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, user, this.isPreviousUIFromTasks);
 				taskSelected.taskDataDisplay();
 			}
 
@@ -64,7 +62,7 @@ public class US203GetUnfinishedTaskUI {
 				System.out.println("Please choose a valid option: ");
 				System.out.println("");
 				US203GetUnfinishedTaskUI unfinishedTaskByUser1 = new US203GetUnfinishedTaskUI();
-				unfinishedTaskByUser1.displayOptions(this.user);
+				unfinishedTaskByUser1.displayOptions(user);
 			}
 
 			break;
