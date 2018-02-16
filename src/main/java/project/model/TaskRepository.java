@@ -408,11 +408,9 @@ public class TaskRepository {
 		Calendar today = Calendar.getInstance();
 		List<Task> expiredTasks = new ArrayList<>();
 		for (Task other : this.projectTasks) {
-			if (!other.isTaskFinished()) {
-				if (other.getTaskDeadline() != null) {
-					if (other.getTaskDeadline().before(today)) {
-						expiredTasks.add(other);
-					}
+			if (!other.isTaskFinished() && other.getTaskDeadline() != null) {
+				if (other.getTaskDeadline().before(today)) {
+					expiredTasks.add(other);
 				}
 			}
 		}
