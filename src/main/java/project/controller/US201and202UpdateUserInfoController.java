@@ -67,6 +67,21 @@ public class US201and202UpdateUserInfoController {
 	}
 
 	/**
+	 * This method creates a new address
+	 * 
+	 * @param newStreet
+	 * @param newZipCode
+	 * @param newCity
+	 * @param newDistrict
+	 * @param newCountry
+	 */
+	public Address createNewAddress(String newStreet, String newZipCode, String newCity, String newDistrict,
+			String newCountry) {
+		Address newAddress = new Address(newStreet, newZipCode, newCity, newDistrict, newCountry);
+		return newAddress;
+	}
+
+	/**
 	 * This method controls the add of a new address to user's address list by
 	 * calling the method addAddress.
 	 * 

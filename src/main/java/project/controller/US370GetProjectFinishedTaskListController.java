@@ -7,9 +7,6 @@ import project.model.Task;
 
 public class US370GetProjectFinishedTaskListController {
 
-	public US370GetProjectFinishedTaskListController() {
-	}
-
 	/**
 	 * Returns a list of tasks that belong to a Project and were marked as finished.
 	 * - US370
