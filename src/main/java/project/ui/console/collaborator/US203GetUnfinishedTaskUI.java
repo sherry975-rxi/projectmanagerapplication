@@ -8,9 +8,9 @@ import project.ui.console.MainMenuUI;
 
 public class US203GetUnfinishedTaskUI {
 	private Boolean isPreviousUIFromTasks;
-	private int projID;
 
 	public void displayOptions(User user1) {
+		int projID;
 		String[] split;
 		User user = user1;
 		US203GetUnfinishedTaskByUser unfinishedTaskByUser = new US203GetUnfinishedTaskByUser();
