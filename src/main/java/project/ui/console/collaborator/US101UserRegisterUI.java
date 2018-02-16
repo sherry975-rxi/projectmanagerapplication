@@ -12,6 +12,7 @@ public class US101UserRegisterUI {
 
 	public void userRegister() {
 
+		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
 		US101RegisterUserController registerUsercontroller1 = new US101RegisterUserController();
 
@@ -129,16 +130,16 @@ public class US101UserRegisterUI {
 
 		System.out.println("Confirm if your data is correct: ");
 		System.out.println();
-		System.out.println("             " + "[1] Nome: " + name);
-		System.out.println("             " + "[2] Email: " + email);
-		System.out.println("             " + "[3] IdNumber: " + idNumber);
-		System.out.println("             " + "[4] Function: " + function);
-		System.out.println("             " + "[5] Phone: " + phone);
-		System.out.println("             " + "[6] Street: " + street);
-		System.out.println("             " + "[7] ZipCode: " + zipCode);
-		System.out.println("             " + "[8] City: " + city);
-		System.out.println("             " + "[9] District: " + district);
-		System.out.println("             " + "[10] Country: " + country);
+		System.out.println(blank + "[1] Nome: " + name);
+		System.out.println(blank + "[2] Email: " + email);
+		System.out.println(blank + "[3] IdNumber: " + idNumber);
+		System.out.println(blank + "[4] Function: " + function);
+		System.out.println(blank + "[5] Phone: " + phone);
+		System.out.println(blank + "[6] Street: " + street);
+		System.out.println(blank + "[7] ZipCode: " + zipCode);
+		System.out.println(blank + "[8] City: " + city);
+		System.out.println(blank + "[9] District: " + district);
+		System.out.println(blank + "[10] Country: " + country);
 
 		System.out.println();
 		System.out.println("Is your data correct? (y to confirm; n to deny)");
