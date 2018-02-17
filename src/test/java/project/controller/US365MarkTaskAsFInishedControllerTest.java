@@ -311,26 +311,6 @@ public class US365MarkTaskAsFInishedControllerTest {
 		us365controller = null;
 	}
 
-	@Test
-	public void testCanTaskFinish() {
-		// create controller for ongoing task 1 (of project 1)
-		us365controller = new US365MarkTaskAsFinishedControllerProjectManager(task1OnGoing.getTaskID(), project1);
-
-		assertTrue(us365controller.canTaskFinish());
-
-		// create controller for ready task 3 (of project 2)
-		us365controller = new US365MarkTaskAsFinishedControllerProjectManager(task3.getTaskID(), project2);
-
-		assertFalse(us365controller.canTaskFinish());
-
-		// us365controller.getProjectsFromProjectManager(projectManager);
-		// us365controller.getUnfinishedTasksOfProjectFromProjectManager(0);
-		// us365controller.getTaskToBeMarkedFinished(0);
-		// us365controller.markTaskAsFinished();
-		//
-		// assertEquals("Finished", task1OnGoing.viewTaskStateName());
-	}
-
 	/**
 	 * 
 	 * this test asserts that a task starting as Ongoing can be marked as finish and

@@ -154,11 +154,5 @@ public class FinishedTaskTests {
 		assertFalse(stateTask.changeToReady());
 		assertFalse(stateTask.changeToCancelled());
 		assertFalse(stateTask.changeToFinished());
-		assertFalse(stateTask.isTransitionToCreatedPossible());
-		assertFalse(stateTask.isTransitionToPlannedPossible());
-		assertFalse(stateTask.isTransitionToAssignedPossible());
-		assertFalse(stateTask.isTransitionToStandByPossible());
-		assertFalse(stateTask.isTransitionToCancelledPossible());
-
 	}
 }

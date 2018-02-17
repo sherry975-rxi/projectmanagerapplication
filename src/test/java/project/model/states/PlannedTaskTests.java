@@ -144,16 +144,4 @@ public class PlannedTaskTests {
 		assertEquals("Planned", testTask.viewTaskStateName());
 	}
 
-	
-
-	/**
-	 * this test verify if the transition to the “Assigned” state of a Task is
-	 * possible
-	 */
-	@Test
-	public final void testIsTransitionToAssignedPossible() {
-
-		assertTrue(stateThree.isTransitionToAssignedPossible());
-	}
-
 }

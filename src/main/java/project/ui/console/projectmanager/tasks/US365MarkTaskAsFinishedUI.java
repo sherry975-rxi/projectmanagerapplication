@@ -13,7 +13,7 @@ public class US365MarkTaskAsFinishedUI {
 
 		controller = new US365MarkTaskAsFinishedControllerProjectManager(taskID, selectedProject);
 
-		if (controller.canTaskFinish()) {
+
 
 			Scanner input = new Scanner(System.in);
 			System.out.println("Would you really like to mark this task as completed?");
@@ -23,15 +23,18 @@ public class US365MarkTaskAsFinishedUI {
 			String command = input.nextLine().toUpperCase();
 
 			if ("Y".equals(command)) {
-				controller.setTaskAsFinished();
-				System.out.println("Task " + taskID + " has been finished!");
+				if(controller.setTaskAsFinished()){
+					System.out.println("Task " + taskID + " has been finished!");
+				}else{
+					System.out.println("You cannot finish this task yet");
+				}
 			} else {
 				System.out.println("Task completion aborted.");
 			}
 
-		} else {
-			System.out.println("You cannot finish this task yet");
-		}
+
+
+
 
 		System.out.println("");
 		System.out.println("Returning to main menu...");

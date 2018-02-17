@@ -315,11 +315,6 @@ public class OnGoingTaskTest {
 		task2.addProjectCollaboratorToTask(collab2);
 
 		/*
-		 * Checks if its possible to change to state "StandBy" from state "OnGoing"
-		 */
-		assertTrue(OnGoingTask1.isTransitionToStandByPossible());
-
-		/*
 		 * Creates a String that will be compared with the result of the method
 		 * viewTaskStateName()
 		 */
@@ -377,11 +372,6 @@ public class OnGoingTaskTest {
 		task1.addProjectCollaboratorToTask(collab2);
 
 		/*
-		 * Checks if its possible to change to state "Cancelled" from state "OnGoing"
-		 */
-		assertTrue(OnGoingTask1.isTransitionToCancelledPossible());
-
-		/*
 		 * Creates a String that will be compared with the result of the method
 		 * viewTaskStateName()
 		 */
@@ -420,11 +410,6 @@ public class OnGoingTaskTest {
 		 */
 		task1.addProjectCollaboratorToTask(collab1);
 		task1.addProjectCollaboratorToTask(collab2);
-
-		/*
-		 * Checks if its possible to change to state "Finished" from state "OnGoing"
-		 */
-		assertTrue(OnGoingTask1.isTransitionToFinishedPossible());
 
 		/*
 		 * Creates a String that will be compared with the result of the method
@@ -467,135 +452,4 @@ public class OnGoingTaskTest {
 		assertEquals(stateToCompare, task1.viewTaskStateName());
 
 	}
-
-	@Test
-	public void testIsTransitionToCreatedPossible() {
-
-		// Initiates OnGoingTask1
-
-		OnGoingTask1 = new OnGoing(task1);
-
-		/*
-		 * Verification if the change to "Created" state is possible. Returns false
-		 * because the change is not possible
-		 * 
-		 */
-
-		assertFalse(OnGoingTask1.isTransitionToCreatedPossible());
-	}
-
-	@Test
-	public void testIsTransitionToPlannedPossible() {
-
-		// Initiates OnGoingTask1
-
-		OnGoingTask1 = new OnGoing(task1);
-
-		/*
-		 * Verification if the change to "Planned" state is possible. Returns false
-		 * because the change is not possible
-		 * 
-		 */
-
-		assertFalse(OnGoingTask1.isTransitionToPlannedPossible());
-
-	}
-
-	@Test
-	public void testIsTransitionToAssignedPossible() {
-
-		// Initiates OnGoingTask1
-
-		OnGoingTask1 = new OnGoing(task1);
-
-		/*
-		 * Verification if the change to "Assigned" state is possible. Returns false
-		 * because the change is not possible
-		 * 
-		 */
-
-		assertFalse(OnGoingTask1.isTransitionToAssignedPossible());
-
-	}
-
-	@Test
-	public void testIsTransitionToReadyPossible() {
-
-		// Initiates OnGoingTask1
-		OnGoingTask1 = new OnGoing(task1);
-
-		/*
-		 * Verification if the change to "Ready" state is possible. Returns false
-		 * because the change is not possible
-		 * 
-		 */
-
-		assertFalse(OnGoingTask1.isTransitionToReadyPossible());
-
-	}
-
-	@Test
-	public void testIsTransitionToOnGoingPossible() {
-
-		// Initiates OnGoingTask1
-		OnGoingTask1 = new OnGoing(task1);
-
-		/*
-		 * Verification if the change to "Assigned" state is possible. Returns false
-		 * because the change is not possible
-		 * 
-		 */
-
-		assertFalse(OnGoingTask1.isTransitionToOnGoingPossible());
-
-	}
-
-	@Test
-	public void testIsTransitionToStandByPossible() {
-
-		// Initiates OnGoingTask1
-		OnGoingTask1 = new OnGoing(task1);
-
-		/*
-		 * Verification if the change to "StandBy" state is possible. Returns true
-		 * because the change is possible
-		 * 
-		 */
-
-		assertTrue(OnGoingTask1.isTransitionToStandByPossible());
-
-	}
-
-	@Test
-	public void testIsTransitionToCancelledPossible() {
-
-		// Initiates OnGoingTask1
-		OnGoingTask1 = new OnGoing(task1);
-
-		/*
-		 * Verification if the change to "Cancelled" state is possible. Returns true
-		 * because the change is possible
-		 * 
-		 */
-
-		assertTrue(OnGoingTask1.isTransitionToCancelledPossible());
-
-	}
-
-	@Test
-	public void testIsTransitionToFinishedPossible() {
-
-		// Initiates OnGoingTask1
-		OnGoingTask1 = new OnGoing(task1);
-
-		/*
-		 * Verification if the change to "StandBy" state is possible. Returns true
-		 * because the change is not possible
-		 * 
-		 */
-
-		assertTrue(OnGoingTask1.isTransitionToFinishedPossible());
-
-	}
-
 }

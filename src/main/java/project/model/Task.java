@@ -395,11 +395,13 @@ public class Task {
 	 * changeToFinished method implemented in states machine)
 	 * 
 	 */
-	public void markTaskAsFinished() {
+	public boolean markTaskAsFinished() {
+		boolean wasChangedToFinished = false;
 		if (this.finishDate == null) {
 			this.setFinishDate();
-			this.taskState.changeToFinished();
+			wasChangedToFinished = this.taskState.changeToFinished();
 		}
+		return wasChangedToFinished;
 	}
 
 	/**

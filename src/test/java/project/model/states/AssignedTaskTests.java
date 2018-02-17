@@ -84,27 +84,6 @@ public class AssignedTaskTests {
 		assertFalse(assignedStateTester.isValid());
 	}
 
-	// Given a new Task without dependencies and valid Assigned State
-	@Test
-	public void testValidateStateChangingChecks() {
-		assignedTask.addProjectCollaboratorToTask(testerCollab);
-		assignedStateTester = new Assigned(assignedTask);
-
-		// asserts state cannot change to itself
-		assertFalse(assignedStateTester.isTransitionToAssignedPossible());
-
-		// asserts state cannot change to any of the following
-		assertFalse(assignedStateTester.isTransitionToCreatedPossible());
-		assertFalse(assignedStateTester.isTransitionToOnGoingPossible());
-		assertFalse(assignedStateTester.isTransitionToStandByPossible());
-		assertFalse(assignedStateTester.isTransitionToCancelledPossible());
-		assertFalse(assignedStateTester.isTransitionToFinishedPossible());
-
-		// asserts it can only change to Ready or Planned
-		assertTrue(assignedStateTester.isTransitionToPlannedPossible());
-		assertTrue(assignedStateTester.isTransitionToReadyPossible());
-	}
-
 	// Given a new Task with active team (valid Assigned State) and a dependency...
 	@Test
 	public void testTransitionAssignedToReady() {

@@ -13,12 +13,8 @@ public class US365MarkTaskAsFinishedControllerProjectManager {
 		this.taskToBeMarked = projectTaskList.getTaskByID(taskID);
 	}
 
-	public boolean canTaskFinish() {
-		return taskToBeMarked.getTaskState().isTransitionToFinishedPossible();
-	}
-
-	public void setTaskAsFinished() {
-		taskToBeMarked.markTaskAsFinished();
+	public boolean setTaskAsFinished() {
+		return taskToBeMarked.markTaskAsFinished();
 	}
 
 	/**
