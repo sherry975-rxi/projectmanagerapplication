@@ -5,8 +5,6 @@ import project.model.User;
 
 public class DoLoginController {
 
-	private String password;
-
 	/**
 	 * This method does the login of the user
 	 * 
@@ -15,15 +13,15 @@ public class DoLoginController {
 	 * @param password
 	 *            Sets private variable password to inserted password by user
 	 */
-	public boolean doLogin(String email, String password) {
+	public boolean doLogin(String email, String password1) {
+		String password;
 		User username;
 		username = Company.getTheInstance().getUsersRepository().getUserByEmail(email);
-		this.password = password;
+		password = password1;
 		boolean loginSuccess = false;
-		if (Company.getTheInstance().getUsersRepository().isUserinUserRepository(username)) {
-			if (username.checkLogin(password) == true) {
-				loginSuccess = true;
-			}
+		if (Company.getTheInstance().getUsersRepository().isUserinUserRepository(username)
+				&& username.checkLogin(password)) {
+			loginSuccess = true;
 		}
 
 		return loginSuccess;
