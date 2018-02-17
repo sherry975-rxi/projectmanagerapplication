@@ -25,6 +25,32 @@ public class TaskDetailsUI {
 		this.isPreviousUIFromTasks = previous;
 	}
 
+	private void printMenuOption(PrintProjectInfoController projectInfo, PrintTaskInfoController taskInfo){
+		System.out.println("");
+		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
+		System.out.println("");
+		System.out.println("                     TASK                    ");
+		System.out.println("*** " + taskInfo.printTaskNameInfo().toUpperCase() + " ***");
+		System.out.println("______________________________________________");
+		System.out.println("ID: " + taskInfo.printTaskIDCodeInfo());
+		System.out.println("STATUS: " + taskInfo.printTaskStateInfo());
+		System.out.println("ESTIMATED START DATE: " + taskInfo.printTaskEstimatedStartDateInfo());
+		System.out.println("START DATE: " + taskInfo.printTaskStartDateInfo());
+		System.out.println("DEADLINE: " + taskInfo.printTaskDeadlineInfo());
+		System.out.println("FINISH DATE: " + taskInfo.printTaskFinishDateInfo());
+		System.out.println("TASK TEAM: " + taskInfo.printTaskTeamInfo());
+		System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
+		System.out.println("");
+		System.out.println("[1] Mark task as completed");
+		System.out.println("[2] Request assignment to task team");
+		System.out.println("[3] Request task team unassignment");
+		System.out.println("[4] Update task report");
+		System.out.println("______________________________________________");
+		System.out.println("[B] Back");
+		System.out.println("[M] MainMenu");
+		System.out.println("[E] Exit");
+	}
+
 	/**
 	 * This method executes all options to execute through this UI Presents the task
 	 * details and the options about this specific task Uses a switch case to treat
@@ -39,29 +65,8 @@ public class TaskDetailsUI {
 
 		boolean condition = true;
 		while (condition) {
-			System.out.println("");
-			System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
-			System.out.println("");
-			System.out.println("                     TASK                    ");
-			System.out.println("*** " + taskInfo.printTaskNameInfo().toUpperCase() + " ***");
-			System.out.println("______________________________________________");
-			System.out.println("ID: " + taskInfo.printTaskIDCodeInfo());
-			System.out.println("STATUS: " + taskInfo.printTaskStateInfo());
-			System.out.println("ESTIMATED START DATE: " + taskInfo.printTaskEstimatedStartDateInfo());
-			System.out.println("START DATE: " + taskInfo.printTaskStartDateInfo());
-			System.out.println("DEADLINE: " + taskInfo.printTaskDeadlineInfo());
-			System.out.println("FINISH DATE: " + taskInfo.printTaskFinishDateInfo());
-			System.out.println("TASK TEAM: " + taskInfo.printTaskTeamInfo());
-			System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
-			System.out.println("");
-			System.out.println("[1] Mark task as completed");
-			System.out.println("[2] Request assignment to task team");
-			System.out.println("[3] Request task team unassignment");
-			System.out.println("[4] Update task report");
-			System.out.println("______________________________________________");
-			System.out.println("[B] Back");
-			System.out.println("[M] MainMenu");
-			System.out.println("[E] Exit");
+
+			printMenuOption(projectInfo, taskInfo);
 
 			Scanner scannerInput = new Scanner(System.in);
 			String choice = scannerInput.nextLine().toUpperCase();
