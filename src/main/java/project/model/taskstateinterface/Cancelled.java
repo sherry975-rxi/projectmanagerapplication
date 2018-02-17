@@ -18,11 +18,7 @@ public class Cancelled implements TaskStateInterface {
 	 */
 	@Override
 	public boolean isValid() {
-		boolean validation = false;
-		if (task.getFinishDate() == null && task.getCancelDate() != null) {
-			validation = true;
-		}
-		return validation;
+		return task.getFinishDate() == null && task.getCancelDate() != null;
 	}
 
 	@Override
