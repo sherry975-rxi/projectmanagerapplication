@@ -20,23 +20,14 @@ import project.ui.console.director.DirectorMenuUI;
 
 public class MainMenuUI {
 
-	private static Company myCompany;
 	private static User userAdmin;
 	private static User userDirector;
 	private static User userJSilva;
-	private static User userATirapicos;
-	private static User projectManager;
-	private static Project projectGP;
-	private static Project projectApostas;
-	private static Project projectHomeBanking;
-	private static ProjectCollaborator projcollabJSilva;
-	private static ProjectCollaborator projcollabATirapicos;
-	private static ProjectCollaborator projcollabManager;
 
 	public static void main(String[] args) {
 
 		// Instantiates the company
-		myCompany = Company.getTheInstance();
+		Company myCompany = Company.getTheInstance();
 
 		// Instantiate the users, sets their passwords
 		userAdmin = myCompany.getUsersRepository().createUser("Teresa Ribeiro", "admin@gmail.com", "001",
@@ -49,10 +40,10 @@ public class MainMenuUI {
 		userJSilva = myCompany.getUsersRepository().createUser("João Silva", "jsilva@gmail.com", "010", "Comercial",
 				"937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userJSilva.setPassword("switch");
-		userATirapicos = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
+		User userATirapicos = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
 				"Comercial", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Porto", "Portugal");
 		userATirapicos.setPassword("tirapicos");
-		projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "spereira@gmail.com", "012",
+		User projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "spereira@gmail.com", "012",
 				"Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
 				"Portugal");
 		// addition of users to the company
@@ -69,11 +60,11 @@ public class MainMenuUI {
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 
 		// Instantiates a project and add it to the company
-		projectGP = myCompany.getProjectsRepository().createProject("Gestão de Projetos",
+		Project projectGP = myCompany.getProjectsRepository().createProject("Gestão de Projetos",
 				"Aplicação para Gestão de Projetos", projectManager);
-		projectApostas = myCompany.getProjectsRepository().createProject("Apostas Online",
+        Project projectApostas = myCompany.getProjectsRepository().createProject("Apostas Online",
 				"Plataforma Web para Apostas", projectManager);
-		projectHomeBanking = myCompany.getProjectsRepository().createProject("HomeBanking",
+        Project projectHomeBanking = myCompany.getProjectsRepository().createProject("HomeBanking",
 				"Aplicação iOS para HomeBanking", userJSilva);
 
 		TaskCollaborator tWorkerJSilva;
@@ -105,9 +96,9 @@ public class MainMenuUI {
 		projectHomeBanking.setProjectBudget(5000);
 
 		// Create Project collaborators
-		projcollabJSilva = new ProjectCollaborator(userJSilva, 2);
-		projcollabATirapicos = new ProjectCollaborator(userATirapicos, 2);
-		projcollabManager = new ProjectCollaborator(projectManager, 2);
+		ProjectCollaborator projcollabJSilva = new ProjectCollaborator(userJSilva, 2);
+        ProjectCollaborator projcollabATirapicos = new ProjectCollaborator(userATirapicos, 2);
+        ProjectCollaborator projcollabManager = new ProjectCollaborator(projectManager, 2);
 
 		// addition of ProjectCollaborators 1 and 2 to projectGP and projectApostas
 		projectGP.addProjectCollaboratorToProjectTeam(projcollabJSilva);
