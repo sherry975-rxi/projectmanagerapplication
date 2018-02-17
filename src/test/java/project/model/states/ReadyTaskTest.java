@@ -241,24 +241,4 @@ public class ReadyTaskTest {
 		mainTask.getTaskState().changeToAssigned();
 		assertFalse(mainTask.viewTaskStateName().equals("Finished"));
 	}
-
-	/**
-	 * Tests the ability of the task to change state
-	 */
-
-	@Test
-	public final void testPossibleTransitions() {
-		// Tests the impossible transitions
-		assertFalse(mainTask.getTaskState().isTransitionToCreatedPossible());
-		assertFalse(mainTask.getTaskState().isTransitionToAssignedPossible());
-		assertFalse(mainTask.getTaskState().isTransitionToReadyPossible());
-		assertFalse(mainTask.getTaskState().isTransitionToStandByPossible());
-		assertFalse(mainTask.getTaskState().isTransitionToCancelledPossible());
-		assertFalse(mainTask.getTaskState().isTransitionToFinishedPossible());
-
-		// Tests the possible transitions
-		assertTrue(mainTask.getTaskState().isTransitionToPlannedPossible());
-		assertTrue(mainTask.getTaskState().isTransitionToOnGoingPossible());
-	}
-
 }

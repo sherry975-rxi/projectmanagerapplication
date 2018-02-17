@@ -1,14 +1,13 @@
 package project.ui.console.projectmanager.tasks;
 
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
+
+import java.util.Scanner;
 
 public class PmTaskFunctionalitiesUI {
 
@@ -77,8 +76,7 @@ public class PmTaskFunctionalitiesUI {
 				us347UI.cancelOnGoingTask(taskID, project);
 				break;
 			case "B":
-				ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(this.user, this.project);
-				previousMenu.displayOptions();
+				condition = false;
 				break;
 			case "M":
 				MainMenuUI.mainMenu();
@@ -90,8 +88,6 @@ public class PmTaskFunctionalitiesUI {
 			default:
 				System.out.println("Please choose a valid option.");
 				System.out.println("");
-				PmTaskFunctionalitiesUI myAtualUIView = new PmTaskFunctionalitiesUI(this.taskID, this.project, this.user);
-				myAtualUIView.taskDataDisplay();
 				break;
 			}
 		}

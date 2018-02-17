@@ -137,7 +137,7 @@ public class US340CreateTaskUI {
 		}
 	}
 
-	private int estimatedTaskEffortUI(Scanner estimatedTaskEffort) {
+	private static int estimatedTaskEffortUI(Scanner estimatedTaskEffort) {
 		int result = 0;
 		do {
 			System.out.println("Please enter a positive number!");
@@ -152,7 +152,7 @@ public class US340CreateTaskUI {
 		return result;
 	}
 
-	private int estimatedTaskCostUI(Scanner estimatedCost) {
+	private static int estimatedTaskCostUI(Scanner estimatedCost) {
 		int result = 0;
 		do {
 			System.out.println("Please enter a positive number!");

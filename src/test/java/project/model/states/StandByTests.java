@@ -280,10 +280,6 @@ public class StandByTests {
 		testTask.setStartDate(taskStartDate);
 		testTask.setTaskState(stateTestTask1);
 
-		/*
-		 * Tests if its possible to change to state OnGoing. Expects true
-		 */
-		assertTrue(stateTestTask1.isTransitionToOnGoingPossible());
 		String stateToCompare = "StandBy";
 
 		/*
@@ -368,10 +364,6 @@ public class StandByTests {
 		testTask.addProjectCollaboratorToTask(collab1);
 		testTask.addProjectCollaboratorToTask(collab2);
 
-		/*
-		 * Tests if its possible to change to state Cancelled Expects true
-		 */
-		assertTrue(stateTestTask1.isTransitionToCancelledPossible());
 		String stateToCompare = "Cancelled";
 
 		/*
@@ -384,15 +376,6 @@ public class StandByTests {
 		stateTestTask1.changeToCancelled();
 		assertEquals(stateToCompare, testTask.viewTaskStateName());
 		// TODO Cancelled Class is still returning false
-
-		// Sets a finish Date to testTask
-		testTask.setFinishDate();
-		/*
-		 * Tests if its possible to change to state Cancelled. Expects False because
-		 * TestTask has a finish date
-		 */
-		assertTrue(stateTestTask1.isTransitionToCancelledPossible());
-
 	}
 
 	@Test
@@ -419,11 +402,6 @@ public class StandByTests {
 		testTask2.addProjectCollaboratorToTask(collab1);
 		testTask2.addProjectCollaboratorToTask(collab2);
 
-		/*
-		 * Tests if its possible to change to state Cancelled. Expects true
-		 */
-		assertTrue(stateTestTask1.isTransitionToFinishedPossible());
-
 		// Creates a new string to compare with result by viewTaskStateName
 		String stateToCompare = "StandBy";
 
@@ -445,126 +423,6 @@ public class StandByTests {
 		// Checks if the task status changed to finished
 		assertEquals(stateToCompare, testTask.viewTaskStateName());
 
-	}
-
-	@Test
-	public void testIsTransitionToCreatedPossible() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		/*
-		 * Checks if it's possible to change to "Created" state from "StandBy" State.
-		 * It's not allowed to go from state "StandBy" to "Created"
-		 * 
-		 */
-
-		assertFalse(stateTestTask1.isTransitionToCreatedPossible());
-	}
-
-	@Test
-	public void testIsTransitionToPlannedPossible() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		/*
-		 * Checks if it's possible to change to "Planned" state from "StandBy" State.
-		 * It's not allowed to go from state "StandBy" to "Planned"
-		 * 
-		 */
-
-		assertFalse(stateTestTask1.isTransitionToPlannedPossible());
-	}
-
-	@Test
-	public void testIsTransitionToAssignedPossible() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		/*
-		 * Checks if it's possible to change to "Assigned" state from "StandBy" State.
-		 * It's not allowed to go from state "StandBy" to "Assigned"
-		 * 
-		 */
-
-		assertFalse(stateTestTask1.isTransitionToAssignedPossible());
-	}
-
-	@Test
-	public void testIsTransitionToReadyPossible() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		/*
-		 * Checks if it's possible to change to "Ready" state from "StandBy" State. It's
-		 * not allowed to go from state "StandBy" to "Ready"
-		 * 
-		 */
-
-		assertFalse(stateTestTask1.isTransitionToReadyPossible());
-	}
-
-	@Test
-	public void testIsTransitionToOnGoingPossible() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		/*
-		 * Checks if it's possible to change to "OnGoing" state from "StandBy" State.
-		 * It's not allowed to go from state "StandBy" to "OnGoing"
-		 * 
-		 */
-
-		assertTrue(stateTestTask1.isTransitionToOnGoingPossible());
-	}
-
-	@Test
-	public void testIsTransitionToStandByPossible() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		/*
-		 * Checks if it's possible to change to "StandBy" state from "StandBy" State.
-		 * It's not allowed to go from state "StandBy" to "StandBy"
-		 * 
-		 */
-
-		assertFalse(stateTestTask1.isTransitionToStandByPossible());
-	}
-
-	@Test
-	public void testIsTransitionToCancelledPossible() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		/*
-		 * Checks if it's possible to change to "Cancelled" state from "StandBy" State.
-		 * It's not allowed to go from state "StandBy" to "Cancelled"
-		 * 
-		 */
-
-		assertTrue(stateTestTask1.isTransitionToCancelledPossible());
-	}
-
-	@Test
-	public void testIsTransitionToFinishedPossible() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		/*
-		 * Checks if it's possible to change to "Finished" state from "StandBy" State.
-		 * It's not allowed to go from state "StandBy" to "Finished"
-		 * 
-		 */
-
-		assertTrue(stateTestTask1.isTransitionToFinishedPossible());
 	}
 
 }

@@ -110,16 +110,6 @@ public class CreatedTaskTests {
 		assertEquals("Created", taskReadyToPlan.viewTaskStateName());
 	}
 
-	/**
-	 * this test verify if the transition to the “Planned” state of a Task is
-	 * possible
-	 */
-	@Test
-	public final void testIsTransitionToPlannedPossible() {
-
-		assertTrue(test2.isTransitionToPlannedPossible());
-	}
-
 	@Test
 	public final void testChangesTo() {
 		Created stateTask = new Created(testTask);
@@ -128,12 +118,6 @@ public class CreatedTaskTests {
 		assertFalse(stateTask.changeToReady());
 		assertFalse(stateTask.changeToCancelled());
 		assertFalse(stateTask.changeToFinished());
-		assertFalse(stateTask.isTransitionToCreatedPossible());
-		assertTrue(stateTask.isTransitionToPlannedPossible());
-		assertFalse(stateTask.isTransitionToAssignedPossible());
-		assertFalse(stateTask.isTransitionToStandByPossible());
-		assertFalse(stateTask.isTransitionToCancelledPossible());
-
 	}
 
 }
