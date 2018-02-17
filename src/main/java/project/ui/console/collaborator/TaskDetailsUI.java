@@ -25,7 +25,7 @@ public class TaskDetailsUI {
 		this.isPreviousUIFromTasks = previous;
 	}
 
-	private void printMenuOption(PrintProjectInfoController projectInfo, PrintTaskInfoController taskInfo){
+	private static void printMenuOption(PrintProjectInfoController projectInfo, PrintTaskInfoController taskInfo){
 		System.out.println("");
 		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
 		System.out.println("");
@@ -41,6 +41,7 @@ public class TaskDetailsUI {
 		System.out.println("TASK TEAM: " + taskInfo.printTaskTeamInfo());
 		System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
 		System.out.println("");
+
 		System.out.println("[1] Mark task as completed");
 		System.out.println("[2] Request assignment to task team");
 		System.out.println("[3] Request task team unassignment");
