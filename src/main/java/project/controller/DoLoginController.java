@@ -5,7 +5,6 @@ import project.model.User;
 
 public class DoLoginController {
 
-	private User username;
 	private String password;
 
 	/**
@@ -17,7 +16,8 @@ public class DoLoginController {
 	 *            Sets private variable password to inserted password by user
 	 */
 	public boolean doLogin(String email, String password) {
-		this.username = Company.getTheInstance().getUsersRepository().getUserByEmail(email);
+		User username;
+		username = Company.getTheInstance().getUsersRepository().getUserByEmail(email);
 		this.password = password;
 		boolean loginSuccess = false;
 		if (Company.getTheInstance().getUsersRepository().isUserinUserRepository(username)) {
