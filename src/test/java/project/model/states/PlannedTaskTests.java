@@ -143,5 +143,21 @@ public class PlannedTaskTests {
 
 		assertEquals("Planned", testTask.viewTaskStateName());
 	}
+	
+	/**
+	 * Tests the ability of the task to change state
+	 */
+
+	@Test
+	public final void testPossibleChanges() {
+		// Tests the impossible transitions
+		assertFalse(testTask.getTaskState().changeToCreated());
+		assertFalse(testTask.getTaskState().changeToPlanned());
+		assertFalse(testTask.getTaskState().changeToReady());
+		assertFalse(testTask.getTaskState().changeToOnGoing());
+		assertFalse(testTask.getTaskState().changeToStandBy());
+		assertFalse(testTask.getTaskState().changeToCancelled());
+		assertFalse(testTask.getTaskState().changeToFinished());
+	}
 
 }
