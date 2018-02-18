@@ -57,8 +57,8 @@ public class US320ViewProjectsController {
 	 */
 	public String overviewProjectAsString(Project toView) {
 
-		Integer IDnumber = toView.getIdCode();
-		String ID = IDnumber.toString();
+		Integer numberID = toView.getIdCode();
+		String ID = numberID.toString();
 		String status = toView.getProjectStatusName();
 
 		int headerSize = 15 + ID.length() + toView.getName().length();
@@ -68,7 +68,7 @@ public class US320ViewProjectsController {
 
 		String output = header + "\n";
 		output += "===== ";
-		output += IDnumber.toString();
+		output += numberID.toString();
 		output += " - " + toView.getName() + " =====\n";
 		output += header;
 		output += "\n - Status: " + status;
@@ -80,13 +80,13 @@ public class US320ViewProjectsController {
 	}
 
 	public String generateHeader(String toRepeat, int repeat) {
-		String header = "";
+        StringBuilder gen = new StringBuilder();
 
 		for (int i = 0; i < repeat; i++) {
-			header += toRepeat;
+		    gen.append(toRepeat);
 		}
 
-		return header;
+		return gen.toString();
 	}
 
 }
