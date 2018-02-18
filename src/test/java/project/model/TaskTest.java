@@ -228,14 +228,9 @@ public class TaskTest {
 		testTask.getTaskState().changeToOnGoing();
 
 		assertFalse(testTask.isTaskFinished());
-		testTask.markTaskAsFinished();
 
 		// pass from "OnGoing" to "Finished"
-		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
-		testTask.setFinishDate(testDate);
-		testTask.markTaskAsFinished();
-
-		assertTrue(testTask.isTaskFinished());
+		assertTrue(testTask.markTaskAsFinished());
 	}
 
 	/**
