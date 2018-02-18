@@ -58,10 +58,10 @@ public class US320ViewProjectsController {
 	public String overviewProjectAsString(Project toView) {
 
 		Integer numberID = toView.getIdCode();
-		String ID = numberID.toString();
+		String id = numberID.toString();
 		String status = toView.getProjectStatusName();
 
-		int headerSize = 15 + ID.length() + toView.getName().length();
+		int headerSize = 15 + id.length() + toView.getName().length();
 
 		String headerChar = "=";
 		String header = generateHeader(headerChar, headerSize);
