@@ -1,10 +1,10 @@
 package project.dto;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class userDTOTests {
 
@@ -13,7 +13,8 @@ public class userDTOTests {
 	@Before
 	public void setUp() {
 
-		user = new UserDTO("name", "email", "idNumber", "function", "phone", "password", "street", "zipCode", "city",
+		user = new UserDTO("name", "email", "idNumber", "function", "phone", "password");
+		user.setUserAddress( "street", "zipCode", "city",
 				"district", "country");
 	}
 
