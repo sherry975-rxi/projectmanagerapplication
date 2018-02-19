@@ -166,7 +166,7 @@ public class US201and202UpdateUserInfoUI {
 	 * @param input
 	 * @return
 	 */
-	private boolean confirmInfoYOrN(Scanner input) {
+	private static boolean confirmInfoYOrN(Scanner input) {
 		boolean result = false;
 		System.out.println("Press y to confirm change");
 		String yesOrNo = input.nextLine();

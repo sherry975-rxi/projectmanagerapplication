@@ -7,7 +7,6 @@ import project.controller.US361AssignTaskToCollaboratorsController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 public class US361AssignUserToTaskUI {
 
@@ -46,32 +45,19 @@ public class US361AssignUserToTaskUI {
 		while (condition) {
 
 			System.out.println("-------------CHOOSE A USER TO ADD-------------");
+			System.out.println("\n");
 			System.out.println("[B] Back");
-			System.out.println("[M] MainMenu");
-			System.out.println("[E] Exit");
-			System.out.println();
 
 			String choice = input.nextLine().toUpperCase();
 
-			switch (choice) {
-
-			case "B":
-				PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
-						this.user);
-				caseBack.taskDataDisplay();
-				break;
-			case "M":
-				MainMenuUI.mainMenu();
-				break;
-			case "E":
+			if ("B".equals(choice)) {
 				System.out.println("\n");
-				System.out.println("--YOU HAVE EXIT FROM THE APPLICATION--");
+				System.out.println("--YOU HAVE QUITTED THE MENU--");
 				condition = false;
-				break;
-			default:
+			} else {
 				chooseUserToAssign(assignController, choice);
-				break;
 			}
+
 		}
 	}
 

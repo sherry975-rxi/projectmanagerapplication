@@ -7,7 +7,6 @@ import project.controller.US362RemoveTaskFromProjectCollaborator;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 public class US362RemoveUserFromTaskUI {
 
@@ -49,36 +48,21 @@ public class US362RemoveUserFromTaskUI {
 	public void chooseAction(US362RemoveTaskFromProjectCollaborator removeColController) {
 
 		Scanner input = new Scanner(System.in);
-		boolean condition = true;
-		while (condition) {
+		boolean repeat = true;
+		while (repeat) {
 
-			System.out.println("-------------CHOOSE A USER TO REMOVE-------------");
+			System.out.println("-------------CHOOSE A USER TO ADD-------------");
 			System.out.println("\n");
 			System.out.println("[B] Back");
-			System.out.println("[M] MainMenu");
-			System.out.println("[E] Exit");
-			System.out.println();
 
-			String choice = input.nextLine().toUpperCase();
+			String option = input.nextLine().toUpperCase();
 
-			switch (choice) {
-
-			case "B":
-				PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
-						this.user);
-				caseBack.taskDataDisplay();
-				break;
-			case "M":
-				MainMenuUI.mainMenu();
-				break;
-			case "E":
+			if ("B".equals(option)) {
 				System.out.println("\n");
-				System.out.println("--YOU HAVE EXIT FROM THE APPLICATION--");
-				condition = false;
-				break;
-			default:
-				chooseUserToRemove(removeColController, choice);
-				break;
+				System.out.println("--YOU HAVE QUITTED THE MENU--");
+				repeat = false;
+			} else {
+				chooseUserToRemove(removeColController, option);
 			}
 		}
 	}

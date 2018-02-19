@@ -76,7 +76,7 @@ public class US320ViewProjectsControllerTest {
 	public void generateHeaderTest() {
 		projectListsController = new US320ViewProjectsController();
 
-		String headerChar = "=";
+		char headerChar = '=';
 		int headerSize = 20;
 		String expectedHeader = "====================";
 
