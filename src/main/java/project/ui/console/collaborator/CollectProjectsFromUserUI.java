@@ -80,13 +80,13 @@ public class CollectProjectsFromUserUI {
 				ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI(project.getIdCode(), user);
 				projectViewMenuUI.projectDataDisplay();
 				}
-			} else if (option.equals("B")) { 
+			} else if ("B".equals(option)) {
 				CollaboratorMainMenuUI menu = new CollaboratorMainMenuUI(user);
 				menu.displayOptions();
-			} else if (option.equals("M")) {
+			} else if ("M".equals(option)) {
 				MainMenuUI.mainMenu();
-			} else if (option.equals("E")) {
-				System.exit(0);
+			} else if ("E".equals(option)) {
+				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 			}
 			listOfOptionsToCompare.add(projectIDCodeToString);
 		}
