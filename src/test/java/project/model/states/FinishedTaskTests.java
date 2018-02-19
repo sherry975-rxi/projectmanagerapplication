@@ -149,6 +149,7 @@ public class FinishedTaskTests {
 	public final void testChangesTo() {
 		Finished stateTask = new Finished(testTask);
 		assertFalse(stateTask.changeToCreated());
+		assertFalse(stateTask.changeToStandBy());
 		assertFalse(stateTask.changeToPlanned());
 		assertFalse(stateTask.changeToAssigned());
 		assertFalse(stateTask.changeToReady());

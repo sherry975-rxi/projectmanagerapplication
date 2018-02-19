@@ -132,4 +132,17 @@ public class AssignedTaskTests {
 		assertTrue(assignedTask.viewTaskStateName().equals("Planned"));
 
 	}
+
+	@Test
+	public final void testChangesTo() {
+		assignedTask.addProjectCollaboratorToTask(testerCollab);
+		assignedTask.createTaskDependence(dependency, 10);
+		Assigned stateTask = new Assigned(assignedTask);
+		assertFalse(stateTask.changeToCreated());
+		assertFalse(stateTask.changeToAssigned());
+		assertFalse(stateTask.changeToOnGoing());
+		assertFalse(stateTask.changeToStandBy());
+		assertFalse(stateTask.changeToCancelled());
+		assertFalse(stateTask.changeToFinished());
+	}
 }

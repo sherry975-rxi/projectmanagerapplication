@@ -116,6 +116,8 @@ public class CreatedTaskTests {
 		assertFalse(stateTask.changeToCreated());
 		assertFalse(stateTask.changeToAssigned());
 		assertFalse(stateTask.changeToReady());
+		assertFalse(stateTask.changeToOnGoing());
+		assertFalse(stateTask.changeToStandBy());
 		assertFalse(stateTask.changeToCancelled());
 		assertFalse(stateTask.changeToFinished());
 	}
