@@ -23,17 +23,6 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	}
 
 	/**
-	 * this method return the list of cancelled tasks
-	 * 
-	 * @param proj
-     *
-	 * @return
-	 */
-	public List<Task> getProjectCancelledTasks(Project proj) {
-		return proj.getTaskRepository().getCancelledTasks();
-	}
-
-	/**
 	 * This method returns the tasks from a specific project
 	 * 
 	 * @return List of Tasks of the chosen Project
@@ -54,18 +43,18 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	 */
 	public List<String> getCancelledTaskListId(Project proj) {
 
-		List<Task> taskListCanceleld = proj.getTaskRepository().getCancelledTasks();
-		List<String> taskCanceleldListToPrint = new ArrayList<>();
+		List<Task> taskListCancelled = proj.getTaskRepository().getCancelledTasks();
+		List<String> taskCancelledListToPrint = new ArrayList<>();
 
-		for (int i = 0; i < taskListCanceleld.size(); i++) {
+		for (int i = 0; i < taskListCancelled.size(); i++) {
 
-			String taskDescription = taskListCanceleld.get(i).getDescription();
-			String taskID = "[" + taskListCanceleld.get(i).getTaskID() + "]";
-			String taskIDandDescription = taskID + " " + taskDescription;
-			taskCanceleldListToPrint.add(taskIDandDescription);
+			String cancelledTaskDescription = taskListCancelled.get(i).getDescription();
+			String cancelledTaskID = "[" + taskListCancelled.get(i).getTaskID() + "]";
+			String cancelledTaskIDandDescription = cancelledTaskID + " " + cancelledTaskDescription;
+			taskCancelledListToPrint.add(cancelledTaskIDandDescription);
 		}
 
-		return taskCanceleldListToPrint;
+		return taskCancelledListToPrint;
 	}
 
 	/**

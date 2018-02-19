@@ -50,7 +50,7 @@ public class US377ProjectCancelledTasks {
 		for (int i = 0; i < controller.getCancelledTasksFromAProject().size(); i++) {
 			String taskInfo = controller.getCancelledTaskListId(project).get(i);
 			System.out.println(taskInfo);
-			listOfCancelledTasks.add(controller.getProjectCancelledTasks(this.project).get(i).getTaskID());
+			listOfCancelledTasks.add(controller.getCancelledTasksFromAProject().get(i).getTaskID());
 		}
 
 		System.out.println(line);

@@ -251,7 +251,7 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 
 	@Test
 	public final void getProjectCancelledTasks() {
-		assertEquals(2, controller.getProjectCancelledTasks(project).size());
+		assertEquals(2, controller.getCancelledTasksFromAProject().size());
 	}
 
 }

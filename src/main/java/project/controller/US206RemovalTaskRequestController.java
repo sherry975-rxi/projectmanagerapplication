@@ -27,10 +27,6 @@ public class US206RemovalTaskRequestController {
 	 * 
 	 * @param user
 	 *            User that asks for the removal
-	 * @param projectID
-	 *            Project ID of project where the task is
-	 * @param taskID
-	 *            Task ID of the task that the user wants to be removed from
 	 */
 	public US206RemovalTaskRequestController(User user) {
 		this.user = user;
@@ -85,7 +81,7 @@ public class US206RemovalTaskRequestController {
 	/**
 	 * This method gets the ProjectID by spliting the taskID in two.
 	 * 
-	 * @param taskDetails
+	 * @param taskID
 	 *            String with the taskID
 	 */
 	public void setProjectIDFromTaskID(String taskID) {
