@@ -765,26 +765,22 @@ public class Task {
 		if (this.isCreatingTaskDependencyValid(taskToEstablishDependenceUpon)) {
 
 
-
+			this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
 			if (daysToPostpone >= 0) {
-				this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
 				this.estimatedTaskStartDate.add(Calendar.DATE, daysToPostpone);
-				this.taskDependency.add(taskToEstablishDependenceUpon);
-
 			}
-
-			else{
-				this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
-				this.taskDependency.add(taskToEstablishDependenceUpon);
-			}
-
+			this.taskDependency.add(taskToEstablishDependenceUpon);
 			wasDependencyCreated = true;
 
-		}
+			}
 
 		return wasDependencyCreated;
 
-	}
+
+		}
+
+
+
 
 	/**
 	 * This method removes a dependency of a task
