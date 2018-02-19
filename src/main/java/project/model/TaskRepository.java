@@ -139,7 +139,7 @@ public class TaskRepository {
 	 * given user. Given a negative "monthsAgo" input, Returns ALL finished tasks of
 	 * said user
 	 * 
-	 * @param user
+	 * @param collab
 	 *            user who is in the tasks
 	 * @param monthsAgo
 	 *            how many months to subtract
@@ -184,7 +184,7 @@ public class TaskRepository {
 	 * This method returns the total time spent by a user in tasks from a project
 	 * Last month
 	 * 
-	 * @param user
+	 * @param collab
 	 * @return Time spent on last month project user tasks
 	 */
 	public double getTimeSpentByProjectCollaboratorInAllTasksLastMonth(ProjectCollaborator collab) {
@@ -229,7 +229,7 @@ public class TaskRepository {
 	 * This method returns a list with all the tasks of a certain user in the
 	 * project
 	 * 
-	 * @param user
+	 * @param collab
 	 *            User (to be able to return its tasks)
 	 * 
 	 * @return AllTasksList List if all tasks from a user
@@ -248,7 +248,7 @@ public class TaskRepository {
 	 * 
 	 * This method checks if a given user doesnt have any task assigned to him
 	 * 
-	 * @param user
+	 * @param collab
 	 *            Project Collaborator
 	 * @return true if the user doesnt have a task. False if he has at least one
 	 *         task
@@ -408,10 +408,9 @@ public class TaskRepository {
 		Calendar today = Calendar.getInstance();
 		List<Task> expiredTasks = new ArrayList<>();
 		for (Task other : this.projectTasks) {
-			if (!other.isTaskFinished() && other.getTaskDeadline() != null) {
-				if (other.getTaskDeadline().before(today)) {
+			if (!other.isTaskFinished() && other.getTaskDeadline() != null && other.getTaskDeadline().before(today)) {
 					expiredTasks.add(other);
-				}
+
 			}
 		}
 		return expiredTasks;
@@ -449,23 +448,11 @@ public class TaskRepository {
 		boolean wasTaskDeleted = false;
 
 		switch (taskToDelete.viewTaskStateName()) {
-		case "Assigned":
-			this.projectTasks.remove(taskToDelete);
+		case "Assigned": case "Planned" : case "Created" : case "Ready":
+ 			this.projectTasks.remove(taskToDelete);
 			wasTaskDeleted = true;
 			break;
 
-		case "Planned":
-			this.projectTasks.remove(taskToDelete);
-			wasTaskDeleted = true;
-			break;
-		case "Created":
-			this.projectTasks.remove(taskToDelete);
-			wasTaskDeleted = true;
-			break;
-		case "Ready":
-			this.projectTasks.remove(taskToDelete);
-			wasTaskDeleted = true;
-			break;
 		default:
 			break;
 
