@@ -66,10 +66,10 @@ public class TaskTeamRequest {
 	 * @return The string representation
 	 */
 	public String viewStringRepresentation() {
-		String result = this.projCollab.getUserFromProjectCollaborator().getName() + "\n"
+
+		return this.projCollab.getUserFromProjectCollaborator().getName() + "\n"
 				+ this.projCollab.getUserFromProjectCollaborator().getEmail() + "\n"
 				+ this.task.getTaskID() + "\n" + this.task.getDescription();
-		return result;
 	}
 
 }
