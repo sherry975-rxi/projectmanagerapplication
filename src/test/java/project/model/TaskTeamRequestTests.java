@@ -176,14 +176,18 @@ public class TaskTeamRequestTests {
 		TaskTeamRequest request3 = new TaskTeamRequest(teamTesterCollaboratorNull, chosenTask);
 		TaskTeamRequest request4 = new TaskTeamRequest(teamTesterCollaboratorNull, nullTask);
 
+		int requestHashCode = ((31 + teamTesterCollaborator.hashCode()) * 31) + chosenTask.hashCode();
+
 		// Checks if both Hashcodes are the same
 		assertTrue(request.hashCode() == request2.hashCode());
+		assertTrue(request2.hashCode() == requestHashCode);
 
 		// Collaborator is NULL, so it will return false
 		assertFalse(request.hashCode() == request3.hashCode());
 
 		// Task and collaborator are NULL, so it will return false
 		assertFalse(request.hashCode() == request4.hashCode());
+		assertFalse(request4.hashCode() == requestHashCode);
 
 	}
 
