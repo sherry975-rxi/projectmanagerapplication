@@ -1,6 +1,3 @@
-/**
- * 
- */
 package project.controller;
 
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	/**
 	 * Constructor
 	 * 
-	 * @param projectIDtoInstantiate
+	 * @param project Project ID of the project with which this controller will work
 	 */
 	public US377CollectionOfCancelledTasksFromAProjectController(Project project) {
 		this.project = project;
@@ -29,6 +26,7 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	 * this method return the list of cancelled tasks
 	 * 
 	 * @param proj
+     *
 	 * @return
 	 */
 	public List<Task> getProjectCancelledTasks(Project proj) {
