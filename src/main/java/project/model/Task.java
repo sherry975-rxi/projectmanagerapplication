@@ -132,7 +132,7 @@ public class Task {
 		this.startDate = task.getStartDate();
 		this.finishDate = task.getFinishDate();
 		this.taskState = task.getTaskState();
-		this.taskTeam = task.copyListOfTaskCollaboratorsInTask(this.taskTeam);
+		this.taskTeam = task.copyListOfTaskCollaboratorsInTask();
 		this.reports = task.getReports();
 		this.estimatedTaskEffort = task.getEstimatedTaskEffort();
 		this.estimatedTaskStartDate = task.getEstimatedTaskStartDate();
@@ -166,7 +166,7 @@ public class Task {
 	 * Defines the interval between the start date of the project and the estimated
 	 * start date for the task to be a number provided.
 	 * 
-	 * @param newStartDateInterval
+	 * @param newStartDateInterval the amount of days between the start of the mother task and this task
 	 */
 	public void setStartDateInterval(int newStartDateInterval) {
 		this.startDateInterval = newStartDateInterval;
@@ -186,7 +186,7 @@ public class Task {
 	 * Defines the interval between the start date of the project and the estimated
 	 * finish date for the task to be a number provided.
 	 * 
-	 * @param newFinishDateInterval
+	 * @param newFinishDateInterval the amount of days between the end of the mother task and this task
 	 */
 	public void setDeadlineInterval(int newFinishDateInterval) {
 		this.deadlineInterval = newFinishDateInterval;
@@ -204,7 +204,7 @@ public class Task {
 	/**
 	 * This method when called update the estimated task effort
 	 * 
-	 * @param newEstimatedTaskEffort
+	 * @param newEstimatedTaskEffort the effort estimated for a task
 	 */
 	public void setEstimatedTaskEffort(int newEstimatedTaskEffort) {
 		this.estimatedTaskEffort = newEstimatedTaskEffort;
@@ -237,7 +237,7 @@ public class Task {
 	/**
 	 * This method when called update the Estimated Task Start Date
 	 * 
-	 * @param newEstimatedTaskStartDate
+	 * @param newEstimatedTaskStartDate an estimated start date for the task
 	 */
 	public void setEstimatedTaskStartDate(Calendar newEstimatedTaskStartDate) {
 		this.estimatedTaskStartDate = newEstimatedTaskStartDate;
@@ -270,7 +270,7 @@ public class Task {
 	/**
 	 * This method when called update the task Dead line
 	 * 
-	 * @param newTaskDeadline
+	 * @param newTaskDeadline an estimated deadline for the task
 	 */
 	public void setTaskDeadline(Calendar newTaskDeadline) {
 		this.taskDeadline = newTaskDeadline;
@@ -288,7 +288,7 @@ public class Task {
 	/**
 	 * This method when called update the estimated Budget Cost Task
 	 * 
-	 * @param newEstimatedBudgetCostTask
+	 * @param newEstimatedBudgetCostTask an estimated budget for the task
 	 */
 	public void setTaskBudget(int newEstimatedBudgetCostTask) {
 		this.taskBudget = newEstimatedBudgetCostTask;
@@ -316,7 +316,7 @@ public class Task {
 	/**
 	 * This method when called let us define a startDate of our choice
 	 * 
-	 * @parameter c Calendar date to input in start date
+	 * @param c Calendar date to input in start date
 	 */
 	public void setStartDate(Calendar c) {
 		this.startDate = c;
@@ -408,7 +408,7 @@ public class Task {
 	 * This Method adds a Project Collaborator to a Task, and creates a New Task
 	 * Collaborator from this Project Collaborator.
 	 * 
-	 * @param projCollaborator
+	 * @param projCollaborator project collaborator to add to the task team
 	 */
 	public boolean addProjectCollaboratorToTask(ProjectCollaborator projCollaborator) {
 		return addTaskCollaboratorToTask(createTaskCollaborator(projCollaborator));
@@ -421,7 +421,7 @@ public class Task {
 	 * If it is already already added to the the list it is reactivated, and its
 	 * attributes are copied into the existing task Collaborator
 	 * 
-	 * @param TaskCollaborator
+	 * @param taskCollaborator
 	 *            Task Collaborator to add to the task team
 	 * 
 	 * 
@@ -445,7 +445,7 @@ public class Task {
 	/**
 	 * Creates a Task Collaborator from a Project Collaborator
 	 * 
-	 * @param ProjectCollaborator
+	 * @param projCollaborator a project collaborator for which a task collaborator will be created
 	 * 
 	 * @return TaskCollaborator
 	 */
@@ -458,7 +458,7 @@ public class Task {
 	 * Creates and adds a Report of a Specific Task Collaborator associated to a
 	 * Specific Project Collaborator
 	 * 
-	 * @param taskCollaborator
+	 * @param taskCollaborator a project collaborator for which a report will be created/updated
 	 * 
 	 * @return report
 	 */
@@ -478,7 +478,6 @@ public class Task {
 		} else {
 			Report report = new Report(taskCollaborator);
 			this.reports.add(report);
-			wasReportCreated = true;
 
 		}
 
@@ -572,8 +571,8 @@ public class Task {
 	 * This method removes the user from a task. It checks first if the user is in
 	 * the task team (List of users in Task), and deactivates it from the team.
 	 * 
-	 * @param user
-	 *            User to remove from the list of users in a task
+	 * @param projCollaborator
+	 *            project collaborator to remove from the list of users in a task
 	 * 
 	 */
 	public boolean removeProjectCollaboratorFromTask(ProjectCollaborator projCollaborator) {
@@ -613,8 +612,8 @@ public class Task {
 	 * This method returns the time that a specific Project Collaborator spent on
 	 * this Task
 	 * 
-	 * @param ProjectCollaborator
-	 *            to check
+	 * @param toCheck
+	 *            a project collaborator for which to get the time spent on task
 	 * 
 	 * @return Time spent on task
 	 */
@@ -658,16 +657,15 @@ public class Task {
 		if (getClass() != obj.getClass())
 			return false;
 		Task other = (Task) obj;
-		if (!taskID.equals(other.taskID))
-			return false;
-		return true;
+
+		return taskID.equals(other.taskID);
 	}
 
 	/**
 	 * This PRIVATE method checks if a Project Collaborator is already on the task
 	 * team.
 	 * 
-	 * @param Project
+	 * @param projCollaborator
 	 *            Collaborator Project Collaborator to check
 	 * @return True if task team contains Project Collaborator, FALSE if the task
 	 *         team does not have the Project Collaborator to check
@@ -685,7 +683,7 @@ public class Task {
 	 * This PRIVATE method checks if a Project Collaborator is active on the task
 	 * team.
 	 * 
-	 * @param Project
+	 * @param projCollaborator
 	 *            Collaborator Project Collaborator to check
 	 * @return True if task team Project Collaborator is active, FALSE if the task
 	 *         team does not have the Project Collaborator active
@@ -704,8 +702,6 @@ public class Task {
 	 * This PRIVATE method checks if a Project Collaborator is active on the task
 	 * team.
 	 * 
-	 * @param Project
-	 *            Collaborator Project Collaborator to check
 	 * @return True if task team Project Collaborator is active, FALSE if the task
 	 *         team does not have the Project Collaborator active
 	 */
@@ -721,19 +717,11 @@ public class Task {
 	// TODO What does copyListOfUsersInTask do that getUserList doesn't?
 	// Why does it need to receive an empty list input?
 	/**
-	 * @param emptyListOfUsersInTask
-	 *            Empty list that will be filled with the users from another task.
 	 * @return Returns a list of users copied from another task.
 	 */
-	public List<TaskCollaborator> copyListOfTaskCollaboratorsInTask(List<TaskCollaborator> emptyListOfUsersInTask) {
+    private List<TaskCollaborator> copyListOfTaskCollaboratorsInTask() {
 
-		emptyListOfUsersInTask = new ArrayList<>();
-
-		for (int iUser = 0; iUser < this.getTaskTeam().size(); iUser++) {
-			emptyListOfUsersInTask.add(this.getTaskTeam().get(iUser));
-		}
-
-		return emptyListOfUsersInTask;
+        return new ArrayList<>(this.getTaskTeam());
 	}
 
 	/**
