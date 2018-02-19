@@ -90,13 +90,11 @@ public class TaskDetailsUI {
 				}
 				break;
 			case "2":
-				US204v2CreateTaskAssignmentToCollaboratorUI createAssignmentRequest = new US204v2CreateTaskAssignmentToCollaboratorUI(
-						user, taskID, projectID);
+				US204v2CreateTaskAssignmentToCollaboratorUI createAssignmentRequest = new US204v2CreateTaskAssignmentToCollaboratorUI(user, taskID, projectID);
 				createAssignmentRequest.createTaskAssignment();
 				break;
 			case "3":
-				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember1 = new US204v2createRequestAddCollaboratorToTaskTeamController(
-						this.taskID, this.user);
+				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember1 = new US204v2createRequestAddCollaboratorToTaskTeamController(this.taskID, this.user);
 				task = controllerMember1.getTaskByTaskID(this.taskID);
 				ProjectCollaborator projCollaborator1 = new ProjectCollaborator(this.user, this.projectID);
 				checkAndAddRemovalRequest(projCollaborator1, cantDoIt);
@@ -105,8 +103,7 @@ public class TaskDetailsUI {
 				goToPreviousUI(this.projectID, this.user);
 				break;
 			case "4":
-				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember2 = new US204v2createRequestAddCollaboratorToTaskTeamController(
-						this.taskID, this.user);
+				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember2 = new US204v2createRequestAddCollaboratorToTaskTeamController(this.taskID, this.user);
 				task = controllerMember2.getTaskByTaskID(this.taskID);
 				ProjectCollaborator projCollaborator2 = new ProjectCollaborator(this.user, this.projectID);
 				checkAndCreateReportRequest(projCollaborator2, cantDoIt);
