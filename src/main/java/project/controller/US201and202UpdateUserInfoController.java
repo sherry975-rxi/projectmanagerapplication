@@ -77,8 +77,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public Address createNewAddress(String newStreet, String newZipCode, String newCity, String newDistrict,
 			String newCountry) {
-		Address newAddress = new Address(newStreet, newZipCode, newCity, newDistrict, newCountry);
-		return newAddress;
+		return new Address(newStreet, newZipCode, newCity, newDistrict, newCountry);
 	}
 
 	/**
