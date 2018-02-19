@@ -27,15 +27,15 @@ public class US135andUS136SearchUsersController {
 	public List<String> searchUsersByProfileController(Profile profileToSearch) {
 		this.userList = Company.getTheInstance().getUsersRepository().searchUsersByProfile(profileToSearch);
 
-		List<String> userListAsString = new ArrayList<>();
+		List<String> userListString = new ArrayList<>();
 
 		for (int i = 0; i < userList.size(); i++) {
-			Integer showIndex = i + 1;
-			String toShowUser = "[" + showIndex.toString() + "] \n" + userDataToString(userList.get(i));
-			userListAsString.add(toShowUser);
+			Integer visibleIndex = i + 1;
+			String toShowUser = "[" + visibleIndex.toString() + "] \n" + userDataToString(userList.get(i));
+			userListString.add(toShowUser);
 		}
 
-		return userListAsString;
+		return userListString;
 
 	}
 
@@ -48,15 +48,15 @@ public class US135andUS136SearchUsersController {
 	public List<String> searchUsersByEmailController(String emailToSearch) {
 		this.userList = Company.getTheInstance().getUsersRepository().searchUsersByEmail(emailToSearch);
 
-		List<String> userListAsString = new ArrayList<>();
+		List<String> userListString = new ArrayList<>();
 
 		for (int i = 0; i < userList.size(); i++) {
-			Integer showIndex = i + 1;
-			String toShowUser = "[" + showIndex.toString() + "] \n" + userDataToString(userList.get(i));
-			userListAsString.add(toShowUser);
+			Integer visibleIndex = i + 1;
+			String toShowUser = "[" + visibleIndex.toString() + "] \n" + userDataToString(userList.get(i));
+			userListString.add(toShowUser);
 		}
 
-		return userListAsString;
+		return userListString;
 
 	}
 
@@ -67,9 +67,9 @@ public class US135andUS136SearchUsersController {
 	 * @return User to be Returned and handled by the Admin
 	 */
 	public User selectUser(int index) {
-		int actualIndex = index - 1;
-		if (actualIndex >= 0 && actualIndex < userList.size()) {
-			selectedUser = userList.get(actualIndex);
+		int realIndex = index - 1;
+		if (realIndex >= 0 && realIndex < userList.size()) {
+			selectedUser = userList.get(realIndex);
 		}
 		return selectedUser;
 
@@ -84,7 +84,7 @@ public class US135andUS136SearchUsersController {
 	 * @return String of the user's data
 	 */
 	public String userDataToString(User toConvert) {
-		String profile = "";
+		String profile;
 		switch (toConvert.getUserProfile()) {
 		case DIRECTOR:
 			profile = "Director";
@@ -96,10 +96,8 @@ public class US135andUS136SearchUsersController {
 			profile = "Unassigned";
 		}
 
-		String data = toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " ("
+		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " ("
 				+ toConvert.getEmail() + "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
-
-		return data;
 	}
 
 }
