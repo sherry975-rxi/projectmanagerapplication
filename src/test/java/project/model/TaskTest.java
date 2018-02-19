@@ -909,6 +909,8 @@ public class TaskTest {
 		// Checks if its possible to remove a task dependency
 		assertTrue(testTask.createTaskDependence(testTask2, 10));
 
+
+
 		/*
 		 * It's not possible to create task dependency because testTask1 doesn't have
 		 * the requirements to be a mother task
@@ -919,6 +921,13 @@ public class TaskTest {
 		 * Checks if its possible to remove the task dependency
 		 */
 		assertTrue(testTask.removeTaskDependence(testTask2));
+
+		/*
+		 * Checks if it's valid to create task Dependency with a negative value.
+		 * It is, but the days to postpone will be equal to 0
+		 */
+		assertTrue(testTask.createTaskDependence(testTask2, -10));
+
 
 		/*
 		 * Checks if its possible to remove the task dependency It won't be because

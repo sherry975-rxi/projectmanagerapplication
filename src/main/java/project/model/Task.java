@@ -776,13 +776,18 @@ public class Task {
 		boolean wasDependencyCreated = false;
 		if (this.isCreatingTaskDependencyValid(taskToEstablishDependenceUpon)) {
 
-			this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
-			this.taskDependency.add(taskToEstablishDependenceUpon);
+
 
 			if (daysToPostpone >= 0) {
+				this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
 				this.estimatedTaskStartDate.add(Calendar.DATE, daysToPostpone);
 				this.taskDependency.add(taskToEstablishDependenceUpon);
 
+			}
+
+			else{
+				this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
+				this.taskDependency.add(taskToEstablishDependenceUpon);
 			}
 
 			wasDependencyCreated = true;
