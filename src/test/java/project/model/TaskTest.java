@@ -201,6 +201,12 @@ public class TaskTest {
 		assertTrue(testTask.addTaskCollaboratorToTask(tWorker1));
 		assertFalse(testTask.addTaskCollaboratorToTask(tWorker2));
 
+		// given that taskWorker 1 still has a finish date (considered inactive)
+		// when the add Project Collaborator to task method is called for Collaborator 1
+		// then the expected result must be false
+		assertTrue(testTask.addProjectCollaboratorToTask(collab1));
+		assertFalse(testTask.addProjectCollaboratorToTask(collab2));
+
 	}
 
 	/**
