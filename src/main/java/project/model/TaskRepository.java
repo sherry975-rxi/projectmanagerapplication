@@ -508,7 +508,6 @@ public class TaskRepository {
 			if (other.getTaskState() instanceof Cancelled) {
 				validTasks.remove(other);
 			}
-			return validTasks;
 		}
 		return validTasks;
 	}
