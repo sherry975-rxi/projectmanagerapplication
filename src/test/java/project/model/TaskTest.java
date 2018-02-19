@@ -182,10 +182,25 @@ public class TaskTest {
 	@Test
 	public void testTaskTeam() {
 
-		testTask.addTaskCollaboratorToTask(tWorker1);
-		testTask.addTaskCollaboratorToTask(tWorker2);
+		// given a task and two task workers
+		// when the task is empty
+		// then the addTaskCollaborator to task method must return true
+		assertTrue(testTask.addTaskCollaboratorToTask(tWorker1));
+		assertTrue(testTask.addTaskCollaboratorToTask(tWorker2));
 		assertTrue(
 				testTask.isProjectCollaboratorInTaskTeam(collab1) && testTask.isProjectCollaboratorInTaskTeam(collab2));
+
+		// when task workers 1 and 2 are active in the task
+		// then they cannot be added to the same task again (addTaskCollaboratorToTask must return false)
+		assertFalse(testTask.addTaskCollaboratorToTask(tWorker1));
+		assertFalse(testTask.addTaskCollaboratorToTask(tWorker2));
+
+		// when task worker 1 is inactive and 2 is active in the task
+		tWorker1.addFinishDateForTaskCollaborator();
+		// then only task worker 1 can be added to the task
+		assertTrue(testTask.addTaskCollaboratorToTask(tWorker1));
+		assertFalse(testTask.addTaskCollaboratorToTask(tWorker2));
+
 	}
 
 	/**
