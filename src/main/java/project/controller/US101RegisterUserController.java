@@ -18,41 +18,29 @@ public class US101RegisterUserController {
 
 	}
 
+
 	/**
 	 * After creating the Controller, this method is called to both create and add
 	 * the User
-	 * 
-	 * @param User
-	 *            name
-	 * @param User
-	 *            email
-	 * @param User
-	 *            idNumber
-	 * @param User
-	 *            function
-	 * @param User
-	 *            phone
-	 * @param User
-	 *            password
-	 * @param User
-	 *            Address street
-	 * @param User
-	 *            Address zipCode
-	 * @param User
-	 *            Address city
-	 * @param User
-	 *            Address district
-	 * @param User
-	 *            Address country
-	 * 
-	 * @return the User if added successfully, null if the email already exists or
-	 *         is invalid
+	 *
+	 * @param name Name of the user
+	 * @param email Email of the User
+	 * @param idNumber idNumber of the User
+	 * @param function function of the User
+	 * @param phone phone of the User
+	 * @param password password of the User
+	 * @param street street of the User
+	 * @param zipCode zipCode of the User
+	 * @param city cityof the User
+	 * @param district district of the User
+	 * @param country country of the User
 	 */
 	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
 			String street, String zipCode, String city, String district, String country) {
 
-		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password, street, zipCode, city, district,
-				country);
+		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password);
+
+		newUser.setUserAddress(street, zipCode, city, district, country);
 
 		userRegistry.createUserWithDTO(newUser);
 	}

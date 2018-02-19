@@ -1,10 +1,10 @@
 package project.dto;
 
-import java.util.List;
-
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
+
+import java.util.List;
 
 public class UserDTO {
 
@@ -37,40 +37,36 @@ public class UserDTO {
 		this.userProfile = user.getUserProfile();
 	}
 
+
 	/**
 	 * Creates a userDTO with the same parameters that a User is created
-	 * 
-	 * @param name
-	 *            Name of the user
-	 * @param email
-	 *            Email of the user
-	 * @param idNumber
-	 *            idNumber of the user
-	 * @param function
-	 *            Function of the user
-	 * @param phone
-	 *            Phone of the user
-	 * @param password
-	 *            Password of the user
-	 * @param street
-	 *            Street of the user
-	 * @param zipCode
-	 *            ZipCode of the user
-	 * @param city
-	 *            City of the user
-	 * @param district
-	 *            District of the user
-	 * @param country
-	 *            Country of the user
+	 *
+	 * @param name name of the Country
+	 * @param email email of the User
+	 * @param idNumber idNumber of the User
+	 * @param function function of the User
+	 * @param phone phone of the User
+	 * @param password password of the User
 	 */
-	public UserDTO(String name, String email, String idNumber, String function, String phone, String password,
-			String street, String zipCode, String city, String district, String country) {
+	public UserDTO(String name, String email, String idNumber, String function, String phone, String password) {
 		this.name = name;
 		this.email = email;
 		this.idNumber = idNumber;
 		this.function = function;
 		this.phone = phone;
 		this.password = password;
+	}
+
+	/**
+	 * Sets the user address parameters
+	 *
+	 * @param street Street to set
+	 * @param zipCode zipcode to set
+	 * @param city city set
+	 * @param district district to set
+	 * @param country country to set
+	 */
+	public void setUserAddress(String street, String zipCode, String city, String district, String country) {
 		this.street = street;
 		this.zipCode = zipCode;
 		this.city = city;

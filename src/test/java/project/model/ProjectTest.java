@@ -372,12 +372,15 @@ public class ProjectTest {
 	@Test
 	public void testRemoveCollaboratorFromProjectTeam() {
 
+		// given user 2 not in Project 1, then attempting to remove it must return false
+		assertFalse(p1.removeProjectCollaboratorFromProjectTeam(user2));
+
 		p1.addProjectCollaboratorToProjectTeam(projectCollaborator2);
 		p1.addProjectCollaboratorToProjectTeam(projectCollaborator1);
 		task1.addTaskCollaboratorToTask(taskWorker2);
 		task1.addTaskCollaboratorToTask(taskWorker1);
 
-		p1.removeProjectCollaboratorFromProjectTeam(user2);
+		assertTrue(p1.removeProjectCollaboratorFromProjectTeam(user2));
 
 		// asserts the project team still contains both users
 		assertEquals(2, p1.getProjectTeam().size());
@@ -576,6 +579,11 @@ public class ProjectTest {
 	public void testHashcode() {
 		assertTrue(p1.hashCode() == p1.hashCode());
 		assertFalse(p1.hashCode() == p2.hashCode());
+
+		// asserts the Hashcode equals 31 + ProjectID
+		assertTrue (p1.hashCode() == 32);
+
+		assertFalse(p1.hashCode() == 0);
 
 	}
 
