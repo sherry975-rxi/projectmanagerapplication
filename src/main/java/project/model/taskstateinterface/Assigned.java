@@ -16,8 +16,7 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return True if valid, False if not
 	 */
-	// TODO what happens when the finished dependency of a "ready" task reverts to
-	// Unfinished?
+
 	@Override
 	public boolean isValid() {
 		return task.doesTaskTeamHaveActiveUsers();
@@ -83,7 +82,6 @@ public class Assigned implements TaskStateInterface {
 	 * 
 	 * @return Void
 	 */
-	// TODO Can Task skip Ready State if it has no dependencies?
 	@Override
 	public boolean changeToOnGoing() {
 		return false;
