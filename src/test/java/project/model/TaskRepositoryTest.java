@@ -24,18 +24,18 @@ import project.model.taskstateinterface.StandBy;
 public class TaskRepositoryTest {
 
 	UserRepository userRepository;
-	User user1;
+	User userDan;
 	User userAdmin;
-	User user2;
-	User user3;
+	User userJoa;
+	User userFra;
 
-	TaskCollaborator taskWorker1;
-	TaskCollaborator taskWorker2;
-	TaskCollaborator taskWorker3;
+	TaskCollaborator taskWorkerDan;
+	TaskCollaborator taskWorkerJoa;
+	TaskCollaborator taskWorkerFra;
 
-	ProjectCollaborator collab1;
-	ProjectCollaborator collab2;
-	ProjectCollaborator collab3;
+	ProjectCollaborator collabDan;
+	ProjectCollaborator collabJoa;
+	ProjectCollaborator collabFra;
 
 	Project project;
 	Project project2;
@@ -60,11 +60,11 @@ public class TaskRepositoryTest {
 		projectRepository = new ProjectRepository();
 
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		userDan = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
-		user2 = userRepository.createUser("Joao", "joao@gmail.com", "002", "collaborator", "920000000", "Rua",
+		userJoa = userRepository.createUser("Joao", "joao@gmail.com", "002", "collaborator", "920000000", "Rua",
 				"2402-00", "Test", "Testo", "Testistan");
-		user3 = userRepository.createUser("Francisco", "francisco@gmail.com", "003", "collaborator", "420000000", "Rua",
+		userFra = userRepository.createUser("Francisco", "francisco@gmail.com", "003", "collaborator", "420000000", "Rua",
 				"2402-00", "Test", "Testo", "Testistan");
 		// create user admin
 		userAdmin = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
@@ -75,30 +75,30 @@ public class TaskRepositoryTest {
 		project2 = projectRepository.createProject("Project2", "description2", userAdmin);
 
 		// create project collaborators
-		collab1 = new ProjectCollaborator(user1, 2);
-		collab2 = new ProjectCollaborator(user2, 3);
-		collab3 = project2.createProjectCollaborator(user3, 3);
+		collabDan = new ProjectCollaborator(userDan, 2);
+		collabJoa = new ProjectCollaborator(userJoa, 3);
+		collabFra = project2.createProjectCollaborator(userFra, 3);
 
 		// create task workers
-		taskWorker1 = new TaskCollaborator(collab1);
-		taskWorker2 = new TaskCollaborator(collab2);
-		taskWorker3 = new TaskCollaborator(collab3);
+		taskWorkerDan = new TaskCollaborator(collabDan);
+		taskWorkerJoa = new TaskCollaborator(collabJoa);
+		taskWorkerFra = new TaskCollaborator(collabFra);
 
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(user2);
-		userRepository.addUserToUserRepository(user3);
+		userRepository.addUserToUserRepository(userDan);
+		userRepository.addUserToUserRepository(userJoa);
+		userRepository.addUserToUserRepository(userFra);
 
 		userRepository.addUserToUserRepository(userAdmin);
 		// set user as collaborator
-		user1.setUserProfile(Profile.COLLABORATOR);
-		user2.setUserProfile(Profile.COLLABORATOR);
-		user3.setUserProfile(Profile.COLLABORATOR);
+		userDan.setUserProfile(Profile.COLLABORATOR);
+		userJoa.setUserProfile(Profile.COLLABORATOR);
+		userFra.setUserProfile(Profile.COLLABORATOR);
 
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// add user to project team
-		project.addProjectCollaboratorToProjectTeam(collab1);
-		project.addProjectCollaboratorToProjectTeam(collab2);
+		project.addProjectCollaboratorToProjectTeam(collabDan);
+		project.addProjectCollaboratorToProjectTeam(collabJoa);
 		// create taskRepository
 		taskRepository = project.getTaskRepository();
 
@@ -146,7 +146,7 @@ public class TaskRepositoryTest {
 	@After
 	public void tearDown() {
 
-		user1 = null;
+		userDan = null;
 		testTask = null;
 		testTask2 = null;
 		testTask3 = null;
@@ -156,11 +156,11 @@ public class TaskRepositoryTest {
 		projectRepository = null;
 		taskRepository = null;
 		userRepository = null;
-		taskWorker1 = null;
-		taskWorker2 = null;
-		collab1 = null;
-		collab2 = null;
-		collab3 = null;
+		taskWorkerDan = null;
+		taskWorkerJoa = null;
+		collabDan = null;
+		collabJoa = null;
+		collabFra = null;
 
 	}
 
@@ -220,10 +220,10 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// add de user to the task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
-		testTask4.addTaskCollaboratorToTask(taskWorker1);
+		testTask.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask3.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask4.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// create a list and add task to compare to unfinished task list
 		List<Task> test = new ArrayList<Task>();
@@ -233,7 +233,7 @@ public class TaskRepositoryTest {
 		test.add(testTask4);
 
 		// verify if test list is the same as the user unfinished task list
-		assertEquals(test, taskRepository.getUnfinishedTasksFromProjectCollaborator(collab1));
+		assertEquals(test, taskRepository.getUnfinishedTasksFromProjectCollaborator(collabDan));
 	}
 
 	@Test
@@ -245,8 +245,8 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// adds the user to the task
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
-		testTask4.addTaskCollaboratorToTask(taskWorker1);
+		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask4.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// testTask - set state as Finished
 		// necessary to pass from "Created" to "Planned"
@@ -260,7 +260,7 @@ public class TaskRepositoryTest {
 		testTask.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask.addProjectCollaboratorToTask(collab1);
+		testTask.addProjectCollaboratorToTask(collabDan);
 		testTask.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -288,7 +288,7 @@ public class TaskRepositoryTest {
 		testTask3.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask3.addProjectCollaboratorToTask(collab1);
+		testTask3.addProjectCollaboratorToTask(collabDan);
 		testTask3.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -317,13 +317,13 @@ public class TaskRepositoryTest {
 		test.add(testTask3);
 
 		// verify if test list is the same as the user finished task list
-		assertEquals(test, taskRepository.getFinishedTaskListofUserInProject(collab1));
+		assertEquals(test, taskRepository.getFinishedTaskListofUserInProject(collabDan));
 
 		// clears list
 		test.clear();
 
-		// Expects empty list, as collab2 doesnt belong to Task team
-		assertEquals(test, taskRepository.getFinishedTaskListofUserInProject(collab2));
+		// Expects empty list, as collabJoa doesnt belong to Task team
+		assertEquals(test, taskRepository.getFinishedTaskListofUserInProject(collabJoa));
 
 	}
 
@@ -337,16 +337,15 @@ public class TaskRepositoryTest {
 		startDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// create finished date to test
-		Calendar finishDateTest = Calendar.getInstance();
-		finishDateTest.add(Calendar.MONTH, -1);
-		Calendar finishDateTest2 = Calendar.getInstance();
-		finishDateTest2.add(Calendar.MONTH, -2);
+		// create finish dates to test ("last month", and "this month")
+		Calendar finishDateLastMonth = Calendar.getInstance();
+		finishDateLastMonth.add(Calendar.MONTH, -1);
+		Calendar finishDateThisMonth = Calendar.getInstance();
 
 		// prepare the tasks
 		testTask.getTaskState().changeToPlanned();
-		testTask.addProjectCollaboratorToTask(collab1);
-		testTask.addProjectCollaboratorToTask(collab2);
+		testTask.addProjectCollaboratorToTask(collabDan);
+		testTask.addProjectCollaboratorToTask(collabJoa);
 		testTask.getTaskState().changeToAssigned();
 		testTask.getTaskState().changeToReady();
 		Calendar startDatetestTask = testTask.getEstimatedTaskStartDate();
@@ -355,41 +354,41 @@ public class TaskRepositoryTest {
 		testTask.getTaskState().changeToOnGoing();
 		testTask.createReport(testTask.getTaskTeam().get(0));
 		testTask.getReports().get(0).setReportedTime(5);
-		testTask.setFinishDate(finishDateTest);
+		testTask.setFinishDate(finishDateLastMonth);
 		testTask.getTaskState().changeToFinished();
 
 		testTask2.getTaskState().changeToPlanned();
-		testTask2.addProjectCollaboratorToTask(collab2);
-		testTask2.addProjectCollaboratorToTask(collab1);
+		testTask2.addProjectCollaboratorToTask(collabJoa);
+		testTask2.addProjectCollaboratorToTask(collabDan);
 		testTask2.getTaskState().changeToAssigned();
 		testTask2.getTaskState().changeToReady();
 		Calendar startDateTask2 = testTask2.getEstimatedTaskStartDate();
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		testTask2.setStartDate(startDatetestTask);
 		testTask2.getTaskState().changeToOnGoing();
-		testTask2.setFinishDate(finishDateTest);
+		testTask2.setFinishDate(finishDateLastMonth);
 		testTask2.getTaskState().changeToFinished();
 
 		testTask3.getTaskState().changeToPlanned();
-		testTask3.addProjectCollaboratorToTask(collab1);
+		testTask3.addProjectCollaboratorToTask(collabDan);
 		testTask3.getTaskState().changeToAssigned();
 		testTask3.getTaskState().changeToReady();
 		Calendar startDateTask3 = testTask3.getEstimatedTaskStartDate();
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		testTask3.setStartDate(startDatetestTask);
 		testTask3.getTaskState().changeToOnGoing();
-		testTask3.setFinishDate(finishDateTest);
+		testTask3.setFinishDate(finishDateLastMonth);
 		testTask3.getTaskState().changeToFinished();
 
 		testTask4.getTaskState().changeToPlanned();
-		testTask4.addProjectCollaboratorToTask(collab1);
+		testTask4.addProjectCollaboratorToTask(collabDan);
 		testTask4.getTaskState().changeToAssigned();
 		testTask4.getTaskState().changeToReady();
 		Calendar startDateTask4 = testTask4.getEstimatedTaskStartDate();
 		startDateTask4.add(Calendar.DAY_OF_MONTH, 60);
 		testTask4.setStartDate(startDatetestTask);
 		testTask4.getTaskState().changeToOnGoing();
-		testTask4.setFinishDate(finishDateTest2);
+		testTask4.setFinishDate(finishDateThisMonth);
 		testTask4.getTaskState().changeToFinished();
 
 		// add task to task repository of the project
@@ -398,8 +397,19 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 
-		// verify if test list is the same as the user unfinished task list
-		assertEquals(3, taskRepository.getFinishedTasksFromProjectCollaboratorInGivenMonth(collab1, 1).size());
+		// given four finished tasks from Collaborator Daniel (collabDan)
+
+		// when "Months ago" is set to "1" (last month)
+		// then the expected list must contain 3 tasks
+		assertEquals(3, taskRepository.getFinishedTasksFromProjectCollaboratorInGivenMonth(collabDan, 1).size());
+
+		// when "Months ago" is set to "0" (this month)
+		// then the expected list must contain 1 task
+		assertEquals(1, taskRepository.getFinishedTasksFromProjectCollaboratorInGivenMonth(collabDan, 0).size());
+
+		// when "Months ago" is set to "-1" (All months)
+		// then the expected list must contain all 4 tasks
+		assertEquals(4, taskRepository.getFinishedTasksFromProjectCollaboratorInGivenMonth(collabDan, -1).size());
 	}
 
 	@Test
@@ -445,8 +455,8 @@ public class TaskRepositoryTest {
 		// Prepare the tasks
 
 		testTask.getTaskState().changeToPlanned();
-		testTask.addProjectCollaboratorToTask(collab1);
-		testTask.addProjectCollaboratorToTask(collab2);
+		testTask.addProjectCollaboratorToTask(collabDan);
+		testTask.addProjectCollaboratorToTask(collabJoa);
 		testTask.getTaskState().changeToAssigned();
 		testTask.getTaskState().changeToReady();
 		Calendar startDatetestTask = testTask.getEstimatedTaskStartDate();
@@ -459,7 +469,7 @@ public class TaskRepositoryTest {
 		testTask.getTaskState().changeToFinished();
 
 		testTask2.getTaskState().changeToPlanned();
-		testTask2.addProjectCollaboratorToTask(collab2);
+		testTask2.addProjectCollaboratorToTask(collabJoa);
 		testTask2.getTaskState().changeToAssigned();
 		testTask2.getTaskState().changeToReady();
 		Calendar startDateTask2 = testTask2.getEstimatedTaskStartDate();
@@ -470,7 +480,7 @@ public class TaskRepositoryTest {
 		testTask2.getTaskState().changeToFinished();
 
 		testTask3.getTaskState().changeToPlanned();
-		testTask3.addProjectCollaboratorToTask(collab1);
+		testTask3.addProjectCollaboratorToTask(collabDan);
 		testTask3.getTaskState().changeToAssigned();
 		testTask3.getTaskState().changeToReady();
 		Calendar startDateTask3 = testTask3.getEstimatedTaskStartDate();
@@ -481,11 +491,11 @@ public class TaskRepositoryTest {
 		testTask3.getTaskState().changeToFinished();
 
 		// Checks if the 2 values are equal
-		assertEquals(5.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab1), 0.001);
+		assertEquals(5.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collabDan), 0.001);
 		// Checks if the 2 values are equal
-		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab2), 0.001);
-		// Expects 0, as collab3 belongs to another Project
-		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collab3), 0.001);
+		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collabJoa), 0.001);
+		// Expects 0, as collabFra belongs to another Project
+		assertEquals(0.0, taskRepository.getTimeSpentByProjectCollaboratorInAllTasksLastMonth(collabFra), 0.001);
 
 	}
 
@@ -528,10 +538,10 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 		// adds the user to the task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
-		testTask4.addTaskCollaboratorToTask(taskWorker1);
+		testTask.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask3.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask4.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// Marks task and task3 as finished
 		testTask.markTaskAsFinished();
@@ -545,7 +555,7 @@ public class TaskRepositoryTest {
 		testList.add(testTask4);
 
 		// See if the two taskLists have the same tasks
-		assertEquals(testList, taskRepository.getAllTasksFromProjectCollaborator(collab1));
+		assertEquals(testList, taskRepository.getAllTasksFromProjectCollaborator(collabDan));
 
 	}
 
@@ -558,13 +568,13 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask4);
 
 		// Adds user to testTssk
-		testTask.addTaskCollaboratorToTask(taskWorker2);
+		testTask.addTaskCollaboratorToTask(taskWorkerJoa);
 
-		// Checks if the collab1 doesnt have any task assigned to him
-		assertFalse(taskRepository.isCollaboratorActiveOnAnyTask(collab1));
+		// Checks if the collabDan doesnt have any task assigned to him
+		assertFalse(taskRepository.isCollaboratorActiveOnAnyTask(collabDan));
 
-		// Checks if the collab2 has tasks assigned to him
-		assertTrue(taskRepository.isCollaboratorActiveOnAnyTask(collab2));
+		// Checks if the collabJoa has tasks assigned to him
+		assertTrue(taskRepository.isCollaboratorActiveOnAnyTask(collabJoa));
 	}
 
 	@Test
@@ -577,8 +587,8 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask4);
 
 		// adds User of index 1 to testTask and testTask4
-		testTask.addTaskCollaboratorToTask(taskWorker2);
-		testTask4.addTaskCollaboratorToTask(taskWorker2);
+		testTask.addTaskCollaboratorToTask(taskWorkerJoa);
+		testTask4.addTaskCollaboratorToTask(taskWorkerJoa);
 
 		// Creates a new list, and then added the tasks without any user assigned to
 		// them
@@ -589,7 +599,7 @@ public class TaskRepositoryTest {
 		assertEquals(listTasksWithoutUser, taskRepository.getAllTasksWithoutCollaboratorsAssigned());
 
 		// adds TaskWorker 1 to testTask2
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
+		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// Removes task2 from taskList to compare
 		listTasksWithoutUser.remove(testTask2);
@@ -597,8 +607,8 @@ public class TaskRepositoryTest {
 		// See if the both lists have the same tasks.
 		assertEquals(listTasksWithoutUser, taskRepository.getAllTasksWithoutCollaboratorsAssigned());
 
-		// removes collab1 from testTask2
-		testTask2.removeProjectCollaboratorFromTask(collab1);
+		// removes collabDan from testTask2
+		testTask2.removeProjectCollaboratorFromTask(collabDan);
 
 		// clears the taskList
 		listTasksWithoutUser.clear();
@@ -621,8 +631,8 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 		taskRepository.addProjectTask(testTask4);
 
-		// Adds user1 to the Task
-		testTask4.addTaskCollaboratorToTask(taskWorker1);
+		// Adds userDan to the Task
+		testTask4.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// testTask - set state as OnGoing
 		// necessary to pass from "Created" to "Planned"
@@ -636,7 +646,7 @@ public class TaskRepositoryTest {
 		testTask.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask.addProjectCollaboratorToTask(collab1);
+		testTask.addProjectCollaboratorToTask(collabDan);
 		testTask.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -659,7 +669,7 @@ public class TaskRepositoryTest {
 		testTask2.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask2.addProjectCollaboratorToTask(collab1);
+		testTask2.addProjectCollaboratorToTask(collabDan);
 		testTask2.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -681,7 +691,7 @@ public class TaskRepositoryTest {
 		testTask3.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask3.addProjectCollaboratorToTask(collab1);
+		testTask3.addProjectCollaboratorToTask(collabDan);
 		testTask3.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -717,8 +727,8 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask2);
 		taskRepository.addProjectTask(testTask3);
 
-		// Adds user1 to the Task
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
+		// Adds userDan to the Task
+		testTask3.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// testTask - set state as Finished
 		// necessary to pass from "Created" to "Planned"
@@ -732,7 +742,7 @@ public class TaskRepositoryTest {
 		testTask.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask.addProjectCollaboratorToTask(collab1);
+		testTask.addProjectCollaboratorToTask(collabDan);
 		testTask.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -760,7 +770,7 @@ public class TaskRepositoryTest {
 		testTask2.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask2.addProjectCollaboratorToTask(collab1);
+		testTask2.addProjectCollaboratorToTask(collabDan);
 		testTask2.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -796,10 +806,10 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask2);
 		taskRepository.addProjectTask(testTask3);
 
-		// Adds user1 to the Task
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
+		// Adds userDan to the Task
+		testTask.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask3.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// create star date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -894,7 +904,7 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask2);
 		taskRepository.addProjectTask(testTask3);
 
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
+		testTask3.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// testTask - set state as Finished
 		// necessary to pass from "Created" to "Planned"
@@ -908,7 +918,7 @@ public class TaskRepositoryTest {
 		testTask.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask.addTaskCollaboratorToTask(taskWorker1);
+		testTask.addTaskCollaboratorToTask(taskWorkerDan);
 		testTask.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -936,7 +946,7 @@ public class TaskRepositoryTest {
 		testTask2.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
+		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
 		testTask2.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -986,8 +996,8 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask6);
 		taskRepository.addProjectTask(testTask7);
 
-		// Adds user1 to the Task7
-		testTask7.addTaskCollaboratorToTask(taskWorker1);
+		// Adds userDan to the Task7
+		testTask7.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// testTask - set state as OnGoing
 		// necessary to pass from "Created" to "Planned"
@@ -1001,7 +1011,7 @@ public class TaskRepositoryTest {
 		testTask.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask.addProjectCollaboratorToTask(collab1);
+		testTask.addProjectCollaboratorToTask(collabDan);
 		testTask.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -1024,7 +1034,7 @@ public class TaskRepositoryTest {
 		testTask3.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask3.addProjectCollaboratorToTask(collab1);
+		testTask3.addProjectCollaboratorToTask(collabDan);
 		testTask3.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -1046,7 +1056,7 @@ public class TaskRepositoryTest {
 		testTask5.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask5.addProjectCollaboratorToTask(collab1);
+		testTask5.addProjectCollaboratorToTask(collabDan);
 		testTask5.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -1068,7 +1078,7 @@ public class TaskRepositoryTest {
 		testTask6.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask6.addProjectCollaboratorToTask(collab1);
+		testTask6.addProjectCollaboratorToTask(collabDan);
 		testTask6.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -1090,7 +1100,7 @@ public class TaskRepositoryTest {
 		testTask2.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask2.addProjectCollaboratorToTask(collab1);
+		testTask2.addProjectCollaboratorToTask(collabDan);
 		testTask2.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -1117,7 +1127,7 @@ public class TaskRepositoryTest {
 		testTask4.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		testTask4.addProjectCollaboratorToTask(collab1);
+		testTask4.addProjectCollaboratorToTask(collabDan);
 		testTask4.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
@@ -1148,7 +1158,7 @@ public class TaskRepositoryTest {
 
 		// Checks if both lists have the same tasks
 		assertEquals(getStartedNotFinishedTasks,
-				taskRepository.getStartedNotFinishedTasksFromProjectCollaborator(collab1));
+				taskRepository.getStartedNotFinishedTasksFromProjectCollaborator(collabDan));
 
 	}
 
@@ -1343,9 +1353,9 @@ public class TaskRepositoryTest {
 		testTask3.setTaskDeadline(taskDeadline);
 
 		// set active user
-		testTask.addTaskCollaboratorToTask(taskWorker1);
-		testTask2.addTaskCollaboratorToTask(taskWorker1);
-		testTask3.addTaskCollaboratorToTask(taskWorker1);
+		testTask.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask3.addTaskCollaboratorToTask(taskWorkerDan);
 
 		// Sets the tasks to "Planned"
 		testTask.setTaskState(PlannedTestTask);
@@ -1418,7 +1428,7 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 
 		// creates a TaskReport (TaskWorker as an indexWork of 2)
-		testTask.createReport(taskWorker1);
+		testTask.createReport(taskWorkerDan);
 
 		// Updates report Time to 30
 		testTask.changeReportedTime(30, "daniel@gmail.com");
