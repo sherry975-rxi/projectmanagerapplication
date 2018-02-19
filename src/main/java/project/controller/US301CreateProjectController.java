@@ -113,10 +113,8 @@ public class US301CreateProjectController {
 	 */
 	public String userDataToString(User toConvert) {
 
-		String data = toConvert.getIdNumber() + ": " + toConvert.getName() + " (" + toConvert.getEmail() + "; "
+		return toConvert.getIdNumber() + ": " + toConvert.getName() + " (" + toConvert.getEmail() + "; "
 				+ toConvert.getPhone() + ") - " + toConvert.getFunction();
-
-		return data;
 	}
 
 }

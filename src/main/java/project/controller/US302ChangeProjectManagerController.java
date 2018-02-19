@@ -95,10 +95,8 @@ public class US302ChangeProjectManagerController {
 	 */
 	public String collaboratorInfoToString(User toConvert) {
 
-		String info = toConvert.getIdNumber() + ": " + toConvert.getName() + " (" + toConvert.getEmail() + "; "
+		return toConvert.getIdNumber() + ": " + toConvert.getName() + " (" + toConvert.getEmail() + "; "
 				+ toConvert.getPhone() + ") - " + toConvert.getFunction();
-
-		return info;
 	}
 
 }
