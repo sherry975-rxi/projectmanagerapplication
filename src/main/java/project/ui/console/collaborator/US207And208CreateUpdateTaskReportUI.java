@@ -26,7 +26,7 @@ public class US207And208CreateUpdateTaskReportUI {
 	public void createReport() {
 
 		Scanner input = new Scanner(System.in);
-		if (createReportController.getReportedCollaboratorName().equals("")) {
+		if ("".equals(createReportController.getReportedCollaboratorName())) {
 			System.out.println("The User still didn't create a Report.");
 
 		} else {

@@ -76,8 +76,8 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 			yerOrNo = input.nextLine();
 		}
 
-		if (yerOrNo.equalsIgnoreCase("y")) {
-			if (controller.createTaskTeamRequest() == true) {
+		if ("y".equalsIgnoreCase(yerOrNo)) {
+			if (controller.createTaskTeamRequest()) {
 				System.out.println("Your request is pending approval.");
 				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user, this.isPreviousUIFromTasks);
 				taskDetailsUI.taskDataDisplay();

@@ -112,8 +112,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 * @return Task from taskID
 	 */
 	public Task getTaskByTaskID(String taskID) {
-		Task taskToAddCollaborator = taskRepository.getTaskByID(taskID);
-		return taskToAddCollaborator;
+		return taskRepository.getTaskByID(taskID);
 
 	}
 

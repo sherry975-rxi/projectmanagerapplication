@@ -13,6 +13,12 @@ public class US320ViewProjectsController {
 	List<Project> chosenList;
 	Project selectedProject = null;
 
+    /**
+     * This method generates lists all project and converts them to a list of strings
+     * to be displayed in the UI
+     *
+     * @return a list of String with Projects' data
+     */
 	public List<String> viewAllProjects() {
 		this.chosenList = projRepository.getAllProjects();
 		List<String> allProjectsList = new ArrayList<>();
@@ -26,6 +32,12 @@ public class US320ViewProjectsController {
 		return allProjectsList;
 	}
 
+    /**
+     * This method generates lists all active project and converts them to
+     * a list of strings to be displayed in the UI
+     *
+     * @return a list of String with Projects' data
+     */
 	public List<String> viewActiveProjects() {
 		this.chosenList = projRepository.getActiveProjects();
 		List<String> activeProjectsList = new ArrayList<>();
@@ -39,6 +51,14 @@ public class US320ViewProjectsController {
 		return activeProjectsList;
 	}
 
+    /**
+     * This method is called when the user selects a project from the visible index listed
+     * in the UI
+     *
+     * @param integer of the visible index
+     *
+     * @return the selected Project, to be stored by the UI and handled by other controllers
+     */
 	public Project selectProject(int visibleIndex) {
 		int actualIndex = visibleIndex - 1;
 		if (actualIndex >= 0 && actualIndex < chosenList.size()) {
@@ -47,12 +67,12 @@ public class US320ViewProjectsController {
 		return selectedProject;
 	}
 
-	/**
+    /**
 	 * This is a simple utility method that converts a project's basic data into a
 	 * string to be displayed in the UI
 	 * 
-	 * @param selected
-	 *            Project
+	 * @param the project to view data in the UI
+	 *
 	 * @return a String with the Project's data
 	 */
 	public String overviewProjectAsString(Project toView) {
@@ -63,7 +83,8 @@ public class US320ViewProjectsController {
 
 		int headerSize = 15 + id.length() + toView.getName().length();
 
-		String headerChar = "=";
+
+		char headerChar = '=';
 		String header = generateHeader(headerChar, headerSize);
 
 		String output = header + "\n";
@@ -79,7 +100,11 @@ public class US320ViewProjectsController {
 		return output;
 	}
 
-	public String generateHeader(String toRepeat, int repeat) {
+/**
+ * This is a utility method to generate a header with the selected character and size, to be called by the project view
+ *
+ */
+ public String generateHeader(char toRepeat, int repeat) {
         StringBuilder gen = new StringBuilder();
 
 		for (int i = 0; i < repeat; i++) {
