@@ -66,9 +66,7 @@ public class US130ListUsersController {
 			profile = "Unassigned";
 		}
 
-		String data = toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " ("
+		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " ("
 				+ toConvert.getEmail() + "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
-
-		return data;
 	}
 }

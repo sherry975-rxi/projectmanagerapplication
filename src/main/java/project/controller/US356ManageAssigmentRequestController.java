@@ -32,9 +32,7 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public List<String> showAllAssignmentRequests() {
 
-		List<String> listOfPendingAssignmentRequests = selectedProject.viewPendingTaskAssignementRequests();
-
-		return listOfPendingAssignmentRequests;
+		return selectedProject.viewPendingTaskAssignementRequests();
 	}
 
 	/**

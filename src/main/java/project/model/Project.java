@@ -641,9 +641,6 @@ public class Project {
 		return null;
 	}
 
-	// TODO Do we use this method give the Assignment requests to the controller, or
-	// create a method in Project that handles the approvals/rejections by recieving
-	// index numbers from the controller?
 	/**
 	 * Returns the list of Task assigment requests by collaborators, to be handled
 	 * by the model or controller
