@@ -119,7 +119,7 @@ public class US342DefineDependenciesBetweenTasksUI {
 				System.out.println("If you type a negative value, the estimated start date of the daughter task will "
 						+ "be set to the same day of the estimated finish date of the task mother");
 
-				incrementDaysChoosing(scannerInput, us342Controller, daughterTask, motherTask, checkD);
+				incrementDaysChoosing(scannerInput, us342Controller, daughterTask, motherTask);
 			}
 		} else {
 			System.out.println(
@@ -133,7 +133,7 @@ public class US342DefineDependenciesBetweenTasksUI {
 	}
 
 	private static boolean incrementDaysChoosing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
-			String daughterTask, String motherTask, boolean checkD) {
+			String daughterTask, String motherTask) {
 
 		boolean checkE = false;
 		if (scannerInput.hasNextInt()) {

@@ -581,9 +581,12 @@ public class ProjectTest {
 		assertFalse(p1.hashCode() == p2.hashCode());
 
 		// asserts the Hashcode equals 31 + ProjectID
-		assertTrue (p1.hashCode() == 32);
+		assertTrue (p1.hashCode() == 31*3 + p1.getIdCode());
 
 		assertFalse(p1.hashCode() == 0);
+
+		int result = 3 * 31 + p1.getIdCode();
+		assertEquals(p1.hashCode(), result);
 
 	}
 

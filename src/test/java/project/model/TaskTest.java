@@ -439,7 +439,7 @@ public class TaskTest {
 	@Test
 	public void testRemoveProjectCollaboratorFromTask() {
 		testTask2.addTaskCollaboratorToTask(tWorker1);
-		testTask2.removeProjectCollaboratorFromTask(collab1);
+		assertTrue(testTask2.removeProjectCollaboratorFromTask(collab1));
 		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
 
 		/*
@@ -454,6 +454,7 @@ public class TaskTest {
 		 * not in task
 		 */
 		testTask2.removeProjectCollaboratorFromTask(collab2);
+		assertFalse(testTask2.removeProjectCollaboratorFromTask(collab2));
 		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
 	}
 
