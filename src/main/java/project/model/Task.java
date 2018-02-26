@@ -638,7 +638,7 @@ public class Task {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = 3;
 		result = prime * result + taskID.hashCode();
 		return result;
 	}

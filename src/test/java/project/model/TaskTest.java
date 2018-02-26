@@ -621,8 +621,10 @@ public class TaskTest {
 	@Test
 	public void testHashcode() {
 
-		assertTrue(testTask.hashCode() == testTask.hashCode());
 		assertFalse(testTask.hashCode() == testTask2.hashCode());
+
+		int result = 3*31 + testTask.getTaskID().hashCode();
+		assertEquals(testTask.hashCode(), result);
 
 	}
 
@@ -966,6 +968,7 @@ public class TaskTest {
 		assertFalse(testTask.removeTaskDependence(testTask2));
 	}
 
+	@Test
 	public void testClearCancelDate() {
 
 		testTask.setCancelDate();
