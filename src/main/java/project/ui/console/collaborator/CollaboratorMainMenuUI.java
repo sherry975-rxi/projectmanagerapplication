@@ -66,7 +66,6 @@ public class CollaboratorMainMenuUI {
 			break;
 		case "E":
 			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			System.exit(0);
 			break;
 		default:
 			displayOptions();

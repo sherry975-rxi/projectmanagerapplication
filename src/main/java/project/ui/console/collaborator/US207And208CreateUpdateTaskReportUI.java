@@ -8,8 +8,6 @@ import project.ui.console.MainMenuUI;
 
 public class US207And208CreateUpdateTaskReportUI {
 
-	private String email;
-	private boolean wasReportCreated;
 	private String taskID;
 	US207and208CreateUpdateTaskReportControllers createReportController;
 	private Integer projectID;
@@ -18,12 +16,12 @@ public class US207And208CreateUpdateTaskReportUI {
 
 	public US207And208CreateUpdateTaskReportUI(String email, String taskID) {
 
-		this.email = email;
 		this.createReportController = new US207and208CreateUpdateTaskReportControllers(email, taskID);
 		this.taskID = taskID;
 	}
 
 	public void createReport() {
+
 
 		Scanner input = new Scanner(System.in);
 		if ("".equals(createReportController.getReportedCollaboratorName())) {
@@ -70,6 +68,9 @@ public class US207And208CreateUpdateTaskReportUI {
 	}
 
 	public void tryToUpdateTaskReport(String newTime){
+
+		boolean wasReportCreated;
+
 		int newTimeToInt;
 		try {
 			newTimeToInt = Integer.parseInt(newTime);
