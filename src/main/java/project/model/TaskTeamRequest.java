@@ -21,9 +21,9 @@ public class TaskTeamRequest {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = 3;
 		result = prime * result + ((projCollab == null) ? 0 : projCollab.hashCode());
-		result = prime * result + ((task == null) ? 0 : task.hashCode());
+		result = result + ((task == null) ? 0 : task.hashCode());
 		return result;
 	}
 

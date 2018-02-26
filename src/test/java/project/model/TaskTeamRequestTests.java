@@ -176,7 +176,7 @@ public class TaskTeamRequestTests {
 		TaskTeamRequest request3 = new TaskTeamRequest(teamTesterCollaboratorNull, chosenTask);
 		TaskTeamRequest request4 = new TaskTeamRequest(teamTesterCollaboratorNull, nullTask);
 
-		int requestHashCode = ((31 + teamTesterCollaborator.hashCode()) * 31) + chosenTask.hashCode();
+		int requestHashCode = ((31*3 + teamTesterCollaborator.hashCode())) + chosenTask.hashCode();
 
 		// Checks if both Hashcodes are the same
 		assertTrue(request.hashCode() == request2.hashCode());
