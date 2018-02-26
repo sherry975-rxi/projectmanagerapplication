@@ -927,8 +927,14 @@ public class TaskTest {
 		// Sets a task deadline
 		testTask2.setTaskDeadline(Calendar.getInstance());
 
+		/*
+		 	Checks that the testTask has no active dependencies yet
+		 */
+		assertFalse(testTask.hasActiveDependencies());
+
 		// Checks if its possible to remove a task dependency
 		assertTrue(testTask.createTaskDependence(testTask2, 10));
+
 
 
 

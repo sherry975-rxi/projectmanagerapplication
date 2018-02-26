@@ -352,6 +352,9 @@ public class UserTest {
 		User u2 = new User("Miguel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 		User uDifferent = new User("Afonso", "afonso@gmail.com", "01", "Porteiro", "910000000");
 
+		int result = 31 * 3 + u1.getEmail().hashCode();
+		assertEquals(result, u1.hashCode());
+
 		assertTrue(u1.hashCode() == u2.hashCode());
 		assertFalse(u1.hashCode() == uDifferent.hashCode());
 
@@ -360,11 +363,7 @@ public class UserTest {
 		User u4 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 		assertTrue(u3.hashCode() == u4.hashCode());
 
-		// Creates 2 users with the null parameters on the email field
-		User u5 = new User("Daniel", null, "01", "Porteiro", "910000000");
-		User u6 = new User("Daniel", null, "01", "Porteiro", "910000000");
-		assertTrue(u5.hashCode() == u6.hashCode());
-		assertFalse(u1.hashCode() == u6.hashCode());
+
 
 	}
 
