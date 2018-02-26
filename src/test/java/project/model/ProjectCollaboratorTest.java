@@ -88,8 +88,12 @@ public class ProjectCollaboratorTest {
 		assertTrue(testMoar.hashCode() == testMoar.hashCode());
 		assertFalse(tester.hashCode() == testMoar.hashCode());
 
-		assertTrue(testCollaboratorNull.hashCode() == testCollaboratorNull2.hashCode());
-		assertFalse(testMoar.hashCode() == testCollaboratorNull.hashCode());
+		
+
+		int result = 31 * 3 + tester.hashCode();
+		assertEquals(result, testMoar.hashCode());
+
+
 	}
 
 }

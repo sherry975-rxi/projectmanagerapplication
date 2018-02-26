@@ -1,5 +1,6 @@
 package project.model;
 
+
 public class TaskTeamRequest {
 
 	private ProjectCollaborator projCollab;
@@ -70,6 +71,7 @@ public class TaskTeamRequest {
 		return this.projCollab.getUserFromProjectCollaborator().getName() + "\n"
 				+ this.projCollab.getUserFromProjectCollaborator().getEmail() + "\n"
 				+ this.task.getTaskID() + "\n" + this.task.getDescription();
+
 	}
 
 }
