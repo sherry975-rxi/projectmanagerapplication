@@ -16,7 +16,7 @@ public class US342DefineDependenciesBetweenTasksUI {
 	private Project project;
 
 	/**
-	 * @param user
+	 * @param project
 	 */
 	public US342DefineDependenciesBetweenTasksUI(Project project) {
 		this.project = project;
@@ -132,8 +132,10 @@ public class US342DefineDependenciesBetweenTasksUI {
 
 	}
 
-	private boolean incrementDaysChoosing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
-			String daughterTask, String motherTask, boolean checkE) {
+	private static boolean incrementDaysChoosing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
+			String daughterTask, String motherTask, boolean checkD) {
+
+		boolean checkE = false;
 		if (scannerInput.hasNextInt()) {
 			checkE = validIncrementDaysChoosing(scannerInput, us342Controller, daughterTask, motherTask);
 
