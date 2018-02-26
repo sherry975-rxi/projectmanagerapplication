@@ -95,10 +95,12 @@ public class AddressTest {
 		Address casa3 = new Address("Rua Esquerda", "4356-245", "Gondomar", "Porto", "Portugal");
 		Address casa4 = new Address(null, "4356-245", "Gondomar", "Porto", "Portugal");
 
+		int result = (31*3) + casa.getStreet().hashCode();
+
+		assertTrue(casa.hashCode() == result);
 		assertTrue(casa.hashCode() == casa2.hashCode());
-		assertTrue(casa.hashCode() == casa.hashCode());
 		assertFalse(casa.hashCode() == casa4.hashCode());
-		assertTrue(casa4.hashCode() == casa4.hashCode());
+	    assertFalse(casa.hashCode() == casa3.hashCode());
 
 	}
 
