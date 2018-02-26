@@ -133,9 +133,9 @@ public class US342DefineDependenciesBetweenTasksUI {
 	}
 
 	private boolean incrementDaysChoosing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
-			String daughterTask, String motherTask, boolean checkD) {
+			String daughterTask, String motherTask, boolean checkE) {
 		if (scannerInput.hasNextInt()) {
-			checkD = validIncrementDaysChoosing(scannerInput, us342Controller, daughterTask, motherTask);
+			checkE = validIncrementDaysChoosing(scannerInput, us342Controller, daughterTask, motherTask);
 
 		} else {
 			System.out.println("Invalid number!");
@@ -146,13 +146,13 @@ public class US342DefineDependenciesBetweenTasksUI {
 			if (!"Y".equalsIgnoreCase(choice)) {
 				System.out.println("Task dependency creation cancelled!");
 				System.out.println("Exiting menu.");
-				checkD = false;
+				checkE = false;
 			}
 		}
-		return checkD;
+		return checkE;
 	}
 
-	private boolean validIncrementDaysChoosing(Scanner scannerInput,
+	private static boolean validIncrementDaysChoosing(Scanner scannerInput,
 			US342CreateTaskDependencyController us342Controller, String daughterTask, String motherTask) {
 		boolean result = true;
 		int incrementDaysInput = Integer.parseInt(scannerInput.nextLine());

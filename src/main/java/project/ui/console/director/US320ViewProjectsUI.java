@@ -17,7 +17,7 @@ public class US320ViewProjectsUI {
 		System.out.println("Type [0] to view active projects, or any key to view all projects:");
 		System.out.println("");
 
-		if (input.nextLine().equals("0")) {
+		if ("0".equals(input.nextLine())) {
 			projectsList = controller.viewActiveProjects();
 		} else {
 			projectsList = controller.viewAllProjects();
