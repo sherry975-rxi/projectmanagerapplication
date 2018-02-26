@@ -14,18 +14,16 @@ import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 public class US372ProjectUnfinishedTasksUI {
 
-	private Project project;
-	private User user;
+
 
 	public void displayUnfinishedOfProject(Project project, User user) {
 
-		this.project = project;
-		this.user = user;
+
 		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -46,10 +44,10 @@ public class US372ProjectUnfinishedTasksUI {
 
 		List<String> listOfOnGoingTasks = new ArrayList<>();
 
-		for (int i = 0; i < controller.getProjectUnfinishedTaskList(this.project).size(); i++) {
-			String taskInfo = controller.getUnfinishedTaskListId(this.project).get(i);
+		for (int i = 0; i < controller.getProjectUnfinishedTaskList(project).size(); i++) {
+			String taskInfo = controller.getUnfinishedTaskListId(project).get(i);
 			System.out.println(taskInfo);
-			listOfOnGoingTasks.add(controller.getProjectUnfinishedTaskList(this.project).get(i).getTaskID());
+			listOfOnGoingTasks.add(controller.getProjectUnfinishedTaskList(project).get(i).getTaskID());
 		}
 		System.out.println();
 		System.out.println("Please choose a task to see more options:");
@@ -69,11 +67,11 @@ public class US372ProjectUnfinishedTasksUI {
 		for (String ii : listOfOnGoingTasks) {
 
 			if (option.equals(ii)) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
+				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
 				taskFuntionatities.taskDataDisplay();
 			} else if ("B".equals(option)) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
-						this.project);
+				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(user,
+						project);
 				projectManagerMainMenuUI.displayOptions();
 
 			} else if ("M".equals(option)) {

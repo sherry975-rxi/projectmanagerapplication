@@ -14,18 +14,15 @@ import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 public class US377ProjectCancelledTasks {
 
-	private Project project;
-	private User user;
 
 	public void displayCancelledTasksOfProject(Project project, User user) {
 
-		this.project = project;
-		this.user = user;
+
 		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -69,11 +66,11 @@ public class US377ProjectCancelledTasks {
 		for (String ii : listOfCancelledTasks) {
 
 			if (option.equals(ii)) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, this.project, this.user);
+				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
 				taskFuntionatities.taskDataDisplay();
 			} else if ("B".equals(option)) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(this.user,
-						this.project);
+				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(user,
+						project);
 				projectManagerMainMenuUI.displayOptions();
 
 			} else if ("M".equals(option)) {

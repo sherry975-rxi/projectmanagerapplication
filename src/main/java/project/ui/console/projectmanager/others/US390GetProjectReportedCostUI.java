@@ -13,18 +13,16 @@ public class US390GetProjectReportedCostUI {
 	// Integer projectID
 	// Display projectCost
 
-	private Project project;
-	private User user;
+
 
 	public void displayProjectCost(Project project, User user) {
 
-		this.project = project;
-		this.user = user;
+
 		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -48,7 +46,7 @@ public class US390GetProjectReportedCostUI {
 
 		System.out.println("The reported project cost until now is:");
 		System.out.println();
-		System.out.println(controller.calculateReportedProjectCostController(this.project));
+		System.out.println(controller.calculateReportedProjectCostController(project));
 		System.out.println();
 		System.out.println("The reported cost to each task of the project is:");
 		System.out.println();
@@ -72,7 +70,7 @@ public class US390GetProjectReportedCostUI {
 			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 		} else {
 			System.out.println("Please choose a valid option: ");
-			this.displayProjectCost(this.project, this.user);
+			this.displayProjectCost(project, user);
 		}
 
 	}

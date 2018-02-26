@@ -1,6 +1,7 @@
 package project.ui.console.collaborator;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import project.controller.US203GetUnfinishedTaskByUser;
 import project.model.User;
@@ -47,9 +48,10 @@ public class US203GetUnfinishedTaskUI {
 			MainMenuUI.mainMenu();
 			break;
 		case "E":
-			System.exit(0);
 			break;
 		default:
+
+
 			try {
 				split = option.split("\\.");
 				projID = Integer.valueOf(split[0]);

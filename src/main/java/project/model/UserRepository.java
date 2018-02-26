@@ -106,7 +106,7 @@ public class UserRepository {
 	 * This method allows the administrator to see if a given user already exists in
 	 * company
 	 * 
-	 * @param user
+	 * @param addedUser
 	 *            user
 	 * @return boolean; TRUE if user exists in company FALSE if user doesn’t exist
 	 *         in company
@@ -217,7 +217,7 @@ public class UserRepository {
 	/**
 	 * This method checks if an e-mail inserted by the user is valid or not
 	 * 
-	 * @param String
+	 * @param email
 	 *            email
 	 * @return TRUE if email is valid FALSE if email is invalid
 	 */
@@ -229,6 +229,7 @@ public class UserRepository {
 			emailAddr.validate();
 		} catch (AddressException ex) {
 			result = false;
+
 		}
 		return result;
 	}
