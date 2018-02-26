@@ -723,6 +723,11 @@ public class ProjectTest {
 		p1.createTaskAssignementRequest(projectCollaborator2, task2);
 		p1.createTaskAssignementRequest(projectCollaborator3, task2);
 
+		/*
+		 * No tasks were removed from the list yet
+		 */
+		assertEquals(8, p1.getAssignmentRequestsList().size());
+
 		p1.removeAllRequestsWithASpecificTaskFromAssignementRequests(task1);
 
 		assertEquals(4, p1.getAssignmentRequestsList().size());
@@ -742,6 +747,12 @@ public class ProjectTest {
 		p1.createTaskRemovalRequest(projectCollaborator1, task3);
 		p1.createTaskRemovalRequest(projectCollaborator2, task2);
 		p1.createTaskRemovalRequest(projectCollaborator3, task2);
+
+		/*
+		 * No tasks were removed from the list yet
+		 */
+		assertEquals(8, p1.getRemovalRequestsList().size());
+
 
 		p1.removeAllRequestsWithASpecificTaskFromRemovalRequests(task1);
 

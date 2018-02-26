@@ -1,7 +1,6 @@
 package project.ui.console.collaborator;
 
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 import project.controller.US203GetUnfinishedTaskByUser;
 import project.model.User;

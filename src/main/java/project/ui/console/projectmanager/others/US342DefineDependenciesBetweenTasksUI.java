@@ -103,7 +103,7 @@ public class US342DefineDependenciesBetweenTasksUI {
 
 	}
 
-	private void incrementDaysInputing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
+	private static void incrementDaysInputing(Scanner scannerInput, US342CreateTaskDependencyController us342Controller,
 			String daughterTask, String motherTask) {
 		if (us342Controller.getTaskByID(motherTask).getTaskDeadline() != null) {
 			boolean checkD = true;
