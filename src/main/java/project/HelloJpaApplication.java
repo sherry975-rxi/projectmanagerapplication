@@ -31,11 +31,10 @@ public class HelloJpaApplication implements CommandLineRunner {
     public void run(String... strings) throws Exception {
         // save a couple of books
 
-        BookDetail bd = new BookDetail(12);
+        //BookDetail bd = new BookDetail(12);
         //bookDetailRepository.save(bd);
 
-        Book book = new Book("Book A", bd);
-        book.setBookDetail(bd);
+        Book book = new Book("Book A", new BookDetail(16));
         bookRepository.save(book);
 
        /* book = new Book("Book B", new BookDetail(124));

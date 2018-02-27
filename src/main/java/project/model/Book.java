@@ -20,6 +20,7 @@ public class Book {
 
     public Book(String name, BookDetail bookDetail){
         this.name = name;
+        this.bookDetail=bookDetail;
     }
 
 

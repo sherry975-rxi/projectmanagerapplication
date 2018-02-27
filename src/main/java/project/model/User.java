@@ -2,6 +2,7 @@ package project.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 
 /**
  * Class to build Users. From this class one can create a new User(object),
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class User {
 
+	private int id;
 	private String name;
 	private String email;
 	private String idNumber;
@@ -23,6 +25,11 @@ public class User {
 	private Profile userProfile;
 	private boolean systemUserStateActive;
 	private String password;
+
+	/**
+	 * Empty Constructor for User
+	 */
+	public User () {}
 
 	/**
 	 * Constructor of the class User. Every user has list of Addresses.
@@ -35,8 +42,6 @@ public class User {
 	 *            ID number of the new user.
 	 * @param function
 	 *            Function of the new user in the company.
-	 * @param addressList
-	 *            List of addresses of the new user.
 	 * @param phone
 	 *            Phone number of the new user.systemUserStateActive
 	 */
@@ -51,6 +56,7 @@ public class User {
 		this.userProfile = Profile.UNASSIGNED;
 		this.systemUserStateActive = true;
 	}
+
 
 	/**
 	 * Creates an instance of Address.
