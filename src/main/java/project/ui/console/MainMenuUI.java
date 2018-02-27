@@ -24,7 +24,7 @@ public class MainMenuUI {
 	private static User userDirector;
 	private static User userJSilva;
 
-	public static void main(String[] args) {
+	public /*static*/ void main(String[] args) {
 
 		// Instantiates the company
 		Company myCompany = Company.getTheInstance();
