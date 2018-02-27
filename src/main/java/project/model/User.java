@@ -2,7 +2,7 @@ package project.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+
 
 /**
  * Class to build Users. From this class one can create a new User(object),
@@ -192,8 +192,7 @@ public class User {
 
 	/**
 	 * Sets the state of the user state.
-	 * 
-	 * @param state
+	 *
 	 *            State of the user to be set
 	 * 
 	 */
@@ -215,8 +214,8 @@ public class User {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		int result = 3;
+		result = prime * result + email.hashCode();
 		return result;
 	}
 
@@ -267,7 +266,7 @@ public class User {
 	 * this method search one specific address in user address list, if find one
 	 * match, the method return this specific address object.
 	 * 
-	 * @param findAddress
+	 * @param street
 	 * @return address
 	 */
 	public Address searchUserAddress(String street) {
