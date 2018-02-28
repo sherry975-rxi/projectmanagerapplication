@@ -242,7 +242,7 @@ public class UserRepositoryTest {
 		// then, sets the first user as inactive, asserts its state was change
 		// and finally, confirms the active collaborators list contains 2 users
 		user1.changeUserState();
-		assertFalse(user1.isUserActive());
+		assertFalse(user1.isSystemUserStateActive());
 		assertEquals(userRep.getAllActiveCollaboratorsFromRepository().size(), 2);
 	}
 

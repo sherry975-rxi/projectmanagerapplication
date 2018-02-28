@@ -53,12 +53,12 @@ public class US116Tests {
 	 */
 	@Test
 	public void testSetSystemUserState() {
-		assertFalse(newUser2.isUserActive());
-		assertTrue(newUser3.isUserActive());
+		assertFalse(newUser2.isSystemUserStateActive());
+		assertTrue(newUser3.isSystemUserStateActive());
 
 		newUser2.changeUserState();
 
-		assertTrue(newUser2.isUserActive());
+		assertTrue(newUser2.isSystemUserStateActive());
 	}
 
 }

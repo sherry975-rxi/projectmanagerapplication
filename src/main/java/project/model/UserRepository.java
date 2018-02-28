@@ -17,6 +17,8 @@ import project.dto.UserDTO;
  */
 public class UserRepository {
 
+
+
 	private List<User> usersRepository;
 
 	/**
@@ -139,7 +141,7 @@ public class UserRepository {
 
 		List<User> allCollaborators = new ArrayList<>();
 		for (User other : this.usersRepository) {
-			if (other.isUserActive() && other.getUserProfile().equals(Profile.COLLABORATOR)) {
+			if (other.isSystemUserStateActive() && other.getUserProfile().equals(Profile.COLLABORATOR)) {
 				allCollaborators.add(other);
 			}
 		}

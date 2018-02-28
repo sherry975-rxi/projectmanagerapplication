@@ -37,7 +37,7 @@ public class US115andUS116SetUserStateController {
 	public String userStateAsString() {
 		String output;
 
-		if (toChangeState.isUserActive()) {
+		if (toChangeState.isSystemUserStateActive()) {
 			output = "(ACTIVE)";
 		} else {
 			output = "(DISABLED)";

@@ -173,7 +173,7 @@ public class UserTest {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
-		assertTrue(u1.isUserActive());
+		assertTrue(u1.isSystemUserStateActive());
 	}
 
 	@Test
@@ -196,7 +196,7 @@ public class UserTest {
 
 		u1.changeUserState();
 
-		assertEquals(u1.isUserActive(), false);
+		assertEquals(u1.isSystemUserStateActive(), false);
 	}
 
 	/**
@@ -209,11 +209,11 @@ public class UserTest {
 
 		u1.changeUserState();
 
-		assertEquals(u1.isUserActive(), false);
+		assertEquals(u1.isSystemUserStateActive(), false);
 
 		u1.changeUserState();
 
-		assertEquals(u1.isUserActive(), true);
+		assertEquals(u1.isSystemUserStateActive(), true);
 
 	}
 

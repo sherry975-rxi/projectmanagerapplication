@@ -1,5 +1,8 @@
 package project.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
  * Class to builds an Address.
  * 
@@ -10,13 +13,18 @@ package project.model;
  *
  */
 
-public class Address {
+@Embeddable
+
+public class Address{
 
 	private String street;
 	private String zipCode;
 	private String city;
 	private String district;
 	private String country;
+	//private User user;
+
+	public Address(){}
 
 	/**
 	 * This method defines the Constructor Address which will have the following
@@ -36,6 +44,8 @@ public class Address {
 		this.country = country;
 
 	}
+
+
 
 	/**
 	 * Sets the street
@@ -168,4 +178,8 @@ public class Address {
 		return true;
 	}
 
-}
+
+	}
+
+
+

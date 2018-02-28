@@ -1,6 +1,7 @@
 package project;
 
 import project.Repository.BookDetailRepository;
+
 import project.model.*;
 import project.Repository.BookRepository;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +25,14 @@ public class HelloJpaApplication implements CommandLineRunner {
     @Autowired
     private BookDetailRepository bookDetailRepository;
 
+
+
     public static void main(String[] args) {
         SpringApplication.run(HelloJpaApplication.class, args);
     }
 
     @Override
+    @Transactional
     public void run(String... strings) throws Exception {
         // save a couple of books
 

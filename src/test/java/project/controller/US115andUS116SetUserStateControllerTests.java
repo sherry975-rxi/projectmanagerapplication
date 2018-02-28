@@ -41,27 +41,27 @@ public class US115andUS116SetUserStateControllerTests {
 	@Test
 	public void testSetUserAsInactiveController() {
 		// Asserts the User starts as Active and creates the User State Controller
-		assertTrue(newUser2.isUserActive());
+		assertTrue(newUser2.isSystemUserStateActive());
 		US115andUS116SetUserStateController testUserStateController = new US115andUS116SetUserStateController(newUser2);
 
 		// Uses the controller to deactivate the user and confirms its state.
 		testUserStateController.changeUserState();
-		assertFalse(newUser2.isUserActive());
+		assertFalse(newUser2.isSystemUserStateActive());
 	}
 
 	@Test
 	public void testSetUserAsActiveController() {
 		// Asserts the User starts as Active and creates the User State Controller
-		assertTrue(newUser2.isUserActive());
+		assertTrue(newUser2.isSystemUserStateActive());
 		US115andUS116SetUserStateController testUserStateController = new US115andUS116SetUserStateController(newUser2);
 
 		// Uses the controller to deactivate the user and confirms its state.
 		testUserStateController.changeUserState();
-		assertFalse(newUser2.isUserActive());
+		assertFalse(newUser2.isSystemUserStateActive());
 
 		// Uses the controller to reactivate the user and confirms its state.
 		testUserStateController.changeUserState();
-		assertTrue(newUser2.isUserActive());
+		assertTrue(newUser2.isSystemUserStateActive());
 	}
 
 	@Test

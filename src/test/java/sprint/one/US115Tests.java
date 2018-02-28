@@ -56,19 +56,19 @@ public class US115Tests {
 	@Test
 	public void testAssertSystemUserState() {
 
-		assertTrue(newUser2.isUserActive());
+		assertTrue(newUser2.isSystemUserStateActive());
 
 		newUser2.changeUserState();
 		newUser3.changeUserState();
 
-		assertFalse(newUser2.isUserActive());
-		assertFalse(newUser3.isUserActive());
+		assertFalse(newUser2.isSystemUserStateActive());
+		assertFalse(newUser3.isSystemUserStateActive());
 
 		newUser2.changeUserState();
 		newUser3.changeUserState();
 
-		assertTrue(newUser2.isUserActive());
-		assertTrue(newUser3.isUserActive());
+		assertTrue(newUser2.isSystemUserStateActive());
+		assertTrue(newUser3.isSystemUserStateActive());
 	}
 
 }
