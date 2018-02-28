@@ -1,56 +1,33 @@
 package project;
-
-import project.Repository.BookDetailRepository;
-
 import project.model.*;
-import project.Repository.BookRepository;
+import project.Repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-
 @SpringBootApplication
 public class HelloJpaApplication implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(HelloJpaApplication.class);
-
     @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private BookDetailRepository bookDetailRepository;
-
-
-
+    private UserRepository userRepository;
     public static void main(String[] args) {
         SpringApplication.run(HelloJpaApplication.class, args);
     }
-
     @Override
-    @Transactional
     public void run(String... strings) throws Exception {
-        // save a couple of books
-
-        //BookDetail bd = new BookDetail(12);
-        //bookDetailRepository.save(bd);
-
-        Book book = new Book("Book A", new BookDetail(16));
-        bookRepository.save(book);
-
-       /* book = new Book("Book B", new BookDetail(124));
-        bookRepository.save(book);
-        book = new Book("Book C", new BookDetail(332));
-        bookRepository.save(book);
-*/
-
-        // fetch all books
-        for (Book b : bookRepository.findAll()) {
-            logger.info(b.toString());
+        Company myCompany = Company.getTheInstance();
+        User newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+                "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+        User newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+                "940000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+        myCompany.getUsersRepository().addUserToUserRepository(newUser2);
+        myCompany.getUsersRepository().addUserToUserRepository(newUser3);
+        userRepository.save(newUser2);
+        userRepository.save(newUser3);
+        for (User u : userRepository.findAll()) {
+            logger.info(u.toString());
         }
     }
 }

@@ -1,5 +1,6 @@
 package project.model;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 /**
  * Class to build Users. From this class one can create a new User(object),
@@ -11,12 +12,14 @@ import java.util.ArrayList;
  */
 @Entity
 @Table(name = "User")
-public class User {
+public class User implements Serializable{
 	private int id;
 	private String name;
 	private String email;
 	private String idNumber;
 	private String function;
+	static final long serialVersionUID = 44L;
+
 
 	@Embedded
 	//@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="user")
@@ -280,4 +283,5 @@ public class User {
 		}
 		return found;
 	}
+
 }

@@ -15,13 +15,14 @@ import java.io.Serializable;
 
 @Embeddable
 
-public class Address{
+public class Address implements Serializable{
 
 	private String street;
 	private String zipCode;
 	private String city;
 	private String district;
 	private String country;
+	static final long serialVersionUID = 42L;
 	//private User user;
 
 	public Address(){}

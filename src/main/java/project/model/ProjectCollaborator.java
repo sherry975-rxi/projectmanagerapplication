@@ -1,10 +1,25 @@
 package project.model;
 
+
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "ProjectCollaborator")
 public class ProjectCollaborator {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	private User collaborator;
+	private Project project;
 	private boolean status;
 	private int costPerEffort;
+
+
+	protected ProjectCollaborator(){
+
+	}
 
 	/**
 	 * Constructor of the class ProjectCollaborator. This contains a Project
@@ -23,6 +38,37 @@ public class ProjectCollaborator {
 		this.costPerEffort = costPerEffort;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public User getCollaborator() {
+		return collaborator;
+	}
+
+	public void setCollaborator(User collaborator) {
+		this.collaborator = collaborator;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public int getCostPerEffort() {
+		return costPerEffort;
+	}
+
+	public void setCostPerEffort(int costPerEffort) {
+		this.costPerEffort = costPerEffort;
+	}
 	/**
 	 * This method sets the Project Collaborator as working or not working on the
 	 * project.
@@ -99,5 +145,16 @@ public class ProjectCollaborator {
 			return false;
 		ProjectCollaborator other = (ProjectCollaborator) obj;
 		return collaborator.equals(other.collaborator);
+	}
+
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Project_id")
+	public Project getProject(){
+		return project;
+	}
+
+	public void setProject(Project project){
+		this.project = project;
 	}
 }

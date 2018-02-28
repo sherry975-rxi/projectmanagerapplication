@@ -1,5 +1,6 @@
 package project.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -7,11 +8,14 @@ import java.util.List;
 import project.model.taskstateinterface.Cancelled;
 import project.model.taskstateinterface.Finished;
 
-public class TaskRepository {
+
+public class TaskRepository implements Serializable{
 
 	private int taskCounter;
 	private int projId;
 	private List<Task> projectTasks;
+	static final long serialVersionUID = 46L;
+
 
 	public TaskRepository(int projId) {
 

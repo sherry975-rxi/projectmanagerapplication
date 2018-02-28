@@ -1,6 +1,8 @@
 package project.model;
 
 //
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -15,28 +17,38 @@ import java.util.List;
  * @author Group 3
  *
  */
+@Entity
+@Table(name = "Project")
+public class Project implements Serializable{
 
-public class Project {
-
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	private int projectIdCode;
 	private int status;
 	private TaskRepository taskRepository;
 	private User projectManager;
-	private List<ProjectCollaborator> projectTeam;
+	private ArrayList<ProjectCollaborator> projectTeam;
 	private String name;
 	private String description;
 	private EffortUnit effortUnit;
 	private int budget;
 	private Calendar startdate;
 	private Calendar finishdate;
-	private List<TaskTeamRequest> pendingTaskAssignementRequests;
-	private List<TaskTeamRequest> pendingTaskRemovalRequests;
+	private ArrayList<TaskTeamRequest> pendingTaskAssignementRequests;
+	private ArrayList<TaskTeamRequest> pendingTaskRemovalRequests;
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
 	public static final int EXECUTION = 2; // execução
 	public static final int DELIVERY = 3; // entrega
 	public static final int REVIEW = 4; // garantia
 	public static final int CLOSE = 5; // fecho
+	static final long serialVersionUID = 43L;
+
+
+	public Project(){
+
+	}
 
 	/**
 	 * Project Constructor that demands the fields name, description and the Project
@@ -47,6 +59,7 @@ public class Project {
 	 * @param description
 	 * @param projectManager
 	 */
+
 
 	public Project(int projCounter, String name, String description, User projectManager) {
 
@@ -65,6 +78,85 @@ public class Project {
 		this.pendingTaskRemovalRequests = new ArrayList<>();
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public static int getPLANNING() {
+		return PLANNING;
+	}
+
+	public static int getINITIATION() {
+		return INITIATION;
+	}
+
+	public static int getEXECUTION() {
+		return EXECUTION;
+	}
+
+	public static int getDELIVERY() {
+		return DELIVERY;
+	}
+
+	public static int getREVIEW() {
+		return REVIEW;
+	}
+
+	public static int getCLOSE() {
+		return CLOSE;
+	}
+
+	public int getProjectIdCode() {
+		return projectIdCode;
+	}
+
+	public void setProjectIdCode(int projectIdCode) {
+		this.projectIdCode = projectIdCode;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public void setTaskRepository(TaskRepository taskRepository) {
+		this.taskRepository = taskRepository;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getBudget() {
+		return budget;
+	}
+
+	public void setBudget(int budget) {
+		this.budget = budget;
+	}
+
+	public void setPendingTaskAssignementRequests(ArrayList<TaskTeamRequest> pendingTaskAssignementRequests) {
+		this.pendingTaskAssignementRequests = pendingTaskAssignementRequests;
+	}
+
+	public void setPendingTaskRemovalRequests(ArrayList<TaskTeamRequest> pendingTaskRemovalRequests) {
+		this.pendingTaskRemovalRequests = pendingTaskRemovalRequests;
+	}
 	/**
 	 * This Method adds a User to a project. This action converts the User in a
 	 * Project Collaborator ( User + costPerEffort)
@@ -189,13 +281,18 @@ public class Project {
 		this.description = newDescription;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "Project")
 	/**
 	 * Get the users that belong to this Project's Team
 	 * 
 	 * @return Project Team Team of the Project
 	 */
-	public List<ProjectCollaborator> getProjectTeam() {
+	public ArrayList<ProjectCollaborator> getProjectTeam() {
 		return this.projectTeam;
+	}
+
+	public void setProjectTeam(ArrayList<ProjectCollaborator> projectTeam){
+		this.projectTeam = projectTeam;
 	}
 
 	/**
@@ -203,8 +300,8 @@ public class Project {
 	 * 
 	 * @return Project Team - Active Team of the Project
 	 */
-	public List<ProjectCollaborator> getActiveProjectTeam() {
-		List<ProjectCollaborator> activeCollaborators = new ArrayList<>();
+	public ArrayList<ProjectCollaborator> getActiveProjectTeam() {
+		ArrayList<ProjectCollaborator> activeCollaborators = new ArrayList<>();
 
 		for (ProjectCollaborator other : this.projectTeam) {
 			if (other.isProjectCollaboratorActive())
@@ -427,8 +524,8 @@ public class Project {
 	 *
 	 */
 
-	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
-		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
+	public ArrayList<ProjectCollaborator> getCollaboratorsWithoutTasks() {
+		ArrayList<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
 		inactiveCollaborators.addAll(this.getProjectTeam());
 		for (ProjectCollaborator other : this.getProjectTeam()) {
 			if (this.taskRepository.isCollaboratorActiveOnAnyTask(other)) // needs to check if
@@ -591,8 +688,8 @@ public class Project {
 	 * @return toString List of strings which contains the info about the task and
 	 *         the project collaborator for each request
 	 */
-	public List<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
-		List<String> toString = new ArrayList<>();
+	public ArrayList<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
+		ArrayList<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskAssignementRequests) {
 			toString.add(req.viewStringRepresentation());
 		}
@@ -606,8 +703,8 @@ public class Project {
 	 * @return toString List of strings which contains the info about the task and
 	 *         the project collaborator for each request
 	 */
-	public List<String> viewPendingTaskRemovalRequests() {
-		List<String> toString = new ArrayList<>();
+	public ArrayList<String> viewPendingTaskRemovalRequests() {
+		ArrayList<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskRemovalRequests) {
 			toString.add(req.getProjCollab().getUserFromProjectCollaborator().getName() + "\n"
 					+ req.getProjCollab().getUserFromProjectCollaborator().getEmail() + "\n"
@@ -649,7 +746,7 @@ public class Project {
 	 *         to a certain task
 	 */
 
-	public List<TaskTeamRequest> getAssignmentRequestsList() {
+	public ArrayList<TaskTeamRequest> getAssignmentRequestsList() {
 		return this.pendingTaskAssignementRequests;
 	}
 
@@ -664,7 +761,7 @@ public class Project {
 	 *         to a certain task
 	 */
 
-	public List<TaskTeamRequest> getRemovalRequestsList() {
+	public ArrayList<TaskTeamRequest> getRemovalRequestsList() {
 		return this.pendingTaskRemovalRequests;
 	}
 
@@ -793,9 +890,9 @@ public class Project {
 	 * 
 	 * @return Returns a list with the task team
 	 */
-	public List<ProjectCollaborator> getProjectCollaboratorsFromTask(Task task) {
+	public ArrayList<ProjectCollaborator> getProjectCollaboratorsFromTask(Task task) {
 
-		List<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
+		ArrayList<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
 		for (ProjectCollaborator other : this.getActiveProjectTeam()) {
 			if (task.isProjectCollaboratorActiveInTaskTeam(other)) {
 				collaboratorsFromTask.add(other);
