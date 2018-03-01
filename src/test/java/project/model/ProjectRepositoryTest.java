@@ -99,40 +99,39 @@ public class ProjectRepositoryTest {
 		// create a estimated Task Dead line Date
 		// last deadline
 		taskDeadlineDateTest = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
-		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
+
 		// first deadline
 		taskDeadlineDateTest2 = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
-		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 15);
+		taskDeadlineDateTest2.set(Calendar.HOUR_OF_DAY, 15);
+		taskDeadlineDateTest2.set(Calendar.DAY_OF_MONTH, 28);
+		taskDeadlineDateTest2.set(Calendar.MONTH, Calendar.FEBRUARY);
+		taskDeadlineDateTest2.set(Calendar.YEAR, 2018);
+
 		// second deadline
 		taskDeadlineDateTest3 = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
-		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 16);
+		taskDeadlineDateTest3.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest3.set(Calendar.MONTH, Calendar.FEBRUARY);
+		taskDeadlineDateTest3.set(Calendar.DAY_OF_MONTH, 28);
+		taskDeadlineDateTest3.set(Calendar.HOUR_OF_DAY, 16);
 		// third deadline
 		taskDeadlineDateTest4 = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
-		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 17);
+		taskDeadlineDateTest4.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest4.set(Calendar.MONTH, Calendar.FEBRUARY);
+		taskDeadlineDateTest4.set(Calendar.DAY_OF_MONTH, 28);
+		taskDeadlineDateTest4.set(Calendar.HOUR_OF_DAY, 17);
 		// fourth deadline
 		taskDeadlineDateTest6 = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
-		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 18);
+		taskDeadlineDateTest6.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest6.set(Calendar.MONTH, Calendar.FEBRUARY);
+		taskDeadlineDateTest6.set(Calendar.DAY_OF_MONTH, 28);
+		taskDeadlineDateTest6.set(Calendar.HOUR_OF_DAY, 18);
 		// fifth deadline
 		taskDeadlineDateTest5 = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 28);
-		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 19);
+		taskDeadlineDateTest5.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest5.set(Calendar.MONTH, Calendar.FEBRUARY);
+		taskDeadlineDateTest5.set(Calendar.DAY_OF_MONTH, 28);
+		taskDeadlineDateTest5.set(Calendar.HOUR_OF_DAY, 19);
 
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
@@ -946,11 +945,12 @@ public class ProjectRepositoryTest {
 
 		// creates a new list of tasks in increasingDeadLineOrder
 		List<Task> startedNotFinishedTasksInOrder = new ArrayList<>();
+		startedNotFinishedTasksInOrder.add(task1);
+
 		startedNotFinishedTasksInOrder.add(task3);
 		startedNotFinishedTasksInOrder.add(task4);
 		startedNotFinishedTasksInOrder.add(task5);
-		startedNotFinishedTasksInOrder.add(task1);
-
+		System.out.println(task1.getTaskDeadline());
 		assertEquals(startedNotFinishedTasksInOrder,
 				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1));
 		assertEquals(startedNotFinishedTasksInOrder.size(),

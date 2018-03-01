@@ -114,9 +114,9 @@ public class TaskRepositoryTest {
 
 		// create a estimated Task Dead line Date
 		Calendar taskDeadlineDateTest = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
-		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.FEBRUARY);
-		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
+		taskDeadlineDateTest.set(Calendar.YEAR, 2028);
+		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
+		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 27);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create a expired estimated Task Dead line Date
