@@ -12,6 +12,8 @@ public class ProjectCollaborator {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private User collaborator;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Project_id")
 	private Project project;
 	private boolean status;
 	private int costPerEffort;
@@ -148,8 +150,7 @@ public class ProjectCollaborator {
 	}
 
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Project_id")
+
 	public Project getProject(){
 		return project;
 	}
