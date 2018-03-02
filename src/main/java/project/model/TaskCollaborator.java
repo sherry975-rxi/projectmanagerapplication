@@ -18,6 +18,9 @@ public class TaskCollaborator implements Serializable {
 	private Calendar finishDate;
 	private boolean status;
 	static final long serialVersionUID = 52L;
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Task_id")
+	private Task task;
 
 	/**
 	 * Empty Constructor for TaskCollaborator
@@ -183,6 +186,14 @@ public class TaskCollaborator implements Serializable {
 		return projCollaborator.equals(other.projCollaborator);
 	}
 
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    public Task getTask() {
+        return task;
+    }
 }
 
 

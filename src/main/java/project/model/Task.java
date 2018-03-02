@@ -49,6 +49,8 @@ public class Task {
 	private Integer deadlineInterval;
 	private Calendar cancelDate;
 
+	public Task(){}
+
 	/**
 	 * This constructor creates a task with the mandatory fields taskCounter, projId
 	 * and description. However, the description is the only parameter that will be
