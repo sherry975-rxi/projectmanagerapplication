@@ -8,12 +8,20 @@ import java.util.List;
 import project.model.taskstateinterface.Cancelled;
 import project.model.taskstateinterface.Finished;
 
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.OneToMany;
 
+@Embeddable
 public class TaskRepository implements Serializable{
 
 	private int taskCounter;
 	private int projId;
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	private List<Task> projectTasks;
+
+	private Project project;
 	static final long serialVersionUID = 46L;
 
 
@@ -74,7 +82,17 @@ public class TaskRepository implements Serializable{
 	 *            Task to add to the Project Task List
 	 */
 	public void addProjectTask(Task toAdd) {
+	    toAdd.setProject(this.project);
 		this.projectTasks.add(toAdd);
+	}
+
+
+	public void setProject(Project project) {
+		this.project=project;
+	}
+
+	public Project getProject() {
+		return this.project;
 	}
 
 	/**

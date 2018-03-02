@@ -49,6 +49,10 @@ public class Task {
 	private Integer deadlineInterval;
 	private Calendar cancelDate;
 
+	@ManyToOne
+    @JoinColumn(name = "Project_id")
+	private Project project;
+
 	public Task(){}
 
 	/**
@@ -171,6 +175,15 @@ public class Task {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public void setProject(Project project) {
+	    this.project=project;
+    }
+
+    public Project getProject() {
+	    return this.project;
+    }
+
 	/**
 	 * Returns the interval between the start date of the project and the estimated
 	 * start date for the task.
