@@ -1,6 +1,7 @@
 package project.model;
 
 //
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -13,28 +14,37 @@ import project.model.taskstateinterface.Ready;
 import project.model.taskstateinterface.StandBy;
 import project.model.taskstateinterface.TaskStateInterface;
 
+import javax.persistence.*;
+
 /**
  * Class that allows building and accessing Task attributes.
  * 
  * @author Group 3
  *
  */
-
+@Entity
+@Table(name = "Task")
 public class Task {
 
+
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private String taskID;
 	private String description;
-	private List<TaskCollaborator> taskTeam;
-	private List<Report> reports;
+	private ArrayList<TaskCollaborator> taskTeam;
+	private ArrayList<Report> reports;
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
+	@javax.persistence.Transient
 	private TaskStateInterface taskState;
 	private Integer estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
 	private Integer taskBudget;
-	private List<Task> taskDependency;
+	private ArrayList<Task> taskDependency;
 	private Integer startDateInterval;
 	private Integer deadlineInterval;
 	private Calendar cancelDate;
@@ -152,6 +162,13 @@ public class Task {
 		}
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 	/**
 	 * Returns the interval between the start date of the project and the estimated
 	 * start date for the task.
@@ -372,7 +389,7 @@ public class Task {
 	 * 
 	 * @return reports List of reports in the task
 	 */
-	public List<Report> getReports() {
+	public ArrayList<Report> getReports() {
 		return reports;
 	}
 
@@ -719,7 +736,7 @@ public class Task {
 	/**
 	 * @return Returns a list of users copied from another task.
 	 */
-    private List<TaskCollaborator> copyListOfTaskCollaboratorsInTask() {
+    private ArrayList<TaskCollaborator> copyListOfTaskCollaboratorsInTask() {
 
         return new ArrayList<>(this.getTaskTeam());
 	}

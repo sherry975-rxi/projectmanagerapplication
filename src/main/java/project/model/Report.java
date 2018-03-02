@@ -1,5 +1,7 @@
 package project.model;
 
+import javax.persistence.*;
+
 /**
  * 
  * This Class Stores Reported Information associated with a Task Collaborator
@@ -7,11 +9,27 @@ package project.model;
  * @author Group3
  *
  */
+@Entity
+@Table(name = "Report")
+
 public class Report {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	private int reportedTime;
 	private TaskCollaborator taskCollaborator;
 	private int cost;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Task_id")
+	private Task task;
+
+
+
+
+	public Report(){
+
+	}
 
 	/**
 	 * This method creates a report
@@ -19,11 +37,30 @@ public class Report {
 	 * @param taskCollaborator
 	 *            Task Collaborator
 	 */
+
+
 	public Report(TaskCollaborator taskCollaborator) {
 		
 		this.reportedTime = 0;
 		this.taskCollaborator = taskCollaborator;
 		this.cost = taskCollaborator.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 
 	/**
