@@ -26,7 +26,10 @@ public class Project implements Serializable{
 	private long id;
 	private int projectIdCode;
 	private int status;
+
+    @Embedded
 	private TaskRepository taskRepository;
+
 	private User projectManager;
 	private ArrayList<ProjectCollaborator> projectTeam;
 	private String name;
@@ -74,6 +77,7 @@ public class Project implements Serializable{
 		this.startdate = null;
 		this.finishdate = null;
 		this.taskRepository = new TaskRepository(projectIdCode);
+		this.taskRepository.setProject(this);
 		this.projectTeam = new ArrayList<>();
 		this.pendingTaskAssignementRequests = new ArrayList<>();
 		this.pendingTaskRemovalRequests = new ArrayList<>();
