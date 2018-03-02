@@ -494,6 +494,7 @@ public class Task {
 
 		} else {
 			Report report = new Report(taskCollaborator);
+			report.setTask(this);
 			this.reports.add(report);
 
 		}
