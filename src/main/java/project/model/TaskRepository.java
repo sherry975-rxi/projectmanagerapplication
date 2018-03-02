@@ -16,11 +16,14 @@ import javax.persistence.OneToMany;
 @Embeddable
 public class TaskRepository implements Serializable{
 
+
+	@javax.persistence.Transient
 	private int taskCounter;
+	@javax.persistence.Transient
 	private int projId;
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	private List<Task> projectTasks;
-
+	@javax.persistence.Transient
 	private Project project;
 	static final long serialVersionUID = 46L;
 
@@ -40,7 +43,6 @@ public class TaskRepository implements Serializable{
 	 * 
 	 * @return the task created
 	 */
-
 	public Task createTask(String description, int estimatedTaskEffort, Calendar estimatedTaskStartDate,
 			Calendar taskDeadline, int estimatedBudgetCostTask) {
 
@@ -57,7 +59,6 @@ public class TaskRepository implements Serializable{
 	 * 
 	 * @return the task created
 	 */
-
 	public Task createTask(String description) {
 
 		Task newTask = new Task(this.taskCounter, this.projId, description);
