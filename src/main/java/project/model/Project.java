@@ -31,6 +31,7 @@ public class Project implements Serializable{
 	private ArrayList<ProjectCollaborator> projectTeam;
 	private String name;
 	private String description;
+	@Enumerated(EnumType.STRING)
 	private EffortUnit effortUnit;
 	private int budget;
 	private Calendar startdate;
