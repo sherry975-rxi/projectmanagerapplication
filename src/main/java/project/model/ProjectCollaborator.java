@@ -3,14 +3,16 @@ package project.model;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "ProjectCollaborator")
-public class ProjectCollaborator {
+public class ProjectCollaborator implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "User_id")
 	private User collaborator;
@@ -19,10 +21,13 @@ public class ProjectCollaborator {
 	private Project project;
 	private boolean status;
 	private int costPerEffort;
+	static final long serialVersionUID = 51L;
 
 
+	/**
+	 * Empty Constructor for ProjectCollaborator
+	 */
 	protected ProjectCollaborator(){
-
 	}
 
 	/**
@@ -35,18 +40,17 @@ public class ProjectCollaborator {
 	 * @param costPerEffort
 	 *            how much the Project Collaborator costs per unit of effort
 	 */
-
 	public ProjectCollaborator(User collab, int costPerEffort) {
 		this.collaborator = collab;
 		this.status = true;
 		this.costPerEffort = costPerEffort;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -121,9 +125,18 @@ public class ProjectCollaborator {
 		return toCompare.equals(this.collaborator);
 	}
 
+
+	public Project getProject(){
+		return project;
+	}
+
+	public void setProject(Project project){
+		this.project = project;
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -136,7 +149,7 @@ public class ProjectCollaborator {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -149,15 +162,5 @@ public class ProjectCollaborator {
 			return false;
 		ProjectCollaborator other = (ProjectCollaborator) obj;
 		return collaborator.equals(other.collaborator);
-	}
-
-
-
-	public Project getProject(){
-		return project;
-	}
-
-	public void setProject(Project project){
-		this.project = project;
 	}
 }

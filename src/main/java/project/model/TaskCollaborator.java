@@ -1,20 +1,36 @@
 package project.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class TaskCollaborator {
+@Entity
+@Table(name = "TaskCollaborator")
+public class TaskCollaborator implements Serializable {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollaborator;
 	private Calendar startDate;
 	private Calendar finishDate;
 	private boolean status;
+	static final long serialVersionUID = 52L;
+
+	/**
+	 * Empty Constructor for TaskCollaborator
+	 */
+	protected TaskCollaborator(){
+	}
 
 	/**
 	 * Constructor to create a new task collaborator
-	 * 
+	 *
 	 * Collaborator is set as the Project Collaborator provided. A start date is set
 	 * automatically. Finish date is added after collaborator is removed.
-	 * 
+	 *
 	 * @param projCollaborator
 	 *            projectCollaborator to create the new TaskCollaborator
 	 */
@@ -23,6 +39,48 @@ public class TaskCollaborator {
 		this.startDate = Calendar.getInstance();
 		this.finishDate = null;
 		this.status = true;
+	}
+
+	public TaskCollaborator setId(long id) {
+		this.id = id;
+		return this;
+	}
+
+	public ProjectCollaborator getProjCollaborator() {
+		return projCollaborator;
+	}
+
+	public TaskCollaborator setProjCollaborator(ProjectCollaborator projCollaborator) {
+		this.projCollaborator = projCollaborator;
+		return this;
+	}
+
+	public TaskCollaborator setStartDate(Calendar startDate) {
+		this.startDate = startDate;
+		return this;
+	}
+
+	public TaskCollaborator setFinishDate(Calendar finishDate) {
+		this.finishDate = finishDate;
+		return this;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public TaskCollaborator setStatus(boolean status) {
+		this.status = status;
+		return this;
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**

@@ -23,7 +23,7 @@ public class Project implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long id;
 	private int projectIdCode;
 	private int status;
 	private TaskRepository taskRepository;
@@ -45,8 +45,10 @@ public class Project implements Serializable{
 	public static final int CLOSE = 5; // fecho
 	static final long serialVersionUID = 43L;
 
-
-	public Project(){
+	/**
+	 * Empty Constructor for Project
+	 */
+	protected Project(){
 
 	}
 
@@ -59,8 +61,6 @@ public class Project implements Serializable{
 	 * @param description
 	 * @param projectManager
 	 */
-
-
 	public Project(int projCounter, String name, String description, User projectManager) {
 
 		this.projectIdCode = projCounter;
@@ -78,7 +78,7 @@ public class Project implements Serializable{
 		this.pendingTaskRemovalRequests = new ArrayList<>();
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
