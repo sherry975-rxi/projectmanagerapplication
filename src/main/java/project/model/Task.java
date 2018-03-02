@@ -16,6 +16,9 @@ import project.model.taskstateinterface.TaskStateInterface;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+
 /**
  * Class that allows building and accessing Task attributes.
  * 
@@ -33,7 +36,8 @@ public class Task {
 	private Long id;
 	private String taskID;
 	private String description;
-	private ArrayList<TaskCollaborator> taskTeam;
+	@OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "task")
+	private List<TaskCollaborator> taskTeam;
 	private ArrayList<Report> reports;
 	private Calendar creationDate;
 	private Calendar startDate;
