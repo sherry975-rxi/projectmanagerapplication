@@ -1,11 +1,11 @@
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import project.model.Company;
 import project.model.Profile;
 import project.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class US135andUS136SearchUsersController {
 

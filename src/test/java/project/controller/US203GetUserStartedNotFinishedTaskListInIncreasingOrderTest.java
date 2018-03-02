@@ -1,20 +1,13 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import project.model.*;
 
-import project.model.Company;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.User;
+import java.util.Calendar;
+
+import static org.junit.Assert.assertEquals;
 
 public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 

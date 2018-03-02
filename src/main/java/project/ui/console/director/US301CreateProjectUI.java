@@ -1,11 +1,11 @@
 package project.ui.console.director;
 
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.US301CreateProjectController;
 import project.model.EffortUnit;
 import project.model.User;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class US301CreateProjectUI {
 

@@ -3,10 +3,10 @@
  */
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.model.User;
 import project.ui.console.MainMenuUI;
+
+import java.util.Scanner;
 
 /**
  * @author Group3

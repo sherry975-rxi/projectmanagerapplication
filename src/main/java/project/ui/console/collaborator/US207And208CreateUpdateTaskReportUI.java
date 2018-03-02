@@ -1,10 +1,10 @@
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.controller.US207and208CreateUpdateTaskReportControllers;
 import project.model.User;
 import project.ui.console.MainMenuUI;
+
+import java.util.Scanner;
 
 public class US207And208CreateUpdateTaskReportUI {
 

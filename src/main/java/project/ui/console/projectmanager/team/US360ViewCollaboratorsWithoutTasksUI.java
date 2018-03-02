@@ -1,12 +1,12 @@
 package project.ui.console.projectmanager.team;
 
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.US360ViewCollaboratorsWithoutTasksController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class US360ViewCollaboratorsWithoutTasksUI {
 

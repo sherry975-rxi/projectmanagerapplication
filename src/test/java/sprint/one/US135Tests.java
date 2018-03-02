@@ -1,18 +1,17 @@
 package sprint.one;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import project.model.Company;
 import project.model.ProjectRepository;
 import project.model.User;
 import project.model.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class US135Tests {
 

@@ -1,10 +1,10 @@
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.model.User;
 import project.ui.console.MainMenuUI;
+
+import java.util.Scanner;
 
 public class ProjectViewMenuUI {
 

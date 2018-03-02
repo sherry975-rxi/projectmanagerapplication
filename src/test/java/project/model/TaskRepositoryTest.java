@@ -1,25 +1,15 @@
 package project.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import project.model.taskstateinterface.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import project.model.taskstateinterface.Assigned;
-import project.model.taskstateinterface.Cancelled;
-import project.model.taskstateinterface.Created;
-import project.model.taskstateinterface.Finished;
-import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.Planned;
-import project.model.taskstateinterface.Ready;
-import project.model.taskstateinterface.StandBy;
+import static org.junit.Assert.*;
 
 public class TaskRepositoryTest {
 

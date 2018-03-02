@@ -1,7 +1,5 @@
 package project.ui.console.projectmanager;
 
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.model.Project;
 import project.model.User;
@@ -12,15 +10,12 @@ import project.ui.console.projectmanager.others.US342DefineDependenciesBetweenTa
 import project.ui.console.projectmanager.others.US390GetProjectReportedCostUI;
 import project.ui.console.projectmanager.requests.US356ApproveOrCancelAssignmentRequestUI;
 import project.ui.console.projectmanager.requests.US357ApproveOrCancelRemovalRequestUI;
-import project.ui.console.projectmanager.tasklists.US360ProjectUnassignedTasksUI;
-import project.ui.console.projectmanager.tasklists.US370ProjectFinishedTasksDecreasingOrderUI;
-import project.ui.console.projectmanager.tasklists.US372ProjectUnfinishedTasksUI;
-import project.ui.console.projectmanager.tasklists.US375ProjectNotStartedTasksUI;
-import project.ui.console.projectmanager.tasklists.US377ProjectCancelledTasks;
-import project.ui.console.projectmanager.tasklists.US380ProjectUnfinishedTasksWithExperiredDeadlineUI;
+import project.ui.console.projectmanager.tasklists.*;
 import project.ui.console.projectmanager.team.US351AddCollaboratorToProjectTeamUI;
 import project.ui.console.projectmanager.team.US355ViewProjectTeamAndThenRemoveCollaboratorUI;
 import project.ui.console.projectmanager.team.US360ViewCollaboratorsWithoutTasksUI;
+
+import java.util.Scanner;
 
 public class ProjectManagerMainMenuUI {
 	private User projectManager;

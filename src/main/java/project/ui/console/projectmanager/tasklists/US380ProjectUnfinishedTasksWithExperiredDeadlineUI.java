@@ -1,12 +1,12 @@
 package project.ui.console.projectmanager.tasklists;
 
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.controller.US380GetProjectExpiredTaskListController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
+
+import java.util.Scanner;
 
 public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 

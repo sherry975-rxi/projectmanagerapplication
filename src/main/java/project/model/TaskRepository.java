@@ -1,17 +1,15 @@
 package project.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import project.model.taskstateinterface.Cancelled;
 import project.model.taskstateinterface.Finished;
 
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 @Embeddable
 public class TaskRepository implements Serializable{

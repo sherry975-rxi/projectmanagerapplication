@@ -1,11 +1,11 @@
 package project.ui.console.projectmanager.team;
 
-import java.util.Scanner;
-
 import project.controller.US351AddColaboratorToProjectTeamController;
 import project.model.Company;
 import project.model.Project;
 import project.model.User;
+
+import java.util.Scanner;
 
 public class US351AddCollaboratorToProjectTeamUI {
 

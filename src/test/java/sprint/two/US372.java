@@ -1,23 +1,14 @@
 package sprint.two;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import project.model.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import project.model.Company;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.ProjectRepository;
-import project.model.Task;
-import project.model.TaskRepository;
-import project.model.User;
-import project.model.UserRepository;
+import static org.junit.Assert.assertEquals;
 
 public class US372 {
 

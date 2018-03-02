@@ -1,11 +1,11 @@
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import project.model.Company;
 import project.model.Project;
 import project.model.ProjectRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class US320ViewProjectsController {
 

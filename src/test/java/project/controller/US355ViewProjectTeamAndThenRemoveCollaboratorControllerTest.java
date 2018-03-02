@@ -1,19 +1,18 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import project.model.Company;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 

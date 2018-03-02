@@ -1,24 +1,15 @@
 package project.model.states;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import project.model.Company;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.ProjectRepository;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.User;
+import project.model.*;
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.TaskStateInterface;
+
+import java.util.Calendar;
+
+import static org.junit.Assert.*;
 
 public class FinishedTaskTests {
 	Company myCompany;

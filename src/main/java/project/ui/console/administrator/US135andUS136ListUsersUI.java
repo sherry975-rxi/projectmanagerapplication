@@ -1,11 +1,11 @@
 package project.ui.console.administrator;
 
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.US135andUS136SearchUsersController;
 import project.model.Profile;
 import project.model.User;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class US135andUS136ListUsersUI {
 

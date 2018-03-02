@@ -1,8 +1,8 @@
 package project.ui.console.administrator;
 
-import java.util.Scanner;
-
 import project.model.User;
+
+import java.util.Scanner;
 
 public class AdminMenuUI {
 

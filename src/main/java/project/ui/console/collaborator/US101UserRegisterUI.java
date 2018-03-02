@@ -1,8 +1,8 @@
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.controller.US101RegisterUserController;
+
+import java.util.Scanner;
 
 /**
  * UI for register a user (US102)

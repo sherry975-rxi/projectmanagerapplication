@@ -1,10 +1,10 @@
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import project.model.Project;
 import project.model.Task;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This controller is used to respond to US380 (Como Gestor de projeto, quero

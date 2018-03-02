@@ -1,11 +1,11 @@
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	Project proj;

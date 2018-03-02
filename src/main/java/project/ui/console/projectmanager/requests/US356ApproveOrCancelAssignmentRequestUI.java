@@ -1,12 +1,12 @@
 package project.ui.console.projectmanager.requests;
 
-import java.util.Scanner;
-
 import project.controller.US356ManageAssigmentRequestController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
+
+import java.util.Scanner;
 
 public class US356ApproveOrCancelAssignmentRequestUI {
 

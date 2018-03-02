@@ -1,11 +1,11 @@
 package project.ui.console.projectmanager.others;
 
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.controller.US340CreateTaskController;
 import project.model.Project;
 import project.ui.console.MainMenuUI;
+
+import java.util.Scanner;
 
 /**
  * Constructor to instantiate a new US340CreateTaskUI

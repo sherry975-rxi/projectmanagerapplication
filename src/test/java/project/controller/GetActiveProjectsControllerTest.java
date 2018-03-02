@@ -1,17 +1,16 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import project.model.Project;
+import project.model.ProjectRepository;
+import project.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import project.model.Project;
-import project.model.ProjectRepository;
-import project.model.User;
+import static org.junit.Assert.assertEquals;
 
 public class GetActiveProjectsControllerTest {
 

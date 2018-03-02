@@ -1,10 +1,10 @@
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.controller.US210GetAllFinishedUserTasksInDecreasingOrderController;
 import project.model.User;
 import project.ui.console.MainMenuUI;
+
+import java.util.Scanner;
 
 public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 	User currentUser;

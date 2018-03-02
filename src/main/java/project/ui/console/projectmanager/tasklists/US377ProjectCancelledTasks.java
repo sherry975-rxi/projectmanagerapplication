@@ -1,9 +1,5 @@
 package project.ui.console.projectmanager.tasklists;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.controller.US377CollectionOfCancelledTasksFromAProjectController;
 import project.model.Project;
@@ -11,6 +7,10 @@ import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class US377ProjectCancelledTasks {
 

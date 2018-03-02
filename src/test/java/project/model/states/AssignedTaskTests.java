@@ -1,20 +1,19 @@
 package project.model.states;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
 import project.model.taskstateinterface.Assigned;
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.TaskStateInterface;
+
+import java.util.Calendar;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AssignedTaskTests {
 

@@ -1,14 +1,9 @@
 package project.controller;
 
+import project.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import project.model.Company;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.ProjectRepository;
-import project.model.Task;
-import project.model.User;
 
 public class US205MarkTaskAsFinishedCollaborator {
 	private User username;

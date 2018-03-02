@@ -1,12 +1,6 @@
 package project.controller;
 
-import project.model.Company;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.ProjectRepository;
-import project.model.Task;
-import project.model.TaskRepository;
-import project.model.User;
+import project.model.*;
 
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	private User user;

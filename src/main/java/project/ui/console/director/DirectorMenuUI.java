@@ -1,10 +1,10 @@
 package project.ui.console.director;
 
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.model.Project;
 import project.model.User;
+
+import java.util.Scanner;
 
 public class DirectorMenuUI {
 

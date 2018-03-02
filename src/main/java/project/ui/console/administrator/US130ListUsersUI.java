@@ -1,10 +1,10 @@
 package project.ui.console.administrator;
 
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.US130ListUsersController;
 import project.model.User;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class US130ListUsersUI {
 

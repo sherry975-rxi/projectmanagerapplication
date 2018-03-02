@@ -1,12 +1,11 @@
 package project.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import project.dto.UserDTO;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-
-import project.dto.UserDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class UserRepository that contains all lists and methods to build lists of
