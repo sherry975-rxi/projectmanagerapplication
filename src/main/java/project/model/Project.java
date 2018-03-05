@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+
 /**
  * Class to build Projects.
  * 
@@ -40,8 +43,13 @@ public class Project implements Serializable{
 	private int budget;
 	private Calendar startdate;
 	private Calendar finishdate;
-	private ArrayList<TaskTeamRequest> pendingTaskAssignementRequests;
-	private ArrayList<TaskTeamRequest> pendingTaskRemovalRequests;
+
+    @OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "project")
+	private List<TaskTeamRequest> pendingTaskAssignementRequests;
+
+    @OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "project")
+	private List<TaskTeamRequest> pendingTaskRemovalRequests;
+
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
 	public static final int EXECUTION = 2; // execução
@@ -156,11 +164,11 @@ public class Project implements Serializable{
 		this.budget = budget;
 	}
 
-	public void setPendingTaskAssignementRequests(ArrayList<TaskTeamRequest> pendingTaskAssignementRequests) {
+	public void setPendingTaskAssignementRequests(List<TaskTeamRequest> pendingTaskAssignementRequests) {
 		this.pendingTaskAssignementRequests = pendingTaskAssignementRequests;
 	}
 
-	public void setPendingTaskRemovalRequests(ArrayList<TaskTeamRequest> pendingTaskRemovalRequests) {
+	public void setPendingTaskRemovalRequests(List<TaskTeamRequest> pendingTaskRemovalRequests) {
 		this.pendingTaskRemovalRequests = pendingTaskRemovalRequests;
 	}
 	/**
@@ -755,7 +763,7 @@ public class Project implements Serializable{
 	 *         to a certain task
 	 */
 
-	public ArrayList<TaskTeamRequest> getAssignmentRequestsList() {
+	public List<TaskTeamRequest> getAssignmentRequestsList() {
 		return this.pendingTaskAssignementRequests;
 	}
 
@@ -770,7 +778,7 @@ public class Project implements Serializable{
 	 *         to a certain task
 	 */
 
-	public ArrayList<TaskTeamRequest> getRemovalRequestsList() {
+	public List<TaskTeamRequest> getRemovalRequestsList() {
 		return this.pendingTaskRemovalRequests;
 	}
 
@@ -831,7 +839,7 @@ public class Project implements Serializable{
 	 *            Task to remove from the assignement request list
 	 */
 	public void removeAllRequestsWithASpecificTaskFromAssignementRequests(Task task) {
-		ArrayList<TaskTeamRequest> assignementCopy = new ArrayList<>();
+		List<TaskTeamRequest> assignementCopy = new ArrayList<>();
 		assignementCopy.addAll(this.pendingTaskAssignementRequests);
 		for (int i = assignementCopy.size() - 1; i >= 0; i--) {
 			if (assignementCopy.get(i).getTask().equals(task)) {
@@ -848,7 +856,7 @@ public class Project implements Serializable{
 	 *            Task to remove from the removal request list
 	 */
 	public void removeAllRequestsWithASpecificTaskFromRemovalRequests(Task task) {
-		ArrayList<TaskTeamRequest> removalCopy = new ArrayList<>();
+		List<TaskTeamRequest> removalCopy = new ArrayList<>();
 		removalCopy.addAll(this.pendingTaskRemovalRequests);
 		for (int i = removalCopy.size() - 1; i >= 0; i--) {
 			if (removalCopy.get(i).getTask().equals(task)) {

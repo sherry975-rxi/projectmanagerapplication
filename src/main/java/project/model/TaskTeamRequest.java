@@ -9,10 +9,17 @@ public class TaskTeamRequest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollab;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
 	private Task task;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Project_id")
+	private Project project;
 
 
 	/*
@@ -79,6 +86,15 @@ public class TaskTeamRequest {
 	 */
 	public Task getTask() {
 		return task;
+	}
+
+
+	public void setProject(Project proj) {
+		this.project=proj;
+	}
+
+	public Project getProject() {
+		return project;
 	}
 
 	@Override
