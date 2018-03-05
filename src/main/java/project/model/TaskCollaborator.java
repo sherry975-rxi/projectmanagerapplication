@@ -11,7 +11,7 @@ public class TaskCollaborator implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollaborator;
 	private Calendar startDate;

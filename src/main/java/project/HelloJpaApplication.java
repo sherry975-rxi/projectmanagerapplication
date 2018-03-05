@@ -51,8 +51,10 @@ public class HelloJpaApplication implements CommandLineRunner {
         myProjectTest.addProjectCollaboratorToProjectTeam(manelinhoCollab);
 
         Task tester = myProjectTest.getTaskRepository().createTask("Testing ze test");
-     //   tester.addProjectCollaboratorToTask(manelinhoCollab);
         myProjectTest.getTaskRepository().addProjectTask(tester);
+        TaskCollaborator manelinhoTaskCol = tester.createTaskCollaborator(manelinhoCollab);
+        tester.addTaskCollaboratorToTask(manelinhoTaskCol);
+
 
 
         userRepository.save(manger);

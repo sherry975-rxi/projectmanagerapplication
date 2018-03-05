@@ -396,6 +396,11 @@ public class Task {
 		return taskTeam;
 	}
 
+    public void setTaskTeam(List<TaskCollaborator> taskTeam) {
+        this.taskTeam=taskTeam;
+    }
+
+
 	/**
 	 * This method gets the list of reports from the task
 	 * 
@@ -480,7 +485,10 @@ public class Task {
 	 */
 	public TaskCollaborator createTaskCollaborator(ProjectCollaborator projCollaborator) {
 
-		return new TaskCollaborator(projCollaborator);
+	    TaskCollaborator newTaskCollab = new TaskCollaborator(projCollaborator);
+	    newTaskCollab.setTask(this);
+
+		return newTaskCollab;
 	}
 
 	/**
