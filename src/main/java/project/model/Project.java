@@ -29,7 +29,7 @@ public class Project implements Serializable{
 
     @Embedded
 	private TaskRepository taskRepository;
-
+	@OneToOne
 	private User projectManager;
 	private ArrayList<ProjectCollaborator> projectTeam;
 	private String name;

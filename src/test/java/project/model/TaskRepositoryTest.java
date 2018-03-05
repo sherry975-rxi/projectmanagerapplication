@@ -46,7 +46,7 @@ public class TaskRepositoryTest {
 		// creates an UserRepository
 		userRepository = new UserRepository();
 
-		// creates a ProjectRepository
+		// creates a ProjectsRepository
 		projectRepository = new ProjectRepository();
 
 		// create user

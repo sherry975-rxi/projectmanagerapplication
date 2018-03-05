@@ -22,7 +22,7 @@ public class US201and202UpdateUserInfoController_Test {
 
 	@Before
 	public void setUp() {
-		// create company and clear ProjectRepository and UsersRepository
+		// create company and clear ProjectsRepository and UsersRepository
 
 		c1 = Company.getTheInstance();
 

@@ -35,7 +35,7 @@ public class US355 {
 
 	@Before
 	public void setUp() {
-		// create company and clear ProjectRepository and UsersRepository
+		// create company and clear ProjectsRepository and UsersRepository
 
 		c1 = Company.getTheInstance();
 

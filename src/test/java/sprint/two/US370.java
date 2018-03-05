@@ -43,13 +43,13 @@ public class US370 {
 		// creates an UserRepository
 		userRepository = myCompany.getUsersRepository();
 
-		// creates a ProjectRepository
+		// creates a ProjectsRepository
 		projectRepository = myCompany.getProjectsRepository();
 
 		// creates a UserRepository
 		userRepository.getAllUsersFromRepository().clear();
 
-		// clean list ProjectRepository
+		// clean list ProjectsRepository
 		myCompany.getProjectsRepository().getAllProjects().clear();
 
 		// clean list URepository

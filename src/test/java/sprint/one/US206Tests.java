@@ -42,7 +42,7 @@ public class US206Tests {
 		// creates an UserRepository
 		userRepository = myCompany.getUsersRepository();
 
-		// creates a ProjectRepository
+		// creates a ProjectsRepository
 		projectRepository = myCompany.getProjectsRepository();
 
 		// create user

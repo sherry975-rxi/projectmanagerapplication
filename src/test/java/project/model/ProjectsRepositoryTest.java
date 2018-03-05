@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 ;
 
-public class ProjectRepositoryTest {
+public class ProjectsRepositoryTest {
 
 	ProjectRepository projectRepository;
 	User user1;
@@ -192,7 +192,7 @@ public class ProjectRepositoryTest {
 	}
 
 	/**
-	 * Tests the ProjectRepository constructor.
+	 * Tests the ProjectsRepository constructor.
 	 */
 	@Test
 	public void test_Constructor() {

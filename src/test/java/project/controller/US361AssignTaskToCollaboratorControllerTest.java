@@ -33,7 +33,7 @@ public class US361AssignTaskToCollaboratorControllerTest {
 		// creates an UserRepository
 		userRepository = myCompany.getUsersRepository();
 
-		// creates a ProjectRepository
+		// creates a ProjectsRepository
 		projectRepository = myCompany.getProjectsRepository();
 
 		userRepository.getAllUsersFromRepository().clear();

@@ -54,7 +54,7 @@ public class US390 {
 		// creates an UserRepository
 		userRepository = myCompany.getUsersRepository();
 
-		// creates a ProjectRepository
+		// creates a ProjectsRepository
 		projectRepository = myCompany.getProjectsRepository();
 
 		// creates a UserRepository

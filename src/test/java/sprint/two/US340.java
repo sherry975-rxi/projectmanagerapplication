@@ -47,7 +47,7 @@ public class US340 {
 		// creates an UserRepository
 		userRepository = myCompany.getUsersRepository();
 
-		// creates a ProjectRepository
+		// creates a ProjectsRepository
 		projectRepository = myCompany.getProjectsRepository();
 
 		userRepository.getAllUsersFromRepository().clear();
