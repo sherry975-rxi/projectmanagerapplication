@@ -26,6 +26,8 @@ public class TaskRepository implements Serializable{
 	static final long serialVersionUID = 46L;
 
 
+	public TaskRepository() {}
+
 	public TaskRepository(int projId) {
 
 		this.projectTasks = new ArrayList<>();

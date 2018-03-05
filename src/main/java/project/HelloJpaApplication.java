@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import project.Repository.ProjectsRepository;
 import project.Repository.UserRepository;
 import project.Repository.ProjCollabRepository;
+import project.Repository.TaskRepository;
 import project.model.*;
 
 @SpringBootApplication
@@ -21,6 +22,9 @@ public class HelloJpaApplication implements CommandLineRunner {
 
     @Autowired
     private ProjCollabRepository projCollabRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
 
     public static void main(String[] args) {
@@ -46,16 +50,25 @@ public class HelloJpaApplication implements CommandLineRunner {
         ProjectCollaborator manelinhoCollab = myProjectTest.createProjectCollaborator(manelinho, 68);
         myProjectTest.addProjectCollaboratorToProjectTeam(manelinhoCollab);
 
+        Task tester = myProjectTest.getTaskRepository().createTask("Testing ze test");
+     //   tester.addProjectCollaboratorToTask(manelinhoCollab);
+        myProjectTest.getTaskRepository().addProjectTask(tester);
+
 
         userRepository.save(manger);
         userRepository.save(manelinho);
         projRepository.save(myProjectTest);
         projRepository.save(myProjectExperiment);
         projCollabRepository.save(manelinhoCollab);
+        taskRepository.save(tester);
 
 
         for (User u : userRepository.findAll()) {
             logger.info(u.toString());
+        }
+
+        for (Project p : projRepository.findAll()) {
+            logger.info(p.toString());
         }
 
     }
