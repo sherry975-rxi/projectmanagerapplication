@@ -1,20 +1,82 @@
 package project.model;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "TaskTeamRequest")
 public class TaskTeamRequest {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	private ProjectCollaborator projCollab;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Task_id")
 	private Task task;
 
+
+	/*
+	 * 	Constructor of TaskTeamRequest
+	 * 	Receives as Parameters the ProjectCollaborator who makes the request and the task that he wants to be associated to
+	 */
 	public TaskTeamRequest(ProjectCollaborator projCollab, Task task) {
 		this.projCollab = projCollab;
 		this.task = task;
+
 	}
 
+	/*
+	 * 	Empty Constructor for TaskTeamRequest
+	 */
+	public TaskTeamRequest() {
+
+	}
+
+	/*
+	 * Returns the id of the task
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/*
+	 * Sets a task D
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/*
+	 *	Sets a Project Collaborator to Parameter projCollab of the TaskTeamRequest
+	 */
+	public void setProjCollab(ProjectCollaborator projCollab) {
+		this.projCollab = projCollab;
+	}
+
+	/*
+	 * Sets a Task to the Task Parameter of the TaskTeamRequest
+	 */
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
+
+	/*
+	 * This method returns the projectCollaborator parameter of the TaskTeamRequest
+	 *
+	 * @return ProjectCollaborator
+	 * 	 The Project Collaborator associated to the TaskTeamRequest
+	 */
 	public ProjectCollaborator getProjCollab() {
 		return projCollab;
 	}
 
+	/*
+	 * This method returns the Task associated of the TaskTeamRequest
+	 *
+	 * @return Task
+	 * 	 The Task associated to the TaskTeamRequest
+	 */
 	public Task getTask() {
 		return task;
 	}
@@ -63,7 +125,7 @@ public class TaskTeamRequest {
 	/**
 	 * Takes the attributes of the request and converts the name and email of the
 	 * collaborator and the id and description of the task into a string
-	 * 
+	 *
 	 * @return The string representation
 	 */
 	public String viewStringRepresentation() {
