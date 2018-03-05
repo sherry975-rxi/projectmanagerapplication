@@ -1,18 +1,11 @@
 package sprint.two;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import project.model.*;
 
-import project.model.Company;
-import project.model.EffortUnit;
-import project.model.Profile;
-import project.model.Project;
-import project.model.User;
+import static org.junit.Assert.*;
 
 public class US301v02 {
 

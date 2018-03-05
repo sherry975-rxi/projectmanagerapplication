@@ -1,15 +1,14 @@
 package sprint.two;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import project.model.Company;
 import project.model.Project;
 import project.model.User;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * US351 - As a project Manager, I want to remove collaboratos from the project

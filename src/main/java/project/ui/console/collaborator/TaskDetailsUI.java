@@ -1,7 +1,5 @@
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US204v2createRequestAddCollaboratorToTaskTeamController;
@@ -10,6 +8,8 @@ import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
+
+import java.util.Scanner;
 
 public class TaskDetailsUI {
 	private User user;

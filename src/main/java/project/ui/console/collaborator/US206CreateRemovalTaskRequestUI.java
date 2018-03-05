@@ -1,11 +1,11 @@
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US206RemovalTaskRequestController;
 import project.model.User;
+
+import java.util.Scanner;
 
 public class US206CreateRemovalTaskRequestUI {
 	User user;

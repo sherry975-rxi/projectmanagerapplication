@@ -1,10 +1,10 @@
 package project.ui.console.director;
 
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.US302ChangeProjectManagerController;
 import project.model.Project;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class US302ChangeProjectManagerUI {
 

@@ -1,8 +1,8 @@
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.controller.DoLoginController;
+
+import java.util.Scanner;
 
 public class US208LoginUI {
 

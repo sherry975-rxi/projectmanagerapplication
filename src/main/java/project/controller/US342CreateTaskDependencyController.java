@@ -1,12 +1,12 @@
 package project.controller;
 
+import project.model.Project;
+import project.model.Task;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import project.model.Project;
-import project.model.Task;
 
 /**
  * @author Group 3

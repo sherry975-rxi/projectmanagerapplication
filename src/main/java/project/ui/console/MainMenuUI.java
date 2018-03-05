@@ -1,15 +1,6 @@
 package project.ui.console;
 
-import java.util.Calendar;
-import java.util.Scanner;
-
-import project.model.Company;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.User;
+import project.model.*;
 import project.model.taskstateinterface.Cancelled;
 import project.model.taskstateinterface.OnGoing;
 import project.ui.console.administrator.AdminMenuUI;
@@ -17,6 +8,9 @@ import project.ui.console.collaborator.CollaboratorMainMenuUI;
 import project.ui.console.collaborator.US101UserRegisterUI;
 import project.ui.console.collaborator.US208LoginUI;
 import project.ui.console.director.DirectorMenuUI;
+
+import java.util.Calendar;
+import java.util.Scanner;
 
 public class MainMenuUI {
 

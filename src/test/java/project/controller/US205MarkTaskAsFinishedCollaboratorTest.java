@@ -1,26 +1,19 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import project.model.*;
+import project.model.taskstateinterface.Assigned;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Planned;
+import project.model.taskstateinterface.Ready;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import project.model.Company;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.User;
-import project.model.taskstateinterface.Assigned;
-import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.Planned;
-import project.model.taskstateinterface.Ready;
+import static org.junit.Assert.assertEquals;
 
 public class US205MarkTaskAsFinishedCollaboratorTest {
 

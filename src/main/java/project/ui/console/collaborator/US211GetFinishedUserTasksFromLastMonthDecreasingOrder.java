@@ -1,12 +1,12 @@
 package project.ui.console.collaborator;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController;
 import project.model.User;
 import project.ui.console.MainMenuUI;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Scanner;
 
 public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 

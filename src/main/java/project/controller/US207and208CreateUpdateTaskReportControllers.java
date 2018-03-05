@@ -1,10 +1,6 @@
 package project.controller;
 
-import project.model.Company;
-import project.model.ProjectRepository;
-import project.model.Task;
-import project.model.User;
-import project.model.UserRepository;
+import project.model.*;
 
 public class US207and208CreateUpdateTaskReportControllers {
 

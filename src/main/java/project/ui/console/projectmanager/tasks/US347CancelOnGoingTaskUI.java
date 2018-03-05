@@ -1,9 +1,9 @@
 package project.ui.console.projectmanager.tasks;
 
-import java.util.Scanner;
-
 import project.controller.US347CancelOnGoingTaskController;
 import project.model.Project;
+
+import java.util.Scanner;
 
 public class US347CancelOnGoingTaskUI {
 

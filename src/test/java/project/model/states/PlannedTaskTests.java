@@ -1,17 +1,16 @@
 package project.model.states;
 
-import static org.junit.Assert.*;
-
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
 import project.model.taskstateinterface.Planned;
+
+import java.util.Calendar;
+
+import static org.junit.Assert.*;
 
 public class PlannedTaskTests {
 

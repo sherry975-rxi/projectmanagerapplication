@@ -1,20 +1,16 @@
 package project.model;
 
 //
-import java.beans.Transient;
+
+import project.model.taskstateinterface.*;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import project.model.taskstateinterface.Cancelled;
-import project.model.taskstateinterface.Created;
-import project.model.taskstateinterface.Finished;
-import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.Ready;
-import project.model.taskstateinterface.StandBy;
-import project.model.taskstateinterface.TaskStateInterface;
-
-import javax.persistence.*;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
 
 /**
  * Class that allows building and accessing Task attributes.
@@ -33,7 +29,8 @@ public class Task {
 	private Long id;
 	private String taskID;
 	private String description;
-	private ArrayList<TaskCollaborator> taskTeam;
+	@OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "task")
+	private List<TaskCollaborator> taskTeam;
 	private ArrayList<Report> reports;
 	private Calendar creationDate;
 	private Calendar startDate;

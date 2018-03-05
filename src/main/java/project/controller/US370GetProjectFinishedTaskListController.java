@@ -1,9 +1,9 @@
 package project.controller;
 
-import java.util.List;
-
 import project.model.Project;
 import project.model.Task;
+
+import java.util.List;
 
 public class US370GetProjectFinishedTaskListController {
 

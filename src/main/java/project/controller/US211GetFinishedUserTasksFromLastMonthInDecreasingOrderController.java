@@ -1,15 +1,11 @@
 package project.controller;
 
+import project.model.*;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import project.model.Company;
-import project.model.Project;
-import project.model.ProjectRepository;
-import project.model.Task;
-import project.model.User;
 
 public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
 	ProjectRepository myProjRepo;

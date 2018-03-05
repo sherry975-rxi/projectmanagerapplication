@@ -3,13 +3,13 @@
  */
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US204v2createRequestAddCollaboratorToTaskTeamController;
 import project.model.ProjectCollaborator;
 import project.model.User;
+
+import java.util.Scanner;
 
 /**
  * In this UI the user (project collaborator) confirms his intention to assign

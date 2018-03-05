@@ -1,19 +1,18 @@
 package sprint.one;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
-
 import project.controller.US301CreateProjectController;
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
 import project.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Grupo 3

@@ -1,15 +1,15 @@
 package project.ui.console.projectmanager.tasklists;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.controller.US360GetProjectTasksWithoutCollaboratorsAssignedController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class US360ProjectUnassignedTasksUI {
 

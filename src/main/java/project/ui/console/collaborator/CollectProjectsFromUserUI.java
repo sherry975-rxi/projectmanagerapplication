@@ -3,15 +3,15 @@
  */
 package project.ui.console.collaborator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.CollectProjectsFromUserController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * This UI shows all projects from a user

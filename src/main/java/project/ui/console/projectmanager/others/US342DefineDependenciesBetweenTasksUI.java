@@ -1,11 +1,11 @@
 package project.ui.console.projectmanager.others;
 
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.US342CreateTaskDependencyController;
 import project.model.Project;
 import project.model.Task;
+
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author group3

@@ -1,25 +1,15 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import project.model.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import project.model.Company;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.TaskRepository;
-import project.model.User;
+import static org.junit.Assert.*;
 
 public class US362RemoveTaskFromProjectCollaboratorTest {
 

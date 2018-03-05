@@ -1,8 +1,5 @@
 package project.ui.console.projectmanager.tasklists;
 
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.PrintProjectInfoController;
 import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US370GetProjectFinishedTaskListController;
@@ -12,6 +9,9 @@ import project.model.User;
 import project.ui.console.MainMenuUI;
 import project.ui.console.collaborator.ProjectViewMenuUI;
 import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class US370ProjectFinishedTasksDecreasingOrderUI {
 

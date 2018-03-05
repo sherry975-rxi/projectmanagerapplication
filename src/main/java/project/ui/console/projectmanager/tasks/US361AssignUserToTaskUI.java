@@ -1,12 +1,12 @@
 package project.ui.console.projectmanager.tasks;
 
-import java.util.List;
-import java.util.Scanner;
-
 import project.controller.US361AssignTaskToCollaboratorsController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class US361AssignUserToTaskUI {
 

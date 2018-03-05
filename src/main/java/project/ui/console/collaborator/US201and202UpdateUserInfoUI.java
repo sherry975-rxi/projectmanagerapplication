@@ -1,10 +1,10 @@
 package project.ui.console.collaborator;
 
-import java.util.Scanner;
-
 import project.controller.US201and202UpdateUserInfoController;
 import project.model.Address;
 import project.model.User;
+
+import java.util.Scanner;
 
 /**
  * UI for updating User info US201 v2

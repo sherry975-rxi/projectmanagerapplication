@@ -1,22 +1,14 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import project.model.Company;
-import project.model.Project;
-import project.model.ProjectRepository;
-import project.model.Report;
-import project.model.Task;
-import project.model.TaskRepository;
-import project.model.User;
-import project.model.UserRepository;
+import project.model.*;
 import project.model.taskstateinterface.Finished;
+
+import java.util.Calendar;
+
+import static org.junit.Assert.assertEquals;
 
 public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 

@@ -1,16 +1,15 @@
 package project.controller;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
 import project.model.User;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AddColaboratorToProjectTeamController_Test {
 
