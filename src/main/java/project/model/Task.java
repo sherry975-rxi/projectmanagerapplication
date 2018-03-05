@@ -44,7 +44,10 @@ public class Task {
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
 	private Integer taskBudget;
-	private ArrayList<Task> taskDependency;
+
+	@ManyToMany(cascade = ALL)
+	private List<Task> taskDependency;
+
 	private Integer startDateInterval;
 	private Integer deadlineInterval;
 	private Calendar cancelDate;

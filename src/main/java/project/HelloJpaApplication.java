@@ -12,6 +12,8 @@ import project.Repository.ProjCollabRepository;
 import project.Repository.TaskRepository;
 import project.model.*;
 
+import java.util.Calendar;
+
 @SpringBootApplication
 public class HelloJpaApplication implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(HelloJpaApplication.class);
@@ -57,6 +59,11 @@ public class HelloJpaApplication implements CommandLineRunner {
         tester.addTaskCollaboratorToTask(manelinhoTaskCol);
         tester.createReport(manelinhoTaskCol);
         tester.getReports().get(0).setReportedTime(70);
+
+        Calendar testerDeadline = Calendar.getInstance();
+        testerDeadline.add(Calendar.DAY_OF_YEAR, 60);
+        tester.setTaskDeadline(testerDeadline);
+
 
 
 
