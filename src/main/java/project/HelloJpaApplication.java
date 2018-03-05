@@ -35,6 +35,21 @@ public class HelloJpaApplication implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
 
+        dummyData();
+
+        for (User u : userRepository.findAll()) {
+            logger.info(u.toString());
+        }
+
+        for (Project p : projRepository.findAll()) {
+            logger.info(p.toString());
+        }
+
+    }
+
+
+    public void dummyData() {
+
         Company myCompany = Company.getTheInstance();
         User manger = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Manger",
                 "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
@@ -79,15 +94,6 @@ public class HelloJpaApplication implements CommandLineRunner {
         taskRepository.save(dependentTest);
 
 
-        for (User u : userRepository.findAll()) {
-            logger.info(u.toString());
-        }
-
-        for (Project p : projRepository.findAll()) {
-            logger.info(p.toString());
-        }
-
     }
-
 
 }
