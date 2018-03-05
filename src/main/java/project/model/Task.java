@@ -31,7 +31,10 @@ public class Task {
 	private String description;
 	@OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "task")
 	private List<TaskCollaborator> taskTeam;
-	private ArrayList<Report> reports;
+
+    @OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "task")
+	private List<Report> reports;
+
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
@@ -406,9 +409,13 @@ public class Task {
 	 * 
 	 * @return reports List of reports in the task
 	 */
-	public ArrayList<Report> getReports() {
+	public List<Report> getReports() {
 		return reports;
 	}
+
+    public void setReports(List<Report> reports) {
+        this.reports=reports;
+    }
 
 	/**
 	 * This method confirms if the task state is Finished

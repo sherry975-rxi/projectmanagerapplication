@@ -18,6 +18,8 @@ public class Report {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private int reportedTime;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "TaskCollaborator_id")
 	private TaskCollaborator taskCollaborator;
 	private int cost;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -99,6 +101,11 @@ public class Report {
 	 */
 	public TaskCollaborator getTaskCollaborator() {
 		return this.taskCollaborator;
+	}
+
+	public void setTaskCollaborator(TaskCollaborator taskCollab) {
+		this.taskCollaborator = taskCollab;
+
 	}
 
 }
