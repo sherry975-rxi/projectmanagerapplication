@@ -420,6 +420,14 @@ public class Task {
         this.reports=reports;
     }
 
+    public List<Task> getTaskDependency() {
+	    return this.taskDependency;
+    }
+
+    public void setTaskDependency(List<Task> taskDependency) {
+	    this.taskDependency=taskDependency;
+    }
+
 	/**
 	 * This method confirms if the task state is Finished
 	 * 

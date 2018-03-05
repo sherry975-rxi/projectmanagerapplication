@@ -65,6 +65,9 @@ public class HelloJpaApplication implements CommandLineRunner {
         tester.setTaskDeadline(testerDeadline);
 
 
+        Task dependentTest = myProjectTest.getTaskRepository().createTask("This task is very dependent");
+        myProjectTest.getTaskRepository().addProjectTask(dependentTest);
+        dependentTest.createTaskDependence(tester, 20);
 
 
         userRepository.save(manger);
@@ -73,6 +76,7 @@ public class HelloJpaApplication implements CommandLineRunner {
         projRepository.save(myProjectExperiment);
         projCollabRepository.save(manelinhoCollab);
         taskRepository.save(tester);
+        taskRepository.save(dependentTest);
 
 
         for (User u : userRepository.findAll()) {
