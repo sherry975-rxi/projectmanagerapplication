@@ -8,9 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import project.Repository.ProjectsRepository;
 import project.Repository.UserRepository;
-import project.model.Company;
-import project.model.Project;
-import project.model.User;
+import project.Repository.ProjCollabRepository;
+import project.model.*;
+
 @SpringBootApplication
 public class HelloJpaApplication implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(HelloJpaApplication.class);
@@ -18,28 +18,47 @@ public class HelloJpaApplication implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private ProjectsRepository projRepository;
+
+    @Autowired
+    private ProjCollabRepository projCollabRepository;
+
+
     public static void main(String[] args) {
         SpringApplication.run(HelloJpaApplication.class, args);
     }
     @Override
     public void run(String... strings) throws Exception {
+
         Company myCompany = Company.getTheInstance();
-        User newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+        User manger = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Manger",
                 "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-        User newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+        User manelinho = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Enabler",
                 "940000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-        Project myProjectA = new Project(1, "Projecto 1", "Projecto Abcd", newUser2);
-        Project myProjectB = new Project(2, "Projecto 2", "Projecto Efgh", newUser3);
-        myCompany.getUsersRepository().addUserToUserRepository(newUser2);
-        myCompany.getUsersRepository().addUserToUserRepository(newUser3);
-        myCompany.getProjectsRepository().addProjectToProjectRepository(myProjectA);
-        myCompany.getProjectsRepository().addProjectToProjectRepository(myProjectB);
-        userRepository.save(newUser2);
-        userRepository.save(newUser3);
-        projRepository.save(myProjectA);
-        projRepository.save(myProjectB);
+        myCompany.getUsersRepository().addUserToUserRepository(manger);
+        myCompany.getUsersRepository().addUserToUserRepository(manelinho);
+
+        Project myProjectTest = myCompany.getProjectsRepository().createProject("Test ze boot", "Test ze spring boot well yes?", manger);
+        Project myProjectExperiment = myCompany.getProjectsRepository().createProject("Social experiment", "Manelinho is best meneger", manelinho);
+        myCompany.getProjectsRepository().addProjectToProjectRepository(myProjectTest);
+        myCompany.getProjectsRepository().addProjectToProjectRepository(myProjectExperiment);
+
+
+        ProjectCollaborator manelinhoCollab = myProjectTest.createProjectCollaborator(manelinho, 68);
+        myProjectTest.addProjectCollaboratorToProjectTeam(manelinhoCollab);
+
+
+        userRepository.save(manger);
+        userRepository.save(manelinho);
+        projRepository.save(myProjectTest);
+        projRepository.save(myProjectExperiment);
+        projCollabRepository.save(manelinhoCollab);
+
+
         for (User u : userRepository.findAll()) {
             logger.info(u.toString());
         }
+
     }
+
+
 }

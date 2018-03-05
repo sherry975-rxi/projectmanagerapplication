@@ -31,6 +31,7 @@ public class Project implements Serializable{
 	private TaskRepository taskRepository;
 	@OneToOne
 	private User projectManager;
+	@Transient
 	private ArrayList<ProjectCollaborator> projectTeam;
 	private String name;
 	private String description;
@@ -185,7 +186,10 @@ public class Project implements Serializable{
 	 */
 	public ProjectCollaborator createProjectCollaborator(User collaborator, int costPerEffort) {
 
-		return new ProjectCollaborator(collaborator, costPerEffort);
+		ProjectCollaborator newCollaborator = new ProjectCollaborator(collaborator, costPerEffort);
+		newCollaborator.setProject(this);
+
+		return newCollaborator;
 	}
 
 	/**
