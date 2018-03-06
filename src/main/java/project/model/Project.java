@@ -391,9 +391,7 @@ public class Project implements Serializable{
 	 *            User to compare to the Project's Manager
 	 * @param toAdd
 	 *            User to add to the Project Team
-	 */
-
-	/*
+     *
 	 * public void addUserToProjectTeam(User projectManager, User toAdd) { if
 	 * (this.isProjectManager(projectManager)) { if
 	 * (!this.projectTeam.contains(toAdd)) { this.projectTeam.add(toAdd); } } }

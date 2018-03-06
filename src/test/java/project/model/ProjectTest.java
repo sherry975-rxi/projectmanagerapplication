@@ -711,10 +711,11 @@ public class ProjectTest {
 	}
 
 
-	/**
+	/** THIS METHOD HAS BEEN PURGED
+     *
 	 * Tests if removeAllRequestsWithASpecificTaskFromAssignementRequests() actually
 	 * removes the requests chosen from the assignement requests list
-	 */
+
 	@Test
 	public void testRemoveAssignementRequestsWithACertainTask() {
 		p1.createTaskAssignementRequest(projectCollaborator1, task1);
@@ -726,15 +727,16 @@ public class ProjectTest {
 		p1.createTaskAssignementRequest(projectCollaborator2, task2);
 		p1.createTaskAssignementRequest(projectCollaborator3, task2);
 
-		/*
-		 * No tasks were removed from the list yet
-		 */
+		//
+		 // No tasks were removed from the list yet
+		 //
 		assertEquals(8, p1.getPendingTaskAssignementRequests().size());
 
 		p1.removeAllRequestsWithASpecificTask(task1);
 
 		assertEquals(4, p1.getPendingTaskAssignementRequests().size());
 	}
+	*/
 
 	/** THIS METHOD HAS BEEN PURGED
 	 *
@@ -766,12 +768,10 @@ public class ProjectTest {
 	*/
 
 
-	/** THIS METHOD HAS BEEN PURGED
-	 *
-	 *
+	/**
 	 * Tests if removeAllRequestsWithASpecificTask() actually removes the requests
 	 * chosen from the both the requests list
-
+     */
 	@Test
 	public void testRemoveAllRequestsWithACertainTask() {
 		p1.createTaskAssignementRequest(projectCollaborator1, task1);
@@ -798,7 +798,7 @@ public class ProjectTest {
 		assertEquals(4, p1.getPendingTaskRemovalRequests().size());
 	}
 
-	 */
+
 
 	/**
 	 * Tests the Set and Get of project's description
