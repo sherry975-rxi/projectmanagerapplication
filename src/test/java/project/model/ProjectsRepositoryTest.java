@@ -950,7 +950,6 @@ public class ProjectsRepositoryTest {
 		startedNotFinishedTasksInOrder.add(task3);
 		startedNotFinishedTasksInOrder.add(task4);
 		startedNotFinishedTasksInOrder.add(task5);
-		System.out.println(task1.getTaskDeadline());
 		assertEquals(startedNotFinishedTasksInOrder,
 				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1));
 		assertEquals(startedNotFinishedTasksInOrder.size(),
