@@ -21,6 +21,10 @@ public class TaskTeamRequest {
 	@JoinColumn(name = "Project_id")
 	private Project project;
 
+	private Integer type;
+	public static final int ASSIGNMENT = 0;
+	public static final int REMOVAL = 1;
+
 
 	/*
 	 * 	Constructor of TaskTeamRequest
@@ -97,6 +101,30 @@ public class TaskTeamRequest {
 		return project;
 	}
 
+
+	public String getType() {
+	    String typeString ="N/A";
+	    if (type==0) {
+            typeString = "Assignment";
+        } else if (type==1) {
+            typeString = "Removal";
+        }
+	    return typeString;
+    }
+
+    public boolean isAssignmentRequest() {
+	    return type==TaskTeamRequest.ASSIGNMENT;
+    }
+
+    public boolean isRemovalRequest() {
+        return type==TaskTeamRequest.REMOVAL;
+    }
+
+    public void setType(int typ) {
+	    this.type=typ;
+    }
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -135,6 +163,13 @@ public class TaskTeamRequest {
 		} else if (!task.equals(other.task)) {
 			return false;
 		}
+		if (type == null) {
+		    if (other.type != null) {
+		        return false;
+            }
+        } else if (type != other.type) {
+		    return false;
+        }
 		return true;
 	}
 

@@ -605,10 +605,10 @@ public class ProjectTest {
 	@Test
 	public void testDeleteTaskAssignementRequest() {
 		p1.createTaskAssignementRequest(projectCollaborator1, task1);
-		assertTrue(p1.isAssignementRequestAlreadyCreated(projectCollaborator1, task1));
+		assertTrue(p1.isAssignmentRequestAlreadyCreated(projectCollaborator1, task1));
 		TaskTeamRequest req = p1.getAssignementTaskTeamRequest(projectCollaborator1, task1);
 		p1.deleteTaskAssignementRequest(req);
-		assertFalse(p1.isAssignementRequestAlreadyCreated(projectCollaborator1, task1));
+		assertFalse(p1.isAssignmentRequestAlreadyCreated(projectCollaborator1, task1));
 	}
 
 	/**
@@ -618,8 +618,8 @@ public class ProjectTest {
 	@Test
 	public void testIsAssignementAlreadyCreated() {
 		p1.createTaskAssignementRequest(projectCollaborator1, task1);
-		assertTrue(p1.isAssignementRequestAlreadyCreated(projectCollaborator1, task1));
-		assertFalse(p1.isAssignementRequestAlreadyCreated(projectCollaborator3, task4));
+		assertTrue(p1.isAssignmentRequestAlreadyCreated(projectCollaborator1, task1));
+		assertFalse(p1.isAssignmentRequestAlreadyCreated(projectCollaborator3, task4));
 	}
 
 	/**
@@ -639,7 +639,7 @@ public class ProjectTest {
 	@Test
 	public void testGetRemovalRequestsList() {
 		// no request added, so size should be zero
-		assertEquals(0, p1.getRemovalRequestsList().size());
+		assertEquals(0, p1.getPendingTaskRemovalRequests().size());
 
 	}
 
@@ -681,6 +681,7 @@ public class ProjectTest {
 		p1.createTaskRemovalRequest(projectCollaborator1, task1);
 		// create a similar request of the one created
 		TaskTeamRequest expectedRequest = new TaskTeamRequest(projectCollaborator1, task1);
+		expectedRequest.setType(TaskTeamRequest.REMOVAL);
 		TaskTeamRequest req = p1.getRemovalTaskTeamRequest(projectCollaborator1, task1);
 		// if the info are the same, the objects should be considered the same
 		assertTrue(req.equals(expectedRequest));
@@ -709,6 +710,7 @@ public class ProjectTest {
 		assertTrue(p1.viewPendingTaskRemovalRequests().get(0).equals(result));
 	}
 
+
 	/**
 	 * Tests if removeAllRequestsWithASpecificTaskFromAssignementRequests() actually
 	 * removes the requests chosen from the assignement requests list
@@ -727,17 +729,18 @@ public class ProjectTest {
 		/*
 		 * No tasks were removed from the list yet
 		 */
-		assertEquals(8, p1.getAssignmentRequestsList().size());
+		assertEquals(8, p1.getPendingTaskAssignementRequests().size());
 
-		p1.removeAllRequestsWithASpecificTaskFromAssignementRequests(task1);
+		p1.removeAllRequestsWithASpecificTask(task1);
 
-		assertEquals(4, p1.getAssignmentRequestsList().size());
+		assertEquals(4, p1.getPendingTaskAssignementRequests().size());
 	}
 
-	/**
+	/** THIS METHOD HAS BEEN PURGED
+	 *
 	 * Tests if removeAllRequestsWithASpecificTaskFromRemovalRequests() actually
 	 * removes the requests chosen from the removal requests list
-	 */
+
 	@Test
 	public void testRemoveRemovalRequestsWithACertainTask() {
 		p1.createTaskRemovalRequest(projectCollaborator1, task1);
@@ -749,21 +752,26 @@ public class ProjectTest {
 		p1.createTaskRemovalRequest(projectCollaborator2, task2);
 		p1.createTaskRemovalRequest(projectCollaborator3, task2);
 
-		/*
-		 * No tasks were removed from the list yet
-		 */
-		assertEquals(8, p1.getRemovalRequestsList().size());
+		//
+		 // No tasks were removed from the list yet
+		 ///
+		assertEquals(8, p1.getPendingTaskRemovalRequests().size());
 
 
-		p1.removeAllRequestsWithASpecificTaskFromRemovalRequests(task1);
+		p1.removeAllRequestsWithASpecificTask(task1);
 
-		assertEquals(4, p1.getRemovalRequestsList().size());
+		assertEquals(4, p1.getPendingTaskRemovalRequests().size());
 	}
 
-	/**
+	*/
+
+
+	/** THIS METHOD HAS BEEN PURGED
+	 *
+	 *
 	 * Tests if removeAllRequestsWithASpecificTask() actually removes the requests
 	 * chosen from the both the requests list
-	 */
+
 	@Test
 	public void testRemoveAllRequestsWithACertainTask() {
 		p1.createTaskAssignementRequest(projectCollaborator1, task1);
@@ -786,9 +794,11 @@ public class ProjectTest {
 
 		p1.removeAllRequestsWithASpecificTask(task1);
 
-		assertEquals(4, p1.getAssignmentRequestsList().size());
-		assertEquals(4, p1.getRemovalRequestsList().size());
+		assertEquals(4, p1.getPendingTaskAssignementRequests().size());
+		assertEquals(4, p1.getPendingTaskRemovalRequests().size());
 	}
+
+	 */
 
 	/**
 	 * Tests the Set and Get of project's description
