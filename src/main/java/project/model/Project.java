@@ -310,8 +310,8 @@ public class Project implements Serializable{
 	 * 
 	 * @return Project Team - Active Team of the Project
 	 */
-	public ArrayList<ProjectCollaborator> getActiveProjectTeam() {
-		ArrayList<ProjectCollaborator> activeCollaborators = new ArrayList<>();
+	public List<ProjectCollaborator> getActiveProjectTeam() {
+		List<ProjectCollaborator> activeCollaborators = new ArrayList<>();
 
 		for (ProjectCollaborator other : this.projectTeam) {
 			if (other.isProjectCollaboratorActive())
@@ -532,8 +532,8 @@ public class Project implements Serializable{
 	 *
 	 */
 
-	public ArrayList<ProjectCollaborator> getCollaboratorsWithoutTasks() {
-		ArrayList<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
+	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
+		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
 		inactiveCollaborators.addAll(this.getProjectTeam());
 		for (ProjectCollaborator other : this.getProjectTeam()) {
 			if (this.taskRepository.isCollaboratorActiveOnAnyTask(other)) // needs to check if
@@ -704,8 +704,8 @@ public class Project implements Serializable{
 	 * @return toString List of strings which contains the info about the task and
 	 *         the project collaborator for each request
 	 */
-	public ArrayList<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
-		ArrayList<String> toString = new ArrayList<>();
+	public List<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
+		List<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
 		    if(req.isAssignmentRequest()) {
 		        toString.add(req.viewStringRepresentation());
@@ -721,8 +721,8 @@ public class Project implements Serializable{
 	 * @return toString List of strings which contains the info about the task and
 	 *         the project collaborator for each request
 	 */
-	public ArrayList<String> viewPendingTaskRemovalRequests() {
-		ArrayList<String> toString = new ArrayList<>();
+	public List<String> viewPendingTaskRemovalRequests() {
+		List<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
             if(req.isRemovalRequest()) {
 			    toString.add(req.viewStringRepresentation());
@@ -930,9 +930,9 @@ public class Project implements Serializable{
 	 * 
 	 * @return Returns a list with the task team
 	 */
-	public ArrayList<ProjectCollaborator> getProjectCollaboratorsFromTask(Task task) {
+	public List<ProjectCollaborator> getProjectCollaboratorsFromTask(Task task) {
 
-		ArrayList<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
+		List<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
 		for (ProjectCollaborator other : this.getActiveProjectTeam()) {
 			if (task.isProjectCollaboratorActiveInTaskTeam(other)) {
 				collaboratorsFromTask.add(other);
