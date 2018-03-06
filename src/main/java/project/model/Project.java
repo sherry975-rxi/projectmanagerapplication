@@ -34,8 +34,8 @@ public class Project implements Serializable{
 	private TaskRepository taskRepository;
 	@OneToOne
 	private User projectManager;
-	@Transient
-	private ArrayList<ProjectCollaborator> projectTeam;
+	@OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "project")
+	private List<ProjectCollaborator> projectTeam;
 	private String name;
 	private String description;
 	@Enumerated(EnumType.STRING)
@@ -304,11 +304,11 @@ public class Project implements Serializable{
 	 * 
 	 * @return Project Team Team of the Project
 	 */
-	public ArrayList<ProjectCollaborator> getProjectTeam() {
+	public List<ProjectCollaborator> getProjectTeam() {
 		return this.projectTeam;
 	}
 
-	public void setProjectTeam(ArrayList<ProjectCollaborator> projectTeam){
+	public void setProjectTeam(List<ProjectCollaborator> projectTeam){
 		this.projectTeam = projectTeam;
 	}
 
