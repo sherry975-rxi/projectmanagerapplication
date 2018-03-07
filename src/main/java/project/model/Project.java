@@ -34,7 +34,8 @@ public class Project implements Serializable{
 	private TaskContainer taskContainer;
 	@OneToOne
 	private User projectManager;
-	@OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "project")
+	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+	@Column(columnDefinition = "LONGBLOB")
 	private List<ProjectCollaborator> projectTeam;
 	private String name;
 	private String description;
@@ -290,8 +291,7 @@ public class Project implements Serializable{
 	public void setProjectDescription(String newDescription) {
 		this.description = newDescription;
 	}
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "Project")
+	
 	/**
 	 * Get the users that belong to this Project's Team
 	 * 
