@@ -77,7 +77,7 @@ public class US207CreateTaskReportController {
      */
     public List<Integer> getReportsIndexByGivenUser() {
 
-        List<Integer> reportsOfGivenUser = new ArrayList<>();
+        List<Integer> reportsOfGivenUser;
 
         reportsOfGivenUser = task.getReportsIndexOfTaskCollaborator(username.getEmail());
 

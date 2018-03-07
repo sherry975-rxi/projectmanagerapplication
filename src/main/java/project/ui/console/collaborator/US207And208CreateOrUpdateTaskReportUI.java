@@ -2,28 +2,20 @@ package project.ui.console.collaborator;
 
 import project.controller.US207CreateTaskReportController;
 import project.model.TaskCollaborator;
-import project.model.User;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class US207And208CreateOrUpdateTaskReportUI {
 
-    private String taskID;
     private US207CreateTaskReportController createUpdateReportController;
-    private Integer projectID;
-    private User user;
-    private Boolean isPreviousUIFromTasks;
     private TaskCollaborator taskCollaborator;
-    private String fixCommit;
 
 
     public US207And208CreateOrUpdateTaskReportUI(String email, String taskID) {
 
         this.createUpdateReportController = new US207CreateTaskReportController(email, taskID);
-        this.taskID = taskID;
         this.taskCollaborator = createUpdateReportController.getTaskCollaboratorByEmail(email);
-        fixCommit = ("trying to fix commit");
     }
 
 
