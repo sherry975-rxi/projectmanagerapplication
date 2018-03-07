@@ -35,7 +35,7 @@ public class OnGoingTaskTest {
 
 		// Creates a Company and a project repository within the company
 		myCompany = Company.getTheInstance();
-		myProjectContainer = myCompany.getProjectsRepository();
+		myProjectContainer = myCompany.getProjectsContainer();
 
 		// Creates 3 users: User1 and User2
 		user1 = new User("Ana", "ana@company.com", "66", "Dev", "1234567");

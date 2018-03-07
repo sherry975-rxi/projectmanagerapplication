@@ -29,8 +29,8 @@ public class PrintTaskInfoController {
 	}
 
 	public void setProjectAndTask() {
-		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.projeID);
-		this.task = Company.getTheInstance().getProjectsRepository().getProjById(this.projeID).getTaskRepository()
+		this.project = Company.getTheInstance().getProjectsContainer().getProjById(this.projeID);
+		this.task = Company.getTheInstance().getProjectsContainer().getProjById(this.projeID).getTaskRepository()
 				.getTaskByID(this.taskID);
 	}
 

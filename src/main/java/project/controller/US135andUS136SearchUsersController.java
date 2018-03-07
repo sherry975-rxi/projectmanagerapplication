@@ -25,7 +25,7 @@ public class US135andUS136SearchUsersController {
 	 *         that match the user profile
 	 */
 	public List<String> searchUsersByProfileController(Profile profileToSearch) {
-		this.userList = Company.getTheInstance().getUsersRepository().searchUsersByProfile(profileToSearch);
+		this.userList = Company.getTheInstance().getUsersContainer().searchUsersByProfile(profileToSearch);
 
 		List<String> userListString = new ArrayList<>();
 
@@ -46,7 +46,7 @@ public class US135andUS136SearchUsersController {
 	 *         contain the same text that the user typed
 	 */
 	public List<String> searchUsersByEmailController(String emailToSearch) {
-		this.userList = Company.getTheInstance().getUsersRepository().searchUsersByEmail(emailToSearch);
+		this.userList = Company.getTheInstance().getUsersContainer().searchUsersByEmail(emailToSearch);
 
 		List<String> userListString = new ArrayList<>();
 

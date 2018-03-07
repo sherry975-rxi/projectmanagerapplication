@@ -32,11 +32,11 @@ public class US201Tests {
 	public void setUp() {
 		company = Company.getTheInstance();
 
-		newUserA = company.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Empregado", "930000000",
+		newUserA = company.getUsersContainer().createUser("João", "user2@gmail.com", "123", "Empregado", "930000000",
 				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
-		newUserB = company.getUsersRepository().createUser("Jonny", "user3@gmail.com", "132", "Telefonista",
+		newUserB = company.getUsersContainer().createUser("Jonny", "user3@gmail.com", "132", "Telefonista",
 				"940000000", "StreetB", "ZipCodeB", "CityB", "DistrictB", "CountryB");
-		newUserC = company.getUsersRepository().createUser("Juuni", "user4@sapo.com", "321", "Faz tudo", "960000000",
+		newUserC = company.getUsersContainer().createUser("Juuni", "user4@sapo.com", "321", "Faz tudo", "960000000",
 				"StreetC", "ZipCodeC", "CityC", "DistrictC", "CountryC");
 
 	}
@@ -132,8 +132,8 @@ public class US201Tests {
 		String Email3 = newUserB.getEmail();
 		String FalseMail = "huehue€troll*org";
 
-		assertTrue(company.getUsersRepository().isEmailAddressValid(Email3));
-		assertFalse(company.getUsersRepository().isEmailAddressValid(FalseMail));
+		assertTrue(company.getUsersContainer().isEmailAddressValid(Email3));
+		assertFalse(company.getUsersContainer().isEmailAddressValid(FalseMail));
 
 		assertTrue(newUserA.getEmail().equals(Email2));
 	}

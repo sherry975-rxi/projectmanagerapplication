@@ -262,7 +262,7 @@ public class Task {
 		}
 		double d = Double.parseDouble(taskID);
 		int projId = (int) d;
-		Project proj = Company.getTheInstance().getProjectsRepository().getProjById(projId);
+		Project proj = Company.getTheInstance().getProjectsContainer().getProjById(projId);
 		Calendar newEstimatedStartDate = (Calendar) proj.getStartdate().clone();
 		newEstimatedStartDate.add(Calendar.DAY_OF_YEAR, this.startDateInterval);
 		return newEstimatedStartDate;
@@ -295,7 +295,7 @@ public class Task {
 		}
 		double d = Double.parseDouble(taskID);
 		int projId = (int) d;
-		Project proj = Company.getTheInstance().getProjectsRepository().getProjById(projId);
+		Project proj = Company.getTheInstance().getProjectsContainer().getProjById(projId);
 		Calendar newDeadline = (Calendar) proj.getStartdate().clone();
 		newDeadline.add(Calendar.DAY_OF_YEAR, this.deadlineInterval);
 		return newDeadline;

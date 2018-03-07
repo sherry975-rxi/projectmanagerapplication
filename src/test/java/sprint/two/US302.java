@@ -26,14 +26,14 @@ public class US302 {
 		// create company
 		myComp = Company.getTheInstance();
 		// create users
-		user1 = myComp.getUsersRepository().createUser("myuser", "myemail@myemail.com", "myid", "myfunction", "myphone",
+		user1 = myComp.getUsersContainer().createUser("myuser", "myemail@myemail.com", "myid", "myfunction", "myphone",
 				"mystreet", "myzipcode", "mycity", "mydistrict", "mycountry");
-		user2 = myComp.getUsersRepository().createUser("myuser2", "myemail2@myemail.com", "myid2", "myfunction2",
+		user2 = myComp.getUsersContainer().createUser("myuser2", "myemail2@myemail.com", "myid2", "myfunction2",
 				"myphone2", "mystreet2", "myzipcode2", "mycity2", "mydistrict2", "mycountry2");
 		// create project
-		myComp.getProjectsRepository().addProjectToProjectContainer(
-				myComp.getProjectsRepository().createProject("myProj", "dis ma project", user1));
-		proj1 = myComp.getProjectsRepository().getAllProjects().get(0);
+		myComp.getProjectsContainer().addProjectToProjectContainer(
+				myComp.getProjectsContainer().createProject("myProj", "dis ma project", user1));
+		proj1 = myComp.getProjectsContainer().getAllProjectsfromProjectsContainer().get(0);
 	}
 
 	@After

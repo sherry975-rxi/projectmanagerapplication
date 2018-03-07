@@ -22,11 +22,11 @@ public class PrintProjectInfoController {
 
 	public PrintProjectInfoController(Integer projID) {
 		this.projID = projID;
-		project = Company.getTheInstance().getProjectsRepository().getProjById(this.projID);
+		project = Company.getTheInstance().getProjectsContainer().getProjById(this.projID);
 	}
 
 	public void setProject() {
-		this.project = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode());
+		this.project = Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode());
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class PrintProjectInfoController {
 	 * @return List of Strings of project's task (task ID + task description)
 	 */
 	public List<String> getProjectTaskList() {
-		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode())
+		List<Task> taskList = Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode())
 				.getTaskRepository().getProjectTaskRepository();
 		List<String> projectTaskList = new ArrayList<>();
 		for (Task projectTask : taskList) {
@@ -180,7 +180,7 @@ public class PrintProjectInfoController {
 	 */
 	public List<String> getTasksIDs() {
 
-		List<Task> taskList = Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode())
+		List<Task> taskList = Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode())
 
 				.getTaskRepository().getProjectTaskRepository();
 		List<String> projectTasksID = new ArrayList<>();
@@ -196,7 +196,7 @@ public class PrintProjectInfoController {
 	 * @return List of project's task
 	 */
 	public List<Task> getTasks() {
-		return Company.getTheInstance().getProjectsRepository().getProjById(this.project.getIdCode())
+		return Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode())
 				.getTaskRepository().getProjectTaskRepository();
 	}
 

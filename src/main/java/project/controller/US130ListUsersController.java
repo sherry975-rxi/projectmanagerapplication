@@ -17,7 +17,7 @@ public class US130ListUsersController {
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listUsersController() {
-		this.userList = Company.getTheInstance().getUsersRepository().getAllUsersFromRepository();
+		this.userList = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer();
 		List<String> userListAsString = new ArrayList<>();
 
 		for (int i = 0; i < userList.size(); i++) {

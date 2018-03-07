@@ -38,14 +38,14 @@ public class US202Tests {
 		myCompany = Company.getTheInstance();
 
 		// create user
-		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Director", "910000000",
+		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "Director", "910000000",
 				"Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create a new address
 		address1 = user1.createAddress("Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
 		// add user to user list
-		myCompany.getUsersRepository().addUserToUserRepository(user1);
+		myCompany.getUsersContainer().addUserToUserRepository(user1);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);

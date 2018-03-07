@@ -29,32 +29,32 @@ public class PrintProjectInfoControllerTest {
 	public void setUp() {
 		// create company
 		myCompany = Company.getTheInstance();
-		myCompany.getProjectsRepository().setProjCounter(1);
+		myCompany.getProjectsContainer().setProjCounter(1);
 
 		// create user
-		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		joaoPM = myCompany.getUsersRepository().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+		joaoPM = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
-		myCompany.getUsersRepository().addUserToUserRepository(user1);
-		myCompany.getUsersRepository().addUserToUserRepository(joaoPM);
+		myCompany.getUsersContainer().addUserToUserRepository(user1);
+		myCompany.getUsersContainer().addUserToUserRepository(joaoPM);
 
 		// creates project repository
-		projectContainer = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsContainer();
 
 		// Creates one Project
-		project = myCompany.getProjectsRepository().createProject("Projeto de gestão",
+		project = myCompany.getProjectsContainer().createProject("Projeto de gestão",
 				"Este projeto está focado na gestão.", joaoPM);
 
 		project.setProjectBudget(1000);
 		project.setProjectStatus(3);
 
 		// add project to project repository
-		myCompany.getProjectsRepository().addProjectToProjectContainer(project);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(project);
 
 		// add start date to project
 		Calendar startDate = Calendar.getInstance();

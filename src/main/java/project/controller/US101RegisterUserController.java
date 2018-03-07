@@ -14,7 +14,7 @@ public class US101RegisterUserController {
 	 */
 	public US101RegisterUserController() {
 
-		this.userRegistry = Company.getTheInstance().getUsersRepository();
+		this.userRegistry = Company.getTheInstance().getUsersContainer();
 
 	}
 

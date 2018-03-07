@@ -21,12 +21,12 @@ public class US110andUS112SetUserProfileControllerTests {
 
 		Blip = Company.getTheInstance();
 
-		newUser2 = Blip.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
+		newUser2 = Blip.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser3 = Blip.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = Blip.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-		Blip.getUsersRepository().addUserToUserRepository(newUser2);
+		Blip.getUsersContainer().addUserToUserRepository(newUser2);
 	}
 
 	@After
@@ -50,7 +50,7 @@ public class US110andUS112SetUserProfileControllerTests {
 
 		// finally, asserts that no other Users were changed
 		// and that user repository contains the new director
-		assertTrue(Blip.getUsersRepository().searchUsersByProfile(Profile.DIRECTOR).contains(newUser2));
+		assertTrue(Blip.getUsersContainer().searchUsersByProfile(Profile.DIRECTOR).contains(newUser2));
 		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
 	}
 
@@ -67,7 +67,7 @@ public class US110andUS112SetUserProfileControllerTests {
 
 		// finally, asserts that no other Users were changed
 		// and that user repository contains the new director
-		assertTrue(Blip.getUsersRepository().searchUsersByProfile(Profile.COLLABORATOR).contains(newUser2));
+		assertTrue(Blip.getUsersContainer().searchUsersByProfile(Profile.COLLABORATOR).contains(newUser2));
 		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
 	}
 

@@ -17,7 +17,7 @@ public class US215TotalTimeSpentOnTaskLastMonthController {
 	ProjectContainer myProjRepo;
 
 	public US215TotalTimeSpentOnTaskLastMonthController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsRepository();
+		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
 	}
 
 	/**

@@ -197,7 +197,7 @@ public class ProjectsRepositoryTest {
 	@Test
 	public void test_Constructor() {
 
-		assertEquals(expResultProjectList, ProjectContainer.getAllProjects());
+		assertEquals(expResultProjectList, ProjectContainer.getAllProjectsfromProjectsContainer());
 
 	}
 
@@ -239,7 +239,7 @@ public class ProjectsRepositoryTest {
 
 		expResultProjectList.add(project1);
 
-		assertEquals(expResultProjectList, ProjectContainer.getAllProjects());
+		assertEquals(expResultProjectList, ProjectContainer.getAllProjectsfromProjectsContainer());
 
 		// Tried to add again the same project
 		ProjectContainer.addProjectToProjectContainer(project1);
@@ -249,12 +249,12 @@ public class ProjectsRepositoryTest {
 		 * projects that already exist in the projectContainer
 		 */
 
-		assertEquals(expResultProjectList, ProjectContainer.getAllProjects());
+		assertEquals(expResultProjectList, ProjectContainer.getAllProjectsfromProjectsContainer());
 
 	}
 
 	/**
-	 * Tests the getAllProjects by asserting if the list within the
+	 * Tests the getAllProjectsfromProjectsContainer by asserting if the list within the
 	 * projectContainer is equal to a new list of projects created.
 	 */
 	@Test
@@ -264,7 +264,7 @@ public class ProjectsRepositoryTest {
 
 		expResultProjectList.add(project1);
 
-		assertEquals(expResultProjectList, ProjectContainer.getAllProjects());
+		assertEquals(expResultProjectList, ProjectContainer.getAllProjectsfromProjectsContainer());
 	}
 
 	/**

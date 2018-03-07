@@ -41,26 +41,26 @@ public class US370 {
 		myCompany = Company.getTheInstance();
 
 		// creates an UserContainer
-		userContainer = myCompany.getUsersRepository();
+		userContainer = myCompany.getUsersContainer();
 
 		// creates a ProjectsRepository
-		projectContainer = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsContainer();
 
 		// creates a UserContainer
-		userContainer.getAllUsersFromRepository().clear();
+		userContainer.getAllUsersFromUserContainer().clear();
 
 		// clean list ProjectsRepository
-		myCompany.getProjectsRepository().getAllProjects().clear();
+		myCompany.getProjectsContainer().getAllProjectsfromProjectsContainer().clear();
 
 		// clean list URepository
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		myCompany.getUsersContainer().getAllUsersFromUserContainer().clear();
 
 		// create user
-		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		user2 = myCompany.getUsersRepository().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+		user2 = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list

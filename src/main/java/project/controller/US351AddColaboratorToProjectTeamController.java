@@ -29,7 +29,7 @@ public class US351AddColaboratorToProjectTeamController {
 	 * @return List with all the available users
 	 */
 	public List<User> getAllUsers() {
-		return Company.getTheInstance().getUsersRepository().getAllActiveCollaboratorsFromRepository();
+		return Company.getTheInstance().getUsersContainer().getAllActiveCollaboratorsFromRepository();
 	}
 
 	public boolean isUserAlreadyInProject(User user, Project project) {

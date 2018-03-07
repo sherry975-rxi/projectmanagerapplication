@@ -17,7 +17,7 @@ public class US216AverageTimeSpentOnTaskLastMonthController {
 	ProjectContainer myProjRepo;
 
 	public US216AverageTimeSpentOnTaskLastMonthController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsRepository();
+		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
 	}
 
 	/**

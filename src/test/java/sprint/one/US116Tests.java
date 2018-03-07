@@ -28,13 +28,13 @@ public class US116Tests {
 
 		myCompany = Company.getTheInstance();
 
-		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+		newUser2 = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-		newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = myCompany.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
-		myCompany.getUsersRepository().addUserToUserRepository(newUser3);
+		myCompany.getUsersContainer().addUserToUserRepository(newUser2);
+		myCompany.getUsersContainer().addUserToUserRepository(newUser3);
 
 		newUser2.changeUserState();
 	}

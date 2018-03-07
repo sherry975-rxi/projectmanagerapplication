@@ -32,10 +32,10 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		myComp = Company.getTheInstance();
 
 		// Initialize Project Repository
-		projRepo = myComp.getProjectsRepository();
+		projRepo = myComp.getProjectsContainer();
 
 		// Initialize User Repository
-		userRepo = myComp.getUsersRepository();
+		userRepo = myComp.getUsersContainer();
 
 		// Add user to User Repository
 		userRepo.addUserToUserRepository(userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337",
@@ -50,7 +50,7 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		// Add a project to the project repository
 		projRepo.addProjectToProjectContainer(
 				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", userA));
-		proj = projRepo.getAllProjects().get(0);
+		proj = projRepo.getAllProjectsfromProjectsContainer().get(0);
 
 		// Add user to proj
 		proj.addUserToProjectTeam(userA, 5);

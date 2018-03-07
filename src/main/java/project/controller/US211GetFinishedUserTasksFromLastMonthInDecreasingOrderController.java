@@ -11,7 +11,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
 	ProjectContainer myProjRepo;
 
 	public US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsRepository();
+		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
 	}
 
 	/**

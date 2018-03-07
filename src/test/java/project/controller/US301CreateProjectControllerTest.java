@@ -31,10 +31,10 @@ public class US301CreateProjectControllerTest {
 		c1 = Company.getTheInstance();
 
 		// User creation
-		u1 = c1.getUsersRepository().createUser("Leonor", "leonor@gmail.com", "001", "Empregado", "930000000",
+		u1 = c1.getUsersContainer().createUser("Leonor", "leonor@gmail.com", "001", "Empregado", "930000000",
 				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
 		// add users to company
-		c1.getUsersRepository().addUserToUserRepository(u1);
+		c1.getUsersContainer().addUserToUserRepository(u1);
 
 		// set user as Director
 		u1.setUserProfile(Profile.DIRECTOR);
@@ -63,7 +63,7 @@ public class US301CreateProjectControllerTest {
 		List<Project> emptyProjectList = new ArrayList<Project>();
 
 		// Asserts if the project list is empty
-		assertEquals(emptyProjectList, c1.getProjectsRepository().getAllProjects());
+		assertEquals(emptyProjectList, c1.getProjectsContainer().getAllProjectsfromProjectsContainer());
 
 		// Creates the controller to create a project
 		createNewProject = new US301CreateProjectController();
@@ -76,7 +76,7 @@ public class US301CreateProjectControllerTest {
 		projectList.add(newProject);
 
 		// Asserts if the project repository has the new project in it
-		assertEquals(projectList, c1.getProjectsRepository().getAllProjects());
+		assertEquals(projectList, c1.getProjectsContainer().getAllProjectsfromProjectsContainer());
 
 		// Asserts if the user u1 is the project manager
 		assertTrue(newProject.isProjectManager(u1));

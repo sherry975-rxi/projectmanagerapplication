@@ -30,7 +30,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	// public US204v2createRequestAddCollaboratorToTaskTeamController(int projId) {
 	//
 	// company = Company.getTheInstance();
-	// projectContainer = company.getProjectsRepository();
+	// projectContainer = company.getProjectsContainer();
 	// project = projectContainer.getProjById(projId);
 	//
 	// }
@@ -44,7 +44,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID, User user) {
 		setProjectIDFromTaskID(taskID);
 		this.company = Company.getTheInstance();
-		this.projectContainer = company.getProjectsRepository();
+		this.projectContainer = company.getProjectsContainer();
 		this.project = projectContainer.getProjById(this.projectID);
 		this.taskContainer = project.getTaskRepository();
 		this.user = user;

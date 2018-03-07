@@ -36,7 +36,7 @@ public class StandByTests {
 		myCompany = Company.getTheInstance();
 
 		// Creates a Project Repository
-		myProjRep = myCompany.getProjectsRepository();
+		myProjRep = myCompany.getProjectsContainer();
 
 		// Creates a new User1
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");

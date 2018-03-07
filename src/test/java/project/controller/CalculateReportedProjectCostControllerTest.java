@@ -62,11 +62,11 @@ public class CalculateReportedProjectCostControllerTest {
 		projectManager = new User("Manager boi", "manger@gmail.com", "005", "Kinda Admin", "920000000");
 
 		// adds all users to user list
-		blip.getUsersRepository().addUserToUserRepository(userDaniel);
-		blip.getUsersRepository().addUserToUserRepository(userJonny);
-		blip.getUsersRepository().addUserToUserRepository(userMike);
-		blip.getUsersRepository().addUserToUserRepository(userAna);
-		blip.getUsersRepository().addUserToUserRepository(projectManager);
+		blip.getUsersContainer().addUserToUserRepository(userDaniel);
+		blip.getUsersContainer().addUserToUserRepository(userJonny);
+		blip.getUsersContainer().addUserToUserRepository(userMike);
+		blip.getUsersContainer().addUserToUserRepository(userAna);
+		blip.getUsersContainer().addUserToUserRepository(projectManager);
 
 		// set user as collaborator
 		userDaniel.setUserProfile(Profile.COLLABORATOR);
@@ -76,7 +76,7 @@ public class CalculateReportedProjectCostControllerTest {
 
 		// create project and add it to project list
 		project = new Project(0, "Make things", "Test: CalculateReportedProjectCost", projectManager);
-		blip.getProjectsRepository().addProjectToProjectContainer(project);
+		blip.getProjectsContainer().addProjectToProjectContainer(project);
 
 		// creates 4 Project Collaborators and adds them to the project
 		projectUserDaniel = project.createProjectCollaborator(userDaniel, 10);

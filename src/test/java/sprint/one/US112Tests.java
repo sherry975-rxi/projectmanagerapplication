@@ -33,12 +33,12 @@ public class US112Tests {
 
 		Armis = Company.getTheInstance();
 
-		newUser2 = Armis.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
+		newUser2 = Armis.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser3 = Armis.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = Armis.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-		Armis.getUsersRepository().addUserToUserRepository(newUser2);
+		Armis.getUsersContainer().addUserToUserRepository(newUser2);
 		
 	}
 
@@ -59,12 +59,12 @@ public class US112Tests {
 	@Test
 	public void testSetUserAsCollaborator() {
 
-		assertTrue(Armis.getUsersRepository().getAllUsersFromRepository().contains(newUser2));
-		assertFalse(Armis.getUsersRepository().getAllUsersFromRepository().contains(newUser3));
+		assertTrue(Armis.getUsersContainer().getAllUsersFromUserContainer().contains(newUser2));
+		assertFalse(Armis.getUsersContainer().getAllUsersFromUserContainer().contains(newUser3));
 
 		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
 
-		Armis.getUsersRepository().addUserToUserRepository(newUser3);
+		Armis.getUsersContainer().addUserToUserRepository(newUser3);
 
 		newUser3.setUserProfile(Profile.COLLABORATOR);
 

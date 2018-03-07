@@ -13,7 +13,7 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 	ProjectContainer myProjRepo;
 
 	public US360GetProjectTasksWithoutCollaboratorsAssignedController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsRepository();
+		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
 	}
 
 	/**

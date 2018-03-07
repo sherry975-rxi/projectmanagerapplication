@@ -24,9 +24,9 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		company1 = Company.getTheInstance();
 
 		// create users in company
-		user2 = company1.getUsersRepository().createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
+		user2 = company1.getUsersContainer().createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
 				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
-		user1 = company1.getUsersRepository().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
+		user1 = company1.getUsersContainer().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
 
 		// change profiles of users from VISITOR (default) to COLLABORATOR
@@ -34,10 +34,10 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		user1.setUserProfile(Profile.COLLABORATOR);
 
 		// create project 1 in company 1
-		project1 = company1.getProjectsRepository().createProject("name3", "description4", user2);
+		project1 = company1.getProjectsContainer().createProject("name3", "description4", user2);
 
 		// add project 1 to company 1
-		company1.getProjectsRepository().addProjectToProjectContainer(project1);
+		company1.getProjectsContainer().addProjectToProjectContainer(project1);
 
 		// create an estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();

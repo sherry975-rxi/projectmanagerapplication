@@ -51,13 +51,13 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 
 		myCompany = Company.getTheInstance();
 
-		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Programador",
+		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "Programador",
 				"910000000", "Rua Azul", "5679-987", "braga", "braga", "portugal");
-		user2 = myCompany.getUsersRepository().createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto",
+		user2 = myCompany.getUsersContainer().createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto",
 				"920000000", "rua verde", "6789", "porto", "porto", "portugal");
 
 		// create myProject
-		myProject = myCompany.getProjectsRepository().createProject("Projecto I", "Projecto de Gestão", user1);
+		myProject = myCompany.getProjectsContainer().createProject("Projecto I", "Projecto de Gestão", user1);
 
 		// Generate a Start Calendar
 		Calendar startDate = Calendar.getInstance();
@@ -76,11 +76,11 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		task4 = myProject.getTaskRepository().createTask("Task 4", 4, startDate, finishDate, 10);
 
 		// Users 1 and 2 added to the users repository.
-		myCompany.getUsersRepository().addUserToUserRepository(user1);
-		myCompany.getUsersRepository().addUserToUserRepository(user2);
+		myCompany.getUsersContainer().addUserToUserRepository(user1);
+		myCompany.getUsersContainer().addUserToUserRepository(user2);
 
 		// Project 1 added to the project repository.
-		myCompany.getProjectsRepository().addProjectToProjectContainer(myProject);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(myProject);
 
 		// create project collaborators
 		projectCollaborator1 = myProject.createProjectCollaborator(user1, 10);

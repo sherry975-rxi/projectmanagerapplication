@@ -40,10 +40,10 @@ public class US206Tests {
 		myCompany = Company.getTheInstance();
 
 		// creates an UserContainer
-		userContainer = myCompany.getUsersRepository();
+		userContainer = myCompany.getUsersContainer();
 
 		// creates a ProjectsRepository
-		projectContainer = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsContainer();
 
 		// create user
 		newUser2 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",

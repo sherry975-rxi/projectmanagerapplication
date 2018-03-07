@@ -21,7 +21,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	 * @param user
 	 */
 	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
-		this.myProjRepo = Company.getTheInstance().getProjectsRepository();
+		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
 		this.myUser = user;
 	}
 

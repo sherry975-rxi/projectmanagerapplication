@@ -68,22 +68,22 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		company1 = Company.getTheInstance();
 
 		// create users
-		user1 = company1.getUsersRepository().createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
+		user1 = company1.getUsersContainer().createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
 				"930000000", "Rua da Caparica, 19", "7894-654", "Porto", "Porto", "Portugal");
-		user2 = company1.getUsersRepository().createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager",
+		user2 = company1.getUsersContainer().createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager",
 				"930025000", "Rua Doutor Armando", "4455-654", "Rio Tinto", "Gondomar", "Portugal");
-		projectManager = company1.getUsersRepository().createUser("Mary MacJohn", "mmacjohn@gmail.com", "003",
+		projectManager = company1.getUsersContainer().createUser("Mary MacJohn", "mmacjohn@gmail.com", "003",
 				"Product Manager", "930025000", "Rua Terceira, 44", "4455-122", "Leça da Palmeira", "Matosinhos",
 				"Portugal");
-		projectManager2 = company1.getUsersRepository().createUser("John MacMary", "jmacmary2@gmail.com", "003",
+		projectManager2 = company1.getUsersContainer().createUser("John MacMary", "jmacmary2@gmail.com", "003",
 				"Product Manager2", "930025356", "Rua Segunda, 45", "4455-122", "Leça da Palmeira", "Matosinhos",
 				"Portugal");
 
 		// add users to company
-		company1.getUsersRepository().addUserToUserRepository(user1);
-		company1.getUsersRepository().addUserToUserRepository(user2);
-		company1.getUsersRepository().addUserToUserRepository(projectManager);
-		company1.getUsersRepository().addUserToUserRepository(projectManager2);
+		company1.getUsersContainer().addUserToUserRepository(user1);
+		company1.getUsersContainer().addUserToUserRepository(user2);
+		company1.getUsersContainer().addUserToUserRepository(projectManager);
+		company1.getUsersContainer().addUserToUserRepository(projectManager2);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -93,17 +93,17 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 
 		// create project and establishes collaborator projectManager as project manager
 		// of project 1
-		project1 = company1.getProjectsRepository().createProject("Project Management software",
+		project1 = company1.getProjectsContainer().createProject("Project Management software",
 				"This software main goals are ....", projectManager);
-		project2 = company1.getProjectsRepository().createProject("Project Management software",
+		project2 = company1.getProjectsContainer().createProject("Project Management software",
 				"This software main goals are ....", projectManager2);
-		project3 = company1.getProjectsRepository().createProject("Project Management software",
+		project3 = company1.getProjectsContainer().createProject("Project Management software",
 				"This software main goals are ....", projectManager);
 
 		// add project to company
-		company1.getProjectsRepository().addProjectToProjectContainer(project1);
-		company1.getProjectsRepository().addProjectToProjectContainer(project2);
-		company1.getProjectsRepository().addProjectToProjectContainer(project3);
+		company1.getProjectsContainer().addProjectToProjectContainer(project1);
+		company1.getProjectsContainer().addProjectToProjectContainer(project2);
+		company1.getProjectsContainer().addProjectToProjectContainer(project3);
 
 		// create project collaborators
 		projCollab1 = new ProjectCollaborator(user1, 2);

@@ -22,8 +22,8 @@ public class US207CreateTaskReportController {
      */
     public US207CreateTaskReportController(String email, String taskID) {
         this.company = Company.getTheInstance();
-        this.projectContainer = company.getProjectsRepository();
-        this.userContainer = company.getUsersRepository();
+        this.projectContainer = company.getProjectsContainer();
+        this.userContainer = company.getUsersContainer();
         this.username = userContainer.getUserByEmail(email);
         this.email = email;
         for (Task other : projectContainer.getUserTasks(username)) {

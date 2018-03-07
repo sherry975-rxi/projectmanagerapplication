@@ -42,15 +42,15 @@ public class US380 {
 		myCompany = Company.getTheInstance();
 
 		// Creates three users
-		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2101-00", "Test", "Testo", "Testistan");
-		user2 = myCompany.getUsersRepository().createUser("Joao", "joaoo@gmail.com", "001", "collaborator", "920000000",
+		user2 = myCompany.getUsersContainer().createUser("Joao", "joaoo@gmail.com", "001", "collaborator", "920000000",
 				"Rua", "2301-00", "Test", "Testo", "Testistan");
-		user3 = myCompany.getUsersRepository().createUser("Rita", "rita@gmail.com", "001", "collaborator", "930000000",
+		user3 = myCompany.getUsersContainer().createUser("Rita", "rita@gmail.com", "001", "collaborator", "930000000",
 				"Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// Creates a project
-		project = myCompany.getProjectsRepository().createProject("Project A", "Project AA", user1);
+		project = myCompany.getProjectsContainer().createProject("Project A", "Project AA", user1);
 
 		// Creates Project collaborators
 		project.addUserToProjectTeam(user2, 15);

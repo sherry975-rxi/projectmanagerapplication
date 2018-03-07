@@ -39,14 +39,14 @@ public class US204Tests {
 		myCompany = Company.getTheInstance();
 
 		// Creation of two users: newUserA and newUserB
-		newUserA = myCompany.getUsersRepository().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
+		newUserA = myCompany.getUsersContainer().createUser("João", "user2@gmail.com", "123", "Maneger", "940000000",
 				"StreetA", "ZipCodeA", "CityA", "DistrictA", "CountryA");
 
-		newUserB = myCompany.getUsersRepository().createUser("Juni", "user3@gmail.com", "132", "Code Monkey",
+		newUserB = myCompany.getUsersContainer().createUser("Juni", "user3@gmail.com", "132", "Code Monkey",
 				"930000000", "StreetB", "ZipCodeB", "CityB", "DistrictB", "CountryB");
 
 		// Creation of one project and newUser4 set as the project manager
-		project1 = myCompany.getProjectsRepository().createProject("name3", "description4", newUserA);
+		project1 = myCompany.getProjectsContainer().createProject("name3", "description4", newUserA);
 
 		// Creation of two tasks: taskA and taskB
 		Calendar startDateA = Calendar.getInstance();
@@ -87,12 +87,12 @@ public class US204Tests {
 	 */
 	@Test
 	public void testCheckProjectManagerAndAddTaskToProject() {
-		myCompany.getUsersRepository().addUserToUserRepository(newUserA);
-		myCompany.getUsersRepository().addUserToUserRepository(newUserB);
+		myCompany.getUsersContainer().addUserToUserRepository(newUserA);
+		myCompany.getUsersContainer().addUserToUserRepository(newUserB);
 		newUserA.setUserProfile(Profile.COLLABORATOR);
 		newUserB.setUserProfile(Profile.COLLABORATOR);
 
-		myCompany.getProjectsRepository().addProjectToProjectContainer(project1);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(project1);
 
 		assertTrue(project1.isProjectManager(newUserA));
 		assertFalse(project1.isProjectManager(newUserB));
@@ -116,7 +116,7 @@ public class US204Tests {
 		newUserA.setUserProfile(Profile.COLLABORATOR);
 		newUserB.setUserProfile(Profile.COLLABORATOR);
 
-		myCompany.getProjectsRepository().addProjectToProjectContainer(project1);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(project1);
 
 		project1.addUserToProjectTeam(newUserB, 10);
 		project1.addUserToProjectTeam(newUserA, 10);
@@ -134,7 +134,7 @@ public class US204Tests {
 		List<Task> testList = new ArrayList<Task>();
 		testList.add(taskA);
 		testList.add(taskB);
-		assertEquals(myCompany.getProjectsRepository().getUnfinishedUserTaskList(newUserA), testList);
+		assertEquals(myCompany.getProjectsContainer().getUnfinishedUserTaskList(newUserA), testList);
 
 		// tests taskTeamContainsUser method
 		assertTrue(taskA.isProjectCollaboratorInTaskTeam(projCollab1));

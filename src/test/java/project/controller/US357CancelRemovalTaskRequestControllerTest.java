@@ -42,8 +42,8 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		company = Company.getTheInstance();
 
 		// Creates the Project Repository and User Repository
-		projectContainer = Company.getTheInstance().getProjectsRepository();
-		userContainer = Company.getTheInstance().getUsersRepository();
+		projectContainer = Company.getTheInstance().getProjectsContainer();
+		userContainer = Company.getTheInstance().getUsersContainer();
 
 		// Creates the users
 		userDaniel = userContainer.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto", "967387654", "Rua",

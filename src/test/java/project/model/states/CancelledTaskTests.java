@@ -27,7 +27,7 @@ public class CancelledTaskTests {
 	public void setUp() {
 
 		myCompany = Company.getTheInstance();
-		myProjRep = myCompany.getProjectsRepository();
+		myProjRep = myCompany.getProjectsContainer();
 
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");

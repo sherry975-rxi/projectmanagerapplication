@@ -26,7 +26,7 @@ public class US365MarkTaskAsFinishedControllerProjectManager {
 	 * 
 	 * public List<Project> getProjectsFromProjectManager(User user) { List<Project>
 	 * projectsThatImProjectManager = new ArrayList<>(); this.username = user;
-	 * projectList = Company.getTheInstance().getProjectsRepository();
+	 * projectList = Company.getTheInstance().getProjectsContainer();
 	 * projectsThatImProjectManager.addAll(projectList.getProjectsFromProjectManager(this.username));
 	 * return projectsThatImProjectManager; }
 	 *

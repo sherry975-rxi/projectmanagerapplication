@@ -37,7 +37,7 @@ public class US135andUS136SearchUsersControllerTest {
 		company = Company.getTheInstance();
 
 		// Creates an UserContainer
-		userContainer = company.getUsersRepository();
+		userContainer = company.getUsersContainer();
 
 		// create user
 		newUser1 = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");

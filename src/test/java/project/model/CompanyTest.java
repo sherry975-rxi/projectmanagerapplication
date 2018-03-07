@@ -36,28 +36,28 @@ public class CompanyTest {
 		myCompany = Company.getTheInstance();
 
 		// instantiate users
-		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
-		user2 = myCompany.getUsersRepository().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+		user2 = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
-		user3 = myCompany.getUsersRepository().createUser("DanielMM", "danielmm@gmail.com", "003", "collaborator",
+		user3 = myCompany.getUsersContainer().createUser("DanielMM", "danielmm@gmail.com", "003", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
-		user4 = myCompany.getUsersRepository().createUser("DanielMM", "danielmmgmail.com", "003", "collaborator",
+		user4 = myCompany.getUsersContainer().createUser("DanielMM", "danielmmgmail.com", "003", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// user 1 and user 3 included in user repository
-		myCompany.getUsersRepository().addUserToUserRepository(user1);
-		myCompany.getUsersRepository().addUserToUserRepository(user2);
+		myCompany.getUsersContainer().addUserToUserRepository(user1);
+		myCompany.getUsersContainer().addUserToUserRepository(user2);
 
 		// instantiate projects
-		project1 = myCompany.getProjectsRepository().createProject("name3", "description4", user1);
-		project2 = myCompany.getProjectsRepository().createProject("name3", "description4", user1);
-		project3 = myCompany.getProjectsRepository().createProject("name3", "description4", user1);
+		project1 = myCompany.getProjectsContainer().createProject("name3", "description4", user1);
+		project2 = myCompany.getProjectsContainer().createProject("name3", "description4", user1);
+		project3 = myCompany.getProjectsContainer().createProject("name3", "description4", user1);
 
 		// project 1 and project 3 included in project repository
-		myCompany.getProjectsRepository().addProjectToProjectContainer(project1);
-		myCompany.getProjectsRepository().addProjectToProjectContainer(project3);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(project1);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(project3);
 	}
 
 	@After
@@ -70,8 +70,8 @@ public class CompanyTest {
 		project1 = null;
 		project2 = null;
 		project3 = null;
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
-		myCompany.getProjectsRepository().getAllProjects().clear();
+		myCompany.getUsersContainer().getAllUsersFromUserContainer().clear();
+		myCompany.getProjectsContainer().getAllProjectsfromProjectsContainer().clear();
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class CompanyTest {
 	@Test
 	public void testgetUserRepository() {
 
-		assertEquals(myCompany.getUsersRepository().getAllUsersFromRepository().size(), 2);
+		assertEquals(myCompany.getUsersContainer().getAllUsersFromUserContainer().size(), 2);
 
 	}
 
@@ -92,7 +92,7 @@ public class CompanyTest {
 	// @Test
 	// public void testgetProjectContainer() {
 	//
-	// assertEquals(myCompany.getProjectsRepository().getAllProjects().size(), 2);
+	// assertEquals(myCompany.getProjectsContainer().getAllProjectsfromProjectsContainer().size(), 2);
 	//
 	// }
 }

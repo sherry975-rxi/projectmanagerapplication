@@ -13,7 +13,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 	ProjectContainer myProjRepo;
 
 	public US203GetUserStartedNotFinishedTaskListInIncreasingOrderController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsRepository();
+		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
 	}
 
 	/**

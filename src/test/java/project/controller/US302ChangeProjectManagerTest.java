@@ -31,19 +31,19 @@ public class US302ChangeProjectManagerTest {
 		c1 = Company.getTheInstance();
 
 		// User creation
-		userFirstManager = c1.getUsersRepository().createUser("Leonor", "leonor@gmail.com", "001", "Empregado",
+		userFirstManager = c1.getUsersContainer().createUser("Leonor", "leonor@gmail.com", "001", "Empregado",
 				"930000000", "Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
-		userNewManager = c1.getUsersRepository().createUser("Lenny", "lenny@gmail.com", "002", "Empregado", "940000000",
+		userNewManager = c1.getUsersContainer().createUser("Lenny", "lenny@gmail.com", "002", "Empregado", "940000000",
 				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
 		// add users to company
-		c1.getUsersRepository().addUserToUserRepository(userFirstManager);
-		c1.getUsersRepository().addUserToUserRepository(userNewManager);
+		c1.getUsersContainer().addUserToUserRepository(userFirstManager);
+		c1.getUsersContainer().addUserToUserRepository(userNewManager);
 
 		// set user as Director
 		userFirstManager.setUserProfile(Profile.COLLABORATOR);
 
-		newProject = c1.getProjectsRepository().createProject("name", "description", userFirstManager);
-		c1.getProjectsRepository().addProjectToProjectContainer(newProject);
+		newProject = c1.getProjectsContainer().createProject("name", "description", userFirstManager);
+		c1.getProjectsContainer().addProjectToProjectContainer(newProject);
 	}
 
 	@After

@@ -27,7 +27,7 @@ public class US201and202UpdateUserInfoController_Test {
 		c1 = Company.getTheInstance();
 
 		// create users
-		u1 = c1.getUsersRepository().createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",
+		u1 = c1.getUsersContainer().createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",
 				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
 		u1.getAddressList().clear();
 		// create a new address
@@ -39,7 +39,7 @@ public class US201and202UpdateUserInfoController_Test {
 		u1.setUserProfile(Profile.COLLABORATOR);
 
 		// add users to company
-		c1.getUsersRepository().addUserToUserRepository(u1);
+		c1.getUsersContainer().addUserToUserRepository(u1);
 
 	}
 
@@ -275,7 +275,7 @@ public class US201and202UpdateUserInfoController_Test {
 		u1.setUserProfile(Profile.COLLABORATOR);
 
 		// add users to company
-		c1.getUsersRepository().addUserToUserRepository(u1);
+		c1.getUsersContainer().addUserToUserRepository(u1);
 
 		// Creates a list with the addresses of the user
 		List<Address> userAddresses = new ArrayList<>();

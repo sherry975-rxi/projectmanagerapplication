@@ -35,7 +35,7 @@ public class US340v2 {
 		//create company
 		myCompany = Company.getTheInstance();
 		//create project repository
-		myProjRep = myCompany.getProjectsRepository();
+		myProjRep = myCompany.getProjectsContainer();
 		// create users
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
