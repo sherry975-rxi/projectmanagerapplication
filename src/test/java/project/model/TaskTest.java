@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.taskstateinterface.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -272,8 +271,8 @@ public class TaskTest {
 		testTask.addTaskCollaboratorToTask(tWorker1);
 		testTask.addTaskCollaboratorToTask(tWorker2);
 
-		testTask.createReport(tWorker1, LocalDate.now(), 0);
-		testTask.createReport(tWorker2, LocalDate.now(), 15);
+		testTask.createReport(tWorker1, Calendar.getInstance(), 0);
+		testTask.createReport(tWorker2, Calendar.getInstance(), 15);
 
 		testTask.getReports().get(1).setReportedTime(15);
 
@@ -363,7 +362,7 @@ public class TaskTest {
 		testTask2.addProjectCollaboratorToTask(collab1);
 		testTask2.removeProjectCollaboratorFromTask(collab1);
 		testTask2.addProjectCollaboratorToTask(collab1);
-		testTask2.createReport(tWorker1, LocalDate.now(), 0);
+		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
 		testTask2.getReports().get(0).setReportedTime(15);
 
 		assertEquals(5, collab1.getCollaboratorCost());
@@ -385,9 +384,9 @@ public class TaskTest {
 		testTask2.addTaskCollaboratorToTask(tWorker2);
 
 		// sets the hours spent on the task by each user
-		testTask2.createReport(tWorker1, LocalDate.now(), 0);
+		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
 		testTask2.getReports().get(0).setReportedTime(10);
-		testTask2.createReport(tWorker2, LocalDate.now(), 0);
+		testTask2.createReport(tWorker2, Calendar.getInstance(), 0);
 		testTask2.getReports().get(1).setReportedTime(5);
 
 		// calculates the expected cost of the task
@@ -642,9 +641,9 @@ public class TaskTest {
 
 
 		// add three reports to reports's list
-		testTask.createReport(tWorker1, LocalDate.now(), 0);
-		testTask.createReport(tWorker1, LocalDate.now(), 0);
-		testTask.createReport(tWorker1, LocalDate.now(), 0);
+		testTask.createReport(tWorker1, Calendar.getInstance(), 0);
+		testTask.createReport(tWorker1, Calendar.getInstance(), 0);
+		testTask.createReport(tWorker1, Calendar.getInstance(), 0);
 
 
 		// change reportedTime to 10 of report with index 0
@@ -707,7 +706,7 @@ public class TaskTest {
 
 		finishedTaskState = new Finished(testTask2);
 		testTask2.setTaskState(finishedTaskState);
-		assertFalse(testTask2.createReport(tWorker1, LocalDate.now(), 0));
+		assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
 
 		/*
 		 * Checks that the tastState is set to Finished
@@ -727,7 +726,7 @@ public class TaskTest {
 		/*
 		 * Checks that its not possible to add a report to a task set to "StandBy"
 		 */
-		assertFalse(testTask2.createReport(tWorker1, LocalDate.now(), 0));
+		assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
 
 		cancelledTaskState = new Cancelled(testTask2);
 
@@ -739,7 +738,7 @@ public class TaskTest {
 		/*
 		 * Checks that its not possible to add a report to a task set to "Cancelled"
 		 */
-		assertFalse(testTask2.createReport(tWorker1, LocalDate.now(), 0));
+		assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
 
 	}
 
@@ -766,7 +765,7 @@ public class TaskTest {
 		testTask2.addProjectCollaboratorToTask(collab1);
 
 		// Creates a report by tWorker1
-		testTask2.createReport(tWorker1, LocalDate.now(), 0);
+		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
 
 		// Checks if the task a report by its user
 		assertTrue(testTask2.doesTaskHaveReportByGivenUser("user@gmail.com"));
@@ -787,10 +786,10 @@ public class TaskTest {
 		/*
 		Creates Reports by two different task Collaborators
 		 */
-		testTask.createReport(tWorker1, LocalDate.now(), 10);
-		testTask.createReport(tWorker2, LocalDate.now(), 30);
-		testTask.createReport(tWorker2, LocalDate.now(), 20);
-		testTask.createReport(tWorker1, LocalDate.now(), 5);
+		testTask.createReport(tWorker1, Calendar.getInstance(), 10);
+		testTask.createReport(tWorker2, Calendar.getInstance(), 30);
+		testTask.createReport(tWorker2, Calendar.getInstance(), 20);
+		testTask.createReport(tWorker1, Calendar.getInstance(), 5);
 
 		/*
 		Creates a list with the index of the reports by tWorker1
@@ -817,7 +816,7 @@ public class TaskTest {
 		testTask2.addProjectCollaboratorToTask(collab1);
 
 		// Creates a report by tWorker1
-		testTask2.createReport(tWorker1, LocalDate.now(), 0);
+		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
 
 		// updates the report time
 		testTask2.updateReportedTime(20, tWorker1, 0);
@@ -838,7 +837,7 @@ public class TaskTest {
 		testTask2.addProjectCollaboratorToTask(collab1);
 
 		// Creates a report by tWorker1
-		testTask2.createReport(tWorker1, LocalDate.now(), 0);
+		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
 
 		// updates the report time
 		testTask2.updateReportedTime(20, tWorker1, 0);

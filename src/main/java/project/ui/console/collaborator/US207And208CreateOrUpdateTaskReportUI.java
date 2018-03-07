@@ -3,7 +3,7 @@ package project.ui.console.collaborator;
 import project.controller.US207CreateTaskReportController;
 import project.model.TaskCollaborator;
 
-import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class US207And208CreateOrUpdateTaskReportUI {
@@ -86,7 +86,7 @@ public class US207And208CreateOrUpdateTaskReportUI {
                 if (input.hasNextDouble()) {
                     Double taskReportTime = input.nextDouble();
 
-                    if (this.createUpdateReportController.createReportController(taskReportTime, LocalDate.now())) {
+                    if (this.createUpdateReportController.createReportController(taskReportTime, Calendar.getInstance())) {
                         System.out.println("The Report was successfully created");
                     } else {
                         System.out.println("The Report couldn't be created");

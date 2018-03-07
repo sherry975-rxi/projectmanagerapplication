@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -170,11 +169,11 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		task2.addTaskCollaboratorToTask(taskWorker1);
 		task3.addTaskCollaboratorToTask(taskWorker1);
 
-		Report report2 = new Report(taskWorker1, LocalDate.now());
+		Report report2 = new Report(taskWorker1, Calendar.getInstance());
 		task2.getReports().add(report2);
 		task2.updateReportedTime(5, taskWorker1, 0);
 
-		Report report3 = new Report(taskWorker1, LocalDate.now());
+		Report report3 = new Report(taskWorker1, Calendar.getInstance());
 		task3.getReports().add(report3);
 		task3.updateReportedTime(10, taskWorker1, 0);
 

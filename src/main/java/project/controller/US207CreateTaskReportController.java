@@ -2,8 +2,8 @@ package project.controller;
 
 import project.model.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class US207CreateTaskReportController {
@@ -60,7 +60,7 @@ public class US207CreateTaskReportController {
      * @param timeToReport The time associated to the report
      * @return TRUE if the report is created, FALSE if not
      */
-    public boolean createReportController(double timeToReport, LocalDate dateOfReport) {
+    public boolean createReportController(double timeToReport, Calendar dateOfReport) {
 
         boolean wasReportCreated = false;
 
@@ -106,9 +106,9 @@ public class US207CreateTaskReportController {
      * @param taskCollaborator The TaskCollaborator to search its reports for
      * @return A List with the dates of the report creation dates
      */
-    public List<LocalDate> getReportsCreationDateByGivenUser(TaskCollaborator taskCollaborator) {
+    public List<Calendar> getReportsCreationDateByGivenUser(TaskCollaborator taskCollaborator) {
 
-        List<LocalDate> reportsDate = new ArrayList<>();
+        List<Calendar> reportsDate = new ArrayList<>();
         for (Report other : this.task.getReports()) {
             if (other.getTaskCollaborator().equals(taskCollaborator)) {
                 reportsDate.add(other.getDateOfReport());
@@ -125,9 +125,9 @@ public class US207CreateTaskReportController {
      * @param taskCollaborator The TaskCollaborator to search its reports for
      * @return A List with the dates of the report update dates
      */
-    public List<LocalDate> getReportsUpdateDateByGivenUser(TaskCollaborator taskCollaborator) {
+    public List<Calendar> getReportsUpdateDateByGivenUser(TaskCollaborator taskCollaborator) {
 
-        List<LocalDate> reportsDate = new ArrayList<>();
+        List<Calendar> reportsDate = new ArrayList<>();
         for (Report other : this.task.getReports()) {
             if (other.getTaskCollaborator().equals(taskCollaborator)) {
                 reportsDate.add(other.getDateOfUpdate());

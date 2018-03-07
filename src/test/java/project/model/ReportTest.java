@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +19,7 @@ public class ReportTest {
 	Project p1;
 	TaskRepository taskRepository;
 	Report report;
-	LocalDate dateOfReport;
+	Calendar dateOfReport;
 	Task task1;
 	int timeToCompare;
 
@@ -38,7 +37,7 @@ public class ReportTest {
 		t1 = p1.getTaskRepository().createTask("description", 0, estimatedStartDate, taskDeadline, 0);
 		p1.getTaskRepository().addProjectTask(t1);
 		timeToCompare = 0;
-		dateOfReport = LocalDate.now();
+		dateOfReport = Calendar.getInstance();
 		task1 = new Task();
 	}
 
@@ -85,12 +84,12 @@ public class ReportTest {
 		assertEquals(report.getTask(), task1);
 
 		//Sets a date to the report
-		report.setDateOfReport(LocalDate.now());
-		assertEquals(report.getDateOfReport(), LocalDate.now());
+		report.setDateOfReport(Calendar.getInstance());
+		assertEquals(report.getDateOfReport(), Calendar.getInstance());
 
 		//Sets a date to the update
-		report.setDateOfUpdate(LocalDate.now());
-		assertEquals(report.getDateOfUpdate(), LocalDate.now());
+		report.setDateOfUpdate(Calendar.getInstance());
+		assertEquals(report.getDateOfUpdate(), Calendar.getInstance());
 
 		//Sets an Id
 		report.setId(2);

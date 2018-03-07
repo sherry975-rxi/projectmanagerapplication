@@ -1,7 +1,7 @@
 package project.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Calendar;
 
 /**
  * 
@@ -26,8 +26,8 @@ public class Report {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
 	private Task task;
-	private LocalDate dateOfReport;
-	private LocalDate dateOfUpdate;
+	private Calendar dateOfReport;
+	private Calendar dateOfUpdate;
 
 
 
@@ -45,7 +45,7 @@ public class Report {
 	 */
 
 
-	public Report(TaskCollaborator taskCollaborator, LocalDate reportDate) {
+	public Report(TaskCollaborator taskCollaborator, Calendar reportDate) {
 		
 		this.reportedTime = 0;
 		this.taskCollaborator = taskCollaborator;
@@ -117,7 +117,7 @@ public class Report {
 	 */
 	public void updateReportedTime(double time) {
 		this.reportedTime = time;
-		this.dateOfUpdate = LocalDate.now();
+		this.dateOfUpdate = Calendar.getInstance();
 
 	}
 
@@ -154,7 +154,7 @@ public class Report {
 	 *
 	 * @return void
 	 */
-	public void setDateOfReport(LocalDate reportDate) {
+	public void setDateOfReport(Calendar reportDate) {
 		this.dateOfReport = reportDate;
 	}
 
@@ -164,7 +164,7 @@ public class Report {
 	 *
 	 * @return void
 	 */
-	public LocalDate getDateOfReport() {
+	public Calendar getDateOfReport() {
 		return this.dateOfReport;
 	}
 
@@ -183,7 +183,7 @@ public class Report {
 	 *
 	 * @return LocalDate
 	 */
-	public LocalDate getDateOfUpdate() {
+	public Calendar getDateOfUpdate() {
 		return dateOfUpdate;
 	}
 
@@ -192,7 +192,7 @@ public class Report {
 	 *
 	 * @return LocalDate
 	 */
-	public void setDateOfUpdate(LocalDate dateOfUpdate) {
+	public void setDateOfUpdate(Calendar dateOfUpdate) {
 		this.dateOfUpdate = dateOfUpdate;
 	}
 

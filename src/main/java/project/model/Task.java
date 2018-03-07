@@ -5,7 +5,6 @@ package project.model;
 import project.model.taskstateinterface.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -519,7 +518,7 @@ public class Task {
 	 * @return report
 	 */
 
-	public boolean createReport(TaskCollaborator taskCollaborator, LocalDate dateOfReport, double timeToReport) {
+	public boolean createReport(TaskCollaborator taskCollaborator, Calendar dateOfReport, double timeToReport) {
 		boolean wasReportCreated = true;
 
 		if (this.getTaskState() instanceof Finished) {

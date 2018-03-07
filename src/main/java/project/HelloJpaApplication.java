@@ -12,7 +12,6 @@ import project.Repository.TaskRepository;
 import project.Repository.UserRepository;
 import project.model.*;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 @SpringBootApplication
@@ -80,7 +79,7 @@ public class HelloJpaApplication implements CommandLineRunner {
 
         TaskCollaborator manelinhoTaskCol = tester.createTaskCollaborator(manelinhoCollab);
         tester.addTaskCollaboratorToTask(manelinhoTaskCol);
-        tester.createReport(manelinhoTaskCol, LocalDate.now(), 10);
+        tester.createReport(manelinhoTaskCol, Calendar.getInstance(), 10);
         tester.getReports().get(0).setReportedTime(70);
 
         Calendar testerDeadline = Calendar.getInstance();

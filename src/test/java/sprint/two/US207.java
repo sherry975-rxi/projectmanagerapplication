@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.*;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
@@ -115,7 +114,7 @@ public class US207 {
 		testTask.addTaskCollaboratorToTask(taskWorker);
 
 		// Updates the time spent on task by user
-		testTask.createReport(taskWorker, LocalDate.now(), 0);
+		testTask.createReport(taskWorker, Calendar.getInstance(), 0);
 		testTask.getReports().get(0).setReportedTime(1);
 
 		// Checks if both times are the same

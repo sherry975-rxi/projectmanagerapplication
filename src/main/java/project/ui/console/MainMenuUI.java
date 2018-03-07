@@ -9,7 +9,6 @@ import project.ui.console.collaborator.US101UserRegisterUI;
 import project.ui.console.collaborator.US208LoginUI;
 import project.ui.console.director.DirectorMenuUI;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -124,7 +123,7 @@ public class MainMenuUI {
 		taskDeadlineDate.set(Calendar.MONTH, Calendar.FEBRUARY);
 		taskGP1.setTaskDeadline(taskDeadlineDate);
 
-		taskGP1.createReport(tWorkerJSilva, LocalDate.now(), 10);
+		taskGP1.createReport(tWorkerJSilva, Calendar.getInstance(), 10);
 		taskGP1.getReports().get(0).setReportedTime(20);
 
 		Task taskGP2 = projectGP.getTaskRepository().createTask("Desenvolver código para responder à US122");
