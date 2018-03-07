@@ -138,51 +138,14 @@ public class CancelledTaskTests {
 	}
 
 	@Test
-	public final void testChangeToCreated() {
-		Cancelled taskState = new Cancelled(testTask);
-		assertFalse(taskState.changeToCreated());
-	}
-
-	@Test
-	public final void testChangeToPlanned() {
-		Planned taskState = new Planned(testTask);
-		assertFalse(taskState.changeToCreated());
-	}
-
-	@Test
-	public final void testChangeToAssigned() {
-		Assigned taskState = new Assigned(testTask);
-		assertFalse(taskState.changeToAssigned());
-	}
-
-	@Test
-	public final void testChangeToReady() {
-		Ready taskState = new Ready(testTask);
-		assertFalse(taskState.changeToReady());
-	}
-
-	@Test
-	public final void testChangeToCancelled() {
-		Cancelled taskState = new Cancelled(testTask);
-		assertFalse(taskState.changeToReady());
-	}
-	
-	/**
-	 * Tests the ability of the task to change state
-	 */
-
-	@Test
-	public final void testPossibleChanges() {
-		// Tests the impossible transitions
+	public final void testImpossibleChanges() {
 		assertFalse(testTask.getTaskState().changeToCreated());
 		assertFalse(testTask.getTaskState().changeToPlanned());
 		assertFalse(testTask.getTaskState().changeToAssigned());
-
 		assertFalse(testTask.getTaskState().changeToReady());
 		assertFalse(testTask.getTaskState().changeToOnGoing());
 		assertFalse(testTask.getTaskState().changeToStandBy());
 		assertFalse(testTask.getTaskState().changeToCancelled());
-
 	}
 
 }

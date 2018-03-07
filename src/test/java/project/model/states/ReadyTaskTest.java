@@ -158,27 +158,15 @@ public class ReadyTaskTest {
 		assertFalse(mainTask.viewTaskStateName().equals("Planned"));
 	}
 
-	/**
-	 * Tests if the task fails to change to assigned
-	 */
 
 	@Test
 	public final void testChangeToAssignedFailed() {
-		// Should fail as a ready task shouldn't change to assigned
-		mainTask.getTaskState().changeToAssigned();
-		assertFalse(mainTask.viewTaskStateName().equals("Assigned"));
+		assertFalse(mainTask.getTaskState().changeToAssigned());
 	}
-
-	/**
-	 * Tests if the task "fails" to change to ready
-	 */
 
 	@Test
 	public final void testChangeToReadyFailed() {
-		// Should not fail nor succeed per se, as it's the same state as the one the
-		// task is already in
-		mainTask.getTaskState().changeToReady();
-		assertTrue(mainTask.viewTaskStateName().equals("Ready"));
+		assertFalse(mainTask.getTaskState().changeToReady());
 	}
 
 	/**
@@ -208,36 +196,19 @@ public class ReadyTaskTest {
 		assertFalse(mainTask.viewTaskStateName().equals("OnGoing"));
 	}
 
-	/**
-	 * Tests if the task fails to change to standby
-	 */
-
 	@Test
 	public final void testChangeToStandByFailed() {
-		// Should fail as a ready task shouldn't change to standby
-		mainTask.getTaskState().changeToStandBy();
-		assertFalse(mainTask.viewTaskStateName().equals("StandBy"));
+		assertFalse(mainTask.getTaskState().changeToStandBy());
 	}
 
-	/**
-	 * Tests if the task fails to change to cancelled
-	 */
 
 	@Test
 	public final void testChangeToCancelledFailed() {
-		// Should fail as a ready task shouldn't change to cancelled
-		mainTask.getTaskState().changeToCancelled();
-		assertFalse(mainTask.viewTaskStateName().equals("Cancelled"));
+		assertFalse(mainTask.getTaskState().changeToCancelled());
 	}
-
-	/**
-	 * Tests if the task fails to change to finished
-	 */
 
 	@Test
 	public final void testChangeToFinishedFailed() {
-		// Should fail as a ready task shouldn't change to finished
-		mainTask.getTaskState().changeToAssigned();
-		assertFalse(mainTask.viewTaskStateName().equals("Finished"));
+		assertFalse(mainTask.getTaskState().changeToAssigned());
 	}
 }

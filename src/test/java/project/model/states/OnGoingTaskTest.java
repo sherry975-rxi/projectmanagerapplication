@@ -189,101 +189,15 @@ public class OnGoingTaskTest {
 	}
 
 	@Test
-	public void testChangeToCreated() {
+	public void testChangeTo() {
 
-		// InitiatesOnGoingTask1
 		OnGoingTask1 = new OnGoing(task1);
 
-		task1.setStartDate(taskStartDate);
-		task1.setTaskState(OnGoingTask1);
-
-		String stateToCompare = "OnGoing";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		OnGoingTask1.changeToCreated();
-
-		assertEquals(stateToCompare, task1.viewTaskStateName());
-	}
-
-	@Test
-	public void testChangeToPlanned() {
-
-		// Initiates OnGoingTask1
-		OnGoingTask1 = new OnGoing(task1);
-
-		task1.setStartDate(taskStartDate);
-		task1.setTaskState(OnGoingTask1);
-
-		String stateToCompare = "OnGoing";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		OnGoingTask1.changeToPlanned();
-
-		assertEquals(stateToCompare, task1.viewTaskStateName());
-
-	}
-
-	@Test
-	public void testChangeToAssigned() {
-
-		// Initiates OnGoingTask1
-		OnGoingTask1 = new OnGoing(task1);
-
-		task1.setStartDate(taskStartDate);
-		task1.setTaskState(OnGoingTask1);
-
-		String stateToCompare = "OnGoing";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		OnGoingTask1.changeToAssigned();
-
-		assertEquals(stateToCompare, task1.viewTaskStateName());
-
-	}
-
-	@Test
-	public void testChangeToReady() {
-
-		// Initiates OnGoingTask1
-		OnGoingTask1 = new OnGoing(task1);
-
-		task1.setStartDate(taskStartDate);
-		task1.setTaskState(OnGoingTask1);
-
-		String stateToCompare = "OnGoing";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		OnGoingTask1.changeToReady();
-
-		assertEquals(stateToCompare, task1.viewTaskStateName());
-
-	}
-
-	@Test
-	public void testChangeToOnGoing() {
-
-		// Initiates OnGoingTask1
-		OnGoingTask1 = new OnGoing(task1);
-
-		task1.setStartDate(taskStartDate);
-		task1.setTaskState(OnGoingTask1);
-
-		String stateToCompare = "OnGoing";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		OnGoingTask1.changeToOnGoing();
-
-		assertEquals(stateToCompare, task1.viewTaskStateName());
+		assertFalse(OnGoingTask1.changeToCreated());
+		assertFalse(OnGoingTask1.changeToPlanned());
+		assertFalse(OnGoingTask1.changeToAssigned());
+		assertFalse(OnGoingTask1.changeToReady());
+		assertFalse(OnGoingTask1.changeToOnGoing());
 	}
 
 	@Test
