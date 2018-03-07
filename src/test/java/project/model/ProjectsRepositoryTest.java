@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -582,7 +583,7 @@ public class ProjectsRepositoryTest {
 		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDatetask);
 		task1.getTaskState().changeToOnGoing();
-		task1.createReport(task1.getTaskTeam().get(0));
+		task1.createReport(task1.getTaskTeam().get(0), LocalDate.now(), 5);
 		task1.getReports().get(0).setReportedTime(5);
 		task1.setFinishDate(calendar1);
 		task1.getTaskState().changeToFinished();
@@ -596,7 +597,7 @@ public class ProjectsRepositoryTest {
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDatetask);
 		task2.getTaskState().changeToOnGoing();
-		task2.createReport(task2.getTaskTeam().get(1));
+		task2.createReport(task2.getTaskTeam().get(1), LocalDate.now(), 10);
 		task2.getReports().get(0).setReportedTime(10);
 		task2.setFinishDate(calendar2);
 		task2.getTaskState().changeToFinished();
@@ -645,7 +646,7 @@ public class ProjectsRepositoryTest {
 		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDatetask);
 		task1.getTaskState().changeToOnGoing();
-		task1.createReport(task1.getTaskTeam().get(0));
+		task1.createReport(task1.getTaskTeam().get(0), LocalDate.now(), 5);
 		task1.getReports().get(0).setReportedTime(5);
 		task1.setFinishDate(calendar1);
 		task1.getTaskState().changeToFinished();
@@ -659,7 +660,7 @@ public class ProjectsRepositoryTest {
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDatetask);
 		task2.getTaskState().changeToOnGoing();
-		task2.createReport(task2.getTaskTeam().get(1));
+		task2.createReport(task2.getTaskTeam().get(1), LocalDate.now(), 10);
 		task2.getReports().get(0).setReportedTime(10);
 		task2.setFinishDate(calendar2);
 		task2.getTaskState().changeToFinished();

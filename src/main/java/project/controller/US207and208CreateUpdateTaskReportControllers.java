@@ -2,6 +2,8 @@ package project.controller;
 
 import project.model.*;
 
+import java.time.LocalDate;
+
 public class US207and208CreateUpdateTaskReportControllers {
 
 	private User username;
@@ -33,55 +35,22 @@ public class US207and208CreateUpdateTaskReportControllers {
 
 	/**
 	 * This controller creates or updates a Report with a given time
-	 * 
-	 * @param newTime
+	 *
+	 * @param timeToReport
 	 *            The time associated to the report
 	 * 
 	 * @return TRUE if the report is created, FALSE if not
 	 */
-	public boolean createReportController(int newTime) {
+	public boolean createReportController(double timeToReport) {
 
 		boolean wasReportCreated = false;
 
-		if (!task.doesTaskHaveReportByGivenUser(email)) {
+		wasReportCreated = task.createReport(task.getTaskCollaboratorByEmail(email), LocalDate.now(), timeToReport);
 
-			task.createReport(task.getTaskCollaboratorByEmail(email));
-
-			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
-		} else {
-			task.changeReportedTime(newTime, username.getEmail());
-			wasReportCreated = task.changeReportedTime(newTime, username.getEmail());
-
-		}
 		return wasReportCreated;
 
 	}
 
-	/**
-	 * @param email
-	 *            The email of the user to search his associated tasks ID
-	 * @param taskIndex
-	 *            The task to look for it's report
-	 * @return The reported time by a given TaskCollaborator
-	 */
-	public int getReportedTimeByCollaborator() {
-		int reportedTimeByCollaborator = 0;
 
-		reportedTimeByCollaborator = task.getReportedTimeByTaskCollaborator(email);
-
-		return reportedTimeByCollaborator;
-	}
-
-	/**
-	 * @param email
-	 *            The email of the user to search his name
-	 * @param taskIndex
-	 *            The task to look for it's report
-	 * @return The reporter Name
-	 */
-	public String getReportedCollaboratorName() {
-
-		return  task.getReporterName(email);
-	}
 
 }

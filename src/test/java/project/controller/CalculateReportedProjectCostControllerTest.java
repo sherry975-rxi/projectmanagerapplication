@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -160,14 +161,10 @@ public class CalculateReportedProjectCostControllerTest {
 		testTask2.addTaskCollaboratorToTask(taskWorkerMike);
 		testTask2.addTaskCollaboratorToTask(taskWorkerAna);
 		// Task worker sets the hours spent on the task
-		testTask.createReport(taskWorkerDaniel);
-		testTask.getReports().get(0).setReportedTime(5);
-		testTask.createReport(taskWorkerJonny);
-		testTask.getReports().get(1).setReportedTime(10);
-		testTask2.createReport(taskWorkerMike);
-		testTask2.getReports().get(0).setReportedTime(2);
-		testTask2.createReport(taskWorkerAna);
-		testTask2.getReports().get(1).setReportedTime(3);
+		testTask.createReport(taskWorkerDaniel, LocalDate.now(), 5);
+		testTask.createReport(taskWorkerJonny, LocalDate.now(), 10);
+		testTask2.createReport(taskWorkerMike, LocalDate.now(), 2);
+		testTask2.createReport(taskWorkerAna, LocalDate.now(), 3);
 
 		// Calculates the value of the project - Equals to to the sum of the total hours
 		// spent times the cost of each TaskWorker
@@ -195,9 +192,9 @@ public class CalculateReportedProjectCostControllerTest {
 		testTask2.addTaskCollaboratorToTask(taskWorkerMike);
 		testTask2.addTaskCollaboratorToTask(taskWorkerAna);
 		// Task worker sets the hours spent on the task
-		testTask.createReport(taskWorkerDaniel);
+		testTask.createReport(taskWorkerDaniel, LocalDate.now(), 5);
 		testTask.getReports().get(0).setReportedTime(5);
-		testTask.createReport(taskWorkerJonny);
+		testTask.createReport(taskWorkerJonny, LocalDate.now(), 10);
 		testTask.getReports().get(1).setReportedTime(10);
 
 		// Creates a new list of ReporCcost

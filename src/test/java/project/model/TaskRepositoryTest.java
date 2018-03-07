@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.taskstateinterface.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -342,7 +343,7 @@ public class TaskRepositoryTest {
 		startDatetestTask.add(Calendar.DAY_OF_MONTH, 60);
 		testTask.setStartDate(startDatetestTask);
 		testTask.getTaskState().changeToOnGoing();
-		testTask.createReport(testTask.getTaskTeam().get(0));
+		testTask.createReport(testTask.getTaskTeam().get(0), LocalDate.now(), 0);
 		testTask.getReports().get(0).setReportedTime(5);
 		testTask.setFinishDate(finishDateLastMonth);
 		testTask.getTaskState().changeToFinished();
@@ -453,7 +454,7 @@ public class TaskRepositoryTest {
 		startDatetestTask.add(Calendar.DAY_OF_MONTH, 60);
 		testTask.setStartDate(startDatetestTask);
 		testTask.getTaskState().changeToOnGoing();
-		testTask.createReport(testTask.getTaskTeam().get(0));
+		testTask.createReport(testTask.getTaskTeam().get(0), LocalDate.now(), 0);
 		testTask.getReports().get(0).setReportedTime(5);
 		testTask.setFinishDate(finishDateTest);
 		testTask.getTaskState().changeToFinished();
@@ -1418,12 +1419,13 @@ public class TaskRepositoryTest {
 		taskRepository.addProjectTask(testTask3);
 
 		// creates a TaskReport (TaskWorker as an indexWork of 2)
-		testTask.createReport(taskWorkerDan);
+		testTask.addTaskCollaboratorToTask(taskWorkerDan);
+		testTask.createReport(taskWorkerDan, LocalDate.now(), 2);
 
 		// Updates report Time to 30
-		testTask.changeReportedTime(30, "daniel@gmail.com");
+		testTask.updateReportedTime(30, taskWorkerDan, 0);
 
-		// Creates a new list of ReporCcost
+		// Creates a new list of ReportCcost
 		List<String> reportedCost = new ArrayList<>();
 		double reportCost = 60;
 

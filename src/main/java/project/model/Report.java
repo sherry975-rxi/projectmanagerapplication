@@ -1,6 +1,7 @@
 package project.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 /**
  * 
@@ -17,14 +18,17 @@ public class Report {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private int reportedTime;
+	private double reportedTime;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "TaskCollaborator_id")
 	private TaskCollaborator taskCollaborator;
-	private int cost;
+	private double cost;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
 	private Task task;
+	private LocalDate dateOfReport;
+	private LocalDate dateOfUpdate;
+
 
 
 
@@ -41,26 +45,47 @@ public class Report {
 	 */
 
 
-	public Report(TaskCollaborator taskCollaborator) {
+	public Report(TaskCollaborator taskCollaborator, LocalDate reportDate) {
 		
 		this.reportedTime = 0;
 		this.taskCollaborator = taskCollaborator;
 		this.cost = taskCollaborator.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+		this.dateOfReport = reportDate;
+		this.dateOfUpdate = reportDate;
 	}
 
-
+	/**
+	 * This method returns the id of the Report
+	 *
+	 * @return id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * This method sets an ID to the Report
+	 *
+	 * @return void
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * This method returns the Task associated to the Report
+	 *
+	 * @return Task
+	 */
 	public Task getTask() {
 		return task;
 	}
 
+	/**
+	 * This method sets a Task to the Task attribute of the Report
+	 *
+	 * @return Void
+	 */
 	public void setTask(Task task) {
 		this.task = task;
 	}
@@ -70,7 +95,7 @@ public class Report {
 	 * 
 	 * @return cost
 	 */
-	public int getCost() {
+	public double getCost() {
 		return cost;
 	}
 
@@ -80,17 +105,28 @@ public class Report {
 	 * @param time
 	 *            Time spent on task
 	 */
-	public void setReportedTime(int time) {
+	public void setReportedTime(double time) {
 		this.reportedTime = time;
 
 	}
 
 	/**
+	 * Sets the time that a a Task Collaborator spent on a task
+	 *
+	 * @param time Time spent on task
+	 */
+	public void updateReportedTime(double time) {
+		this.reportedTime = time;
+		this.dateOfUpdate = LocalDate.now();
+
+	}
+
+	/**
 	 * This method returns the time that a Task Collaborator spent on a task
-	 * 
+	 *
 	 * @return Time spent on task by a Task Collaborator
 	 */
-	public int getReportedTime() {
+	public double getReportedTime() {
 		return this.reportedTime;
 	}
 
@@ -103,9 +139,62 @@ public class Report {
 		return this.taskCollaborator;
 	}
 
+	/**
+	 * Sets the Task Collaborator to the report
+	 *
+	 * @return void
+	 */
 	public void setTaskCollaborator(TaskCollaborator taskCollab) {
 		this.taskCollaborator = taskCollab;
 
 	}
+
+	/**
+	 * Sets a date to the report
+	 *
+	 * @return void
+	 */
+	public void setDateOfReport(LocalDate reportDate) {
+		this.dateOfReport = reportDate;
+	}
+
+
+	/**
+	 * Gets the date of the report
+	 *
+	 * @return void
+	 */
+	public LocalDate getDateOfReport() {
+		return this.dateOfReport;
+	}
+
+	/**
+	 * Sets a cost to the Report
+	 *
+	 * @return void
+	 */
+
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+	/**
+	 * Gets the date of when the Report was last updated
+	 *
+	 * @return LocalDate
+	 */
+	public LocalDate getDateOfUpdate() {
+		return dateOfUpdate;
+	}
+
+	/**
+	 * Sets a date to the report
+	 *
+	 * @return LocalDate
+	 */
+	public void setDateOfUpdate(LocalDate dateOfUpdate) {
+		this.dateOfUpdate = dateOfUpdate;
+	}
+
 
 }

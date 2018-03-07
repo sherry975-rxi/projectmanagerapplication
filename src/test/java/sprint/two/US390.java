@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.*;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
@@ -177,13 +178,13 @@ public class US390 {
 		testTask2.addTaskCollaboratorToTask(taskWorker3);
 		testTask2.addTaskCollaboratorToTask(taskWorker4);
 		// Task worker sets the hours spent on the task
-		testTask.createReport(taskWorker1);
+		testTask.createReport(taskWorker1, LocalDate.now(), 5);
 		testTask.getReports().get(0).setReportedTime(5);
-		testTask.createReport(taskWorker2);
+		testTask.createReport(taskWorker2, LocalDate.now(), 10);
 		testTask.getReports().get(0).setReportedTime(10);
-		testTask2.createReport(taskWorker3);
+		testTask2.createReport(taskWorker3, LocalDate.now(), 2);
 		testTask2.getReports().get(0).setReportedTime(2);
-		testTask2.createReport(taskWorker4);
+		testTask2.createReport(taskWorker4, LocalDate.now(), 3);
 		testTask2.getReports().get(0).setReportedTime(3);
 
 		// Calculates the value of the project - Equals to to the sum of the total hours

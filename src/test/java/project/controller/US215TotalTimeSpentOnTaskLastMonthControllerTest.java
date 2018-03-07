@@ -6,6 +6,7 @@ import org.junit.Test;
 import project.model.*;
 import project.model.taskstateinterface.Finished;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
@@ -72,9 +73,9 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		taskC.addProjectCollaboratorToTask(proj.getProjectCollaboratorFromUser(userA));
 
 		// Create reports in the tasks
-		taskA.createReport(taskA.getTaskCollaboratorByEmail("ugandan@nackls.com"));
-		taskB.createReport(taskB.getTaskCollaboratorByEmail("ugandan@nackls.com"));
-		taskC.createReport(taskC.getTaskCollaboratorByEmail("ugandan@nackls.com"));
+		taskA.createReport(taskA.getTaskCollaboratorByEmail("ugandan@nackls.com"), LocalDate.now(), 0);
+		taskB.createReport(taskB.getTaskCollaboratorByEmail("ugandan@nackls.com"), LocalDate.now(), 0);
+		taskC.createReport(taskC.getTaskCollaboratorByEmail("ugandan@nackls.com"), LocalDate.now(), 0);
 
 		// Initialize Controller
 		controller = new US215TotalTimeSpentOnTaskLastMonthController();

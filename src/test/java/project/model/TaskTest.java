@@ -8,7 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.taskstateinterface.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -269,8 +272,8 @@ public class TaskTest {
 		testTask.addTaskCollaboratorToTask(tWorker1);
 		testTask.addTaskCollaboratorToTask(tWorker2);
 
-		testTask.createReport(tWorker1);
-		testTask.createReport(tWorker2);
+		testTask.createReport(tWorker1, LocalDate.now(), 0);
+		testTask.createReport(tWorker2, LocalDate.now(), 15);
 
 		testTask.getReports().get(1).setReportedTime(15);
 
@@ -360,11 +363,11 @@ public class TaskTest {
 		testTask2.addProjectCollaboratorToTask(collab1);
 		testTask2.removeProjectCollaboratorFromTask(collab1);
 		testTask2.addProjectCollaboratorToTask(collab1);
-		testTask2.createReport(tWorker1);
+		testTask2.createReport(tWorker1, LocalDate.now(), 0);
 		testTask2.getReports().get(0).setReportedTime(15);
 
 		assertEquals(5, collab1.getCollaboratorCost());
-		assertEquals(15, testTask2.getReports().get(0).getReportedTime());
+		assertEquals(15, testTask2.getReports().get(0).getReportedTime(), 0.0);
 		assertTrue(tWorker1.getStartDate() != null);
 		assertTrue(testTask2.isProjectCollaboratorActiveInTaskTeam(collab1));
 	}
@@ -382,9 +385,9 @@ public class TaskTest {
 		testTask2.addTaskCollaboratorToTask(tWorker2);
 
 		// sets the hours spent on the task by each user
-		testTask2.createReport(tWorker1);
+		testTask2.createReport(tWorker1, LocalDate.now(), 0);
 		testTask2.getReports().get(0).setReportedTime(10);
-		testTask2.createReport(tWorker2);
+		testTask2.createReport(tWorker2, LocalDate.now(), 0);
 		testTask2.getReports().get(1).setReportedTime(5);
 
 		// calculates the expected cost of the task
@@ -396,7 +399,6 @@ public class TaskTest {
 
 		finishedTaskState = new Finished(testTask2);
 		testTask2.setTaskState(finishedTaskState);
-		assertFalse(testTask2.createReport(tWorker1));
 
 		assertEquals(testTask2.viewTaskStateName(), "Finished");
 
@@ -634,22 +636,34 @@ public class TaskTest {
 	 */
 	@Test
 	public void testChangeReportedTime() {
+
+		testTask.addTaskCollaboratorToTask(tWorker1);
+		testTask.addTaskCollaboratorToTask(tWorker2);
+
+
 		// add three reports to reports's list
-		testTask.createReport(tWorker1);
-		testTask.createReport(tWorker1);
-		testTask.createReport(tWorker1);
+		testTask.createReport(tWorker1, LocalDate.now(), 0);
+		testTask.createReport(tWorker1, LocalDate.now(), 0);
+		testTask.createReport(tWorker1, LocalDate.now(), 0);
+
 
 		// change reportedTime to 10 of report with index 0
-		assertTrue(testTask.changeReportedTime(10, "user@gmail.com"));
+		assertTrue(testTask.updateReportedTime(10, tWorker1, 0));
 
 		// change reportedTime to 20 of report with index 1
-		assertTrue(testTask.changeReportedTime(20, "user@gmail.com"));
+		assertTrue(testTask.updateReportedTime(20, tWorker1, 1));
 
 		/*
 		 * asserts that cannot change a reported time with an email that doesnt exist in
 		 * the TaskTeam
 		 */
-		assertFalse(testTask.changeReportedTime(30, "invalidEmail@gmail.com"));
+		assertFalse(testTask.updateReportedTime(30, tWorker3, 2));
+
+		/*
+		Tries to change a report that's not associated to the taskCollaborator
+		 */
+		assertFalse(testTask.updateReportedTime(30, tWorker3, 0));
+
 
 	}
 
@@ -693,7 +707,7 @@ public class TaskTest {
 
 		finishedTaskState = new Finished(testTask2);
 		testTask2.setTaskState(finishedTaskState);
-		assertFalse(testTask2.createReport(tWorker1));
+		assertFalse(testTask2.createReport(tWorker1, LocalDate.now(), 0));
 
 		/*
 		 * Checks that the tastState is set to Finished
@@ -713,7 +727,7 @@ public class TaskTest {
 		/*
 		 * Checks that its not possible to add a report to a task set to "StandBy"
 		 */
-		assertFalse(testTask2.createReport(tWorker1));
+		assertFalse(testTask2.createReport(tWorker1, LocalDate.now(), 0));
 
 		cancelledTaskState = new Cancelled(testTask2);
 
@@ -725,7 +739,7 @@ public class TaskTest {
 		/*
 		 * Checks that its not possible to add a report to a task set to "Cancelled"
 		 */
-		assertFalse(testTask2.createReport(tWorker1));
+		assertFalse(testTask2.createReport(tWorker1, LocalDate.now(), 0));
 
 	}
 
@@ -752,7 +766,7 @@ public class TaskTest {
 		testTask2.addProjectCollaboratorToTask(collab1);
 
 		// Creates a report by tWorker1
-		testTask2.createReport(tWorker1);
+		testTask2.createReport(tWorker1, LocalDate.now(), 0);
 
 		// Checks if the task a report by its user
 		assertTrue(testTask2.doesTaskHaveReportByGivenUser("user@gmail.com"));
@@ -763,6 +777,39 @@ public class TaskTest {
 
 	}
 
+
+	@Test
+	public void testGetReportsIndexOfGivenTaskCollaborator() {
+
+		testTask.addTaskCollaboratorToTask(tWorker1);
+		testTask.addTaskCollaboratorToTask(tWorker2);
+
+		/*
+		Creates Reports by two different task Collaborators
+		 */
+		testTask.createReport(tWorker1, LocalDate.now(), 10);
+		testTask.createReport(tWorker2, LocalDate.now(), 30);
+		testTask.createReport(tWorker2, LocalDate.now(), 20);
+		testTask.createReport(tWorker1, LocalDate.now(), 5);
+
+		/*
+		Creates a list with the index of the reports by tWorker1
+		 */
+		List<Integer> reportsIndex1 = new ArrayList<>();
+		reportsIndex1.add(0);
+		reportsIndex1.add(3);
+
+		List<Integer> reportsIndex2 = new ArrayList<>();
+		reportsIndex2.add(1);
+		reportsIndex2.add(2);
+
+		assertEquals(testTask.getReportsIndexOfTaskCollaborator(tWorker1.getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail()), reportsIndex1);
+
+		assertEquals(testTask.getReportsIndexOfTaskCollaborator(tWorker2.getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail()), reportsIndex2);
+
+
+	}
+
 	@Test
 	public void getReportedTimeByTaskCollaborator() {
 
@@ -770,16 +817,16 @@ public class TaskTest {
 		testTask2.addProjectCollaboratorToTask(collab1);
 
 		// Creates a report by tWorker1
-		testTask2.createReport(tWorker1);
+		testTask2.createReport(tWorker1, LocalDate.now(), 0);
 
 		// updates the report time
-		testTask2.changeReportedTime(20, "user@gmail.com");
+		testTask2.updateReportedTime(20, tWorker1, 0);
 
 		// Checks if the task
-		assertEquals(testTask2.getReportedTimeByTaskCollaborator("user@gmail.com"), 20);
+		assertEquals(testTask2.getReportedTimeByTaskCollaborator("user@gmail.com"), 20, 0.0);
 
 		// Checks if the task a report by its user
-		assertEquals(testTask2.getReportedTimeByTaskCollaborator("null@gmail.com"), 0);
+		assertEquals(testTask2.getReportedTimeByTaskCollaborator("null@gmail.com"), 0, 0.0);
 
 	}
 
@@ -791,10 +838,10 @@ public class TaskTest {
 		testTask2.addProjectCollaboratorToTask(collab1);
 
 		// Creates a report by tWorker1
-		testTask2.createReport(tWorker1);
+		testTask2.createReport(tWorker1, LocalDate.now(), 0);
 
 		// updates the report time
-		testTask2.changeReportedTime(20, "user@gmail.com");
+		testTask2.updateReportedTime(20, tWorker1, 0);
 
 		// Checks the getReporterName method
 		assertEquals(testTask2.getReporterName("user@gmail.com"), "pepe");

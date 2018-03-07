@@ -5,6 +5,7 @@ package project.model;
 import project.model.taskstateinterface.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -518,7 +519,7 @@ public class Task {
 	 * @return report
 	 */
 
-	public boolean createReport(TaskCollaborator taskCollaborator) {
+	public boolean createReport(TaskCollaborator taskCollaborator, LocalDate dateOfReport, double timeToReport) {
 		boolean wasReportCreated = true;
 
 		if (this.getTaskState() instanceof Finished) {
@@ -530,9 +531,12 @@ public class Task {
 		} else if (this.getTaskState() instanceof StandBy) {
 			wasReportCreated = false;
 
+		} else if (!this.taskTeam.contains(taskCollaborator) || taskCollaborator.getFinishDate() != null) {
+			wasReportCreated = false;
 		} else {
-			Report report = new Report(taskCollaborator);
+			Report report = new Report(taskCollaborator, dateOfReport);
 			report.setTask(this);
+			report.setReportedTime(timeToReport);
 			this.reports.add(report);
 
 		}
@@ -541,28 +545,55 @@ public class Task {
 
 	}
 
+
 	/**
-	 * 
+	 * This method returns the index number of the reports associated to a Task Collaborator
+	 *
+	 * @param email The Task Collaborator to search it's reports index number
+	 * @return reportsIndex
+	 * Returns a List with the index numbers of the reports by a given taskCollaborator
+	 */
+	public List<Integer> getReportsIndexOfTaskCollaborator(String email) {
+
+		List<Integer> reportsIndex = new ArrayList<>();
+
+		for (int reportNumber = 0; reportNumber < this.reports.size(); reportNumber++) {
+			if (this.reports.get(reportNumber).getTaskCollaborator().getProjCollaborator().getUserFromProjectCollaborator().
+					getEmail().equals(email) && this.reports.get(reportNumber).getTaskCollaborator().getFinishDate() == null) {
+				reportsIndex.add(reportNumber);
+			}
+		}
+
+		return reportsIndex;
+
+	}
+
+	/**
+	 *
 	 * This method changes the reportedTime of a Task by a given TaskCollaborator
-	 * 
+	 *
 	 * @param newTime
 	 *            The updated time of the report
-	 * @param userEmail
+	 * @param taskCollaborator
 	 *            The userEmail to update it's reportedTime
 	 * @return TRUE if the Report is updated, FALSE if Not
 	 */
-	public boolean changeReportedTime(int newTime, String userEmail) {
+	public boolean updateReportedTime(double newTime, TaskCollaborator taskCollaborator, int reportToChange) {
 		boolean wasReportUpdated = false;
-		for (Report other : this.reports) {
-			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
-					.getUserFromProjectCollaborator().getEmail().equals(userEmail)) {
-				other.setReportedTime(newTime);
+		Report reportToUpdate;
+		if (reportToChange >= 0 && reportToChange < this.reports.size()) {
+
+			reportToUpdate = this.reports.get(reportToChange);
+
+			if (reportToUpdate.getTaskCollaborator().equals(taskCollaborator) && taskCollaborator.getFinishDate() == null) {
+				reportToUpdate.setReportedTime(newTime);
 				wasReportUpdated = true;
 			}
 		}
 
 		return wasReportUpdated;
 	}
+
 
 	/**
 	 * @param userEmail
@@ -596,12 +627,32 @@ public class Task {
 	}
 
 	/**
+	 * This method returns the Active Task Collaborator by Email
+	 *
+	 * @param email The Email to search for
+	 * @return TaskCollaborator that is active in the TaskTeam
+	 */
+	public TaskCollaborator getActiveTaskCollaboratorByEmail(String email) {
+		TaskCollaborator taskCollaborator = null;
+		for (TaskCollaborator other : this.getTaskTeam()) {
+			if (other.getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail()
+					.equals(email) && other.getFinishDate() == null) {
+				taskCollaborator = other;
+			}
+
+		}
+
+		return taskCollaborator;
+	}
+
+
+	/**
 	 * @param userEmail
 	 *            The UserEmail that the method will look for it's report
 	 * @return The reported time by a task collaborator
 	 */
-	public int getReportedTimeByTaskCollaborator(String userEmail) {
-		int reportedTime = 0;
+	public double getReportedTimeByTaskCollaborator(String userEmail) {
+		double reportedTime = 0;
 		for (Report other : this.reports) {
 			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
 					.getUserFromProjectCollaborator().getEmail().equals(userEmail)) {

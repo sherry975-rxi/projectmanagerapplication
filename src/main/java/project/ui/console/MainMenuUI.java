@@ -9,6 +9,7 @@ import project.ui.console.collaborator.US101UserRegisterUI;
 import project.ui.console.collaborator.US208LoginUI;
 import project.ui.console.director.DirectorMenuUI;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class MainMenuUI {
 	private static User userDirector;
 	private static User userJSilva;
 
-	public /*static*/ void main(String[] args) {
+	public /*Static*/ void main(String[] args) {
 
 		// Instantiates the company
 		Company myCompany = Company.getTheInstance();
@@ -123,7 +124,7 @@ public class MainMenuUI {
 		taskDeadlineDate.set(Calendar.MONTH, Calendar.FEBRUARY);
 		taskGP1.setTaskDeadline(taskDeadlineDate);
 
-		taskGP1.createReport(tWorkerJSilva);
+		taskGP1.createReport(tWorkerJSilva, LocalDate.now(), 10);
 		taskGP1.getReports().get(0).setReportedTime(20);
 
 		Task taskGP2 = projectGP.getTaskRepository().createTask("Desenvolver código para responder à US122");
@@ -409,6 +410,7 @@ public class MainMenuUI {
 				directorMenu.directorMenu();
 				break;
 
+
 			case "5":
 				userJSilva.setUserProfile(Profile.COLLABORATOR);
 				CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(userJSilva);
@@ -416,7 +418,8 @@ public class MainMenuUI {
 
 				break;
 
-			default:
+
+				default:
 				System.out.println("Choose a valid option:");
 				mainMenu();
 			}

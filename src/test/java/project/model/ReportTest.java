@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
@@ -19,6 +20,8 @@ public class ReportTest {
 	Project p1;
 	TaskRepository taskRepository;
 	Report report;
+	LocalDate dateOfReport;
+	Task task1;
 	int timeToCompare;
 
 	@Before
@@ -35,6 +38,8 @@ public class ReportTest {
 		t1 = p1.getTaskRepository().createTask("description", 0, estimatedStartDate, taskDeadline, 0);
 		p1.getTaskRepository().addProjectTask(t1);
 		timeToCompare = 0;
+		dateOfReport = LocalDate.now();
+		task1 = new Task();
 	}
 
 	@After
@@ -48,6 +53,7 @@ public class ReportTest {
 		taskRepository = null;
 		report = null;
 		timeToCompare = 0;
+		dateOfReport = null;
 	}
 
 	/**
@@ -57,7 +63,47 @@ public class ReportTest {
 	public void testCreateReport() {
 
 		// Creates a new Report instance
-		report = new Report(taskWorker1);
+		report = new Report(taskWorker1, dateOfReport);
+
+	}
+
+	/**
+	 * Tests the setters and getters
+	 */
+	@Test
+	public void testSettersAndGetters() {
+
+		// Creates a new Report instance
+		report = new Report(taskWorker1, dateOfReport);
+
+		//Sets a time to the report
+		report.setReportedTime(10);
+		assertEquals(report.getReportedTime(), 10, 0.0);
+
+		//Sets a task to the report
+		report.setTask(task1);
+		assertEquals(report.getTask(), task1);
+
+		//Sets a date to the report
+		report.setDateOfReport(LocalDate.now());
+		assertEquals(report.getDateOfReport(), LocalDate.now());
+
+		//Sets a date to the update
+		report.setDateOfUpdate(LocalDate.now());
+		assertEquals(report.getDateOfUpdate(), LocalDate.now());
+
+		//Sets an Id
+		report.setId(2);
+		assertEquals(report.getId(), 2);
+
+		//Sets a Cost
+		report.setCost(10);
+		assertEquals(report.getCost(), 10, 0.0);
+
+		//Sets a Task Collaborator to the task
+		report.setTaskCollaborator(taskWorker1);
+		assertEquals(report.getTaskCollaborator(), taskWorker1);
+
 
 	}
 
@@ -68,9 +114,9 @@ public class ReportTest {
 	public void testGetReportedTime() {
 
 		// Creates a new report instance;
-		report = new Report(taskWorker1);
+		report = new Report(taskWorker1, dateOfReport);
 
-		// Creates a new int, with the expected value to be returnet by getReportedTime
+		// Creates a new int, with the expected value to be returned by getReportedTime
 		// method
 		timeToCompare = 20;
 
@@ -78,7 +124,7 @@ public class ReportTest {
 		report.setReportedTime(20);
 
 		// Compares the two values
-		assertEquals(report.getReportedTime(), timeToCompare);
+		assertEquals(report.getReportedTime(), timeToCompare, 0.0);
 
 	}
 
@@ -89,7 +135,7 @@ public class ReportTest {
 	public void testGetTaskWorker() {
 
 		// Creates a new report instance;
-		report = new Report(taskWorker1);
+		report = new Report(taskWorker1, dateOfReport);
 
 		// Compares the two values
 		assertEquals(report.getTaskCollaborator(), taskWorker1);

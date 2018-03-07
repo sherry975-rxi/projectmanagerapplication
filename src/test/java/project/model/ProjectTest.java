@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -412,8 +413,8 @@ public class ProjectTest {
 		// and the current info about the TimeSpent is by default zero.
 		// The following instructions will change that TimeSpent for each TaskWorker
 
-		task1.createReport(taskWorker2);
-		task1.createReport(taskWorker1);
+		task1.createReport(taskWorker2, LocalDate.now(), 0);
+		task1.createReport(taskWorker1, LocalDate.now(), 0);
 
 		task1.getReports().get(0).setReportedTime(5);
 		task1.getReports().get(1).setReportedTime(7);
@@ -433,7 +434,7 @@ public class ProjectTest {
 		// t4.createTaskWorker(projectCollaborator1);
 		// task4.addUserToTask(task4.createTaskWorker(projectCollaborator2));
 		task4.addProjectCollaboratorToTask(projectCollaborator2);
-		task4.createReport(task4.getTaskTeam().get(0));
+		task4.createReport(task4.getTaskTeam().get(0), LocalDate.now(), 0);
 		// task4.getTaskTeam().get(0).setHoursSpent(7);
 		task4.getReports().get(0).setReportedTime(7);
 

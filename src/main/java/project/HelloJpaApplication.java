@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import project.Repository.ProjectsRepository;
-import project.Repository.UserRepository;
 import project.Repository.ProjCollabRepository;
+import project.Repository.ProjectsRepository;
 import project.Repository.TaskRepository;
+import project.Repository.UserRepository;
 import project.model.*;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 @SpringBootApplication
@@ -77,7 +78,7 @@ public class HelloJpaApplication implements CommandLineRunner {
 
         TaskCollaborator manelinhoTaskCol = tester.createTaskCollaborator(manelinhoCollab);
         tester.addTaskCollaboratorToTask(manelinhoTaskCol);
-        tester.createReport(manelinhoTaskCol);
+        tester.createReport(manelinhoTaskCol, LocalDate.now(), 10);
         tester.getReports().get(0).setReportedTime(70);
 
         Calendar testerDeadline = Calendar.getInstance();

@@ -45,7 +45,7 @@ public class TaskDetailsUI {
 		System.out.println("[1] Mark task as completed");
 		System.out.println("[2] Request assignment to task team");
 		System.out.println("[3] Request task team unassignment");
-		System.out.println("[4] Update task report");
+		System.out.println("[4] Create/Update task report");
 		System.out.println("______________________________________________");
 		System.out.println("[B] Back");
 		System.out.println("[M] MainMenu");
@@ -141,6 +141,8 @@ public class TaskDetailsUI {
 		} else {
 			US207And208CreateUpdateTaskReportUI reportUI = new US207And208CreateUpdateTaskReportUI(user.getEmail(),
 					taskID);
+
+
 			reportUI.createReport();
 		}
 	}
