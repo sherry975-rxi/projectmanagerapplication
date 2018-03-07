@@ -139,7 +139,7 @@ public class TaskDetailsUI {
 		if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator2)) {
 			System.out.println(cantDoIt);
 		} else {
-			US207And208CreateUpdateTaskReportUI reportUI = new US207And208CreateUpdateTaskReportUI(user.getEmail(),
+			US207And208CreateOrUpdateTaskReportUI reportUI = new US207And208CreateOrUpdateTaskReportUI(user.getEmail(),
 					taskID);
 
 
