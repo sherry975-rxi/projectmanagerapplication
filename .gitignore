@@ -200,3 +200,12 @@ lib/spring-orm-4.3.14.RELEASE.jar
 lib/spring-oxm-4.3.14.RELEASE.jar
 lib/spring-test-4.3.14.RELEASE.jar
 lib/spring-tx-4.3.14.RELEASE.jar
+javax.annotation.jar
+javax.ejb.jar
+javax.persistence.jar
+javax.transaction.jar
+javax.servlet.jsp.jstl.jar
+javax.servlet.jsp.jar
+javax.servlet.jar
+javax.resource.jar
+javax.jms.jar
