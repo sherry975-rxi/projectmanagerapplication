@@ -35,7 +35,9 @@ public class HelloJpaApplication implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
 
-        dummyData();
+        if(userRepository.findAll().isEmpty() && projRepository.findAll().isEmpty()) {
+            dummyData();
+        }
 
         for (User u : userRepository.findAll()) {
             logger.info(u.toString());
