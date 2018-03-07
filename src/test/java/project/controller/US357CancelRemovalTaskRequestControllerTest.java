@@ -137,7 +137,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		// PreAssert: the taskCollaborator correspondent to the user does not have a
 		// finish date and the pendingRemovalListSize is 2
 		us357Controller.setTaskIDandUserEmailWithRequestString(stringRequest1);
-		int pendingRemovalListSizeBefore = projectA.getRemovalRequestsList().size();
+		int pendingRemovalListSizeBefore = projectA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
 		assertEquals(2, pendingRemovalListSizeBefore);
 
@@ -146,7 +146,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		// Assert: the taskCollaborator correspondent to the user has to have a finish
 		// date and the pendinfRemovalListSize is 1
-		int pendingRemovalListSizeAfter = projectA.getRemovalRequestsList().size();
+		int pendingRemovalListSizeAfter = projectA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() != null));
 		assertEquals(1, pendingRemovalListSizeAfter);
 
@@ -163,7 +163,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		// PreAssert- the taskCollaborator correspondent to the user does not have a
 		// finish date and the pendingRemovalListSize is 2
 		us357Controller.setTaskIDandUserEmailWithRequestString(stringRequest1);
-		int pendingRemovalListSizeBefore = projectA.getRemovalRequestsList().size();
+		int pendingRemovalListSizeBefore = projectA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
 		assertEquals(2, pendingRemovalListSizeBefore);
 
@@ -172,7 +172,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		// Assert - the taskCollaborator still does'nt have a finish date and the
 		// pendingRemovalList has one less request
-		int pendingRemovalListSizeAfter = projectA.getRemovalRequestsList().size();
+		int pendingRemovalListSizeAfter = projectA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
 		assertEquals(1, pendingRemovalListSizeAfter);
 

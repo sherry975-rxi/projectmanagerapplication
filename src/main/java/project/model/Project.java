@@ -45,10 +45,7 @@ public class Project implements Serializable{
 	private Calendar finishdate;
 
     @OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "project")
-	private List<TaskTeamRequest> pendingTaskAssignementRequests;
-
-    @OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "project")
-	private List<TaskTeamRequest> pendingTaskRemovalRequests;
+	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
@@ -88,8 +85,7 @@ public class Project implements Serializable{
 		this.taskRepository = new TaskRepository(projectIdCode);
 		this.taskRepository.setProject(this);
 		this.projectTeam = new ArrayList<>();
-		this.pendingTaskAssignementRequests = new ArrayList<>();
-		this.pendingTaskRemovalRequests = new ArrayList<>();
+		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 
 	public long getId() {
@@ -164,13 +160,10 @@ public class Project implements Serializable{
 		this.budget = budget;
 	}
 
-	public void setPendingTaskAssignementRequests(List<TaskTeamRequest> pendingTaskAssignementRequests) {
-		this.pendingTaskAssignementRequests = pendingTaskAssignementRequests;
+	public void setPendingTaskTeamRequests(List<TaskTeamRequest> pendingTaskTeamRequests) {
+		this.pendingTaskTeamRequests = pendingTaskTeamRequests;
 	}
 
-	public void setPendingTaskRemovalRequests(List<TaskTeamRequest> pendingTaskRemovalRequests) {
-		this.pendingTaskRemovalRequests = pendingTaskRemovalRequests;
-	}
 	/**
 	 * This Method adds a User to a project. This action converts the User in a
 	 * Project Collaborator ( User + costPerEffort)
@@ -317,8 +310,8 @@ public class Project implements Serializable{
 	 * 
 	 * @return Project Team - Active Team of the Project
 	 */
-	public ArrayList<ProjectCollaborator> getActiveProjectTeam() {
-		ArrayList<ProjectCollaborator> activeCollaborators = new ArrayList<>();
+	public List<ProjectCollaborator> getActiveProjectTeam() {
+		List<ProjectCollaborator> activeCollaborators = new ArrayList<>();
 
 		for (ProjectCollaborator other : this.projectTeam) {
 			if (other.isProjectCollaboratorActive())
@@ -398,9 +391,7 @@ public class Project implements Serializable{
 	 *            User to compare to the Project's Manager
 	 * @param toAdd
 	 *            User to add to the Project Team
-	 */
-
-	/*
+     *
 	 * public void addUserToProjectTeam(User projectManager, User toAdd) { if
 	 * (this.isProjectManager(projectManager)) { if
 	 * (!this.projectTeam.contains(toAdd)) { this.projectTeam.add(toAdd); } } }
@@ -541,8 +532,8 @@ public class Project implements Serializable{
 	 *
 	 */
 
-	public ArrayList<ProjectCollaborator> getCollaboratorsWithoutTasks() {
-		ArrayList<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
+	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
+		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
 		inactiveCollaborators.addAll(this.getProjectTeam());
 		for (ProjectCollaborator other : this.getProjectTeam()) {
 			if (this.taskRepository.isCollaboratorActiveOnAnyTask(other)) // needs to check if
@@ -655,7 +646,12 @@ public class Project implements Serializable{
 	 */
 	public boolean createTaskAssignementRequest(ProjectCollaborator projCollab, Task task) {// uso de if incorreto?
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
-		return this.pendingTaskAssignementRequests.add(newReq);
+		newReq.setType(TaskTeamRequest.ASSIGNMENT);
+        newReq.setProject(this);
+        if (!this.isAssignmentRequestAlreadyCreated(projCollab, task)) {
+            return this.pendingTaskTeamRequests.add(newReq);
+        }
+        return false;
 	}
 
 	/**
@@ -668,8 +664,10 @@ public class Project implements Serializable{
 	 */
 	public boolean createTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
+        newReq.setType(TaskTeamRequest.REMOVAL);
+        newReq.setProject(this);
 		if (!this.isRemovalRequestAlreadyCreated(projCollab, task)) {
-			return this.pendingTaskRemovalRequests.add(newReq);
+			return this.pendingTaskTeamRequests.add(newReq);
 		}
 		return false;
 	}
@@ -683,7 +681,7 @@ public class Project implements Serializable{
 	 */
 
 	public void deleteTaskAssignementRequest(TaskTeamRequest request) {
-		this.pendingTaskAssignementRequests.remove(request);
+		this.pendingTaskTeamRequests.remove(request);
 	}
 
 	/**
@@ -696,7 +694,8 @@ public class Project implements Serializable{
 
 	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
 		TaskTeamRequest request = getRemovalTaskTeamRequest(projCollab, task);
-		return this.pendingTaskRemovalRequests.remove(request);
+        request.setType(TaskTeamRequest.REMOVAL);
+		return this.pendingTaskTeamRequests.remove(request);
 	}
 
 	/**
@@ -705,10 +704,12 @@ public class Project implements Serializable{
 	 * @return toString List of strings which contains the info about the task and
 	 *         the project collaborator for each request
 	 */
-	public ArrayList<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
-		ArrayList<String> toString = new ArrayList<>();
-		for (TaskTeamRequest req : this.pendingTaskAssignementRequests) {
-			toString.add(req.viewStringRepresentation());
+	public List<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
+		List<String> toString = new ArrayList<>();
+		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
+		    if(req.isAssignmentRequest()) {
+		        toString.add(req.viewStringRepresentation());
+            }
 		}
 		return toString;
 	}
@@ -720,12 +721,12 @@ public class Project implements Serializable{
 	 * @return toString List of strings which contains the info about the task and
 	 *         the project collaborator for each request
 	 */
-	public ArrayList<String> viewPendingTaskRemovalRequests() {
-		ArrayList<String> toString = new ArrayList<>();
-		for (TaskTeamRequest req : this.pendingTaskRemovalRequests) {
-			toString.add(req.getProjCollab().getUserFromProjectCollaborator().getName() + "\n"
-					+ req.getProjCollab().getUserFromProjectCollaborator().getEmail() + "\n"
-					+ req.getTask().getTaskID() + "\n" + req.getTask().getDescription());
+	public List<String> viewPendingTaskRemovalRequests() {
+		List<String> toString = new ArrayList<>();
+		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
+            if(req.isRemovalRequest()) {
+			    toString.add(req.viewStringRepresentation());
+            }
 		}
 		return toString;
 	}
@@ -746,7 +747,8 @@ public class Project implements Serializable{
 	public TaskTeamRequest getRemovalTaskTeamRequest(ProjectCollaborator projCollaborator, Task task) {
 
 		TaskTeamRequest removalRequestToFind = new TaskTeamRequest(projCollaborator, task);
-		for (TaskTeamRequest other : this.pendingTaskRemovalRequests) {
+        removalRequestToFind.setType(TaskTeamRequest.REMOVAL);
+		for (TaskTeamRequest other : this.pendingTaskTeamRequests) {
 			if (removalRequestToFind.equals(other)) {
 				return other;
 			}
@@ -763,9 +765,17 @@ public class Project implements Serializable{
 	 *         to a certain task
 	 */
 
-	public List<TaskTeamRequest> getAssignmentRequestsList() {
-		return this.pendingTaskAssignementRequests;
-	}
+    public List<TaskTeamRequest> getPendingTaskAssignementRequests() {
+
+        List<TaskTeamRequest> assignmentRequests = new ArrayList<>();
+
+        for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
+            if (req.isAssignmentRequest()) {
+                assignmentRequests.add(req);
+            }
+        }
+        return assignmentRequests;
+    }
 
 	// Do we use this method give the Removal requests to the controller, or
 	// create a method in Project that handles the approvals/rejections by receiving
@@ -778,9 +788,18 @@ public class Project implements Serializable{
 	 *         to a certain task
 	 */
 
-	public List<TaskTeamRequest> getRemovalRequestsList() {
-		return this.pendingTaskRemovalRequests;
-	}
+    public List<TaskTeamRequest> getPendingTaskRemovalRequests() {
+        List<TaskTeamRequest> removalRequests = new ArrayList<>();
+
+        for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
+            if (req.isRemovalRequest()) {
+                removalRequests.add(req);
+            }
+        }
+        return removalRequests;
+    }
+
+
 
 	/**
 	 * Checks if a certain request already exists
@@ -791,9 +810,10 @@ public class Project implements Serializable{
 	 *            Task chosen by the project collaborator
 	 * @return True if request already exists, false if not
 	 */
-	public boolean isAssignementRequestAlreadyCreated(ProjectCollaborator projCollab, Task task) {
+	public boolean isAssignmentRequestAlreadyCreated(ProjectCollaborator projCollab, Task task) {
 		TaskTeamRequest request = new TaskTeamRequest(projCollab, task);
-		return this.pendingTaskAssignementRequests.contains(request);
+        request.setType(TaskTeamRequest.ASSIGNMENT);
+		return this.pendingTaskTeamRequests.contains(request);
 	}
 
 	/**
@@ -807,7 +827,8 @@ public class Project implements Serializable{
 	 */
 	public boolean isRemovalRequestAlreadyCreated(ProjectCollaborator projCollab, Task task) {
 		TaskTeamRequest request = new TaskTeamRequest(projCollab, task);
-		return this.pendingTaskRemovalRequests.contains(request);
+        request.setType(TaskTeamRequest.REMOVAL);
+		return this.pendingTaskTeamRequests.contains(request);
 	}
 
 	/**
@@ -823,7 +844,8 @@ public class Project implements Serializable{
 	public TaskTeamRequest getAssignementTaskTeamRequest(ProjectCollaborator projCollaborator, Task task) {
 		TaskTeamRequest result = null;
 		TaskTeamRequest assignementRequestToFind = new TaskTeamRequest(projCollaborator, task);
-		for (TaskTeamRequest other : this.pendingTaskAssignementRequests) {
+        assignementRequestToFind.setType(TaskTeamRequest.ASSIGNMENT);
+		for (TaskTeamRequest other : this.pendingTaskTeamRequests) {
 			if (assignementRequestToFind.equals(other)) {
 				result = other;
 			}
@@ -831,51 +853,65 @@ public class Project implements Serializable{
 		return result;
 	}
 
-	/**
+	/** THESE METHODS HAVE BEEN PURGED AS ONLY ONE REQUEST LIST EXISTS NOW
+     *
+     *
 	 * Searches the assignement request list for the task selected. If it finds any
 	 * request with this task, removes it from the list.
-	 * 
+	 *
 	 * @param task
 	 *            Task to remove from the assignement request list
-	 */
+
 	public void removeAllRequestsWithASpecificTaskFromAssignementRequests(Task task) {
 		List<TaskTeamRequest> assignementCopy = new ArrayList<>();
-		assignementCopy.addAll(this.pendingTaskAssignementRequests);
+		assignementCopy.addAll(this.pendingTaskTeamRequests);
 		for (int i = assignementCopy.size() - 1; i >= 0; i--) {
 			if (assignementCopy.get(i).getTask().equals(task)) {
-				this.pendingTaskAssignementRequests.remove(this.pendingTaskAssignementRequests.get(i));
+				this.pendingTaskTeamRequests.remove(this.pendingTaskTeamRequests.get(i));
 			}
 		}
 	}
 
-	/**
+
 	 * Searches the removal request list for the task selected. If it finds any
 	 * request with this task, removes it from the list.
-	 * 
+	 *
 	 * @param task
 	 *            Task to remove from the removal request list
-	 */
+
 	public void removeAllRequestsWithASpecificTaskFromRemovalRequests(Task task) {
 		List<TaskTeamRequest> removalCopy = new ArrayList<>();
-		removalCopy.addAll(this.pendingTaskRemovalRequests);
+		removalCopy.addAll(this.pendingTaskTeamRequests);
 		for (int i = removalCopy.size() - 1; i >= 0; i--) {
 			if (removalCopy.get(i).getTask().equals(task)) {
-				this.pendingTaskRemovalRequests.remove(this.pendingTaskRemovalRequests.get(i));
+				this.pendingTaskTeamRequests.remove(this.pendingTaskTeamRequests.get(i));
 			}
 		}
 	}
 
+     */
+
+
+
 	/**
-	 * Searches both request lists for the task selected. If it finds any request
+	 * Searches request lists for the task selected. If it finds any request
 	 * with this task, removes it from the list.
 	 * 
 	 * @param task
 	 *            Task to remove from the request lists
 	 */
 	public void removeAllRequestsWithASpecificTask(Task task) {
-		this.removeAllRequestsWithASpecificTaskFromAssignementRequests(task);
-		this.removeAllRequestsWithASpecificTaskFromRemovalRequests(task);
+        List<TaskTeamRequest> requestsCopy = new ArrayList<>();
+        requestsCopy.addAll(this.pendingTaskTeamRequests);
+        for (int i = requestsCopy.size() - 1; i >= 0; i--) {
+            if (requestsCopy.get(i).getTask().equals(task)) {
+                this.pendingTaskTeamRequests.remove(this.pendingTaskTeamRequests.get(i));
+            }
+        }
 	}
+
+
+
 
 	public ProjectCollaborator getProjectCollaboratorFromUser(User user) {
 
@@ -888,28 +924,15 @@ public class Project implements Serializable{
 
 	}
 
-	/**
-	 * @return the pendingTaskAssignementRequests
-	 */
-	public List<TaskTeamRequest> getPendingTaskAssignementRequests() {
-		return pendingTaskAssignementRequests;
-	}
+    /**
 
-	/**
-	 * @return the pendingTaskRemovalRequests
-	 */
-	public List<TaskTeamRequest> getPendingTaskRemovalRequests() {
-		return pendingTaskRemovalRequests;
-	}
-
-	/**
 	 * This method returns the List of Collaborators from a specific task
 	 * 
 	 * @return Returns a list with the task team
 	 */
-	public ArrayList<ProjectCollaborator> getProjectCollaboratorsFromTask(Task task) {
+	public List<ProjectCollaborator> getProjectCollaboratorsFromTask(Task task) {
 
-		ArrayList<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
+		List<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
 		for (ProjectCollaborator other : this.getActiveProjectTeam()) {
 			if (task.isProjectCollaboratorActiveInTaskTeam(other)) {
 				collaboratorsFromTask.add(other);
