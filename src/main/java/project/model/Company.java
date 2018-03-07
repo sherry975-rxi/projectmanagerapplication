@@ -1,5 +1,9 @@
 package project.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import project.Repository.ProjectsRepository;
+
 /**
  * Company Class for building Repositories of Users and Projects (according to
  * certain specifications)
@@ -7,20 +11,30 @@ package project.model;
  * @author Group3
  *
  */
+@Service
 public final class Company {
 
-	private UserContainer usersRepository;
-	private ProjectContainer projectsRepository;
+	private UserContainer usersContainer;
+	private ProjectContainer projectContainer;
 	private static Company theInstance;
 
 	/**
-	 * Constructor for Company includes usersRepository creation and
-	 * projectsRepository creation
+	 * Constructor for Company includes usersContainer creation and
+	 * projectContainer creation
 	 */
-	private Company() {
-		this.usersRepository = new UserContainer();
-		this.projectsRepository = new ProjectContainer();
+	@Autowired
+	private Company(project.Repository.UserRepository userRepository, ProjectsRepository projectRepository) {
+		this.usersContainer = new UserContainer(userRepository);
+		this.projectContainer = new ProjectContainer(projectRepository);
+		theInstance = this;
 	}
+
+	private Company() {
+		this.usersContainer = new UserContainer();
+		this.projectContainer = new ProjectContainer();
+	}
+
+
 
 	/**
 	 * Method to instantiate one Company only.
@@ -44,20 +58,20 @@ public final class Company {
 	}
 
 	/**
-	 * This method returns the Repository of projects (projectsRepository)
+	 * This method returns the Repository of projects (projectContainer)
 	 * 
-	 * @return projectsRepository This is the Repository of all Projects created
+	 * @return projectContainer This is the Repository of all Projects created
 	 */
-	public ProjectContainer getProjectsRepository() {
-		return this.projectsRepository;
+	public ProjectContainer getProjectsContainer() {
+		return this.projectContainer;
 	}
 
 	/**
-	 * This method returns the Repository of users (usersRepository)
+	 * This method returns the Repository of users (usersContainer)
 	 * 
-	 * @return usersRepository This is the Repository of all Users created
+	 * @return usersContainer This is the Repository of all Users created
 	 */
-	public UserContainer getUsersRepository() {
-		return this.usersRepository;
+	public UserContainer getUsersContainer() {
+		return this.usersContainer;
 	}
 }
