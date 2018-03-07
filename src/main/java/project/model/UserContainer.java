@@ -1,5 +1,6 @@
 package project.model;
 
+import project.Repository.UserRepository;
 import project.dto.UserDTO;
 
 import javax.mail.internet.AddressException;
@@ -8,23 +9,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class UserRepository that contains all lists and methods to build lists of
+ * Class UserContainer that contains all lists and methods to build lists of
  * users
  * 
  * @author Group3
  *
  */
-public class UserRepository {
+public class UserContainer {
 
 
+	private UserRepository userRepository;
+	private List<User> usersContainer;
 
-	private List<User> usersRepository;
 
 	/**
-	 * Constructor for UserRepository includes usersList creation
+	 * Constructor created for JPA purposes. It is not to be used in model context.
 	 */
-	public UserRepository() {
-		this.usersRepository = new ArrayList<>();
+	//@Deprecated
+	public UserContainer (UserRepository userRepository){
+		this.userRepository = userRepository;
+		this.usersContainer = new ArrayList<>();
+	}
+
+	/**
+	 * Constructor for UserContainer includes usersList creation
+	 */
+	public UserContainer() {
+		this.usersContainer = new ArrayList<>();
 	}
 
 	/**
@@ -98,8 +109,8 @@ public class UserRepository {
 	 *            User added to the List of Users
 	 */
 	public void addUserToUserRepository(User toAddUsers) {
-		if (!this.usersRepository.contains(toAddUsers)) {
-			this.usersRepository.add(toAddUsers);
+		if (!this.usersContainer.contains(toAddUsers)) {
+			this.usersContainer.add(toAddUsers);
 		}
 	}
 
@@ -114,24 +125,24 @@ public class UserRepository {
 	 */
 	public boolean isUserinUserRepository(User addedUser) {
 
-		return this.usersRepository.contains(addedUser);
+		return this.usersContainer.contains(addedUser);
 	}
 
 	/**
-	 * This method returns a copy of the list of all users (usersRepository)
+	 * This method returns a copy of the list of all users (usersContainer)
 	 * 
 	 * @return allUsers This is the copy of the List of all Users in the repository
 	 */
-	public List<User> getAllUsersFromRepository() {
+	public List<User> getAllUsersFromUserContainer() {
 
 		List<User> allUsers = new ArrayList<>();
-		allUsers.addAll(this.usersRepository);
+		allUsers.addAll(this.usersContainer);
 		return allUsers;
 
 	}
 
 	/**
-	 * This method returns a list of all active collaborators (usersRepository)
+	 * This method returns a list of all active collaborators (usersContainer)
 	 * 
 	 * @return allCollaborators This is the copy of the List of all Users in the
 	 *         repository
@@ -139,7 +150,7 @@ public class UserRepository {
 	public List<User> getAllActiveCollaboratorsFromRepository() {
 
 		List<User> allCollaborators = new ArrayList<>();
-		for (User other : this.usersRepository) {
+		for (User other : this.usersContainer) {
 			if (other.isSystemUserStateActive() && other.getUserProfile().equals(Profile.COLLABORATOR)) {
 				allCollaborators.add(other);
 			}
@@ -163,9 +174,9 @@ public class UserRepository {
 
 		List<User> userListThatContainsPiecesOfEmailString = new ArrayList<>();
 
-		for (int i = 0; i < this.usersRepository.size(); i++) {
-			if (usersRepository.get(i).getEmail().contains(partOfEmail)) {
-				userListThatContainsPiecesOfEmailString.add(usersRepository.get(i));
+		for (int i = 0; i < this.usersContainer.size(); i++) {
+			if (usersContainer.get(i).getEmail().contains(partOfEmail)) {
+				userListThatContainsPiecesOfEmailString.add(usersContainer.get(i));
 			}
 
 		}
@@ -186,9 +197,9 @@ public class UserRepository {
 	 */
 	public User getUserByEmail(String completeEmail) {
 
-		for (int i = 0; i < this.usersRepository.size(); i++) {
-			if (usersRepository.get(i).getEmail().contains(completeEmail)) {
-				return usersRepository.get(i);
+		for (int i = 0; i < this.usersContainer.size(); i++) {
+			if (usersContainer.get(i).getEmail().contains(completeEmail)) {
+				return usersContainer.get(i);
 			}
 		}
 		return null;
@@ -207,9 +218,9 @@ public class UserRepository {
 
 		List<User> usersByProfileList = new ArrayList<>();
 
-		for (int i = 0; i < this.usersRepository.size(); i++) {
-			if (usersRepository.get(i).getUserProfile() == searchProfile) {
-				usersByProfileList.add(this.usersRepository.get(i));
+		for (int i = 0; i < this.usersContainer.size(); i++) {
+			if (usersContainer.get(i).getUserProfile() == searchProfile) {
+				usersByProfileList.add(this.usersContainer.get(i));
 			}
 		}
 		return usersByProfileList;

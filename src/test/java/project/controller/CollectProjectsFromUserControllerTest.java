@@ -24,7 +24,7 @@ public class CollectProjectsFromUserControllerTest {
 	User user1;
 	User userAdmin;
 
-	TaskRepository taskRepository;
+	TaskContainer taskContainer;
 
 	TaskCollaborator taskWorker1;
 
@@ -39,31 +39,31 @@ public class CollectProjectsFromUserControllerTest {
 		myCompany = Company.getTheInstance();
 
 		// create user
-		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		userAdmin = myCompany.getUsersRepository().createUser("João", "joao@gmail.com", "001", "Admin", "920000000",
+		userAdmin = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000",
 				"Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
-		myCompany.getUsersRepository().addUserToUserRepository(user1);
-		myCompany.getUsersRepository().addUserToUserRepository(userAdmin);
+		myCompany.getUsersContainer().addUserToUserRepository(user1);
+		myCompany.getUsersContainer().addUserToUserRepository(userAdmin);
 
 		// Creates one Project
-		project = myCompany.getProjectsRepository().createProject("name3", "description4", userAdmin);
-		project2 = myCompany.getProjectsRepository().createProject("name1", "description4", userAdmin);
+		project = myCompany.getProjectsContainer().createProject("name3", "description4", userAdmin);
+		project2 = myCompany.getProjectsContainer().createProject("name1", "description4", userAdmin);
 
 		// add project to project repository
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(project);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(project2);
 
 		// create project collaborators
 		collab1 = new ProjectCollaborator(user1, 2);
 
-		// create taskRepository
+		// create taskContainer
 
-		taskRepository = project.getTaskRepository();
+		taskContainer = project.getTaskRepository();
 
 		// create task workers
 		taskWorker1 = new TaskCollaborator(collab1);
@@ -86,7 +86,7 @@ public class CollectProjectsFromUserControllerTest {
 		userAdmin = null;
 		project = null;
 		project2 = null;
-		taskRepository = null;
+		taskContainer = null;
 		taskWorker1 = null;
 		collab1 = null;
 	}

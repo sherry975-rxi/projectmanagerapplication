@@ -49,9 +49,9 @@ public class US356ManageAssignmentRequestControllerTest {
 
 		teamPermanentMember = new User("Mr permanent", "permie@mail.mail", "33333", "placeholding", "98644");
 
-		spaceX.getUsersRepository().addUserToUserRepository(managerTester);
-		spaceX.getUsersRepository().addUserToUserRepository(teamTester);
-		spaceX.getUsersRepository().addUserToUserRepository(teamPermanentMember);
+		spaceX.getUsersContainer().addUserToUserRepository(managerTester);
+		spaceX.getUsersContainer().addUserToUserRepository(teamTester);
+		spaceX.getUsersContainer().addUserToUserRepository(teamPermanentMember);
 
 		// creates a new test project, and adds the test Collaborator to the team
 		testProject = new Project(1, "testing proj", "shoot rocket... again", managerTester);
@@ -59,7 +59,7 @@ public class US356ManageAssignmentRequestControllerTest {
 		teamPermanentCollaborator = new ProjectCollaborator(teamPermanentMember, 2000);
 		testProject.addProjectCollaboratorToProjectTeam(teamTesterCollaborator);
 		testProject.addProjectCollaboratorToProjectTeam(teamPermanentCollaborator);
-		spaceX.getProjectsRepository().addProjectToProjectRepository(testProject);
+		spaceX.getProjectsContainer().addProjectToProjectContainer(testProject);
 
 		// creates two estimated dates and uses them to generate a task
 		// declares strings for the task's ID and description to facilitate assertion

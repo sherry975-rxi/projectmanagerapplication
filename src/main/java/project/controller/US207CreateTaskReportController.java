@@ -9,9 +9,9 @@ import java.util.List;
 public class US207CreateTaskReportController {
 
     private User username;
-    private UserRepository userRepository;
+    private UserContainer userContainer;
     private Company company;
-    private ProjectRepository projectRepository;
+    private ProjectContainer projectContainer;
     private String email;
     private Task task;
 
@@ -22,11 +22,11 @@ public class US207CreateTaskReportController {
      */
     public US207CreateTaskReportController(String email, String taskID) {
         this.company = Company.getTheInstance();
-        this.projectRepository = company.getProjectsRepository();
-        this.userRepository = company.getUsersRepository();
-        this.username = userRepository.getUserByEmail(email);
+        this.projectContainer = company.getProjectsContainer();
+        this.userContainer = company.getUsersContainer();
+        this.username = userContainer.getUserByEmail(email);
         this.email = email;
-        for (Task other : projectRepository.getUserTasks(username)) {
+        for (Task other : projectContainer.getUserTasks(username)) {
             if (other.getTaskID().equals(taskID)) {
                 task = other;
             }

@@ -59,7 +59,7 @@ public class US357CancelRemovalTaskRequestController {
 		String userEmail = parts[1];
 		String taskID = parts[2];
 
-		this.userToRemove = Company.getTheInstance().getUsersRepository().getUserByEmail(userEmail);
+		this.userToRemove = Company.getTheInstance().getUsersContainer().getUserByEmail(userEmail);
 		this.task = project.getTaskRepository().getTaskByID(taskID);
 	}
 

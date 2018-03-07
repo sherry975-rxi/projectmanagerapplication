@@ -1,20 +1,34 @@
 package project.model;
 
+import project.Repository.ProjectsRepository;
+import project.Repository.UserRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectRepository {
+public class ProjectContainer {
 
-	private List<Project> projectsRepository;
+	private project.Repository.ProjectsRepository projectsRepository;
+	private List<Project> projectsContainer;
 	private int projCounter = 1;
+
+
+
+	/**
+	 * Constructor created for JPA purposes. It is not to be used in model context.
+	 */
+	//@Deprecated
+	public ProjectContainer (ProjectsRepository projectsRepository){
+		this.projectsRepository = projectsRepository;
+	}
 
 	/**
 	 * Constructor that allows one to create a new Project Repository. There are no
 	 * mandatory fields.
 	 */
-	public ProjectRepository() {
+	public ProjectContainer() {
 
-		this.projectsRepository = new ArrayList<>();
+		this.projectsContainer = new ArrayList<>();
 	}
 
 	/**
@@ -45,7 +59,7 @@ public class ProjectRepository {
 	}
 
 	public Project getProjById(int projCounter) {
-		for (Project proj : projectsRepository) {
+		for (Project proj : projectsContainer) {
 			if (proj.getIdCode() == projCounter) {
 				return proj;
 			}
@@ -68,9 +82,9 @@ public class ProjectRepository {
 	 * @param toAddProject
 	 *            Project added to the List of Projects
 	 */
-	public void addProjectToProjectRepository(Project toAddProject) {
-		if (!this.projectsRepository.contains(toAddProject)) {
-			this.projectsRepository.add(toAddProject);
+	public void addProjectToProjectContainer(Project toAddProject) {
+		if (!this.projectsContainer.contains(toAddProject)) {
+			this.projectsContainer.add(toAddProject);
 		}
 	}
 
@@ -79,10 +93,10 @@ public class ProjectRepository {
 	 * 
 	 * @return allProjects This is a copy of he list of all Projects created
 	 */
-	public List<Project> getAllProjects() {
+	public List<Project> getAllProjectsfromProjectsContainer() {
 
 		List<Project> allProjects = new ArrayList<>();
-		allProjects.addAll(this.projectsRepository);
+		allProjects.addAll(this.projectsContainer);
 
 		return allProjects;
 	}
@@ -99,7 +113,7 @@ public class ProjectRepository {
 
 		List<Project> activeProjectsList = new ArrayList<>();
 
-		for (Project other : this.projectsRepository) {
+		for (Project other : this.projectsContainer) {
 
 			if (other.getProjectStatus() == 1 || other.getProjectStatus() == 2 || other.getProjectStatus() == 3
 					|| other.getProjectStatus() == 4) {
@@ -123,7 +137,7 @@ public class ProjectRepository {
 	public List<Task> getUserTasks(User user) {
 		List<Task> tasksOfSpecificUser = new ArrayList<>();
 
-		for (Project other : this.projectsRepository) {
+		for (Project other : this.projectsContainer) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
 			if (toCheck != null) {
@@ -147,7 +161,7 @@ public class ProjectRepository {
 	public List<Task> getAllFinishedTasksFromUser(User user) {
 
 		List<Task> finishedTasksOfSpecificUser = new ArrayList<>();
-		for (Project other : this.projectsRepository) {
+		for (Project other : this.projectsContainer) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
 			if (toCheck != null) {
@@ -171,7 +185,7 @@ public class ProjectRepository {
 	public List<Task> getUnfinishedUserTaskList(User user) {
 
 		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<>();
-		for (Project other : this.projectsRepository) {
+		for (Project other : this.projectsContainer) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
 			if (toCheck != null) {
@@ -194,7 +208,7 @@ public class ProjectRepository {
 	public List<Task> getStartedNotFinishedUserTaskList(User user) {
 
 		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<>();
-		for (Project other : this.projectsRepository) {
+		for (Project other : this.projectsContainer) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
 			if (toCheck != null) {
@@ -223,7 +237,7 @@ public class ProjectRepository {
 	public List<Task> getLastMonthFinishedUserTaskList(User user) {
 
 		List<Task> lastMonthFinishedTaskListByUser = new ArrayList<>();
-		for (Project other : this.projectsRepository) {
+		for (Project other : this.projectsContainer) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
 			if (toCheck != null) {
@@ -247,7 +261,7 @@ public class ProjectRepository {
 	public double getTotalTimeOfFinishedTasksFromUserLastMonth(User user) {
 
 		double totalTime = 0;
-		for (Project other : this.projectsRepository) {
+		for (Project other : this.projectsContainer) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 			totalTime = totalTime
 					+ other.getTaskRepository().getTimeSpentByProjectCollaboratorInAllTasksLastMonth(toCheck);
@@ -409,9 +423,9 @@ public class ProjectRepository {
 	 * 
 	 * @return TRUE if the Project is in this project repository FALSE if not
 	 */
-	public boolean isProjectInProjectRepository(Project project) {
+	public boolean isProjectInProjectContainer(Project project) {
 
-		return this.projectsRepository.contains(project);
+		return this.projectsContainer.contains(project);
 	}
 
 	/**
@@ -426,7 +440,7 @@ public class ProjectRepository {
 
 		List<Project> listOfProjectsOfUser = new ArrayList<>();
 
-		for (Project other : this.projectsRepository) {
+		for (Project other : this.projectsContainer) {
 			if (other.isUserInProjectTeam(user) || other.isProjectManager(user)) {
 				listOfProjectsOfUser.add(other);
 			}
@@ -447,7 +461,7 @@ public class ProjectRepository {
 
 		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
 
-		for (Project other : this.projectsRepository) {
+		for (Project other : this.projectsContainer) {
 			if (other.isProjectManager(user)) {
 				listOfProjectsOfProjectManager.add(other);
 			}

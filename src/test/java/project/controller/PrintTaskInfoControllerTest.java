@@ -16,10 +16,10 @@ public class PrintTaskInfoControllerTest {
 	User user1;
 	User joaoPM;
 	ProjectCollaborator collab1, collab2;
-	ProjectRepository projectRepository;
+	ProjectContainer projectContainer;
 	Project project;
 	Calendar startDate, finishDate;
-	TaskRepository taskRepository;
+	TaskContainer taskContainer;
 	Task task1, task2, task3;
 	PrintTaskInfoController controller;
 
@@ -27,30 +27,30 @@ public class PrintTaskInfoControllerTest {
 	public void setUp() {
 		// create company
 		myCompany = Company.getTheInstance();
-		myCompany.getProjectsRepository().setProjCounter(1);
+		myCompany.getProjectsContainer().setProjCounter(1);
 
 		// create user
-		user1 = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		joaoPM = myCompany.getUsersRepository().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+		joaoPM = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
-		myCompany.getUsersRepository().addUserToUserRepository(user1);
-		myCompany.getUsersRepository().addUserToUserRepository(joaoPM);
+		myCompany.getUsersContainer().addUserToUserRepository(user1);
+		myCompany.getUsersContainer().addUserToUserRepository(joaoPM);
 
 		// creates project repository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsContainer();
 
 		// Creates one Project
-		project = myCompany.getProjectsRepository().createProject("Projeto de gestão",
+		project = myCompany.getProjectsContainer().createProject("Projeto de gestão",
 				"Este projeto está focado na gestão.", joaoPM);
 		project.setProjectBudget(3000);
 
 		// add project to project repository
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(project);
 
 		// add start date to project
 		Calendar startDate = Calendar.getInstance();
@@ -66,8 +66,8 @@ public class PrintTaskInfoControllerTest {
 		collab1 = new ProjectCollaborator(user1, 2);
 		collab2 = new ProjectCollaborator(joaoPM, 3);
 
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
+		// create taskContainer
+		taskContainer = project.getTaskRepository();
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -104,10 +104,10 @@ public class PrintTaskInfoControllerTest {
 		user1 = null;
 		joaoPM = null;
 		project = null;
-		projectRepository = null;
+		projectContainer = null;
 		startDate = null;
 		finishDate = null;
-		taskRepository = null;
+		taskContainer = null;
 		task1 = null;
 		task2 = null;
 		task3 = null;

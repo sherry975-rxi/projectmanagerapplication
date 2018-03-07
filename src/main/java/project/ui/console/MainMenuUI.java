@@ -18,34 +18,34 @@ public class MainMenuUI {
 	private static User userDirector;
 	private static User userJSilva;
 
-	public /*Static*/ void main(String[] args) {
+	public static void main() {
 
 		// Instantiates the company
 		Company myCompany = Company.getTheInstance();
 
 		// Instantiate the users, sets their passwords
-		userAdmin = myCompany.getUsersRepository().createUser("Teresa Ribeiro", "admin@gmail.com", "001",
+		userAdmin = myCompany.getUsersContainer().createUser("Teresa Ribeiro", "admin@gmail.com", "001",
 				"Administrator", "917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userAdmin.setPassword("123456");
-		userDirector = myCompany.getUsersRepository().createUser("Roberto Santos", "director@gmail.com", "002",
+		userDirector = myCompany.getUsersContainer().createUser("Roberto Santos", "director@gmail.com", "002",
 				"Director", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userDirector.setPassword("abcdef");
 
-		userJSilva = myCompany.getUsersRepository().createUser("João Silva", "jsilva@gmail.com", "010", "Comercial",
+		userJSilva = myCompany.getUsersContainer().createUser("João Silva", "jsilva@gmail.com", "010", "Comercial",
 				"937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userJSilva.setPassword("switch");
-		User userATirapicos = myCompany.getUsersRepository().createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
+		User userATirapicos = myCompany.getUsersContainer().createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
 				"Comercial", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Porto", "Portugal");
 		userATirapicos.setPassword("tirapicos");
-		User projectManager = myCompany.getUsersRepository().createUser("Sara Pereira", "spereira@gmail.com", "012",
+		User projectManager = myCompany.getUsersContainer().createUser("Sara Pereira", "spereira@gmail.com", "012",
 				"Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
 				"Portugal");
 		// addition of users to the company
-		myCompany.getUsersRepository().addUserToUserRepository(userAdmin);
-		myCompany.getUsersRepository().addUserToUserRepository(userDirector);
-		myCompany.getUsersRepository().addUserToUserRepository(userJSilva);
-		myCompany.getUsersRepository().addUserToUserRepository(userATirapicos);
-		myCompany.getUsersRepository().addUserToUserRepository(projectManager);
+		myCompany.getUsersContainer().addUserToUserRepository(userAdmin);
+		myCompany.getUsersContainer().addUserToUserRepository(userDirector);
+		myCompany.getUsersContainer().addUserToUserRepository(userJSilva);
+		myCompany.getUsersContainer().addUserToUserRepository(userATirapicos);
+		myCompany.getUsersContainer().addUserToUserRepository(projectManager);
 
 		// set user as collaborator
 		userDirector.setUserProfile(Profile.DIRECTOR);
@@ -54,11 +54,11 @@ public class MainMenuUI {
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 
 		// Instantiates a project and add it to the company
-		Project projectGP = myCompany.getProjectsRepository().createProject("Gestão de Projetos",
+		Project projectGP = myCompany.getProjectsContainer().createProject("Gestão de Projetos",
 				"Aplicação para Gestão de Projetos", projectManager);
-        Project projectApostas = myCompany.getProjectsRepository().createProject("Apostas Online",
+        Project projectApostas = myCompany.getProjectsContainer().createProject("Apostas Online",
 				"Plataforma Web para Apostas", projectManager);
-        Project projectHomeBanking = myCompany.getProjectsRepository().createProject("HomeBanking",
+        Project projectHomeBanking = myCompany.getProjectsContainer().createProject("HomeBanking",
 				"Aplicação iOS para HomeBanking", userJSilva);
 
 		TaskCollaborator tWorkerJSilva;
@@ -76,9 +76,9 @@ public class MainMenuUI {
 		projectGP.setFinishdate(finishDate);
 
 		// addition of projects to the company
-		myCompany.getProjectsRepository().addProjectToProjectRepository(projectGP);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(projectApostas);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(projectHomeBanking);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(projectGP);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(projectApostas);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(projectHomeBanking);
 
 		// set "EXECUTION" status of projects
 		projectGP.setProjectStatus(2);
@@ -382,6 +382,7 @@ public class MainMenuUI {
 			System.out.println("[3] Administrator");
 			System.out.println("[4] Director");
 			System.out.println("[5] Collaborator");
+            System.out.println("[E] EXIT");
 			System.out.println("______________________________________________");
 			System.out.println();
 			System.out.println("Please select an option:");
@@ -417,10 +418,14 @@ public class MainMenuUI {
 
 				break;
 
+            case "E":
+                condition=false;
+                System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
+                break;
 
-				default:
-				System.out.println("Choose a valid option:");
-				mainMenu();
+			default:
+			    System.out.println("Choose a valid option:");
+			    break;
 			}
 		}
 	}

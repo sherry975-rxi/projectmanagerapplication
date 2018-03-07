@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class OnGoingTaskTest {
 
 	Company myCompany;
-	ProjectRepository myProjectRepository;
+	ProjectContainer myProjectContainer;
 	User user1, user2;
 	Project myProject;
 	Task task1, task2, task3, neededTask, task4;
@@ -35,7 +35,7 @@ public class OnGoingTaskTest {
 
 		// Creates a Company and a project repository within the company
 		myCompany = Company.getTheInstance();
-		myProjectRepository = myCompany.getProjectsRepository();
+		myProjectContainer = myCompany.getProjectsContainer();
 
 		// Creates 3 users: User1 and User2
 		user1 = new User("Ana", "ana@company.com", "66", "Dev", "1234567");
@@ -45,7 +45,7 @@ public class OnGoingTaskTest {
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
 
 		// Adds a project to the project repository
-		myProjectRepository.addProjectToProjectRepository(myProject);
+		myProjectContainer.addProjectToProjectContainer(myProject);
 
 		// Creates 2 project collaborators
 		collab1 = myProject.createProjectCollaborator(user1, 5);
@@ -83,7 +83,7 @@ public class OnGoingTaskTest {
 	@After
 	public void tearDown() throws Exception {
 		Company.clear();
-		myProjectRepository = null;
+		myProjectContainer = null;
 		user1 = null;
 		user2 = null;
 		myProject = null;

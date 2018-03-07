@@ -4,8 +4,8 @@ import project.model.*;
 
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	private User user;
-	private TaskRepository taskRepository;
-	private ProjectRepository projectRepository;
+	private TaskContainer taskContainer;
+	private ProjectContainer projectContainer;
 	private Project project;
 	private Company company;
 	private Integer projectID;
@@ -30,8 +30,8 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	// public US204v2createRequestAddCollaboratorToTaskTeamController(int projId) {
 	//
 	// company = Company.getTheInstance();
-	// projectRepository = company.getProjectsRepository();
-	// project = projectRepository.getProjById(projId);
+	// projectContainer = company.getProjectsContainer();
+	// project = projectContainer.getProjById(projId);
 	//
 	// }
 
@@ -44,16 +44,16 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID, User user) {
 		setProjectIDFromTaskID(taskID);
 		this.company = Company.getTheInstance();
-		this.projectRepository = company.getProjectsRepository();
-		this.project = projectRepository.getProjById(this.projectID);
-		this.taskRepository = project.getTaskRepository();
+		this.projectContainer = company.getProjectsContainer();
+		this.project = projectContainer.getProjById(this.projectID);
+		this.taskContainer = project.getTaskRepository();
 		this.user = user;
 
 	}
 
 	public boolean createTaskTeamRequest() {
 
-		Task taskToAddCollaboratorTo = taskRepository.getTaskByID(this.taskID);
+		Task taskToAddCollaboratorTo = taskContainer.getTaskByID(this.taskID);
 		return project.createTaskAssignementRequest(getProjectCollaboratorFromUser(this.user), taskToAddCollaboratorTo);
 	}
 
@@ -106,7 +106,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 * @return Task from taskID
 	 */
 	public Task getTaskByTaskID(String taskID) {
-		return taskRepository.getTaskByID(taskID);
+		return taskContainer.getTaskByID(taskID);
 
 	}
 

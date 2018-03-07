@@ -8,10 +8,10 @@ import java.util.Calendar;
 import java.util.List;
 
 public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
-	ProjectRepository myProjRepo;
+	ProjectContainer myProjRepo;
 
 	public US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsRepository();
+		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
 	}
 
 	/**

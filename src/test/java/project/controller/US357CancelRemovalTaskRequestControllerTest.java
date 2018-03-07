@@ -22,8 +22,8 @@ public class US357CancelRemovalTaskRequestControllerTest {
 	Company company;
 	User userDaniel;
 	User userRui;
-	ProjectRepository projectRepository;
-	UserRepository userRepository;
+	ProjectContainer projectContainer;
+	UserContainer userContainer;
 	Project projectA;
 	ProjectCollaborator userRuiProjectCollaborator;
 	Task taskA;
@@ -42,21 +42,21 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		company = Company.getTheInstance();
 
 		// Creates the Project Repository and User Repository
-		projectRepository = Company.getTheInstance().getProjectsRepository();
-		userRepository = Company.getTheInstance().getUsersRepository();
+		projectContainer = Company.getTheInstance().getProjectsContainer();
+		userContainer = Company.getTheInstance().getUsersContainer();
 
 		// Creates the users
-		userDaniel = userRepository.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto", "967387654", "Rua",
+		userDaniel = userContainer.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto", "967387654", "Rua",
 				"3700", "Porto", "Porto", "Portugal");
-		userRui = userRepository.createUser("Rui", "rui@gmail.com", "12345", "Arquitecto", "967387654", "Rua", "3800",
+		userRui = userContainer.createUser("Rui", "rui@gmail.com", "12345", "Arquitecto", "967387654", "Rua", "3800",
 				"Porto", "Porto", "Portugal");
 		// Adds users to the user repository
-		userRepository.addUserToUserRepository(userDaniel);
-		userRepository.addUserToUserRepository(userRui);
+		userContainer.addUserToUserRepository(userDaniel);
+		userContainer.addUserToUserRepository(userRui);
 
 		// Creates the Project and adds it to the project repository
-		projectA = projectRepository.createProject("Museu Serralves", "Projecto do Museu de Serralves", userDaniel);
-		projectRepository.addProjectToProjectRepository(projectA);
+		projectA = projectContainer.createProject("Museu Serralves", "Projecto do Museu de Serralves", userDaniel);
+		projectContainer.addProjectToProjectContainer(projectA);
 
 		// Adds the user to the project team
 		projectA.addUserToProjectTeam(userRui, 20);
@@ -102,8 +102,8 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		projectA = null;
 		userDaniel = null;
 		userRui = null;
-		projectRepository = null;
-		userRepository = null;
+		projectContainer = null;
+		userContainer = null;
 		userRuiProjectCollaborator = null;
 		taskA = null;
 		taskB = null;

@@ -16,10 +16,10 @@ public class DoLoginController {
 	public boolean doLogin(String email, String password1) {
 		String password;
 		User username;
-		username = Company.getTheInstance().getUsersRepository().getUserByEmail(email);
+		username = Company.getTheInstance().getUsersContainer().getUserByEmail(email);
 		password = password1;
 		boolean loginSuccess = false;
-		if (Company.getTheInstance().getUsersRepository().isUserinUserRepository(username)
+		if (Company.getTheInstance().getUsersContainer().isUserinUserRepository(username)
 				&& username.checkLogin(password)) {
 			loginSuccess = true;
 		}

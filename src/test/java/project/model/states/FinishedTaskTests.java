@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class FinishedTaskTests {
 	Company myCompany;
-	ProjectRepository myProjRep;
+	ProjectContainer myProjRep;
 	User user1, user2;
 	Project myProject;
 	Task testTask, testTask2, testTask3;
@@ -28,13 +28,13 @@ public class FinishedTaskTests {
 	public void setUp() {
 
 		myCompany = Company.getTheInstance();
-		myProjRep = myCompany.getProjectsRepository();
+		myProjRep = myCompany.getProjectsContainer();
 
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
 
-		myProjRep.addProjectToProjectRepository(myProject);
+		myProjRep.addProjectToProjectContainer(myProject);
 
 		collab1 = myProject.createProjectCollaborator(user1, 5);
 		collab2 = myProject.createProjectCollaborator(user2, 5);

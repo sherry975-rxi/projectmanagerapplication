@@ -32,9 +32,9 @@ public class US136Tests {
 	public void setUp() {
 		myCompany = Company.getTheInstance();
 
-		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+		newUser2 = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "rua cinzenta", "6789-654", "porto", "porto", "portugal");
-		newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = myCompany.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "rua rosa", "6799-654", "porto", "porto", "portugal");
 
 		/* Set the testCollab profile type to collaborator */
@@ -56,14 +56,14 @@ public class US136Tests {
 	public void testSearchUsersByProfile() {
 		/* Compares a search of a profile type that doesn't exist with a empty List */
 		List<User> emptyList = new ArrayList<User>();
-		assertEquals(myCompany.getUsersRepository().searchUsersByProfile(Profile.COLLABORATOR), emptyList);
+		assertEquals(myCompany.getUsersContainer().searchUsersByProfile(Profile.COLLABORATOR), emptyList);
 	}
 
 	@Test
 	public void testSearchUsersByProfile2() {
 		/* Adds the created users to the Company user list */
-		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
-		myCompany.getUsersRepository().addUserToUserRepository(newUser3);
+		myCompany.getUsersContainer().addUserToUserRepository(newUser2);
+		myCompany.getUsersContainer().addUserToUserRepository(newUser3);
 
 		/*
 		 * Compares a search of collaborator with a list where two collaborators exist
@@ -72,6 +72,6 @@ public class US136Tests {
 		collaboratorstest.add(newUser2);
 		collaboratorstest.add(newUser3);
 
-		assertEquals(myCompany.getUsersRepository().searchUsersByProfile(Profile.COLLABORATOR), collaboratorstest);
+		assertEquals(myCompany.getUsersContainer().searchUsersByProfile(Profile.COLLABORATOR), collaboratorstest);
 	}
 }

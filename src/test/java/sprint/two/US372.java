@@ -21,12 +21,12 @@ public class US372 {
 	 */
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User user2;
 	Project project;
-	ProjectRepository projectRepository;
-	TaskRepository taskRepository;
+	ProjectContainer projectContainer;
+	TaskContainer taskContainer;
 	Task testTask;
 	Task testTask2;
 	Task testTask3;
@@ -38,26 +38,26 @@ public class US372 {
 
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersContainer();
 
 		// creates a ProjectsRepository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsContainer();
 
-		// creates a UserRepository
-		userRepository.getAllUsersFromRepository().clear();
+		// creates a UserContainer
+		userContainer.getAllUsersFromUserContainer().clear();
 
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		user2 = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -67,13 +67,13 @@ public class US372 {
 		ProjectCollaborator collaborator1 = new ProjectCollaborator(user1, 1200);
 
 		// create project
-		project = projectRepository.createProject("name3", "description4", user2);
+		project = projectContainer.createProject("name3", "description4", user2);
 
 		// add user to project team
 		project.addProjectCollaboratorToProjectTeam(collaborator1);
 
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
+		// create taskContainer
+		taskContainer = project.getTaskRepository();
 
 	}
 
@@ -83,9 +83,9 @@ public class US372 {
 		user1 = null;
 		testTask = null;
 		project = null;
-		projectRepository = null;
-		taskRepository = null;
-		userRepository = null;
+		projectContainer = null;
+		taskContainer = null;
+		userContainer = null;
 	}
 
 	@Test
@@ -113,13 +113,13 @@ public class US372 {
 		startDate.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create 4 tasks
-		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask2 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask3 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask3 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask4 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask4 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
 
 		// Marks 2 tasks as finished
@@ -133,7 +133,7 @@ public class US372 {
 		ArrayList<Task> listOfUnfinishedTasks = new ArrayList<Task>();
 
 		// Sees if the two lists are the same
-		assertEquals(listOfUnfinishedTasks, taskRepository.getUnFinishedTasks());
+		assertEquals(listOfUnfinishedTasks, taskContainer.getUnFinishedTasks());
 
 	}
 

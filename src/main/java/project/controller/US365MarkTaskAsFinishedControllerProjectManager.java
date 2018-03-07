@@ -2,11 +2,11 @@ package project.controller;
 
 import project.model.Project;
 import project.model.Task;
-import project.model.TaskRepository;
+import project.model.TaskContainer;
 
 public class US365MarkTaskAsFinishedControllerProjectManager {
 	private Task taskToBeMarked;
-	private TaskRepository projectTaskList;
+	private TaskContainer projectTaskList;
 
 	public US365MarkTaskAsFinishedControllerProjectManager(String taskID, Project selectedProject) {
 		this.projectTaskList = selectedProject.getTaskRepository();
@@ -26,7 +26,7 @@ public class US365MarkTaskAsFinishedControllerProjectManager {
 	 * 
 	 * public List<Project> getProjectsFromProjectManager(User user) { List<Project>
 	 * projectsThatImProjectManager = new ArrayList<>(); this.username = user;
-	 * projectList = Company.getTheInstance().getProjectsRepository();
+	 * projectList = Company.getTheInstance().getProjectsContainer();
 	 * projectsThatImProjectManager.addAll(projectList.getProjectsFromProjectManager(this.username));
 	 * return projectsThatImProjectManager; }
 	 *

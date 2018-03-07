@@ -13,7 +13,7 @@ public class US203GetUnfinishedTaskByUser {
 		User username = user1;
 		List<Task> unfinishedTaskFromUser = new ArrayList<>();
 		unfinishedTaskFromUser
-				.addAll(Company.getTheInstance().getProjectsRepository().getUnfinishedUserTaskList(username));
+				.addAll(Company.getTheInstance().getProjectsContainer().getUnfinishedUserTaskList(username));
 		return unfinishedTaskFromUser;
 	}
 

@@ -32,23 +32,23 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 		// creates test users for a manager and collaborator.
 		// declares the collaborator's relevant data as Strings to facilitate assertions
 
-		managerTester = Company.getTheInstance().getUsersRepository().createUser("menager", "manager@mail.mail",
+		managerTester = Company.getTheInstance().getUsersContainer().createUser("menager", "manager@mail.mail",
 				"11111", "function", "123456789", "rua", "0000", "porto", "porto", "PORTO");
 
-		teamPermanentMember = Company.getTheInstance().getUsersRepository().createUser("Mr permanent",
+		teamPermanentMember = Company.getTheInstance().getUsersContainer().createUser("Mr permanent",
 				"permie@mail.mail", "33333", "placeholding", "98644", "rua", "0000", "porto", "porto", "PORTO");
 
-		spaceX.getUsersRepository().addUserToUserRepository(managerTester);
-		spaceX.getUsersRepository().addUserToUserRepository(teamPermanentMember);
+		spaceX.getUsersContainer().addUserToUserRepository(managerTester);
+		spaceX.getUsersContainer().addUserToUserRepository(teamPermanentMember);
 
 		// creates a new test project, and adds the test Collaborator to the team
-		testProject = Company.getTheInstance().getProjectsRepository().createProject("testing proj",
+		testProject = Company.getTheInstance().getProjectsContainer().createProject("testing proj",
 				"shoot rocket... again", managerTester);
 
 		teamPermanentCollaborator = new ProjectCollaborator(teamPermanentMember, 2000);
 
 		testProject.addProjectCollaboratorToProjectTeam(teamPermanentCollaborator);
-		spaceX.getProjectsRepository().addProjectToProjectRepository(testProject);
+		spaceX.getProjectsContainer().addProjectToProjectContainer(testProject);
 
 		viewProjectTeamAndThenRemoveCollaborator = new US355ViewProjectTeamAndThenRemoveCollaboratorController(
 				this.testProject);

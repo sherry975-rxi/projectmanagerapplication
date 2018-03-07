@@ -6,13 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import project.ui.console.MainMenuUI;
 
 
 @SpringBootApplication
 public class HelloJpaApplication implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(HelloJpaApplication.class);
-    @Autowired
-    private DemoComponent demo;
+    //@Autowired
+    //private DemoComponent demo;
 
 
     public static void main(String[] args) {
@@ -22,7 +23,9 @@ public class HelloJpaApplication implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
 
-        demo.demoRun();
+        //demo.demoRun();
+
+        //MainMenuUI.main();
 
     }
 

@@ -39,7 +39,7 @@ public class US206RemovalTaskRequestController {
 
 		boolean createdSucess = false;
 
-		Project project = Company.getTheInstance().getProjectsRepository().getProjById(this.projectID);
+		Project project = Company.getTheInstance().getProjectsContainer().getProjById(this.projectID);
 		Task taskBeRemovedOf = project.getTaskRepository().getTaskByID(this.taskID);
 		ProjectCollaborator projectCollaborator = project.findProjectCollaborator(this.user);
 
@@ -60,7 +60,7 @@ public class US206RemovalTaskRequestController {
 	 */
 	public List<String> getUnfinishedTaskListFromUser() {
 
-		List<Task> usersTask = Company.getTheInstance().getProjectsRepository().getUnfinishedUserTaskList(user);
+		List<Task> usersTask = Company.getTheInstance().getProjectsContainer().getUnfinishedUserTaskList(user);
 		List<String> userTaskDetails = new ArrayList<>();
 
 		for (int i = 0; i < usersTask.size(); i++) {

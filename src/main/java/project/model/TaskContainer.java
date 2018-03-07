@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Embeddable
-public class TaskRepository implements Serializable{
+public class TaskContainer implements Serializable{
 
 
 	@javax.persistence.Transient
@@ -26,9 +26,9 @@ public class TaskRepository implements Serializable{
 	static final long serialVersionUID = 46L;
 
 
-	public TaskRepository() {}
+	public TaskContainer() {}
 
-	public TaskRepository(int projId) {
+	public TaskContainer(int projId) {
 
 		this.projectTasks = new ArrayList<>();
 		this.taskCounter = 1;
@@ -501,7 +501,7 @@ public class TaskRepository implements Serializable{
 	}
 
 	/**
-	 * @return The cost reported to each task in the TaskRepository
+	 * @return The cost reported to each task in the TaskContainer
 	 */
 
 	public List<String> getReportedCostOfEachTask() {

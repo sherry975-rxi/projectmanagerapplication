@@ -4,9 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import project.model.Company;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 import project.model.User;
-import project.model.UserRepository;
+import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,26 +32,26 @@ public class US135Tests {
 	User newUser2;
 	User newUser3;
 	User newUser4;
-	UserRepository userRepository;
-	ProjectRepository projectRepository;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 
 	@Before
 	public void setUp() {
 		myCompany = Company.getTheInstance();
 
-		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+		newUser2 = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
-		newUser3 = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = myCompany.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
-		newUser4 = myCompany.getUsersRepository().createUser("Emanuel", "user4@sapo.com", "003", "Faz tudo",
+		newUser4 = myCompany.getUsersContainer().createUser("Emanuel", "user4@sapo.com", "003", "Faz tudo",
 				"960000000", "ruinha", "7040-531", "Bucareste", "Porto", "Portugal");
 
-		myCompany.getUsersRepository().getAllUsersFromRepository().clear();
+		myCompany.getUsersContainer().getAllUsersFromUserContainer().clear();
 
 		/* Adds the created users to the Company user list */
-		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
-		myCompany.getUsersRepository().addUserToUserRepository(newUser3);
-		myCompany.getUsersRepository().addUserToUserRepository(newUser4);
+		myCompany.getUsersContainer().addUserToUserRepository(newUser2);
+		myCompany.getUsersContainer().addUserToUserRepository(newUser3);
+		myCompany.getUsersContainer().addUserToUserRepository(newUser4);
 	}
 
 	@After
@@ -60,15 +60,15 @@ public class US135Tests {
 		newUser2 = null;
 		newUser3 = null;
 		newUser4 = null;
-		userRepository = null;
-		projectRepository = null;
+		userContainer = null;
+		projectContainer = null;
 	}
 
 	@Test
 	public void searchEmailThatDoesntExists() {
 		/* Compares a search of a mail that doesn't exist with a empty List */
 		List<User> emptyList = new ArrayList<User>();
-		assertEquals(myCompany.getUsersRepository().searchUsersByEmail("yahoo"), emptyList);
+		assertEquals(myCompany.getUsersContainer().searchUsersByEmail("yahoo"), emptyList);
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class US135Tests {
 		/* Compares a search by entire mail address with a list with that mail */
 		List<User> testUsersEmail1 = new ArrayList<User>();
 		testUsersEmail1.add(newUser2);
-		assertEquals(myCompany.getUsersRepository().searchUsersByEmail("user2@gmail.com"), testUsersEmail1);
+		assertEquals(myCompany.getUsersContainer().searchUsersByEmail("user2@gmail.com"), testUsersEmail1);
 	}
 
 	@Test
@@ -88,7 +88,7 @@ public class US135Tests {
 		List<User> testUsersEmail2 = new ArrayList<User>();
 		testUsersEmail2.add(newUser2);
 		testUsersEmail2.add(newUser3);
-		assertEquals(myCompany.getUsersRepository().searchUsersByEmail("gmail"), testUsersEmail2);
+		assertEquals(myCompany.getUsersContainer().searchUsersByEmail("gmail"), testUsersEmail2);
 	}
 
 	@Test
@@ -101,6 +101,6 @@ public class US135Tests {
 		testUsersEmail3.add(newUser2);
 		testUsersEmail3.add(newUser3);
 		testUsersEmail3.add(newUser4);
-		assertEquals(myCompany.getUsersRepository().searchUsersByEmail("user"), testUsersEmail3);
+		assertEquals(myCompany.getUsersContainer().searchUsersByEmail("user"), testUsersEmail3);
 	}
 }

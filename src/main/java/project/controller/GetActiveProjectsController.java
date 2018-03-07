@@ -1,7 +1,7 @@
 package project.controller;
 
 import project.model.Project;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ public class GetActiveProjectsController {
 	 *
 	 */
 
-	public List<Project> getActiveProjectsController(ProjectRepository projectRepository) {
+	public List<Project> getActiveProjectsController(ProjectContainer projectContainer) {
 
-		return projectRepository.getActiveProjects();
+		return projectContainer.getActiveProjects();
 
 	}
 

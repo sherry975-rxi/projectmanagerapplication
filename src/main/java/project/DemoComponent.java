@@ -53,22 +53,22 @@ public class DemoComponent {
     public void dummyData() {
 
         Company myCompany = Company.getTheInstance();
-        User manger = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Manger",
+        User manger = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Manger",
                 "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-        User manelinho = myCompany.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Enabler",
+        User manelinho = myCompany.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Enabler",
                 "940000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-        User zeDasCouves = myCompany.getUsersRepository().createUser("Zezinho", "user4@gmail.com", "003", "Janitor",
+        User zeDasCouves = myCompany.getUsersContainer().createUser("Zezinho", "user4@gmail.com", "003", "Janitor",
                 "950000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-        myCompany.getUsersRepository().addUserToUserRepository(manger);
-        myCompany.getUsersRepository().addUserToUserRepository(manelinho);
-        myCompany.getUsersRepository().addUserToUserRepository(zeDasCouves);
+        myCompany.getUsersContainer().addUserToUserRepository(manger);
+        myCompany.getUsersContainer().addUserToUserRepository(manelinho);
+        myCompany.getUsersContainer().addUserToUserRepository(zeDasCouves);
 
 
-        Project myProjectTest = myCompany.getProjectsRepository().createProject("Test ze boot", "Test ze spring boot well yes?", manger);
-        Project myProjectExperiment = myCompany.getProjectsRepository().createProject("Social experiment", "Manelinho is best meneger", manelinho);
-        myCompany.getProjectsRepository().addProjectToProjectRepository(myProjectTest);
-        myCompany.getProjectsRepository().addProjectToProjectRepository(myProjectExperiment);
+        Project myProjectTest = myCompany.getProjectsContainer().createProject("Test ze boot", "Test ze spring boot well yes?", manger);
+        Project myProjectExperiment = myCompany.getProjectsContainer().createProject("Social experiment", "Manelinho is best meneger", manelinho);
+        myCompany.getProjectsContainer().addProjectToProjectContainer(myProjectTest);
+        myCompany.getProjectsContainer().addProjectToProjectContainer(myProjectExperiment);
 
 
         ProjectCollaborator manelinhoCollab = myProjectTest.createProjectCollaborator(manelinho, 68);

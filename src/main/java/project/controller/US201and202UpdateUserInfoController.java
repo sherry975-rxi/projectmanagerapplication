@@ -33,13 +33,13 @@ public class US201and202UpdateUserInfoController {
 
 	public boolean isEmailValid(String email) {
 
-		return Company.getTheInstance().getUsersRepository().isEmailAddressValid(email);
+		return Company.getTheInstance().getUsersContainer().isEmailAddressValid(email);
 
 	}
 
 	public boolean isEmailAlreadyInUse(String email) {
 
-		return Company.getTheInstance().getUsersRepository().getUserByEmail(email) != null;
+		return Company.getTheInstance().getUsersContainer().getUserByEmail(email) != null;
 	}
 
 	/**

@@ -13,11 +13,11 @@ import static org.junit.Assert.*;
 public class US361AssignTaskToCollaboratorControllerTest {
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User userAdmin;
 	Project project;
-	ProjectRepository projectRepository;
+	ProjectContainer projectContainer;
 	Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6, testTask7;
 	ProjectCollaborator projCollaborator;
 	TaskCollaborator taskCollaborator;
@@ -30,29 +30,29 @@ public class US361AssignTaskToCollaboratorControllerTest {
 
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersContainer();
 
 		// creates a ProjectsRepository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsContainer();
 
-		userRepository.getAllUsersFromRepository().clear();
+		userContainer.getAllUsersFromUserContainer().clear();
 
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 		// create user admin
-		userAdmin = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(userAdmin);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(userAdmin);
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
-		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
-		projectRepository.addProjectToProjectRepository(project);
+		project = projectContainer.createProject("name3", "description4", userAdmin);// !!!
+		projectContainer.addProjectToProjectContainer(project);
 		projCollaborator = new ProjectCollaborator(user1, 0);
 		project.addProjectCollaboratorToProjectTeam(projCollaborator);
 		nullProjectCollaborator = null;
@@ -70,8 +70,8 @@ public class US361AssignTaskToCollaboratorControllerTest {
 		testTask = null;
 		testTask2 = null;
 		project = null;
-		projectRepository = null;
-		userRepository = null;
+		projectContainer = null;
+		userContainer = null;
 		projCollaborator = null;
 
 	}

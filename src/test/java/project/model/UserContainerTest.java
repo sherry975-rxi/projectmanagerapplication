@@ -16,14 +16,14 @@ import static org.junit.Assert.*;
  * @author Group3
  *
  */
-public class UserRepositoryTest {
+public class UserContainerTest {
 
 	User user1;
 	User user2;
 	User user3;
 	User user4;
 	User user5;
-	UserRepository userRep = new UserRepository();
+	UserContainer userRep = new UserContainer();
 
 	@Before
 	public void setUp() {
@@ -59,7 +59,7 @@ public class UserRepositoryTest {
 
 		List<User> testUserRep = new ArrayList<>();
 
-		assertEquals(testUserRep, userRep.getAllUsersFromRepository());
+		assertEquals(testUserRep, userRep.getAllUsersFromUserContainer());
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class UserRepositoryTest {
 		testUsersInRep.add(user1);
 		testUsersInRep.add(user2);
 
-		assertEquals(testUsersInRep, userRep.getAllUsersFromRepository());
+		assertEquals(testUsersInRep, userRep.getAllUsersFromUserContainer());
 	}
 
 	/**
@@ -120,8 +120,8 @@ public class UserRepositoryTest {
 		userRep.addUserToUserRepository(user1);
 		userRep.addUserToUserRepository(user1);
 
-		assertTrue(user1.equals(userRep.getAllUsersFromRepository().get(0)));
-		assertEquals(1, userRep.getAllUsersFromRepository().size()); // if it would add even if the user was already on
+		assertTrue(user1.equals(userRep.getAllUsersFromUserContainer().get(0)));
+		assertEquals(1, userRep.getAllUsersFromUserContainer().size()); // if it would add even if the user was already on
 																		// the list, the size of the repository would be
 																		// 2 instead of 1
 	}
@@ -234,7 +234,7 @@ public class UserRepositoryTest {
 		// when three of the users are active collaborators, asserts the total list
 		// contains 4 users
 		// and that the active Collaborators list has 3 users
-		assertEquals(userRep.getAllUsersFromRepository().size(), 4);
+		assertEquals(userRep.getAllUsersFromUserContainer().size(), 4);
 		assertEquals(userRep.getAllActiveCollaboratorsFromRepository().size(), 3);
 
 		// then, sets the first user as inactive, asserts its state was change

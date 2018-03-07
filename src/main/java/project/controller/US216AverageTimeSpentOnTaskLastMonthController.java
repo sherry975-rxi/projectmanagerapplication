@@ -1,7 +1,7 @@
 package project.controller;
 
 import project.model.Company;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 import project.model.User;
 
 /**
@@ -14,10 +14,10 @@ import project.model.User;
  */
 
 public class US216AverageTimeSpentOnTaskLastMonthController {
-	ProjectRepository myProjRepo;
+	ProjectContainer myProjRepo;
 
 	public US216AverageTimeSpentOnTaskLastMonthController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsRepository();
+		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
 	}
 
 	/**

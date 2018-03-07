@@ -24,10 +24,10 @@ public class US115andUS116SetUserStateControllerTests {
 
 		myCompany = Company.getTheInstance();
 
-		newUser2 = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+		newUser2 = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		myCompany.getUsersRepository().addUserToUserRepository(newUser2);
+		myCompany.getUsersContainer().addUserToUserRepository(newUser2);
 
 	}
 

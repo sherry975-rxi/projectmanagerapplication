@@ -6,7 +6,7 @@ import org.junit.Test;
 import project.model.Company;
 import project.model.Profile;
 import project.model.User;
-import project.model.UserRepository;
+import project.model.UserContainer;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class DoLoginControllerTests {
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User userAdmin;
 	DoLoginController doLoginController;
@@ -25,20 +25,20 @@ public class DoLoginControllerTests {
 
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersContainer();
 
-		userRepository.getAllUsersFromRepository().clear();
+		userContainer.getAllUsersFromUserContainer().clear();
 
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// Sets a password for the user1
 		user1.setPassword("123456");
 
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user1);
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 
@@ -48,7 +48,7 @@ public class DoLoginControllerTests {
 	public void tearDown() {
 		Company.clear();
 		user1 = null;
-		userRepository = null;
+		userContainer = null;
 		doLoginController = null;
 	}
 

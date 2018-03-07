@@ -38,9 +38,9 @@ public class US301CreateProjectController {
 	 */
 	public Project createProject(String name, String description, User projectManager) {
 
-		createdProject = myCompany.getProjectsRepository().createProject(name, description, projectManager);
+		createdProject = myCompany.getProjectsContainer().createProject(name, description, projectManager);
 
-		myCompany.getProjectsRepository().addProjectToProjectRepository(createdProject);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(createdProject);
 
 		return createdProject;
 	}
@@ -52,7 +52,7 @@ public class US301CreateProjectController {
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listActiveCollaborators() {
-		this.activeCollaboratorList = myCompany.getUsersRepository().getAllActiveCollaboratorsFromRepository();
+		this.activeCollaboratorList = myCompany.getUsersContainer().getAllActiveCollaboratorsFromRepository();
 		List<String> userListAsString = new ArrayList<>();
 
 		for (int i = 0; i < activeCollaboratorList.size(); i++) {

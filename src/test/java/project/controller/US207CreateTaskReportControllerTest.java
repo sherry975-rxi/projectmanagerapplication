@@ -31,23 +31,23 @@ public class US207CreateTaskReportControllerTest {
         company1 = Company.getTheInstance();
 
         // create users in company
-        user2 = company1.getUsersRepository().createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
+        user2 = company1.getUsersContainer().createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
                 "rua doutor antónio", "7689-654", "porto", "porto", "portugal");
-        user1 = company1.getUsersRepository().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
+        user1 = company1.getUsersContainer().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
                 "rua engenheiro joão", "789-654", "porto", "porto", "portugal");
 
-        company1.getUsersRepository().addUserToUserRepository(user1);
-        company1.getUsersRepository().addUserToUserRepository(user2);
+        company1.getUsersContainer().addUserToUserRepository(user1);
+        company1.getUsersContainer().addUserToUserRepository(user2);
 
         // change profiles of users from VISITOR (default) to COLLABORATOR
         user2.setUserProfile(Profile.COLLABORATOR);
         user1.setUserProfile(Profile.COLLABORATOR);
 
         // create project 1 in company 1
-        project1 = company1.getProjectsRepository().createProject("name3", "description4", user2);
+        project1 = company1.getProjectsContainer().createProject("name3", "description4", user2);
 
         // add project 1 to company 1
-        company1.getProjectsRepository().addProjectToProjectRepository(project1);
+        company1.getProjectsContainer().addProjectToProjectContainer(project1);
 
         // create an estimated Task Start Date
         Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -275,6 +275,64 @@ public class US207CreateTaskReportControllerTest {
          */
         assertEquals(controller.getReportTimeByGivenUser(taskCollab1).get(0), 30, 0.0);
 
+    }
+
+
+    @Test
+    public void testUS207getReportsCreationDateByGivenUser() {
+          /*
+        Creates two TaskCollaborators
+         */
+        taskCollab1 = task1.createTaskCollaborator(projCollab1);
+
+           /*
+        Adds the TaskCollaborators to the task
+         */
+        task1.addTaskCollaboratorToTask(taskCollab1);
+
+           /*
+        Creates two CreateTaskReport Controllers
+         */
+        controller = new US207CreateTaskReportController(user1.getEmail(), task1.getTaskID());
+
+        Calendar dayOfReport = Calendar.getInstance();
+          /*
+        Creates a report
+         */
+        controller.createReportController(10, dayOfReport);
+
+        assertEquals(controller.getReportsCreationDateByGivenUser(taskCollab1).get(0), dayOfReport);
+    }
+
+    @Test
+    public void testUS207getReportUpdateDateByGivenUser() {
+
+
+          /*
+        Creates two TaskCollaborators
+         */
+        taskCollab1 = task1.createTaskCollaborator(projCollab1);
+
+           /*
+        Adds the TaskCollaborators to the task
+         */
+        task1.addTaskCollaboratorToTask(taskCollab1);
+
+           /*
+        Creates two CreateTaskReport Controllers
+         */
+        controller = new US207CreateTaskReportController(user1.getEmail(), task1.getTaskID());
+
+        Calendar dayOfReport = Calendar.getInstance();
+
+          /*
+        Creates a report
+         */
+        controller.createReportController(10, dayOfReport);
+
+        controller.updateTaskReport(20, taskCollab1, 0);
+
+        assertEquals(controller.getReportsUpdateDateByGivenUser(taskCollab1).get(0), dayOfReport);
     }
 
 }

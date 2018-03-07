@@ -23,7 +23,7 @@ public class US390 {
 	 */
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User user2;
 	User user3;
@@ -34,8 +34,8 @@ public class US390 {
 	ProjectCollaborator projectUser2;
 	ProjectCollaborator projectUser3;
 	ProjectCollaborator projectUser4;
-	ProjectRepository projectRepository;
-	TaskRepository taskRepository;
+	ProjectContainer projectContainer;
+	TaskContainer taskContainer;
 	Task testTask;
 	Task testTask2;
 	TaskCollaborator taskWorker1;
@@ -51,40 +51,40 @@ public class US390 {
 
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersContainer();
 
 		// creates a ProjectsRepository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsContainer();
 
-		// creates a UserRepository
-		userRepository.getAllUsersFromRepository().clear();
+		// creates a UserContainer
+		userContainer.getAllUsersFromUserContainer().clear();
 
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// create user2
-		user2 = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 
 		// create user3
-		user3 = userRepository.createUser("Miguel", "miguel@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		user3 = userContainer.createUser("Miguel", "miguel@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 
 		// create user4
-		user4 = userRepository.createUser("Ana", "ana@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00", "Test",
+		user4 = userContainer.createUser("Ana", "ana@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00", "Test",
 				"Testo", "Testistan");
 
 		// create projectManager
-		projectManager = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+		projectManager = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(user2);
-		userRepository.addUserToUserRepository(user3);
-		userRepository.addUserToUserRepository(user4);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user3);
+		userContainer.addUserToUserRepository(user4);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -93,7 +93,7 @@ public class US390 {
 		user4.setUserProfile(Profile.COLLABORATOR);
 
 		// create project
-		project = projectRepository.createProject("name3", "description4", projectManager);
+		project = projectContainer.createProject("name3", "description4", projectManager);
 
 		// creates 4 Project Collaborators and adds them to the project
 		projectUser1 = project.createProjectCollaborator(user1, 10);
@@ -119,17 +119,17 @@ public class US390 {
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 20);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
+		// create taskContainer
+		taskContainer = project.getTaskRepository();
 
-		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask2 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
 
-		// Adds Tasks to TaskRepository
-		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
+		// Adds Tasks to TaskContainer
+		taskContainer.addProjectTask(testTask);
+		taskContainer.addProjectTask(testTask2);
 
 		// Creates 4 Task Workers
 		taskWorker1 = testTask.createTaskCollaborator(projectUser1);
@@ -161,9 +161,9 @@ public class US390 {
 		testTask = null;
 		testTask2 = null;
 		project = null;
-		projectRepository = null;
-		taskRepository = null;
-		userRepository = null;
+		projectContainer = null;
+		taskContainer = null;
+		userContainer = null;
 		totalCost = 0.0;
 
 	}

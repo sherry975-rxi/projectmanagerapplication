@@ -27,8 +27,8 @@ public class US320ViewProjectsControllerTest {
 		activeManager = new User("Daniel", "email", "idNumber", "function", "123456789");
 		inactiveManager = new User("Johnny", "email2", "idNumber2", "function2", "987654321");
 
-		testCompany.getUsersRepository().addUserToUserRepository(activeManager);
-		testCompany.getUsersRepository().addUserToUserRepository(inactiveManager);
+		testCompany.getUsersContainer().addUserToUserRepository(activeManager);
+		testCompany.getUsersContainer().addUserToUserRepository(inactiveManager);
 
 		// creates both an active and an Inactive Project using their rewspective
 		// Project Managers
@@ -38,8 +38,8 @@ public class US320ViewProjectsControllerTest {
 		activeProject.setProjectStatus(Project.EXECUTION);
 		inactiveProject.setProjectStatus(Project.PLANNING);
 
-		testCompany.getProjectsRepository().addProjectToProjectRepository(activeProject);
-		testCompany.getProjectsRepository().addProjectToProjectRepository(inactiveProject);
+		testCompany.getProjectsContainer().addProjectToProjectContainer(activeProject);
+		testCompany.getProjectsContainer().addProjectToProjectContainer(inactiveProject);
 
 		// creates a string from activeProject's overview data, to be compared with the
 		// various tests
@@ -117,9 +117,9 @@ public class US320ViewProjectsControllerTest {
 	@Test
 	public void allProjectsListTest() {
 		projectListsController = new US320ViewProjectsController();
-		int projectRepositorySize = testCompany.getProjectsRepository().getAllProjects().size();
+		int ProjectContainerSize = testCompany.getProjectsContainer().getAllProjectsfromProjectsContainer().size();
 
-		assertEquals(projectRepositorySize, projectListsController.viewAllProjects().size());
+		assertEquals(ProjectContainerSize, projectListsController.viewAllProjects().size());
 
 		// also asserts that the contents of index 0 and 1 are different, and weren't
 		// duplicated

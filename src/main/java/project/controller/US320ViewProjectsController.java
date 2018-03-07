@@ -2,14 +2,14 @@ package project.controller;
 
 import project.model.Company;
 import project.model.Project;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class US320ViewProjectsController {
 
-	ProjectRepository projRepository = Company.getTheInstance().getProjectsRepository();
+	ProjectContainer projRepository = Company.getTheInstance().getProjectsContainer();
 	List<Project> chosenList;
 	Project selectedProject = null;
 
@@ -20,7 +20,7 @@ public class US320ViewProjectsController {
      * @return a list of String with Projects' data
      */
 	public List<String> viewAllProjects() {
-		this.chosenList = projRepository.getAllProjects();
+		this.chosenList = projRepository.getAllProjectsfromProjectsContainer();
 		List<String> allProjectsList = new ArrayList<>();
 
 		for (int i = 0; i < chosenList.size(); i++) {

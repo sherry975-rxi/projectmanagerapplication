@@ -23,7 +23,7 @@ public class US351AddCollaboratorToProjectTeamUI {
 		System.out.println(line);
 		System.out.println("USER LIST");
 		System.out.println(line);
-		for (User each : Company.getTheInstance().getUsersRepository().getAllUsersFromRepository()) {
+		for (User each : Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer()) {
 			System.out.println(each.getName());
 			System.out.println(each.getIdNumber());
 			System.out.println(each.getEmail());

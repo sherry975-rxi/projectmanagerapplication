@@ -108,7 +108,7 @@ public class AddressTest {
 	@Test
 	public void testEquals() {
 
-		ProjectRepository projectRep = new ProjectRepository();
+		ProjectContainer projectRep = new ProjectContainer();
 		// This two addresses are the same
 		Address casa = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
 		Address casa2 = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");

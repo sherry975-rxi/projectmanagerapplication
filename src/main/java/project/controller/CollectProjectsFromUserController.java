@@ -2,7 +2,7 @@ package project.controller;
 
 import project.model.Company;
 import project.model.Project;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 import project.model.User;
 
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ public class CollectProjectsFromUserController {
 	public List<String> getProjectsFromUserAndProjectManager() {
 
 		List<String> myProjects = new ArrayList<>();
-		ProjectRepository myProjRepo = Company.getTheInstance().getProjectsRepository();
-		for (Project ii : myProjRepo.getAllProjects()) {
+		ProjectContainer myProjRepo = Company.getTheInstance().getProjectsContainer();
+		for (Project ii : myProjRepo.getAllProjectsfromProjectsContainer()) {
 			if (ii.isProjectManager(user)) {
 				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName() + " - PM ");
 			} else if (ii.isUserActiveInProject(user)) {
@@ -50,7 +50,7 @@ public class CollectProjectsFromUserController {
 	 */
 	public List<Project> getProjectsFromUser() {
 		List<Project> listOfProjectsOfUser = new ArrayList<>();
-		listOfProjectsOfUser.addAll(Company.getTheInstance().getProjectsRepository().getProjectsFromUser(this.user));
+		listOfProjectsOfUser.addAll(Company.getTheInstance().getProjectsContainer().getProjectsFromUser(this.user));
 		return listOfProjectsOfUser;
 	}
 
@@ -66,7 +66,7 @@ public class CollectProjectsFromUserController {
 	public List<Project> getProjectsFromProjectManager() {
 		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
 		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsRepository().getProjectsFromProjectManager(this.user));
+				.addAll(Company.getTheInstance().getProjectsContainer().getProjectsFromProjectManager(this.user));
 		return listOfProjectsOfProjectManager;
 	}
 

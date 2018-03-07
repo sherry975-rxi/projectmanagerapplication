@@ -30,19 +30,19 @@ public class US130ListUsersControllerTest {
 		testList = new ArrayList<>();
 
 		// creates user four users
-		user1 = Critical.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
+		user1 = Critical.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		user2 = Critical.getUsersRepository().createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey",
+		user2 = Critical.getUsersContainer().createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey",
 				"920000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser2 = Critical.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
+		newUser2 = Critical.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser3 = Critical.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = Critical.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-		// adds all but newUser3 to the UserRepository and test List
-		Critical.getUsersRepository().addUserToUserRepository(user1);
-		Critical.getUsersRepository().addUserToUserRepository(user2);
-		Critical.getUsersRepository().addUserToUserRepository(newUser2);
+		// adds all but newUser3 to the UserContainer and test List
+		Critical.getUsersContainer().addUserToUserRepository(user1);
+		Critical.getUsersContainer().addUserToUserRepository(user2);
+		Critical.getUsersContainer().addUserToUserRepository(newUser2);
 
 		listUsersController = new US130ListUsersController();
 	}

@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class StandByTests {
 
 	Company myCompany;
-	ProjectRepository myProjRep;
+	ProjectContainer myProjRep;
 	User user1, user2;
 	Project myProject;
 	Task testTask, testTask2, testTask3;
@@ -36,7 +36,7 @@ public class StandByTests {
 		myCompany = Company.getTheInstance();
 
 		// Creates a Project Repository
-		myProjRep = myCompany.getProjectsRepository();
+		myProjRep = myCompany.getProjectsContainer();
 
 		// Creates a new User1
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
@@ -48,7 +48,7 @@ public class StandByTests {
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
 
 		// Adds a project to the project repository
-		myProjRep.addProjectToProjectRepository(myProject);
+		myProjRep.addProjectToProjectContainer(myProject);
 
 		// Creates 2 project collaborators
 		collab1 = myProject.createProjectCollaborator(user1, 5);

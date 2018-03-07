@@ -37,7 +37,7 @@ public class US302ChangeProjectManagerController {
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listPossibleManagers() {
-		this.activeCollaboratorList = myCompany.getUsersRepository().getAllActiveCollaboratorsFromRepository();
+		this.activeCollaboratorList = myCompany.getUsersContainer().getAllActiveCollaboratorsFromRepository();
 		List<String> collabListAsString = new ArrayList<>();
 
 		for (int i = 0; i < activeCollaboratorList.size(); i++) {

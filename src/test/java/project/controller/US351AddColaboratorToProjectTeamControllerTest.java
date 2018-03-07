@@ -23,30 +23,30 @@ public class US351AddColaboratorToProjectTeamControllerTest {
 		myCompany = Company.getTheInstance();
 
 		// Creates and add users to company's user repository
-		activeUser = myCompany.getUsersRepository().createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto",
+		activeUser = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto",
 				"967387654", "Rua", "3700", "Porto", "Porto", "Portugal");
-		myCompany.getUsersRepository().addUserToUserRepository(activeUser);
+		myCompany.getUsersContainer().addUserToUserRepository(activeUser);
 		activeUser.setUserProfile(Profile.COLLABORATOR);
 
-		inactiveUser = myCompany.getUsersRepository().createUser("Rui", "rui@gmail.com", "12345", "Arquitecto",
+		inactiveUser = myCompany.getUsersContainer().createUser("Rui", "rui@gmail.com", "12345", "Arquitecto",
 				"967387654", "Rua", "3800", "Porto", "Porto", "Portugal");
-		myCompany.getUsersRepository().addUserToUserRepository(inactiveUser);
+		myCompany.getUsersContainer().addUserToUserRepository(inactiveUser);
 		inactiveUser.setUserProfile(Profile.COLLABORATOR);
 
-		projectManager = myCompany.getUsersRepository().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+		projectManager = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		myCompany.getUsersRepository().addUserToUserRepository(projectManager);
+		myCompany.getUsersContainer().addUserToUserRepository(projectManager);
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 
 		// Add project to company's project repository
-		activeProj = myCompany.getProjectsRepository().createProject("Quin serch!", "Wii must faind aur quin!",
+		activeProj = myCompany.getProjectsContainer().createProject("Quin serch!", "Wii must faind aur quin!",
 				projectManager);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(activeProj);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(activeProj);
 		activeProj.setProjectStatus(Project.EXECUTION);
 
-		inactiveProj = myCompany.getProjectsRepository().createProject("Wae follouing!", "Wii must follou da wae!",
+		inactiveProj = myCompany.getProjectsContainer().createProject("Wae follouing!", "Wii must follou da wae!",
 				projectManager);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(inactiveProj);
+		myCompany.getProjectsContainer().addProjectToProjectContainer(inactiveProj);
 		inactiveProj.setProjectStatus(Project.PLANNING);
 
 		// Deactivate inactive user

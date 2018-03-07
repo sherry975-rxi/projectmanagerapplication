@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class ProjectsRepositoryTest {
 
-	ProjectRepository projectRepository;
+	ProjectContainer ProjectContainer;
 	User user1;
 	User user2;
 	User user3;
@@ -63,7 +63,7 @@ public class ProjectsRepositoryTest {
 	@Before
 	public void setUp() {
 
-		projectRepository = new ProjectRepository();
+		ProjectContainer = new ProjectContainer();
 		user1 = new User("name", "email@gmail.com", "idNumber", "function", "123456789");
 		user2 = new User("name2", "email2@gmail.com", "idNumber2", "function2", "987654321");
 		user3 = new User("name6", "email6@gmail.com", "idNumber6", "function6", "987654271");
@@ -148,14 +148,14 @@ public class ProjectsRepositoryTest {
 		expResultTaskList = new ArrayList<Task>();
 
 		// sets the Project Counter to 0
-		projectRepository.setProjCounter(0);
+		ProjectContainer.setProjCounter(0);
 	}
 
 	@After
 	public void tearDown() {
 
-		projectRepository.setProjCounter(0);
-		projectRepository = null;
+		ProjectContainer.setProjCounter(0);
+		ProjectContainer = null;
 		user1 = null;
 		user2 = null;
 		user3 = null;
@@ -197,7 +197,7 @@ public class ProjectsRepositoryTest {
 	@Test
 	public void test_Constructor() {
 
-		assertEquals(expResultProjectList, projectRepository.getAllProjects());
+		assertEquals(expResultProjectList, ProjectContainer.getAllProjectsfromProjectsContainer());
 
 	}
 
@@ -210,7 +210,7 @@ public class ProjectsRepositoryTest {
 	@Test
 	public void testCreateProject() {
 
-		assertTrue(project1.equals(projectRepository.createProject("name3", "description3", user1)));
+		assertTrue(project1.equals(ProjectContainer.createProject("name3", "description3", user1)));
 
 	}
 
@@ -222,49 +222,49 @@ public class ProjectsRepositoryTest {
 	@Test
 	public void test_getProjCounter() {
 
-		projectRepository.setProjCounter(10);
+		ProjectContainer.setProjCounter(10);
 
-		assertEquals(10, projectRepository.getProjCounter());
+		assertEquals(10, ProjectContainer.getProjCounter());
 	}
 
 	/**
-	 * Tests the addProjectToProjectRepository by asserting if the list within the
-	 * projectRepository is equal to a new list of projects created, after adding
+	 * Tests the addProjectToProjectContainer by asserting if the list within the
+	 * projectContainer is equal to a new list of projects created, after adding
 	 * the same project to both lists.
 	 */
 	@Test
-	public void testAddProjectToProjectRepository() {
+	public void testAddProjectToProjectContainer() {
 
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		expResultProjectList.add(project1);
 
-		assertEquals(expResultProjectList, projectRepository.getAllProjects());
+		assertEquals(expResultProjectList, ProjectContainer.getAllProjectsfromProjectsContainer());
 
 		// Tried to add again the same project
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		/*
 		 * The result will be the same as before, as the method doesn't allow to add
-		 * projects that already exist in the projectRepository
+		 * projects that already exist in the projectContainer
 		 */
 
-		assertEquals(expResultProjectList, projectRepository.getAllProjects());
+		assertEquals(expResultProjectList, ProjectContainer.getAllProjectsfromProjectsContainer());
 
 	}
 
 	/**
-	 * Tests the getAllProjects by asserting if the list within the
-	 * projectRepository is equal to a new list of projects created.
+	 * Tests the getAllProjectsfromProjectsContainer by asserting if the list within the
+	 * projectContainer is equal to a new list of projects created.
 	 */
 	@Test
 	public void testGetAllProjects() {
 
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		expResultProjectList.add(project1);
 
-		assertEquals(expResultProjectList, projectRepository.getAllProjects());
+		assertEquals(expResultProjectList, ProjectContainer.getAllProjectsfromProjectsContainer());
 	}
 
 	/**
@@ -276,12 +276,12 @@ public class ProjectsRepositoryTest {
 	public void testGetActiveProjects() {
 
 		// Adds the projects to the project repository
-		projectRepository.addProjectToProjectRepository(project1);
-		projectRepository.addProjectToProjectRepository(project2);
-		projectRepository.addProjectToProjectRepository(project3);
-		projectRepository.addProjectToProjectRepository(project4);
-		projectRepository.addProjectToProjectRepository(project5);
-		projectRepository.addProjectToProjectRepository(project6);
+		ProjectContainer.addProjectToProjectContainer(project1);
+		ProjectContainer.addProjectToProjectContainer(project2);
+		ProjectContainer.addProjectToProjectContainer(project3);
+		ProjectContainer.addProjectToProjectContainer(project4);
+		ProjectContainer.addProjectToProjectContainer(project5);
+		ProjectContainer.addProjectToProjectContainer(project6);
 
 		// Sets the project status to Planning (0, Not active)
 		project1.setProjectStatus(0);
@@ -307,7 +307,7 @@ public class ProjectsRepositoryTest {
 		expResultProjectList.add(project4);
 		expResultProjectList.add(project5);
 
-		assertEquals(expResultProjectList, projectRepository.getActiveProjects());
+		assertEquals(expResultProjectList, ProjectContainer.getActiveProjects());
 	}
 
 	/**
@@ -318,7 +318,7 @@ public class ProjectsRepositoryTest {
 	public void testGetUserTasks() {
 
 		// Adds project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		// Adds user to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
@@ -337,19 +337,19 @@ public class ProjectsRepositoryTest {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getUserTasks(user1));
+		assertEquals(expResultTaskList, ProjectContainer.getUserTasks(user1));
 
 		// Clears list
 		expResultTaskList.clear();
 
 		// returns an empty list, as the user is not a collaborator
-		assertEquals(expResultTaskList, projectRepository.getUserTasks(userNotCollaborator));
+		assertEquals(expResultTaskList, ProjectContainer.getUserTasks(userNotCollaborator));
 
 		/*
 		 * returns an empty list, as the user is a collaborator but doesnt have any task
 		 * associated to him
 		 */
-		assertEquals(expResultTaskList, projectRepository.getUserTasks(user2));
+		assertEquals(expResultTaskList, ProjectContainer.getUserTasks(user2));
 
 	}
 
@@ -361,7 +361,7 @@ public class ProjectsRepositoryTest {
 	public void testGetFinishedUserTaskList() {
 
 		// Adds project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		// Adds user to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
@@ -400,13 +400,13 @@ public class ProjectsRepositoryTest {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getAllFinishedTasksFromUser(user1));
+		assertEquals(expResultTaskList, ProjectContainer.getAllFinishedTasksFromUser(user1));
 
 		// Clears list
 		expResultTaskList.clear();
 
 		// returns an empty list, as the user is not a collaborator
-		assertEquals(expResultTaskList, projectRepository.getAllFinishedTasksFromUser(userNotCollaborator));
+		assertEquals(expResultTaskList, ProjectContainer.getAllFinishedTasksFromUser(userNotCollaborator));
 
 	}
 
@@ -418,7 +418,7 @@ public class ProjectsRepositoryTest {
 	public void testGetUnfinishedUserTaskList() {
 
 		// Adds project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		// Adds user to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
@@ -450,13 +450,13 @@ public class ProjectsRepositoryTest {
 		expResultTaskList.add(task2);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getUnfinishedUserTaskList(user1));
+		assertEquals(expResultTaskList, ProjectContainer.getUnfinishedUserTaskList(user1));
 
 		// Clears list
 		expResultTaskList.clear();
 
 		// returns an empty list, as the user is not a collaborator
-		assertEquals(expResultTaskList, projectRepository.getUnfinishedUserTaskList(userNotCollaborator));
+		assertEquals(expResultTaskList, ProjectContainer.getUnfinishedUserTaskList(userNotCollaborator));
 
 	}
 
@@ -468,7 +468,7 @@ public class ProjectsRepositoryTest {
 	public void testGetLastMonthFinishedUserTaskList() {
 
 		// Adds project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		// Adds user to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
@@ -532,13 +532,13 @@ public class ProjectsRepositoryTest {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task2);
 
-		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskList(user1));
+		assertEquals(expResultTaskList, ProjectContainer.getLastMonthFinishedUserTaskList(user1));
 
 		// Clears list
 		expResultTaskList.clear();
 
 		// returns an empty list, as the user is not a collaborator
-		assertEquals(expResultTaskList, projectRepository.getLastMonthFinishedUserTaskList(userNotCollaborator));
+		assertEquals(expResultTaskList, ProjectContainer.getLastMonthFinishedUserTaskList(userNotCollaborator));
 
 	}
 
@@ -549,7 +549,7 @@ public class ProjectsRepositoryTest {
 	@Test
 	public void testGetTotalTimeLastMonthFinishedTasksByUser() {
 		// Adds project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		// Adds user to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
@@ -601,7 +601,7 @@ public class ProjectsRepositoryTest {
 		task2.setFinishDate(calendar2);
 		task2.getTaskState().changeToFinished();
 
-		assertEquals(15.0, projectRepository.getTotalTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
+		assertEquals(15.0, ProjectContainer.getTotalTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
 
 	/**
@@ -612,7 +612,7 @@ public class ProjectsRepositoryTest {
 	@Test
 	public void testGetAverageTimeLastMonthFinishedTasksUser() {
 		// Adds project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		// Adds user to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
@@ -663,7 +663,7 @@ public class ProjectsRepositoryTest {
 		task2.getReports().get(0).setReportedTime(10);
 		task2.setFinishDate(calendar2);
 		task2.getTaskState().changeToFinished();
-		assertEquals(7.5, projectRepository.getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
+		assertEquals(7.5, ProjectContainer.getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
 
 	/**
@@ -674,7 +674,7 @@ public class ProjectsRepositoryTest {
 	public void testGetLastMonthFinishedUserTaskListDecreasingOrder() {
 
 		// Adds project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		// Adds user to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
@@ -740,7 +740,7 @@ public class ProjectsRepositoryTest {
 		expResultTaskList.add(task2);
 		expResultTaskList.add(task1);
 
-		assertEquals(expResultTaskList, projectRepository.getFinishedUserTasksFromLastMonthInDecreasingOrder(user1));
+		assertEquals(expResultTaskList, ProjectContainer.getFinishedUserTasksFromLastMonthInDecreasingOrder(user1));
 	}
 
 	/**
@@ -751,7 +751,7 @@ public class ProjectsRepositoryTest {
 	public void testGetFinishedTaskListByDecreasingOrder() {
 
 		// Adds project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		// Adds user to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
@@ -817,7 +817,7 @@ public class ProjectsRepositoryTest {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList, projectRepository.getAllFinishedUserTasksInDecreasingOrder(user1));
+		assertEquals(expResultTaskList, ProjectContainer.getAllFinishedUserTasksInDecreasingOrder(user1));
 	}
 
 	/**
@@ -854,31 +854,31 @@ public class ProjectsRepositoryTest {
 		expResultTaskList.add(task1);
 		expResultTaskList.add(task3);
 
-		assertEquals(expResultTaskList.size(), projectRepository.sortTaskListDecreasingOrder(toBeSorted).size());
-		assertEquals(expResultTaskList, projectRepository.sortTaskListDecreasingOrder(toBeSorted));
+		assertEquals(expResultTaskList.size(), ProjectContainer.sortTaskListDecreasingOrder(toBeSorted).size());
+		assertEquals(expResultTaskList, ProjectContainer.sortTaskListDecreasingOrder(toBeSorted));
 	}
 
 	/**
-	 * test to isProjectInProjectRepository.
+	 * test to isProjectInProjectContainer.
 	 */
 	@Test
-	public void test_isProjectInProjectRepository() {
+	public void test_isProjectInProjectContainer() {
 		// before add the project, verify if the project1 is in project repository
-		assertFalse(projectRepository.isProjectInProjectRepository(project1));
+		assertFalse(ProjectContainer.isProjectInProjectContainer(project1));
 
 		// add project 1 to project repository
-		projectRepository.addProjectToProjectRepository(project1);
+		ProjectContainer.addProjectToProjectContainer(project1);
 
 		// verify if project1 it was add to project repository
-		assertTrue(projectRepository.isProjectInProjectRepository(project1));
+		assertTrue(ProjectContainer.isProjectInProjectContainer(project1));
 	}
 
 	@Test
 	public void getStartedNotFinishedUserTaskInIncreasingDeadlineOrder() {
 
 		// Adds project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
-		projectRepository.addProjectToProjectRepository(project2);
+		ProjectContainer.addProjectToProjectContainer(project1);
+		ProjectContainer.addProjectToProjectContainer(project2);
 
 		// Adds user to project team
 		project1.addProjectCollaboratorToProjectTeam(collab1);
@@ -951,15 +951,15 @@ public class ProjectsRepositoryTest {
 		startedNotFinishedTasksInOrder.add(task4);
 		startedNotFinishedTasksInOrder.add(task5);
 		assertEquals(startedNotFinishedTasksInOrder,
-				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1));
+				ProjectContainer.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1));
 		assertEquals(startedNotFinishedTasksInOrder.size(),
-				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1).size());
+				ProjectContainer.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user1).size());
 
 		// clears the list
 		startedNotFinishedTasksInOrder.clear();
 		// The method returns an empty list, if the user is null
 		assertEquals(startedNotFinishedTasksInOrder,
-				projectRepository.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(nullUser));
+				ProjectContainer.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(nullUser));
 
 	}
 
@@ -970,10 +970,10 @@ public class ProjectsRepositoryTest {
 	@Test
 	public void testGetProjectsFromUser() {
 
-		// Adds three project to the projectRepository
-		projectRepository.addProjectToProjectRepository(project2);
-		projectRepository.addProjectToProjectRepository(project5);
-		projectRepository.addProjectToProjectRepository(project6);
+		// Adds three project to the projectContainer
+		ProjectContainer.addProjectToProjectContainer(project2);
+		ProjectContainer.addProjectToProjectContainer(project5);
+		ProjectContainer.addProjectToProjectContainer(project6);
 
 		// add user to projects
 		project5.addProjectCollaboratorToProjectTeam(collab1);
@@ -986,7 +986,7 @@ public class ProjectsRepositoryTest {
 
 		// Asserts if the resulted list of the getProjectOfProjectManager method equals
 		// the list created with the project from which the user 3 is Project Manager
-		assertEquals(projectsOfProjectManager, projectRepository.getProjectsFromUser(user1));
+		assertEquals(projectsOfProjectManager, ProjectContainer.getProjectsFromUser(user1));
 	}
 
 	/**
@@ -996,17 +996,17 @@ public class ProjectsRepositoryTest {
 	@Test
 	public void testGetProjectById() {
 
-		// Adds two project to the projectRepository
-		projectA = projectRepository.createProject("ProjA", "ProjectoA", user1);
-		projectB = projectRepository.createProject("ProjB", "ProjectoA", user1);
-		projectRepository.addProjectToProjectRepository(projectA);
-		projectRepository.addProjectToProjectRepository(projectB);
-		// projectRepository.addProjectToProjectRepository(projectC);
+		// Adds two project to the projectContainer
+		projectA = ProjectContainer.createProject("ProjA", "ProjectoA", user1);
+		projectB = ProjectContainer.createProject("ProjB", "ProjectoA", user1);
+		ProjectContainer.addProjectToProjectContainer(projectA);
+		ProjectContainer.addProjectToProjectContainer(projectB);
+		// projectContainer.addProjectToProjectContainer(projectC);
 
 		// Asserts if the getProjById returns the expected Project
-		assertEquals(projectRepository.getProjById(0), projectA);
-		assertEquals(projectRepository.getProjById(1), projectB);
-		assertEquals(projectRepository.getProjById(3), null);
+		assertEquals(ProjectContainer.getProjById(0), projectA);
+		assertEquals(ProjectContainer.getProjById(1), projectB);
+		assertEquals(ProjectContainer.getProjById(3), null);
 
 	}
 
