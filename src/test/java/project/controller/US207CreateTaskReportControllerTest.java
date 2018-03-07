@@ -277,4 +277,62 @@ public class US207CreateTaskReportControllerTest {
 
     }
 
+
+    @Test
+    public void testUS207getReportsCreationDateByGivenUser() {
+          /*
+        Creates two TaskCollaborators
+         */
+        taskCollab1 = task1.createTaskCollaborator(projCollab1);
+
+           /*
+        Adds the TaskCollaborators to the task
+         */
+        task1.addTaskCollaboratorToTask(taskCollab1);
+
+           /*
+        Creates two CreateTaskReport Controllers
+         */
+        controller = new US207CreateTaskReportController(user1.getEmail(), task1.getTaskID());
+
+        Calendar dayOfReport = Calendar.getInstance();
+          /*
+        Creates a report
+         */
+        controller.createReportController(10, dayOfReport);
+
+        assertEquals(controller.getReportsCreationDateByGivenUser(taskCollab1).get(0), dayOfReport);
+    }
+
+    @Test
+    public void testUS207getReportUpdateDateByGivenUser() {
+
+
+          /*
+        Creates two TaskCollaborators
+         */
+        taskCollab1 = task1.createTaskCollaborator(projCollab1);
+
+           /*
+        Adds the TaskCollaborators to the task
+         */
+        task1.addTaskCollaboratorToTask(taskCollab1);
+
+           /*
+        Creates two CreateTaskReport Controllers
+         */
+        controller = new US207CreateTaskReportController(user1.getEmail(), task1.getTaskID());
+
+        Calendar dayOfReport = Calendar.getInstance();
+
+          /*
+        Creates a report
+         */
+        controller.createReportController(10, dayOfReport);
+
+        controller.updateTaskReport(20, taskCollab1, 0);
+
+        assertEquals(controller.getReportsUpdateDateByGivenUser(taskCollab1).get(0), dayOfReport);
+    }
+
 }
