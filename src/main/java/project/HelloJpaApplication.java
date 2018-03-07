@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import project.ui.console.MainMenuUI;
 
 
 @SpringBootApplication
@@ -23,6 +24,8 @@ public class HelloJpaApplication implements CommandLineRunner {
     public void run(String... strings) throws Exception {
 
         demo.demoRun();
+
+        MainMenuUI.main();
 
     }
 

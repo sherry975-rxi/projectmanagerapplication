@@ -18,7 +18,7 @@ public class MainMenuUI {
 	private static User userDirector;
 	private static User userJSilva;
 
-	public /*Static*/ void main(String[] args) {
+	public static void main() {
 
 		// Instantiates the company
 		Company myCompany = Company.getTheInstance();
@@ -382,6 +382,7 @@ public class MainMenuUI {
 			System.out.println("[3] Administrator");
 			System.out.println("[4] Director");
 			System.out.println("[5] Collaborator");
+            System.out.println("[E] EXIT");
 			System.out.println("______________________________________________");
 			System.out.println();
 			System.out.println("Please select an option:");
@@ -417,10 +418,14 @@ public class MainMenuUI {
 
 				break;
 
+            case "E":
+                condition=false;
+                System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
+                break;
 
-				default:
-				System.out.println("Choose a valid option:");
-				mainMenu();
+			default:
+			    System.out.println("Choose a valid option:");
+			    break;
 			}
 		}
 	}
