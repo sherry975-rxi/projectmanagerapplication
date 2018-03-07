@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.Company;
 import project.model.User;
-import project.model.UserRepository;
+import project.model.UserContainer;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +13,7 @@ public class US101RegisterUserControllerTest {
 
 	Company Critical;
 	User user1, user2, user3;
-	UserRepository userRepository;
+	UserContainer userContainer;
 
 	@Before
 	public void setUp() {
@@ -50,7 +50,7 @@ public class US101RegisterUserControllerTest {
 		US101RegisterUserController testUserRegistrationController = new US101RegisterUserController();
 		assertEquals(Critical.getUsersRepository().getAllUsersFromRepository().size(), 0);
 
-		// Checks if the user1 is in the UserRepository
+		// Checks if the user1 is in the UserContainer
 		assertEquals(testUserRegistrationController.isUserInUserRepository("daniel@gmail.com"), false);
 
 		// uses the controller to both create and add the user

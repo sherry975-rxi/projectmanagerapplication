@@ -41,12 +41,12 @@ public class US351AddColaboratorToProjectTeamControllerTest {
 		// Add project to company's project repository
 		activeProj = myCompany.getProjectsRepository().createProject("Quin serch!", "Wii must faind aur quin!",
 				projectManager);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(activeProj);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(activeProj);
 		activeProj.setProjectStatus(Project.EXECUTION);
 
 		inactiveProj = myCompany.getProjectsRepository().createProject("Wae follouing!", "Wii must follou da wae!",
 				projectManager);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(inactiveProj);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(inactiveProj);
 		inactiveProj.setProjectStatus(Project.PLANNING);
 
 		// Deactivate inactive user

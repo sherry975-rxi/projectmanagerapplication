@@ -30,8 +30,8 @@ public class CalculateReportedProjectCostControllerTest {
 	ProjectCollaborator projectUserJonny;
 	ProjectCollaborator projectUserMike;
 	ProjectCollaborator projectUserAna;
-	ProjectRepository projectRepository;
-	TaskRepository taskRepository;
+	ProjectContainer projectContainer;
+	TaskContainer taskContainer;
 	Task testTask;
 	Task testTask2;
 	TaskCollaborator taskWorkerDaniel;
@@ -76,7 +76,7 @@ public class CalculateReportedProjectCostControllerTest {
 
 		// create project and add it to project list
 		project = new Project(0, "Make things", "Test: CalculateReportedProjectCost", projectManager);
-		blip.getProjectsRepository().addProjectToProjectRepository(project);
+		blip.getProjectsRepository().addProjectToProjectContainer(project);
 
 		// creates 4 Project Collaborators and adds them to the project
 		projectUserDaniel = project.createProjectCollaborator(userDaniel, 10);
@@ -102,16 +102,16 @@ public class CalculateReportedProjectCostControllerTest {
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 20);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
+		// create taskContainer
+		taskContainer = project.getTaskRepository();
 
-		testTask = taskRepository.createTask("Testin once", 10, estimatedTaskStartDateTest, taskDeadlineDateTest, 10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask = taskContainer.createTask("Testin once", 10, estimatedTaskStartDateTest, taskDeadlineDateTest, 10);
+		testTask2 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
 
-		// Adds Tasks to TaskRepository
-		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
+		// Adds Tasks to TaskContainer
+		taskContainer.addProjectTask(testTask);
+		taskContainer.addProjectTask(testTask2);
 
 		// Creates 4 Task Workers
 		taskWorkerDaniel = testTask.createTaskCollaborator(projectUserDaniel);
@@ -144,8 +144,8 @@ public class CalculateReportedProjectCostControllerTest {
 		testTask = null;
 		testTask2 = null;
 		project = null;
-		projectRepository = null;
-		taskRepository = null;
+		projectContainer = null;
+		taskContainer = null;
 		totalCost = 0.0;
 		controllerCost = null;
 

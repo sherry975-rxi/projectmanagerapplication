@@ -2,7 +2,7 @@ package project.controller;
 
 import project.model.Company;
 import project.model.Project;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 import project.model.User;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class CollectProjectsFromUserController {
 	public List<String> getProjectsFromUserAndProjectManager() {
 
 		List<String> myProjects = new ArrayList<>();
-		ProjectRepository myProjRepo = Company.getTheInstance().getProjectsRepository();
+		ProjectContainer myProjRepo = Company.getTheInstance().getProjectsRepository();
 		for (Project ii : myProjRepo.getAllProjects()) {
 			if (ii.isProjectManager(user)) {
 				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName() + " - PM ");

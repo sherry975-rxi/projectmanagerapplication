@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
 public class US342CreateTaskDependencyTest {
 
 	Company myComp;
-	ProjectRepository projRepo;
-	UserRepository userRepo;
-	TaskRepository taskRepo;
+	ProjectContainer projRepo;
+	UserContainer userRepo;
+	TaskContainer taskRepo;
 	Project proj;
 	Task taskA;
 	Task taskB;
@@ -43,7 +43,7 @@ public class US342CreateTaskDependencyTest {
 		user = userRepo.getUserByEmail("ugandan@nackls.com");
 
 		// Add a project to the project repository
-		projRepo.addProjectToProjectRepository(
+		projRepo.addProjectToProjectContainer(
 				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user));
 		proj = projRepo.getAllProjects().get(0);
 
@@ -135,7 +135,7 @@ public class US342CreateTaskDependencyTest {
 
 	@Test
 	public void isTaskDependencyPossibleTest() {
-		// Adds taskA to TaskRepository
+		// Adds taskA to TaskContainer
 		taskRepo.addProjectTask(taskA);
 
 		/*
@@ -164,7 +164,7 @@ public class US342CreateTaskDependencyTest {
 
 	@Test
 	public void removeTaskDependency() {
-		// Adds taskA to TaskRepository
+		// Adds taskA to TaskContainer
 		taskRepo.addProjectTask(taskA);
 
 		/*
@@ -199,7 +199,7 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public void getTaskDeadlineString() {
 
-		// Adds taskA to TaskRepository
+		// Adds taskA to TaskContainer
 		taskRepo.addProjectTask(taskA);
 
 		/*

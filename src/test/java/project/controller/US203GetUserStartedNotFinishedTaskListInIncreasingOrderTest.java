@@ -38,7 +38,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		project1 = company1.getProjectsRepository().createProject("name3", "description4", user2);
 
 		// add project 1 to company 1
-		company1.getProjectsRepository().addProjectToProjectRepository(project1);
+		company1.getProjectsRepository().addProjectToProjectContainer(project1);
 
 		// create an estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();

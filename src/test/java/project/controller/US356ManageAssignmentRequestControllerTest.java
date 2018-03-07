@@ -59,7 +59,7 @@ public class US356ManageAssignmentRequestControllerTest {
 		teamPermanentCollaborator = new ProjectCollaborator(teamPermanentMember, 2000);
 		testProject.addProjectCollaboratorToProjectTeam(teamTesterCollaborator);
 		testProject.addProjectCollaboratorToProjectTeam(teamPermanentCollaborator);
-		spaceX.getProjectsRepository().addProjectToProjectRepository(testProject);
+		spaceX.getProjectsRepository().addProjectToProjectContainer(testProject);
 
 		// creates two estimated dates and uses them to generate a task
 		// declares strings for the task's ID and description to facilitate assertion

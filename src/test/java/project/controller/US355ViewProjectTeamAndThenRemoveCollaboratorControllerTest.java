@@ -48,7 +48,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 		teamPermanentCollaborator = new ProjectCollaborator(teamPermanentMember, 2000);
 
 		testProject.addProjectCollaboratorToProjectTeam(teamPermanentCollaborator);
-		spaceX.getProjectsRepository().addProjectToProjectRepository(testProject);
+		spaceX.getProjectsRepository().addProjectToProjectContainer(testProject);
 
 		viewProjectTeamAndThenRemoveCollaborator = new US355ViewProjectTeamAndThenRemoveCollaboratorController(
 				this.testProject);

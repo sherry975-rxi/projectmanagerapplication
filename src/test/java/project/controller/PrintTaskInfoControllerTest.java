@@ -16,10 +16,10 @@ public class PrintTaskInfoControllerTest {
 	User user1;
 	User joaoPM;
 	ProjectCollaborator collab1, collab2;
-	ProjectRepository projectRepository;
+	ProjectContainer projectContainer;
 	Project project;
 	Calendar startDate, finishDate;
-	TaskRepository taskRepository;
+	TaskContainer taskContainer;
 	Task task1, task2, task3;
 	PrintTaskInfoController controller;
 
@@ -42,7 +42,7 @@ public class PrintTaskInfoControllerTest {
 		myCompany.getUsersRepository().addUserToUserRepository(joaoPM);
 
 		// creates project repository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsRepository();
 
 		// Creates one Project
 		project = myCompany.getProjectsRepository().createProject("Projeto de gestão",
@@ -50,7 +50,7 @@ public class PrintTaskInfoControllerTest {
 		project.setProjectBudget(3000);
 
 		// add project to project repository
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(project);
 
 		// add start date to project
 		Calendar startDate = Calendar.getInstance();
@@ -66,8 +66,8 @@ public class PrintTaskInfoControllerTest {
 		collab1 = new ProjectCollaborator(user1, 2);
 		collab2 = new ProjectCollaborator(joaoPM, 3);
 
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
+		// create taskContainer
+		taskContainer = project.getTaskRepository();
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -104,10 +104,10 @@ public class PrintTaskInfoControllerTest {
 		user1 = null;
 		joaoPM = null;
 		project = null;
-		projectRepository = null;
+		projectContainer = null;
 		startDate = null;
 		finishDate = null;
-		taskRepository = null;
+		taskContainer = null;
 		task1 = null;
 		task2 = null;
 		task3 = null;

@@ -8,22 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class UserRepository that contains all lists and methods to build lists of
+ * Class UserContainer that contains all lists and methods to build lists of
  * users
  * 
  * @author Group3
  *
  */
-public class UserRepository {
+public class UserContainer {
 
 
 
 	private List<User> usersRepository;
 
 	/**
-	 * Constructor for UserRepository includes usersList creation
+	 * Constructor for UserContainer includes usersList creation
 	 */
-	public UserRepository() {
+	public UserContainer() {
 		this.usersRepository = new ArrayList<>();
 	}
 

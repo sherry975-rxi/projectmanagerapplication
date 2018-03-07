@@ -2,11 +2,11 @@ package project.controller;
 
 import project.dto.UserDTO;
 import project.model.Company;
-import project.model.UserRepository;
+import project.model.UserContainer;
 
 public class US101RegisterUserController {
 
-	UserRepository userRegistry;
+	UserContainer userRegistry;
 
 	/**
 	 * This constructor creates a user Registration controller. *

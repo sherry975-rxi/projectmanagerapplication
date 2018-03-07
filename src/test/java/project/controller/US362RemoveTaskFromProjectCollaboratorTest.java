@@ -18,7 +18,7 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 	User user1;
 	User userAdmin;
 
-	TaskRepository taskRepository;
+	TaskContainer taskContainer;
 
 	TaskCollaborator taskWorker1;
 
@@ -58,25 +58,25 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		project2 = myCompany.getProjectsRepository().createProject("name1", "description4", userAdmin);
 
 		// add project to project repository
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(project);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(project2);
 
 		// create project collaborators
 		collab1 = new ProjectCollaborator(user1, 2);
 
-		// create taskRepository
+		// create taskContainer
 
-		taskRepository = project.getTaskRepository();
+		taskContainer = project.getTaskRepository();
 
 		// create 4 tasks
-		testTask = taskRepository.createTask("Test dis agen pls");
-		testTask2 = taskRepository.createTask("Test dis agen pls");
-		testTask3 = taskRepository.createTask("Test moar yeh");
+		testTask = taskContainer.createTask("Test dis agen pls");
+		testTask2 = taskContainer.createTask("Test dis agen pls");
+		testTask3 = taskContainer.createTask("Test moar yeh");
 
-		// Adds 5 tasks to the TaskRepository
-		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
-		taskRepository.addProjectTask(testTask3);
+		// Adds 5 tasks to the TaskContainer
+		taskContainer.addProjectTask(testTask);
+		taskContainer.addProjectTask(testTask2);
+		taskContainer.addProjectTask(testTask3);
 
 		// create task workers
 		taskWorker1 = new TaskCollaborator(collab1);
@@ -130,7 +130,7 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		testTask2 = null;
 		testTask3 = null;
 		project = null;
-		taskRepository = null;
+		taskContainer = null;
 		taskWorker1 = null;
 		collab1 = null;
 		estimatedTaskStartDateTest = null;

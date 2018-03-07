@@ -67,8 +67,8 @@ public class DemoComponent {
 
         Project myProjectTest = myCompany.getProjectsRepository().createProject("Test ze boot", "Test ze spring boot well yes?", manger);
         Project myProjectExperiment = myCompany.getProjectsRepository().createProject("Social experiment", "Manelinho is best meneger", manelinho);
-        myCompany.getProjectsRepository().addProjectToProjectRepository(myProjectTest);
-        myCompany.getProjectsRepository().addProjectToProjectRepository(myProjectExperiment);
+        myCompany.getProjectsRepository().addProjectToProjectContainer(myProjectTest);
+        myCompany.getProjectsRepository().addProjectToProjectContainer(myProjectExperiment);
 
 
         ProjectCollaborator manelinhoCollab = myProjectTest.createProjectCollaborator(manelinho, 68);

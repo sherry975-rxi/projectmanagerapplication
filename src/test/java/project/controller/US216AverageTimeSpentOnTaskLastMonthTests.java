@@ -33,14 +33,14 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 	 */
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User user2;
 	ProjectCollaborator projectCollaborator1;
 	TaskCollaborator taskWorker1;
-	ProjectRepository projectRepository;
+	ProjectContainer projectContainer;
 	Project myProject;
-	TaskRepository taskRepository;
+	TaskContainer taskContainer;
 	Task task1;
 	Task task2;
 	Task task3;
@@ -80,7 +80,7 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		myCompany.getUsersRepository().addUserToUserRepository(user2);
 
 		// Project 1 added to the project repository.
-		myCompany.getProjectsRepository().addProjectToProjectRepository(myProject);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(myProject);
 
 		// create project collaborators
 		projectCollaborator1 = myProject.createProjectCollaborator(user1, 10);
@@ -148,14 +148,14 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 	@After
 	public void tearDown() {
 		Company.clear();
-		userRepository = null;
+		userContainer = null;
 		user1 = null;
 		user2 = null;
 		projectCollaborator1 = null;
 		taskWorker1 = null;
-		projectRepository = null;
+		projectContainer = null;
 		myProject = null;
-		taskRepository = null;
+		taskContainer = null;
 		task1 = null;
 		task2 = null;
 		task3 = null;

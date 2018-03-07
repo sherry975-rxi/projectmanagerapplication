@@ -13,9 +13,9 @@ import static org.junit.Assert.assertEquals;
 public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 
 	Company myComp;
-	ProjectRepository projRepo;
-	UserRepository userRepo;
-	TaskRepository taskRepo;
+	ProjectContainer projRepo;
+	UserContainer userRepo;
+	TaskContainer taskRepo;
 	Project proj;
 	Task taskA;
 	Task taskB;
@@ -48,7 +48,7 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		userB = userRepo.getUserByEmail("ugandan2@nackls.com");
 
 		// Add a project to the project repository
-		projRepo.addProjectToProjectRepository(
+		projRepo.addProjectToProjectContainer(
 				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", userA));
 		proj = projRepo.getAllProjects().get(0);
 

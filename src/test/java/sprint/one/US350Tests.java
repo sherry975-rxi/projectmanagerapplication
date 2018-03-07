@@ -59,7 +59,7 @@ public class US350Tests {
 		// create the project and set a user to Project manager
 		p1 = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
 		// add project to the Company Project list
-		c1.getProjectsRepository().addProjectToProjectRepository(p1);
+		c1.getProjectsRepository().addProjectToProjectContainer(p1);
 
 	}
 

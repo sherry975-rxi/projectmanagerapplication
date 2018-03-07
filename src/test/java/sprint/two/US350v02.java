@@ -75,7 +75,7 @@ public class US350v02 {
 		contextualProject = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
 
 		// add project to project repository
-		c1.getProjectsRepository().addProjectToProjectRepository(contextualProject);
+		c1.getProjectsRepository().addProjectToProjectContainer(contextualProject);
 
 	}
 
@@ -109,7 +109,7 @@ public class US350v02 {
 		p1.addProjectCollaboratorToProjectTeam(collaborattor3);
 
 		// add project to the Company Project list
-		c1.getProjectsRepository().addProjectToProjectRepository(p1);
+		c1.getProjectsRepository().addProjectToProjectContainer(p1);
 
 		// Creates a new list and adds user to that list, to compare with userList
 		// inside ProjectTeam

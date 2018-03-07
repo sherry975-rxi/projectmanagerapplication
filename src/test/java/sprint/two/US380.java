@@ -90,7 +90,7 @@ public class US380 {
 	}
 
 	/**
-	 * First, the second task (position 1 on the taskRepository list) is marked as
+	 * First, the second task (position 1 on the taskContainer list) is marked as
 	 * finished. Then, the other tasks that were not marked as finished were added
 	 * to the expResult list. The assert checks if the expResult is equal to the
 	 * result of the getExpiredTasks method.

@@ -22,12 +22,12 @@ import static org.junit.Assert.assertEquals;
 public class US207 {
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User userAdmin;
 	Project project;
-	ProjectRepository projectRepository;
-	TaskRepository taskRepository;
+	ProjectContainer projectContainer;
+	TaskContainer taskContainer;
 	Task testTask;
 	ProjectCollaborator projectCollaborator;
 	TaskCollaborator taskWorker;
@@ -38,29 +38,29 @@ public class US207 {
 		// create company
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersRepository();
 
 		// creates a ProjectsRepository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsRepository();
 
-		userRepository.getAllUsersFromRepository().clear();
+		userContainer.getAllUsersFromRepository().clear();
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 		// create user admin
-		userAdmin = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(userAdmin);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(userAdmin);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 
 		// create project
-		project = projectRepository.createProject("name3", "description4", userAdmin);
+		project = projectContainer.createProject("name3", "description4", userAdmin);
 
 		// create project collaborator
 		projectCollaborator = project.createProjectCollaborator(user1, 2);
@@ -68,8 +68,8 @@ public class US207 {
 		// add user to project team
 		project.addProjectCollaboratorToProjectTeam(projectCollaborator);
 
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
+		// create taskContainer
+		taskContainer = project.getTaskRepository();
 
 	}
 
@@ -79,9 +79,9 @@ public class US207 {
 		user1 = null;
 		testTask = null;
 		project = null;
-		projectRepository = null;
-		taskRepository = null;
-		userRepository = null;
+		projectContainer = null;
+		taskContainer = null;
+		userContainer = null;
 	}
 
 	@Test
@@ -101,11 +101,11 @@ public class US207 {
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create 1 task
-		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
 
-		// Adds Tasks to TaskRepository
-		taskRepository.addProjectTask(testTask);
+		// Adds Tasks to TaskContainer
+		taskContainer.addProjectTask(testTask);
 
 		// create task Worker
 		taskWorker = testTask.createTaskCollaborator(projectCollaborator);

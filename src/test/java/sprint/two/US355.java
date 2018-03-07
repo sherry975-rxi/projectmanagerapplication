@@ -75,7 +75,7 @@ public class US355 {
 		p1.getTaskRepository().getProjectTaskRepository().clear();
 
 		// add project to the Company Project list
-		c1.getProjectsRepository().addProjectToProjectRepository(p1);
+		c1.getProjectsRepository().addProjectToProjectContainer(p1);
 
 		// create project collabotors with u3, u4 and u5 users
 		collaborator1 = p1.createProjectCollaborator(u3, 120);

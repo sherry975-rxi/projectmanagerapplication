@@ -3,7 +3,7 @@ package project.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectRepository {
+public class ProjectContainer {
 
 	private List<Project> projectsRepository;
 	private int projCounter = 1;
@@ -12,7 +12,7 @@ public class ProjectRepository {
 	 * Constructor that allows one to create a new Project Repository. There are no
 	 * mandatory fields.
 	 */
-	public ProjectRepository() {
+	public ProjectContainer() {
 
 		this.projectsRepository = new ArrayList<>();
 	}
@@ -68,7 +68,7 @@ public class ProjectRepository {
 	 * @param toAddProject
 	 *            Project added to the List of Projects
 	 */
-	public void addProjectToProjectRepository(Project toAddProject) {
+	public void addProjectToProjectContainer(Project toAddProject) {
 		if (!this.projectsRepository.contains(toAddProject)) {
 			this.projectsRepository.add(toAddProject);
 		}
@@ -409,7 +409,7 @@ public class ProjectRepository {
 	 * 
 	 * @return TRUE if the Project is in this project repository FALSE if not
 	 */
-	public boolean isProjectInProjectRepository(Project project) {
+	public boolean isProjectInProjectContainer(Project project) {
 
 		return this.projectsRepository.contains(project);
 	}

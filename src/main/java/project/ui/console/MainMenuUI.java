@@ -76,9 +76,9 @@ public class MainMenuUI {
 		projectGP.setFinishdate(finishDate);
 
 		// addition of projects to the company
-		myCompany.getProjectsRepository().addProjectToProjectRepository(projectGP);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(projectApostas);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(projectHomeBanking);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(projectGP);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(projectApostas);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(projectHomeBanking);
 
 		// set "EXECUTION" status of projects
 		projectGP.setProjectStatus(2);

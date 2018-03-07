@@ -29,16 +29,16 @@ public class US215Tests {
 	 */
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User user2;
 	ProjectCollaborator projectCollaborator1;
 	ProjectCollaborator projectCollaborator2;
 	TaskCollaborator taskWorker1;
 	TaskCollaborator taskWorker2;
-	ProjectRepository projectRepository;
+	ProjectContainer projectContainer;
 	Project myProject;
-	TaskRepository taskRepository;
+	TaskContainer taskContainer;
 	Task task1;
 	Task task2;
 	Task task3;
@@ -71,10 +71,10 @@ public class US215Tests {
 		myProject.addProjectCollaboratorToProjectTeam(projectCollaborator2);
 
 		// Project 1 added to the project repository.
-		myCompany.getProjectsRepository().addProjectToProjectRepository(myProject);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(myProject);
 
-		// create taskRepository
-		taskRepository = myProject.getTaskRepository();
+		// create taskContainer
+		taskContainer = myProject.getTaskRepository();
 
 		// Generate a Start Calendar (three months ago) and added to tasks start date
 		Calendar startCalendar = Calendar.getInstance();
@@ -120,16 +120,16 @@ public class US215Tests {
 	@After
 	public void tearDown() {
 		Company.clear();
-		userRepository = null;
+		userContainer = null;
 		user1 = null;
 		user2 = null;
 		projectCollaborator1 = null;
 		projectCollaborator2 = null;
 		taskWorker1 = null;
 		taskWorker2 = null;
-		projectRepository = null;
+		projectContainer = null;
 		myProject = null;
-		taskRepository = null;
+		taskContainer = null;
 		task1 = null;
 		task2 = null;
 		task3 = null;

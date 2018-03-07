@@ -47,7 +47,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 		project1 = company1.getProjectsRepository().createProject("name3", "description4", user2);
 
 		// add project 1 to company 1
-		company1.getProjectsRepository().addProjectToProjectRepository(project1);
+		company1.getProjectsRepository().addProjectToProjectContainer(project1);
 
 		// create tasks in project 1
 		task1 = project1.getTaskRepository().createTask("Do this");

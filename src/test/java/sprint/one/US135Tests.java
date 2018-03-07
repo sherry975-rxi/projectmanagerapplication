@@ -4,9 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import project.model.Company;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 import project.model.User;
-import project.model.UserRepository;
+import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +32,8 @@ public class US135Tests {
 	User newUser2;
 	User newUser3;
 	User newUser4;
-	UserRepository userRepository;
-	ProjectRepository projectRepository;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 
 	@Before
 	public void setUp() {
@@ -60,8 +60,8 @@ public class US135Tests {
 		newUser2 = null;
 		newUser3 = null;
 		newUser4 = null;
-		userRepository = null;
-		projectRepository = null;
+		userContainer = null;
+		projectContainer = null;
 	}
 
 	@Test

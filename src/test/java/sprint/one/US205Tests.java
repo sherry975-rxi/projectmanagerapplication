@@ -23,9 +23,9 @@ public class US205Tests {
 	 * 
 	 */
 	Company myCompany;
-	UserRepository userRepository;
-	ProjectRepository projectRepository;
-	TaskRepository taskRepository;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
+	TaskContainer taskContainer;
 	ProjectCollaborator projectUser1;
 	ProjectCollaborator projectUser2;
 	User newUser2;
@@ -42,22 +42,22 @@ public class US205Tests {
 	public void setUp() {
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersRepository();
 
 		// creates a ProjectsRepository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsRepository();
 
 		// create user
-		newUser2 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		newUser2 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// create user
-		newUser3 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		newUser3 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// create project
-		testProj = projectRepository.createProject("name3", "description4", newUser3);
+		testProj = projectContainer.createProject("name3", "description4", newUser3);
 
 		// // create a estimated Task Start Date
 		// Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -72,16 +72,16 @@ public class US205Tests {
 		// taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 20);
 		// taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// create taskRepository
-		taskRepository = testProj.getTaskRepository();
+		// create taskContainer
+		taskContainer = testProj.getTaskRepository();
 
 		// creates 2 Project Collaborators
 		projectUser1 = testProj.createProjectCollaborator(newUser2, 10);
 		projectUser2 = testProj.createProjectCollaborator(newUser3, 10);
 
 		// creates 2 Tasks
-		testTask = taskRepository.createTask("Test dis agen pls");
-		testTask2 = taskRepository.createTask("Test dis agen pls");
+		testTask = taskContainer.createTask("Test dis agen pls");
+		testTask2 = taskContainer.createTask("Test dis agen pls");
 
 		// Creates 2 Task Workers
 		taskWorker1 = testTask.createTaskCollaborator(projectUser1);
@@ -94,9 +94,9 @@ public class US205Tests {
 	public void tearDown() {
 
 		Company.clear();
-		userRepository = null;
-		projectRepository = null;
-		taskRepository = null;
+		userContainer = null;
+		projectContainer = null;
+		taskContainer = null;
 		projectUser1 = null;
 		projectUser2 = null;
 		newUser2 = null;

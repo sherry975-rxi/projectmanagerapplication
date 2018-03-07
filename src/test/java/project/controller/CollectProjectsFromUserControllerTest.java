@@ -24,7 +24,7 @@ public class CollectProjectsFromUserControllerTest {
 	User user1;
 	User userAdmin;
 
-	TaskRepository taskRepository;
+	TaskContainer taskContainer;
 
 	TaskCollaborator taskWorker1;
 
@@ -55,15 +55,15 @@ public class CollectProjectsFromUserControllerTest {
 		project2 = myCompany.getProjectsRepository().createProject("name1", "description4", userAdmin);
 
 		// add project to project repository
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project2);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(project);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(project2);
 
 		// create project collaborators
 		collab1 = new ProjectCollaborator(user1, 2);
 
-		// create taskRepository
+		// create taskContainer
 
-		taskRepository = project.getTaskRepository();
+		taskContainer = project.getTaskRepository();
 
 		// create task workers
 		taskWorker1 = new TaskCollaborator(collab1);
@@ -86,7 +86,7 @@ public class CollectProjectsFromUserControllerTest {
 		userAdmin = null;
 		project = null;
 		project2 = null;
-		taskRepository = null;
+		taskContainer = null;
 		taskWorker1 = null;
 		collab1 = null;
 	}

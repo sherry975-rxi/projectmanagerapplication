@@ -31,7 +31,7 @@ public class Project implements Serializable{
 	private int status;
 
     @Embedded
-	private TaskRepository taskRepository;
+	private TaskContainer taskContainer;
 	@OneToOne
 	private User projectManager;
 	@OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "project")
@@ -82,8 +82,8 @@ public class Project implements Serializable{
 		this.status = PLANNING;
 		this.startdate = null;
 		this.finishdate = null;
-		this.taskRepository = new TaskRepository(projectIdCode);
-		this.taskRepository.setProject(this);
+		this.taskContainer = new TaskContainer(projectIdCode);
+		this.taskContainer.setProject(this);
 		this.projectTeam = new ArrayList<>();
 		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
@@ -136,8 +136,8 @@ public class Project implements Serializable{
 		this.status = status;
 	}
 
-	public void setTaskRepository(TaskRepository taskRepository) {
-		this.taskRepository = taskRepository;
+	public void setTaskRepository(TaskContainer taskContainer) {
+		this.taskContainer = taskContainer;
 	}
 
 	public void setName(String name) {
@@ -265,10 +265,10 @@ public class Project implements Serializable{
 	/**
 	 * This method returns the Task Repository for this specific Project
 	 * 
-	 * @return taskRepository Task Repository for this Project
+	 * @return taskContainer Task Repository for this Project
 	 */
-	public TaskRepository getTaskRepository() {
-		return taskRepository;
+	public TaskContainer getTaskRepository() {
+		return taskContainer;
 	}
 
 	/**
@@ -536,7 +536,7 @@ public class Project implements Serializable{
 		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
 		inactiveCollaborators.addAll(this.getProjectTeam());
 		for (ProjectCollaborator other : this.getProjectTeam()) {
-			if (this.taskRepository.isCollaboratorActiveOnAnyTask(other)) // needs to check if
+			if (this.taskContainer.isCollaboratorActiveOnAnyTask(other)) // needs to check if
 				// collaborator is
 				// active
 				inactiveCollaborators.remove(other);
@@ -558,7 +558,7 @@ public class Project implements Serializable{
 	 * 
 	 * if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
 	 * collaboratorToRemoveFromProjectTeam.setState(false); for (Task otherTask :
-	 * this.taskRepository.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
+	 * this.taskContainer.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
 	 * otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); } }
 	 * 
 	 * }
@@ -582,7 +582,7 @@ public class Project implements Serializable{
 
 				other.setState(false);
 
-				for (Task otherTask : this.taskRepository.getAllTasksFromProjectCollaborator(other)) {
+				for (Task otherTask : this.taskContainer.getAllTasksFromProjectCollaborator(other)) {
 					otherTask.removeProjectCollaboratorFromTask(other);
 				}
 				remove = true;
@@ -620,7 +620,7 @@ public class Project implements Serializable{
 	public double getTotalCostReportedToProjectUntilNow() {
 		double reportedCost = 0.0;
 
-		for (Task task : taskRepository.getProjectTaskRepository()) {
+		for (Task task : taskContainer.getProjectTaskRepository()) {
 			reportedCost += task.getTaskCost();
 		}
 

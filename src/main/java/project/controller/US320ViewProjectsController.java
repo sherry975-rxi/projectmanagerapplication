@@ -2,14 +2,14 @@ package project.controller;
 
 import project.model.Company;
 import project.model.Project;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class US320ViewProjectsController {
 
-	ProjectRepository projRepository = Company.getTheInstance().getProjectsRepository();
+	ProjectContainer projRepository = Company.getTheInstance().getProjectsRepository();
 	List<Project> chosenList;
 	Project selectedProject = null;
 

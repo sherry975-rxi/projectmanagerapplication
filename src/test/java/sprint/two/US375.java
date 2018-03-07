@@ -22,12 +22,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class US375 {
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User user2;
 	Project project;
-	ProjectRepository projectRepository;
-	TaskRepository taskRepository;
+	ProjectContainer projectContainer;
+	TaskContainer taskContainer;
 	Task testTask;
 	Task testTask2;
 	ProjectCollaborator projectCollaborator;
@@ -40,33 +40,33 @@ public class US375 {
 
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersRepository();
 
 		// creates a ProjectsRepository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsRepository();
 
-		// creates a UserRepository
-		userRepository.getAllUsersFromRepository().clear();
+		// creates a UserContainer
+		userContainer.getAllUsersFromRepository().clear();
 
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		user2 = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		user2.setUserProfile(Profile.COLLABORATOR);
 
 		// create project
-		project = projectRepository.createProject("name3", "description4", user2);
+		project = projectContainer.createProject("name3", "description4", user2);
 
 		// create project collaborator
 		projectCollaborator = project.createProjectCollaborator(user1, 2);
@@ -74,8 +74,8 @@ public class US375 {
 		// add user to project team
 		project.addProjectCollaboratorToProjectTeam(projectCollaborator);
 
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
+		// create taskContainer
+		taskContainer = project.getTaskRepository();
 
 	}
 
@@ -85,9 +85,9 @@ public class US375 {
 		user1 = null;
 		testTask = null;
 		project = null;
-		projectRepository = null;
-		taskRepository = null;
-		userRepository = null;
+		projectContainer = null;
+		taskContainer = null;
+		userContainer = null;
 	}
 
 	@Test
@@ -106,18 +106,18 @@ public class US375 {
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create 2 task
-		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask2 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
 
 		// create task Worker
 		taskWorker = testTask.createTaskCollaborator(projectCollaborator);
 		taskWorker1 = testTask2.createTaskCollaborator(projectCollaborator);
 
-		// Adds Tasks to TaskRepository
-		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
+		// Adds Tasks to TaskContainer
+		taskContainer.addProjectTask(testTask);
+		taskContainer.addProjectTask(testTask2);
 
 		// Adds user1 to the Task
 		testTask.addTaskCollaboratorToTask(taskWorker);
@@ -129,7 +129,7 @@ public class US375 {
 		listunstartedTasks.add(testTask);
 		listunstartedTasks.add(testTask2);
 
-		assertEquals(listunstartedTasks, taskRepository.getUnstartedTasks());
+		assertEquals(listunstartedTasks, taskContainer.getUnstartedTasks());
 
 	}
 }

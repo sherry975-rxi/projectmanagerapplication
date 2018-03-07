@@ -2,11 +2,11 @@ package project.controller;
 
 import project.model.Project;
 import project.model.Task;
-import project.model.TaskRepository;
+import project.model.TaskContainer;
 
 public class US365MarkTaskAsFinishedControllerProjectManager {
 	private Task taskToBeMarked;
-	private TaskRepository projectTaskList;
+	private TaskContainer projectTaskList;
 
 	public US365MarkTaskAsFinishedControllerProjectManager(String taskID, Project selectedProject) {
 		this.projectTaskList = selectedProject.getTaskRepository();

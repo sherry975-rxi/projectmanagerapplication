@@ -14,7 +14,7 @@ public class US205MarkTaskAsFinishedCollaborator {
 	public List<Project> getProjectsThatIAmCollaborator(User user) {
 		List<Project> projectsThatImProjectCollaborator = new ArrayList<>();
 		this.username = user;
-		ProjectRepository projectList = Company.getTheInstance().getProjectsRepository();
+		ProjectContainer projectList = Company.getTheInstance().getProjectsRepository();
 		projectsThatImProjectCollaborator.addAll(projectList.getProjectsFromUser(this.username));
 		return projectsThatImProjectCollaborator;
 	}

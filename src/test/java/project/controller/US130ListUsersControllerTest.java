@@ -39,7 +39,7 @@ public class US130ListUsersControllerTest {
 		newUser3 = Critical.getUsersRepository().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-		// adds all but newUser3 to the UserRepository and test List
+		// adds all but newUser3 to the UserContainer and test List
 		Critical.getUsersRepository().addUserToUserRepository(user1);
 		Critical.getUsersRepository().addUserToUserRepository(user2);
 		Critical.getUsersRepository().addUserToUserRepository(newUser2);

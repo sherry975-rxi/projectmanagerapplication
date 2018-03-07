@@ -27,12 +27,12 @@ import static org.junit.Assert.*;
 public class US340 {
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User userAdmin;
 	Project project;
-	ProjectRepository projectRepository;
-	TaskRepository taskRepository;
+	ProjectContainer projectContainer;
+	TaskContainer taskContainer;
 	Task testTask;
 	Task testTask2;
 	Task testTask3;
@@ -44,30 +44,30 @@ public class US340 {
 
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersRepository();
 
 		// creates a ProjectsRepository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsRepository();
 
-		userRepository.getAllUsersFromRepository().clear();
+		userContainer.getAllUsersFromRepository().clear();
 
 		// create user
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 		// create user admin
-		userAdmin = userRepository.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(userAdmin);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(userAdmin);
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
-		project = projectRepository.createProject("name3", "description4", userAdmin);// !!!
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
+		project = projectContainer.createProject("name3", "description4", userAdmin);// !!!
+		// create taskContainer
+		taskContainer = project.getTaskRepository();
 
 	}
 
@@ -80,9 +80,9 @@ public class US340 {
 		testTask3 = null;
 		testTask4 = null;
 		project = null;
-		projectRepository = null;
-		taskRepository = null;
-		userRepository = null;
+		projectContainer = null;
+		taskContainer = null;
+		userContainer = null;
 	}
 
 	@Test
@@ -106,20 +106,20 @@ public class US340 {
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create 1 task
-		testTask = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask2 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask2 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask3 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask3 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
-		testTask4 = taskRepository.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
+		testTask4 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
 				10);
 
-		// Adds Tasks to TaskRepository
-		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
-		taskRepository.addProjectTask(testTask3);
-		taskRepository.addProjectTask(testTask4);
+		// Adds Tasks to TaskContainer
+		taskContainer.addProjectTask(testTask);
+		taskContainer.addProjectTask(testTask2);
+		taskContainer.addProjectTask(testTask3);
+		taskContainer.addProjectTask(testTask4);
 
 		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
 		// getProjectTaskList method
@@ -132,7 +132,7 @@ public class US340 {
 		taskListToCompare.add(testTask4);
 
 		// See if the two lists have the same tasks
-		assertEquals(taskRepository.getProjectTaskRepository(), taskListToCompare);
+		assertEquals(taskContainer.getProjectTaskRepository(), taskListToCompare);
 
 	}
 	

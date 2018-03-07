@@ -1,7 +1,7 @@
 package project.controller;
 
 import project.model.Company;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 import project.model.User;
 
 /**
@@ -14,7 +14,7 @@ import project.model.User;
  */
 public class US215TotalTimeSpentOnTaskLastMonthController {
 
-	ProjectRepository myProjRepo;
+	ProjectContainer myProjRepo;
 
 	public US215TotalTimeSpentOnTaskLastMonthController() {
 		this.myProjRepo = Company.getTheInstance().getProjectsRepository();

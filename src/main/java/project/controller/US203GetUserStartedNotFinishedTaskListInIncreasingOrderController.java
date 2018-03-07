@@ -1,7 +1,7 @@
 package project.controller;
 
 import project.model.Company;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 import project.model.Task;
 import project.model.User;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 
-	ProjectRepository myProjRepo;
+	ProjectContainer myProjRepo;
 
 	public US203GetUserStartedNotFinishedTaskListInIncreasingOrderController() {
 		this.myProjRepo = Company.getTheInstance().getProjectsRepository();

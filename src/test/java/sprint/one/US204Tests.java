@@ -92,7 +92,7 @@ public class US204Tests {
 		newUserA.setUserProfile(Profile.COLLABORATOR);
 		newUserB.setUserProfile(Profile.COLLABORATOR);
 
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(project1);
 
 		assertTrue(project1.isProjectManager(newUserA));
 		assertFalse(project1.isProjectManager(newUserB));
@@ -116,7 +116,7 @@ public class US204Tests {
 		newUserA.setUserProfile(Profile.COLLABORATOR);
 		newUserB.setUserProfile(Profile.COLLABORATOR);
 
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(project1);
 
 		project1.addUserToProjectTeam(newUserB, 10);
 		project1.addUserToProjectTeam(newUserA, 10);

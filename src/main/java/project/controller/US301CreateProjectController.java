@@ -40,7 +40,7 @@ public class US301CreateProjectController {
 
 		createdProject = myCompany.getProjectsRepository().createProject(name, description, projectManager);
 
-		myCompany.getProjectsRepository().addProjectToProjectRepository(createdProject);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(createdProject);
 
 		return createdProject;
 	}

@@ -1,7 +1,7 @@
 package project.controller;
 
 import project.model.Company;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 import project.model.Task;
 import project.model.User;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 
 	User myUser;
-	ProjectRepository myProjRepo;
+	ProjectContainer myProjRepo;
 
 	/**
 	 * Creator of the controller, receives a user

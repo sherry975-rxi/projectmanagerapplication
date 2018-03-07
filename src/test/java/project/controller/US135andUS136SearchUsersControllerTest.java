@@ -6,7 +6,7 @@ import org.junit.Test;
 import project.model.Company;
 import project.model.Profile;
 import project.model.User;
-import project.model.UserRepository;
+import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class US135andUS136SearchUsersControllerTest {
 	User newUser1;
 	User newUser2;
 	User newUser3;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	US135andUS136SearchUsersController searchController;
 	Company company;
 
@@ -36,8 +36,8 @@ public class US135andUS136SearchUsersControllerTest {
 		// Creates new company
 		company = Company.getTheInstance();
 
-		// Creates an UserRepository
-		userRepository = company.getUsersRepository();
+		// Creates an UserContainer
+		userContainer = company.getUsersRepository();
 
 		// create user
 		newUser1 = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
@@ -48,9 +48,9 @@ public class US135andUS136SearchUsersControllerTest {
 		newUser3 = new User("Miguel", "miguel@gmail.com", "001", "Admin", "920000000");
 
 		/* Adds the created users to the user Repository */
-		userRepository.addUserToUserRepository(newUser1);
-		userRepository.addUserToUserRepository(newUser2);
-		userRepository.addUserToUserRepository(newUser3);
+		userContainer.addUserToUserRepository(newUser1);
+		userContainer.addUserToUserRepository(newUser2);
+		userContainer.addUserToUserRepository(newUser3);
 
 		// Creates a searchController
 		searchController = new US135andUS136SearchUsersController();
@@ -60,7 +60,7 @@ public class US135andUS136SearchUsersControllerTest {
 	@After
 	public void tearDown() {
 		Company.clear();
-		userRepository = null;
+		userContainer = null;
 		searchController = null;
 		newUser1 = null;
 		newUser2 = null;

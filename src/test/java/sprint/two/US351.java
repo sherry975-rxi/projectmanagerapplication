@@ -31,7 +31,7 @@ public class US351 {
 		user2 = myComp.getUsersRepository().createUser("myuser2", "myemail2@myemail.com", "myid2", "myfunction2",
 				"myphone2", "mystreet2", "myzipcode2", "mycity2", "mydistrict2", "mycountry2");
 		// create project
-		myComp.getProjectsRepository().addProjectToProjectRepository(
+		myComp.getProjectsRepository().addProjectToProjectContainer(
 				myComp.getProjectsRepository().createProject("myProj", "dis ma project", user1));
 		proj1 = myComp.getProjectsRepository().getAllProjects().get(0);
 		// add user to project as project collaborator

@@ -20,8 +20,8 @@ public class CompanyTest {
 
 	Company myCompany;
 	Company companyB;
-	UserRepository userRepository;
-	ProjectRepository projectRepository;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 	User user1;
 	User user2;
 	User user3;
@@ -56,8 +56,8 @@ public class CompanyTest {
 		project3 = myCompany.getProjectsRepository().createProject("name3", "description4", user1);
 
 		// project 1 and project 3 included in project repository
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project1);
-		myCompany.getProjectsRepository().addProjectToProjectRepository(project3);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(project1);
+		myCompany.getProjectsRepository().addProjectToProjectContainer(project3);
 	}
 
 	@After
@@ -90,7 +90,7 @@ public class CompanyTest {
 	// * Test to verify that the Company has project repository
 	// */
 	// @Test
-	// public void testgetProjectRepository() {
+	// public void testgetProjectContainer() {
 	//
 	// assertEquals(myCompany.getProjectsRepository().getAllProjects().size(), 2);
 	//

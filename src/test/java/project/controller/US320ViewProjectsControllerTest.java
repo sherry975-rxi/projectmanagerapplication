@@ -38,8 +38,8 @@ public class US320ViewProjectsControllerTest {
 		activeProject.setProjectStatus(Project.EXECUTION);
 		inactiveProject.setProjectStatus(Project.PLANNING);
 
-		testCompany.getProjectsRepository().addProjectToProjectRepository(activeProject);
-		testCompany.getProjectsRepository().addProjectToProjectRepository(inactiveProject);
+		testCompany.getProjectsRepository().addProjectToProjectContainer(activeProject);
+		testCompany.getProjectsRepository().addProjectToProjectContainer(inactiveProject);
 
 		// creates a string from activeProject's overview data, to be compared with the
 		// various tests
@@ -117,9 +117,9 @@ public class US320ViewProjectsControllerTest {
 	@Test
 	public void allProjectsListTest() {
 		projectListsController = new US320ViewProjectsController();
-		int projectRepositorySize = testCompany.getProjectsRepository().getAllProjects().size();
+		int ProjectContainerSize = testCompany.getProjectsRepository().getAllProjects().size();
 
-		assertEquals(projectRepositorySize, projectListsController.viewAllProjects().size());
+		assertEquals(ProjectContainerSize, projectListsController.viewAllProjects().size());
 
 		// also asserts that the contents of index 0 and 1 are different, and weren't
 		// duplicated

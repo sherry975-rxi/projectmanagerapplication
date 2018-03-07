@@ -32,7 +32,7 @@ public class ProjectTest {
 	TaskCollaborator taskWorker2;
 	Project p1;
 	Project p2;
-	TaskRepository taskRepository;
+	TaskContainer taskContainer;
 
 	@Before
 	public void setUp() {
@@ -152,7 +152,7 @@ public class ProjectTest {
 		projectCollaborator1 = null;
 		projectCollaborator3 = null;
 		projectCollaborator4 = null;
-		taskRepository = null;
+		taskContainer = null;
 	}
 
 	/**

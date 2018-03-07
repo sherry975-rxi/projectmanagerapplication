@@ -16,14 +16,14 @@ import static org.junit.Assert.*;
  * @author Group3
  *
  */
-public class UserRepositoryTest {
+public class UserContainerTest {
 
 	User user1;
 	User user2;
 	User user3;
 	User user4;
 	User user5;
-	UserRepository userRep = new UserRepository();
+	UserContainer userRep = new UserContainer();
 
 	@Before
 	public void setUp() {

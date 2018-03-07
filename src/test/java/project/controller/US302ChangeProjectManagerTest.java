@@ -43,7 +43,7 @@ public class US302ChangeProjectManagerTest {
 		userFirstManager.setUserProfile(Profile.COLLABORATOR);
 
 		newProject = c1.getProjectsRepository().createProject("name", "description", userFirstManager);
-		c1.getProjectsRepository().addProjectToProjectRepository(newProject);
+		c1.getProjectsRepository().addProjectToProjectContainer(newProject);
 	}
 
 	@After

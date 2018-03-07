@@ -77,7 +77,7 @@ public class US347CancelOnGoingTaskControllerTest {
 				"This software main goals are ....", projectManager);
 
 		// add project to company
-		company1.getProjectsRepository().addProjectToProjectRepository(project1);
+		company1.getProjectsRepository().addProjectToProjectContainer(project1);
 
 		// create project collaborators
 		projCollab1 = new ProjectCollaborator(user1, 2);

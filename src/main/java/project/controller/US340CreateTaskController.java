@@ -2,11 +2,11 @@ package project.controller;
 
 import project.model.Project;
 import project.model.Task;
-import project.model.TaskRepository;
+import project.model.TaskContainer;
 
 public class US340CreateTaskController {
 
-	private TaskRepository taskRepository;
+	private TaskContainer taskContainer;
 
 	/**
 	 * This constructor creates a target controller. Currently, it receives a
@@ -19,11 +19,11 @@ public class US340CreateTaskController {
 	 */
 	public US340CreateTaskController(Project target) {
 
-		this.taskRepository = target.getTaskRepository();
+		this.taskContainer = target.getTaskRepository();
 	}
 
-	public TaskRepository getTaskRepository() {
-		return this.taskRepository;
+	public TaskContainer getTaskRepository() {
+		return this.taskContainer;
 	}
 
 	/**
@@ -38,9 +38,9 @@ public class US340CreateTaskController {
 	 * @return the added task
 	 */
 	public Task addTask(String description) {
-		Task newTask = taskRepository.createTask(description);
+		Task newTask = taskContainer.createTask(description);
 
-		taskRepository.addProjectTask(newTask);
+		taskContainer.addProjectTask(newTask);
 
 		return newTask;
 

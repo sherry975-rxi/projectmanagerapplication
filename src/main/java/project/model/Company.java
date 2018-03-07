@@ -9,8 +9,8 @@ package project.model;
  */
 public final class Company {
 
-	private UserRepository usersRepository;
-	private ProjectRepository projectsRepository;
+	private UserContainer usersRepository;
+	private ProjectContainer projectsRepository;
 	private static Company theInstance;
 
 	/**
@@ -18,8 +18,8 @@ public final class Company {
 	 * projectsRepository creation
 	 */
 	private Company() {
-		this.usersRepository = new UserRepository();
-		this.projectsRepository = new ProjectRepository();
+		this.usersRepository = new UserContainer();
+		this.projectsRepository = new ProjectContainer();
 	}
 
 	/**
@@ -48,7 +48,7 @@ public final class Company {
 	 * 
 	 * @return projectsRepository This is the Repository of all Projects created
 	 */
-	public ProjectRepository getProjectsRepository() {
+	public ProjectContainer getProjectsRepository() {
 		return this.projectsRepository;
 	}
 
@@ -57,7 +57,7 @@ public final class Company {
 	 * 
 	 * @return usersRepository This is the Repository of all Users created
 	 */
-	public UserRepository getUsersRepository() {
+	public UserContainer getUsersRepository() {
 		return this.usersRepository;
 	}
 }

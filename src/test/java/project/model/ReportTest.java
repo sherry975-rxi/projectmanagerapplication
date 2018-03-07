@@ -17,7 +17,7 @@ public class ReportTest {
 	Task t1;
 	TaskCollaborator taskWorker1;
 	Project p1;
-	TaskRepository taskRepository;
+	TaskContainer taskContainer;
 	Report report;
 	Calendar dateOfReport;
 	Task task1;
@@ -49,7 +49,7 @@ public class ReportTest {
 		taskWorker1 = null;
 		p1 = null;
 		projectCollaborator1 = null;
-		taskRepository = null;
+		taskContainer = null;
 		report = null;
 		timeToCompare = 0;
 		dateOfReport = null;

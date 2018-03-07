@@ -2,7 +2,7 @@ package project.controller;
 
 import project.model.Company;
 import project.model.Project;
-import project.model.ProjectRepository;
+import project.model.ProjectContainer;
 import project.model.Task;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 
-	ProjectRepository myProjRepo;
+	ProjectContainer myProjRepo;
 
 	public US360GetProjectTasksWithoutCollaboratorsAssignedController() {
 		this.myProjRepo = Company.getTheInstance().getProjectsRepository();

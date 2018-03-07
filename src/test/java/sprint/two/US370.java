@@ -21,12 +21,12 @@ import static org.junit.Assert.assertEquals;
 public class US370 {
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User user2;
 	Project project;
-	ProjectRepository projectRepository;
-	TaskRepository taskRepository;
+	ProjectContainer projectContainer;
+	TaskContainer taskContainer;
 	Task testTask;
 	Task testTask2;
 	ProjectCollaborator projectCollaborator;
@@ -40,14 +40,14 @@ public class US370 {
 
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersRepository();
 
 		// creates a ProjectsRepository
-		projectRepository = myCompany.getProjectsRepository();
+		projectContainer = myCompany.getProjectsRepository();
 
-		// creates a UserRepository
-		userRepository.getAllUsersFromRepository().clear();
+		// creates a UserContainer
+		userContainer.getAllUsersFromRepository().clear();
 
 		// clean list ProjectsRepository
 		myCompany.getProjectsRepository().getAllProjects().clear();
@@ -64,15 +64,15 @@ public class US370 {
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		user2.setUserProfile(Profile.COLLABORATOR);
 
 		// create project
-		project = projectRepository.createProject("name3", "description4", user2);
+		project = projectContainer.createProject("name3", "description4", user2);
 
 		// create project collaborator
 		projectCollaborator = project.createProjectCollaborator(user1, 2);
@@ -80,8 +80,8 @@ public class US370 {
 		// add user to project team
 		project.addProjectCollaboratorToProjectTeam(projectCollaborator);
 
-		// create taskRepository
-		taskRepository = project.getTaskRepository();
+		// create taskContainer
+		taskContainer = project.getTaskRepository();
 
 	}
 
@@ -91,21 +91,21 @@ public class US370 {
 		user1 = null;
 		testTask = null;
 		project = null;
-		projectRepository = null;
-		taskRepository = null;
-		userRepository = null;
+		projectContainer = null;
+		taskContainer = null;
+		userContainer = null;
 	}
 
 	@Test
 	public void testUS370() {
 		
 		// create 2 task
-		testTask = taskRepository.createTask("Test dis agen pls");
-		testTask2 = taskRepository.createTask("Test dis agen pls");
+		testTask = taskContainer.createTask("Test dis agen pls");
+		testTask2 = taskContainer.createTask("Test dis agen pls");
 
-		// Adds Tasks to TaskRepository
-		taskRepository.addProjectTask(testTask);
-		taskRepository.addProjectTask(testTask2);
+		// Adds Tasks to TaskContainer
+		taskContainer.addProjectTask(testTask);
+		taskContainer.addProjectTask(testTask2);
 
 		// create task Worker
 		taskWorker = testTask.createTaskCollaborator(projectCollaborator);
@@ -171,7 +171,7 @@ public class US370 {
 		listFinishedTasks.add(testTask);
 		listFinishedTasks.add(testTask2);
 
-		assertEquals(listFinishedTasks, taskRepository.getFinishedTasks());
+		assertEquals(listFinishedTasks, taskContainer.getFinishedTasks());
 
 	}
 

@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 public class US320Tests {
 
 	Company myCompany;
-	UserRepository userRepository;
+	UserContainer userContainer;
 	User user1;
 	User user2;
 	Project project1;
@@ -30,7 +30,7 @@ public class US320Tests {
 	Project project3;
 	Project project4;
 	Project project5;
-	ProjectRepository projectRepository;
+	ProjectContainer projectContainer;
 	ProjectCollaborator projectCollaborator;
 	List<Project> testUs320;
 
@@ -39,40 +39,40 @@ public class US320Tests {
 		// Company creation
 		myCompany = Company.getTheInstance();
 
-		// creates an UserRepository
-		userRepository = myCompany.getUsersRepository();
+		// creates an UserContainer
+		userContainer = myCompany.getUsersRepository();
 
 		// creates a ProjectsRepository
-		projectRepository = myCompany.getProjectsRepository();
-		userRepository.getAllUsersFromRepository().clear();
+		projectContainer = myCompany.getProjectsRepository();
+		userContainer.getAllUsersFromRepository().clear();
 
 		// User creation
-		user1 = userRepository.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
-		user2 = userRepository.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "Rua Bla",
+		user2 = userContainer.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "Rua Bla",
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
 		// add user to user list
-		userRepository.addUserToUserRepository(user1);
-		userRepository.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.DIRECTOR);
 		user2.setUserProfile(Profile.COLLABORATOR);
 
 		// create project and set a user to Project manager
-		project1 = projectRepository.createProject("name3", "description4", user2);
-		project2 = projectRepository.createProject("name3", "description4", user2);
-		project3 = projectRepository.createProject("name3", "description4", user2);
-		project4 = projectRepository.createProject("name3", "description4", user2);
-		project5 = projectRepository.createProject("name3", "description4", user2);
+		project1 = projectContainer.createProject("name3", "description4", user2);
+		project2 = projectContainer.createProject("name3", "description4", user2);
+		project3 = projectContainer.createProject("name3", "description4", user2);
+		project4 = projectContainer.createProject("name3", "description4", user2);
+		project5 = projectContainer.createProject("name3", "description4", user2);
 
 		// add project to project repository
-		projectRepository.addProjectToProjectRepository(project1);
-		projectRepository.addProjectToProjectRepository(project2);
-		projectRepository.addProjectToProjectRepository(project3);
-		projectRepository.addProjectToProjectRepository(project4);
-		projectRepository.addProjectToProjectRepository(project5);
+		projectContainer.addProjectToProjectContainer(project1);
+		projectContainer.addProjectToProjectContainer(project2);
+		projectContainer.addProjectToProjectContainer(project3);
+		projectContainer.addProjectToProjectContainer(project4);
+		projectContainer.addProjectToProjectContainer(project5);
 
 		// create project collaborator
 		projectCollaborator = project1.createProjectCollaborator(user1, 2);
@@ -97,8 +97,8 @@ public class US320Tests {
 	@After
 	public void tearDown() {
 		Company.clear();
-		userRepository = null;
-		projectRepository = null;
+		userContainer = null;
+		projectContainer = null;
 		projectCollaborator = null;
 		user1 = null;
 		user2 = null;
@@ -128,6 +128,6 @@ public class US320Tests {
 		testUs320.add(project3);
 		testUs320.add(project4);
 
-		assertEquals(testUs320, projectRepository.getActiveProjects());
+		assertEquals(testUs320, projectContainer.getActiveProjects());
 	}
 }

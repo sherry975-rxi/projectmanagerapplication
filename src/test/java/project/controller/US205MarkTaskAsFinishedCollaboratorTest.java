@@ -101,9 +101,9 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 				"This software main goals are ....", projectManager);
 
 		// add project to company
-		company1.getProjectsRepository().addProjectToProjectRepository(project1);
-		company1.getProjectsRepository().addProjectToProjectRepository(project2);
-		company1.getProjectsRepository().addProjectToProjectRepository(project3);
+		company1.getProjectsRepository().addProjectToProjectContainer(project1);
+		company1.getProjectsRepository().addProjectToProjectContainer(project2);
+		company1.getProjectsRepository().addProjectToProjectContainer(project3);
 
 		// create project collaborators
 		projCollab1 = new ProjectCollaborator(user1, 2);
@@ -314,7 +314,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		// create controller
 		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
 
-		// create list of tasks to compare to taskRepository of project
+		// create list of tasks to compare to taskContainer of project
 		List<Project> allProjectsInTest = new ArrayList<>();
 
 		// add task to the list allTasksInTest
@@ -333,7 +333,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
 
-		// create list of tasks to compare to taskRepository of project
+		// create list of tasks to compare to taskContainer of project
 		List<Task> allTasksInProject1Test = new ArrayList<>();
 		List<Task> allTasksInProject1 = uS205MarkTaskAsFinishedCollaborator
 				.getUnfinishedTasksOfProjectFromCollaborator(1);

@@ -101,9 +101,9 @@ public class US203GetUnfinishedTaskTest {
 				"This software main goals are ....", projectManager);
 
 		// add project to company
-		company1.getProjectsRepository().addProjectToProjectRepository(project1);
-		company1.getProjectsRepository().addProjectToProjectRepository(project2);
-		company1.getProjectsRepository().addProjectToProjectRepository(project3);
+		company1.getProjectsRepository().addProjectToProjectContainer(project1);
+		company1.getProjectsRepository().addProjectToProjectContainer(project2);
+		company1.getProjectsRepository().addProjectToProjectContainer(project3);
 
 		// create project collaborators
 		projCollab1 = new ProjectCollaborator(user1, 2);
@@ -313,7 +313,7 @@ public class US203GetUnfinishedTaskTest {
 	public void test() {
 		US203GetUnfinishedTaskByUser unfinishedtask = new US203GetUnfinishedTaskByUser();
 		int t = 0;
-		// create list of tasks to compare to taskRepository of project
+		// create list of tasks to compare to taskContainer of project
 		List<Task> allTasksInTest = new ArrayList<>();
 		List<Task> allTasks = new ArrayList<>();
 

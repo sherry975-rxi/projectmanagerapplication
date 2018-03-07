@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 public class US340v2 {
 
 	Company myCompany;
-	ProjectRepository myProjRep;
+	ProjectContainer myProjRep;
 	User user1, user2;
 	Project myProject;
 	Task testTask, testTask2, testTask3;
@@ -42,7 +42,7 @@ public class US340v2 {
 		//create project
 		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
 		//add project to project repository
-		myProjRep.addProjectToProjectRepository(myProject);
+		myProjRep.addProjectToProjectContainer(myProject);
 		// add cost per effort in users, creating Project Collaborators for each one
 		collab1 = myProject.createProjectCollaborator(user1, 5);
 		collab2 = myProject.createProjectCollaborator(user2, 5);

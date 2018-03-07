@@ -76,7 +76,7 @@ public class AddColaboratorToProjectTeamController_Test {
 		contextualProject = c1.getProjectsRepository().createProject("Teste", "blablabla", u2);
 
 		// add project to project repository
-		c1.getProjectsRepository().addProjectToProjectRepository(contextualProject);
+		c1.getProjectsRepository().addProjectToProjectContainer(contextualProject);
 
 	}
 
