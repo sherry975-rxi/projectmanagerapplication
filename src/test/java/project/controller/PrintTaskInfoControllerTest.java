@@ -237,11 +237,22 @@ public class PrintTaskInfoControllerTest {
 
 		assertEquals(controller.printTaskTeamInfo(), "Daniel");
 	}
-
+	/**
+	 * Tests if the method of controller gets the project name where the task is associated
+	 */
 	@Test
 	public void testPrintInfoFromTask() {
 
 		String projectName = controller.printProjectNameInfo();
 		assertEquals("Projeto de gestão", projectName);
+	}
+	/**
+	 * Tests if the method of controller gets the task's budget
+	 */
+	@Test
+	public void testPrintTaskBudgetInfo(){
+		task1.setTaskBudget(20);
+		assertEquals(controller.printTaskBudgetInfo(), "20");
+
 	}
 }
