@@ -35,6 +35,9 @@ public class Task {
     @OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "task")
 	private List<Report> reports;
 
+	@Enumerated(EnumType.STRING)
+	private StateEnum currentState;
+
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
@@ -90,6 +93,7 @@ public class Task {
 		this.taskDependency = new ArrayList<>();
 		this.taskState = new Created(this);
 		this.cancelDate = null;
+		this.currentState = StateEnum.Created;
 	}
 
 	/**
@@ -134,6 +138,7 @@ public class Task {
 		this.deadlineInterval = null;
 		this.taskDependency = new ArrayList<>();
 		this.taskState = new Created(this);
+		this.currentState = StateEnum.Created;
 	}
 
 	/**
@@ -169,6 +174,25 @@ public class Task {
 		} else {
 			this.deadlineInterval = null;
 		}
+		this.currentState = StateEnum.Created;
+	}
+
+	/**
+	 * Gets the currentState from the currentStateEnum variable
+	 *
+	 * @return the current state
+	 */
+	public StateEnum getCurrentState() {
+		return currentState;
+	}
+
+	/**
+	 * Sets the currentStateEnum
+	 *
+	 * @param currentState Enum to set
+	 */
+	public void setCurrentState(StateEnum currentState) {
+		this.currentState = currentState;
 	}
 
 	public Long getId() {
@@ -991,6 +1015,15 @@ public class Task {
 	 */
 	public String viewTaskStateName() {
 		return this.taskState.getClass().getSimpleName();
+	}
+
+	/**
+	 * This method returns the name of the task's current state from the enum
+	 *
+	 * @return String taskState
+	 */
+	public String viewTaskStateNameFromEnum() {
+		return this.currentState.getClass().toString();
 	}
 
 	/**
