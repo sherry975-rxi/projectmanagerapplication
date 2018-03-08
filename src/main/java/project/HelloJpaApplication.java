@@ -61,7 +61,7 @@ public class HelloJpaApplication implements CommandLineRunner {
         project.getTaskRepository().getTaskByID(task2.getTaskID()).createTaskDependence(task,2);
 
         //Saves the project to the database
-        company.getProjectsContainer().saveProject(project);
+        company.getProjectsContainer().addProjectToProjectContainerX(project);
         //Gets the project from the database by the id
         Project projectAAA = company.getProjectsContainer(). getProjectById(1);
         //Gets the task through the project taskRepository
