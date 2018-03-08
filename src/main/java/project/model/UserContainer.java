@@ -100,7 +100,7 @@ public class UserContainer {
 		newUser.setPassword(userDTO.getPassword());
 
 		// Adds the user to User repository
-		this.addUserToUserRepository(newUser);
+		this.addUserToUserRepositoryX(newUser);
 
 	}
 
