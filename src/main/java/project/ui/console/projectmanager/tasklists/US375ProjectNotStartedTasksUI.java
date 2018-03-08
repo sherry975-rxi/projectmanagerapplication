@@ -2,6 +2,7 @@ package project.ui.console.projectmanager.tasklists;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.US375GetProjectNotStartedTaskListController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
@@ -15,6 +16,8 @@ import java.util.Scanner;
 public class US375ProjectNotStartedTasksUI {
 
 	public void projectNotStartedTasksUI(Project project, User user) {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";

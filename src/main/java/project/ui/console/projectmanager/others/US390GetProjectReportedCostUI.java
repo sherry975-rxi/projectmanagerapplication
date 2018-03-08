@@ -2,6 +2,7 @@ package project.ui.console.projectmanager.others;
 
 import project.controller.CalculateReportedProjectCostController;
 import project.controller.PrintProjectInfoController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
@@ -16,7 +17,8 @@ public class US390GetProjectReportedCostUI {
 
 
 	public void displayProjectCost(Project project, User user) {
-
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		String line = "___________________________________________________";
 

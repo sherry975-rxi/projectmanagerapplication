@@ -1,12 +1,15 @@
 package project.ui.console.collaborator;
 
 import project.controller.DoLoginController;
+import project.controller.UpdateDbToContainersController;
 
 import java.util.Scanner;
 
 public class US208LoginUI {
 
 	public void doLogin() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		Scanner input = new Scanner(System.in);
 		DoLoginController login = new DoLoginController();
 		System.out.println("Username: ");

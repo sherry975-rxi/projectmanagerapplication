@@ -2,6 +2,7 @@ package project.ui.console.projectmanager.tasklists;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.US377CollectionOfCancelledTasksFromAProjectController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
@@ -16,6 +17,8 @@ public class US377ProjectCancelledTasks {
 
 
 	public void displayCancelledTasksOfProject(Project project, User user) {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 
 		String line = "___________________________________________________";

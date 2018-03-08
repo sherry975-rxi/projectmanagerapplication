@@ -1,6 +1,7 @@
 package project.ui.console.collaborator;
 
 import project.controller.US207CreateTaskReportController;
+import project.controller.UpdateDbToContainersController;
 import project.model.TaskCollaborator;
 
 import java.util.Calendar;
@@ -20,6 +21,8 @@ public class US207And208CreateOrUpdateTaskReportUI {
 
 
     public void createReport() {
+        UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+        infoUpdater.updateDBtoContainer();
 
 
         Scanner input = new Scanner(System.in);

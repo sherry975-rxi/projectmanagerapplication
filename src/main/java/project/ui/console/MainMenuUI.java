@@ -1,5 +1,6 @@
 package project.ui.console;
 
+import project.controller.UpdateDbToContainersController;
 import project.model.*;
 import project.model.taskstateinterface.Cancelled;
 import project.model.taskstateinterface.OnGoing;
@@ -376,13 +377,15 @@ public class MainMenuUI {
 	}
 
 	public static void mainMenu() {
+        UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+
 
 		printImage();
 
 		Scanner input = new Scanner(System.in);
 		boolean condition = true;
 		while (condition) {
-
+            infoUpdater.updateDBtoContainer();
 			System.out.println();
 			System.out.println("                  MAIN MENU");
 			System.out.println("______________________________________________");

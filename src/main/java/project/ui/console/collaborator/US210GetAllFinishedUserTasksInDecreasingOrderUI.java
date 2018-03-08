@@ -1,6 +1,7 @@
 package project.ui.console.collaborator;
 
 import project.controller.US210GetAllFinishedUserTasksInDecreasingOrderController;
+import project.controller.UpdateDbToContainersController;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 
@@ -14,6 +15,8 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 	}
 
 	public void getAllFinishedUserTasksInDecreasingOrderUI() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		Scanner scannerInput = new Scanner(System.in);
 		US210GetAllFinishedUserTasksInDecreasingOrderController userTasks = new US210GetAllFinishedUserTasksInDecreasingOrderController(

@@ -1,6 +1,7 @@
 package project.ui.console.projectmanager.requests;
 
 import project.controller.US357CancelRemovalTaskRequestController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
@@ -30,10 +31,11 @@ public class US357ApproveOrCancelRemovalRequestUI {
 	 * Displays the removal task requests and the options available to the user
 	 */
 	public void displayRemovalTaskRequests() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 
 		boolean condition = true;
 		while (condition) {
-
+			infoUpdater.updateDBtoContainer();
 			System.out.println("\n    TASKS REMOVAL REQUESTS PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");
 

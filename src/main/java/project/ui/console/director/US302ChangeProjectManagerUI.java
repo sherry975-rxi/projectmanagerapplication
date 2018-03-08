@@ -1,6 +1,7 @@
 package project.ui.console.director;
 
 import project.controller.US302ChangeProjectManagerController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 
 import java.util.List;
@@ -12,7 +13,8 @@ public class US302ChangeProjectManagerUI {
 	List<String> possibleManagers;
 
 	public void changeProjectManager(Project toChangeManager) {
-
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		Scanner input = new Scanner(System.in);
 
 		System.out.println(toChangeManager.getProjectManager().getName() + " currently manages Project "

@@ -2,6 +2,7 @@ package project.ui.console.projectmanager.tasklists;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.US380GetProjectExpiredTaskListController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
@@ -11,7 +12,8 @@ import java.util.Scanner;
 public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
-
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
 
