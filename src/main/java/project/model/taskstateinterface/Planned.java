@@ -1,5 +1,6 @@
 package project.model.taskstateinterface;
 
+import project.model.StateEnum;
 import project.model.Task;
 
 public class Planned implements TaskStateInterface {
@@ -51,6 +52,7 @@ public class Planned implements TaskStateInterface {
 		TaskStateInterface stateAssigned = new Assigned(task);
 		if (stateAssigned.isValid()) {
 			task.setTaskState(stateAssigned);
+			task.setCurrentState(StateEnum.Assigned);
 			condition = true;
 		}
 		return condition;

@@ -1,5 +1,6 @@
 package project.model.taskstateinterface;
 
+import project.model.StateEnum;
 import project.model.Task;
 
 public class Cancelled implements TaskStateInterface {
@@ -64,6 +65,7 @@ public class Cancelled implements TaskStateInterface {
         TaskStateInterface finishedState = new Finished(task);
         if (finishedState.isValid()) {
             task.setTaskState(finishedState);
+			task.setCurrentState(StateEnum.Finished);
             condition = true;
         }
 		return condition;

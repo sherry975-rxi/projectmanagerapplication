@@ -1,5 +1,6 @@
 package project.model.taskstateinterface;
 
+import project.model.StateEnum;
 import project.model.Task;
 
 public class OnGoing implements TaskStateInterface {
@@ -87,6 +88,7 @@ public class OnGoing implements TaskStateInterface {
 		TaskStateInterface stateStandBy = new StandBy(task);
 		if (stateStandBy.isValid()) {
 			task.setTaskState(stateStandBy);
+			task.setCurrentState(StateEnum.StandBy);
 			condition = true;
 		}
 		return condition;
@@ -103,6 +105,7 @@ public class OnGoing implements TaskStateInterface {
 		TaskStateInterface stateCancelled = new Cancelled(task);
 		if (stateCancelled.isValid()) {
 			task.setTaskState(stateCancelled);
+			task.setCurrentState(StateEnum.Cancelled);
 			condition = true;
 		}
 		return condition;
@@ -119,6 +122,7 @@ public class OnGoing implements TaskStateInterface {
 		TaskStateInterface finishedState = new Finished(task);
 		if (finishedState.isValid()) {
 			task.setTaskState(finishedState);
+			task.setCurrentState(StateEnum.Finished);
 			condition = true;
 		}
 		return condition;

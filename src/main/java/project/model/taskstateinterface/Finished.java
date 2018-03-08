@@ -1,5 +1,6 @@
 package project.model.taskstateinterface;
 
+import project.model.StateEnum;
 import project.model.Task;
 
 public class Finished implements TaskStateInterface {
@@ -71,6 +72,7 @@ public class Finished implements TaskStateInterface {
 		TaskStateInterface stateOnGoing = new OnGoing(task);
 		if (stateOnGoing.isValid()) {
 			task.setTaskState(stateOnGoing);
+			task.setCurrentState(StateEnum.OnGoing);
 			condition = true;
 		}
 		return condition;
