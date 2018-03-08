@@ -1,6 +1,7 @@
 package project.ui.console.projectmanager.team;
 
 import project.controller.US360ViewCollaboratorsWithoutTasksController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
@@ -19,6 +20,8 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 	}
 
 	public void viewUnassignedCollaborators() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		List<String> idleCollaboratorsInfo;
 

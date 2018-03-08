@@ -1,6 +1,7 @@
 package project.ui.console.projectmanager.tasks;
 
 import project.controller.US362RemoveTaskFromProjectCollaborator;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
@@ -21,6 +22,8 @@ public class US362RemoveUserFromTaskUI {
 	}
 
 	public void displayUsersToRemove() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		System.out.println("            PROJECT COLLABORATORS           ");
 		System.out.println("____________________________________________");

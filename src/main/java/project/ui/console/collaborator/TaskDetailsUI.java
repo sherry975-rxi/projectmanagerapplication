@@ -1,9 +1,6 @@
 package project.ui.console.collaborator;
 
-import project.controller.PrintProjectInfoController;
-import project.controller.PrintTaskInfoController;
-import project.controller.US204v2createRequestAddCollaboratorToTaskTeamController;
-import project.controller.US205MarkTaskAsFinishedCollaborator;
+import project.controller.*;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
@@ -26,6 +23,8 @@ public class TaskDetailsUI {
 	}
 
 	private static void printMenuOption(PrintProjectInfoController projectInfo, PrintTaskInfoController taskInfo){
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
 		System.out.println("");

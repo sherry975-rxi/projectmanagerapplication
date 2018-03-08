@@ -1,6 +1,7 @@
 package project.ui.console.collaborator;
 
 import project.controller.US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController;
+import project.controller.UpdateDbToContainersController;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 
@@ -19,6 +20,8 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 	}
 
 	public void viewLastMonthFinishedTasks() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		Scanner scannerInput = new Scanner(System.in);
 		US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController viewTasksFinishedLastMonth = new US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController();
 		List<String> lastMonthFinishedTasks = viewTasksFinishedLastMonth

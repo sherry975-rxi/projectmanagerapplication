@@ -2,6 +2,7 @@ package project.ui.console.projectmanager.tasks;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
@@ -24,6 +25,7 @@ public class PmTaskFunctionalitiesUI {
 	}
 
 	public void taskDataDisplay() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		PrintTaskInfoController taskInfo = new PrintTaskInfoController(this.taskID, this.project.getIdCode());
 		taskInfo.setProjectAndTask();
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project.getIdCode());
@@ -31,6 +33,7 @@ public class PmTaskFunctionalitiesUI {
 
 		boolean condition = true;
 		while (condition) {
+			infoUpdater.updateDBtoContainer();
 			System.out.println("");
 			System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
 			System.out.println("");

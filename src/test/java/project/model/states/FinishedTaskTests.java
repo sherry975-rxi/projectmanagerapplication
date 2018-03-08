@@ -132,7 +132,7 @@ public class FinishedTaskTests {
 	@Test
 	public final void testchangeToOngoing() {
 		testTask.removeFinishDate();
-		testTask.getTaskState().changeToOnGoing();
+		assertFalse(testTask.getTaskState().changeToOnGoing());
 		assertEquals("OnGoing", testTask.viewTaskStateName());
 	}
 

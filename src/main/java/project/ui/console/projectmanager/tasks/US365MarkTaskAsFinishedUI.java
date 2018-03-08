@@ -1,6 +1,7 @@
 package project.ui.console.projectmanager.tasks;
 
 import project.controller.US365MarkTaskAsFinishedControllerProjectManager;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 
 import java.util.Scanner;
@@ -10,6 +11,8 @@ public class US365MarkTaskAsFinishedUI {
 	US365MarkTaskAsFinishedControllerProjectManager controller;
 
 	public void markTaskAsFinished(String taskID, Project selectedProject) {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		controller = new US365MarkTaskAsFinishedControllerProjectManager(taskID, selectedProject);
 

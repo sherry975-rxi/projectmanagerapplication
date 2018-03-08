@@ -4,6 +4,7 @@
 package project.ui.console.collaborator;
 
 import project.controller.CollectProjectsFromUserController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
@@ -36,6 +37,8 @@ public class CollectProjectsFromUserUI {
 	 * This method executes all options to execute through this UI
 	 */
 	public void collectProjectsFromUser() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		System.out.println("\n                  PROJETOS ");
 		System.out.println("___________________________________________________");

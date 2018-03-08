@@ -2,6 +2,7 @@ package project.ui.console.administrator;
 
 import project.controller.US110andUS112SetUserProfileController;
 import project.controller.US115andUS116SetUserStateController;
+import project.controller.UpdateDbToContainersController;
 import project.model.User;
 
 import java.util.Scanner;
@@ -9,7 +10,8 @@ import java.util.Scanner;
 public class US115andUS116SetUserStateUI {
 
 	public void changeUserState(User user) {
-
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		US115andUS116SetUserStateController controllerA = new US115andUS116SetUserStateController(user);
 		US110andUS112SetUserProfileController controllerB = new US110andUS112SetUserProfileController();
 

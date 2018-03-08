@@ -6,8 +6,7 @@ import org.junit.Test;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TaskTeamRequestTests {
 
@@ -89,6 +88,31 @@ public class TaskTeamRequestTests {
 
 	// Given a Project Collaborator and task:
 	// this test validates the data when a new Request is created
+
+	@Test
+	public void settersAndGetters() {
+
+		TaskTeamRequest taskRequest = new TaskTeamRequest();
+		int taskRequestId = 1;
+		taskRequest.setId(taskRequestId);
+		assertEquals(taskRequest.getId(), taskRequestId);
+
+		taskRequest.setProjCollab(teamTesterOtherCollab);
+		assertEquals(taskRequest.getProjCollab(), teamTesterOtherCollab);
+
+		taskRequest.setProject(testProject);
+		assertEquals(taskRequest.getProject(), testProject);
+
+		taskRequest.setType(10);
+		assertEquals(taskRequest.getType(), "N/A");
+
+		taskRequest.setType(0);
+		assertEquals(taskRequest.getType(), "Assignment");
+
+		taskRequest.setType(1);
+		assertEquals(taskRequest.getType(), "Removal");
+
+	}
 	@Test
 	public void createRequest() {
 		TaskTeamRequest firstRequest = new TaskTeamRequest(teamTesterCollaborator, chosenTask);

@@ -1,6 +1,7 @@
 package project.ui.console.director;
 
 import project.controller.US320ViewProjectsController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.Scanner;
 public class US320ViewProjectsUI {
 
 	public Project viewProjectsUI(Project selectedProject) {
-
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		Scanner input = new Scanner(System.in);
 		US320ViewProjectsController controller = new US320ViewProjectsController();
 		List<String> projectsList;
