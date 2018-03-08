@@ -52,14 +52,19 @@ public class userDTOTests {
 	 */
 	@Test
 	public void testConstructorUserDTO(){
+		//create user3
 		user3 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 		Address a1 = new Address("Rua A", "3700-243", "Aveiro", "Aveiro", "Portugal");
+		//add address in user3
 		user3.addAddress(a1);
-
+		//create userDTO (user 2) from user3
 		user2 = new UserDTO(user3);
+		//checks if the size of address list are the same
 		assertEquals(1, user2.getAddressList().size());
-
+		//checks if the existing address is the same in userDTO and user
 		assertEquals(a1, user2.getAddressList().get(0));
+		//checks if the profile is the same in userDTO and user
+		assertEquals(user3.getUserProfile(), (user2.getUserProfile()));
 
 	}
 }
