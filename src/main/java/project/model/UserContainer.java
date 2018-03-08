@@ -132,6 +132,7 @@ public class UserContainer {
 	public void addUserToRepository(User user){
 			this.userRepository.save(user);
 	}
+
 	/**
 	 * This method adds users to the usersList if the user doesn’t exists
 	 * 
@@ -175,7 +176,8 @@ public class UserContainer {
 	 * This method feeds the list of all Users in the Company with the user data that is in the DB
 	 */
 	public void updateUserContainer(){
-		this.userRepository.findAll().forEach(usersContainer::add);
+			usersContainer.clear();
+			this.userRepository.findAll().forEach(usersContainer::add);
 	}
 
 	/**
