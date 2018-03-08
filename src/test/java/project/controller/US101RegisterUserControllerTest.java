@@ -2,6 +2,7 @@ package project.controller;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import project.model.Company;
 import project.model.User;
@@ -40,10 +41,12 @@ public class US101RegisterUserControllerTest {
 
 	}
 
+
 	/**
 	 * Given a visitor, this test attempts the creation of a User Registration
 	 * controller
 	 */
+	@Ignore
 	@Test
 	public void testUserRegistrationController() {
 		// creates the controller and asserts the list of users starts at 0
@@ -77,6 +80,9 @@ public class US101RegisterUserControllerTest {
 
 	}
 	
+
+
+	@Ignore
 	@Test
 	public void wasUserAddedTest() {
 	
@@ -96,6 +102,7 @@ public class US101RegisterUserControllerTest {
 		assertTrue(testUserRegistrationController.wasUserAdded(true));
 		
 	}
+
 
 	@Test
 	public void isUserEmailValidRegistrationController() {
