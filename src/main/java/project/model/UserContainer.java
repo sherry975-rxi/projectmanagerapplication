@@ -76,6 +76,7 @@ public class UserContainer {
 		return newUser;
 	}
 
+
 	/**
 	 * Creates a user from a userDTO
 	 * 
@@ -99,9 +100,38 @@ public class UserContainer {
 		newUser.setPassword(userDTO.getPassword());
 
 		// Adds the user to User repository
-		addUserToUserRepository(newUser);
+		this.addUserToUserRepository(newUser);
+
 	}
 
+	public void createUserWithDTOx(UserDTO userDTO) {
+
+		// Instantias the user
+		User newUser = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getIdNumber(), userDTO.getFunction(),
+				userDTO.getPhone());
+
+		// Creates a new address
+		Address newAddress = newUser.createAddress(userDTO.getStreet(), userDTO.getZipCode(), userDTO.getCity(),
+				userDTO.getDistrict(), userDTO.getCountry());
+
+		// Adds the address to user list
+		newUser.addAddress(newAddress);
+
+		// Sets the user password
+		newUser.setPassword(userDTO.getPassword());
+
+		// Adds the user to User repository
+		this.addUserToRepository(newUser);
+
+	}
+
+	/**
+	 * Method that saves the user to the database
+	 * @param user user to save
+	 */
+	public void addUserToRepository(User user){
+			this.userRepository.save(user);
+	}
 	/**
 	 * This method adds users to the usersList if the user doesn’t exists
 	 * 
