@@ -172,6 +172,13 @@ public class UserContainer {
 	}
 
 	/**
+	 * This method feeds the list of all Users in the Company with the user data that is in the DB
+	 */
+	public void updateUserContainer(){
+		this.userRepository.findAll().forEach(usersContainer::add);
+	}
+
+	/**
 	 * This method returns a list of all active collaborators (usersContainer)
 	 * 
 	 * @return allCollaborators This is the copy of the List of all Users in the
