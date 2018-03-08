@@ -49,6 +49,14 @@ public class ProjectContainer {
 
 	}
 
+	public Project getProjectById(long id) {
+		return this.projectsRepository.findById(id);
+	}
+
+	public void saveProject(Project project) {
+		this.projectsRepository.save(project);
+	}
+
 	/**
 	 * This method returns the Project Counter
 	 * 
