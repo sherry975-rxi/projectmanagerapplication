@@ -99,6 +99,9 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		us206v2Controller.setProjectID(1);
 		us206v2Controller.setTaskID("1.1");
 
+		//checks the change in task ID
+		assertEquals(us206v2Controller.getTaskID(), "1.1");
+
 		// Creates the removal requests from userRui and TaskA
 		assertTrue(us206v2Controller.createRequest());
 		// Tries to create again the same request
