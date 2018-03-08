@@ -57,6 +57,7 @@ public class HelloJpaApplication implements CommandLineRunner {
 
         //Create dependency between two tasks
         project.getTaskRepository().getTaskByID(task.getTaskID()).setStartDate(date);
+        project.getTaskRepository().getTaskByID(task.getTaskID()).setTaskDeadline(date);
         project.getTaskRepository().getTaskByID(task2.getTaskID()).createTaskDependence(task,2);
 
         //Saves the project to the database
