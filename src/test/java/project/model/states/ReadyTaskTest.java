@@ -129,7 +129,7 @@ public class ReadyTaskTest {
 	@Test
 	public final void testChangeToCreatedFailed() {
 		// Should fail as a ready task shouldn't change to created
-		mainTask.getTaskState().changeToCreated();
+		assertFalse(mainTask.getTaskState().changeToCreated());
 		assertFalse(mainTask.viewTaskStateName().equals("Created"));
 	}
 
@@ -143,7 +143,7 @@ public class ReadyTaskTest {
 		// Removes the user from the task team
 		mainTask.removeProjectCollaboratorFromTask(testPCollab);
 		// Changes the state to planned and tests it
-		mainTask.getTaskState().changeToPlanned();
+		assertTrue(mainTask.getTaskState().changeToPlanned());
 		assertTrue(mainTask.viewTaskStateName().equals("Planned"));
 	}
 
@@ -181,7 +181,7 @@ public class ReadyTaskTest {
 		finishedState = new Finished(neededTask);
 		neededTask.setTaskState(finishedState);
 		// Changes the state to ongoing and tests it
-		mainTask.getTaskState().changeToOnGoing();
+		assertTrue(mainTask.getTaskState().changeToOnGoing());
 		assertTrue(mainTask.viewTaskStateName().equals("OnGoing"));
 	}
 

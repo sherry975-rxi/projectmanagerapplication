@@ -124,7 +124,7 @@ public class PlannedTaskTests {
 	@Test
 	public void testChangeToAssigned() {
 		
-		stateThree.changeToAssigned();
+		assertTrue(stateThree.changeToAssigned());
 		
 
 		assertEquals("Assigned", taskReadyToAssigned.viewTaskStateName());

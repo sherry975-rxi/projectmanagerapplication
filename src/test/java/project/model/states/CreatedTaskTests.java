@@ -89,7 +89,7 @@ public class CreatedTaskTests {
 	@Test
 	public final void testChangeToPlanned() {
 
-		test2.changeToPlanned();
+		assertTrue(test2.changeToPlanned());
 
 		assertEquals("Planned", taskReadyToPlan.viewTaskStateName());
 	}
