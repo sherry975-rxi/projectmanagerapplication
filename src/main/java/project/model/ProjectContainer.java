@@ -460,7 +460,7 @@ public class ProjectContainer {
 	 * This method returns a set of Projects where a certain user is the project
 	 * manager
 	 * 
-	 * @param User
+	 * @param user
 	 * 
 	 * @return List of Projects of a User
 	 * 
@@ -477,4 +477,13 @@ public class ProjectContainer {
 		return listOfProjectsOfProjectManager;
 	}
 
+
+	/**
+	 *  This method updates the project repository(DB) from the project container.
+	 */
+	public void updateProjectContainer(){
+
+		this.projectsRepository.findAll().forEach(projectsContainer::add);
+
+	}
 }
