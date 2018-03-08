@@ -5,6 +5,7 @@ import project.model.taskstateinterface.Finished;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class TaskContainer implements Serializable{
 	private int taskCounter;
 	@javax.persistence.Transient
 	private int projId;
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
 	private List<Task> projectTasks;
 	@javax.persistence.Transient
 	private Project project;
