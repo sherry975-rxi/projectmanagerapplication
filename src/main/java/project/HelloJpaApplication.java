@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import project.model.*;
+import project.ui.console.MainMenuUI;
 
 import java.util.Calendar;
 
@@ -24,53 +25,53 @@ public class HelloJpaApplication implements CommandLineRunner {
     public void run(String... strings) throws Exception {
 
         //demo.demoRun();
-        // MainMenuUI.main();
+        MainMenuUI.mainMenu();
 
-        //Creates a company.
-        Company company = Company.getTheInstance();
-        //Creates the user through the company
-        User manuel = company.getUsersContainer().createUser("Manuel", "user2@gmail.com", "001", "Manger",
-                "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-        //Saves the user to the database
-        company.getUsersContainer().addUserToUserRepositoryX(manuel);
-
-        //Creates the project through the company
-        Project project = company.getProjectsContainer().createProject("NOME PROJECTO", "DESCRIÇÃO PROJECTO", manuel);
-
-        //Creates the task through the project
-        Task task = project.getTaskRepository().createTask("Description Task");
-        Task task2 = project.getTaskRepository().createTask("Inject Dependencies");
-        //Adds the task to the task repository
-        project.getTaskRepository().addProjectTask(task);
-        project.getTaskRepository().addProjectTask(task2);
-        //Creates ProjectCollaborator through the Project
-        ProjectCollaborator manuelProjCollab = project.createProjectCollaborator(manuel,7);
-        //Adds the projectCollaborator to the ProjectTeam
-        //project.addProjectCollaboratorToProjectTeam(manuelProjCollab);
-        project.addUserToProjectTeam(manuel,7000);
-        //Adds taskCollaborator to Task
-        project.getTaskRepository().getTaskByID(task.getTaskID()).addProjectCollaboratorToTask(manuelProjCollab);
-        project.getTaskRepository().getTaskByID(task2.getTaskID()).addProjectCollaboratorToTask(manuelProjCollab);
-        //Create Task Report
-        Calendar date = Calendar.getInstance();
-        project.getTaskRepository().getTaskByID(task.getTaskID()).createReport(task.getTaskTeam().get(0), date, 5 );
-
-        //Create dependency between two tasks
-        project.getTaskRepository().getTaskByID(task.getTaskID()).setStartDate(date);
-        project.getTaskRepository().getTaskByID(task.getTaskID()).setTaskDeadline(date);
-        project.getTaskRepository().getTaskByID(task2.getTaskID()).createTaskDependence(task,2);
-
-        //Saves the project to the database
-        company.getProjectsContainer().addProjectToProjectContainerX(project);
-        //Gets the project from the database by the id
-        Project projectAAA = company.getProjectsContainer(). getProjectById(1);
-        //Gets the task through the project taskRepository
-        Task taskAAA = projectAAA.getTaskRepository().getProjectTaskRepository().get(0);
-
-        //Expected output
-        System.out.println("-----------------------------TEST-----------------------------");
-        System.out.println(taskAAA.getDescription());
-        System.out.println("-----------------------------TEST-----------------------------");
+//        //Creates a company.
+//        Company company = Company.getTheInstance();
+//        //Creates the user through the company
+//        User manuel = company.getUsersContainer().createUser("Manuel", "user2@gmail.com", "001", "Manger",
+//                "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+//        //Saves the user to the database
+//        company.getUsersContainer().addUserToUserRepositoryX(manuel);
+//
+//        //Creates the project through the company
+//        Project project = company.getProjectsContainer().createProject("NOME PROJECTO", "DESCRIÇÃO PROJECTO", manuel);
+//
+//        //Creates the task through the project
+//        Task task = project.getTaskRepository().createTask("Description Task");
+//        Task task2 = project.getTaskRepository().createTask("Inject Dependencies");
+//        //Adds the task to the task repository
+//        project.getTaskRepository().addProjectTask(task);
+//        project.getTaskRepository().addProjectTask(task2);
+//        //Creates ProjectCollaborator through the Project
+//        ProjectCollaborator manuelProjCollab = project.createProjectCollaborator(manuel,7);
+//        //Adds the projectCollaborator to the ProjectTeam
+//        //project.addProjectCollaboratorToProjectTeam(manuelProjCollab);
+//        project.addUserToProjectTeam(manuel,7000);
+//        //Adds taskCollaborator to Task
+//        project.getTaskRepository().getTaskByID(task.getTaskID()).addProjectCollaboratorToTask(manuelProjCollab);
+//        project.getTaskRepository().getTaskByID(task2.getTaskID()).addProjectCollaboratorToTask(manuelProjCollab);
+//        //Create Task Report
+//        Calendar date = Calendar.getInstance();
+//        project.getTaskRepository().getTaskByID(task.getTaskID()).createReport(task.getTaskTeam().get(0), date, 5 );
+//
+//        //Create dependency between two tasks
+//        project.getTaskRepository().getTaskByID(task.getTaskID()).setStartDate(date);
+//        project.getTaskRepository().getTaskByID(task.getTaskID()).setTaskDeadline(date);
+//        project.getTaskRepository().getTaskByID(task2.getTaskID()).createTaskDependence(task,2);
+//
+//        //Saves the project to the database
+//        company.getProjectsContainer().addProjectToProjectContainerX(project);
+//        //Gets the project from the database by the id
+//        Project projectAAA = company.getProjectsContainer(). getProjectById(1);
+//        //Gets the task through the project taskRepository
+//        Task taskAAA = projectAAA.getTaskRepository().getProjectTaskRepository().get(0);
+//
+//        //Expected output
+//        System.out.println("-----------------------------TEST-----------------------------");
+//        System.out.println(taskAAA.getDescription());
+//        System.out.println("-----------------------------TEST-----------------------------");
 
 
 
