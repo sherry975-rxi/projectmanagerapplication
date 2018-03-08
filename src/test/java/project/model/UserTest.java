@@ -17,6 +17,21 @@ public class UserTest {
 	 * test getter/ setter Name
 	 */
 	@Test
+	public void testGetID(){
+
+		long ID;
+
+		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+
+		u1.setId(1);
+
+		assertEquals(1,u1.getId());
+	}
+
+	/**
+	 * test getter/ setter Name
+	 */
+	@Test
 	public void testGetName() {
 
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
@@ -64,6 +79,18 @@ public class UserTest {
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
 		assertEquals("01", u1.getIdNumber());
+	}
+
+	/**
+	 * test setter IDNumber
+	 */
+	@Test
+	public void testSetIdNumber() {
+
+		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+		u1.setIdNumber("004");
+
+		assertEquals("004", u1.getIdNumber());
 	}
 
 	/**
@@ -126,6 +153,27 @@ public class UserTest {
 
 		assertEquals(expResult, u1.getAddressList());
 
+	}
+
+
+	/**
+	 * tests the getAddress method.
+	 */
+	@Test
+	public void testSetAddress() {
+
+		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+
+		Address a1 = new Address("Rua A", "3700-243", "Aveiro", "Aveiro", "Portugal");
+		Address a2 = new Address("Rua A", "3700-243", "Aveiro", "Aveiro", "Portugal");
+
+		ArrayList<Address> expResult = new ArrayList<>();
+		expResult.add(a1);
+		expResult.add(a2);
+
+		u1.setAddressList(expResult);
+
+		assertEquals(a1, u1.getAddressList().get(0));
 	}
 
 	/**
@@ -241,7 +289,7 @@ public class UserTest {
 
 	/**
 	 * Tests several combinations of the Equals override
-	 * 
+	 *
 	 */
 	@Test
 	public void testEquals() {
@@ -305,6 +353,7 @@ public class UserTest {
 	 */
 	@Test
 	public void testSearchUserAddress() {
+
 		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
 		Address user1Address = new Address("street", "zipCode", "city", "district", "country");
@@ -361,8 +410,25 @@ public class UserTest {
 		User u4 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 		assertTrue(u3.hashCode() == u4.hashCode());
 
+	}
+
+	/**
+	 * Test set of User active
+	 */
+	@Test
+	public void testSetSystemUserStateActive(){
+
+		User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+
+		User user2 = new User();
 
 
+		boolean systemUserStateTest = true;
+		u1.setSystemUserStateActive(systemUserStateTest);
+		//user2.setSystemUserStateActive(systemUserStateTest);
+
+		assertEquals(u1.isSystemUserStateActive(), true);
+		//assertEquals(u1.isSystemUserStateActive(), true);
 	}
 
 }
