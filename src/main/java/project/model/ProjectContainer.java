@@ -20,6 +20,7 @@ public class ProjectContainer {
 	//@Deprecated
 	public ProjectContainer (ProjectsRepository projectsRepository){
 		this.projectsRepository = projectsRepository;
+		this.projectsContainer = new ArrayList<>();
 	}
 
 	/**
@@ -483,6 +484,7 @@ public class ProjectContainer {
 	 */
 	public void updateProjectContainer(){
 
+		this.projectsContainer.clear();
 		this.projectsRepository.findAll().forEach(projectsContainer::add);
 
 	}
