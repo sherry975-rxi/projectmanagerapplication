@@ -48,7 +48,7 @@ public class Created implements TaskStateInterface {
 		TaskStateInterface statePlanned = new Planned(task);
 		if (statePlanned.isValid()) {
 			task.setTaskState(statePlanned);
-			task.setCurrentState(StateEnum.Planned);
+			task.setCurrentState(StateEnum.PLANNED);
 			condition = true;
 		}
 		return condition;

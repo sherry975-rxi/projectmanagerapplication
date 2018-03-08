@@ -65,7 +65,7 @@ public class Cancelled implements TaskStateInterface {
         TaskStateInterface finishedState = new Finished(task);
         if (finishedState.isValid()) {
             task.setTaskState(finishedState);
-			task.setCurrentState(StateEnum.Finished);
+			task.setCurrentState(StateEnum.FINISHED);
             condition = true;
         }
 		return condition;

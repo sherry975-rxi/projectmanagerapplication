@@ -46,7 +46,7 @@ public class Ready implements TaskStateInterface {
 		TaskStateInterface statePlanned = new Planned(task);
 		if (statePlanned.isValid()) {
 			task.setTaskState(statePlanned);
-			task.setCurrentState(StateEnum.Planned);
+			task.setCurrentState(StateEnum.PLANNED);
 			condition = true;
 		}
 		return condition;
@@ -85,7 +85,7 @@ public class Ready implements TaskStateInterface {
 		TaskStateInterface stateOnGoing = new OnGoing(task);
 		if (stateOnGoing.isValid()) {
 			task.setTaskState(stateOnGoing);
-			task.setCurrentState(StateEnum.OnGoing);
+			task.setCurrentState(StateEnum.ONGOING);
 			condition = true;
 		}
 		return condition;

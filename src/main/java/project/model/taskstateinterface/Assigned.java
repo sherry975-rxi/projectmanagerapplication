@@ -45,7 +45,7 @@ public class Assigned implements TaskStateInterface {
         TaskStateInterface statePlanned = new Planned(task);
         if (statePlanned.isValid()) {
             task.setTaskState(statePlanned);
-			task.setCurrentState(StateEnum.Planned);
+			task.setCurrentState(StateEnum.PLANNED);
             condition = true;
         }
 		return condition;
@@ -73,7 +73,7 @@ public class Assigned implements TaskStateInterface {
         TaskStateInterface stateReady = new Ready(task);
         if (stateReady.isValid()) {
             task.setTaskState(stateReady);
-			task.setCurrentState(StateEnum.Ready);
+			task.setCurrentState(StateEnum.READY);
             condition = true;
         }
 		return condition;

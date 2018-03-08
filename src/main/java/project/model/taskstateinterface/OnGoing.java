@@ -88,7 +88,7 @@ public class OnGoing implements TaskStateInterface {
 		TaskStateInterface stateStandBy = new StandBy(task);
 		if (stateStandBy.isValid()) {
 			task.setTaskState(stateStandBy);
-			task.setCurrentState(StateEnum.StandBy);
+			task.setCurrentState(StateEnum.STANDBY);
 			condition = true;
 		}
 		return condition;
@@ -105,7 +105,7 @@ public class OnGoing implements TaskStateInterface {
 		TaskStateInterface stateCancelled = new Cancelled(task);
 		if (stateCancelled.isValid()) {
 			task.setTaskState(stateCancelled);
-			task.setCurrentState(StateEnum.Cancelled);
+			task.setCurrentState(StateEnum.CANCELLED);
 			condition = true;
 		}
 		return condition;
@@ -122,7 +122,7 @@ public class OnGoing implements TaskStateInterface {
 		TaskStateInterface finishedState = new Finished(task);
 		if (finishedState.isValid()) {
 			task.setTaskState(finishedState);
-			task.setCurrentState(StateEnum.Finished);
+			task.setCurrentState(StateEnum.FINISHED);
 			condition = true;
 		}
 		return condition;

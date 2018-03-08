@@ -52,7 +52,7 @@ public class Planned implements TaskStateInterface {
 		TaskStateInterface stateAssigned = new Assigned(task);
 		if (stateAssigned.isValid()) {
 			task.setTaskState(stateAssigned);
-			task.setCurrentState(StateEnum.Assigned);
+			task.setCurrentState(StateEnum.ASSIGNED);
 			condition = true;
 		}
 		return condition;

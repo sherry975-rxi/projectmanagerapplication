@@ -93,7 +93,7 @@ public class Task {
 		this.taskDependency = new ArrayList<>();
 		this.taskState = new Created(this);
 		this.cancelDate = null;
-		this.currentState = StateEnum.Created;
+		this.currentState = StateEnum.CREATED;
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class Task {
 		this.deadlineInterval = null;
 		this.taskDependency = new ArrayList<>();
 		this.taskState = new Created(this);
-		this.currentState = StateEnum.Created;
+		this.currentState = StateEnum.CREATED;
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class Task {
 		} else {
 			this.deadlineInterval = null;
 		}
-		this.currentState = StateEnum.Created;
+		this.currentState = StateEnum.CREATED;
 	}
 
 	/**
