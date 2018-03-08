@@ -49,11 +49,11 @@ public class MainMenuUI {
 
 
 		// addition of users to the company
-		myCompany.getUsersContainer().addUserToUserRepository(userAdmin);
-		myCompany.getUsersContainer().addUserToUserRepository(userDirector);
-		myCompany.getUsersContainer().addUserToUserRepository(userJSilva);
-		myCompany.getUsersContainer().addUserToUserRepository(userATirapicos);
-		myCompany.getUsersContainer().addUserToUserRepository(projectManager);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userAdmin);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userDirector);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userJSilva);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userATirapicos);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(projectManager);
 
 
 
