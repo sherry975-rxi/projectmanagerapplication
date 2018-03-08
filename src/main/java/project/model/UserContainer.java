@@ -121,7 +121,7 @@ public class UserContainer {
 		newUser.setPassword(userDTO.getPassword());
 
 		// Adds the user to User repository
-		this.addUserToRepository(newUser);
+		this.addUserToUserRepositoryX(newUser);
 
 	}
 
@@ -129,9 +129,10 @@ public class UserContainer {
 	 * Method that saves the user to the database
 	 * @param user user to save
 	 */
-	public void addUserToRepository(User user){
+	public void addUserToUserRepositoryX(User user){
 			this.userRepository.save(user);
 	}
+
 	/**
 	 * This method adds users to the usersList if the user doesn’t exists
 	 * 
@@ -175,7 +176,8 @@ public class UserContainer {
 	 * This method feeds the list of all Users in the Company with the user data that is in the DB
 	 */
 	public void updateUserContainer(){
-		this.userRepository.findAll().forEach(usersContainer::add);
+			usersContainer.clear();
+			this.userRepository.findAll().forEach(usersContainer::add);
 	}
 
 	/**

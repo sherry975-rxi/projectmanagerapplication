@@ -40,18 +40,22 @@ public class MainMenuUI {
 		User projectManager = myCompany.getUsersContainer().createUser("Sara Pereira", "spereira@gmail.com", "012",
 				"Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
 				"Portugal");
-		// addition of users to the company
-		myCompany.getUsersContainer().addUserToUserRepository(userAdmin);
-		myCompany.getUsersContainer().addUserToUserRepository(userDirector);
-		myCompany.getUsersContainer().addUserToUserRepository(userJSilva);
-		myCompany.getUsersContainer().addUserToUserRepository(userATirapicos);
-		myCompany.getUsersContainer().addUserToUserRepository(projectManager);
 
 		// set user as collaborator
 		userDirector.setUserProfile(Profile.DIRECTOR);
 		userJSilva.setUserProfile(Profile.COLLABORATOR);
 		userATirapicos.setUserProfile(Profile.COLLABORATOR);
 		projectManager.setUserProfile(Profile.COLLABORATOR);
+
+
+		// addition of users to the company
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userAdmin);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userDirector);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userJSilva);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userATirapicos);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(projectManager);
+
+
 
 		// Instantiates a project and add it to the company
 		Project projectGP = myCompany.getProjectsContainer().createProject("Gestão de Projetos",
@@ -76,9 +80,9 @@ public class MainMenuUI {
 		projectGP.setFinishdate(finishDate);
 
 		// addition of projects to the company
-		myCompany.getProjectsContainer().addProjectToProjectContainer(projectGP);
-		myCompany.getProjectsContainer().addProjectToProjectContainer(projectApostas);
-		myCompany.getProjectsContainer().addProjectToProjectContainer(projectHomeBanking);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectGP);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectApostas);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectHomeBanking);
 
 		// set "EXECUTION" status of projects
 		projectGP.setProjectStatus(2);
@@ -362,6 +366,11 @@ public class MainMenuUI {
 		// Request of removal of collaborator projcollabATirapicos from task 3.5
 		// (taskHB5)
 		projectHomeBanking.createTaskRemovalRequest(projcollabATirapicos, taskHB5);
+
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectGP);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectApostas);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectHomeBanking);
+
 		mainMenu();
 
 	}
