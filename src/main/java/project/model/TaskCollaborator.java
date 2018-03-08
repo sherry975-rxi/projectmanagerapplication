@@ -44,18 +44,16 @@ public class TaskCollaborator implements Serializable {
 		this.status = true;
 	}
 
-	public TaskCollaborator setId(long id) {
+	public void setId(long id) {
 		this.id = id;
-		return this;
 	}
 
 	public ProjectCollaborator getProjCollaborator() {
 		return projCollaborator;
 	}
 
-	public TaskCollaborator setProjCollaborator(ProjectCollaborator projCollaborator) {
+	public void setProjCollaborator(ProjectCollaborator projCollaborator) {
 		this.projCollaborator = projCollaborator;
-		return this;
 	}
 
 	public TaskCollaborator setStartDate(Calendar startDate) {

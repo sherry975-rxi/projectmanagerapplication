@@ -10,16 +10,14 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-//
-
 public class ProjectTest {
 
 	User user1;
 	User user2;
 	User user3;
 	User user4;
-	ProjectCollaborator projectCollaborator2;
 	ProjectCollaborator projectCollaborator1;
+	ProjectCollaborator projectCollaborator2;
 	ProjectCollaborator projectCollaborator3;
 	ProjectCollaborator projectCollaborator4;
 	Calendar estimatedStartDate;
@@ -596,6 +594,7 @@ public class ProjectTest {
 	@Test
 	public void testAddTaskAssignementRequest() {
 		assertTrue(p1.createTaskAssignementRequest(projectCollaborator1, task1));
+		assertFalse(p1.createTaskAssignementRequest(projectCollaborator1, task1));
 	}
 
 	/**
@@ -710,64 +709,6 @@ public class ProjectTest {
 		assertTrue(p1.viewPendingTaskRemovalRequests().get(0).equals(result));
 	}
 
-
-	/** THIS METHOD HAS BEEN PURGED
-     *
-	 * Tests if removeAllRequestsWithASpecificTaskFromAssignementRequests() actually
-	 * removes the requests chosen from the assignement requests list
-
-	@Test
-	public void testRemoveAssignementRequestsWithACertainTask() {
-		p1.createTaskAssignementRequest(projectCollaborator1, task1);
-		p1.createTaskAssignementRequest(projectCollaborator2, task1);
-		p1.createTaskAssignementRequest(projectCollaborator3, task1);
-		p1.createTaskAssignementRequest(projectCollaborator4, task1);
-		p1.createTaskAssignementRequest(projectCollaborator1, task2);
-		p1.createTaskAssignementRequest(projectCollaborator1, task3);
-		p1.createTaskAssignementRequest(projectCollaborator2, task2);
-		p1.createTaskAssignementRequest(projectCollaborator3, task2);
-
-		//
-		 // No tasks were removed from the list yet
-		 //
-		assertEquals(8, p1.getPendingTaskAssignementRequests().size());
-
-		p1.removeAllRequestsWithASpecificTask(task1);
-
-		assertEquals(4, p1.getPendingTaskAssignementRequests().size());
-	}
-	*/
-
-	/** THIS METHOD HAS BEEN PURGED
-	 *
-	 * Tests if removeAllRequestsWithASpecificTaskFromRemovalRequests() actually
-	 * removes the requests chosen from the removal requests list
-
-	@Test
-	public void testRemoveRemovalRequestsWithACertainTask() {
-		p1.createTaskRemovalRequest(projectCollaborator1, task1);
-		p1.createTaskRemovalRequest(projectCollaborator2, task1);
-		p1.createTaskRemovalRequest(projectCollaborator3, task1);
-		p1.createTaskRemovalRequest(projectCollaborator4, task1);
-		p1.createTaskRemovalRequest(projectCollaborator1, task2);
-		p1.createTaskRemovalRequest(projectCollaborator1, task3);
-		p1.createTaskRemovalRequest(projectCollaborator2, task2);
-		p1.createTaskRemovalRequest(projectCollaborator3, task2);
-
-		//
-		 // No tasks were removed from the list yet
-		 ///
-		assertEquals(8, p1.getPendingTaskRemovalRequests().size());
-
-
-		p1.removeAllRequestsWithASpecificTask(task1);
-
-		assertEquals(4, p1.getPendingTaskRemovalRequests().size());
-	}
-
-	*/
-
-
 	/**
 	 * Tests if removeAllRequestsWithASpecificTask() actually removes the requests
 	 * chosen from the both the requests list
@@ -797,8 +738,6 @@ public class ProjectTest {
 		assertEquals(4, p1.getPendingTaskAssignementRequests().size());
 		assertEquals(4, p1.getPendingTaskRemovalRequests().size());
 	}
-
-
 
 	/**
 	 * Tests the Set and Get of project's description
@@ -859,6 +798,8 @@ public class ProjectTest {
 		assertTrue(p1.getProjectStatusName().equals("Initiation"));
 		p1.setProjectStatus(Project.REVIEW);
 		assertTrue(p1.getProjectStatusName().equals("Review"));
+		p1.setProjectStatus(99);
+		assertEquals("Unknown", p1.getProjectStatusName());
 
 	}
 
@@ -866,10 +807,6 @@ public class ProjectTest {
 	public void getPendingTaskRemovalRequests() {
 		List<TaskTeamRequest> listOfPendingRequests = new ArrayList<>();
 		assertEquals(p1.getPendingTaskAssignementRequests(), listOfPendingRequests);
-
-		// Creates a TaskAssignementRequest
-		p1.createTaskAssignementRequest(projectCollaborator1, task1);
-		TaskTeamRequest newReq = new TaskTeamRequest(projectCollaborator1, task1);
 	}
 
 	/**
@@ -885,6 +822,46 @@ public class ProjectTest {
 
 		assertEquals(listOfProjectCollaboratorsFromTask, p1.getProjectCollaboratorsFromTask(task1));
 
+	}
+
+	@Test
+	public void testGettersAndSetters(){
+		p1.setProjectIdCode(123);
+		assertEquals(123, p1.getProjectIdCode());
+
+		TaskContainer taskContainerExpected = new TaskContainer(1);
+		p1.setTaskRepository(taskContainerExpected);
+		assertEquals(taskContainerExpected, p1.getTaskRepository());
+
+		List<ProjectCollaborator> projectTeam = new ArrayList<ProjectCollaborator>();
+		projectTeam.add(projectCollaborator1);
+		p1.setProjectTeam(projectTeam);
+		assertEquals(projectTeam, p1.getProjectTeam());
+
+		TaskTeamRequest testRequest = new TaskTeamRequest(projectCollaborator1, task1);
+		List<TaskTeamRequest> listOfPendingRequests = new ArrayList<>();
+		listOfPendingRequests.add(testRequest);
+		p1.setPendingTaskTeamRequests(listOfPendingRequests);
+		assertEquals(listOfPendingRequests, p1.getPendingTaskTeamRequests());
+
+		Calendar projStartDate = (Calendar) estimatedStartDate.clone();
+		p1.setStartdate(projStartDate);
+		assertEquals(projStartDate, p1.getStartdate());
+
+		p1.setId(1);
+		assertEquals(1, p1.getId());
+
+		p1.setStatus(1);
+		assertEquals(1, p1.getStatus());
+
+		p1.setName("Projecto de desenvolvimento");
+		assertEquals("Projecto de desenvolvimento", p1.getName());
+
+		p1.setDescription("Desenvolver código");
+		assertEquals("Desenvolver código", p1.getDescription());
+
+		p1.setBudget(10);
+		assertEquals(10, p1.getBudget());
 	}
 
 }

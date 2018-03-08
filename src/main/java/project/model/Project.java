@@ -97,30 +97,6 @@ public class Project implements Serializable{
 		this.id = id;
 	}
 
-	public static int getPLANNING() {
-		return PLANNING;
-	}
-
-	public static int getINITIATION() {
-		return INITIATION;
-	}
-
-	public static int getEXECUTION() {
-		return EXECUTION;
-	}
-
-	public static int getDELIVERY() {
-		return DELIVERY;
-	}
-
-	public static int getREVIEW() {
-		return REVIEW;
-	}
-
-	public static int getCLOSE() {
-		return CLOSE;
-	}
-
 	public int getProjectIdCode() {
 		return projectIdCode;
 	}
@@ -163,6 +139,10 @@ public class Project implements Serializable{
 
 	public void setPendingTaskTeamRequests(List<TaskTeamRequest> pendingTaskTeamRequests) {
 		this.pendingTaskTeamRequests = pendingTaskTeamRequests;
+	}
+
+	public List<TaskTeamRequest> getPendingTaskTeamRequests() {
+		return this.pendingTaskTeamRequests;
 	}
 
 	/**
@@ -799,19 +779,17 @@ public class Project implements Serializable{
         return removalRequests;
     }
 
-
-
 	/**
 	 * Checks if a certain request already exists
 	 * 
-	 * @param projCollab
+	 * @param projectCollaborator
 	 *            Projector collaborator that wants to create the request
 	 * @param task
 	 *            Task chosen by the project collaborator
 	 * @return True if request already exists, false if not
 	 */
-	public boolean isAssignmentRequestAlreadyCreated(ProjectCollaborator projCollab, Task task) {
-		TaskTeamRequest request = new TaskTeamRequest(projCollab, task);
+	public boolean isAssignmentRequestAlreadyCreated(ProjectCollaborator projectCollaborator, Task task) {
+		TaskTeamRequest request = new TaskTeamRequest(projectCollaborator, task);
         request.setType(TaskTeamRequest.ASSIGNMENT);
 		return this.pendingTaskTeamRequests.contains(request);
 	}
@@ -909,9 +887,6 @@ public class Project implements Serializable{
             }
         }
 	}
-
-
-
 
 	public ProjectCollaborator getProjectCollaboratorFromUser(User user) {
 
