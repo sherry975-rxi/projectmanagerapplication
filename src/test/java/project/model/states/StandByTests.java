@@ -240,7 +240,7 @@ public class StandByTests {
 		/*
 		 * State will change, because task has now two project collaborators
 		 */
-		stateTestTask1.changeToOnGoing();
+		assertTrue(stateTestTask1.changeToOnGoing());
 		assertEquals(stateToCompare, testTask.viewTaskStateName());
 
 	}
@@ -324,7 +324,7 @@ public class StandByTests {
 		testTask.setFinishDate();
 
 		// Changes the state of the task to finished
-		stateTestTask1.changeToFinished();
+		assertTrue(stateTestTask1.changeToFinished());
 
 		// Checks if the task status changed to finished
 		assertEquals(stateToCompare, testTask.viewTaskStateName());

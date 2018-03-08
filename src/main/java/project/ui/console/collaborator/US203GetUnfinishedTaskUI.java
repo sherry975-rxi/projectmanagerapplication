@@ -1,6 +1,7 @@
 package project.ui.console.collaborator;
 
 import project.controller.US203GetUnfinishedTaskByUser;
+import project.controller.UpdateDbToContainersController;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 
@@ -10,6 +11,8 @@ public class US203GetUnfinishedTaskUI {
 	private Boolean isPreviousUIFromTasks;
 
 	public void displayOptions(User user1) {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		int projID;
 		String[] split;
 		User user = user1;

@@ -170,6 +170,47 @@ public class TaskCollaboratorTest {
 	}
 
 	/**
+	 * This tests the empty constructer and various getters/setters required by Springboot
+	 */
+	@Test
+	public final void testConstructorGetterSetter() {
+
+		// given an empty Task Collaborator
+		TaskCollaborator springTaskCollab = new TaskCollaborator();
+
+		// when no setters are called, then the auto generated ID must not be null, while the project collaborator is null
+		assertFalse(springTaskCollab.getId()== null);
+		assertTrue(springTaskCollab.getProjectCollaboratorFromTaskCollaborator()==null);
+
+		// given a fixed ID number, when setID is called, then getID must return the same value
+		long thisID = 70;
+		springTaskCollab.setId(thisID);
+		assertTrue(springTaskCollab.getId().equals(thisID));
+
+		// given a single test date
+		Calendar testDate = Calendar.getInstance();
+		// when both setStartDate and setFinishDate are called with testDate as argument
+		springTaskCollab.setStartDate(testDate);
+		springTaskCollab.setFinishDate(testDate);
+		// then those fields must be equal
+		assertTrue(springTaskCollab.getStartDate().equals(springTaskCollab.getFinishDate()));
+
+
+		// when the isStatus method is called, it should return what setStatus declared
+		// isStatus cannot be called without previously assigning a boolean
+		springTaskCollab.setStatus(true);
+		assertTrue(springTaskCollab.isStatus());
+
+		// given an empty constructor, then the resulting TaskCollaborator must have a null Task field
+		assertTrue(springTaskCollab.getTask()==null);
+		// when the setTask method is called, then the Task parameter must not be null
+		springTaskCollab.setTask(task1);
+		assertFalse(springTaskCollab.getTask()==null);
+
+	}
+
+
+	/**
 	 * Tests several combinations of the Equals override
 	 * 
 	 */

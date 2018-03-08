@@ -121,7 +121,7 @@ public class CancelledTaskTests {
 	public final void testchangeToFinished() {
 		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
 		testTask.setFinishDate(testDate);
-		testTask.getTaskState().changeToFinished();
+		assertTrue(testTask.getTaskState().changeToFinished());
 		assertEquals("Finished", testTask.viewTaskStateName());
 	}
 

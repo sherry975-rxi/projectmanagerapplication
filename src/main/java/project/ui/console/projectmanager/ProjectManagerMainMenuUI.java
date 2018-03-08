@@ -1,6 +1,7 @@
 package project.ui.console.projectmanager;
 
 import project.controller.PrintProjectInfoController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.MainMenuUI;
@@ -36,6 +37,8 @@ public class ProjectManagerMainMenuUI {
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
 		projectInfo.setProject();
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		Scanner scannerInput = new Scanner(System.in);
 

@@ -1,6 +1,7 @@
 package project.ui.console.director;
 
 import project.controller.PrintProjectInfoController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 
@@ -22,10 +23,13 @@ public class DirectorMenuUI {
 	}
 
 	public void directorMenu() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+
 		Scanner input = new Scanner(System.in);
 
 		boolean cycle = true;
 		while (cycle) {
+			infoUpdater.updateDBtoContainer();
 			System.out.println("");
 			System.out.println(
 					"———————————————————————————————————————————MENU DIRECTOR——————————————————————————————————————————————————");

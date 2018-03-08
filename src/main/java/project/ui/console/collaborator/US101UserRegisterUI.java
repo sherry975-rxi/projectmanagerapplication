@@ -1,6 +1,7 @@
 package project.ui.console.collaborator;
 
 import project.controller.US101RegisterUserController;
+import project.controller.UpdateDbToContainersController;
 
 import java.util.Scanner;
 
@@ -11,7 +12,8 @@ import java.util.Scanner;
 public class US101UserRegisterUI {
 
 	public void userRegister() {
-
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
 		US101RegisterUserController registerUsercontroller1 = new US101RegisterUserController();

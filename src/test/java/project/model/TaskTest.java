@@ -33,6 +33,8 @@ public class TaskTest {
 	Finished finishedTaskState;
 	StandBy standByTaskState;
 	Cancelled cancelledTaskState;
+	Task task;
+	OnGoing taskState;
 
 	double expectedCost;
 
@@ -67,6 +69,8 @@ public class TaskTest {
 		testTask5 = new Task(5, 1, "Description of task 5");
 		testTask5.setDeadlineInterval(Calendar.DAY_OF_YEAR + 5);
 		testTask5.setStartDateInterval(Calendar.DAY_OF_YEAR + 6);
+		Task task = new Task();
+		OnGoing taskState = new OnGoing(task);
 
 	}
 
@@ -1016,5 +1020,51 @@ public class TaskTest {
 		testTask.cancelledDateClear();
 
 		assertTrue(testTask.getCancelDate() == null);
+	}
+
+
+	@Test
+	public void testSettersAndGetters() {
+
+		Task task = new Task();
+		OnGoing taskState = new OnGoing(task);
+
+		//Checks get/set taskState
+		task.setTaskState(taskState);
+		assertEquals(task.getTaskState(), taskState);
+
+		//Checks get/set taskID
+		task.setId(10L);
+		assertEquals(task.getId(), 10L, 0);
+
+		//Checks get/set Project
+		task.setProject(myProject);
+		assertEquals(task.getProject(), myProject);
+
+
+		//checks get/set TaskTeam
+		List<TaskCollaborator> taskCollaborators = new ArrayList<>();
+		taskCollaborators.add(tWorker1);
+		taskCollaborators.add(tWorker2);
+
+
+		task.setTaskTeam(taskCollaborators);
+		assertEquals(task.getTaskTeam(), taskCollaborators);
+
+
+		//checks get/set Reports
+		List<Report> reports = new ArrayList<>();
+		Report report1 = new Report();
+		Report report2 = new Report();
+
+		reports.add(report1);
+		reports.add(report2);
+
+		task.setReports(reports);
+		assertEquals(task.getReports(), reports);
+
+		//checks get/set taskDependency
+
+	
 	}
 }

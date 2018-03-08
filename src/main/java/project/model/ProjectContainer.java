@@ -54,7 +54,7 @@ public class ProjectContainer {
 		return this.projectsRepository.findById(id);
 	}
 
-	public void saveProject(Project project) {
+	public void addProjectToProjectContainerX(Project project) {
 		this.projectsRepository.save(project);
 	}
 

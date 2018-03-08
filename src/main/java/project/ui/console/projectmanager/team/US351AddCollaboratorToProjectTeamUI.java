@@ -1,6 +1,7 @@
 package project.ui.console.projectmanager.team;
 
 import project.controller.US351AddColaboratorToProjectTeamController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Company;
 import project.model.Project;
 import project.model.User;
@@ -13,6 +14,8 @@ public class US351AddCollaboratorToProjectTeamUI {
 	int costPerEffort;
 
 	public void addCollaboratorToProjectTeam(Project project) {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 		String line = "______________________________________________";
 		US351AddColaboratorToProjectTeamController controller = new US351AddColaboratorToProjectTeamController();
 		Scanner dataIn = new Scanner(System.in);

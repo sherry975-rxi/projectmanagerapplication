@@ -3,6 +3,7 @@ package project.ui.console.projectmanager.tasklists;
 import project.controller.PrintProjectInfoController;
 import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US370GetProjectFinishedTaskListController;
+import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
@@ -29,6 +30,8 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	 * the user's input
 	 */
 	public void projectDataDisplay() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.proj.getIdCode());
 		int projectID = proj.getIdCode();

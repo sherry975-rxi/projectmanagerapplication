@@ -22,6 +22,7 @@ public class ReportTest {
 	Calendar dateOfReport;
 	Task task1;
 	int timeToCompare;
+	Report report2;
 
 	@Before
 	public void setUp() {
@@ -53,6 +54,8 @@ public class ReportTest {
 		report = null;
 		timeToCompare = 0;
 		dateOfReport = null;
+		report = null;
+		report2 = null;
 	}
 
 	/**
@@ -62,7 +65,7 @@ public class ReportTest {
 	public void testCreateReport() {
 
 		// Creates a new Report instance
-		report = new Report(taskWorker1, dateOfReport);
+		report2 = new Report(taskWorker1, dateOfReport);
 
 	}
 
@@ -71,9 +74,11 @@ public class ReportTest {
 	 */
 	@Test
 	public void testSettersAndGetters() {
+		report = new Report();
 
 		// Creates a new Report instance
-		report = new Report(taskWorker1, dateOfReport);
+		report.setTaskCollaborator(taskWorker1);
+		report.setDateOfReport(dateOfReport);
 
 		//Sets a time to the report
 		report.setReportedTime(10);
@@ -111,10 +116,11 @@ public class ReportTest {
 	 */
 	@Test
 	public void testGetReportedTime() {
+		report = new Report();
 
 		// Creates a new report instance;
-		report = new Report(taskWorker1, dateOfReport);
-
+		report.setTaskCollaborator(taskWorker1);
+		report.setDateOfReport(dateOfReport);
 		// Creates a new int, with the expected value to be returned by getReportedTime
 		// method
 		timeToCompare = 20;
@@ -134,7 +140,9 @@ public class ReportTest {
 	public void testGetTaskWorker() {
 
 		// Creates a new report instance;
-		report = new Report(taskWorker1, dateOfReport);
+		report = new Report();
+		report.setTaskCollaborator(taskWorker1);
+		report.setDateOfReport(dateOfReport);
 
 		// Compares the two values
 		assertEquals(report.getTaskCollaborator(), taskWorker1);

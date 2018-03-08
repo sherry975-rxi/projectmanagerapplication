@@ -1,6 +1,7 @@
 package project.ui.console.collaborator;
 
 import project.controller.PrintProjectInfoController;
+import project.controller.UpdateDbToContainersController;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 
@@ -22,6 +23,8 @@ public class ProjectViewMenuUI {
 	 * the user's input
 	 */
 	public void projectDataDisplay() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		infoUpdater.updateDBtoContainer();
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
 		projectInfo.setProject();
