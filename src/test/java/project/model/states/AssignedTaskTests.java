@@ -103,7 +103,7 @@ public class AssignedTaskTests {
 		// then asserts it's state is now Ready
 		TaskStateInterface dependencyFinishedState = new Finished(dependency);
 		dependency.setTaskState(dependencyFinishedState);
-		assignedStateTester.changeToReady();
+		assertTrue(assignedStateTester.changeToReady());
 		assertTrue(assignedTask.viewTaskStateName().equals("Ready"));
 	}
 
@@ -127,7 +127,7 @@ public class AssignedTaskTests {
 		// then, asserts the state has changed to planned (transition valid)
 
 		assignedTask.removeProjectCollaboratorFromTask(testerCollab);
-		assignedStateTester.changeToPlanned();
+		assertTrue(assignedStateTester.changeToPlanned());
 		assertTrue(assignedTask.viewTaskStateName().equals("Planned"));
 
 	}

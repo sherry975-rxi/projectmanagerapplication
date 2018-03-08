@@ -121,7 +121,7 @@ public class UserContainer {
 		newUser.setPassword(userDTO.getPassword());
 
 		// Adds the user to User repository
-		this.addUserToRepository(newUser);
+		this.addUserToUserRepositoryX(newUser);
 
 	}
 
@@ -129,7 +129,7 @@ public class UserContainer {
 	 * Method that saves the user to the database
 	 * @param user user to save
 	 */
-	public void addUserToRepository(User user){
+	public void addUserToUserRepositoryX(User user){
 			this.userRepository.save(user);
 	}
 

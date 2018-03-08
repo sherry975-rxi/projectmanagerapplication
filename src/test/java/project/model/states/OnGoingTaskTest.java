@@ -243,7 +243,7 @@ public class OnGoingTaskTest {
 		 * have a finish date and doesn't have any active Project Collaborator in the
 		 * task
 		 */
-		OnGoingTask1.changeToStandBy();
+		assertTrue(OnGoingTask1.changeToStandBy());
 		/*
 		 * Changes String values to "StandBy"
 		 */

@@ -32,7 +32,7 @@ public class HelloJpaApplication implements CommandLineRunner {
         User manuel = company.getUsersContainer().createUser("Manuel", "user2@gmail.com", "001", "Manger",
                 "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
         //Saves the user to the database
-        company.getUsersContainer().addUserToRepository(manuel);
+        company.getUsersContainer().addUserToUserRepositoryX(manuel);
 
         //Creates the project through the company
         Project project = company.getProjectsContainer().createProject("NOME PROJECTO", "DESCRIÇÃO PROJECTO", manuel);
@@ -61,7 +61,7 @@ public class HelloJpaApplication implements CommandLineRunner {
         project.getTaskRepository().getTaskByID(task2.getTaskID()).createTaskDependence(task,2);
 
         //Saves the project to the database
-        company.getProjectsContainer().saveProject(project);
+        company.getProjectsContainer().addProjectToProjectContainerX(project);
         //Gets the project from the database by the id
         Project projectAAA = company.getProjectsContainer(). getProjectById(1);
         //Gets the task through the project taskRepository
