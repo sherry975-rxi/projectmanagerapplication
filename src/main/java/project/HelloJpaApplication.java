@@ -32,7 +32,7 @@ public class HelloJpaApplication implements CommandLineRunner {
         User manuel = company.getUsersContainer().createUser("Manuel", "user2@gmail.com", "001", "Manger",
                 "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
         //Saves the user to the database
-        company.getUsersContainer().addUserToRepository(manuel);
+        company.getUsersContainer().addUserToUserRepositoryX(manuel);
 
         //Creates the project through the company
         Project project = company.getProjectsContainer().createProject("NOME PROJECTO", "DESCRIÇÃO PROJECTO", manuel);
