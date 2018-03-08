@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import project.model.Company;
-import project.model.Project;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
 
 
 @SpringBootApplication
@@ -30,18 +27,23 @@ public class HelloJpaApplication implements CommandLineRunner {
         //Creates a company.
         Company company = Company.getTheInstance();
         //Creates the user through the company
-        User manger = company.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Manger",
+        User manuel = company.getUsersContainer().createUser("Manuel", "user2@gmail.com", "001", "Manger",
                 "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
         //Saves the user to the database
-        company.getUsersContainer().addUserToRepository(manger);
+        company.getUsersContainer().addUserToRepository(manuel);
 
-        //Creates the projecto through the company
-        Project project = company.getProjectsContainer().createProject("NOME PROJECTO", "DESCRIÇÃO PROJECTO", manger);
+        //Creates the project through the company
+        Project project = company.getProjectsContainer().createProject("NOME PROJECTO", "DESCRIÇÃO PROJECTO", manuel);
 
         //Creates the task through the project
         Task task = project.getTaskRepository().createTask("DESCRIÇÃO TAREFA");
         //Adds the task to the task repository
         project.getTaskRepository().addProjectTask(task);
+        //Creates ProjectCollaborator through the Project
+        ProjectCollaborator manuelProjCollab = project.createProjectCollaborator(manuel,7);
+        //Adds the projectCollaborator to the ProjectTeam
+        //project.addProjectCollaboratorToProjectTeam(manuelProjCollab);
+        project.addUserToProjectTeam(manuel,7000);
         //Saves the project to the database
         company.getProjectsContainer().saveProject(project);
         //Gets the project from the database by the id
