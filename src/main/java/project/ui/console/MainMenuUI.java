@@ -80,9 +80,9 @@ public class MainMenuUI {
 		projectGP.setFinishdate(finishDate);
 
 		// addition of projects to the company
-		myCompany.getProjectsContainer().addProjectToProjectContainer(projectGP);
-		myCompany.getProjectsContainer().addProjectToProjectContainer(projectApostas);
-		myCompany.getProjectsContainer().addProjectToProjectContainer(projectHomeBanking);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectGP);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectApostas);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectHomeBanking);
 
 		// set "EXECUTION" status of projects
 		projectGP.setProjectStatus(2);
@@ -367,9 +367,9 @@ public class MainMenuUI {
 		// (taskHB5)
 		projectHomeBanking.createTaskRemovalRequest(projcollabATirapicos, taskHB5);
 
-		myCompany.getProjectsContainer().saveProject(projectGP);
-		myCompany.getProjectsContainer().saveProject(projectApostas);
-		myCompany.getProjectsContainer().saveProject(projectHomeBanking);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectGP);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectApostas);
+		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectHomeBanking);
 
 		mainMenu();
 
