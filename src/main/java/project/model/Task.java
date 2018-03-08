@@ -29,12 +29,12 @@ public class Task {
 	private Long id;
 	private String taskID;
 	private String description;
-	@OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "task")
+	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
+	@Column(columnDefinition = "LONGBLOB")
 	private List<TaskCollaborator> taskTeam;
-
-    @OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "task")
+	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
+	@Column(columnDefinition = "LONGBLOB")
 	private List<Report> reports;
-
 	@Enumerated(EnumType.STRING)
 	private StateEnum currentState;
 
@@ -538,6 +538,7 @@ public class Task {
 	 * Specific Project Collaborator
 	 * 
 	 * @param taskCollaborator a project collaborator for which a report will be created/updated
+	 * @param dateOfReport     date of the hours worked in task
 	 * 
 	 * @return report
 	 */
