@@ -40,6 +40,14 @@ public class MainMenuUI {
 		User projectManager = myCompany.getUsersContainer().createUser("Sara Pereira", "spereira@gmail.com", "012",
 				"Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
 				"Portugal");
+
+		// set user as collaborator
+		userDirector.setUserProfile(Profile.DIRECTOR);
+		userJSilva.setUserProfile(Profile.COLLABORATOR);
+		userATirapicos.setUserProfile(Profile.COLLABORATOR);
+		projectManager.setUserProfile(Profile.COLLABORATOR);
+
+
 		// addition of users to the company
 		myCompany.getUsersContainer().addUserToUserRepository(userAdmin);
 		myCompany.getUsersContainer().addUserToUserRepository(userDirector);
@@ -47,11 +55,7 @@ public class MainMenuUI {
 		myCompany.getUsersContainer().addUserToUserRepository(userATirapicos);
 		myCompany.getUsersContainer().addUserToUserRepository(projectManager);
 
-		// set user as collaborator
-		userDirector.setUserProfile(Profile.DIRECTOR);
-		userJSilva.setUserProfile(Profile.COLLABORATOR);
-		userATirapicos.setUserProfile(Profile.COLLABORATOR);
-		projectManager.setUserProfile(Profile.COLLABORATOR);
+
 
 		// Instantiates a project and add it to the company
 		Project projectGP = myCompany.getProjectsContainer().createProject("Gestão de Projetos",
@@ -362,6 +366,11 @@ public class MainMenuUI {
 		// Request of removal of collaborator projcollabATirapicos from task 3.5
 		// (taskHB5)
 		projectHomeBanking.createTaskRemovalRequest(projcollabATirapicos, taskHB5);
+
+		myCompany.getProjectsContainer().saveProject(projectGP);
+		myCompany.getProjectsContainer().saveProject(projectApostas);
+		myCompany.getProjectsContainer().saveProject(projectHomeBanking);
+
 		mainMenu();
 
 	}
