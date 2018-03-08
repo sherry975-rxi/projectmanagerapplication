@@ -4,6 +4,7 @@ import project.model.Address;
 import project.model.Profile;
 import project.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDTO {
@@ -33,6 +34,7 @@ public class UserDTO {
 		this.email = user.getEmail();
 		this.idNumber = user.getIdNumber();
 		this.function = user.getFunction();
+		this.addressList = new ArrayList<>();
 		this.addressList.addAll(user.getAddressList());
 		this.userProfile = user.getUserProfile();
 	}
