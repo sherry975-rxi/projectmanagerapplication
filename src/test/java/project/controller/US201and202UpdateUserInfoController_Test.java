@@ -319,4 +319,21 @@ public class US201and202UpdateUserInfoController_Test {
 
 	}
 
+	/**
+	 * Tests the creator of an address in controller
+	 */
+	@Test
+	public void testCreateNewAddress(){
+		// create controller
+		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
+		// create a new address in user u1
+		address2 = u1.createAddress("Testy Street2", "2401-342", "Testburg2", "Testo2", "Testistan2");
+		// create an identical address in controller
+		address1 = controller.createNewAddress("Testy Street2", "2401-342", "Testburg2", "Testo2", "Testistan2");
+		//compares similar objects
+		assertTrue(address2.equals(address1));
+
+
+	}
+
 }
