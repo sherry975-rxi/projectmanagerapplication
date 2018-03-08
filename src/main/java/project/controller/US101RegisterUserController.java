@@ -39,13 +39,11 @@ public class US101RegisterUserController {
 	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
 			String street, String zipCode, String city, String district, String country) {
 
-		User newUser = new User(name, email, idNumber, function, phone);
+		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password);
 
-		newUser.setPassword(password);
+		newUser.setUserAddress(street, zipCode, city, district, country);
 
-		newUser.addAddress(newUser.createAddress(street, zipCode, city, district, country));
-
-		userRegistry.addUserToUserRepositoryX(newUser);
+		userRegistry.createUserWithDTO(newUser);
 	}
 
 	public boolean isUserInUserRepository(String email) {
