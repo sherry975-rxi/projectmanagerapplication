@@ -185,83 +185,6 @@ public class StandByTests {
 	}
 
 	@Test
-	public void testChangeToCreated() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		testTask.setStartDate(taskStartDate);
-		testTask.setTaskState(stateTestTask1);
-
-		String stateToCompare = "StandBy";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		stateTestTask1.changeToCreated();
-
-		assertEquals(stateToCompare, testTask.viewTaskStateName());
-	}
-
-	@Test
-	public void testChangeToPlanned() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		testTask.setStartDate(taskStartDate);
-		testTask.setTaskState(stateTestTask1);
-
-		String stateToCompare = "StandBy";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		stateTestTask1.changeToPlanned();
-
-		assertEquals(stateToCompare, testTask.viewTaskStateName());
-	}
-
-	@Test
-	public void testChangeToAssigned() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		testTask.setStartDate(taskStartDate);
-		testTask.setTaskState(stateTestTask1);
-
-		String stateToCompare = "StandBy";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		stateTestTask1.changeToAssigned();
-
-		assertEquals(stateToCompare, testTask.viewTaskStateName());
-	}
-
-	@Test
-	public void testChangeToReady() {
-
-		// Initiates stateTestTask1
-		stateTestTask1 = new StandBy(testTask);
-
-		testTask.setStartDate(taskStartDate);
-		testTask.setTaskState(stateTestTask1);
-
-		String stateToCompare = "StandBy";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		stateTestTask1.changeToReady();
-
-		assertEquals(stateToCompare, testTask.viewTaskStateName());
-
-	}
-
-	@Test
 	public void testChangeToOnGoing() {
 
 		// Initiates stateTestTask1
@@ -323,22 +246,14 @@ public class StandByTests {
 	}
 
 	@Test
-	public void testChangeToStandBy() {
+	public void testImpossibleToChange() {
 
-		// Initiates stateTestTask1
 		stateTestTask1 = new StandBy(testTask);
-
-		testTask.setStartDate(taskStartDate);
-		testTask.setTaskState(stateTestTask1);
-
-		String stateToCompare = "StandBy";
-
-		/*
-		 * State won't change, because task doesn't have active users
-		 */
-		stateTestTask1.changeToStandBy();
-
-		assertEquals(stateToCompare, testTask.viewTaskStateName());
+		assertFalse(stateTestTask1.changeToStandBy());
+		assertFalse(stateTestTask1.changeToReady());
+		assertFalse(stateTestTask1.changeToAssigned());
+		assertFalse(stateTestTask1.changeToPlanned());
+		assertFalse(stateTestTask1.changeToCreated());
 	}
 
 	@Test

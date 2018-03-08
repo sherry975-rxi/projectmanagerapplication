@@ -32,10 +32,7 @@ public class Cancelled implements TaskStateInterface {
 	}
 
 	@Override
-	public boolean changeToAssigned() {
-		return false;
-
-	}
+	public boolean changeToAssigned() { return false; }
 
 	@Override
 	public boolean changeToReady() {
