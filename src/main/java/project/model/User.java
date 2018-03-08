@@ -29,10 +29,6 @@ public class User implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private Profile userProfile;
 
-	public void setSystemUserStateActive(boolean systemUserStateActive) {
-		this.systemUserStateActive = systemUserStateActive;
-	}
-
 	private boolean systemUserStateActive;
 	private String password;
 	/**
@@ -63,6 +59,11 @@ public class User implements Serializable{
 		this.userProfile = Profile.UNASSIGNED;
 		this.systemUserStateActive = true;
 	}
+
+	public void setSystemUserStateActive(boolean systemUserStateActive) {
+		this.systemUserStateActive = systemUserStateActive;
+	}
+
 	/**
 	 * Creates an instance of Address.
 	 *
