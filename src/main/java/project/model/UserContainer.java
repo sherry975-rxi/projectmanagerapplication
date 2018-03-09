@@ -151,6 +151,15 @@ public class UserContainer {
 
 	}
 
+	public void alterUser(User user) {
+		this.userRepository.save(user);
+
+	}
+
+	public User getUserByEmailFromDatabase(String email) {
+		return this.userRepository.findByEmail(email);
+	}
+
 	/**
 	 * This method feeds the list of all Users in the Company with the user data that is in the DB
 	 */
