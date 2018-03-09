@@ -30,8 +30,7 @@ public class MainMenuUI {
 		userJSilva = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(2);
 		userDirector = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(1);
 		userAdmin = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(0);
-
-		printImage();
+		
 		displayOptions();
 	}
 
