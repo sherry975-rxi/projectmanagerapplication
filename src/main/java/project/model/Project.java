@@ -537,7 +537,7 @@ public class Project implements Serializable{
 	 * removeProjectCollaboratorFromProjectTeam
 	 * 
 	 * if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
-	 * collaboratorToRemoveFromProjectTeam.setState(false); for (Task otherTask :
+	 * collaboratorToRemoveFromProjectTeam.setStatus(false); for (Task otherTask :
 	 * this.taskContainer.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
 	 * otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); } }
 	 * 
@@ -560,7 +560,7 @@ public class Project implements Serializable{
 		for (ProjectCollaborator other : projectTeam) {
 			if (other.getUserFromProjectCollaborator().equals(collaboratorToRemoveFromProjectTeam)) {
 
-				other.setState(false);
+				other.setStatus(false);
 
 				for (Task otherTask : this.taskContainer.getAllTasksFromProjectCollaborator(other)) {
 					otherTask.removeProjectCollaboratorFromTask(other);
