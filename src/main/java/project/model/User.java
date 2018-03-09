@@ -2,6 +2,8 @@ package project.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class to build Users. From this class one can create a new User(object),
  * which is defined by its name, email, idNumber, function, address list, phone
@@ -13,7 +15,12 @@ import java.util.ArrayList;
 @Entity
 @Table(name = "User")
 public class User implements Serializable{
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "User_ID")
 	private int id;
+	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+	List<ProjectCollaborator> projCollabs;
 	private String name;
 	private String email;
 	private String idNumber;
@@ -78,9 +85,7 @@ public class User implements Serializable{
 	public Address createAddress(String street, String zipCode, String city, String district, String country) {
 		return new Address(street, zipCode, city, district, country);
 	}
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "User_ID")
+
 	public int getId() {
 		return id;
 	}
@@ -283,6 +288,15 @@ public class User implements Serializable{
 			found = true;
 		}
 		return found;
+	}
+
+
+	public List<ProjectCollaborator> getProjCollabs() {
+		return projCollabs;
+	}
+
+	public void setProjCollabs(List<ProjectCollaborator> projCollabs) {
+		this.projCollabs = projCollabs;
 	}
 
 }

@@ -25,7 +25,7 @@ public class HelloJpaApplication implements CommandLineRunner {
     public void run(String... strings) throws Exception {
 
         //demo.demoRun();
-        MainMenuUI.mainMenu();
+        MainMenuUI.main();
 
 //        //Creates a company.
         //Company company = Company.getTheInstance();

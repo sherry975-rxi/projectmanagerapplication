@@ -48,16 +48,6 @@ public class MainMenuUI {
 		userATirapicos.setUserProfile(Profile.COLLABORATOR);
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 
-
-		// addition of users to the company
-		myCompany.getUsersContainer().addUserToUserRepositoryX(userAdmin);
-		myCompany.getUsersContainer().addUserToUserRepositoryX(userDirector);
-		myCompany.getUsersContainer().addUserToUserRepositoryX(userJSilva);
-		myCompany.getUsersContainer().addUserToUserRepositoryX(userATirapicos);
-		myCompany.getUsersContainer().addUserToUserRepositoryX(projectManager);
-
-
-
 		// Instantiates a project and add it to the company
 		Project projectGP = myCompany.getProjectsContainer().createProject("Gestão de Projetos",
 				"Aplicação para Gestão de Projetos", projectManager);
@@ -79,11 +69,6 @@ public class MainMenuUI {
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.set(2018, Calendar.FEBRUARY, 2, 12, 31, 00);
 		projectGP.setFinishdate(finishDate);
-
-		// addition of projects to the company
-		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectGP);
-		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectApostas);
-		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectHomeBanking);
 
 		// set "EXECUTION" status of projects
 		projectGP.setProjectStatus(2);
@@ -367,6 +352,13 @@ public class MainMenuUI {
 		// Request of removal of collaborator projcollabATirapicos from task 3.5
 		// (taskHB5)
 		projectHomeBanking.createTaskRemovalRequest(projcollabATirapicos, taskHB5);
+
+		// addition of users to the company
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userAdmin);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userDirector);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userJSilva);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(userATirapicos);
+		myCompany.getUsersContainer().addUserToUserRepositoryX(projectManager);
 
 		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectGP);
 		myCompany.getProjectsContainer().addProjectToProjectContainerX(projectApostas);
