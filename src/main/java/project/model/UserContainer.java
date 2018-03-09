@@ -18,7 +18,7 @@ import java.util.List;
 public class UserContainer {
 
 
-	public UserRepository userRepository;
+	private UserRepository userRepository;
 	private List<User> usersContainer;
 
 
