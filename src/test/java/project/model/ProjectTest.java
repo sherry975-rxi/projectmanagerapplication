@@ -174,6 +174,9 @@ public class ProjectTest {
 		assertTrue(p1.isProjectManager(user1));
 		assertEquals(tasksListofThisProject, p1.getTaskRepository().getProjectTaskRepository());
 		assertEquals(projectTeam, p1.getProjectTeam());
+
+		//then, asserts the project's task repository is correctly tagged with the project
+		assertTrue(p1.getTaskRepository().getProject().equals(p1));
 	}
 
 	/**
@@ -183,7 +186,13 @@ public class ProjectTest {
 	@Test
 	public void testCreateProjectCollaborator() {
 
-		assertEquals(projectCollaborator2, p1.createProjectCollaborator(user2, 1200));
+		ProjectCollaborator testingUser2Collab = p1.createProjectCollaborator(user2, 1200);
+
+		assertEquals(projectCollaborator2, testingUser2Collab);
+
+		//asserts the created collaborator is correctly tagged with the project, after adding it to the team
+		p1.addProjectCollaboratorToProjectTeam(testingUser2Collab);
+		assertTrue(p1.getProjectTeam().get(0).getProject().equals(p1));
 	}
 
 	/**
@@ -595,6 +604,9 @@ public class ProjectTest {
 	public void testAddTaskAssignementRequest() {
 		assertTrue(p1.createTaskAssignementRequest(projectCollaborator1, task1));
 		assertFalse(p1.createTaskAssignementRequest(projectCollaborator1, task1));
+
+		//asserts the task Request is tagged with the creating project
+		assertTrue(p1.getPendingTaskAssignementRequests().get(0).getProject().equals(p1));
 	}
 
 	/**
@@ -652,6 +664,9 @@ public class ProjectTest {
 		assertTrue(p1.createTaskRemovalRequest(projectCollaborator1, task1));
 		// if exists it doesn't allow to create the request
 		assertFalse(p1.createTaskRemovalRequest(projectCollaborator1, task1));
+
+		//asserts the task Request is tagged with the creating project
+		assertTrue(p1.getPendingTaskRemovalRequests().get(0).getProject().equals(p1));
 
 	}
 
