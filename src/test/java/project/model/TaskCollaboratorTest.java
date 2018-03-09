@@ -248,4 +248,29 @@ public class TaskCollaboratorTest {
 		}
 	}
 
+	/**
+	 * Test of setter of project collaborator in task collaborator
+	 */
+	@Test
+	public final void testSetProjCollaborator(){
+		//"collabTester2" is the project collaborator in task collaborator "workerTester2"
+		assertTrue(workerTester2.getProjCollaborator().equals(collabTester2));
+
+		//change the project collaborator in task collaborator "workerTester2"
+		workerTester2.setProjCollaborator(collabTester);
+		//checks the change
+		assertTrue(workerTester2.getProjCollaborator().equals(collabTester));
+	}
+
+	@Test
+	public final void testSetId(){
+
+		long iD = 70;
+		Long thisID = iD;
+		workerTester2.setId(thisID);
+		assertTrue(workerTester2.getId().equals(thisID));
+
+	}
+
+
 }
