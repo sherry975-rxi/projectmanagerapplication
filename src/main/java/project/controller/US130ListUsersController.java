@@ -40,6 +40,8 @@ public class US130ListUsersController {
 		int actualIndex = index - 1;
 		if (actualIndex >= 0 && actualIndex < userList.size()) {
 			selectedUser = userList.get(actualIndex);
+		} else {
+			selectedUser = null;
 		}
 		return selectedUser;
 
@@ -48,8 +50,8 @@ public class US130ListUsersController {
 	/**
 	 * This is a utility method that converts a User object into a String of data,
 	 * to be displayed in the UI
-	 * 
-	 * @param User
+	 *
+	 * @param toConvert
 	 *            to be converted
 	 * @return String of the user's data
 	 */

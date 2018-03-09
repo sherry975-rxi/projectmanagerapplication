@@ -32,7 +32,7 @@ public class US130ListUsersControllerTest {
 		// creates user four users
 		user1 = Critical.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		user2 = Critical.getUsersContainer().createUser("DanielM", "danielM@gmail.com", "002", "Code Monkey",
+		user2 = Critical.getUsersContainer().createUser("DanielM", "daniel2M@gmail.com", "002", "Code Monkey",
 				"920000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		newUser2 = Critical.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
@@ -96,6 +96,17 @@ public class US130ListUsersControllerTest {
 		// user 0)
 		// it must be equal to User 1
 		assertEquals(listUsersController.selectUser(1), user1);
+
+		assertEquals(listUsersController.selectUser(2), user2);
+
+		assertEquals(listUsersController.selectUser(3), newUser2);
+
+		assertEquals(listUsersController.selectUser(4), null);
+
+		assertEquals(listUsersController.selectUser(5), null);
+
+
+
 	}
 
 	@Test
