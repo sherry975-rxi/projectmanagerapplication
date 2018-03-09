@@ -19,11 +19,11 @@ public class PrintProjectInfoControllerTest {
 	User joaoPM;
 	ProjectCollaborator collab1, collab2;
 	ProjectContainer projectContainer;
-	Project project;
+	Project project, project1;
 	Calendar startDate, finishDate;
 	TaskContainer taskContainer;
 	Task task1, task2, task3;
-	PrintProjectInfoController controller;
+	PrintProjectInfoController controller, controller1;
 
 	@Before
 	public void setUp() {
@@ -257,6 +257,34 @@ public class PrintProjectInfoControllerTest {
 		String projectName = controller.printProjectNameInfo();
 
 		assertEquals("Projeto de gestão", projectName);
+
+	}
+
+	@Test
+	public void testPrintProjectInfoController(){
+
+		// Creates one Project
+		project1 = myCompany.getProjectsContainer().createProject("Projeto de voluntariado",
+				"Este projeto está focado em solidariedade.", user1);
+
+		// add project to project repository
+		myCompany.getProjectsContainer().addProjectToProjectContainer(project1);
+
+		// Instantiates de controller
+		controller1 = new PrintProjectInfoController(project1);
+		controller1.setProject();
+
+		assertEquals(controller1.printProjectNameInfo(), "Projeto de voluntariado");
+
+		// add user to project team
+		project1.addProjectCollaboratorToProjectTeam(collab1);
+		project1.addProjectCollaboratorToProjectTeam(collab2);
+
+		//remove user from project team
+		project1.removeProjectCollaboratorFromProjectTeam(joaoPM);
+
+		assertEquals(controller1.printProjectTeamInfo(), "Daniel [ACTIVE], João [INACTIVE]");
+
 
 	}
 
