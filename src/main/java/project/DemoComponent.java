@@ -47,14 +47,19 @@ public class DemoComponent {
 
 
     public void dummyData() {
+        String ruaBla = "Rua Bla";
+        String blabla ="Blabla";
+        String blablabla = "Blablabla";
+        String blablablabla = blabla+blabla;
+        String blalandia ="Blalandia";
 
         Company myCompany = Company.getTheInstance();
         User manger = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Manger",
-                "930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+                "930000000", ruaBla, blabla, blablabla, blablablabla, blalandia);
         User manelinho = myCompany.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Enabler",
-                "940000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+                "940000000", ruaBla, blabla, blablabla, blablablabla, blalandia);
         User zeDasCouves = myCompany.getUsersContainer().createUser("Zezinho", "user4@gmail.com", "003", "Janitor",
-                "950000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+                "950000000", ruaBla, blabla, blablabla, blablablabla, blalandia);
 
         myCompany.getUsersContainer().addUserToUserRepository(manger);
         myCompany.getUsersContainer().addUserToUserRepository(manelinho);
