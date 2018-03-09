@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import project.Repository.ProjectsRepository;
-import project.Repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Calendar;
