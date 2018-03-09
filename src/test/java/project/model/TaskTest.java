@@ -487,6 +487,16 @@ public class TaskTest {
 
 		// Confirms that the task has active dependencies
 		assertTrue(testTask2.hasActiveDependencies());
+		assertEquals(testTask2.getTaskDependency().size(), 1);
+
+		// should not allow to apply an existing dependency
+		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+
+		// Apply same testTask2 dependencies in testTask3
+		assertEquals(testTask3.getTaskDependency().size(), 0);
+		List<Task> cloneTaskDependency = testTask2.getTaskDependency();
+		testTask3.setTaskDependency(cloneTaskDependency);
+		assertEquals(testTask3.getTaskDependency().size(), 1);
 
 		// Task dependencies no longer update Start Date!!!
 
@@ -1067,4 +1077,36 @@ public class TaskTest {
 
 	
 	}
+
+	/**
+	 * Tests the getter of task current state
+	 */
+	@Test
+	public void testGetCurrentState(){
+		//testTask was only created
+		assertEquals(testTask.getCurrentState(), StateEnum.CREATED);
+	}
+
+	@Test
+	public void testGetActiveTaskCollaboratorByEmail() {
+
+		Task task = new Task();
+		OnGoing taskState = new OnGoing(task);
+
+		//Checks get/set Project
+		task.setProject(myProject);
+		assertEquals(task.getProject(), myProject);
+
+		//checks get/set TaskTeam
+		List<TaskCollaborator> taskCollaborators = new ArrayList<>();
+		taskCollaborators.add(tWorker1);
+		taskCollaborators.add(tWorker2);
+
+		task.setTaskTeam(taskCollaborators);
+		assertEquals(task.getTaskTeam(), taskCollaborators);
+
+		//tWorker2 is collab2 which is user2 (suchmail@mail.com)
+		assertTrue(tWorker2.equals(task.getActiveTaskCollaboratorByEmail("suchmail@mail.com")));
+	}
+
 }
