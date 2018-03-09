@@ -30,6 +30,7 @@ public class TaskTeamRequestTests {
 	String taskIDnumber;
 	Task chosenTask;
 	Task nullTask;
+	Task simpleTask;
 
 	@Before
 	public void setUp() {
@@ -123,6 +124,15 @@ public class TaskTeamRequestTests {
 
 		assertTrue(firstRequest.getTask().getTaskID().equals(taskIDnumber));
 		assertTrue(firstRequest.getTask().getDescription().equals(taskDescription));
+
+		//Defining data for task "simpleTask"
+		simpleTask = testProject.getTaskRepository().createTask(taskDescription, 2000, estimatedStartDate,
+				estimatedTaskDeadline, 200000);
+		simpleTask.setTaskBudget(20);
+		//changing from task "chosenTask" to "simpleTask" in request "firstRequest"
+		firstRequest.setTask(simpleTask);
+		//getting the budget of the new task associated in firstRequest
+		assertEquals(firstRequest.getTask().getTaskBudget(), 20);
 
 	}
 
