@@ -18,6 +18,7 @@ public class US201and202UpdateUserInfoController {
 	public void updateUserName(User user, String name) {
 
 		user.setName(name);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	/**
@@ -29,6 +30,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public void updateUserEmail(User user, String email) {
 		user.setEmail(email);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	public boolean isEmailValid(String email) {
@@ -52,6 +54,7 @@ public class US201and202UpdateUserInfoController {
 	public void updateUserPassword(User user, String password) {
 
 		user.setPassword(password);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	/**
@@ -64,6 +67,7 @@ public class US201and202UpdateUserInfoController {
 	public void updateUserPhone(User user, String phone) {
 
 		user.setPhone(phone);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	/**
@@ -89,6 +93,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public void addNewAddress(User user, Address address) {
 		user.addAddress(address);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	/**
@@ -103,6 +108,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public void updateUserStreet(User user, String street, String newStreet) {
 		user.searchUserAddress(street).setStreet(newStreet);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	/**
@@ -117,6 +123,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public void updateUserZipCode(User user, String street, String zipCode) {
 		user.searchUserAddress(street).setZipCode(zipCode);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	/**
@@ -131,6 +138,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public void updateUserCity(User user, String street, String city) {
 		user.searchUserAddress(street).setCity(city);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	/**
@@ -145,6 +153,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public void updateUserDistrict(User user, String street, String district) {
 		user.searchUserAddress(street).setDistrict(district);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	/**
@@ -159,6 +168,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public void updateUserCountry(User user, String street, String country) {
 		user.searchUserAddress(street).setCountry(country);
+		Company.getTheInstance().getUsersContainer().alterUser(user);
 	}
 
 	/**
