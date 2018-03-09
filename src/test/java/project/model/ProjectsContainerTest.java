@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 ;
 
@@ -69,6 +70,7 @@ public class ProjectsContainerTest {
 
 	@Before
 	public void setUp() {
+		initMocks(this);
 
 		ProjectContainer = new ProjectContainer();
 		user1 = new User("name", "email@gmail.com", "idNumber", "function", "123456789");
