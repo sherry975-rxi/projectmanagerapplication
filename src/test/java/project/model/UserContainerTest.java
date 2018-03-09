@@ -6,11 +6,17 @@ package project.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import project.Repository.UserRepository;
+import project.dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * @author Group3
@@ -18,25 +24,29 @@ import static org.junit.Assert.*;
  */
 public class UserContainerTest {
 
-	User user1;
+    @Mock
+    private UserRepository userRepositoryMock;
+
+    User user1;
 	User user2;
 	User user3;
 	User user4;
 	User user5;
-	UserContainer userRep = new UserContainer();
+	UserContainer userContainer = new UserContainer();
 
 	@Before
 	public void setUp() {
+        initMocks(this);
 
 		// instantiate users
-		user1 = userRep.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua", "2401-00",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
-		user2 = userRep.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00", "Test",
+		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00", "Test",
 				"Testo", "Testistan");
-		user4 = userRep.createUser("DanielMM", "danielmm@gmail.com", "003", "collaborator", "910000000", "Rua",
+		user4 = userContainer.createUser("DanielMM", "danielmm@gmail.com", "003", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
-		user5 = userRep.createUser("DanielMM", "danielmmgmail.com", "003", "collaborator", "910000000", "Rua",
+		user5 = userContainer.createUser("DanielMM", "danielmmgmail.com", "003", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 	}
 
@@ -47,7 +57,7 @@ public class UserContainerTest {
 		user3 = null;
 		user4 = null;
 		user5 = null;
-		userRep = null;
+		userContainer = null;
 	}
 
 	/**
@@ -59,7 +69,7 @@ public class UserContainerTest {
 
 		List<User> testUserRep = new ArrayList<>();
 
-		assertEquals(testUserRep, userRep.getAllUsersFromUserContainer());
+		assertEquals(testUserRep, userContainer.getAllUsersFromUserContainer());
 	}
 
 	/**
@@ -88,7 +98,7 @@ public class UserContainerTest {
 		Address newAddress = user3.createAddress("Rua", "2401-00", "Test", "Testo", "Testistan");
 		user3.addAddress(newAddress);
 
-		assertEquals(user3, userRep.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		assertEquals(user3, userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan"));
 	}
 
@@ -99,14 +109,14 @@ public class UserContainerTest {
 	@Test
 	public void testGetAllUsersFromRepository() {
 
-		userRep.addUserToUserRepository(user1);
-		userRep.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
 
 		List<User> testUsersInRep = new ArrayList<>();
 		testUsersInRep.add(user1);
 		testUsersInRep.add(user2);
 
-		assertEquals(testUsersInRep, userRep.getAllUsersFromUserContainer());
+		assertEquals(testUsersInRep, userContainer.getAllUsersFromUserContainer());
 	}
 
 	/**
@@ -117,11 +127,11 @@ public class UserContainerTest {
 	public void testAddUserToUserRepository() {
 
 		// adds user twice
-		userRep.addUserToUserRepository(user1);
-		userRep.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user1);
 
-		assertTrue(user1.equals(userRep.getAllUsersFromUserContainer().get(0)));
-		assertEquals(1, userRep.getAllUsersFromUserContainer().size()); // if it would add even if the user was already on
+		assertTrue(user1.equals(userContainer.getAllUsersFromUserContainer().get(0)));
+		assertEquals(1, userContainer.getAllUsersFromUserContainer().size()); // if it would add even if the user was already on
 																		// the list, the size of the repository would be
 																		// 2 instead of 1
 	}
@@ -132,10 +142,10 @@ public class UserContainerTest {
 	@Test
 	public void testIsUserinUserRepository() {
 
-		userRep.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user1);
 
-		assertTrue(userRep.isUserinUserRepository(user1));
-		assertFalse(userRep.isUserinUserRepository(user2));
+		assertTrue(userContainer.isUserinUserRepository(user1));
+		assertFalse(userContainer.isUserinUserRepository(user2));
 	}
 
 	/**
@@ -144,15 +154,15 @@ public class UserContainerTest {
 	@Test
 	public void testSearchUsersByEmail() {
 
-		userRep.addUserToUserRepository(user1);
-		userRep.addUserToUserRepository(user2);
-		userRep.addUserToUserRepository(user4);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user4);
 
 		List<User> testUsersWithEmail = new ArrayList<>();
 		testUsersWithEmail.add(user1);
 		testUsersWithEmail.add(user4);
 
-		assertEquals(testUsersWithEmail, userRep.searchUsersByEmail("daniel"));
+		assertEquals(testUsersWithEmail, userContainer.searchUsersByEmail("daniel"));
 
 	}
 
@@ -163,18 +173,18 @@ public class UserContainerTest {
 	@Test
 	public void testGetUserByEmail() {
 
-		userRep.addUserToUserRepository(user1);
-		userRep.addUserToUserRepository(user2);
-		userRep.addUserToUserRepository(user4);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user4);
 
-		assertTrue(user1.equals(userRep.getUserByEmail("daniel@gmail.com")));
-		assertTrue(user4.equals(userRep.getUserByEmail("danielmm@gmail.com")));
-		assertFalse(user1.equals(userRep.getUserByEmail("danielmm@gmail.com")));
+		assertTrue(user1.equals(userContainer.getUserByEmail("daniel@gmail.com")));
+		assertTrue(user4.equals(userContainer.getUserByEmail("danielmm@gmail.com")));
+		assertFalse(user1.equals(userContainer.getUserByEmail("danielmm@gmail.com")));
 
 		// This email doesnt exist in the list, so the method returns null;
 		List<User> testUsersWithEmail = new ArrayList<>();
 
-		assertEquals(null, userRep.getUserByEmail("doesntExist"));
+		assertEquals(null, userContainer.getUserByEmail("doesntExist"));
 
 	}
 
@@ -184,9 +194,9 @@ public class UserContainerTest {
 	@Test
 	public void testsearchUsersByProfile() {
 
-		userRep.addUserToUserRepository(user1);
-		userRep.addUserToUserRepository(user2);
-		userRep.addUserToUserRepository(user4);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user4);
 
 		user2.setUserProfile(Profile.DIRECTOR);
 
@@ -197,8 +207,8 @@ public class UserContainerTest {
 		List<User> testUsersWithProfileDirector = new ArrayList<>();
 		testUsersWithProfileDirector.add(user2);
 
-		assertEquals(testUsersWithProfileVisitor, userRep.searchUsersByProfile(Profile.UNASSIGNED));
-		assertEquals(testUsersWithProfileDirector, userRep.searchUsersByProfile(Profile.DIRECTOR));
+		assertEquals(testUsersWithProfileVisitor, userContainer.searchUsersByProfile(Profile.UNASSIGNED));
+		assertEquals(testUsersWithProfileDirector, userContainer.searchUsersByProfile(Profile.DIRECTOR));
 	}
 
 	/**
@@ -208,8 +218,8 @@ public class UserContainerTest {
 	@Test
 	public void testUserEmailValid() {
 
-		assertEquals(userRep.isEmailAddressValid(user1.getEmail()), true);
-		assertEquals(userRep.isEmailAddressValid(user5.getEmail()), false);
+		assertEquals(userContainer.isEmailAddressValid(user1.getEmail()), true);
+		assertEquals(userContainer.isEmailAddressValid(user5.getEmail()), false);
 	}
 
 	/**
@@ -219,10 +229,10 @@ public class UserContainerTest {
 	@Test
 	public void testGetAllActiveCollaborators() {
 
-		userRep.addUserToUserRepository(user1);
-		userRep.addUserToUserRepository(user2);
-		userRep.addUserToUserRepository(user4);
-		userRep.addUserToUserRepository(user5);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user4);
+		userContainer.addUserToUserRepository(user5);
 
 		// given four users, sets the first three users as collaborator, and the fourth
 		// as director
@@ -234,14 +244,48 @@ public class UserContainerTest {
 		// when three of the users are active collaborators, asserts the total list
 		// contains 4 users
 		// and that the active Collaborators list has 3 users
-		assertEquals(userRep.getAllUsersFromUserContainer().size(), 4);
-		assertEquals(userRep.getAllActiveCollaboratorsFromRepository().size(), 3);
+		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 4);
+		assertEquals(userContainer.getAllActiveCollaboratorsFromRepository().size(), 3);
 
 		// then, sets the first user as inactive, asserts its state was change
 		// and finally, confirms the active collaborators list contains 2 users
 		user1.changeUserState();
 		assertFalse(user1.isSystemUserStateActive());
-		assertEquals(userRep.getAllActiveCollaboratorsFromRepository().size(), 2);
+		assertEquals(userContainer.getAllActiveCollaboratorsFromRepository().size(), 2);
 	}
 
+	@Test
+	public void testAddUserToUserRepositoryX(){
+        when(userRepositoryMock.save(any(User.class))).thenReturn(user1);
+        UserContainer victim = new UserContainer(userRepositoryMock);
+
+        victim.addUserToUserRepositoryX(user1);
+
+        verify(userRepositoryMock, times(1)).save(user1);
+	}
+
+	@Test
+    public void testCreateUserWithDTO(){
+        when(userRepositoryMock.save(any(User.class))).thenReturn(user1);
+        UserContainer victim = new UserContainer(userRepositoryMock);
+
+        UserDTO userDto = new UserDTO(user1);
+        victim.createUserWithDTO(userDto);
+        verify(userRepositoryMock, times(1)).save(user1);
+    }
+
+    @Test
+    public void testUpdateUserContainer(){
+
+	    List<User> expectedUserList = new ArrayList<>();
+        expectedUserList.add(user1);
+        expectedUserList.add(user2);
+
+        when(userRepositoryMock.findAll()).thenReturn(expectedUserList);
+        UserContainer victim = new UserContainer(userRepositoryMock);
+
+        victim.updateUserContainer();
+
+        assertEquals(expectedUserList,victim.getAllUsersFromUserContainer());
+    }
 }
