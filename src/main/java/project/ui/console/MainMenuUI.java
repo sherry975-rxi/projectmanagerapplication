@@ -15,17 +15,28 @@ import java.util.Scanner;
 
 public class MainMenuUI {
 
-	private static User userAdmin;
-	private static User userDirector;
-	private static User userJSilva;
+	protected static User userAdmin;
+	protected static User userDirector;
+	protected static User userJSilva;
 
 
 
 	public static void mainMenu() {
-
+		//Updates de DataBase
         UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();
+
+
 		userJSilva = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(2);
+		userDirector = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(1);
+		userAdmin = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(0);
+
+		printImage();
+		displayOptions();
+	}
+
+	public static void displayOptions() {
+
 		printImage();
 
 		Scanner input = new Scanner(System.in);
@@ -40,7 +51,7 @@ public class MainMenuUI {
 			System.out.println("[3] Administrator");
 			System.out.println("[4] Director");
 			System.out.println("[5] Collaborator");
-            System.out.println("[E] EXIT");
+			System.out.println("[E] EXIT");
 			System.out.println("______________________________________________");
 			System.out.println();
 			System.out.println("Please select an option:");
@@ -49,43 +60,44 @@ public class MainMenuUI {
 			String choice = input.nextLine().toUpperCase();
 			System.out.println();
 			switch (choice) {
-			case "1":
-				US101UserRegisterUI userRegister = new US101UserRegisterUI();
-				userRegister.userRegister();
-				break;
-			case "2":
-				US208LoginUI doLogin = new US208LoginUI();
-				doLogin.doLogin();
-				break;
-			case "3":
-				AdminMenuUI adminMenu = new AdminMenuUI(userAdmin);
-				adminMenu.adminMenu();
-				break;
+				case "1":
+					US101UserRegisterUI userRegister = new US101UserRegisterUI();
+					userRegister.userRegister();
+					break;
+				case "2":
+					US208LoginUI doLogin = new US208LoginUI();
+					doLogin.doLogin();
+					break;
+				case "3":
+					AdminMenuUI adminMenu = new AdminMenuUI(userAdmin);
+					adminMenu.adminMenu();
+					break;
 
-			case "4":
-				userDirector.setUserProfile(Profile.DIRECTOR);
-				DirectorMenuUI directorMenu = new DirectorMenuUI(userDirector);
-				directorMenu.directorMenu();
-				break;
+				case "4":
+					userDirector.setUserProfile(Profile.DIRECTOR);
+					DirectorMenuUI directorMenu = new DirectorMenuUI(userDirector);
+					directorMenu.directorMenu();
+					break;
 
 
-			case "5":
-				//userJSilva.setUserProfile(Profile.COLLABORATOR);
-				CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(userJSilva);
-				collaboratorMenu.displayOptions();
+				case "5":
+					//userJSilva.setUserProfile(Profile.COLLABORATOR);
+					CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(userJSilva);
+					collaboratorMenu.displayOptions();
 
-				break;
+					break;
 
-            case "E":
-                condition=false;
-                System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-                break;
+				case "E":
+					condition=false;
+					System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
+					break;
 
-			default:
-			    System.out.println("Choose a valid option:");
-			    break;
+				default:
+					System.out.println("Choose a valid option:");
+					break;
 			}
 		}
+
 	}
 
 	public static void printImage() {
