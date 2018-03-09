@@ -252,4 +252,28 @@ public class US347CancelOnGoingTaskControllerTest {
 		assertEquals("Cancelled", task1.viewTaskStateName());
 	}
 
+
+	/**
+	 * This test verifies if task in state OnGoing and then marked with a finish date
+	 * can not be changed to Cancelled using
+	 * the controller.
+	 */
+	@Test
+	public void testNotCancelOnGoingTask() {
+
+		// create controller
+		US347CancelOnGoingTaskController uS347NotCancelOnGoingTaskController = new US347CancelOnGoingTaskController(task1.getTaskID(), project1);
+
+
+		// Sets a finish date for the task1
+		task1.setFinishDate();
+
+		// use of control to set task1 to state cancelled
+		uS347NotCancelOnGoingTaskController.cancelOnGoingTask();
+
+		// asserts that task1 has state cancelled
+		assertEquals("OnGoing", task1.viewTaskStateName());
+	}
+
+
 }

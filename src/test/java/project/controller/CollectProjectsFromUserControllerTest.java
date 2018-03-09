@@ -142,11 +142,14 @@ public class CollectProjectsFromUserControllerTest {
 		// create controller
 		CollectProjectsFromUserController controller3 = new CollectProjectsFromUserController(this.userAdmin);
 
-		// create list with cancelled task to compare
+		// create an expected list with projects of userAdmin
 		List<String> projectsToString = new ArrayList<String>();
 
 		projectsToString.add("[1] name3 - PM ");
 		projectsToString.add("[2] name1 - PM ");
+		//checks the similarity of expected list and the real list of userAdmin's projects
+		assertEquals(projectsToString, controller3.getProjectsFromUserAndProjectManager());
+
 
 		CollectProjectsFromUserController controller4 = new CollectProjectsFromUserController(this.user1);
 
@@ -156,6 +159,8 @@ public class CollectProjectsFromUserControllerTest {
 		projectsToString2.add("[1] name3");
 		projectsToString2.add("[2] name1");
 		assertEquals(projectsToString2, controller4.getProjectsFromUserAndProjectManager());
+
+
 
 	}
 }
