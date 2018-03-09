@@ -10,7 +10,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.FetchType.LAZY;
 
 /**
  * Class that allows building and accessing Task attributes.
@@ -48,7 +47,7 @@ public class Task {
 	private Calendar taskDeadline;
 	private Integer taskBudget;
 
-	@ManyToMany(cascade = ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Task> taskDependency;
 
 	private Integer startDateInterval;

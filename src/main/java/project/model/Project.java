@@ -1,6 +1,7 @@
 package project.model;
 
 //
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,7 +9,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.FetchType.LAZY;
 
 /**
  * Class to build Projects.
@@ -45,7 +45,7 @@ public class Project implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-    @OneToMany (fetch = LAZY, cascade = ALL, mappedBy = "project")
+    @OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "project")
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	public static final int PLANNING = 0; // planeado

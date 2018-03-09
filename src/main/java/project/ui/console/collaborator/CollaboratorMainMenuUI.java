@@ -1,6 +1,5 @@
 package project.ui.console.collaborator;
 
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 

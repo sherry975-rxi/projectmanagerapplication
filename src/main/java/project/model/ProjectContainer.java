@@ -1,7 +1,6 @@
 package project.model;
 
 import project.Repository.ProjectsRepository;
-import project.Repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
