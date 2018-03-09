@@ -64,10 +64,6 @@ public class ProjectCollaborator implements Serializable {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
 	public int getCostPerEffort() {
 		return costPerEffort;
 	}
@@ -83,7 +79,7 @@ public class ProjectCollaborator implements Serializable {
 	 *            determines whether the Project Collaborator is still working on
 	 *            the project (true by default)
 	 */
-	public void setState(boolean status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
