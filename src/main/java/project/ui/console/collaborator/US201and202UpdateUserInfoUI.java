@@ -63,6 +63,7 @@ public class US201and202UpdateUserInfoUI {
 			String name = input.nextLine();
 			System.out.println("New Name:" + name);
 			confirmInfoToUpdateName(input, name, updateSuccessful);
+
 			break;
 		case "2":
 			// Updates email
@@ -240,6 +241,7 @@ public class US201and202UpdateUserInfoUI {
 		if (confirmInfoYOrN(input)) {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			updater.updateUserPhone(user, phone);
+			updater.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -257,6 +259,7 @@ public class US201and202UpdateUserInfoUI {
 		if (confirmInfoYOrN(input)) {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			updater.updateUserName(user, name);
+			updater.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -276,6 +279,7 @@ public class US201and202UpdateUserInfoUI {
 		if (confirmInfoYOrN(input)) {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			updater.updateUserStreet(user, currentStreet, newStreet);
+			updater.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -295,6 +299,7 @@ public class US201and202UpdateUserInfoUI {
 		if (confirmInfoYOrN(input)) {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			updater.updateUserZipCode(user, currentStreet, newZipCode);
+			updater.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -313,6 +318,7 @@ public class US201and202UpdateUserInfoUI {
 		if (confirmInfoYOrN(input)) {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			updater.updateUserCity(user, currentStreet, newCity);
+			updater.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -332,6 +338,7 @@ public class US201and202UpdateUserInfoUI {
 		if (confirmInfoYOrN(input)) {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			updater.updateUserDistrict(user, currentStreet, newDistrict);
+			updater.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -351,6 +358,7 @@ public class US201and202UpdateUserInfoUI {
 		if (confirmInfoYOrN(input)) {
 			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			updater.updateUserCountry(user, currentStreet, newCountry);
+			updater.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
