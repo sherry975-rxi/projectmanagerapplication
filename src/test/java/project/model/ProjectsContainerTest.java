@@ -3,16 +3,23 @@ package project.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import project.Repository.ProjectsRepository;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 ;
 
-public class ProjectsRepositoryTest {
+public class ProjectsContainerTest {
+
+	@Mock
+	private ProjectsRepository projectRepositoryMock;
 
 	ProjectContainer ProjectContainer;
 	User user1;
@@ -62,6 +69,7 @@ public class ProjectsRepositoryTest {
 
 	@Before
 	public void setUp() {
+		initMocks(this);
 
 		ProjectContainer = new ProjectContainer();
 		user1 = new User("name", "email@gmail.com", "idNumber", "function", "123456789");
@@ -1010,12 +1018,17 @@ public class ProjectsRepositoryTest {
 
 	}
 
-	/*
-	 * Tests the getOnGoingUserTasks
-	 */
 	@Test
-	public void getOnGoingUserReportedTasks() {
+	public void testUpdateProjectContainer(){
+		List<Project> expectedProjectList = new ArrayList<>();
+		expectedProjectList.add(project1);
+		expectedProjectList.add(project2);
 
+		when(projectRepositoryMock.findAll()).thenReturn(expectedProjectList);
+
+		ProjectContainer victim = new ProjectContainer(projectRepositoryMock);
+		victim.updateProjectContainer();
+
+		assertEquals(expectedProjectList,victim.getAllProjectsfromProjectsContainer());
 	}
-
 }

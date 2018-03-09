@@ -265,6 +265,8 @@ public class OnGoingTaskTest {
 		task1.setStartDate(taskStartDate);
 		task1.setTaskState(OnGoingTask1);
 
+
+		assertFalse(OnGoingTask1.changeToCancelled());
 		/*
 		 * Adds two ProjectCollaborators to the task,
 		 * 
