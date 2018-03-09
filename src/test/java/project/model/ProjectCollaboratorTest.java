@@ -4,14 +4,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Optional;
-
 import static org.junit.Assert.*;
 
 public class ProjectCollaboratorTest {
 
+
     User tester, testerTwo;
-    ProjectCollaborator testMoar, testEvenMoar, testCollaboratorNull, testCollaboratorNull2;
+    ProjectCollaborator testMoar, testEvenMoar, testCollaboratorNull, testCollaboratorNull2, testCollaboratorEmpty;
+    Project project;
 
     @Before
     public void SetUp() {
@@ -22,7 +22,8 @@ public class ProjectCollaboratorTest {
         testEvenMoar = new ProjectCollaborator(testerTwo, 100000);
         testCollaboratorNull = new ProjectCollaborator(null, 100000);
         testCollaboratorNull2 = new ProjectCollaborator(null, 100000);
-
+        testCollaboratorEmpty = new ProjectCollaborator();
+        project = new Project();
     }
 
     @After
@@ -46,9 +47,9 @@ public class ProjectCollaboratorTest {
     public void testProjectCollaborator() {
 
         assertTrue(testMoar.isProjectCollaboratorActive());
-        testMoar.setState(false);
+        testMoar.setStatus(false);
         assertFalse(testMoar.isProjectCollaboratorActive());
-        testMoar.setState(true);
+        testMoar.setStatus(true);
         assertTrue(testMoar.isProjectCollaboratorActive());
 
         assertEquals(testMoar.getCollaboratorCost(), 100000);
@@ -123,7 +124,7 @@ public class ProjectCollaboratorTest {
     @Test
     public void testSetStatus() {
 
-        testMoar.setState(false);
+        testMoar.setStatus(false);
 
         assertFalse(testMoar.isStatus());
     }
@@ -139,6 +140,13 @@ public class ProjectCollaboratorTest {
         testMoar.setCostPerEffort(10);
 
         assertEquals(10, testMoar.getCostPerEffort());
+    }
+
+    @Test
+    public void testGetProject() {
+
+        testMoar.setProject(project);
+        assertEquals(project, testMoar.getProject());
     }
 
 }
