@@ -26,8 +26,8 @@ public class CollaboratorMainMenuUI {
 	}
 
 	public void displayOptions() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		//UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		//infoUpdater.updateDBtoContainer();
 		Scanner scannerInput = new Scanner(System.in);
 
 		String myname = user.getName();
