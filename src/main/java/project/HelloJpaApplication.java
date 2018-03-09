@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import project.controller.UpdateDbToContainersController;
 import project.model.*;
-import project.model.taskstateinterface.Cancelled;
+import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Planned;
 import project.ui.console.MainMenuUI;
 
 import java.util.Calendar;
@@ -114,9 +114,11 @@ public class HelloJpaApplication implements CommandLineRunner {
 
 
         projectGP.addUserToProjectTeam(userJSilva, 2);
-        ProjectCollaborator projcollabJSilva = projectGP.findProjectCollaborator(userJSilva);
+        ProjectCollaborator projcollabJSilvaGP = projectGP.findProjectCollaborator(userJSilva);
         projectApostas.addUserToProjectTeam(userATirapicos, 3);
         ProjectCollaborator projcollabATirapicos = projectApostas.findProjectCollaborator(userATirapicos);
+        projectApostas.addUserToProjectTeam(userJSilva, 3);
+        ProjectCollaborator projcollabJSilvaAp = projectApostas.findProjectCollaborator(userJSilva);
         projectHomeBanking.addUserToProjectTeam(projectManager, 4);
         ProjectCollaborator projcollabManager = projectHomeBanking.findProjectCollaborator(projectManager);
 
@@ -124,19 +126,57 @@ public class HelloJpaApplication implements CommandLineRunner {
 
         // Instantiates a task
 
-        projectApostas.getTaskRepository().createTask("Code tests");
-
         // create task deadline
         Calendar taskDeadlineDate = Calendar.getInstance();
         taskDeadlineDate.set(Calendar.YEAR, 2017);
         taskDeadlineDate.set(Calendar.MONTH, Calendar.FEBRUARY);
 
-        Task taskGP1 = projectApostas.getTaskRepository().createTask("Desenvolver código para responder à US399");
-        projectApostas.getTaskRepository().addProjectTask(taskGP1);
-        OnGoing onGoingState = new OnGoing(taskGP1);
-        taskGP1.setTaskState(onGoingState);
-        taskGP1.setStartDate(startDate);
-        taskGP1.setTaskDeadline(taskDeadlineDate);
+        Task taskAp1 = projectApostas.getTaskRepository().createTask("Desenvolver código para responder à US399");
+        projectApostas.getTaskRepository().addProjectTask(taskAp1);
+        Planned onGoingStateAp1 = new Planned(taskAp1);
+        taskAp1.setTaskState(onGoingStateAp1);
+        taskAp1.setStartDate(startDate);
+        taskAp1.setTaskDeadline(taskDeadlineDate);
+
+        Task taskAp2 = projectApostas.getTaskRepository().createTask("Implementar sistema de segurança");
+        projectApostas.getTaskRepository().addProjectTask(taskAp2);
+        Created onGoingStateAp2 = new Created(taskAp2);
+        taskAp2.setTaskState(onGoingStateAp2);
+        taskAp2.setStartDate(startDate);
+        taskAp2.setTaskDeadline(taskDeadlineDate);
+
+        Task taskGP = projectGP.getTaskRepository().createTask("Adicionar colaboradores às tarefas planeadas.");
+        projectGP.getTaskRepository().addProjectTask(taskGP);
+        OnGoing onGoingStateGP = new OnGoing(taskGP);
+        taskGP.setTaskState(onGoingStateGP);
+        taskGP.setStartDate(startDate);
+        taskGP.setTaskDeadline(taskDeadlineDate);
+
+        Task taskHB = projectHomeBanking.getTaskRepository().createTask("Permitir ligação a sites de noticias");
+        projectHomeBanking.getTaskRepository().addProjectTask(taskHB);
+        OnGoing onGoingStateHB = new OnGoing(taskHB);
+        taskHB.setTaskState(onGoingStateHB);
+        taskHB.setStartDate(startDate);
+        taskHB.setTaskDeadline(taskDeadlineDate);
+
+        taskAp1.addTaskCollaboratorToTask(taskAp1.createTaskCollaborator(projcollabJSilvaAp));
+        taskGP.addTaskCollaboratorToTask(taskGP.createTaskCollaborator(projcollabJSilvaGP));
+        taskHB.addTaskCollaboratorToTask(taskHB.createTaskCollaborator(projcollabManager));
+
+        projectHomeBanking.createTaskRemovalRequest(projcollabManager, taskHB);
+        projectApostas.createTaskAssignementRequest(projcollabATirapicos, taskAp1);
+
+        TaskCollaborator taskCollabJSilvaAp = taskAp1.getTaskCollaboratorByEmail("jsilva@gmail.com");
+        taskAp1.createReport(taskCollabJSilvaAp, taskDeadlineDate, 20.5);
+
+        boolean meh = taskAp2.createTaskDependence(taskAp1, 0);
+        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        System.out.println(meh);
+        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
 
 
 //        taskGP1.createReport(tWorkerJSilva, Calendar.getInstance(), 10);
@@ -169,7 +209,7 @@ public class HelloJpaApplication implements CommandLineRunner {
 //        taskGP3.getTaskState().changeToAssigned();
 //        // pass from "Assigned" to "Ready"
 //        taskGP3.getTaskState().changeToReady();
-//        // necessary to pass from "Ready" to "OnGoing"
+//        // necessary to pass from "Ready" to "OnGoing"5
 //        taskGP3.setStartDate(startDate);
 //        taskGP3.getTaskState().changeToOnGoing();
 //        // pass from "OnGoing" to "Finished"

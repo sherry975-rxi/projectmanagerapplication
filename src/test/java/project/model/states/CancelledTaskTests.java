@@ -4,7 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import project.model.*;
-import project.model.taskstateinterface.*;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.TaskStateInterface;
 
 import java.util.Calendar;
 
