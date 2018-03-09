@@ -131,6 +131,11 @@ public class ReportTest {
 		// Compares the two values
 		assertEquals(report.getReportedTime(), timeToCompare, 0.0);
 
+
+		report.updateReportedTime(20);
+		assertEquals(report.getReportedTime(), 20, 0);
+		;
+
 	}
 
 	/**

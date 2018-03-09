@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
 import project.Repository.TaskRepository;
 import project.Repository.UserRepository;
@@ -21,9 +20,6 @@ public class DemoComponent {
     private UserRepository userRepository;
     @Autowired
     private ProjectsRepository projRepository;
-
-    @Autowired
-    private ProjCollabRepository projCollabRepository;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -98,7 +94,6 @@ public class DemoComponent {
         userRepository.save(zeDasCouves);
         projRepository.save(myProjectTest);
         projRepository.save(myProjectExperiment);
-        projCollabRepository.save(manelinhoCollab);
         taskRepository.save(tester);
         taskRepository.save(dependentTest);
 

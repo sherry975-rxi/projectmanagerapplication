@@ -34,7 +34,6 @@ public class HelloJpaApplication implements CommandLineRunner {
         //demo.demoRun();
 
 
-
         // Instantiates the company
         Company myCompany = Company.getTheInstance();
 
