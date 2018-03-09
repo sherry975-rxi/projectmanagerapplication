@@ -56,23 +56,20 @@ public class TaskCollaborator implements Serializable {
 		this.projCollaborator = projCollaborator;
 	}
 
-	public TaskCollaborator setStartDate(Calendar startDate) {
+	public void setStartDate(Calendar startDate) {
 		this.startDate = startDate;
-		return this;
 	}
 
-	public TaskCollaborator setFinishDate(Calendar finishDate) {
+	public void setFinishDate(Calendar finishDate) {
 		this.finishDate = finishDate;
-		return this;
 	}
 
 	public boolean isStatus() {
 		return status;
 	}
 
-	public TaskCollaborator setStatus(boolean status) {
+	public void setStatus(boolean status) {
 		this.status = status;
-		return this;
 	}
 
 
