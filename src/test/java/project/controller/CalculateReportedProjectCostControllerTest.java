@@ -19,33 +19,31 @@ public class CalculateReportedProjectCostControllerTest {
 	 * This class tests the CalculateReportedProjectCostController class
 	 *
 	 */
-	Company blip;
-	User userDaniel;
-	User userJonny;
-	User userMike;
-	User userAna;
-	User projectManager;
+	private ProjectContainer projContainer = new ProjectContainer();
+	UserContainer userContainer = new UserContainer();
+	private User userDaniel;
+	private User userJonny;
+	private User userMike;
+	private User userAna;
 	Project project;
-	ProjectCollaborator projectUserDaniel;
-	ProjectCollaborator projectUserJonny;
-	ProjectCollaborator projectUserMike;
-	ProjectCollaborator projectUserAna;
+	private ProjectCollaborator projectUserDaniel;
+	private ProjectCollaborator projectUserJonny;
+	private ProjectCollaborator projectUserMike;
+	private ProjectCollaborator projectUserAna;
 	ProjectContainer projectContainer;
-	TaskContainer taskContainer;
-	Task testTask;
-	Task testTask2;
-	TaskCollaborator taskWorkerDaniel;
-	TaskCollaborator taskWorkerJonny;
-	TaskCollaborator taskWorkerMike;
-	TaskCollaborator taskWorkerAna;
-	CalculateReportedProjectCostController controllerCost;
+	private TaskContainer taskContainer;
+	private Task testTask;
+	private Task testTask2;
+	private TaskCollaborator taskWorkerDaniel;
+	private TaskCollaborator taskWorkerJonny;
+	private TaskCollaborator taskWorkerMike;
+	private TaskCollaborator taskWorkerAna;
+	private CalculateReportedProjectCostController controllerCost;
 
-	double totalCost;
+	private double totalCost;
 
 	@Before
 	public void setUp() {
-
-		blip = Company.getTheInstance();
 
 		// create user
 		userDaniel = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
@@ -59,14 +57,14 @@ public class CalculateReportedProjectCostControllerTest {
 		userAna = new User("Ana", "ana@gmail.com", "004", "Not Admin", "920000000");
 
 		// create projectManager
-		projectManager = new User("Manager boi", "manger@gmail.com", "005", "Kinda Admin", "920000000");
+		User projectManager = new User("Manager boi", "manger@gmail.com", "005", "Kinda Admin", "920000000");
 
 		// adds all users to user list
-		blip.getUsersContainer().addUserToUserRepository(userDaniel);
-		blip.getUsersContainer().addUserToUserRepository(userJonny);
-		blip.getUsersContainer().addUserToUserRepository(userMike);
-		blip.getUsersContainer().addUserToUserRepository(userAna);
-		blip.getUsersContainer().addUserToUserRepository(projectManager);
+		userContainer.addUserToUserRepository(userDaniel);
+		userContainer.addUserToUserRepository(userJonny);
+		userContainer.addUserToUserRepository(userMike);
+		userContainer.addUserToUserRepository(userAna);
+		userContainer.addUserToUserRepository(projectManager);
 
 		// set user as collaborator
 		userDaniel.setUserProfile(Profile.COLLABORATOR);
@@ -76,7 +74,7 @@ public class CalculateReportedProjectCostControllerTest {
 
 		// create project and add it to project list
 		project = new Project(0, "Make things", "Test: CalculateReportedProjectCost", projectManager);
-		blip.getProjectsContainer().addProjectToProjectContainer(project);
+		projContainer.addProjectToProjectContainer(project);
 
 		// creates 4 Project Collaborators and adds them to the project
 		projectUserDaniel = project.createProjectCollaborator(userDaniel, 10);
@@ -127,8 +125,8 @@ public class CalculateReportedProjectCostControllerTest {
 	@After
 	public void tearDown() {
 
-		Company.clear();
-		blip = null;
+		projContainer = null;
+		userContainer = null;
 		userDaniel = null;
 		userJonny = null;
 		userMike = null;
