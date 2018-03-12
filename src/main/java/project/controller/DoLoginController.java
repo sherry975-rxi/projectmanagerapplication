@@ -1,8 +1,10 @@
 package project.controller;
 
 import project.model.User;
+import project.model.UserContainer;
 
 public class DoLoginController {
+
 
 	/**
 	 * This method does the login of the user
@@ -13,12 +15,14 @@ public class DoLoginController {
 	 *            Sets private variable password to inserted password by user
 	 */
 	public boolean doLogin(String email, String password1) {
+	    UserContainer userContainer;
+	    userContainer = new UserContainer();
 		String password;
 		User username;
-		username = Company.getTheInstance().getUsersContainer().getUserByEmail(email);
+		username = userContainer.getUserByEmail(email);
 		password = password1;
 		boolean loginSuccess = false;
-		if (Company.getTheInstance().getUsersContainer().isUserinUserRepository(username)
+		if (userContainer.isUserinUserRepository(username)
 				&& username.checkLogin(password)) {
 			loginSuccess = true;
 		}
