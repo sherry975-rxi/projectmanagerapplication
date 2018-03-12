@@ -3,32 +3,30 @@
  */
 package project.model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import project.Repository.UserRepository;
-import project.dto.UserDTO;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests all methods in UserContainerClass
+ * 
  * @author Group3
  *
  */
 public class UserContainerTest {
 
-    @Mock
-    private UserRepository userRepositoryMock;
+	// @Mock
+	// private UserRepository userRepositoryMock;
 
-    User user1;
+	User user1;
 	User user2;
 	User user3;
 	User user4;
@@ -37,13 +35,13 @@ public class UserContainerTest {
 
 	@Before
 	public void setUp() {
-        initMocks(this);
+		initMocks(this);
 
 		// instantiate users
-		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua", "2401-00",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
+		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
-		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00", "Test",
-				"Testo", "Testistan");
 		user4 = userContainer.createUser("DanielMM", "danielmm@gmail.com", "003", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
@@ -99,8 +97,8 @@ public class UserContainerTest {
 		Address newAddress = user3.createAddress("Rua", "2401-00", "Test", "Testo", "Testistan");
 		user3.addAddress(newAddress);
 
-		assertEquals(user3, userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
-				"2401-00", "Test", "Testo", "Testistan"));
+		assertEquals(user3, userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000",
+				"Rua", "2401-00", "Test", "Testo", "Testistan"));
 	}
 
 	/**
@@ -132,9 +130,10 @@ public class UserContainerTest {
 		userContainer.addUserToUserRepository(user1);
 
 		assertTrue(user1.equals(userContainer.getAllUsersFromUserContainer().get(0)));
-		assertEquals(1, userContainer.getAllUsersFromUserContainer().size()); // if it would add even if the user was already on
-																		// the list, the size of the repository would be
-																		// 2 instead of 1
+		assertEquals(1, userContainer.getAllUsersFromUserContainer().size()); // if it would add even if the user was
+																				// already on
+		// the list, the size of the repository would be
+		// 2 instead of 1
 	}
 
 	/**
@@ -255,38 +254,34 @@ public class UserContainerTest {
 		assertEquals(userContainer.getAllActiveCollaboratorsFromRepository().size(), 2);
 	}
 
-	@Test
-	public void testAddUserToUserRepositoryX(){
-        when(userRepositoryMock.save(any(User.class))).thenReturn(user1);
-        UserContainer victim = new UserContainer(userRepositoryMock);
+	/**
+	 * @Test public void testAddUserToUserRepositoryX(){
+	 *       when(userRepositoryMock.save(any(User.class))).thenReturn(user1);
+	 *       UserContainer victim = new UserContainer(userRepositoryMock);
+	 * 
+	 *       victim.addUserToUserRepositoryX(user1);
+	 * 
+	 *       verify(userRepositoryMock, times(1)).save(user1); }
+	 * 
+	 * @Test public void testCreateUserWithDTO(){
+	 *       when(userRepositoryMock.save(any(User.class))).thenReturn(user1);
+	 *       UserContainer victim = new UserContainer(userRepositoryMock);
+	 * 
+	 *       UserDTO userDto = new UserDTO(user1);
+	 *       victim.createUserWithDTO(userDto); verify(userRepositoryMock,
+	 *       times(1)).save(user1); }
+	 * 
+	 * @Test public void testUpdateUserContainer(){
+	 * 
+	 *       List<User> expectedUserList = new ArrayList<>();
+	 *       expectedUserList.add(user1); expectedUserList.add(user2);
+	 * 
+	 *       when(userRepositoryMock.findAll()).thenReturn(expectedUserList);
+	 *       UserContainer victim = new UserContainer(userRepositoryMock);
+	 * 
+	 *       victim.updateUserContainer();
+	 * 
+	 *       assertEquals(expectedUserList,victim.getAllUsersFromUserContainer()); }
+	 */
 
-        victim.addUserToUserRepositoryX(user1);
-
-        verify(userRepositoryMock, times(1)).save(user1);
-	}
-
-	@Test
-    public void testCreateUserWithDTO(){
-        when(userRepositoryMock.save(any(User.class))).thenReturn(user1);
-        UserContainer victim = new UserContainer(userRepositoryMock);
-
-        UserDTO userDto = new UserDTO(user1);
-        victim.createUserWithDTO(userDto);
-        verify(userRepositoryMock, times(1)).save(user1);
-    }
-
-    @Test
-    public void testUpdateUserContainer(){
-
-	    List<User> expectedUserList = new ArrayList<>();
-        expectedUserList.add(user1);
-        expectedUserList.add(user2);
-
-        when(userRepositoryMock.findAll()).thenReturn(expectedUserList);
-        UserContainer victim = new UserContainer(userRepositoryMock);
-
-        victim.updateUserContainer();
-
-        assertEquals(expectedUserList,victim.getAllUsersFromUserContainer());
-    }
 }
