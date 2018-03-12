@@ -16,13 +16,17 @@ public class PrintProjectInfoController {
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	Integer projID;
+	
 
 	public PrintProjectInfoController(Project project) {
 		this.project = project;
+		projContainer.updateProjectContainer();
+
 	}
 
 	public PrintProjectInfoController(Integer projID) {
 		this.projID = projID;
+		projContainer.updateProjectContainer();
 		project = projContainer.getProjById(this.projID);
 	}
 
