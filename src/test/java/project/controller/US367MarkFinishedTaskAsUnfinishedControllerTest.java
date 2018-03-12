@@ -124,12 +124,12 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		task6 = project3.getTaskRepository().createTask("create test for method set name in class user");
 
 		// add tasks to task repository
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
-		project2.getTaskRepository().addProjectTask(task3);
-		project2.getTaskRepository().addProjectTask(task4);
-		project3.getTaskRepository().addProjectTask(task5);
-		project3.getTaskRepository().addProjectTask(task6);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
+		project2.getTaskRepository().addTaskToProject(task3);
+		project2.getTaskRepository().addTaskToProject(task4);
+		project3.getTaskRepository().addTaskToProject(task5);
+		project3.getTaskRepository().addTaskToProject(task6);
 
 		// create a estimated Task Start Date
 		startDateTest = Calendar.getInstance();

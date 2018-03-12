@@ -29,7 +29,7 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	 */
 	public List<Task> getCancelledTasksFromAProject() {
 
-		return project.getTaskRepository().getCancelledTasks();
+		return project.getTaskRepository().getCancelledTasksFromProject();
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	 */
 	public List<String> getCancelledTaskListId(Project proj) {
 
-		List<Task> taskListCancelled = proj.getTaskRepository().getCancelledTasks();
+		List<Task> taskListCancelled = proj.getTaskRepository().getCancelledTasksFromProject();
 		List<String> taskCancelledListToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListCancelled.size(); i++) {

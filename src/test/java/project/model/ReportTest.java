@@ -36,7 +36,7 @@ public class ReportTest {
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
 		t1 = p1.getTaskRepository().createTask("description", 0, estimatedStartDate, taskDeadline, 0);
-		p1.getTaskRepository().addProjectTask(t1);
+		p1.getTaskRepository().addTaskToProject(t1);
 		timeToCompare = 0;
 		dateOfReport = Calendar.getInstance();
 		task1 = new Task();

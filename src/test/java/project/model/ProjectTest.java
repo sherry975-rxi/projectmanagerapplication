@@ -59,11 +59,11 @@ public class ProjectTest {
 		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
 
 		task1 = p1.getTaskRepository().createTask("description", 0, estimatedStartDate, taskDeadline, 0);
-		p1.getTaskRepository().addProjectTask(task1);
+		p1.getTaskRepository().addTaskToProject(task1);
 		task1.addProjectCollaboratorToTask(projectCollaborator2);
 
 		task2 = p1.getTaskRepository().createTask("description2", 0, null, null, 0);
-		p1.getTaskRepository().addProjectTask(task2);
+		p1.getTaskRepository().addTaskToProject(task2);
 
 		// task2 state to Finished
 		// necessary to pass from "Created" to "Planned"
@@ -172,7 +172,7 @@ public class ProjectTest {
 		assertEquals(1, p1.getIdCode());
 		assertEquals(0, p1.getProjectStatus());
 		assertTrue(p1.isProjectManager(user1));
-		assertEquals(tasksListofThisProject, p1.getTaskRepository().getProjectTaskRepository());
+		assertEquals(tasksListofThisProject, p1.getTaskRepository().getAllTasksfromProject());
 		assertEquals(projectTeam, p1.getProjectTeam());
 
 		//then, asserts the project's task repository is correctly tagged with the project
@@ -200,8 +200,8 @@ public class ProjectTest {
 	 */
 	@Test
 	public void testAddTaskToProjectTaskList() {
-		p1.getTaskRepository().addProjectTask(task4);
-		assertEquals(task4, p1.getTaskRepository().getProjectTaskRepository().get(2));
+		p1.getTaskRepository().addTaskToProject(task4);
+		assertEquals(task4, p1.getTaskRepository().getAllTasksfromProject().get(2));
 	}
 
 	/**
@@ -305,7 +305,7 @@ public class ProjectTest {
 	public void testGetFinishedTasks() {
 
 		task2.addTaskCollaboratorToTask(taskWorker1);
-		assertEquals(task2, p1.getTaskRepository().getFinishedTaskListofUserInProject(projectCollaborator1).get(0));
+		assertEquals(task2, p1.getTaskRepository().getFinishedTaskListOfUserInProject(projectCollaborator1).get(0));
 	}
 
 	@Test
@@ -329,9 +329,9 @@ public class ProjectTest {
 		task1.addTaskCollaboratorToTask(taskWorker1);
 		task2.addTaskCollaboratorToTask(taskWorker1);
 		task3.addTaskCollaboratorToTask(taskWorker1);
-		p1.getTaskRepository().addProjectTask(task1);
-		p1.getTaskRepository().addProjectTask(task2);
-		p1.getTaskRepository().addProjectTask(task3);
+		p1.getTaskRepository().addTaskToProject(task1);
+		p1.getTaskRepository().addTaskToProject(task2);
+		p1.getTaskRepository().addTaskToProject(task3);
 		task2.markTaskAsFinished();
 		task3.markTaskAsFinished();
 		task2.getFinishDate().set(Calendar.MONTH, test.get(Calendar.MONTH) - 1);
@@ -342,30 +342,30 @@ public class ProjectTest {
 
 	@Test
 	public void testAddUserToTask() {
-		p1.getTaskRepository().addProjectTask(task1);
-		p1.getTaskRepository().addProjectTask(task2);
-		p1.getTaskRepository().addProjectTask(task3);
+		p1.getTaskRepository().addTaskToProject(task1);
+		p1.getTaskRepository().addTaskToProject(task2);
+		p1.getTaskRepository().addTaskToProject(task3);
 		task2.addTaskCollaboratorToTask(taskWorker1);
 		assertTrue(task2.isProjectCollaboratorInTaskTeam(projectCollaborator1));
 	}
 
 	@Test
 	public void testFailToAddUserToTask() {
-		p1.getTaskRepository().addProjectTask(task1);
-		p1.getTaskRepository().addProjectTask(task2);
-		p1.getTaskRepository().addProjectTask(task3);
+		p1.getTaskRepository().addTaskToProject(task1);
+		p1.getTaskRepository().addTaskToProject(task2);
+		p1.getTaskRepository().addTaskToProject(task3);
 		task2.addTaskCollaboratorToTask(taskWorker1);
 		assertFalse(task1.isProjectCollaboratorInTaskTeam(projectCollaborator1));
 	}
 
 	@Test
 	public void testProjectContainsTask() {
-		assertTrue(p1.getTaskRepository().isTaskInRTaskRepository(task2));
+		assertTrue(p1.getTaskRepository().isTaskInTaskContainer(task2));
 	}
 
 	@Test
 	public void testProjectContainsTaskFalse() {
-		assertFalse(p1.getTaskRepository().isTaskInRTaskRepository(task3));
+		assertFalse(p1.getTaskRepository().isTaskInTaskContainer(task3));
 	}
 
 	/**
@@ -436,7 +436,7 @@ public class ProjectTest {
 		// t1.getTaskCost();
 
 		// Task 4 will be added to Project 1 and associated to a new created
-		p1.getTaskRepository().addProjectTask(task4);
+		p1.getTaskRepository().addTaskToProject(task4);
 		// t4.createTaskWorker(projectCollaborator1);
 		// task4.addUserToTask(task4.createTaskWorker(projectCollaborator2));
 		task4.addProjectCollaboratorToTask(projectCollaborator2);
@@ -465,8 +465,8 @@ public class ProjectTest {
 		p1.addProjectCollaboratorToProjectTeam(projectCollaborator4);
 
 		// add task t1 and t2 to Project
-		p1.getTaskRepository().addProjectTask(task1);
-		p1.getTaskRepository().addProjectTask(task2);
+		p1.getTaskRepository().addTaskToProject(task1);
+		p1.getTaskRepository().addTaskToProject(task2);
 
 		// add taskWorkers to tasks
 		task1.addProjectCollaboratorToTask(projectCollaborator2);
