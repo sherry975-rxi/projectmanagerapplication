@@ -18,8 +18,9 @@ import static org.junit.Assert.assertTrue;
  *
  */
 public class US301CreateProjectControllerTest {
-
-	Company c1;
+	
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 	User u1;
 	US301CreateProjectController createNewProject;
 	Project newProject;
@@ -27,14 +28,17 @@ public class US301CreateProjectControllerTest {
 	@Before
 	public void setUp() {
 
-		// Company creation
-		c1 = Company.getTheInstance();
+		// creates an UserContainer
+		userContainer = new UserContainer();
+								
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
 
 		// User creation
-		u1 = c1.getUsersContainer().createUser("Leonor", "leonor@gmail.com", "001", "Empregado", "930000000",
+		u1 = userContainer.createUser("Leonor", "leonor@gmail.com", "001", "Empregado", "930000000",
 				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
 		// add users to company
-		c1.getUsersContainer().addUserToUserRepository(u1);
+		userContainer.addUserToUserRepository(u1);
 
 		// set user as Director
 		u1.setUserProfile(Profile.DIRECTOR);
@@ -42,8 +46,8 @@ public class US301CreateProjectControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
-		c1 = null;
+		userContainer = null;
+		projectContainer = null;
 		u1 = null;
 		createNewProject = null;
 		newProject = null;
@@ -63,7 +67,7 @@ public class US301CreateProjectControllerTest {
 		List<Project> emptyProjectList = new ArrayList<Project>();
 
 		// Asserts if the project list is empty
-		assertEquals(emptyProjectList, c1.getProjectsContainer().getAllProjectsfromProjectsContainer());
+		assertEquals(emptyProjectList, projectContainer.getAllProjectsfromProjectsContainer());
 
 		// Creates the controller to create a project
 		createNewProject = new US301CreateProjectController();
@@ -76,7 +80,7 @@ public class US301CreateProjectControllerTest {
 		projectList.add(newProject);
 
 		// Asserts if the project repository has the new project in it
-		assertEquals(projectList, c1.getProjectsContainer().getAllProjectsfromProjectsContainer());
+		assertEquals(projectList, projectContainer.getAllProjectsfromProjectsContainer());
 
 		// Asserts if the user u1 is the project manager
 		assertTrue(newProject.isProjectManager(u1));
