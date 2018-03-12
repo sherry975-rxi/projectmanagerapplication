@@ -9,8 +9,8 @@ public class UpdateDbToContainersController {
     ProjectContainer projectContainer;
 
     public void updateDBtoContainer(){
-        this.projectContainer = Company.getTheInstance().getProjectsContainer();
-        this.userContainer = Company.getTheInstance().getUsersContainer();
+        this.projectContainer = new ProjectContainer();
+        this.userContainer = new UserContainer();
         projectContainer.updateProjectContainer();
         userContainer.updateUserContainer();
 
