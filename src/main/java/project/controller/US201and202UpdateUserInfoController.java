@@ -2,6 +2,7 @@ package project.controller;
 
 import project.model.Address;
 import project.model.User;
+import project.model.UserContainer;
 
 import java.util.List;
 
@@ -10,20 +11,24 @@ public class US201and202UpdateUserInfoController {
 	/**
 	 * This method controls the update of user's name by calling the method setName
 	 * that set this parameter of user's data.
-	 * 
+	 *
 	 * @param user
 	 * @param name
 	 */
+
+	UserContainer userContainer;
+
 	public void updateUserName(User user, String name) {
 
 		user.setName(name);
+		this.userContainer = new UserContainer();
 
 	}
 
 	/**
 	 * This method controls the update of user's email by calling the method
 	 * setEmail that set this parameter of user's data.
-	 * 
+	 *
 	 * @param user
 	 * @param email
 	 */
@@ -33,19 +38,19 @@ public class US201and202UpdateUserInfoController {
 
 	public boolean isEmailValid(String email) {
 
-		return Company.getTheInstance().getUsersContainer().isEmailAddressValid(email);
+		return userContainer.isEmailAddressValid(email);
 
 	}
 
 	public boolean isEmailAlreadyInUse(String email) {
 
-		return Company.getTheInstance().getUsersContainer().getUserByEmail(email) != null;
+		return userContainer.getUserByEmail(email) != null;
 	}
 
 	/**
 	 * This method controls the update of user's password by calling the method
 	 * setPassword that set this parameter of user's data.
-	 * 
+	 *
 	 * @param user
 	 * @param password
 	 */
@@ -57,7 +62,7 @@ public class US201and202UpdateUserInfoController {
 	/**
 	 * This method controls the update of user's phone by calling the method
 	 * setPhone that set this parameter of user's data.
-	 * 
+	 *
 	 * @param user
 	 * @param phone
 	 */
@@ -68,7 +73,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * This method creates a new address
-	 * 
+	 *
 	 * @param newStreet
 	 * @param newZipCode
 	 * @param newCity
@@ -76,14 +81,14 @@ public class US201and202UpdateUserInfoController {
 	 * @param newCountry
 	 */
 	public Address createNewAddress(String newStreet, String newZipCode, String newCity, String newDistrict,
-			String newCountry) {
+									String newCountry) {
 		return new Address(newStreet, newZipCode, newCity, newDistrict, newCountry);
 	}
 
 	/**
 	 * This method controls the add of a new address to user's address list by
 	 * calling the method addAddress.
-	 * 
+	 *
 	 * @param user
 	 * @param address
 	 */
@@ -96,9 +101,9 @@ public class US201and202UpdateUserInfoController {
 	 * searchUserAddress (that search the specific address and return it) and then
 	 * uses the method setStreet to change the parameter street of that specific
 	 * address.
-	 * 
+	 *
 	 * @param user
-	 * @param address
+	 * @param newStreet
 	 * @param street
 	 */
 	public void updateUserStreet(User user, String street, String newStreet) {
@@ -110,9 +115,9 @@ public class US201and202UpdateUserInfoController {
 	 * searchUserAddress (that search the specific address and return it) and then
 	 * uses the method setZipCode to change the parameter zipCode of that specific
 	 * address.
-	 * 
+	 *
 	 * @param user
-	 * @param address
+	 * @param street
 	 * @param zipCode
 	 */
 	public void updateUserZipCode(User user, String street, String zipCode) {
@@ -124,9 +129,9 @@ public class US201and202UpdateUserInfoController {
 	 * searchUserAddress (that search the specific address and return it) and then
 	 * uses the method setCity to change the parameter city of that specific
 	 * address.
-	 * 
+	 *
 	 * @param user
-	 * @param address
+	 * @param street
 	 * @param city
 	 */
 	public void updateUserCity(User user, String street, String city) {
@@ -138,9 +143,9 @@ public class US201and202UpdateUserInfoController {
 	 * searchUserAddress (that search the specific address and return it) and then
 	 * uses the method setDistrict to change the parameter district of that specific
 	 * address.
-	 * 
+	 *
 	 * @param user
-	 * @param address
+	 * @param street
 	 * @param district
 	 */
 	public void updateUserDistrict(User user, String street, String district) {
@@ -152,9 +157,9 @@ public class US201and202UpdateUserInfoController {
 	 * searchUserAddress (that search the specific address and return it) and then
 	 * uses the method setCountry to change the parameter country of that specific
 	 * address.
-	 * 
+	 *
 	 * @param user
-	 * @param address
+	 * @param street
 	 * @param country
 	 */
 	public void updateUserCountry(User user, String street, String country) {
@@ -163,7 +168,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * This method returns a list of all the addresses from a user
-	 * 
+	 *
 	 * @param user
 	 */
 	public List<Address> getAllAddresses(User user) {
@@ -172,7 +177,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * Returns the name of the user.
-	 * 
+	 *
 	 * @return the name of the user
 	 */
 	public String getName(User user) {
@@ -180,9 +185,9 @@ public class US201and202UpdateUserInfoController {
 	}
 
 	/**
-	 * 
+	 *
 	 * Returns the user Email
-	 * 
+	 *
 	 * @return the user Email.
 	 */
 	public String getEmail(User user) {
@@ -191,7 +196,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * Returns the ID number of the user
-	 * 
+	 *
 	 * @return the ID number of the user.
 	 */
 	public String getIdNumber(User user) {
@@ -200,7 +205,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * Returns the function of the user
-	 * 
+	 *
 	 * @return Returns the user function.
 	 */
 	public String getFunction(User user) {
@@ -209,7 +214,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * Returns the phone number of a certain user
-	 * 
+	 *
 	 * @return the phone number of a certain user
 	 */
 	public String getPhone(User user) {
@@ -219,8 +224,9 @@ public class US201and202UpdateUserInfoController {
 	/**
 	 * this method search one specific address in user address list, if find one
 	 * match, the method return this specific address object.
-	 * 
-	 * @param findAddress
+	 *
+	 * @param user
+	 * @param street
 	 * @return address
 	 */
 	public Address searchUserAddress(User user, String street) {
@@ -232,9 +238,9 @@ public class US201and202UpdateUserInfoController {
 	}
 
 	/**
-	 * 
+	 *
 	 * Gets the street
-	 * 
+	 *
 	 * @return Street
 	 */
 	public String getStreet(Address address) {
@@ -243,7 +249,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * Gets the City
-	 * 
+	 *
 	 * @return city City
 	 */
 	public String getCity(Address address) {
@@ -252,7 +258,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * Gets the Country
-	 * 
+	 *
 	 * @return country Country
 	 */
 	public String getCountry(Address address) {
@@ -261,7 +267,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * Gets the District
-	 * 
+	 *
 	 * @return district District
 	 */
 	public String getDistrict(Address address) {
@@ -270,7 +276,7 @@ public class US201and202UpdateUserInfoController {
 
 	/**
 	 * Gets the zipCode
-	 * 
+	 *
 	 * @return zipCode zipCode
 	 */
 	public String getZipCode(Address address) {
@@ -278,7 +284,7 @@ public class US201and202UpdateUserInfoController {
 	}
 
 	public void alterUser(User user) {
-		Company.getTheInstance().getUsersContainer().alterUser(user);
+		this.userContainer.addUserToUserRepositoryX(user);
 	}
 
 }

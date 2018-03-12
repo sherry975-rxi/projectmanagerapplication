@@ -10,12 +10,13 @@ public class US205MarkTaskAsFinishedCollaborator {
 	private int projectIndex;
 	private Task taskToBeMarked;
 	List<Task> unfinishedTaskFromProject;
+	private ProjectContainer projectContainer;
 
 	public List<Project> getProjectsThatIAmCollaborator(User user) {
 		List<Project> projectsThatImProjectCollaborator = new ArrayList<>();
 		this.username = user;
-		ProjectContainer projectList = Company.getTheInstance().getProjectsContainer();
-		projectsThatImProjectCollaborator.addAll(projectList.getProjectsFromUser(this.username));
+		projectContainer = new ProjectContainer();
+		projectsThatImProjectCollaborator.addAll(projectContainer.getProjectsFromUser(this.username));
 		return projectsThatImProjectCollaborator;
 	}
 
@@ -23,8 +24,8 @@ public class US205MarkTaskAsFinishedCollaborator {
 		ProjectCollaborator collab;
 		Project selectedProject;
 		this.projectIndex = projectIndex;
-		selectedProject = Company.getTheInstance().getProjectsContainer().getProjById(this.projectIndex);
-		collab = Company.getTheInstance().getProjectsContainer().getProjById(this.projectIndex)
+		selectedProject = projectContainer.getProjById(this.projectIndex);
+		collab = projectContainer.getProjById(this.projectIndex)
 				.getProjectCollaboratorFromUser(this.username);
 		this.unfinishedTaskFromProject = selectedProject.getTaskRepository()
 				.getUnfinishedTasksFromProjectCollaborator(collab);
@@ -33,7 +34,7 @@ public class US205MarkTaskAsFinishedCollaborator {
 
 	public Task getTaskToBeMarkedFinished(String taskIndex1) {
 		String taskIndex = taskIndex1;
-		taskToBeMarked = Company.getTheInstance().getProjectsContainer().getProjById(this.projectIndex)
+		taskToBeMarked = projectContainer.getProjById(this.projectIndex)
 				.getTaskRepository().getTaskByID(taskIndex);
 
 		return taskToBeMarked;

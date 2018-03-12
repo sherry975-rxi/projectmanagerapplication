@@ -7,7 +7,6 @@ import project.model.UserContainer;
 
 import java.util.List;
 
-@Service
 public class US351AddColaboratorToProjectTeamController {
 
 	UserContainer userContainer = new UserContainer();

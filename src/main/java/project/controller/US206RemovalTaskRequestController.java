@@ -17,7 +17,7 @@ public class US206RemovalTaskRequestController {
 	private Integer projectID;
 	private String taskID;
 	private User user;
-
+	private ProjectContainer projectContainer;
 	/**
 	 * Constructor to instantiate a new CollaboratorRemovalrequest
 	 * 
@@ -28,6 +28,7 @@ public class US206RemovalTaskRequestController {
 		this.user = user;
 		this.projectID = null;
 		this.taskID = null;
+		this.projectContainer = new ProjectContainer();
 	}
 
 	/**
@@ -39,7 +40,7 @@ public class US206RemovalTaskRequestController {
 
 		boolean createdSucess = false;
 
-		Project project = Company.getTheInstance().getProjectsContainer().getProjById(this.projectID);
+		Project project = projectContainer.getProjById(this.projectID);
 		Task taskBeRemovedOf = project.getTaskRepository().getTaskByID(this.taskID);
 		ProjectCollaborator projectCollaborator = project.findProjectCollaborator(this.user);
 
@@ -48,6 +49,7 @@ public class US206RemovalTaskRequestController {
 			project.createTaskRemovalRequest(projectCollaborator, taskBeRemovedOf);
 			createdSucess = true;
 		}
+		projectContainer.updateProjectContainer();
 		return createdSucess;
 	}
 
@@ -60,7 +62,7 @@ public class US206RemovalTaskRequestController {
 	 */
 	public List<String> getUnfinishedTaskListFromUser() {
 
-		List<Task> usersTask = Company.getTheInstance().getProjectsContainer().getUnfinishedUserTaskList(user);
+		List<Task> usersTask = projectContainer.getUnfinishedUserTaskList(user);
 		List<String> userTaskDetails = new ArrayList<>();
 
 		for (int i = 0; i < usersTask.size(); i++) {
