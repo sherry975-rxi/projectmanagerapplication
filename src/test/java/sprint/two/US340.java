@@ -116,10 +116,10 @@ public class US340 {
 				10);
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 
 		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
 		// getProjectTaskList method
@@ -132,7 +132,7 @@ public class US340 {
 		taskListToCompare.add(testTask4);
 
 		// See if the two lists have the same tasks
-		assertEquals(taskContainer.getProjectTaskRepository(), taskListToCompare);
+		assertEquals(taskContainer.getAllTasksfromProject(), taskListToCompare);
 
 	}
 	

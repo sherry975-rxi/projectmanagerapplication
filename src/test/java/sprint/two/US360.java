@@ -71,7 +71,7 @@ public class US360 {
 		// create the project and set a user to Project manager
 		p1 = c1.getProjectsContainer().createProject("Teste", "blablabla", u2);
 		p1.getProjectTeam().clear();
-		p1.getTaskRepository().getProjectTaskRepository().clear();
+		p1.getTaskRepository().getAllTasksfromProject().clear();
 
 		// add project to the Company Project list
 		c1.getProjectsContainer().addProjectToProjectContainer(p1);
@@ -119,10 +119,10 @@ public class US360 {
 		testTask4.getTaskTeam().clear();
 
 		// add tasks to project p1
-		p1.getTaskRepository().addProjectTask(testTask);
-		p1.getTaskRepository().addProjectTask(testTask2);
-		p1.getTaskRepository().addProjectTask(testTask3);
-		p1.getTaskRepository().addProjectTask(testTask4);
+		p1.getTaskRepository().addTaskToProject(testTask);
+		p1.getTaskRepository().addTaskToProject(testTask2);
+		p1.getTaskRepository().addTaskToProject(testTask3);
+		p1.getTaskRepository().addTaskToProject(testTask4);
 
 		// add taskworkers (collaborator1 and 2) to tasks 1 and 2
 		testTask.addProjectCollaboratorToTask(collaborator1);

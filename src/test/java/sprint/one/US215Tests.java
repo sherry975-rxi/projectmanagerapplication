@@ -99,10 +99,10 @@ public class US215Tests {
 		taskWorker2 = task2.createTaskCollaborator(projectCollaborator2);
 
 		// Add Tasks to project
-		myProject.getTaskRepository().addProjectTask(task1);
-		myProject.getTaskRepository().addProjectTask(task2);
-		myProject.getTaskRepository().addProjectTask(task3);
-		myProject.getTaskRepository().addProjectTask(task4);
+		myProject.getTaskRepository().addTaskToProject(task1);
+		myProject.getTaskRepository().addTaskToProject(task2);
+		myProject.getTaskRepository().addTaskToProject(task3);
+		myProject.getTaskRepository().addTaskToProject(task4);
 
 		// Associates users to tasks
 		task1.addTaskCollaboratorToTask(taskWorker1);

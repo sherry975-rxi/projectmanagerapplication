@@ -72,7 +72,7 @@ public class US355 {
 		// create the project and set a user to Project manager
 		p1 = c1.getProjectsContainer().createProject("Teste", "blablabla", u2);
 		p1.getProjectTeam().clear();
-		p1.getTaskRepository().getProjectTaskRepository().clear();
+		p1.getTaskRepository().getAllTasksfromProject().clear();
 
 		// add project to the Company Project list
 		c1.getProjectsContainer().addProjectToProjectContainer(p1);
@@ -111,8 +111,8 @@ public class US355 {
 		testTask.getTaskTeam().clear();
 		testTask2.getTaskTeam().clear();
 
-		p1.getTaskRepository().addProjectTask(testTask);
-		p1.getTaskRepository().addProjectTask(testTask2);
+		p1.getTaskRepository().addTaskToProject(testTask);
+		p1.getTaskRepository().addTaskToProject(testTask2);
 
 	}
 

@@ -104,8 +104,8 @@ public class US370 {
 		testTask2 = taskContainer.createTask("Test dis agen pls");
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
 
 		// create task Worker
 		taskWorker = testTask.createTaskCollaborator(projectCollaborator);

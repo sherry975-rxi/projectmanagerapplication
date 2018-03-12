@@ -132,28 +132,28 @@ public class HelloJpaApplication implements CommandLineRunner {
         taskDeadlineDate.set(Calendar.MONTH, Calendar.FEBRUARY);
 
         Task taskAp1 = projectApostas.getTaskRepository().createTask("Desenvolver código para responder à US399");
-        projectApostas.getTaskRepository().addProjectTask(taskAp1);
+        projectApostas.getTaskRepository().addTaskToProject(taskAp1);
         Planned onGoingStateAp1 = new Planned(taskAp1);
         taskAp1.setTaskState(onGoingStateAp1);
         taskAp1.setStartDate(startDate);
         taskAp1.setTaskDeadline(taskDeadlineDate);
 
         Task taskAp2 = projectApostas.getTaskRepository().createTask("Implementar sistema de segurança");
-        projectApostas.getTaskRepository().addProjectTask(taskAp2);
+        projectApostas.getTaskRepository().addTaskToProject(taskAp2);
         Created onGoingStateAp2 = new Created(taskAp2);
         taskAp2.setTaskState(onGoingStateAp2);
         taskAp2.setStartDate(startDate);
         taskAp2.setTaskDeadline(taskDeadlineDate);
 
         Task taskGP = projectGP.getTaskRepository().createTask("Adicionar colaboradores às tarefas planeadas.");
-        projectGP.getTaskRepository().addProjectTask(taskGP);
+        projectGP.getTaskRepository().addTaskToProject(taskGP);
         OnGoing onGoingStateGP = new OnGoing(taskGP);
         taskGP.setTaskState(onGoingStateGP);
         taskGP.setStartDate(startDate);
         taskGP.setTaskDeadline(taskDeadlineDate);
 
         Task taskHB = projectHomeBanking.getTaskRepository().createTask("Permitir ligação a sites de noticias");
-        projectHomeBanking.getTaskRepository().addProjectTask(taskHB);
+        projectHomeBanking.getTaskRepository().addTaskToProject(taskHB);
         OnGoing onGoingStateHB = new OnGoing(taskHB);
         taskHB.setTaskState(onGoingStateHB);
         taskHB.setStartDate(startDate);

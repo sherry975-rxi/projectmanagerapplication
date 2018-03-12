@@ -56,8 +56,8 @@ public class US342CreateTaskDependencyTest {
 		taskA = new Task(1, 1, "Faind fek quin!");
 		taskB = new Task(2, 1, "Spit on non-beleevahs!");
 		taskC = new Task(3, 1, "Follou da wae!");
-		taskRepo.addProjectTask(taskC);
-		taskRepo.addProjectTask(taskB);
+		taskRepo.addTaskToProject(taskC);
+		taskRepo.addTaskToProject(taskB);
 
 		// Initialize Controller
 		controller = new US342CreateTaskDependencyController(proj);
@@ -136,7 +136,7 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public void isTaskDependencyPossibleTest() {
 		// Adds taskA to TaskContainer
-		taskRepo.addProjectTask(taskA);
+		taskRepo.addTaskToProject(taskA);
 
 		/*
 		 * Creates four tasks states
@@ -165,7 +165,7 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public void removeTaskDependency() {
 		// Adds taskA to TaskContainer
-		taskRepo.addProjectTask(taskA);
+		taskRepo.addTaskToProject(taskA);
 
 		/*
 		 * Creates four tasks states
@@ -200,7 +200,7 @@ public class US342CreateTaskDependencyTest {
 	public void getTaskDeadlineString() {
 
 		// Adds taskA to TaskContainer
-		taskRepo.addProjectTask(taskA);
+		taskRepo.addTaskToProject(taskA);
 
 		/*
 		 * Creates four tasks states
