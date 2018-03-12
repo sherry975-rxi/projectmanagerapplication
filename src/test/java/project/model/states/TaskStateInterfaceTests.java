@@ -35,7 +35,7 @@ public class TaskStateInterfaceTests {
 		
 		//Creates the Task
 		task = project.getTaskRepository().createTask("Task de teste"); 
-		project.getTaskRepository().addProjectTask(task);
+		project.getTaskRepository().addTaskToProject(task);
 
 		// create a estimated task date
 		estimatedTaskStartDate = Calendar.getInstance();

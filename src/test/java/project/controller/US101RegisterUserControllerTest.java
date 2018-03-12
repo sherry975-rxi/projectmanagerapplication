@@ -11,21 +11,20 @@ import static org.junit.Assert.*;
 
 public class US101RegisterUserControllerTest {
 
-	Company Critical;
 	User user1, user2, user3;
 	UserContainer userContainer;
 
 	@Before
 	public void setUp() {
 
-		// create company
-		Critical = Company.getTheInstance();
+		// creates an UserContainer
+		userContainer = new UserContainer();
 
 		// create user
-		user1 = Critical.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		
-		user3 = Critical.getUsersContainer().createUser("João", "joão.gmail.com", "034", "Testes", "919876787",
+		user3 = userContainer.createUser("João", "joão.gmail.com", "034", "Testes", "919876787",
 				"Street", "2401-343", "Testburg", "Testo", "Testistan");
 
 	}
@@ -33,7 +32,7 @@ public class US101RegisterUserControllerTest {
 	@After
 	public void tearDown() {
 
-		Company.clear();
+		userContainer = null;
 		user1 = null;
 		user2 = null;
 		user3 = null;
@@ -50,7 +49,7 @@ public class US101RegisterUserControllerTest {
 	public void testUserRegistrationController() {
 		// creates the controller and asserts the list of users starts at 0
 		US101RegisterUserController testUserRegistrationController = new US101RegisterUserController();
-		assertEquals(Critical.getUsersContainer().getAllUsersFromUserContainer().size(), 0);
+		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 0);
 
 		// Checks if the user1 is in the UserContainer
 		assertEquals(testUserRegistrationController.isUserInUserRepository("daniel@gmail.com"), false);
@@ -58,16 +57,16 @@ public class US101RegisterUserControllerTest {
 		// uses the controller to both create and add the user
 		testUserRegistrationController.addNewUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Password", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		assertEquals(Critical.getUsersContainer().getAllUsersFromUserContainer().size(), 1);
-		assertTrue(Critical.getUsersContainer().getAllUsersFromUserContainer().get(0).equals(user1));
+		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 1);
+		assertTrue(userContainer.getAllUsersFromUserContainer().get(0).equals(user1));
 
 		// verifies if the addNewUser method returns null when user email already exists
 		testUserRegistrationController.addNewUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Password", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		testUserRegistrationController.addNewUser("Daniel", "danicom", "001", "Porteiro", "920000000", "Password",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		user2 = Critical.getUsersContainer().getAllUsersFromUserContainer().get(0);
-		user3 = Critical.getUsersContainer().getAllUsersFromUserContainer().get(1);
+		user2 = userContainer.getAllUsersFromUserContainer().get(0);
+		user3 = userContainer.getAllUsersFromUserContainer().get(1);
 
 		// verifies if the addNewUser method returns true when the user email already
 		// exists in the repository

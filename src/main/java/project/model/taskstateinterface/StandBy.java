@@ -17,15 +17,18 @@ public class StandBy implements TaskStateInterface {
 		OnGoing onGoingState = new OnGoing();
 		if(onGoingState.isValid(task)) {
 			task.setTaskState(onGoingState);
+			task.setCurrentState(StateEnum.ONGOING);
 		}
 
 		Cancelled cancelledState = new Cancelled();
 		if(cancelledState.isValid(task)) {
 			task.setTaskState(cancelledState);
+			task.setCurrentState(StateEnum.CANCELLED);
 		}
 		Finished finishedState = new Finished();
 		if(finishedState.isValid(task)) {
 			task.setTaskState(finishedState);
+			task.setCurrentState(StateEnum.FINISHED);
 		}
 	}
 

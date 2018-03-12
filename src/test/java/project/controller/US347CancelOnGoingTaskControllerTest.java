@@ -23,7 +23,8 @@ import static org.junit.Assert.assertEquals;
 public class US347CancelOnGoingTaskControllerTest {
 
 	// TasksFiltersController tasksFiltersController;
-	Company company1;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 	User user1, user2, projectManager;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2;
@@ -49,35 +50,38 @@ public class US347CancelOnGoingTaskControllerTest {
 	@Before
 	public void setUp() {
 
-		// create company
-		company1 = Company.getTheInstance();
+		// creates an UserContainer
+		userContainer = new UserContainer();
 
 		// create users
-		user1 = company1.getUsersContainer().createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
+		user1 = userContainer.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
 				"930000000", "Rua da Caparica, 19", "7894-654", "Porto", "Porto", "Portugal");
-		user2 = company1.getUsersContainer().createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager",
+		user2 = userContainer.createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager",
 				"930025000", "Rua Doutor Armando", "4455-654", "Rio Tinto", "Gondomar", "Portugal");
-		projectManager = company1.getUsersContainer().createUser("Mary MacJohn", "mmacjohn@gmail.com", "003",
+		projectManager = userContainer.createUser("Mary MacJohn", "mmacjohn@gmail.com", "003",
 				"Product Manager", "930025000", "Rua Terceira, 44", "4455-122", "Leça da Palmeira", "Matosinhos",
 				"Portugal");
 
 		// add users to company
-		company1.getUsersContainer().addUserToUserRepository(user1);
-		company1.getUsersContainer().addUserToUserRepository(user2);
-		company1.getUsersContainer().addUserToUserRepository(projectManager);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(projectManager);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		user2.setUserProfile(Profile.COLLABORATOR);
 		projectManager.setUserProfile(Profile.COLLABORATOR);
+		
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
 
 		// create project and establishes collaborator projectManager as project manager
 		// of project 1
-		project1 = company1.getProjectsContainer().createProject("Project Management software",
+		project1 = projectContainer.createProject("Project Management software",
 				"This software main goals are ....", projectManager);
 
 		// add project to company
-		company1.getProjectsContainer().addProjectToProjectContainer(project1);
+		projectContainer.addProjectToProjectContainer(project1);
 
 		// create project collaborators
 		projCollab1 = new ProjectCollaborator(user1, 2);
@@ -183,7 +187,8 @@ public class US347CancelOnGoingTaskControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+		projectContainer = null;
+		userContainer = null;
 		user1 = null;
 		user2 = null;
 		projectManager = null;

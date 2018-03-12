@@ -18,12 +18,14 @@ public class Ready implements TaskStateInterface {
 		Planned plannedState = new Planned();
 		if(plannedState.isValid(task)) {
 			task.setTaskState(plannedState);
+			task.setCurrentState(StateEnum.PLANNED);
 		}
 
 		//Checks if the task can change to the ongoing state
 		OnGoing ongoingState = new OnGoing();
 		if(ongoingState.isValid(task)) {
 			task.setTaskState(ongoingState);
+			task.setCurrentState(StateEnum.ONGOING);
 		}
 	}
 
