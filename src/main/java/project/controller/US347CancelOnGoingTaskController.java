@@ -4,6 +4,7 @@
 package project.controller;
 
 import project.model.Project;
+import project.model.ProjectContainer;
 import project.model.Task;
 
 /**
@@ -48,13 +49,14 @@ public class US347CancelOnGoingTaskController {
 	 *            Cancelled
 	 */
 	public boolean cancelOnGoingTask() {
-
+		ProjectContainer projectContainer = new ProjectContainer();
 		Task task = this.project.getTaskRepository().getTaskByID(taskID);
 
 		boolean cancelled = false;
 		task.setCancelDate();
 		if (task.getTaskState().changeToCancelled()) {
 			cancelled = true;
+			projectContainer.addProjectToProjectContainerX(this.project);
 		} else {
 			task.cancelledDateClear();
 		}

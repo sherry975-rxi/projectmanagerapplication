@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 
 public class US361AssignTaskToCollaboratorControllerTest {
 
-	Company myCompany;
 	UserContainer userContainer;
 	User user1;
 	User userAdmin;
@@ -26,15 +25,11 @@ public class US361AssignTaskToCollaboratorControllerTest {
 
 	@Before
 	public void setUp() {
-		// create company
-
-		myCompany = Company.getTheInstance();
-
 		// creates an UserContainer
-		userContainer = myCompany.getUsersContainer();
-
-		// creates a ProjectsRepository
-		projectContainer = myCompany.getProjectsContainer();
+		userContainer = new UserContainer();
+						
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
 
 		userContainer.getAllUsersFromUserContainer().clear();
 
@@ -65,7 +60,6 @@ public class US361AssignTaskToCollaboratorControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
 		user1 = null;
 		testTask = null;
 		testTask2 = null;

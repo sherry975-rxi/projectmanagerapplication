@@ -14,7 +14,8 @@ import static org.junit.Assert.*;
 
 public class US356ManageAssignmentRequestControllerTest {
 
-	Company spaceX;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 
 	String teamTesterName, teamTesterID;
 
@@ -37,7 +38,13 @@ public class US356ManageAssignmentRequestControllerTest {
 
 	@Before
 	public void setUp() {
-		spaceX = Company.getTheInstance();
+		
+		// creates an UserContainer
+		userContainer = new UserContainer();
+						
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
+		
 		// creates test users for a manager and collaborator.
 		// declares the collaborator's relevant data as Strings to facilitate assertions
 		managerTester = new User("menager", "manager@mail.mail", "11111", "function", "123456789");
@@ -49,9 +56,9 @@ public class US356ManageAssignmentRequestControllerTest {
 
 		teamPermanentMember = new User("Mr permanent", "permie@mail.mail", "33333", "placeholding", "98644");
 
-		spaceX.getUsersContainer().addUserToUserRepository(managerTester);
-		spaceX.getUsersContainer().addUserToUserRepository(teamTester);
-		spaceX.getUsersContainer().addUserToUserRepository(teamPermanentMember);
+		userContainer.addUserToUserRepository(managerTester);
+		userContainer.addUserToUserRepository(teamTester);
+		userContainer.addUserToUserRepository(teamPermanentMember);
 
 		// creates a new test project, and adds the test Collaborator to the team
 		testProject = new Project(1, "testing proj", "shoot rocket... again", managerTester);
@@ -59,7 +66,7 @@ public class US356ManageAssignmentRequestControllerTest {
 		teamPermanentCollaborator = new ProjectCollaborator(teamPermanentMember, 2000);
 		testProject.addProjectCollaboratorToProjectTeam(teamTesterCollaborator);
 		testProject.addProjectCollaboratorToProjectTeam(teamPermanentCollaborator);
-		spaceX.getProjectsContainer().addProjectToProjectContainer(testProject);
+		projectContainer.addProjectToProjectContainer(testProject);
 
 		// creates two estimated dates and uses them to generate a task
 		// declares strings for the task's ID and description to facilitate assertion
@@ -92,8 +99,8 @@ public class US356ManageAssignmentRequestControllerTest {
 
 	@After
 	public void breakDown() {
-		Company.clear();
-		spaceX = null;
+		userContainer = null;
+		projectContainer = null;
 
 		managerTester = null;
 

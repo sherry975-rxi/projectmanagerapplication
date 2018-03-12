@@ -1,5 +1,6 @@
 package project.controller;
 
+
 import project.model.Project;
 import project.model.ProjectContainer;
 import project.model.Task;
@@ -12,7 +13,8 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 	ProjectContainer myProjRepo;
 
 	public US360GetProjectTasksWithoutCollaboratorsAssignedController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
+		this.myProjRepo = new ProjectContainer();
+
 	}
 
 	/**
