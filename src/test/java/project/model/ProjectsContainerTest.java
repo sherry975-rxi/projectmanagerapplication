@@ -70,14 +70,11 @@ public class ProjectsContainerTest {
 
 		collab1 = new ProjectCollaborator(user1, 1);
 		collab2 = new ProjectCollaborator(user2, 2);
-		ProjectCollaborator collab3 = new ProjectCollaborator(user3, 3);
 
 		// Another collaborator in project 2
 		collab4 = new ProjectCollaborator(user1, 4);
 
 		taskWorker1 = new TaskCollaborator(collab1);
-		new TaskCollaborator(collab2);
-		new TaskCollaborator(collab3);
 
 		// User 1 is collab4 in project 2
 		taskWorker4 = new TaskCollaborator(collab4);
