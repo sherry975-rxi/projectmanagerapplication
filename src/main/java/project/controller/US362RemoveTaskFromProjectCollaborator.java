@@ -5,6 +5,7 @@ package project.controller;
 
 import project.model.Project;
 import project.model.ProjectCollaborator;
+import project.model.ProjectContainer;
 import project.model.Task;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
  *
  */
 public class US362RemoveTaskFromProjectCollaborator {
-
+	ProjectContainer projectContainer = new ProjectContainer();
 	private ProjectCollaborator projectCollaborator;
 	private Project project;
 	private Task task;
@@ -57,8 +58,12 @@ public class US362RemoveTaskFromProjectCollaborator {
 	 */
 
 	public boolean removeCollaboratorFromTask() {
-
-		return this.task.removeProjectCollaboratorFromTask(this.projectCollaborator);
+		boolean removeCollaboratorFromTask = false;
+		 if(this.task.removeProjectCollaboratorFromTask(this.projectCollaborator)){
+			 projectContainer.addProjectToProjectContainerX(this.project);
+			 removeCollaboratorFromTask = true;
+		 }
+		return removeCollaboratorFromTask;
 	}
 
 	/**

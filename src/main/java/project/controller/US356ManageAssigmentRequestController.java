@@ -1,6 +1,7 @@
 package project.controller;
 
 import project.model.Project;
+import project.model.ProjectContainer;
 import project.model.TaskTeamRequest;
 
 import java.util.List;
@@ -9,6 +10,7 @@ public class US356ManageAssigmentRequestController {
 
 	Project selectedProject;
 	TaskTeamRequest selectedAdditionRequest;
+	ProjectContainer projectContainer = new ProjectContainer();
 
 	/*
 	 * This controller manages Addition Requests by Project Collaborators * respond
@@ -44,6 +46,7 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public void setSelectedAdditionRequest(int index) {
 		this.selectedAdditionRequest = selectedProject.getPendingTaskAssignementRequests().get(index);
+		projectContainer.addProjectToProjectContainerX(selectedProject);
 	}
 
 	/**
@@ -60,6 +63,7 @@ public class US356ManageAssigmentRequestController {
 		if (selectedAdditionRequest != null) {
 			selectedAdditionRequest.getTask().addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
 			deleteRequest();
+			projectContainer.addProjectToProjectContainerX(selectedProject);
 			return true;
 		} else
 			return false;
@@ -78,6 +82,7 @@ public class US356ManageAssigmentRequestController {
 	public boolean rejectAssignmentRequest() {
 		if (selectedAdditionRequest != null) {
 			deleteRequest();
+			projectContainer.addProjectToProjectContainerX(selectedProject);
 			return true;
 		} else
 			return false;
@@ -89,6 +94,8 @@ public class US356ManageAssigmentRequestController {
 	 * 
 	 */
 	public void deleteRequest() {
+
 		selectedProject.deleteTaskAssignementRequest(this.selectedAdditionRequest);
+		projectContainer.addProjectToProjectContainerX(selectedProject);
 	}
 }

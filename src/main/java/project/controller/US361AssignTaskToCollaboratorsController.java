@@ -2,6 +2,7 @@ package project.controller;
 
 import project.model.Project;
 import project.model.ProjectCollaborator;
+import project.model.ProjectContainer;
 import project.model.Task;
 
 import java.util.ArrayList;
@@ -76,7 +77,13 @@ public class US361AssignTaskToCollaboratorsController {
 	 * @return TRUE if it was possible to add or FALSE if not
 	 */
 	public boolean assignCollaboratorToTask() {
-		return task.addProjectCollaboratorToTask(this.projectCollaborator);
+		boolean assignCollaboratorToTask = false;
+		ProjectContainer projectContainer = new ProjectContainer();
+		if(task.addProjectCollaboratorToTask(this.projectCollaborator)){
+			projectContainer.addProjectToProjectContainerX(this.project);
+			assignCollaboratorToTask = true;
+		}
+		return assignCollaboratorToTask;
 	}
 
 }
