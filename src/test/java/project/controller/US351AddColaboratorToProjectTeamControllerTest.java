@@ -5,47 +5,53 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.Profile;
 import project.model.Project;
+import project.model.ProjectContainer;
 import project.model.User;
+import project.model.UserContainer;
 
 import static org.junit.Assert.*;
 
 public class US351AddColaboratorToProjectTeamControllerTest {
-
-	Company myCompany;
+	
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 	Project activeProj, inactiveProj;
 	User activeUser, inactiveUser, projectManager;
 	US351AddColaboratorToProjectTeamController controller;
 
 	@Before
 	public void setUp() {
-		// Initializes company
-		myCompany = Company.getTheInstance();
+		// creates an UserContainer
+		userContainer = new UserContainer();
+		
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
 
 		// Creates and add users to company's user repository
-		activeUser = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto",
+		activeUser = userContainer.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto",
 				"967387654", "Rua", "3700", "Porto", "Porto", "Portugal");
-		myCompany.getUsersContainer().addUserToUserRepository(activeUser);
+		userContainer.addUserToUserRepository(activeUser);
 		activeUser.setUserProfile(Profile.COLLABORATOR);
 
-		inactiveUser = myCompany.getUsersContainer().createUser("Rui", "rui@gmail.com", "12345", "Arquitecto",
+		inactiveUser = userContainer.createUser("Rui", "rui@gmail.com", "12345", "Arquitecto",
 				"967387654", "Rua", "3800", "Porto", "Porto", "Portugal");
-		myCompany.getUsersContainer().addUserToUserRepository(inactiveUser);
+		userContainer.addUserToUserRepository(inactiveUser);
 		inactiveUser.setUserProfile(Profile.COLLABORATOR);
 
-		projectManager = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+		projectManager = userContainer.createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		myCompany.getUsersContainer().addUserToUserRepository(projectManager);
+		userContainer.addUserToUserRepository(projectManager);
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 
 		// Add project to company's project repository
-		activeProj = myCompany.getProjectsContainer().createProject("Quin serch!", "Wii must faind aur quin!",
+		activeProj = projectContainer.createProject("Quin serch!", "Wii must faind aur quin!",
 				projectManager);
-		myCompany.getProjectsContainer().addProjectToProjectContainer(activeProj);
+		projectContainer.addProjectToProjectContainer(activeProj);
 		activeProj.setProjectStatus(Project.EXECUTION);
 
-		inactiveProj = myCompany.getProjectsContainer().createProject("Wae follouing!", "Wii must follou da wae!",
+		inactiveProj = projectContainer.createProject("Wae follouing!", "Wii must follou da wae!",
 				projectManager);
-		myCompany.getProjectsContainer().addProjectToProjectContainer(inactiveProj);
+		projectContainer.addProjectToProjectContainer(inactiveProj);
 		inactiveProj.setProjectStatus(Project.PLANNING);
 
 		// Deactivate inactive user
@@ -57,7 +63,8 @@ public class US351AddColaboratorToProjectTeamControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+		projectContainer = null;
+		userContainer = null;
 		activeProj = null;
 		activeUser = null;
 		inactiveUser = null;

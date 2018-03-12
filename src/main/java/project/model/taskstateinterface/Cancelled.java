@@ -16,7 +16,7 @@ public class Cancelled implements TaskStateInterface {
 		Finished finishedState = new Finished();
 		if(finishedState.isValid(task)) {
 			task.setTaskState(finishedState);
-			task.setFinishDate();
+			task.setCurrentState(StateEnum.FINISHED);
 	}
 	}
 

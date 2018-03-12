@@ -43,7 +43,6 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID, User user) {
 		setProjectIDFromTaskID(taskID);
 		this.projectContainer = new ProjectContainer();
-		this.projectContainer.updateProjectContainer();
 		this.project = projectContainer.getProjById(this.projectID);
 		this.taskContainer = project.getTaskRepository();
 		this.user = user;

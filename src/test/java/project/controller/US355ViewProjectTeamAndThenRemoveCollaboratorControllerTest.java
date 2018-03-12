@@ -5,7 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.Project;
 import project.model.ProjectCollaborator;
+import project.model.ProjectContainer;
 import project.model.User;
+import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,8 @@ import static org.junit.Assert.assertTrue;
 
 public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
-	Company spaceX;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 
 	User managerTester, teamPermanentMember;
 
@@ -27,27 +30,32 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
 	@Before
 	public void setUp() {
-		spaceX = Company.getTheInstance();
+		// creates an UserContainer
+		userContainer = new UserContainer();
+				
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
+		
 		// creates test users for a manager and collaborator.
 		// declares the collaborator's relevant data as Strings to facilitate assertions
 
-		managerTester = Company.getTheInstance().getUsersContainer().createUser("menager", "manager@mail.mail",
+		managerTester = userContainer.createUser("menager", "manager@mail.mail",
 				"11111", "function", "123456789", "rua", "0000", "porto", "porto", "PORTO");
 
-		teamPermanentMember = Company.getTheInstance().getUsersContainer().createUser("Mr permanent",
+		teamPermanentMember = userContainer.createUser("Mr permanent",
 				"permie@mail.mail", "33333", "placeholding", "98644", "rua", "0000", "porto", "porto", "PORTO");
 
-		spaceX.getUsersContainer().addUserToUserRepository(managerTester);
-		spaceX.getUsersContainer().addUserToUserRepository(teamPermanentMember);
+		userContainer.addUserToUserRepository(managerTester);
+		userContainer.addUserToUserRepository(teamPermanentMember);
 
 		// creates a new test project, and adds the test Collaborator to the team
-		testProject = Company.getTheInstance().getProjectsContainer().createProject("testing proj",
+		testProject = projectContainer.createProject("testing proj",
 				"shoot rocket... again", managerTester);
 
 		teamPermanentCollaborator = new ProjectCollaborator(teamPermanentMember, 2000);
 
 		testProject.addProjectCollaboratorToProjectTeam(teamPermanentCollaborator);
-		spaceX.getProjectsContainer().addProjectToProjectContainer(testProject);
+		projectContainer.addProjectToProjectContainer(testProject);
 
 		viewProjectTeamAndThenRemoveCollaborator = new US355ViewProjectTeamAndThenRemoveCollaboratorController(
 				this.testProject);
@@ -55,8 +63,8 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
 	@After
 	public void breakDown() {
-		Company.clear();
-		spaceX = null;
+		userContainer = null;
+		projectContainer = null;
 
 		managerTester = null;
 
