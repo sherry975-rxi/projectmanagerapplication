@@ -27,7 +27,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 
 		if (proj.removeProjectCollaboratorFromProjectTeam(user)) {
 			remove = true;
-			projectContainer.addProjectToProjectContainerX(proj);
+			projectContainer.saveProjectInRepository(proj);
 		}
 
 		return remove;
