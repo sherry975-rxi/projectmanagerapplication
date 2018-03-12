@@ -1,8 +1,6 @@
 package project.controller;
 
 import project.dto.UserDTO;
-import project.model.Company;
-import project.model.User;
 import project.model.UserContainer;
 
 public class US101RegisterUserController {
