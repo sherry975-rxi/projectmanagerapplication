@@ -1,6 +1,6 @@
 package project.ui.console.collaborator;
 
-import project.controller.US203GetUnfinishedTaskByUser;
+import project.controller.US203GetUserStartedNotFinishedTaskListInIncreasingOrderController;
 import project.controller.UpdateDbToContainersController;
 import project.model.User;
 import project.ui.console.MainMenuUI;
@@ -16,7 +16,7 @@ public class US203GetUnfinishedTaskUI {
 		int projID;
 		String[] split;
 		User user = user1;
-		US203GetUnfinishedTaskByUser unfinishedTaskByUser = new US203GetUnfinishedTaskByUser();
+		US203GetUserStartedNotFinishedTaskListInIncreasingOrderController unfinishedTaskByUser = new US203GetUserStartedNotFinishedTaskListInIncreasingOrderController();
 		int t;
 		t = 0;
 		Scanner scannerInput = new Scanner(System.in);
@@ -27,11 +27,11 @@ public class US203GetUnfinishedTaskUI {
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
 
-		for (int i = 0; i < unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).size(); i++) {
+		for (int i = 0; i < unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).size(); i++) {
 			t = t + 1;
 			System.out.println("["
-					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID() + "]" + " "
-					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getDescription());
+					+ unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).get(i).getTaskID() + "]" + " "
+					+ unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).get(i).getDescription());
 		}
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back");

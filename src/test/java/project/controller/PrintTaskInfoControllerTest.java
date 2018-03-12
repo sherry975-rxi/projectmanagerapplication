@@ -11,55 +11,53 @@ import static org.junit.Assert.assertEquals;
 
 public class PrintTaskInfoControllerTest {
 
-	Company myCompany;
-
+	private ProjectContainer projContainer = new ProjectContainer();
+	UserContainer userContainer = new UserContainer();
 	User user1;
-	User joaoPM;
-	ProjectCollaborator collab1, collab2;
+	private User joaoPM;
+	private ProjectCollaborator collab1, collab2;
 	ProjectContainer projectContainer;
 	Project project;
-	Calendar startDate, finishDate;
-	TaskContainer taskContainer;
+	private Calendar startDate, finishDate;
 	Task task1, task2, task3;
 	PrintTaskInfoController controller;
 
 	@Before
 	public void setUp() {
-		// create company
-		myCompany = Company.getTheInstance();
-		myCompany.getProjectsContainer().setProjCounter(1);
+
+		projContainer.setProjCounter(1);
 
 		// create user
-		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		joaoPM = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+		joaoPM = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
-		myCompany.getUsersContainer().addUserToUserRepository(user1);
-		myCompany.getUsersContainer().addUserToUserRepository(joaoPM);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(joaoPM);
 
 		// creates project repository
-		projectContainer = myCompany.getProjectsContainer();
+		projectContainer = projContainer;
 
 		// Creates one Project
-		project = myCompany.getProjectsContainer().createProject("Projeto de gestão",
+		project = projContainer.createProject("Projeto de gestão",
 				"Este projeto está focado na gestão.", joaoPM);
 		project.setProjectBudget(3000);
 
 		// add project to project repository
-		myCompany.getProjectsContainer().addProjectToProjectContainer(project);
+		projContainer.addProjectToProjectContainer(project);
 
 		// add start date to project
-		Calendar startDate = Calendar.getInstance();
-		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
+		startDate = Calendar.getInstance();
+		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 0);
 		project.setStartdate(startDate);
 
 		// add finish date to project
-		Calendar finishDate = Calendar.getInstance();
-		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
+		finishDate = Calendar.getInstance();
+		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 0);
 		project.setFinishdate(finishDate);
 
 		// create project collaborators
@@ -67,7 +65,6 @@ public class PrintTaskInfoControllerTest {
 		collab2 = new ProjectCollaborator(joaoPM, 3);
 
 		// create taskContainer
-		taskContainer = project.getTaskRepository();
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -100,14 +97,14 @@ public class PrintTaskInfoControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+		projContainer = null;
+		userContainer = null;
 		user1 = null;
 		joaoPM = null;
 		project = null;
 		projectContainer = null;
 		startDate = null;
 		finishDate = null;
-		taskContainer = null;
 		task1 = null;
 		task2 = null;
 		task3 = null;
@@ -164,7 +161,7 @@ public class PrintTaskInfoControllerTest {
 
 		// create a calendar date to set task's estimated start date
 		Calendar estimatedStartDate = Calendar.getInstance();
-		estimatedStartDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
+		estimatedStartDate.set(2017, Calendar.JANUARY, 2, 12, 31, 0);
 		task1.setEstimatedTaskStartDate(estimatedStartDate);
 		// asserts that the task1 have the estimated start date that are previous set
 		assertEquals(controller.printTaskEstimatedStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
@@ -185,7 +182,7 @@ public class PrintTaskInfoControllerTest {
 
 		// create a calendar date to set task's start date
 		Calendar startDate = Calendar.getInstance();
-		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 00);
+		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 0);
 		task1.setStartDate(startDate);
 		// asserts that the task1 have the start date that are previous set
 		assertEquals(controller.printTaskStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
@@ -204,7 +201,7 @@ public class PrintTaskInfoControllerTest {
 
 		// create a calendar date to set task's deadline
 		Calendar estimatedFinishDate = Calendar.getInstance();
-		estimatedFinishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
+		estimatedFinishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 0);
 		task1.setTaskDeadline(estimatedFinishDate);
 		// asserts that the task1 have the deadline that are previous set
 		assertEquals(controller.printTaskDeadlineInfo(), "Thu, 2 Feb 2017 12:31:00");
@@ -223,7 +220,7 @@ public class PrintTaskInfoControllerTest {
 
 		// create a calendar date to set task's finish date
 		Calendar finishDate = Calendar.getInstance();
-		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 00);
+		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 0);
 		task1.setFinishDate(finishDate);
 		// asserts that the task1 have the finish date that are previous set
 		assertEquals(controller.printTaskFinishDateInfo(), "Thu, 2 Feb 2017 12:31:00");

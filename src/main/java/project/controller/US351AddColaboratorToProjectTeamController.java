@@ -9,6 +9,10 @@ import java.util.List;
 public class US351AddColaboratorToProjectTeamController {
 
 	UserContainer userContainer = new UserContainer();
+
+	public US351AddColaboratorToProjectTeamController(){
+	    this.userContainer.updateUserContainer();
+    }
 	/**
 	 * This controller add user to project team
 	 * 
