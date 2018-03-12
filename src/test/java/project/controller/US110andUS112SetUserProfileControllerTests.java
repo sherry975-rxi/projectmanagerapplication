@@ -3,81 +3,109 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import static org.mockito.Mockito.when;
+
+import project.Repository.UserRepository;
 import project.model.Profile;
 import project.model.User;
+import project.model.UserContainer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(MockitoJUnitRunner.class)
 public class US110andUS112SetUserProfileControllerTests {
 
-	Company Blip;
-	User newUser2, newUser3;
-	int typeOfUser;
+    @Mock
+    private UserRepository userRepository;
 
-	@Before
-	public void setUp() {
+    private UserContainer userContainer;
 
-		Blip = Company.getTheInstance();
+    @InjectMocks
+    private US110andUS112SetUserProfileController us110andUS112SetUserProfileController;
+    private User newUser2, newUser3;
 
-		newUser2 = Blip.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
-				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser3 = Blip.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
-				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+    @Before
+    public void setUp() {
 
-		Blip.getUsersContainer().addUserToUserRepository(newUser2);
-	}
+        us110andUS112SetUserProfileController = new US110andUS112SetUserProfileController();
 
-	@After
-	public void breakDown() {
-		Company.clear();
-		newUser2 = null;
-		newUser3 = null;
+        userContainer = new UserContainer();
 
-	}
+        newUser2 = us110andUS112SetUserProfileController.getUserContainer().createUser("Manel", "user2@gmail.com",
+                "001", "Empregado", "930000000",
+                "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-	@Test
-	public void testSetUserAsDirectorController() {
-		// given a User - newUser2 - asserts they start as Visitor when created
-		// and then creates the controller
-		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
-		US110andUS112SetUserProfileController testProfileController = new US110andUS112SetUserProfileController();
+        newUser3 = us110andUS112SetUserProfileController.getUserContainer().createUser("Manelinho", "user3@gmail.com",
+                "002", "Telefonista",
+                "940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-		// sets newUser2 as Director and asserts its profile
-		testProfileController.setUserAsDirector(newUser2);
-		assertEquals(newUser2.getUserProfile(), Profile.DIRECTOR);
+        us110andUS112SetUserProfileController.getUserContainer().addUserToUserRepository(newUser2);
+        us110andUS112SetUserProfileController.getUserContainer().addUserToUserRepository(newUser3);
 
-		// finally, asserts that no other Users were changed
-		// and that user repository contains the new director
-		assertTrue(Blip.getUsersContainer().searchUsersByProfile(Profile.DIRECTOR).contains(newUser2));
-		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
-	}
+        List<User> victim = new ArrayList<>();
+        victim.add(newUser2);
+        victim.add(newUser3);
 
-	@Test
-	public void testSetUserAsCollaboratorController() {
-		// given a User - newUser2 - asserts they start as Visitor when created
-		// and then creates the controller
-		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
-		US110andUS112SetUserProfileController testProfileController = new US110andUS112SetUserProfileController();
+        when(userRepository.findAll()).thenReturn(victim);
+    }
 
-		// sets newUser2 as Collaborator and asserts its profile
-		testProfileController.setUserAsCollaborator(newUser2);
-		assertEquals(newUser2.getUserProfile(), Profile.COLLABORATOR);
+    @After
+    public void breakDown() {
+        newUser2 = null;
+        newUser3 = null;
+        us110andUS112SetUserProfileController = null;
 
-		// finally, asserts that no other Users were changed
-		// and that user repository contains the new director
-		assertTrue(Blip.getUsersContainer().searchUsersByProfile(Profile.COLLABORATOR).contains(newUser2));
-		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
-	}
+    }
 
-	@Test
-	public void testUserProfileAsString() {
-		US110andUS112SetUserProfileController testProfileController = new US110andUS112SetUserProfileController();
-		assertTrue("Unassigned".equals(testProfileController.userProfileAsString(newUser2)));
-		testProfileController.setUserAsCollaborator(newUser2);
-		assertTrue("Collaborator".equals(testProfileController.userProfileAsString(newUser2)));
-		testProfileController.setUserAsDirector(newUser2);
-		assertTrue("Director".equals(testProfileController.userProfileAsString(newUser2)));
-	}
+    @Test
+    public void testSetUserAsDirectorController() {
+        // given a User - newUser2 - asserts they start as Visitor when created
+        // and then creates the controller
+        assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
+
+        // sets newUser2 as Director and asserts its profile
+        us110andUS112SetUserProfileController.setUserAsDirector(newUser2);
+        assertEquals(newUser2.getUserProfile(), Profile.DIRECTOR);
+
+        // finally, asserts that no other Users were changed
+        // and that user repository contains the new director
+        assertTrue(us110andUS112SetUserProfileController.getUserContainer().searchUsersByProfile(Profile.DIRECTOR).contains(newUser2));
+        assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
+    }
+
+    @Test
+    public void testSetUserAsCollaboratorController() {
+        // given a User - newUser2 - asserts they start as Visitor when created
+        // and then creates the controller
+        assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
+
+        // sets newUser2 as Collaborator and asserts its profile
+        us110andUS112SetUserProfileController.setUserAsCollaborator(newUser2);
+        assertEquals(newUser2.getUserProfile(), Profile.COLLABORATOR);
+
+        // finally, asserts that no other Users were changed
+        // and that user repository contains the new director
+        assertTrue(us110andUS112SetUserProfileController.getUserContainer().searchUsersByProfile(Profile.COLLABORATOR).contains(newUser2));
+        assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
+    }
+
+    @Test
+    public void testUserProfileAsString() {
+        assertTrue("Unassigned".equals(us110andUS112SetUserProfileController.userProfileAsString(newUser2)));
+        us110andUS112SetUserProfileController.setUserAsCollaborator(newUser2);
+
+        assertTrue("Collaborator".equals(us110andUS112SetUserProfileController.userProfileAsString(newUser2)));
+        us110andUS112SetUserProfileController.setUserAsDirector(newUser2);
+
+        assertTrue("Director".equals(us110andUS112SetUserProfileController.userProfileAsString(newUser2)));
+    }
 
 }
