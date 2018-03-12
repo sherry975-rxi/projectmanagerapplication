@@ -34,10 +34,9 @@ public class ProjectContainer {
 	/**
 	 * Creates an instance of Project
 	 * 
-	 * @param name
-	 * @param description
-	 * @param projectManager
-	 *            (User Object)
+	 * @param name name to be given to the Project
+	 * @param description description to be given to the Project
+	 * @param projectManager what user will be this Project's manager
 	 * 
 	 * @return the project created
 	 */
@@ -47,14 +46,6 @@ public class ProjectContainer {
 		projCounter++;
 		return newProject;
 
-	}
-
-	public Project getProjectById(long id) {
-		return this.projectsRepository.findById(id);
-	}
-
-	public void addProjectToProjectContainerX(Project project) {
-		this.projectsRepository.save(project);
 	}
 
 	/**
@@ -78,7 +69,7 @@ public class ProjectContainer {
 	/**
 	 * Takes an int to set the Project counter
 	 * 
-	 * @param projCounter
+	 * @param projCounter the number of projects alreayd created. Used to define the Project with an unique number
 	 */
 	public void setProjCounter(int projCounter) {
 		this.projCounter = projCounter;
@@ -103,10 +94,7 @@ public class ProjectContainer {
 	 */
 	public List<Project> getAllProjectsfromProjectsContainer() {
 
-		List<Project> allProjects = new ArrayList<>();
-		allProjects.addAll(this.projectsContainer);
-
-		return allProjects;
+		return new ArrayList<>(this.projectsContainer);
 	}
 
 	/**
@@ -137,7 +125,7 @@ public class ProjectContainer {
 	 * user associated to that task, no matter if the project is active or not, if
 	 * the task is finished or not.
 	 * 
-	 * @param User
+	 * @param user
 	 *            user to search the tasks in which it is included
 	 * 
 	 * @return Returns the user task list.
@@ -285,7 +273,7 @@ public class ProjectContainer {
 	 * method gets the total time spent on every task finished on last month. Then
 	 * it will divide that time by the number of tasks.
 	 * 
-	 * @param user
+	 * @param user user for which to get the average time spent on tasks that were finished last month
 	 * 
 	 * @return Returns the average time spent by finished task in the last month.
 	 */
@@ -301,15 +289,14 @@ public class ProjectContainer {
 	 * This method returns a list with the tasks finished last month by decreasing
 	 * order.
 	 * 
-	 * @param user
+	 * @param user user for which to get the tasks that were finished last month in decreasing order of finish date
 	 * 
 	 * @return Returns a list with the tasks finished last month by decreasing
 	 *         order.
 	 */
 	public List<Task> getFinishedUserTasksFromLastMonthInDecreasingOrder(User user) {
 
-		List<Task> lastMonthFinishedUserTaskListDecreasingOrder = new ArrayList<>();
-		lastMonthFinishedUserTaskListDecreasingOrder.addAll(this.getLastMonthFinishedUserTaskList(user));
+		List<Task> lastMonthFinishedUserTaskListDecreasingOrder = new ArrayList<>(this.getLastMonthFinishedUserTaskList(user));
 
 		return this.sortTaskListDecreasingOrder(lastMonthFinishedUserTaskListDecreasingOrder);
 
@@ -322,15 +309,14 @@ public class ProjectContainer {
 	 * order of the finishedTaskList. It does not runs a cycle to compare the tasks
 	 * finish dates, neither analysis the finishedTaskList in any way.
 	 * 
-	 * @param user
+	 * @param user user for which to get the finished tasks in decreasing order of finish date
 	 * 
 	 * @return Returns a list with the all the user finished tasks sorted by
 	 *         decreasing order.
 	 */
 	public List<Task> getAllFinishedUserTasksInDecreasingOrder(User user) {
 
-		List<Task> finishedUserTaskListDecreasingOrder = new ArrayList<>();
-		finishedUserTaskListDecreasingOrder.addAll(this.getAllFinishedTasksFromUser(user));
+		List<Task> finishedUserTaskListDecreasingOrder = new ArrayList<>(this.getAllFinishedTasksFromUser(user));
 
 		return this.sortTaskListDecreasingOrder(finishedUserTaskListDecreasingOrder);
 	}
@@ -343,15 +329,14 @@ public class ProjectContainer {
 	 * a cycle to compare the tasks, neither analysis the finishedTaskList in any
 	 * way.
 	 * 
-	 * @param user
+	 * @param user user for which to get the started but not finished tasks in increasing order of deadline
 	 * 
 	 * @return Returns a list with the all the user started, unfinished tasks sorted
 	 *         by increasing Deadline order.
 	 */
 	public List<Task> getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(User user) {
 
-		List<Task> incompleteUserTaskListIncreasingOrder = new ArrayList<>();
-		incompleteUserTaskListIncreasingOrder.addAll(this.getStartedNotFinishedUserTaskList(user));
+		List<Task> incompleteUserTaskListIncreasingOrder = new ArrayList<>(this.getStartedNotFinishedUserTaskList(user));
 
 		return this.sortTaskListByDeadline(incompleteUserTaskListIncreasingOrder);
 	}
@@ -370,8 +355,7 @@ public class ProjectContainer {
 	 * 
 	 */
 	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
-		List<Task> result = new ArrayList<>();
-		result.addAll(toSort);
+		List<Task> result = new ArrayList<>(toSort);
 		boolean cycle = true;
 		int i = 0;
 		while (cycle) {
@@ -391,7 +375,6 @@ public class ProjectContainer {
 		return result;
 	}
 
-	// TODO implement verification of Null Deadlines
 	/**
 	 * This method returns a list with the tasks of a certain user by decreasing
 	 * order of date. First, this method creates a list which is a copy of the task
@@ -405,8 +388,7 @@ public class ProjectContainer {
 	 * 
 	 */
 	public List<Task> sortTaskListByDeadline(List<Task> toSort) {
-		List<Task> result = new ArrayList<>();
-		result.addAll(toSort);
+		List<Task> result = new ArrayList<>(toSort);
 		boolean cycle = true;
 		int i = 0;
 		while (cycle) {
@@ -414,10 +396,12 @@ public class ProjectContainer {
 
 			for (int j = i + 1; j < result.size(); j++) {
 				cycle = true;
-				if (result.get(i).getTaskDeadline().after(result.get(j).getTaskDeadline())) {
-					Task h = new Task(result.get(i));
-					result.set(i, result.get(j));
-					result.set(j, h);
+				if (result.get(i).getTaskDeadline()!= null) {
+					if (result.get(i).getTaskDeadline().after(result.get(j).getTaskDeadline())) {
+						Task h = new Task(result.get(i));
+						result.set(i, result.get(j));
+						result.set(j, h);
+					}
 				}
 			}
 			i++;
@@ -439,7 +423,7 @@ public class ProjectContainer {
 	/**
 	 * This method returns a set of Projects where a certain user
 	 * 
-	 * @param User
+	 * @param user user whose projects are going to be found
 	 * 
 	 * @return List of Projects of a User
 	 * 
@@ -460,7 +444,7 @@ public class ProjectContainer {
 	 * This method returns a set of Projects where a certain user is the project
 	 * manager
 	 * 
-	 * @param user
+	 * @param user user for which to find the projects where it is the project manager
 	 * 
 	 * @return List of Projects of a User
 	 * 
@@ -484,7 +468,7 @@ public class ProjectContainer {
 	public void updateProjectContainer(){
 
 		this.projectsContainer.clear();
-		this.projectsRepository.findAll().forEach(projectsContainer::add);
+		projectsContainer.addAll(this.projectsRepository.findAll());
 
 	}
 }

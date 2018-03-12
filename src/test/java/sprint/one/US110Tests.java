@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.Profile;
 import project.model.User;
+import project.model.UserContainer;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,26 +25,27 @@ public class US110Tests {
 	 * 
 	 */
 
-	Company Blip;
+	UserContainer userContainer;
 	User newUser2, newUser3;
 	int typeOfUser;
 
 	@Before
 	public void setUp() {
 
-		Blip = Company.getTheInstance();
+		userContainer = new UserContainer();
 
-		newUser2 = Blip.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
+		newUser2 = userContainer.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser3 = Blip.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = userContainer.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-		Blip.getUsersContainer().addUserToUserRepository(newUser2);
+		userContainer.addUserToUserRepository(newUser2);
 	}
 
 	@After
 	public void breakDown() {
-		Company.clear();
+
+		userContainer = null;
 		newUser2 = null;
 		newUser3 = null;
 		typeOfUser = 0;

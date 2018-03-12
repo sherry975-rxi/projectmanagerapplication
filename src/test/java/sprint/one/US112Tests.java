@@ -3,9 +3,9 @@ package sprint.one;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import project.model.Company;
 import project.model.Profile;
 import project.model.User;
+import project.model.UserContainer;
 
 import static org.junit.Assert.*;
 
@@ -24,27 +24,29 @@ public class US112Tests {
 	 * @author João Bessa
 	 * 
 	 */
-	Company Armis;
+	UserContainer userRepository;
 	User newUser2;
 	User newUser3;
 
 	@Before
 	public void setUp() {
 
-		Armis = Company.getTheInstance();
+		userRepository = new UserContainer();
 
-		newUser2 = Armis.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
+
+		newUser2 = userRepository.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser3 = Armis.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = userRepository.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-		Armis.getUsersContainer().addUserToUserRepository(newUser2);
+		userRepository.addUserToUserRepository(newUser2);
 		
 	}
 
 	@After
 	public void tearDown() {
-		Company.clear();
+
+		userRepository = null;
 		newUser2 = null;
 		newUser3 = null;
 
@@ -59,12 +61,12 @@ public class US112Tests {
 	@Test
 	public void testSetUserAsCollaborator() {
 
-		assertTrue(Armis.getUsersContainer().getAllUsersFromUserContainer().contains(newUser2));
-		assertFalse(Armis.getUsersContainer().getAllUsersFromUserContainer().contains(newUser3));
+		assertTrue(userRepository.getAllUsersFromUserContainer().contains(newUser2));
+		assertFalse(userRepository.getAllUsersFromUserContainer().contains(newUser3));
 
 		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
 
-		Armis.getUsersContainer().addUserToUserRepository(newUser3);
+		userRepository.addUserToUserRepository(newUser3);
 
 		newUser3.setUserProfile(Profile.COLLABORATOR);
 
