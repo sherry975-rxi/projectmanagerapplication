@@ -2,7 +2,6 @@ package project.ui.console.projectmanager.team;
 
 import project.controller.US351AddColaboratorToProjectTeamController;
 import project.controller.UpdateDbToContainersController;
-import project.model.Company;
 import project.model.Project;
 import project.model.User;
 

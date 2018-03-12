@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import project.model.Company;
 import project.model.User;
 import project.model.UserContainer;
 

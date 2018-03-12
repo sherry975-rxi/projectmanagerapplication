@@ -14,58 +14,49 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-;
-
 public class ProjectsContainerTest {
 
 	@Mock
 	private ProjectsRepository projectRepositoryMock;
 
-	ProjectContainer ProjectContainer;
-	User user1;
-	User user2;
-	User user3;
-	User userNotCollaborator;
-	User nullUser;
-	ProjectCollaborator collab1;
-	ProjectCollaborator collab2;
-	ProjectCollaborator collab3;
-	ProjectCollaborator collab4;
+	private ProjectContainer ProjectContainer;
+	private User user1;
+	private User user2;
+	private User user3;
+	private User userNotCollaborator;
+	private ProjectCollaborator collab1;
+	private ProjectCollaborator collab2;
+	private ProjectCollaborator collab4;
 
-	TaskCollaborator taskWorker1;
-	TaskCollaborator taskWorker2;
-	TaskCollaborator taskWorker3;
-	TaskCollaborator taskWorker4;
+	private TaskCollaborator taskWorker1;
+	private TaskCollaborator taskWorker4;
 
-	Project project1;
-	Project project2;
-	Project project3;
-	Project project4;
-	Project project5;
-	Project project6;
+	private Project project1;
+	private Project project2;
+	private Project project3;
+	private Project project4;
+	private Project project5;
+	private Project project6;
 
-	Project projectA;
-	Project projectB;
-	Project projectC;
+	private Project projectA;
+	private Project projectB;
 
-	Task task1;
-	Task task2;
-	Task task3;
-	Task task4;
-	Task task5;
-	Task task6;
+	private Task task1;
+	private Task task2;
+	private Task task3;
+	private Task task4;
+	private Task task5;
+	private Task task6;
 
-	List<Project> expResultProjectList;
-	List<Task> expResultTaskList;
-	Calendar estimatedStartDate;
-	Calendar taskDeadline;
-	Calendar taskDeadlineDateTest;
-	Calendar taskDeadlineDateTest2;
-	Calendar taskDeadlineDateTest3;
-	Calendar taskDeadlineDateTest4;
-	Calendar taskDeadlineDateTest5;
-	Calendar taskDeadlineDateTest6;
-	Calendar estimatedTaskStartDateTest;
+	private List<Project> expResultProjectList;
+	private List<Task> expResultTaskList;
+	private Calendar estimatedStartDate;
+	private Calendar taskDeadlineDateTest;
+	private Calendar taskDeadlineDateTest2;
+	private Calendar taskDeadlineDateTest3;
+	private Calendar taskDeadlineDateTest4;
+	private Calendar taskDeadlineDateTest5;
+	private Calendar taskDeadlineDateTest6;
 
 	@Before
 	public void setUp() {
@@ -79,14 +70,14 @@ public class ProjectsContainerTest {
 
 		collab1 = new ProjectCollaborator(user1, 1);
 		collab2 = new ProjectCollaborator(user2, 2);
-		collab3 = new ProjectCollaborator(user3, 3);
+		ProjectCollaborator collab3 = new ProjectCollaborator(user3, 3);
 
 		// Another collaborator in project 2
 		collab4 = new ProjectCollaborator(user1, 4);
 
 		taskWorker1 = new TaskCollaborator(collab1);
-		taskWorker2 = new TaskCollaborator(collab2);
-		taskWorker3 = new TaskCollaborator(collab3);
+		new TaskCollaborator(collab2);
+		new TaskCollaborator(collab3);
 
 		// User 1 is collab4 in project 2
 		taskWorker4 = new TaskCollaborator(collab4);
@@ -99,7 +90,7 @@ public class ProjectsContainerTest {
 		project6 = new Project(5, "project6", "description5", user3);
 
 		// create a estimated Task Start Date
-		estimatedTaskStartDateTest = Calendar.getInstance();
+		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
 		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
 		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 25);
@@ -143,7 +134,7 @@ public class ProjectsContainerTest {
 
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
-		taskDeadline = Calendar.getInstance();
+		Calendar taskDeadline = Calendar.getInstance();
 		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
 		task1 = new Task(111, 222, "Task 1", 50, estimatedTaskStartDateTest, taskDeadlineDateTest, 2000);
 		task2 = new Task(112, 223, "Task 1", 50, estimatedTaskStartDateTest, taskDeadlineDateTest2, 2000);
@@ -152,8 +143,8 @@ public class ProjectsContainerTest {
 		task5 = new Task(289, 2245, "Task 5", 50, estimatedTaskStartDateTest, taskDeadlineDateTest5, 2000);
 		task6 = new Task(584, 285, "Task 5", 50, estimatedTaskStartDateTest, taskDeadlineDateTest6, 2000);
 
-		expResultProjectList = new ArrayList<Project>();
-		expResultTaskList = new ArrayList<Task>();
+		expResultProjectList = new ArrayList<>();
+		expResultTaskList = new ArrayList<>();
 
 		// sets the Project Counter to 0
 		ProjectContainer.setProjCounter(0);
@@ -176,7 +167,6 @@ public class ProjectsContainerTest {
 
 		projectA = null;
 		projectB = null;
-		projectC = null;
 
 		taskDeadlineDateTest = null;
 		taskDeadlineDateTest2 = null;
@@ -193,8 +183,6 @@ public class ProjectsContainerTest {
 		task6 = null;
 
 		taskWorker1 = null;
-		taskWorker2 = null;
-		taskWorker3 = null;
 		taskWorker4 = null;
 
 	}
@@ -381,28 +369,19 @@ public class ProjectsContainerTest {
 		project1.getTaskRepository().addProjectTask(task3);
 
 		// prepare the tasks
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(collab1);
 		task1.addProjectCollaboratorToTask(collab2);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
 		Calendar startDatetask = task1.getEstimatedTaskStartDate();
 		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDatetask);
-		task1.getTaskState().changeToOnGoing();
 		task1.setFinishDate(taskDeadlineDateTest3);
-		task1.getTaskState().changeToFinished();
 
-		task3.getTaskState().changeToPlanned();
 		task3.addProjectCollaboratorToTask(collab1);
-		task3.getTaskState().changeToAssigned();
-		task3.getTaskState().changeToReady();
+
 		Calendar startDateTask3 = task3.getEstimatedTaskStartDate();
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		task3.setStartDate(startDatetask);
-		task3.getTaskState().changeToOnGoing();
 		task3.setFinishDate(taskDeadlineDateTest3);
-		task3.getTaskState().changeToFinished();
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task1);
@@ -444,14 +423,10 @@ public class ProjectsContainerTest {
 		// Marks tasks as finished
 		task1.setEstimatedTaskStartDate(estimatedStartDate);
 		task1.setTaskDeadline(taskDeadlineDateTest);
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(collab1);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
 		Calendar startDateTask1 = estimatedStartDate;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDateTask1);
-		task1.getTaskState().changeToOnGoing();
 		task1.markTaskAsFinished();
 
 		// Adds user to expResultTaskList
@@ -501,40 +476,25 @@ public class ProjectsContainerTest {
 		finishDateTest2.add(Calendar.MONTH, -2);
 
 		// prepare the tasks
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(collab1);
 		task1.addProjectCollaboratorToTask(collab2);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
 		Calendar startDatetask = task1.getEstimatedTaskStartDate();
 		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDatetask);
-		task1.getTaskState().changeToOnGoing();
 		task1.setFinishDate(finishDateTest);
-		task1.getTaskState().changeToFinished();
 
-		task2.getTaskState().changeToPlanned();
 		task2.addProjectCollaboratorToTask(collab2);
 		task2.addProjectCollaboratorToTask(collab1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
 		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDatetask);
-		task2.getTaskState().changeToOnGoing();
 		task2.setFinishDate(finishDateTest);
-		task2.getTaskState().changeToFinished();
 
-		task3.getTaskState().changeToPlanned();
 		task3.addProjectCollaboratorToTask(collab1);
-		task3.getTaskState().changeToAssigned();
-		task3.getTaskState().changeToReady();
 		Calendar startDateTask3 = task3.getEstimatedTaskStartDate();
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		task3.setStartDate(startDatetask);
-		task3.getTaskState().changeToOnGoing();
 		task3.setFinishDate(finishDateTest2);
-		task3.getTaskState().changeToFinished();
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task1);
@@ -581,33 +541,23 @@ public class ProjectsContainerTest {
 		calendar2.add(Calendar.MONTH, -1);
 
 		// prepare the tasks
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(collab1);
 		task1.addProjectCollaboratorToTask(collab2);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
 		Calendar startDatetask = task1.getEstimatedTaskStartDate();
 		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDatetask);
-		task1.getTaskState().changeToOnGoing();
 		task1.createReport(task1.getTaskTeam().get(0), Calendar.getInstance(), 5);
 		task1.getReports().get(0).setReportedTime(5);
 		task1.setFinishDate(calendar1);
-		task1.getTaskState().changeToFinished();
 
-		task2.getTaskState().changeToPlanned();
 		task2.addProjectCollaboratorToTask(collab2);
 		task2.addProjectCollaboratorToTask(collab1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
 		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDatetask);
-		task2.getTaskState().changeToOnGoing();
 		task2.createReport(task2.getTaskTeam().get(1), Calendar.getInstance(), 10);
 		task2.getReports().get(0).setReportedTime(10);
 		task2.setFinishDate(calendar2);
-		task2.getTaskState().changeToFinished();
 
 		assertEquals(15.0, ProjectContainer.getTotalTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
@@ -644,33 +594,23 @@ public class ProjectsContainerTest {
 		calendar2.add(Calendar.MONTH, -1);
 
 		// prepare the tasks
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(collab1);
 		task1.addProjectCollaboratorToTask(collab2);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
 		Calendar startDatetask = task1.getEstimatedTaskStartDate();
 		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDatetask);
-		task1.getTaskState().changeToOnGoing();
 		task1.createReport(task1.getTaskTeam().get(0), Calendar.getInstance(), 5);
 		task1.getReports().get(0).setReportedTime(5);
 		task1.setFinishDate(calendar1);
-		task1.getTaskState().changeToFinished();
 
-		task2.getTaskState().changeToPlanned();
 		task2.addProjectCollaboratorToTask(collab2);
 		task2.addProjectCollaboratorToTask(collab1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
 		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDatetask);
-		task2.getTaskState().changeToOnGoing();
 		task2.createReport(task2.getTaskTeam().get(1), Calendar.getInstance(), 10);
 		task2.getReports().get(0).setReportedTime(10);
 		task2.setFinishDate(calendar2);
-		task2.getTaskState().changeToFinished();
 		assertEquals(7.5, ProjectContainer.getAverageTimeOfFinishedTasksFromUserLastMonth(user1), 0.000000001);
 	}
 
@@ -707,42 +647,27 @@ public class ProjectsContainerTest {
 		finishDateTest2.add(Calendar.MONTH, -2);
 
 		// prepare the tasks
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(collab1);
 		task1.addProjectCollaboratorToTask(collab2);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
 		Calendar startDatetask = task1.getEstimatedTaskStartDate();
 		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDatetask);
-		task1.getTaskState().changeToOnGoing();
 		task1.setFinishDate(finishDateTest);
 		task1.getFinishDate().set(Calendar.DAY_OF_MONTH, 10);
-		task1.getTaskState().changeToFinished();
 
-		task2.getTaskState().changeToPlanned();
 		task2.addProjectCollaboratorToTask(collab2);
 		task2.addProjectCollaboratorToTask(collab1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
 		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDatetask);
-		task2.getTaskState().changeToOnGoing();
 		task2.setFinishDate(finishDateTest);
 		task2.getFinishDate().set(Calendar.DAY_OF_MONTH, 15);
-		task2.getTaskState().changeToFinished();
 
-		task3.getTaskState().changeToPlanned();
 		task3.addProjectCollaboratorToTask(collab1);
-		task3.getTaskState().changeToAssigned();
-		task3.getTaskState().changeToReady();
 		Calendar startDateTask3 = task3.getEstimatedTaskStartDate();
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		task3.setStartDate(startDatetask);
-		task3.getTaskState().changeToOnGoing();
 		task3.setFinishDate(finishDateTest2);
-		task3.getTaskState().changeToFinished();
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task2);
@@ -782,43 +707,28 @@ public class ProjectsContainerTest {
 		finishDateTest.add(Calendar.MONTH, -1);
 
 		// prepare the tasks
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(collab1);
 		task1.addProjectCollaboratorToTask(collab2);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
 		Calendar startDatetask = task1.getEstimatedTaskStartDate();
 		startDatetask.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDatetask);
-		task1.getTaskState().changeToOnGoing();
 		task1.setFinishDate(finishDateTest);
 		task1.getFinishDate().set(Calendar.DAY_OF_MONTH, 10);
-		task1.getTaskState().changeToFinished();
 
-		task2.getTaskState().changeToPlanned();
 		task2.addProjectCollaboratorToTask(collab2);
 		task2.addProjectCollaboratorToTask(collab1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
 		Calendar startDateTask2 = task2.getEstimatedTaskStartDate();
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDatetask);
-		task2.getTaskState().changeToOnGoing();
 		task2.setFinishDate(finishDateTest);
 		task2.getFinishDate().set(Calendar.DAY_OF_MONTH, 15);
-		task2.getTaskState().changeToFinished();
 
-		task3.getTaskState().changeToPlanned();
 		task3.addProjectCollaboratorToTask(collab1);
-		task3.getTaskState().changeToAssigned();
-		task3.getTaskState().changeToReady();
 		Calendar startDateTask3 = task3.getEstimatedTaskStartDate();
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		task3.setStartDate(startDatetask);
-		task3.getTaskState().changeToOnGoing();
 		task3.setFinishDate(finishDateTest);
 		task3.getFinishDate().set(Calendar.DAY_OF_MONTH, 5);
-		task3.getTaskState().changeToFinished();
 
 		// Adds user to expResultTaskList
 		expResultTaskList.add(task2);
@@ -852,7 +762,7 @@ public class ProjectsContainerTest {
 		task3.markTaskAsFinished();
 
 		// List with tasks not sorted.
-		List<Task> toBeSorted = new ArrayList<Task>();
+		List<Task> toBeSorted = new ArrayList<>();
 		toBeSorted.add(task1);
 		toBeSorted.add(task2);
 		toBeSorted.add(task3);
@@ -929,26 +839,18 @@ public class ProjectsContainerTest {
 		// Marks tasks as finished
 		task2.setEstimatedTaskStartDate(estimatedStartDate);
 		task2.setTaskDeadline(taskDeadlineDateTest);
-		task2.getTaskState().changeToPlanned();
 		task2.addProjectCollaboratorToTask(collab1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
 		Calendar startDateTask1 = estimatedStartDate;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDateTask1);
-		task2.getTaskState().changeToOnGoing();
 		task2.markTaskAsFinished();
 
 		task6.setEstimatedTaskStartDate(estimatedStartDate);
 		task6.setTaskDeadline(taskDeadlineDateTest);
-		task6.getTaskState().changeToPlanned();
 		task6.addProjectCollaboratorToTask(collab1);
-		task6.getTaskState().changeToAssigned();
-		task6.getTaskState().changeToReady();
 		Calendar startDateTask2 = estimatedStartDate;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task6.setStartDate(startDateTask2);
-		task6.getTaskState().changeToOnGoing();
 		task6.markTaskAsFinished();
 
 		// creates a new list of tasks in increasingDeadLineOrder
@@ -967,7 +869,7 @@ public class ProjectsContainerTest {
 		startedNotFinishedTasksInOrder.clear();
 		// The method returns an empty list, if the user is null
 		assertEquals(startedNotFinishedTasksInOrder,
-				ProjectContainer.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(nullUser));
+				ProjectContainer.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(null));
 
 	}
 

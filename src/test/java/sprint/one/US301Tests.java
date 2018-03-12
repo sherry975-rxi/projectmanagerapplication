@@ -3,7 +3,6 @@ package sprint.one;
 import org.junit.After;
 import org.junit.Before;
 import project.controller.US301CreateProjectController;
-import project.model.Company;
 import project.model.Profile;
 import project.model.Project;
 import project.model.User;
