@@ -12,7 +12,6 @@ import static org.junit.Assert.assertTrue;
 
 public class DoLoginControllerTests {
 
-	Company myCompany;
 	UserContainer userContainer;
 	User user1;
 	User userAdmin;
@@ -20,12 +19,10 @@ public class DoLoginControllerTests {
 
 	@Before
 	public void setUp() {
-		// create company
-
-		myCompany = Company.getTheInstance();
+		
 
 		// creates an UserContainer
-		userContainer = myCompany.getUsersContainer();
+		userContainer = new UserContainer();
 
 		userContainer.getAllUsersFromUserContainer().clear();
 
@@ -45,7 +42,6 @@ public class DoLoginControllerTests {
 
 	@After
 	public void tearDown() {
-		Company.clear();
 		user1 = null;
 		userContainer = null;
 		doLoginController = null;
