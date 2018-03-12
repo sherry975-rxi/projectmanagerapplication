@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.Profile;
 import project.model.User;
+import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,34 +15,34 @@ import static org.junit.Assert.assertTrue;
 
 public class US130ListUsersControllerTest {
 
-	Company Critical;
 	User user1, user2, newUser2, newUser3;
 	List<String> testList;
 	US130ListUsersController listUsersController;
+	UserContainer userContainer;
 
 	@Before
 	public void setUp() {
 
-		// create company
-		Critical = Company.getTheInstance();
+		// creates an UserContainer
+		userContainer = new UserContainer();
 
 		// create a list to compare
 		testList = new ArrayList<>();
 
 		// creates user four users
-		user1 = Critical.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		user2 = Critical.getUsersContainer().createUser("DanielM", "daniel2M@gmail.com", "002", "Code Monkey",
+		user2 = userContainer.createUser("DanielM", "daniel2M@gmail.com", "002", "Code Monkey",
 				"920000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser2 = Critical.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
+		newUser2 = userContainer.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		newUser3 = Critical.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = userContainer.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
 		// adds all but newUser3 to the UserContainer and test List
-		Critical.getUsersContainer().addUserToUserRepository(user1);
-		Critical.getUsersContainer().addUserToUserRepository(user2);
-		Critical.getUsersContainer().addUserToUserRepository(newUser2);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(newUser2);
 
 		listUsersController = new US130ListUsersController();
 	}
@@ -49,7 +50,7 @@ public class US130ListUsersControllerTest {
 	@After
 	public void tearDown() {
 
-		Company.clear();
+		userContainer = null;
 		user1 = null;
 		user2 = null;
 		newUser2 = null;
