@@ -17,6 +17,7 @@ public class Finished implements TaskStateInterface {
 		OnGoing ongoingState = new OnGoing();
 		if(ongoingState.isValid(task)) {
 			task.setTaskState(ongoingState);
+			task.setCurrentState(StateEnum.ONGOING);
 		}
 	}
 
