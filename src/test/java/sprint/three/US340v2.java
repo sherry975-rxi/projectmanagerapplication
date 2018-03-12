@@ -19,7 +19,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class US340v2 {
 
-	Company myCompany;
+
+	UserContainer myProjCont;
 	ProjectContainer myProjRep;
 	User user1, user2;
 	Project myProject;
@@ -32,10 +33,8 @@ public class US340v2 {
 	@Before
 	public void setUp() {
 
-		//create company
-		myCompany = Company.getTheInstance();
-		//create project repository
-		myProjRep = myCompany.getProjectsContainer();
+		//create project container
+		myProjRep = new ProjectContainer();
 		// create users
 		user1 = new User("pepe", "huehue@mail.com", "66", "debugger", "1234567");
 		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
@@ -57,16 +56,20 @@ public class US340v2 {
 		myProject.setStartdate(projStartDate);
 		// create tasks with the dates previously prepared
 		testTask = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
+		testTask.setProject(myProject);
 		testTask2 = new Task(2, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
-		testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
-		// add user to task
+        testTask2.setProject(myProject);
+        testTask3 = new Task(3, 3, "Task Hue", 1, estimatedTaskStartDate, taskDeadline, 0);
+        testTask3.setProject(myProject);
+        // add user to task
 		testTask.addProjectCollaboratorToTask(collab1);
 
 	}
 
 	@After
 	public void tearDown() {
-		Company.clear();
+
+		myProjCont=null;
 		myProjRep = null;
 		user1 = null;
 		user2 = null;
@@ -121,7 +124,8 @@ public class US340v2 {
 		// create expected new Task start date after define the interval
 		// Start date of project and task were previously before
 		// now the task start date is 10 days after the project
-		Calendar expectedStartDate = (Calendar) myProject.getStartdate().clone();
+		Calendar expectedStartDate = Calendar.getInstance();
+        expectedStartDate.add(Calendar.MONTH, -1);
 		expectedStartDate.add(Calendar.DAY_OF_YEAR, 10);
 
 		// compares the simulated date to the one that the method returns
@@ -163,8 +167,10 @@ public class US340v2 {
 		// estimated deadline.
 		testTask.setDeadlineInterval(15);
 
-		// simulates the new estimated deadline for the task
-		Calendar expectedDeadline = (Calendar) myProject.getStartdate().clone();
+		// simulates the new estimated deadline for the task. It copies the system date and adds 1 month to match the created deadline
+        // then adds 15 days
+		Calendar expectedDeadline = Calendar.getInstance();
+		expectedDeadline.add(Calendar.MONTH, -1);
 		expectedDeadline.add(Calendar.DAY_OF_YEAR, 15);
 
 		// compares the simulated date to the one that the method returns

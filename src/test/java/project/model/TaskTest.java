@@ -63,10 +63,15 @@ public class TaskTest {
 		myProject.setStartdate(projStartDate);
 
 		testTask = new Task(1, 1, "Description of task");
+		testTask.setProject(myProject);
 		testTask2 = new Task(2, 2, "Description of task");
+		testTask2.setProject(myProject);
 		testTask3 = new Task(3, 3, "Description of task 3");
+		testTask3.setProject(myProject);
 		testTask4 = new Task(testTask);
+		testTask4.setProject(myProject);
 		testTask5 = new Task(5, 1, "Description of task 5");
+		testTask5.setProject(myProject);
 		testTask5.setDeadlineInterval(Calendar.DAY_OF_YEAR + 5);
 		testTask5.setStartDateInterval(Calendar.DAY_OF_YEAR + 6);
 		Task task = new Task();
