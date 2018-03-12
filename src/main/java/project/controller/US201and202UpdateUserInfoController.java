@@ -22,7 +22,6 @@ public class US201and202UpdateUserInfoController {
 
 		user.setName(name);
 		this.userContainer = new UserContainer();
-		this.userContainer.updateUserContainer();
 
 	}
 
