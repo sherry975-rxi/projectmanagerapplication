@@ -1,9 +1,29 @@
 package project.controller;
 
+import project.Repository.UserRepository;
 import project.model.Profile;
+import project.model.ProjectContainer;
 import project.model.User;
+import project.model.UserContainer;
 
 public class US110andUS112SetUserProfileController {
+	
+	private UserContainer userContainer;
+	private ProjectContainer projectContainer;
+
+	public US110andUS112SetUserProfileController() {
+		userContainer = new UserContainer();
+		projectContainer = new ProjectContainer();
+
+	}
+
+	public UserContainer getUserContainer() {
+		return userContainer;
+	}
+
+	public ProjectContainer getProjectContainer() {
+		return projectContainer;
+	}
 
 	/**
 	 * This method sets the assigned user as Director
@@ -31,7 +51,7 @@ public class US110andUS112SetUserProfileController {
 		String output;
 		switch (user.getUserProfile()) {
 		case DIRECTOR:
-			output = "Director";
+			output = "Director2";
 			break;
 		case COLLABORATOR:
 			output = "Collaborator";
