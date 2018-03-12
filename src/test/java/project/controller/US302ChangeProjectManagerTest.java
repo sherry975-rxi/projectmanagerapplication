@@ -5,7 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.Profile;
 import project.model.Project;
+import project.model.ProjectContainer;
 import project.model.User;
+import project.model.UserContainer;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +19,8 @@ import static org.junit.Assert.*;
  */
 public class US302ChangeProjectManagerTest {
 
-	Company c1;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 	User userFirstManager;
 	User userNewManager;
 	Project newProject;
@@ -26,29 +29,32 @@ public class US302ChangeProjectManagerTest {
 	@Before
 	public void setUp() {
 
-		// Company creation
-		c1 = Company.getTheInstance();
+		// creates an UserContainer
+		userContainer = new UserContainer();
+								
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
 
 		// User creation
-		userFirstManager = c1.getUsersContainer().createUser("Leonor", "leonor@gmail.com", "001", "Empregado",
+		userFirstManager = userContainer.createUser("Leonor", "leonor@gmail.com", "001", "Empregado",
 				"930000000", "Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
-		userNewManager = c1.getUsersContainer().createUser("Lenny", "lenny@gmail.com", "002", "Empregado", "940000000",
+		userNewManager = userContainer.createUser("Lenny", "lenny@gmail.com", "002", "Empregado", "940000000",
 				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
 		// add users to company
-		c1.getUsersContainer().addUserToUserRepository(userFirstManager);
-		c1.getUsersContainer().addUserToUserRepository(userNewManager);
+		userContainer.addUserToUserRepository(userFirstManager);
+		userContainer.addUserToUserRepository(userNewManager);
 
 		// set user as Director
 		userFirstManager.setUserProfile(Profile.COLLABORATOR);
 
-		newProject = c1.getProjectsContainer().createProject("name", "description", userFirstManager);
-		c1.getProjectsContainer().addProjectToProjectContainer(newProject);
+		newProject = projectContainer.createProject("name", "description", userFirstManager);
+		projectContainer.addProjectToProjectContainer(newProject);
 	}
 
 	@After
 	public void tearDown() {
-		Company.clear();
-		c1 = null;
+		userContainer = null;
+		projectContainer = null;
 		userFirstManager = null;
 		userNewManager = null;
 		newProject = null;
