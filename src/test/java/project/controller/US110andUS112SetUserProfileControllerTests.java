@@ -3,16 +3,9 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.Mockito.when;
 
-import project.Repository.UserRepository;
 import project.model.Profile;
 import project.model.User;
-import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,24 +13,16 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(MockitoJUnitRunner.class)
 public class US110andUS112SetUserProfileControllerTests {
 
-    @Mock
-    private UserRepository userRepository;
-
-    private UserContainer userContainer;
-
-    @InjectMocks
     private US110andUS112SetUserProfileController us110andUS112SetUserProfileController;
+
     private User newUser2, newUser3;
 
     @Before
     public void setUp() {
 
         us110andUS112SetUserProfileController = new US110andUS112SetUserProfileController();
-
-        userContainer = new UserContainer();
 
         newUser2 = us110andUS112SetUserProfileController.getUserContainer().createUser("Manel", "user2@gmail.com",
                 "001", "Empregado", "930000000",
@@ -54,7 +39,6 @@ public class US110andUS112SetUserProfileControllerTests {
         victim.add(newUser2);
         victim.add(newUser3);
 
-        when(userRepository.findAll()).thenReturn(victim);
     }
 
     @After
