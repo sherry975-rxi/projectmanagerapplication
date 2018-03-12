@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
+ * Tests all methods in UserContainerClass
  * @author Group3
  *
  */
@@ -144,8 +145,8 @@ public class UserContainerTest {
 
 		userContainer.addUserToUserRepository(user1);
 
-		assertTrue(userContainer.isUserinUserRepository(user1));
-		assertFalse(userContainer.isUserinUserRepository(user2));
+		assertTrue(userContainer.isUserinUserContainer(user1));
+		assertFalse(userContainer.isUserinUserContainer(user2));
 	}
 
 	/**
