@@ -19,7 +19,6 @@ import static org.junit.Assert.assertTrue;
  */
 public class US357CancelRemovalTaskRequestControllerTest {
 
-	Company company;
 	User userDaniel;
 	User userRui;
 	ProjectContainer projectContainer;
@@ -38,12 +37,10 @@ public class US357CancelRemovalTaskRequestControllerTest {
 	@Before
 	public void setUp() {
 
-		// Sets the Company
-		company = Company.getTheInstance();
 
 		// Creates the Project Repository and User Repository
-		projectContainer = Company.getTheInstance().getProjectsContainer();
-		userContainer = Company.getTheInstance().getUsersContainer();
+		projectContainer = new ProjectContainer();
+		userContainer = new UserContainer();
 
 		// Creates the users
 		userDaniel = userContainer.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto", "967387654", "Rua",
@@ -98,7 +95,6 @@ public class US357CancelRemovalTaskRequestControllerTest {
 	@After
 	public void tearDown() {
 
-		Company.clear();
 		projectA = null;
 		userDaniel = null;
 		userRui = null;
