@@ -73,7 +73,7 @@ public class TaskContainer implements Serializable{
 	 * 
 	 * @return Project Task List
 	 */
-	public List<Task> getProjectTaskRepository() {
+	public List<Task> getAllTasksfromProject() {
 		return this.projectTasks;
 	}
 
@@ -83,7 +83,7 @@ public class TaskContainer implements Serializable{
 	 * @param toAdd
 	 *            Task to add to the Project Task List
 	 */
-	public void addProjectTask(Task toAdd) {
+	public void addTaskToProject(Task toAdd) {
 	    toAdd.setProject(this.project);
 		this.projectTasks.add(toAdd);
 	}
@@ -195,7 +195,7 @@ public class TaskContainer implements Serializable{
 	 * @return TRUE if task exists in the task list FALSE if task does not exist in
 	 *         the task list
 	 */
-	public boolean isTaskInRTaskRepository(Task task) {
+	public boolean isTaskInTaskContainer(Task task) {
 		for (Task other : this.projectTasks) {
 			if (task.equals(other)) {
 				return true;
@@ -260,7 +260,7 @@ public class TaskContainer implements Serializable{
 	 */
 	public List<Task> getAllTasksFromProjectCollaborator(ProjectCollaborator collab) {
 		List<Task> allTasks = new ArrayList<>();
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			if (other.isProjectCollaboratorInTaskTeam(collab)) {
 				allTasks.add(other);
 			}
@@ -278,7 +278,7 @@ public class TaskContainer implements Serializable{
 	 *         task
 	 */
 	public boolean isCollaboratorActiveOnAnyTask(ProjectCollaborator collab) {
-		for (Task otherTask : this.getProjectTaskRepository()) {
+		for (Task otherTask : this.getAllTasksfromProject()) {
 			if (otherTask.isProjectCollaboratorActiveInTaskTeam(collab))
 				return true;
 		}
@@ -296,7 +296,7 @@ public class TaskContainer implements Serializable{
 
 		List<Task> listOfTasksWithoutCollaboratorsAssigned = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 
 			if (other.isTaskTeamEmpty()) {
 				listOfTasksWithoutCollaboratorsAssigned.add(other);
@@ -317,7 +317,7 @@ public class TaskContainer implements Serializable{
 	public List<Task> getFinishedTasks() {
 		List<Task> allFinishedTasks = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			if (other.isTaskFinished()) {
 				allFinishedTasks.add(other);
 			}
@@ -379,7 +379,7 @@ public class TaskContainer implements Serializable{
 	public List<Task> getUnFinishedTasks() {
 		List<Task> allUnFinishedTasks = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			if (!other.isTaskFinished() && !"Cancelled".equals(other.viewTaskStateName())
 					&& other.getStartDate() != null) {
 				allUnFinishedTasks.add(other);
@@ -397,7 +397,7 @@ public class TaskContainer implements Serializable{
 	public List<Task> getOnGoingTasks() {
 		List<Task> allOnGoing = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			if ("OnGoing".equals(other.viewTaskStateName())) {
 				allOnGoing.add(other);
 			}
@@ -414,7 +414,7 @@ public class TaskContainer implements Serializable{
 	public List<Task> getUnstartedTasks() {
 		List<Task> allUnstartedTasks = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			if (other.getStartDate() == null) {
 				allUnstartedTasks.add(other);
 			}
@@ -490,7 +490,7 @@ public class TaskContainer implements Serializable{
 	 * 
 	 * @return List of cancelled Tasks
 	 */
-	public List<Task> getCancelledTasks() {
+	public List<Task> getCancelledTasksFromProject() {
 		List<Task> cancelledTasksFromProject = new ArrayList<>();
 
 		for (Task other : this.projectTasks) {
@@ -508,7 +508,7 @@ public class TaskContainer implements Serializable{
 	public List<String> getReportedCostOfEachTask() {
 		List<String> reportTaskCost = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			reportTaskCost.add(String.valueOf(other.getTaskCost()));
 
 		}

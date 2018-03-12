@@ -62,9 +62,9 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		taskA = new Task(1, 1, "Faind fek quin!");
 		taskB = new Task(2, 1, "Spit on non-beleevahs!");
 		taskC = new Task(3, 1, "Follou da wae!");
-		taskRepo.addProjectTask(taskA);
-		taskRepo.addProjectTask(taskB);
-		taskRepo.addProjectTask(taskC);
+		taskRepo.addTaskToProject(taskA);
+		taskRepo.addTaskToProject(taskB);
+		taskRepo.addTaskToProject(taskC);
 
 		// Add User to tasks
 		taskA.addProjectCollaboratorToTask(proj.getProjectCollaboratorFromUser(userA));

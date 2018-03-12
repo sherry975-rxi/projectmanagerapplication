@@ -89,10 +89,10 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		myProject.addProjectCollaboratorToProjectTeam(projectCollaborator1);
 
 		// Add Tasks to project 1
-		myProject.getTaskRepository().addProjectTask(task1);
-		myProject.getTaskRepository().addProjectTask(task2);
-		myProject.getTaskRepository().addProjectTask(task3);
-		myProject.getTaskRepository().addProjectTask(task4);
+		myProject.getTaskRepository().addTaskToProject(task1);
+		myProject.getTaskRepository().addTaskToProject(task2);
+		myProject.getTaskRepository().addTaskToProject(task3);
+		myProject.getTaskRepository().addTaskToProject(task4);
 
 		// create task workers
 		taskWorker1 = task1.createTaskCollaborator(projectCollaborator1);

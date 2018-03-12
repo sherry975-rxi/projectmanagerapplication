@@ -40,7 +40,7 @@ public class US340CreateTaskController {
 	public Task addTask(String description) {
 		Task newTask = taskContainer.createTask(description);
 
-		taskContainer.addProjectTask(newTask);
+		taskContainer.addTaskToProject(newTask);
 
 		return newTask;
 

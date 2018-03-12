@@ -71,7 +71,7 @@ public class US350v02 {
 		// create the project and set a user to Project manager
 		p1 = c1.getProjectsContainer().createProject("Teste", "blablabla", u2);
 		p1.getProjectTeam().clear();
-		p1.getTaskRepository().getProjectTaskRepository().clear();
+		p1.getTaskRepository().getAllTasksfromProject().clear();
 		contextualProject = c1.getProjectsContainer().createProject("Teste", "blablabla", u2);
 
 		// add project to project repository

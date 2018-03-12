@@ -45,8 +45,8 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 		// creates two tasks and adds the to the project's task repository
 		taskWithTeam = testStuff.getTaskRepository().createTask("This one has a team");
 		taskWithNoTeam = testStuff.getTaskRepository().createTask("This one does not");
-		testStuff.getTaskRepository().addProjectTask(taskWithTeam);
-		testStuff.getTaskRepository().addProjectTask(taskWithNoTeam);
+		testStuff.getTaskRepository().addTaskToProject(taskWithTeam);
+		testStuff.getTaskRepository().addTaskToProject(taskWithNoTeam);
 
 		// adds the active team member to a task, and creates an expected String of data
 		// belonging to the idle team member

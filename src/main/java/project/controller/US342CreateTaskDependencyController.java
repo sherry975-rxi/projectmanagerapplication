@@ -161,8 +161,8 @@ public class US342CreateTaskDependencyController {
 	 */
 	public boolean projectContainsSelectedTask(String id) {
 		boolean result = false;
-		for (int i = 0; i < project.getTaskRepository().getProjectTaskRepository().size(); i++) {
-			if (id.equals(project.getTaskRepository().getProjectTaskRepository().get(i).getTaskID())) {
+		for (int i = 0; i < project.getTaskRepository().getAllTasksfromProject().size(); i++) {
+			if (id.equals(project.getTaskRepository().getAllTasksfromProject().get(i).getTaskID())) {
 				result = true;
 				break;
 			}

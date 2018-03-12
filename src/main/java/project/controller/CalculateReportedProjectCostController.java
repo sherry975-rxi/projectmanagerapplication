@@ -48,7 +48,7 @@ public class CalculateReportedProjectCostController {
 	public List<String> getTaskId(Project project) {
 		List<String> taskID = new ArrayList<>();
 
-		for (Task other : project.getTaskRepository().getProjectTaskRepository()) {
+		for (Task other : project.getTaskRepository().getAllTasksfromProject()) {
 			taskID.add(other.getTaskID());
 		}
 

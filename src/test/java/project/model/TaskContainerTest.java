@@ -158,10 +158,10 @@ public class TaskContainerTest {
 	public void testCreateTask() {
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 
 		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
 		// getProjectTaskList method
@@ -174,7 +174,7 @@ public class TaskContainerTest {
 		taskListToCompare.add(testTask4);
 
 		// See if the two lists have the same tasks
-		assertEquals(taskContainer.getProjectTaskRepository(), taskListToCompare);
+		assertEquals(taskContainer.getAllTasksfromProject(), taskListToCompare);
 
 	}
 
@@ -182,10 +182,10 @@ public class TaskContainerTest {
 	public void testGetProjectTaskList() {
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 
 		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
 		// getProjectTaskList method
@@ -198,17 +198,17 @@ public class TaskContainerTest {
 		taskListToCompare.add(testTask4);
 
 		// See if the two lists have the same tasks
-		assertEquals(taskContainer.getProjectTaskRepository(), taskListToCompare);
+		assertEquals(taskContainer.getAllTasksfromProject(), taskListToCompare);
 
 	}
 
 	@Test
 	public void testGetUnFinishedTasksFromUser() {
 		// add task to task repository of the project
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 		// add de user to the task
 		testTask.addTaskCollaboratorToTask(taskWorkerDan);
 		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
@@ -230,10 +230,10 @@ public class TaskContainerTest {
 	public void testFinishedTaskListOfUserInProject() {
 
 		// add task to task repository of the project
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 		// adds the user to the task
 		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
 		testTask4.addTaskCollaboratorToTask(taskWorkerDan);
@@ -382,10 +382,10 @@ public class TaskContainerTest {
 		testTask4.getTaskState().changeToFinished();
 
 		// add task to task repository of the project
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 
 		// given four finished tasks from Collaborator Daniel (collabDan)
 
@@ -406,28 +406,28 @@ public class TaskContainerTest {
 	public void testContainsTask() {
 
 		// add task to task repository of the project
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
 
 		// See if the tasks are contained in the Task Repository
-		assertTrue(taskContainer.isTaskInRTaskRepository(testTask));
-		assertFalse(taskContainer.isTaskInRTaskRepository(testTask4));
+		assertTrue(taskContainer.isTaskInTaskContainer(testTask));
+		assertFalse(taskContainer.isTaskInTaskContainer(testTask4));
 
 		// adds Task4 to the Repository
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask4);
 
 		// See if task4 is contained in the Task Repository
-		assertTrue(taskContainer.isTaskInRTaskRepository(testTask4));
+		assertTrue(taskContainer.isTaskInTaskContainer(testTask4));
 
 	}
 
 	@Test
 	public void testGetTimeOnLastMonthProjectUserTask() {
 		// add task to task repository of the project
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
 
 		// create finished date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -494,11 +494,11 @@ public class TaskContainerTest {
 		// sets the task counter as 0;
 		taskContainer.setTaskCounter(0);
 		// add task to task repository of the project
-		taskContainer.addProjectTask(testTask);
+		taskContainer.addTaskToProject(testTask);
 		taskContainer.setTaskCounter(1);
-		taskContainer.addProjectTask(testTask2);
+		taskContainer.addTaskToProject(testTask2);
 		taskContainer.setTaskCounter(2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask3);
 		taskContainer.setTaskCounter(3);
 
 		// creates a variable with the value of the expected outcome of getTaskCounter
@@ -523,10 +523,10 @@ public class TaskContainerTest {
 	@Test
 	public void testGetAllTaskOfUser() {
 		// add task to task repository of the project
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 		// adds the user to the task
 		testTask.addTaskCollaboratorToTask(taskWorkerDan);
 		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
@@ -552,10 +552,10 @@ public class TaskContainerTest {
 	@Test
 	public void testIsThereUserWithoutTasks() {
 		// adds task to task repository of the project
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 
 		// Adds user to testTssk
 		testTask.addTaskCollaboratorToTask(taskWorkerJoa);
@@ -571,10 +571,10 @@ public class TaskContainerTest {
 	public void testGetListofTasksWithoutCollaboratorsAssigned() {
 
 		// adds task to task repository of the project
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 
 		// adds User of index 1 to testTask and testTask4
 		testTask.addTaskCollaboratorToTask(taskWorkerJoa);
@@ -616,10 +616,10 @@ public class TaskContainerTest {
 	public void testGetUnFinishedTasks() {
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 
 		// Adds userDan to the Task
 		testTask4.addTaskCollaboratorToTask(taskWorkerDan);
@@ -713,9 +713,9 @@ public class TaskContainerTest {
 	public void testGetFinishedTasks() {
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
 
 		// Adds userDan to the Task
 		testTask3.addTaskCollaboratorToTask(taskWorkerDan);
@@ -792,9 +792,9 @@ public class TaskContainerTest {
 	public void testGetUnstartedTasks() {
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
 
 		// Adds userDan to the Task
 		testTask.addTaskCollaboratorToTask(taskWorkerDan);
@@ -825,13 +825,13 @@ public class TaskContainerTest {
 	public void testGetExpiredTasks() {
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask4);
-		taskContainer.addProjectTask(testTask5);
-		taskContainer.addProjectTask(testTask6);
-		taskContainer.addProjectTask(testTask7);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask4);
+		taskContainer.addTaskToProject(testTask5);
+		taskContainer.addTaskToProject(testTask6);
+		taskContainer.addTaskToProject(testTask7);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
 
 		// Marks testTask2 as finished
 		testTask2.markTaskAsFinished();
@@ -890,9 +890,9 @@ public class TaskContainerTest {
 	@Test
 	public void testGetFinishedTasksInDecreasingOrder() {
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
 
 		testTask3.addTaskCollaboratorToTask(taskWorkerDan);
 
@@ -978,13 +978,13 @@ public class TaskContainerTest {
 		startDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask4);
-		taskContainer.addProjectTask(testTask5);
-		taskContainer.addProjectTask(testTask6);
-		taskContainer.addProjectTask(testTask7);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask4);
+		taskContainer.addTaskToProject(testTask5);
+		taskContainer.addTaskToProject(testTask6);
+		taskContainer.addTaskToProject(testTask7);
 
 		// Adds userDan to the Task7
 		testTask7.addTaskCollaboratorToTask(taskWorkerDan);
@@ -1161,10 +1161,10 @@ public class TaskContainerTest {
 	@Test
 	public void getTaskByID() {
 
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
 
 		// The TaskID is set automatically, so the the first task is 1.1, the second
 		// task is 1.2 and so on.
@@ -1203,12 +1203,12 @@ public class TaskContainerTest {
 		Cancelled CancelledTest = new Cancelled(testTask6);
 
 		// Adds 5 tasks to the TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
-		taskContainer.addProjectTask(testTask4);
-		taskContainer.addProjectTask(testTask5);
-		taskContainer.addProjectTask(testTask6);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
+		taskContainer.addTaskToProject(testTask4);
+		taskContainer.addTaskToProject(testTask5);
+		taskContainer.addTaskToProject(testTask6);
 
 		/*
 		 * States on which the task can be deleted - "ASSIGNED", "PLANNED" , "CREATED" ,
@@ -1222,7 +1222,7 @@ public class TaskContainerTest {
 		assertFalse(taskContainer.deleteTask(testTask));
 
 		// The task won't be deleted because the state of the Task is set to "OnGoing"
-		assertTrue(taskContainer.getProjectTaskRepository().contains(testTask));
+		assertTrue(taskContainer.getAllTasksfromProject().contains(testTask));
 
 		// Sets the taskState to "ASSIGNED"
 		testTask.setTaskState(AssignedTest);
@@ -1231,10 +1231,10 @@ public class TaskContainerTest {
 		assertTrue(taskContainer.deleteTask(testTask));
 
 		// The task was deleted from the task repository
-		assertFalse(taskContainer.getProjectTaskRepository().contains(testTask));
+		assertFalse(taskContainer.getAllTasksfromProject().contains(testTask));
 
 		// Verifies if task2 is in the TaskContainer
-		assertTrue(taskContainer.getProjectTaskRepository().contains(testTask2));
+		assertTrue(taskContainer.getAllTasksfromProject().contains(testTask2));
 
 		// sets the task State to "Created"
 		testTask2.setTaskState(CreatedTest);
@@ -1243,10 +1243,10 @@ public class TaskContainerTest {
 		assertTrue(taskContainer.deleteTask(testTask2));
 
 		// Task2 was sucessfully deleted
-		assertFalse(taskContainer.getProjectTaskRepository().contains(testTask2));
+		assertFalse(taskContainer.getAllTasksfromProject().contains(testTask2));
 
 		// Verifies if task3 is in the TaskContainer
-		assertTrue(taskContainer.getProjectTaskRepository().contains(testTask3));
+		assertTrue(taskContainer.getAllTasksfromProject().contains(testTask3));
 
 		// sets the task State to "Finished"
 		testTask3.setTaskState(FinishedTest);
@@ -1255,7 +1255,7 @@ public class TaskContainerTest {
 		assertFalse(taskContainer.deleteTask(testTask3));
 
 		// Task3 wasn't deleted from the repository
-		assertTrue(taskContainer.getProjectTaskRepository().contains(testTask3));
+		assertTrue(taskContainer.getAllTasksfromProject().contains(testTask3));
 
 		// Sets the state of testTask3 to "Planned"
 		testTask3.setTaskState(PlannedTest);
@@ -1264,10 +1264,10 @@ public class TaskContainerTest {
 		taskContainer.deleteTask(testTask3);
 
 		// Task3 was sucessfully deleted from the TaskContainer
-		assertFalse(taskContainer.getProjectTaskRepository().contains(testTask3));
+		assertFalse(taskContainer.getAllTasksfromProject().contains(testTask3));
 
 		// Verifies if task4 is in the TaskContainer
-		assertTrue(taskContainer.getProjectTaskRepository().contains(testTask4));
+		assertTrue(taskContainer.getAllTasksfromProject().contains(testTask4));
 
 		// Sets the state of testTask4 to "Ready"
 		testTask4.setTaskState(ReadyTest);
@@ -1276,10 +1276,10 @@ public class TaskContainerTest {
 		assertTrue(taskContainer.deleteTask(testTask4));
 
 		// Task4 was sucessfully deleted from the TaskContainer
-		assertFalse(taskContainer.getProjectTaskRepository().contains(testTask4));
+		assertFalse(taskContainer.getAllTasksfromProject().contains(testTask4));
 
 		// Verifies if task5 is in the TaskContainer
-		assertTrue(taskContainer.getProjectTaskRepository().contains(testTask5));
+		assertTrue(taskContainer.getAllTasksfromProject().contains(testTask5));
 
 		// Sets the state of testTask5 to "StandBy"
 		testTask5.setTaskState(ReadyTest);
@@ -1288,19 +1288,19 @@ public class TaskContainerTest {
 		assertTrue(taskContainer.deleteTask(testTask5));
 
 		// Task5 was sucessfully deleted from the TaskContainer
-		assertFalse(taskContainer.getProjectTaskRepository().contains(testTask5));
+		assertFalse(taskContainer.getAllTasksfromProject().contains(testTask5));
 
 		// Sets testTak6 to state "StandBy"
 		testTask6.setTaskState(StandByTest);
 		// Verifies if task6 is in the TaskContainer
-		assertTrue(taskContainer.getProjectTaskRepository().contains(testTask6));
+		assertTrue(taskContainer.getAllTasksfromProject().contains(testTask6));
 
 		// Tries to delete the testTask6
 		assertFalse(taskContainer.deleteTask(testTask6));
 
 		// Task6 couldn't deleted from the TaskContainer because its set to state
 		// "StandBy2
-		assertTrue(taskContainer.getProjectTaskRepository().contains(testTask6));
+		assertTrue(taskContainer.getAllTasksfromProject().contains(testTask6));
 
 		// Sets testTak6 to state "Cancelled"
 		testTask6.setTaskState(CancelledTest);
@@ -1310,12 +1310,12 @@ public class TaskContainerTest {
 
 		// Task6 couldn't deleted from the TaskContainer because it's set to state
 		// "Cancelled"
-		assertTrue(taskContainer.getProjectTaskRepository().contains(testTask6));
+		assertTrue(taskContainer.getAllTasksfromProject().contains(testTask6));
 
 	}
 
 	/**
-	 * this test verify if the method getCancelledTasks return the correct list of
+	 * this test verify if the method getCancelledTasksFromProject return the correct list of
 	 * cancelled tasks.
 	 * 
 	 */
@@ -1323,9 +1323,9 @@ public class TaskContainerTest {
 	public void getCancelledTasksTest() {
 
 		// Adds 5 tasks to the TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
 
 		// Creates State Objects planned for task.
 		Planned PlannedTestTask = new Planned(testTask);
@@ -1401,7 +1401,7 @@ public class TaskContainerTest {
 		cancelledTaskToCompare.add(testTask);
 		cancelledTaskToCompare.add(testTask2);
 
-		assertEquals(cancelledTaskToCompare, taskContainer.getCancelledTasks());
+		assertEquals(cancelledTaskToCompare, taskContainer.getCancelledTasksFromProject());
 
 	}
 
@@ -1413,9 +1413,9 @@ public class TaskContainerTest {
 	public void getTaskCostsTest() {
 
 		// Adds 3 tasks to the TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
 
 		// creates a TaskReport (TaskWorker as an indexWork of 2)
 		testTask.addTaskCollaboratorToTask(taskWorkerDan);

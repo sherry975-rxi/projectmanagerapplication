@@ -333,9 +333,9 @@ public class ProjectsContainerTest {
 		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
-		project1.getTaskRepository().addProjectTask(task3);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
+		project1.getTaskRepository().addTaskToProject(task3);
 
 		// Adds user to tasks.
 		task1.addTaskCollaboratorToTask(taskWorker1);
@@ -376,9 +376,9 @@ public class ProjectsContainerTest {
 		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
-		project1.getTaskRepository().addProjectTask(task3);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
+		project1.getTaskRepository().addTaskToProject(task3);
 
 		// prepare the tasks
 		task1.getTaskState().changeToPlanned();
@@ -433,9 +433,9 @@ public class ProjectsContainerTest {
 		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
-		project1.getTaskRepository().addProjectTask(task3);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
+		project1.getTaskRepository().addTaskToProject(task3);
 
 		// Adds user to tasks.
 		task2.addTaskCollaboratorToTask(taskWorker1);
@@ -483,9 +483,9 @@ public class ProjectsContainerTest {
 		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
-		project1.getTaskRepository().addProjectTask(task3);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
+		project1.getTaskRepository().addTaskToProject(task3);
 
 		// create finished date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -563,8 +563,8 @@ public class ProjectsContainerTest {
 		project1.addProjectCollaboratorToProjectTeam(collab1);
 
 		// Adds tasks to project repository.
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
 
 		// Sets a startDate for the tasks
 
@@ -626,8 +626,8 @@ public class ProjectsContainerTest {
 		project1.addProjectCollaboratorToProjectTeam(collab1);
 
 		// Adds tasks to project repository.
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
 
 		// Sets a startDate for the tasks
 
@@ -689,9 +689,9 @@ public class ProjectsContainerTest {
 		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
-		project1.getTaskRepository().addProjectTask(task3);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
+		project1.getTaskRepository().addTaskToProject(task3);
 
 		// create finished date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -766,9 +766,9 @@ public class ProjectsContainerTest {
 		project1.addProjectCollaboratorToProjectTeam(collab2);
 
 		// Adds tasks to project repository.
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
-		project1.getTaskRepository().addProjectTask(task3);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
+		project1.getTaskRepository().addTaskToProject(task3);
 
 		// create finished date to test
 		Calendar startDateTest = Calendar.getInstance();
@@ -896,14 +896,14 @@ public class ProjectsContainerTest {
 		project2.addProjectCollaboratorToProjectTeam(collab4);
 
 		// Adds tasks to project repository 1
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
-		project1.getTaskRepository().addProjectTask(task3);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
+		project1.getTaskRepository().addTaskToProject(task3);
 
 		// Adds tasks to project repository 2
-		project2.getTaskRepository().addProjectTask(task4);
-		project2.getTaskRepository().addProjectTask(task5);
-		project2.getTaskRepository().addProjectTask(task6);
+		project2.getTaskRepository().addTaskToProject(task4);
+		project2.getTaskRepository().addTaskToProject(task5);
+		project2.getTaskRepository().addTaskToProject(task6);
 
 		// Adds user1 to tasks in Project 1
 		task1.addTaskCollaboratorToTask(taskWorker1);

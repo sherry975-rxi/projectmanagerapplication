@@ -116,8 +116,8 @@ public class US375 {
 		taskWorker1 = testTask2.createTaskCollaborator(projectCollaborator);
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
 
 		// Adds user1 to the Task
 		testTask.addTaskCollaboratorToTask(taskWorker);
