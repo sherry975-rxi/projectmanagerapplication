@@ -9,9 +9,8 @@ import static org.junit.Assert.assertEquals;
 
 public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 
-	Company myComp;
-	ProjectContainer projRepo;
-	UserContainer userRepo;
+	ProjectContainer projectContainer;
+	UserContainer userContainer;
 	TaskContainer taskRepo;
 	Project proj;
 	Task taskA;
@@ -22,24 +21,23 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 
 	@Before
 	public void setUp() {
-		// Initialize company
-		myComp = Company.getTheInstance();
 
 		// Initialize Project Repository
-		projRepo = myComp.getProjectsContainer();
+		projectContainer = new ProjectContainer();
+
 
 		// Initialize User Repository
-		userRepo = myComp.getUsersContainer();
+		userContainer = new UserContainer();
 
 		// Add user to User Repository
-		userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
+		userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
 				"Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA");
-		user = userRepo.getUserByEmail("ugandan@nackls.com");
+		user = userContainer.getUserByEmail("ugandan@nackls.com");
 
 		// Add a project to the project repository
-		projRepo.addProjectToProjectContainer(
-				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user));
-		proj = projRepo.getAllProjectsfromProjectsContainer().get(0);
+		projectContainer.addProjectToProjectContainer(
+				projectContainer.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user));
+		proj = projectContainer.getAllProjectsfromProjectsContainer().get(0);
 
 		// Initialize Task Repository
 		taskRepo = proj.getTaskRepository();
@@ -59,9 +57,9 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
-		projRepo = null;
-		userRepo = null;
+
+		projectContainer = null;
+		userContainer = null;
 		taskRepo = null;
 		proj = null;
 		taskA = null;

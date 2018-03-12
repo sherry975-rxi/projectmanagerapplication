@@ -10,7 +10,6 @@ public class US207CreateTaskReportController {
 
     private User username;
     private UserContainer userContainer;
-    private Company company;
     private ProjectContainer projectContainer;
     private String email;
     private Task task;
@@ -21,9 +20,10 @@ public class US207CreateTaskReportController {
      * @param email The email of the user that will create a task report
      */
     public US207CreateTaskReportController(String email, String taskID) {
-        this.company = Company.getTheInstance();
-        this.projectContainer = company.getProjectsContainer();
-        this.userContainer = company.getUsersContainer();
+        this.projectContainer = new ProjectContainer();
+        this.projectContainer.updateProjectContainer();
+        this.userContainer = new UserContainer();
+        this.userContainer.updateUserContainer();
         this.username = userContainer.getUserByEmail(email);
         this.email = email;
         for (Task other : projectContainer.getUserTasks(username)) {
@@ -66,6 +66,8 @@ public class US207CreateTaskReportController {
 
         wasReportCreated = task.createReport(task.getTaskCollaboratorByEmail(email), dateOfReport, timeToReport);
 
+        projectContainer.updateProjectContainer();
+
         return wasReportCreated;
 
     }
@@ -95,6 +97,7 @@ public class US207CreateTaskReportController {
     public boolean updateTaskReport(double newReportTime, TaskCollaborator taskCollaborator, Integer reportToChange) {
         Boolean wasReportUpdated = false;
         wasReportUpdated = task.updateReportedTime(newReportTime, taskCollaborator, reportToChange);
+        projectContainer.updateProjectContainer();
 
         return wasReportUpdated;
 
