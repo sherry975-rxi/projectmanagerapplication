@@ -18,17 +18,19 @@ public class OnGoing implements TaskStateInterface {
 		StandBy standByState = new StandBy();
 		if (standByState.isValid(task)) {
 			task.setTaskState(standByState);
+			task.setCurrentState(StateEnum.STANDBY);
 		}
 
 		Cancelled cancelledState = new Cancelled();
 		if (cancelledState.isValid(task)) {
 			task.setTaskState(cancelledState);
-			task.cancelTask();
+			task.setCurrentState(StateEnum.CANCELLED);
 		}
 
 		Finished finishedState = new Finished();
 		if (finishedState.isValid(task)) {
 			task.setTaskState(finishedState);
+			task.setCurrentState(StateEnum.FINISHED);
 			task.setFinishDate();
 		}
 	}

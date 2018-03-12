@@ -16,6 +16,7 @@ public class Planned implements TaskStateInterface {
 		Ready readyState = new Ready();
 		if(readyState.isValid(task)) {
 			task.setTaskState(readyState);
+			task.setCurrentState(StateEnum.READY);
 		}
 	}
 
