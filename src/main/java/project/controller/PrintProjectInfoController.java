@@ -19,14 +19,17 @@ public class PrintProjectInfoController {
 	
 
 	public PrintProjectInfoController(Project project) {
-		this.project = project;
+		projContainer = new ProjectContainer();
 		projContainer.updateProjectContainer();
+		this.project = project;
+		
 
 	}
 
 	public PrintProjectInfoController(Integer projID) {
-		this.projID = projID;
+		projContainer = new ProjectContainer();
 		projContainer.updateProjectContainer();
+		this.projID = projID;
 		project = projContainer.getProjById(this.projID);
 	}
 
@@ -168,7 +171,7 @@ public class PrintProjectInfoController {
 	 */
 	public List<String> getProjectTaskList() {
 		List<Task> taskList = projContainer.getProjById(this.project.getIdCode())
-				.getTaskRepository().getProjectTaskRepository();
+				.getTaskRepository().getAllTasksfromProject();
 		List<String> projectTaskList = new ArrayList<>();
 		for (Task projectTask : taskList) {
 			String[] stringList = projectTask.getTaskID().split("\\.");
@@ -185,9 +188,7 @@ public class PrintProjectInfoController {
 	 */
 	public List<String> getTasksIDs() {
 
-		List<Task> taskList = projContainer.getProjById(this.project.getIdCode())
-
-				.getTaskRepository().getProjectTaskRepository();
+		List<Task> taskList = projContainer.getProjById(this.project.getIdCode()).getTaskRepository().getAllTasksfromProject();
 		List<String> projectTasksID = new ArrayList<>();
 		for (Task projectTask : taskList) {
 			projectTasksID.add(projectTask.getTaskID());
@@ -202,7 +203,7 @@ public class PrintProjectInfoController {
 	 */
 	public List<Task> getTasks() {
 		return projContainer.getProjById(this.project.getIdCode())
-				.getTaskRepository().getProjectTaskRepository();
+				.getTaskRepository().getAllTasksfromProject();
 	}
 
 }

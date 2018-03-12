@@ -13,12 +13,12 @@ import static org.junit.Assert.assertEquals;
 
 public class PrintProjectInfoControllerTest {
 
-	Company myCompany;
 
 	User user1;
 	User joaoPM;
 	ProjectCollaborator collab1, collab2;
 	ProjectContainer projectContainer;
+	UserContainer userContainer;
 	Project project, project1;
 	Calendar startDate, finishDate;
 	TaskContainer taskContainer;
@@ -28,33 +28,34 @@ public class PrintProjectInfoControllerTest {
 	@Before
 	public void setUp() {
 		// create company
-		myCompany = Company.getTheInstance();
-		myCompany.getProjectsContainer().setProjCounter(1);
+		projectContainer = new ProjectContainer();
+		projectContainer.setProjCounter(1);
 
 		// create user
-		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		userContainer = new UserContainer();
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		joaoPM = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+		joaoPM = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
-		myCompany.getUsersContainer().addUserToUserRepository(user1);
-		myCompany.getUsersContainer().addUserToUserRepository(joaoPM);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(joaoPM);
 
 		// creates project repository
-		projectContainer = myCompany.getProjectsContainer();
+		//projectContainer = myCompany.getProjectsContainer();
 
 		// Creates one Project
-		project = myCompany.getProjectsContainer().createProject("Projeto de gestão",
+		project = projectContainer.createProject("Projeto de gestão",
 				"Este projeto está focado na gestão.", joaoPM);
 
 		project.setProjectBudget(1000);
 		project.setProjectStatus(3);
 
 		// add project to project repository
-		myCompany.getProjectsContainer().addProjectToProjectContainer(project);
+		projectContainer.addProjectToProjectContainer(project);
 
 		// add start date to project
 		Calendar startDate = Calendar.getInstance();
@@ -104,11 +105,11 @@ public class PrintProjectInfoControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+		userContainer = null;
+		projectContainer = null;
 		user1 = null;
 		joaoPM = null;
 		project = null;
-		projectContainer = null;
 		startDate = null;
 		finishDate = null;
 		taskContainer = null;
@@ -264,11 +265,11 @@ public class PrintProjectInfoControllerTest {
 	public void testPrintProjectInfoController(){
 
 		// Creates one Project
-		project1 = myCompany.getProjectsContainer().createProject("Projeto de voluntariado",
+		project1 = projectContainer.createProject("Projeto de voluntariado",
 				"Este projeto está focado em solidariedade.", user1);
 
 		// add project to project repository
-		myCompany.getProjectsContainer().addProjectToProjectContainer(project1);
+		projectContainer.addProjectToProjectContainer(project1);
 
 		// Instantiates de controller
 		controller1 = new PrintProjectInfoController(project1);

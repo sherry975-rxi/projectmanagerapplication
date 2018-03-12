@@ -1,20 +1,30 @@
 package project.controller;
 
 import project.model.Project;
+import project.model.ProjectContainer;
 import project.model.Task;
 import project.model.TaskContainer;
 
 public class US365MarkTaskAsFinishedControllerProjectManager {
+	private ProjectContainer projContainer;
 	private Task taskToBeMarked;
 	private TaskContainer projectTaskList;
+	private Project selectedProject;
 
 	public US365MarkTaskAsFinishedControllerProjectManager(String taskID, Project selectedProject) {
+		this.selectedProject=selectedProject;
 		this.projectTaskList = selectedProject.getTaskRepository();
 		this.taskToBeMarked = projectTaskList.getTaskByID(taskID);
 	}
 
 	public boolean setTaskAsFinished() {
-		return taskToBeMarked.markTaskAsFinished();
+		boolean wasTaskChangedToFinished = taskToBeMarked.markTaskAsFinished();
+
+		if (wasTaskChangedToFinished) {
+			projContainer.saveProjectInRepository(selectedProject);
+		}
+
+		return wasTaskChangedToFinished;
 	}
 
 	/**
