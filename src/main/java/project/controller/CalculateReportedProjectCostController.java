@@ -7,7 +7,7 @@ import project.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+
 public class CalculateReportedProjectCostController {
 
 	/*
