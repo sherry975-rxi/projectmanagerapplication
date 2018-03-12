@@ -18,6 +18,7 @@ public class CollectProjectsFromUserController {
 	 */
 	public CollectProjectsFromUserController(User user) {
 		this.user = user;
+		this.projContainer.updateProjectContainer();
 	}
 
 	/**
