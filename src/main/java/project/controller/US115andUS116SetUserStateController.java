@@ -1,16 +1,20 @@
 package project.controller;
 
 import project.model.User;
+import project.model.UserContainer;
 
 public class US115andUS116SetUserStateController {
 
+
 	User toChangeState;
+	UserContainer userContainer;
+
 
 	/**
 	 * This controller recieves a user whose state is to be changed
 	 * 
 	 * 
-	 * @param the
+	 * @param toChange
 	 *            selected User
 	 */
 	public US115andUS116SetUserStateController(User toChange) {
@@ -21,11 +25,14 @@ public class US115andUS116SetUserStateController {
 	 * 
 	 * This method is called only after the controller is created, and changes the
 	 * user's state
-	 * 
+	 *
+	 * Then, it saves the updated user to the database	 *
 	 * 
 	 */
 	public void changeUserState() {
 		toChangeState.changeUserState();
+		userContainer.addUserToUserRepositoryX(toChangeState);
+
 	}
 
 	/**
