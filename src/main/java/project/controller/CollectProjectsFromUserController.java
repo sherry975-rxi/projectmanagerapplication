@@ -9,6 +9,7 @@ import java.util.List;
 
 public class CollectProjectsFromUserController {
 
+	private ProjectContainer projContainer = new ProjectContainer();
 	private User user;
 
 	/**
@@ -21,15 +22,12 @@ public class CollectProjectsFromUserController {
 
 	/**
 	 * This method returns a set of Projects where a certain user
-	 * 
-	 * @param User
-	 * 
 	 * @return List of Projects from user
 	 */
 	public List<String> getProjectsFromUserAndProjectManager() {
 
 		List<String> myProjects = new ArrayList<>();
-		ProjectContainer myProjRepo = Company.getTheInstance().getProjectsContainer();
+		ProjectContainer myProjRepo = projContainer;
 		for (Project ii : myProjRepo.getAllProjectsfromProjectsContainer()) {
 			if (ii.isProjectManager(user)) {
 				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName() + " - PM ");
@@ -42,31 +40,19 @@ public class CollectProjectsFromUserController {
 
 	/**
 	 * This method returns a set of Projects where a certain user
-	 * 
-	 * @param User
-	 * 
 	 * @return List of Projects of a user
 	 */
 	public List<Project> getProjectsFromUser() {
-		List<Project> listOfProjectsOfUser = new ArrayList<>();
-		listOfProjectsOfUser.addAll(Company.getTheInstance().getProjectsContainer().getProjectsFromUser(this.user));
-		return listOfProjectsOfUser;
+		return new ArrayList<>(projContainer.getProjectsFromUser(this.user));
 	}
 
 	/**
 	 * This method returns a set of Projects where a certain user was defined as
 	 * Project Manager
-	 * 
-	 * @param projectManager
-	 *            User defined as Project Manager
-	 * 
 	 * @return List of Projects of a Project Manager
 	 */
 	public List<Project> getProjectsFromProjectManager() {
-		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
-		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsContainer().getProjectsFromProjectManager(this.user));
-		return listOfProjectsOfProjectManager;
+		return new ArrayList<>(projContainer.getProjectsFromProjectManager(this.user));
 	}
 
 }
