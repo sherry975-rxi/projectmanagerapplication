@@ -32,8 +32,8 @@ public class ProjectContainer {
 	 * mandatory fields.
 	 */
 	public ProjectContainer() {
-
 		this.projectsContainer = new ArrayList<>();
+		this.updateProjectContainer();
 	}
 
 	/**
@@ -90,6 +90,10 @@ public class ProjectContainer {
 		if (!this.projectsContainer.contains(toAddProject)) {
 			this.projectsContainer.add(toAddProject);
 		}
+	}
+
+	public void saveProjectInRepository(Project projToSave) {
+		this.projectsRepository.save(projToSave);
 	}
 
 	/**

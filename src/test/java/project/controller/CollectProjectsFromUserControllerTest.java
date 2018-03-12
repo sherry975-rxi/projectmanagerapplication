@@ -19,54 +19,45 @@ import static org.junit.Assert.assertEquals;
  */
 public class CollectProjectsFromUserControllerTest {
 
-	Company myCompany;
-
+	private ProjectContainer projContainer = new ProjectContainer();
+	UserContainer userContainer = new UserContainer();
 	User user1;
-	User userAdmin;
+	private User userAdmin;
 
-	TaskContainer taskContainer;
-
-	TaskCollaborator taskWorker1;
-
-	ProjectCollaborator collab1;
+	private ProjectCollaborator collab1;
 
 	Project project;
-	Project project2;
+	private Project project2;
 
 	@Before
 	public void setUp() {
-		// create company
-		myCompany = Company.getTheInstance();
 
 		// create user
-		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		userAdmin = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000",
+		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000",
 				"Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
-		myCompany.getUsersContainer().addUserToUserRepository(user1);
-		myCompany.getUsersContainer().addUserToUserRepository(userAdmin);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(userAdmin);
 
 		// Creates one Project
-		project = myCompany.getProjectsContainer().createProject("name3", "description4", userAdmin);
-		project2 = myCompany.getProjectsContainer().createProject("name1", "description4", userAdmin);
+		project = projContainer.createProject("name3", "description4", userAdmin);
+		project2 = projContainer.createProject("name1", "description4", userAdmin);
 
 		// add project to project repository
-		myCompany.getProjectsContainer().addProjectToProjectContainer(project);
-		myCompany.getProjectsContainer().addProjectToProjectContainer(project2);
+		projContainer.addProjectToProjectContainer(project);
+		projContainer.addProjectToProjectContainer(project2);
 
 		// create project collaborators
 		collab1 = new ProjectCollaborator(user1, 2);
 
 		// create taskContainer
 
-		taskContainer = project.getTaskRepository();
-
 		// create task workers
-		taskWorker1 = new TaskCollaborator(collab1);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -81,13 +72,12 @@ public class CollectProjectsFromUserControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+		projContainer = null;
+		userContainer = null;
 		user1 = null;
 		userAdmin = null;
 		project = null;
 		project2 = null;
-		taskContainer = null;
-		taskWorker1 = null;
 		collab1 = null;
 	}
 
@@ -102,7 +92,7 @@ public class CollectProjectsFromUserControllerTest {
 		CollectProjectsFromUserController controller = new CollectProjectsFromUserController(this.user1);
 
 		// create list with cancelled task to compare
-		List<Project> projectsFromUser = new ArrayList<Project>();
+		List<Project> projectsFromUser = new ArrayList<>();
 
 		// add task to the list
 		projectsFromUser.add(project);
@@ -123,7 +113,7 @@ public class CollectProjectsFromUserControllerTest {
 		CollectProjectsFromUserController controller2 = new CollectProjectsFromUserController(userAdmin);
 
 		// create list with cancelled task to compare
-		List<Project> projectsFromUser = new ArrayList<Project>();
+		List<Project> projectsFromUser = new ArrayList<>();
 
 		// add task to the list
 		projectsFromUser.add(project);
@@ -143,7 +133,7 @@ public class CollectProjectsFromUserControllerTest {
 		CollectProjectsFromUserController controller3 = new CollectProjectsFromUserController(this.userAdmin);
 
 		// create an expected list with projects of userAdmin
-		List<String> projectsToString = new ArrayList<String>();
+		List<String> projectsToString = new ArrayList<>();
 
 		projectsToString.add("[1] name3 - PM ");
 		projectsToString.add("[2] name1 - PM ");
@@ -154,7 +144,7 @@ public class CollectProjectsFromUserControllerTest {
 		CollectProjectsFromUserController controller4 = new CollectProjectsFromUserController(this.user1);
 
 		// create list with cancelled task to compare
-		List<String> projectsToString2 = new ArrayList<String>();
+		List<String> projectsToString2 = new ArrayList<>();
 
 		projectsToString2.add("[1] name3");
 		projectsToString2.add("[2] name1");

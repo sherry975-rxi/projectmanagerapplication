@@ -1,11 +1,13 @@
 package project.controller;
 
+import org.springframework.stereotype.Service;
 import project.model.Project;
 import project.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CalculateReportedProjectCostController {
 
 	/*
