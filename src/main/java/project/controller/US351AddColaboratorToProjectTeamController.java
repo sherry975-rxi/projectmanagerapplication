@@ -18,7 +18,7 @@ public class US351AddColaboratorToProjectTeamController {
 	public void addUserToProjectTeam(User user, Project project, int effort) {
 		ProjectContainer projectContainer = new ProjectContainer();
 		project.addUserToProjectTeam(user, effort);
-		projectContainer.addProjectToProjectContainerX(project);
+		projectContainer.saveProjectInRepository(project);
 
 	}
 
