@@ -27,8 +27,7 @@ public class CollectProjectsFromUserController {
 	public List<String> getProjectsFromUserAndProjectManager() {
 
 		List<String> myProjects = new ArrayList<>();
-		ProjectContainer myProjRepo = projContainer;
-		for (Project ii : myProjRepo.getAllProjectsfromProjectsContainer()) {
+		for (Project ii : projContainer.getAllProjectsfromProjectsContainer()) {
 			if (ii.isProjectManager(user)) {
 				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName() + " - PM ");
 			} else if (ii.isUserActiveInProject(user)) {
