@@ -32,7 +32,6 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 	 * 
 	 */
 
-	Company myCompany;
 	UserContainer userContainer;
 	User user1;
 	User user2;
@@ -49,15 +48,15 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 	@Before
 	public void setUp() {
 
-		myCompany = Company.getTheInstance();
+		userContainer = new UserContainer();
 
-		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "Programador",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "Programador",
 				"910000000", "Rua Azul", "5679-987", "braga", "braga", "portugal");
-		user2 = myCompany.getUsersContainer().createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto",
+		user2 = userContainer.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto",
 				"920000000", "rua verde", "6789", "porto", "porto", "portugal");
 
 		// create myProject
-		myProject = myCompany.getProjectsContainer().createProject("Projecto I", "Projecto de Gestão", user1);
+		myProject = projectContainer.createProject("Projecto I", "Projecto de Gestão", user1);
 
 		// Generate a Start Calendar
 		Calendar startDate = Calendar.getInstance();
@@ -76,11 +75,11 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		task4 = myProject.getTaskRepository().createTask("Task 4", 4, startDate, finishDate, 10);
 
 		// Users 1 and 2 added to the users repository.
-		myCompany.getUsersContainer().addUserToUserRepository(user1);
-		myCompany.getUsersContainer().addUserToUserRepository(user2);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(user2);
 
 		// Project 1 added to the project repository.
-		myCompany.getProjectsContainer().addProjectToProjectContainer(myProject);
+		projectContainer.addProjectToProjectContainer(myProject);
 
 		// create project collaborators
 		projectCollaborator1 = myProject.createProjectCollaborator(user1, 10);
@@ -100,42 +99,27 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		// defines finish date to task, and mark it as Finished
 		task1.setEstimatedTaskStartDate(startDate);
 		task1.setTaskDeadline(finishDate);
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(projectCollaborator1);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
 		Calendar startDateTask1 = startDate;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDateTask1);
-		task1.getTaskState().changeToOnGoing();
 		task1.setFinishDate(finishDate);
-		task1.getTaskState().changeToFinished();
 
 		task2.setEstimatedTaskStartDate(startDate);
 		task2.setTaskDeadline(finishDate);
-		task2.getTaskState().changeToPlanned();
 		task2.addProjectCollaboratorToTask(projectCollaborator1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
 		Calendar startDateTask2 = startDate;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDateTask1);
-		task2.getTaskState().changeToOnGoing();
 		task2.setFinishDate(otherFinishDate);
-		task2.getTaskState().changeToFinished();
 
 		task3.setEstimatedTaskStartDate(startDate);
 		task3.setTaskDeadline(finishDate);
-		task3.getTaskState().changeToPlanned();
 		task3.addProjectCollaboratorToTask(projectCollaborator1);
-		task3.getTaskState().changeToAssigned();
-		task3.getTaskState().changeToReady();
 		Calendar startDateTask3 = startDate;
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		task3.setStartDate(startDateTask1);
-		task3.getTaskState().changeToOnGoing();
 		task3.setFinishDate(otherFinishDate);
-		task3.getTaskState().changeToFinished();
 
 		// List to compare to the getLastMonthFinishedUserTaskList.
 		List<Task> expResult = new ArrayList<Task>();
@@ -147,7 +131,9 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+
+		userContainer = null;
+		projectContainer = null;
 		userContainer = null;
 		user1 = null;
 		user2 = null;

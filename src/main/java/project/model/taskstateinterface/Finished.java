@@ -32,15 +32,12 @@ public class Finished implements TaskStateInterface {
 		return ((task.getTaskState() instanceof OnGoing) ||
                 (task.getTaskState() instanceof Cancelled) ||
                 (task.getTaskState() instanceof StandBy)) &&
-                (task.getCancelDate() != null) &&
                 (task.getEstimatedTaskStartDate() != null) &&
                 (task.getTaskDeadline() != null) &&
-                task.doesTaskTeamHaveActiveUsers() &&
                 (task.getStartDate() != null) &&
-                (task.getFinishDate() == null) &&
+                (task.getFinishDate() != null) &&
                 (task.getEstimatedTaskEffort() != 0) &&
-                (task.getTaskBudget() != 0) &&
-                (task.getFinishDate() == null);
+                (task.getTaskBudget() != 0);
 	}
 
 }

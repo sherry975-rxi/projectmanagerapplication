@@ -12,7 +12,9 @@ import static org.junit.Assert.assertEquals;
 public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 
 	US210GetAllFinishedUserTasksInDecreasingOrderController tasksFiltersController;
-	Company company1;
+
+	ProjectContainer projectContainer;
+	UserContainer userContainer;
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
@@ -21,13 +23,12 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 
 	@Before
 	public void setUp() {
-		// create company 1
-		company1 = Company.getTheInstance();
+
 
 		// create users in company
-		user2 = company1.getUsersContainer().createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
+		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
 				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
-		user1 = company1.getUsersContainer().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
+		user1 = userContainer.createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
 
 		// change profiles of users from VISITOR (default) to COLLABORATOR
@@ -35,10 +36,10 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 		user1.setUserProfile(Profile.COLLABORATOR);
 
 		// create project 1 in company 1
-		project1 = company1.getProjectsContainer().createProject("name3", "description4", user2);
+		project1 = projectContainer.createProject("name3", "description4", user2);
 
 		// add project 1 to company 1
-		company1.getProjectsContainer().addProjectToProjectContainer(project1);
+		projectContainer.addProjectToProjectContainer(project1);
 
 		// create an estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -104,38 +105,27 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 		// defines finish date to task, and mark it as Finished7
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task1.setTaskDeadline(taskDeadlineDateTest1);
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(projCollab1);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
+
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDateTask1);
-		task1.getTaskState().changeToOnGoing();
 		task1.markTaskAsFinished();
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task2.setTaskDeadline(taskDeadlineDateTest1);
-		task2.getTaskState().changeToPlanned();
 		task2.addProjectCollaboratorToTask(projCollab1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
 		Calendar startDateTask2 = estimatedTaskStartDateTest;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDateTask1);
-		task2.getTaskState().changeToOnGoing();
 		task2.markTaskAsFinished();
 
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskDeadlineDateTest1);
-		task3.getTaskState().changeToPlanned();
 		task3.addProjectCollaboratorToTask(projCollab1);
-		task3.getTaskState().changeToAssigned();
-		task3.getTaskState().changeToReady();
 		Calendar startDateTask3 = estimatedTaskStartDateTest;
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		task3.setStartDate(startDateTask1);
-		task3.getTaskState().changeToOnGoing();
 		task3.markTaskAsFinished();
 
 		// creates the controller
@@ -144,7 +134,9 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+
+		projectContainer = null;
+		userContainer = null;
 		user1 = null;
 		user2 = null;
 		user3 = null;

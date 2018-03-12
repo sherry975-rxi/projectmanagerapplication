@@ -42,7 +42,7 @@ public class StandBy implements TaskStateInterface {
 				(task.getTaskDeadline() != null) &&
 				!task.doesTaskTeamHaveActiveUsers() &&
 				(task.getStartDate() != null) &&
-				(task.getFinishDate() != null) &&
+				(task.getFinishDate() == null) &&
 				(task.getCancelDate() == null) &&
 				(task.getEstimatedTaskEffort() != 0) &&
 				(task.getTaskBudget() != 0);
