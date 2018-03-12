@@ -1,17 +1,18 @@
 package project.controller;
 
+import org.springframework.stereotype.Service;
 import project.model.Project;
 import project.model.User;
 import project.model.UserContainer;
 
 import java.util.List;
 
+@Service
 public class US351AddColaboratorToProjectTeamController {
 
 	UserContainer userContainer = new UserContainer();
 
 	public US351AddColaboratorToProjectTeamController(){
-	    this.userContainer.updateUserContainer();
     }
 	/**
 	 * This controller add user to project team

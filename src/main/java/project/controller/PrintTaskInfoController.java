@@ -1,5 +1,6 @@
 package project.controller;
 
+import org.springframework.stereotype.Service;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.ProjectContainer;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Service
 public class PrintTaskInfoController {
 
 	private ProjectContainer projContainer = new ProjectContainer();
