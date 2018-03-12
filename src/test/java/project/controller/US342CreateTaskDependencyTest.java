@@ -15,7 +15,6 @@ import static org.junit.Assert.*;
 
 public class US342CreateTaskDependencyTest {
 
-	Company myComp;
 	ProjectContainer projRepo;
 	UserContainer userRepo;
 	TaskContainer taskRepo;
@@ -28,14 +27,13 @@ public class US342CreateTaskDependencyTest {
 
 	@Before
 	public void setUp() {
-		// Initialize company
-		myComp = Company.getTheInstance();
+
 
 		// Initialize Project Repository
-		projRepo = myComp.getProjectsContainer();
+		projRepo = new ProjectContainer();
 
 		// Initialize User Repository
-		userRepo = myComp.getUsersContainer();
+		userRepo = new UserContainer();
 
 		// Add user to User Repository
 		userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
@@ -66,7 +64,6 @@ public class US342CreateTaskDependencyTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
 		projRepo = null;
 		userRepo = null;
 		taskRepo = null;
