@@ -113,9 +113,9 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		testTask3 = taskContainer.createTask("Test moar yeh");
 
 		// Adds 5 tasks to the TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
-		taskContainer.addProjectTask(testTask3);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
+		taskContainer.addTaskToProject(testTask3);
 
 		// Creates State Objects planned for task.
 		Planned PlannedTestTask = new Planned(testTask);

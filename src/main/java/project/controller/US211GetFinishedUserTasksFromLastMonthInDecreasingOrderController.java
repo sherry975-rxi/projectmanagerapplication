@@ -15,6 +15,8 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
 
 	public US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController() {
 		this.projectContainer = new ProjectContainer();
+		projectContainer.updateProjectContainer();
+
 	}
 
 	/**

@@ -58,12 +58,12 @@ public class US370V2GetProjectFinishedTaskListTest {
 		task6 = project1.getTaskRepository().createTask("Do this");
 
 		// add tasks to task repository of project 1
-		project1.getTaskRepository().addProjectTask(task1);
-		project1.getTaskRepository().addProjectTask(task2);
-		project1.getTaskRepository().addProjectTask(task3);
-		project1.getTaskRepository().addProjectTask(task4);
-		project1.getTaskRepository().addProjectTask(task5);
-		project1.getTaskRepository().addProjectTask(task6);
+		project1.getTaskRepository().addTaskToProject(task1);
+		project1.getTaskRepository().addTaskToProject(task2);
+		project1.getTaskRepository().addTaskToProject(task3);
+		project1.getTaskRepository().addTaskToProject(task4);
+		project1.getTaskRepository().addTaskToProject(task5);
+		project1.getTaskRepository().addTaskToProject(task6);
 
 		// add costPerEffort to users in project 1, resulting in a Project Collaborator
 		// for each one

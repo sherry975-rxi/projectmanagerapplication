@@ -17,6 +17,7 @@ public class US216AverageTimeSpentOnTaskLastMonthController {
 
 	public US216AverageTimeSpentOnTaskLastMonthController() {
 		this.projectContainer = new ProjectContainer();
+		projectContainer.updateProjectContainer();
 	}
 
 	/**
