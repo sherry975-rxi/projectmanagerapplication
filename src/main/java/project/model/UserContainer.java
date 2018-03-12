@@ -19,20 +19,11 @@ import java.util.List;
 @Service
 public class UserContainer {
 
-
+    @Autowired
     private UserRepository userRepository;
     private List<User> usersContainer;
 
 
-    /**
-     * Constructor created for JPA purposes. It is not to be used in model context.
-     */
-    //@Deprecated
-    @Autowired
-    protected UserContainer(UserRepository userRepository) {
-        this.userRepository = userRepository;
-        this.usersContainer = new ArrayList<>();
-    }
 
     /**
      * Constructor for UserContainer includes usersList creation
