@@ -74,24 +74,20 @@ public class ProjectTest {
 		taskDeadline.add(Calendar.MONTH, 1);
 		task2.setTaskDeadline(taskDeadline);
 
-		task2.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
 		task2.addProjectCollaboratorToTask(projectCollaborator2);
-		task2.getTaskState().changeToAssigned();
 
-		// pass from "Assigned" to "Ready"
-		task2.getTaskState().changeToReady();
+
 
 		// necessary to pass from "Ready" to "OnGoing"
 		Calendar projStartDate = (Calendar) estimatedStartDate.clone();
 		task2.setStartDate(projStartDate);
-		task2.getTaskState().changeToOnGoing();
+
 
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate = (Calendar) estimatedStartDate.clone();
 		task2.setFinishDate(testDate);
-		task2.getTaskState().changeToFinished();
 
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task2.viewTaskStateName());
@@ -107,24 +103,19 @@ public class ProjectTest {
 		taskDeadline.add(Calendar.MONTH, 1);
 		task3.setTaskDeadline(taskDeadline);
 
-		task3.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
 		task3.addProjectCollaboratorToTask(projectCollaborator2);
-		task3.getTaskState().changeToAssigned();
 
 		// pass from "Assigned" to "Ready"
-		task3.getTaskState().changeToReady();
 
 		// necessary to pass from "Ready" to "OnGoing"
 		Calendar projStartDate3 = (Calendar) estimatedStartDate.clone();
 		task3.setStartDate(projStartDate3);
-		task3.getTaskState().changeToOnGoing();
 
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate3 = (Calendar) estimatedStartDate.clone();
 		task3.setFinishDate(testDate3);
-		task3.getTaskState().changeToFinished();
 
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task2.viewTaskStateName());
