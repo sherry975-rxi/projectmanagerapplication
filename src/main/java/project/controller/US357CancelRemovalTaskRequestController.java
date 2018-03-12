@@ -63,7 +63,7 @@ public class US357CancelRemovalTaskRequestController {
 
 		this.userToRemove = userContainer.getUserByEmail(userEmail);
 		this.task = project.getTaskRepository().getTaskByID(taskID);
-		projectContainer.addProjectToProjectContainerX(this.project);
+		projectContainer.saveProjectInRepository(this.project);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class US357CancelRemovalTaskRequestController {
 		this.task.removeProjectCollaboratorFromTask(projectCollaboratorFromUser);
 		// Deletes the request from the pendingRemovalRequestList
 		if(project.deleteTaskRemovalRequest(projectCollaboratorFromUser, this.task)){
-			projectContainer.addProjectToProjectContainerX(this.project);
+			projectContainer.saveProjectInRepository(this.project);
 			acceptRemovalRequestFromTask = true;
 		}
 
@@ -103,7 +103,7 @@ public class US357CancelRemovalTaskRequestController {
 
 		if(project.deleteTaskRemovalRequest(projectCollaboratorFromUser, this.task)){
 			cancelRemovalRequestFromTask = true;
-			projectContainer.addProjectToProjectContainerX(this.project);
+			projectContainer.saveProjectInRepository(this.project);
 		}
 		return	cancelRemovalRequestFromTask;
 	}
