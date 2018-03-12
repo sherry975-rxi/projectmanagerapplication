@@ -9,10 +9,11 @@ import java.util.List;
 
 public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 
-	ProjectContainer myProjRepo;
+	ProjectContainer projectContainer;
 
 	public US203GetUserStartedNotFinishedTaskListInIncreasingOrderController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
+		this.projectContainer = new ProjectContainer();
+		this.projectContainer.updateProjectContainer();
 	}
 
 	/**
@@ -25,7 +26,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 	 */
 	public List<Task> getUserStartedNotFinishedTaskListInIncreasingOrder(User myUser) {
 
-		List<Task> myUnfinishedAllTasks = myProjRepo.getStartedNotFinishedUserTaskList(myUser);
+		List<Task> myUnfinishedAllTasks = projectContainer.getStartedNotFinishedUserTaskList(myUser);
 		List<Task> myUnfinishedTasksWDeadline = new ArrayList<>();
 		List<Task> myUnfinishedAllTasksWODeadline = new ArrayList<>();
 
@@ -36,7 +37,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 				myUnfinishedAllTasksWODeadline.add(other);
 			}
 		}
-		myUnfinishedAllTasks = myProjRepo.sortTaskListByDeadline(myUnfinishedTasksWDeadline);
+		myUnfinishedAllTasks = projectContainer.sortTaskListByDeadline(myUnfinishedTasksWDeadline);
 		myUnfinishedAllTasks.addAll(myUnfinishedAllTasksWODeadline);
 		return myUnfinishedAllTasks;
 	}
