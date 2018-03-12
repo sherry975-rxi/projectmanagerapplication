@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
 
 public class US340CreateTaskControllerTest {
 
-	Company myCompany;
 	UserContainer userContainer;
 	User user1;
 	User userAdmin;
@@ -19,15 +18,11 @@ public class US340CreateTaskControllerTest {
 
 	@Before
 	public void setUp() {
-		// create company
-
-		myCompany = Company.getTheInstance();
-
 		// creates an UserContainer
-		userContainer = myCompany.getUsersContainer();
-
-		// creates a ProjectsRepository
-		projectContainer = myCompany.getProjectsContainer();
+		userContainer = new UserContainer();
+								
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
 
 		userContainer.getAllUsersFromUserContainer().clear();
 
@@ -50,7 +45,6 @@ public class US340CreateTaskControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
 		user1 = null;
 		testTask = null;
 		project = null;

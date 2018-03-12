@@ -2,6 +2,7 @@ package project.controller;
 
 import project.model.Project;
 import project.model.User;
+import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.List;
  */
 public class US302ChangeProjectManagerController {
 
-	Company myCompany = Company.getTheInstance();
+
+	UserContainer userContainer;
 	List<User> activeCollaboratorList;
 	User selectedManager;
 	Project selectedProject;
@@ -36,7 +38,7 @@ public class US302ChangeProjectManagerController {
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listPossibleManagers() {
-		this.activeCollaboratorList = myCompany.getUsersContainer().getAllActiveCollaboratorsFromRepository();
+		this.activeCollaboratorList = userContainer.getAllActiveCollaboratorsFromRepository();
 		List<String> collabListAsString = new ArrayList<>();
 
 		for (int i = 0; i < activeCollaboratorList.size(); i++) {

@@ -46,15 +46,13 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public void setSelectedAdditionRequest(int index) {
 		this.selectedAdditionRequest = selectedProject.getPendingTaskAssignementRequests().get(index);
-		projectContainer.addProjectToProjectContainerX(selectedProject);
+		projectContainer.saveProjectInRepository(selectedProject);
 	}
 
 	/**
 	 * This method approves an assignment request: Gets the target request from the
 	 * index number, adding its collaborator field to the task in its task field
-	 * 
-	 * @param int
-	 *            Index - the index number of the selected request
+	 *
 	 * 
 	 * @return returns true or false if the request was found and approved
 	 *         successfully
@@ -63,7 +61,7 @@ public class US356ManageAssigmentRequestController {
 		if (selectedAdditionRequest != null) {
 			selectedAdditionRequest.getTask().addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
 			deleteRequest();
-			projectContainer.addProjectToProjectContainerX(selectedProject);
+			projectContainer.saveProjectInRepository(selectedProject);
 			return true;
 		} else
 			return false;
@@ -72,9 +70,7 @@ public class US356ManageAssigmentRequestController {
 	/**
 	 * This method rejects an assignment request: Gets the target request from the
 	 * index number, adding its collaborator field to the task in its task field
-	 * 
-	 * @param int
-	 *            Index - the index number of the selected request
+	 *
 	 * 
 	 * @return returns true or false if the request was found and rejected
 	 *         successfully
@@ -82,7 +78,7 @@ public class US356ManageAssigmentRequestController {
 	public boolean rejectAssignmentRequest() {
 		if (selectedAdditionRequest != null) {
 			deleteRequest();
-			projectContainer.addProjectToProjectContainerX(selectedProject);
+			projectContainer.saveProjectInRepository(selectedProject);
 			return true;
 		} else
 			return false;
@@ -96,6 +92,6 @@ public class US356ManageAssigmentRequestController {
 	public void deleteRequest() {
 
 		selectedProject.deleteTaskAssignementRequest(this.selectedAdditionRequest);
-		projectContainer.addProjectToProjectContainerX(selectedProject);
+		projectContainer.saveProjectInRepository(selectedProject);
 	}
 }

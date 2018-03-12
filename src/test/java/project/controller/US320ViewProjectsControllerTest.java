@@ -4,13 +4,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import project.model.Project;
+import project.model.ProjectContainer;
 import project.model.User;
+import project.model.UserContainer;
 
 import static org.junit.Assert.*;
 
 public class US320ViewProjectsControllerTest {
 
-	Company testCompany;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 	Project activeProject;
 	Project inactiveProject;
 	User activeManager;
@@ -20,14 +23,17 @@ public class US320ViewProjectsControllerTest {
 
 	@Before
 	public void setUp() {
-		// Gets the company and creates Two users
-		testCompany = Company.getTheInstance();
+		// creates an UserContainer
+		userContainer = new UserContainer();
+								
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
 
 		activeManager = new User("Daniel", "email", "idNumber", "function", "123456789");
 		inactiveManager = new User("Johnny", "email2", "idNumber2", "function2", "987654321");
 
-		testCompany.getUsersContainer().addUserToUserRepository(activeManager);
-		testCompany.getUsersContainer().addUserToUserRepository(inactiveManager);
+		userContainer.addUserToUserRepository(activeManager);
+		userContainer.addUserToUserRepository(inactiveManager);
 
 		// creates both an active and an Inactive Project using their rewspective
 		// Project Managers
@@ -37,8 +43,8 @@ public class US320ViewProjectsControllerTest {
 		activeProject.setProjectStatus(Project.EXECUTION);
 		inactiveProject.setProjectStatus(Project.PLANNING);
 
-		testCompany.getProjectsContainer().addProjectToProjectContainer(activeProject);
-		testCompany.getProjectsContainer().addProjectToProjectContainer(inactiveProject);
+		projectContainer.addProjectToProjectContainer(activeProject);
+		projectContainer.addProjectToProjectContainer(inactiveProject);
 
 		// creates a string from activeProject's overview data, to be compared with the
 		// various tests
@@ -56,8 +62,8 @@ public class US320ViewProjectsControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
-		testCompany = null;
+		userContainer = null;
+		projectContainer = null;
 		activeProject = null;
 		inactiveProject = null;
 		activeManager = null;
@@ -116,7 +122,7 @@ public class US320ViewProjectsControllerTest {
 	@Test
 	public void allProjectsListTest() {
 		projectListsController = new US320ViewProjectsController();
-		int ProjectContainerSize = testCompany.getProjectsContainer().getAllProjectsfromProjectsContainer().size();
+		int ProjectContainerSize = projectContainer.getAllProjectsfromProjectsContainer().size();
 
 		assertEquals(ProjectContainerSize, projectListsController.viewAllProjects().size());
 

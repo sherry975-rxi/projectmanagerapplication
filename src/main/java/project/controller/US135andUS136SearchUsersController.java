@@ -2,6 +2,7 @@ package project.controller;
 
 import project.model.Profile;
 import project.model.User;
+import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ public class US135andUS136SearchUsersController {
 
 	List<User> userList;
 	User selectedUser = null;
+	UserContainer userContainer;
 
 	/**
 	 * Este controlador permite ao Administrador pesquisar utilizadores do sistema
@@ -24,7 +26,7 @@ public class US135andUS136SearchUsersController {
 	 *         that match the user profile
 	 */
 	public List<String> searchUsersByProfileController(Profile profileToSearch) {
-		this.userList = Company.getTheInstance().getUsersContainer().searchUsersByProfile(profileToSearch);
+		this.userList = userContainer.searchUsersByProfile(profileToSearch);
 
 		List<String> userListString = new ArrayList<>();
 
@@ -45,7 +47,7 @@ public class US135andUS136SearchUsersController {
 	 *         contain the same text that the user typed
 	 */
 	public List<String> searchUsersByEmailController(String emailToSearch) {
-		this.userList = Company.getTheInstance().getUsersContainer().searchUsersByEmail(emailToSearch);
+		this.userList = userContainer.searchUsersByEmail(emailToSearch);
 
 		List<String> userListString = new ArrayList<>();
 

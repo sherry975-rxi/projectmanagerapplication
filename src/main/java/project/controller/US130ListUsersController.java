@@ -1,6 +1,5 @@
 package project.controller;
 
-import project.model.Company;
 import project.model.User;
 import project.model.UserContainer;
 

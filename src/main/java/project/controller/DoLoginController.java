@@ -22,7 +22,7 @@ public class DoLoginController {
 		username = userContainer.getUserByEmail(email);
 		password = password1;
 		boolean loginSuccess = false;
-		if (userContainer.isUserinUserRepository(username)
+		if (userContainer.isUserinUserContainer(username)
 				&& username.checkLogin(password)) {
 			loginSuccess = true;
 		}

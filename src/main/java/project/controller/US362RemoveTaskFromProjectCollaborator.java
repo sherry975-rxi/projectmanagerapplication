@@ -60,7 +60,7 @@ public class US362RemoveTaskFromProjectCollaborator {
 	public boolean removeCollaboratorFromTask() {
 		boolean removeCollaboratorFromTask = false;
 		 if(this.task.removeProjectCollaboratorFromTask(this.projectCollaborator)){
-			 projectContainer.addProjectToProjectContainerX(this.project);
+			 projectContainer.saveProjectInRepository(this.project);
 			 removeCollaboratorFromTask = true;
 		 }
 		return removeCollaboratorFromTask;

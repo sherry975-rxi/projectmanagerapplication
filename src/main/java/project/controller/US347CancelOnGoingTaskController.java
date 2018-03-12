@@ -19,7 +19,8 @@ public class US347CancelOnGoingTaskController {
 	/**
 	 * Constructor
 	 * 
-	 * @param projectIDtoInstantiate
+	 * @param taskID task id to give to the task
+	 * @param project project in which to create the task
 	 */
 	public US347CancelOnGoingTaskController(String taskID, Project project) {
 		this.taskID = taskID;
@@ -28,10 +29,7 @@ public class US347CancelOnGoingTaskController {
 
 	/**
 	 * Returns a string with the state of a certain Task
-	 * 
-	 * @param taskID
-	 *            Task to get state info
-	 * 
+
 	 * @return task state as a string
 	 */
 	public String viewTaskState() {
@@ -42,24 +40,14 @@ public class US347CancelOnGoingTaskController {
 	}
 
 	/**
-	 * This method changes the state of a Task from OnGoing to Cancelled
-	 * 
-	 * @param taskIDtoSetState
-	 *            ID of the task which state is going to be changed from OnGoing to
-	 *            Cancelled
+	 * This method changes the state of a Task from OnGoing to Cancelledz
 	 */
 	public boolean cancelOnGoingTask() {
-		ProjectContainer projectContainer = new ProjectContainer();
-		Task task = this.project.getTaskRepository().getTaskByID(taskID);
 
-		boolean cancelled = false;
-		task.setCancelDate();
-		if (task.getTaskState().changeToCancelled()) {
-			cancelled = true;
-			projectContainer.addProjectToProjectContainerX(this.project);
-		} else {
-			task.cancelledDateClear();
-		}
-		return cancelled;
+		ProjectContainer projContainer = new ProjectContainer();
+		Task task = this.project.getTaskRepository().getTaskByID(taskID);
+		boolean result = task.cancelTask();
+		projContainer.saveProjectInRepository(project);
+		return result;
 	}
 }
