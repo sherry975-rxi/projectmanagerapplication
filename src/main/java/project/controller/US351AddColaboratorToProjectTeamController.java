@@ -1,30 +1,24 @@
 package project.controller;
 
-import org.springframework.stereotype.Service;
-import project.model.Project;
-import project.model.User;
-import project.model.UserContainer;
+import project.model.*;
 
 import java.util.List;
 
 public class US351AddColaboratorToProjectTeamController {
 
-	UserContainer userContainer = new UserContainer();
-
-	public US351AddColaboratorToProjectTeamController(){
-    }
 	/**
 	 * This controller add user to project team
 	 * 
 	 * respond to US 350
 	 * 
-	 * @param user user to add to project
-	 * @param project project to which to add the user
-	 * @param costPerEffort the cost per unit of effort this particular user requires
+	 * @param user
+	 * @param project
+	 * @param effort
 	 */
-	public void addUserToProjectTeam(User user, Project project, int costPerEffort) {
-
-		project.addUserToProjectTeam(user, costPerEffort);
+	public void addUserToProjectTeam(User user, Project project, int effort) {
+		ProjectContainer projectContainer = new ProjectContainer();
+		project.addUserToProjectTeam(user, effort);
+		projectContainer.addProjectToProjectContainerX(project);
 
 	}
 
@@ -34,6 +28,7 @@ public class US351AddColaboratorToProjectTeamController {
 	 * @return List with all the available users
 	 */
 	public List<User> getAllUsers() {
+		UserContainer userContainer = new UserContainer();
 		return userContainer.getAllActiveCollaboratorsFromRepository();
 	}
 
