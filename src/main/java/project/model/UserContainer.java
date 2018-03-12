@@ -242,4 +242,15 @@ public class UserContainer {
         }
         return result;
     }
+
+    /**
+     * This method feeds the list of all Users in the Company (userContainer) with the user data that is in the DB
+     */
+    public List<User> populateUserContainer() {
+        usersContainer.clear();
+
+        this.userRepository.findAll().forEach(this.usersContainer::add);
+
+        return this.usersContainer;
+    }
 }
