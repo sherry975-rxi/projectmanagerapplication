@@ -13,7 +13,6 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 
 	public US203GetUserStartedNotFinishedTaskListInIncreasingOrderController() {
 		this.projectContainer = new ProjectContainer();
-		this.projectContainer.updateProjectContainer();
 	}
 
 	/**

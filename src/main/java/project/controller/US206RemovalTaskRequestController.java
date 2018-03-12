@@ -29,7 +29,6 @@ public class US206RemovalTaskRequestController {
 		this.projectID = null;
 		this.taskID = null;
 		this.projectContainer = new ProjectContainer();
-		projectContainer.updateProjectContainer();
 	}
 
 	/**
