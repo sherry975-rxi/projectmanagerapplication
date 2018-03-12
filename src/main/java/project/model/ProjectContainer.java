@@ -92,6 +92,10 @@ public class ProjectContainer {
 		}
 	}
 
+	public void saveProjectInRepository(Project projToSave) {
+		this.projectsRepository.save(projToSave);
+	}
+
 	/**
 	 * This method returns a copy of the list of projects (projectsList)
 	 * 
