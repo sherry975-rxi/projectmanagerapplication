@@ -21,6 +21,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	 */
 	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
 		this.myProjRepo = new ProjectContainer();
+		this.myProjRepo.updateProjectContainer();
 		this.myUser = user;
 	}
 

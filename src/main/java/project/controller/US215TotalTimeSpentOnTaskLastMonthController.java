@@ -13,10 +13,11 @@ import project.model.User;
  */
 public class US215TotalTimeSpentOnTaskLastMonthController {
 
-	ProjectContainer myProjRepo;
+	ProjectContainer projectContainer;
 
 	public US215TotalTimeSpentOnTaskLastMonthController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
+		this.projectContainer = new ProjectContainer();
+		projectContainer.updateProjectContainer();
 	}
 
 	/**
@@ -31,7 +32,7 @@ public class US215TotalTimeSpentOnTaskLastMonthController {
 	 */
 	public double getTotalTimeOfFinishedTasksFromUserLastMonth(User user) {
 
-		return myProjRepo.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
+		return projectContainer.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
 	}
 
 }
