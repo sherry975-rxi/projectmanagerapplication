@@ -90,7 +90,7 @@ public class Task {
 		this.startDateInterval = null;
 		this.deadlineInterval = null;
 		this.taskDependency = new ArrayList<>();
-		this.taskState = new Created(this);
+		this.taskState = new Created();
 		this.cancelDate = null;
 		this.currentState = StateEnum.CREATED;
 	}
@@ -136,7 +136,7 @@ public class Task {
 		this.startDateInterval = null;
 		this.deadlineInterval = null;
 		this.taskDependency = new ArrayList<>();
-		this.taskState = new Created(this);
+		this.taskState = new Created();
 		this.currentState = StateEnum.CREATED;
 	}
 
@@ -228,6 +228,7 @@ public class Task {
 	 */
 	public void setStartDateInterval(int newStartDateInterval) {
 		this.startDateInterval = newStartDateInterval;
+		this.taskState.doAction(this);
 	}
 
 	/**
@@ -248,6 +249,7 @@ public class Task {
 	 */
 	public void setDeadlineInterval(int newFinishDateInterval) {
 		this.deadlineInterval = newFinishDateInterval;
+		this.taskState.doAction(this);
 	}
 
 	/**
@@ -266,6 +268,7 @@ public class Task {
 	 */
 	public void setEstimatedTaskEffort(int newEstimatedTaskEffort) {
 		this.estimatedTaskEffort = newEstimatedTaskEffort;
+		this.taskState.doAction(this);
 	}
 
 	/**
@@ -299,6 +302,7 @@ public class Task {
 	 */
 	public void setEstimatedTaskStartDate(Calendar newEstimatedTaskStartDate) {
 		this.estimatedTaskStartDate = newEstimatedTaskStartDate;
+		this.taskState.doAction(this);
 	}
 
 	/**
@@ -332,6 +336,7 @@ public class Task {
 	 */
 	public void setTaskDeadline(Calendar newTaskDeadline) {
 		this.taskDeadline = newTaskDeadline;
+		this.taskState.doAction(this);
 	}
 
 	/**
@@ -350,6 +355,7 @@ public class Task {
 	 */
 	public void setTaskBudget(int newEstimatedBudgetCostTask) {
 		this.taskBudget = newEstimatedBudgetCostTask;
+		this.taskState.doAction(this);
 	}
 
 	/**
@@ -378,6 +384,7 @@ public class Task {
 	 */
 	public void setStartDate(Calendar c) {
 		this.startDate = c;
+		this.taskState.doAction(this);
 	}
 
 	/**
@@ -465,18 +472,14 @@ public class Task {
 	}
 
 	/**
-	 * This method changes the task state to finished if the task have a finishDate
-	 * and confirms if the task have the conditions to change (using
-	 * changeToFinished method implemented in states machine)
+	 * This method tris to change the task state to finished.
+	 *
+	 * @return TRUE if it state is successfully finished, FALSE if not
 	 * 
 	 */
 	public boolean markTaskAsFinished() {
-		boolean wasChangedToFinished = false;
-		if (this.finishDate == null) {
-			this.setFinishDate();
-			wasChangedToFinished = this.taskState.changeToFinished();
-		}
-		return wasChangedToFinished;
+		this.getTaskState().doAction(this);
+		return this.getTaskState() instanceof Finished;
 	}
 
 	/**
@@ -486,6 +489,7 @@ public class Task {
 	 * @param projCollaborator project collaborator to add to the task team
 	 */
 	public boolean addProjectCollaboratorToTask(ProjectCollaborator projCollaborator) {
+		this.taskState.doAction(this);
 		return addTaskCollaboratorToTask(createTaskCollaborator(projCollaborator));
 
 	}
@@ -512,9 +516,9 @@ public class Task {
 			wasTheTaskAddedToCollaborator = true;
 
 		}
-
+		
+		this.taskState.doAction(this);
 		return wasTheTaskAddedToCollaborator;
-
 	}
 
 	/**
@@ -717,7 +721,7 @@ public class Task {
 				removed = true;
 			}
 		}
-		this.taskState.changeToStandBy();
+		this.taskState.doAction(this);
 		return removed;
 	}
 
@@ -903,7 +907,7 @@ public class Task {
 			wasDependencyCreated = true;
 
 			}
-
+		this.getTaskState().doAction(this);
 		return wasDependencyCreated;
 
 
@@ -1048,10 +1052,19 @@ public class Task {
 	 */
 	public void removeFinishDate() {
 		if (this.finishDate != null) {
-			this.finishDate = null;
-			this.taskState.changeToOnGoing();
+			this.getTaskState().doAction(this);
 		}
 
+	}
+	
+	/**
+	 * This method cancels a task
+	 *
+	 * @return TRUE if the state was successfully cancelled, FALSE if not
+	 */
+	public boolean cancelTask() {
+		this.getTaskState().doAction(this);
+		return this.getTaskState() instanceof Cancelled;
 	}
 
 	/**
@@ -1080,10 +1093,12 @@ public class Task {
 				other.addFinishDateForTaskCollaborator();
 			}
 		}
+		this.getTaskState().doAction(this);
 	}
 
 	public void cancelledDateClear() {
 		this.cancelDate = null;
+		this.getTaskState().doAction(this);
 	}
 
 }
