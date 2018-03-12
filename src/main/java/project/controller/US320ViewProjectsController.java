@@ -8,7 +8,7 @@ import java.util.List;
 
 public class US320ViewProjectsController {
 
-	ProjectContainer projRepository = Company.getTheInstance().getProjectsContainer();
+	ProjectContainer projRepository = new ProjectContainer();
 	List<Project> chosenList;
 	Project selectedProject = null;
 

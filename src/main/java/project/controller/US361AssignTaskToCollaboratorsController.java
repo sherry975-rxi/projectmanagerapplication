@@ -80,7 +80,7 @@ public class US361AssignTaskToCollaboratorsController {
 		boolean assignCollaboratorToTask = false;
 		ProjectContainer projectContainer = new ProjectContainer();
 		if(task.addProjectCollaboratorToTask(this.projectCollaborator)){
-			projectContainer.addProjectToProjectContainerX(this.project);
+			projectContainer.saveProjectInRepository(this.project);
 			assignCollaboratorToTask = true;
 		}
 		return assignCollaboratorToTask;
