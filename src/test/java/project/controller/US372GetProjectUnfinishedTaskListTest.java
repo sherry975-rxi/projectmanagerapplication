@@ -14,7 +14,8 @@ import static org.junit.Assert.assertTrue;
 public class US372GetProjectUnfinishedTaskListTest {
 
 	US372GetProjectUnfinishedTaskListController tasksFiltersController;
-	Company company1;
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
@@ -23,13 +24,16 @@ public class US372GetProjectUnfinishedTaskListTest {
 
 	@Before
 	public void setUp() {
-		// create company 1
-		company1 = Company.getTheInstance();
+		// creates an UserContainer
+		userContainer = new UserContainer();
+								
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
 
 		// create users in company
-		user2 = company1.getUsersContainer().createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
+		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
 				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
-		user1 = company1.getUsersContainer().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
+		user1 = userContainer.createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
 
 		// change profiles of users from VISITOR (default) to COLLABORATOR
@@ -37,10 +41,10 @@ public class US372GetProjectUnfinishedTaskListTest {
 		user1.setUserProfile(Profile.COLLABORATOR);
 
 		// create project 1 in company 1
-		project1 = company1.getProjectsContainer().createProject("name3", "description4", user2);
+		project1 = projectContainer.createProject("name3", "description4", user2);
 
 		// add project 1 to company 1
-		company1.getProjectsContainer().addProjectToProjectContainer(project1);
+		projectContainer.addProjectToProjectContainer(project1);
 
 		// create an estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -147,7 +151,8 @@ public class US372GetProjectUnfinishedTaskListTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+		userContainer = null;
+		projectContainer = null;
 		user1 = null;
 		user2 = null;
 		user3 = null;
