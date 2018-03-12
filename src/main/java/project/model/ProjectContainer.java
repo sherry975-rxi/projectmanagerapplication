@@ -1,13 +1,18 @@
 package project.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import project.Repository.ProjectsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ProjectContainer {
 
-	private project.Repository.ProjectsRepository projectsRepository;
+	@Autowired
+	private ProjectsRepository projectsRepository;
+
 	private List<Project> projectsContainer;
 	private int projCounter = 1;
 
@@ -469,6 +474,7 @@ public class ProjectContainer {
 
 		this.projectsContainer.clear();
 		projectsContainer.addAll(this.projectsRepository.findAll());
+		projCounter=projectsContainer.size()+1;
 
 	}
 }

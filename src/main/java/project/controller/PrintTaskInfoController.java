@@ -2,6 +2,7 @@ package project.controller;
 
 import project.model.Project;
 import project.model.ProjectCollaborator;
+import project.model.ProjectContainer;
 import project.model.Task;
 
 import java.text.SimpleDateFormat;
@@ -11,13 +12,14 @@ import java.util.List;
 
 public class PrintTaskInfoController {
 
+	private ProjectContainer projContainer = new ProjectContainer();
 	private Task task;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	private String taskID;
 	private Integer projeID;
 	private Project project;
 
-	public PrintTaskInfoController(Task task) {
+	PrintTaskInfoController(Task task) {
 		this.task = task;
 	}
 
@@ -28,8 +30,8 @@ public class PrintTaskInfoController {
 	}
 
 	public void setProjectAndTask() {
-		this.project = Company.getTheInstance().getProjectsContainer().getProjById(this.projeID);
-		this.task = Company.getTheInstance().getProjectsContainer().getProjById(this.projeID).getTaskRepository()
+		this.project = projContainer.getProjById(this.projeID);
+		this.task = projContainer.getProjById(this.projeID).getTaskRepository()
 				.getTaskByID(this.taskID);
 	}
 

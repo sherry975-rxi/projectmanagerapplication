@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import project.model.*;
-import project.model.taskstateinterface.Finished;
 
 import java.util.Calendar;
 
@@ -12,45 +11,42 @@ import static org.junit.Assert.assertEquals;
 
 public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 
-	Company myComp;
-	ProjectContainer projRepo;
-	UserContainer userRepo;
+	ProjectContainer projectContainer;
+	UserContainer userContainer;
 	TaskContainer taskRepo;
 	Project proj;
 	Task taskA;
 	Task taskB;
 	Task taskC;
 	User user;
-	User nullUser;
 	User userA;
 	User userB;
 	US215TotalTimeSpentOnTaskLastMonthController controller;
 
 	@Before
 	public void setUp() {
-		// Initialize company
-		myComp = Company.getTheInstance();
+
 
 		// Initialize Project Repository
-		projRepo = myComp.getProjectsContainer();
+		projectContainer = new ProjectContainer();
 
 		// Initialize User Repository
-		userRepo = myComp.getUsersContainer();
+		userContainer = new UserContainer();
 
 		// Add user to User Repository
-		userRepo.addUserToUserRepository(userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337",
+		userContainer.addUserToUserRepository(userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337",
 				"Follower of da wae", "919898997", "Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA"));
-		userA = userRepo.getUserByEmail("ugandan@nackls.com");
+		userA = userContainer.getUserByEmail("ugandan@nackls.com");
 
-		userRepo.addUserToUserRepository(
-				userRepo.createUser("Fek Quin2", "ugandan2@nackls.com", "cluck13372", "Follower of da wae2",
+		userContainer.addUserToUserRepository(
+				userContainer.createUser("Fek Quin2", "ugandan2@nackls.com", "cluck13372", "Follower of da wae2",
 						"9198989972", "Debil Strit2", "SP1T-0N-H1M2", "NacklsCiti2", "QuinLend2", "UGANDA2"));
-		userB = userRepo.getUserByEmail("ugandan2@nackls.com");
+		userB = userContainer.getUserByEmail("ugandan2@nackls.com");
 
 		// Add a project to the project repository
-		projRepo.addProjectToProjectContainer(
-				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", userA));
-		proj = projRepo.getAllProjectsfromProjectsContainer().get(0);
+		projectContainer.addProjectToProjectContainer(
+				projectContainer.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", userA));
+		proj = projectContainer.getAllProjectsfromProjectsContainer().get(0);
 
 		// Add user to proj
 		proj.addUserToProjectTeam(userA, 5);
@@ -83,24 +79,22 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.add(Calendar.MONTH, -1);
 
-		Finished stateA = new Finished(taskA);
-		taskA.setTaskState(stateA);
+
 		taskA.setFinishDate(finishDate);
 
-		Finished stateB = new Finished(taskB);
-		taskB.setTaskState(stateB);
+
 		taskB.setFinishDate(finishDate);
 
-		Finished stateC = new Finished(taskC);
-		taskC.setTaskState(stateC);
+
 		taskC.setFinishDate(finishDate);
 	}
 
 	@After
 	public void tearDown() {
-		Company.clear();
-		projRepo = null;
-		userRepo = null;
+
+		userContainer = null;
+		projectContainer = null;
+		userContainer = null;
 		taskRepo = null;
 		proj = null;
 		taskA = null;

@@ -46,7 +46,7 @@ public class OnGoing implements TaskStateInterface {
 		return ((task.getTaskState() instanceof Ready) || (task.getTaskState() instanceof Finished)
 				|| (task.getTaskState() instanceof StandBy)) && (task.getEstimatedTaskStartDate() != null)
 				&& (task.getTaskDeadline() != null) && task.doesTaskTeamHaveActiveUsers()
-				&& (task.getStartDate() != null) && (task.getFinishDate() != null) && (task.getCancelDate() == null)
+				&& (task.getStartDate() != null) && (task.getFinishDate() == null) && (task.getCancelDate() == null)
 				&& (task.getEstimatedTaskEffort() != 0) && (task.getTaskBudget() != 0);
 	}
 
