@@ -18,7 +18,9 @@ import static org.junit.Assert.assertEquals;
 public class US370V2GetProjectFinishedTaskListTest {
 
 	US370GetProjectFinishedTaskListController tasksFiltersController;
-	Company company1;
+	UserContainer myUsers;
+	ProjectContainer myProjects;
+
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
@@ -29,25 +31,26 @@ public class US370V2GetProjectFinishedTaskListTest {
 	@Before
 	public void setUp() {
 		// create company 1
-		company1 = Company.getTheInstance();
+		myUsers = new UserContainer();
+		myProjects = new ProjectContainer();
 
 		// create users in company
-		user2 = company1.getUsersContainer().createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
+		user2 = myUsers.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
 				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
-		company1.getUsersContainer().addUserToUserRepository(user2);
-		user1 = company1.getUsersContainer().createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
+		myUsers.addUserToUserRepository(user2);
+		user1 = myUsers.createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
-		company1.getUsersContainer().addUserToUserRepository(user1);
+		myUsers.addUserToUserRepository(user1);
 
 		// change profiles of users from VISITOR (default) to COLLABORATOR
 		user2.setUserProfile(Profile.COLLABORATOR);
 		user1.setUserProfile(Profile.COLLABORATOR);
 
 		// create project 1 in company 1
-		project1 = company1.getProjectsContainer().createProject("name3", "description4", user2);
+		project1 = myProjects.createProject("name3", "description4", user2);
 
 		// add project 1 to company 1
-		company1.getProjectsContainer().addProjectToProjectContainer(project1);
+		myProjects.addProjectToProjectContainer(project1);
 
 		// create tasks in project 1
 		task1 = project1.getTaskRepository().createTask("Do this");
@@ -95,7 +98,8 @@ public class US370V2GetProjectFinishedTaskListTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+		myUsers=null;
+		myProjects=null;
 		user1 = null;
 		user2 = null;
 		user3 = null;
@@ -134,16 +138,15 @@ public class US370V2GetProjectFinishedTaskListTest {
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.add(Calendar.MONTH, -5);
 		task1.setTaskDeadline(taskDeadline);
-		task1.getTaskState().changeToPlanned();
+
 		// necessary to pass from "Planned" to "Assigned"
+		// and then to ready since there are no dependencies
 		task1.addProjectCollaboratorToTask(projCollab1);
-		task1.getTaskState().changeToAssigned();
-		// pass from "Assigned" to "Ready"
-		task1.getTaskState().changeToReady();
+
 		// necessary to pass from "Ready" to "OnGoing"
 		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
 		task1.setStartDate(projStartDate);
-		task1.getTaskState().changeToOnGoing();
+
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate4 = (Calendar) estimatedTaskStartDate.clone();
 		testDate4.set(Calendar.YEAR, 2017);
@@ -151,7 +154,8 @@ public class US370V2GetProjectFinishedTaskListTest {
 		testDate4.set(Calendar.DAY_OF_MONTH, 20);
 		testDate4.set(Calendar.HOUR_OF_DAY, 14);
 		task1.setFinishDate(testDate4);
-		task1.getTaskState().changeToFinished();
+		task1.getTaskState().doAction(task1);
+
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task1.viewTaskStateName());
 
@@ -163,15 +167,14 @@ public class US370V2GetProjectFinishedTaskListTest {
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.add(Calendar.MONTH, 1);
 		task6.setTaskDeadline(taskDeadline);
-		task6.getTaskState().changeToPlanned();
+
 		// necessary to pass from "Planned" to "Assigned"
-		task6.addProjectCollaboratorToTask(projCollab2);
-		task6.getTaskState().changeToAssigned();
 		// pass from "Assigned" to "Ready"
-		task6.getTaskState().changeToReady();
+		task6.addProjectCollaboratorToTask(projCollab2);
+
 		// necessary to pass from "Ready" to "OnGoing"
 		task6.setStartDate(projStartDate);
-		task6.getTaskState().changeToOnGoing();
+
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate3 = (Calendar) estimatedTaskStartDate.clone();
 		testDate3.set(Calendar.YEAR, 2017);
@@ -179,7 +182,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 		testDate3.set(Calendar.DAY_OF_MONTH, 20);
 		testDate3.set(Calendar.HOUR_OF_DAY, 14);
 		task6.setFinishDate(testDate3);
-		task6.getTaskState().changeToFinished();
+		task6.getTaskState().doAction(task6);
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task6.viewTaskStateName());
 
@@ -191,18 +194,13 @@ public class US370V2GetProjectFinishedTaskListTest {
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.add(Calendar.MONTH, 1);
 		task5.setTaskDeadline(taskDeadline);
-		task5.getTaskState().changeToPlanned();
 
 		// necessary to pass from "Planned" to "Assigned"
-		task5.addProjectCollaboratorToTask(projCollab2);
-		task5.getTaskState().changeToAssigned();
-
 		// pass from "Assigned" to "Ready"
-		task5.getTaskState().changeToReady();
+		task5.addProjectCollaboratorToTask(projCollab2);
 
 		// necessary to pass from "Ready" to "OnGoing"
 		task5.setStartDate(projStartDate);
-		task5.getTaskState().changeToOnGoing();
 
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate2 = (Calendar) estimatedTaskStartDate.clone();
@@ -211,7 +209,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 		testDate2.set(Calendar.DAY_OF_MONTH, 20);
 		testDate2.set(Calendar.HOUR_OF_DAY, 14);
 		task5.setFinishDate(testDate2);
-		task5.getTaskState().changeToFinished();
+		task5.getTaskState().doAction(task5);
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task5.viewTaskStateName());
 
@@ -223,15 +221,14 @@ public class US370V2GetProjectFinishedTaskListTest {
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.add(Calendar.MONTH, 1);
 		task4.setTaskDeadline(taskDeadline);
-		task4.getTaskState().changeToPlanned();
+
 		// necessary to pass from "Planned" to "Assigned"
-		task4.addProjectCollaboratorToTask(projCollab2);
-		task4.getTaskState().changeToAssigned();
 		// pass from "Assigned" to "Ready"
-		task4.getTaskState().changeToReady();
+		task4.addProjectCollaboratorToTask(projCollab2);
+
 		// necessary to pass from "Ready" to "OnGoing"
 		task4.setStartDate(projStartDate);
-		task4.getTaskState().changeToOnGoing();
+
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
 		testDate.set(Calendar.YEAR, 2017);
@@ -239,7 +236,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 		testDate.set(Calendar.DAY_OF_MONTH, 20);
 		testDate.set(Calendar.HOUR_OF_DAY, 14);
 		task4.setFinishDate(testDate);
-		task4.getTaskState().changeToFinished();
+		task4.getTaskState().doAction(task4);
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task4.viewTaskStateName());
 
