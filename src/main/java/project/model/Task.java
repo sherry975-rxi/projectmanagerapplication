@@ -7,6 +7,7 @@ import project.model.taskstateinterface.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
@@ -21,17 +22,15 @@ import static javax.persistence.CascadeType.ALL;
 @Table(name = "Task")
 public class Task {
 
-
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String taskID;
 	private String description;
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
 	private List<TaskCollaborator> taskTeam;
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
 	private List<Report> reports;
 	@Enumerated(EnumType.STRING)
@@ -55,10 +54,11 @@ public class Task {
 	private Calendar cancelDate;
 
 	@ManyToOne
-    @JoinColumn(name = "Project_id")
+	@JoinColumn(name = "Project_id")
 	private Project project;
 
-	public Task(){}
+	public Task() {
+	}
 
 	/**
 	 * This constructor creates a task with the mandatory fields taskCounter, projId
@@ -174,6 +174,7 @@ public class Task {
 			this.deadlineInterval = null;
 		}
 		this.currentState = StateEnum.CREATED;
+		this.project = task.getProject();
 	}
 
 	/**
@@ -188,7 +189,8 @@ public class Task {
 	/**
 	 * Sets the currentStateEnum
 	 *
-	 * @param currentState Enum to set
+	 * @param currentState
+	 *            Enum to set
 	 */
 	public void setCurrentState(StateEnum currentState) {
 		this.currentState = currentState;
@@ -203,12 +205,12 @@ public class Task {
 	}
 
 	public void setProject(Project project) {
-	    this.project=project;
-    }
+		this.project = project;
+	}
 
-    public Project getProject() {
-	    return this.project;
-    }
+	public Project getProject() {
+		return this.project;
+	}
 
 	/**
 	 * Returns the interval between the start date of the project and the estimated
@@ -224,7 +226,9 @@ public class Task {
 	 * Defines the interval between the start date of the project and the estimated
 	 * start date for the task to be a number provided.
 	 * 
-	 * @param newStartDateInterval the amount of days between the start of the mother task and this task
+	 * @param newStartDateInterval
+	 *            the amount of days between the start of the mother task and this
+	 *            task
 	 */
 	public void setStartDateInterval(int newStartDateInterval) {
 		this.startDateInterval = newStartDateInterval;
@@ -245,7 +249,9 @@ public class Task {
 	 * Defines the interval between the start date of the project and the estimated
 	 * finish date for the task to be a number provided.
 	 * 
-	 * @param newFinishDateInterval the amount of days between the end of the mother task and this task
+	 * @param newFinishDateInterval
+	 *            the amount of days between the end of the mother task and this
+	 *            task
 	 */
 	public void setDeadlineInterval(int newFinishDateInterval) {
 		this.deadlineInterval = newFinishDateInterval;
@@ -264,7 +270,8 @@ public class Task {
 	/**
 	 * This method when called update the estimated task effort
 	 * 
-	 * @param newEstimatedTaskEffort the effort estimated for a task
+	 * @param newEstimatedTaskEffort
+	 *            the effort estimated for a task
 	 */
 	public void setEstimatedTaskEffort(int newEstimatedTaskEffort) {
 		this.estimatedTaskEffort = newEstimatedTaskEffort;
@@ -286,10 +293,7 @@ public class Task {
 		if (this.startDateInterval == null) {
 			return this.estimatedTaskStartDate;
 		}
-		double d = Double.parseDouble(taskID);
-		int projId = (int) d;
-		Project proj = Company.getTheInstance().getProjectsContainer().getProjById(projId);
-		Calendar newEstimatedStartDate = (Calendar) proj.getStartdate().clone();
+		Calendar newEstimatedStartDate = (Calendar) project.getStartdate().clone();
 		newEstimatedStartDate.add(Calendar.DAY_OF_YEAR, this.startDateInterval);
 		return newEstimatedStartDate;
 
@@ -298,7 +302,8 @@ public class Task {
 	/**
 	 * This method when called update the Estimated Task Start Date
 	 * 
-	 * @param newEstimatedTaskStartDate an estimated start date for the task
+	 * @param newEstimatedTaskStartDate
+	 *            an estimated start date for the task
 	 */
 	public void setEstimatedTaskStartDate(Calendar newEstimatedTaskStartDate) {
 		this.estimatedTaskStartDate = newEstimatedTaskStartDate;
@@ -320,10 +325,7 @@ public class Task {
 		if (this.deadlineInterval == null) {
 			return this.taskDeadline;
 		}
-		double d = Double.parseDouble(taskID);
-		int projId = (int) d;
-		Project proj = Company.getTheInstance().getProjectsContainer().getProjById(projId);
-		Calendar newDeadline = (Calendar) proj.getStartdate().clone();
+		Calendar newDeadline = (Calendar) project.getStartdate().clone();
 		newDeadline.add(Calendar.DAY_OF_YEAR, this.deadlineInterval);
 		return newDeadline;
 
@@ -332,7 +334,8 @@ public class Task {
 	/**
 	 * This method when called update the task Dead line
 	 * 
-	 * @param newTaskDeadline an estimated deadline for the task
+	 * @param newTaskDeadline
+	 *            an estimated deadline for the task
 	 */
 	public void setTaskDeadline(Calendar newTaskDeadline) {
 		this.taskDeadline = newTaskDeadline;
@@ -351,7 +354,8 @@ public class Task {
 	/**
 	 * This method when called update the estimated Budget Cost Task
 	 * 
-	 * @param newEstimatedBudgetCostTask an estimated budget for the task
+	 * @param newEstimatedBudgetCostTask
+	 *            an estimated budget for the task
 	 */
 	public void setTaskBudget(int newEstimatedBudgetCostTask) {
 		this.taskBudget = newEstimatedBudgetCostTask;
@@ -380,7 +384,8 @@ public class Task {
 	/**
 	 * This method when called let us define a startDate of our choice
 	 * 
-	 * @param c Calendar date to input in start date
+	 * @param c
+	 *            Calendar date to input in start date
 	 */
 	public void setStartDate(Calendar c) {
 		this.startDate = c;
@@ -432,10 +437,9 @@ public class Task {
 		return taskTeam;
 	}
 
-    public void setTaskTeam(List<TaskCollaborator> taskTeam) {
-        this.taskTeam=taskTeam;
-    }
-
+	public void setTaskTeam(List<TaskCollaborator> taskTeam) {
+		this.taskTeam = taskTeam;
+	}
 
 	/**
 	 * This method gets the list of reports from the task
@@ -446,17 +450,17 @@ public class Task {
 		return reports;
 	}
 
-    public void setReports(List<Report> reports) {
-        this.reports=reports;
-    }
+	public void setReports(List<Report> reports) {
+		this.reports = reports;
+	}
 
-    public List<Task> getTaskDependency() {
-	    return this.taskDependency;
-    }
+	public List<Task> getTaskDependency() {
+		return this.taskDependency;
+	}
 
-    public void setTaskDependency(List<Task> taskDependency) {
-	    this.taskDependency=taskDependency;
-    }
+	public void setTaskDependency(List<Task> taskDependency) {
+		this.taskDependency = taskDependency;
+	}
 
 	/**
 	 * This method confirms if the task state is Finished
@@ -472,21 +476,31 @@ public class Task {
 	}
 
 	/**
-	 * This method tris to change the task state to finished.
+	 * This method tries to change the task state to finished.
 	 *
 	 * @return TRUE if it state is successfully finished, FALSE if not
 	 * 
 	 */
 	public boolean markTaskAsFinished() {
-		this.getTaskState().doAction(this);
-		return this.getTaskState() instanceof Finished;
+		Boolean changed = true;
+		this.setFinishDate();
+
+		this.taskState.doAction(this);
+		
+		if (!(this.taskState instanceof Finished)) {
+			changed = false;
+			this.finishDate = null;
+		}
+
+		return changed;
 	}
 
 	/**
 	 * This Method adds a Project Collaborator to a Task, and creates a New Task
 	 * Collaborator from this Project Collaborator.
 	 * 
-	 * @param projCollaborator project collaborator to add to the task team
+	 * @param projCollaborator
+	 *            project collaborator to add to the task team
 	 */
 	public boolean addProjectCollaboratorToTask(ProjectCollaborator projCollaborator) {
 		this.taskState.doAction(this);
@@ -516,7 +530,7 @@ public class Task {
 			wasTheTaskAddedToCollaborator = true;
 
 		}
-		
+
 		this.taskState.doAction(this);
 		return wasTheTaskAddedToCollaborator;
 	}
@@ -524,14 +538,16 @@ public class Task {
 	/**
 	 * Creates a Task Collaborator from a Project Collaborator
 	 * 
-	 * @param projCollaborator a project collaborator for which a task collaborator will be created
+	 * @param projCollaborator
+	 *            a project collaborator for which a task collaborator will be
+	 *            created
 	 * 
 	 * @return TaskCollaborator
 	 */
 	public TaskCollaborator createTaskCollaborator(ProjectCollaborator projCollaborator) {
 
-	    TaskCollaborator newTaskCollab = new TaskCollaborator(projCollaborator);
-	    newTaskCollab.setTask(this);
+		TaskCollaborator newTaskCollab = new TaskCollaborator(projCollaborator);
+		newTaskCollab.setTask(this);
 
 		return newTaskCollab;
 	}
@@ -540,8 +556,10 @@ public class Task {
 	 * Creates and adds a Report of a Specific Task Collaborator associated to a
 	 * Specific Project Collaborator
 	 * 
-	 * @param taskCollaborator a project collaborator for which a report will be created/updated
-	 * @param dateOfReport     date of the hours worked in task
+	 * @param taskCollaborator
+	 *            a project collaborator for which a report will be created/updated
+	 * @param dateOfReport
+	 *            date of the hours worked in task
 	 * 
 	 * @return report
 	 */
@@ -572,21 +590,23 @@ public class Task {
 
 	}
 
-
 	/**
-	 * This method returns the index number of the reports associated to a Task Collaborator
+	 * This method returns the index number of the reports associated to a Task
+	 * Collaborator
 	 *
-	 * @param email The Task Collaborator to search it's reports index number
-	 * @return reportsIndex
-	 * Returns a List with the index numbers of the reports by a given taskCollaborator
+	 * @param email
+	 *            The Task Collaborator to search it's reports index number
+	 * @return reportsIndex Returns a List with the index numbers of the reports by
+	 *         a given taskCollaborator
 	 */
 	public List<Integer> getReportsIndexOfTaskCollaborator(String email) {
 
 		List<Integer> reportsIndex = new ArrayList<>();
 
 		for (int reportNumber = 0; reportNumber < this.reports.size(); reportNumber++) {
-			if (this.reports.get(reportNumber).getTaskCollaborator().getProjCollaborator().getUserFromProjectCollaborator().
-					getEmail().equals(email) && this.reports.get(reportNumber).getTaskCollaborator().getFinishDate() == null) {
+			if (this.reports.get(reportNumber).getTaskCollaborator().getProjCollaborator()
+					.getUserFromProjectCollaborator().getEmail().equals(email)
+					&& this.reports.get(reportNumber).getTaskCollaborator().getFinishDate() == null) {
 				reportsIndex.add(reportNumber);
 			}
 		}
@@ -612,7 +632,8 @@ public class Task {
 
 			reportToUpdate = this.reports.get(reportToChange);
 
-			if (reportToUpdate.getTaskCollaborator().equals(taskCollaborator) && taskCollaborator.getFinishDate() == null) {
+			if (reportToUpdate.getTaskCollaborator().equals(taskCollaborator)
+					&& taskCollaborator.getFinishDate() == null) {
 				reportToUpdate.setReportedTime(newTime);
 				wasReportUpdated = true;
 			}
@@ -620,7 +641,6 @@ public class Task {
 
 		return wasReportUpdated;
 	}
-
 
 	/**
 	 * @param userEmail
@@ -656,7 +676,8 @@ public class Task {
 	/**
 	 * This method returns the Active Task Collaborator by Email
 	 *
-	 * @param email The Email to search for
+	 * @param email
+	 *            The Email to search for
 	 * @return TaskCollaborator that is active in the TaskTeam
 	 */
 	public TaskCollaborator getActiveTaskCollaboratorByEmail(String email) {
@@ -671,7 +692,6 @@ public class Task {
 
 		return taskCollaborator;
 	}
-
 
 	/**
 	 * @param userEmail
@@ -825,7 +845,8 @@ public class Task {
 	public boolean isProjectCollaboratorActiveInTaskTeam(ProjectCollaborator projCollaborator) {
 		boolean isActive = false;
 		for (TaskCollaborator other : taskTeam) {
-			if (other.getTaskCollaborator().equals(projCollaborator.getUserFromProjectCollaborator()) && other.isTaskCollaboratorActiveInTask()) {
+			if (other.getTaskCollaborator().equals(projCollaborator.getUserFromProjectCollaborator())
+					&& other.isTaskCollaboratorActiveInTask()) {
 				isActive = true;
 			}
 		}
@@ -853,9 +874,9 @@ public class Task {
 	/**
 	 * @return Returns a list of users copied from another task.
 	 */
-    private ArrayList<TaskCollaborator> copyListOfTaskCollaboratorsInTask() {
+	private ArrayList<TaskCollaborator> copyListOfTaskCollaboratorsInTask() {
 
-        return new ArrayList<>(this.getTaskTeam());
+		return new ArrayList<>(this.getTaskTeam());
 	}
 
 	/**
@@ -898,7 +919,6 @@ public class Task {
 		boolean wasDependencyCreated = false;
 		if (this.isCreatingTaskDependencyValid(taskToEstablishDependenceUpon)) {
 
-
 			this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
 			if (daysToPostpone >= 0) {
 				this.estimatedTaskStartDate.add(Calendar.DATE, daysToPostpone);
@@ -906,15 +926,11 @@ public class Task {
 			this.taskDependency.add(taskToEstablishDependenceUpon);
 			wasDependencyCreated = true;
 
-			}
+		}
 		this.getTaskState().doAction(this);
 		return wasDependencyCreated;
 
-
-		}
-
-
-
+	}
 
 	/**
 	 * This method removes a dependency of a task
@@ -1056,15 +1072,22 @@ public class Task {
 		}
 
 	}
-	
+
 	/**
 	 * This method cancels a task
 	 *
 	 * @return TRUE if the state was successfully cancelled, FALSE if not
 	 */
 	public boolean cancelTask() {
-		this.getTaskState().doAction(this);
-		return this.getTaskState() instanceof Cancelled;
+		Boolean cancelled = true; 
+		this.setCancelDate();
+		this.taskState.doAction(this);
+		if(!(this.getTaskState() instanceof Cancelled)) {
+			cancelled = false; 
+			this.cancelledDateClear();
+		}
+		
+		return cancelled; 
 	}
 
 	/**
@@ -1099,6 +1122,26 @@ public class Task {
 	public void cancelledDateClear() {
 		this.cancelDate = null;
 		this.getTaskState().doAction(this);
+	}
+
+	/**
+	 * Deletes the finish date of the task and changed its state to Ongoing. If the
+	 * state machine does not let the task change its state, the finish date is set
+	 * to its previous value.
+	 */
+	public void UnfinishTask() {
+		int year = finishDate.get(Calendar.YEAR);
+		int month = finishDate.get(Calendar.MONTH);
+		int date = finishDate.get(Calendar.DAY_OF_MONTH);
+		Calendar finishDateCopy = Calendar.getInstance(); 
+		finishDate.set(year, month, date);
+		
+		this.finishDate = null;
+		this.taskState.doAction(this);
+
+		if (!(this.taskState instanceof OnGoing)) {
+			this.finishDate = finishDateCopy;
+		}
 	}
 
 }

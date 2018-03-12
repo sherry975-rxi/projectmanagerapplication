@@ -35,10 +35,9 @@ public class Cancelled implements TaskStateInterface {
 				(task.getFinishDate() == null) &&
 				(task.getEstimatedTaskStartDate() != null) &&
 				(task.getTaskDeadline() != null) &&
-				(task.getCancelDate() == null) &&
+				(task.getCancelDate() != null) &&
 				task.doesTaskTeamHaveActiveUsers() &&
 				(task.getStartDate() != null) &&
-				(task.getFinishDate() != null) &&
 				(task.getEstimatedTaskEffort() != 0) &&
 				(task.getTaskBudget() != 0);
 
