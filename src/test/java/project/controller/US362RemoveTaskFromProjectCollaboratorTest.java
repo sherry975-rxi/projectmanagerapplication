@@ -13,8 +13,9 @@ import static org.junit.Assert.*;
 
 public class US362RemoveTaskFromProjectCollaboratorTest {
 
-	Company myCompany;
-
+	UserContainer userContainer;
+	ProjectContainer projectContainer;
+	
 	User user1;
 	User userAdmin;
 
@@ -38,28 +39,32 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 
 	@Before
 	public void setUp() {
-		// create company
-		myCompany = Company.getTheInstance();
+		
+		// creates an UserContainer
+		userContainer = new UserContainer();
+								
+		// creates a Project Container
+		projectContainer = new ProjectContainer();
 
 		// create user
-		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		userAdmin = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000",
+		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000",
 				"Rua", "2401-00", "Test", "Testo", "Testistan");
 
 		// add user to user list
-		myCompany.getUsersContainer().addUserToUserRepository(user1);
-		myCompany.getUsersContainer().addUserToUserRepository(userAdmin);
+		userContainer.addUserToUserRepository(user1);
+		userContainer.addUserToUserRepository(userAdmin);
 
 		// Creates one Project
-		project = myCompany.getProjectsContainer().createProject("name3", "description4", userAdmin);
-		project2 = myCompany.getProjectsContainer().createProject("name1", "description4", userAdmin);
+		project = projectContainer.createProject("name3", "description4", userAdmin);
+		project2 = projectContainer.createProject("name1", "description4", userAdmin);
 
 		// add project to project repository
-		myCompany.getProjectsContainer().addProjectToProjectContainer(project);
-		myCompany.getProjectsContainer().addProjectToProjectContainer(project2);
+		projectContainer.addProjectToProjectContainer(project);
+		projectContainer.addProjectToProjectContainer(project2);
 
 		// create project collaborators
 		collab1 = new ProjectCollaborator(user1, 2);
@@ -124,7 +129,8 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
+		userContainer = null;
+		projectContainer = null;
 		user1 = null;
 		testTask = null;
 		testTask2 = null;
