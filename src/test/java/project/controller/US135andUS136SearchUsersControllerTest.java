@@ -27,16 +27,12 @@ public class US135andUS136SearchUsersControllerTest {
 	User newUser3;
 	UserContainer userContainer;
 	US135andUS136SearchUsersController searchController;
-	Company company;
 
 	@Before
 	public void setUp() {
 
-		// Creates new company
-		company = Company.getTheInstance();
-
-		// Creates an UserContainer
-		userContainer = company.getUsersContainer();
+		// creates an UserContainer
+		userContainer = new UserContainer();
 
 		// create user
 		newUser1 = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
@@ -58,7 +54,6 @@ public class US135andUS136SearchUsersControllerTest {
 
 	@After
 	public void tearDown() {
-		Company.clear();
 		userContainer = null;
 		searchController = null;
 		newUser1 = null;
