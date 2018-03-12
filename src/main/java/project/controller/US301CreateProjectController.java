@@ -1,8 +1,6 @@
 package project.controller;
 
-import project.model.EffortUnit;
-import project.model.Project;
-import project.model.User;
+import project.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +14,16 @@ import java.util.List;
  */
 public class US301CreateProjectController {
 
-	Company myCompany = Company.getTheInstance();
-	List<User> activeCollaboratorList;
-	User selectedUser = null;
-	Project createdProject = null;
+    private ProjectContainer projects;
+    private UserContainer users;
+    private List<User> activeCollaboratorList;
+    private User selectedUser = null;
+	private Project createdProject = null;
+
+	public US301CreateProjectController() {
+		projects = new ProjectContainer();
+		users = new UserContainer();
+	}
 
 	/**
 	 * This method creates a project from the controller by calling the create
@@ -37,9 +41,9 @@ public class US301CreateProjectController {
 	 */
 	public Project createProject(String name, String description, User projectManager) {
 
-		createdProject = myCompany.getProjectsContainer().createProject(name, description, projectManager);
+		createdProject = projects.createProject(name, description, projectManager);
 
-		myCompany.getProjectsContainer().addProjectToProjectContainer(createdProject);
+		projects.addProjectToProjectContainer(createdProject);
 
 		return createdProject;
 	}
@@ -51,7 +55,9 @@ public class US301CreateProjectController {
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listActiveCollaborators() {
-		this.activeCollaboratorList = myCompany.getUsersContainer().getAllActiveCollaboratorsFromRepository();
+
+	    activeCollaboratorList = this.users.getAllActiveCollaboratorsFromRepository();
+
 		List<String> userListAsString = new ArrayList<>();
 
 		for (int i = 0; i < activeCollaboratorList.size(); i++) {
@@ -94,7 +100,7 @@ public class US301CreateProjectController {
 	 * This method is called after the project is created and sets the project's
 	 * budget as the chosen value. By default, budget is set to "0"
 	 * 
-	 * @param Integer
+	 * @param budget
 	 *            value that will become the project's budget
 	 */
 	public void changeBudget(int budget) {
@@ -106,7 +112,7 @@ public class US301CreateProjectController {
 	 * This is a utility method that converts a User object into a String of data,
 	 * to be displayed in the UI
 	 * 
-	 * @param User
+	 * @param toConvert
 	 *            to be converted
 	 * @return String of the user's data
 	 */
