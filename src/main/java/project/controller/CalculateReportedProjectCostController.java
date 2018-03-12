@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CalculateReportedProjectCostController {
 
-	/**
+	/*
 	 * 
 	 * This controller allows a Project Manager to get the reported cost to the
 	 * Project he is the manager of
@@ -36,13 +36,8 @@ public class CalculateReportedProjectCostController {
 	 */
 
 	public List<String> calculeReportedCostOfEachTaskController(Project project) {
-		List<String> reportTaskCost = new ArrayList<>();
 
-		for (String reportedCost : project.getTaskRepository().getReportedCostOfEachTask()) {
-			reportTaskCost.add(reportedCost);
-		}
-
-		return reportTaskCost;
+		return new ArrayList<>(project.getTaskRepository().getReportedCostOfEachTask());
 	}
 
 	public List<String> getTaskId(Project project) {

@@ -20,7 +20,8 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	 * @param user
 	 */
 	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
-		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
+		this.myProjRepo = new ProjectContainer();
+		this.myProjRepo.updateProjectContainer();
 		this.myUser = user;
 	}
 
@@ -51,9 +52,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	
 	/**
 	 * Returns the list of user finished tasks in decreasing order. - US210
-	 * 
-	 * @param myUser
-	 *            The User to search for it's finished tasks in decreasing order
+	 *
 	 * @return Task List
 	 * 
 	 */

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.Profile;
 import project.model.User;
+import project.model.UserContainer;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,25 +15,28 @@ public class US115andUS116SetUserStateControllerTests {
 	Profile director = Profile.DIRECTOR;
 	Profile collaborator = Profile.COLLABORATOR;
 
-	Company myCompany;
+
+	UserContainer userContainer;
 	User newUser2;
 	User newUser3;
 
 	@Before
 	public void setUp() {
 
-		myCompany = Company.getTheInstance();
+		userContainer = new UserContainer();
 
-		newUser2 = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+
+		newUser2 = userContainer.createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		myCompany.getUsersContainer().addUserToUserRepository(newUser2);
+		userContainer.addUserToUserRepository(newUser2);
 
 	}
 
 	@After
 	public void tearDown() {
-		Company.clear();
+
+		userContainer = null;
 		newUser2 = null;
 	}
 

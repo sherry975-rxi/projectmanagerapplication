@@ -1,6 +1,9 @@
 package project.controller;
 
-import project.model.*;
+import project.model.Project;
+import project.model.ProjectContainer;
+import project.model.Task;
+import project.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,10 +11,12 @@ import java.util.Calendar;
 import java.util.List;
 
 public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
-	ProjectContainer myProjRepo;
+	ProjectContainer projectContainer;
 
 	public US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
+		this.projectContainer = new ProjectContainer();
+		projectContainer.updateProjectContainer();
+
 	}
 
 	/**
@@ -25,7 +30,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
 	 * 
 	 */
 	public List<String> getFinishedUserTasksFromLastMonthInDecreasingOrder(User myUser) {
-		List<Task> lastMonthFinishedTasks = this.myProjRepo.getFinishedUserTasksFromLastMonthInDecreasingOrder(myUser);
+		List<Task> lastMonthFinishedTasks = this.projectContainer.getFinishedUserTasksFromLastMonthInDecreasingOrder(myUser);
 		List<String> lastMonthFinishedTasksString = new ArrayList<>();
 
 		for (Task other : lastMonthFinishedTasks) {
@@ -67,7 +72,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
 		String projectName = "404 Project Not found!";
 		String[] splitTaskID = toSeeProject.getTaskID().split("\\.");
 		int projectID = Integer.parseInt(splitTaskID[0]);
-		Project projectContainingTask = myProjRepo.getProjById(projectID);
+		Project projectContainingTask = projectContainer.getProjById(projectID);
 		if (projectContainingTask != null) {
 			projectName = projectContainingTask.getName();
 		}
