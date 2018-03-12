@@ -2,6 +2,7 @@ package project.controller;
 
 import project.model.Project;
 import project.model.ProjectCollaborator;
+import project.model.ProjectContainer;
 import project.model.Task;
 
 import java.text.SimpleDateFormat;
@@ -11,21 +12,26 @@ import java.util.List;
 
 public class PrintProjectInfoController {
 
+	private ProjectContainer projContainer;
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	Integer projID;
+	
 
 	public PrintProjectInfoController(Project project) {
 		this.project = project;
+		projContainer.updateProjectContainer();
+
 	}
 
 	public PrintProjectInfoController(Integer projID) {
 		this.projID = projID;
-		project = Company.getTheInstance().getProjectsContainer().getProjById(this.projID);
+		projContainer.updateProjectContainer();
+		project = projContainer.getProjById(this.projID);
 	}
 
 	public void setProject() {
-		this.project = Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode());
+		this.project = projContainer.getProjById(this.project.getIdCode());
 	}
 
 	/**
@@ -161,7 +167,7 @@ public class PrintProjectInfoController {
 	 * @return List of Strings of project's task (task ID + task description)
 	 */
 	public List<String> getProjectTaskList() {
-		List<Task> taskList = Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode())
+		List<Task> taskList = projContainer.getProjById(this.project.getIdCode())
 				.getTaskRepository().getProjectTaskRepository();
 		List<String> projectTaskList = new ArrayList<>();
 		for (Task projectTask : taskList) {
@@ -179,7 +185,7 @@ public class PrintProjectInfoController {
 	 */
 	public List<String> getTasksIDs() {
 
-		List<Task> taskList = Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode())
+		List<Task> taskList = projContainer.getProjById(this.project.getIdCode())
 
 				.getTaskRepository().getProjectTaskRepository();
 		List<String> projectTasksID = new ArrayList<>();
@@ -195,7 +201,7 @@ public class PrintProjectInfoController {
 	 * @return List of project's task
 	 */
 	public List<Task> getTasks() {
-		return Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode())
+		return projContainer.getProjById(this.project.getIdCode())
 				.getTaskRepository().getProjectTaskRepository();
 	}
 
