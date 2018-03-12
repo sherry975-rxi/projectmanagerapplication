@@ -174,6 +174,7 @@ public class Task {
 			this.deadlineInterval = null;
 		}
 		this.currentState = StateEnum.CREATED;
+		this.project = task.getProject();
 	}
 
 	/**
@@ -286,10 +287,7 @@ public class Task {
 		if (this.startDateInterval == null) {
 			return this.estimatedTaskStartDate;
 		}
-		double d = Double.parseDouble(taskID);
-		int projId = (int) d;
-		Project proj = Company.getTheInstance().getProjectsContainer().getProjById(projId);
-		Calendar newEstimatedStartDate = (Calendar) proj.getStartdate().clone();
+		Calendar newEstimatedStartDate = (Calendar) project.getStartdate().clone();
 		newEstimatedStartDate.add(Calendar.DAY_OF_YEAR, this.startDateInterval);
 		return newEstimatedStartDate;
 
@@ -320,10 +318,7 @@ public class Task {
 		if (this.deadlineInterval == null) {
 			return this.taskDeadline;
 		}
-		double d = Double.parseDouble(taskID);
-		int projId = (int) d;
-		Project proj = Company.getTheInstance().getProjectsContainer().getProjById(projId);
-		Calendar newDeadline = (Calendar) proj.getStartdate().clone();
+		Calendar newDeadline = (Calendar) project.getStartdate().clone();
 		newDeadline.add(Calendar.DAY_OF_YEAR, this.deadlineInterval);
 		return newDeadline;
 
