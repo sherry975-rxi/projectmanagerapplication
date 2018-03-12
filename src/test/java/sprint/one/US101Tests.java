@@ -36,7 +36,7 @@ public class US101Tests {
 	public void setUp() {
 
 		// create an UserContainer
-		Critical = new UserContainer;
+		Critical = new UserContainer();
 
 		// create user
 		user1 = Critical.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",

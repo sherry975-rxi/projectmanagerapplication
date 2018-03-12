@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import project.model.User;
+import project.model.UserContainer;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -18,29 +19,30 @@ public class US116Tests {
 	 * uses methods setSystemUserState
 	 * 
 	 */
-	Company myCompany;
+	UserContainer userContainer;
 	User newUser2;
 	User newUser3;
 
 	@Before
 	public void setUp() {
 
-		myCompany = Company.getTheInstance();
+		userContainer = new UserContainer();
 
-		newUser2 = myCompany.getUsersContainer().createUser("Manel", "user2@gmail.com", "001", "Empregado",
+		newUser2 = userContainer.createUser("Manel", "user2@gmail.com", "001", "Empregado",
 				"930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
-		newUser3 = myCompany.getUsersContainer().createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
+		newUser3 = userContainer.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		myCompany.getUsersContainer().addUserToUserRepository(newUser2);
-		myCompany.getUsersContainer().addUserToUserRepository(newUser3);
+		userContainer.addUserToUserRepository(newUser2);
+		userContainer.addUserToUserRepository(newUser3);
 
 		newUser2.changeUserState();
 	}
 
 	@After
 	public void tearDown() {
-		Company.clear();
+
+		userContainer = null;
 		newUser2 = null;
 		newUser3 = null;
 	}
