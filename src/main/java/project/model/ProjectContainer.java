@@ -32,8 +32,8 @@ public class ProjectContainer {
 	 * mandatory fields.
 	 */
 	public ProjectContainer() {
-
 		this.projectsContainer = new ArrayList<>();
+		this.updateProjectContainer();
 	}
 
 	/**
