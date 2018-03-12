@@ -33,7 +33,6 @@ public class ProjectContainer {
 	 */
 	public ProjectContainer() {
 		this.projectsContainer = new ArrayList<>();
-		this.updateProjectContainer();
 	}
 
 	/**
