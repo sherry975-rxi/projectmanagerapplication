@@ -1,7 +1,6 @@
 package project.controller;
 
 import project.model.Address;
-import project.model.Company;
 import project.model.User;
 
 import java.util.List;

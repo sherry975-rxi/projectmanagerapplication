@@ -3,7 +3,6 @@ package sprint.two;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import project.model.Company;
 import project.model.Project;
 import project.model.User;
 

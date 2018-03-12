@@ -1,7 +1,6 @@
 package project.ui.console;
 
 import project.controller.UpdateDbToContainersController;
-import project.model.Company;
 import project.model.Profile;
 import project.model.User;
 import project.ui.console.administrator.AdminMenuUI;

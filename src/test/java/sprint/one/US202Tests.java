@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import project.model.Address;
-import project.model.Company;
 import project.model.Profile;
 import project.model.User;
 

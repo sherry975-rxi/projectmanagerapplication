@@ -1,6 +1,5 @@
 package project.controller;
 
-import project.model.Company;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
