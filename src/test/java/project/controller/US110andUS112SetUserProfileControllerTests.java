@@ -92,4 +92,5 @@ public class US110andUS112SetUserProfileControllerTests {
         assertTrue("Director".equals(us110andUS112SetUserProfileController.userProfileAsString(newUser2)));
     }
 
+
 }

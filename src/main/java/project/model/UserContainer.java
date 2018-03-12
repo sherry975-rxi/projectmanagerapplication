@@ -30,7 +30,6 @@ public class UserContainer {
      */
     public UserContainer() {
         this.usersContainer = new ArrayList<>();
-        this.updateUserContainer();
     }
 
     /**
