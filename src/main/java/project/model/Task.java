@@ -73,10 +73,7 @@ public class Task {
 	 * @param description
 	 *            Description of the task set by the user
 	 */
-	public Task(int taskCounter, int projId, String description) {
-		Integer taskNumber = taskCounter;
-		Integer projCode = projId;
-		this.taskID = projCode.toString() + "." + taskNumber.toString();
+	public Task(String description) {
 		this.description = description;
 		this.creationDate = Calendar.getInstance();
 		this.startDate = null;
@@ -118,11 +115,8 @@ public class Task {
 	 * @param estimatedBudgetCostTask
 	 *            Value for the estimated cost of the Task.
 	 */
-	public Task(int taskCounter, int projId, String description, int estimatedTaskEffort,
+	public Task(String description, int estimatedTaskEffort,
 			Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedBudgetCostTask) {
-		Integer taskNumber = taskCounter;
-		Integer projCode = projId;
-		this.taskID = projCode.toString() + "." + taskNumber.toString();
 		this.description = description;
 		this.creationDate = Calendar.getInstance();
 		this.startDate = null;
@@ -149,7 +143,6 @@ public class Task {
 	 *            Task that will be used to create a new one.
 	 */
 	public Task(Task task) {
-		this.taskID = task.taskID;
 		this.description = task.description;
 		this.creationDate = task.creationDate;
 		this.startDate = task.getStartDate();
