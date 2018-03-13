@@ -107,40 +107,40 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		// defines finish date to task, and mark it as Finished
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task1.setTaskDeadline(taskDeadlineDateTest1);
-//		task1.getTaskState().changeToPlanned();
+//		task1.setTaskState(new Planned());
 		task1.addProjectCollaboratorToTask(projCollab1);
 //		task1.getTaskState().changeToAssigned();
-//		task1.getTaskState().changeToReady();
+//		task1.setTaskState(new Ready());
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDateTask1);
-//		task1.getTaskState().changeToOnGoing();
+//		task1.setTaskState(new OnGoing());
 		task1.markTaskAsFinished();
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task2.setTaskDeadline(taskDeadlineDateTest1);
-//		task2.getTaskState().changeToPlanned();
+//		task2.setTaskState(new Planned());
 		task2.addProjectCollaboratorToTask(projCollab1);
 //		task2.getTaskState().changeToAssigned();
-//		task2.getTaskState().changeToReady();
+//		task2.setTaskState(new Ready());
 		Calendar startDateTask2 = estimatedTaskStartDateTest;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDateTask1);
-//		task2.getTaskState().changeToOnGoing();
+//		task2.setTaskState(new OnGoing());
 		task2.markTaskAsFinished();
 
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskDeadlineDateTest1);
-//		task3.getTaskState().changeToPlanned();
+//		task3.setTaskState(new Planned());
 		task3.addProjectCollaboratorToTask(projCollab1);
 //		task3.getTaskState().changeToAssigned();
-//		task3.getTaskState().changeToReady();
+//		task3.setTaskState(new Ready());
 		task3.setTaskBudget(55);
 		task3.setEstimatedTaskEffort(45);
 		Calendar startDateTask3 = estimatedTaskStartDateTest;
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		task3.setStartDate(startDateTask1);
-//		task3.getTaskState().changeToOnGoing();
+//		task3.setTaskState(new OnGoing());
 		task3.markTaskAsFinished();
 
 		// creates the controller
