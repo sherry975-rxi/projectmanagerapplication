@@ -8,6 +8,8 @@ package project.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import project.Repository.ProjectsRepository;
 import project.model.taskstateinterface.*;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 //
 
@@ -24,7 +27,10 @@ import static org.junit.Assert.*;
  */
 public class TaskTest {
 
-    ProjectContainer myProjRep;
+    @Mock
+    private ProjectsRepository projRepo;
+
+
     User user1, user2;
     Project myProject;
     Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6;
@@ -39,10 +45,13 @@ public class TaskTest {
 
     double expectedCost;
 
+    ProjectContainer myProjRep = new ProjectContainer();
+
+
     @Before
     public void setUp() {
 
-        myProjRep = new ProjectContainer();
+        initMocks(this);
 
         user1 = new User("pepe", "user@gmail.com", "66", "debugger", "1234567");
         user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
@@ -712,10 +721,27 @@ public class TaskTest {
      */
     @Test
     public void testCreateReportNotPossible() {
-        // Adds two users to the task
-        testTask2.addTaskCollaboratorToTask(tWorker1);
+        // Adds users to the task, as well as start date, and asserts its now in the ready state
 
-        testTask2.setTaskState(finishedTaskState);
+        testTask2.setEstimatedTaskStartDate(Calendar.getInstance());
+        testTask2.setTaskDeadline(Calendar.getInstance());
+        testTask2.addProjectCollaboratorToTask(collab1);
+
+        testTask2.setEstimatedTaskEffort(69);
+        testTask2.setTaskBudget(96);
+
+       // testTask2.getTaskState().doAction(testTask2);
+
+        assertTrue(testTask2.getTaskState() instanceof Ready);
+
+        // once all needed parameters are added, start the task
+        testTask2.setStartDate(Calendar.getInstance());
+
+        // given a finished task
+        assertTrue(testTask2.markTaskAsFinished());
+        assertTrue(testTask2.getTaskState() instanceof Finished);
+
+
         assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
 
         /*
@@ -725,13 +751,16 @@ public class TaskTest {
 
 
         /*
-         * sets testTask2 to StandBy State
+         * sets testTask2 to StandBy State, by removing finish date
          */
-        testTask2.setTaskState(standByTaskState);
+        testTask2.removeFinishDate();
+        testTask2.setTaskState(new StandBy());
+        assertTrue(testTask2.getTaskState() instanceof StandBy);
 
         /*
          * Checks that its not possible to add a report to a task set to "StandBy"
          */
+
         assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
 
         /*
