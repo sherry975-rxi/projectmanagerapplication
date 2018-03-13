@@ -16,7 +16,13 @@ public class ProjectContainer {
 	private List<Project> projectsContainer;
 	private int projCounter = 1;
 
-
+	/**
+	 * Constructor that allows one to create a new Project Repository. There are no
+	 * mandatory fields.
+	 */
+	public ProjectContainer() {
+		this.projectsContainer = new ArrayList<>();
+	}
 
 	/**
 	 * Constructor created for JPA purposes. It is not to be used in model context.
@@ -27,13 +33,7 @@ public class ProjectContainer {
 		this.projectsContainer = new ArrayList<>();
 	}
 
-	/**
-	 * Constructor that allows one to create a new Project Repository. There are no
-	 * mandatory fields.
-	 */
-	public ProjectContainer() {
-		this.projectsContainer = new ArrayList<>();
-	}
+	
 
 	/**
 	 * Creates an instance of Project
