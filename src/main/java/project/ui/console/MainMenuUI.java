@@ -3,6 +3,7 @@ package project.ui.console;
 import project.controller.UpdateDbToContainersController;
 import project.model.Profile;
 import project.model.User;
+import project.model.UserContainer;
 import project.ui.console.administrator.AdminMenuUI;
 import project.ui.console.collaborator.CollaboratorMainMenuUI;
 import project.ui.console.collaborator.US101UserRegisterUI;
@@ -20,14 +21,15 @@ public class MainMenuUI {
 
 
 	public static void mainMenu() {
+        UserContainer userContainer = new UserContainer();
 		//Updates de DataBase
         UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();
 
 
-		userJSilva = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(2);
-		userDirector = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(1);
-		userAdmin = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(0);
+		userJSilva = userContainer.getAllUsersFromUserContainer().get(2);
+		userDirector = userContainer.getAllUsersFromUserContainer().get(1);
+		userAdmin = userContainer.getAllUsersFromUserContainer().get(0);
 		
 		displayOptions();
 	}
