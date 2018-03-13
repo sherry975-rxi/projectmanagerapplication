@@ -8,6 +8,9 @@ package project.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.internal.configuration.injection.filter.OngoingInjecter;
+import project.Repository.ProjectsRepository;
 import project.model.taskstateinterface.*;
 
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 //
 
@@ -24,7 +28,10 @@ import static org.junit.Assert.*;
  */
 public class TaskTest {
 
-    ProjectContainer myProjRep;
+    @Mock
+    private ProjectsRepository projRepo;
+
+
     User user1, user2;
     Project myProject;
     Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6;
@@ -39,10 +46,13 @@ public class TaskTest {
 
     double expectedCost;
 
+    ProjectContainer myProjRep = new ProjectContainer();
+
+
     @Before
     public void setUp() {
 
-        myProjRep = new ProjectContainer();
+        initMocks(this);
 
         user1 = new User("pepe", "user@gmail.com", "66", "debugger", "1234567");
         user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
@@ -228,23 +238,26 @@ public class TaskTest {
     @Test
     public void testIsFinished() {
         // necessary to pass from "Created" to "Planned"
+
         estimatedTaskStartDate = Calendar.getInstance();
         estimatedTaskStartDate.add(Calendar.MONTH, -1);
         testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
         taskDeadline = Calendar.getInstance();
         taskDeadline.add(Calendar.MONTH, 1);
         testTask.setTaskDeadline(taskDeadline);
+        testTask.setEstimatedTaskEffort(1);
+        testTask.setTaskBudget(1);
 
-        // add collaborators, necessary to pass from "Planned" to "Assigned"
+        // add collaborators, necessary to pass from "Planned" to "Ready"
         testTask.addProjectCollaboratorToTask(collab2);
-
-        // pass from "Assigned" to "Ready", since task has no dependeencies
+        assertTrue(testTask.getTaskState() instanceof Ready);
 
         // necessary to pass from "Ready" to "OnGoing" since task has been started
         Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
         testTask.setStartDate(projStartDate);
 
         assertFalse(testTask.isTaskFinished());
+        assertTrue(testTask.getTaskState() instanceof OnGoing);
 
         // pass from "OnGoing" to "Finished"
         assertTrue(testTask.markTaskAsFinished());
@@ -382,20 +395,33 @@ public class TaskTest {
     @Test
     public void testGetReportedBudgetToTheTask() {
         // Adds two users to the task
+        testTask2.setTaskBudget(2);
+        testTask2.setEstimatedTaskEffort(2);
+        testTask2.setEstimatedTaskStartDate(Calendar.getInstance());
+        testTask2.setTaskDeadline(Calendar.getInstance());
         testTask2.addTaskCollaboratorToTask(tWorker1);
         testTask2.addTaskCollaboratorToTask(tWorker2);
 
-        // sets the hours spent on the task by each user
+        testTask2.getTaskState().doAction(testTask2);
+
+        assertTrue(testTask2.getTaskState() instanceof Ready);
+        testTask2.setStartDate(Calendar.getInstance());
+
+
+        // given a task in the Ongoing State...
+        assertTrue(testTask2.getTaskState() instanceof OnGoing);
+
+        //  when the users spent the calculated time spent working...
         testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
         testTask2.getReports().get(0).setReportedTime(10);
         testTask2.createReport(tWorker2, Calendar.getInstance(), 0);
         testTask2.getReports().get(1).setReportedTime(5);
 
-        // calculates the expected cost of the task
+        // then the expected cost of the task should equal the time spent times the collaborator's cost
         expectedCost = 10 * collab1.getCollaboratorCost();
         expectedCost += 5 * collab2.getCollaboratorCost();
 
-        // Checks if the two values are the smae
+        // Checks if the two values are the same
         assertEquals(expectedCost, testTask2.getTaskCost(), 0.001);
 
         testTask2.markTaskAsFinished();
@@ -712,10 +738,27 @@ public class TaskTest {
      */
     @Test
     public void testCreateReportNotPossible() {
-        // Adds two users to the task
-        testTask2.addTaskCollaboratorToTask(tWorker1);
+        // Adds users to the task, as well as start date, and asserts its now in the ready state
 
-        testTask2.setTaskState(finishedTaskState);
+        testTask2.setEstimatedTaskStartDate(Calendar.getInstance());
+        testTask2.setTaskDeadline(Calendar.getInstance());
+        testTask2.addProjectCollaboratorToTask(collab1);
+
+        testTask2.setEstimatedTaskEffort(70);
+        testTask2.setTaskBudget(100);
+
+       // testTask2.getTaskState().doAction(testTask2);
+
+        assertTrue(testTask2.getTaskState() instanceof Ready);
+
+        // once all needed parameters are added, start the task
+        testTask2.setStartDate(Calendar.getInstance());
+
+        // given a finished task
+        assertTrue(testTask2.markTaskAsFinished());
+        assertTrue(testTask2.getTaskState() instanceof Finished);
+
+
         assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
 
         /*
@@ -725,13 +768,16 @@ public class TaskTest {
 
 
         /*
-         * sets testTask2 to StandBy State
+         * sets testTask2 to StandBy State, by removing finish date
          */
-        testTask2.setTaskState(standByTaskState);
+        testTask2.removeFinishDate();
+        testTask2.setTaskState(new StandBy());
+        assertTrue(testTask2.getTaskState() instanceof StandBy);
 
         /*
          * Checks that its not possible to add a report to a task set to "StandBy"
          */
+
         assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
 
         /*
@@ -939,6 +985,9 @@ public class TaskTest {
          * It's not possible to create a task dependency with a mother task set to
          * Cancelled
          */
+        testTask.setCancelDate();
+        testTask.setTaskState(new Cancelled());
+        assertTrue(testTask.getTaskState() instanceof Cancelled);
         assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
 
     }

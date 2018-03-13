@@ -503,9 +503,12 @@ public class Task {
 	 *            project collaborator to add to the task team
 	 */
 	public boolean addProjectCollaboratorToTask(ProjectCollaborator projCollaborator) {
-		this.taskState.doAction(this);
-		return addTaskCollaboratorToTask(createTaskCollaborator(projCollaborator));
+		boolean addProjectCollaboratorToTask = false;
 
+		addProjectCollaboratorToTask = addTaskCollaboratorToTask(createTaskCollaborator(projCollaborator));
+
+		this.taskState.doAction(this);
+		return addProjectCollaboratorToTask;
 	}
 
 	/**
@@ -1068,6 +1071,7 @@ public class Task {
 	 */
 	public void removeFinishDate() {
 		if (this.finishDate != null) {
+			this.finishDate=null;
 			this.getTaskState().doAction(this);
 		}
 
