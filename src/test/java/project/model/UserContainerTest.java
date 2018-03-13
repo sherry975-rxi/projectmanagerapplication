@@ -3,9 +3,7 @@
  */
 package project.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.ArrayList;
@@ -14,6 +12,13 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+import project.Repository.UserRepository;
+import project.dto.UserDTO;
 
 /**
  * Tests all methods in UserContainerClass
@@ -21,17 +26,22 @@ import org.junit.Test;
  * @author Group3
  *
  */
+@RunWith(MockitoJUnitRunner.class)
 public class UserContainerTest {
 
-	// @Mock
-	// private UserRepository userRepositoryMock;
+	@Mock
+	private UserRepository userRepositoryMock;
+
+	@InjectMocks
+	private UserContainer userContainer = new UserContainer();
 
 	User user1;
 	User user2;
 	User user3;
 	User user4;
 	User user5;
-	UserContainer userContainer = new UserContainer();
+    List<User> mockUsers;
+
 
 	@Before
 	public void setUp() {
@@ -47,6 +57,15 @@ public class UserContainerTest {
 
 		user5 = userContainer.createUser("DanielMM", "danielmmgmail.com", "003", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
+
+
+        mockUsers = new ArrayList<>();
+
+
+		//Mockito.when(userRepositoryMock.save(any(User.class))).thenReturn(true);
+
+
+
 	}
 
 	@After
@@ -56,7 +75,8 @@ public class UserContainerTest {
 		user3 = null;
 		user4 = null;
 		user5 = null;
-		userContainer = null;
+        mockUsers = null;
+		//userContainer = null;
 	}
 
 	/**
@@ -254,34 +274,78 @@ public class UserContainerTest {
 		assertEquals(userContainer.getAllActiveCollaboratorsFromRepository().size(), 2);
 	}
 
-	/**
-	 * @Test public void testAddUserToUserRepositoryX(){
-	 *       when(userRepositoryMock.save(any(User.class))).thenReturn(user1);
-	 *       UserContainer victim = new UserContainer(userRepositoryMock);
-	 * 
-	 *       victim.addUserToUserRepositoryX(user1);
-	 * 
-	 *       verify(userRepositoryMock, times(1)).save(user1); }
-	 * 
-	 * @Test public void testCreateUserWithDTO(){
-	 *       when(userRepositoryMock.save(any(User.class))).thenReturn(user1);
-	 *       UserContainer victim = new UserContainer(userRepositoryMock);
-	 * 
-	 *       UserDTO userDto = new UserDTO(user1);
-	 *       victim.createUserWithDTO(userDto); verify(userRepositoryMock,
-	 *       times(1)).save(user1); }
-	 * 
-	 * @Test public void testUpdateUserContainer(){
-	 * 
-	 *       List<User> expectedUserList = new ArrayList<>();
-	 *       expectedUserList.add(user1); expectedUserList.add(user2);
-	 * 
-	 *       when(userRepositoryMock.findAll()).thenReturn(expectedUserList);
-	 *       UserContainer victim = new UserContainer(userRepositoryMock);
-	 * 
-	 *       victim.updateUserContainer();
-	 * 
-	 *       assertEquals(expectedUserList,victim.getAllUsersFromUserContainer()); }
-	 */
+
+    /**
+     *
+     * This method tests the addUserToRepositoryX method, which calls the JPA repository's save method
+     *
+     */
+	  @Test
+      public void testAddUserToUserRepositoryX(){
+
+	        // given a mocked .save  method
+	        Mockito.when(userRepositoryMock.save(user1)).thenReturn(user1);
+
+	        // when the addUserToRepositoryX method is called, then .save method must be called once for user 1
+	        userContainer.addUserToUserRepositoryX(user1);
+            Mockito.verify(userRepositoryMock, Mockito.times(1)).save(user1);
+
+
+            // when user1 is added to a mockUserList, which is mocked to the JPA findAll() method
+
+            mockUsers.add(user1);
+            Mockito.when(userRepositoryMock.findAll()).thenReturn(mockUsers);
+
+            // then the updateUserContainer method must overwrite a list containing one user
+            assertTrue(userContainer.getAllUsersFromUserContainer().isEmpty());
+	        userContainer.updateUserContainer();
+	        assertEquals(userContainer.getAllUsersFromUserContainer().size(), 1);
+
+
+      }
+
+    /**
+     * This test attempts to create a user from a DTO, mocking its addition to the database
+     *
+     *
+     */
+    @Test
+      public void testCreateUserWithDTO(){
+
+        // given a user DTO for user1
+        UserDTO userDto = new UserDTO(user1);
+
+        // when the .save method is mocked
+        Mockito.when(userRepositoryMock.save(Mockito.any(User.class))).thenReturn(user1);
+
+
+
+        // then the create User with DTO method must call the save method once for user1
+
+        userContainer.createUserWithDTO(userDto);
+	    Mockito.verify(userRepositoryMock,Mockito.times(1)).save(user1);
+	    }
+
+    /**
+     * This test mocks an attempted update of user container list from database
+     *
+     */
+    @Test
+      public void testUpdateUserContainer(){
+
+            // given two users in a mock list
+
+	        mockUsers.add(user1);
+	        mockUsers.add(user2);
+
+	        // when userRepository.findAll() is directed to the mock user list
+	        Mockito.when(userRepositoryMock.findAll()).thenReturn(mockUsers);
+
+	        // then the updateUserContainer method must copy the mocked list
+	        userContainer.updateUserContainer();
+
+	        assertEquals(mockUsers,userContainer.getAllUsersFromUserContainer());
+	}
+
 
 }
