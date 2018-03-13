@@ -145,7 +145,7 @@ public class ProjectContainer {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
 			if (toCheck != null) {
-				tasksOfSpecificUser.addAll(other.getTaskRepository().getAllTasksFromProjectCollaborator(toCheck));
+				//tasksOfSpecificUser.addAll(other.getTaskRepository().getAllTasksFromProjectCollaborator(toCheck));
 			}
 		}
 
@@ -169,8 +169,8 @@ public class ProjectContainer {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
 			if (toCheck != null) {
-				finishedTasksOfSpecificUser.addAll(
-						other.getTaskRepository().getFinishedTasksFromProjectCollaboratorInGivenMonth(toCheck, -1));
+				//finishedTasksOfSpecificUser.addAll(
+						//other.getTaskRepository().getFinishedTasksFromProjectCollaboratorInGivenMonth(toCheck, -1));
 			}
 		}
 		return finishedTasksOfSpecificUser;
@@ -193,8 +193,8 @@ public class ProjectContainer {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
 			if (toCheck != null) {
-				unfinishedTasksOfSpecificUser
-						.addAll(other.getTaskRepository().getUnfinishedTasksFromProjectCollaborator(toCheck));
+				//unfinishedTasksOfSpecificUser
+						//.addAll(other.getTaskRepository().getUnfinishedTasksFromProjectCollaborator(toCheck));
 			}
 		}
 		return unfinishedTasksOfSpecificUser;
@@ -216,8 +216,8 @@ public class ProjectContainer {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
 			if (toCheck != null) {
-				unfinishedTasksOfSpecificUser
-						.addAll(other.getTaskRepository().getStartedNotFinishedTasksFromProjectCollaborator(toCheck));
+				//unfinishedTasksOfSpecificUser
+						//.addAll(other.getTaskRepository().getStartedNotFinishedTasksFromProjectCollaborator(toCheck));
 			}
 		}
 
@@ -244,10 +244,10 @@ public class ProjectContainer {
 		for (Project other : this.projectsContainer) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
 
-			if (toCheck != null) {
-				lastMonthFinishedTaskListByUser.addAll(
-						other.getTaskRepository().getFinishedTasksFromProjectCollaboratorInGivenMonth(toCheck, 1));
-			}
+			//if (toCheck != null) {
+			//	lastMonthFinishedTaskListByUser.addAll(
+			//			other.getTaskRepository().getFinishedTasksFromProjectCollaboratorInGivenMonth(toCheck, 1));
+			//}
 		}
 		return lastMonthFinishedTaskListByUser;
 	}
@@ -267,8 +267,8 @@ public class ProjectContainer {
 		double totalTime = 0;
 		for (Project other : this.projectsContainer) {
 			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
-			totalTime = totalTime
-					+ other.getTaskRepository().getTimeSpentByProjectCollaboratorInAllTasksLastMonth(toCheck);
+			//totalTime = totalTime
+					//+ other.getTaskRepository().getTimeSpentByProjectCollaboratorInAllTasksLastMonth(toCheck);
 
 		}
 
