@@ -3,83 +3,181 @@ package project.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import project.model.taskstateinterface.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static java.util.Calendar.MONTH;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class TaskContainerTest {
 
-	UserContainer userContainer;
-	User userDan;
-	User userAdmin;
-	User userJoa;
-	User userFra;
+	@Mock
+	private Task taskMock;
 
-	TaskCollaborator taskWorkerDan;
-	TaskCollaborator taskWorkerJoa;
-	TaskCollaborator taskWorkerFra;
+	private Calendar startDate;
+	private Project project;
+	private ProjectContainer projectContainer;
+	private UserContainer userContainer;
+	private User user;
+	private ProjectCollaborator projectCollaborator;
+	private TaskCollaborator taskCollaborator;
+	private Task task;
 
-	ProjectCollaborator collabDan;
-	ProjectCollaborator collabJoa;
-	ProjectCollaborator collabFra;
-
-	Project project;
-	Project project2;
-	ProjectContainer projectContainer;
-	TaskContainer taskContainer;
-	Task testTask;
-	Task testTask2;
-	Task testTask3;
-	Task testTask4;
-	Task testTask5;
-	Task testTask6;
-	Task testTask7;
-	Calendar estimatedTaskStartDate, taskDeadline;
-	Calendar startDateTest;
+	@InjectMocks
+	private TaskContainer victim;
 
 	@Before
-	public void setUp() {
-		// creates an UserContainer
-		userContainer = new UserContainer();
+	public void setUp(){
+		initMocks(this);
 
-		// creates a ProjectsRepository
-		projectContainer = new ProjectContainer();
+		System.out.println("badjotaSDasfg");
 
-		// create user
-		userDan = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		this.victim = new TaskContainer(1);
+
+		this.startDate = Calendar.getInstance();
+		this.startDate.set(Calendar.YEAR, 2017);
+		this.startDate.set(MONTH, Calendar.SEPTEMBER);
+		this.startDate.set(Calendar.DAY_OF_MONTH, 25);
+		this.startDate.set(Calendar.HOUR_OF_DAY, 14);
+
+		this.userContainer = new UserContainer();
+		this.projectContainer = new ProjectContainer();
+		this.user = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
-		userJoa = userContainer.createUser("Joao", "joao@gmail.com", "002", "collaborator", "920000000", "Rua",
-				"2402-00", "Test", "Testo", "Testistan");
-		userFra = userContainer.createUser("Francisco", "francisco@gmail.com", "003", "collaborator", "420000000", "Rua",
-				"2402-00", "Test", "Testo", "Testistan");
-		// create user admin
-		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
-				"Test", "Testo", "Testistan");
+		this.project = projectContainer.createProject("name3", "description4", user);
+		project.setTaskRepository(victim);
+		this.projectCollaborator = new ProjectCollaborator(user, 10);
+		this.taskCollaborator = new TaskCollaborator(projectCollaborator);
+		this.userContainer.addUserToUserRepository(user);
 
-		// Creates one Project
-		project = projectContainer.createProject("name3", "description4", userAdmin);
-		project2 = projectContainer.createProject("Project2", "description2", userAdmin);
+	}
 
-		// create project collaborators
-		collabDan = new ProjectCollaborator(userDan, 2);
-		collabJoa = new ProjectCollaborator(userJoa, 3);
-		collabFra = project2.createProjectCollaborator(userFra, 3);
+	@After
+	public void tearDown() {
+		this.victim = null;
 
-		// create task workers
-		taskWorkerDan = new TaskCollaborator(collabDan);
-		taskWorkerJoa = new TaskCollaborator(collabJoa);
-		taskWorkerFra = new TaskCollaborator(collabFra);
+	}
 
-		// add user to user list
-		userContainer.addUserToUserRepository(userDan);
-		userContainer.addUserToUserRepository(userJoa);
-		userContainer.addUserToUserRepository(userFra);
+	@Test
+	public void testConstructor(){
+		assertEquals(1, victim.getProjectId());
+		assertEquals(2, victim.getTaskCounter());
+	}
 
-		userContainer.addUserToUserRepository(userAdmin);
+	@Test
+	public void testCreateTask() {
+		Task expectedTask = new Task(victim.getTaskCounter(), victim.getProjectId(), "firstTask", 1, this.startDate, this.startDate, 10);
+		assertEquals(2, victim.getTaskCounter());
+		Task actualTask= victim.createTask("firstTask", 1, this.startDate, this.startDate, 10 );
+		assertEquals(expectedTask, actualTask);
+		assertEquals(3, victim.getTaskCounter());
+
+		expectedTask = new Task(victim.getTaskCounter(), victim.getProjectId(),"firstTask");
+		actualTask= victim.createTask("firstTask");
+		assertEquals(expectedTask, actualTask);
+		assertEquals(4, victim.getTaskCounter());
+	}
+
+	@Test
+	public void testGetAllTasksfromProject(){
+		Task task = new Task(victim.getTaskCounter(), victim.getProjectId(),"firstTask");
+		victim.addTaskToProject(task);
+
+		List<Task> expectedTasks = new ArrayList<>();
+		expectedTasks.add(task);
+
+		assertEquals(expectedTasks, victim.getAllTasksfromProject());
+	}
+
+	@Test
+	public void testSetAndGetProject(){
+		victim.setProject(project);
+
+		assertEquals(project, victim.getProject());
+	}
+
+	@Test
+	public void testGetUnFinishedTasksFromProjectCollaborator() {
+		when(taskMock.isTaskFinished()).thenReturn(false);
+		when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+
+		victim.addTaskToProject(taskMock);
+
+		List<Task> expectedTaskList = new ArrayList<>();
+		expectedTaskList.add(taskMock);
+		assertEquals(expectedTaskList, victim.getUnfinishedTasksFromProjectCollaborator(projectCollaborator));
+	}
+
+	@Test
+	public void testGetStartedNotFinishedTasksFromProjectCollaborator(){
+		when(taskMock.isTaskFinished()).thenReturn(false);
+		when(taskMock.viewTaskStateName()).thenReturn("Canceled");
+		when(taskMock.getStartDate()).thenReturn(startDate);
+		when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+
+		victim.addTaskToProject(taskMock);
+
+		List<Task> expectedTaskList = new ArrayList<>();
+		expectedTaskList.add(taskMock);
+		assertEquals(expectedTaskList, victim.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
+	}
+
+	@Test
+	public void testFinishedTaskListOfUserInProject() {
+		when(taskMock.isTaskFinished()).thenReturn(true);
+		when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+		victim.addTaskToProject(taskMock);
+
+		List<Task> expectedTaskList = new ArrayList<>();
+		expectedTaskList.add(taskMock);
+		assertEquals(expectedTaskList, victim.getFinishedTaskListofUserInProject(projectCollaborator));
+	}
+
+	@Test
+	public void testGetFinishedTasksFromProjectCollaboratorInGivenMonth() {
+		Calendar calendar = Calendar.getInstance();
+
+		when(taskMock.isTaskFinished()).thenReturn(true);
+		when(taskMock.getFinishDate()).thenReturn(calendar);
+		when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+		victim.addTaskToProject(taskMock);
+
+
+		List<Task> expectedTaskList = new ArrayList<>();
+		expectedTaskList.add(taskMock);
+		assertEquals(expectedTaskList, victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
+		assertEquals(expectedTaskList, victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, -1));
+
+
+		calendar.set(MONTH, Calendar.FEBRUARY);
+		when(taskMock.getFinishDate()).thenReturn(calendar);
+		assertEquals(new ArrayList<>(), victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
+	}
+
+	@Test
+	public void testIsTaskInTaskContainer(){
+		victim.addTaskToProject(taskMock);
+
+		assertTrue(victim.isTaskInTaskContainer(taskMock));
+		assertFalse(victim.isTaskInTaskContainer(new Task()));
+	}
+
+	/*
+	@Before
+	public void setUp() {
+
+
 		// set user as collaborator
 		userDan.setUserProfile(Profile.COLLABORATOR);
 		userJoa.setUserProfile(Profile.COLLABORATOR);
@@ -154,168 +252,10 @@ public class TaskContainerTest {
 
 	}
 
-	@Test
-	public void testCreateTask() {
 
-		// Adds Tasks to TaskContainer
-		taskContainer.addTaskToProject(testTask);
-		taskContainer.addTaskToProject(testTask2);
-		taskContainer.addTaskToProject(testTask3);
-		taskContainer.addTaskToProject(testTask4);
 
-		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
-		// getProjectTaskList method
-		List<Task> taskListToCompare = new ArrayList<Task>();
 
-		// adds tasks to the task list
-		taskListToCompare.add(testTask);
-		taskListToCompare.add(testTask2);
-		taskListToCompare.add(testTask3);
-		taskListToCompare.add(testTask4);
 
-		// See if the two lists have the same tasks
-		assertEquals(taskContainer.getAllTasksfromProject(), taskListToCompare);
-
-	}
-
-	@Test
-	public void testGetProjectTaskList() {
-
-		// Adds Tasks to TaskContainer
-		taskContainer.addTaskToProject(testTask);
-		taskContainer.addTaskToProject(testTask2);
-		taskContainer.addTaskToProject(testTask3);
-		taskContainer.addTaskToProject(testTask4);
-
-		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
-		// getProjectTaskList method
-		List<Task> taskListToCompare = new ArrayList<Task>();
-
-		// adds tasks to the task list
-		taskListToCompare.add(testTask);
-		taskListToCompare.add(testTask2);
-		taskListToCompare.add(testTask3);
-		taskListToCompare.add(testTask4);
-
-		// See if the two lists have the same tasks
-		assertEquals(taskContainer.getAllTasksfromProject(), taskListToCompare);
-
-	}
-
-	@Test
-	public void testGetUnFinishedTasksFromUser() {
-		// add task to task repository of the project
-		taskContainer.addTaskToProject(testTask);
-		taskContainer.addTaskToProject(testTask2);
-		taskContainer.addTaskToProject(testTask3);
-		taskContainer.addTaskToProject(testTask4);
-		// add de user to the task
-		testTask.addTaskCollaboratorToTask(taskWorkerDan);
-		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
-		testTask3.addTaskCollaboratorToTask(taskWorkerDan);
-		testTask4.addTaskCollaboratorToTask(taskWorkerDan);
-
-		// create a list and add task to compare to unfinished task list
-		List<Task> test = new ArrayList<Task>();
-		test.add(testTask);
-		test.add(testTask2);
-		test.add(testTask3);
-		test.add(testTask4);
-
-		// verify if test list is the same as the user unfinished task list
-		assertEquals(test, taskContainer.getUnfinishedTasksFromProjectCollaborator(collabDan));
-	}
-
-	@Test
-	public void testFinishedTaskListOfUserInProject() {
-
-		// add task to task repository of the project
-		taskContainer.addTaskToProject(testTask);
-		taskContainer.addTaskToProject(testTask2);
-		taskContainer.addTaskToProject(testTask3);
-		taskContainer.addTaskToProject(testTask4);
-		// adds the user to the task
-		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
-		testTask4.addTaskCollaboratorToTask(taskWorkerDan);
-
-		// testTask - set state as Finished
-		// necessary to pass from "Created" to "Planned"
-		estimatedTaskStartDate = Calendar.getInstance();
-		estimatedTaskStartDate.add(Calendar.MONTH, -1);
-		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
-		taskDeadline = Calendar.getInstance();
-		taskDeadline.add(Calendar.MONTH, 1);
-		testTask.setTaskDeadline(taskDeadline);
-
-		testTask.getTaskState().changeToPlanned();
-
-		// necessary to pass from "Planned" to "Assigned"
-		testTask.addProjectCollaboratorToTask(collabDan);
-		testTask.getTaskState().changeToAssigned();
-
-		// pass from "Assigned" to "Ready"
-		testTask.getTaskState().changeToReady();
-
-		// necessary to pass from "Ready" to "OnGoing"
-		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
-		testTask.setStartDate(projStartDate);
-		testTask.getTaskState().changeToOnGoing();
-
-		// pass from "OnGoing" to "Finished"
-		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
-		testTask.setFinishDate(testDate);
-		testTask.getTaskState().changeToFinished();
-
-		// testTask3 - set state as Finished
-		// necessary to pass from "Created" to "Planned"
-		estimatedTaskStartDate = Calendar.getInstance();
-		estimatedTaskStartDate.add(Calendar.MONTH, -1);
-		testTask3.setEstimatedTaskStartDate(estimatedTaskStartDate);
-		taskDeadline = Calendar.getInstance();
-		taskDeadline.add(Calendar.MONTH, 1);
-		testTask3.setTaskDeadline(taskDeadline);
-
-		testTask3.getTaskState().changeToPlanned();
-
-		// necessary to pass from "Planned" to "Assigned"
-		testTask3.addProjectCollaboratorToTask(collabDan);
-		testTask3.getTaskState().changeToAssigned();
-
-		// pass from "Assigned" to "Ready"
-		testTask3.getTaskState().changeToReady();
-
-		// necessary to pass from "Ready" to "OnGoing"
-		testTask3.setStartDate(projStartDate);
-		testTask3.getTaskState().changeToOnGoing();
-
-		// pass from "OnGoing" to "Finished"
-		testTask3.setFinishDate(testDate);
-		testTask3.getTaskState().changeToFinished();
-
-		// Marks task and task3 as finished
-		testTask.markTaskAsFinished();
-		testTask3.markTaskAsFinished();
-
-		// assures that the taskTest state is Finished
-		assertEquals("Finished", testTask.viewTaskStateName());
-		// assures that the taskTest3 state is Finished
-		assertEquals("Finished", testTask3.viewTaskStateName());
-
-		// create a list and add task to compare to unfinished task list
-		List<Task> test = new ArrayList<Task>();
-		test.add(testTask);
-		test.add(testTask3);
-
-		// verify if test list is the same as the user finished task list
-		assertEquals(test, taskContainer.getFinishedTaskListofUserInProject(collabDan));
-
-		// clears list
-		test.clear();
-
-		// Expects empty list, as collabJoa doesnt belong to Task team
-		assertEquals(test, taskContainer.getFinishedTaskListofUserInProject(collabJoa));
-
-	}
 
 	@Test
 	public void testGetFinishedTaskGivenMonth() {
@@ -402,25 +342,7 @@ public class TaskContainerTest {
 		assertEquals(4, taskContainer.getFinishedTasksFromProjectCollaboratorInGivenMonth(collabDan, -1).size());
 	}
 
-	@Test
-	public void testContainsTask() {
 
-		// add task to task repository of the project
-		taskContainer.addTaskToProject(testTask);
-		taskContainer.addTaskToProject(testTask2);
-		taskContainer.addTaskToProject(testTask3);
-
-		// See if the tasks are contained in the Task Repository
-		assertTrue(taskContainer.isTaskInTaskContainer(testTask));
-		assertFalse(taskContainer.isTaskInTaskContainer(testTask4));
-
-		// adds Task4 to the Repository
-		taskContainer.addTaskToProject(testTask4);
-
-		// See if task4 is contained in the Task Repository
-		assertTrue(taskContainer.isTaskInTaskContainer(testTask4));
-
-	}
 
 	@Test
 	public void testGetTimeOnLastMonthProjectUserTask() {
@@ -512,12 +434,12 @@ public class TaskContainerTest {
 	@Test
 	public void testGetProjectId() {
 		// checks if the project id are the same;
-		assertEquals(project.getIdCode(), taskContainer.getProjId());
+		assertEquals(project.getIdCode(), taskContainer.getProjectId());
 
 		// creates a new project
 		projectContainer.addProjectToProjectContainer(project);
 		TaskContainer anotherTaskContainer = project.getTaskRepository();
-		assertEquals(project.getIdCode(), anotherTaskContainer.getProjId());
+		assertEquals(project.getIdCode(), anotherTaskContainer.getProjectId());
 	}
 
 	@Test
@@ -847,10 +769,10 @@ public class TaskContainerTest {
 
 	}
 
-	/**
+	*//**
 	 * Tests the SortTaskListDecreasingOrder. Compares the output of the method to a
 	 * list with the projects added be decreasing order.
-	 */
+	 *//*
 	@Test
 	public void testSortTaskListDecreasingOrder() {
 
@@ -1152,12 +1074,12 @@ public class TaskContainerTest {
 
 	}
 
-	/**
+	*//**
 	 * Tests the getTaskByID method by creating 4 tasks that are equal to the tasks
 	 * resulted from the getTaskByID, and asserting if they are equal to the
 	 * original.
 	 * 
-	 */
+	 *//*
 	@Test
 	public void getTaskByID() {
 
@@ -1182,12 +1104,12 @@ public class TaskContainerTest {
 		assertEquals(taskContainer.getTaskByID("1.9"), null);
 	}
 
-	/**
+	*//**
 	 * Tests the deleteTask method. If the State of the task is set to "Assigned",
 	 * "Planned", "Created" or "Ready", the task can be deleted, else, the task
 	 * won't be deleted
 	 * 
-	 */
+	 *//*
 	@Test
 	public void deleteTaskTest() {
 
@@ -1210,10 +1132,10 @@ public class TaskContainerTest {
 		taskContainer.addTaskToProject(testTask5);
 		taskContainer.addTaskToProject(testTask6);
 
-		/*
+		*//*
 		 * States on which the task can be deleted - "ASSIGNED", "PLANNED" , "CREATED" ,
 		 * "READY"
-		 */
+		 *//*
 
 		// Sets the taskSate to "OnGoing"
 		testTask.setTaskState(OnGoingTest);
@@ -1314,11 +1236,11 @@ public class TaskContainerTest {
 
 	}
 
-	/**
+	*//**
 	 * this test verify if the method getCancelledTasksFromProject return the correct list of
 	 * cancelled tasks.
 	 * 
-	 */
+	 *//*
 	@Test
 	public void getCancelledTasksTest() {
 
@@ -1405,10 +1327,10 @@ public class TaskContainerTest {
 
 	}
 
-	/**
+	*//**
 	 * this test verify if the method getTaskCost
 	 * 
-	 */
+	 *//*
 	@Test
 	public void getTaskCostsTest() {
 
@@ -1428,9 +1350,9 @@ public class TaskContainerTest {
 		List<String> reportedCost = new ArrayList<>();
 		double reportCost = 60;
 
-		/*
+		*//*
 		 * Adds the value of TaskWorker*Time spend (60) Other tasks have no reports
-		 */
+		 *//*
 
 		reportedCost.add((String.valueOf(reportCost)));
 		reportedCost.add("0.0");
@@ -1438,5 +1360,5 @@ public class TaskContainerTest {
 
 		assertEquals(project.getTaskRepository().getReportedCostOfEachTask(), reportedCost);
 
-	}
+	}*/
 }
