@@ -4,6 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import project.model.*;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Planned;
+import project.model.taskstateinterface.Ready;
 
 import java.util.Calendar;
 
@@ -109,14 +112,13 @@ public class US380GetProjectExpiredTaskListTest {
 		// defines finish date to task, and mark it as Finished7
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task1.setTaskDeadline(taskDeadlineDateTest1);
-		task1.getTaskState().changeToPlanned();
+		task1.setTaskState(new Planned());
 		task1.addProjectCollaboratorToTask(projCollab1);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
+		task1.setTaskState(new Ready());
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDateTask1);
-		task1.getTaskState().changeToOnGoing();
+		task1.setTaskState(new OnGoing());
 		task1.markTaskAsFinished();
 
 		// creates the controller
