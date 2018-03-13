@@ -81,8 +81,8 @@ public class US356ManageAssignmentRequestControllerTest {
 				estimatedTaskDeadline, 200000);
 		taskIDnumber = taskWithNoTeam.getTaskID();
 
-		testingTaskState = new Planned(taskWithNoTeam);
-		taskWithNoTeam.setTaskState(testingTaskState);
+
+		taskWithNoTeam.setTaskState(new Planned());
 
 		testProject.createTaskAssignementRequest(teamTesterCollaborator, taskWithNoTeam);
 		assignmentRequestsController = new US356ManageAssigmentRequestController(testProject);
@@ -91,8 +91,8 @@ public class US356ManageAssignmentRequestControllerTest {
 		standByTask = testProject.getTaskRepository().createTask(taskDescriptionB, 2000, estimatedStartDate,
 				estimatedTaskDeadline, 200000);
 
-		testingTaskStateB = new StandBy(standByTask);
-		standByTask.setTaskState(testingTaskStateB);
+
+		standByTask.setTaskState(new StandBy());
 
 		testProject.createTaskAssignementRequest(teamTesterCollaborator, standByTask);
 	}
