@@ -3,6 +3,9 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.Calendar;
@@ -16,16 +19,16 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
 	Task task1, task2, task3, task4, task5, task6;
 	TaskCollaborator taskCollab1, taskCollab2, taskCollab3, taskCollab4, taskCollab5, taskCollab6;
-	ProjectContainer projectContainer;
-	UserContainer userContainer;
+	ProjectContainerService projectContainer;
+	UserContainerService userContainer;
 
 	@Before
 	public void setUp() {
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 						
 		// creates a Project Container
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		// create users in company
 		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",

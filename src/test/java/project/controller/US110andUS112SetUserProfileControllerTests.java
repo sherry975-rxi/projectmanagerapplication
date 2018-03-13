@@ -10,9 +10,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import project.Services.UserContainerService;
 import project.model.Profile;
 import project.model.User;
-import project.model.UserContainer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -22,7 +23,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class US110andUS112SetUserProfileControllerTests {
 
     @InjectMocks
-    private UserContainer userContainer;
+    private UserContainerService userContainer;
 
     @Mock
     private US110andUS112SetUserProfileController us110andUS112SetUserProfileController;

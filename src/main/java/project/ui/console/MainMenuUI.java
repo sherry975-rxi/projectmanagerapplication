@@ -1,9 +1,9 @@
 package project.ui.console;
 
+import project.Services.UserContainerService;
 import project.controller.UpdateDbToContainersController;
 import project.model.Profile;
 import project.model.User;
-import project.model.UserContainer;
 import project.ui.console.administrator.AdminMenuUI;
 import project.ui.console.collaborator.CollaboratorMainMenuUI;
 import project.ui.console.collaborator.US101UserRegisterUI;
@@ -21,7 +21,7 @@ public class MainMenuUI {
 
 
 	public static void mainMenu() {
-        UserContainer userContainer = new UserContainer();
+        UserContainerService userContainer = new UserContainerService();
 		//Updates de DataBase
         UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();

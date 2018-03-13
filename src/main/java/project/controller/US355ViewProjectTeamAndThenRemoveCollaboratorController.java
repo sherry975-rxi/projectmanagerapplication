@@ -1,8 +1,8 @@
 package project.controller;
 
+import project.Services.ProjectContainerService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
-import project.model.ProjectContainer;
 import project.model.User;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	 */
 	public boolean removeCollaboratorFromProjectTeam(User user) {
 		boolean remove = false;
-		ProjectContainer projectContainer = new ProjectContainer();
+		ProjectContainerService projectContainer = new ProjectContainerService();
 
 		if (proj.removeProjectCollaboratorFromProjectTeam(user)) {
 			remove = true;

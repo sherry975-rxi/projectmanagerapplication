@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import project.Repository.ProjectsRepository;
+import project.Services.ProjectContainerService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,7 +20,7 @@ public class ProjectsContainerTest {
 	@Mock
 	private ProjectsRepository projectRepositoryMock;
 
-	private ProjectContainer ProjectContainer;
+	private ProjectContainerService ProjectContainer;
 	private User user1;
 	private User user2;
 	private User user3;
@@ -62,7 +63,7 @@ public class ProjectsContainerTest {
 	public void setUp() {
 		initMocks(this);
 
-		ProjectContainer = new ProjectContainer();
+		ProjectContainer = new ProjectContainerService();
 		user1 = new User("name", "email@gmail.com", "idNumber", "function", "123456789");
 		user2 = new User("name2", "email2@gmail.com", "idNumber2", "function2", "987654321");
 		user3 = new User("name6", "email6@gmail.com", "idNumber6", "function6", "987654271");
@@ -925,7 +926,7 @@ public class ProjectsContainerTest {
 
 		when(projectRepositoryMock.findAll()).thenReturn(expectedProjectList);
 
-		ProjectContainer victim = new ProjectContainer(projectRepositoryMock);
+		ProjectContainerService victim = new ProjectContainerService(projectRepositoryMock);
 		victim.updateProjectContainer();
 
 		assertEquals(expectedProjectList,victim.getAllProjectsfromProjectsContainer());

@@ -3,6 +3,9 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -12,11 +15,11 @@ import static org.junit.Assert.*;
 
 public class US361AssignTaskToCollaboratorControllerTest {
 
-	UserContainer userContainer;
+	UserContainerService userContainer;
 	User user1;
 	User userAdmin;
 	Project project;
-	ProjectContainer projectContainer;
+	ProjectContainerService projectContainer;
 	Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6, testTask7;
 	ProjectCollaborator projCollaborator;
 	TaskCollaborator taskCollaborator;
@@ -26,10 +29,10 @@ public class US361AssignTaskToCollaboratorControllerTest {
 	@Before
 	public void setUp() {
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 						
 		// creates a Project Container
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		userContainer.getAllUsersFromUserContainer().clear();
 

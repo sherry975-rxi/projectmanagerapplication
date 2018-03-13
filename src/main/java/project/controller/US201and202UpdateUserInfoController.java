@@ -1,8 +1,8 @@
 package project.controller;
 
+import project.Services.UserContainerService;
 import project.model.Address;
 import project.model.User;
-import project.model.UserContainer;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ public class US201and202UpdateUserInfoController {
 	 * @param name
 	 */
 
-	UserContainer userContainer;
+	UserContainerService userContainer;
 
 	public void updateUserName(User user, String name) {
 
 		user.setName(name);
-		this.userContainer = new UserContainer();
+		this.userContainer = new UserContainerService();
 
 	}
 

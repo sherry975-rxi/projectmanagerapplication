@@ -1,5 +1,7 @@
 package project.controller;
 
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -9,8 +11,8 @@ import java.util.List;
 public class US207CreateTaskReportController {
 
     private User username;
-    private UserContainer userContainer;
-    private ProjectContainer projectContainer;
+    private UserContainerService userContainer;
+    private ProjectContainerService projectContainer;
     private String email;
     private Task task;
 
@@ -20,8 +22,8 @@ public class US207CreateTaskReportController {
      * @param email The email of the user that will create a task report
      */
     public US207CreateTaskReportController(String email, String taskID) {
-        this.projectContainer = new ProjectContainer();
-        this.userContainer = new UserContainer();
+        this.projectContainer = new ProjectContainerService();
+        this.userContainer = new UserContainerService();
         this.username = userContainer.getUserByEmail(email);
         this.email = email;
         for (Task other : projectContainer.getUserTasks(username)) {

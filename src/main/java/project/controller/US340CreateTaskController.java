@@ -1,12 +1,12 @@
 package project.controller;
 
+import project.Services.TaskContainerService;
 import project.model.Project;
 import project.model.Task;
-import project.model.TaskContainer;
 
 public class US340CreateTaskController {
 
-	private TaskContainer taskContainer;
+	private TaskContainerService taskContainer;
 
 	/**
 	 * This constructor creates a target controller. Currently, it receives a
@@ -22,7 +22,7 @@ public class US340CreateTaskController {
 		this.taskContainer = target.getTaskRepository();
 	}
 
-	public TaskContainer getTaskRepository() {
+	public TaskContainerService getTaskRepository() {
 		return this.taskContainer;
 	}
 

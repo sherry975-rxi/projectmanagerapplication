@@ -3,8 +3,8 @@
  */
 package project.controller;
 
+import project.Services.ProjectContainerService;
 import project.model.Project;
-import project.model.ProjectContainer;
 import project.model.Task;
 
 /**
@@ -44,7 +44,7 @@ public class US347CancelOnGoingTaskController {
 	 */
 	public boolean cancelOnGoingTask() {
 
-		ProjectContainer projContainer = new ProjectContainer();
+		ProjectContainerService projContainer = new ProjectContainerService();
 		Task task = this.project.getTaskRepository().getTaskByID(taskID);
 		boolean result = task.cancelTask();
 		projContainer.saveProjectInRepository(project);

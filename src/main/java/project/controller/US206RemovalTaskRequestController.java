@@ -1,5 +1,6 @@
 package project.controller;
 
+import project.Services.ProjectContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class US206RemovalTaskRequestController {
 	private Integer projectID;
 	private String taskID;
 	private User user;
-	private ProjectContainer projectContainer;
+	private ProjectContainerService projectContainer;
 	/**
 	 * Constructor to instantiate a new CollaboratorRemovalrequest
 	 * 
@@ -28,7 +29,7 @@ public class US206RemovalTaskRequestController {
 		this.user = user;
 		this.projectID = null;
 		this.taskID = null;
-		this.projectContainer = new ProjectContainer();
+		this.projectContainer = new ProjectContainerService();
 	}
 
 	/**

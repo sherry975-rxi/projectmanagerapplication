@@ -1,5 +1,7 @@
 package project.controller;
 
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.List;
@@ -16,7 +18,7 @@ public class US351AddColaboratorToProjectTeamController {
 	 * @param effort
 	 */
 	public void addUserToProjectTeam(User user, Project project, int effort) {
-		ProjectContainer projectContainer = new ProjectContainer();
+		ProjectContainerService projectContainer = new ProjectContainerService();
 		project.addUserToProjectTeam(user, effort);
 		projectContainer.saveProjectInRepository(project);
 
@@ -28,7 +30,7 @@ public class US351AddColaboratorToProjectTeamController {
 	 * @return List with all the available users
 	 */
 	public List<User> getAllUsers() {
-		UserContainer userContainer = new UserContainer();
+		UserContainerService userContainer = new UserContainerService();
 		return userContainer.getAllActiveCollaboratorsFromRepository();
 	}
 

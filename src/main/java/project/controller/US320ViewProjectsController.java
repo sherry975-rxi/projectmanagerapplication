@@ -1,14 +1,14 @@
 package project.controller;
 
+import project.Services.ProjectContainerService;
 import project.model.Project;
-import project.model.ProjectContainer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class US320ViewProjectsController {
 
-	ProjectContainer projRepository = new ProjectContainer();
+	ProjectContainerService projRepository = new ProjectContainerService();
 	List<Project> chosenList;
 	Project selectedProject = null;
 

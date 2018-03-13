@@ -3,9 +3,10 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.UserContainerService;
 import project.model.Profile;
 import project.model.User;
-import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +26,14 @@ public class US135andUS136SearchUsersControllerTest {
 	User newUser1;
 	User newUser2;
 	User newUser3;
-	UserContainer userContainer;
+	UserContainerService userContainer;
 	US135andUS136SearchUsersController searchController;
 
 	@Before
 	public void setUp() {
 
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
 		// create user
 		newUser1 = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");

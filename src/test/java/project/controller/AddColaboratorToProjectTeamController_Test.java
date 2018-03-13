@@ -3,6 +3,9 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import static org.junit.Assert.assertFalse;
@@ -21,8 +24,8 @@ public class AddColaboratorToProjectTeamController_Test {
 	 * 
 	 */
 
-	private ProjectContainer projContainer = new ProjectContainer();
-	UserContainer userContainer = new UserContainer();
+	private ProjectContainerService projContainer = new ProjectContainerService();
+	UserContainerService userContainer = new UserContainerService();
 	private User u1;
 	private User u2;
 	private User u3;

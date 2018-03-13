@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.model.ProjectContainer;
+import project.Services.ProjectContainerService;
 import project.model.Task;
 import project.model.User;
 
@@ -13,14 +13,14 @@ import java.util.List;
 public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 
 	User myUser;
-	ProjectContainer myProjRepo;
+	ProjectContainerService myProjRepo;
 
 	/**
 	 * Creator of the controller, receives a user
 	 * @param user
 	 */
 	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
-		this.myProjRepo = new ProjectContainer();
+		this.myProjRepo = new ProjectContainerService();
 		this.myProjRepo.updateProjectContainer();
 		this.myUser = user;
 	}

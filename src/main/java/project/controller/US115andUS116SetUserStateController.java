@@ -1,13 +1,13 @@
 package project.controller;
 
+import project.Services.UserContainerService;
 import project.model.User;
-import project.model.UserContainer;
 
 public class US115andUS116SetUserStateController {
 
 
 	User toChangeState;
-	UserContainer userContainer;
+	UserContainerService userContainer;
 
 
 	/**

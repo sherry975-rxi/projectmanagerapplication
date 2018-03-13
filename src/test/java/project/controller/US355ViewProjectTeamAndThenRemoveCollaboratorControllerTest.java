@@ -3,11 +3,12 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
-import project.model.ProjectContainer;
 import project.model.User;
-import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,8 @@ import static org.junit.Assert.assertTrue;
 
 public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
-	UserContainer userContainer;
-	ProjectContainer projectContainer;
+	UserContainerService userContainer;
+	ProjectContainerService projectContainer;
 
 	User managerTester, teamPermanentMember;
 
@@ -31,10 +32,10 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 	@Before
 	public void setUp() {
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 				
 		// creates a Project Container
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 		
 		// creates test users for a manager and collaborator.
 		// declares the collaborator's relevant data as Strings to facilitate assertions

@@ -3,10 +3,11 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.UserContainerService;
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
-import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,13 @@ public class US201and202UpdateUserInfoController_Test {
 	User u1;
 	Address address1;
 	Address address2;
-	UserContainer userContainer;
+	UserContainerService userContainer;
 
 	@Before
 	public void setUp() {
 		// create company and clear ProjectsRepository and UsersRepository
 
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
 		// create users
 		u1 = userContainer.createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",

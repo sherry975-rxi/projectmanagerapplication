@@ -3,11 +3,12 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.Profile;
 import project.model.Project;
-import project.model.ProjectContainer;
 import project.model.User;
-import project.model.UserContainer;
 
 import static org.junit.Assert.*;
 
@@ -19,8 +20,8 @@ import static org.junit.Assert.*;
  */
 public class US302ChangeProjectManagerTest {
 
-	UserContainer userContainer;
-	ProjectContainer projectContainer;
+	UserContainerService userContainer;
+	ProjectContainerService projectContainer;
 	User userFirstManager;
 	User userNewManager;
 	Project newProject;
@@ -30,10 +31,10 @@ public class US302ChangeProjectManagerTest {
 	public void setUp() {
 
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		// User creation
 		userFirstManager = userContainer.createUser("Leonor", "leonor@gmail.com", "001", "Empregado",

@@ -3,6 +3,9 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -18,8 +21,8 @@ import static org.junit.Assert.assertEquals;
 public class US370V2GetProjectFinishedTaskListTest {
 
 	US370GetProjectFinishedTaskListController tasksFiltersController;
-	UserContainer myUsers;
-	ProjectContainer myProjects;
+	UserContainerService myUsers;
+	ProjectContainerService myProjects;
 
 	User user1, user2, user3;
 	Project project1;
@@ -31,8 +34,8 @@ public class US370V2GetProjectFinishedTaskListTest {
 	@Before
 	public void setUp() {
 		// create company 1
-		myUsers = new UserContainer();
-		myProjects = new ProjectContainer();
+		myUsers = new UserContainerService();
+		myProjects = new ProjectContainerService();
 
 		// create users in company
 		user2 = myUsers.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",

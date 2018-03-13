@@ -3,6 +3,10 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.TaskContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -13,13 +17,13 @@ import static org.junit.Assert.*;
 
 public class US362RemoveTaskFromProjectCollaboratorTest {
 
-	UserContainer userContainer;
-	ProjectContainer projectContainer;
+	UserContainerService userContainer;
+	ProjectContainerService projectContainer;
 	
 	User user1;
 	User userAdmin;
 
-	TaskContainer taskContainer;
+	TaskContainerService taskContainer;
 
 	TaskCollaborator taskWorker1;
 
@@ -41,10 +45,10 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 	public void setUp() {
 		
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",

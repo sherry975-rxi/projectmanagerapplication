@@ -3,6 +3,10 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.TaskContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.Calendar;
@@ -11,9 +15,9 @@ import static org.junit.Assert.assertEquals;
 
 public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 
-	ProjectContainer projectContainer;
-	UserContainer userContainer;
-	TaskContainer taskRepo;
+	ProjectContainerService projectContainer;
+	UserContainerService userContainer;
+	TaskContainerService taskRepo;
 	Project proj;
 	Task taskA;
 	Task taskB;
@@ -28,10 +32,10 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 
 
 		// Initialize Project Repository
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		// Initialize User Repository
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
 		// Add user to User Repository
 		userContainer.addUserToUserRepository(userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337",

@@ -3,9 +3,10 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.UserContainerService;
 import project.model.Profile;
 import project.model.User;
-import project.model.UserContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,13 @@ public class US130ListUsersControllerTest {
 	User user1, user2, newUser2, newUser3;
 	List<String> testList;
 	US130ListUsersController listUsersController;
-	UserContainer userContainer;
+	UserContainerService userContainer;
 
 	@Before
 	public void setUp() {
 
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
 		// create a list to compare
 		testList = new ArrayList<>();

@@ -10,6 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import project.Repository.ProjectsRepository;
 import project.Repository.TaskRepository;
 import project.Repository.UserRepository;
+import project.Services.ProjectContainerService;
+import project.Services.TaskContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.OnGoing;
@@ -27,22 +30,19 @@ public class HelloJpaApplication implements CommandLineRunner {
     private static User userJSilva;
     private static Task taskOne;
     private static Project projOne;
-    private TaskContainer taskContainer;
-    @Autowired
-    private TaskRepository taskRepository;
-    private ProjectContainer projContainer;
-    @Autowired
-    private ProjectsRepository projRepository;
-    private UserContainer userContainer;
-    @Autowired
-    private UserRepository userRepository;
     
     
+    @Autowired
+    private ProjectCollaborator projectCollaboratorContainer;
+    @Autowired
+    private TaskContainerService taskContainer;
+    @Autowired
+    private ProjectContainerService projContainer;
+    @Autowired
+    private UserContainerService userContainer;
 
-
-    //@Autowired
-    //private DemoComponent demo;
-
+    
+    
     public static void main(String[] args) {
         SpringApplication.run(HelloJpaApplication.class, args);
     }
@@ -195,23 +195,15 @@ public class HelloJpaApplication implements CommandLineRunner {
 //        MainMenuUI.mainMenu();
     	
     	 	//Instantiates the UserContainer, defines user "userAdmin", saves it in Repository
-    	 	userContainer = new UserContainer(userRepository);
-    	 	userAdmin = userContainer.createUser("Teresa Ribeiro", "admin@gmail.com", "001", "Administrator", "917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
-    	 	userContainer.addUserToUserRepositoryX(userAdmin);
+//    	 	userAdmin = userContainer.createUser("Teresa Ribeiro", "admin@gmail.com", "001", "Administrator", "917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
+//    	 	userContainer.addUserToUserRepositoryX(userAdmin);
     	 	
     	 	//Instantiates the ProjectContainer, defines project "projOne", saves it in Repository
-    	 	projContainer = new ProjectContainer(projRepository);
-    	 	projOne = projContainer.createProject("POne", "teste", userAdmin);
-    	 	projContainer.saveProjectInRepository(projOne);
+//    	 	projOne = projContainer.createProject("POne", "teste", userAdmin);
+//    	 	projContainer.saveProjectInRepository(projOne);
     	 	
     	 	//Instantiates the TaskContainer, defines task "taskOne", saves it in Repository
-    	 	taskContainer = new TaskContainer(taskRepository);
-    	 	taskOne = taskContainer.createTask("Desenvolver código para responder à US399");
-    	
-
+    	 	//taskOne = taskContainer.createTask("Desenvolver código para responder à US399");
+    	   	 	
     }
-
-
-
-
 }

@@ -3,6 +3,9 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -21,8 +24,8 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	 *
 	 */
 
-	UserContainer userContainer;
-	ProjectContainer projectContainer;
+	UserContainerService userContainer;
+	ProjectContainerService projectContainer;
 
 	// TasksFiltersController tasksFiltersController;
 	User user1, user2, projectManager, projectManager2;
@@ -39,7 +42,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	public void setUp() {
 
 		// create an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
 		// create users
 		user1 = userContainer.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
@@ -66,7 +69,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		projectManager2.setUserProfile(Profile.COLLABORATOR);
 
 		//Creates a ProjectContainer
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		// create project and establishes collaborator projectManager as project manager
 		// of project 1

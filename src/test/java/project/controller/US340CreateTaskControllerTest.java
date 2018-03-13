@@ -3,26 +3,29 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import static org.junit.Assert.*;
 
 public class US340CreateTaskControllerTest {
 
-	UserContainer userContainer;
+	UserContainerService userContainer;
 	User user1;
 	User userAdmin;
 	Project project;
-	ProjectContainer projectContainer;
+	ProjectContainerService projectContainer;
 	Task testTask;
 
 	@Before
 	public void setUp() {
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		userContainer.getAllUsersFromUserContainer().clear();
 

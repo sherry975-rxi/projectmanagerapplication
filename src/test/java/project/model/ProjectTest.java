@@ -3,6 +3,8 @@ package project.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.TaskContainerService;
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
 import project.model.taskstateinterface.Ready;
@@ -33,7 +35,7 @@ public class ProjectTest {
 	TaskCollaborator taskWorker2;
 	Project p1;
 	Project p2;
-	TaskContainer taskContainer;
+	TaskContainerService taskContainer;
 
 	@Before
 	public void setUp() {
@@ -842,7 +844,7 @@ public class ProjectTest {
 		p1.setProjectIdCode(123);
 		assertEquals(123, p1.getProjectIdCode());
 
-		TaskContainer taskContainerExpected = new TaskContainer(1);
+		TaskContainerService taskContainerExpected = new TaskContainerService(1);
 		p1.setTaskRepository(taskContainerExpected);
 		assertEquals(taskContainerExpected, p1.getTaskRepository());
 

@@ -1,5 +1,7 @@
 package project.controller;
 
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class US357CancelRemovalTaskRequestController {
 	Project project;
 	Task task;
 	User userToRemove;
-	ProjectContainer projectContainer = new ProjectContainer();
+	ProjectContainerService projectContainer = new ProjectContainerService();
 
 	/**
 	 * Constructor to instantiate a new US357CancelRemoveTaskRequestController
@@ -55,7 +57,7 @@ public class US357CancelRemovalTaskRequestController {
 	 *            Information of the request chosen by the user.
 	 */
 	public void setTaskIDandUserEmailWithRequestString(String requestData) {
-		UserContainer userContainer = new UserContainer();
+		UserContainerService userContainer = new UserContainerService();
 		userContainer.updateUserContainer();
 		String[] parts = requestData.split("\n");
 		String userEmail = parts[1];

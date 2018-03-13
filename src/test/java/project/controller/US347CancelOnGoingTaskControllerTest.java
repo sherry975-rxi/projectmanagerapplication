@@ -6,6 +6,9 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 import project.model.taskstateinterface.*;
 
@@ -23,8 +26,8 @@ import static org.junit.Assert.assertEquals;
 public class US347CancelOnGoingTaskControllerTest {
 
 	// TasksFiltersController tasksFiltersController;
-	UserContainer userContainer;
-	ProjectContainer projectContainer;
+	UserContainerService userContainer;
+	ProjectContainerService projectContainer;
 	User user1, user2, projectManager;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2;
@@ -39,7 +42,7 @@ public class US347CancelOnGoingTaskControllerTest {
 	public void setUp() {
 
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
 		// create users
 		user1 = userContainer.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
@@ -61,7 +64,7 @@ public class US347CancelOnGoingTaskControllerTest {
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 		
 		// creates a Project Container
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		// create project and establishes collaborator projectManager as project manager
 		// of project 1

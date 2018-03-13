@@ -3,18 +3,19 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.Profile;
 import project.model.Project;
-import project.model.ProjectContainer;
 import project.model.User;
-import project.model.UserContainer;
 
 import static org.junit.Assert.*;
 
 public class US351AddColaboratorToProjectTeamControllerTest {
 	
-	UserContainer userContainer;
-	ProjectContainer projectContainer;
+	UserContainerService userContainer;
+	ProjectContainerService projectContainer;
 	Project activeProj, inactiveProj;
 	User activeUser, inactiveUser, projectManager;
 	US351AddColaboratorToProjectTeamController controller;
@@ -22,10 +23,10 @@ public class US351AddColaboratorToProjectTeamControllerTest {
 	@Before
 	public void setUp() {
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 		
 		// creates a Project Container
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		// Creates and add users to company's user repository
 		activeUser = userContainer.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto",

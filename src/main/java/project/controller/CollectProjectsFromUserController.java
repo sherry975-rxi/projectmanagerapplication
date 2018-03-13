@@ -2,8 +2,9 @@ package project.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+
+import project.Services.ProjectContainerService;
 import project.model.Project;
-import project.model.ProjectContainer;
 import project.model.User;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public class CollectProjectsFromUserController {
 
-	private ProjectContainer projContainer = new ProjectContainer();
+	private ProjectContainerService projContainer = new ProjectContainerService();
 	private User user;
 
 	/**

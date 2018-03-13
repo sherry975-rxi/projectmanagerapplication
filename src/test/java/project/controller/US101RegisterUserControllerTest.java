@@ -4,21 +4,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import project.Services.UserContainerService;
 import project.model.User;
-import project.model.UserContainer;
 
 import static org.junit.Assert.*;
 
 public class US101RegisterUserControllerTest {
 
 	User user1, user2, user3;
-	UserContainer userContainer;
+	UserContainerService userContainer;
 
 	@Before
 	public void setUp() {
 
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",

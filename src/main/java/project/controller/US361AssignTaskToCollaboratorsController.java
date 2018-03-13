@@ -1,8 +1,8 @@
 package project.controller;
 
+import project.Services.ProjectContainerService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
-import project.model.ProjectContainer;
 import project.model.Task;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class US361AssignTaskToCollaboratorsController {
 	 */
 	public boolean assignCollaboratorToTask() {
 		boolean assignCollaboratorToTask = false;
-		ProjectContainer projectContainer = new ProjectContainer();
+		ProjectContainerService projectContainer = new ProjectContainerService();
 		if(task.addProjectCollaboratorToTask(this.projectCollaborator)){
 			projectContainer.saveProjectInRepository(this.project);
 			assignCollaboratorToTask = true;

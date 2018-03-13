@@ -3,6 +3,9 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -14,8 +17,8 @@ public class US206CancelRemovalTaskRequestControllerTest {
 
 	User userDaniel;
 	User userRui;
-	ProjectContainer projectContainer;
-	UserContainer userContainer;
+	ProjectContainerService projectContainer;
+	UserContainerService userContainer;
 	Project projectA;
 	ProjectCollaborator userRuiCollaborator;
 	Task taskA;
@@ -31,8 +34,8 @@ public class US206CancelRemovalTaskRequestControllerTest {
 
 
 		// Creates the Project Repository and User Repository
-		projectContainer = new ProjectContainer();
-		userContainer = new UserContainer();
+		projectContainer = new ProjectContainerService();
+		userContainer = new UserContainerService();
 
 		// Creates the users
 		userDaniel = userContainer.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto", "967387654", "Rua",

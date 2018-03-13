@@ -1,20 +1,20 @@
 package project.controller;
 
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.Profile;
-import project.model.ProjectContainer;
 import project.model.User;
-import project.model.UserContainer;
 
 public class US110andUS112SetUserProfileController {
 	
-	private UserContainer userContainer;
+	private UserContainerService userContainer;
 
 	public US110andUS112SetUserProfileController() {
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
 	}
 
-	public UserContainer getUserContainer() {
+	public UserContainerService getUserContainer() {
 		return userContainer;
 	}
 

@@ -3,9 +3,10 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.UserContainerService;
 import project.model.Profile;
 import project.model.User;
-import project.model.UserContainer;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -16,14 +17,14 @@ public class US115andUS116SetUserStateControllerTests {
 	Profile collaborator = Profile.COLLABORATOR;
 
 
-	UserContainer userContainer;
+	UserContainerService userContainer;
 	User newUser2;
 	User newUser3;
 
 	@Before
 	public void setUp() {
 
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
 
 		newUser2 = userContainer.createUser("Manel", "user2@gmail.com", "001", "Empregado",

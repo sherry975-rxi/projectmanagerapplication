@@ -3,6 +3,9 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -22,15 +25,15 @@ public class US207CreateTaskReportControllerTest {
     TaskCollaborator taskCollab1, taskCollab2;
     US207CreateTaskReportController controller;
     US207CreateTaskReportController controller2;
-    UserContainer userContainer;
-    ProjectContainer projectContainer;
+    UserContainerService userContainer;
+    ProjectContainerService projectContainer;
 
 
     @Before
     public void setUp() {
 
-        userContainer = new UserContainer();
-        projectContainer = new ProjectContainer();
+        userContainer = new UserContainerService();
+        projectContainer = new ProjectContainerService();
 
         // create users in company
         user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",

@@ -1,10 +1,10 @@
 package project.controller;
 
+import project.Services.ProjectContainerService;
 import project.model.Project;
-import project.model.ProjectContainer;
 
 public class US367MarkFinishedTaskAsUnfinishedController {
-	private ProjectContainer projContainer;
+	private ProjectContainerService projContainer;
 	private Project project;
 	private String taskID;
 

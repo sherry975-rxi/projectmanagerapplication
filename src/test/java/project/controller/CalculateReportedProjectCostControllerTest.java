@@ -3,6 +3,10 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.TaskContainerService;
+import project.Services.UserContainerService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -19,8 +23,8 @@ public class CalculateReportedProjectCostControllerTest {
 	 * This class tests the CalculateReportedProjectCostController class
 	 *
 	 */
-	private ProjectContainer projContainer = new ProjectContainer();
-	UserContainer userContainer = new UserContainer();
+	private ProjectContainerService projContainer = new ProjectContainerService();
+	UserContainerService userContainer = new UserContainerService();
 	private User userDaniel;
 	private User userJonny;
 	private User userMike;
@@ -30,8 +34,8 @@ public class CalculateReportedProjectCostControllerTest {
 	private ProjectCollaborator projectUserJonny;
 	private ProjectCollaborator projectUserMike;
 	private ProjectCollaborator projectUserAna;
-	ProjectContainer projectContainer;
-	private TaskContainer taskContainer;
+	ProjectContainerService projectContainer;
+	private TaskContainerService taskContainer;
 	private Task testTask;
 	private Task testTask2;
 	private TaskCollaborator taskWorkerDaniel;

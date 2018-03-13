@@ -3,17 +3,18 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.UserContainerService;
 import project.model.Project;
-import project.model.ProjectContainer;
 import project.model.User;
-import project.model.UserContainer;
 
 import static org.junit.Assert.*;
 
 public class US320ViewProjectsControllerTest {
 
-	UserContainer userContainer;
-	ProjectContainer projectContainer;
+	UserContainerService userContainer;
+	ProjectContainerService projectContainer;
 	Project activeProject;
 	Project inactiveProject;
 	User activeManager;
@@ -24,10 +25,10 @@ public class US320ViewProjectsControllerTest {
 	@Before
 	public void setUp() {
 		// creates an UserContainer
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		activeManager = new User("Daniel", "email", "idNumber", "function", "123456789");
 		inactiveManager = new User("Johnny", "email2", "idNumber2", "function2", "987654321");
