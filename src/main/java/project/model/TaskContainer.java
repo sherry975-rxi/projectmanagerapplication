@@ -174,19 +174,12 @@ public class TaskContainer implements Serializable{
 		return false;
 	}
 
-	/**
-	 * This method returns the total time spent by a user in tasks from a project
-	 * Last month
-	 * 
-	 * @param collab
-	 * @return Time spent on last month project user tasks
-	 */
-	public double getTimeSpentByProjectCollaboratorInAllTasksLastMonth(ProjectCollaborator collab) {
+	public double getTimeSpentByProjectCollaboratorInAllTasksLastMonth(ProjectCollaborator collaborator) {
 		List<Task> lastMonth = new ArrayList<>();
-		lastMonth.addAll(this.getFinishedTasksFromProjectCollaboratorInGivenMonth(collab, 1));
+		lastMonth.addAll(this.getFinishedTasksFromProjectCollaboratorInGivenMonth(collaborator, 1));
 		double totalTime = 0;
 		for (Task test : lastMonth) {
-			totalTime = totalTime + test.getTimeSpentByProjectCollaboratorOntask(collab);
+			totalTime = totalTime + test.getTimeSpentByProjectCollaboratorOntask(collaborator);
 		}
 		return totalTime;
 	}
@@ -223,15 +216,15 @@ public class TaskContainer implements Serializable{
 	 * This method returns a list with all the tasks of a certain user in the
 	 * project
 	 * 
-	 * @param collab
+	 * @param collaborator
 	 *            User (to be able to return its tasks)
 	 * 
 	 * @return AllTasksList List if all tasks from a user
 	 */
-	public List<Task> getAllTasksFromProjectCollaborator(ProjectCollaborator collab) {
+	public List<Task> getAllTasksFromProjectCollaborator(ProjectCollaborator collaborator) {
 		List<Task> allTasks = new ArrayList<>();
 		for (Task other : this.getAllTasksfromProject()) {
-			if (other.isProjectCollaboratorInTaskTeam(collab)) {
+			if (other.isProjectCollaboratorInTaskTeam(collaborator)) {
 				allTasks.add(other);
 			}
 		}
@@ -242,14 +235,14 @@ public class TaskContainer implements Serializable{
 	 * 
 	 * This method checks if a given user doesnt have any task assigned to him
 	 * 
-	 * @param collab
+	 * @param collaborator
 	 *            Project Collaborator
 	 * @return true if the user doesnt have a task. False if he has at least one
 	 *         task
 	 */
-	public boolean isCollaboratorActiveOnAnyTask(ProjectCollaborator collab) {
+	public boolean isCollaboratorActiveOnAnyTask(ProjectCollaborator collaborator) {
 		for (Task otherTask : this.getAllTasksfromProject()) {
-			if (otherTask.isProjectCollaboratorActiveInTaskTeam(collab))
+			if (otherTask.isProjectCollaboratorActiveInTaskTeam(collaborator))
 				return true;
 		}
 		return false;
@@ -267,15 +260,12 @@ public class TaskContainer implements Serializable{
 		List<Task> listOfTasksWithoutCollaboratorsAssigned = new ArrayList<>();
 
 		for (Task other : this.getAllTasksfromProject()) {
-
 			if (other.isTaskTeamEmpty()) {
 				listOfTasksWithoutCollaboratorsAssigned.add(other);
 			} else if (!other.doesTaskTeamHaveActiveUsers()) {
 				listOfTasksWithoutCollaboratorsAssigned.add(other);
-
 			}
 		}
-
 		return listOfTasksWithoutCollaboratorsAssigned;
 	}
 
@@ -292,7 +282,6 @@ public class TaskContainer implements Serializable{
 				allFinishedTasks.add(other);
 			}
 		}
-
 		return allFinishedTasks;
 	}
 

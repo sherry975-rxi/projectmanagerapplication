@@ -2,6 +2,7 @@ package project.model;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -41,8 +42,6 @@ public class TaskContainerTest {
 	public void setUp(){
 		initMocks(this);
 
-		System.out.println("badjotaSDasfg");
-
 		this.victim = new TaskContainer(1);
 
 		this.startDate = Calendar.getInstance();
@@ -72,21 +71,21 @@ public class TaskContainerTest {
 	@Test
 	public void testConstructor(){
 		assertEquals(1, victim.getProjectId());
-		assertEquals(2, victim.getTaskCounter());
+		assertEquals(1, victim.getTaskCounter());
 	}
 
 	@Test
 	public void testCreateTask() {
 		Task expectedTask = new Task(victim.getTaskCounter(), victim.getProjectId(), "firstTask", 1, this.startDate, this.startDate, 10);
-		assertEquals(2, victim.getTaskCounter());
+		assertEquals(1, victim.getTaskCounter());
 		Task actualTask= victim.createTask("firstTask", 1, this.startDate, this.startDate, 10 );
 		assertEquals(expectedTask, actualTask);
-		assertEquals(3, victim.getTaskCounter());
+		assertEquals(2, victim.getTaskCounter());
 
 		expectedTask = new Task(victim.getTaskCounter(), victim.getProjectId(),"firstTask");
 		actualTask= victim.createTask("firstTask");
 		assertEquals(expectedTask, actualTask);
-		assertEquals(4, victim.getTaskCounter());
+		assertEquals(3, victim.getTaskCounter());
 	}
 
 	@Test
@@ -101,10 +100,14 @@ public class TaskContainerTest {
 	}
 
 	@Test
-	public void testSetAndGetProject(){
+	public void testSettersAndGetters(){
 		victim.setProject(project);
-
 		assertEquals(project, victim.getProject());
+
+		victim.setTaskCounter(2);
+		assertEquals(2, victim.getTaskCounter());
+
+		assertEquals(1, victim.getProjectId());
 	}
 
 	@Test
@@ -173,6 +176,77 @@ public class TaskContainerTest {
 		assertFalse(victim.isTaskInTaskContainer(new Task()));
 	}
 
+	@Test
+	public void testGetAllTasksFromProjectCollaborator(){
+		when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+		victim.addTaskToProject(taskMock);
+
+		List<Task> expectedTaskList = new ArrayList<>();
+		expectedTaskList.add(taskMock);
+
+		assertEquals(expectedTaskList, victim.getAllTasksFromProjectCollaborator(projectCollaborator));
+	}
+
+	@Test
+	public void testIsCollaboratorActiveOnAnyTask(){
+		when(taskMock.isProjectCollaboratorActiveInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+		victim.addTaskToProject(taskMock);
+		assertTrue(victim.isCollaboratorActiveOnAnyTask(projectCollaborator));
+
+
+		when(taskMock.isProjectCollaboratorActiveInTaskTeam(any(ProjectCollaborator.class))).thenReturn(false);
+		assertFalse(victim.isCollaboratorActiveOnAnyTask(projectCollaborator));
+	}
+
+
+	//TODO ver teste, cobrir todas as hipóteses?
+	@Test
+	public void testGetAllTasksWithoutCollaboratorsAssigned(){
+		when(taskMock.isTaskTeamEmpty()).thenReturn(true);
+		victim.addTaskToProject(taskMock);
+
+		List<Task> expectedTaskList = new ArrayList<>();
+		expectedTaskList.add(taskMock);
+		assertEquals(expectedTaskList, victim.getAllTasksWithoutCollaboratorsAssigned());
+
+		when(taskMock.isTaskTeamEmpty()).thenReturn(false);
+		when(taskMock.doesTaskTeamHaveActiveUsers()).thenReturn(false);
+		assertEquals(expectedTaskList, victim.getAllTasksWithoutCollaboratorsAssigned());
+
+		when(taskMock.isTaskTeamEmpty()).thenReturn(false);
+		when(taskMock.doesTaskTeamHaveActiveUsers()).thenReturn(true);
+		expectedTaskList.remove(taskMock);
+		assertEquals(expectedTaskList, victim.getAllTasksWithoutCollaboratorsAssigned());
+	}
+
+	//TODO ver teste
+	@Test
+	public void testGetFinishedTasks(){
+		when(taskMock.isTaskFinished()).thenReturn(true);
+		victim.addTaskToProject(taskMock);
+
+		List<Task> expectedTaskList = new ArrayList<>();
+		expectedTaskList.add(taskMock);
+
+		assertEquals(expectedTaskList, victim.getFinishedTasks());
+	}
+
+	/*@Test
+	public void testSortTaskListDecreasingOrder*/
+
+
+
+	//TODO refazer
+	@Ignore
+	@Test
+	public void testGetTimeSpentByProjectCollaboratorInAllTasksLastMonth(){
+		Calendar calendar = Calendar.getInstance();
+
+		when(taskMock.isTaskFinished()).thenReturn(true);
+		when(taskMock.getFinishDate()).thenReturn(calendar);
+		when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+
+	}
 	/*
 	@Before
 	public void setUp() {
