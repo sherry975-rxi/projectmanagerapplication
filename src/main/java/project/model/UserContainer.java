@@ -24,13 +24,20 @@ public class UserContainer {
     private List<User> usersContainer;
 
 
-
     /**
      * Constructor for UserContainer includes usersList creation
      */
     public UserContainer() {
         this.usersContainer = new ArrayList<>();
     }
+    
+    /**
+     * Constructor created for JPA purposes.
+     * @param userRepository
+     */
+    public UserContainer(UserRepository userRepository) {
+		this.userRepository = userRepository;
+}
 
     /**
      * Creates an instance of User using Creator pattern that creates User objects in a manner suitable to the situation.
