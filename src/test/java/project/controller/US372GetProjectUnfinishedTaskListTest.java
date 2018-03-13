@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import project.model.*;
 import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Planned;
+import project.model.taskstateinterface.Ready;
 
 import java.util.Calendar;
 
@@ -110,40 +112,34 @@ public class US372GetProjectUnfinishedTaskListTest {
 		// defines finish date to task, and mark it as Finished7
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task1.setTaskDeadline(taskDeadlineDateTest1);
-		task1.getTaskState().changeToPlanned();
+		task1.setTaskState(new Planned());
 		task1.addProjectCollaboratorToTask(projCollab1);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
+		task1.setTaskState(new Ready());
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDateTask1);
-		task1.getTaskState().changeToOnGoing();
+		task1.setTaskState(new OnGoing());
 		task1.markTaskAsFinished();
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task2.setTaskDeadline(taskDeadlineDateTest1);
-		task2.getTaskState().changeToPlanned();
+		task2.setTaskState(new Planned());
 		task2.addProjectCollaboratorToTask(projCollab1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
+		task2.setTaskState(new Ready());
 		Calendar startDateTask2 = estimatedTaskStartDateTest;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDateTask2);
-		task2.getTaskState().changeToOnGoing();
+		task2.setTaskState(new OnGoing());
 		task2.markTaskAsFinished();
 
 		task3.setStartDate(Calendar.getInstance());
-		OnGoing stateTask3 = new OnGoing(task3);
-		task3.setTaskState(stateTask3);
+		task3.setTaskState(new OnGoing());
 		task4.setStartDate(Calendar.getInstance());
-		OnGoing stateTask4 = new OnGoing(task4);
-		task4.setTaskState(stateTask4);
+		task4.setTaskState(new OnGoing());
 		task5.setStartDate(Calendar.getInstance());
-		OnGoing stateTask5 = new OnGoing(task5);
-		task5.setTaskState(stateTask5);
+		task5.setTaskState(new OnGoing());
 		task6.setStartDate(Calendar.getInstance());
-		OnGoing stateTask6 = new OnGoing(task6);
-		task6.setTaskState(stateTask6);
+		task6.setTaskState(new OnGoing());
 
 		// creates the controller
 		tasksFiltersController = new US372GetProjectUnfinishedTaskListController();
