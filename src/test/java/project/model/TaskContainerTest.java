@@ -3,6 +3,10 @@ package project.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import project.Services.ProjectContainerService;
+import project.Services.TaskContainerService;
+import project.Services.UserContainerService;
 import project.model.taskstateinterface.*;
 
 import java.util.ArrayList;
@@ -13,7 +17,7 @@ import static org.junit.Assert.*;
 
 public class TaskContainerTest {
 
-	UserContainer userContainer;
+	UserContainerService userContainer;
 	User userDan;
 	User userAdmin;
 	User userJoa;
@@ -29,8 +33,8 @@ public class TaskContainerTest {
 
 	Project project;
 	Project project2;
-	ProjectContainer projectContainer;
-	TaskContainer taskContainer;
+	ProjectContainerService projectContainer;
+	TaskContainerService taskContainer;
 	Task testTask;
 	Task testTask2;
 	Task testTask3;
@@ -44,9 +48,9 @@ public class TaskContainerTest {
 	@Before
 	public void setUp() {
 
-		userContainer = new UserContainer();
+		userContainer = new UserContainerService();
 
-		projectContainer = new ProjectContainer();
+		projectContainer = new ProjectContainerService();
 
 		userDan = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
@@ -483,7 +487,7 @@ public class TaskContainerTest {
 
 		// creates a new project
 		projectContainer.addProjectToProjectContainer(project);
-		TaskContainer anotherTaskContainer = project.getTaskRepository();
+		TaskContainerService anotherTaskContainer = project.getTaskRepository();
 		assertEquals(project.getIdCode(), anotherTaskContainer.getProjectId());
 	}
 

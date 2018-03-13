@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import project.Services.TaskContainerService;
+
 import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +19,7 @@ public class ReportTest {
 	Task t1;
 	TaskCollaborator taskWorker1;
 	Project p1;
-	TaskContainer taskContainer;
+	TaskContainerService taskContainer;
 	Report report;
 	Calendar dateOfReport;
 	Task task1;
