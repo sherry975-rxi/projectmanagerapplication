@@ -3,6 +3,9 @@ package project.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Ready;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,7 +78,7 @@ public class ProjectTest {
 		task2.setTaskDeadline(taskDeadline);
 
 
-		// necessary to pass from "Planned" to "Assigned"
+		// necessary to pass from "Planned"
 		task2.addProjectCollaboratorToTask(projectCollaborator2);
 
 
@@ -83,11 +86,14 @@ public class ProjectTest {
 		// necessary to pass from "Ready" to "OnGoing"
 		Calendar projStartDate = (Calendar) estimatedStartDate.clone();
 		task2.setStartDate(projStartDate);
+		task2.setTaskState(new Ready());
+		task2.setTaskState(new OnGoing());
 
 
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate = (Calendar) estimatedStartDate.clone();
 		task2.setFinishDate(testDate);
+		task2.setTaskState(new Finished());
 
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task2.viewTaskStateName());
@@ -104,18 +110,19 @@ public class ProjectTest {
 		task3.setTaskDeadline(taskDeadline);
 
 
-		// necessary to pass from "Planned" to "Assigned"
+		// necessary to pass from "Planned"
 		task3.addProjectCollaboratorToTask(projectCollaborator2);
-
-		// pass from "Assigned" to "Ready"
+		task3.setTaskState(new Ready());
 
 		// necessary to pass from "Ready" to "OnGoing"
 		Calendar projStartDate3 = (Calendar) estimatedStartDate.clone();
 		task3.setStartDate(projStartDate3);
+		task3.setTaskState(new OnGoing());
 
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate3 = (Calendar) estimatedStartDate.clone();
 		task3.setFinishDate(testDate3);
+		task3.setTaskState(new Finished());
 
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task2.viewTaskStateName());
