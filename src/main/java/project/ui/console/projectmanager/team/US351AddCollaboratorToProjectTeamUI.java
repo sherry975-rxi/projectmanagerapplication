@@ -4,6 +4,7 @@ import project.controller.US351AddColaboratorToProjectTeamController;
 import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
+import project.model.UserContainer;
 
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ public class US351AddCollaboratorToProjectTeamUI {
 	int costPerEffort;
 
 	public void addCollaboratorToProjectTeam(Project project) {
+		UserContainer userContainer = new UserContainer();
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();
 		String line = "______________________________________________";
@@ -25,7 +27,7 @@ public class US351AddCollaboratorToProjectTeamUI {
 		System.out.println(line);
 		System.out.println("USER LIST");
 		System.out.println(line);
-		for (User each : Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer()) {
+		for (User each : userContainer.getAllUsersFromUserContainer()) {
 			System.out.println(each.getName());
 			System.out.println(each.getIdNumber());
 			System.out.println(each.getEmail());
