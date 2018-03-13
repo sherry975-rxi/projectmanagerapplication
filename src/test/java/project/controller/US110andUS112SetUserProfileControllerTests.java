@@ -4,17 +4,27 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.mockito.Mockito.*;
+
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import project.model.Profile;
 import project.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
+import project.model.UserContainer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.MockitoAnnotations.initMocks;
 
+@RunWith(MockitoJUnitRunner.class)
 public class US110andUS112SetUserProfileControllerTests {
 
+    @Mock
+    private UserContainer userContainer;
+
+    @InjectMocks
     private US110andUS112SetUserProfileController us110andUS112SetUserProfileController;
 
     private User newUser2, newUser3;
@@ -22,7 +32,9 @@ public class US110andUS112SetUserProfileControllerTests {
     @Before
     public void setUp() {
 
-        us110andUS112SetUserProfileController = new US110andUS112SetUserProfileController();
+        initMocks(this);
+
+        when(us110andUS112SetUserProfileController.getUserContainer()).thenReturn(userContainer);
 
         newUser2 = us110andUS112SetUserProfileController.getUserContainer().createUser("Manel", "user2@gmail.com",
                 "001", "Empregado", "930000000",
@@ -34,10 +46,6 @@ public class US110andUS112SetUserProfileControllerTests {
 
         us110andUS112SetUserProfileController.getUserContainer().addUserToUserRepository(newUser2);
         us110andUS112SetUserProfileController.getUserContainer().addUserToUserRepository(newUser3);
-
-        List<User> victim = new ArrayList<>();
-        victim.add(newUser2);
-        victim.add(newUser3);
 
     }
 
