@@ -8,20 +8,14 @@ import project.model.UserContainer;
 public class US110andUS112SetUserProfileController {
 	
 	private UserContainer userContainer;
-	private ProjectContainer projectContainer;
 
 	public US110andUS112SetUserProfileController() {
 		userContainer = new UserContainer();
-		projectContainer = new ProjectContainer();
 
 	}
 
 	public UserContainer getUserContainer() {
 		return userContainer;
-	}
-
-	public ProjectContainer getProjectContainer() {
-		return projectContainer;
 	}
 
 	/**
