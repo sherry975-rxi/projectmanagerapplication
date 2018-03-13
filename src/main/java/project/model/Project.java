@@ -29,9 +29,6 @@ public class Project implements Serializable{
 	private long id;
 	private int projectIdCode;
 	private int status;
-
-    @Embedded
-	private TaskContainer taskContainer;
 	@OneToOne
 	private User projectManager;
 	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
@@ -83,8 +80,6 @@ public class Project implements Serializable{
 		this.status = PLANNING;
 		this.startdate = null;
 		this.finishdate = null;
-		this.taskContainer = new TaskContainer(projectIdCode);
-		this.taskContainer.setProject(this);
 		this.projectTeam = new ArrayList<>();
 		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
@@ -113,9 +108,6 @@ public class Project implements Serializable{
 		this.status = status;
 	}
 
-	public void setTaskRepository(TaskContainer taskContainer) {
-		this.taskContainer = taskContainer;
-	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -243,14 +235,7 @@ public class Project implements Serializable{
 		return this.projectManager;
 	}
 
-	/**
-	 * This method returns the Task Repository for this specific Project
-	 * 
-	 * @return taskContainer Task Repository for this Project
-	 */
-	public TaskContainer getTaskRepository() {
-		return taskContainer;
-	}
+
 
 	/**
 	 * Get the project's description
@@ -516,7 +501,7 @@ public class Project implements Serializable{
 		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
 		inactiveCollaborators.addAll(this.getProjectTeam());
 		for (ProjectCollaborator other : this.getProjectTeam()) {
-			if (this.taskContainer.isCollaboratorActiveOnAnyTask(other)) // needs to check if
+		//	if (this.taskContainer.isCollaboratorActiveOnAnyTask(other)) // needs to check if TODO CHECK CONDITION
 				// collaborator is
 				// active
 				inactiveCollaborators.remove(other);
@@ -524,25 +509,6 @@ public class Project implements Serializable{
 		return inactiveCollaborators;
 	}
 
-	/**
-	 * This method allows removing a Project Collaborator from a Project Team and
-	 * includes removing that Project Collaborator from all Tasks in this Project
-	 *
-	 * @param collaboratorToRemoveFromProjectTeam
-	 *            Collaborator to remove from project
-	 */
-	/*
-	 * private void removeCollaboratorFromProjectTeam(ProjectCollaborator
-	 * collaboratorToRemoveFromProjectTeam) { // REFACTOR TO
-	 * removeProjectCollaboratorFromProjectTeam
-	 * 
-	 * if (this.projectTeam.contains(collaboratorToRemoveFromProjectTeam)) {
-	 * collaboratorToRemoveFromProjectTeam.setStatus(false); for (Task otherTask :
-	 * this.taskContainer.getAllTasks(collaboratorToRemoveFromProjectTeam)) {
-	 * otherTask.removeUserFromTask(collaboratorToRemoveFromProjectTeam); } }
-	 * 
-	 * }
-	 */
 
 	/**
 	 * This method allows the inactivation of a User from a Project Team which
@@ -562,10 +528,10 @@ public class Project implements Serializable{
 
 				other.setStatus(false);
 
-				for (Task otherTask : this.taskContainer.getAllTasksFromProjectCollaborator(other)) {
-					otherTask.removeProjectCollaboratorFromTask(other);
-				}
-				remove = true;
+				//for (Task otherTask : this.taskContainer.getAllTasksFromProjectCollaborator(other)) { //TODO REIMPLEMENT THIS METHOD IN ACCORDANCE WITH THE UPDATED MODEL
+				//	otherTask.removeProjectCollaboratorFromTask(other);
+				//}
+				//remove = true;
 			}
 
 		}
@@ -600,9 +566,9 @@ public class Project implements Serializable{
 	public double getTotalCostReportedToProjectUntilNow() {
 		double reportedCost = 0.0;
 
-		for (Task task : taskContainer.getAllTasksfromProject()) {
-			reportedCost += task.getTaskCost();
-		}
+		//for (Task task : taskContainer.getAllTasksfromProject()) { TODO REIMPLEMENT THIS METHOD IN ACCORDANCE WITH THE UPDATED MODEL
+		//	reportedCost += task.getTaskCost();
+		//}
 
 		return reportedCost;
 	}
