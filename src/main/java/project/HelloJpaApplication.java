@@ -34,24 +34,25 @@ public class HelloJpaApplication implements CommandLineRunner {
         //demo.demoRun();
 
 
-        // Instantiates the company
-        Company myCompany = Company.getTheInstance();
+        // Instantiates the UserContainer & ProjectContainer
+        UserContainer userContainer = new UserContainer();
+        ProjectContainer projectContainer = new ProjectContainer();
 
         // Instantiate the users, sets their passwords
-        userAdmin = myCompany.getUsersContainer().createUser("Teresa Ribeiro", "admin@gmail.com", "001",
+        userAdmin = userContainer.createUser("Teresa Ribeiro", "admin@gmail.com", "001",
                 "Administrator", "917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
         userAdmin.setPassword("123456");
-        userDirector = myCompany.getUsersContainer().createUser("Roberto Santos", "director@gmail.com", "002",
+        userDirector = userContainer.createUser("Roberto Santos", "director@gmail.com", "002",
                 "Director", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
         userDirector.setPassword("abcdef");
 
-        userJSilva = myCompany.getUsersContainer().createUser("João Silva", "jsilva@gmail.com", "010", "Comercial",
+        userJSilva = userContainer.createUser("João Silva", "jsilva@gmail.com", "010", "Comercial",
                 "937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
         userJSilva.setPassword("switch");
-        User userATirapicos = myCompany.getUsersContainer().createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
+        User userATirapicos = userContainer.createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
                 "Comercial", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Porto", "Portugal");
         userATirapicos.setPassword("tirapicos");
-        User projectManager = myCompany.getUsersContainer().createUser("Sara Pereira", "spereira@gmail.com", "012",
+        User projectManager = userContainer.createUser("Sara Pereira", "spereira@gmail.com", "012",
                 "Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
                 "Portugal");
 
@@ -63,20 +64,20 @@ public class HelloJpaApplication implements CommandLineRunner {
 
 
         // addition of users to the company
-        myCompany.getUsersContainer().addUserToUserRepositoryX(userAdmin);
-        myCompany.getUsersContainer().addUserToUserRepositoryX(userDirector);
-        myCompany.getUsersContainer().addUserToUserRepositoryX(userJSilva);
-        myCompany.getUsersContainer().addUserToUserRepositoryX(userATirapicos);
-        myCompany.getUsersContainer().addUserToUserRepositoryX(projectManager);
+        userContainer.addUserToUserRepositoryX(userAdmin);
+        userContainer.addUserToUserRepositoryX(userDirector);
+        userContainer.addUserToUserRepositoryX(userJSilva);
+        userContainer.addUserToUserRepositoryX(userATirapicos);
+        userContainer.addUserToUserRepositoryX(projectManager);
 
 
 
         // Instantiates a project and add it to the company
-        Project projectGP = myCompany.getProjectsContainer().createProject("Gestão de Projetos",
+        Project projectGP = projectContainer.createProject("Gestão de Projetos",
                 "Aplicação para Gestão de Projetos", projectManager);
-        Project projectApostas = myCompany.getProjectsContainer().createProject("Apostas Online",
+        Project projectApostas = projectContainer.createProject("Apostas Online",
                 "Plataforma Web para Apostas", projectManager);
-        Project projectHomeBanking = myCompany.getProjectsContainer().createProject("HomeBanking",
+        Project projectHomeBanking = projectContainer.createProject("HomeBanking",
                 "Aplicação iOS para HomeBanking", userJSilva);
 
         TaskCollaborator tWorkerJSilva;
@@ -94,9 +95,9 @@ public class HelloJpaApplication implements CommandLineRunner {
         projectGP.setFinishdate(finishDate);
 
         // addition of projects to the company
-        myCompany.getProjectsContainer().addProjectToProjectContainerX(projectGP);
-        myCompany.getProjectsContainer().addProjectToProjectContainerX(projectApostas);
-        myCompany.getProjectsContainer().addProjectToProjectContainerX(projectHomeBanking);
+        projectContainer.saveProjectInRepository(projectGP);
+        projectContainer.saveProjectInRepository(projectApostas);
+        projectContainer.saveProjectInRepository(projectHomeBanking);
 
         // set "EXECUTION" status of projects
         projectGP.setProjectStatus(2);
@@ -133,29 +134,25 @@ public class HelloJpaApplication implements CommandLineRunner {
 
         Task taskAp1 = projectApostas.getTaskRepository().createTask("Desenvolver código para responder à US399");
         projectApostas.getTaskRepository().addTaskToProject(taskAp1);
-        Planned onGoingStateAp1 = new Planned(taskAp1);
-        taskAp1.setTaskState(onGoingStateAp1);
+        taskAp1.getTaskState().doAction(taskAp1);
         taskAp1.setStartDate(startDate);
         taskAp1.setTaskDeadline(taskDeadlineDate);
 
         Task taskAp2 = projectApostas.getTaskRepository().createTask("Implementar sistema de segurança");
         projectApostas.getTaskRepository().addTaskToProject(taskAp2);
-        Created onGoingStateAp2 = new Created(taskAp2);
-        taskAp2.setTaskState(onGoingStateAp2);
+        taskAp2.getTaskState().doAction(taskAp2);
         taskAp2.setStartDate(startDate);
         taskAp2.setTaskDeadline(taskDeadlineDate);
 
         Task taskGP = projectGP.getTaskRepository().createTask("Adicionar colaboradores às tarefas planeadas.");
         projectGP.getTaskRepository().addTaskToProject(taskGP);
-        OnGoing onGoingStateGP = new OnGoing(taskGP);
-        taskGP.setTaskState(onGoingStateGP);
+        taskGP.getTaskState().doAction(taskGP);
         taskGP.setStartDate(startDate);
         taskGP.setTaskDeadline(taskDeadlineDate);
 
         Task taskHB = projectHomeBanking.getTaskRepository().createTask("Permitir ligação a sites de noticias");
         projectHomeBanking.getTaskRepository().addTaskToProject(taskHB);
-        OnGoing onGoingStateHB = new OnGoing(taskHB);
-        taskHB.setTaskState(onGoingStateHB);
+        taskHB.getTaskState().doAction(taskHB);
         taskHB.setStartDate(startDate);
         taskHB.setTaskDeadline(taskDeadlineDate);
 
@@ -172,9 +169,9 @@ public class HelloJpaApplication implements CommandLineRunner {
         taskAp2.createTaskDependence(taskAp1, 0);
 
 
-        myCompany.getProjectsContainer().addProjectToProjectContainerX(projectGP);
-        myCompany.getProjectsContainer().addProjectToProjectContainerX(projectApostas);
-        myCompany.getProjectsContainer().addProjectToProjectContainerX(projectHomeBanking);
+        projectContainer.saveProjectInRepository(projectGP);
+        projectContainer.saveProjectInRepository(projectApostas);
+        projectContainer.saveProjectInRepository(projectHomeBanking);
 
         MainMenuUI.mainMenu();
 
