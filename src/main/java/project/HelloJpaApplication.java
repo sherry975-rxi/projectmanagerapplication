@@ -2,9 +2,14 @@ package project;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import project.Repository.ProjectsRepository;
+import project.Repository.TaskRepository;
+import project.Repository.UserRepository;
 import project.model.*;
 import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.OnGoing;
@@ -23,8 +28,14 @@ public class HelloJpaApplication implements CommandLineRunner {
     private static Task taskOne;
     private static Project projOne;
     private TaskContainer taskContainer;
+    @Autowired
+    private TaskRepository taskRepository;
     private ProjectContainer projContainer;
+    @Autowired
+    private ProjectsRepository projRepository;
     private UserContainer userContainer;
+    @Autowired
+    private UserRepository userRepository;
     
     
 
@@ -183,16 +194,18 @@ public class HelloJpaApplication implements CommandLineRunner {
 //
 //        MainMenuUI.mainMenu();
     	
-    	 	//Instantiates the TaskContainer
-    	 	userContainer = new UserContainer();
+    	 	//Instantiates the UserContainer, defines user "userAdmin", saves it in Repository
+    	 	userContainer = new UserContainer(userRepository);
     	 	userAdmin = userContainer.createUser("Teresa Ribeiro", "admin@gmail.com", "001", "Administrator", "917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
     	 	userContainer.addUserToUserRepositoryX(userAdmin);
     	 	
-    	 	projContainer = new ProjectContainer();
+    	 	//Instantiates the ProjectContainer, defines project "projOne", saves it in Repository
+    	 	projContainer = new ProjectContainer(projRepository);
     	 	projOne = projContainer.createProject("POne", "teste", userAdmin);
     	 	projContainer.saveProjectInRepository(projOne);
     	 	
-    	 	taskContainer = new TaskContainer();
+    	 	//Instantiates the TaskContainer, defines task "taskOne", saves it in Repository
+    	 	taskContainer = new TaskContainer(taskRepository);
     	 	taskOne = taskContainer.createTask("Desenvolver código para responder à US399");
     	
 
