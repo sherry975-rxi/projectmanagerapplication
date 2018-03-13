@@ -30,18 +30,6 @@ public class US347CancelOnGoingTaskControllerTest {
 	ProjectCollaborator projCollab1, projCollab2;
 	Task task1, task2, task3;
 	TaskCollaborator taskCollab1, taskCollab2;
-	Planned PlannedTestTask;
-	Planned PlannedTestTask2;
-	Planned PlannedTestTask3;
-	Assigned AssignedTestTask;
-	Assigned AssignedTestTask2;
-	Assigned AssignedTestTask3;
-	Ready ReadyTestTask;
-	Ready ReadyTestTask2;
-	Ready ReadyTestTask3;
-	OnGoing onGoingTestTask;
-	OnGoing onGoingTestTask2;
-	OnGoing onGoingTestTask3;
 	Calendar startDateTest;
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
@@ -126,9 +114,10 @@ public class US347CancelOnGoingTaskControllerTest {
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// Creates State Objects planned for task.
-		PlannedTestTask = new Planned(task1);
-		PlannedTestTask2 = new Planned(task2);
-		PlannedTestTask3 = new Planned(task3);
+		task1.setTaskState(new Planned());
+        task2.setTaskState(new Planned());
+        task3.setTaskState(new Planned());
+
 
 		// set estimated task start date and task dead line to tasks
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
@@ -141,9 +130,9 @@ public class US347CancelOnGoingTaskControllerTest {
 		task3.setTaskDeadline(taskDeadlineDateTest);
 
 		// Sets the tasks to "Planned"
-		task1.setTaskState(PlannedTestTask);
-		task2.setTaskState(PlannedTestTask2);
-		task3.setTaskState(PlannedTestTask3);
+		task1.setTaskState(new Planned());
+		task2.setTaskState(new Planned());
+		task3.setTaskState(new Planned());
 
 		// create task workers
 		taskCollab1 = new TaskCollaborator(projCollab1);
@@ -154,35 +143,15 @@ public class US347CancelOnGoingTaskControllerTest {
 		task2.addTaskCollaboratorToTask(taskCollab2);
 		task3.addTaskCollaboratorToTask(taskCollab1);
 
-		// Creates State Objects assigned for task.
-		AssignedTestTask = new Assigned(task1);
-		AssignedTestTask2 = new Assigned(task2);
-		AssignedTestTask3 = new Assigned(task3);
-
-		// Sets the tasks to "Assigned"
-		task1.setTaskState(AssignedTestTask);
-		task2.setTaskState(AssignedTestTask2);
-		task3.setTaskState(AssignedTestTask3);
-
-		// Creates State Objects Ready for task.
-		ReadyTestTask = new Ready(task1);
-		ReadyTestTask2 = new Ready(task2);
-		ReadyTestTask3 = new Ready(task3);
-
-		// Sets the tasks to "Ready"
-		task1.setTaskState(ReadyTestTask);
-		task2.setTaskState(ReadyTestTask2);
-		task3.setTaskState(ReadyTestTask3);
-
-		// Creates State Objects OnGoing for task.
-		onGoingTestTask = new OnGoing(task1);
-		onGoingTestTask2 = new OnGoing(task2);
-		onGoingTestTask3 = new OnGoing(task3);
+        // Sets the tasks to "Ready"
+        task1.setTaskState(new Ready());
+        task2.setTaskState(new Ready());
+        task3.setTaskState(new Ready());
 
 		// Sets the tasks to "onGoing"
-		task1.setTaskState(onGoingTestTask);
-		task2.setTaskState(onGoingTestTask2);
-		task3.setTaskState(onGoingTestTask3);
+		task1.setTaskState(new OnGoing());
+		task2.setTaskState(new OnGoing());
+		task3.setTaskState(new OnGoing());
 	}
 
 	@After
@@ -200,18 +169,6 @@ public class US347CancelOnGoingTaskControllerTest {
 		task3 = null;
 		taskCollab1 = null;
 		taskCollab2 = null;
-		PlannedTestTask = null;
-		PlannedTestTask2 = null;
-		PlannedTestTask3 = null;
-		AssignedTestTask = null;
-		AssignedTestTask2 = null;
-		AssignedTestTask3 = null;
-		ReadyTestTask = null;
-		ReadyTestTask2 = null;
-		ReadyTestTask3 = null;
-		onGoingTestTask = null;
-		onGoingTestTask2 = null;
-		onGoingTestTask3 = null;
 		startDateTest = null;
 		estimatedTaskStartDateTest = null;
 		taskDeadlineDateTest = null;
@@ -242,14 +199,12 @@ public class US347CancelOnGoingTaskControllerTest {
 		US347CancelOnGoingTaskController uS347CancelOnGoingTaskController = new US347CancelOnGoingTaskController(
 				task1.getTaskID(), project1);
 
-		// create state cancelled in task2
-		Cancelled cancelledTestTask = new Cancelled(task2);
-
 		// Sets task2 to "cancelled"
-		task2.setTaskState(cancelledTestTask);
+		task2.setTaskState(new Cancelled());
 
 		// Sets a cancel date for the task1
 		task1.setCancelDate();
+
 		// use of control to set task1 to state cancelled
 		uS347CancelOnGoingTaskController.cancelOnGoingTask();
 
