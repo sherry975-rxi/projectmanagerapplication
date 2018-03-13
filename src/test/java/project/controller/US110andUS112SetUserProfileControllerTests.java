@@ -21,10 +21,10 @@ import static org.mockito.MockitoAnnotations.initMocks;
 @RunWith(MockitoJUnitRunner.class)
 public class US110andUS112SetUserProfileControllerTests {
 
-    @Mock
+    @InjectMocks
     private UserContainer userContainer;
 
-    @InjectMocks
+    @Mock
     private US110andUS112SetUserProfileController us110andUS112SetUserProfileController;
 
     private User newUser2, newUser3;
