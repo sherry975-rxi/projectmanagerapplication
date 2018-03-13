@@ -135,17 +135,8 @@ public class US342CreateTaskDependencyTest {
 		// Adds taskA to TaskContainer
 		taskRepo.addTaskToProject(taskA);
 
-		/*
-		 * Creates four tasks states
-		 */
-		OnGoing onGoing = new OnGoing(taskA);
-		Created created = new Created(taskA);
-
-		OnGoing onGoingB = new OnGoing(taskB);
-		Created createdB = new Created(taskB);
-
-		taskA.setTaskState(onGoing);
-		taskB.setTaskState(createdB);
+		taskA.setTaskState(new OnGoing());
+		taskB.setTaskState(new Created());
 		taskA.setTaskDeadline(Calendar.getInstance());
 
 		// Checks if transition is valid
@@ -154,7 +145,7 @@ public class US342CreateTaskDependencyTest {
 		/*
 		 * Sets taskB to "OnGoing" Transition won't be valid
 		 */
-		taskB.setTaskState(onGoingB);
+		taskB.setTaskState(new OnGoing());
 		assertFalse(controller.isTaskDependencyPossible(taskB.getTaskID(), taskA.getTaskID()));
 
 	}
@@ -164,17 +155,9 @@ public class US342CreateTaskDependencyTest {
 		// Adds taskA to TaskContainer
 		taskRepo.addTaskToProject(taskA);
 
-		/*
-		 * Creates four tasks states
-		 */
-		OnGoing onGoing = new OnGoing(taskA);
-		Created created = new Created(taskA);
 
-		OnGoing onGoingB = new OnGoing(taskB);
-		Created createdB = new Created(taskB);
-
-		taskA.setTaskState(onGoing);
-		taskB.setTaskState(createdB);
+		taskA.setTaskState(new OnGoing());
+		taskB.setTaskState(new Created());
 		taskA.setTaskDeadline(Calendar.getInstance());
 
 		// Creates a task dependency
@@ -199,17 +182,8 @@ public class US342CreateTaskDependencyTest {
 		// Adds taskA to TaskContainer
 		taskRepo.addTaskToProject(taskA);
 
-		/*
-		 * Creates four tasks states
-		 */
-		OnGoing onGoing = new OnGoing(taskA);
-		Created created = new Created(taskA);
-
-		OnGoing onGoingB = new OnGoing(taskB);
-		Created createdB = new Created(taskB);
-
-		taskA.setTaskState(onGoing);
-		taskB.setTaskState(createdB);
+		taskA.setTaskState(new OnGoing());
+		taskB.setTaskState(new Created());
 		taskA.setTaskDeadline(Calendar.getInstance());
 
 		// Creates a task dependency
