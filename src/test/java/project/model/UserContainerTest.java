@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import project.Repository.UserRepository;
+import project.Services.UserContainerService;
 import project.dto.UserDTO;
 
 /**
@@ -33,7 +34,7 @@ public class UserContainerTest {
 	private UserRepository userRepositoryMock;
 
 	@InjectMocks
-	private UserContainer userContainer = new UserContainer();
+	private UserContainerService userContainer = new UserContainerService();
 
 	User user1;
 	User user2;
