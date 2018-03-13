@@ -121,11 +121,6 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		taskContainer.addTaskToProject(testTask2);
 		taskContainer.addTaskToProject(testTask3);
 
-		// Creates State Objects planned for task.
-		Planned PlannedTestTask = new Planned(testTask);
-		Planned PlannedTestTask2 = new Planned(testTask2);
-		Planned PlannedTestTask3 = new Planned(testTask3);
-
 		// set estimated task start date and task dead line to tasks
 		testTask.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		testTask.setTaskDeadline(taskDeadlineDateTest);
@@ -142,24 +137,9 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		testTask3.addTaskCollaboratorToTask(taskWorker1);
 
 		// Sets the tasks to "Planned"
-		testTask.setTaskState(PlannedTestTask);
-		testTask2.setTaskState(PlannedTestTask2);
-		testTask3.setTaskState(PlannedTestTask3);
-
-		// Creates State Objects assigned for task.
-		Assigned AssignedTestTask = new Assigned(testTask);
-		Assigned AssignedTestTask2 = new Assigned(testTask2);
-		Assigned AssignedTestTask3 = new Assigned(testTask3);
-
-		// Sets the tasks to "Assigned"
-		testTask.setTaskState(AssignedTestTask);
-		testTask2.setTaskState(AssignedTestTask2);
-		testTask3.setTaskState(AssignedTestTask3);
-
-		// Creates State Objects Ready for task.
-		Ready ReadyTestTask = new Ready(testTask);
-		Ready ReadyTestTask2 = new Ready(testTask2);
-		Ready ReadyTestTask3 = new Ready(testTask3);
+		testTask.setTaskState(new Planned());
+		testTask2.setTaskState(new Planned());
+		testTask3.setTaskState(new Planned());
 
 		// set start date
 		testTask.setStartDate(startDateTest);
@@ -167,27 +147,18 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		testTask3.setStartDate(startDateTest);
 
 		// Sets the tasks to "Ready"
-		testTask.setTaskState(ReadyTestTask);
-		testTask2.setTaskState(ReadyTestTask2);
-		testTask3.setTaskState(ReadyTestTask3);
-
-		// Creates State Objects OnGoing for task.
-		OnGoing onGoingTestTask = new OnGoing(testTask);
-		OnGoing onGoingTestTask2 = new OnGoing(testTask2);
-		OnGoing onGoingTestTask3 = new OnGoing(testTask3);
+		testTask.setTaskState(new Ready());
+		testTask2.setTaskState(new Ready());
+		testTask3.setTaskState(new Ready());
 
 		// Sets the tasks to "onGoing"
-		testTask.setTaskState(onGoingTestTask);
-		testTask2.setTaskState(onGoingTestTask2);
-		testTask3.setTaskState(onGoingTestTask3);
-
-		// Creates State Objects Cancelled for task.
-		Cancelled cancelledTestTask = new Cancelled(testTask);
-		Cancelled cancelledTestTask2 = new Cancelled(testTask2);
+		testTask.setTaskState(new OnGoing());
+		testTask2.setTaskState(new OnGoing());
+		testTask3.setTaskState(new OnGoing());
 
 		// Sets the tasks to "cancelled"
-		testTask.setTaskState(cancelledTestTask);
-		testTask2.setTaskState(cancelledTestTask2);
+		testTask.setTaskState(new Cancelled());
+		testTask2.setTaskState(new Cancelled());
 
 		// Creates the controller to be tested
 		controller = new US377CollectionOfCancelledTasksFromAProjectController(project);
