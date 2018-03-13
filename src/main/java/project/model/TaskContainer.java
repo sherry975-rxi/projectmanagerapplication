@@ -18,7 +18,17 @@ public class TaskContainer {
 	@Autowired
 	private TaskRepository taskRepository;
 
-	public TaskContainer() {}
+	public TaskContainer() {
+		
+	}
+	
+	/**
+	 * Constructor created for JPA purposes.
+	 * @param taskRepository
+	 */
+	public TaskContainer(TaskRepository taskRepository) {
+		this.taskRepository = taskRepository;
+	}
 
 	/**
 	 * Create a Task using Creation Pattern and saves the Task created in the DB
