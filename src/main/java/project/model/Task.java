@@ -90,7 +90,7 @@ public class Task {
 		this.taskState = new Created();
 		this.cancelDate = null;
 		this.currentState = StateEnum.CREATED;
-		this.project = this.getProject();
+		//this.project = this.getProject();
 	}
 
 	/**
