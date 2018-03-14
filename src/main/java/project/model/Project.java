@@ -52,6 +52,10 @@ public class Project implements Serializable{
 	public static final int REVIEW = 4; // garantia
 	public static final int CLOSE = 5; // fecho
 	static final long serialVersionUID = 43L;
+	
+	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+	@Column(columnDefinition = "LONGBLOB")
+	private List<Task> taskList;
 
 	/**
 	 * Empty Constructor for Project
@@ -162,6 +166,23 @@ public class Project implements Serializable{
 		newCollaborator.setProject(this);
 
 		return newCollaborator;
+	}
+	
+	/**
+	 * Creates an instance of Task
+	 * 
+	 * @param description
+	 *            description of the task to add
+
+	 * 
+	 * @return The new task instantiated
+	 */
+	public Task createTaskinProject(String description) {
+
+		Task newTask = new Task(description);
+		newTask.setProject(this);
+
+		return newTask;
 	}
 
 	/**
