@@ -44,89 +44,56 @@ public class ProjectContainerService {
 	 */
 	public Project createProject(String name, String description, User projectManager) {
 
-		Project newProject = new Project(projCounter, name, description, projectManager);
-		projCounter++;
+		Project newProject = new Project(name, description, projectManager);
+		this.projectsRepository.save(newProject);
 		return newProject;
 
 	}
 
 	/**
-	 * This method returns the Project Counter
+	 * This method tells the ProjectRepository to save a certain project in the database
 	 * 
-	 * @return Project Counter
-	 */
-	public int getProjCounter() {
-		return projCounter;
-	}
-
-	public Project getProjById(int projCounter) {
-		for (Project proj : projectsContainer) {
-			if (proj.getIdCode() == projCounter) {
-				return proj;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Takes an int to set the Project counter
-	 * 
-	 * @param projCounter the number of projects alreayd created. Used to define the Project with an unique number
-	 */
-	public void setProjCounter(int projCounter) {
-		this.projCounter = projCounter;
-	}
-
-	/**
-	 * This method adds project to projectsList if project doesn't exit
-	 * 
-	 * @param toAddProject
+	 * @param project
 	 *            Project added to the List of Projects
 	 */
-	public void addProjectToProjectContainer(Project toAddProject) {
-		if (!this.projectsContainer.contains(toAddProject)) {
-			this.projectsContainer.add(toAddProject);
-		}
-	}
-
-	public void saveProjectInRepository(Project projToSave) {
-		this.projectsRepository.save(projToSave);
+	public void addProjectToProjectContainer(Project project) {
+			this.projectsRepository.save(project);
 	}
 
 	/**
-	 * This method returns a copy of the list of projects (projectsList)
+	 * This method tells the projectRepository to call the method findAll in order to retrieve all projects from the database
 	 * 
 	 * @return allProjects This is a copy of he list of all Projects created
 	 */
 	public List<Project> getAllProjectsfromProjectsContainer() {
 
-		return new ArrayList<>(this.projectsContainer);
+		List<Project> allProjects = new ArrayList<>();
+		allProjects.addAll(this.projectsRepository.findAll());
+		return allProjects;
 	}
 
 	/**
-	 * This method returns a list of active Projects. For each Project in the list
-	 * of projects (projectList on the user task list), this method will check if
-	 * the Project is active. If active equals true (the project is active) the
-	 * projectsList list adds that Project.
+	 * Tells the projectRepository to call the method findByProjectStatus for each
+	 * of the status that is considered as "Active" .
+	 * ActiveStates 1 to 4
 	 * 
 	 * @return activeProjectsList The List of active Projects
 	 */
 	public List<Project> getActiveProjects() {
 
-		List<Project> activeProjectsList = new ArrayList<>();
+		List<Project> activeProjects = new ArrayList<>();
+		activeProjects.addAll(this.projectsRepository.findByProjectStatus(1));
+		activeProjects.addAll(this.projectsRepository.findByProjectStatus(2));
+		activeProjects.addAll(this.projectsRepository.findByProjectStatus(3));
+		activeProjects.addAll(this.projectsRepository.findByProjectStatus(4));
 
-		for (Project other : this.projectsContainer) {
-
-			if (other.getProjectStatus() == 1 || other.getProjectStatus() == 2 || other.getProjectStatus() == 3
-					|| other.getProjectStatus() == 4) {
-				activeProjectsList.add(other);
-			}
-
-		}
-		return activeProjectsList;
+		return activeProjects;
 	}
 
+
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns all the tasks from all the projects, that has a specific
 	 * user associated to that task, no matter if the project is active or not, if
 	 * the task is finished or not.
