@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ProjectContainerService {
+public class ProjectService {
 
 	@Autowired
 	private ProjectsRepository projectsRepository;
@@ -24,12 +24,12 @@ public class ProjectContainerService {
 	 * Constructor that allows one to create a new Project Repository. There are no
 	 * mandatory fields.
 	 */
-	public ProjectContainerService() {}
+	public ProjectService() {}
 
 	/**
 	 * Constructor created for JPA purposes. It is not to be used in model context.
 	 */
-	public ProjectContainerService (ProjectsRepository projectsRepository){
+	public ProjectService (ProjectsRepository projectsRepository){
 		this.projectsRepository = projectsRepository;
 	}
 
@@ -184,111 +184,7 @@ public class ProjectContainerService {
 		this.projectCollaboratorRepository.save(projectCollaborator);
 	}
 
-	/**
-	 * TODO This method is going to transinct to the TaskContainerService Class.
-	 *
-	 * This method returns all the tasks from all the projects, that has a specific
-	 * user associated to that task, no matter if the project is active or not, if
-	 * the task is finished or not.
-	 *
-	 * @param user
-	 *            user to search the tasks in which it is included
-	 *
-	 * @return Returns the user task list.
-	 */
-	/*public List<Task> getUserTasks(User user) {
-		List<Task> tasksOfSpecificUser = new ArrayList<>();
-
-		for (Project other : this.projectsContainer) {
-			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
-
-			if (toCheck != null) {
-				//tasksOfSpecificUser.addAll(other.getTaskRepository().getAllTasksFromProjectCollaborator(toCheck));
-			}
-		}
-
-		return tasksOfSpecificUser;
-	} */
-
-
-
-	/**
-	 * TODO This method is going to transinct to the TaskContainerService Class.
-	 *
-	 * This method returns all the tasks with state "finished" from all the
-	 * projects, that has a specific user associated to that task, no matter if the
-	 * project is active or not.
-	 *
-	 * @param user
-	 *            user to search the tasks in which it is included.
-	 *
-	 * @return List of finished tasks of a specific user
-	 */
-	/*public List<Task> getAllFinishedTasksFromUser(User user) {
-
-		List<Task> finishedTasksOfSpecificUser = new ArrayList<>();
-		for (Project other : this.projectsContainer) {
-			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
-
-			if (toCheck != null) {
-				//finishedTasksOfSpecificUser.addAll(
-						//other.getTaskRepository().getFinishedTasksFromProjectCollaboratorInGivenMonth(toCheck, -1));
-			}
-		}
-		return finishedTasksOfSpecificUser;
-	} */
-
-	/**
-	 * TODO This method is going to transinct to the TaskContainerService Class.
-	 *
-	 * This method returns all the tasks with state "unfinished" from all the
-	 * projects, that has a specific user associated to that task, no matter if the
-	 * project is active or not.
-	 *
-	 * @param user
-	 *            user to search the tasks in which it is included
-	 *
-	 * @return List of unfinished tasks of a specific user
-	 */
-	/*public List<Task> getUnfinishedUserTaskList(User user) {
-
-		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<>();
-		for (Project other : this.projectsContainer) {
-			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
-
-			if (toCheck != null) {
-				//unfinishedTasksOfSpecificUser
-						//.addAll(other.getTaskRepository().getUnfinishedTasksFromProjectCollaborator(toCheck));
-			}
-		}
-		return unfinishedTasksOfSpecificUser;
-	} */
-
-	/**
-	 * TODO This method is going to transinct to the TaskContainerService Class.
-	 *
-	 * This method returns all the Started tasks with state "unfinished" from all
-	 * the projects, that has a specific user associated to that task.
-	 *
-	 * @param user
-	 *            user to search the tasks in which it is included
-	 *
-	 * @return List of started but not finished tasks of a specific user
-	 */
-	/*public List<Task> getStartedNotFinishedUserTaskList(User user) {
-
-		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<>();
-		for (Project other : this.projectsContainer) {
-			ProjectCollaborator toCheck = other.findProjectCollaborator(user);
-
-			if (toCheck != null) {
-				//unfinishedTasksOfSpecificUser
-						//.addAll(other.getTaskRepository().getStartedNotFinishedTasksFromProjectCollaborator(toCheck));
-			}
-		}
-
-		return unfinishedTasksOfSpecificUser;
-	} */
+	
 
 	/**
 	 * TODO This method is going to transinct to the TaskContainerService Class.
@@ -425,77 +321,5 @@ public class ProjectContainerService {
 		return this.sortTaskListByDeadline(incompleteUserTaskListIncreasingOrder);
 	}*/
 
-	/**
-	 * TODO This method is going to transinct to the TaskContainerService Class.
-	 *
-	 * This method returns a list with the tasks of a certain user by decreasing
-	 * order of date. First, this method creates a list which is a copy of the task
-	 * list of the user. This method just reverses the initial order of the
-	 * TaskList. It does not runs a cycle to compare the tasks finish dates, neither
-	 * analysis the TaskList in any way.
-	 *
-	 * @param toSort
-	 *            List of tasks to sort
-	 *
-	 * @return sorted list
-	 *
-	 */
-	/*public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
-		List<Task> result = new ArrayList<>(toSort);
-		boolean cycle = true;
-		int i = 0;
-		while (cycle) {
-			cycle = false;
-
-			for (int j = i + 1; j < result.size(); j++) {
-				cycle = true;
-				if (result.get(i).getFinishDate().before(result.get(j).getFinishDate())) {
-					Task h = new Task(result.get(i));
-					result.set(i, result.get(j));
-					result.set(j, h);
-				}
-			}
-			i++;
-
-		}
-		return result;
-	} */
-
-	/**
-	 * TODO This method is going to transinct to the TaskContainerService Class.
-	 *
-	 * This method returns a list with the tasks of a certain user by decreasing
-	 * order of date. First, this method creates a list which is a copy of the task
-	 * list of the user. This method just sorts the Task List by Deadline,
-	 * increasing order.
-	 *
-	 * @param toSort
-	 *            List of tasks to sort
-	 *
-	 * @return sorted list
-	 *
-	 */
-	/*public List<Task> sortTaskListByDeadline(List<Task> toSort) {
-		List<Task> result = new ArrayList<>(toSort);
-		boolean cycle = true;
-		int i = 0;
-		while (cycle) {
-			cycle = false;
-
-			for (int j = i + 1; j < result.size(); j++) {
-				cycle = true;
-				if (result.get(i).getTaskDeadline()!= null) {
-					if (result.get(i).getTaskDeadline().after(result.get(j).getTaskDeadline())) {
-						Task h = new Task(result.get(i));
-						result.set(i, result.get(j));
-						result.set(j, h);
-					}
-				}
-			}
-			i++;
-
-		}
-		return result;
-	} */
 
 }
