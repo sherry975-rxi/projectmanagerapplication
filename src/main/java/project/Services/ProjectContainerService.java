@@ -462,4 +462,12 @@ public class ProjectContainerService {
 		return projectsOfPM;
 	}
 
+	/**
+	 * Thid method tells the projectRepository to call the method save, in order to update a certain project
+	 *
+	 * @param project Project to update
+	 */
+	public void updateProject(Project project) {
+		this.projectsRepository.save(project);
+	}
 }
