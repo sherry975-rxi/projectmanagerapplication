@@ -1,5 +1,6 @@
 package project.Services;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.Repository.ProjectsRepository;
@@ -17,30 +18,23 @@ public class ProjectContainerService {
 	@Autowired
 	private ProjectsRepository projectsRepository;
 
-	private List<Project> projectsContainer;
-	private int projCounter = 1;
-
 	/**
 	 * Constructor that allows one to create a new Project Repository. There are no
 	 * mandatory fields.
 	 */
-	public ProjectContainerService() {
-		this.projectsContainer = new ArrayList<>();
-	}
+	public ProjectContainerService() {}
 
 	/**
 	 * Constructor created for JPA purposes. It is not to be used in model context.
 	 */
-	//@Deprecated
 	public ProjectContainerService (ProjectsRepository projectsRepository){
 		this.projectsRepository = projectsRepository;
-		this.projectsContainer = new ArrayList<>();
 	}
 
-	
+
 
 	/**
-	 * Creates an instance of Project
+	 * Creates an instance of Project and saves it in the database
 	 * 
 	 * @param name name to be given to the Project
 	 * @param description description to be given to the Project
