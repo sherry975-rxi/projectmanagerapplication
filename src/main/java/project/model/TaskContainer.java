@@ -15,7 +15,6 @@ import java.util.List;
 @Embeddable
 public class TaskContainer implements Serializable{
 
-
 	@javax.persistence.Transient
 	private int taskCounter;
 	@javax.persistence.Transient
@@ -26,7 +25,6 @@ public class TaskContainer implements Serializable{
 	private Project project;
 	static final long serialVersionUID = 46L;
 
-
 	public TaskContainer() {}
 
 	public TaskContainer(int projectId) {
@@ -34,7 +32,6 @@ public class TaskContainer implements Serializable{
 		this.projectTasks = new ArrayList<>();
 		this.taskCounter = 1;
 		this.projectId = projectId;
-
 	}
 
 	public Task createTask(String description, int estimatedTaskEffort, Calendar estimatedTaskStartDate,
@@ -70,7 +67,6 @@ public class TaskContainer implements Serializable{
 		this.projectTasks.add(toAdd);
 	}
 
-
 	public void setProject(Project project) {
 		this.project=project;
 	}
@@ -89,9 +85,7 @@ public class TaskContainer implements Serializable{
 				unfinishedTaskList.remove(other);
 			}
 		}
-
 		return unfinishedTaskList;
-
 	}
 
 	public List<Task> getStartedNotFinishedTasksFromProjectCollaborator(ProjectCollaborator collaborator) {
@@ -105,9 +99,7 @@ public class TaskContainer implements Serializable{
 				incompleteTaskList.remove(other);
 			}
 		}
-
 		return incompleteTaskList;
-
 	}
 
 	/**
@@ -124,7 +116,6 @@ public class TaskContainer implements Serializable{
 				finishedTaskList.add(other);
 			}
 		}
-
 		return finishedTaskList;
 	}
 
@@ -298,7 +289,7 @@ public class TaskContainer implements Serializable{
 	 * @return sorted list
 	 * 
 	 */
-	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
+	private List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
 		for (int i = 0; i < result.size(); i++) {
@@ -324,8 +315,7 @@ public class TaskContainer implements Serializable{
 	 */
 	public List<Task> getFinishedTasksInDecreasingOrder() {
 
-		List<Task> finishedTaskListDecreasingOrder = new ArrayList<>();
-		finishedTaskListDecreasingOrder.addAll(this.getFinishedTasks());
+        List<Task> finishedTaskListDecreasingOrder = new ArrayList<>(this.getFinishedTasks());
 
 		return sortTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
 	}
@@ -346,23 +336,6 @@ public class TaskContainer implements Serializable{
 
 		}
 		return allUnFinishedTasks;
-	}
-
-	/**
-	 * This method returns all OnGoing Tasks
-	 * 
-	 * @return List with the tasks set to "OnGoing" state
-	 */
-	public List<Task> getOnGoingTasks() {
-		List<Task> allOnGoing = new ArrayList<>();
-
-		for (Task other : this.getAllTasksfromProject()) {
-			if ("OnGoing".equals(other.viewTaskStateName())) {
-				allOnGoing.add(other);
-			}
-
-		}
-		return allOnGoing;
 	}
 
 	/**
@@ -393,29 +366,19 @@ public class TaskContainer implements Serializable{
 		for (Task other : this.projectTasks) {
 			if (!other.isTaskFinished() && other.getTaskDeadline() != null && other.getTaskDeadline().before(today)) {
 					expiredTasks.add(other);
-
 			}
 		}
 		return expiredTasks;
 	}
 
-	/**
-	 * This method returns the a Task by taskID
-	 * 
-	 * @param taskID
-	 * 
-	 * @return A task by a Task ID
-	 */
 	public Task getTaskByID(String taskID) {
 
 		for (Task other : projectTasks) {
 			if (other.getTaskID().equals(taskID)) {
 				return other;
 			}
-
 		}
 		return null;
-
 	}
 
 	/**
@@ -431,17 +394,14 @@ public class TaskContainer implements Serializable{
 		boolean wasTaskDeleted = false;
 
 		switch (taskToDelete.viewTaskStateName()) {
-		case "Assigned": case "Planned" : case "Created" : case "Ready":
+		case "Planned" : case "Created" : case "Ready":
  			this.projectTasks.remove(taskToDelete);
 			wasTaskDeleted = true;
 			break;
-
 		default:
 			break;
-
 		}
 		return wasTaskDeleted;
-
 	}
 
 	/**
@@ -469,9 +429,7 @@ public class TaskContainer implements Serializable{
 
 		for (Task other : this.getAllTasksfromProject()) {
 			reportTaskCost.add(String.valueOf(other.getTaskCost()));
-
 		}
-
 		return reportTaskCost;
 	}
 
@@ -482,13 +440,9 @@ public class TaskContainer implements Serializable{
 	 * @return A list of tasks that can be associated to a TaskDependency
 	 */
 	public List<Task> getTaskListOfWhichDependenciesCanBeCreated() {
-		List<Task> validTasks = new ArrayList<>();
-		validTasks.addAll(projectTasks);
+		List<Task> validTasks = new ArrayList<>(projectTasks);
 		for (Task other : this.projectTasks) {
-			if (other.getTaskState() instanceof Finished) {
-				validTasks.remove(other);
-			}
-			if (other.getTaskState() instanceof Cancelled) {
+			if (other.getTaskState() instanceof Finished || other.getTaskState() instanceof Cancelled) {
 				validTasks.remove(other);
 			}
 		}
