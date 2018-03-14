@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import project.Services.ProjectCollaboratorService;
 import project.Services.ProjectContainerService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
@@ -26,8 +25,7 @@ public class HelloJpaApplication implements CommandLineRunner {
 	private static Project projOne;
 	private static ProjectCollaborator projCollab1;
 
-	@Autowired
-	private ProjectCollaboratorService projectCollaboratorContainer;
+
 	@Autowired
 	private TaskContainerService taskContainer;
 	@Autowired
@@ -218,7 +216,7 @@ public class HelloJpaApplication implements CommandLineRunner {
 
 		// Instantiates the ProjectCollaborator, defines projCollab "projCollab1", save it in Repository
 		projCollab1 = projOne.createProjectCollaborator(userAdmin, 3);
-		projectCollaboratorContainer.addProjectCollaborator(projCollab1);
+		projContainer.addProjectCollaborator(projCollab1);
 		
 		// Instantiates the TaskContainer, defines task "taskOne", saves it in Repository
 		//taskOne = taskContainer.createTask("Desenvolver código para responder à US399");
