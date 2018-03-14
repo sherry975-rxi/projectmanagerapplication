@@ -1,14 +1,10 @@
 package project.Services;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.Repository.ProjectsRepository;
 import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
 import project.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +44,17 @@ public class ProjectContainerService {
 		this.projectsRepository.save(newProject);
 		return newProject;
 
+	}
+
+	/**
+	 * Gets a project from the database by searching with the id
+	 *
+	 * @param id id to search for a specific project
+	 *
+	 * @return project found
+	 */
+	public Project getProjectById(long id) {
+		return this.projectsRepository.findById(id);
 	}
 
 	/**
@@ -103,7 +110,7 @@ public class ProjectContainerService {
 	 * 
 	 * @return Returns the user task list.
 	 */
-	public List<Task> getUserTasks(User user) {
+	/*public List<Task> getUserTasks(User user) {
 		List<Task> tasksOfSpecificUser = new ArrayList<>();
 
 		for (Project other : this.projectsContainer) {
