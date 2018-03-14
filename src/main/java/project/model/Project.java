@@ -69,9 +69,7 @@ public class Project implements Serializable{
 	 * @param description
 	 * @param projectManager
 	 */
-	public Project(int projCounter, String name, String description, User projectManager) {
-
-		this.projectIdCode = projCounter;
+	public Project(String name, String description, User projectManager) {
 		this.name = name;
 		this.description = description;
 		this.projectManager = projectManager;
