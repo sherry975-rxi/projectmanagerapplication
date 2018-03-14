@@ -17,6 +17,11 @@ import java.util.List;
 
 @Service
 public class TaskContainerService {
+	
+	private List<Task> projectTasks; //TEMPORARY just to not break old tests
+	private int taskCounter; //TEMPORARY just to not break old tests
+	private int projId; //TEMPORARY just to not break old tests
+	
 
 	@Autowired
 	private TaskRepository taskRepository;
@@ -524,5 +529,42 @@ public class TaskContainerService {
 //		}
 //		return validTasks;
 //	}
+	public TaskContainerService(int projId) {
+		//TEMPORARY JUST TO NOT BREAK OLD TESTS
+		this.projectTasks = new ArrayList<>();
+		this.taskCounter = 1;
+		this.projId = projId;
+
+	}
+
+	/**
+	 * Creates an instance of Task
+	 * 
+	 * @param description
+	 * 
+	 * @return the task created
+	 */
+	public Task createTask(String description, int estimatedTaskEffort, Calendar estimatedTaskStartDate,
+			Calendar taskDeadline, int estimatedBudgetCostTask) {
+		//TEMPORARY JUST TO NOT BREAK OLD TESTS
+		Task newTask = new Task(this.taskCounter, this.projId, description, estimatedTaskEffort, estimatedTaskStartDate, taskDeadline, estimatedBudgetCostTask);
+		taskCounter++;
+		return newTask;
+	}
+
+	/**
+	 * Creates an instance of Task in the state CREATED
+	 * 
+	 * @param description
+	 * 
+	 * @return the task created
+	 */
+	public Task createTask(String description) {
+		//TEMPORARY JUST TO NOT BREAK OLD TESTS
+		Task newTask = new Task(this.taskCounter, this.projId, description);
+
+		taskCounter++;
+		return newTask;
+	}
 	
 }
