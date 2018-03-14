@@ -2,8 +2,11 @@ package project.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
 import project.model.Project;
+import project.model.ProjectCollaborator;
 import project.model.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +16,10 @@ public class ProjectContainerService {
 
 	@Autowired
 	private ProjectsRepository projectsRepository;
-
+	
+	@Autowired
+	ProjCollabRepository projectCollaboratorRepository; 
+		
 	/**
 	 * Constructor that allows one to create a new Project Repository. There are no
 	 * mandatory fields.
@@ -105,10 +111,10 @@ public class ProjectContainerService {
 	 * This method returns all the tasks from all the projects, that has a specific
 	 * user associated to that task, no matter if the project is active or not, if
 	 * the task is finished or not.
-	 * 
+	 *
 	 * @param user
 	 *            user to search the tasks in which it is included
-	 * 
+	 *
 	 * @return Returns the user task list.
 	 */
 	/*public List<Task> getUserTasks(User user) {
@@ -133,10 +139,10 @@ public class ProjectContainerService {
 	 * This method returns all the tasks with state "finished" from all the
 	 * projects, that has a specific user associated to that task, no matter if the
 	 * project is active or not.
-	 * 
+	 *
 	 * @param user
 	 *            user to search the tasks in which it is included.
-	 * 
+	 *
 	 * @return List of finished tasks of a specific user
 	 */
 	/*public List<Task> getAllFinishedTasksFromUser(User user) {
@@ -159,10 +165,10 @@ public class ProjectContainerService {
 	 * This method returns all the tasks with state "unfinished" from all the
 	 * projects, that has a specific user associated to that task, no matter if the
 	 * project is active or not.
-	 * 
+	 *
 	 * @param user
 	 *            user to search the tasks in which it is included
-	 * 
+	 *
 	 * @return List of unfinished tasks of a specific user
 	 */
 	/*public List<Task> getUnfinishedUserTaskList(User user) {
@@ -184,10 +190,10 @@ public class ProjectContainerService {
 	 *
 	 * This method returns all the Started tasks with state "unfinished" from all
 	 * the projects, that has a specific user associated to that task.
-	 * 
+	 *
 	 * @param user
 	 *            user to search the tasks in which it is included
-	 * 
+	 *
 	 * @return List of started but not finished tasks of a specific user
 	 */
 	/*public List<Task> getStartedNotFinishedUserTaskList(User user) {
@@ -213,10 +219,10 @@ public class ProjectContainerService {
 	 * of the finished task list of the user. This method just reverses the initial
 	 * order of the finishedTaskList. It does not runs a cycle to compare the tasks
 	 * finish dates, neither analysis the finishedTaskList in any way.
-	 * 
+	 *
 	 * @param user
 	 *            user to search the tasks in which it is included
-	 * 
+	 *
 	 * @return Returns a list with the all the user finished tasks sorted by
 	 *         decreasing order.
 	 */
@@ -241,10 +247,10 @@ public class ProjectContainerService {
 	 * This method returns the sum of the time spent in all the tasks that were
 	 * marked as finished during the last month. So it runs a cycle to get the time
 	 * spent on every task finished on last month, and sum one by one.
-	 * 
+	 *
 	 * @param user
 	 *            user to search the tasks in which it is included
-	 * 
+	 *
 	 * @return Returns total time spent doing tasks in the last month.
 	 */
 	/*public double getTotalTimeOfFinishedTasksFromUserLastMonth(User user) {
@@ -267,9 +273,9 @@ public class ProjectContainerService {
 	 * This method returns the average time spent by task during last month. This
 	 * method gets the total time spent on every task finished on last month. Then
 	 * it will divide that time by the number of tasks.
-	 * 
+	 *
 	 * @param user user for which to get the average time spent on tasks that were finished last month
-	 * 
+	 *
 	 * @return Returns the average time spent by finished task in the last month.
 	 */
 	/*public double getAverageTimeOfFinishedTasksFromUserLastMonth(User user) {
@@ -283,9 +289,9 @@ public class ProjectContainerService {
 	/**
 	 * This method returns a list with the tasks finished last month by decreasing
 	 * order.
-	 * 
+	 *
 	 * @param user user for which to get the tasks that were finished last month in decreasing order of finish date
-	 * 
+	 *
 	 * @return Returns a list with the tasks finished last month by decreasing
 	 *         order.
 	 */
@@ -305,9 +311,9 @@ public class ProjectContainerService {
 	 * of the finished task list of the user. This method just reverses the initial
 	 * order of the finishedTaskList. It does not runs a cycle to compare the tasks
 	 * finish dates, neither analysis the finishedTaskList in any way.
-	 * 
+	 *
 	 * @param user user for which to get the finished tasks in decreasing order of finish date
-	 * 
+	 *
 	 * @return Returns a list with the all the user finished tasks sorted by
 	 *         decreasing order.
 	 */
@@ -327,9 +333,9 @@ public class ProjectContainerService {
 	 * method just sorts the list by increasing order of deadline. It does not runs
 	 * a cycle to compare the tasks, neither analysis the finishedTaskList in any
 	 * way.
-	 * 
+	 *
 	 * @param user user for which to get the started but not finished tasks in increasing order of deadline
-	 * 
+	 *
 	 * @return Returns a list with the all the user started, unfinished tasks sorted
 	 *         by increasing Deadline order.
 	 */
@@ -348,12 +354,12 @@ public class ProjectContainerService {
 	 * list of the user. This method just reverses the initial order of the
 	 * TaskList. It does not runs a cycle to compare the tasks finish dates, neither
 	 * analysis the TaskList in any way.
-	 * 
+	 *
 	 * @param toSort
 	 *            List of tasks to sort
-	 * 
+	 *
 	 * @return sorted list
-	 * 
+	 *
 	 */
 	/*public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
 		List<Task> result = new ArrayList<>(toSort);
@@ -383,12 +389,12 @@ public class ProjectContainerService {
 	 * order of date. First, this method creates a list which is a copy of the task
 	 * list of the user. This method just sorts the Task List by Deadline,
 	 * increasing order.
-	 * 
+	 *
 	 * @param toSort
 	 *            List of tasks to sort
-	 * 
+	 *
 	 * @return sorted list
-	 * 
+	 *
 	 */
 	/*public List<Task> sortTaskListByDeadline(List<Task> toSort) {
 		List<Task> result = new ArrayList<>(toSort);
