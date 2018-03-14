@@ -43,6 +43,16 @@ public class TaskContainerService {
 		this.taskRepository.save(newTask);
 		return newTask;
 	}
+	
+	/**
+	 * This method saves the task e the Repository
+	 * @param task
+	 * @return
+	 */
+	public Task saveTask (Task task) {
+
+		return this.taskRepository.save(task);
+	}
 
 //	/**
 //	 * Get the complete task list for the project
