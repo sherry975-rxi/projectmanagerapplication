@@ -1,14 +1,10 @@
 package project.Services;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.Repository.ProjectsRepository;
 import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
 import project.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +44,17 @@ public class ProjectContainerService {
 		this.projectsRepository.save(newProject);
 		return newProject;
 
+	}
+
+	/**
+	 * Gets a project from the database by searching with the id
+	 *
+	 * @param id id to search for a specific project
+	 *
+	 * @return project found
+	 */
+	public Project getProjectById(long id) {
+		return this.projectsRepository.findById(id);
 	}
 
 	/**
@@ -103,7 +110,7 @@ public class ProjectContainerService {
 	 * 
 	 * @return Returns the user task list.
 	 */
-	public List<Task> getUserTasks(User user) {
+	/*public List<Task> getUserTasks(User user) {
 		List<Task> tasksOfSpecificUser = new ArrayList<>();
 
 		for (Project other : this.projectsContainer) {
@@ -115,9 +122,13 @@ public class ProjectContainerService {
 		}
 
 		return tasksOfSpecificUser;
-	}
+	} */
+
+
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns all the tasks with state "finished" from all the
 	 * projects, that has a specific user associated to that task, no matter if the
 	 * project is active or not.
@@ -127,7 +138,7 @@ public class ProjectContainerService {
 	 * 
 	 * @return List of finished tasks of a specific user
 	 */
-	public List<Task> getAllFinishedTasksFromUser(User user) {
+	/*public List<Task> getAllFinishedTasksFromUser(User user) {
 
 		List<Task> finishedTasksOfSpecificUser = new ArrayList<>();
 		for (Project other : this.projectsContainer) {
@@ -139,9 +150,11 @@ public class ProjectContainerService {
 			}
 		}
 		return finishedTasksOfSpecificUser;
-	}
+	} */
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns all the tasks with state "unfinished" from all the
 	 * projects, that has a specific user associated to that task, no matter if the
 	 * project is active or not.
@@ -151,7 +164,7 @@ public class ProjectContainerService {
 	 * 
 	 * @return List of unfinished tasks of a specific user
 	 */
-	public List<Task> getUnfinishedUserTaskList(User user) {
+	/*public List<Task> getUnfinishedUserTaskList(User user) {
 
 		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<>();
 		for (Project other : this.projectsContainer) {
@@ -163,9 +176,11 @@ public class ProjectContainerService {
 			}
 		}
 		return unfinishedTasksOfSpecificUser;
-	}
+	} */
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns all the Started tasks with state "unfinished" from all
 	 * the projects, that has a specific user associated to that task.
 	 * 
@@ -174,7 +189,7 @@ public class ProjectContainerService {
 	 * 
 	 * @return List of started but not finished tasks of a specific user
 	 */
-	public List<Task> getStartedNotFinishedUserTaskList(User user) {
+	/*public List<Task> getStartedNotFinishedUserTaskList(User user) {
 
 		List<Task> unfinishedTasksOfSpecificUser = new ArrayList<>();
 		for (Project other : this.projectsContainer) {
@@ -187,9 +202,11 @@ public class ProjectContainerService {
 		}
 
 		return unfinishedTasksOfSpecificUser;
-	}
+	} */
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns a list with the finished tasks of a certain user by
 	 * decreasing order of date. First, this method creates a list which is a copy
 	 * of the finished task list of the user. This method just reverses the initial
@@ -202,7 +219,7 @@ public class ProjectContainerService {
 	 * @return Returns a list with the all the user finished tasks sorted by
 	 *         decreasing order.
 	 */
-
+/*
 	public List<Task> getLastMonthFinishedUserTaskList(User user) {
 
 		List<Task> lastMonthFinishedTaskListByUser = new ArrayList<>();
@@ -215,9 +232,11 @@ public class ProjectContainerService {
 			//}
 		}
 		return lastMonthFinishedTaskListByUser;
-	}
+	} */
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns the sum of the time spent in all the tasks that were
 	 * marked as finished during the last month. So it runs a cycle to get the time
 	 * spent on every task finished on last month, and sum one by one.
@@ -227,7 +246,7 @@ public class ProjectContainerService {
 	 * 
 	 * @return Returns total time spent doing tasks in the last month.
 	 */
-	public double getTotalTimeOfFinishedTasksFromUserLastMonth(User user) {
+	/*public double getTotalTimeOfFinishedTasksFromUserLastMonth(User user) {
 
 		double totalTime = 0;
 		for (Project other : this.projectsContainer) {
@@ -239,9 +258,11 @@ public class ProjectContainerService {
 
 		return totalTime;
 
-	}
+	} */
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns the average time spent by task during last month. This
 	 * method gets the total time spent on every task finished on last month. Then
 	 * it will divide that time by the number of tasks.
@@ -250,13 +271,13 @@ public class ProjectContainerService {
 	 * 
 	 * @return Returns the average time spent by finished task in the last month.
 	 */
-	public double getAverageTimeOfFinishedTasksFromUserLastMonth(User user) {
+	/*public double getAverageTimeOfFinishedTasksFromUserLastMonth(User user) {
 
 		double totalTime = this.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
 
 		return totalTime / this.getLastMonthFinishedUserTaskList(user).size();
 
-	}
+	}*/
 
 	/**
 	 * This method returns a list with the tasks finished last month by decreasing
@@ -267,15 +288,17 @@ public class ProjectContainerService {
 	 * @return Returns a list with the tasks finished last month by decreasing
 	 *         order.
 	 */
-	public List<Task> getFinishedUserTasksFromLastMonthInDecreasingOrder(User user) {
+	/*public List<Task> getFinishedUserTasksFromLastMonthInDecreasingOrder(User user) {
 
 		List<Task> lastMonthFinishedUserTaskListDecreasingOrder = new ArrayList<>(this.getLastMonthFinishedUserTaskList(user));
 
 		return this.sortTaskListDecreasingOrder(lastMonthFinishedUserTaskListDecreasingOrder);
 
-	}
+	}*/
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns a list with the finished tasks of a certain user by
 	 * decreasing order of date. First, this method creates a list which is a copy
 	 * of the finished task list of the user. This method just reverses the initial
@@ -287,14 +310,16 @@ public class ProjectContainerService {
 	 * @return Returns a list with the all the user finished tasks sorted by
 	 *         decreasing order.
 	 */
-	public List<Task> getAllFinishedUserTasksInDecreasingOrder(User user) {
+	/*public List<Task> getAllFinishedUserTasksInDecreasingOrder(User user) {
 
 		List<Task> finishedUserTaskListDecreasingOrder = new ArrayList<>(this.getAllFinishedTasksFromUser(user));
 
 		return this.sortTaskListDecreasingOrder(finishedUserTaskListDecreasingOrder);
-	}
+	}*/
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns a list with the started but not finished tasks of a
 	 * certain user by increasing order of deadline. First, this method creates a
 	 * list which is a copy of the started, unfinished task list of the user. This
@@ -307,14 +332,16 @@ public class ProjectContainerService {
 	 * @return Returns a list with the all the user started, unfinished tasks sorted
 	 *         by increasing Deadline order.
 	 */
-	public List<Task> getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(User user) {
+	/*public List<Task> getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(User user) {
 
 		List<Task> incompleteUserTaskListIncreasingOrder = new ArrayList<>(this.getStartedNotFinishedUserTaskList(user));
 
 		return this.sortTaskListByDeadline(incompleteUserTaskListIncreasingOrder);
-	}
+	}*/
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns a list with the tasks of a certain user by decreasing
 	 * order of date. First, this method creates a list which is a copy of the task
 	 * list of the user. This method just reverses the initial order of the
@@ -327,7 +354,7 @@ public class ProjectContainerService {
 	 * @return sorted list
 	 * 
 	 */
-	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
+	/*public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
 		List<Task> result = new ArrayList<>(toSort);
 		boolean cycle = true;
 		int i = 0;
@@ -346,9 +373,11 @@ public class ProjectContainerService {
 
 		}
 		return result;
-	}
+	} */
 
 	/**
+	 * TODO This method is going to transinct to the TaskContainerService Class.
+	 *
 	 * This method returns a list with the tasks of a certain user by decreasing
 	 * order of date. First, this method creates a list which is a copy of the task
 	 * list of the user. This method just sorts the Task List by Deadline,
@@ -360,7 +389,7 @@ public class ProjectContainerService {
 	 * @return sorted list
 	 * 
 	 */
-	public List<Task> sortTaskListByDeadline(List<Task> toSort) {
+	/*public List<Task> sortTaskListByDeadline(List<Task> toSort) {
 		List<Task> result = new ArrayList<>(toSort);
 		boolean cycle = true;
 		int i = 0;
@@ -381,19 +410,21 @@ public class ProjectContainerService {
 
 		}
 		return result;
-	}
+	} */
 
 	/**
-	 * Checks if the a project is in a project repository.
+	 * Checks if the a project already exists
 	 * 
 	 * @return TRUE if the Project is in this project repository FALSE if not
 	 */
-	public boolean isProjectInProjectContainer(Project project) {
+	public boolean isProjectInProjectContainer(int projectId){
 
-		return this.projectsContainer.contains(project);
+		return this.projectsRepository.exists(projectId);
 	}
 
 	/**
+	 * TODO This method is going to transinct to the ProjectCollaboratorService Class.
+	 *
 	 * This method returns a set of Projects where a certain user
 	 * 
 	 * @param user user whose projects are going to be found
@@ -401,9 +432,10 @@ public class ProjectContainerService {
 	 * @return List of Projects of a User
 	 * 
 	 */
-	public List<Project> getProjectsFromUser(User user) {
+	/**public List<Project> getProjectsFromUser(User user) {
 
 		List<Project> listOfProjectsOfUser = new ArrayList<>();
+		listOfProjectsOfUser.addAll(this.projectsRepository.find)
 
 		for (Project other : this.projectsContainer) {
 			if (other.isUserInProjectTeam(user) || other.isProjectManager(user)) {
@@ -411,7 +443,7 @@ public class ProjectContainerService {
 			}
 		}
 		return listOfProjectsOfUser;
-	}
+	} */
 
 	/**
 	 * This method returns a set of Projects where a certain user is the project
@@ -424,25 +456,18 @@ public class ProjectContainerService {
 	 */
 	public List<Project> getProjectsFromProjectManager(User user) {
 
-		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
+		List<Project> projectsOfPM = new ArrayList<>();
+		projectsOfPM.addAll(this.projectsRepository.findAllByProjectManager(user));
 
-		for (Project other : this.projectsContainer) {
-			if (other.isProjectManager(user)) {
-				listOfProjectsOfProjectManager.add(other);
-			}
-		}
-		return listOfProjectsOfProjectManager;
+		return projectsOfPM;
 	}
 
-
 	/**
-	 *  This method updates the project repository(DB) from the project container.
+	 * Thid method tells the projectRepository to call the method save, in order to update a certain project
+	 *
+	 * @param project Project to update
 	 */
-	public void updateProjectContainer(){
-
-		this.projectsContainer.clear();
-		projectsContainer.addAll(this.projectsRepository.findAll());
-		projCounter=projectsContainer.size()+1;
-
+	public void updateProject(Project project) {
+		this.projectsRepository.save(project);
 	}
 }
