@@ -911,4 +911,13 @@ public class Project implements Serializable{
 	public void addTaskToProject(Task task) {
 		task.setProject(this);
 	}
+	
+	/**
+	 * Checks if a project has a status considered Active
+	 * 
+	 * @return TRUE if is active FALSE if not
+	 */
+	public Boolean isProjectActive() { 
+		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION || this.getProjectStatus() ==  EXECUTION  || this.getProjectStatus() == DELIVERY;
+	}
 }

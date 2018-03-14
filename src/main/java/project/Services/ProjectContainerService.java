@@ -89,11 +89,12 @@ public class ProjectContainerService {
 	public List<Project> getActiveProjects() {
 
 		List<Project> activeProjects = new ArrayList<>();
-		activeProjects.addAll(this.projectsRepository.findByProjectStatus(1));
-		activeProjects.addAll(this.projectsRepository.findByProjectStatus(2));
-		activeProjects.addAll(this.projectsRepository.findByProjectStatus(3));
-		activeProjects.addAll(this.projectsRepository.findByProjectStatus(4));
-
+		
+		for(Project project : getAllProjectsfromProjectsContainer()) {
+			if(project.isProjectActive()) {
+				activeProjects.add(project);
+			}
+		}
 		return activeProjects;
 	}
 
