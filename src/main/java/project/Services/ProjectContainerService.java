@@ -457,7 +457,7 @@ public class ProjectContainerService {
 	public List<Project> getProjectsFromProjectManager(User user) {
 
 		List<Project> projectsOfPM = new ArrayList<>();
-		projectsOfPM.addAll(this.projectsRepository.findAll());
+		projectsOfPM.addAll(this.projectsRepository.findAllByProjectManager(user));
 
 		return projectsOfPM;
 	}
