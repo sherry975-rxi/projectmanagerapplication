@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
 import project.model.*;
@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 public class US342CreateTaskDependencyTest {
 
-	ProjectContainerService projRepo;
+	ProjectService projRepo;
 	UserContainerService userRepo;
 	TaskContainerService taskRepo;
 	Project proj;
@@ -34,7 +34,7 @@ public class US342CreateTaskDependencyTest {
 
 
 		// Initialize Project Repository
-		projRepo = new ProjectContainerService();
+		projRepo = new ProjectService();
 
 		// Initialize User Repository
 		userRepo = new UserContainerService();

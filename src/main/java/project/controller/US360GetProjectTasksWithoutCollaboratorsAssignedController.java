@@ -1,7 +1,7 @@
 package project.controller;
 
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.Project;
 import project.model.Task;
 
@@ -10,10 +10,10 @@ import java.util.List;
 
 public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 
-	ProjectContainerService myProjRepo;
+	ProjectService myProjRepo;
 
 	public US360GetProjectTasksWithoutCollaboratorsAssignedController() {
-		this.myProjRepo = new ProjectContainerService();
+		this.myProjRepo = new ProjectService();
 
 	}
 

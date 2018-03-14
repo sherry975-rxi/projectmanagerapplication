@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -16,7 +16,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 
 	US210GetAllFinishedUserTasksInDecreasingOrderController tasksFiltersController;
 
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	UserContainerService userContainer;
 	User user1, user2, user3;
 	Project project1;

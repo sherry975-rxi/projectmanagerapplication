@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -25,7 +25,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	 */
 
 	UserContainerService userContainer;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 
 	// TasksFiltersController tasksFiltersController;
 	User user1, user2, projectManager, projectManager2;
@@ -69,7 +69,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		projectManager2.setUserProfile(Profile.COLLABORATOR);
 
 		//Creates a ProjectContainer
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		// create project and establishes collaborator projectManager as project manager
 		// of project 1

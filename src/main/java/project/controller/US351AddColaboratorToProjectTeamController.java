@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -18,7 +18,7 @@ public class US351AddColaboratorToProjectTeamController {
 	 * @param effort
 	 */
 	public void addUserToProjectTeam(User user, Project project, int effort) {
-		ProjectContainerService projectContainer = new ProjectContainerService();
+		ProjectService projectContainer = new ProjectService();
 		project.addUserToProjectTeam(user, effort);
 		projectContainer.saveProjectInRepository(project);
 

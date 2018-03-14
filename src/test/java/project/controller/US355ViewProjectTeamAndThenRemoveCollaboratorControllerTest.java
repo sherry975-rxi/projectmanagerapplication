@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
 	UserContainerService userContainer;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 
 	User managerTester, teamPermanentMember;
 
@@ -35,7 +35,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 		userContainer = new UserContainerService();
 				
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 		
 		// creates test users for a manager and collaborator.
 		// declares the collaborator's relevant data as Strings to facilitate assertions

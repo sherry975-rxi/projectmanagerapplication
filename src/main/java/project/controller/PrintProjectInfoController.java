@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -12,14 +12,14 @@ import java.util.List;
 
 public class PrintProjectInfoController {
 
-	private ProjectContainerService projContainer;
+	private ProjectService projContainer;
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	Integer projID;
 	
 
 	public PrintProjectInfoController(Project project) {
-		projContainer = new ProjectContainerService();
+		projContainer = new ProjectService();
 		projContainer.updateProjectContainer();
 		this.project = project;
 		
@@ -27,7 +27,7 @@ public class PrintProjectInfoController {
 	}
 
 	public PrintProjectInfoController(Integer projID) {
-		projContainer = new ProjectContainerService();
+		projContainer = new ProjectService();
 		projContainer.updateProjectContainer();
 		this.projID = projID;
 		project = projContainer.getProjById(this.projID);

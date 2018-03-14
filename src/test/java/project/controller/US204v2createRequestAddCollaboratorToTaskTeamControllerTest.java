@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
 import project.model.*;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	UserContainerService userContainer;
 	TaskContainerService taskRepo;
 	Project proj;
@@ -27,7 +27,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 	public void setUp() {
 
 		// Initialize Project Repository
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 
 		// Initialize User Repository

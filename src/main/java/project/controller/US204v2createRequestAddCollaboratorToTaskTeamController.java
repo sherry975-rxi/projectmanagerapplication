@@ -1,13 +1,13 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.model.*;
 
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	private User user;
 	private TaskContainerService taskContainer;
-	private ProjectContainerService projectContainer;
+	private ProjectService projectContainer;
 	private Project project;
 	private Integer projectID;
 	private String taskID;
@@ -44,7 +44,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 */
 	public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID, User user) {
 		setProjectIDFromTaskID(taskID);
-		this.projectContainer = new ProjectContainerService();
+		this.projectContainer = new ProjectService();
 		this.project = projectContainer.getProjById(this.projectID);
 		this.taskContainer = project.getTaskRepository();
 		this.user = user;

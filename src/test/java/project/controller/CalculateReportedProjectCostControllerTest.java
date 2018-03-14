@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
 import project.model.*;
@@ -23,7 +23,7 @@ public class CalculateReportedProjectCostControllerTest {
 	 * This class tests the CalculateReportedProjectCostController class
 	 *
 	 */
-	private ProjectContainerService projContainer = new ProjectContainerService();
+	private ProjectService projContainer = new ProjectService();
 	UserContainerService userContainer = new UserContainerService();
 	private User userDaniel;
 	private User userJonny;
@@ -34,7 +34,7 @@ public class CalculateReportedProjectCostControllerTest {
 	private ProjectCollaborator projectUserJonny;
 	private ProjectCollaborator projectUserMike;
 	private ProjectCollaborator projectUserAna;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	private TaskContainerService taskContainer;
 	private Task testTask;
 	private Task testTask2;

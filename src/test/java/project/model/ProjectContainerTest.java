@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import project.Repository.ProjectsRepository;
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class ProjectContainerTest {
 	private ProjectsRepository projectRepositoryMock;
 
 	@InjectMocks
-	private ProjectContainerService ProjectContainer = new ProjectContainerService();
+	private ProjectService ProjectContainer = new ProjectService();
 
 	User user1;
 	User user2;

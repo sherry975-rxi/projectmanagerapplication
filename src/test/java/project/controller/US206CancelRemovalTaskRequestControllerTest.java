@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -17,7 +17,7 @@ public class US206CancelRemovalTaskRequestControllerTest {
 
 	User userDaniel;
 	User userRui;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	UserContainerService userContainer;
 	Project projectA;
 	ProjectCollaborator userRuiCollaborator;
@@ -34,7 +34,7 @@ public class US206CancelRemovalTaskRequestControllerTest {
 
 
 		// Creates the Project Repository and User Repository
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 		userContainer = new UserContainerService();
 
 		// Creates the users

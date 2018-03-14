@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
 import project.model.*;
@@ -21,7 +21,7 @@ public class PrintProjectInfoControllerTest {
 	User user1;
 	User joaoPM;
 	ProjectCollaborator collab1, collab2;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	UserContainerService userContainer;
 	Project project, project1;
 	Calendar startDate, finishDate;
@@ -32,7 +32,7 @@ public class PrintProjectInfoControllerTest {
 	@Before
 	public void setUp() {
 		// create company
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 		projectContainer.setProjCounter(1);
 
 		// create user

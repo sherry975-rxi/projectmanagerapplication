@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 public class US301CreateProjectControllerTest {
 	
 	UserContainerService userContainer;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	User u1;
 	US301CreateProjectController createNewProject;
 	Project newProject;
@@ -35,7 +35,7 @@ public class US301CreateProjectControllerTest {
 		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		// User creation
 		u1 = userContainer.createUser("Leonor", "leonor@gmail.com", "001", "Empregado", "930000000",

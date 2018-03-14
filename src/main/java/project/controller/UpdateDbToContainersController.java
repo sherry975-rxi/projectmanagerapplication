@@ -1,15 +1,15 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 
 public class UpdateDbToContainersController {
 
     UserContainerService userContainer;
-    ProjectContainerService projectContainer;
+    ProjectService projectContainer;
 
     public void updateDBtoContainer(){
-        this.projectContainer = new ProjectContainerService();
+        this.projectContainer = new ProjectService();
         this.userContainer = new UserContainerService();
         projectContainer.updateProjectContainer();
         userContainer.updateUserContainer();

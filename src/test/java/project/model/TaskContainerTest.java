@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
 import project.model.taskstateinterface.*;
@@ -33,7 +33,7 @@ public class TaskContainerTest {
 
 	Project project;
 	Project project2;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	TaskContainerService taskContainer;
 	Task testTask;
 	Task testTask2;
@@ -50,7 +50,7 @@ public class TaskContainerTest {
 
 		userContainer = new UserContainerService();
 
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		userDan = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");

@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.User;
 
 /**
@@ -13,10 +13,10 @@ import project.model.User;
  */
 
 public class US216AverageTimeSpentOnTaskLastMonthController {
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 
 	public US216AverageTimeSpentOnTaskLastMonthController() {
-		this.projectContainer = new ProjectContainerService();
+		this.projectContainer = new ProjectService();
 		projectContainer.updateProjectContainer();
 	}
 

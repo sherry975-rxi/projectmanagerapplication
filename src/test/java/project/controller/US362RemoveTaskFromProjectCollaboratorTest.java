@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
 import project.model.*;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class US362RemoveTaskFromProjectCollaboratorTest {
 
 	UserContainerService userContainer;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	
 	User user1;
 	User userAdmin;
@@ -48,7 +48,7 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",

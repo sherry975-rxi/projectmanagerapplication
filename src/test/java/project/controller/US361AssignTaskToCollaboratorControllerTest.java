@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -19,7 +19,7 @@ public class US361AssignTaskToCollaboratorControllerTest {
 	User user1;
 	User userAdmin;
 	Project project;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6, testTask7;
 	ProjectCollaborator projCollaborator;
 	TaskCollaborator taskCollaborator;
@@ -32,7 +32,7 @@ public class US361AssignTaskToCollaboratorControllerTest {
 		userContainer = new UserContainerService();
 						
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		userContainer.getAllUsersFromUserContainer().clear();
 

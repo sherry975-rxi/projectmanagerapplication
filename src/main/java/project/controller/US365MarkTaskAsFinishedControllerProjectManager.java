@@ -1,12 +1,12 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.model.Project;
 import project.model.Task;
 
 public class US365MarkTaskAsFinishedControllerProjectManager {
-	private ProjectContainerService projContainer;
+	private ProjectService projContainer;
 	private Task taskToBeMarked;
 	private TaskContainerService projectTaskList;
 	private Project selectedProject;

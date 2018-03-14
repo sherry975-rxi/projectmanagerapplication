@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -24,7 +24,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 
 	// TasksFiltersController tasksFiltersController;
 	UserContainerService myUsers;
-	ProjectContainerService myProjects;
+	ProjectService myProjects;
 
 	User user1, user2, projectManager, projectManager2;
 	Project project1, project2, project3;
@@ -42,7 +42,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 
 		// create user and project container
 		myUsers= new UserContainerService();
-		myProjects = new ProjectContainerService();
+		myProjects = new ProjectService();
 
 		// create users
 		user1 = myUsers.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",

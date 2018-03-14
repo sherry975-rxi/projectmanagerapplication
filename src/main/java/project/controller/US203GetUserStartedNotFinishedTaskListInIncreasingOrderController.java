@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.Task;
 import project.model.User;
 
@@ -9,10 +9,10 @@ import java.util.List;
 
 public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 
 	public US203GetUserStartedNotFinishedTaskListInIncreasingOrderController() {
-		this.projectContainer = new ProjectContainerService();
+		this.projectContainer = new ProjectService();
 	}
 
 	/**

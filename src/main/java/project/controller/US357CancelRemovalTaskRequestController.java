@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -19,7 +19,7 @@ public class US357CancelRemovalTaskRequestController {
 	Project project;
 	Task task;
 	User userToRemove;
-	ProjectContainerService projectContainer = new ProjectContainerService();
+	ProjectService projectContainer = new ProjectService();
 
 	/**
 	 * Constructor to instantiate a new US357CancelRemoveTaskRequestController

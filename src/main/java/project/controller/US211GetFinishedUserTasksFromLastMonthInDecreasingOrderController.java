@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
@@ -11,10 +11,10 @@ import java.util.Calendar;
 import java.util.List;
 
 public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 
 	public US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController() {
-		this.projectContainer = new ProjectContainerService();
+		this.projectContainer = new ProjectService();
 		projectContainer.updateProjectContainer();
 
 	}

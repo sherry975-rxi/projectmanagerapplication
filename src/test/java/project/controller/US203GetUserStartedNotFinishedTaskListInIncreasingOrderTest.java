@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -16,7 +16,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 
 	US203GetUserStartedNotFinishedTaskListInIncreasingOrderController tasksFiltersController;
 	UserContainerService userContainer;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
@@ -30,7 +30,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		userContainer = new UserContainerService();
 
 		//Creates a ProjectContainer
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		// create users in UserContainer
 		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",

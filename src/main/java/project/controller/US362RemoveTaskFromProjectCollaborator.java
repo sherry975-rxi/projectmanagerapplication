@@ -3,7 +3,7 @@
  */
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -16,7 +16,7 @@ import java.util.List;
  *
  */
 public class US362RemoveTaskFromProjectCollaborator {
-	ProjectContainerService projectContainer = new ProjectContainerService();
+	ProjectService projectContainer = new ProjectService();
 	private ProjectCollaborator projectCollaborator;
 	private Project project;
 	private Task task;

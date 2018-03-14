@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
@@ -23,7 +23,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	 */
 	public boolean removeCollaboratorFromProjectTeam(User user) {
 		boolean remove = false;
-		ProjectContainerService projectContainer = new ProjectContainerService();
+		ProjectService projectContainer = new ProjectService();
 
 		if (proj.removeProjectCollaboratorFromProjectTeam(user)) {
 			remove = true;

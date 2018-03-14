@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
 import project.model.*;
@@ -41,7 +41,7 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 	User user2;
 	ProjectCollaborator projectCollaborator1;
 	TaskCollaborator taskWorker1;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	Project myProject;
 	TaskContainerService taskContainer;
 	Task task1;

@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class CollectProjectsFromUserControllerTest {
 
-	private ProjectContainerService projContainer = new ProjectContainerService();
+	private ProjectService projContainer = new ProjectService();
 	UserContainerService userContainer = new UserContainerService();
 	User user1;
 	private User userAdmin;

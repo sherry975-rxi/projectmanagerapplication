@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -24,7 +24,7 @@ public class AddColaboratorToProjectTeamController_Test {
 	 * 
 	 */
 
-	private ProjectContainerService projContainer = new ProjectContainerService();
+	private ProjectService projContainer = new ProjectService();
 	UserContainerService userContainer = new UserContainerService();
 	private User u1;
 	private User u2;

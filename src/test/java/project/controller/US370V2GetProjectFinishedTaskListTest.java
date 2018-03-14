@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -22,7 +22,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 
 	US370GetProjectFinishedTaskListController tasksFiltersController;
 	UserContainerService myUsers;
-	ProjectContainerService myProjects;
+	ProjectService myProjects;
 
 	User user1, user2, user3;
 	Project project1;
@@ -35,7 +35,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 	public void setUp() {
 		// create company 1
 		myUsers = new UserContainerService();
-		myProjects = new ProjectContainerService();
+		myProjects = new ProjectService();
 
 		// create users in company
 		user2 = myUsers.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",

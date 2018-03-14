@@ -2,7 +2,7 @@ package project.controller;
 
 import org.springframework.stereotype.Service;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PrintTaskInfoController {
 
-	private ProjectContainerService projContainer = new ProjectContainerService();
+	private ProjectService projContainer = new ProjectService();
 	private Task task;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	private String taskID;

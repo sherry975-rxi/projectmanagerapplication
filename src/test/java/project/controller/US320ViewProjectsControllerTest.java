@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.Project;
 import project.model.User;
@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class US320ViewProjectsControllerTest {
 
 	UserContainerService userContainer;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	Project activeProject;
 	Project inactiveProject;
 	User activeManager;
@@ -28,7 +28,7 @@ public class US320ViewProjectsControllerTest {
 		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		activeManager = new User("Daniel", "email", "idNumber", "function", "123456789");
 		inactiveManager = new User("Johnny", "email2", "idNumber2", "function2", "987654321");

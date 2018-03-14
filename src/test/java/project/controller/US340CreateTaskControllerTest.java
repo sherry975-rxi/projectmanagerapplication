@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -16,7 +16,7 @@ public class US340CreateTaskControllerTest {
 	User user1;
 	User userAdmin;
 	Project project;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	Task testTask;
 
 	@Before
@@ -25,7 +25,7 @@ public class US340CreateTaskControllerTest {
 		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		userContainer.getAllUsersFromUserContainer().clear();
 

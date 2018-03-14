@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -19,7 +19,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
 	Task task1, task2, task3, task4, task5, task6;
 	TaskCollaborator taskCollab1, taskCollab2, taskCollab3, taskCollab4, taskCollab5, taskCollab6;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	UserContainerService userContainer;
 
 	@Before
@@ -28,7 +28,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		userContainer = new UserContainerService();
 						
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		// create users in company
 		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",

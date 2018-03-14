@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.Project;
 import project.model.TaskTeamRequest;
 
@@ -10,7 +10,7 @@ public class US356ManageAssigmentRequestController {
 
 	Project selectedProject;
 	TaskTeamRequest selectedAdditionRequest;
-	ProjectContainerService projectContainer = new ProjectContainerService();
+	ProjectService projectContainer = new ProjectService();
 
 	/*
 	 * This controller manages Addition Requests by Project Collaborators * respond

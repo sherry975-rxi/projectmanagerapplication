@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 import project.model.taskstateinterface.OnGoing;
@@ -20,7 +20,7 @@ public class US380GetProjectExpiredTaskListTest {
 
 	US380GetProjectExpiredTaskListController tasksFiltersController;
 	UserContainerService userContainer;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
@@ -33,7 +33,7 @@ public class US380GetProjectExpiredTaskListTest {
 		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		// create users in company
 		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",

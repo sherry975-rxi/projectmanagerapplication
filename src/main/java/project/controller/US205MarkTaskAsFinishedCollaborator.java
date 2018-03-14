@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -11,12 +11,12 @@ public class US205MarkTaskAsFinishedCollaborator {
 	private int projectIndex;
 	private Task taskToBeMarked;
 	List<Task> unfinishedTaskFromProject;
-	private ProjectContainerService projectContainer;
+	private ProjectService projectContainer;
 
 	public List<Project> getProjectsThatIAmCollaborator(User user) {
 		List<Project> projectsThatImProjectCollaborator = new ArrayList<>();
 		this.username = user;
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 		projectsThatImProjectCollaborator.addAll(projectContainer.getProjectsFromUser(this.username));
 		return projectsThatImProjectCollaborator;
 	}

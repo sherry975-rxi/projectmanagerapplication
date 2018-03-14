@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 import project.model.taskstateinterface.*;
@@ -27,7 +27,7 @@ public class US347CancelOnGoingTaskControllerTest {
 
 	// TasksFiltersController tasksFiltersController;
 	UserContainerService userContainer;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	User user1, user2, projectManager;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2;
@@ -64,7 +64,7 @@ public class US347CancelOnGoingTaskControllerTest {
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 		
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		// create project and establishes collaborator projectManager as project manager
 		// of project 1

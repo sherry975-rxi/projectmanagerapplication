@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.Profile;
 import project.model.Project;
@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 public class US302ChangeProjectManagerTest {
 
 	UserContainerService userContainer;
-	ProjectContainerService projectContainer;
+	ProjectService projectContainer;
 	User userFirstManager;
 	User userNewManager;
 	Project newProject;
@@ -34,7 +34,7 @@ public class US302ChangeProjectManagerTest {
 		userContainer = new UserContainerService();
 								
 		// creates a Project Container
-		projectContainer = new ProjectContainerService();
+		projectContainer = new ProjectService();
 
 		// User creation
 		userFirstManager = userContainer.createUser("Leonor", "leonor@gmail.com", "001", "Empregado",

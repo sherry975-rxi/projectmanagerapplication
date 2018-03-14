@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.UserContainerService;
 import project.model.*;
 
@@ -16,14 +16,14 @@ import java.util.List;
  */
 public class US301CreateProjectController {
 
-    private ProjectContainerService projects;
+    private ProjectService projects;
     private UserContainerService users;
     private List<User> activeCollaboratorList;
     private User selectedUser = null;
 	private Project createdProject = null;
 
 	public US301CreateProjectController() {
-		projects = new ProjectContainerService();
+		projects = new ProjectService();
 		users = new UserContainerService();
 	}
 

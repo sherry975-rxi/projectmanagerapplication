@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.internal.configuration.injection.filter.OngoingInjecter;
 import project.Repository.ProjectsRepository;
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.model.taskstateinterface.*;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class TaskTest {
 
     double expectedCost;
 
-    ProjectContainerService myProjRep = new ProjectContainerService();
+    ProjectService myProjRep = new ProjectService();
 
 
     @Before

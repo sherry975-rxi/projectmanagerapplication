@@ -2,7 +2,7 @@ package project.model;
 
 import org.junit.Test;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 
 import static org.junit.Assert.*;
 
@@ -110,7 +110,7 @@ public class AddressTest {
 	@Test
 	public void testEquals() {
 
-		ProjectContainerService projectRep = new ProjectContainerService();
+		ProjectService projectRep = new ProjectService();
 		// This two addresses are the same
 		Address casa = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
 		Address casa2 = new Address("Rua Direita", "4356-245", "Gondomar", "Porto", "Portugal");
