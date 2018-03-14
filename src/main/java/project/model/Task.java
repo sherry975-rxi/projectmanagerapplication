@@ -56,6 +56,7 @@ public class Task {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Project_id")
 	private Project project;
+	private long projx_ID_x;
 
 	public Task() {
 	}
@@ -73,7 +74,7 @@ public class Task {
 	 * @param description
 	 *            Description of the task set by the user
 	 */
-	public Task(String description) {
+	public Task(String description, Project selectedProject) {
 		this.description = description;
 		this.creationDate = Calendar.getInstance();
 		this.startDate = null;
@@ -90,7 +91,8 @@ public class Task {
 		this.taskState = new Created();
 		this.cancelDate = null;
 		this.currentState = StateEnum.CREATED;
-		//this.project = this.getProject();
+		this.projx_ID_x = selectedProject.getId();
+		this.project = selectedProject;
 	}
 
 	/**

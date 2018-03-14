@@ -222,8 +222,8 @@ public class HelloJpaApplication implements CommandLineRunner {
 		
 		// Instantiates the TaskContainer, defines task "taskOne", saves it in Repository
 		//taskOne = taskContainer.createTask("Desenvolver código para responder à US399");
-		taskOne = projOne.createTaskinProject("Desenvolver código para responder à US499");
-		taskContainer.saveTask(taskOne);
+		//taskOne = projOne.createTaskinProject("Desenvolver código para responder à US499");
+		taskContainer.createTask("Desenvolver código para responder à US499", projOne);
 
 
 	}

@@ -3,6 +3,7 @@ package project.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.Repository.TaskRepository;
+import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.taskstateinterface.Cancelled;
@@ -37,22 +38,22 @@ public class TaskContainerService {
 	 * @param description
 	 * @return A new Task object
 	 */
-	public Task createTask(String description) {
+	public Task createTask(String description, Project selectedProject) {
 
-		Task newTask = new Task(description);
+		Task newTask = new Task(description, selectedProject);
 		this.taskRepository.save(newTask);
 		return newTask;
 	}
 	
-	/**
-	 * This method saves the task e the Repository
-	 * @param task
-	 * @return
-	 */
-	public Task saveTask (Task task) {
-
-		return this.taskRepository.save(task);
-	}
+//	/**
+//	 * This method saves the task e the Repository
+//	 * @param task
+//	 * @return
+//	 */
+//	public Task saveTask (Task task) {
+//
+//		return this.taskRepository.save(task);
+//	}
 
 //	/**
 //	 * Get the complete task list for the project

@@ -168,22 +168,22 @@ public class Project implements Serializable{
 		return newCollaborator;
 	}
 	
-	/**
-	 * Creates an instance of Task
-	 * 
-	 * @param description
-	 *            description of the task to add
-
-	 * 
-	 * @return The new task instantiated
-	 */
-	public Task createTaskinProject(String description) {
-
-		Task newTask = new Task(description);
-		newTask.setProject(this);
-
-		return newTask;
-	}
+//	/**
+//	 * Creates an instance of Task
+//	 * 
+//	 * @param description
+//	 *            description of the task to add
+//
+//	 * 
+//	 * @return The new task instantiated
+//	 */
+//	public Task createTaskinProject(String description) {
+//
+//		Task newTask = new Task(description);
+//		newTask.setProject(this);
+//
+//		return newTask;
+//	}
 
 	/**
 	 * Add Project Collaborator to project team if is missing from the projectTeam.
@@ -903,12 +903,12 @@ public class Project implements Serializable{
 	}
 
 
-	/**
-	 * This method sets task project parameter equal to the project that calls the method
-	 *
-	 * @param task Task to set
-	 */
-	public void addTaskToProject(Task task) {
-		task.setProject(this);
-	}
+//	/**
+//	 * This method sets task project parameter equal to the project that calls the method
+//	 *
+//	 * @param task Task to set
+//	 */
+//	public void addTaskToProject(Task task) {
+//		task.setProject(this);
+//	}
 }
