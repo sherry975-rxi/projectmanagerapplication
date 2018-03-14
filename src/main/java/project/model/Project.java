@@ -881,4 +881,13 @@ public class Project implements Serializable{
 		return collaboratorsFromTask;
 	}
 
+
+	/**
+	 * This method sets task project parameter equal to the project that calls the method
+	 *
+	 * @param task Task to set
+	 */
+	public void addTaskToProject(Task task) {
+		task.setProject(this);
+	}
 }
