@@ -56,23 +56,21 @@ public class Task {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Project_id")
 	private Project project;
-	private long projx_ID_x;
 
 	public Task() {
 	}
 
 	/**
-	 * This constructor creates a task with the mandatory fields taskCounter, projId
-	 * and description. However, the description is the only parameter that will be
-	 * set by the user. The other two fields are automatically introduced by the
+	 * This constructor creates a task with the mandatory fields description 
+	 * and the project where it will be associated.
+	 * The other fields are automatically introduced by the
 	 * creator pattern of the task.
 	 * 
-	 * @param taskCounter
-	 *            Task counter in relation to the project
-	 * @param projId
-	 *            Id of the project to which the task belongs to
 	 * @param description
 	 *            Description of the task set by the user
+	 * @param selectedProject
+	 *            Id of the project to which the task belongs to
+
 	 */
 	public Task(String description, Project selectedProject) {
 		this.description = description;
@@ -91,7 +89,6 @@ public class Task {
 		this.taskState = new Created();
 		this.cancelDate = null;
 		this.currentState = StateEnum.CREATED;
-		this.projx_ID_x = selectedProject.getId();
 		this.project = selectedProject;
 	}
 

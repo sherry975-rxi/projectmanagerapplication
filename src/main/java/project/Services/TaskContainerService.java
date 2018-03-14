@@ -33,9 +33,11 @@ public class TaskContainerService {
 		this.taskRepository = taskRepository;
 	}
 
+	
 	/**
 	 * Create a Task using Creation Pattern and saves the Task created in the DB
-	 * @param description
+	 * @param description of the task
+	 * @param selectedProject is the project where the task will be associated
 	 * @return A new Task object
 	 */
 	public Task createTask(String description, Project selectedProject) {
