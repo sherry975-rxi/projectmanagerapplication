@@ -126,7 +126,13 @@ public class UserContainerService {
      */
     public boolean isUserinUserContainer(User addedUser) {
 
-        return this.usersContainer.contains(addedUser);
+        boolean result = false;
+
+       if ( this.userRepository.findByEmail(addedUser.getEmail()) != null) {
+           result = true;
+       }
+
+        return result;
     }
 
     /**
@@ -136,9 +142,7 @@ public class UserContainerService {
      */
     public List<User> getAllUsersFromUserContainer() {
 
-        List<User> allUsers = new ArrayList<>();
-        allUsers.addAll(this.usersContainer);
-        return allUsers;
+        return userRepository.findAll();
 
     }
 

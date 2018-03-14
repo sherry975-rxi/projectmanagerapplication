@@ -903,12 +903,22 @@ public class Project implements Serializable{
 	}
 
 
-//	/**
-//	 * This method sets task project parameter equal to the project that calls the method
-//	 *
-//	 * @param task Task to set
-//	 */
-//	public void addTaskToProject(Task task) {
-//		task.setProject(this);
-//	}
+	/**
+	 * This method sets task project parameter equal to the project that calls the method
+	 *
+	 * @param task Task to set
+	 */
+	public void addTaskToProject(Task task) {
+		task.setProject(this);
+	}
+	
+	/**
+	 * Checks if a project has a status considered Active
+	 * 
+	 * @return TRUE if is active FALSE if not
+	 */
+	public Boolean isProjectActive() { 
+		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION || this.getProjectStatus() ==  EXECUTION  || this.getProjectStatus() == DELIVERY;
+	}
+
 }
