@@ -600,7 +600,7 @@ public class Project implements Serializable{
 	public double getTotalCostReportedToProjectUntilNow() {
 		double reportedCost = 0.0;
 
-		for (Task task : taskContainer.getProjectTaskRepository()) {
+		for (Task task : taskContainer.getAllTasksfromProject()) {
 			reportedCost += task.getTaskCost();
 		}
 

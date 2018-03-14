@@ -86,8 +86,8 @@ public class US207CreateTaskReportControllerTest {
 
 
         // add tasks to task repository of project 1
-        project1.getTaskRepository().addProjectTask(task1);
-        project1.getTaskRepository().addProjectTask(task2);
+        project1.getTaskRepository().addTaskToProject(task1);
+        project1.getTaskRepository().addTaskToProject(task2);
 
 
         // add costPerEffort to users in project 1, resulting in a Project Collaborator

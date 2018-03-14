@@ -105,7 +105,7 @@ public class US207 {
 				10);
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
+		taskContainer.addTaskToProject(testTask);
 
 		// create task Worker
 		taskWorker = testTask.createTaskCollaborator(projectCollaborator);

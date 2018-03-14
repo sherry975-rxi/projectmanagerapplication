@@ -87,9 +87,9 @@ public class PrintProjectInfoControllerTest {
 		task3 = project.getTaskRepository().createTask("Third task");
 
 		// add task to project
-		project.getTaskRepository().addProjectTask(task1);
-		project.getTaskRepository().addProjectTask(task2);
-		project.getTaskRepository().addProjectTask(task3);
+		project.getTaskRepository().addTaskToProject(task1);
+		project.getTaskRepository().addTaskToProject(task2);
+		project.getTaskRepository().addTaskToProject(task3);
 
 		// add project's collaborators to tasks
 		task1.addProjectCollaboratorToTask(collab1);

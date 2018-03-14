@@ -17,7 +17,7 @@ public class US205Tests {
 	 * US205: Como colaborador, eu pretendo marcar uma tarefa que consta na minha
 	 * lista de tarefas como concluida.
 	 * 
-	 * uses methods addProjectTask, addUserToTask, markTaskAsCompleted(),
+	 * uses methods addTaskToProject, addUserToTask, markTaskAsCompleted(),
 	 * setFinishDate(), isFinished()
 	 * 
 	 * 

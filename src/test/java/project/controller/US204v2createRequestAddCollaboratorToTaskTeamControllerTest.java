@@ -48,9 +48,9 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 		taskA = new Task(1, 1, "Faind fek quin!");
 		taskB = new Task(2, 1, "Spit on non-beleevahs!");
 		taskC = new Task(3, 1, "Follou da wae!");
-		taskRepo.addProjectTask(taskA);
-		taskRepo.addProjectTask(taskB);
-		taskRepo.addProjectTask(taskC);
+		taskRepo.addTaskToProject(taskA);
+		taskRepo.addTaskToProject(taskB);
+		taskRepo.addTaskToProject(taskC);
 
 		// Create controller to be used
 		controller = new US204v2createRequestAddCollaboratorToTaskTeamController("1.1", user);

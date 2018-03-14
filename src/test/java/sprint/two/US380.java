@@ -60,18 +60,18 @@ public class US380 {
 
 		// Creates the tasks and adds the tasks to the task repository
 		
-		project.getTaskRepository().addProjectTask(
+		project.getTaskRepository().addTaskToProject(
 				project.getTaskRepository().createTask("Task a"));
-		project.getTaskRepository().addProjectTask(
+		project.getTaskRepository().addTaskToProject(
 				project.getTaskRepository().createTask("Task b"));
-		project.getTaskRepository().addProjectTask(
+		project.getTaskRepository().addTaskToProject(
 				project.getTaskRepository().createTask("Task c"));
 		
 		
 		//create 3 tasks
-		testTask = project.getTaskRepository().getProjectTaskRepository().get(0);
-		testTask2 = project.getTaskRepository().getProjectTaskRepository().get(1);
-		testTask3 = project.getTaskRepository().getProjectTaskRepository().get(2);
+		testTask = project.getTaskRepository().getAllTasksfromProject().get(0);
+		testTask2 = project.getTaskRepository().getAllTasksfromProject().get(1);
+		testTask3 = project.getTaskRepository().getAllTasksfromProject().get(2);
 
 		// Creates the expResult list
 		expResult = new ArrayList<Task>();

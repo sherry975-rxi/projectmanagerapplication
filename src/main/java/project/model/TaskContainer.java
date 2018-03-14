@@ -15,39 +15,29 @@ import java.util.List;
 @Embeddable
 public class TaskContainer implements Serializable{
 
-
 	@javax.persistence.Transient
 	private int taskCounter;
 	@javax.persistence.Transient
-	private int projId;
+	private int projectId;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
 	private List<Task> projectTasks;
 	@javax.persistence.Transient
 	private Project project;
 	static final long serialVersionUID = 46L;
 
-
 	public TaskContainer() {}
 
-	public TaskContainer(int projId) {
+	public TaskContainer(int projectId) {
 
 		this.projectTasks = new ArrayList<>();
 		this.taskCounter = 1;
-		this.projId = projId;
-
+		this.projectId = projectId;
 	}
 
-	/**
-	 * Creates an instance of Task
-	 * 
-	 * @param description
-	 * 
-	 * @return the task created
-	 */
 	public Task createTask(String description, int estimatedTaskEffort, Calendar estimatedTaskStartDate,
 			Calendar taskDeadline, int estimatedBudgetCostTask) {
 
-		Task newTask = new Task(this.taskCounter, this.projId, description, estimatedTaskEffort, estimatedTaskStartDate,
+		Task newTask = new Task(this.taskCounter, this.projectId, description, estimatedTaskEffort, estimatedTaskStartDate,
 				taskDeadline, estimatedBudgetCostTask);
 		taskCounter++;
 		return newTask;
@@ -62,32 +52,20 @@ public class TaskContainer implements Serializable{
 	 */
 	public Task createTask(String description) {
 
-		Task newTask = new Task(this.taskCounter, this.projId, description);
+		Task newTask = new Task(this.taskCounter, this.projectId, description);
 
 		taskCounter++;
 		return newTask;
 	}
 
-	/**
-	 * Get the complete task list for the project
-	 * 
-	 * @return Project Task List
-	 */
-	public List<Task> getProjectTaskRepository() {
+	public List<Task> getAllTasksfromProject() {
 		return this.projectTasks;
 	}
 
-	/**
-	 * Add a task to the project tasks list
-	 * 
-	 * @param toAdd
-	 *            Task to add to the Project Task List
-	 */
-	public void addProjectTask(Task toAdd) {
+	public void addTaskToProject(Task toAdd) {
 	    toAdd.setProject(this.project);
 		this.projectTasks.add(toAdd);
 	}
-
 
 	public void setProject(Project project) {
 		this.project=project;
@@ -97,47 +75,31 @@ public class TaskContainer implements Serializable{
 		return this.project;
 	}
 
-	/**
-	 * This method returns only the unfinished tasks in a project.
-	 * 
-	 * @return UnfinishedTaskList The list if tasks that are not finished
-	 */
-	public List<Task> getUnfinishedTasksFromProjectCollaborator(ProjectCollaborator collab) {
+	public List<Task> getUnfinishedTasksFromProjectCollaborator(ProjectCollaborator collaborator) {
 
 		List<Task> unfinishedTaskList = new ArrayList<>();
-		unfinishedTaskList.addAll(this.getAllTasksFromProjectCollaborator(collab));
+		unfinishedTaskList.addAll(this.getAllTasksFromProjectCollaborator(collaborator));
 
-		for (Task other : this.getAllTasksFromProjectCollaborator(collab)) {
+		for (Task other : this.getAllTasksFromProjectCollaborator(collaborator)) {
 			if (other.isTaskFinished()) {
 				unfinishedTaskList.remove(other);
 			}
 		}
-
 		return unfinishedTaskList;
-
 	}
 
-	/**
-	 * This method returns only the started but not finished tasks assigned to a
-	 * ProjectCollaborator.
-	 * 
-	 * @return incompleteTaskList The list if tasks that are started but not
-	 *         finished
-	 */
-	public List<Task> getStartedNotFinishedTasksFromProjectCollaborator(ProjectCollaborator collab) {
+	public List<Task> getStartedNotFinishedTasksFromProjectCollaborator(ProjectCollaborator collaborator) {
 
 		List<Task> incompleteTaskList = new ArrayList<>();
-		incompleteTaskList.addAll(this.getAllTasksFromProjectCollaborator(collab));
+		incompleteTaskList.addAll(this.getAllTasksFromProjectCollaborator(collaborator));
 
-		for (Task other : this.getAllTasksFromProjectCollaborator(collab)) {
+		for (Task other : this.getAllTasksFromProjectCollaborator(collaborator)) {
 			if (other.isTaskFinished() || "Cancelled".equals(other.viewTaskStateName())
 					|| other.getStartDate() == null) {
 				incompleteTaskList.remove(other);
 			}
 		}
-
 		return incompleteTaskList;
-
 	}
 
 	/**
@@ -154,7 +116,6 @@ public class TaskContainer implements Serializable{
 				finishedTaskList.add(other);
 			}
 		}
-
 		return finishedTaskList;
 	}
 
@@ -163,19 +124,19 @@ public class TaskContainer implements Serializable{
 	 * given user. Given a negative "monthsAgo" input, Returns ALL finished tasks of
 	 * said user
 	 * 
-	 * @param collab
+	 * @param collaborator
 	 *            user who is in the tasks
 	 * @param monthsAgo
 	 *            how many months to subtract
 	 * @return lastMonthFinishedTaskList List of all tasks finished the previous
 	 *         month, by the user
 	 */
-	public List<Task> getFinishedTasksFromProjectCollaboratorInGivenMonth(ProjectCollaborator collab, int monthsAgo) {
+	public List<Task> getFinishedTasksFromProjectCollaboratorInGivenMonth(ProjectCollaborator collaborator, int monthsAgo) {
 		Calendar givenMonth = Calendar.getInstance();
 		givenMonth.add(Calendar.MONTH, -monthsAgo);
 		List<Task> lastMonthFinishedTaskList = new ArrayList<>();
 
-		for (Task other : this.getAllTasksFromProjectCollaborator(collab)) {
+		for (Task other : this.getAllTasksFromProjectCollaborator(collaborator)) {
 			if (other.isTaskFinished()) {
 				if (monthsAgo < 0) {
 					lastMonthFinishedTaskList.add(other);
@@ -195,7 +156,7 @@ public class TaskContainer implements Serializable{
 	 * @return TRUE if task exists in the task list FALSE if task does not exist in
 	 *         the task list
 	 */
-	public boolean isTaskInRTaskRepository(Task task) {
+	public boolean isTaskInTaskContainer(Task task) {
 		for (Task other : this.projectTasks) {
 			if (task.equals(other)) {
 				return true;
@@ -204,19 +165,12 @@ public class TaskContainer implements Serializable{
 		return false;
 	}
 
-	/**
-	 * This method returns the total time spent by a user in tasks from a project
-	 * Last month
-	 * 
-	 * @param collab
-	 * @return Time spent on last month project user tasks
-	 */
-	public double getTimeSpentByProjectCollaboratorInAllTasksLastMonth(ProjectCollaborator collab) {
+	public double getTimeSpentByProjectCollaboratorInAllTasksLastMonth(ProjectCollaborator collaborator) {
 		List<Task> lastMonth = new ArrayList<>();
-		lastMonth.addAll(this.getFinishedTasksFromProjectCollaboratorInGivenMonth(collab, 1));
+		lastMonth.addAll(this.getFinishedTasksFromProjectCollaboratorInGivenMonth(collaborator, 1));
 		double totalTime = 0;
 		for (Task test : lastMonth) {
-			totalTime = totalTime + test.getTimeSpentByProjectCollaboratorOntask(collab);
+			totalTime = totalTime + test.getTimeSpentByProjectCollaboratorOntask(collaborator);
 		}
 		return totalTime;
 	}
@@ -245,23 +199,23 @@ public class TaskContainer implements Serializable{
 	 * 
 	 * @return the Project Id
 	 */
-	public int getProjId() {
-		return projId;
+	public int getProjectId() {
+		return projectId;
 	}
 
 	/**
 	 * This method returns a list with all the tasks of a certain user in the
 	 * project
 	 * 
-	 * @param collab
+	 * @param collaborator
 	 *            User (to be able to return its tasks)
 	 * 
 	 * @return AllTasksList List if all tasks from a user
 	 */
-	public List<Task> getAllTasksFromProjectCollaborator(ProjectCollaborator collab) {
+	public List<Task> getAllTasksFromProjectCollaborator(ProjectCollaborator collaborator) {
 		List<Task> allTasks = new ArrayList<>();
-		for (Task other : this.getProjectTaskRepository()) {
-			if (other.isProjectCollaboratorInTaskTeam(collab)) {
+		for (Task other : this.getAllTasksfromProject()) {
+			if (other.isProjectCollaboratorInTaskTeam(collaborator)) {
 				allTasks.add(other);
 			}
 		}
@@ -272,14 +226,14 @@ public class TaskContainer implements Serializable{
 	 * 
 	 * This method checks if a given user doesnt have any task assigned to him
 	 * 
-	 * @param collab
+	 * @param collaborator
 	 *            Project Collaborator
 	 * @return true if the user doesnt have a task. False if he has at least one
 	 *         task
 	 */
-	public boolean isCollaboratorActiveOnAnyTask(ProjectCollaborator collab) {
-		for (Task otherTask : this.getProjectTaskRepository()) {
-			if (otherTask.isProjectCollaboratorActiveInTaskTeam(collab))
+	public boolean isCollaboratorActiveOnAnyTask(ProjectCollaborator collaborator) {
+		for (Task otherTask : this.getAllTasksfromProject()) {
+			if (otherTask.isProjectCollaboratorActiveInTaskTeam(collaborator))
 				return true;
 		}
 		return false;
@@ -296,16 +250,13 @@ public class TaskContainer implements Serializable{
 
 		List<Task> listOfTasksWithoutCollaboratorsAssigned = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
-
+		for (Task other : this.getAllTasksfromProject()) {
 			if (other.isTaskTeamEmpty()) {
 				listOfTasksWithoutCollaboratorsAssigned.add(other);
 			} else if (!other.doesTaskTeamHaveActiveUsers()) {
 				listOfTasksWithoutCollaboratorsAssigned.add(other);
-
 			}
 		}
-
 		return listOfTasksWithoutCollaboratorsAssigned;
 	}
 
@@ -317,12 +268,11 @@ public class TaskContainer implements Serializable{
 	public List<Task> getFinishedTasks() {
 		List<Task> allFinishedTasks = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			if (other.isTaskFinished()) {
 				allFinishedTasks.add(other);
 			}
 		}
-
 		return allFinishedTasks;
 	}
 
@@ -339,7 +289,7 @@ public class TaskContainer implements Serializable{
 	 * @return sorted list
 	 * 
 	 */
-	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
+	private List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
 		for (int i = 0; i < result.size(); i++) {
@@ -365,8 +315,7 @@ public class TaskContainer implements Serializable{
 	 */
 	public List<Task> getFinishedTasksInDecreasingOrder() {
 
-		List<Task> finishedTaskListDecreasingOrder = new ArrayList<>();
-		finishedTaskListDecreasingOrder.addAll(this.getFinishedTasks());
+        List<Task> finishedTaskListDecreasingOrder = new ArrayList<>(this.getFinishedTasks());
 
 		return sortTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
 	}
@@ -379,7 +328,7 @@ public class TaskContainer implements Serializable{
 	public List<Task> getUnFinishedTasks() {
 		List<Task> allUnFinishedTasks = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			if (!other.isTaskFinished() && !"Cancelled".equals(other.viewTaskStateName())
 					&& other.getStartDate() != null) {
 				allUnFinishedTasks.add(other);
@@ -390,23 +339,6 @@ public class TaskContainer implements Serializable{
 	}
 
 	/**
-	 * This method returns all OnGoing Tasks
-	 * 
-	 * @return List with the tasks set to "OnGoing" state
-	 */
-	public List<Task> getOnGoingTasks() {
-		List<Task> allOnGoing = new ArrayList<>();
-
-		for (Task other : this.getProjectTaskRepository()) {
-			if ("OnGoing".equals(other.viewTaskStateName())) {
-				allOnGoing.add(other);
-			}
-
-		}
-		return allOnGoing;
-	}
-
-	/**
 	 * this method create a list with all unstarted tasks in project.
 	 * 
 	 * @return allUnstartedTasks
@@ -414,7 +346,7 @@ public class TaskContainer implements Serializable{
 	public List<Task> getUnstartedTasks() {
 		List<Task> allUnstartedTasks = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			if (other.getStartDate() == null) {
 				allUnstartedTasks.add(other);
 			}
@@ -434,29 +366,19 @@ public class TaskContainer implements Serializable{
 		for (Task other : this.projectTasks) {
 			if (!other.isTaskFinished() && other.getTaskDeadline() != null && other.getTaskDeadline().before(today)) {
 					expiredTasks.add(other);
-
 			}
 		}
 		return expiredTasks;
 	}
 
-	/**
-	 * This method returns the a Task by taskID
-	 * 
-	 * @param taskID
-	 * 
-	 * @return A task by a Task ID
-	 */
 	public Task getTaskByID(String taskID) {
 
 		for (Task other : projectTasks) {
 			if (other.getTaskID().equals(taskID)) {
 				return other;
 			}
-
 		}
 		return null;
-
 	}
 
 	/**
@@ -472,17 +394,14 @@ public class TaskContainer implements Serializable{
 		boolean wasTaskDeleted = false;
 
 		switch (taskToDelete.viewTaskStateName()) {
-		case "Assigned": case "Planned" : case "Created" : case "Ready":
+		case "Planned" : case "Created" : case "Ready":
  			this.projectTasks.remove(taskToDelete);
 			wasTaskDeleted = true;
 			break;
-
 		default:
 			break;
-
 		}
 		return wasTaskDeleted;
-
 	}
 
 	/**
@@ -490,7 +409,7 @@ public class TaskContainer implements Serializable{
 	 * 
 	 * @return List of cancelled Tasks
 	 */
-	public List<Task> getCancelledTasks() {
+	public List<Task> getCancelledTasksFromProject() {
 		List<Task> cancelledTasksFromProject = new ArrayList<>();
 
 		for (Task other : this.projectTasks) {
@@ -508,11 +427,9 @@ public class TaskContainer implements Serializable{
 	public List<String> getReportedCostOfEachTask() {
 		List<String> reportTaskCost = new ArrayList<>();
 
-		for (Task other : this.getProjectTaskRepository()) {
+		for (Task other : this.getAllTasksfromProject()) {
 			reportTaskCost.add(String.valueOf(other.getTaskCost()));
-
 		}
-
 		return reportTaskCost;
 	}
 
@@ -523,13 +440,9 @@ public class TaskContainer implements Serializable{
 	 * @return A list of tasks that can be associated to a TaskDependency
 	 */
 	public List<Task> getTaskListOfWhichDependenciesCanBeCreated() {
-		List<Task> validTasks = new ArrayList<>();
-		validTasks.addAll(projectTasks);
+		List<Task> validTasks = new ArrayList<>(projectTasks);
 		for (Task other : this.projectTasks) {
-			if (other.getTaskState() instanceof Finished) {
-				validTasks.remove(other);
-			}
-			if (other.getTaskState() instanceof Cancelled) {
+			if (other.getTaskState() instanceof Finished || other.getTaskState() instanceof Cancelled) {
 				validTasks.remove(other);
 			}
 		}

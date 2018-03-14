@@ -110,8 +110,8 @@ public class CalculateReportedProjectCostControllerTest {
 				10);
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addProjectTask(testTask);
-		taskContainer.addProjectTask(testTask2);
+		taskContainer.addTaskToProject(testTask);
+		taskContainer.addTaskToProject(testTask2);
 
 		// Creates 4 Task Workers
 		taskWorkerDaniel = testTask.createTaskCollaborator(projectUserDaniel);

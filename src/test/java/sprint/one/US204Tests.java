@@ -19,7 +19,7 @@ public class US204Tests {
 	 * US204: Como colaborador, eu pretendo adicionar uma tarefa à minha lista de
 	 * tarefas.
 	 * 
-	 * uses methods addProjectTask, addUserToTask, isProjectManager,
+	 * uses methods addTaskToProject, addUserToTask, isProjectManager,
 	 * getProjectTeam().contains()
 	 */
 
@@ -97,8 +97,8 @@ public class US204Tests {
 		assertTrue(project1.isProjectManager(newUserA));
 		assertFalse(project1.isProjectManager(newUserB));
 
-		project1.getTaskRepository().addProjectTask(taskA);
-		project1.getTaskRepository().addProjectTask(taskB);
+		project1.getTaskRepository().addTaskToProject(taskA);
+		project1.getTaskRepository().addTaskToProject(taskB);
 
 	}
 
@@ -121,8 +121,8 @@ public class US204Tests {
 		project1.addUserToProjectTeam(newUserB, 10);
 		project1.addUserToProjectTeam(newUserA, 10);
 
-		project1.getTaskRepository().addProjectTask(taskA);
-		project1.getTaskRepository().addProjectTask(taskB);
+		project1.getTaskRepository().addTaskToProject(taskA);
+		project1.getTaskRepository().addTaskToProject(taskB);
 
 		// verifies if project team contains newUserB
 		assertTrue(project1.isUserInProjectTeam(newUserB));
