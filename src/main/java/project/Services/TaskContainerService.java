@@ -190,7 +190,7 @@ public class TaskContainerService {
 	 *         the task list
 	 */
 	public boolean isTaskInRTaskRepository(Task task) {
-		for (Task other : this.projectTasks) {
+		for (Task other : this.getProjectTaskRepository()) {
 			if (task.equals(other)) {
 				return true;
 			}
@@ -425,7 +425,7 @@ public class TaskContainerService {
 	public List<Task> getExpiredTasks() {
 		Calendar today = Calendar.getInstance();
 		List<Task> expiredTasks = new ArrayList<>();
-		for (Task other : this.projectTasks) {
+		for (Task other : this.getProjectTaskRepository()) {
 			if (!other.isTaskFinished() && other.getTaskDeadline() != null && other.getTaskDeadline().before(today)) {
 					expiredTasks.add(other);
 
@@ -443,7 +443,7 @@ public class TaskContainerService {
 	 */
 	public Task getTaskByID(String taskID) {
 
-		for (Task other : projectTasks) {
+		for (Task other : getProjectTaskRepository()) {
 			if (other.getTaskID().equals(taskID)) {
 				return other;
 			}
@@ -487,7 +487,7 @@ public class TaskContainerService {
 	public List<Task> getCancelledTasks() {
 		List<Task> cancelledTasksFromProject = new ArrayList<>();
 
-		for (Task other : this.projectTasks) {
+		for (Task other : this.getProjectTaskRepository()) {
 			if (other.getTaskState() instanceof Cancelled) {
 				cancelledTasksFromProject.add(other);
 			}
@@ -518,8 +518,8 @@ public class TaskContainerService {
 	 */
 	public List<Task> getTaskListOfWhichDependenciesCanBeCreated() {
 		List<Task> validTasks = new ArrayList<>();
-		validTasks.addAll(projectTasks);
-		for (Task other : this.projectTasks) {
+		validTasks.addAll(getProjectTaskRepository());
+		for (Task other : this.getProjectTaskRepository()) {
 			if (other.getTaskState() instanceof Finished) {
 				validTasks.remove(other);
 			}
