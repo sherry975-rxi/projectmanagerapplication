@@ -59,7 +59,7 @@ public class Task {
 
 	public Task() {
 	}
-
+	
 	/**
 	 * This constructor creates a task with the mandatory fields description 
 	 * and the project where it will be associated.
@@ -90,6 +90,41 @@ public class Task {
 		this.cancelDate = null;
 		this.currentState = StateEnum.CREATED;
 		this.project = selectedProject;
+	}
+
+	/**
+	 * This constructor creates a task with the mandatory fields taskCounter, projId
+	 * and description. However, the description is the only parameter that will be
+	 * set by the user. The other two fields are automatically introduced by the
+	 * creator pattern of the task.
+	 * 
+	 * @param taskCounter
+	 *            Task counter in relation to the project
+	 * @param projId
+	 *            Id of the project to which the task belongs to
+	 * @param description
+	 *            Description of the task set by the user
+	 */
+	public Task(int taskCounter, int projId, String description) {
+		Integer taskNumber = taskCounter;
+		Integer projCode = projId;
+		this.taskID = projCode.toString() + "." + taskNumber.toString();
+		this.description = description;
+		this.creationDate = Calendar.getInstance();
+		this.startDate = null;
+		this.finishDate = null;
+		this.taskTeam = new ArrayList<>();
+		this.reports = new ArrayList<>();
+		this.estimatedTaskEffort = 0;
+		this.estimatedTaskStartDate = null;
+		this.taskDeadline = null;
+		this.taskBudget = 0;
+		this.startDateInterval = null;
+		this.deadlineInterval = null;
+		this.taskDependency = new ArrayList<>();
+		this.taskState = this.getTaskState();
+		this.cancelDate = null;
+		this.currentState = StateEnum.CREATED;
 	}
 
 	/**
@@ -131,6 +166,51 @@ public class Task {
 		this.deadlineInterval = null;
 		this.taskDependency = new ArrayList<>();
 		this.taskState = new Created();
+		this.currentState = StateEnum.CREATED;
+	}
+	
+	/**
+	 * This constructor is going to be deleted soon.
+	 * 
+	 * This Constructor creates a Task object with the mandatory parameters taskID
+	 * and description and non mandatory parameters creation date, start date,
+	 * finish date, task state (finished or unfinished) and task team
+	 * 
+	 * @param taskCounter
+	 *            The Task counter in the Project in which it is included. This
+	 *            value is generated in the Creator of Task.
+	 * @param projId
+	 *            This is the Project ID to which this Task belongs to.
+	 * @param description
+	 *            Description of Task.
+	 * @param estimatedTaskEffort
+	 *            Value that corresponds to the effort associated with this Task.
+	 * @param estimatedTaskStartDate
+	 *            This value may have dependences if this Task has dependences.
+	 * @param taskDeadline
+	 *            Estimated finish Task date.
+	 * @param estimatedBudgetCostTask
+	 *            Value for the estimated cost of the Task.
+	 */
+	public Task(int taskCounter, int projId, String description, int estimatedTaskEffort,
+			Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedBudgetCostTask) {
+		Integer taskNumber = taskCounter;
+		Integer projCode = projId;
+		this.taskID = projCode.toString() + "." + taskNumber.toString();
+		this.description = description;
+		this.creationDate = Calendar.getInstance();
+		this.startDate = null;
+		this.finishDate = null;
+		this.taskTeam = new ArrayList<>();
+		this.reports = new ArrayList<>();
+		this.estimatedTaskEffort = estimatedTaskEffort;
+		this.estimatedTaskStartDate = estimatedTaskStartDate;
+		this.taskDeadline = taskDeadline;
+		this.taskBudget = estimatedBudgetCostTask;
+		this.startDateInterval = null;
+		this.deadlineInterval = null;
+		this.taskDependency = new ArrayList<>();
+		this.taskState = this.getTaskState();
 		this.currentState = StateEnum.CREATED;
 	}
 
