@@ -214,14 +214,12 @@ public class HelloJpaApplication implements CommandLineRunner {
 		// Instantiates the ProjectContainer, defines project "projOne", saves it in
 		// Repository
 		projOne = projContainer.createProject("POne", "teste", userAdmin);
-		projContainer.saveProjectInRepository(projOne);
+		//projContainer.addProjectToProjectContainer(projOne);
 
-		// Instantiates the TaskContainer, defines task "taskOne", saves it in
-		// Repository
+		// Instantiates the TaskContainer, defines task "taskOne", saves it in Repository
 		taskOne = taskContainer.createTask("Desenvolver código para responder à US399");
 
-		// Instantiates the ProjectCollaborator, defines projCollab "projCollab1", saves
-		// it in Repository
+		// Instantiates the ProjectCollaborator, defines projCollab "projCollab1", save it in Repository
 		projCollab1 = projOne.createProjectCollaborator(userAdmin, 3);
 		projectCollaboratorContainer.addProjectCollaborator(projCollab1);
 

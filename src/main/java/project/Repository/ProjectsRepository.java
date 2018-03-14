@@ -10,9 +10,9 @@ public interface ProjectsRepository extends JpaRepository<Project, Integer>{
 
     Project findById(long id);
 
-    List<Project> findByProjectStatus(int status);
+    //List<Project> findByProjectStatus(int status);
 
-    List<Project> findAllByProjectManager(User user);
+    //List<Project> findAllByProjectManager(User user);
 }
 
 

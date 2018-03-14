@@ -53,7 +53,7 @@ public class Task {
 	private Integer deadlineInterval;
 	private Calendar cancelDate;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Project_id")
 	private Project project;
 
@@ -90,6 +90,7 @@ public class Task {
 		this.taskState = new Created();
 		this.cancelDate = null;
 		this.currentState = StateEnum.CREATED;
+		this.project = this.getProject();
 	}
 
 	/**
