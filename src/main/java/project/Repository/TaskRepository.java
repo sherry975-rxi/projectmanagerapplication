@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import project.model.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Integer>{
+	
+	//Task findByID(Long iD);
 }

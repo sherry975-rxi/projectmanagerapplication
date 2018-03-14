@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import project.Services.ProjectContainerService;
+import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
 import project.model.Project;
@@ -29,7 +29,7 @@ public class HelloJpaApplication implements CommandLineRunner {
 	@Autowired
 	private TaskContainerService taskContainer;
 	@Autowired
-	private ProjectContainerService projContainer;
+	private ProjectService projContainer;
 	@Autowired
 	private UserContainerService userContainer;
 
