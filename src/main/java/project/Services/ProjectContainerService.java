@@ -104,6 +104,85 @@ public class ProjectContainerService {
 		return activeProjects;
 	}
 
+	/**
+	 * Checks if the a project already exists
+	 * 
+	 * @return TRUE if the Project is in this project repository FALSE if not
+	 */
+	public boolean isProjectInProjectContainer(int projectId){
+
+		return this.projectsRepository.exists(projectId);
+	}
+
+	/**
+	 * This method returns a set of Projects where a certain user
+	 *
+	 * *
+	 * @param user user whose projects are going to be found
+	 * 
+	 * @return List of Projects of a User
+	 * 
+	 */
+	public List<Project> getProjectsFromUser(User user) {
+		
+		List<Project> projects = new ArrayList<>();
+		List<ProjectCollaborator> userProjCollabs = new ArrayList<>();
+
+		//Finds all projectCollaborators from a given user
+		userProjCollabs.addAll(this.projectCollaboratorRepository.findAllByCollaborator(user));
+		
+		long projectId;
+
+		//Compares de projectId of the projectCollaborator to the project id of the projects in the database
+		for(ProjectCollaborator collaborator : userProjCollabs) {
+			projectId = collaborator.getProject().getId(); 
+			for(Project project : this.getAllProjectsfromProjectsContainer()) { 
+				if(project.getId() == projectId) {
+					projects.add(project); 
+				}			
+			}			
+		}
+
+		return projects;		
+	} 
+
+	/**
+	 * This method returns a set of Projects where a certain user is the project
+	 * manager
+	 * 
+	 * @param user user for which to find the projects where it is the project manager
+	 * 
+	 * @return List of Projects of a User
+	 * 
+	 */
+	public List<Project> getProjectsFromProjectManager(User user) {
+
+		List<Project> projectsOfPM = new ArrayList<>();
+		projectsOfPM.addAll(this.projectsRepository.findAllByProjectManager(user));
+
+		return projectsOfPM;
+	}
+
+	/**
+	 * Thid method tells the projectRepository to call the method save, in order to update a certain project
+	 *
+	 * @param project Project to update
+	 */
+	public void updateProject(Project project) {
+		this.projectsRepository.save(project);
+	}
+
+
+	/**
+	 * Calls the projectCollaboratorRepository to save the projectCollaborator to the database
+	 * The projectCollaborator is created by the Project
+	 *
+	 * @param projectCollaborator ProjectCollaborator to save
+	 */
+	public void addProjectCollaborator(ProjectCollaborator projectCollaborator) {
+
+		this.projectCollaboratorRepository.save(projectCollaborator);
+	}
 
 	/**
 	 * TODO This method is going to transinct to the TaskContainerService Class.
@@ -419,62 +498,4 @@ public class ProjectContainerService {
 		return result;
 	} */
 
-	/**
-	 * Checks if the a project already exists
-	 * 
-	 * @return TRUE if the Project is in this project repository FALSE if not
-	 */
-	public boolean isProjectInProjectContainer(int projectId){
-
-		return this.projectsRepository.exists(projectId);
-	}
-
-	/**
-	 * TODO This method is going to transinct to the ProjectCollaboratorService Class.
-	 *
-	 * This method returns a set of Projects where a certain user
-	 * 
-	 * @param user user whose projects are going to be found
-	 * 
-	 * @return List of Projects of a User
-	 * 
-	 */
-	/**public List<Project> getProjectsFromUser(User user) {
-
-		List<Project> listOfProjectsOfUser = new ArrayList<>();
-		listOfProjectsOfUser.addAll(this.projectsRepository.find)
-
-		for (Project other : this.projectsContainer) {
-			if (other.isUserInProjectTeam(user) || other.isProjectManager(user)) {
-				listOfProjectsOfUser.add(other);
-			}
-		}
-		return listOfProjectsOfUser;
-	} */
-
-	/**
-	 * This method returns a set of Projects where a certain user is the project
-	 * manager
-	 * 
-	 * @param user user for which to find the projects where it is the project manager
-	 * 
-	 * @return List of Projects of a User
-	 * 
-	 */
-	public List<Project> getProjectsFromProjectManager(User user) {
-
-		List<Project> projectsOfPM = new ArrayList<>();
-		projectsOfPM.addAll(this.projectsRepository.findAllByProjectManager(user));
-
-		return projectsOfPM;
-	}
-
-	/**
-	 * Thid method tells the projectRepository to call the method save, in order to update a certain project
-	 *
-	 * @param project Project to update
-	 */
-	public void updateProject(Project project) {
-		this.projectsRepository.save(project);
-	}
 }
