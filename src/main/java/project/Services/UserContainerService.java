@@ -177,9 +177,11 @@ public class UserContainerService {
 
         List<User> userListThatContainsPiecesOfEmailString = new ArrayList<>();
 
-        for (int i = 0; i < this.usersContainer.size(); i++) {
-            if (usersContainer.get(i).getEmail().contains(partOfEmail)) {
-                userListThatContainsPiecesOfEmailString.add(usersContainer.get(i));
+        List<User> allUsers = userRepository.findAll();
+
+        for (int i = 0; i < allUsers.size(); i++) {
+            if (allUsers.get(i).getEmail().contains(partOfEmail)) {
+                userListThatContainsPiecesOfEmailString.add(allUsers.get(i));
             }
         }
         return userListThatContainsPiecesOfEmailString;
