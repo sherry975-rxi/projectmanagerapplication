@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
@@ -17,14 +17,14 @@ public class US115andUS116SetUserStateControllerTests {
 	Profile collaborator = Profile.COLLABORATOR;
 
 
-	UserContainerService userContainer;
+	UserService userContainer;
 	User newUser2;
 	User newUser3;
 
 	@Before
 	public void setUp() {
 
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 
 
 		newUser2 = userContainer.createUser("Manel", "user2@gmail.com", "001", "Empregado",

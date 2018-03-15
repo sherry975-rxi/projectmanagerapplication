@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.Calendar;
@@ -20,12 +20,12 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 	Task task1, task2, task3, task4, task5, task6;
 	TaskCollaborator taskCollab1, taskCollab2, taskCollab3, taskCollab4, taskCollab5, taskCollab6;
 	ProjectService projectContainer;
-	UserContainerService userContainer;
+	UserService userContainer;
 
 	@Before
 	public void setUp() {
 		// creates an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 						
 		// creates a Project Container
 		projectContainer = new ProjectService();

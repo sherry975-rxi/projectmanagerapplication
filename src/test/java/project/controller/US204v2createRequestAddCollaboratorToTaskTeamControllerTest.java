@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.TaskContainerService;
-import project.Services.UserContainerService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.*;
 
 import static org.junit.Assert.assertEquals;
@@ -14,8 +14,8 @@ import static org.junit.Assert.assertEquals;
 public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 
 	ProjectService projectContainer;
-	UserContainerService userContainer;
-	TaskContainerService taskRepo;
+	UserService userContainer;
+	TaskService taskRepo;
 	Project proj;
 	Task taskA;
 	Task taskB;
@@ -31,7 +31,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 
 
 		// Initialize User Repository
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 
 		// Add user to User Repository
 		userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",

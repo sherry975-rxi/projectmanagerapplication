@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	 *
 	 */
 
-	UserContainerService userContainer;
+	UserService userContainer;
 	ProjectService projectContainer;
 
 	// TasksFiltersController tasksFiltersController;
@@ -42,7 +42,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	public void setUp() {
 
 		// create an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 
 		// create users
 		user1 = userContainer.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",

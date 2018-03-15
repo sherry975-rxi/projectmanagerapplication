@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 import project.model.taskstateinterface.Planned;
 import project.model.taskstateinterface.StandBy;
@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 
 public class US356ManageAssignmentRequestControllerTest {
 
-	UserContainerService userContainer;
+	UserService userContainer;
 	ProjectService projectContainer;
 
 	String teamTesterName, teamTesterID;
@@ -43,7 +43,7 @@ public class US356ManageAssignmentRequestControllerTest {
 	public void setUp() {
 		
 		// creates an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 						
 		// creates a Project Container
 		projectContainer = new ProjectService();

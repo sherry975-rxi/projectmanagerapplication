@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class US361AssignTaskToCollaboratorControllerTest {
 
-	UserContainerService userContainer;
+	UserService userContainer;
 	User user1;
 	User userAdmin;
 	Project project;
@@ -29,7 +29,7 @@ public class US361AssignTaskToCollaboratorControllerTest {
 	@Before
 	public void setUp() {
 		// creates an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 						
 		// creates a Project Container
 		projectContainer = new ProjectService();

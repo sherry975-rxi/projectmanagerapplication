@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
@@ -23,7 +23,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class US110andUS112SetUserProfileControllerTests {
 
     @InjectMocks
-    private UserContainerService userContainer;
+    private UserService userContainer;
 
     @Mock
     private US110andUS112SetUserProfileController us110andUS112SetUserProfileController;

@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.TaskContainerService;
-import project.Services.UserContainerService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.*;
 import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.OnGoing;
@@ -20,8 +20,8 @@ import static org.junit.Assert.*;
 public class US342CreateTaskDependencyTest {
 
 	ProjectService projRepo;
-	UserContainerService userRepo;
-	TaskContainerService taskRepo;
+	UserService userRepo;
+	TaskService taskRepo;
 	Project proj;
 	Task taskA;
 	Task taskB;
@@ -37,7 +37,7 @@ public class US342CreateTaskDependencyTest {
 		projRepo = new ProjectService();
 
 		// Initialize User Repository
-		userRepo = new UserContainerService();
+		userRepo = new UserService();
 
 		// Add user to User Repository
 		userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",

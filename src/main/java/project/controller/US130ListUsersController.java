@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.User;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class US130ListUsersController {
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listUsersController() {
-		UserContainerService userContainer = new UserContainerService();
+		UserService userContainer = new UserService();
 
 		this.userList = userContainer.getAllUsersFromUserContainer();
 		List<String> userListAsString = new ArrayList<>();

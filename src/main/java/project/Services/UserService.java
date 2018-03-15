@@ -20,7 +20,7 @@ import java.util.List;
  * @author Group3
  */
 @Service
-public class UserContainerService {
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -30,7 +30,7 @@ public class UserContainerService {
     /**
      * Constructor for UserContainer includes usersList creation
      */
-    public UserContainerService() {
+    public UserService() {
         this.usersContainer = new ArrayList<>();
     }
     
@@ -38,7 +38,7 @@ public class UserContainerService {
      * Constructor created for JPA purposes.
      * @param userRepository
      */
-    public UserContainerService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 }
 

@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Service
-public class TaskContainerService {
+public class TaskService {
 
 	@Autowired
 	private TaskRepository taskRepository;
@@ -26,14 +26,14 @@ public class TaskContainerService {
 	@Autowired
 	private ProjCollabRepository projectCollaboratorRepository;
 
-	public TaskContainerService() { }
+	public TaskService() { }
 
 	/**
 	 * Constructor created for JPA purposes.
 	 * 
 	 * @param taskRepository
 	 */
-	public TaskContainerService(TaskRepository taskRepository) {
+	public TaskService(TaskRepository taskRepository) {
 		this.taskRepository = taskRepository;
 	}
 

@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.TaskContainerService;
-import project.Services.UserContainerService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class CalculateReportedProjectCostControllerTest {
 	 *
 	 */
 	private ProjectService projContainer = new ProjectService();
-	UserContainerService userContainer = new UserContainerService();
+	UserService userContainer = new UserService();
 	private User userDaniel;
 	private User userJonny;
 	private User userMike;
@@ -35,7 +35,7 @@ public class CalculateReportedProjectCostControllerTest {
 	private ProjectCollaborator projectUserMike;
 	private ProjectCollaborator projectUserAna;
 	ProjectService projectContainer;
-	private TaskContainerService taskContainer;
+	private TaskService taskContainer;
 	private Task testTask;
 	private Task testTask2;
 	private TaskCollaborator taskWorkerDaniel;

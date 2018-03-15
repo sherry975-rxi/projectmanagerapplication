@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.TaskContainerService;
-import project.Services.UserContainerService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.Calendar;
@@ -16,8 +16,8 @@ import static org.junit.Assert.assertEquals;
 public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 
 	ProjectService projectContainer;
-	UserContainerService userContainer;
-	TaskContainerService taskRepo;
+	UserService userContainer;
+	TaskService taskRepo;
 	Project proj;
 	Task taskA;
 	Task taskB;
@@ -35,7 +35,7 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		projectContainer = new ProjectService();
 
 		// Initialize User Repository
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 
 		// Add user to User Repository
 		userContainer.addUserToUserRepository(userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337",

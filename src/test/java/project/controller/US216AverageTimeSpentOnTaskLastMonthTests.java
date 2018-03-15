@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.TaskContainerService;
-import project.Services.UserContainerService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -36,14 +36,14 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 	 * 
 	 */
 
-	UserContainerService userContainer;
+	UserService userContainer;
 	User user1;
 	User user2;
 	ProjectCollaborator projectCollaborator1;
 	TaskCollaborator taskWorker1;
 	ProjectService projectContainer;
 	Project myProject;
-	TaskContainerService taskContainer;
+	TaskService taskContainer;
 	Task task1;
 	Task task2;
 	Task task3;
@@ -52,7 +52,7 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 	@Before
 	public void setUp() {
 
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "Programador",
 				"910000000", "Rua Azul", "5679-987", "braga", "braga", "portugal");

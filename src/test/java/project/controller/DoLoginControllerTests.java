@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 public class DoLoginControllerTests {
 
-	UserContainerService userContainer;
+	UserService userContainer;
 	User user1;
 	User userAdmin;
 	DoLoginController doLoginController;
@@ -23,7 +23,7 @@ public class DoLoginControllerTests {
 		
 
 		// creates an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 
 		userContainer.getAllUsersFromUserContainer().clear();
 

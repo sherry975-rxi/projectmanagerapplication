@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.Project;
 import project.model.User;
@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  */
 public class US302ChangeProjectManagerTest {
 
-	UserContainerService userContainer;
+	UserService userContainer;
 	ProjectService projectContainer;
 	User userFirstManager;
 	User userNewManager;
@@ -31,7 +31,7 @@ public class US302ChangeProjectManagerTest {
 	public void setUp() {
 
 		// creates an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 								
 		// creates a Project Container
 		projectContainer = new ProjectService();

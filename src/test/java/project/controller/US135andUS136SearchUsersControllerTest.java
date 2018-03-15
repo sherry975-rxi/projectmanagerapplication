@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
@@ -26,14 +26,14 @@ public class US135andUS136SearchUsersControllerTest {
 	User newUser1;
 	User newUser2;
 	User newUser3;
-	UserContainerService userContainer;
+	UserService userContainer;
 	US135andUS136SearchUsersController searchController;
 
 	@Before
 	public void setUp() {
 
 		// creates an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 
 		// create user
 		newUser1 = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
