@@ -2,6 +2,8 @@ package project.model;
 
 //
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import project.model.taskstateinterface.*;
 
 import javax.persistence.*;
@@ -24,14 +26,16 @@ public class Task {
 
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String taskID;
 	private String description;
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
+	@OneToMany (cascade = CascadeType.ALL, mappedBy = "task")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@Column(columnDefinition = "LONGBLOB")
 	private List<TaskCollaborator> taskTeam;
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
+	@OneToMany (cascade = CascadeType.ALL, mappedBy = "task")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@Column(columnDefinition = "LONGBLOB")
 	private List<Report> reports;
 	@Enumerated(EnumType.STRING)
