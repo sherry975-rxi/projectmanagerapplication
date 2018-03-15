@@ -5,5 +5,5 @@ import project.model.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Integer>{
 	
-	//Task findByID(Long iD);
+	Task findById(Long id);
 }
