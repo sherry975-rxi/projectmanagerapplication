@@ -547,13 +547,13 @@ public class TaskContainerTest {
 		listTasksWithoutUser.add(testTask2);
 		listTasksWithoutUser.add(testTask3);
 
-		assertEquals(listTasksWithoutUser, taskContainer.getAllTasksWithoutCollaboratorsAssigned());
+		assertEquals(listTasksWithoutUser, taskContainer.getProjectTasksWithoutCollaboratorsAssigned());
 
 		testTask2.addTaskCollaboratorToTask(taskWorkerDan);
 
 		listTasksWithoutUser.remove(testTask2);
 
-		assertEquals(listTasksWithoutUser, taskContainer.getAllTasksWithoutCollaboratorsAssigned());
+		assertEquals(listTasksWithoutUser, taskContainer.getProjectTasksWithoutCollaboratorsAssigned());
 
 		testTask2.removeProjectCollaboratorFromTask(collabDan);
 
@@ -562,7 +562,7 @@ public class TaskContainerTest {
 		listTasksWithoutUser.add(testTask2);
 		listTasksWithoutUser.add(testTask3);
 
-		assertEquals(listTasksWithoutUser, taskContainer.getAllTasksWithoutCollaboratorsAssigned());
+		assertEquals(listTasksWithoutUser, taskContainer.getProjectTasksWithoutCollaboratorsAssigned());
 
 	}
 
@@ -760,7 +760,7 @@ public class TaskContainerTest {
 		listUnstartedTasks.add(testTask);
 		listUnstartedTasks.add(testTask2);
 
-		assertEquals(listUnstartedTasks, taskContainer.getUnstartedTasks());
+		assertEquals(listUnstartedTasks, taskContainer.getProjectUnstartedTasks());
 
 	}
 
@@ -783,7 +783,7 @@ public class TaskContainerTest {
 		listExpiredTasks.add(testTask6);
 		listExpiredTasks.add(testTask7);
 
-		assertEquals(listExpiredTasks, taskContainer.getExpiredTasks());
+		assertEquals(listExpiredTasks, taskContainer.getProjectExpiredTasks());
 
 	}
 

@@ -11,11 +11,8 @@ import project.model.StateEnum;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
-import project.model.taskstateinterface.Cancelled;
-import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.*;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,16 +20,13 @@ import java.util.List;
 @Service
 public class TaskContainerService {
 
-	private List<Task> projectTasks; // TEMPORARY just to not break old tests
-	private int taskCounter; // TEMPORARY just to not break old tests
-	private int projId; // TEMPORARY just to not break old tests
-
 	@Autowired
 	private TaskRepository taskRepository;
 
-	public TaskContainerService() {
+	@Autowired
+	private ProjCollabRepository projectCollaboratorRepository;
 
-	}
+	public TaskContainerService() { }
 
 	/**
 	 * Constructor created for JPA purposes.
@@ -64,9 +58,20 @@ public class TaskContainerService {
 	 * 
 	 * @return Project Task List
 	 */
-	public List<Task> getProjectTaskRepository() {
+	public List<Task> getTaskRepository() {
 		return this.taskRepository.findAll();
 	}
+
+	/**
+	 * Get the complete task list for the project
+	 *
+	 * @return Project Task List
+	 */
+	public List<Task> getProjectTasks(Project project) {
+		return this.taskRepository.findAllByProject(project);
+	}
+
+
 
 	/**
 	 * This method returns all the tasks from a certain user.
@@ -81,13 +86,13 @@ public class TaskContainerService {
 		List<Task> userTasks = new ArrayList<>();
 
 		// Iterates through the taskRepository
-		for (Task task : this.getProjectTaskRepository()) {
+		for (Task task : this.getTaskRepository()) {
 			// Iterates through the task team of every task in taskRepository
 			for (TaskCollaborator taskCollab : task.getTaskTeam()) {
 				User toCompare = taskCollab.getProjectCollaboratorFromTaskCollaborator().getCollaborator();
 				// checks if the user is in the task and if the task was not already added to
 				// the list
-				if (toCompare.equals(user) && !userTasks.contains(task)) {
+				if (user.equals(toCompare) && !userTasks.contains(task)) {
 					userTasks.add(task);
 				}
 			}
@@ -142,8 +147,6 @@ public class TaskContainerService {
 	}
 
 	/**
-	 * TODO This method is going to transinct to the TaskContainerService Class.
-	 *
 	 * This method returns all the Started tasks with state "unfinished" from all
 	 * the projects, that has a specific user associated to that task.
 	 *
@@ -252,42 +255,127 @@ public class TaskContainerService {
 		}
 		return result;
 	}
-	
-	//	/**
-	//	 * This method saves the task in the Repository
-	//	 * @param task
-	//	 * @return
-	//	 */
-	//	public Task saveTask (Task task) {
-	//
-	//		return this.taskRepository.save(task);
-	//	}
-	
 
+	/**
+	 * This method returns the sum of the time spent in all the tasks that were
+	 * marked as finished during the last month.
+	 *
+	 * @param user
+	 *            user to search the tasks in which it is included
+	 *
+	 * @return Returns total time spent doing tasks in the last month.
+	 */
+	public double getTotalTimeOfFinishedTasksFromUserLastMonth(User user) {
 
-//		/**
-//		 * Add a task to the project tasks list
-//		 * 
-//		 * @param toAdd
-//		 *            Task to add to the Project Task List
-//		 */
-//		public void addProjectTask(Task toAdd) {
-//		    toAdd.setProject(this.project);
-//			this.projectTasks.add(toAdd);
-//		}
-	//
-	//
-//		public void setProject(Project project) {
-//			this.project=project;
-//		}
-	//
-//		public Project getProject() {
-//			return this.project;
-//		}
+		double totalTime = 0;
+
+		for (ProjectCollaborator projCollab : this.projectCollaboratorRepository.findAll()) {
+			User toCompare = projCollab.getCollaborator();
+			if(user.equals(toCompare)) {
+						totalTime = totalTime + getTimeSpentByProjectCollaboratorInAllTasksLastMonth(projCollab);
+			}
+		}
+		return totalTime;
+	}
+
+	/**
+	 * This method returns the total time spent by a user in tasks from a project
+	 * Last month
+	 *
+	 * @param collab ProjectCollaborator to search
+	 * @return Time spent on last month project user tasks
+	 */
+	public double getTimeSpentByProjectCollaboratorInAllTasksLastMonth(ProjectCollaborator collab) {
+		List<Task> lastMonth = new ArrayList<>();
+		lastMonth.addAll(this.getLastMonthFinishedUserTaskList(collab.getUserFromProjectCollaborator()));
+		double totalTime = 0;
+		for (Task task : lastMonth) {
+			totalTime = totalTime + task.getTimeSpentByProjectCollaboratorOntask(collab);
+		}
+		return totalTime;
+	}
+
+	/**
+	 * This method returns the average time spent by task during last month. This
+	 * method gets the total time spent on every task finished on last month. Then
+	 * it will divide that time by the number of tasks.
+	 *
+	 * @param user user for which to get the average time spent on tasks that were finished last month
+	 *
+	 * @return Returns the average time spent by finished task in the last month.
+	 */
+	public double getAverageTimeOfFinishedTasksFromUserLastMonth(User user) {
+
+		double totalTime = this.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
+
+		return totalTime / this.getLastMonthFinishedUserTaskList(user).size();
+
+	}
+
+	/**
+	 * This method returns a list with the tasks finished last month by decreasing
+	 * order.
+	 *
+	 * @param user user for which to get the tasks that were finished last month in decreasing order of finish date
+	 *
+	 * @return Returns a list with the tasks finished last month by decreasing
+	 *         order.
+	 */
+	public List<Task> getFinishedUserTasksFromLastMonthInDecreasingOrder(User user) {
+
+		List<Task> lastMonthTasksDecOrder = new ArrayList<>();
+		lastMonthTasksDecOrder.addAll(getLastMonthFinishedUserTaskList(user));
+
+		return this.sortTaskListDecreasingOrder(lastMonthTasksDecOrder);
+	}
+
+	/**
+	 * This method returns a list with the finished tasks of a certain user by
+	 * decreasing order of date.
+	 *
+	 * @param user user for which to get the finished tasks in decreasing order of finish date
+	 *
+	 * @return Returns a list with the all the user finished tasks sorted by
+	 *         decreasing order.
+	 */
+	public List<Task> getAllFinishedUserTasksInDecreasingOrder(User user) {
+
+		List<Task> finishedTasksDecOrder = new ArrayList<>();
+		finishedTasksDecOrder.addAll(getUserTasks(user));
+
+		return this.sortTaskListDecreasingOrder(finishedTasksDecOrder);
+	}
+
+	/**
+	 *
+	 * This method returns a list with the started but not finished tasks of a
+	 * certain user by increasing order of deadline.
+	 *
+	 * @param user user for which to get the started but not finished tasks in increasing order of deadline
+	 *
+	 * @return Returns a list with the all the user started, unfinished tasks sorted
+	 *         by increasing Deadline order.
+	 */
+	public List<Task> getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(User user) {
+
+		List<Task> incompleteUserTaskListIncreasingOrder = new ArrayList<>(this.getStartedNotFinishedUserTaskList(user));
+
+		return this.sortTaskListByDeadline(incompleteUserTaskListIncreasingOrder);
+	}
+
+	/**
+		 * This method saves the task in the Repository
+		 * @param task
+		 * @return
+		 */
+		public Task saveTask (Task task) {
+
+			return this.taskRepository.save(task);
+		}
 
 		/**
 		 * This method returns only the unfinished tasks in a project.
-		 * 
+		 *
 		 * @return UnfinishedTaskList The list if tasks that are not finished
 		 */
 		public List<Task> getUnfinishedTasksFromProjectCollaborator(ProjectCollaborator collab) {
@@ -304,7 +392,6 @@ public class TaskContainerService {
 			return unfinishedTaskList;
 
 		}
-	
 
 		/**
 		 * This method returns only the started but not finished tasks assigned to a
@@ -338,7 +425,7 @@ public class TaskContainerService {
 
 			List<Task> finishedTaskList = new ArrayList<>();
 			
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other : this.getTaskRepository()) {
 				if (other.isTaskFinished() && other.isProjectCollaboratorInTaskTeam(collab)) {
 					finishedTaskList.add(other);
 				}
@@ -385,62 +472,14 @@ public class TaskContainerService {
 		 *         the task list
 		 */
 		public boolean isTaskInRTaskRepository(Task task) {
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other : this.getTaskRepository()) {
 				if (task.equals(other)) {
 					return true;
 				}
 			}
 			return false;
 		}
-		
-		/**
-		 * This method returns the total time spent by a user in tasks from a project
-		 * Last month
-		 * 
-		 * @param collab
-		 * @return Time spent on last month project user tasks
-		 */
-		public double getTimeSpentByProjectCollaboratorInAllTasksLastMonth(ProjectCollaborator collab) {
-			List<Task> lastMonth = new ArrayList<>();
-			lastMonth.addAll(this.getFinishedTasksFromProjectCollaboratorInGivenMonth(collab, 1));
-			double totalTime = 0;
-			for (Task test : lastMonth) {
-				totalTime = totalTime + test.getTimeSpentByProjectCollaboratorOntask(collab);
-			}
-			return totalTime;
-		}
-		
-		/**
-		 * Sets Counter of tasks
-		 * 
-		 * @param count
-		 *            Integer to set the count of the task
-		 */
-		public void setTaskCounter(int count) {
-			// TEMPORARY JUST TO NOT BREAK OLD TESTS
-			this.taskCounter = count;
-		}
 
-		/**
-		 * Gets the counter of tasks
-		 * 
-		 * @return the count of the tasks
-		 */
-		public int getTaskCounter() {
-			// TEMPORARY JUST TO NOT BREAK OLD TESTS
-			return this.taskCounter;
-		}
-
-		/**
-		 * Gets the Project Id
-		 * 
-		 * @return the Project Id
-		 */
-		public int getProjId() {
-			// TEMPORARY JUST TO NOT BREAK OLD TESTS
-			return projId;
-		}
-		
 		/**
 		 * This method returns a list with all the tasks of a certain user in the
 		 * project
@@ -452,7 +491,7 @@ public class TaskContainerService {
 		 */
 		public List<Task> getAllTasksFromProjectCollaborator(ProjectCollaborator collab) {
 			List<Task> allTasks = new ArrayList<>();
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other : this.getTaskRepository()) {
 				if (other.isProjectCollaboratorInTaskTeam(collab)) {
 					allTasks.add(other);
 				}
@@ -470,7 +509,7 @@ public class TaskContainerService {
 		 *         task
 		 */
 		public boolean isCollaboratorActiveOnAnyTask(ProjectCollaborator collab) {
-			for (Task otherTask : this.getProjectTaskRepository()) {
+			for (Task otherTask : this.getTaskRepository()) {
 				if (otherTask.isProjectCollaboratorActiveInTaskTeam(collab))
 					return true;
 			}
@@ -484,11 +523,11 @@ public class TaskContainerService {
 		 * @return listOfTasksWithoutCollaboratorsAssigned List with all the tasks with
 		 *         no collaborators assigned.
 		 */
-		public List<Task> getAllTasksWithoutCollaboratorsAssigned() {
+		public List<Task> getProjectTasksWithoutCollaboratorsAssigned(Project project) {
 
 			List<Task> listOfTasksWithoutCollaboratorsAssigned = new ArrayList<>();
 
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other :  this.getProjectTasks(project)) {
 
 				if (other.isTaskTeamEmpty()) {
 					listOfTasksWithoutCollaboratorsAssigned.add(other);
@@ -506,10 +545,10 @@ public class TaskContainerService {
 		 * 
 		 * @return allFinishedTasks
 		 */
-		public List<Task> getFinishedTasks() {
+		public List<Task> getFinishedTasks(Project project) {
 			List<Task> allFinishedTasks = new ArrayList<>();
 
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other : this.getProjectTasks(project)) {
 				if (other.isTaskFinished()) {
 					allFinishedTasks.add(other);
 				}
@@ -522,16 +561,15 @@ public class TaskContainerService {
 		
 		/**
 		 * This method create a list of all tasks finished from project in decreasing
-		 * order. First creates a empty list, then add all finished tasks from the
-		 * project using method getFinishedTasks. At last, apply the sort by decreasing
-		 * order to that list and return it.
+		 * order.
 		 * 
 		 * @return a list of tasks finished by decreasing order
 		 */
-		public List<Task> getFinishedTasksInDecreasingOrder() {
+		public List<Task> getProjectFinishedTasksInDecreasingOrder(Project project) {
 
 			List<Task> finishedTaskListDecreasingOrder = new ArrayList<>();
-			finishedTaskListDecreasingOrder.addAll(this.getFinishedTasks());
+
+			finishedTaskListDecreasingOrder.addAll(this.getProjectTasks(project));
 
 			return sortTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
 		}
@@ -541,10 +579,10 @@ public class TaskContainerService {
 		 * 
 		 * @return allUnFinishedTasks
 		 */
-		public List<Task> getUnFinishedTasks() {
+		public List<Task> getUnFinishedTasks(Project project) {
 			List<Task> allUnFinishedTasks = new ArrayList<>();
 
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other : this.getProjectTasks(project)) {
 				if (!other.isTaskFinished() && !"Cancelled".equals(other.viewTaskStateName())
 						&& other.getStartDate() != null) {
 					allUnFinishedTasks.add(other);
@@ -559,10 +597,10 @@ public class TaskContainerService {
 		 * 
 		 * @return List with the tasks set to “OnGoing” state
 		 */
-		public List<Task> getOnGoingTasks() {
+		public List<Task> getProjectOnGoingTasks(Project project) {
 			List<Task> allOnGoing = new ArrayList<>();
 
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other : this.getProjectTasks(project)) {
 				if ("OnGoing".equals(other.viewTaskStateName())) {
 					allOnGoing.add(other);
 				}
@@ -576,11 +614,11 @@ public class TaskContainerService {
 		 * 
 		 * @return allUnstartedTasks
 		 */
-		public List<Task> getUnstartedTasks() {
+		public List<Task> getProjectUnstartedTasks(Project project) {
 			List<Task> allUnstartedTasks = new ArrayList<>();
 
-			for (Task other : this.getProjectTaskRepository()) {
-				if (other.getStartDate() == null) {
+			for (Task other : this.getProjectTasks(project)) {
+				if (other.getTaskState() instanceof Created || other.getTaskState() instanceof Planned || other.getTaskState() instanceof Ready) {
 					allUnstartedTasks.add(other);
 				}
 			}
@@ -593,10 +631,10 @@ public class TaskContainerService {
 		 * 
 		 * @return expiredTasks
 		 */
-		public List<Task> getExpiredTasks() {
+		public List<Task> getProjectExpiredTasks(Project project) {
 			Calendar today = Calendar.getInstance();
 			List<Task> expiredTasks = new ArrayList<>();
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other : this.getProjectTasks(project)) {
 				if (!other.isTaskFinished() && other.getTaskDeadline() != null && other.getTaskDeadline().before(today)) {
 						expiredTasks.add(other);
 
@@ -608,19 +646,13 @@ public class TaskContainerService {
 		/**
 		 * This method returns the a Task by taskID
 		 * 
-		 * @param taskID
+		 * @param id taskId
 		 * 
 		 * @return A task by a Task ID
 		 */
-		public Task getTaskByID(String taskID) {
+		public Task getTaskByID(Long id) {
 
-			for (Task other : getProjectTaskRepository()) {
-				if (other.getTaskID().equals(taskID)) {
-					return other;
-				}
-
-			}
-			return null;
+			return this.taskRepository.findById(id);
 
 		}
 
@@ -638,7 +670,7 @@ public class TaskContainerService {
 
 			switch (taskToDelete.viewTaskStateName()) {
 			case "Assigned": case "Planned" : case "Created" : case "Ready":
-	 			this.projectTasks.remove(taskToDelete);
+	 			this.taskRepository.delete(taskToDelete);
 				wasTaskDeleted = true;
 				break;
 
@@ -655,10 +687,10 @@ public class TaskContainerService {
 		 * 
 		 * @return List of cancelled Tasks
 		 */
-		public List<Task> getCancelledTasks() {
+		public List<Task> getProjectCancelledTasks(Project project) {
 			List<Task> cancelledTasksFromProject = new ArrayList<>();
 
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other : this.getProjectTasks(project)) {
 				if (other.getTaskState() instanceof Cancelled) {
 					cancelledTasksFromProject.add(other);
 				}
@@ -673,7 +705,7 @@ public class TaskContainerService {
 		public List<String> getReportedCostOfEachTask() {
 			List<String> reportTaskCost = new ArrayList<>();
 
-			for (Task other : this.getProjectTaskRepository()) {
+			for (Task other : this.getTaskRepository()) {
 				reportTaskCost.add(String.valueOf(other.getTaskCost()));
 
 			}
@@ -689,8 +721,8 @@ public class TaskContainerService {
 		 */
 		public List<Task> getTaskListOfWhichDependenciesCanBeCreated() {
 			List<Task> validTasks = new ArrayList<>();
-			validTasks.addAll(getProjectTaskRepository());
-			for (Task other : this.getProjectTaskRepository()) {
+			validTasks.addAll(getTaskRepository());
+			for (Task other : this.getTaskRepository()) {
 				if (other.getTaskState() instanceof Finished) {
 					validTasks.remove(other);
 				}
@@ -700,49 +732,5 @@ public class TaskContainerService {
 			}
 			return validTasks;
 		}
-		
-//	/**
-//	 * Constructor created for JPA purposes.
-//	 * 
-//	 * @param projId
-//	 */
-//	public TaskContainerService(int projId) {
-//		// TEMPORARY JUST TO NOT BREAK OLD TESTS
-//		this.projectTasks = new ArrayList<>();
-//		this.taskCounter = 1;
-//		this.projId = projId;
-//
-//	}
-
-	/**
-	 * Creates an instance of Task
-	 * 
-	 * @param description
-	 * 
-	 * @return the task created
-	 */
-	public Task createTask(String description, int estimatedTaskEffort, Calendar estimatedTaskStartDate,
-			Calendar taskDeadline, int estimatedBudgetCostTask) {
-		// TEMPORARY JUST TO NOT BREAK OLD TESTS
-		Task newTask = new Task(this.taskCounter, this.projId, description, estimatedTaskEffort, estimatedTaskStartDate,
-				taskDeadline, estimatedBudgetCostTask);
-		taskCounter++;
-		return newTask;
-	}
-
-	/**
-	 * Creates an instance of Task in the state CREATED
-	 * 
-	 * @param description
-	 * 
-	 * @return the task created
-	 */
-	public Task createTask(String description) {
-		// TEMPORARY JUST TO NOT BREAK OLD TESTS
-		Task newTask = new Task(this.taskCounter, this.projId, description);
-
-		taskCounter++;
-		return newTask;
-	}
 
 }
