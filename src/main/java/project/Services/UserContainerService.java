@@ -109,7 +109,7 @@ public class UserContainerService {
 
     /**
      * This method allows the administrator to see if a given user already exists in
-     * company (userContainer)
+     * company (userContainer) DB
      *
      * @param addedUser user
      * @return TRUE if user exists in company. FALSE if user doesn’t exist
@@ -142,7 +142,7 @@ public class UserContainerService {
      * @param email parameter used to fetch users from the DataBase
      * @return all users that possess a certain email address
      */
-    public User getUserByEmailFromDatabase(String email) {
+    public User getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
     }
 
@@ -162,13 +162,7 @@ public class UserContainerService {
      * @return all active Collaborators
      */
     public List<User> getAllActiveCollaboratorsFromRepository() {
-        List<User> allCollaborators = new ArrayList<>();
-        for (User other : this.getAllUsersFromUserContainer()) {
-            if (other.isSystemUserStateActive() && other.getUserProfile().equals(Profile.COLLABORATOR)) {
-                allCollaborators.add(other);
-            }
-        }
-        return allCollaborators;
+        return userRepository.findAllByUserProfile(Profile.COLLABORATOR);
     }
 
     /**
@@ -192,39 +186,15 @@ public class UserContainerService {
     }
 
     /**
-     * This method allows the Administrator to access the user list (userContainer) and search users
-     * by complete email. This is achieved by using the .contains() method.
-     *
-     * @param completeEmail This is the complete user's email address
-     * @return the user that matches the searched e-mail address
-     */
-    public User getUserByEmail(String completeEmail) {
-
-        for (int i = 0; i < this.usersContainer.size(); i++) {
-            if (usersContainer.get(i).getEmail().contains(completeEmail)) {
-                return usersContainer.get(i);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * This method allows the administrator to access the userContainer and search
-     * users by profile.
+     * This method allows the administrator to search
+     * users in the Company by profile. This method accesses the DB
      *
      * @param searchProfile Profile of a user
      * @return list of users from the userContainer with users that possess a certain profile
      */
     public List<User> searchUsersByProfile(Profile searchProfile) {
 
-        List<User> usersByProfileList = new ArrayList<>();
-
-        for (int i = 0; i < this.usersContainer.size(); i++) {
-            if (usersContainer.get(i).getUserProfile() == searchProfile) {
-                usersByProfileList.add(this.usersContainer.get(i));
-            }
-        }
-        return usersByProfileList;
+        return userRepository.findAllByUserProfile(searchProfile);
     }
 
     /**
@@ -246,14 +216,4 @@ public class UserContainerService {
         return result;
     }
 
-    /**
-     * This method feeds the list of all Users in the Company (userContainer) with the user data that is in the DB
-     */
-    public List<User> populateUserContainer() {
-        usersContainer.clear();
-
-        this.userRepository.findAll().forEach(this.usersContainer::add);
-
-        return this.usersContainer;
-    }
 }
