@@ -1,5 +1,8 @@
 package project.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,17 +10,20 @@ import javax.persistence.*;
 public class TaskTeamRequest {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollab;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "Task_id")
 	private Task task;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "Project_id")
 	private Project project;
 
