@@ -1,6 +1,9 @@
 package project.model;
 
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,12 +12,14 @@ import java.io.Serializable;
 public class ProjectCollaborator implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "User_id")
 	private User collaborator;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "Project_id")
 	private Project project;
 	private boolean status;
