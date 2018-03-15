@@ -10,7 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
-import project.model.*;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 
 @SpringBootApplication
 public class HelloJpaApplication implements CommandLineRunner {
@@ -23,7 +27,6 @@ public class HelloJpaApplication implements CommandLineRunner {
 	private static Project projOne;
 	private static ProjectCollaborator projCollab1;
 	private static Profile collabProfile;
-
 
 	@Autowired
 	private TaskContainerService taskContainer;
@@ -215,15 +218,19 @@ public class HelloJpaApplication implements CommandLineRunner {
 		// Instantiates the ProjectContainer, defines project "projOne", saves it in
 		// Repository
 		projOne = projContainer.createProject("POne", "teste", userAdmin);
-		//projContainer.addProjectToProjectContainer(projOne);
+		// projContainer.addProjectToProjectContainer(projOne);
 
-		// Instantiates the ProjectCollaborator, defines projCollab "projCollab1", save it in Repository
+		// Instantiates the ProjectCollaborator, defines projCollab "projCollab1", save
+		// it in Repository
 		projCollab1 = projOne.createProjectCollaborator(userAdmin, 3);
 		projContainer.addProjectCollaborator(projCollab1);
-		
-		// Instantiates the TaskContainer, defines task "taskOne", saves it in Repository
-		//taskOne = taskContainer.createTask("Desenvolver código para responder à US399");
-		//taskOne = projOne.createTaskinProject("Desenvolver código para responder à US499");
+
+		// Instantiates the TaskContainer, defines task "taskOne", saves it in
+		// Repository
+		// taskOne = taskContainer.createTask("Desenvolver código para responder à
+		// US399");
+		// taskOne = projOne.createTaskinProject("Desenvolver código para responder à
+		// US499");
 		taskContainer.createTask("Desenvolver código para responder à US499", projOne);
 
 		userContainer.isUserinUserContainer(userAdmin);
@@ -233,8 +240,16 @@ public class HelloJpaApplication implements CommandLineRunner {
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println(userContainer.isUserinUserContainer(userAdmin));
 		System.out.println(userContainer.getAllUsersFromUserContainer().get(0).getName());
-		System.out.println(userContainer.getUserByEmailFromDatabase("admin@gmail.com").getName());
+		System.out.println(userContainer.getUserByEmail("admin@gmail.com").getName());
+		// //System.out.println(userContainer.searchUsersByEmail("@gmail.com").get(0).getName());
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println(userContainer.getAllActiveCollaboratorsFromRepository().get(0).getName());
+		// System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		// System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		// System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println(userContainer.searchUsersByProfile(collabProfile).get(0).getName());
 
 	}
 }
