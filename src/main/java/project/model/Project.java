@@ -1,8 +1,9 @@
 package project.model;
 
-//
+
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,6 +57,7 @@ public class Project implements Serializable{
 	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
 	@Column(columnDefinition = "LONGBLOB")
 	private List<Task> taskList;
+	
 
 	/**
 	 * Empty Constructor for Project
@@ -148,6 +150,19 @@ public class Project implements Serializable{
 	 */
 	public void addUserToProjectTeam(User userToAdd, int costPerEffort) {
 		addProjectCollaboratorToProjectTeam(createProjectCollaborator(userToAdd, costPerEffort));
+	}
+	
+	/**
+	 * Create a Task using Creation Pattern
+	 * 
+	 * @param description
+	 *            of the task
+	 * @return A new Task object
+	 */
+	public Task createTask(String description) {
+
+		Task newTask = new Task(description, this);
+		return newTask;
 	}
 
 	/**

@@ -24,6 +24,7 @@ public class HelloJpaApplication implements CommandLineRunner {
 	private static User userDirector;
 	private static User userJSilva;
 	private static Task taskOne;
+	private static Task taskTwo;
 	private static Project projOne;
 	private static ProjectCollaborator projCollab1;
 	private static Profile collabProfile;
@@ -252,6 +253,9 @@ public class HelloJpaApplication implements CommandLineRunner {
 		System.out.println(userContainer.searchUsersByProfile(collabProfile).get(0).getName());
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println(userContainer.searchUsersByPartsOfEmail("admin@gmail.com").get(0).getName());
+		
+		taskTwo = projOne.createTask("Desenvolver código para responder à US499");
+		taskContainer.saveTask(taskTwo);
 
 	}
 }
