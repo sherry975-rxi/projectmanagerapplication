@@ -18,7 +18,7 @@ public class ProjectService {
 	private ProjectsRepository projectsRepository;
 	
 	@Autowired
-	ProjCollabRepository projectCollaboratorRepository; 
+	private ProjCollabRepository projectCollaboratorRepository; 
 		
 	/**
 	 * Constructor that allows one to create a new Project Repository. There are no
@@ -184,4 +184,21 @@ public class ProjectService {
 		this.projectCollaboratorRepository.save(projectCollaborator);
 	}
 
+	/**
+	 * Creates an instance of ProjectCollaborator set the id of the project and saves projectCollaborator in the database
+	 * 
+	 * @param user user to associate with projectCollaborator 
+	 * @param project to set project id in projectCollaborator
+	 * @param costPerEffort 
+	 * 
+	 * @return the projectCollaborator created
+	 */
+	public ProjectCollaborator createProjectCollaborator(User user, Project project, int costPerEffort) {
+
+		ProjectCollaborator newProjectCollaborator = new ProjectCollaborator(user, costPerEffort);
+		newProjectCollaborator.setProject(project);
+		this.projectCollaboratorRepository.save(newProjectCollaborator);
+		return newProjectCollaborator;
+
+	}
 }
