@@ -65,7 +65,8 @@ public class TaskContainerTest {
 	@After
 	public void tearDown() {
 		this.victim = null;
-
+		this.taskMock= null;
+		this.task2Mock= null;
 	}
 
 	@Test
@@ -297,7 +298,7 @@ public class TaskContainerTest {
 	}
 
 	@Test
-	public void testGetExpiredTasks(){
+	public void testGetExpiredTasks() {
 		Calendar calendar2 = Calendar.getInstance();
 		calendar2.add(Calendar.MONTH, -1);
 
@@ -309,18 +310,46 @@ public class TaskContainerTest {
 		List<Task> expectedTaskList = new ArrayList<>();
 		expectedTaskList.add(taskMock);
 		assertEquals(expectedTaskList, victim.getExpiredTasks());
+		}
 
-		//the condition other.getTaskDeadline().before(today) is false
-		when(taskMock.isTaskFinished()).thenReturn(false);
-		Calendar calendar = Calendar.getInstance();
-		when(taskMock.getTaskDeadline()).thenReturn(calendar);
+	@Test
+	public void testGetExpiredTasks2() {
+			Calendar calendar2 = Calendar.getInstance();
+			calendar2.add(Calendar.MONTH, -1);
+
+			List<Task> expectedTaskList = new ArrayList<>();
+			expectedTaskList.add(taskMock);
+
+			//the condition other.getTaskDeadline().before(today) is false
+			when(taskMock.isTaskFinished()).thenReturn(false);
+			Calendar calendar = Calendar.getInstance();
+			when(taskMock.getTaskDeadline()).thenReturn(calendar);
+			expectedTaskList.remove(taskMock);
+			assertEquals(expectedTaskList, victim.getExpiredTasks());
+	}
+
+	@Test
+	public void testGetExpiredTasks3() {
+		Calendar calendar2 = Calendar.getInstance();
+		calendar2.add(Calendar.MONTH, -1);
+
+		List<Task> expectedTaskList = new ArrayList<>();
+		expectedTaskList.add(taskMock);
 		expectedTaskList.remove(taskMock);
-		assertEquals(expectedTaskList, victim.getExpiredTasks());
-
 		//the condition other.getTaskDeadline() != null is false
 		when(taskMock.isTaskFinished()).thenReturn(false);
 		when(taskMock.getTaskDeadline()).thenReturn(null);
 		assertEquals(expectedTaskList, victim.getExpiredTasks());
+	}
+
+	@Test
+	public void testGetExpiredTasks4() {
+		Calendar calendar2 = Calendar.getInstance();
+		calendar2.add(Calendar.MONTH, -1);
+
+		List<Task> expectedTaskList = new ArrayList<>();
+		expectedTaskList.add(taskMock);
+		expectedTaskList.remove(taskMock);
 
 		//the condition !other.isTaskFinished() is false
 		when(taskMock.isTaskFinished()).thenReturn(true);
