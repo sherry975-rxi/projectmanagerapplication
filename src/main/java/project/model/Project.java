@@ -2,6 +2,9 @@ package project.model;
 
 //
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ import static javax.persistence.CascadeType.ALL;
 public class Project implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private int projectIdCode;
 	private int status;
@@ -34,7 +37,8 @@ public class Project implements Serializable{
 	private TaskContainer taskContainer;
 	@OneToOne
 	private User projectManager;
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+	@OneToMany (cascade = CascadeType.ALL, mappedBy = "project")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@Column(columnDefinition = "LONGBLOB")
 	private List<ProjectCollaborator> projectTeam;
 	private String name;
@@ -45,7 +49,8 @@ public class Project implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-    @OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "project")
+    @OneToMany (cascade = ALL, mappedBy = "project")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	public static final int PLANNING = 0; // planeado
