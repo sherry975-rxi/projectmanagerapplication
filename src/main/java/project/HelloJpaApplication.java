@@ -10,20 +10,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import project.Services.ProjectService;
 import project.Services.TaskContainerService;
 import project.Services.UserContainerService;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
 
 @SpringBootApplication
 public class HelloJpaApplication implements CommandLineRunner {
 	private static final Logger logger = LoggerFactory.getLogger(HelloJpaApplication.class);
 	private static User userAdmin;
+	private static User userCollab;
 	private static User userDirector;
 	private static User userJSilva;
 	private static Task taskOne;
 	private static Project projOne;
 	private static ProjectCollaborator projCollab1;
+	private static Profile collabProfile;
 
 
 	@Autowired
@@ -207,7 +206,11 @@ public class HelloJpaApplication implements CommandLineRunner {
 		// Repository
 		userAdmin = userContainer.createUser("Teresa Ribeiro", "admin@gmail.com", "001", "Administrator", "917653635",
 				"Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
-		userContainer.addUserToUserRepositoryX(userAdmin);
+		userCollab = userContainer.createUser("Vanda Miranda", "vmiranda@gmail.com", "002", "Software Developer",
+				"911111111", "Avenida das Marias", "4444-654", "Matosinhos", "Porto", "Portugal");
+		collabProfile = Profile.COLLABORATOR;
+		userCollab.setUserProfile(collabProfile);
+		userContainer.addUserToUserRepositoryX(userCollab);
 
 		// Instantiates the ProjectContainer, defines project "projOne", saves it in
 		// Repository
@@ -223,6 +226,15 @@ public class HelloJpaApplication implements CommandLineRunner {
 		//taskOne = projOne.createTaskinProject("Desenvolver código para responder à US499");
 		taskContainer.createTask("Desenvolver código para responder à US499", projOne);
 
+		userContainer.isUserinUserContainer(userAdmin);
+
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println(userContainer.isUserinUserContainer(userAdmin));
+		System.out.println(userContainer.getAllUsersFromUserContainer().get(0).getName());
+		System.out.println(userContainer.getUserByEmailFromDatabase("admin@gmail.com").getName());
+		System.out.println(userContainer.getAllActiveCollaboratorsFromRepository().get(0).getName());
 
 	}
 }
