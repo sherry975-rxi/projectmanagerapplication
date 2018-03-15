@@ -1,4 +1,7 @@
 package project.model;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,10 +19,11 @@ import java.util.List;
 @Table(name = "User")
 public class User implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "User_ID")
 	private int id;
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+	@OneToMany (cascade = CascadeType.ALL, mappedBy = "project")
+			@LazyCollection(LazyCollectionOption.FALSE)
 	List<ProjectCollaborator> projCollabs;
 	private String name;
 	private String email;
