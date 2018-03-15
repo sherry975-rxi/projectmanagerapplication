@@ -1,7 +1,7 @@
 package project.controller;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -17,14 +17,14 @@ import java.util.List;
 public class US301CreateProjectController {
 
     private ProjectService projects;
-    private UserContainerService users;
+    private UserService users;
     private List<User> activeCollaboratorList;
     private User selectedUser = null;
 	private Project createdProject = null;
 
 	public US301CreateProjectController() {
 		projects = new ProjectService();
-		users = new UserContainerService();
+		users = new UserService();
 	}
 
 	/**

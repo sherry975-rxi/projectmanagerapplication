@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.Calendar;
@@ -17,7 +17,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 	US210GetAllFinishedUserTasksInDecreasingOrderController tasksFiltersController;
 
 	ProjectService projectContainer;
-	UserContainerService userContainer;
+	UserService userContainer;
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;

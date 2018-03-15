@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.TaskContainerService;
+import project.Services.TaskService;
 
 import java.util.Calendar;
 
@@ -19,7 +19,7 @@ public class ReportTest {
 	Task t1;
 	TaskCollaborator taskWorker1;
 	Project p1;
-	TaskContainerService taskContainer;
+	TaskService taskContainer;
 	Report report;
 	Calendar dateOfReport;
 	Task task1;

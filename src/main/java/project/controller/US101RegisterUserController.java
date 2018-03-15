@@ -1,11 +1,11 @@
 package project.controller;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.dto.UserDTO;
 
 public class US101RegisterUserController {
 
-	UserContainerService userRegistry;
+	UserService userRegistry;
 
 	/**
 	 * This constructor creates a user Registration controller. *
@@ -13,7 +13,7 @@ public class US101RegisterUserController {
 	 */
 	public US101RegisterUserController() {
 
-		this.userRegistry = new UserContainerService();
+		this.userRegistry = new UserService();
 
 
 	}

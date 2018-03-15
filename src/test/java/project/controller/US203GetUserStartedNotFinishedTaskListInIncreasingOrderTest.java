@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.Calendar;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 
 	US203GetUserStartedNotFinishedTaskListInIncreasingOrderController tasksFiltersController;
-	UserContainerService userContainer;
+	UserService userContainer;
 	ProjectService projectContainer;
 	User user1, user2, user3;
 	Project project1;
@@ -27,7 +27,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 	public void setUp() {
 
 		//Creates an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 
 		//Creates a ProjectContainer
 		projectContainer = new ProjectService();

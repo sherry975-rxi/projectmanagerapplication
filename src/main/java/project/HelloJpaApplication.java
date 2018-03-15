@@ -8,8 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import project.Services.ProjectService;
-import project.Services.TaskContainerService;
-import project.Services.UserContainerService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
@@ -30,11 +30,11 @@ public class HelloJpaApplication implements CommandLineRunner {
 	private static Profile collabProfile;
 
 	@Autowired
-	private TaskContainerService taskContainer;
+	private TaskService taskContainer;
 	@Autowired
 	private ProjectService projContainer;
 	@Autowired
-	private UserContainerService userContainer;
+	private UserService userContainer;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HelloJpaApplication.class, args);

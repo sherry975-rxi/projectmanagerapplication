@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.Project;
 import project.model.User;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class US302ChangeProjectManagerController {
 
 
-	UserContainerService userContainer;
+	UserService userContainer;
 	List<User> activeCollaboratorList;
 	User selectedManager;
 	Project selectedProject;

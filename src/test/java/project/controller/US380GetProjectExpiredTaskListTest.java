@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 import project.model.taskstateinterface.OnGoing;
 import project.model.taskstateinterface.Planned;
@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class US380GetProjectExpiredTaskListTest {
 
 	US380GetProjectExpiredTaskListController tasksFiltersController;
-	UserContainerService userContainer;
+	UserService userContainer;
 	ProjectService projectContainer;
 	User user1, user2, user3;
 	Project project1;
@@ -30,7 +30,7 @@ public class US380GetProjectExpiredTaskListTest {
 	@Before
 	public void setUp() {
 		// creates an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 								
 		// creates a Project Container
 		projectContainer = new ProjectService();

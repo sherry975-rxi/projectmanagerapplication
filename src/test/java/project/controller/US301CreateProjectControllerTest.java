@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class US301CreateProjectControllerTest {
 	
-	UserContainerService userContainer;
+	UserService userContainer;
 	ProjectService projectContainer;
 	User u1;
 	US301CreateProjectController createNewProject;
@@ -32,7 +32,7 @@ public class US301CreateProjectControllerTest {
 	public void setUp() {
 
 		// creates an UserContainer
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 								
 		// creates a Project Container
 		projectContainer = new ProjectService();

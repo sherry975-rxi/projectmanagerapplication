@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 public class CollectProjectsFromUserControllerTest {
 
 	private ProjectService projContainer = new ProjectService();
-	UserContainerService userContainer = new UserContainerService();
+	UserService userContainer = new UserService();
 	User user1;
 	private User userAdmin;
 

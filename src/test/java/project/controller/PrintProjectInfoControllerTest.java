@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.TaskContainerService;
-import project.Services.UserContainerService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -22,10 +22,10 @@ public class PrintProjectInfoControllerTest {
 	User joaoPM;
 	ProjectCollaborator collab1, collab2;
 	ProjectService projectContainer;
-	UserContainerService userContainer;
+	UserService userContainer;
 	Project project, project1;
 	Calendar startDate, finishDate;
-	TaskContainerService taskContainer;
+	TaskService taskContainer;
 	Task task1, task2, task3;
 	PrintProjectInfoController controller, controller1;
 
@@ -36,7 +36,7 @@ public class PrintProjectInfoControllerTest {
 		projectContainer.setProjCounter(1);
 
 		// create user
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
 

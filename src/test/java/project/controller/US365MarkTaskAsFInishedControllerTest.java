@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.Calendar;
@@ -23,7 +23,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 	 */
 
 	// TasksFiltersController tasksFiltersController;
-	UserContainerService myUsers;
+	UserService myUsers;
 	ProjectService myProjects;
 
 	User user1, user2, projectManager, projectManager2;
@@ -41,7 +41,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 	public void setUp() {
 
 		// create user and project container
-		myUsers= new UserContainerService();
+		myUsers= new UserService();
 		myProjects = new ProjectService();
 
 		// create users

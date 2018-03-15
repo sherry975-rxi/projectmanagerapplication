@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
@@ -11,7 +11,7 @@ public class US135andUS136SearchUsersController {
 
 	List<User> userList;
 	User selectedUser = null;
-	UserContainerService userContainer;
+	UserService userContainer;
 
 	/**
 	 * Este controlador permite ao Administrador pesquisar utilizadores do sistema

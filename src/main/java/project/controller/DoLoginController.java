@@ -1,6 +1,6 @@
 package project.controller;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.User;
 
 public class DoLoginController {
@@ -15,8 +15,8 @@ public class DoLoginController {
 	 *            Sets private variable password to inserted password by user
 	 */
 	public boolean doLogin(String email, String password1) {
-	    UserContainerService userContainer;
-	    userContainer = new UserContainerService();
+	    UserService userContainer;
+	    userContainer = new UserService();
 		String password;
 		User username;
 		username = userContainer.getUserByEmail(email);

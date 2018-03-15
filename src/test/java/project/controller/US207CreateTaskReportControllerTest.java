@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.ProjectService;
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -25,14 +25,14 @@ public class US207CreateTaskReportControllerTest {
     TaskCollaborator taskCollab1, taskCollab2;
     US207CreateTaskReportController controller;
     US207CreateTaskReportController controller2;
-    UserContainerService userContainer;
+    UserService userContainer;
     ProjectService projectContainer;
 
 
     @Before
     public void setUp() {
 
-        userContainer = new UserContainerService();
+        userContainer = new UserService();
         projectContainer = new ProjectService();
 
         // create users in company

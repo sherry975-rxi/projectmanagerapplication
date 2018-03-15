@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import project.Services.UserContainerService;
+import project.Services.UserService;
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
@@ -19,13 +19,13 @@ public class US201and202UpdateUserInfoController_Test {
 	User u1;
 	Address address1;
 	Address address2;
-	UserContainerService userContainer;
+	UserService userContainer;
 
 	@Before
 	public void setUp() {
 		// create company and clear ProjectsRepository and UsersRepository
 
-		userContainer = new UserContainerService();
+		userContainer = new UserService();
 
 		// create users
 		u1 = userContainer.createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",
