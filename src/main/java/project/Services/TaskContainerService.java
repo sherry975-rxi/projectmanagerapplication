@@ -545,7 +545,7 @@ public class TaskContainerService {
 		 * 
 		 * @return allFinishedTasks
 		 */
-		public List<Task> getFinishedTasks(Project project) {
+		public List<Task> getProjectFinishedTasks(Project project) {
 			List<Task> allFinishedTasks = new ArrayList<>();
 
 			for (Task other : this.getProjectTasks(project)) {
@@ -579,7 +579,7 @@ public class TaskContainerService {
 		 * 
 		 * @return allUnFinishedTasks
 		 */
-		public List<Task> getUnFinishedTasks(Project project) {
+		public List<Task> getProjectUnFinishedTasks(Project project) {
 			List<Task> allUnFinishedTasks = new ArrayList<>();
 
 			for (Task other : this.getProjectTasks(project)) {
