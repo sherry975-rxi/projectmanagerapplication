@@ -195,48 +195,14 @@ public class TaskContainerService {
 	 * list of the user. This method just reverses the initial order of the
 	 * TaskList. It does not runs a cycle to compare the tasks finish dates, neither
 	 * analysis the TaskList in any way.
-	 *
+	 * 
 	 * @param toSort
 	 *            List of tasks to sort
-	 *
+	 * 
 	 * @return sorted list
-	 *
+	 * 
 	 */
 	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
-		List<Task> result = new ArrayList<>(toSort);
-		boolean cycle = true;
-		int i = 0;
-		while (cycle) {
-			cycle = false;
-
-			for (int j = i + 1; j < result.size(); j++) {
-				cycle = true;
-				if (result.get(i).getFinishDate().before(result.get(j).getFinishDate())) {
-					Task h = new Task(result.get(i));
-					result.set(i, result.get(j));
-					result.set(j, h);
-				}
-			}
-			i++;
-
-		}
-		return result;
-	}
-	
-	/**
-	 * This method returns a list with the tasks of a certain user by decreasing
-	 * order of date. First, this method creates a list which is a copy of the task
-	 * list of the user. This method just reverses the initial order of the
-	 * TaskList. It does not runs a cycle to compare the tasks finish dates, neither
-	 * analysis the TaskList in any way.
-	 * 
-	 * @param toSort
-	 *            List of tasks to sort
-	 * 
-	 * @return sorted list
-	 * 
-	 */
-	public List<Task> sortTaskListDecreasingOrderXX(List<Task> toSort) {
 		List<Task> result = new ArrayList<>();
 		result.addAll(toSort);
 		for (int i = 0; i < result.size(); i++) {
@@ -286,9 +252,6 @@ public class TaskContainerService {
 		}
 		return result;
 	}
-
-	
-	
 	
 	//	/**
 	//	 * This method saves the task in the Repository
