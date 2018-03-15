@@ -1,5 +1,8 @@
 package project.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -9,16 +12,18 @@ import java.util.Calendar;
 public class TaskCollaborator implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollaborator;
 	private Calendar startDate;
 	private Calendar finishDate;
 	private boolean status;
 	static final long serialVersionUID = 52L;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "Task_id")
 	private Task task;
 
