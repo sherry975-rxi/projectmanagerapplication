@@ -66,6 +66,8 @@ public class UserContainerService {
 
         newUser.addAddress(newAddress);
 
+        userRepository.save(newUser);
+
         return newUser;
     }
 
@@ -106,17 +108,6 @@ public class UserContainerService {
     }
 
     /**
-     * This method adds users to the usersList if the user doesn’t exists
-     *
-     * @param toAddUsers User added to the List of Users
-     */
-    public void addUserToUserRepository(User toAddUsers) {
-        if (!this.usersContainer.contains(toAddUsers)) {
-            this.usersContainer.add(toAddUsers);
-        }
-    }
-
-    /**
      * This method allows the administrator to see if a given user already exists in
      * company (userContainer)
      *
@@ -127,11 +118,9 @@ public class UserContainerService {
     public boolean isUserinUserContainer(User addedUser) {
 
         boolean result = false;
-
        if ( this.userRepository.findByEmail(addedUser.getEmail()) != null) {
            result = true;
        }
-
         return result;
     }
 
@@ -165,16 +154,16 @@ public class UserContainerService {
         this.userRepository.findAll().forEach(usersContainer::add);
     }
 
+
     /**
-     * This method returns a list of all active collaborators in the Company, from the usersContainer
+     * This method returns a list of all active collaborators in the Company
+     * accessed by DB
      *
-     * @return all active Collaborators. This is the copy of the List of all active Users in the
-     * Container
+     * @return all active Collaborators
      */
     public List<User> getAllActiveCollaboratorsFromRepository() {
-
         List<User> allCollaborators = new ArrayList<>();
-        for (User other : this.usersContainer) {
+        for (User other : this.getAllUsersFromUserContainer()) {
             if (other.isSystemUserStateActive() && other.getUserProfile().equals(Profile.COLLABORATOR)) {
                 allCollaborators.add(other);
             }
