@@ -47,7 +47,7 @@ public class US135andUS136SearchUsersController {
 	 *         contain the same text that the user typed
 	 */
 	public List<String> searchUsersByEmailController(String emailToSearch) {
-		this.userList = userContainer.searchUsersByEmail(emailToSearch);
+		this.userList = userContainer.searchUsersByPartsOfEmail(emailToSearch);
 
 		List<String> userListString = new ArrayList<>();
 

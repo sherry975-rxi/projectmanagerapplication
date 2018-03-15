@@ -183,7 +183,7 @@ public class UserContainerTest {
 		testUsersWithEmail.add(user1);
 		testUsersWithEmail.add(user4);
 
-		assertEquals(testUsersWithEmail, userContainer.searchUsersByEmail("daniel"));
+		assertEquals(testUsersWithEmail, userContainer.searchUsersByPartsOfEmail("daniel"));
 
 	}
 

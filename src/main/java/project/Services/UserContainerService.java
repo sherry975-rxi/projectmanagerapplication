@@ -173,7 +173,7 @@ public class UserContainerService {
      * @return userListThatContainsPiecesOfEmailString. The list with users that have
      * the query piece of email
      */
-    public List<User> searchUsersByEmail(String partOfEmail) {
+    public List<User> searchUsersByPartsOfEmail(String partOfEmail) {
 
         List<User> userListThatContainsPiecesOfEmailString = new ArrayList<>();
 
