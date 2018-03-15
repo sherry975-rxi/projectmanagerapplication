@@ -241,15 +241,17 @@ public class HelloJpaApplication implements CommandLineRunner {
 		System.out.println(userContainer.isUserinUserContainer(userAdmin));
 		System.out.println(userContainer.getAllUsersFromUserContainer().get(0).getName());
 		System.out.println(userContainer.getUserByEmail("admin@gmail.com").getName());
-		// //System.out.println(userContainer.searchUsersByEmail("@gmail.com").get(0).getName());
+		System.out.println(userContainer.searchUsersByPartsOfEmail("@gmail.com").get(0).getName());
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println(userContainer.getAllActiveCollaboratorsFromRepository().get(0).getName());
-		// System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		// System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		// System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println(userContainer.searchUsersByProfile(collabProfile).get(0).getName());
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.println(userContainer.searchUsersByPartsOfEmail("admin@gmail.com").get(0).getName());
 
 	}
 }
