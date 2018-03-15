@@ -1,5 +1,7 @@
 package project.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import project.model.taskstateinterface.Cancelled;
 import project.model.taskstateinterface.Finished;
 
@@ -19,7 +21,8 @@ public class TaskContainer implements Serializable{
 	private int taskCounter;
 	@javax.persistence.Transient
 	private int projectId;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Task> projectTasks;
 	@javax.persistence.Transient
 	private Project project;
