@@ -189,6 +189,10 @@ public class TaskCollaborator implements Serializable {
     public Task getTask() {
         return task;
     }
+    
+    public int getCost() {
+    	return this.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+    }
 }
 
 

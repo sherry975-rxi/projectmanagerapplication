@@ -49,7 +49,7 @@ public class Report {
 		
 		this.reportedTime = 0;
 		this.taskCollaborator = taskCollaborator;
-		this.cost = taskCollaborator.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+		this.cost = taskCollaborator.getCost();
 		this.dateOfReport = reportDate;
 		this.dateOfUpdate = reportDate;
 	}
