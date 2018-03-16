@@ -2,7 +2,6 @@ package project;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import project.model.*;
@@ -15,20 +14,24 @@ import java.util.Calendar;
 
 
 @SpringBootApplication
-public class HelloJpaApplication implements CommandLineRunner {
+public class HelloJpaApplication {
     private static final Logger logger = LoggerFactory.getLogger(HelloJpaApplication.class);
     private static User userAdmin;
     private static User userDirector;
     private static User userJSilva;
 
+    private static Company myCompany;
+
     //@Autowired
     //private DemoComponent demo;
 
     public static void main(String[] args) {
+        myCompany = Company.getTheInstance();
+
         SpringApplication.run(HelloJpaApplication.class, args);
     }
 
-    @Override
+   // @Override
     public void run(String... strings) throws Exception {
 
         //demo.demoRun();
