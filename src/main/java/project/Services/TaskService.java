@@ -123,7 +123,7 @@ public class TaskService {
 		return finishedTasks;
 	}
 
-	
+
 	/**
 	 * This method returns all the tasks from a certain user that do not have their
 	 * current state equal to Finished.
@@ -252,7 +252,6 @@ public class TaskService {
 				}
 			}
 			i++;
-
 		}
 		return result;
 	}
@@ -472,7 +471,7 @@ public class TaskService {
 		 * @return TRUE if task exists in the task list FALSE if task does not exist in
 		 *         the task list
 		 */
-		public boolean isTaskInRTaskRepository(Task task) {
+		public boolean isTaskInTaskRepository(Task task) {
 			for (Task other : this.getTaskRepository()) {
 				if (task.equals(other)) {
 					return true;
@@ -534,10 +533,8 @@ public class TaskService {
 					listOfTasksWithoutCollaboratorsAssigned.add(other);
 				} else if (!other.doesTaskTeamHaveActiveUsers()) {
 					listOfTasksWithoutCollaboratorsAssigned.add(other);
-
 				}
 			}
-
 			return listOfTasksWithoutCollaboratorsAssigned;
 		}
 
@@ -554,7 +551,6 @@ public class TaskService {
 					allFinishedTasks.add(other);
 				}
 			}
-
 			return allFinishedTasks;
 		}
 		
@@ -588,7 +584,6 @@ public class TaskService {
 						&& other.getStartDate() != null) {
 					allUnFinishedTasks.add(other);
 				}
-
 			}
 			return allUnFinishedTasks;
 		}
@@ -605,7 +600,6 @@ public class TaskService {
 				if ("OnGoing".equals(other.viewTaskStateName())) {
 					allOnGoing.add(other);
 				}
-
 			}
 			return allOnGoing;
 		}
@@ -625,7 +619,6 @@ public class TaskService {
 			}
 			return allUnstartedTasks;
 		}
-		
 		/**
 		 * Returns a list of the tasks which are unfinished but which deadline has
 		 * already passed
@@ -674,13 +667,10 @@ public class TaskService {
 	 			this.taskRepository.delete(taskToDelete);
 				wasTaskDeleted = true;
 				break;
-
 			default:
 				break;
-
 			}
 			return wasTaskDeleted;
-
 		}
 
 		/**
@@ -724,67 +714,11 @@ public class TaskService {
 			List<Task> validTasks = new ArrayList<>();
 			validTasks.addAll(getTaskRepository());
 			for (Task other : this.getTaskRepository()) {
-				if (other.getTaskState() instanceof Finished) {
-					validTasks.remove(other);
-				}
-				if (other.getTaskState() instanceof Cancelled) {
+				if (other.getTaskState() instanceof Finished || other.getTaskState() instanceof Cancelled) {
 					validTasks.remove(other);
 				}
 			}
 			return validTasks;
 		}
-
-	/**
-	 * This method checks which ProjectCollaborators don't have tasks assigned.
-	 * First, it gets all the Project Collaborators in project team; then, cycles
-	 * each Project Collaborator through each task and verifies if it's active on
-	 * any task. If so, it's removed from the inactiveCollaborators list.
-	 *
-	 * @Return returns a List of Project Collaborators that are not assigned to a
-	 *         Task
-	 *
-	 */
-	public List<ProjectCollaborator> getCollaboratorsWithoutTasks(Project project) {
-
-		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
-		inactiveCollaborators.addAll(this.projectCollaboratorRepository.findAllByProject(project));
-
-		for (ProjectCollaborator other : inactiveCollaborators) {
-			if (this.isCollaboratorActiveOnAnyTask(other))
-			inactiveCollaborators.remove(other);
-		}
-		return inactiveCollaborators;
-	}
-
-
-	/**
-	 * This method allows the inactivation of a User from a Project Team which
-	 * includes deactivate the Project Collaborator in the Project Team of this
-	 * Project
-	 *
-	 * @param collaboratorToRemoveFromProjectTeam
-	 *            Collaborator to remove from project
-	 *
-	 * @return remove
-	 */
-
-	public boolean removeProjectCollaboratorFromProject(User collaboratorToRemoveFromProjectTeam, Project project) {
-		boolean remove = false;
-		List<ProjectCollaborator> projectTeam = new ArrayList<>();
-		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project));
-
-		for (ProjectCollaborator other : projectTeam) {
-			if (other.getUserFromProjectCollaborator().equals(collaboratorToRemoveFromProjectTeam)) {
-				other.setStatus(false);
-				for (Task otherTask : this.getAllTasksFromProjectCollaborator(other)) {
-				otherTask.removeProjectCollaboratorFromTask(other);
-				}
-				remove = true;
-			}
-
-		}
-		return remove;
-	}
-
 
 }
