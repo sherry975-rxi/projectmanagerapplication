@@ -201,4 +201,34 @@ public class ProjectService {
 		return newProjectCollaborator;
 
 	}
+
+	/**
+	 * Get the active users inside this Project's Team
+	 *
+	 * @return Project Team - Active Team of the Project
+	 */
+	public List<ProjectCollaborator> getActiveProjectTeam(Project project) {
+		List<ProjectCollaborator> activeCollaborators = new ArrayList<>();
+
+		for (ProjectCollaborator other : this.projectCollaboratorRepository.findAllByProject(project)) {
+			if (other.isProjectCollaboratorActive())
+				activeCollaborators.add(other);
+		}
+
+		return activeCollaborators;
+	}
+
+	/**
+	 * Returns a list with all project collaborators from a certain project
+	 *
+	 * @param project Project to get project collaborators from
+	 *
+	 * @return List of Project Collaborators of a certian project
+	 */
+	public List<ProjectCollaborator> getProjectTeam(Project project) {
+		List<ProjectCollaborator> projectTeam = new ArrayList<>();
+		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		return projectTeam;
+	}
 }
