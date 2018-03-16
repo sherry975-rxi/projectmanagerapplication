@@ -62,11 +62,6 @@ public class UserServiceTest {
 				"2401-00", "Porto", "Porto", "Portugal");
 		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Porto", "Porto", "Portugal");
-		user4 = userContainer.createUser("DanielMM", "danielmm@gmail.com", "003", "collaborator", "910000000", "Rua",
-				"2401-00", "Porto", "Porto", "Portugal");
-
-		user5 = userContainer.createUser("DanielMM", "danielmmgmail.com", "003", "collaborator", "910000000", "Rua",
-				"2401-00", "Porto", "Porto", "Portugal");
 
 		mockUsers = new ArrayList<>();
 
@@ -142,7 +137,10 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testGetUserByEmail() {
-		fail("Not yet implemented"); // TODO
+
+		when(userRepositoryMock.findByEmail("daniel@gmail.com")).thenReturn(user1);
+
+		assertEquals(user1, userContainer.getUserByEmail("daniel@gmail.com"));
 	}
 
 	/**
@@ -159,7 +157,7 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testGetAllActiveCollaboratorsFromRepository() {
-		fail("Not yet implemented"); // TODO
+
 	}
 
 	/**
@@ -168,7 +166,14 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testSearchUsersByPartsOfEmail() {
-		fail("Not yet implemented"); // TODO
+
+		List<User> list = new ArrayList<>();
+		list.add(user1);
+		list.add(user2);
+
+		when(userRepositoryMock.findAll()).thenReturn(list);
+
+		assertEquals(list, userContainer.searchUsersByPartsOfEmail("@"));
 	}
 
 	/**
