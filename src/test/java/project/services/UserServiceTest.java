@@ -3,23 +3,73 @@
  */
 package project.services;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import project.Repository.UserRepository;
+import project.Services.UserService;
+import project.model.Profile;
+import project.model.User;
 
 /**
+ * Tests all methods in UserService
+ * 
  * @author Group3
  *
  */
+@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
+
+	@Mock
+	private UserRepository userRepositoryMock;
+
+	@InjectMocks
+	private UserService userContainer = new UserService();
+	private UserService userContainerWithRepository = new UserService(userRepositoryMock);
+
+	User user1;
+	User user2;
+	User user3;
+	User user4;
+	User user5;
+	List<User> mockUsers;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
+
+		initMocks(this);
+
+		// instantiate users
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Porto", "Porto", "Portugal");
+		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+				"Porto", "Porto", "Portugal");
+		user4 = userContainer.createUser("DanielMM", "danielmm@gmail.com", "003", "collaborator", "910000000", "Rua",
+				"2401-00", "Porto", "Porto", "Portugal");
+
+		user5 = userContainer.createUser("DanielMM", "danielmmgmail.com", "003", "collaborator", "910000000", "Rua",
+				"2401-00", "Porto", "Porto", "Portugal");
+
+		mockUsers = new ArrayList<>();
+
 	}
 
 	/**
@@ -27,32 +77,13 @@ public class UserServiceTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-	}
 
-	/**
-	 * Test method for {@link project.Services.UserService#UserService()}.
-	 */
-	@Test
-	public final void testUserService() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for
-	 * {@link project.Services.UserService#UserService(project.Repository.UserRepository)}.
-	 */
-	@Test
-	public final void testUserServiceUserRepository() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for
-	 * {@link project.Services.UserService#createUser(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)}.
-	 */
-	@Test
-	public final void testCreateUser() {
-		fail("Not yet implemented"); // TODO
+		user1 = null;
+		user2 = null;
+		user3 = null;
+		user4 = null;
+		user5 = null;
+		mockUsers = null;
 	}
 
 	/**
@@ -61,34 +92,48 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testCreateUserWithDTO() {
-		fail("Not yet implemented"); // TODO
+
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.Services.UserService#addUserToUserRepositoryX(project.model.User)}.
+	 * Test method call addUserToUserRepository
 	 */
 	@Test
 	public final void testAddUserToUserRepositoryX() {
-		fail("Not yet implemented"); // TODO
+
+		// when(userRepositoryMock.save(any(User.class))).thenReturn(user1);
+
+		userContainer.addUserToUserRepositoryX(user1);
+
+		verify(userRepositoryMock, times(2)).save(user1);
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.Services.UserService#isUserinUserContainer(project.model.User)}.
+	 * Test method call for isUserinUserContainer
 	 */
 	@Test
 	public final void testIsUserinUserContainer() {
-		fail("Not yet implemented"); // TODO
+
+		when(userRepositoryMock.findByEmail(user2.getEmail())).thenReturn(user2);
+
+		assertEquals(true, userContainer.isUserinUserContainer(user2));
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.Services.UserService#getAllUsersFromUserContainer()}.
+	 * Test method call getAllUsersFromUserContainer.
 	 */
 	@Test
 	public final void testGetAllUsersFromUserContainer() {
-		fail("Not yet implemented"); // TODO
+
+		List<User> listToCompare = new ArrayList<>();
+		listToCompare.add(user1);
+
+		List<User> userInDB = new ArrayList<>();
+		userInDB.add(user1);
+
+		when(userRepositoryMock.findAll()).thenReturn(userInDB);
+
+		assertEquals(listToCompare, userContainer.getAllUsersFromUserContainer());
 	}
 
 	/**
@@ -132,7 +177,14 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testSearchUsersByProfile() {
-		fail("Not yet implemented"); // TODO
+
+		List<User> listOfUsersByProfile = new ArrayList<>();
+		user1.setUserProfile(Profile.COLLABORATOR);
+		listOfUsersByProfile.add(user1);
+
+		when(userRepositoryMock.findAllByUserProfile(Profile.COLLABORATOR)).thenReturn(listOfUsersByProfile);
+
+		assertEquals(listOfUsersByProfile, userContainer.searchUsersByProfile(Profile.COLLABORATOR));
 	}
 
 	/**
