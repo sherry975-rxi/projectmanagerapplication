@@ -123,6 +123,7 @@ public class TaskService {
 		return finishedTasks;
 	}
 
+	
 	/**
 	 * This method returns all the tasks from a certain user that do not have their
 	 * current state equal to Finished.

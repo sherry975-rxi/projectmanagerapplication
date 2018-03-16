@@ -4,6 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import project.Repository.TaskRepository;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
@@ -14,10 +17,104 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-public class TaskContainerTest {
+public class TaskServiceTest {
 
-	UserService userContainer;
+	@Mock
+	private Task taskMock;
+
+	@Mock
+	private Task task2Mock;
+
+	@Mock
+	private TaskRepository taskRepository;
+
+	private Calendar startDate;
+	private Project project;
+	private ProjectService projectContainer;
+	private UserService userContainer;
+	private User user;
+	private ProjectCollaborator projectCollaborator;
+	private TaskCollaborator taskCollaborator;
+
+	@InjectMocks
+	private TaskService victim;
+
+	@Before
+	public void setUp(){
+		initMocks(this);
+
+		this.victim = new TaskService();
+
+		this.startDate = Calendar.getInstance();
+		this.startDate.set(Calendar.YEAR, 2017);
+		this.startDate.set(Calendar.MONTH, Calendar.SEPTEMBER);
+		this.startDate.set(Calendar.DAY_OF_MONTH, 25);
+		this.startDate.set(Calendar.HOUR_OF_DAY, 14);
+
+
+		this.projectContainer = new ProjectService();
+		this.userContainer = new UserService();
+		this.user = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
+		this.project = projectContainer.createProject("name3", "description4", user);
+		this.projectCollaborator = new ProjectCollaborator(user, 10);
+		this.taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
+
+	}
+
+	@Test
+	public void testCreateTask() {
+		Task expectedTask = new Task("firstTask", project);
+		Task actualTask= victim.createTask("firstTask", project);
+		assertEquals(expectedTask, actualTask);
+
+		expectedTask = new Task("firstTask", project);
+		actualTask= victim.createTask("firstTask", project);
+		assertEquals(expectedTask, actualTask);
+	}
+
+
+	@Test
+	public void testGetTaskRepository(){
+		when(taskRepository.findAll()).thenReturn(new ArrayList<>());
+
+		verify(taskRepository, times(1)).findAll();
+	}
+
+	@Test
+	public void testGetProjectTasks(){
+		when(taskRepository.findAllByProject(any(Project.class))).thenReturn(new ArrayList<>());
+
+		verify(taskRepository, times(1)).findAllByProject(project);
+	}
+
+	@Test
+	public void testGetUserTasks(){
+		List<Task> taskListMock = new ArrayList<>();
+		taskListMock.add(taskMock);
+		when(victim.getTaskRepository()).thenReturn(taskListMock);
+
+		List<TaskCollaborator> listTaskCollaborator= new ArrayList<>();
+		listTaskCollaborator.add(taskCollaborator);
+		when(taskMock.getTaskTeam()).thenReturn(listTaskCollaborator);
+
+		when(taskCollaborator.getProjectCollaboratorFromTaskCollaborator().getCollaborator()).thenReturn(user);
+
+		List<Task> expectedList = new ArrayList<>();
+		expectedList.add(taskMock);
+
+		assertEquals(expectedList, victim.getUserTasks(user));
+	}
+
+
+
+	/*UserService userContainer;
 	User userDan;
 	User userAdmin;
 	User userJoa;
@@ -154,12 +251,12 @@ public class TaskContainerTest {
 
 	}
 
-	/**
+	*//**
 	 * Tests the CreateTask method by calling the method equals (task) to
 	 * assert if the task created is equal to other task. If the equals
 	 * returns TRUE means the two equals are equal, so the createTask method
 	 * worked.
-	 */
+	 *//*
 	@Test
 	public void testCreateTask() {
 		// Creates a new List of Tasks, to compare with the getProjectTaskList of the
@@ -186,10 +283,10 @@ public class TaskContainerTest {
 	}
 
 
-	/**
+	*//**
 	 * Tests the getUserTasks. The list returned has to be equal to the
 	 * expResultTaskList created.
-	 */
+	 *//*
 	@Test
 	public void testGetUserTasks() {
 
@@ -218,17 +315,17 @@ public class TaskContainerTest {
 		// returns an empty list, as the user is not a collaborator
 		assertEquals(expResultTaskList, taskContainer.getUserTasks(userFra));
 
-		/*
+		*//*
 		 * returns an empty list, as the user is a collaborator but doesnt have any task
 		 * associated to him
-		 */
+		 *//*
 		assertEquals(expResultTaskList, taskContainer.getUserTasks(userJoa));
 	}
 
-	/**
+	*//**
 	 * Tests the getFinishedUserTaskList method. Has to return the finished tasks
 	 * from an user.
-	 */
+	 *//*
 	@Test
 	public void testgetAllFinishedTasksFromUser() {
 
@@ -1169,10 +1266,10 @@ public class TaskContainerTest {
 		taskContainer.addTaskToProject(testTask5);
 		taskContainer.addTaskToProject(testTask6);
 
-		/*
+		*//*
 		 * States on which the task can be deleted - "ASSIGNED", "PLANNED" , "CREATED" ,
 		 * "READY"
-		 */
+		 *//*
 
 
 		testTask.setTaskState(new OnGoing());
@@ -1346,4 +1443,6 @@ public class TaskContainerTest {
 	public void getTaskListOfWhichDependenciesCanBeCreatedTest(){
 
 	}
+
+	*/
 }
