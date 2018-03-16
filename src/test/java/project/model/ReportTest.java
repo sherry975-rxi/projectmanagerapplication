@@ -88,13 +88,14 @@ public class ReportTest {
 		report.setTask(task1);
 		assertEquals(report.getTask(), task1);
 
-		//Sets a date to the report
-		report.setDateOfReport(Calendar.getInstance());
-		assertEquals(report.getDateOfReport(), Calendar.getInstance());
+		//Sets a date to the report, asserting the getter returns the correct value
+		Calendar testDate = Calendar.getInstance();
+		report.setDateOfReport(testDate);
+		assertEquals(report.getDateOfReport(), testDate);
 
-		//Sets a date to the update
-		report.setDateOfUpdate(Calendar.getInstance());
-		assertEquals(report.getDateOfUpdate(), Calendar.getInstance());
+		//Sets a date to the update, asserting the getter returns the correct value
+		report.setDateOfUpdate(testDate);
+		assertEquals(report.getDateOfUpdate(), testDate);
 
 		//Sets an Id
 		report.setId(2);
