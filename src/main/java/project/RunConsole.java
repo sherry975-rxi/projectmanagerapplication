@@ -1,10 +1,7 @@
 package project;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 import project.model.*;
 import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.OnGoing;
@@ -13,30 +10,17 @@ import project.ui.console.MainMenuUI;
 
 import java.util.Calendar;
 
+@Component
+public class RunConsole implements CommandLineRunner {
 
-@SpringBootApplication
-public class HelloJpaApplication {
-    private static final Logger logger = LoggerFactory.getLogger(HelloJpaApplication.class);
     private static User userAdmin;
     private static User userDirector;
     private static User userJSilva;
 
     private static Company myCompany;
 
-    //@Autowired
-    //private DemoComponent demo;
-
-    public static void main(String[] args) {
-        myCompany = Company.getTheInstance();
-
-        SpringApplication.run(HelloJpaApplication.class, args);
-    }
-
-   // @Override
-    public void run(String... strings) throws Exception {
-
-        //demo.demoRun();
-
+    @Override
+    public void run(String... args) throws Exception {
 
         // Instantiates the company
         Company myCompany = Company.getTheInstance();
@@ -183,8 +167,4 @@ public class HelloJpaApplication {
         MainMenuUI.mainMenu();
 
     }
-
-
-
-
 }
