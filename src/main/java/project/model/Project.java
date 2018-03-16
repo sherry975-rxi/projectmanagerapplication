@@ -75,15 +75,20 @@ public class Project implements Serializable{
 	 * @param projectManager
 	 */
 	public Project(String name, String description, User projectManager) {
+
+		Objects.requireNonNull(name, "Name of the project cannot be null");
+		Objects.requireNonNull(description, "Description of the project cannot be null");
+		Objects.requireNonNull(projectManager, "Description of the project cannot be null");
+
 		this.name = name;
 		this.description = description;
 		this.projectManager = projectManager;
 		this.effortUnit = EffortUnit.HOURS;
+		this.projectTeam = new ArrayList<>();
 		this.budget = 0;
 		this.status = PLANNING;
 		this.startdate = null;
 		this.finishdate = null;
-		this.projectTeam = new ArrayList<>();
 		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 
@@ -136,21 +141,12 @@ public class Project implements Serializable{
 		this.pendingTaskTeamRequests = pendingTaskTeamRequests;
 	}
 
+
+
 	public List<TaskTeamRequest> getPendingTaskTeamRequests() {
 		return this.pendingTaskTeamRequests;
 	}
 
-	/**
-	 * This Method adds a User to a project. This action converts the User in a
-	 * Project Collaborator ( User + costPerEffort)
-	 * 
-	 * @param userToAdd
-	 * @param costPerEffort
-	 */
-	public void addUserToProjectTeam(User userToAdd, int costPerEffort) {
-		addProjectCollaboratorToProjectTeam(createProjectCollaborator(userToAdd, costPerEffort));
-	}
-	
 	/**
 	 * Create a Task using Creation Pattern
 	 * 
@@ -159,6 +155,7 @@ public class Project implements Serializable{
 	 * @return A new Task object
 	 */
 	public Task createTask(String description) {
+		Objects.requireNonNull(description, "Description of the Task cannot be null");
 
 		Task newTask = new Task(description, this);
 		return newTask;
@@ -176,41 +173,12 @@ public class Project implements Serializable{
 	 */
 	public ProjectCollaborator createProjectCollaborator(User collaborator, int costPerEffort) {
 
+		Objects.requireNonNull(collaborator, "User cannot be null");
+
 		ProjectCollaborator newCollaborator = new ProjectCollaborator(collaborator, costPerEffort);
 		newCollaborator.setProject(this);
 
 		return newCollaborator;
-	}
-	
-//	/**
-//	 * Creates an instance of Task
-//	 * 
-//	 * @param description
-//	 *            description of the task to add
-//
-//	 * 
-//	 * @return The new task instantiated
-//	 */
-//	public Task createTaskinProject(String description) {
-//
-//		Task newTask = new Task(description);
-//		newTask.setProject(this);
-//
-//		return newTask;
-//	}
-
-	/**
-	 * Add Project Collaborator to project team if is missing from the projectTeam.
-	 * 
-	 * @param newAddedProjectCollaborator
-	 *            Project Collaborator to add to the Project Team
-	 */
-	public void addProjectCollaboratorToProjectTeam(ProjectCollaborator newAddedProjectCollaborator) {
-		if (!isUserInProjectTeam(newAddedProjectCollaborator.getUserFromProjectCollaborator())) {
-			this.projectTeam.add(newAddedProjectCollaborator);
-		} else if (!newAddedProjectCollaborator.isProjectCollaboratorActive()) {
-			this.projectTeam.add(newAddedProjectCollaborator);
-		}
 	}
 
 	/**
