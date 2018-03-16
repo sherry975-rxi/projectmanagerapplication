@@ -123,7 +123,7 @@ public class TaskService {
 		return finishedTasks;
 	}
 
-	
+
 	/**
 	 * This method returns all the tasks from a certain user that do not have their
 	 * current state equal to Finished.
@@ -252,7 +252,6 @@ public class TaskService {
 				}
 			}
 			i++;
-
 		}
 		return result;
 	}
@@ -472,7 +471,7 @@ public class TaskService {
 		 * @return TRUE if task exists in the task list FALSE if task does not exist in
 		 *         the task list
 		 */
-		public boolean isTaskInRTaskRepository(Task task) {
+		public boolean isTaskInTaskRepository(Task task) {
 			for (Task other : this.getTaskRepository()) {
 				if (task.equals(other)) {
 					return true;
@@ -534,13 +533,11 @@ public class TaskService {
 					listOfTasksWithoutCollaboratorsAssigned.add(other);
 				} else if (!other.doesTaskTeamHaveActiveUsers()) {
 					listOfTasksWithoutCollaboratorsAssigned.add(other);
-
 				}
 			}
-
 			return listOfTasksWithoutCollaboratorsAssigned;
 		}
-
+		
 		/**
 		 * This method creates a list with all finished tasks in project.
 		 * 
@@ -554,12 +551,9 @@ public class TaskService {
 					allFinishedTasks.add(other);
 				}
 			}
-
 			return allFinishedTasks;
 		}
-		
 
-		
 		/**
 		 * This method create a list of all tasks finished from project in decreasing
 		 * order.
@@ -588,7 +582,6 @@ public class TaskService {
 						&& other.getStartDate() != null) {
 					allUnFinishedTasks.add(other);
 				}
-
 			}
 			return allUnFinishedTasks;
 		}
@@ -605,7 +598,6 @@ public class TaskService {
 				if ("OnGoing".equals(other.viewTaskStateName())) {
 					allOnGoing.add(other);
 				}
-
 			}
 			return allOnGoing;
 		}
@@ -625,6 +617,8 @@ public class TaskService {
 			}
 			return allUnstartedTasks;
 		}
+		
+
 		
 		/**
 		 * Returns a list of the tasks which are unfinished but which deadline has
@@ -674,13 +668,10 @@ public class TaskService {
 	 			this.taskRepository.delete(taskToDelete);
 				wasTaskDeleted = true;
 				break;
-
 			default:
 				break;
-
 			}
 			return wasTaskDeleted;
-
 		}
 
 		/**
@@ -708,11 +699,10 @@ public class TaskService {
 
 			for (Task other : this.getTaskRepository()) {
 				reportTaskCost.add(String.valueOf(other.getTaskCost()));
-
 			}
-
 			return reportTaskCost;
 		}
+		
 
 		/**
 		 * This method returns a list of tasks that can be associated to
@@ -724,14 +714,13 @@ public class TaskService {
 			List<Task> validTasks = new ArrayList<>();
 			validTasks.addAll(getTaskRepository());
 			for (Task other : this.getTaskRepository()) {
-				if (other.getTaskState() instanceof Finished) {
-					validTasks.remove(other);
-				}
-				if (other.getTaskState() instanceof Cancelled) {
+				if (other.getTaskState() instanceof Finished || other.getTaskState() instanceof Cancelled) {
 					validTasks.remove(other);
 				}
 			}
 			return validTasks;
 		}
+
+
 
 }
