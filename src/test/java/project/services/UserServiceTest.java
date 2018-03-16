@@ -82,8 +82,7 @@ public class UserServiceTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.Services.UserService#createUserWithDTO(project.dto.UserDTO)}.
+	 * Test method call of testCreateUserWithDTO
 	 */
 	@Test
 	public final void testCreateUserWithDTO() {
@@ -132,8 +131,7 @@ public class UserServiceTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.Services.UserService#getUserByEmail(java.lang.String)}.
+	 * Test method call of testGetUserByEmail
 	 */
 	@Test
 	public final void testGetUserByEmail() {
@@ -144,7 +142,7 @@ public class UserServiceTest {
 	}
 
 	/**
-	 * Test method for {@link project.Services.UserService#updateUserContainer()}.
+	 * Test method call of testUpdateUserContainer
 	 */
 	@Test
 	public final void testUpdateUserContainer() {
@@ -152,17 +150,24 @@ public class UserServiceTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.Services.UserService#getAllActiveCollaboratorsFromRepository()}.
+	 * Test method call of testGetAllActiveCollaboratorsFromRepository
 	 */
 	@Test
 	public final void testGetAllActiveCollaboratorsFromRepository() {
+		List<User> list = new ArrayList<>();
+		user1.setUserProfile(Profile.COLLABORATOR);
+		user2.setUserProfile(Profile.COLLABORATOR);
+		list.add(user1);
+		list.add(user2);
+
+		when(userRepositoryMock.findAll()).thenReturn(list);
+
+		assertEquals(list, userContainer.getAllActiveCollaboratorsFromRepository());
 
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.Services.UserService#searchUsersByPartsOfEmail(java.lang.String)}.
+	 * Test method call of testSearchUsersByPartsOfEmail
 	 */
 	@Test
 	public final void testSearchUsersByPartsOfEmail() {
@@ -177,8 +182,7 @@ public class UserServiceTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.Services.UserService#searchUsersByProfile(project.model.Profile)}.
+	 * Test method call of testSearchUsersByProfile
 	 */
 	@Test
 	public final void testSearchUsersByProfile() {
@@ -193,8 +197,7 @@ public class UserServiceTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link project.Services.UserService#isEmailAddressValid(java.lang.String)}.
+	 * Test method call of testIsEmailAddressValid
 	 */
 	@Test
 	public final void testIsEmailAddressValid() {
