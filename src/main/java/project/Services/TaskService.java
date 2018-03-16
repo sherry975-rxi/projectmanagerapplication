@@ -537,7 +537,7 @@ public class TaskService {
 			}
 			return listOfTasksWithoutCollaboratorsAssigned;
 		}
-		
+
 		/**
 		 * This method creates a list with all finished tasks in project.
 		 * 
@@ -553,7 +553,9 @@ public class TaskService {
 			}
 			return allFinishedTasks;
 		}
+		
 
+		
 		/**
 		 * This method create a list of all tasks finished from project in decreasing
 		 * order.
@@ -617,9 +619,6 @@ public class TaskService {
 			}
 			return allUnstartedTasks;
 		}
-		
-
-		
 		/**
 		 * Returns a list of the tasks which are unfinished but which deadline has
 		 * already passed
@@ -699,10 +698,11 @@ public class TaskService {
 
 			for (Task other : this.getTaskRepository()) {
 				reportTaskCost.add(String.valueOf(other.getTaskCost()));
+
 			}
+
 			return reportTaskCost;
 		}
-		
 
 		/**
 		 * This method returns a list of tasks that can be associated to
@@ -720,7 +720,5 @@ public class TaskService {
 			}
 			return validTasks;
 		}
-
-
 
 }

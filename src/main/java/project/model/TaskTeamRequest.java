@@ -104,9 +104,11 @@ public class TaskTeamRequest {
 
 	public String getType() {
 	    String typeString ="N/A";
-	    if (type==0) {
+	    Integer assignement = 0;
+	    Integer removal = 1;
+	    if (assignement.equals(type)) {
             typeString = "Assignment";
-        } else if (type==1) {
+        } else if (removal.equals(type)) {
             typeString = "Removal";
         }
 	    return typeString;
@@ -179,7 +181,9 @@ public class TaskTeamRequest {
 	 *
 	 * @return The string representation
 	 */
-	public String viewStringRepresentation() {
+	public String viewStringRepresentation() { 
+		
+		//Este método não devia estar noutro sítio? Controladores ou assim...
 
 		return this.projCollab.getUserFromProjectCollaborator().getName() + "\n"
 				+ this.projCollab.getUserFromProjectCollaborator().getEmail() + "\n"

@@ -4,71 +4,59 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+import project.Repository.TaskRepository;
+import project.Repository.UserRepository;
 import project.Services.TaskService;
+import project.Services.UserService;
 
 import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ReportTest {
 
-	User u1;
-	ProjectCollaborator projectCollaborator1;
-	Calendar estimatedStartDate;
-	Calendar taskDeadline;
-	Task t1;
-	TaskCollaborator taskWorker1;
-	Project p1;
-	TaskService taskContainer;
-	Report report;
-	Calendar dateOfReport;
-	Task task1;
-	int timeToCompare;
-	Report report2;
+	private Calendar estimatedStartDate;
+	private Calendar taskDeadline;
+
+	@InjectMocks
+    private
+    Task task1;
+
+	@Mock
+    private
+    TaskCollaborator taskWorker1;
+
+    private Report report;
+
+	private Calendar dateOfReport;
+	private int timeToCompare;
 
 	@Before
 	public void setUp() {
-
-		u1 = new User("name", "email", "idNumber", "function", "123456789");
-		projectCollaborator1 = new ProjectCollaborator(u1, 1200);
-		taskWorker1 = new TaskCollaborator(projectCollaborator1);
-		p1 = new Project(1, "name3", "description4", u1);
+		Mockito.when(taskWorker1.getCost()).thenReturn(1);
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
-		t1 = p1.getTaskRepository().createTask("description", 0, estimatedStartDate, taskDeadline, 0);
-		p1.getTaskRepository().addTaskToProject(t1);
-		timeToCompare = 0;
-		dateOfReport = Calendar.getInstance();
-		task1 = new Task();
 	}
 
 	@After
 	public void tearDown() {
 
-		u1 = null;
-		t1 = null;
+		task1 = null;
 		taskWorker1 = null;
-		p1 = null;
-		projectCollaborator1 = null;
-		taskContainer = null;
+		estimatedStartDate = null;
+		taskDeadline = null;
 		report = null;
 		timeToCompare = 0;
 		dateOfReport = null;
 		report = null;
-		report2 = null;
-	}
-
-	/**
-	 * Tests constructor for Report
-	 */
-	@Test
-	public void testCreateReport() {
-
-		// Creates a new Report instance
-		report2 = new Report(taskWorker1, dateOfReport);
-
 	}
 
 	/**
@@ -76,11 +64,9 @@ public class ReportTest {
 	 */
 	@Test
 	public void testSettersAndGetters() {
-		report = new Report();
 
-		// Creates a new Report instance
-		report.setTaskCollaborator(taskWorker1);
-		report.setDateOfReport(dateOfReport);
+        // Creates a new Report instance
+        report = new Report(taskWorker1, dateOfReport);
 
 		//Sets a time to the report
 		report.setReportedTime(10);

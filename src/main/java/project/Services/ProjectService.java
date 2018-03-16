@@ -8,8 +8,13 @@ import project.Repository.ProjectsRepository;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
+
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Optional;
 
 @Service
 public class ProjectService {
@@ -201,4 +206,81 @@ public class ProjectService {
 		return newProjectCollaborator;
 
 	}
+
+	/**
+	 * Get the active users inside this Project's Team
+	 *
+	 * @return Project Team - Active Team of the Project
+	 */
+	public List<ProjectCollaborator> getActiveProjectTeam(Project project) {
+		List<ProjectCollaborator> activeCollaborators = new ArrayList<>();
+
+		for (ProjectCollaborator other : this.projectCollaboratorRepository.findAllByProject(project)) {
+			if (other.isProjectCollaboratorActive())
+				activeCollaborators.add(other);
+		}
+
+		return activeCollaborators;
+	}
+
+	/**
+	 * Returns a list with all project collaborators from a certain project
+	 *
+	 * @param project Project to get project collaborators from
+	 *
+	 * @return List of Project Collaborators of a certian project
+	 */
+	public List<ProjectCollaborator> getProjectTeam(Project project) {
+		List<ProjectCollaborator> projectTeam = new ArrayList<>();
+		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		return projectTeam;
+	}
+
+	/**
+	 * Checks if the user is in the Project Team. A project collaborator contains a
+	 * User that is a collaborator and has a cost associated to him
+	 *
+	 * @param user
+	 *            User to add as ProjectCollaborator
+	 *
+	 * @return TRUE if the user exists in the project team FALSE if the user does
+	 *         not exist in the project team
+	 */
+	public boolean isUserInProjectTeam(User user, Project project) {
+		List<ProjectCollaborator> projectTeam = new ArrayList<>();
+		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		for (ProjectCollaborator other : projectTeam) {
+			if (user.equals(other.getUserFromProjectCollaborator())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if the user is in the Project Team and is active. A project
+	 * collaborator contains a User that is a collaborator and has a cost associated
+	 * to him
+	 *
+	 * @param user
+	 *            User to add as ProjectCollaborator
+	 *
+	 * @return TRUE if the user exists in the project team AND is active FALSE if
+	 *         the user does not exist in the project team OR isn't active
+	 */
+	public boolean isUserActiveInProject(User user, Project project) {
+		List<ProjectCollaborator> projectTeam = new ArrayList<>();
+		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		for (ProjectCollaborator other : projectTeam) {
+			if (user.equals(other.getUserFromProjectCollaborator()) && other.isProjectCollaboratorActive()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 }

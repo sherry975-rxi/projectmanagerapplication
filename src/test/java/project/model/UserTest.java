@@ -254,7 +254,7 @@ public class UserTest {
         User u3 = null;
         assertTrue(u1.equals(u1));// same object
         assertFalse(u1.equals(u3));// null object
-        Project p1 = new Project(1, "name3", "description4", u1);
+        Project p1 = new Project("name3", "description4", u1);
         assertFalse(u1.equals(p1));// different classes
         assertFalse(u1.equals(u2));// different email
         u3 = new User("Daniel2", "daniel@gmail.com", "02", "Cenas", "910007800");

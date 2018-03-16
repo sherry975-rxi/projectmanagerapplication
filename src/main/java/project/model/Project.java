@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import static javax.persistence.CascadeType.ALL;
 
@@ -32,9 +33,6 @@ public class Project implements Serializable{
 	private int status;
 	@OneToOne
 	private User projectManager;
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
-	@Column(columnDefinition = "LONGBLOB")
-	private List<ProjectCollaborator> projectTeam;
 	private String name;
 	private String description;
 	@Enumerated(EnumType.STRING)
@@ -43,7 +41,12 @@ public class Project implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-    @OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "project")
+	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+	@Column(columnDefinition = "LONGBLOB")
+	private List<ProjectCollaborator> projectTeam;
+
+
+	@OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "project")
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	public static final int PLANNING = 0; // planeado
@@ -53,11 +56,7 @@ public class Project implements Serializable{
 	public static final int REVIEW = 4; // garantia
 	public static final int CLOSE = 5; // fecho
 	static final long serialVersionUID = 43L;
-	
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
-	@Column(columnDefinition = "LONGBLOB")
-	private List<Task> taskList;
-	
+
 
 	/**
 	 * Empty Constructor for Project
@@ -76,15 +75,20 @@ public class Project implements Serializable{
 	 * @param projectManager
 	 */
 	public Project(String name, String description, User projectManager) {
+
+		Objects.requireNonNull(name, "Name of the project cannot be null");
+		Objects.requireNonNull(description, "Description of the project cannot be null");
+		Objects.requireNonNull(projectManager, "Description of the project cannot be null");
+
 		this.name = name;
 		this.description = description;
 		this.projectManager = projectManager;
 		this.effortUnit = EffortUnit.HOURS;
+		this.projectTeam = new ArrayList<>();
 		this.budget = 0;
 		this.status = PLANNING;
 		this.startdate = null;
 		this.finishdate = null;
-		this.projectTeam = new ArrayList<>();
 		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 
@@ -137,21 +141,12 @@ public class Project implements Serializable{
 		this.pendingTaskTeamRequests = pendingTaskTeamRequests;
 	}
 
+
+
 	public List<TaskTeamRequest> getPendingTaskTeamRequests() {
 		return this.pendingTaskTeamRequests;
 	}
 
-	/**
-	 * This Method adds a User to a project. This action converts the User in a
-	 * Project Collaborator ( User + costPerEffort)
-	 * 
-	 * @param userToAdd
-	 * @param costPerEffort
-	 */
-	public void addUserToProjectTeam(User userToAdd, int costPerEffort) {
-		addProjectCollaboratorToProjectTeam(createProjectCollaborator(userToAdd, costPerEffort));
-	}
-	
 	/**
 	 * Create a Task using Creation Pattern
 	 * 
@@ -160,6 +155,7 @@ public class Project implements Serializable{
 	 * @return A new Task object
 	 */
 	public Task createTask(String description) {
+		Objects.requireNonNull(description, "Description of the Task cannot be null");
 
 		Task newTask = new Task(description, this);
 		return newTask;
@@ -177,41 +173,12 @@ public class Project implements Serializable{
 	 */
 	public ProjectCollaborator createProjectCollaborator(User collaborator, int costPerEffort) {
 
+		Objects.requireNonNull(collaborator, "User cannot be null");
+
 		ProjectCollaborator newCollaborator = new ProjectCollaborator(collaborator, costPerEffort);
 		newCollaborator.setProject(this);
 
 		return newCollaborator;
-	}
-	
-//	/**
-//	 * Creates an instance of Task
-//	 * 
-//	 * @param description
-//	 *            description of the task to add
-//
-//	 * 
-//	 * @return The new task instantiated
-//	 */
-//	public Task createTaskinProject(String description) {
-//
-//		Task newTask = new Task(description);
-//		newTask.setProject(this);
-//
-//		return newTask;
-//	}
-
-	/**
-	 * Add Project Collaborator to project team if is missing from the projectTeam.
-	 * 
-	 * @param newAddedProjectCollaborator
-	 *            Project Collaborator to add to the Project Team
-	 */
-	public void addProjectCollaboratorToProjectTeam(ProjectCollaborator newAddedProjectCollaborator) {
-		if (!isUserInProjectTeam(newAddedProjectCollaborator.getUserFromProjectCollaborator())) {
-			this.projectTeam.add(newAddedProjectCollaborator);
-		} else if (!newAddedProjectCollaborator.isProjectCollaboratorActive()) {
-			this.projectTeam.add(newAddedProjectCollaborator);
-		}
 	}
 
 	/**
@@ -305,22 +272,6 @@ public class Project implements Serializable{
 	}
 
 	/**
-	 * Get the active users inside this Project's Team
-	 * 
-	 * @return Project Team - Active Team of the Project
-	 */
-	public List<ProjectCollaborator> getActiveProjectTeam() {
-		List<ProjectCollaborator> activeCollaborators = new ArrayList<>();
-
-		for (ProjectCollaborator other : this.projectTeam) {
-			if (other.isProjectCollaboratorActive())
-				activeCollaborators.add(other);
-		}
-
-		return activeCollaborators;
-	}
-
-	/**
 	 * This method returns the state of the attribute status that can be planning,
 	 * initiation, execution , delivery, review and close.
 	 * 
@@ -381,21 +332,6 @@ public class Project implements Serializable{
 		return result;
 	}
 
-	/**
-	 * 
-	 * Add user to project team if is missing from the projectTeam. Checks if it's
-	 * the project manager that wants to add the user to the team.
-	 * 
-	 * @param projectManager
-	 *            User to compare to the Project's Manager
-	 * @param toAdd
-	 *            User to add to the Project Team
-     *
-	 * public void addUserToProjectTeam(User projectManager, User toAdd) { if
-	 * (this.isProjectManager(projectManager)) { if
-	 * (!this.projectTeam.contains(toAdd)) { this.projectTeam.add(toAdd); } } }
-	 */
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -424,59 +360,6 @@ public class Project implements Serializable{
 			return false;
 		Project other = (Project) obj;
 		return projectIdCode == other.projectIdCode;
-	}
-
-	/*
-	 * THIS METHOD SHOULD ONLY EXIST IN TASK AS IT IS THE TASK RESPONSIBILITY TO ADD
-	 * A USER TO ITS TASK
-	 *//**
-		 * Adds user to task in project. Company calls this method to add user to Task.
-		 *
-		 * @param user
-		 * @param task
-		 *//*
-			 * public void addUserToTaskInProject(User user, Task task) { for (Task other :
-			 * this.projectTaskList) { if (task.equals(other)) { task.addUserToTask(user); }
-			 * } }
-			 */
-
-	/**
-	 * Checks if the user is in the Project Team. A project collaborator contains a
-	 * User that is a collaborator and has a cost associated to him
-	 * 
-	 * @param user
-	 *            User to add as ProjectCollaborator
-	 * 
-	 * @return TRUE if the user exists in the project team FALSE if the user does
-	 *         not exist in the project team
-	 */
-	public boolean isUserInProjectTeam(User user) {
-		for (ProjectCollaborator other : this.projectTeam) {
-			if (user.equals(other.getUserFromProjectCollaborator())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * Checks if the user is in the Project Team and is active. A project
-	 * collaborator contains a User that is a collaborator and has a cost associated
-	 * to him
-	 * 
-	 * @param user
-	 *            User to add as ProjectCollaborator
-	 * 
-	 * @return TRUE if the user exists in the project team AND is active FALSE if
-	 *         the user does not exist in the project team OR isn't active
-	 */
-	public boolean isUserActiveInProject(User user) {
-		for (ProjectCollaborator other : this.projectTeam) {
-			if (user.equals(other.getUserFromProjectCollaborator()) && other.isProjectCollaboratorActive()) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -518,76 +401,6 @@ public class Project implements Serializable{
 	 */
 	public void setProjectBudget(int newBudget) {
 		this.budget = newBudget;
-	}
-
-	/**
-	 * This method checks which ProjectCollaborators don't have tasks assigned.
-	 * First, it gets all the Project Collaborators in project team; then, cycles
-	 * each Project Collaborator through each task and verifies if it's active on
-	 * any task. If so, it's removed from the inactiveCollaborators list.
-	 *
-	 * @Return returns a List of Project Collaborators that are not assigned to a
-	 *         Task
-	 *
-	 */
-
-	public List<ProjectCollaborator> getCollaboratorsWithoutTasks() {
-		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
-		inactiveCollaborators.addAll(this.getProjectTeam());
-		for (ProjectCollaborator other : this.getProjectTeam()) {
-		//	if (this.taskContainer.isCollaboratorActiveOnAnyTask(other)) // needs to check if TODO CHECK CONDITION
-				// collaborator is
-				// active
-				inactiveCollaborators.remove(other);
-		}
-		return inactiveCollaborators;
-	}
-
-
-	/**
-	 * This method allows the inactivation of a User from a Project Team which
-	 * includes deactivate the Project Collaborator in the Project Team of this
-	 * Project
-	 * 
-	 * @param collaboratorToRemoveFromProjectTeam
-	 *            Collaborator to remove from project
-	 * 
-	 * @return remove
-	 */
-
-	public boolean removeProjectCollaboratorFromProjectTeam(User collaboratorToRemoveFromProjectTeam) {
-		boolean remove = false;
-		for (ProjectCollaborator other : projectTeam) {
-			if (other.getUserFromProjectCollaborator().equals(collaboratorToRemoveFromProjectTeam)) {
-
-				other.setStatus(false);
-
-				//for (Task otherTask : this.taskContainer.getAllTasksFromProjectCollaborator(other)) { //TODO REIMPLEMENT THIS METHOD IN ACCORDANCE WITH THE UPDATED MODEL
-				//	otherTask.removeProjectCollaboratorFromTask(other);
-				//}
-				//remove = true;
-			}
-
-		}
-		return remove;
-	}
-
-	/**
-	 * This method retrieves the Project Collaborator in a ProjectTeam from the
-	 * User. If there are more than one Project Collaborator corresponding to the
-	 * same user, that information is not collected in this method.
-	 * 
-	 * @param collaborator
-	 * @return
-	 */
-	public ProjectCollaborator findProjectCollaborator(User collaborator) {
-
-		for (ProjectCollaborator other : projectTeam) {
-			if (other.getUserFromProjectCollaborator().equals(collaborator)) {
-				return other;
-			}
-		}
-		return null;
 	}
 
 	/**
