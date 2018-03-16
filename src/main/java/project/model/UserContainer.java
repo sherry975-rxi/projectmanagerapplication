@@ -38,6 +38,10 @@ public class UserContainer {
 		this.usersContainer = new ArrayList<>();
 	}
 
+	public void setUserRepository(UserRepository repos) {
+		userRepository=repos;
+	}
+
 	/**
 	 * Creates an instance of User
 	 * 
