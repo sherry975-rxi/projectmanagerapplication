@@ -1,9 +1,11 @@
 package project.controller;
 
+import project.model.Company;
 import project.model.User;
 
 public class US115andUS116SetUserStateController {
 
+	Company myCompany = Company.getTheInstance();
 	User toChangeState;
 
 	/**
@@ -26,6 +28,7 @@ public class US115andUS116SetUserStateController {
 	 */
 	public void changeUserState() {
 		toChangeState.changeUserState();
+		myCompany.getUsersContainer().addUserToUserRepositoryX(toChangeState);
 	}
 
 	/**
