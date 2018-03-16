@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import static javax.persistence.CascadeType.ALL;
 
@@ -32,9 +33,6 @@ public class Project implements Serializable{
 	private int status;
 	@OneToOne
 	private User projectManager;
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
-	@Column(columnDefinition = "LONGBLOB")
-	private List<ProjectCollaborator> projectTeam;
 	private String name;
 	private String description;
 	@Enumerated(EnumType.STRING)
@@ -43,7 +41,12 @@ public class Project implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-    @OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "project")
+	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+	@Column(columnDefinition = "LONGBLOB")
+	private List<ProjectCollaborator> projectTeam;
+
+
+	@OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "project")
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	public static final int PLANNING = 0; // planeado
@@ -53,11 +56,7 @@ public class Project implements Serializable{
 	public static final int REVIEW = 4; // garantia
 	public static final int CLOSE = 5; // fecho
 	static final long serialVersionUID = 43L;
-	
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
-	@Column(columnDefinition = "LONGBLOB")
-	private List<Task> taskList;
-	
+
 
 	/**
 	 * Empty Constructor for Project
