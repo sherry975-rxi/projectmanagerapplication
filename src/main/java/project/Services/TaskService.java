@@ -734,4 +734,57 @@ public class TaskService {
 			return validTasks;
 		}
 
+	/**
+	 * This method checks which ProjectCollaborators don't have tasks assigned.
+	 * First, it gets all the Project Collaborators in project team; then, cycles
+	 * each Project Collaborator through each task and verifies if it's active on
+	 * any task. If so, it's removed from the inactiveCollaborators list.
+	 *
+	 * @Return returns a List of Project Collaborators that are not assigned to a
+	 *         Task
+	 *
+	 */
+	public List<ProjectCollaborator> getCollaboratorsWithoutTasks(Project project) {
+
+		List<ProjectCollaborator> inactiveCollaborators = new ArrayList<>();
+		inactiveCollaborators.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		for (ProjectCollaborator other : inactiveCollaborators) {
+			if (this.isCollaboratorActiveOnAnyTask(other))
+			inactiveCollaborators.remove(other);
+		}
+		return inactiveCollaborators;
+	}
+
+
+	/**
+	 * This method allows the inactivation of a User from a Project Team which
+	 * includes deactivate the Project Collaborator in the Project Team of this
+	 * Project
+	 *
+	 * @param collaboratorToRemoveFromProjectTeam
+	 *            Collaborator to remove from project
+	 *
+	 * @return remove
+	 */
+
+	public boolean removeProjectCollaboratorFromProject(User collaboratorToRemoveFromProjectTeam, Project project) {
+		boolean remove = false;
+		List<ProjectCollaborator> projectTeam = new ArrayList<>();
+		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		for (ProjectCollaborator other : projectTeam) {
+			if (other.getUserFromProjectCollaborator().equals(collaboratorToRemoveFromProjectTeam)) {
+				other.setStatus(false);
+				for (Task otherTask : this.getAllTasksFromProjectCollaborator(other)) {
+				otherTask.removeProjectCollaboratorFromTask(other);
+				}
+				remove = true;
+			}
+
+		}
+		return remove;
+	}
+
+
 }
