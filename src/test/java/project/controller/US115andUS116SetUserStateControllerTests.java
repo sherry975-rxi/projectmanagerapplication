@@ -97,7 +97,7 @@ public class US115andUS116SetUserStateControllerTests {
         myCompany.getUsersContainer().updateUserContainer();
         newUser2 = myCompany.getUsersContainer().getAllUsersFromUserContainer().get(0);
 
-        // then newUser2 must be Manel, and must be inactive
+        // then newUser2 must be Manel, and must be active
         assertTrue("Manel".equals(newUser2.getName()));
         assertTrue(newUser2.isSystemUserStateActive());
 	}
