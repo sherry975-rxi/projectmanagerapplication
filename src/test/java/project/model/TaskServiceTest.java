@@ -80,9 +80,13 @@ public class TaskServiceTest {
 			this.taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
 		}
 
+		/**
+		 * Tests the construction of an instance of Task
+		 */
 		@Ignore //TODO corrigir este teste
 		@Test
 		public void testCreateTask() {
+						
 			Task expectedTask = new Task("firstTask", project);
 			Task actualTask= victimTask.createTask("firstTask", project);
 			assertEquals(expectedTask, actualTask);
@@ -92,6 +96,9 @@ public class TaskServiceTest {
 			assertEquals(expectedTask, actualTask);
 		}
 
+		/**
+		 * Tests the method getTaskRepository() to verify if the task list is returned.
+		 */
 		@Ignore //TODO corrigir este teste
 		@Test
 		public void testGetTaskRepository(){
@@ -100,6 +107,10 @@ public class TaskServiceTest {
 			verify(taskRepository, times(1)).findAll();
 		}
 		
+		/**
+		 * Tests the getProjectTasks() method to verify if the task list for the project 
+		 * is returned.
+		 */
 		@Ignore //TODO corrigir este teste
 		@Test
 		public void testGetProjectTasks(){		
@@ -108,6 +119,9 @@ public class TaskServiceTest {
 			verify(taskRepository, times(1)).findAllByProject(any(Project.class));
 		}
 
+		/**
+		 * Tests if the getUserTasks() method to verify is a task list from a certain user is returned.
+		 */
 		@Test
 		public void testGetUserTasks(){
 			List<Task> taskListMock = new ArrayList<>();
@@ -125,13 +139,33 @@ public class TaskServiceTest {
 		}
 		
 		
-		@Ignore
+		
+		/**
+		 * Tests the getFinishedTasksFromUser() method to verify if the tasks from a certain user, marked as finished,
+		 * are returned.
+		 */
 		@Test
 		public void testGetAllFinishedTasksFromUser() {
+			
+			List<Task> taskListMock = new ArrayList<>();
+			taskListMock.add(taskMock);
+			when(victimTask.getTaskRepository()).thenReturn(taskListMock);
+			
+			when(taskMock.isTaskFinished()).thenReturn(true);
+			when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+			
+			List<Task> expectedTaskList = new ArrayList<>();
+			expectedTaskList.add(taskMock);
+			assertEquals(expectedTaskList, victimTask.getFinishedTaskListOfUserInProject(projectCollaborator));		
+				
 			
 		}
 		
 		
+		/**
+		 * Tests the getUnfinishedUserTaskList() method to verify if the tasks from a certain user, marked as unfinished,
+		 * are returned.
+		 */
 		@Test
 		public void testGetUnfinishedUserTaskList() {
 			List<Task> taskListMock = new ArrayList<>();
@@ -146,6 +180,10 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getUnfinishedTasksFromProjectCollaborator(projectCollaborator));
 		}		
 		
+		/**
+		 * Tests the getStartedNotFinishedUserTaskList() method to verify if the tasks from a certain user, marked as Started but
+		 * the state "unfinished" are returned.
+		 */
 		@Test
 		public void testGetStartedNotFinishedUserTaskList(){
 			List<Task> taskListMock = new ArrayList<>();
@@ -162,9 +200,15 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
 		}
 		
+		/**
+		 * Tests the getLastMonthFinishedUserTaskList() method to verify if the tasks marked as Finished, of a certain user,
+		 * are returned, in decreasing order.
+		 */
 		@Ignore
 		@Test
 		public void testGetLastMonthFinishedUserTaskList() {
+			
+		
 			
 		}
 		
@@ -205,9 +249,20 @@ public class TaskServiceTest {
 			
 		}
 		
+		/**
+		 * Tests the getAllFinishedUserTasksInDecreasingOrder() method, to verify f a list with the finished tasks of a 
+		 * certain user by decreasing order of date is returned.
+		 */
 		@Ignore
 		@Test
 		public void testGetAllFinishedUserTasksInDecreasingOrder() {
+			
+			
+			
+			
+			
+			
+			
 			
 		}
 		
@@ -223,6 +278,10 @@ public class TaskServiceTest {
 			
 		}
 		
+		/**
+		 * Tests the getUnfinishedTasksFromProjectCollaborator() method to verify if a list of all unfinished tasks
+		 * of a certain project is returned.
+		 */
 		@Test
 		public void testGetUnFinishedTasksFromProjectCollaborator() {
 			List<Task> taskListMock = new ArrayList<>();
@@ -237,6 +296,10 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getUnfinishedTasksFromProjectCollaborator(projectCollaborator));
 		}
 
+		/**
+		 * Tests the getStartedNotFinishedTasksFromProjectCollaborator() method to verify if a list of started, but not yes finished tasks,
+		 * assigned to a certain project collaborator, is returned.
+		 */
 		@Test
 		public void testGetStartedNotFinishedTasksFromProjectCollaborator(){
 			List<Task> taskListMock = new ArrayList<>();
@@ -244,7 +307,7 @@ public class TaskServiceTest {
 			when(victimTask.getTaskRepository()).thenReturn(taskListMock);
 			
 			when(taskMock.isTaskFinished()).thenReturn(false);
-			when(taskMock.viewTaskStateName()).thenReturn("Canceled");
+			when(taskMock.viewTaskStateName()).thenReturn("Cancelled");
 			when(taskMock.getStartDate()).thenReturn(startDate);
 			when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
 
@@ -253,6 +316,10 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
 		}
 		
+		/**
+		 * Tests the getFinishedTaskListofUserInProject() method to verify if a list of only the finished tasks of a 
+		 * certain user in a project is returned.
+		 */
 		@Test
 		public void testFinishedTaskListOfUserInProject() {
 			List<Task> taskListMock = new ArrayList<>();
@@ -268,6 +335,10 @@ public class TaskServiceTest {
 		}
 		
 	
+		/**
+		 * Tests the getFinishedTasksFromProjectCollaboratorInGivenMonth() method to verify if a list of all tasks
+		 * finished x months ago by a certain project collaborator is returned.
+		 */
 		@Test
 		public void testGetFinishedTasksFromProjectCollaboratorInGivenMonth() {
 			Calendar calendar = Calendar.getInstance();
@@ -290,6 +361,9 @@ public class TaskServiceTest {
 			assertEquals(new ArrayList<>(), victimTask.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
 		}
 		
+		/**
+		 * Tests the isTaskinTaskRepository() method to verify if a certain task exists in the task list.
+		 */
 		@Test
 		public void testIsTaskInTaskContainer(){
 			List<Task> taskListMock = new ArrayList<>();
@@ -300,6 +374,10 @@ public class TaskServiceTest {
 			assertFalse(victimTask.isTaskInTaskRepository(new Task()));
 		}
 		
+		/**
+		 * Tests the getAllTasksFromProjectCollaborator() method to verify if a list of all the tasks of a certain 
+		 * user, which is a project collaborator, is returned.
+		 */
 		@Test
 		public void testGetAllTasksFromProjectCollaborator(){
 			List<Task> taskListMock = new ArrayList<>();
@@ -314,6 +392,9 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getAllTasksFromProjectCollaborator(projectCollaborator));
 		}
 		
+		/**
+		 * Tests the isCollaboratorActiveOnAnyTask() method to verify if a given user had any task assigned to him.
+		 */
 		@Test
 		public void testIsCollaboratorActiveOnAnyTask(){		
 			List<Task> taskListMock = new ArrayList<>();
@@ -328,6 +409,10 @@ public class TaskServiceTest {
 			assertFalse(victimTask.isCollaboratorActiveOnAnyTask(projectCollaborator));
 		}
 		
+		/**
+		 * Tests the getProjectTasksWithoutCollaboratorAssigned() method to verify if a list with all the tasks without
+		 * collaborators assigned is returned.
+		 */
 		@Test
 		public void testGetAllTasksWithoutCollaboratorsAssigned(){
 			List<Task> taskList = new ArrayList<>();
@@ -350,8 +435,12 @@ public class TaskServiceTest {
 		}
 		
 		
+		/**
+		 * Tests the getProjectFinishedTasks() method to verify is a list with all finished tasks
+		 * from a certain project is returned.
+		 */
 		@Test
-		public void testGProjectFinishedTasks(){
+		public void testGetProjectFinishedTasks(){
 			List<Task> taskList = new ArrayList<>();
 			taskList.add(taskMock);
 			when(victimTask.getProjectTasks(project)).thenReturn(taskList);
@@ -363,8 +452,12 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getProjectFinishedTasks(project));
 		}
 		
+		/**
+		 * Tests the getFinishedTasksInDecreasingOrder() method, to verify if a list of all tasks finished from 
+		 * a certain project in decreasing order is returned.
+		 */
 		@Test
-		public void testGetFinishedTasksInDecreasingOrder(){
+		public void testGetProjectFinishedTasksInDecreasingOrder(){
 			List<Task> taskList = new ArrayList<>();
 			taskList.add(taskMock);
 			taskList.add(task2Mock);
@@ -386,6 +479,10 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getProjectFinishedTasksInDecreasingOrder(project));
 		}
 		
+		/**
+		 * Tests the get ProjectUnfinishedTasks() method to verify if a list with all unfinished tasks
+		 * in a certain project is returned.
+		 */
 		@Test
 		public void testGetUnFinishedTasks(){
 			Calendar calendar2 = Calendar.getInstance();
@@ -404,10 +501,32 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getProjectUnFinishedTasks(project));
 		}
 		
-		@Ignore
+		/**
+		 * Tests the getProjectOnGoingTasks() method to verify if a list with
+		 * all the OnGoing tasks is returned.
+		 */
 		@Test
-		public void testGetProjectOnGoingTasks(){}
+		public void testGetProjectOnGoingTasks(){
+			List<Task> taskList = new ArrayList<>();
+			taskList.add(taskMock);
+			when(victimTask.getProjectTasks(project)).thenReturn(taskList);
+			
+			TaskStateInterface onGoing = new OnGoing();
+			when(taskMock.getTaskState()).thenReturn(onGoing);
+			when(taskMock.viewTaskStateName()).thenReturn("OnGoing");
+			when(taskMock.isTaskFinished()).thenReturn(false);
+			
+			List<Task> expectedTaskList = new ArrayList<>();
+			expectedTaskList.add(taskMock);
+			assertEquals(expectedTaskList, victimTask.getProjectOnGoingTasks(project));
+			
+				
+		}
 
+		/**
+		 * Tests the getProjectUnstartedTasks() method to verify if a list with all unstarted tasks 
+		 * (with the stated "Created", "Planned" and/or "Ready") of a certain project is returned.
+		 */
 		@Test
 		public void testGetProjectUnstartedTasks(){
 			List<Task> taskList = new ArrayList<>();
@@ -430,6 +549,10 @@ public class TaskServiceTest {
 		}
 		
 		
+		/**
+		 * Tests the getProjectExpiredTasks() method to verify if a list of all the tasks marked as unfinished
+		 * but which deadline already passed, is returned.
+		 */
 		@Test
 		public void testGetExpiredTasks(){
 			Calendar calendar2 = Calendar.getInstance();
@@ -472,6 +595,10 @@ public class TaskServiceTest {
 			
 		}
 		
+		/**
+		 * Tests the deleteTask() method to verify if a task is deleted from the Task repository, if 
+		 * it hasn't started. 
+		 */
 		@Test
 		public void testDeleteTask(){
 			when(taskMock.viewTaskStateName()).thenReturn("Planned");
@@ -491,6 +618,10 @@ public class TaskServiceTest {
 		}
 
 	
+		/**
+		 * Tests the getProjectCancelledTasks() method to verify if a list of all cancelled tasks
+		 * in a certain project is returned.
+		 */
 		@Test
 		public void testGetProjectCancelledTasks(){
 			List<Task> taskList = new ArrayList<>();
@@ -510,6 +641,10 @@ public class TaskServiceTest {
 
 		}
 		
+		/**
+		 * Tests the getReportedCostOfEachTask() method to verify is the cost reported to each task
+		 * is returned.
+		 */
 		@Test
 		public void testGetReportedCostOfEachTask(){
 			List<Task> taskList = new ArrayList<>();
@@ -525,7 +660,7 @@ public class TaskServiceTest {
 		}
 		
 
-		@Test
+			@Test
 		public void testGetTaskListOfWhichDependenciesCanBeCreated(){
 			List<Task> taskList = new ArrayList<>();
 			when(victimTask.getTaskRepository()).thenReturn(taskList);
