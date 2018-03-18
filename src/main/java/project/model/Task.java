@@ -493,15 +493,6 @@ public class Task {
 	}
 
 	/**
-	 * This method sets the finish date to a chosen date on the Calendar. Created to
-	 * be able to test this class
-	 * 
-	 */
-	public void setFinishDate(Calendar c) { // REMOVE AND CORRECT TESTS
-		this.finishDate = (Calendar) c.clone();
-	}
-
-	/**
 	 * This method gets the list of assigned users to a certain Task
 	 * 
 	 * @return taskTeam List of assigned users to a certain Task
@@ -785,6 +776,13 @@ public class Task {
 		return reportedTime;
 	}
 
+	/**
+	 * This method return the name of task Collaborator from the list of reports using a given email
+	 * 
+	 * @param userEmail
+	 * 
+	 * @return reporterName 
+	 */
 	public String getReporterName(String userEmail) {
 		String reporterName = "";
 		for (Report other : this.reports) {
