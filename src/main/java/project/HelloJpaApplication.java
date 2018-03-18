@@ -1,5 +1,7 @@
 package project;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,23 +238,36 @@ public class HelloJpaApplication implements CommandLineRunner {
 
 		userContainer.isUserinUserContainer(userAdmin);
 
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println(userContainer.isUserinUserContainer(userAdmin));
+//		System.out.println(userContainer.getAllUsersFromUserContainer().get(0).getName());
+//		System.out.println(userContainer.getUserByEmail("admin@gmail.com").getName());
+//		System.out.println(userContainer.searchUsersByPartsOfEmail("@gmail.com").get(0).getName());
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println(userContainer.getAllActiveCollaboratorsFromRepository().get(0).getName());
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println(userContainer.searchUsersByProfile(collabProfile).get(0).getName());
+//		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+//		System.out.println(userContainer.searchUsersByPartsOfEmail("admin@gmail.com").get(0).getName());
+		
+		userContainer.isUserinUserContainer(userAdmin);
+		Optional<ProjectCollaborator> projectCollaborator = projContainer.findProjectCollaborator(userCollab, projOne);
+		Optional<ProjectCollaborator> pCollabFound = projContainer.findProjectCollaborator(userAdmin, projOne);
+
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		System.out.println(userContainer.isUserinUserContainer(userAdmin));
-		System.out.println(userContainer.getAllUsersFromUserContainer().get(0).getName());
-		System.out.println(userContainer.getUserByEmail("admin@gmail.com").getName());
-		System.out.println(userContainer.searchUsersByPartsOfEmail("@gmail.com").get(0).getName());
+		System.out.print(projectCollaborator.map(projCollab -> projCollab.getCollaborator().getName()).orElse("     NOT FOUND!   "));
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		System.out.println(userContainer.getAllActiveCollaboratorsFromRepository().get(0).getName());
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		System.out.print(pCollabFound.map(projCollab -> projCollab.getCollaborator().getName()).orElse("     NOT FOUND!   "));
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		System.out.println(userContainer.searchUsersByProfile(collabProfile).get(0).getName());
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		System.out.println(userContainer.searchUsersByPartsOfEmail("admin@gmail.com").get(0).getName());
 		
 		taskTwo = projOne.createTask("Desenvolver código para responder à US499");
 		taskContainer.saveTask(taskTwo);
