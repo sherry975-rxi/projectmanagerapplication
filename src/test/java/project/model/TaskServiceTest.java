@@ -86,6 +86,7 @@ public class TaskServiceTest {
 		@Ignore //TODO corrigir este teste
 		@Test
 		public void testCreateTask() {
+						
 			Task expectedTask = new Task("firstTask", project);
 			Task actualTask= victimTask.createTask("firstTask", project);
 			assertEquals(expectedTask, actualTask);
@@ -277,6 +278,10 @@ public class TaskServiceTest {
 			
 		}
 		
+		/**
+		 * Tests the getUnfinishedTasksFromProjectCollaborator() method to verify if a list of all unfinished tasks
+		 * of a certain project is returned.
+		 */
 		@Test
 		public void testGetUnFinishedTasksFromProjectCollaborator() {
 			List<Task> taskListMock = new ArrayList<>();
@@ -291,6 +296,10 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getUnfinishedTasksFromProjectCollaborator(projectCollaborator));
 		}
 
+		/**
+		 * Tests the getStartedNotFinishedTasksFromProjectCollaborator() method to verify if a list of started, but not yes finished tasks,
+		 * assigned to a certain project collaborator, is returned.
+		 */
 		@Test
 		public void testGetStartedNotFinishedTasksFromProjectCollaborator(){
 			List<Task> taskListMock = new ArrayList<>();
@@ -298,7 +307,7 @@ public class TaskServiceTest {
 			when(victimTask.getTaskRepository()).thenReturn(taskListMock);
 			
 			when(taskMock.isTaskFinished()).thenReturn(false);
-			when(taskMock.viewTaskStateName()).thenReturn("Canceled");
+			when(taskMock.viewTaskStateName()).thenReturn("Cancelled");
 			when(taskMock.getStartDate()).thenReturn(startDate);
 			when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
 
@@ -307,6 +316,10 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
 		}
 		
+		/**
+		 * Tests the getFinishedTaskListofUserInProject() method to verify if a list of only the finished tasks of a 
+		 * certain user in a project is returned.
+		 */
 		@Test
 		public void testFinishedTaskListOfUserInProject() {
 			List<Task> taskListMock = new ArrayList<>();
@@ -322,6 +335,10 @@ public class TaskServiceTest {
 		}
 		
 	
+		/**
+		 * Tests the getFinishedTasksFromProjectCollaboratorInGivenMonth() method to verify if a list of all tasks
+		 * finished x months ago by a certain project collaborator is returned.
+		 */
 		@Test
 		public void testGetFinishedTasksFromProjectCollaboratorInGivenMonth() {
 			Calendar calendar = Calendar.getInstance();
@@ -344,6 +361,9 @@ public class TaskServiceTest {
 			assertEquals(new ArrayList<>(), victimTask.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
 		}
 		
+		/**
+		 * Tests the isTaskinTaskRepository() method to verify if a certain task exists in the task list.
+		 */
 		@Test
 		public void testIsTaskInTaskContainer(){
 			List<Task> taskListMock = new ArrayList<>();
@@ -354,6 +374,10 @@ public class TaskServiceTest {
 			assertFalse(victimTask.isTaskInTaskRepository(new Task()));
 		}
 		
+		/**
+		 * Tests the getAllTasksFromProjectCollaborator() method to verify if a list of all the tasks of a certain 
+		 * user, which is a project collaborator, is returned.
+		 */
 		@Test
 		public void testGetAllTasksFromProjectCollaborator(){
 			List<Task> taskListMock = new ArrayList<>();
@@ -368,6 +392,9 @@ public class TaskServiceTest {
 			assertEquals(expectedTaskList, victimTask.getAllTasksFromProjectCollaborator(projectCollaborator));
 		}
 		
+		/**
+		 * Tests the isCollaboratorActiveOnAnyTask() method to verify if a given user had any task assigned to him.
+		 */
 		@Test
 		public void testIsCollaboratorActiveOnAnyTask(){		
 			List<Task> taskListMock = new ArrayList<>();
@@ -382,6 +409,10 @@ public class TaskServiceTest {
 			assertFalse(victimTask.isCollaboratorActiveOnAnyTask(projectCollaborator));
 		}
 		
+		/**
+		 * Tests the getProjectTasksWithoutCollaboratorAssigned() method to verify if a list with all the tasks without
+		 * collaborators assigned is returned.
+		 */
 		@Test
 		public void testGetAllTasksWithoutCollaboratorsAssigned(){
 			List<Task> taskList = new ArrayList<>();
