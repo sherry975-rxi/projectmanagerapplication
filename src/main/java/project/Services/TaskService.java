@@ -16,6 +16,8 @@ import project.model.taskstateinterface.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class TaskService {
@@ -720,5 +722,22 @@ public class TaskService {
 			}
 			return validTasks;
 		}
+
+	/**
+	 * This method returns the List of Collaborators from a specific task
+	 *
+	 * @return Returns a list with the project collaborators that are in the task team
+	 */
+	public List<ProjectCollaborator> getProjectCollaboratorsFromTask(Project project, Task task) {
+
+		List<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
+		collaboratorsFromTask.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		return collaboratorsFromTask.stream()
+				.filter(projCollab -> projCollab.isProjectCollaboratorActive())
+				.filter(projCollab -> task.isProjectCollaboratorActiveInTaskTeam(projCollab))
+				.collect(Collectors.toList());
+
+	}
 
 }
