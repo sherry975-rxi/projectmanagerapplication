@@ -282,5 +282,21 @@ public class ProjectService {
 		return false;
 	}
 
+	/**
+	 * This method retrieves the Project Collaborator in a ProjectTeam from the
+	 * User. If there are more than one Project Collaborator corresponding to the
+	 * same user, that information is not collected in this method.
+	 *
+	 * @param collaborator
+	 * @return Optional of a ProjectCollaborator
+	 */
+	public Optional<ProjectCollaborator> findProjectCollaborator(User collaborator, Project project) {
 
+		List<ProjectCollaborator> projectTeam = new ArrayList<>();
+		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		return projectTeam.stream()
+				.filter(projCollab -> projCollab.getCollaborator().equals(collaborator))
+				.findFirst();
+	}
 }
