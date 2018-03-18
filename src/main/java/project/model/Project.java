@@ -41,11 +41,6 @@ public class Project implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
-	@Column(columnDefinition = "LONGBLOB")
-	private List<ProjectCollaborator> projectTeam;
-
-
 	@OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "project")
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
@@ -84,7 +79,6 @@ public class Project implements Serializable{
 		this.description = description;
 		this.projectManager = projectManager;
 		this.effortUnit = EffortUnit.HOURS;
-		this.projectTeam = new ArrayList<>();
 		this.budget = 0;
 		this.status = PLANNING;
 		this.startdate = null;
@@ -256,19 +250,6 @@ public class Project implements Serializable{
 	 */
 	public void setProjectDescription(String newDescription) {
 		this.description = newDescription;
-	}
-	
-	/**
-	 * Get the users that belong to this Project's Team
-	 * 
-	 * @return Project Team Team of the Project
-	 */
-	public List<ProjectCollaborator> getProjectTeam() {
-		return this.projectTeam;
-	}
-
-	public void setProjectTeam(List<ProjectCollaborator> projectTeam){
-		this.projectTeam = projectTeam;
 	}
 
 	/**
@@ -644,46 +625,6 @@ public class Project implements Serializable{
 		return result;
 	}
 
-	/** THESE METHODS HAVE BEEN PURGED AS ONLY ONE REQUEST LIST EXISTS NOW
-     *
-     *
-	 * Searches the assignement request list for the task selected. If it finds any
-	 * request with this task, removes it from the list.
-	 *
-	 * @param task
-	 *            Task to remove from the assignement request list
-
-	public void removeAllRequestsWithASpecificTaskFromAssignementRequests(Task task) {
-		List<TaskTeamRequest> assignementCopy = new ArrayList<>();
-		assignementCopy.addAll(this.pendingTaskTeamRequests);
-		for (int i = assignementCopy.size() - 1; i >= 0; i--) {
-			if (assignementCopy.get(i).getTask().equals(task)) {
-				this.pendingTaskTeamRequests.remove(this.pendingTaskTeamRequests.get(i));
-			}
-		}
-	}
-
-
-	 * Searches the removal request list for the task selected. If it finds any
-	 * request with this task, removes it from the list.
-	 *
-	 * @param task
-	 *            Task to remove from the removal request list
-
-	public void removeAllRequestsWithASpecificTaskFromRemovalRequests(Task task) {
-		List<TaskTeamRequest> removalCopy = new ArrayList<>();
-		removalCopy.addAll(this.pendingTaskTeamRequests);
-		for (int i = removalCopy.size() - 1; i >= 0; i--) {
-			if (removalCopy.get(i).getTask().equals(task)) {
-				this.pendingTaskTeamRequests.remove(this.pendingTaskTeamRequests.get(i));
-			}
-		}
-	}
-
-     */
-
-
-
 	/**
 	 * Searches request lists for the task selected. If it finds any request
 	 * with this task, removes it from the list.
@@ -701,34 +642,6 @@ public class Project implements Serializable{
         }
 	}
 
-	public ProjectCollaborator getProjectCollaboratorFromUser(User user) {
-
-		for (ProjectCollaborator other : projectTeam) {
-			if (other.getUserFromProjectCollaborator().equals(user)) {
-				return other;
-			}
-		}
-		return null;
-
-	}
-
-    /**
-
-	 * This method returns the List of Collaborators from a specific task
-	 * 
-	 * @return Returns a list with the task team
-	 */
-	public List<ProjectCollaborator> getProjectCollaboratorsFromTask(Task task) {
-
-		List<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
-		for (ProjectCollaborator other : this.getActiveProjectTeam()) {
-			if (task.isProjectCollaboratorActiveInTaskTeam(other)) {
-				collaboratorsFromTask.add(other);
-
-			}
-		}
-		return collaboratorsFromTask;
-	}
 
 
 	/**
