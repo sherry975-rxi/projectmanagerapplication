@@ -65,7 +65,7 @@ public class ProjectService {
 	 *
 	 * @return project found
 	 */
-	public Project getProjectById(long id) {
+	public Project getProjectById(int id) {
 		return this.projectsRepository.findById(id);
 	}
 

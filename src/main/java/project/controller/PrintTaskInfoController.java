@@ -1,21 +1,26 @@
 package project.controller;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import project.Services.ProjectService;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
+import project.Services.TaskService;
+import project.model.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class PrintTaskInfoController {
 
-	private ProjectService projContainer = new ProjectService();
+	@Autowired
+	private ProjectService projService;
+
+	@Autowired
+	private TaskService taskService;
+
 	private Task task;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	private String taskID;
@@ -33,9 +38,8 @@ public class PrintTaskInfoController {
 	}
 
 	public void setProjectAndTask() {
-		this.project = projContainer.getProjById(this.projeID);
-		this.task = projContainer.getProjById(this.projeID).getTaskRepository()
-				.getTaskByID(this.taskID);
+		this.project = projService.getProjectById(projeID);
+		this.task = taskService.getTaskByTaskID(taskID);
 	}
 
 	/**
@@ -129,11 +133,14 @@ public class PrintTaskInfoController {
 	 * @return String task's team
 	 */
 	public String printTaskTeamInfo() {
-		List<ProjectCollaborator> projectTeam = this.project.getProjectCollaboratorsFromTask(this.task);
-		List<String> team = new ArrayList<>();
-		for (ProjectCollaborator projectMember : projectTeam) {
-			team.add(projectMember.getUserFromProjectCollaborator().getName());
-		}
+		List<ProjectCollaborator> projectTeam = taskService.getProjectCollaboratorsFromTask(project, task);
+
+
+		List<String> team = projectTeam.stream()
+				.map(ProjectCollaborator::getUserFromProjectCollaborator)
+				.map(User::getName)
+				.collect(Collectors.toList());
+
 		return String.join(", ", team);
 	}
 

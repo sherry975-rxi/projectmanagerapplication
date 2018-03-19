@@ -193,7 +193,7 @@ public class PrintProjectInfoController {
 	public List<String> getTasksIDs() {
 
 		List<String> projectTasksID = new ArrayList<>();
-		
+
 		for (Task projectTask : getTasks()) {
 			projectTasksID.add(projectTask.getTaskID());
 		}
