@@ -11,14 +11,14 @@ public class TaskCollaborator implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollaborator;
 	private Calendar startDate;
 	private Calendar finishDate;
 	private boolean status;
 	static final long serialVersionUID = 52L;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
 	private Task task;
 

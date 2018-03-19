@@ -19,11 +19,11 @@ public class Report {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private double reportedTime;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "TaskCollaborator_id")
 	private TaskCollaborator taskCollaborator;
 	private double cost;
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
 	private Task task;
 	private Calendar dateOfReport;
