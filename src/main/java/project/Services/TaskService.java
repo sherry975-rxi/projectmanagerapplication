@@ -50,7 +50,14 @@ public class TaskService {
 	 */
 	public Task createTask(String description, Project selectedProject) {
 
-		Task newTask = new Task(description, selectedProject);
+		Task newTask = selectedProject.createTask(description);
+
+		int projectID = selectedProject.getId();
+		int taskNumber = getProjectTasks(selectedProject).size()+1;
+		String taskID = projectID  + "." + taskNumber;
+
+		newTask.setTaskId(taskID);
+
 		this.taskRepository.save(newTask);
 		return newTask;
 	}
@@ -638,9 +645,24 @@ public class TaskService {
 			}
 			return expiredTasks;
 		}
-		
+
+
 		/**
-		 * This method returns the a Task by taskID
+		 * This method returns the a Task by string taskID
+		 *
+		 * @param id taskId
+		 *
+		 * @return A task by a Task ID
+		 */
+		public Task getTaskByTaskID(String id) {
+
+			return this.taskRepository.findByTaskId(id);
+
+		}
+
+
+		/**
+		 * This method returns the a Task by database ID
 		 * 
 		 * @param id taskId
 		 * 
