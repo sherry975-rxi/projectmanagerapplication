@@ -1,6 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -12,29 +14,32 @@ import java.util.List;
 
 public class PrintProjectInfoController {
 
-	private ProjectService projContainer;
+	@Autowired
+	private ProjectService projService;
+
+	@Autowired
+	private TaskService taskService;
+
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-	Integer projID;
+	int projID;
 	
 
 	public PrintProjectInfoController(Project project) {
-		projContainer = new ProjectService();
-		projContainer.updateProjectContainer();
+
 		this.project = project;
 		
 
 	}
 
-	public PrintProjectInfoController(Integer projID) {
-		projContainer = new ProjectService();
-		projContainer.updateProjectContainer();
+	public PrintProjectInfoController(int projID) {
+
 		this.projID = projID;
-		project = projContainer.getProjById(this.projID);
+		project = projService.getProjectById(this.projID);
 	}
 
 	public void setProject() {
-		this.project = projContainer.getProjById(this.project.getIdCode());
+		this.project = projService.getProjectById(this.projID);
 	}
 
 	/**
@@ -133,7 +138,7 @@ public class PrintProjectInfoController {
 	 * @return String project's team
 	 */
 	public String printProjectTeamInfo() {
-		List<ProjectCollaborator> projectTeam = this.project.getProjectTeam();
+		List<ProjectCollaborator> projectTeam =  projService.getProjectTeam(project);
 
 		List<String> team = new ArrayList<>();
 
@@ -170,10 +175,9 @@ public class PrintProjectInfoController {
 	 * @return List of Strings of project's task (task ID + task description)
 	 */
 	public List<String> getProjectTaskList() {
-		List<Task> taskList = projContainer.getProjById(this.project.getIdCode())
-				.getTaskRepository().getAllTasksfromProject();
 		List<String> projectTaskList = new ArrayList<>();
-		for (Task projectTask : taskList) {
+
+		for (Task projectTask : getTasks()) {
 			String[] stringList = projectTask.getTaskID().split("\\.");
 			projectTaskList.add("[" + stringList[0] + "." + stringList[1] + "]" + " " + projectTask.getDescription());
 		}
@@ -188,9 +192,9 @@ public class PrintProjectInfoController {
 	 */
 	public List<String> getTasksIDs() {
 
-		List<Task> taskList = projContainer.getProjById(this.project.getIdCode()).getTaskRepository().getAllTasksfromProject();
 		List<String> projectTasksID = new ArrayList<>();
-		for (Task projectTask : taskList) {
+
+		for (Task projectTask : getTasks()) {
 			projectTasksID.add(projectTask.getTaskID());
 		}
 		return projectTasksID;
@@ -202,8 +206,7 @@ public class PrintProjectInfoController {
 	 * @return List of project's task
 	 */
 	public List<Task> getTasks() {
-		return projContainer.getProjById(this.project.getIdCode())
-				.getTaskRepository().getAllTasksfromProject();
+		return taskService.getProjectTasks(project);
 	}
 
 }

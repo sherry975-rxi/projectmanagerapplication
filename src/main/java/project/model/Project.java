@@ -5,12 +5,8 @@ package project.model;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
-
-import static javax.persistence.CascadeType.ALL;
 
 /**
  * Class to build Projects.
@@ -28,8 +24,8 @@ public class Project implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	private int projectIdCode;
+	private int id;
+
 	private int status;
 	@OneToOne
 	private User projectManager;
@@ -82,20 +78,12 @@ public class Project implements Serializable{
 		this.finishdate = null;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getProjectIdCode() {
-		return projectIdCode;
-	}
-
-	public void setProjectIdCode(int projectIdCode) {
-		this.projectIdCode = projectIdCode;
 	}
 
 	public int getStatus() {
@@ -308,7 +296,7 @@ public class Project implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 3;
-		result = prime * result + projectIdCode;
+		result = prime * result + (Integer) id;
 		return result;
 	}
 
@@ -326,7 +314,7 @@ public class Project implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Project other = (Project) obj;
-		return projectIdCode == other.projectIdCode;
+		return id == other.id;
 	}
 
 	/**
@@ -335,7 +323,7 @@ public class Project implements Serializable{
 	 * @return idCode of Project
 	 */
 	public int getIdCode() {
-		return this.projectIdCode;
+		return this.id;
 	}
 
 	/**

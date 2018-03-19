@@ -3,7 +3,9 @@
  */
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -15,6 +17,10 @@ public class US347CancelOnGoingTaskController {
 
 	private String taskID;
 	private Project project;
+
+	@Autowired
+	private TaskService taskService;
+
 
 	/**
 	 * Constructor
@@ -34,7 +40,7 @@ public class US347CancelOnGoingTaskController {
 	 */
 	public String viewTaskState() {
 
-		Task taskToGetByID = this.project.getTaskRepository().getTaskByID(taskID);
+		Task taskToGetByID = taskService.getTaskByTaskID(taskID);
 
 		return taskToGetByID.viewTaskStateName();
 	}
@@ -44,10 +50,9 @@ public class US347CancelOnGoingTaskController {
 	 */
 	public boolean cancelOnGoingTask() {
 
-		ProjectService projContainer = new ProjectService();
-		Task task = this.project.getTaskRepository().getTaskByID(taskID);
+		Task task = taskService.getTaskByTaskID(taskID);
 		boolean result = task.cancelTask();
-		projContainer.saveProjectInRepository(project);
+		taskService.saveTask(task);
 		return result;
 	}
 }

@@ -5,9 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import project.Services.TaskService;
-import project.model.taskstateinterface.Finished;
-import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.Ready;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -328,8 +325,8 @@ public class ProjectTest {
 
 	@Test
 	public void testGettersAndSetters(){
-		p1.setProjectIdCode(123);
-		assertEquals(123, p1.getProjectIdCode());
+		p1.setId(123);
+		assertEquals(123, p1.getId());
 		
 		p1.setId(1);
 		assertEquals(1, p1.getId());
@@ -357,6 +354,17 @@ public class ProjectTest {
 		assertTrue(p1.isProjectActive()); 
 		p1.setStatus(6);
 		assertFalse(p1.isProjectActive()); 
+	}
+	
+	@Test 
+	public void createTask() { 
+		
+		Task task = new Task("Description", p1); 	
+		task.setId(new Long(1));
+		Task taskResult = p1.createTask("Description");
+		taskResult.setId(new Long(1));
+		
+		assertTrue(task.equals(taskResult)); 
 	}
 
 }

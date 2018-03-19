@@ -1,12 +1,16 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
 public class US340CreateTaskController {
 
+	@Autowired
 	private TaskService taskContainer;
+
+	private Project chosenProject;
 
 	/**
 	 * This constructor creates a target controller. Currently, it receives a
@@ -19,7 +23,7 @@ public class US340CreateTaskController {
 	 */
 	public US340CreateTaskController(Project target) {
 
-		this.taskContainer = target.getTaskRepository();
+		chosenProject=target;
 	}
 
 	public TaskService getTaskRepository() {
@@ -38,9 +42,7 @@ public class US340CreateTaskController {
 	 * @return the added task
 	 */
 	public Task addTask(String description) {
-		Task newTask = taskContainer.createTask(description);
-
-		taskContainer.addTaskToProject(newTask);
+		Task newTask = taskContainer.createTask(description, chosenProject);
 
 		return newTask;
 

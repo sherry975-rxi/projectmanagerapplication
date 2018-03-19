@@ -4,7 +4,6 @@
 package project.services;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,10 +18,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import project.Repository.UserRepository;
 import project.Services.UserService;
+import project.dto.UserDTO;
 import project.model.Profile;
 import project.model.User;
 
@@ -40,14 +41,9 @@ public class UserServiceTest {
 
 	@InjectMocks
 	private UserService userContainer = new UserService();
-	private UserService userContainerWithRepository = new UserService(userRepositoryMock);
 
 	User user1;
 	User user2;
-	User user3;
-	User user4;
-	User user5;
-	List<User> mockUsers;
 
 	/**
 	 * @throws java.lang.Exception
@@ -60,10 +56,8 @@ public class UserServiceTest {
 		// instantiate users
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Porto", "Porto", "Portugal");
-		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		user2 = userContainer.createUser("João", "joaogmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Porto", "Porto", "Portugal");
-
-		mockUsers = new ArrayList<>();
 
 	}
 
@@ -75,10 +69,7 @@ public class UserServiceTest {
 
 		user1 = null;
 		user2 = null;
-		user3 = null;
-		user4 = null;
-		user5 = null;
-		mockUsers = null;
+
 	}
 
 	/**
@@ -86,7 +77,16 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testCreateUserWithDTO() {
+		// given a user DTO for user1
+		UserDTO userDto = new UserDTO(user1);
 
+		// when the .save method is mocked
+		Mockito.when(userRepositoryMock.save(Mockito.any(User.class))).thenReturn(user1);
+
+		// then the create User with DTO method must call the save method once for user1
+
+		userContainer.createUserWithDTO(userDto);
+		Mockito.verify(userRepositoryMock, Mockito.times(2)).save(user1);
 	}
 
 	/**
@@ -146,7 +146,15 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testUpdateUserContainer() {
-		fail("Not yet implemented"); // TODO
+
+		List<User> userInDB = new ArrayList<>();
+		userInDB.add(user1);
+
+		when(userRepositoryMock.findAll()).thenReturn(userInDB);
+
+		userContainer.updateUserContainer();
+
+		assertEquals(userInDB, userContainer.getAllUsersFromUserContainer());
 	}
 
 	/**
@@ -178,7 +186,7 @@ public class UserServiceTest {
 
 		when(userRepositoryMock.findAll()).thenReturn(list);
 
-		assertEquals(list, userContainer.searchUsersByPartsOfEmail("@"));
+		assertEquals(list, userContainer.searchUsersByPartsOfEmail("gmail"));
 	}
 
 	/**
@@ -201,7 +209,8 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testIsEmailAddressValid() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(userContainer.isEmailAddressValid(user1.getEmail()), true);
+		assertEquals(userContainer.isEmailAddressValid(user2.getEmail()), false);
 	}
 
 }

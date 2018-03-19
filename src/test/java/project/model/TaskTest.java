@@ -6,16 +6,14 @@ package project.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import project.model.taskstateinterface.Cancelled;
 import project.model.taskstateinterface.Created;
@@ -41,7 +39,7 @@ class TaskTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@BeforeEach
+	@Before
 	void setUp() throws Exception {
 
 		// create user
@@ -85,7 +83,7 @@ class TaskTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@AfterEach
+	@After
 	void tearDown() throws Exception {
 
 		userTest = null;
@@ -493,7 +491,7 @@ class TaskTest {
 	@Test
 	void testGetDescription() {
 
-		assertNotNull(taskTest.getDescription());
+		assertFalse(taskTest.getDescription().equals(null));
 
 	}
 
@@ -503,9 +501,9 @@ class TaskTest {
 	@Test
 	void testGetFinishDate() {
 
-		taskTest.setFinishDate();
+		taskTest.setFinishDate(Calendar.getInstance());
 
-		assertNotNull(taskTest.getFinishDate());
+		assertFalse(taskTest.getFinishDate().equals(null));
 
 	}
 
@@ -515,9 +513,10 @@ class TaskTest {
 	@Test
 	void testSetFinishDate() {
 
-		taskTest.setFinishDate();
+		taskTest.setFinishDate(Calendar.getInstance());
 
-		assertNotNull(taskTest.getFinishDate());
+		assertFalse(taskTest.getFinishDate().equals(null));
+
 	}
 
 	/**
@@ -1069,9 +1068,9 @@ class TaskTest {
 	@Test
 	void testRemoveFinishDate() {
 
-		taskReadyToFinishTest.setFinishDate();
+		taskReadyToFinishTest.setFinishDate(Calendar.getInstance());
 
-		assertNotEquals(null, taskReadyToFinishTest.getFinishDate());
+		assertFalse(taskReadyToFinishTest.getFinishDate().equals(null));
 
 		taskReadyToFinishTest.removeFinishDate();
 
@@ -1093,7 +1092,7 @@ class TaskTest {
 
 		assertTrue(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
 
-		assertNotEquals(null, taskReadyToFinishTest.getCancelDate());
+		assertFalse(taskReadyToFinishTest.getCancelDate().equals(null));
 
 	}
 
@@ -1107,7 +1106,7 @@ class TaskTest {
 
 		taskReadyToFinishTest.setCancelDate();
 
-		assertNotEquals(null, taskReadyToFinishTest.getCancelDate());
+		assertFalse(taskReadyToFinishTest.getCancelDate().equals(null));
 
 	}
 
@@ -1121,7 +1120,8 @@ class TaskTest {
 
 		taskReadyToFinishTest.setCancelDate();
 
-		assertNotEquals(null, taskReadyToFinishTest.getCancelDate());
+		assertFalse(taskReadyToFinishTest.getCancelDate().equals(null));
+
 	}
 
 	/**

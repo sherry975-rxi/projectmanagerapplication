@@ -50,7 +50,14 @@ public class TaskService {
 	 */
 	public Task createTask(String description, Project selectedProject) {
 
-		Task newTask = new Task(description, selectedProject);
+		Task newTask = selectedProject.createTask(description);
+
+		int projectID = selectedProject.getId();
+		int taskNumber = getProjectTasks(selectedProject).size()+1;
+		String taskID = projectID  + "." + taskNumber;
+
+		newTask.setTaskId(taskID);
+
 		this.taskRepository.save(newTask);
 		return newTask;
 	}
@@ -638,9 +645,24 @@ public class TaskService {
 			}
 			return expiredTasks;
 		}
-		
+
+
 		/**
-		 * This method returns the a Task by taskID
+		 * This method returns the a Task by string taskID
+		 *
+		 * @param id taskId
+		 *
+		 * @return A task by a Task ID
+		 */
+		public Task getTaskByTaskID(String id) {
+
+			return this.taskRepository.findByTaskId(id);
+
+		}
+
+
+		/**
+		 * This method returns the a Task by database ID
 		 * 
 		 * @param id taskId
 		 * 
@@ -691,30 +713,20 @@ public class TaskService {
 			return cancelledTasksFromProject;
 		}
 
-		/**
-		 * @return The cost reported to each task in the TaskContainer
-		 */
 
-		public List<String> getReportedCostOfEachTask() {
-			List<String> reportTaskCost = new ArrayList<>();
-
-			for (Task other : this.getTaskRepository()) {
-				reportTaskCost.add(String.valueOf(other.getTaskCost()));
-
-			}
-
-			return reportTaskCost;
-		}
 
 		/**
 		 * This method returns a list of tasks that can be associated to
-		 * TaskDependencies
+		 * TaskDependencies in a given project
+		 *
+		 * @param chosenProj
+		 * 		the chosen Project
 		 * 
 		 * @return A list of tasks that can be associated to a TaskDependency
 		 */
-		public List<Task> getTaskListOfWhichDependenciesCanBeCreated() {
+		public List<Task> getTaskListOfWhichDependenciesCanBeCreated(Project chosenProj) {
 			List<Task> validTasks = new ArrayList<>();
-			validTasks.addAll(getTaskRepository());
+			validTasks.addAll(getProjectTasks(chosenProj));
 			for (Task other : this.getTaskRepository()) {
 				if (other.getTaskState() instanceof Finished || other.getTaskState() instanceof Cancelled) {
 					validTasks.remove(other);
@@ -722,6 +734,7 @@ public class TaskService {
 			}
 			return validTasks;
 		}
+
 
 	/**
 	 * This method returns the List of Collaborators from a specific task
@@ -739,7 +752,24 @@ public class TaskService {
 				.collect(Collectors.toList());
 
 	}
-	
+
+
+	/**
+	 * @return The cost reported to each task in the TaskContainer
+	 */
+
+	public List<String> getReportedCostOfEachTask(Project project) {
+		List<String> reportTaskCost = new ArrayList<>();
+
+		for (Task other : this.taskRepository.findAllByProject(project)) {
+			reportTaskCost.add(String.valueOf(other.getTaskCost()));
+
+		}
+
+		return reportTaskCost;
+	}
+
+
 	/**
 	 * This method calculates the sum of the values reported to the task until the
 	 * moment

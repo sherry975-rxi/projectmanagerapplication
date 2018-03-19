@@ -45,10 +45,10 @@ public class Task {
 	private Long id;
 	private String taskID;
 	private String description;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
 	private List<TaskCollaborator> taskTeam;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
 	private List<Report> reports;
 	@Enumerated(EnumType.STRING)
@@ -74,7 +74,7 @@ public class Task {
 	private Integer deadlineInterval;
 	private Calendar cancelDate;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Project_id")
 	private Project project;
 
@@ -515,8 +515,8 @@ public class Task {
 	 * Calendar
 	 * 
 	 */
-	public void setFinishDate() {
-		this.finishDate = Calendar.getInstance();
+	public void setFinishDate(Calendar finishDate) {
+		this.finishDate = finishDate;
 	}
 
 	/**
@@ -582,7 +582,7 @@ public class Task {
 	 */
 	public boolean markTaskAsFinished() {
 		Boolean changed = true;
-		this.setFinishDate();
+		this.setFinishDate(Calendar.getInstance());
 
 		this.taskState.doAction(this);
 
@@ -922,7 +922,7 @@ public class Task {
 			return false;
 		Task other = (Task) obj;
 
-		return taskID.equals(other.taskID);
+		return this.id.equals(other.id);
 	}
 
 	/**
