@@ -1,6 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.Services.UserService;
 import project.model.*;
 
@@ -11,8 +13,16 @@ import java.util.List;
 public class US207CreateTaskReportController {
 
     private User username;
+
+    @Autowired
     private UserService userContainer;
+
+    @Autowired
     private ProjectService projectContainer;
+
+    @Autowired
+    private TaskService taskService;
+
     private String email;
     private Task task;
 
@@ -22,11 +32,11 @@ public class US207CreateTaskReportController {
      * @param email The email of the user that will create a task report
      */
     public US207CreateTaskReportController(String email, String taskID) {
-        this.projectContainer = new ProjectService();
-        this.userContainer = new UserService();
+
         this.username = userContainer.getUserByEmail(email);
         this.email = email;
-        for (Task other : projectContainer.getUserTasks(username)) {
+
+        for (Task other : taskService.getStartedNotFinishedUserTaskList(username)) {
             if (other.getTaskID().equals(taskID)) {
                 task = other;
             }
@@ -66,8 +76,6 @@ public class US207CreateTaskReportController {
 
         wasReportCreated = task.createReport(task.getTaskCollaboratorByEmail(email), dateOfReport, timeToReport);
 
-        projectContainer.updateProjectContainer();
-
         return wasReportCreated;
 
     }
@@ -97,7 +105,6 @@ public class US207CreateTaskReportController {
     public boolean updateTaskReport(double newReportTime, TaskCollaborator taskCollaborator, Integer reportToChange) {
         Boolean wasReportUpdated = false;
         wasReportUpdated = task.updateReportedTime(newReportTime, taskCollaborator, reportToChange);
-        projectContainer.updateProjectContainer();
 
         return wasReportUpdated;
 
