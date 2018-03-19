@@ -1,16 +1,34 @@
 package project.model;
 
-//
+import static javax.persistence.CascadeType.ALL;
 
-import project.model.taskstateinterface.*;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
-import static javax.persistence.CascadeType.ALL;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+//
+import project.model.taskstateinterface.Cancelled;
+import project.model.taskstateinterface.Created;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Ready;
+import project.model.taskstateinterface.StandBy;
+import project.model.taskstateinterface.TaskStateInterface;
 
 /**
  * Class that allows building and accessing Task attributes.
@@ -36,7 +54,7 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private StateEnum currentState;
 
-	@OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "task")
+	@OneToMany(fetch = FetchType.EAGER, cascade = ALL, mappedBy = "task")
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	private Calendar creationDate;
@@ -62,18 +80,17 @@ public class Task {
 
 	public Task() {
 	}
-	
+
 	/**
-	 * This constructor creates a task with the mandatory fields description 
-	 * and the project where it will be associated.
-	 * The other fields are automatically introduced by the
-	 * creator pattern of the task.
+	 * This constructor creates a task with the mandatory fields description and the
+	 * project where it will be associated. The other fields are automatically
+	 * introduced by the creator pattern of the task.
 	 * 
 	 * @param description
 	 *            Description of the task set by the user
 	 * @param selectedProject
 	 *            Id of the project to which the task belongs to
-
+	 * 
 	 */
 	public Task(String description, Project selectedProject) {
 		this.description = description;
@@ -138,6 +155,7 @@ public class Task {
 	 * This Constructor creates a Task object with the mandatory parameters taskID
 	 * and description and non mandatory parameters creation date, start date,
 	 * finish date, task state (finished or unfinished) and task team
+	 * 
 	 * @param description
 	 *            Description of Task.
 	 * @param estimatedTaskEffort
@@ -149,8 +167,8 @@ public class Task {
 	 * @param estimatedBudgetCostTask
 	 *            Value for the estimated cost of the Task.
 	 */
-	public Task(String description, int estimatedTaskEffort,
-			Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedBudgetCostTask) {
+	public Task(String description, int estimatedTaskEffort, Calendar estimatedTaskStartDate, Calendar taskDeadline,
+			int estimatedBudgetCostTask) {
 		this.description = description;
 		this.creationDate = Calendar.getInstance();
 		this.startDate = null;
@@ -168,7 +186,7 @@ public class Task {
 		this.currentState = StateEnum.CREATED;
 		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
-	
+
 	/**
 	 * This constructor is going to be deleted soon.
 	 * 
@@ -282,7 +300,7 @@ public class Task {
 	public void setTaskId(String taskId) {
 		this.taskID = taskId;
 	}
-	
+
 	public void setProject(Project project) {
 		this.project = project;
 	}
@@ -404,12 +422,11 @@ public class Task {
 		if (this.deadlineInterval == null) {
 			return this.taskDeadline;
 		}
-		
-		//TODO
+
 		Calendar newDeadline = (Calendar) project.getStartdate().clone();
-		
+
 		newDeadline.add(Calendar.DAY_OF_YEAR, this.deadlineInterval);
-		
+
 		return newDeadline;
 
 	}
@@ -543,6 +560,7 @@ public class Task {
 	public void setPendingTaskTeamRequests(List<TaskTeamRequest> pendingTaskTeamRequests) {
 		this.pendingTaskTeamRequests = pendingTaskTeamRequests;
 	}
+
 	/**
 	 * This method confirms if the task state is Finished
 	 * 
@@ -567,7 +585,7 @@ public class Task {
 		this.setFinishDate(Calendar.getInstance());
 
 		this.taskState.doAction(this);
-		
+
 		if (!(this.taskState instanceof Finished)) {
 			changed = false;
 			this.finishDate = null;
@@ -794,11 +812,12 @@ public class Task {
 	}
 
 	/**
-	 * This method return the name of task Collaborator from the list of reports using a given email
+	 * This method return the name of task Collaborator from the list of reports
+	 * using a given email
 	 * 
 	 * @param userEmail
 	 * 
-	 * @return reporterName 
+	 * @return reporterName
 	 */
 	public String getReporterName(String userEmail) {
 		String reporterName = "";
@@ -1159,7 +1178,7 @@ public class Task {
 	 */
 	public void removeFinishDate() {
 		if (this.finishDate != null) {
-			this.finishDate=null;
+			this.finishDate = null;
 			this.getTaskState().doAction(this);
 		}
 
@@ -1171,15 +1190,15 @@ public class Task {
 	 * @return TRUE if the state was successfully cancelled, FALSE if not
 	 */
 	public boolean cancelTask() {
-		Boolean cancelled = true; 
+		Boolean cancelled = true;
 		this.setCancelDate();
 		this.taskState.doAction(this);
-		if(!(this.getTaskState() instanceof Cancelled)) {
-			cancelled = false; 
+		if (!(this.getTaskState() instanceof Cancelled)) {
+			cancelled = false;
 			this.cancelledDateClear();
 		}
-		
-		return cancelled; 
+
+		return cancelled;
 	}
 
 	/**
@@ -1226,9 +1245,9 @@ public class Task {
 		int year = finishDate.get(Calendar.YEAR);
 		int month = finishDate.get(Calendar.MONTH);
 		int date = finishDate.get(Calendar.DAY_OF_MONTH);
-		Calendar finishDateCopy = Calendar.getInstance(); 
+		Calendar finishDateCopy = Calendar.getInstance();
 		finishDate.set(year, month, date);
-		
+
 		this.finishDate = null;
 		this.taskState.doAction(this);
 
@@ -1249,7 +1268,7 @@ public class Task {
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, this);
 		newReq.setType(TaskTeamRequest.ASSIGNMENT);
 		if (!this.isAssignmentRequestAlreadyCreated(projCollab)) {
-			 this.pendingTaskTeamRequests.add(newReq);
+			this.pendingTaskTeamRequests.add(newReq);
 		}
 		return false;
 	}
@@ -1278,9 +1297,15 @@ public class Task {
 	 * @param request
 	 *            Request to remove from the list
 	 */
+	// TODO i think this method should receive a projectCollaborator
 
-	public void deleteTaskAssignementRequest(TaskTeamRequest request) {
-		this.pendingTaskTeamRequests.remove(request);
+	public boolean deleteTaskAssignementRequest(ProjectCollaborator projCollaborator) {
+
+		TaskTeamRequest request = this.getAssignementTaskTeamRequest(projCollaborator);
+
+		request.setType(TaskTeamRequest.ASSIGNMENT);
+
+		return this.pendingTaskTeamRequests.remove(request);
 	}
 
 	/**
@@ -1307,7 +1332,7 @@ public class Task {
 	public List<String> viewPendingTaskAssignementRequests() {
 		List<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
-			if(req.isAssignmentRequest()) {
+			if (req.isAssignmentRequest()) {
 				toString.add(req.viewStringRepresentation());
 			}
 		}
@@ -1324,7 +1349,7 @@ public class Task {
 	public List<String> viewPendingTaskRemovalRequests() {
 		List<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
-			if(req.isRemovalRequest()) {
+			if (req.isRemovalRequest()) {
 				toString.add(req.viewStringRepresentation());
 			}
 		}
@@ -1401,7 +1426,7 @@ public class Task {
 	 *
 	 * @param projectCollaborator
 	 *            Projector collaborator that wants to create the request
-
+	 * 
 	 * @return True if request already exists, false if not
 	 */
 	public boolean isAssignmentRequestAlreadyCreated(ProjectCollaborator projectCollaborator) {
@@ -1444,10 +1469,11 @@ public class Task {
 	}
 
 	/**
-	 * Searches request lists for the task selected. If it finds any request
-	 * with this task, removes it from the list.
+	 * Searches request lists for the task selected. If it finds any request with
+	 * this task, removes it from the list.
 	 */
 	public void removeAllRequestsWithASpecificTask() {
-		this.pendingTaskTeamRequests.clear();;
+		this.pendingTaskTeamRequests.clear();
+		;
 	}
 }
