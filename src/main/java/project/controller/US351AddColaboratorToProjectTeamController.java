@@ -1,5 +1,6 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
 import project.Services.UserService;
 import project.model.*;
@@ -7,6 +8,9 @@ import project.model.*;
 import java.util.List;
 
 public class US351AddColaboratorToProjectTeamController {
+
+	@Autowired
+	private ProjectService projectService;
 
 	/**
 	 * This controller add user to project team
@@ -18,9 +22,9 @@ public class US351AddColaboratorToProjectTeamController {
 	 * @param effort
 	 */
 	public void addUserToProjectTeam(User user, Project project, int effort) {
-		ProjectService projectContainer = new ProjectService();
-		project.addUserToProjectTeam(user, effort);
-		projectContainer.saveProjectInRepository(project);
+
+		ProjectCollaborator projectCollaborator = projectService.createProjectCollaborator(user, project, effort);
+		projectService.addProjectCollaborator(projectCollaborator);
 
 	}
 
@@ -38,7 +42,7 @@ public class US351AddColaboratorToProjectTeamController {
 
 		boolean result = false;
 		if (user != null) {
-			result = project.isUserActiveInProject(user);
+			result = projectService.isUserActiveInProject(user, project);
 		}
 		return result;
 
