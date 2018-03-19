@@ -6,14 +6,12 @@ import project.model.Project;
 import project.model.Task;
 
 public class US365MarkTaskAsFinishedControllerProjectManager {
-	private ProjectService projContainer;
 	private Task taskToBeMarked;
 	private TaskService projectTaskList;
 	private Project selectedProject;
 
-	public US365MarkTaskAsFinishedControllerProjectManager(String taskID, Project selectedProject) {
+	public US365MarkTaskAsFinishedControllerProjectManager(Long taskID, Project selectedProject) {
 		this.selectedProject=selectedProject;
-		this.projectTaskList = selectedProject.getTaskRepository();
 		this.taskToBeMarked = projectTaskList.getTaskByID(taskID);
 	}
 
@@ -21,7 +19,7 @@ public class US365MarkTaskAsFinishedControllerProjectManager {
 		boolean wasTaskChangedToFinished = taskToBeMarked.markTaskAsFinished();
 
 		if (wasTaskChangedToFinished) {
-			projContainer.saveProjectInRepository(selectedProject);
+			projectTaskList.saveTask(this.taskToBeMarked);
 		}
 
 		return wasTaskChangedToFinished;
