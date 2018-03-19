@@ -1,6 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -18,7 +20,13 @@ public class US206RemovalTaskRequestController {
 	private Integer projectID;
 	private String taskID;
 	private User user;
+
+	@Autowired
 	private ProjectService projectContainer;
+
+	@Autowired
+	private TaskService taskService;
+
 	/**
 	 * Constructor to instantiate a new CollaboratorRemovalrequest
 	 * 
@@ -29,7 +37,7 @@ public class US206RemovalTaskRequestController {
 		this.user = user;
 		this.projectID = null;
 		this.taskID = null;
-		this.projectContainer = new ProjectService();
+
 	}
 
 	/**
@@ -41,16 +49,16 @@ public class US206RemovalTaskRequestController {
 
 		boolean createdSucess = false;
 
-		Project project = projectContainer.getProjById(this.projectID);
-		Task taskBeRemovedOf = project.getTaskRepository().getTaskByID(this.taskID);
-		ProjectCollaborator projectCollaborator = project.findProjectCollaborator(this.user);
+		Project project = projectContainer.getProjectById(this.projectID);
+		Task taskBeRemovedOf = taskService.getTaskByTaskID(this.taskID);
+		ProjectCollaborator projectCollaborator = projectContainer.findActiveProjectCollaborator(this.user, project);
 
-		if (taskBeRemovedOf != null && !project.isRemovalRequestAlreadyCreated(projectCollaborator, taskBeRemovedOf)) {
+		if (taskBeRemovedOf != null && !taskBeRemovedOf.isRemovalRequestAlreadyCreated(projectCollaborator)) {
 
-			project.createTaskRemovalRequest(projectCollaborator, taskBeRemovedOf);
+			taskBeRemovedOf.createTaskRemovalRequest(projectCollaborator);
 			createdSucess = true;
 		}
-		projectContainer.updateProjectContainer();
+		
 		return createdSucess;
 	}
 
@@ -63,7 +71,7 @@ public class US206RemovalTaskRequestController {
 	 */
 	public List<String> getUnfinishedTaskListFromUser() {
 
-		List<Task> usersTask = projectContainer.getUnfinishedUserTaskList(user);
+		List<Task> usersTask = taskService.getUnfinishedUserTaskList(user);
 		List<String> userTaskDetails = new ArrayList<>();
 
 		for (int i = 0; i < usersTask.size(); i++) {
