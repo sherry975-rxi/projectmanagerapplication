@@ -1,5 +1,7 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -19,10 +21,13 @@ public class US342CreateTaskDependencyController {
 
 	private Project project;
 
+	@Autowired
+	private TaskService taskService;
+
 	/**
 	 * Constructor
 	 * 
-	 * @param projectIDtoInstantiate
+	 * @param project
 	 */
 	public US342CreateTaskDependencyController(Project project) {
 		this.project = project;
@@ -30,24 +35,22 @@ public class US342CreateTaskDependencyController {
 
 	/**
 	 * This method returns the tasks from a specific project
-	 * 
-	 * @param userInputForProjectID
-	 *            Project ID to get the tasks from
+	 *
 	 * 
 	 * @return List of Tasks of the chosen Project
 	 */
 	public List<Task> getTasksFromAProject() {
 
-		return project.getTaskRepository().getTaskListOfWhichDependenciesCanBeCreated();
+		return taskService.getTaskListOfWhichDependenciesCanBeCreated(project);
 	}
 
 	/**
 	 * This method creates the Dependence of a Task from another task and defines
 	 * the number of days that must be spent until the dependent task starts.
 	 * 
-	 * @param taskDependent
+	 * @param taskDependentID
 	 *            Task that will be set as dependent from another one.
-	 * @param taskReference
+	 * @param taskReferenceID
 	 *            Task that will be set as the reference.
 	 * @param incrementDays
 	 *            Days that will be incremented to the estimated start date of the
@@ -58,8 +61,8 @@ public class US342CreateTaskDependencyController {
 
 		boolean wasTaskDependencyCreated = false;
 
-		Task taskDependent = project.getTaskRepository().getTaskByID(taskDependentID);
-		Task taskReference = project.getTaskRepository().getTaskByID(taskReferenceID);
+		Task taskDependent = taskService.getTaskByTaskID(taskDependentID);
+		Task taskReference = taskService.getTaskByTaskID(taskReferenceID);
 
 		wasTaskDependencyCreated = taskDependent.createTaskDependence(taskReference, incrementDays);
 
@@ -82,8 +85,8 @@ public class US342CreateTaskDependencyController {
 
 		boolean isTaskDependencyPossible = false;
 
-		Task taskDependent = project.getTaskRepository().getTaskByID(taskDependentID);
-		Task taskReference = project.getTaskRepository().getTaskByID(taskReferenceID);
+		Task taskDependent = taskService.getTaskByTaskID(taskDependentID);
+		Task taskReference = taskService.getTaskByTaskID(taskReferenceID);
 
 		isTaskDependencyPossible = taskDependent.isCreatingTaskDependencyValid(taskReference);
 
@@ -102,8 +105,8 @@ public class US342CreateTaskDependencyController {
 
 		boolean wasTaskDependencyRemoved = false;
 
-		Task taskDependent = project.getTaskRepository().getTaskByID(taskDependentID);
-		Task taskReference = project.getTaskRepository().getTaskByID(taskReferenceID);
+		Task taskDependent = taskService.getTaskByTaskID(taskDependentID);
+		Task taskReference = taskService.getTaskByTaskID(taskReferenceID);
 
 		wasTaskDependencyRemoved = taskDependent.removeTaskDependence(taskReference);
 
@@ -118,7 +121,7 @@ public class US342CreateTaskDependencyController {
 	 */
 	public String getTaskEstimatedStartDateString(String taskDependentID) {
 
-		Task taskToGetEstimatedStartDate = project.getTaskRepository().getTaskByID(taskDependentID);
+		Task taskToGetEstimatedStartDate = taskService.getTaskByTaskID(taskDependentID);
 
 		Calendar calendar = taskToGetEstimatedStartDate.getEstimatedTaskStartDate();
 
@@ -140,7 +143,7 @@ public class US342CreateTaskDependencyController {
 	 */
 	public String getTaskDeadlineString(String taskDependentID) {
 
-		Task taskToGetDeadline = project.getTaskRepository().getTaskByID(taskDependentID);
+		Task taskToGetDeadline = taskService.getTaskByTaskID(taskDependentID);
 
 		Calendar calendar = taskToGetDeadline.getTaskDeadline();
 
@@ -161,8 +164,8 @@ public class US342CreateTaskDependencyController {
 	 */
 	public boolean projectContainsSelectedTask(String id) {
 		boolean result = false;
-		for (int i = 0; i < project.getTaskRepository().getAllTasksfromProject().size(); i++) {
-			if (id.equals(project.getTaskRepository().getAllTasksfromProject().get(i).getTaskID())) {
+		for (int i = 0; i < taskService.getProjectTasks(project).size(); i++) {
+			if (id.equals(taskService.getProjectTasks(project).get(i).getTaskID())) {
 				result = true;
 				break;
 			}
@@ -176,7 +179,7 @@ public class US342CreateTaskDependencyController {
 	 * @return A task with the matching ID
 	 */
 	public Task getTaskByID(String id) {
-		return project.getTaskRepository().getTaskByID(id);
+		return taskService.getTaskByTaskID(id);
 	}
 
 }
