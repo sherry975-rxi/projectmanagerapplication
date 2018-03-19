@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class TaskService {
@@ -56,7 +55,7 @@ public class TaskService {
 		int taskNumber = getProjectTasks(selectedProject).size()+1;
 		String taskID = projectID  + "." + taskNumber;
 
-		newTask.setTaskId(taskID);
+		newTask.setTaskID(taskID);
 
 		this.taskRepository.save(newTask);
 		return newTask;
@@ -656,7 +655,7 @@ public class TaskService {
 		 */
 		public Task getTaskByTaskID(String id) {
 
-			return this.taskRepository.findByTaskId(id);
+			return this.taskRepository.findByTaskID(id);
 
 		}
 
