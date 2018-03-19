@@ -157,7 +157,15 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testUpdateUserContainer() {
-		fail("Not yet implemented"); // TODO
+
+		List<User> userInDB = new ArrayList<>();
+		userInDB.add(user1);
+
+		when(userRepositoryMock.findAll()).thenReturn(userInDB);
+
+		userContainer.updateUserContainer();
+
+		assertEquals(userInDB, userContainer.getAllUsersFromUserContainer());
 	}
 
 	/**
