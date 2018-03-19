@@ -119,7 +119,7 @@ public class ProjectService {
 	 */
 	public boolean isProjectInProjectContainer(int projectId) {
 
-		return this.projectsRepository.exists(projectId);
+		return this.projectsRepository.existsById(projectId);
 	}
 
 	/**
