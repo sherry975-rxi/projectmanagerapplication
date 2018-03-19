@@ -24,6 +24,8 @@ import project.model.User;
 @Service
 public class UserService {
 
+
+
 	@Autowired
 	private UserRepository userRepository;
 	private List<User> usersContainer;
@@ -247,6 +249,14 @@ public class UserService {
 			result = false;
 		}
 		return result;
+	}
+
+	public UserRepository getUserRepository() {
+		return userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 
 }
