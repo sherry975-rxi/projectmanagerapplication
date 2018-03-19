@@ -1,6 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.User;
 
 /**
@@ -13,11 +15,11 @@ import project.model.User;
  */
 public class US215TotalTimeSpentOnTaskLastMonthController {
 
-	ProjectService projectContainer;
+	@Autowired
+	TaskService taskService;
 
 	public US215TotalTimeSpentOnTaskLastMonthController() {
-		this.projectContainer = new ProjectService();
-		projectContainer.updateProjectContainer();
+
 	}
 
 	/**
@@ -32,7 +34,7 @@ public class US215TotalTimeSpentOnTaskLastMonthController {
 	 */
 	public double getTotalTimeOfFinishedTasksFromUserLastMonth(User user) {
 
-		return projectContainer.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
+		return taskService.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
 	}
 
 }

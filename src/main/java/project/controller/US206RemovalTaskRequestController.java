@@ -58,7 +58,7 @@ public class US206RemovalTaskRequestController {
 			taskBeRemovedOf.createTaskRemovalRequest(projectCollaborator);
 			createdSucess = true;
 		}
-		
+
 		return createdSucess;
 	}
 
