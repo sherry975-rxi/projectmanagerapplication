@@ -22,7 +22,7 @@ public class PrintProjectInfoController {
 
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-	Long projID;
+	int projID;
 	
 
 	public PrintProjectInfoController(Project project) {
@@ -32,7 +32,7 @@ public class PrintProjectInfoController {
 
 	}
 
-	public PrintProjectInfoController(Long projID) {
+	public PrintProjectInfoController(int projID) {
 
 		this.projID = projID;
 		project = projService.getProjectById(this.projID);
