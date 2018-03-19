@@ -438,7 +438,7 @@ public class TaskService {
 		
 		/**
 		 * This method returns a list of all tasks finished a number of months ago by
-		 * given user. Given a negative “monthsAgo” input, Returns ALL finished tasks of
+		 * given user. Given a negative â€œmonthsAgoâ€� input, Returns ALL finished tasks of
 		 * said user
 		 * 
 		 * @param collab
@@ -593,7 +593,7 @@ public class TaskService {
 		/**
 		 * This method returns all OnGoing Tasks
 		 * 
-		 * @return List with the tasks set to “OnGoing” state
+		 * @return List with the tasks set to â€œOnGoingâ€� state
 		 */
 		public List<Task> getProjectOnGoingTasks(Project project) {
 			List<Task> allOnGoing = new ArrayList<>();
@@ -654,7 +654,7 @@ public class TaskService {
 
 		/**
 		 * This method deletes a task from the task the repository if the state if the
-		 * task hasn’t started
+		 * task hasnâ€™t started
 		 * 
 		 * @param taskToDelete
 		 *            the task that will be removed from the task Repository
@@ -739,5 +739,21 @@ public class TaskService {
 				.collect(Collectors.toList());
 
 	}
+	
+	/**
+	 * This method calculates the sum of the values reported to the task until the
+	 * moment
+	 * 
+	 * @return The cost value reported for the Project until the moment
+	 */
 
+	public double getTotalCostReportedToProjectUntilNow(Project project) {
+		double reportedCost = 0.0;
+
+		for (Task task : this.taskRepository.findAllByProject(project)) {
+			reportedCost += task.getTaskCost();
+		}
+
+		return reportedCost;
+	}
 }
