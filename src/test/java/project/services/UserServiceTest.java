@@ -4,7 +4,6 @@
 package project.services;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -220,7 +219,7 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testIsEmailAddressValid() {
-		fail("Not yet implemented"); // TODO
+		assertEquals(userContainer.isEmailAddressValid(user1.getEmail()), true);
 	}
 
 }
