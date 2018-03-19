@@ -36,6 +36,9 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private StateEnum currentState;
 
+	@OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "task")
+	private List<TaskTeamRequest> pendingTaskTeamRequests;
+
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
@@ -90,6 +93,7 @@ public class Task {
 		this.cancelDate = null;
 		this.currentState = StateEnum.CREATED;
 		this.project = selectedProject;
+		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 
 	/**
@@ -125,6 +129,7 @@ public class Task {
 		this.taskState = this.getTaskState();
 		this.cancelDate = null;
 		this.currentState = StateEnum.CREATED;
+		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 
 	/**
@@ -133,12 +138,6 @@ public class Task {
 	 * This Constructor creates a Task object with the mandatory parameters taskID
 	 * and description and non mandatory parameters creation date, start date,
 	 * finish date, task state (finished or unfinished) and task team
-	 * 
-	 * @param taskCounter
-	 *            The Task counter in the Project in which it is included. This
-	 *            value is generated in the Creator of Task.
-	 * @param projId
-	 *            This is the Project ID to which this Task belongs to.
 	 * @param description
 	 *            Description of Task.
 	 * @param estimatedTaskEffort
@@ -167,6 +166,7 @@ public class Task {
 		this.taskDependency = new ArrayList<>();
 		this.taskState = new Created();
 		this.currentState = StateEnum.CREATED;
+		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 	
 	/**
@@ -212,6 +212,7 @@ public class Task {
 		this.taskDependency = new ArrayList<>();
 		this.taskState = this.getTaskState();
 		this.currentState = StateEnum.CREATED;
+		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 
 	/**
@@ -248,6 +249,7 @@ public class Task {
 		}
 		this.currentState = StateEnum.CREATED;
 		this.project = task.getProject();
+		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 
 	/**
@@ -526,6 +528,13 @@ public class Task {
 		this.taskDependency = taskDependency;
 	}
 
+	public List<TaskTeamRequest> getPendingTaskTeamRequests() {
+		return pendingTaskTeamRequests;
+	}
+
+	public void setPendingTaskTeamRequests(List<TaskTeamRequest> pendingTaskTeamRequests) {
+		this.pendingTaskTeamRequests = pendingTaskTeamRequests;
+	}
 	/**
 	 * This method confirms if the task state is Finished
 	 * 
@@ -1219,4 +1228,217 @@ public class Task {
 		}
 	}
 
+	/**
+	 * Creates a new assignment request, and adds the request to the list of pending
+	 * task assignment requests if it isn't already created
+	 *
+	 * @param projCollab
+	 *            projCollab to create Request
+	 * @return True if it adds, false if there is already an equal request
+	 */
+	public boolean createTaskAssignementRequest(ProjectCollaborator projCollab) {// uso de if incorreto?
+		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, this);
+		newReq.setType(TaskTeamRequest.ASSIGNMENT);
+		if (!this.isAssignmentRequestAlreadyCreated(projCollab)) {
+			 this.pendingTaskTeamRequests.add(newReq);
+		}
+		return false;
+	}
+
+	/**
+	 * Creates a new removal request, and adds the request to the list of pending
+	 * task removal requests if it isn't already created
+	 *
+	 * @param projCollab
+	 *            projCollab to create Request
+	 * @return True if it adds, false if there is already an equal request
+	 */
+	public boolean createTaskRemovalRequest(ProjectCollaborator projCollab) {
+		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, this);
+		newReq.setType(TaskTeamRequest.REMOVAL);
+		if (!this.isRemovalRequestAlreadyCreated(projCollab)) {
+			this.pendingTaskTeamRequests.add(newReq);
+		}
+		return false;
+	}
+
+	/**
+	 * Removes request to add a certain project collaborator to a specific task
+	 * team.
+	 *
+	 * @param request
+	 *            Request to remove from the list
+	 */
+
+	public void deleteTaskAssignementRequest(TaskTeamRequest request) {
+		this.pendingTaskTeamRequests.remove(request);
+	}
+
+	/**
+	 * Removes the removal request of a certain project collaborator to a specific
+	 * task team.
+	 *
+	 * @param projCollab
+	 *
+	 * @return TRUE if deleted FALSE if not
+	 */
+
+	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab) {
+		TaskTeamRequest request = this.getRemovalTaskTeamRequest(projCollab);
+		request.setType(TaskTeamRequest.REMOVAL);
+		return this.pendingTaskTeamRequests.remove(request);
+	}
+
+	/**
+	 * Returns the relevant info in the form of a list of strings
+	 *
+	 * @return toString List of strings which contains the info about the task and
+	 *         the project collaborator for each request
+	 */
+	public List<String> viewPendingTaskAssignementRequests() {
+		List<String> toString = new ArrayList<>();
+		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
+			if(req.isAssignmentRequest()) {
+				toString.add(req.viewStringRepresentation());
+			}
+		}
+		return toString;
+	}
+
+	/**
+	 * Returns the relevant info in the form of a list of strings of the pending
+	 * task removal requests
+	 *
+	 * @return toString List of strings which contains the info about the task and
+	 *         the project collaborator for each request
+	 */
+	public List<String> viewPendingTaskRemovalRequests() {
+		List<String> toString = new ArrayList<>();
+		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
+			if(req.isRemovalRequest()) {
+				toString.add(req.viewStringRepresentation());
+			}
+		}
+		return toString;
+	}
+
+	/**
+	 * This method receives a Project Collaborator and a Task, creates a new
+	 * TaskTeamRequest with those objects and searches if there's a removal request
+	 * equal to the created one, in the pending removal requests list.
+	 *
+	 * @param projCollaborator
+	 *            Project Collaborator to create the request
+	 *
+	 * @return Returns the removal request within the list if it exists or NULL if
+	 *         it does not
+	 */
+	public TaskTeamRequest getRemovalTaskTeamRequest(ProjectCollaborator projCollaborator) {
+
+		TaskTeamRequest removalRequestToFind = new TaskTeamRequest(projCollaborator, this);
+		removalRequestToFind.setType(TaskTeamRequest.REMOVAL);
+		for (TaskTeamRequest other : this.pendingTaskTeamRequests) {
+			if (removalRequestToFind.equals(other)) {
+				return other;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the list of Task assigment requests by collaborators, to be handled
+	 * by the model or controller
+	 *
+	 * @return List of TaskTeamRequest Objects from all users asking to be assigned
+	 *         to a certain task
+	 */
+
+	public List<TaskTeamRequest> getPendingTaskAssignementRequests() {
+
+		List<TaskTeamRequest> assignmentRequests = new ArrayList<>();
+
+		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
+			if (req.isAssignmentRequest()) {
+				assignmentRequests.add(req);
+			}
+		}
+		return assignmentRequests;
+	}
+
+	// Do we use this method give the Removal requests to the controller, or
+	// create a method in Project that handles the approvals/rejections by receiving
+	// index numbers from the controller?
+	/**
+	 * Returns the list of Task removal requests by collaborators, to be handled by
+	 * the model or controller
+	 *
+	 * @return List of TaskTeamRequest Objects from all users asking to be assigned
+	 *         to a certain task
+	 */
+
+	public List<TaskTeamRequest> getPendingTaskRemovalRequests() {
+		List<TaskTeamRequest> removalRequests = new ArrayList<>();
+
+		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
+			if (req.isRemovalRequest()) {
+				removalRequests.add(req);
+			}
+		}
+		return removalRequests;
+	}
+
+	/**
+	 * Checks if a certain request already exists
+	 *
+	 * @param projectCollaborator
+	 *            Projector collaborator that wants to create the request
+
+	 * @return True if request already exists, false if not
+	 */
+	public boolean isAssignmentRequestAlreadyCreated(ProjectCollaborator projectCollaborator) {
+		TaskTeamRequest request = new TaskTeamRequest(projectCollaborator, this);
+		request.setType(TaskTeamRequest.ASSIGNMENT);
+		return this.pendingTaskTeamRequests.contains(request);
+	}
+
+	/**
+	 * Checks if a certain request already exists
+	 *
+	 * @param projCollab
+	 *            Projector collaborator that wants to create the request
+	 * @return True if request already exists, false if not
+	 */
+	public boolean isRemovalRequestAlreadyCreated(ProjectCollaborator projCollab) {
+		TaskTeamRequest request = new TaskTeamRequest(projCollab, this);
+		request.setType(TaskTeamRequest.REMOVAL);
+		return this.pendingTaskTeamRequests.contains(request);
+	}
+
+	/**
+	 * Gets the request associated with the project collaborator and task provided
+	 *
+	 * @param projCollaborator
+	 *            Project Collaborator to search
+	 * @return The request associated with the data provided, if it exists, else
+	 *         return null.
+	 */
+	public TaskTeamRequest getAssignementTaskTeamRequest(ProjectCollaborator projCollaborator) {
+		TaskTeamRequest result = null;
+		TaskTeamRequest assignementRequestToFind = new TaskTeamRequest(projCollaborator, this);
+		assignementRequestToFind.setType(TaskTeamRequest.ASSIGNMENT);
+		for (TaskTeamRequest other : this.pendingTaskTeamRequests) {
+			if (assignementRequestToFind.equals(other)) {
+				result = other;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Searches request lists for the task selected. If it finds any request
+	 * with this task, removes it from the list.
+	 */
+	public void removeAllRequestsWithASpecificTask() {
+		this.pendingTaskTeamRequests.clear();;
+	}
 }
