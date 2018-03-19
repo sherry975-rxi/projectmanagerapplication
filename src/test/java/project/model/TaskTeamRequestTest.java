@@ -52,14 +52,6 @@ public class TaskTeamRequestTest {
 		assertEquals(task2, request.getTask());
 	}
 	
-	@Test
-	public void testSetAndGetProject() {
-		assertNull(request.getProject());
-		
-		request.setProject(proj);
-		
-		assertEquals(proj, request.getProject());
-	}
 	
 	@Test
 	public void testSetAndGetProjectCollaborator() {

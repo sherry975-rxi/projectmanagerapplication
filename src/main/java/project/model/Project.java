@@ -5,12 +5,8 @@ package project.model;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
-
-import static javax.persistence.CascadeType.ALL;
 
 /**
  * Class to build Projects.
@@ -28,8 +24,8 @@ public class Project implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	private int projectIdCode;
+	private int id;
+
 	private int status;
 	@OneToOne
 	private User projectManager;
@@ -40,14 +36,6 @@ public class Project implements Serializable{
 	private int budget;
 	private Calendar startdate;
 	private Calendar finishdate;
-
-	@OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "project")
-	@Column(columnDefinition = "LONGBLOB")
-	private List<ProjectCollaborator> projectTeam;
-
-
-	@OneToMany (fetch = FetchType.LAZY, cascade = ALL, mappedBy = "project")
-	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
@@ -84,28 +72,18 @@ public class Project implements Serializable{
 		this.description = description;
 		this.projectManager = projectManager;
 		this.effortUnit = EffortUnit.HOURS;
-		this.projectTeam = new ArrayList<>();
 		this.budget = 0;
 		this.status = PLANNING;
 		this.startdate = null;
 		this.finishdate = null;
-		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getProjectIdCode() {
-		return projectIdCode;
-	}
-
-	public void setProjectIdCode(int projectIdCode) {
-		this.projectIdCode = projectIdCode;
 	}
 
 	public int getStatus() {
@@ -135,16 +113,6 @@ public class Project implements Serializable{
 
 	public void setBudget(int budget) {
 		this.budget = budget;
-	}
-
-	public void setPendingTaskTeamRequests(List<TaskTeamRequest> pendingTaskTeamRequests) {
-		this.pendingTaskTeamRequests = pendingTaskTeamRequests;
-	}
-
-
-
-	public List<TaskTeamRequest> getPendingTaskTeamRequests() {
-		return this.pendingTaskTeamRequests;
 	}
 
 	/**
@@ -257,19 +225,6 @@ public class Project implements Serializable{
 	public void setProjectDescription(String newDescription) {
 		this.description = newDescription;
 	}
-	
-	/**
-	 * Get the users that belong to this Project's Team
-	 * 
-	 * @return Project Team Team of the Project
-	 */
-	public List<ProjectCollaborator> getProjectTeam() {
-		return this.projectTeam;
-	}
-
-	public void setProjectTeam(List<ProjectCollaborator> projectTeam){
-		this.projectTeam = projectTeam;
-	}
 
 	/**
 	 * This method returns the state of the attribute status that can be planning,
@@ -341,7 +296,7 @@ public class Project implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 3;
-		result = prime * result + projectIdCode;
+		result = prime * result + (Integer) id;
 		return result;
 	}
 
@@ -359,7 +314,7 @@ public class Project implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Project other = (Project) obj;
-		return projectIdCode == other.projectIdCode;
+		return id == other.id;
 	}
 
 	/**
@@ -368,7 +323,7 @@ public class Project implements Serializable{
 	 * @return idCode of Project
 	 */
 	public int getIdCode() {
-		return this.projectIdCode;
+		return this.id;
 	}
 
 	/**
@@ -403,22 +358,6 @@ public class Project implements Serializable{
 		this.budget = newBudget;
 	}
 
-	/**
-	 * This method calculates the sum of the values reported to the task until the
-	 * moment
-	 * 
-	 * @return The cost value reported for the Project until the moment
-	 */
-
-	public double getTotalCostReportedToProjectUntilNow() {
-		double reportedCost = 0.0;
-
-		//for (Task task : taskContainer.getAllTasksfromProject()) { TODO REIMPLEMENT THIS METHOD IN ACCORDANCE WITH THE UPDATED MODEL
-		//	reportedCost += task.getTaskCost();
-		//}
-
-		return reportedCost;
-	}
 
 	/**
 	 * This method returns the name of the project in a String
@@ -429,317 +368,6 @@ public class Project implements Serializable{
 		return this.name;
 	}
 
-	/**
-	 * Creates a new assignment request, and adds the request to the list of pending
-	 * task assignment requests if it isn't already created
-	 * 
-	 * @param request
-	 *            Request to add to the pending task assignment requests list
-	 * @return True if it adds, false if there is already an equal request
-	 */
-	public boolean createTaskAssignementRequest(ProjectCollaborator projCollab, Task task) {// uso de if incorreto?
-		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
-		newReq.setType(TaskTeamRequest.ASSIGNMENT);
-        newReq.setProject(this);
-        if (!this.isAssignmentRequestAlreadyCreated(projCollab, task)) {
-            return this.pendingTaskTeamRequests.add(newReq);
-        }
-        return false;
-	}
-
-	/**
-	 * Creates a new removal request, and adds the request to the list of pending
-	 * task removal requests if it isn't already created
-	 * 
-	 * @param request
-	 *            Request to add to the list of pending task removal requests
-	 * @return True if it adds, false if there is already an equal request
-	 */
-	public boolean createTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
-		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, task);
-        newReq.setType(TaskTeamRequest.REMOVAL);
-        newReq.setProject(this);
-		if (!this.isRemovalRequestAlreadyCreated(projCollab, task)) {
-			return this.pendingTaskTeamRequests.add(newReq);
-		}
-		return false;
-	}
-
-	/**
-	 * Removes request to add a certain project collaborator to a specific task
-	 * team.
-	 * 
-	 * @param request
-	 *            Request to remove from the list
-	 */
-
-	public void deleteTaskAssignementRequest(TaskTeamRequest request) {
-		this.pendingTaskTeamRequests.remove(request);
-	}
-
-	/**
-	 * Removes the removal request of a certain project collaborator to a specific
-	 * task team.
-	 * 
-	 * @param request
-	 *            TaskTeamRequest to remove from the list
-	 */
-
-	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab, Task task) {
-		TaskTeamRequest request = getRemovalTaskTeamRequest(projCollab, task);
-        request.setType(TaskTeamRequest.REMOVAL);
-		return this.pendingTaskTeamRequests.remove(request);
-	}
-
-	/**
-	 * Returns the relevant info in the form of a list of strings
-	 * 
-	 * @return toString List of strings which contains the info about the task and
-	 *         the project collaborator for each request
-	 */
-	public List<String> viewPendingTaskAssignementRequests() {// sera melhor com DTO?
-		List<String> toString = new ArrayList<>();
-		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
-		    if(req.isAssignmentRequest()) {
-		        toString.add(req.viewStringRepresentation());
-            }
-		}
-		return toString;
-	}
-
-	/**
-	 * Returns the relevant info in the form of a list of strings of the pending
-	 * task removal requests
-	 * 
-	 * @return toString List of strings which contains the info about the task and
-	 *         the project collaborator for each request
-	 */
-	public List<String> viewPendingTaskRemovalRequests() {
-		List<String> toString = new ArrayList<>();
-		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
-            if(req.isRemovalRequest()) {
-			    toString.add(req.viewStringRepresentation());
-            }
-		}
-		return toString;
-	}
-
-	/**
-	 * This method receives a Project Collaborator and a Task, creates a new
-	 * TaskTeamRequest with those objects and searches if there's a removal request
-	 * equal to the created one, in the pending removal requests list.
-	 * 
-	 * @param projCollaborator
-	 *            Project Collaborator to create the request
-	 * @param task
-	 *            Task to create the request
-	 * 
-	 * @return Returns the removal request within the list if it exists or NULL if
-	 *         it does not
-	 */
-	public TaskTeamRequest getRemovalTaskTeamRequest(ProjectCollaborator projCollaborator, Task task) {
-
-		TaskTeamRequest removalRequestToFind = new TaskTeamRequest(projCollaborator, task);
-        removalRequestToFind.setType(TaskTeamRequest.REMOVAL);
-		for (TaskTeamRequest other : this.pendingTaskTeamRequests) {
-			if (removalRequestToFind.equals(other)) {
-				return other;
-			}
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the list of Task assigment requests by collaborators, to be handled
-	 * by the model or controller
-	 * 
-	 * @return List of TaskTeamRequest Objects from all users asking to be assigned
-	 *         to a certain task
-	 */
-
-    public List<TaskTeamRequest> getPendingTaskAssignementRequests() {
-
-        List<TaskTeamRequest> assignmentRequests = new ArrayList<>();
-
-        for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
-            if (req.isAssignmentRequest()) {
-                assignmentRequests.add(req);
-            }
-        }
-        return assignmentRequests;
-    }
-
-	// Do we use this method give the Removal requests to the controller, or
-	// create a method in Project that handles the approvals/rejections by receiving
-	// index numbers from the controller?
-	/**
-	 * Returns the list of Task removal requests by collaborators, to be handled by
-	 * the model or controller
-	 * 
-	 * @return List of TaskTeamRequest Objects from all users asking to be assigned
-	 *         to a certain task
-	 */
-
-    public List<TaskTeamRequest> getPendingTaskRemovalRequests() {
-        List<TaskTeamRequest> removalRequests = new ArrayList<>();
-
-        for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
-            if (req.isRemovalRequest()) {
-                removalRequests.add(req);
-            }
-        }
-        return removalRequests;
-    }
-
-	/**
-	 * Checks if a certain request already exists
-	 * 
-	 * @param projectCollaborator
-	 *            Projector collaborator that wants to create the request
-	 * @param task
-	 *            Task chosen by the project collaborator
-	 * @return True if request already exists, false if not
-	 */
-	public boolean isAssignmentRequestAlreadyCreated(ProjectCollaborator projectCollaborator, Task task) {
-		TaskTeamRequest request = new TaskTeamRequest(projectCollaborator, task);
-        request.setType(TaskTeamRequest.ASSIGNMENT);
-		return this.pendingTaskTeamRequests.contains(request);
-	}
-
-	/**
-	 * Checks if a certain request already exists
-	 * 
-	 * @param projCollab
-	 *            Projector collaborator that wants to create the request
-	 * @param task
-	 *            Task chosen by the project collaborator
-	 * @return True if request already exists, false if not
-	 */
-	public boolean isRemovalRequestAlreadyCreated(ProjectCollaborator projCollab, Task task) {
-		TaskTeamRequest request = new TaskTeamRequest(projCollab, task);
-        request.setType(TaskTeamRequest.REMOVAL);
-		return this.pendingTaskTeamRequests.contains(request);
-	}
-
-	/**
-	 * Gets the request associated with the project collaborator and task provided
-	 * 
-	 * @param projCollaborator
-	 *            Project Collaborator to search
-	 * @param task
-	 *            Task to search
-	 * @return The request associated with the data provided, if it exists, else
-	 *         return null.
-	 */
-	public TaskTeamRequest getAssignementTaskTeamRequest(ProjectCollaborator projCollaborator, Task task) {
-		TaskTeamRequest result = null;
-		TaskTeamRequest assignementRequestToFind = new TaskTeamRequest(projCollaborator, task);
-        assignementRequestToFind.setType(TaskTeamRequest.ASSIGNMENT);
-		for (TaskTeamRequest other : this.pendingTaskTeamRequests) {
-			if (assignementRequestToFind.equals(other)) {
-				result = other;
-			}
-		}
-		return result;
-	}
-
-	/** THESE METHODS HAVE BEEN PURGED AS ONLY ONE REQUEST LIST EXISTS NOW
-     *
-     *
-	 * Searches the assignement request list for the task selected. If it finds any
-	 * request with this task, removes it from the list.
-	 *
-	 * @param task
-	 *            Task to remove from the assignement request list
-
-	public void removeAllRequestsWithASpecificTaskFromAssignementRequests(Task task) {
-		List<TaskTeamRequest> assignementCopy = new ArrayList<>();
-		assignementCopy.addAll(this.pendingTaskTeamRequests);
-		for (int i = assignementCopy.size() - 1; i >= 0; i--) {
-			if (assignementCopy.get(i).getTask().equals(task)) {
-				this.pendingTaskTeamRequests.remove(this.pendingTaskTeamRequests.get(i));
-			}
-		}
-	}
-
-
-	 * Searches the removal request list for the task selected. If it finds any
-	 * request with this task, removes it from the list.
-	 *
-	 * @param task
-	 *            Task to remove from the removal request list
-
-	public void removeAllRequestsWithASpecificTaskFromRemovalRequests(Task task) {
-		List<TaskTeamRequest> removalCopy = new ArrayList<>();
-		removalCopy.addAll(this.pendingTaskTeamRequests);
-		for (int i = removalCopy.size() - 1; i >= 0; i--) {
-			if (removalCopy.get(i).getTask().equals(task)) {
-				this.pendingTaskTeamRequests.remove(this.pendingTaskTeamRequests.get(i));
-			}
-		}
-	}
-
-     */
-
-
-
-	/**
-	 * Searches request lists for the task selected. If it finds any request
-	 * with this task, removes it from the list.
-	 * 
-	 * @param task
-	 *            Task to remove from the request lists
-	 */
-	public void removeAllRequestsWithASpecificTask(Task task) {
-        List<TaskTeamRequest> requestsCopy = new ArrayList<>();
-        requestsCopy.addAll(this.pendingTaskTeamRequests);
-        for (int i = requestsCopy.size() - 1; i >= 0; i--) {
-            if (requestsCopy.get(i).getTask().equals(task)) {
-                this.pendingTaskTeamRequests.remove(this.pendingTaskTeamRequests.get(i));
-            }
-        }
-	}
-
-	public ProjectCollaborator getProjectCollaboratorFromUser(User user) {
-
-		for (ProjectCollaborator other : projectTeam) {
-			if (other.getUserFromProjectCollaborator().equals(user)) {
-				return other;
-			}
-		}
-		return null;
-
-	}
-
-    /**
-
-	 * This method returns the List of Collaborators from a specific task
-	 * 
-	 * @return Returns a list with the task team
-	 */
-	public List<ProjectCollaborator> getProjectCollaboratorsFromTask(Task task) {
-
-		List<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
-		for (ProjectCollaborator other : this.getActiveProjectTeam()) {
-			if (task.isProjectCollaboratorActiveInTaskTeam(other)) {
-				collaboratorsFromTask.add(other);
-
-			}
-		}
-		return collaboratorsFromTask;
-	}
-
-
-	/**
-	 * This method sets task project parameter equal to the project that calls the method
-	 *
-	 * @param task Task to set
-	 */
-	public void addTaskToProject(Task task) {
-		task.setProject(this);
-	}
-	
 	/**
 	 * Checks if a project has a status considered Active
 	 * 

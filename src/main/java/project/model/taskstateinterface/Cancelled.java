@@ -1,5 +1,7 @@
 package project.model.taskstateinterface;
 
+import java.util.Calendar;
+
 import project.model.StateEnum;
 import project.model.Task;
 
@@ -17,6 +19,9 @@ public class Cancelled implements TaskStateInterface {
 		if(finishedState.isValid(task)) {
 			task.setTaskState(finishedState);
 			task.setCurrentState(StateEnum.FINISHED);
+			task.setFinishDate(Calendar.getInstance());
+			task.removeAllCollaboratorsFromTaskTeam();
+			
 	}
 	}
 

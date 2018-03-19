@@ -9,17 +9,13 @@ public class TaskTeamRequest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollab;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Task_id")
 	private Task task;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Project_id")
-	private Project project;
 
 	private Integer type;
 	public static final int ASSIGNMENT = 0;
@@ -90,15 +86,6 @@ public class TaskTeamRequest {
 	 */
 	public Task getTask() {
 		return task;
-	}
-
-
-	public void setProject(Project proj) {
-		this.project=proj;
-	}
-
-	public Project getProject() {
-		return project;
 	}
 
 
@@ -183,7 +170,7 @@ public class TaskTeamRequest {
 	 */
 	public String viewStringRepresentation() { 
 		
-		//Este método não devia estar noutro sítio? Controladores ou assim...
+		//Este mï¿½todo nï¿½o devia estar noutro sï¿½tio? Controladores ou assim...
 
 		return this.projCollab.getUserFromProjectCollaborator().getName() + "\n"
 				+ this.projCollab.getUserFromProjectCollaborator().getEmail() + "\n"

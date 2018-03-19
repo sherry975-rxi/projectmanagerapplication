@@ -1,6 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Task;
 import project.model.User;
 
@@ -13,15 +15,19 @@ import java.util.List;
 public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 
 	User myUser;
+
+	@Autowired
 	ProjectService myProjRepo;
+
+	@Autowired
+	TaskService taskService;
+
 
 	/**
 	 * Creator of the controller, receives a user
 	 * @param user
 	 */
 	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
-		this.myProjRepo = new ProjectService();
-		this.myProjRepo.updateProjectContainer();
 		this.myUser = user;
 	}
 
@@ -57,7 +63,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	 * 
 	 */
 	public List<String> getAllFinishedUserTasksInDecreasingOrder(){
-		List<Task> taskList = this.myProjRepo.getAllFinishedUserTasksInDecreasingOrder(this.myUser);
+		List<Task> taskList = taskService.getAllFinishedUserTasksInDecreasingOrder(this.myUser);
 		List<String> finishedTaskListDecreasingOrder = new ArrayList<>();
 		for (Task finishedTask : taskList) {
 			String[] stringList = finishedTask.getTaskID().split("\\.");

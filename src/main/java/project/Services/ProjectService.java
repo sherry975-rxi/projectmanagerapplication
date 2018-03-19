@@ -1,5 +1,10 @@
 package project.Services;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,43 +14,39 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
-import javax.swing.text.html.Option;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static com.sun.xml.internal.ws.policy.sourcemodel.wspolicy.XmlToken.Optional;
-
 @Service
 public class ProjectService {
 
 	@Autowired
 	private ProjectsRepository projectsRepository;
-	
+
 	@Autowired
-	private ProjCollabRepository projectCollaboratorRepository; 
-		
+	private ProjCollabRepository projectCollaboratorRepository;
+
 	/**
 	 * Constructor that allows one to create a new Project Repository. There are no
 	 * mandatory fields.
 	 */
-	public ProjectService() {}
+	public ProjectService() {
+	}
 
 	/**
 	 * Constructor created for JPA purposes. It is not to be used in model context.
 	 */
-	public ProjectService (ProjectsRepository projectsRepository){
+	public ProjectService(ProjectsRepository projectsRepository, ProjCollabRepository projectCollabRepository) {
 		this.projectsRepository = projectsRepository;
+		this.projectCollaboratorRepository = projectCollabRepository;
 	}
-
-
 
 	/**
 	 * Creates an instance of Project and saves it in the database
 	 * 
-	 * @param name name to be given to the Project
-	 * @param description description to be given to the Project
-	 * @param projectManager what user will be this Project's manager
+	 * @param name
+	 *            name to be given to the Project
+	 * @param description
+	 *            description to be given to the Project
+	 * @param projectManager
+	 *            what user will be this Project's manager
 	 * 
 	 * @return the project created
 	 */
@@ -60,26 +61,29 @@ public class ProjectService {
 	/**
 	 * Gets a project from the database by searching with the id
 	 *
-	 * @param id id to search for a specific project
+	 * @param id
+	 *            id to search for a specific project
 	 *
 	 * @return project found
 	 */
-	public Project getProjectById(long id) {
+	public Project getProjectById(int id) {
 		return this.projectsRepository.findById(id);
 	}
 
 	/**
-	 * This method tells the ProjectRepository to save a certain project in the database
+	 * This method tells the ProjectRepository to save a certain project in the
+	 * database
 	 * 
 	 * @param project
 	 *            Project added to the List of Projects
 	 */
 	public void addProjectToProjectContainer(Project project) {
-			this.projectsRepository.save(project);
+		this.projectsRepository.save(project);
 	}
 
 	/**
-	 * This method tells the projectRepository to call the method findAll in order to retrieve all projects from the database
+	 * This method tells the projectRepository to call the method findAll in order
+	 * to retrieve all projects from the database
 	 * 
 	 * @return allProjects This is a copy of he list of all Projects created
 	 */
@@ -92,17 +96,16 @@ public class ProjectService {
 
 	/**
 	 * Tells the projectRepository to call the method findByProjectStatus for each
-	 * of the status that is considered as "Active" .
-	 * ActiveStates 1 to 4
+	 * of the status that is considered as "Active" . ActiveStates 1 to 4
 	 * 
 	 * @return activeProjectsList The List of active Projects
 	 */
 	public List<Project> getActiveProjects() {
 
 		List<Project> activeProjects = new ArrayList<>();
-		
-		for(Project project : getAllProjectsfromProjectsContainer()) {
-			if(project.isProjectActive()) {
+
+		for (Project project : getAllProjectsfromProjectsContainer()) {
+			if (project.isProjectActive()) {
 				activeProjects.add(project);
 			}
 		}
@@ -114,7 +117,7 @@ public class ProjectService {
 	 * 
 	 * @return TRUE if the Project is in this project repository FALSE if not
 	 */
-	public boolean isProjectInProjectContainer(int projectId){
+	public boolean isProjectInProjectContainer(int projectId) {
 
 		return this.projectsRepository.exists(projectId);
 	}
@@ -123,39 +126,44 @@ public class ProjectService {
 	 * This method returns a set of Projects where a certain user
 	 *
 	 * *
-	 * @param user user whose projects are going to be found
+	 * 
+	 * @param user
+	 *            user whose projects are going to be found
 	 * 
 	 * @return List of Projects of a User
 	 * 
 	 */
 	public List<Project> getProjectsFromUser(User user) {
-		
+
 		List<Project> projects = new ArrayList<>();
 		List<ProjectCollaborator> userProjCollabs = new ArrayList<>();
 
-		//Finds all projectCollaborators from a given user
+		// Finds all projectCollaborators from a given user
 		userProjCollabs.addAll(this.projectCollaboratorRepository.findAllByCollaborator(user));
-		
+
 		long projectId;
 
-		//Compares de projectId of the projectCollaborator to the project id of the projects in the database
-		for(ProjectCollaborator collaborator : userProjCollabs) {
-			projectId = collaborator.getProject().getId(); 
-			for(Project project : this.getAllProjectsfromProjectsContainer()) { 
-				if(project.getId() == projectId) {
-					projects.add(project); 
-				}			
-			}			
+		// Compares de projectId of the projectCollaborator to the project id of the
+		// projects in the database
+		for (ProjectCollaborator collaborator : userProjCollabs) {
+			projectId = collaborator.getProject().getId();
+			for (Project project : this.getAllProjectsfromProjectsContainer()) {
+				if (project.getId() == projectId) {
+					projects.add(project);
+				}
+			}
 		}
 
-		return projects;		
-	} 
+		return projects;
+	}
 
 	/**
 	 * This method returns a set of Projects where a certain user is the project
 	 * manager
 	 * 
-	 * @param user user for which to find the projects where it is the project manager
+	 * @param user
+	 *            user for which to find the projects where it is the project
+	 *            manager
 	 * 
 	 * @return List of Projects of a User
 	 * 
@@ -169,20 +177,22 @@ public class ProjectService {
 	}
 
 	/**
-	 * Thid method tells the projectRepository to call the method save, in order to update a certain project
+	 * Thid method tells the projectRepository to call the method save, in order to
+	 * update a certain project
 	 *
-	 * @param project Project to update
+	 * @param project
+	 *            Project to update
 	 */
 	public void updateProject(Project project) {
 		this.projectsRepository.save(project);
 	}
 
-
 	/**
-	 * Calls the projectCollaboratorRepository to save the projectCollaborator to the database
-	 * The projectCollaborator is created by the Project
+	 * Calls the projectCollaboratorRepository to save the projectCollaborator to
+	 * the database The projectCollaborator is created by the Project
 	 *
-	 * @param projectCollaborator ProjectCollaborator to save
+	 * @param projectCollaborator
+	 *            ProjectCollaborator to save
 	 */
 	public void addProjectCollaborator(ProjectCollaborator projectCollaborator) {
 
@@ -190,11 +200,14 @@ public class ProjectService {
 	}
 
 	/**
-	 * Creates an instance of ProjectCollaborator set the id of the project and saves projectCollaborator in the database
+	 * Creates an instance of ProjectCollaborator set the id of the project and
+	 * saves projectCollaborator in the database
 	 * 
-	 * @param user user to associate with projectCollaborator 
-	 * @param project to set project id in projectCollaborator
-	 * @param costPerEffort 
+	 * @param user
+	 *            user to associate with projectCollaborator
+	 * @param project
+	 *            to set project id in projectCollaborator
+	 * @param costPerEffort
 	 * 
 	 * @return the projectCollaborator created
 	 */
@@ -226,7 +239,8 @@ public class ProjectService {
 	/**
 	 * Returns a list with all project collaborators from a certain project
 	 *
-	 * @param project Project to get project collaborators from
+	 * @param project
+	 *            Project to get project collaborators from
 	 *
 	 * @return List of Project Collaborators of a certian project
 	 */
@@ -282,5 +296,54 @@ public class ProjectService {
 		return false;
 	}
 
+	/**
+	 * This method retrieves the Project Collaborator in a ProjectTeam from the
+	 * User. If there are more than one Project Collaborator corresponding to the
+	 * same user, that information is not collected in this method.
+	 *
+	 * @param collaborator
+	 * @return Optional of a ProjectCollaborator
+	 */
+	public Optional<ProjectCollaborator> findProjectCollaborator(User collaborator, Project project) {
 
+		List<ProjectCollaborator> projectTeam = new ArrayList<>();
+		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		return projectTeam.stream().filter(projCollab -> projCollab.getCollaborator().equals(collaborator)).findFirst();
+	}
+
+	/**
+	 * This method retrieves the Project Collaborator in a ProjectTeam from the
+	 * User. If there are more than one Project Collaborator corresponding to the
+	 * same user, that information is not collected in this method.
+	 *
+	 * @param collaborator
+	 * @return Optional of a ProjectCollaborator
+	 */
+	public ProjectCollaborator findActiveProjectCollaborator(User collaborator, Project project) {
+
+		List<ProjectCollaborator> projectTeam = new ArrayList<>();
+		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project).stream()
+                .filter(projectCollaborator -> projectCollaborator.getUserFromProjectCollaborator().equals(collaborator))
+                .collect(Collectors.toList()));
+
+		for (ProjectCollaborator toSearch : projectTeam) {
+			if(toSearch.isStatus()) {
+				return toSearch;
+			}
+		}
+
+		return null;
+
+	}
+
+
+	/**
+	 * This method updates a ProjectCollaborator
+	 *
+	 * @param projCollab Project Collaborator to update
+	 */
+	public void updateProjectCollaborator(ProjectCollaborator projCollab) {
+		this.projectCollaboratorRepository.save(projCollab);
+	}
 }

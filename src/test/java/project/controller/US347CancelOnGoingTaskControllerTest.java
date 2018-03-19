@@ -229,7 +229,7 @@ public class US347CancelOnGoingTaskControllerTest {
 
 
 		// Sets a finish date for the task1
-		task1.setFinishDate();
+		task1.setFinishDate(Calendar.getInstance());
 
 		// use of control to set task1 to state cancelled
 		uS347NotCancelOnGoingTaskController.cancelOnGoingTask();

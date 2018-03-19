@@ -16,6 +16,8 @@ import project.model.taskstateinterface.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class TaskService {
@@ -48,7 +50,14 @@ public class TaskService {
 	 */
 	public Task createTask(String description, Project selectedProject) {
 
-		Task newTask = new Task(description, selectedProject);
+		Task newTask = selectedProject.createTask(description);
+
+		int projectID = selectedProject.getId();
+		int taskNumber = getProjectTasks(selectedProject).size()+1;
+		String taskID = projectID  + "." + taskNumber;
+
+		newTask.setTaskId(taskID);
+
 		this.taskRepository.save(newTask);
 		return newTask;
 	}
@@ -436,7 +445,7 @@ public class TaskService {
 		
 		/**
 		 * This method returns a list of all tasks finished a number of months ago by
-		 * given user. Given a negative “monthsAgo” input, Returns ALL finished tasks of
+		 * given user. Given a negative â€œmonthsAgoâ€� input, Returns ALL finished tasks of
 		 * said user
 		 * 
 		 * @param collab
@@ -591,7 +600,7 @@ public class TaskService {
 		/**
 		 * This method returns all OnGoing Tasks
 		 * 
-		 * @return List with the tasks set to “OnGoing” state
+		 * @return List with the tasks set to â€œOnGoingâ€� state
 		 */
 		public List<Task> getProjectOnGoingTasks(Project project) {
 			List<Task> allOnGoing = new ArrayList<>();
@@ -636,9 +645,24 @@ public class TaskService {
 			}
 			return expiredTasks;
 		}
-		
+
+
 		/**
-		 * This method returns the a Task by taskID
+		 * This method returns the a Task by string taskID
+		 *
+		 * @param id taskId
+		 *
+		 * @return A task by a Task ID
+		 */
+		public Task getTaskByTaskID(String id) {
+
+			return this.taskRepository.findByTaskId(id);
+
+		}
+
+
+		/**
+		 * This method returns the a Task by database ID
 		 * 
 		 * @param id taskId
 		 * 
@@ -652,7 +676,7 @@ public class TaskService {
 
 		/**
 		 * This method deletes a task from the task the repository if the state if the
-		 * task hasn’t started
+		 * task hasnâ€™t started
 		 * 
 		 * @param taskToDelete
 		 *            the task that will be removed from the task Repository
@@ -689,20 +713,7 @@ public class TaskService {
 			return cancelledTasksFromProject;
 		}
 
-		/**
-		 * @return The cost reported to each task in the TaskContainer
-		 */
 
-		public List<String> getReportedCostOfEachTask() {
-			List<String> reportTaskCost = new ArrayList<>();
-
-			for (Task other : this.getTaskRepository()) {
-				reportTaskCost.add(String.valueOf(other.getTaskCost()));
-
-			}
-
-			return reportTaskCost;
-		}
 
 		/**
 		 * This method returns a list of tasks that can be associated to
@@ -721,4 +732,54 @@ public class TaskService {
 			return validTasks;
 		}
 
+	/**
+	 * This method returns the List of Collaborators from a specific task
+	 *
+	 * @return Returns a list with the project collaborators that are in the task team
+	 */
+	public List<ProjectCollaborator> getProjectCollaboratorsFromTask(Project project, Task task) {
+
+		List<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
+		collaboratorsFromTask.addAll(this.projectCollaboratorRepository.findAllByProject(project));
+
+		return collaboratorsFromTask.stream()
+				.filter(projCollab -> projCollab.isProjectCollaboratorActive())
+				.filter(projCollab -> task.isProjectCollaboratorActiveInTaskTeam(projCollab))
+				.collect(Collectors.toList());
+
+	}
+
+
+	/**
+	 * @return The cost reported to each task in the TaskContainer
+	 */
+
+	public List<String> getReportedCostOfEachTask(Project project) {
+		List<String> reportTaskCost = new ArrayList<>();
+
+		for (Task other : this.taskRepository.findAllByProject(project)) {
+			reportTaskCost.add(String.valueOf(other.getTaskCost()));
+
+		}
+
+		return reportTaskCost;
+	}
+
+
+	/**
+	 * This method calculates the sum of the values reported to the task until the
+	 * moment
+	 * 
+	 * @return The cost value reported for the Project until the moment
+	 */
+
+	public double getTotalCostReportedToProjectUntilNow(Project project) {
+		double reportedCost = 0.0;
+
+		for (Task task : this.taskRepository.findAllByProject(project)) {
+			reportedCost += task.getTaskCost();
+		}
+
+		return reportedCost;
+	}
 }
