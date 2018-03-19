@@ -41,12 +41,12 @@ public class Project implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-	@OneToMany (fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+	@OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "project")
 	@Column(columnDefinition = "LONGBLOB")
 	private List<ProjectCollaborator> projectTeam;
 
 
-	@OneToMany (fetch = FetchType.EAGER, cascade = ALL, mappedBy = "project")
+	@OneToMany (fetch = FetchType.LAZY, cascade = ALL, mappedBy = "project")
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	public static final int PLANNING = 0; // planeado

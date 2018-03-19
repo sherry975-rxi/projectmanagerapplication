@@ -1,14 +1,35 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import project.Services.UserService;
 import project.model.User;
 
+@Component
 public class US115andUS116SetUserStateController {
 
 
 	User toChangeState;
+	public User getToChangeState() {
+		return toChangeState;
+	}
+
+	public void setToChangeState(User toChangeState) {
+		this.toChangeState = toChangeState;
+	}
+
+	@Autowired
 	UserService userContainer;
 
+
+	public UserService getUserContainer() {
+		return userContainer;
+	}
+
+	public void setUserContainer(UserService userContainer) {
+		this.userContainer = userContainer;
+	}
 
 	/**
 	 * This controller recieves a user whose state is to be changed
@@ -17,9 +38,7 @@ public class US115andUS116SetUserStateController {
 	 * @param toChange
 	 *            selected User
 	 */
-	public US115andUS116SetUserStateController(User toChange) {
-		this.toChangeState = toChange;
-	}
+	public US115andUS116SetUserStateController() {	}
 
 	/**
 	 * 
