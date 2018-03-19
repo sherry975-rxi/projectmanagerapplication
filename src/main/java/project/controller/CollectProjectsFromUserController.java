@@ -1,7 +1,6 @@
 package project.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import project.Services.ProjectService;
 import project.model.Project;
@@ -13,7 +12,9 @@ import java.util.List;
 
 public class CollectProjectsFromUserController {
 
-	private ProjectService projContainer = new ProjectService();
+	@Autowired
+	private ProjectService projService;
+
 	private User user;
 
 	/**
@@ -31,10 +32,10 @@ public class CollectProjectsFromUserController {
 	public List<String> getProjectsFromUserAndProjectManager() {
 
 		List<String> myProjects = new ArrayList<>();
-		for (Project ii : projContainer.getAllProjectsfromProjectsContainer()) {
+		for (Project ii : projService.getAllProjectsfromProjectsContainer()) {
 			if (ii.isProjectManager(user)) {
 				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName() + " - PM ");
-			} else if (ii.isUserActiveInProject(user)) {
+			} else if (projService.isUserActiveInProject(user, ii)) {
 				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName());
 			}
 		}
@@ -42,11 +43,11 @@ public class CollectProjectsFromUserController {
 	}
 
 	/**
-	 * This method returns a set of Projects where a certain user
+	 * This method returns a set of Projects which a certain user has joined as a collaborator
 	 * @return List of Projects of a user
 	 */
 	public List<Project> getProjectsFromUser() {
-		return new ArrayList<>(projContainer.getProjectsFromUser(this.user));
+		return new ArrayList<>(projService.getProjectsFromUser(this.user));
 	}
 
 	/**
@@ -55,7 +56,7 @@ public class CollectProjectsFromUserController {
 	 * @return List of Projects of a Project Manager
 	 */
 	public List<Project> getProjectsFromProjectManager() {
-		return new ArrayList<>(projContainer.getProjectsFromProjectManager(this.user));
+		return new ArrayList<>(projService.getProjectsFromProjectManager(this.user));
 	}
 
 }

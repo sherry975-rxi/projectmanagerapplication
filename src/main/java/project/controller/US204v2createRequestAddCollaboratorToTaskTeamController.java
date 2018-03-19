@@ -1,13 +1,19 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.*;
 
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	private User user;
+
+	@Autowired
 	private TaskService taskContainer;
+
+	@Autowired
 	private ProjectService projectContainer;
+
 	private Project project;
 	private Integer projectID;
 	private String taskID;
@@ -43,18 +49,19 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 *            ID of a Task that the User wants to add himself to
 	 */
 	public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID, User user) {
+		this.taskID = taskID;
+		this.user = user;
 		setProjectIDFromTaskID(taskID);
-		this.projectContainer = new ProjectService();
-		this.project = projectContainer.getProjById(this.projectID);
-		this.taskContainer = project.getTaskRepository();
+
+		this.project = projectContainer.getProjectById(this.projectID);
 		this.user = user;
 
 	}
 
 	public boolean createTaskTeamRequest() {
 
-		Task taskToAddCollaboratorTo = taskContainer.getTaskByID(this.taskID);
-		return project.createTaskAssignementRequest(getProjectCollaboratorFromUser(this.user), taskToAddCollaboratorTo);
+		Task taskToAddCollaboratorTo = taskContainer.getTaskByTaskID(this.taskID);
+		return taskToAddCollaboratorTo.createTaskAssignementRequest(getProjectCollaboratorFromUser(this.user));
 	}
 
 	/**
@@ -92,7 +99,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 		ProjectCollaborator projcollab;
 
-		projcollab = project.getProjectCollaboratorFromUser(user);
+		projcollab = projectContainer.findActiveProjectCollaborator(user, project);
 
 		return projcollab;
 	}
@@ -106,7 +113,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 * @return Task from taskID
 	 */
 	public Task getTaskByTaskID(String taskID) {
-		return taskContainer.getTaskByID(taskID);
+		return taskContainer.getTaskByTaskID(taskID);
 
 	}
 

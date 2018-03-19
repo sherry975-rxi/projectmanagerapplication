@@ -1,6 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -9,6 +11,10 @@ import java.util.List;
 
 
 public class CalculateReportedProjectCostController {
+
+	@Autowired
+	TaskService taskService;
+
 
 	/*
 	 * 
@@ -26,7 +32,7 @@ public class CalculateReportedProjectCostController {
 	 */
 	public double calculateReportedProjectCostController(Project project) {
 
-		return project.getTotalCostReportedToProjectUntilNow();
+		return taskService.getTotalCostReportedToProjectUntilNow(project);
 
 	}
 
@@ -39,13 +45,13 @@ public class CalculateReportedProjectCostController {
 
 	public List<String> calculeReportedCostOfEachTaskController(Project project) {
 
-		return new ArrayList<>(project.getTaskRepository().getReportedCostOfEachTask());
+		return new ArrayList<>(taskService.getReportedCostOfEachTask(project));
 	}
 
 	public List<String> getTaskId(Project project) {
 		List<String> taskID = new ArrayList<>();
 
-		for (Task other : project.getTaskRepository().getAllTasksfromProject()) {
+		for (Task other : taskService.getProjectTasks(project)) {
 			taskID.add(other.getTaskID());
 		}
 

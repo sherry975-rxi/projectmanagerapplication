@@ -34,6 +34,7 @@ public class OnGoing implements TaskStateInterface {
 			task.setTaskState(finishedState);
 			task.setCurrentState(StateEnum.FINISHED);
 			task.setFinishDate(Calendar.getInstance());
+			task.removeAllCollaboratorsFromTaskTeam();
 		}
 	}
 

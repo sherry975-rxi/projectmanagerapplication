@@ -3,6 +3,7 @@ package project.Services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,7 +66,7 @@ public class ProjectService {
 	 *
 	 * @return project found
 	 */
-	public Project getProjectById(long id) {
+	public Project getProjectById(int id) {
 		return this.projectsRepository.findById(id);
 	}
 
@@ -309,5 +310,40 @@ public class ProjectService {
 		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project));
 
 		return projectTeam.stream().filter(projCollab -> projCollab.getCollaborator().equals(collaborator)).findFirst();
+	}
+
+	/**
+	 * This method retrieves the Project Collaborator in a ProjectTeam from the
+	 * User. If there are more than one Project Collaborator corresponding to the
+	 * same user, that information is not collected in this method.
+	 *
+	 * @param collaborator
+	 * @return Optional of a ProjectCollaborator
+	 */
+	public ProjectCollaborator findActiveProjectCollaborator(User collaborator, Project project) {
+
+		List<ProjectCollaborator> projectTeam = new ArrayList<>();
+		projectTeam.addAll(this.projectCollaboratorRepository.findAllByProject(project).stream()
+                .filter(projectCollaborator -> projectCollaborator.getUserFromProjectCollaborator().equals(collaborator))
+                .collect(Collectors.toList()));
+
+		for (ProjectCollaborator toSearch : projectTeam) {
+			if(toSearch.isStatus()) {
+				return toSearch;
+			}
+		}
+
+		return null;
+
+	}
+
+
+	/**
+	 * This method updates a ProjectCollaborator
+	 *
+	 * @param projCollab Project Collaborator to update
+	 */
+	public void updateProjectCollaborator(ProjectCollaborator projCollab) {
+		this.projectCollaboratorRepository.save(projCollab);
 	}
 }

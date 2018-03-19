@@ -614,12 +614,18 @@ class TaskTest {
 	 */
 	@Test
 	void testMarkTaskAsFinished() {
+		
+		taskReadyToFinishTest.addTaskCollaboratorToTask(taskCollaborator);
+		
+		assertTrue(taskReadyToFinishTest.doesTaskTeamHaveActiveUsers());
 
 		assertFalse(taskReadyToFinishTest.isTaskFinished());
 		
 		taskReadyToFinishTest.markTaskAsFinished();
 		
 		assertTrue(taskReadyToFinishTest.isTaskFinished());
+		
+		assertFalse(taskReadyToFinishTest.doesTaskTeamHaveActiveUsers());
 		
 	}
 

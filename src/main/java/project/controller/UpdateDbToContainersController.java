@@ -11,7 +11,7 @@ public class UpdateDbToContainersController {
     public void updateDBtoContainer(){
         this.projectContainer = new ProjectService();
         this.userContainer = new UserService();
-        projectContainer.updateProjectContainer();
+        //projectContainer.updateProjectContainer();
         userContainer.updateUserContainer();
 
     }

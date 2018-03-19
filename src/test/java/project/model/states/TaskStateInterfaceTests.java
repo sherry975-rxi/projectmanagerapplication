@@ -31,11 +31,10 @@ public class TaskStateInterfaceTests {
 		userPm = new User("Daniel", "daniel@gmail.com", "001", "Junior Programmer",
 				"930000000");		
 		//Creates the project
-		project = new Project(10, "Teste", "teste", user); 
+		project = new Project("Teste", "teste", user); 
 		
 		//Creates the Task
-		task = project.getTaskRepository().createTask("Task de teste"); 
-		project.getTaskRepository().addTaskToProject(task);
+		task = project.createTask("Task de teste"); 
 
 		// create a estimated task date
 		estimatedTaskStartDate = Calendar.getInstance();
@@ -71,8 +70,7 @@ public class TaskStateInterfaceTests {
 		task.setTaskDeadline(taskDeadline);
 		
 		//Adds someone to the task team
-		project.addUserToProjectTeam(user, 10);
-		ProjectCollaborator collaborator = project.getProjectTeam().get(0); 
+		ProjectCollaborator collaborator = project.createProjectCollaborator(user, 10);
 		task.addProjectCollaboratorToTask(collaborator);
 		
 		//Asserts that the state changed to Planned
@@ -114,7 +112,7 @@ public class TaskStateInterfaceTests {
 		
 		//Asserts that the state changed to OnGoing
 		assertEquals("OnGoing", task.viewTaskStateName());
-		
+				
 		//Mark task as finished 
 		task.markTaskAsFinished(); 
 		
@@ -122,15 +120,16 @@ public class TaskStateInterfaceTests {
 		assertEquals("Finished", task.viewTaskStateName());
 		
 		//Marks the task as Unfinished
+		task.addProjectCollaboratorToTask(collaborator);
 		task.UnfinishTask();
 		
 		//Asserts that the taskState changed to Ongoing again
 		assertEquals("OnGoing", task.viewTaskStateName()); 
-		
+				
 		//Cancels the task
 		task.cancelTask();
-		
+				
 		//Asserts that the taskState changed to Cancelled
-		assertEquals("Cancelled", task.viewTaskStateName());
+		assertEquals("Cancelled", task.viewTaskStateName());		
 	}
 }
