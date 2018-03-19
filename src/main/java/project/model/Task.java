@@ -277,6 +277,10 @@ public class Task {
 		this.id = id;
 	}
 
+	public void setTaskId(String taskId) {
+		this.taskID = taskId;
+	}
+	
 	public void setProject(Project project) {
 		this.project = project;
 	}
@@ -398,8 +402,12 @@ public class Task {
 		if (this.deadlineInterval == null) {
 			return this.taskDeadline;
 		}
+		
+		//TODO
 		Calendar newDeadline = (Calendar) project.getStartdate().clone();
+		
 		newDeadline.add(Calendar.DAY_OF_YEAR, this.deadlineInterval);
+		
 		return newDeadline;
 
 	}
@@ -1117,7 +1125,7 @@ public class Task {
 	 * @return String taskState
 	 */
 	public String viewTaskStateNameFromEnum() {
-		return this.currentState.getClass().toString();
+		return this.currentState.toString();
 	}
 
 	/**
@@ -1196,6 +1204,7 @@ public class Task {
 
 	public void cancelledDateClear() {
 		this.cancelDate = null;
+		this.finishDate = Calendar.getInstance();
 		this.getTaskState().doAction(this);
 	}
 
