@@ -497,7 +497,7 @@ class TaskTest {
 	@Test
 	void testGetFinishDate() {
 		
-		taskTest.setFinishDate();
+		taskTest.setFinishDate(Calendar.getInstance());
 		
 		assertNotNull(taskTest.getFinishDate());
 		
@@ -509,7 +509,7 @@ class TaskTest {
 	@Test
 	void testSetFinishDate() {
 		
-		taskTest.setFinishDate();
+		taskTest.setFinishDate(Calendar.getInstance());
 		
 		assertNotNull(taskTest.getFinishDate());
 	}
@@ -1049,7 +1049,7 @@ class TaskTest {
 	@Test
 	void testRemoveFinishDate() {
 		
-		taskReadyToFinishTest.setFinishDate();
+		taskReadyToFinishTest.setFinishDate(Calendar.getInstance());
 		
 		assertNotEquals(null, taskReadyToFinishTest.getFinishDate());
 		

@@ -496,8 +496,8 @@ public class Task {
 	 * Calendar
 	 * 
 	 */
-	public void setFinishDate() {
-		this.finishDate = Calendar.getInstance();
+	public void setFinishDate(Calendar finishDate) {
+		this.finishDate = finishDate;
 	}
 
 	/**
@@ -555,7 +555,7 @@ public class Task {
 	 */
 	public boolean markTaskAsFinished() {
 		Boolean changed = true;
-		this.setFinishDate();
+		this.setFinishDate(Calendar.getInstance());
 
 		this.taskState.doAction(this);
 		
