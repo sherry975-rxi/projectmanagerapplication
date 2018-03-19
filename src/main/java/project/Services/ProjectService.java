@@ -299,4 +299,14 @@ public class ProjectService {
 				.filter(projCollab -> projCollab.getCollaborator().equals(collaborator))
 				.findFirst();
 	}
+
+
+	/**
+	 * This method updates a ProjectCollaborator
+	 *
+	 * @param projCollab Project Collaborator to update
+	 */
+	public void updateProjectCollaborator(ProjectCollaborator projCollab) {
+		this.projectCollaboratorRepository.save(projCollab);
+	}
 }
