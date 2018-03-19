@@ -41,14 +41,9 @@ public class UserServiceTest {
 
 	@InjectMocks
 	private UserService userContainer = new UserService();
-	private UserService userContainerWithRepository = new UserService(userRepositoryMock);
 
 	User user1;
 	User user2;
-	User user3;
-	User user4;
-	User user5;
-	List<User> mockUsers;
 
 	/**
 	 * @throws java.lang.Exception
@@ -64,8 +59,6 @@ public class UserServiceTest {
 		user2 = userContainer.createUser("João", "joaogmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Porto", "Porto", "Portugal");
 
-		mockUsers = new ArrayList<>();
-
 	}
 
 	/**
@@ -76,10 +69,7 @@ public class UserServiceTest {
 
 		user1 = null;
 		user2 = null;
-		user3 = null;
-		user4 = null;
-		user5 = null;
-		mockUsers = null;
+
 	}
 
 	/**
