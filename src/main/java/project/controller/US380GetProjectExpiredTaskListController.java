@@ -1,5 +1,6 @@
 package project.controller;
 
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class US380GetProjectExpiredTaskListController {
 
+	private TaskService taskService;
 	/**
 	 * This methods gets all the unfinished tasks with expired deadline and returns
 	 * the Tasks with these conditions in the form of a List of Strings, with the
@@ -28,7 +30,7 @@ public class US380GetProjectExpiredTaskListController {
 	 */
 	public List<String> getUnfinishedTaskListWithExpiredDeadline(Project proj) {
 
-		List<Task> taskListExpDeadline = proj.getTaskRepository().getExpiredTasks();
+		List<Task> taskListExpDeadline = taskService.getProjectExpiredTasks(proj);
 		List<String> taskListToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListExpDeadline.size(); i++) {

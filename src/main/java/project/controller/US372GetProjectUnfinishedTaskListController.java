@@ -1,5 +1,6 @@
 package project.controller;
 
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class US372GetProjectUnfinishedTaskListController {
-
+	private TaskService taskService;
 	/**
 	 * Returns a list of tasks that belong to a Project and are not marked as
 	 * finished. - US372
@@ -19,7 +20,7 @@ public class US372GetProjectUnfinishedTaskListController {
 
 	public List<Task> getProjectUnfinishedTaskList(Project proj) {
 
-		return proj.getTaskRepository().getUnFinishedTasks();
+		return taskService.getProjectUnFinishedTasks(proj);
 
 	}
 
@@ -34,7 +35,7 @@ public class US372GetProjectUnfinishedTaskListController {
 	 */
 	public List<String> getUnfinishedTaskListId(Project proj) {
 
-		List<Task> taskListOnGoing = proj.getTaskRepository().getUnFinishedTasks();
+		List<Task> taskListOnGoing = taskService.getProjectUnFinishedTasks(proj);
 		List<String> taskListOnGoingToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListOnGoing.size(); i++) {

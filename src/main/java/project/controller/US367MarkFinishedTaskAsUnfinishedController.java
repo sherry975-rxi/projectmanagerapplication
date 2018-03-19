@@ -1,12 +1,15 @@
 package project.controller;
 
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
+import project.model.Task;
 
 public class US367MarkFinishedTaskAsUnfinishedController {
-	private ProjectService projContainer;
+
 	private Project project;
 	private String taskID;
+	TaskService taskService;
 
 	/**
 	 * This constructor receives a Project and a Task's ID, storing these values and allowing them to be used when removing a task's finished state
@@ -17,6 +20,7 @@ public class US367MarkFinishedTaskAsUnfinishedController {
 	public US367MarkFinishedTaskAsUnfinishedController(Project proj, String idTask) {
 		this.project = proj;
 		this.taskID = idTask;
+
 	}
 
 
@@ -27,9 +31,10 @@ public class US367MarkFinishedTaskAsUnfinishedController {
 	 */
 
 	public void markFinishedTaskAsUnfinished() {
-
-		this.project.getTaskRepository().getTaskByID(this.taskID).removeFinishDate();
-		projContainer.saveProjectInRepository(project);
+		Task task;
+		task = taskService.getTaskByTaskID(this.taskID);
+		task.removeFinishDate();
+		taskService.saveTask(task);
 
 	}
 
