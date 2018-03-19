@@ -1,6 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.User;
 
 /**
@@ -13,11 +15,12 @@ import project.model.User;
  */
 
 public class US216AverageTimeSpentOnTaskLastMonthController {
-	ProjectService projectContainer;
+
+	@Autowired
+	TaskService taskService;
 
 	public US216AverageTimeSpentOnTaskLastMonthController() {
-		this.projectContainer = new ProjectService();
-		projectContainer.updateProjectContainer();
+
 	}
 
 	/**
@@ -32,7 +35,7 @@ public class US216AverageTimeSpentOnTaskLastMonthController {
 	 */
 	public double getAverageTimeOfFinishedTasksFromUserLastMonth(User user) {
 
-		return projectContainer.getAverageTimeOfFinishedTasksFromUserLastMonth(user);
+		return taskService.getAverageTimeOfFinishedTasksFromUserLastMonth(user);
 	}
 
 }
