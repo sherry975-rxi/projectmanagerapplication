@@ -903,7 +903,7 @@ public class Task {
 			return false;
 		Task other = (Task) obj;
 
-		return taskID.equals(other.taskID);
+		return this.id.equals(other.id);
 	}
 
 	/**
