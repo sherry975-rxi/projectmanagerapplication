@@ -83,6 +83,8 @@ public class TaskServiceTest {
 			this.project = victimProject.createProject("name3", "description4", user);
 			this.projectCollaborator = new ProjectCollaborator(user, 10);
 			this.taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
+
+			project = victimProject.createProject("testing", "Test", user);
 		}
 
 		/**
@@ -710,17 +712,21 @@ public class TaskServiceTest {
 			List<Task> taskList = new ArrayList<>();
 			when(victimTask.getTaskRepository()).thenReturn(taskList);
 
+			project = victimProject.createProject("testing", "Test", user);
+
+			taskMock.setProject(project);
+
 			//test case taskState is finished
 			TaskStateInterface finished = new Finished();
 			when(taskMock.getTaskState()).thenReturn(finished);
 
 			List<Task> expectedTaskList = new ArrayList<>();
-			assertEquals(expectedTaskList, victimTask.getTaskListOfWhichDependenciesCanBeCreated());
+			assertEquals(expectedTaskList, victimTask.getTaskListOfWhichDependenciesCanBeCreated(project));
 
 			//test case taskState is cancelled
 			TaskStateInterface cancelled = new Cancelled();
 			when(taskMock.getTaskState()).thenReturn(cancelled);
-			assertEquals(expectedTaskList, victimTask.getTaskListOfWhichDependenciesCanBeCreated());
+			assertEquals(expectedTaskList, victimTask.getTaskListOfWhichDependenciesCanBeCreated(project));
 
 			//test case taskState isn't finished neither cancelled
 			taskList.add(taskMock);
@@ -728,6 +734,6 @@ public class TaskServiceTest {
 			TaskStateInterface onGoing = new OnGoing();
 			when(taskMock.getTaskState()).thenReturn(onGoing);
 			expectedTaskList.add(taskMock);
-			assertEquals(expectedTaskList, victimTask.getTaskListOfWhichDependenciesCanBeCreated());
+			assertEquals(expectedTaskList, victimTask.getTaskListOfWhichDependenciesCanBeCreated(project));
 		}
 }

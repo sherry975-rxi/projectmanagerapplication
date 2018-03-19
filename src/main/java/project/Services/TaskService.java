@@ -717,13 +717,16 @@ public class TaskService {
 
 		/**
 		 * This method returns a list of tasks that can be associated to
-		 * TaskDependencies
+		 * TaskDependencies in a given project
+		 *
+		 * @param chosenProj
+		 * 		the chosen Project
 		 * 
 		 * @return A list of tasks that can be associated to a TaskDependency
 		 */
-		public List<Task> getTaskListOfWhichDependenciesCanBeCreated() {
+		public List<Task> getTaskListOfWhichDependenciesCanBeCreated(Project chosenProj) {
 			List<Task> validTasks = new ArrayList<>();
-			validTasks.addAll(getTaskRepository());
+			validTasks.addAll(getProjectTasks(chosenProj));
 			for (Task other : this.getTaskRepository()) {
 				if (other.getTaskState() instanceof Finished || other.getTaskState() instanceof Cancelled) {
 					validTasks.remove(other);
@@ -731,6 +734,7 @@ public class TaskService {
 			}
 			return validTasks;
 		}
+
 
 	/**
 	 * This method returns the List of Collaborators from a specific task
