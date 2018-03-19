@@ -61,7 +61,7 @@ public class UserServiceTest {
 		// instantiate users
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Porto", "Porto", "Portugal");
-		user2 = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		user2 = userContainer.createUser("João", "joaogmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Porto", "Porto", "Portugal");
 
 		mockUsers = new ArrayList<>();
@@ -196,7 +196,7 @@ public class UserServiceTest {
 
 		when(userRepositoryMock.findAll()).thenReturn(list);
 
-		assertEquals(list, userContainer.searchUsersByPartsOfEmail("@"));
+		assertEquals(list, userContainer.searchUsersByPartsOfEmail("gmail"));
 	}
 
 	/**
@@ -220,6 +220,7 @@ public class UserServiceTest {
 	@Test
 	public final void testIsEmailAddressValid() {
 		assertEquals(userContainer.isEmailAddressValid(user1.getEmail()), true);
+		assertEquals(userContainer.isEmailAddressValid(user2.getEmail()), false);
 	}
 
 }
