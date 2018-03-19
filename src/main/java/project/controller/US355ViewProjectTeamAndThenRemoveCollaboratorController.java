@@ -1,5 +1,6 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
@@ -7,8 +8,14 @@ import project.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
+
+	@Autowired
+	private ProjectService projectService;
+
 	Project proj;
 
 	public US355ViewProjectTeamAndThenRemoveCollaboratorController(Project proj) {
@@ -23,11 +30,13 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	 */
 	public boolean removeCollaboratorFromProjectTeam(User user) {
 		boolean remove = false;
-		ProjectService projectContainer = new ProjectService();
 
-		if (proj.removeProjectCollaboratorFromProjectTeam(user)) {
+		ProjectCollaborator toRemove = projectService.findActiveProjectCollaborator(user, proj);
+
+		if (toRemove!=null) {
 			remove = true;
-			projectContainer.saveProjectInRepository(proj);
+			toRemove.setStatus(false);
+			projectService.updateProjectCollaborator(toRemove);
 		}
 
 		return remove;
@@ -39,29 +48,23 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	 * @return a list of user
 	 */
 	public List<User> getActiveProjectCollaboratorFromTeam() {
-		List<ProjectCollaborator> projectTeam = this.proj.getActiveProjectTeam();
-		List<User> listOfUser = new ArrayList<>();
+		List<User> projectTeam = projectService.getActiveProjectTeam(proj).stream()
+				.map(ProjectCollaborator::getUserFromProjectCollaborator).collect(Collectors.toList());
 
-		for (int i = 0; i < projectTeam.size(); i++) {
-			User user = projectTeam.get(i).getUserFromProjectCollaborator();
-			listOfUser.add(user);
-		}
 
-		return listOfUser;
+		return projectTeam;
 	}
 
 	/**
 	 * This methods gets all team collaborator name in the form of a List of
 	 * Strings,
 	 * 
-	 * @param proj
-	 * 
 	 * 
 	 * @return user name List
 	 */
 	public List<String> getProjectTeamName() {
 
-		List<ProjectCollaborator> projectTeam = this.proj.getActiveProjectTeam();
+		List<ProjectCollaborator> projectTeam = projectService.getActiveProjectTeam(proj);
 		List<String> projectTeamToPrint = new ArrayList<>();
 
 		for (int i = 0; i < projectTeam.size(); i++) {
