@@ -19,10 +19,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import project.Repository.UserRepository;
 import project.Services.UserService;
+import project.dto.UserDTO;
 import project.model.Profile;
 import project.model.User;
 
@@ -86,7 +88,16 @@ public class UserServiceTest {
 	 */
 	@Test
 	public final void testCreateUserWithDTO() {
+		// given a user DTO for user1
+		UserDTO userDto = new UserDTO(user1);
 
+		// when the .save method is mocked
+		Mockito.when(userRepositoryMock.save(Mockito.any(User.class))).thenReturn(user1);
+
+		// then the create User with DTO method must call the save method once for user1
+
+		userContainer.createUserWithDTO(userDto);
+		Mockito.verify(userRepositoryMock, Mockito.times(2)).save(user1);
 	}
 
 	/**
