@@ -1,5 +1,6 @@
 package project.controller;
 
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class US375GetProjectNotStartedTaskListController {
-
+    private TaskService taskService;
     /**
      * this method return the list of non-started tasks
      *
@@ -15,7 +16,7 @@ public class US375GetProjectNotStartedTaskListController {
      * @return a list of tasks in the specified project that have not been started
      */
     public List<Task> getProjectNotStartedTasks(Project proj) {
-        return proj.getTaskRepository().getUnstartedTasks();
+        return taskService.getProjectUnstartedTasks(proj);
     }
 
     /**
@@ -28,7 +29,7 @@ public class US375GetProjectNotStartedTaskListController {
      */
     public List<String> getProjectNotStartedTaskList(Project proj) {
 
-        List<Task> taskListNotStarted = proj.getTaskRepository().getUnstartedTasks();
+        List<Task> taskListNotStarted = taskService.getProjectUnstartedTasks(proj);
         List<String> taskListToPrint = new ArrayList<>();
 
         for (int i = 0; i < taskListNotStarted.size(); i++) {

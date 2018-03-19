@@ -1,5 +1,6 @@
 package project.controller;
 
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -12,6 +13,7 @@ import java.util.List;
  */
 public class US377CollectionOfCancelledTasksFromAProjectController {
 	private Project project;
+	private TaskService taskService;
 
 	/**
 	 * Constructor
@@ -29,7 +31,7 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	 */
 	public List<Task> getCancelledTasksFromAProject() {
 
-		return project.getTaskRepository().getCancelledTasksFromProject();
+		return taskService.getProjectCancelledTasks(this.project);
 	}
 
 	/**
@@ -43,7 +45,7 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	 */
 	public List<String> getCancelledTaskListId(Project proj) {
 
-		List<Task> taskListCancelled = proj.getTaskRepository().getCancelledTasksFromProject();
+		List<Task> taskListCancelled = taskService.getProjectCancelledTasks(proj);
 		List<String> taskCancelledListToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListCancelled.size(); i++) {
