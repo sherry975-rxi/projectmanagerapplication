@@ -370,22 +370,6 @@ public class Project implements Serializable{
 		this.budget = newBudget;
 	}
 
-	/**
-	 * This method calculates the sum of the values reported to the task until the
-	 * moment
-	 * 
-	 * @return The cost value reported for the Project until the moment
-	 */
-
-	public double getTotalCostReportedToProjectUntilNow() {
-		double reportedCost = 0.0;
-
-		//for (Task task : taskContainer.getAllTasksfromProject()) { TODO REIMPLEMENT THIS METHOD IN ACCORDANCE WITH THE UPDATED MODEL
-		//	reportedCost += task.getTaskCost();
-		//}
-
-		return reportedCost;
-	}
 
 	/**
 	 * This method returns the name of the project in a String
