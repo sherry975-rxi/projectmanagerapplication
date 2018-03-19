@@ -691,20 +691,7 @@ public class TaskService {
 			return cancelledTasksFromProject;
 		}
 
-		/**
-		 * @return The cost reported to each task in the TaskContainer
-		 */
 
-		public List<String> getReportedCostOfEachTask() {
-			List<String> reportTaskCost = new ArrayList<>();
-
-			for (Task other : this.getTaskRepository()) {
-				reportTaskCost.add(String.valueOf(other.getTaskCost()));
-
-			}
-
-			return reportTaskCost;
-		}
 
 		/**
 		 * This method returns a list of tasks that can be associated to
@@ -739,7 +726,24 @@ public class TaskService {
 				.collect(Collectors.toList());
 
 	}
-	
+
+
+	/**
+	 * @return The cost reported to each task in the TaskContainer
+	 */
+
+	public List<String> getReportedCostOfEachTask(Project project) {
+		List<String> reportTaskCost = new ArrayList<>();
+
+		for (Task other : this.taskRepository.findAllByProject(project)) {
+			reportTaskCost.add(String.valueOf(other.getTaskCost()));
+
+		}
+
+		return reportTaskCost;
+	}
+
+
 	/**
 	 * This method calculates the sum of the values reported to the task until the
 	 * moment
