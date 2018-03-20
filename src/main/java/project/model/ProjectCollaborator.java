@@ -25,7 +25,7 @@ public class ProjectCollaborator implements Serializable {
 	/**
 	 * Empty Constructor for ProjectCollaborator
 	 */
-	protected ProjectCollaborator(){
+	public ProjectCollaborator(){
 	}
 
 	/**
