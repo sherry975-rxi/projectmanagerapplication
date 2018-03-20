@@ -1,30 +1,32 @@
 package project.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import project.Repository.UserRepository;
 import project.Services.UserService;
 import project.model.User;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class US101RegisterUserControllerTest {
 
-	User user1, user2, user3;
-
-	UserService userContainer;
-
 	@Autowired
-    UserRepository userRepository;
+	UserRepository userRepository;
+
+	User user1;
+	User user2;
+	User user3;
+	US101RegisterUserController testUserRegistrationController;
+	UserService userContainer;
 
 	@Before
 	public void setUp() {
@@ -32,48 +34,41 @@ public class US101RegisterUserControllerTest {
 		// creates an UserContainer
 		userContainer = new UserService();
 
+		userContainer.setUserRepository(userRepository);
+
+		testUserRegistrationController = new US101RegisterUserController();
+		testUserRegistrationController.setUserContainer(userContainer);
+
 		// create user
-		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
-				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		
-		user3 = userContainer.createUser("João", "joão.gmail.com", "034", "Testes", "919876787",
-				"Street", "2401-343", "Testburg", "Testo", "Testistan");
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000", "Testy Street",
+				"2401-343", "Testburg", "Testo", "Testistan");
+
+		user3 = userContainer.createUser("João", "joão.gmail.com", "034", "Testes", "919876787", "Street", "2401-343",
+				"Testburg", "Testo", "Testistan");
 
 	}
-
-	@After
-	public void tearDown() {
-
-		userContainer = null;
-		user1 = null;
-		user2 = null;
-		user3 = null;
-
-	}
-
 
 	/**
 	 * Given a visitor, this test attempts the creation of a User Registration
 	 * controller
 	 */
-	@Ignore
+
 	@Test
 	public void testUserRegistrationController() {
 		// creates the controller and asserts the list of users starts at 0
-		US101RegisterUserController testUserRegistrationController = new US101RegisterUserController();
-		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 0);
+		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 2);
 
 		// Checks if the user1 is in the UserContainer
-		assertEquals(testUserRegistrationController.isUserInUserRepository("daniel@gmail.com"), false);
+		assertEquals(testUserRegistrationController.isUserInUserRepository("daniel@gmail.com"), true);
 
 		// uses the controller to both create and add the user
-		testUserRegistrationController.addNewUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
-				"Password", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 1);
+		testUserRegistrationController.addNewUser("Fabio", "fabio@gmail.com", "003", "worker", "919997775", "Password",
+				"Tasty streets", "4450-150", "Hellcity", "HellsBurg", "HellMam");
+		assertEquals(3, userContainer.getAllUsersFromUserContainer().size());
 		assertTrue(userContainer.getAllUsersFromUserContainer().get(0).equals(user1));
 
 		// verifies if the addNewUser method returns null when user email already exists
-		testUserRegistrationController.addNewUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
+		testUserRegistrationController.addNewUser("Daniel", "danielq@gmail.com", "001", "Porteiro", "920000000",
 				"Password", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		testUserRegistrationController.addNewUser("Daniel", "danicom", "001", "Porteiro", "920000000", "Password",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
@@ -89,30 +84,23 @@ public class US101RegisterUserControllerTest {
 		assertEquals(testUserRegistrationController.isUserEmailValid(user1.getEmail()), true);
 
 	}
-	
 
-
-	@Ignore
 	@Test
 	public void wasUserAddedTest() {
-	
-		US101RegisterUserController testUserRegistrationController = new US101RegisterUserController();	
-		
+
 		testUserRegistrationController.addNewUser("Daniel", "danicom", "001", "Porteiro", "920000000", "Password",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-					
+
 		assertTrue(testUserRegistrationController.wasUserAdded(true));
-		
-		
-		//user 3 was created, added and email was set as invalid
-		
+
+		// user 3 was created, added and email was set as invalid
+
 		testUserRegistrationController.addNewUser("João", "joão@gmail.com", "034", "Testes", "919876787", "Password",
 				"Street", "2401-343", "Testburg", "Testo", "Testistan");
-			
-		assertTrue(testUserRegistrationController.wasUserAdded(true));
-		
-	}
 
+		assertTrue(testUserRegistrationController.wasUserAdded(true));
+
+	}
 
 	@Test
 	public void isUserEmailValidRegistrationController() {
@@ -121,7 +109,6 @@ public class US101RegisterUserControllerTest {
 		String email = new String("validEmail@gmail.com");
 
 		// creates the controller and asserts the list of users starts at 0
-		US101RegisterUserController testUserRegistrationController = new US101RegisterUserController();
 
 		assertTrue(testUserRegistrationController.isEmailValidController(email));
 

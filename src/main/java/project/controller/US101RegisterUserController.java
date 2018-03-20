@@ -2,6 +2,7 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import project.Services.UserService;
 import project.dto.UserDTO;
 
@@ -9,25 +10,40 @@ import project.dto.UserDTO;
 public class US101RegisterUserController {
 
 	@Autowired
-	UserService userRegistry;
-
+	UserService userService;
 
 	/**
 	 * After creating the Controller, this method is called to both create and add
 	 * the User
 	 *
-	 * @param name Name of the user
-	 * @param email Email of the User
-	 * @param idNumber idNumber of the User
-	 * @param function function of the User
-	 * @param phone phone of the User
-	 * @param password password of the User
-	 * @param street street of the User
-	 * @param zipCode zipCode of the User
-	 * @param city cityof the User
-	 * @param district district of the User
-	 * @param country country of the User
+	 * @param name
+	 *            Name of the user
+	 * @param email
+	 *            Email of the User
+	 * @param idNumber
+	 *            idNumber of the User
+	 * @param function
+	 *            function of the User
+	 * @param phone
+	 *            phone of the User
+	 * @param password
+	 *            password of the User
+	 * @param street
+	 *            street of the User
+	 * @param zipCode
+	 *            zipCode of the User
+	 * @param city
+	 *            cityof the User
+	 * @param district
+	 *            district of the User
+	 * @param country
+	 *            country of the User
 	 */
+
+	public void setUserContainer(UserService userService) {
+		this.userService = userService;
+	}
+
 	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
 			String street, String zipCode, String city, String district, String country) {
 
@@ -35,17 +51,17 @@ public class US101RegisterUserController {
 
 		newUser.setUserAddress(street, zipCode, city, district, country);
 
-		userRegistry.createUserWithDTO(newUser);
+		userService.createUserWithDTO(newUser);
 	}
 
 	public boolean isUserInUserRepository(String email) {
 
-		return userRegistry.getUserByEmail(email) != null;
+		return userService.getUserByEmail(email) != null;
 
 	}
 
 	public boolean isUserEmailValid(String email) {
-		return userRegistry.isEmailAddressValid(email);
+		return userService.isEmailAddressValid(email);
 	}
 
 	public boolean wasUserAdded(boolean wasAdded) {
@@ -53,7 +69,7 @@ public class US101RegisterUserController {
 	}
 
 	public boolean isEmailValidController(String email) {
-		return this.userRegistry.isEmailAddressValid(email);
+		return this.userService.isEmailAddressValid(email);
 
 	}
 
