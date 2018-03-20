@@ -76,7 +76,7 @@ public class PrintProjectInfoControllerTest {
 		collab2 = new ProjectCollaborator(joaoPM, 3);
 
 		// create taskContainer
-		taskContainer = project.getTaskRepository();
+		taskContainer = project.getTaskService();
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -87,14 +87,14 @@ public class PrintProjectInfoControllerTest {
 		project.addProjectCollaboratorToProjectTeam(collab2);
 
 		// create three tasks
-		task1 = project.getTaskRepository().createTask("First task");
-		task2 = project.getTaskRepository().createTask("Second task");
-		task3 = project.getTaskRepository().createTask("Third task");
+		task1 = project.getTaskService().createTask("First task");
+		task2 = project.getTaskService().createTask("Second task");
+		task3 = project.getTaskService().createTask("Third task");
 
 		// add task to project
-		project.getTaskRepository().addTaskToProject(task1);
-		project.getTaskRepository().addTaskToProject(task2);
-		project.getTaskRepository().addTaskToProject(task3);
+		project.getTaskService().addTaskToProject(task1);
+		project.getTaskService().addTaskToProject(task2);
+		project.getTaskService().addTaskToProject(task3);
 
 		// add project's collaborators to tasks
 		task1.addProjectCollaboratorToTask(collab1);

@@ -23,7 +23,7 @@ import org.springframework.stereotype.Controller;
 public class US380GetProjectExpiredTaskListController {
 
 	@Autowired
-	private TaskService taskService;
+	public TaskService taskService;
 
 
 	/**
@@ -63,10 +63,6 @@ public class US380GetProjectExpiredTaskListController {
 
 		String[] partsTask = string.split(" ");
 		return partsTask[0];
-	}
-	
-	public void setTaskService(TaskService taskService) {
-		this.taskService = taskService;
 	}
 
 }

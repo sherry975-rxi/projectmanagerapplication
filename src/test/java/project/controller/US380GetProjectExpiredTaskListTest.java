@@ -157,34 +157,7 @@ public class US380GetProjectExpiredTaskListTest {
 
 		// creates the controller
 		tasksFiltersController = new US380GetProjectExpiredTaskListController();
-		tasksFiltersController.setTaskService(taskContainer);
-	}
-
-	@After
-	public void tearDown() {
-		userContainer = null;
-		projectContainer = null;
-		taskContainer = null;
-		user1 = null;
-		user2 = null;
-		user3 = null;
-		project1 = null;
-		projCollab1 = null;
-		projCollab2 = null;
-		projCollab3 = null;
-		task1 = null;
-		task2 = null;
-		task3 = null;
-		task4 = null;
-		task5 = null;
-		task6 = null;
-		taskCollab1 = null;
-		taskCollab2 = null;
-		taskCollab3 = null;
-		taskCollab4 = null;
-		taskCollab5 = null;
-		taskCollab6 = null;
-		tasksFiltersController = null;
+		tasksFiltersController.taskService = taskContainer;
 	}
 
 	@Test
