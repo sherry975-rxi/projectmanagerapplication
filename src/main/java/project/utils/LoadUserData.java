@@ -34,7 +34,7 @@ public class LoadUserData {
 		
 		
 
-		NodeList nListUtilizadores = (NodeList) documentUsers.getElementsByTagName("utilizador");
+		NodeList nListUtilizadores = documentUsers.getElementsByTagName("utilizador");
 
 		for (int i = 0; i < nListUtilizadores.getLength(); i++) {
 			Node nNodeUtilizador = nListUtilizadores.item(i);

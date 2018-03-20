@@ -1,11 +1,11 @@
 package project.ui.console.administrator;
 
+import java.util.Scanner;
+
 import project.controller.US110andUS112SetUserProfileController;
 import project.controller.US115andUS116SetUserStateController;
 import project.controller.UpdateDbToContainersController;
 import project.model.User;
-
-import java.util.Scanner;
 
 public class US115andUS116SetUserStateUI {
 
