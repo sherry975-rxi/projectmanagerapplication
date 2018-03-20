@@ -41,7 +41,6 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 	ProjCollabRepository projectCollaboratorRepository;
 	
 	US360ViewCollaboratorsWithoutTasksController us360controller;
-	US360GetProjectTasksWithoutCollaboratorsAssignedController tasksFiltersController;
 	UserService userContainer;
 	ProjectService projectContainer;
 	TaskService taskContainer;
@@ -73,9 +72,11 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 		taskContainer = new TaskService();
 		taskContainer.setTaskRepository(taskRepository);
 		
+//		us360controller = new US360ViewCollaboratorsWithoutTasksController(testStuff);
 		// creates the controller
-		tasksFiltersController = new US360GetProjectTasksWithoutCollaboratorsAssignedController();
-		tasksFiltersController.taskService = taskContainer;
+		us360controller = new US360ViewCollaboratorsWithoutTasksController();
+		us360controller.taskService = taskContainer;
+		us360controller.projectService = projectContainer;
 
 		// creates two users, one manager, and two collaborators
 		userManager = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
@@ -98,6 +99,7 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 //		testStuff.addProjectCollaboratorToProjectTeam(activeProjCollab);
 //		testStuff.addProjectCollaboratorToProjectTeam(idleProjCollab);
 		
+		//save the project team in database
 		projectContainer.addProjectCollaborator(activeProjCollab);
 		projectContainer.addProjectCollaborator(idleProjCollab);
 
@@ -113,11 +115,7 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 
 		idleProjCollabInfo = "003: Lazy Boi (nope@gmail.com; 920000000) - Slacker [COST/EFFORT: 420]";
 
-//		us360controller = new US360ViewCollaboratorsWithoutTasksController(testStuff);
-		// creates the controller
-		us360controller = new US360ViewCollaboratorsWithoutTasksController();
-		us360controller.taskService = taskContainer;
-		us360controller.projectService = projectContainer;
+
 	}
 
 //	@After
@@ -149,10 +147,6 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 	public void testCollaboratorToString() {
 
 		String testResult = us360controller.collaboratorDataAsString(idleProjCollab);
-		
-		System.out.println(testResult);
-		System.out.println("==============************++++++++++||______________a");
-		System.out.println(idleProjCollabInfo);
 
 		assertTrue(testResult.equals(idleProjCollabInfo));
 	}
