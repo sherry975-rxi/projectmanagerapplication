@@ -7,7 +7,7 @@ import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
 import project.model.*;
-import project.utils.LoadData;
+import project.utils.LoadUserData;
 
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class RunConsole implements CommandLineRunner {
 
 	@Autowired
-	LoadData feedDb;
+	LoadUserData feedDb;
 	
     @Override
     public void run(String... strings) throws Exception {

@@ -1,5 +1,7 @@
 package project.controller;
 
+import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
@@ -10,6 +12,9 @@ import java.util.List;
 public class US360ViewCollaboratorsWithoutTasksController {
 
 	private Project toSearch;
+	private ProjectService projectService;
+	private TaskService taskService;
+
 
 	/**
 	 * This controller receives a project and stores it in a private field
@@ -33,12 +38,14 @@ public class US360ViewCollaboratorsWithoutTasksController {
 	public List<String> showCollaboratorsWithoutTasks() {
 		List<String> idleProjectCollaborators = new ArrayList<>();
 
-		List<ProjectCollaborator> activeProjectTeam = toSearch.getActiveProjectTeam();
+		List<ProjectCollaborator> activeProjectTeam = projectService.getActiveProjectTeam(toSearch);
 
 		Integer index = 1;
 
 		for (ProjectCollaborator other : activeProjectTeam) {
-			if (!toSearch.getTaskRepository().isCollaboratorActiveOnAnyTask(other)) {
+			if (!taskService.isCollaboratorActiveOnAnyTask(other)) {
+
+
 
 				String idleProjCollabInfo = collaboratorDataAsString(other);
 

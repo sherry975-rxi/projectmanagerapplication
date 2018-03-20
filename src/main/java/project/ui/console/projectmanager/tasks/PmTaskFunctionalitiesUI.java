@@ -1,5 +1,10 @@
 package project.ui.console.projectmanager.tasks;
 
+import java.util.Scanner;
+
+import project.Services.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
+import project.Services.TaskService;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.UpdateDbToContainersController;
@@ -8,20 +13,20 @@ import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
 
-import java.util.Scanner;
-
 public class PmTaskFunctionalitiesUI {
 
 	private Project project;
 	private String taskID;
 	private User user;
 	private Task task;
+	@Autowired
+	TaskService taskService;
 
 	public PmTaskFunctionalitiesUI(String taskID, Project project, User user) {
 		this.taskID = taskID;
 		this.project = project;
 		this.user = user;
-		this.task = project.getTaskRepository().getTaskByID(taskID);
+		this.task = taskService.getTaskByTaskID(taskID);
 	}
 
 	public void taskDataDisplay() {
