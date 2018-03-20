@@ -6,9 +6,10 @@ import org.springframework.stereotype.Component;
 import project.Services.UserService;
 import project.model.User;
 
-@Component
+
 public class US115andUS116SetUserStateController {
 
+	private UserService userContainer;
 
 	User toChangeState;
 	public User getToChangeState() {
@@ -19,8 +20,8 @@ public class US115andUS116SetUserStateController {
 		this.toChangeState = toChangeState;
 	}
 
-	@Autowired
-	UserService userContainer;
+
+
 
 
 	public UserService getUserContainer() {
