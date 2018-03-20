@@ -1,18 +1,18 @@
 package project.ui.console.administrator;
 
+import java.util.Scanner;
+
 import project.controller.US110andUS112SetUserProfileController;
 import project.controller.US115andUS116SetUserStateController;
 import project.controller.UpdateDbToContainersController;
 import project.model.User;
-
-import java.util.Scanner;
 
 public class US115andUS116SetUserStateUI {
 
 	public void changeUserState(User user) {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();
-		US115andUS116SetUserStateController controllerA = new US115andUS116SetUserStateController(user);
+		US115andUS116SetUserStateController controllerA = new US115andUS116SetUserStateController();
 		US110andUS112SetUserProfileController controllerB = new US110andUS112SetUserProfileController();
 
 		System.out.println(user.getIdNumber() + " - " + controllerA.userStateAsString() + ": " + user.getName() + " - "
