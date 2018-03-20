@@ -1,7 +1,7 @@
 package project.model;
 
-import javax.persistence.Embeddable;
-import java.io.Serializable;
+import javax.persistence.*;
+
 
 /**
  * Class to builds an Address.
@@ -12,18 +12,23 @@ import java.io.Serializable;
  * @author Group 3
  *
  */
-
-@Embeddable
-
-public class Address implements Serializable{
-
+@Entity
+public class Address{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	
 	private String street;
 	private String zipCode;
 	private String city;
 	private String district;
 	private String country;
 	static final long serialVersionUID = 42L;
-	//private User user;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "User_id")
+	private User user;
 
 	public Address(){}
 
@@ -179,6 +184,13 @@ public class Address implements Serializable{
 		return true;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	}
 

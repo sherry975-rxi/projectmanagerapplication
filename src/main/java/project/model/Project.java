@@ -49,7 +49,7 @@ public class Project implements Serializable{
 	/**
 	 * Empty Constructor for Project
 	 */
-	protected Project(){
+	public Project(){
 
 	}
 

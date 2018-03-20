@@ -2,16 +2,9 @@ package project.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Class to build Users. From this class one can create a new User(object),
@@ -33,8 +26,10 @@ public class User implements Serializable {
 	private String idNumber;
 	private String function;
 	static final long serialVersionUID = 44L;
-	@Embedded
-	private ArrayList<Address> addressList;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+	private List<Address> addressList;
+	
 	private String phone;
 	@Enumerated(EnumType.STRING)
 	private Profile userProfile;
@@ -165,7 +160,7 @@ public class User implements Serializable {
 	 *
 	 * @return Returns the user address list.
 	 */
-	public ArrayList<Address> getAddressList() {
+	public List<Address> getAddressList() {
 		return addressList;
 	}
 
@@ -174,7 +169,7 @@ public class User implements Serializable {
 	 *
 	 * @param addresses
 	 */
-	public void setAddressList(ArrayList<Address> addresses) {
+	public void setAddressList(List<Address> addresses) {
 		this.addressList = addresses;
 	}
 
