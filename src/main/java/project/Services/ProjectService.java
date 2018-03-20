@@ -346,4 +346,12 @@ public class ProjectService {
 	public void updateProjectCollaborator(ProjectCollaborator projCollab) {
 		this.projectCollaboratorRepository.save(projCollab);
 	}
+
+	public void setProjectsRepository(ProjectsRepository projectsRepository) {
+		this.projectsRepository = projectsRepository;
+	}
+
+	public void setProjectCollaboratorRepository(ProjCollabRepository projectCollaboratorRepository) {
+		this.projectCollaboratorRepository = projectCollaboratorRepository;
+	}
 }

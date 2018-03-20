@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class TaskService {
 
+
 	@Autowired
 	private TaskRepository taskRepository;
 
@@ -630,8 +631,9 @@ public class TaskService {
 		 */
 		public List<Task> getProjectExpiredTasks(Project project) {
 			Calendar today = Calendar.getInstance();
+			List<Task> projTasks = this.getProjectTasks(project);
 			List<Task> expiredTasks = new ArrayList<>();
-			for (Task other : this.getProjectTasks(project)) {
+			for (Task other : projTasks) {
 				if (!other.isTaskFinished() && other.getTaskDeadline() != null && other.getTaskDeadline().before(today)) {
 						expiredTasks.add(other);
 
@@ -844,6 +846,13 @@ public class TaskService {
 		return removalRequests;
 	}
 
+	public void setTaskRepository(TaskRepository taskRepository) {
+		this.taskRepository = taskRepository;
+	}
+
+	public void setProjectCollaboratorRepository(ProjCollabRepository projectCollaboratorRepository) {
+		this.projectCollaboratorRepository = projectCollaboratorRepository;
+	}
 
 
 }

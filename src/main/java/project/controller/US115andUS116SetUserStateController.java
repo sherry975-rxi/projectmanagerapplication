@@ -3,12 +3,14 @@ package project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import org.springframework.stereotype.Controller;
 import project.Services.UserService;
 import project.model.User;
 
-
+@Controller
 public class US115andUS116SetUserStateController {
 
+	@Autowired
 	private UserService userContainer;
 
 	User toChangeState;
@@ -34,10 +36,6 @@ public class US115andUS116SetUserStateController {
 
 	/**
 	 * This controller recieves a user whose state is to be changed
-	 * 
-	 * 
-	 * @param toChange
-	 *            selected User
 	 */
 	public US115andUS116SetUserStateController() {	}
 
