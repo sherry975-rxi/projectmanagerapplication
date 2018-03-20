@@ -2,6 +2,7 @@ package project.controller;
 
 
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -10,12 +11,7 @@ import java.util.List;
 
 public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 
-	ProjectService myProjRepo;
-
-	public US360GetProjectTasksWithoutCollaboratorsAssignedController() {
-		this.myProjRepo = new ProjectService();
-
-	}
+	private TaskService taskService;
 
 	/**
 	 * this method return the list of not assigned tasks
@@ -24,7 +20,7 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 	 * @return
 	 */
 	public List<Task> getProjectNotAssigned(Project proj) {
-		return proj.getTaskRepository().getAllTasksWithoutCollaboratorsAssigned();
+		return taskService.getProjectTasksWithoutCollaboratorsAssigned(proj);
 	}
 
 	/**
@@ -39,7 +35,7 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 	 */
 	public List<String> getProjectNotAssignedTaskList(Project proj) {
 
-		List<Task> taskListNotAssigned = proj.getTaskRepository().getAllTasksWithoutCollaboratorsAssigned();
+		List<Task> taskListNotAssigned =taskService.getProjectTasksWithoutCollaboratorsAssigned(proj);
 		List<String> taskListToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListNotAssigned.size(); i++) {

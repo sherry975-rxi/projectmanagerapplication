@@ -7,6 +7,9 @@ import project.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 /**
  * This controller is used to respond to US380 (Como Gestor de projeto, quero
  * obter uma lista de tarefas não concluídas e com data de conclusão vencida.
@@ -15,9 +18,14 @@ import java.util.List;
  * @author Group3
  *
  */
+
+@Controller
 public class US380GetProjectExpiredTaskListController {
 
+	@Autowired
 	private TaskService taskService;
+
+
 	/**
 	 * This methods gets all the unfinished tasks with expired deadline and returns
 	 * the Tasks with these conditions in the form of a List of Strings, with the
@@ -55,6 +63,10 @@ public class US380GetProjectExpiredTaskListController {
 
 		String[] partsTask = string.split(" ");
 		return partsTask[0];
+	}
+	
+	public void setTaskService(TaskService taskService) {
+		this.taskService = taskService;
 	}
 
 }

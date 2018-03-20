@@ -24,7 +24,7 @@ import project.model.User;
  *
  */
 @Service
-public class LoadData {
+public class LoadUserData {
 	@Autowired
 	UserService users;
 	public void loadUsers(String pathFile) throws ParserConfigurationException, SAXException, IOException {
@@ -34,7 +34,7 @@ public class LoadData {
 		
 		
 
-		NodeList nListUtilizadores = (NodeList) documentUsers.getElementsByTagName("utilizador");
+		NodeList nListUtilizadores = documentUsers.getElementsByTagName("utilizador");
 
 		for (int i = 0; i < nListUtilizadores.getLength(); i++) {
 			Node nNodeUtilizador = nListUtilizadores.item(i);

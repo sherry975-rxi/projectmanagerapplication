@@ -5,12 +5,7 @@ import org.springframework.stereotype.Service;
 
 import project.Repository.ProjCollabRepository;
 import project.Repository.TaskRepository;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.StateEnum;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.User;
+import project.model.*;
 import project.model.taskstateinterface.*;
 
 import java.util.ArrayList;
@@ -20,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
+
 
 	@Autowired
 	private TaskRepository taskRepository;
@@ -635,8 +631,9 @@ public class TaskService {
 		 */
 		public List<Task> getProjectExpiredTasks(Project project) {
 			Calendar today = Calendar.getInstance();
+			List<Task> projTasks = this.getProjectTasks(project);
 			List<Task> expiredTasks = new ArrayList<>();
-			for (Task other : this.getProjectTasks(project)) {
+			for (Task other : projTasks) {
 				if (!other.isTaskFinished() && other.getTaskDeadline() != null && other.getTaskDeadline().before(today)) {
 						expiredTasks.add(other);
 
@@ -785,4 +782,77 @@ public class TaskService {
 
 		return reportedCost;
 	}
+
+
+	/**
+	 * This method gathers all Project task assignment requests from a given project
+	 *
+	 * @param project
+	 * @return
+	 */
+	public List <TaskTeamRequest> getAllProjectTaskAssignmentRequests(Project project) {
+		List<TaskTeamRequest> assignmentRequests = new ArrayList<>();
+
+		getProjectTasks(project).stream().forEach(Task -> assignmentRequests.addAll(Task.getPendingTaskAssignementRequests()));
+
+		return assignmentRequests;
+	}
+
+
+
+	/**
+	 * This method gathers all Project task removal requests from a given project
+	 *
+	 * @param project
+	 * @return
+	 */
+	public List <TaskTeamRequest> getAllProjectTaskRemovalRequests(Project project) {
+		List<TaskTeamRequest> removalRequests = new ArrayList<>();
+
+		getProjectTasks(project).stream().forEach(Task -> removalRequests.addAll(Task.getPendingTaskRemovalRequests()));
+
+		return removalRequests;
+	}
+
+
+	/**
+	 * This method displays all Project task assignment requests from a given project
+	 *
+	 * @param project
+	 * @return
+	 * 	A list of strings of all the Project task assignment requests
+	 */
+	public List <String> viewAllProjectTaskAssignmentRequests(Project project) {
+		List<String> assignmentRequests = new ArrayList<>();
+
+		getProjectTasks(project).stream().forEach(Task -> assignmentRequests.addAll(Task.viewPendingTaskAssignementRequests()));
+
+		return assignmentRequests;
+	}
+
+
+	/**
+	 * This method displays all Project task assignment requests from a given project
+	 *
+	 * @param project
+	 * @return
+	 * 	A list of strings of all the Project task assignment requests
+	 */
+	public List <String> viewAllProjectTaskRemovalRequests(Project project) {
+		List<String> removalRequests = new ArrayList<>();
+
+		getProjectTasks(project).stream().forEach(Task -> removalRequests.addAll(Task.viewPendingTaskRemovalRequests()));
+
+		return removalRequests;
+	}
+
+	public void setTaskRepository(TaskRepository taskRepository) {
+		this.taskRepository = taskRepository;
+	}
+
+	public void setProjectCollaboratorRepository(ProjCollabRepository projectCollaboratorRepository) {
+		this.projectCollaboratorRepository = projectCollaboratorRepository;
+	}
+
+
 }

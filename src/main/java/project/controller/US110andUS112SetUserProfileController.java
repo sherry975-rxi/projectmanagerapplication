@@ -1,20 +1,24 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
+@Controller
 public class US110andUS112SetUserProfileController {
-	
-	private UserService userContainer;
 
-	public US110andUS112SetUserProfileController() {
-		userContainer = new UserService();
+	@Autowired
+	private UserService userService;
 
+	public void setUserContainer(UserService userService) {
+		this.userService = userService;
 	}
 
 	public UserService getUserContainer() {
-		return userContainer;
+		return userService;
 	}
 
 	/**
@@ -43,7 +47,7 @@ public class US110andUS112SetUserProfileController {
 		String output;
 		switch (user.getUserProfile()) {
 		case DIRECTOR:
-			output = "Director2";
+			output = "Director";
 			break;
 		case COLLABORATOR:
 			output = "Collaborator";
