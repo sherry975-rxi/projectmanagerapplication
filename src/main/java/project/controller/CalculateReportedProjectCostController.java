@@ -1,6 +1,7 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import project.Services.TaskService;
 import project.model.Project;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@Controller
 public class CalculateReportedProjectCostController {
 
 	@Autowired
