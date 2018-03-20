@@ -1,28 +1,34 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import project.Services.UserService;
 import project.model.User;
 
+@Controller
 public class DoLoginController {
 
+	@Autowired
+	public UserService userService;
 
 	/**
 	 * This method does the login of the user
 	 * 
-	 * @param username
+	 * @param email
 	 *            Sets private variable username to inserted username by user
-	 * @param password
+	 * @param password1
 	 *            Sets private variable password to inserted password by user
 	 */
 	public boolean doLogin(String email, String password1) {
-	    UserService userContainer;
-	    userContainer = new UserService();
+
 		String password;
 		User username;
-		username = userContainer.getUserByEmail(email);
+		username = userService.getUserByEmail(email);
 		password = password1;
 		boolean loginSuccess = false;
-		if (userContainer.isUserinUserContainer(username)
+		if (username== null) {
+			return loginSuccess;
+		} else if (userService.isUserinUserContainer(username)
 				&& username.checkLogin(password)) {
 			loginSuccess = true;
 		}
