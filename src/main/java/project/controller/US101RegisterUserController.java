@@ -10,7 +10,7 @@ import project.dto.UserDTO;
 public class US101RegisterUserController {
 
 	@Autowired
-	UserService userService;
+	public UserService userService;
 
 	/**
 	 * After creating the Controller, this method is called to both create and add
@@ -39,10 +39,6 @@ public class US101RegisterUserController {
 	 * @param country
 	 *            country of the User
 	 */
-
-	public void setUserContainer(UserService userService) {
-		this.userService = userService;
-	}
 
 	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
 			String street, String zipCode, String city, String district, String country) {

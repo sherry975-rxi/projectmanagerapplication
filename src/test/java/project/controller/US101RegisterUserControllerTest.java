@@ -37,7 +37,7 @@ public class US101RegisterUserControllerTest {
 		userContainer.setUserRepository(userRepository);
 
 		testUserRegistrationController = new US101RegisterUserController();
-		testUserRegistrationController.setUserContainer(userContainer);
+		testUserRegistrationController.userService = userContainer;
 
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000", "Testy Street",

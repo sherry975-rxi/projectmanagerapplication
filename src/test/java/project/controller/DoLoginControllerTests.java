@@ -4,6 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.Repository.UserRepository;
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
@@ -11,21 +16,26 @@ import project.model.User;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class DoLoginControllerTests {
 
+	@Autowired
+	UserRepository userRepository;
+
 	UserService userContainer;
+
 	User user1;
 	User userAdmin;
+
 	DoLoginController doLoginController;
+
 
 	@Before
 	public void setUp() {
-		
 
-		// creates an UserContainer
 		userContainer = new UserService();
-
-		userContainer.getAllUsersFromUserContainer().clear();
+		userContainer.setUserRepository(userRepository);
 
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
@@ -33,16 +43,16 @@ public class DoLoginControllerTests {
 
 		// Sets a password for the user1
 		user1.setPassword("123456");
-
-		// add user to user list
-		userContainer.addUserToUserRepository(user1);
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
+
+		userContainer.addUserToUserRepositoryX(user1);
 
 	}
 
 	@After
 	public void tearDown() {
+		userRepository.deleteAll();
 		user1 = null;
 		userContainer = null;
 		doLoginController = null;
@@ -56,6 +66,7 @@ public class DoLoginControllerTests {
 		String validPassword = new String("123456");
 
 		doLoginController = new DoLoginController();
+		doLoginController.userService=this.userContainer;
 
 		assertTrue(doLoginController.doLogin(validEmail, validPassword));
 
@@ -69,6 +80,7 @@ public class DoLoginControllerTests {
 		String invalidPassword = new String("12345");
 
 		doLoginController = new DoLoginController();
+		doLoginController.userService=this.userContainer;
 
 		assertFalse(doLoginController.doLogin(validEmail, invalidPassword));
 
@@ -82,6 +94,7 @@ public class DoLoginControllerTests {
 		String validPassword = new String("123456");
 
 		doLoginController = new DoLoginController();
+		doLoginController.userService=this.userContainer;
 
 		assertFalse(doLoginController.doLogin(invalidEmail, validPassword));
 
@@ -95,6 +108,7 @@ public class DoLoginControllerTests {
 		String invalidPassword = new String("12345");
 
 		doLoginController = new DoLoginController();
+		doLoginController.userService=this.userContainer;
 
 		assertFalse(doLoginController.doLogin(invalidEmail, invalidPassword));
 

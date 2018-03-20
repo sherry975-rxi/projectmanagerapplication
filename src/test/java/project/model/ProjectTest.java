@@ -360,9 +360,9 @@ public class ProjectTest {
 	public void createTask() { 
 		
 		Task task = new Task("Description", p1); 	
-		task.setId(new Long(1));
+		task.setTaskID("1");
 		Task taskResult = p1.createTask("Description");
-		taskResult.setId(new Long(1));
+		taskResult.setTaskID("1");
 		
 		assertTrue(task.equals(taskResult)); 
 	}
