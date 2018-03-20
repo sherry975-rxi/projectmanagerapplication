@@ -24,7 +24,7 @@ import project.model.taskstateinterface.TaskStateInterface;
  * @author Grupo 3
  *
  */
-class TaskTest {
+public class TaskTest {
 
 	User userTest;
 	Project projectTest;
@@ -40,7 +40,7 @@ class TaskTest {
 	 * @throws java.lang.Exception
 	 */
 	@Before
-	void setUp() throws Exception {
+	public void setUp() throws Exception {
 
 		// create user
 		userTest = new User("Pedro Silva", "pedrosilva@gmail.com", "001", "Developer", "912364896");
@@ -84,7 +84,7 @@ class TaskTest {
 	 * @throws java.lang.Exception
 	 */
 	@After
-	void tearDown() throws Exception {
+	public void tearDown() throws Exception {
 
 		userTest = null;
 		projectTest = null;
@@ -99,7 +99,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#hashCode()}.
 	 */
 	@Test
-	void testHashCode() {
+	public void testHashCode() {
 
 		taskTest.setTaskID("1");
 		taskTestSecond.setTaskID("2");
@@ -117,7 +117,7 @@ class TaskTest {
 	 * 
 	 */
 	@Test
-	void testTask() {
+	public void testTask() {
 
 		Task task = new Task();
 
@@ -132,7 +132,7 @@ class TaskTest {
 	 * Constructor ____
 	 */
 	@Test
-	void testTaskStringProject() {
+	public void testTaskStringProject() {
 
 		Task task = new Task("task test", projectTest);
 
@@ -146,7 +146,7 @@ class TaskTest {
 	 * Constructor ____
 	 */
 	@Test
-	void testTaskIntIntString() {
+	public void testTaskIntIntString() {
 
 		Task task = new Task(1, 1, "task test");
 
@@ -161,7 +161,7 @@ class TaskTest {
 	 * Constructor to delete _____
 	 */
 	@Test
-	void testTaskStringIntCalendarCalendarInt() {
+	public void testTaskStringIntCalendarCalendarInt() {
 
 		Task task = new Task("task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
 
@@ -176,7 +176,7 @@ class TaskTest {
 	 * Constructor to delete_____
 	 */
 	@Test
-	void testTaskIntIntStringIntCalendarCalendarInt() {
+	public void testTaskIntIntStringIntCalendarCalendarInt() {
 
 		Task task = new Task(1, 1, "task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
 
@@ -190,7 +190,7 @@ class TaskTest {
 	 * Constructor ______
 	 */
 	@Test
-	void testTaskTask() {
+	public void testTaskTask() {
 
 		Task task = new Task(1, 1, "task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
 
@@ -204,7 +204,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getCurrentState()}.
 	 */
 	@Test
-	void testGetCurrentState() {
+	public void testGetCurrentState() {
 
 		StateEnum currentState = StateEnum.CREATED;
 
@@ -219,7 +219,7 @@ class TaskTest {
 	 * {@link project.model.Task#setCurrentState(project.model.StateEnum)}.
 	 */
 	@Test
-	void testSetCurrentState() {
+	public void testSetCurrentState() {
 
 		StateEnum currentState = StateEnum.CREATED;
 
@@ -232,7 +232,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getId()}.
 	 */
 	@Test
-	void testGetId() {
+	public void testGetId() {
 
 		Long expected = 001L;
 
@@ -246,7 +246,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setId(java.lang.Long)}.
 	 */
 	@Test
-	void testSetId() {
+	public void testSetId() {
 
 		Long expected = 001L;
 
@@ -259,7 +259,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setProject(project.model.Project)}.
 	 */
 	@Test
-	void testSetProject() {
+	public void testSetProject() {
 
 		taskTest.setProject(projectTestSecond);
 
@@ -270,7 +270,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getProject()}.
 	 */
 	@Test
-	void testGetProject() {
+	public void testGetProject() {
 
 		taskTest.setProject(projectTestSecond);
 
@@ -281,7 +281,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setTaskID}.
 	 */
 	@Test
-	void testSetTaskId() {
+	public void testSetTaskId() {
 
 		taskTest.setTaskID("testTask");
 
@@ -293,7 +293,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getStartDateInterval()}.
 	 */
 	@Test
-	void testGetStartDateInterval() {
+	public void testGetStartDateInterval() {
 
 		Integer expected = 10;
 
@@ -306,7 +306,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setStartDateInterval(int)}.
 	 */
 	@Test
-	void testSetStartDateInterval() {
+	public void testSetStartDateInterval() {
 
 		Integer expected = 10;
 
@@ -320,7 +320,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getDeadlineInterval()}.
 	 */
 	@Test
-	void testGetDeadlineInterval() {
+	public void testGetDeadlineInterval() {
 
 		Integer expected = 10;
 
@@ -333,7 +333,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setDeadlineInterval(int)}.
 	 */
 	@Test
-	void testSetDeadlineInterval() {
+	public void testSetDeadlineInterval() {
 
 		Integer expected = 10;
 
@@ -346,7 +346,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getEstimatedTaskEffort()}.
 	 */
 	@Test
-	void testGetEstimatedTaskEffort() {
+	public void testGetEstimatedTaskEffort() {
 
 		int expected = 10;
 
@@ -359,7 +359,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setEstimatedTaskEffort(int)}.
 	 */
 	@Test
-	void testSetEstimatedTaskEffort() {
+	public void testSetEstimatedTaskEffort() {
 
 		int expected = 10;
 
@@ -372,7 +372,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getEstimatedTaskStartDate()}.
 	 */
 	@Test
-	void testGetEstimatedTaskStartDate() {
+	public void testGetEstimatedTaskStartDate() {
 
 		Calendar expected = Calendar.getInstance();
 
@@ -386,7 +386,7 @@ class TaskTest {
 	 * {@link project.model.Task#setEstimatedTaskStartDate(java.util.Calendar)}.
 	 */
 	@Test
-	void testSetEstimatedTaskStartDate() {
+	public void testSetEstimatedTaskStartDate() {
 
 		Calendar expected = Calendar.getInstance();
 
@@ -399,7 +399,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getTaskDeadline()}.
 	 */
 	@Test
-	void testGetTaskDeadline() {
+	public void testGetTaskDeadline() {
 
 		Calendar expected = Calendar.getInstance();
 
@@ -413,7 +413,7 @@ class TaskTest {
 	 * {@link project.model.Task#setTaskDeadline(java.util.Calendar)}.
 	 */
 	@Test
-	void testSetTaskDeadline() {
+	public void testSetTaskDeadline() {
 
 		Calendar expected = Calendar.getInstance();
 
@@ -426,7 +426,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getTaskBudget()}.
 	 */
 	@Test
-	void testGetTaskBudget() {
+	public void testGetTaskBudget() {
 
 		int expected = 100;
 
@@ -439,7 +439,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setTaskBudget(int)}.
 	 */
 	@Test
-	void testSetTaskBudget() {
+	public void testSetTaskBudget() {
 
 		int expected = 100;
 
@@ -452,7 +452,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getTaskID()}.
 	 */
 	@Test
-	void testGetTaskID() {
+	public void testGetTaskID() {
 
 		String expected = null;
 
@@ -463,7 +463,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getStartDate()}.
 	 */
 	@Test
-	void testGetStartDate() {
+	public void testGetStartDate() {
 
 		Calendar expected = Calendar.getInstance();
 
@@ -476,7 +476,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setStartDate(java.util.Calendar)}.
 	 */
 	@Test
-	void testSetStartDate() {
+	public void testSetStartDate() {
 
 		Calendar expected = Calendar.getInstance();
 
@@ -489,7 +489,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getDescription()}.
 	 */
 	@Test
-	void testGetDescription() {
+	public void testGetDescription() {
 
 		assertFalse(taskTest.getDescription().equals(null));
 
@@ -499,7 +499,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getFinishDate()}.
 	 */
 	@Test
-	void testGetFinishDate() {
+	public void testGetFinishDate() {
 
 		taskTest.setFinishDate(Calendar.getInstance());
 
@@ -511,7 +511,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setFinishDate()}.
 	 */
 	@Test
-	void testSetFinishDate() {
+	public void testSetFinishDate() {
 
 		taskTest.setFinishDate(Calendar.getInstance());
 
@@ -523,7 +523,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getTaskTeam()}.
 	 */
 	@Test
-	void testGetTaskTeam() {
+	public void testGetTaskTeam() {
 
 		List<TaskCollaborator> expected = new ArrayList<>();
 		expected.add(taskCollaborator);
@@ -537,7 +537,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setTaskTeam(java.util.List)}.
 	 */
 	@Test
-	void testSetTaskTeam() {
+	public void testSetTaskTeam() {
 
 		List<TaskCollaborator> expected = new ArrayList<>();
 		expected.add(taskCollaborator);
@@ -551,7 +551,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getReports()}.
 	 */
 	@Test
-	void testGetReports() {
+	public void testGetReports() {
 
 		List<Report> expected = new ArrayList<>();
 		expected.add(report);
@@ -565,7 +565,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setReports(java.util.List)}.
 	 */
 	@Test
-	void testSetReports() {
+	public void testSetReports() {
 
 		List<Report> expected = new ArrayList<>();
 		expected.add(report);
@@ -579,7 +579,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getTaskDependency()}.
 	 */
 	@Test
-	void testGetTaskDependency() {
+	public void testGetTaskDependency() {
 
 		List<Task> expected = new ArrayList<>();
 		expected.add(taskReadyToFinishTest);
@@ -593,7 +593,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setTaskDependency(java.util.List)}.
 	 */
 	@Test
-	void testSetTaskDependency() {
+	public void testSetTaskDependency() {
 
 		List<Task> expected = new ArrayList<>();
 		expected.add(taskTestSecond);
@@ -607,7 +607,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#isTaskFinished()}.
 	 */
 	@Test
-	void testIsTaskFinished() {
+	public void testIsTaskFinished() {
 
 		taskReadyToFinishTest.markTaskAsFinished();
 
@@ -618,7 +618,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#markTaskAsFinished()}.
 	 */
 	@Test
-	void testMarkTaskAsFinished() {
+	public void testMarkTaskAsFinished() {
 
 		taskReadyToFinishTest.addTaskCollaboratorToTask(taskCollaborator);
 
@@ -639,7 +639,7 @@ class TaskTest {
 	 * {@link project.model.Task#addProjectCollaboratorToTask(project.model.ProjectCollaborator)}.
 	 */
 	@Test
-	void testAddProjectCollaboratorToTask() {
+	public void testAddProjectCollaboratorToTask() {
 
 		assertTrue(taskTest.getTaskTeam().isEmpty());
 
@@ -653,7 +653,7 @@ class TaskTest {
 	 * {@link project.model.Task#addTaskCollaboratorToTask(project.model.TaskCollaborator)}.
 	 */
 	@Test
-	void testAddTaskCollaboratorToTask() {
+	public void testAddTaskCollaboratorToTask() {
 
 		assertTrue(taskTest.getTaskTeam().isEmpty());
 
@@ -667,7 +667,7 @@ class TaskTest {
 	 * {@link project.model.Task#createTaskCollaborator(project.model.ProjectCollaborator)}.
 	 */
 	@Test
-	void testCreateTaskCollaborator() {
+	public void testCreateTaskCollaborator() {
 
 		assertTrue(taskTest.getTaskTeam().isEmpty());
 
@@ -682,7 +682,7 @@ class TaskTest {
 	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
 	 */
 	@Test
-	void testCreateReport() {
+	public void testCreateReport() {
 
 		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
 
@@ -696,7 +696,7 @@ class TaskTest {
 	 * {@link project.model.Task#getReportsIndexOfTaskCollaborator(java.lang.String)}.
 	 */
 	@Test
-	void testGetReportsIndexOfTaskCollaborator() {
+	public void testGetReportsIndexOfTaskCollaborator() {
 
 		assertTrue(taskReadyToFinishTest
 				.getReportsIndexOfTaskCollaborator(taskCollaborator.getTaskCollaborator().getEmail()).isEmpty());
@@ -713,7 +713,7 @@ class TaskTest {
 	 * {@link project.model.Task#updateReportedTime(double, project.model.TaskCollaborator, int)}.
 	 */
 	@Test
-	void testUpdateReportedTime() {
+	public void testUpdateReportedTime() {
 
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 2.0);
 
@@ -732,7 +732,7 @@ class TaskTest {
 	 * {@link project.model.Task#doesTaskHaveReportByGivenUser(java.lang.String)}.
 	 */
 	@Test
-	void testDoesTaskHaveReportByGivenUser() {
+	public void testDoesTaskHaveReportByGivenUser() {
 
 		assertFalse(
 				taskReadyToFinishTest.doesTaskHaveReportByGivenUser(taskCollaborator.getTaskCollaborator().getEmail()));
@@ -749,7 +749,7 @@ class TaskTest {
 	 * {@link project.model.Task#getTaskCollaboratorByEmail(java.lang.String)}.
 	 */
 	@Test
-	void testGetTaskCollaboratorByEmail() {
+	public void testGetTaskCollaboratorByEmail() {
 
 		assertEquals(taskCollaborator,
 				taskReadyToFinishTest.getTaskCollaboratorByEmail(taskCollaborator.getTaskCollaborator().getEmail()));
@@ -761,7 +761,7 @@ class TaskTest {
 	 * {@link project.model.Task#getActiveTaskCollaboratorByEmail(java.lang.String)}.
 	 */
 	@Test
-	void testGetActiveTaskCollaboratorByEmail() {
+	public void testGetActiveTaskCollaboratorByEmail() {
 
 		assertEquals(taskCollaborator, taskReadyToFinishTest
 				.getActiveTaskCollaboratorByEmail(taskCollaborator.getTaskCollaborator().getEmail()));
@@ -773,7 +773,7 @@ class TaskTest {
 	 * {@link project.model.Task#getReportedTimeByTaskCollaborator(java.lang.String)}.
 	 */
 	@Test
-	void testGetReportedTimeByTaskCollaborator() {
+	public void testGetReportedTimeByTaskCollaborator() {
 
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
@@ -786,7 +786,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getReporterName(java.lang.String)}.
 	 */
 	@Test
-	void testGetReporterName() {
+	public void testGetReporterName() {
 
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
@@ -802,7 +802,7 @@ class TaskTest {
 	 * {@link project.model.Task#removeProjectCollaboratorFromTask(project.model.ProjectCollaborator)}.
 	 */
 	@Test
-	void testRemoveProjectCollaboratorFromTask() {
+	public void testRemoveProjectCollaboratorFromTask() {
 
 		assertTrue(taskReadyToFinishTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
 
@@ -816,7 +816,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getTimeSpentOntask()}.
 	 */
 	@Test
-	void testGetTimeSpentOntask() {
+	public void testGetTimeSpentOntask() {
 
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
@@ -834,7 +834,7 @@ class TaskTest {
 	 * {@link project.model.Task#getTimeSpentByProjectCollaboratorOntask(project.model.ProjectCollaborator)}.
 	 */
 	@Test
-	void testGetTimeSpentByProjectCollaboratorOntask() {
+	public void testGetTimeSpentByProjectCollaboratorOntask() {
 
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
@@ -846,7 +846,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#equals(java.lang.Object)}.
 	 */
 	@Test
-	void testEqualsObject() {
+	public void testEqualsObject() {
 
 		assertTrue(taskTest.equals(taskTest));// same object
 
@@ -871,7 +871,7 @@ class TaskTest {
 	 * {@link project.model.Task#isProjectCollaboratorInTaskTeam(project.model.ProjectCollaborator)}.
 	 */
 	@Test
-	void testIsProjectCollaboratorInTaskTeam() {
+	public void testIsProjectCollaboratorInTaskTeam() {
 
 		assertFalse(taskTest.isProjectCollaboratorInTaskTeam(projectCollaborator));
 
@@ -886,7 +886,7 @@ class TaskTest {
 	 * {@link project.model.Task#isProjectCollaboratorActiveInTaskTeam(project.model.ProjectCollaborator)}.
 	 */
 	@Test
-	void testIsProjectCollaboratorActiveInTaskTeam() {
+	public void testIsProjectCollaboratorActiveInTaskTeam() {
 
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
@@ -901,7 +901,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#doesTaskTeamHaveActiveUsers()}.
 	 */
 	@Test
-	void testDoesTaskTeamHaveActiveUsers() {
+	public void testDoesTaskTeamHaveActiveUsers() {
 
 		assertFalse(taskTest.doesTaskTeamHaveActiveUsers());
 
@@ -915,7 +915,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#isTaskTeamEmpty()}.
 	 */
 	@Test
-	void testIsTaskTeamEmpty() {
+	public void testIsTaskTeamEmpty() {
 
 		assertTrue(taskTest.isTaskTeamEmpty());
 
@@ -929,7 +929,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getTaskCost()}.
 	 */
 	@Test
-	void testGetTaskCost() {
+	public void testGetTaskCost() {
 
 		taskTest.addProjectCollaboratorToTask(projectCollaborator);
 
@@ -944,7 +944,7 @@ class TaskTest {
 	 * {@link project.model.Task#createTaskDependence(project.model.Task, int)}.
 	 */
 	@Test
-	void testCreateTaskDependence() {
+	public void testCreateTaskDependence() {
 
 		taskTest.setTaskID("1");
 
@@ -960,7 +960,8 @@ class TaskTest {
 	 * {@link project.model.Task#removeTaskDependence(project.model.Task)}.
 	 */
 	@Test
-	void testRemoveTaskDependence() {
+	public void testRemoveTaskDependence() {
+
 		taskTest.setTaskID("1");
 
 		assertTrue(taskTest.createTaskDependence(taskReadyToFinishTest, 1));
@@ -977,7 +978,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#hasActiveDependencies()}.
 	 */
 	@Test
-	void testHasActiveDependencies() {
+	public void testHasActiveDependencies() {
 
 		taskTest.setTaskID("1");
 
@@ -993,7 +994,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getTaskState()}.
 	 */
 	@Test
-	void testGetTaskState() {
+	public void testGetTaskState() {
 
 		TaskStateInterface taskState = new Created();
 
@@ -1007,7 +1008,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#viewTaskStateName()}.
 	 */
 	@Test
-	void testViewTaskStateName() {
+	public void testViewTaskStateName() {
 
 		TaskStateInterface taskState = new Created();
 
@@ -1021,7 +1022,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#viewTaskStateNameFromEnum()}.
 	 */
 	@Test
-	void testViewTaskStateNameFromEnum() {
+	public void testViewTaskStateNameFromEnum() {
 
 		taskReadyToFinishTest.setCurrentState(StateEnum.CREATED);
 
@@ -1034,7 +1035,7 @@ class TaskTest {
 	 * {@link project.model.Task#setTaskState(project.model.taskstateinterface.TaskStateInterface)}.
 	 */
 	@Test
-	void testSetTaskState() {
+	public void testSetTaskState() {
 
 		assertTrue(taskReadyToFinishTest.getTaskState() instanceof OnGoing);
 
@@ -1050,7 +1051,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#hasDependencies()}.
 	 */
 	@Test
-	void testHasDependencies() {
+	public void testHasDependencies() {
 
 		taskTest.setTaskID("1");
 
@@ -1066,7 +1067,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#removeFinishDate()}.
 	 */
 	@Test
-	void testRemoveFinishDate() {
+	public void testRemoveFinishDate() {
 
 		taskReadyToFinishTest.setFinishDate(Calendar.getInstance());
 
@@ -1082,7 +1083,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#cancelTask()}.
 	 */
 	@Test
-	void testCancelTask() {
+	public void testCancelTask() {
 
 		assertFalse(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
 
@@ -1100,7 +1101,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setCancelDate()}.
 	 */
 	@Test
-	void testSetCancelDate() {
+	public void testSetCancelDate() {
 
 		assertEquals(null, taskReadyToFinishTest.getCancelDate());
 
@@ -1114,7 +1115,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getCancelDate()}.
 	 */
 	@Test
-	void testGetCancelDate() {
+	public void testGetCancelDate() {
 
 		assertEquals(null, taskReadyToFinishTest.getCancelDate());
 
@@ -1129,7 +1130,7 @@ class TaskTest {
 	 * {@link project.model.Task#removeAllCollaboratorsFromTaskTeam()}.
 	 */
 	@Test
-	void testRemoveAllCollaboratorsFromTaskTeam() {
+	public void testRemoveAllCollaboratorsFromTaskTeam() {
 
 		assertFalse(taskTest.doesTaskTeamHaveActiveUsers());
 
@@ -1147,7 +1148,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#cancelledDateClear()}.
 	 */
 	@Test
-	void testCancelledDateClear() {
+	public void testCancelledDateClear() {
 
 		taskReadyToFinishTest.cancelTask();
 
@@ -1163,7 +1164,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#UnfinishTask()}.
 	 */
 	@Test
-	void testUnfinishTask() {
+	public void testUnfinishTask() {
 
 		taskReadyToFinishTest.markTaskAsFinished();
 
@@ -1179,7 +1180,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getAssignementTaskTeamRequest()}.
 	 */
 	@Test
-	void testGetAssignementTaskTeamRequest() {
+	public void testGetAssignementTaskTeamRequest() {
 
 		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
 
@@ -1192,7 +1193,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getRemovalTaskTeamRequest()}.
 	 */
 	@Test
-	void testGetRemovalTaskTeamRequest() {
+	public void testGetRemovalTaskTeamRequest() {
 
 		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
 
@@ -1210,7 +1211,7 @@ class TaskTest {
 	 * {@link project.model.Task#viewPendingTaskAssignementRequests()}.
 	 */
 	@Test
-	void testViewPendingTaskAssignementRequests() {
+	public void testViewPendingTaskAssignementRequests() {
 
 		assertTrue(taskReadyToFinishTest.viewPendingTaskAssignementRequests().isEmpty());
 
@@ -1224,7 +1225,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#viewPendingTaskRemovalRequests()}.
 	 */
 	@Test
-	void testViewPendingTaskRemovalRequests() {
+	public void testViewPendingTaskRemovalRequests() {
 
 		assertTrue(taskReadyToFinishTest.viewPendingTaskRemovalRequests().isEmpty());
 
@@ -1239,7 +1240,7 @@ class TaskTest {
 	 * {@link project.model.Task#getPendingTaskAssignementRequests()}.
 	 */
 	@Test
-	void testGetPendingTaskAssignementRequests() {
+	public void testGetPendingTaskAssignementRequests() {
 
 		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
 
@@ -1253,7 +1254,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getPendingTaskRemovalRequests()}.
 	 */
 	@Test
-	void testGetPendingTaskRemovalRequests() {
+	public void testGetPendingTaskRemovalRequests() {
 
 		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
 
@@ -1267,7 +1268,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#createTaskAssignementRequest()}.
 	 */
 	@Test
-	void testCreateTaskAssignementRequest() {
+	public void testCreateTaskAssignementRequest() {
 
 		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
 
@@ -1281,7 +1282,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#createTaskRemovalRequest()}.
 	 */
 	@Test
-	void testCreateTaskRemovalRequest() {
+	public void testCreateTaskRemovalRequest() {
 
 		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
 
@@ -1296,7 +1297,7 @@ class TaskTest {
 	 * {@link project.model.Task#isAssignmentRequestAlreadyCreated()}.
 	 */
 	@Test
-	void testIsAssignmentRequestAlreadyCreated() {
+	public void testIsAssignmentRequestAlreadyCreated() {
 
 		assertFalse(taskReadyToFinishTest.isAssignmentRequestAlreadyCreated(projectCollaborator));
 
@@ -1310,7 +1311,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#isRemovalRequestAlreadyCreated()}.
 	 */
 	@Test
-	void testIsRemovalRequestAlreadyCreated() {
+	public void testIsRemovalRequestAlreadyCreated() {
 
 		assertFalse(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
 
@@ -1324,7 +1325,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#deleteTaskRemovalRequest()}.
 	 */
 	@Test
-	void testDeleteTaskRemovalRequest() {
+	public void testDeleteTaskRemovalRequest() {
 
 		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
 
@@ -1340,7 +1341,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#deleteTaskAssignementRequest()}.
 	 */
 	@Test
-	void testDeleteTaskAssignementRequest() {
+	public void testDeleteTaskAssignementRequest() {
 
 		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
 
@@ -1359,7 +1360,7 @@ class TaskTest {
 	 * {@link project.model.Task#removeAllRequestsWithASpecificTask()}.
 	 */
 	@Test
-	void testRemoveAllRequestsWithASpecificTask() {
+	public void testRemoveAllRequestsWithASpecificTask() {
 
 		assertTrue(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
 
@@ -1375,7 +1376,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#setPendingTaskTeamRequests()}.
 	 */
 	@Test
-	void testSetPendingTaskTeamRequests() {
+	public void testSetPendingTaskTeamRequests() {
 
 	}
 
@@ -1383,7 +1384,7 @@ class TaskTest {
 	 * Test method for {@link project.model.Task#getPendingTaskTeamRequests()}.
 	 */
 	@Test
-	void testGetPendingTaskTeamRequests() {
+	public void testGetPendingTaskTeamRequests() {
 
 	}
 
