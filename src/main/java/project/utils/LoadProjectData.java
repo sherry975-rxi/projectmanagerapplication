@@ -1,5 +1,12 @@
 package project.utils;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.DOMException;
@@ -8,6 +15,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
@@ -17,12 +25,6 @@ import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 @Service
 public class LoadProjectData {
 
@@ -31,9 +33,9 @@ public class LoadProjectData {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
-	TaskService taskService; 
+	TaskService taskService;
 
 	public void loadProject(String pathFile)
 			throws ParserConfigurationException, SAXException, IOException, DOMException, ParseException {
@@ -105,14 +107,14 @@ public class LoadProjectData {
 
 								Integer costEffort = Integer.valueOf(eElementLigProject
 										.getElementsByTagName("custo_unitario_colaborador").item(0).getTextContent());
-								
-								projCollaborator.setCostPerEffort(costEffort);							
-								projectService.updateProjectCollaborator(projCollaborator);								
-                   			} 
-              			} 									
-                	}                 
-                }
-				
+
+								projCollaborator.setCostPerEffort(costEffort);
+								projectService.updateProjectCollaborator(projCollaborator);
+							}
+						}
+					}
+				}
+
 				NodeList nTaskList = documentProjects.getElementsByTagName("tarefa");
 
 				for (int indexTask = 0; indexTask < nTaskList.getLength(); indexTask++) {
@@ -120,67 +122,81 @@ public class LoadProjectData {
 
 					if (nNodeTask.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElementTask = (Element) nNodeTask;
-						
-						
-						String description = eElementTask
-								.getElementsByTagName("descricao_tarefa").item(0).getTextContent();
-						
-						Task task = project.createTask(description); 
-										
-						task.setTaskID(eElementTask
-								.getElementsByTagName("codigo_tarefa").item(0).getTextContent());
-						
-						Integer taskEffort = Integer.valueOf(eElementTask
-								.getElementsByTagName("esforco_estimado").item(0).getTextContent());
+
+						String description = eElementTask.getElementsByTagName("descricao_tarefa").item(0)
+								.getTextContent();
+
+						Task task = project.createTask(description);
+
+						task.setTaskID(eElementTask.getElementsByTagName("codigo_tarefa").item(0).getTextContent());
+
+						Integer taskEffort = Integer.valueOf(
+								eElementTask.getElementsByTagName("esforco_estimado").item(0).getTextContent());
 						task.setEstimatedTaskEffort(taskEffort);
-						
+
 						Integer taskBudget = Integer.valueOf(eElementTask
 								.getElementsByTagName("custo_unitario_orcamentado").item(0).getTextContent());
 						task.setTaskBudget(taskBudget);
-						
-						Calendar estimatedStartDate = convertStringToCalendar(eElementTask
-								.getElementsByTagName("data_inicio_prevista").item(0).getTextContent()); 
+
+						Calendar estimatedStartDate = convertStringToCalendar(
+								eElementTask.getElementsByTagName("data_inicio_prevista").item(0).getTextContent());
 						task.setEstimatedTaskStartDate(estimatedStartDate);
-						
-						Calendar estimatedFinishDate= convertStringToCalendar(eElementTask
-								.getElementsByTagName("data_conclusao_prevista").item(0).getTextContent()); 
-						
+
+						Calendar estimatedFinishDate = convertStringToCalendar(
+								eElementTask.getElementsByTagName("data_conclusao_prevista").item(0).getTextContent());
+
 						task.setTaskDeadline((estimatedFinishDate));
-						
-						Calendar finishDate = convertStringToCalendar(eElementTask
-								.getElementsByTagName("data_conclusao_efetiva").item(0).getTextContent()); 
-						
+
+						Calendar finishDate = convertStringToCalendar(
+								eElementTask.getElementsByTagName("data_conclusao_efetiva").item(0).getTextContent());
+
 						task.setFinishDate(finishDate);
-						
+
 						taskService.saveTask(task);
+
+						for (int indexTaskDependencies = 0; indexTaskDependencies < nTaskList
+								.getLength(); indexTaskDependencies++) {
+							Node nNodeTaskDependencies = nProjectList.item(indexTaskDependencies);
+
+							if (nNodeTaskDependencies.getNodeType() == Node.ELEMENT_NODE) {
+								Element eElementTaskDependencies = (Element) nNodeTaskDependencies;
+
+								String idTaskMain = eElementTaskDependencies.getElementsByTagName("tarefa_id").item(0)
+										.getTextContent();
+								Task taskMain = taskService.getTaskByTaskID(idTaskMain);
+
+								taskService.saveTask(task);
+
+							}
+						}
 					}
+
 				}
-			}	
-        }
-    }
-    
-    
-    
 
-    /**
-     * Converts a string to a Calendar
-     *
-     * @param calendar String in a pre-set format
-     *
-     * @return Calendar converted from String
-     *
-     * @throws ParseException
-     */
-    private Calendar convertStringToCalendar(String calendar) throws ParseException {
+			}
+		}
+	}
 
-        Calendar date = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-        date.setTime(sdf.parse(calendar));
-        date.set(Calendar.HOUR_OF_DAY, 0);
-        date.set(Calendar.MINUTE, 0);
-        date.set(Calendar.SECOND, 0);
-        date.set(Calendar.MILLISECOND, 0);
+	/**
+	 * Converts a string to a Calendar
+	 *
+	 * @param calendar
+	 *            String in a pre-set format
+	 *
+	 * @return Calendar converted from String
+	 *
+	 * @throws ParseException
+	 */
+	private Calendar convertStringToCalendar(String calendar) throws ParseException {
 
-        return date;
-    }
+		Calendar date = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+		date.setTime(sdf.parse(calendar));
+		date.set(Calendar.HOUR_OF_DAY, 0);
+		date.set(Calendar.MINUTE, 0);
+		date.set(Calendar.SECOND, 0);
+		date.set(Calendar.MILLISECOND, 0);
+
+		return date;
+	}
 }
