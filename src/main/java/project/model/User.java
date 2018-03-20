@@ -45,6 +45,7 @@ public class User implements Serializable {
 	 * Empty Constructor for User
 	 */
 	public User() {
+		this.addressList = new ArrayList<>();
 	}
 
 	/**

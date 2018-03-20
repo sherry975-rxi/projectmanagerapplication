@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,15 +23,16 @@ import project.model.User;
  * @author Group3
  *
  */
+@Service
 public class LoadData {
-
-	public static void loadUsers(String pathFile) throws ParserConfigurationException, SAXException, IOException {
+	@Autowired
+	UserService users;
+	public void loadUsers(String pathFile) throws ParserConfigurationException, SAXException, IOException {
 
 		Document documentUsers = FileUtils.readFromXmlFile(pathFile);
 
-		UserService users = new UserService();
-		User eachUser = new User();
-		Address eachUserAddress = new Address();
+		
+		
 
 		NodeList nListUtilizadores = (NodeList) documentUsers.getElementsByTagName("utilizador");
 
@@ -38,7 +41,7 @@ public class LoadData {
 
 			if (nNodeUtilizador.getNodeType() == Node.ELEMENT_NODE) {
 				Element eElementUtilizador = (Element) nNodeUtilizador;
-
+				User eachUser = new User();
 				eachUser.setName(eElementUtilizador.getElementsByTagName("nome_utilizador").item(0).getTextContent());
 				eachUser.setEmail(eElementUtilizador.getElementsByTagName("email_utilizador").item(0).getTextContent());
 				eachUser.setPassword(eElementUtilizador.getElementsByTagName("password").item(0).getTextContent());
@@ -50,6 +53,7 @@ public class LoadData {
 
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElement = (Element) nNode;
+						Address eachUserAddress = new Address();
 
 						eachUserAddress.setStreet(eElement.getElementsByTagName("rua").item(0).getTextContent());
 						eachUserAddress
@@ -59,8 +63,8 @@ public class LoadData {
 
 						eachUser.addAddress(eachUserAddress);
 					}
+					
 				}
-
 				users.addUserToUserRepositoryX(eachUser);
 			}
 
