@@ -73,10 +73,10 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		otherFinishDate.add(Calendar.MONTH, -1);
 
 		// Four new tasks were created and added to project1
-		task1 = myProject.getTaskRepository().createTask("Task 1", 1, startDate, finishDate, 10);
-		task2 = myProject.getTaskRepository().createTask("Task 2", 2, startDate, finishDate, 10);
-		task3 = myProject.getTaskRepository().createTask("Task 3", 3, startDate, finishDate, 10);
-		task4 = myProject.getTaskRepository().createTask("Task 4", 4, startDate, finishDate, 10);
+		task1 = myProject.getTaskService().createTask("Task 1", 1, startDate, finishDate, 10);
+		task2 = myProject.getTaskService().createTask("Task 2", 2, startDate, finishDate, 10);
+		task3 = myProject.getTaskService().createTask("Task 3", 3, startDate, finishDate, 10);
+		task4 = myProject.getTaskService().createTask("Task 4", 4, startDate, finishDate, 10);
 
 		// Users 1 and 2 added to the users repository.
 		userContainer.addUserToUserRepository(user1);
@@ -92,10 +92,10 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		myProject.addProjectCollaboratorToProjectTeam(projectCollaborator1);
 
 		// Add Tasks to project 1
-		myProject.getTaskRepository().addTaskToProject(task1);
-		myProject.getTaskRepository().addTaskToProject(task2);
-		myProject.getTaskRepository().addTaskToProject(task3);
-		myProject.getTaskRepository().addTaskToProject(task4);
+		myProject.getTaskService().addTaskToProject(task1);
+		myProject.getTaskService().addTaskToProject(task2);
+		myProject.getTaskService().addTaskToProject(task3);
+		myProject.getTaskService().addTaskToProject(task4);
 
 		// create task workers
 		taskWorker1 = task1.createTaskCollaborator(projectCollaborator1);

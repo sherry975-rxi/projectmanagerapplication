@@ -83,14 +83,14 @@ public class US347CancelOnGoingTaskControllerTest {
 		project1.addProjectCollaboratorToProjectTeam(projCollab2);
 
 		// create tasks
-		task1 = project1.getTaskRepository().createTask("Create class User");
-		task2 = project1.getTaskRepository().createTask("Create class User");
-		task3 = project1.getTaskRepository().createTask("create test for method set name in class user");
+		task1 = project1.getTaskService().createTask("Create class User");
+		task2 = project1.getTaskService().createTask("Create class User");
+		task3 = project1.getTaskService().createTask("create test for method set name in class user");
 
 		// add tasks to task repository
-		project1.getTaskRepository().addTaskToProject(task1);
-		project1.getTaskRepository().addTaskToProject(task2);
-		project1.getTaskRepository().addTaskToProject(task3);
+		project1.getTaskService().addTaskToProject(task1);
+		project1.getTaskService().addTaskToProject(task2);
+		project1.getTaskService().addTaskToProject(task3);
 
 		// create a estimated Task Start Date
 		startDateTest = Calendar.getInstance();

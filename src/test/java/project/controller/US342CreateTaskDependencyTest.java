@@ -50,7 +50,7 @@ public class US342CreateTaskDependencyTest {
 		proj = projRepo.getAllProjectsfromProjectsContainer().get(0);
 
 		// Initialize Task Repository
-		taskRepo = proj.getTaskRepository();
+		taskRepo = proj.getTaskService();
 
 		// Create and add tasks to Task Repository
 		// Task A isn't added to test the method that checks if the list contains a

@@ -56,20 +56,20 @@ public class US370V2GetProjectFinishedTaskListTest {
 		myProjects.addProjectToProjectContainer(project1);
 
 		// create tasks in project 1
-		task1 = project1.getTaskRepository().createTask("Do this");
-		task2 = project1.getTaskRepository().createTask("Do that");
-		task3 = project1.getTaskRepository().createTask("Merge everything");
-		task4 = project1.getTaskRepository().createTask("Do this");
-		task5 = project1.getTaskRepository().createTask("Do this");
-		task6 = project1.getTaskRepository().createTask("Do this");
+		task1 = project1.getTaskService().createTask("Do this");
+		task2 = project1.getTaskService().createTask("Do that");
+		task3 = project1.getTaskService().createTask("Merge everything");
+		task4 = project1.getTaskService().createTask("Do this");
+		task5 = project1.getTaskService().createTask("Do this");
+		task6 = project1.getTaskService().createTask("Do this");
 
 		// add tasks to task repository of project 1
-		project1.getTaskRepository().addTaskToProject(task1);
-		project1.getTaskRepository().addTaskToProject(task2);
-		project1.getTaskRepository().addTaskToProject(task3);
-		project1.getTaskRepository().addTaskToProject(task4);
-		project1.getTaskRepository().addTaskToProject(task5);
-		project1.getTaskRepository().addTaskToProject(task6);
+		project1.getTaskService().addTaskToProject(task1);
+		project1.getTaskService().addTaskToProject(task2);
+		project1.getTaskService().addTaskToProject(task3);
+		project1.getTaskService().addTaskToProject(task4);
+		project1.getTaskService().addTaskToProject(task5);
+		project1.getTaskService().addTaskToProject(task6);
 
 		// add costPerEffort to users in project 1, resulting in a Project Collaborator
 		// for each one

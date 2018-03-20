@@ -80,7 +80,7 @@ public class US356ManageAssignmentRequestControllerTest {
 		estimatedTaskDeadline.add(Calendar.DAY_OF_YEAR, 10);
 
 		taskDescription = "dont blow up rocket";
-		taskWithNoTeam = testProject.getTaskRepository().createTask(taskDescription, 2000, estimatedStartDate,
+		taskWithNoTeam = testProject.getTaskService().createTask(taskDescription, 2000, estimatedStartDate,
 				estimatedTaskDeadline, 200000);
 		taskIDnumber = taskWithNoTeam.getTaskID();
 
@@ -91,7 +91,7 @@ public class US356ManageAssignmentRequestControllerTest {
 		assignmentRequestsController = new US356ManageAssigmentRequestController(testProject);
 
 		String taskDescriptionB = "do blow up rocket!";
-		standByTask = testProject.getTaskRepository().createTask(taskDescriptionB, 2000, estimatedStartDate,
+		standByTask = testProject.getTaskService().createTask(taskDescriptionB, 2000, estimatedStartDate,
 				estimatedTaskDeadline, 200000);
 
 

@@ -43,10 +43,10 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 		testStuff.addProjectCollaboratorToProjectTeam(idleProjCollab);
 
 		// creates two tasks and adds the to the project's task repository
-		taskWithTeam = testStuff.getTaskRepository().createTask("This one has a team");
-		taskWithNoTeam = testStuff.getTaskRepository().createTask("This one does not");
-		testStuff.getTaskRepository().addTaskToProject(taskWithTeam);
-		testStuff.getTaskRepository().addTaskToProject(taskWithNoTeam);
+		taskWithTeam = testStuff.getTaskService().createTask("This one has a team");
+		taskWithNoTeam = testStuff.getTaskService().createTask("This one does not");
+		testStuff.getTaskService().addTaskToProject(taskWithTeam);
+		testStuff.getTaskService().addTaskToProject(taskWithNoTeam);
 
 		// adds the active team member to a task, and creates an expected String of data
 		// belonging to the idle team member
@@ -110,8 +110,8 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 		// given that activeProjectCollaborator has a Task assigned
 		// and idleProjectCollaborator has no tasks assigned
 		// asserts both those conditions are correct
-		assertFalse(testStuff.getTaskRepository().isCollaboratorActiveOnAnyTask(idleProjCollab));
-		assertTrue(testStuff.getTaskRepository().isCollaboratorActiveOnAnyTask(activeProjCollab));
+		assertFalse(testStuff.getTaskService().isCollaboratorActiveOnAnyTask(idleProjCollab));
+		assertTrue(testStuff.getTaskService().isCollaboratorActiveOnAnyTask(activeProjCollab));
 
 		// then, asserts the list of idle team members contains only one entry
 		// and that the Idle Team member's information is inside the list
