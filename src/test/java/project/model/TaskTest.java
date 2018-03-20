@@ -18,6 +18,8 @@ import org.junit.Test;
 import project.model.taskstateinterface.Cancelled;
 import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Ready;
+import project.model.taskstateinterface.StandBy;
 import project.model.taskstateinterface.TaskStateInterface;
 
 /**
@@ -66,6 +68,8 @@ public class TaskTest {
 
 		// Finish task
 
+		taskReadyToFinishTest.setTaskID("1");
+
 		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
 
 		taskReadyToFinishTest.setEstimatedTaskStartDate(Calendar.getInstance());
@@ -78,6 +82,23 @@ public class TaskTest {
 
 		taskReadyToFinishTest.setStartDate(Calendar.getInstance());
 
+		// OnGoing task tasReadyToFinish
+
+		// Finish task
+
+		taskTestSecond.setTaskID("2");
+
+		taskTestSecond.addProjectCollaboratorToTask(projectCollaborator);
+
+		taskTestSecond.setEstimatedTaskStartDate(Calendar.getInstance());
+
+		taskTestSecond.setTaskDeadline(Calendar.getInstance());
+
+		taskTestSecond.setEstimatedTaskEffort(1);
+
+		taskTestSecond.setTaskBudget(1);
+
+		taskTestSecond.setStartDate(Calendar.getInstance());
 	}
 
 	/**
@@ -88,11 +109,14 @@ public class TaskTest {
 
 		userTest = null;
 		projectTest = null;
+		projectTestSecond = null;
 		taskTest = null;
-		taskCollaborator = null;
 		taskTestSecond = null;
+		taskReadyToFinishTest = null;
+		taskCollaborator = null;
 		projectCollaborator = null;
 		report = null;
+
 	}
 
 	/**
@@ -195,6 +219,23 @@ public class TaskTest {
 		Task task = new Task(1, 1, "task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
 
 		Task taskCopy = new Task(task);
+
+		assertTrue(taskCopy instanceof Task);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#Task(project.model.Task)}.
+	 * 
+	 * Constructor ______
+	 */
+	@Test
+	public void testTaskTaskWhithStartDateIntervalandDeadlineInterval() {
+
+		taskReadyToFinishTest.setStartDateInterval(1);
+		taskReadyToFinishTest.setDeadlineInterval(2);
+
+		Task taskCopy = new Task(taskReadyToFinishTest);
 
 		assertTrue(taskCopy instanceof Task);
 
@@ -635,6 +676,22 @@ public class TaskTest {
 	}
 
 	/**
+	 * Test method for {@link project.model.Task#markTaskAsFinished()}.
+	 */
+	@Test
+	public void testMarkTaskAsFinishedTaskStateFinished() {
+
+		taskReadyToFinishTest.addTaskCollaboratorToTask(taskCollaborator);
+
+		TaskStateInterface created = new Created();
+
+		taskReadyToFinishTest.setTaskState(created);
+
+		assertFalse(taskReadyToFinishTest.markTaskAsFinished());
+
+	}
+
+	/**
 	 * Test method for
 	 * {@link project.model.Task#addProjectCollaboratorToTask(project.model.ProjectCollaborator)}.
 	 */
@@ -689,6 +746,89 @@ public class TaskTest {
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2);
 
 		assertFalse(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportTaskStateFinished() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		taskReadyToFinishTest.markTaskAsFinished();
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportTaskStateCancelled() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		taskReadyToFinishTest.cancelTask();
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportTaskStateStandBy() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		TaskStateInterface standBy = new StandBy();
+
+		taskReadyToFinishTest.setTaskState(standBy);
+		;
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportWhitoutTaskCollaborator() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		taskReadyToFinishTest.removeAllCollaboratorsFromTaskTeam();
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportWhitTaskCollaborator() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		taskReadyToFinishTest.getTaskTeam().get(0).setFinishDate(Calendar.getInstance());
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
 	}
 
 	/**
@@ -946,7 +1086,7 @@ public class TaskTest {
 	@Test
 	public void testCreateTaskDependence() {
 
-		taskTest.setTaskID("1");
+		taskTest.setTaskID("3");
 
 		assertFalse(taskTest.hasDependencies());
 
@@ -962,7 +1102,7 @@ public class TaskTest {
 	@Test
 	public void testRemoveTaskDependence() {
 
-		taskTest.setTaskID("1");
+		taskTest.setTaskID("3");
 
 		assertTrue(taskTest.createTaskDependence(taskReadyToFinishTest, 1));
 
@@ -980,7 +1120,7 @@ public class TaskTest {
 	@Test
 	public void testHasActiveDependencies() {
 
-		taskTest.setTaskID("1");
+		taskTest.setTaskID("3");
 
 		assertFalse(taskTest.hasActiveDependencies());
 
@@ -1053,7 +1193,7 @@ public class TaskTest {
 	@Test
 	public void testHasDependencies() {
 
-		taskTest.setTaskID("1");
+		taskTest.setTaskID("3");
 
 		assertFalse(taskTest.hasDependencies());
 
@@ -1094,6 +1234,22 @@ public class TaskTest {
 		assertTrue(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
 
 		assertFalse(taskReadyToFinishTest.getCancelDate().equals(null));
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#cancelTask()}.
+	 */
+	@Test
+	public void testCancelTaskWhithTaskStateFinished() {
+
+		assertFalse(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
+
+		taskReadyToFinishTest.markTaskAsFinished();
+
+		taskReadyToFinishTest.cancelTask();
+
+		assertFalse(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
 
 	}
 
@@ -1170,9 +1326,23 @@ public class TaskTest {
 
 		assertTrue(taskReadyToFinishTest.isTaskFinished());
 
-		taskReadyToFinishTest.UnfinishTask();
+		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.UnfinishTask());
 
 		assertFalse(taskReadyToFinishTest.isTaskFinished());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#UnfinishTask()}.
+	 */
+	@Test
+	public void testUnfinishTaskWhithTaskStateSetToOnGoing() {
+
+		taskReadyToFinishTest.cancelTask();
+
+		assertFalse(taskReadyToFinishTest.UnfinishTask());
 
 	}
 
@@ -1279,6 +1449,22 @@ public class TaskTest {
 	}
 
 	/**
+	 * Test method for {@link project.model.Task#createTaskAssignementRequest()}.
+	 */
+	@Test
+	public void testCreateTaskAssignementRequestRequestsAlreadyCreated() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+
+		assertTrue(taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator));
+
+		assertFalse(taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator));
+
+		assertEquals(1, taskReadyToFinishTest.getPendingTaskAssignementRequests().size());
+
+	}
+
+	/**
 	 * Test method for {@link project.model.Task#createTaskRemovalRequest()}.
 	 */
 	@Test
@@ -1289,6 +1475,22 @@ public class TaskTest {
 		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
 
 		assertFalse(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#createTaskRemovalRequest()}.
+	 */
+	@Test
+	public void testCreateTaskRemovalRequestRequestsAlreadyCreated() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
+
+		assertTrue(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
+
+		assertFalse(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
+
+		assertEquals(1, taskReadyToFinishTest.getPendingTaskRemovalRequests().size());
 
 	}
 
@@ -1378,6 +1580,15 @@ public class TaskTest {
 	@Test
 	public void testSetPendingTaskTeamRequests() {
 
+		TaskTeamRequest request = new TaskTeamRequest();
+
+		List<TaskTeamRequest> victim = new ArrayList<>();
+		victim.add(request);
+
+		taskReadyToFinishTest.setPendingTaskTeamRequests(victim);
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskTeamRequests().equals(victim));
+
 	}
 
 	/**
@@ -1386,24 +1597,174 @@ public class TaskTest {
 	@Test
 	public void testGetPendingTaskTeamRequests() {
 
+		TaskTeamRequest request = new TaskTeamRequest();
+
+		List<TaskTeamRequest> victim = new ArrayList<>();
+		victim.add(request);
+
+		taskReadyToFinishTest.setPendingTaskTeamRequests(victim);
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskTeamRequests().equals(victim));
+
 	}
 
-	/**
-	 *
-	 * This test asserts all the task dependency conditions are working correctly:
-	 *
-	 * 1 - Dependencies can only be created on tasks that haven't started yet
-	 *
-	 * 2 - Dependencies can only be created when the expected task start date is
-	 * later than the mother task's deadline (meaning the dependent task can't be
-	 * expected to start before the mother is completed)
-	 *
-	 */
 	/**
 	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValid() {
 
+		TaskStateInterface created = new Created();
+
+		taskTestSecond.setTaskState(created);
+
+		assertTrue(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
 	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSameTask() {
+
+		// Asserts false, because both tasks are the same
+		assertFalse(taskReadyToFinishTest.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidWithoutDeadline() {
+		/*
+		 * Its not possible to create a task dependency with a mother task without task
+		 * deadline
+		 */
+
+		taskTestSecond.setTaskDeadline(null);
+		assertFalse(taskReadyToFinishTest.isCreatingTaskDependencyValid(taskTestSecond));
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSetToOnGoing() {
+
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * onGoing
+		 */
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSetToCancelled() {
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Cancelled
+		 */
+		taskTestSecond.cancelTask();
+
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSetToReady() {
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Ready
+		 */
+		TaskStateInterface ready = new Ready();
+
+		taskTestSecond.setTaskState(ready);
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSetToCancel() {
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Cancelled
+		 */
+		taskTestSecond.cancelTask();
+
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSetToStandBy() {
+		/*
+		 * Its not possible to create a dependency to task that is set to Standby
+		 */
+		TaskStateInterface standBy = new StandBy();
+		taskTestSecond.setTaskState(standBy);
+
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void isCreatingTaskDependencyValidSetToFinished() {
+
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Finished
+		 */
+		taskTestSecond.markTaskAsFinished();
+
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void isCreatingTaskDependencyValidSetToFinishedOtherTaskSetToCancelled() {
+
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Cancelled
+		 */
+		taskTestSecond.cancelTask();
+
+		assertFalse(taskReadyToFinishTest.isCreatingTaskDependencyValid(taskTestSecond));
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid()}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidWithTheSameDependency() {
+
+		TaskStateInterface created = new Created();
+
+		taskTestSecond.setTaskState(created);
+
+		assertTrue(taskTestSecond.createTaskDependence(taskReadyToFinishTest, 1));
+
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
+	}
+
 }

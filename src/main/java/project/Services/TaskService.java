@@ -10,6 +10,8 @@ import project.model.taskstateinterface.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -197,67 +199,25 @@ public class TaskService {
 		return lastMonthFinishedTasks;
 	}
 
-	/**
-	 * This method returns a list with the tasks of a certain user by decreasing
-	 * order of date. First, this method creates a list which is a copy of the task
-	 * list of the user. This method just reverses the initial order of the
-	 * TaskList. It does not runs a cycle to compare the tasks finish dates, neither
-	 * analysis the TaskList in any way.
-	 * 
-	 * @param toSort
-	 *            List of tasks to sort
-	 * 
-	 * @return sorted list
-	 * 
-	 */
-	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {
-		List<Task> result = new ArrayList<>();
-		result.addAll(toSort);
-		for (int i = 0; i < result.size(); i++) {
-			for (int j = i + 1; j < result.size(); j++) {
-				if (result.get(i).getFinishDate().before(result.get(j).getFinishDate())) {
-					Task h = new Task(result.get(i));
-					result.set(i, result.get(j));
-					result.set(j, h);
-				}
-			}
-
-		}
-		return result;
+	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {		
+	
+		Collections.sort(toSort, new Comparator<Task>() {
+            @Override
+            public int compare(Task t1, Task t2) {
+                return t2.getFinishDate().compareTo(t1.getFinishDate());
+            }
+        });
+		return toSort;
 	}
 
-	/**
-	 * This method returns a list with the tasks of a certain user by decreasing
-	 * order of date. First, this method creates a list which is a copy of the task
-	 * list of the user. This method just sorts the Task List by Deadline,
-	 * increasing order.
-	 *
-	 * @param toSort
-	 *            List of tasks to sort
-	 *
-	 * @return sorted list
-	 *
-	 */
 	public List<Task> sortTaskListByDeadline(List<Task> toSort) {
-		List<Task> result = new ArrayList<>(toSort);
-		boolean cycle = true;
-		int i = 0;
-		while (cycle) {
-			cycle = false;
-
-			for (int j = i + 1; j < result.size(); j++) {
-				cycle = true;
-				if (result.get(i).getTaskDeadline() != null) {
-					if (result.get(i).getTaskDeadline().after(result.get(j).getTaskDeadline())) {
-						Task h = new Task(result.get(i));
-						result.set(i, result.get(j));
-						result.set(j, h);
-					}
-				}
-			}
-			i++;
-		}
-		return result;
+		Collections.sort(toSort, new Comparator<Task>() {
+            @Override
+            public int compare(Task t1, Task t2) {
+                return t2.getTaskDeadline().compareTo(t1.getTaskDeadline());
+            }
+        });
+		return toSort;
 	}
 
 	/**
@@ -294,7 +254,7 @@ public class TaskService {
 		lastMonth.addAll(this.getLastMonthFinishedUserTaskList(collab.getUserFromProjectCollaborator()));
 		double totalTime = 0;
 		for (Task task : lastMonth) {
-			totalTime = totalTime + task.getTimeSpentByProjectCollaboratorOntask(collab);
+			totalTime += task.getTimeSpentByProjectCollaboratorOntask(collab);
 		}
 		return totalTime;
 	}

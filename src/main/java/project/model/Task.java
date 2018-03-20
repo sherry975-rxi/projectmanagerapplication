@@ -922,7 +922,7 @@ public class Task {
 			return false;
 		Task other = (Task) obj;
 
-		return this.id.equals(other.id);
+		return this.taskID.equals(other.taskID);
 	}
 
 	/**
@@ -1241,19 +1241,27 @@ public class Task {
 	 * state machine does not let the task change its state, the finish date is set
 	 * to its previous value.
 	 */
-	public void UnfinishTask() {
-		int year = finishDate.get(Calendar.YEAR);
-		int month = finishDate.get(Calendar.MONTH);
-		int date = finishDate.get(Calendar.DAY_OF_MONTH);
+	public boolean UnfinishTask() {
+		boolean unfinishTask = true;
 		Calendar finishDateCopy = Calendar.getInstance();
-		finishDate.set(year, month, date);
+
+		if (!(finishDate == null)) {
+			int year = finishDate.get(Calendar.YEAR);
+			int month = finishDate.get(Calendar.MONTH);
+			int date = finishDate.get(Calendar.DAY_OF_MONTH);
+
+			finishDateCopy.set(year, month, date);
+		}
 
 		this.finishDate = null;
 		this.taskState.doAction(this);
 
 		if (!(this.taskState instanceof OnGoing)) {
 			this.finishDate = finishDateCopy;
+			unfinishTask = false;
 		}
+
+		return unfinishTask;
 	}
 
 	/**
@@ -1269,8 +1277,10 @@ public class Task {
 		newReq.setType(TaskTeamRequest.ASSIGNMENT);
 		if (!this.isAssignmentRequestAlreadyCreated(projCollab)) {
 			this.pendingTaskTeamRequests.add(newReq);
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -1286,8 +1296,10 @@ public class Task {
 		newReq.setType(TaskTeamRequest.REMOVAL);
 		if (!this.isRemovalRequestAlreadyCreated(projCollab)) {
 			this.pendingTaskTeamRequests.add(newReq);
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -1297,7 +1309,6 @@ public class Task {
 	 * @param request
 	 *            Request to remove from the list
 	 */
-	// TODO i think this method should receive a projectCollaborator
 
 	public boolean deleteTaskAssignementRequest(ProjectCollaborator projCollaborator) {
 
