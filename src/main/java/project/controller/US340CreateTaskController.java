@@ -42,10 +42,13 @@ public class US340CreateTaskController {
 	 * @param estimatedCost
 	 * @return the added task
 	 */
-	public Task addTask(String description) {
+	public boolean addTask(String description) {
+		Boolean wasTaskSaved = true;
 		Task newTask = taskService.createTask(description, chosenProject);
-
-		return newTask;
+		if (newTask == null) {
+			wasTaskSaved = false;
+		}
+		return wasTaskSaved;
 
 	}
 
