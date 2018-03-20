@@ -44,7 +44,7 @@ public class US115andUS116SetUserStateControllerTests {
 		
 		testUserStateController = new US115andUS116SetUserStateController();
 		testUserStateController.setToChangeState(newUser2);
-		testUserStateController.setUserContainer(userService);
+		testUserStateController.userContainer = userService;
 		
 		// creates the user and adds it to the dummy database, then refreshes the in memory User List
 		newUser2 = userService.createUser("Manel", "user2@gmail.com", "001", "Empregado",

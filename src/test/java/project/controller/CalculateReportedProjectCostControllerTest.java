@@ -105,7 +105,7 @@ public class CalculateReportedProjectCostControllerTest {
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create taskContainer
-		taskContainer = project.getTaskRepository();
+		taskContainer = project.getTaskService();
 
 		testTask = taskContainer.createTask("Testin once", 10, estimatedTaskStartDateTest, taskDeadlineDateTest, 10);
 		testTask2 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,

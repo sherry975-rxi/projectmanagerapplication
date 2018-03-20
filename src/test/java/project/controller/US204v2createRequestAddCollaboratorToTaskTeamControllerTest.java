@@ -44,7 +44,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 		proj = projectContainer.getAllProjectsfromProjectsContainer().get(0);
 
 		// Initialize Task Repository
-		taskRepo = proj.getTaskRepository();
+		taskRepo = proj.getTaskService();
 
 		// Create and add tasks to Task Repository
 		taskA = new Task(1, 1, "Faind fek quin!");

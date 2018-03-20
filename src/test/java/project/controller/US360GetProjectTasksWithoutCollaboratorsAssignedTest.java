@@ -78,26 +78,26 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedTest {
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create tasks in project 1
-		task1 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest,
+		task1 = project1.getTaskService().createTask("Do this", 10, estimatedTaskStartDateTest,
 				taskDeadlineDateTest1, 10);
-		task2 = project1.getTaskRepository().createTask("Do that", 10, estimatedTaskStartDateTest,
+		task2 = project1.getTaskService().createTask("Do that", 10, estimatedTaskStartDateTest,
 				taskDeadlineDateTest2, 10);
-		task3 = project1.getTaskRepository().createTask("Merge everything", 10, estimatedTaskStartDateTest,
+		task3 = project1.getTaskService().createTask("Merge everything", 10, estimatedTaskStartDateTest,
 				taskExpiredDeadlineDateTest, 10);
-		task4 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest,
+		task4 = project1.getTaskService().createTask("Do this", 10, estimatedTaskStartDateTest,
 				taskDeadlineDateTest3, 10);
-		task5 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest,
+		task5 = project1.getTaskService().createTask("Do this", 10, estimatedTaskStartDateTest,
 				taskDeadlineDateTest4, 10);
-		task6 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest,
+		task6 = project1.getTaskService().createTask("Do this", 10, estimatedTaskStartDateTest,
 				taskExpiredDeadlineDateTest, 10);
 
 		// add tasks to task repository of project 1
-		project1.getTaskRepository().addTaskToProject(task1);
-		project1.getTaskRepository().addTaskToProject(task2);
-		project1.getTaskRepository().addTaskToProject(task3);
-		project1.getTaskRepository().addTaskToProject(task4);
-		project1.getTaskRepository().addTaskToProject(task5);
-		project1.getTaskRepository().addTaskToProject(task6);
+		project1.getTaskService().addTaskToProject(task1);
+		project1.getTaskService().addTaskToProject(task2);
+		project1.getTaskService().addTaskToProject(task3);
+		project1.getTaskService().addTaskToProject(task4);
+		project1.getTaskService().addTaskToProject(task5);
+		project1.getTaskService().addTaskToProject(task6);
 
 		// add costPerEffort to users in project 1, resulting in a Project Collaborator
 		// for each one

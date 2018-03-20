@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +35,7 @@ public class US135andUS136SearchUsersControllerTest {
 	UserService userService;
 
 	@Autowired
-	private UserRepository userRepo;
+	public UserRepository userRepo;
 
 	US135andUS136SearchUsersController searchController;
 
@@ -48,7 +47,7 @@ public class US135andUS136SearchUsersControllerTest {
 		userService.setUserRepository(userRepo);
 		// Creates a searchController
 		searchController = new US135andUS136SearchUsersController();
-		searchController.setUserContainer(userService);
+		searchController.userContainer = userService;
 
 		// create user
 		newUser1 = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
@@ -67,15 +66,6 @@ public class US135andUS136SearchUsersControllerTest {
 
 		userService.updateUserContainer();
 
-	}
-
-	@After
-	public void tearDown() {
-		userService = null;
-		searchController = null;
-		newUser1 = null;
-		newUser2 = null;
-		newUser3 = null;
 	}
 
 	@Test

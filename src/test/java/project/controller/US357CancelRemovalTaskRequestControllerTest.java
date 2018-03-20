@@ -63,12 +63,12 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		userRuiProjectCollaborator = projectA.findProjectCollaborator(userRui);
 
 		// Creates the tasks and adds them to the projectTasks
-		taskA = projectA.getTaskRepository().createTask("Implementar US100");
-		projectA.getTaskRepository().addTaskToProject(taskA);
-		taskB = projectA.getTaskRepository().createTask("Implementar US200");
-		projectA.getTaskRepository().addTaskToProject(taskB);
-		taskC = projectA.getTaskRepository().createTask("Implementar US300");
-		projectA.getTaskRepository().addTaskToProject(taskC);
+		taskA = projectA.getTaskService().createTask("Implementar US100");
+		projectA.getTaskService().addTaskToProject(taskA);
+		taskB = projectA.getTaskService().createTask("Implementar US200");
+		projectA.getTaskService().addTaskToProject(taskB);
+		taskC = projectA.getTaskService().createTask("Implementar US300");
+		projectA.getTaskService().addTaskToProject(taskC);
 
 		// Adds the project collaborator to the tasks
 		taskA.addProjectCollaboratorToTask(userRuiProjectCollaborator);

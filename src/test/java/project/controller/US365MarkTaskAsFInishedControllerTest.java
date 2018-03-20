@@ -95,20 +95,20 @@ public class US365MarkTaskAsFInishedControllerTest {
 		project3.addProjectCollaboratorToProjectTeam(projCollab2);
 
 		// create tasks
-		task1OnGoing = project1.getTaskRepository().createTask("Create class User");
-		task2OnGoing = project1.getTaskRepository().createTask("Create class User");
-		task3 = project2.getTaskRepository().createTask("create test for method set name in class user");
-		task4 = project2.getTaskRepository().createTask("Create class User");
-		task5 = project3.getTaskRepository().createTask("Create class User");
-		task6 = project3.getTaskRepository().createTask("create test for method set name in class user");
+		task1OnGoing = project1.getTaskService().createTask("Create class User");
+		task2OnGoing = project1.getTaskService().createTask("Create class User");
+		task3 = project2.getTaskService().createTask("create test for method set name in class user");
+		task4 = project2.getTaskService().createTask("Create class User");
+		task5 = project3.getTaskService().createTask("Create class User");
+		task6 = project3.getTaskService().createTask("create test for method set name in class user");
 
 		// add tasks to task repository
-		project1.getTaskRepository().addTaskToProject(task1OnGoing);
-		project1.getTaskRepository().addTaskToProject(task2OnGoing);
-		project2.getTaskRepository().addTaskToProject(task3);
-		project2.getTaskRepository().addTaskToProject(task4);
-		project3.getTaskRepository().addTaskToProject(task5);
-		project3.getTaskRepository().addTaskToProject(task6);
+		project1.getTaskService().addTaskToProject(task1OnGoing);
+		project1.getTaskService().addTaskToProject(task2OnGoing);
+		project2.getTaskService().addTaskToProject(task3);
+		project2.getTaskService().addTaskToProject(task4);
+		project3.getTaskService().addTaskToProject(task5);
+		project3.getTaskService().addTaskToProject(task6);
 
 		// create a estimated Task Start Date
 		startDateTest = Calendar.getInstance();
