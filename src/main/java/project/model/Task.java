@@ -922,7 +922,7 @@ public class Task {
 			return false;
 		Task other = (Task) obj;
 
-		return this.id.equals(other.id);
+		return this.taskID.equals(other.taskID);
 	}
 
 	/**
@@ -1277,8 +1277,10 @@ public class Task {
 		newReq.setType(TaskTeamRequest.ASSIGNMENT);
 		if (!this.isAssignmentRequestAlreadyCreated(projCollab)) {
 			this.pendingTaskTeamRequests.add(newReq);
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -1294,8 +1296,10 @@ public class Task {
 		newReq.setType(TaskTeamRequest.REMOVAL);
 		if (!this.isRemovalRequestAlreadyCreated(projCollab)) {
 			this.pendingTaskTeamRequests.add(newReq);
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -1305,7 +1309,6 @@ public class Task {
 	 * @param request
 	 *            Request to remove from the list
 	 */
-	// TODO i think this method should receive a projectCollaborator
 
 	public boolean deleteTaskAssignementRequest(ProjectCollaborator projCollaborator) {
 
