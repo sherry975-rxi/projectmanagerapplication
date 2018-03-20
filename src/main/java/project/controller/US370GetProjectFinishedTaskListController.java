@@ -1,12 +1,14 @@
 package project.controller;
 
+import project.Repository.TaskRepository;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
 import java.util.List;
 
 public class US370GetProjectFinishedTaskListController {
-
+	private TaskService taskService;
 	/**
 	 * Returns a list of tasks that belong to a Project and were marked as finished.
 	 * - US370
@@ -18,7 +20,7 @@ public class US370GetProjectFinishedTaskListController {
 
 	public List<Task> getProjectFinishedTaskList(Project proj) {
 
-		return proj.getTaskRepository().getFinishedTasks();
+		return taskService.getProjectFinishedTasks(proj);
 
 	}
 
@@ -33,7 +35,7 @@ public class US370GetProjectFinishedTaskListController {
 	 */
 	public List<Task> getFinishedTasksInDescreasingOrder(Project project) {
 
-		return project.getTaskRepository().getFinishedTasksInDecreasingOrder();
+		return taskService.getProjectFinishedTasksInDecreasingOrder(project);
 	}
 
 }

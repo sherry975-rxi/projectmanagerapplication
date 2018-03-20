@@ -297,7 +297,7 @@ public class Task {
 		this.id = id;
 	}
 
-	public void setTaskId(String taskId) {
+	public void setTaskID(String taskId) {
 		this.taskID = taskId;
 	}
 

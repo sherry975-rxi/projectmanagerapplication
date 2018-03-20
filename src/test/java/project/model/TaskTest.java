@@ -101,8 +101,8 @@ public class TaskTest {
 	@Test
 	public void testHashCode() {
 
-		taskTest.setTaskId("1");
-		taskTestSecond.setTaskId("2");
+		taskTest.setTaskID("1");
+		taskTestSecond.setTaskID("2");
 
 		assertFalse(taskTest.hashCode() == taskTestSecond.hashCode());
 
@@ -278,12 +278,12 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#setTaskId}.
+	 * Test method for {@link project.model.Task#setTaskID}.
 	 */
 	@Test
 	public void testSetTaskId() {
 
-		taskTest.setTaskId("testTask");
+		taskTest.setTaskID("testTask");
 
 		assertEquals("testTask", taskTest.getTaskID());
 
@@ -946,7 +946,7 @@ public class TaskTest {
 	@Test
 	public void testCreateTaskDependence() {
 
-		taskTest.setTaskId("1");
+		taskTest.setTaskID("1");
 
 		assertFalse(taskTest.hasDependencies());
 
@@ -960,8 +960,13 @@ public class TaskTest {
 	 * {@link project.model.Task#removeTaskDependence(project.model.Task)}.
 	 */
 	@Test
+<<<<<<< HEAD
 	public void testRemoveTaskDependence() {
 		taskTest.setTaskId("1");
+=======
+	void testRemoveTaskDependence() {
+		taskTest.setTaskID("1");
+>>>>>>> 662efbbdb09a0e17c7dd452b918868e461cd2c71
 
 		assertTrue(taskTest.createTaskDependence(taskReadyToFinishTest, 1));
 
@@ -979,7 +984,7 @@ public class TaskTest {
 	@Test
 	public void testHasActiveDependencies() {
 
-		taskTest.setTaskId("1");
+		taskTest.setTaskID("1");
 
 		assertFalse(taskTest.hasActiveDependencies());
 
@@ -1052,7 +1057,7 @@ public class TaskTest {
 	@Test
 	public void testHasDependencies() {
 
-		taskTest.setTaskId("1");
+		taskTest.setTaskID("1");
 
 		assertFalse(taskTest.hasDependencies());
 

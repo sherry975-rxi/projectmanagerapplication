@@ -1,6 +1,7 @@
 package project.controller;
 
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -19,6 +20,8 @@ public class US361AssignTaskToCollaboratorsController {
 	private Project project;
 	private Task task;
 	private ProjectCollaborator projectCollaborator;
+	private ProjectService projectService;
+	private TaskService taskService;
 
 	/**
 	 * Constructor to instantiate a new US361TaskToCollaboratorsController
@@ -43,7 +46,7 @@ public class US361AssignTaskToCollaboratorsController {
 
 		List<String> projectTeam = new ArrayList<>();
 
-		for (ProjectCollaborator other : this.project.getProjectTeam()) {
+		for (ProjectCollaborator other : projectService.getProjectTeam(this.project)) {
 			String userName = other.getUserFromProjectCollaborator().getName();
 			String userEmail = other.getUserFromProjectCollaborator().getEmail();
 			String userFunction = other.getUserFromProjectCollaborator().getFunction();
@@ -61,7 +64,8 @@ public class US361AssignTaskToCollaboratorsController {
 	 *            Index of the projectCollaborator in the ActiveProjectTeam List
 	 */
 	public void setUserToAddToTask(int userIndex) {
-		this.projectCollaborator = project.getActiveProjectTeam().get(userIndex);
+		this.projectCollaborator = projectService.getActiveProjectTeam(this.project).get(userIndex);
+
 	}
 
 	/**
@@ -78,9 +82,9 @@ public class US361AssignTaskToCollaboratorsController {
 	 */
 	public boolean assignCollaboratorToTask() {
 		boolean assignCollaboratorToTask = false;
-		ProjectService projectContainer = new ProjectService();
 		if(task.addProjectCollaboratorToTask(this.projectCollaborator)){
-			projectContainer.saveProjectInRepository(this.project);
+			projectService.updateProject(this.project);
+			taskService.saveTask(this.task);
 			assignCollaboratorToTask = true;
 		}
 		return assignCollaboratorToTask;

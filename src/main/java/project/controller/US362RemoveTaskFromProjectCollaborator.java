@@ -4,6 +4,7 @@
 package project.controller;
 
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -16,7 +17,8 @@ import java.util.List;
  *
  */
 public class US362RemoveTaskFromProjectCollaborator {
-	ProjectService projectContainer = new ProjectService();
+
+	private TaskService taskService;
 	private ProjectCollaborator projectCollaborator;
 	private Project project;
 	private Task task;
@@ -40,7 +42,7 @@ public class US362RemoveTaskFromProjectCollaborator {
 	public List<String> getProjectCollaboratorsFromTask() {
 
 		List<String> taskTeam = new ArrayList<>();
-		for (ProjectCollaborator other : this.project.getProjectCollaboratorsFromTask(task)) {
+		for (ProjectCollaborator other : taskService.getProjectCollaboratorsFromTask(this.project,this.task)) {
 
 			String userName = other.getUserFromProjectCollaborator().getName();
 			String userEmail = other.getUserFromProjectCollaborator().getEmail();
@@ -60,7 +62,7 @@ public class US362RemoveTaskFromProjectCollaborator {
 	public boolean removeCollaboratorFromTask() {
 		boolean removeCollaboratorFromTask = false;
 		 if(this.task.removeProjectCollaboratorFromTask(this.projectCollaborator)){
-			 projectContainer.saveProjectInRepository(this.project);
+			 taskService.saveTask(this.task);
 			 removeCollaboratorFromTask = true;
 		 }
 		return removeCollaboratorFromTask;
@@ -73,7 +75,8 @@ public class US362RemoveTaskFromProjectCollaborator {
 	 *            Position of the project Collaborator in the task team list
 	 */
 	public void setProjectCollaborator(Integer projectCollaboratorIndex) {
-		this.projectCollaborator = project.getProjectCollaboratorsFromTask(task).get(projectCollaboratorIndex);
+		this.projectCollaborator = taskService.getProjectCollaboratorsFromTask(this.project,this.task).get(projectCollaboratorIndex);
+
 	}
 
 	/**
