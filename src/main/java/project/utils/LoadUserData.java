@@ -24,7 +24,7 @@ import project.model.User;
  *
  */
 @Service
-public class LoadData {
+public class LoadUserData {
 	@Autowired
 	UserService users;
 	public void loadUsers(String pathFile) throws ParserConfigurationException, SAXException, IOException {

@@ -5,12 +5,7 @@ import org.springframework.stereotype.Service;
 
 import project.Repository.ProjCollabRepository;
 import project.Repository.TaskRepository;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.StateEnum;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.User;
+import project.model.*;
 import project.model.taskstateinterface.*;
 
 import java.util.ArrayList;
@@ -785,4 +780,70 @@ public class TaskService {
 
 		return reportedCost;
 	}
+
+
+	/**
+	 * This method gathers all Project task assignment requests from a given project
+	 *
+	 * @param project
+	 * @return
+	 */
+	public List <TaskTeamRequest> getAllProjectTaskAssignmentRequests(Project project) {
+		List<TaskTeamRequest> assignmentRequests = new ArrayList<>();
+
+		getProjectTasks(project).stream().forEach(Task -> assignmentRequests.addAll(Task.getPendingTaskAssignementRequests()));
+
+		return assignmentRequests;
+	}
+
+
+
+	/**
+	 * This method gathers all Project task removal requests from a given project
+	 *
+	 * @param project
+	 * @return
+	 */
+	public List <TaskTeamRequest> getAllProjectTaskRemovalRequests(Project project) {
+		List<TaskTeamRequest> removalRequests = new ArrayList<>();
+
+		getProjectTasks(project).stream().forEach(Task -> removalRequests.addAll(Task.getPendingTaskRemovalRequests()));
+
+		return removalRequests;
+	}
+
+
+	/**
+	 * This method displays all Project task assignment requests from a given project
+	 *
+	 * @param project
+	 * @return
+	 * 	A list of strings of all the Project task assignment requests
+	 */
+	public List <String> viewAllProjectTaskAssignmentRequests(Project project) {
+		List<String> assignmentRequests = new ArrayList<>();
+
+		getProjectTasks(project).stream().forEach(Task -> assignmentRequests.addAll(Task.viewPendingTaskAssignementRequests()));
+
+		return assignmentRequests;
+	}
+
+
+	/**
+	 * This method displays all Project task assignment requests from a given project
+	 *
+	 * @param project
+	 * @return
+	 * 	A list of strings of all the Project task assignment requests
+	 */
+	public List <String> viewAllProjectTaskRemovalRequests(Project project) {
+		List<String> removalRequests = new ArrayList<>();
+
+		getProjectTasks(project).stream().forEach(Task -> removalRequests.addAll(Task.viewPendingTaskRemovalRequests()));
+
+		return removalRequests;
+	}
+
+
+
 }

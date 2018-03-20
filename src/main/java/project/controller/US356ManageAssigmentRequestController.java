@@ -1,7 +1,10 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
+import project.model.Task;
 import project.model.TaskTeamRequest;
 
 import java.util.List;
@@ -10,7 +13,14 @@ public class US356ManageAssigmentRequestController {
 
 	Project selectedProject;
 	TaskTeamRequest selectedAdditionRequest;
-	ProjectService projectContainer = new ProjectService();
+	Task selectedTask;
+
+	@Autowired
+	ProjectService projectContainer;
+
+	@Autowired
+	TaskService taskService;
+
 
 	/*
 	 * This controller manages Addition Requests by Project Collaborators * respond
@@ -34,7 +44,7 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public List<String> showAllAssignmentRequests() {
 
-		return selectedProject.viewPendingTaskAssignementRequests();
+		return taskService.viewAllProjectTaskAssignmentRequests(selectedProject);
 	}
 
 	/**
@@ -45,8 +55,8 @@ public class US356ManageAssigmentRequestController {
 	 *            Index of the request.
 	 */
 	public void setSelectedAdditionRequest(int index) {
-		this.selectedAdditionRequest = selectedProject.getPendingTaskAssignementRequests().get(index);
-		projectContainer.saveProjectInRepository(selectedProject);
+		this.selectedAdditionRequest = taskService.getAllProjectTaskAssignmentRequests(selectedProject).get(index);
+		this.selectedTask= selectedAdditionRequest.getTask();
 	}
 
 	/**
@@ -59,9 +69,9 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public boolean approveAssignmentRequest() {
 		if (selectedAdditionRequest != null) {
-			selectedAdditionRequest.getTask().addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
+			selectedTask.addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
 			deleteRequest();
-			projectContainer.saveProjectInRepository(selectedProject);
+
 			return true;
 		} else
 			return false;
@@ -78,7 +88,7 @@ public class US356ManageAssigmentRequestController {
 	public boolean rejectAssignmentRequest() {
 		if (selectedAdditionRequest != null) {
 			deleteRequest();
-			projectContainer.saveProjectInRepository(selectedProject);
+
 			return true;
 		} else
 			return false;
@@ -91,7 +101,7 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public void deleteRequest() {
 
-		selectedProject.deleteTaskAssignementRequest(this.selectedAdditionRequest);
-		projectContainer.saveProjectInRepository(selectedProject);
+		selectedTask.deleteTaskAssignementRequest(selectedAdditionRequest.getProjCollab());
+		taskService.saveTask(selectedTask);
 	}
 }

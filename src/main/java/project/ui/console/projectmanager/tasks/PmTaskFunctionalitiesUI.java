@@ -1,5 +1,8 @@
 package project.ui.console.projectmanager.tasks;
 
+import java.util.Scanner;
+
+import project.Services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.TaskService;
 import project.controller.PrintProjectInfoController;
@@ -9,8 +12,6 @@ import project.model.Project;
 import project.model.Task;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-
-import java.util.Scanner;
 
 public class PmTaskFunctionalitiesUI {
 

@@ -1,6 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.Services.UserService;
 import project.model.*;
 
@@ -19,7 +21,16 @@ public class US357CancelRemovalTaskRequestController {
 	Project project;
 	Task task;
 	User userToRemove;
-	ProjectService projectContainer = new ProjectService();
+
+	@Autowired
+	UserService userService;
+
+	@Autowired
+	ProjectService projectService;
+
+	@Autowired
+	TaskService taskService;
+
 
 	/**
 	 * Constructor to instantiate a new US357CancelRemoveTaskRequestController
@@ -42,10 +53,7 @@ public class US357CancelRemovalTaskRequestController {
 	 */
 	public List<String> viewPendingRemovalRequests() {
 
-		List<String> listOfPendingRemovalRequests = new ArrayList<>();
-		listOfPendingRemovalRequests.addAll(project.viewPendingTaskRemovalRequests());
-
-		return listOfPendingRemovalRequests;
+		return taskService.viewAllProjectTaskRemovalRequests(project);
 	}
 
 	/**
@@ -57,15 +65,13 @@ public class US357CancelRemovalTaskRequestController {
 	 *            Information of the request chosen by the user.
 	 */
 	public void setTaskIDandUserEmailWithRequestString(String requestData) {
-		UserService userContainer = new UserService();
-		userContainer.updateUserContainer();
 		String[] parts = requestData.split("\n");
 		String userEmail = parts[1];
 		String taskID = parts[2];
 
-		this.userToRemove = userContainer.getUserByEmail(userEmail);
-		this.task = project.getTaskRepository().getTaskByID(taskID);
-		projectContainer.saveProjectInRepository(this.project);
+		this.userToRemove = userService.getUserByEmail(userEmail);
+		this.task = taskService.getTaskByTaskID(taskID);
+
 	}
 
 	/**
@@ -78,13 +84,13 @@ public class US357CancelRemovalTaskRequestController {
 	public boolean acceptRemovalRequestFromTask() {
 		boolean acceptRemovalRequestFromTask = false;
 		// Gets the project collaborator correspondent to the user
-		ProjectCollaborator projectCollaboratorFromUser = project.findProjectCollaborator(this.userToRemove);
+		ProjectCollaborator projectCollaboratorFromUser = projectService.findActiveProjectCollaborator(this.userToRemove, project);
 
 		// Removes the project Collaborator correspondent to the user from task.
 		this.task.removeProjectCollaboratorFromTask(projectCollaboratorFromUser);
 		// Deletes the request from the pendingRemovalRequestList
-		if(project.deleteTaskRemovalRequest(projectCollaboratorFromUser, this.task)){
-			projectContainer.saveProjectInRepository(this.project);
+		if(task.deleteTaskRemovalRequest(projectCollaboratorFromUser)){
+			taskService.saveTask(task);
 			acceptRemovalRequestFromTask = true;
 		}
 
@@ -101,11 +107,11 @@ public class US357CancelRemovalTaskRequestController {
 	public boolean cancelRemovalRequestFromTask() {
 		boolean cancelRemovalRequestFromTask = false;
 		// Gets the project collaborator correspondent to the user
-		ProjectCollaborator projectCollaboratorFromUser = project.findProjectCollaborator(this.userToRemove);
+		ProjectCollaborator projectCollaboratorFromUser = projectService.findActiveProjectCollaborator(this.userToRemove, project);
 
-		if(project.deleteTaskRemovalRequest(projectCollaboratorFromUser, this.task)){
+		if(task.deleteTaskRemovalRequest(projectCollaboratorFromUser)){
+			taskService.saveTask(task);
 			cancelRemovalRequestFromTask = true;
-			projectContainer.saveProjectInRepository(this.project);
 		}
 		return	cancelRemovalRequestFromTask;
 	}
