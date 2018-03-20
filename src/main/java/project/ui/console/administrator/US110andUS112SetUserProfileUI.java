@@ -1,11 +1,11 @@
 package project.ui.console.administrator;
 
+import java.util.Scanner;
+
 import project.controller.US110andUS112SetUserProfileController;
 import project.controller.US115andUS116SetUserStateController;
 import project.controller.UpdateDbToContainersController;
 import project.model.User;
-
-import java.util.Scanner;
 
 public class US110andUS112SetUserProfileUI {
 
@@ -15,7 +15,7 @@ public class US110andUS112SetUserProfileUI {
 		Scanner input = new Scanner(System.in);
 		String option;
 		US110andUS112SetUserProfileController controllerA = new US110andUS112SetUserProfileController();
-		US115andUS116SetUserStateController controllerB = new US115andUS116SetUserStateController(user);
+		US115andUS116SetUserStateController controllerB = new US115andUS116SetUserStateController();
 		System.out.println(user.getIdNumber() + " - " + controllerB.userStateAsString() + ": " + user.getName() + " - "
 				+ controllerA.userProfileAsString(user));
 		switch (user.getUserProfile()) {

@@ -58,7 +58,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	/**
 	 * This methods gets all team collaborator name in the form of a List of
 	 * Strings,
-	 * 
+	 *
 	 * 
 	 * @return user name List
 	 */
