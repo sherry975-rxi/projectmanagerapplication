@@ -44,7 +44,7 @@ public class User implements Serializable {
 	/**
 	 * Empty Constructor for User
 	 */
-	protected User() {
+	public User() {
 	}
 
 	/**
