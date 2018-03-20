@@ -1,17 +1,19 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import project.Services.UserService;
 import project.model.User;
 
-
+@Controller
 public class US115andUS116SetUserStateController {
 
-	private UserService userContainer;
+	@Autowired
+	UserService userContainer;
 
 	User toChangeState;
+
 	public User getToChangeState() {
 		return toChangeState;
 	}
@@ -19,10 +21,6 @@ public class US115andUS116SetUserStateController {
 	public void setToChangeState(User toChangeState) {
 		this.toChangeState = toChangeState;
 	}
-
-
-
-
 
 	public UserService getUserContainer() {
 		return userContainer;
@@ -39,14 +37,15 @@ public class US115andUS116SetUserStateController {
 	 * @param toChange
 	 *            selected User
 	 */
-	public US115andUS116SetUserStateController() {	}
+	public US115andUS116SetUserStateController() {
+	}
 
 	/**
 	 * 
 	 * This method is called only after the controller is created, and changes the
 	 * user's state
 	 *
-	 * Then, it saves the updated user to the database	 *
+	 * Then, it saves the updated user to the database *
 	 * 
 	 */
 	public void changeUserState() {
