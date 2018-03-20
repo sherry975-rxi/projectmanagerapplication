@@ -133,28 +133,6 @@ public class PrintProjectInfoControllerTest {
 
 	}
 
-	@After
-	public void tearDown() {
-		taskRepository.deleteAll();
-		projCollabRepository.deleteAll();
-		projRepository.deleteAll();
-		userRepository.deleteAll();
-
-
-		userContainer = null;
-		projectContainer = null;
-		user1 = null;
-		joaoPM = null;
-		project = null;
-		startDate = null;
-		finishDate = null;
-		taskContainer = null;
-		task1 = null;
-		task2 = null;
-		task3 = null;
-		collab1 = null;
-	}
-
 	/**
 	 * Tests if the method of controller gets the project's name
 	 */
@@ -170,7 +148,7 @@ public class PrintProjectInfoControllerTest {
 	@Test
 	public void testPrintProjectIDCodeInfo() {
 
-	    Integer projectID = project.getIdCode();
+	    String projectID = String.valueOf(project.getIdCode());
 
 		assertEquals(controller.printProjectIDCodeInfo(), projectID);
 	}
