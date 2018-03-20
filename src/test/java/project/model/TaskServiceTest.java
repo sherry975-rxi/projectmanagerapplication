@@ -50,6 +50,7 @@ public class TaskServiceTest {
 		private Calendar startDate;
 		private Project project;
 		private User user;
+		private Task notAmock;
 		private ProjectCollaborator projectCollaborator;
 		private TaskCollaborator taskCollaborator;
 
@@ -83,6 +84,7 @@ public class TaskServiceTest {
 			this.project = victimProject.createProject("name3", "description4", user);
 			this.projectCollaborator = new ProjectCollaborator(user, 10);
 			this.taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
+
 
 			project = victimProject.createProject("testing", "Test", user);
 		}
@@ -736,4 +738,83 @@ public class TaskServiceTest {
 			expectedTaskList.add(taskMock);
 			assertEquals(expectedTaskList, victimTask.getTaskListOfWhichDependenciesCanBeCreated(project));
 		}
+
+        /**
+         *
+         *  This test confirms all the methods to get and view the lists of requests are working correctly
+         *
+         */
+
+		@Test
+		public void testGetAssignment_RemovalRequestsList(){
+
+		        // given a new task in project, asserts it has no requests and no active team
+
+				notAmock = project.createTask("This is not a mock");
+
+				List<Task> expected = new ArrayList<>();
+				expected.add(notAmock);
+
+				victimTask.saveTask(taskMock);
+
+				verify(taskRepository, times(1)).save(taskMock);
+
+                when(taskRepository.findAllByProject(project)).thenReturn(expected);
+
+				assertEquals(victimTask.getAllProjectTaskAssignmentRequests(project).size(), 0);
+                assertEquals(victimTask.viewAllProjectTaskAssignmentRequests(project).size(), 0);
+                assertEquals(victimTask.getAllProjectTaskRemovalRequests(project).size(), 0);
+                assertEquals(victimTask.viewAllProjectTaskRemovalRequests(project).size(), 0);
+
+
+                assertFalse(notAmock.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
+
+
+                // when the task assignment requests is created, asserts the lists of assignment requests contain 1 entry
+                notAmock.createTaskAssignementRequest(projectCollaborator);
+
+                assertEquals(victimTask.getAllProjectTaskAssignmentRequests(project).size(), 1);
+                assertEquals(victimTask.viewAllProjectTaskAssignmentRequests(project).size(), 1);
+                assertEquals(victimTask.getAllProjectTaskRemovalRequests(project).size(), 0);
+                assertEquals(victimTask.viewAllProjectTaskRemovalRequests(project).size(), 0);
+
+
+                // then, deletes the request and adds the collaborator to the task, asseting all lists become empty
+                // and that the task team contains the project collaborator
+                assertTrue(notAmock.deleteTaskAssignementRequest(projectCollaborator));
+                notAmock.addProjectCollaboratorToTask(projectCollaborator);
+
+                assertEquals(victimTask.getAllProjectTaskAssignmentRequests(project).size(), 0);
+                assertEquals(victimTask.viewAllProjectTaskAssignmentRequests(project).size(), 0);
+                assertEquals(victimTask.getAllProjectTaskRemovalRequests(project).size(), 0);
+                assertEquals(victimTask.viewAllProjectTaskRemovalRequests(project).size(), 0);
+
+                assertTrue(notAmock.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
+
+                // when a task removal request is created for projectCollaborator
+                // asserts the task removal requests contain 1 entry
+
+                notAmock.createTaskRemovalRequest(projectCollaborator);
+
+                assertEquals(victimTask.getAllProjectTaskAssignmentRequests(project), 0);
+                assertEquals(victimTask.viewAllProjectTaskAssignmentRequests(project), 0);
+                assertEquals(victimTask.getAllProjectTaskRemovalRequests(project), 1);
+                assertEquals(victimTask.viewAllProjectTaskRemovalRequests(project), 1);
+
+
+                // then, approves the request and deletes it, asserting the list of requests all contain 0 entries
+                // and that projectCollaborator is no longer active on task
+                assertTrue(notAmock.deleteTaskRemovalRequest(projectCollaborator));
+                notAmock.removeProjectCollaboratorFromTask(projectCollaborator);
+
+                assertFalse(notAmock.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
+
+                assertEquals(victimTask.getAllProjectTaskAssignmentRequests(project), 0);
+                assertEquals(victimTask.viewAllProjectTaskAssignmentRequests(project), 0);
+                assertEquals(victimTask.getAllProjectTaskRemovalRequests(project), 0);
+                assertEquals(victimTask.viewAllProjectTaskRemovalRequests(project), 0);
+
+        }
+
+
 }
