@@ -36,7 +36,7 @@ public class US110andUS112SetUserProfileControllerTests {
 		userContainer.setUserRepository(userRepository);
 
 		us110andUS112SetUserProfileController = new US110andUS112SetUserProfileController();
-		us110andUS112SetUserProfileController.setUserContainer(userContainer);
+		us110andUS112SetUserProfileController.userService = userContainer;
 
 		newUser2 = us110andUS112SetUserProfileController.getUserContainer().createUser("Manel", "user2@gmail.com",
 				"001", "Empregado", "930000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");

@@ -11,11 +11,7 @@ import project.model.User;
 public class US110andUS112SetUserProfileController {
 
 	@Autowired
-	private UserService userService;
-
-	public void setUserContainer(UserService userService) {
-		this.userService = userService;
-	}
+	public UserService userService;
 
 	public UserService getUserContainer() {
 		return userService;
