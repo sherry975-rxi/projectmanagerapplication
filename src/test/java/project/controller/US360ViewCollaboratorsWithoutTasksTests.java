@@ -3,6 +3,18 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import project.Repository.ProjCollabRepository;
+import project.Repository.ProjectsRepository;
+import project.Repository.TaskRepository;
+import project.Repository.UserRepository;
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -12,8 +24,27 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class US360ViewCollaboratorsWithoutTasksTests {
 
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	ProjectsRepository projectRepository;
+	
+	@Autowired
+	TaskRepository taskRepository;
+	
+	@Autowired
+	ProjCollabRepository projectCollaboratorRepository;
+	
+	US360ViewCollaboratorsWithoutTasksController us360controller;
+	US360GetProjectTasksWithoutCollaboratorsAssignedController tasksFiltersController;
+	UserService userContainer;
+	ProjectService projectContainer;
+	TaskService taskContainer;
 	User userManager;
 	User activeCollaborator;
 	User idleCollaborator;
@@ -23,30 +54,58 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 	Task taskWithTeam;
 	Task taskWithNoTeam;
 
-	US360ViewCollaboratorsWithoutTasksController us360controller;
 
 	String idleProjCollabInfo;
 
 	@Before
 	public void setUp() {
+		
+		// creates an UserContainer
+		userContainer = new UserService();
+		userContainer.setUserRepository(userRepository);
+								
+		// creates a Project Container
+		projectContainer = new ProjectService();
+		projectContainer.setProjectsRepository(projectRepository);
+		projectContainer.setProjectCollaboratorRepository(projectCollaboratorRepository);
+		
+		// creates a Task Container
+		taskContainer = new TaskService();
+		taskContainer.setTaskRepository(taskRepository);
+		
+		// creates the controller
+		tasksFiltersController = new US360GetProjectTasksWithoutCollaboratorsAssignedController();
+		tasksFiltersController.taskService = taskContainer;
 
 		// creates two users, one manager, and two collaborators
 		userManager = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
 		activeCollaborator = new User("João", "joao@gmail.com", "002", "Admin", "930000000");
 		idleCollaborator = new User("Lazy Boi", "nope@gmail.com", "003", "Slacker", "920000000");
+		
+		// saves users in database
+		userContainer.addUserToUserRepositoryX(userManager);
+		userContainer.addUserToUserRepositoryX(activeCollaborator);
+		userContainer.addUserToUserRepositoryX(idleCollaborator);
 
-		// creates a project and adds both active and idle Collaborators to the team
-		testStuff = new Project(1, "Testing controllers", "for great testing", userManager);
+		// creates a project 
+//		testStuff = new Project(1, "Testing controllers", "for great testing", userManager);
+		testStuff = projectContainer.createProject("1", "Testing controllers", userManager);
+		// save project "testStuff" in database
+		projectContainer.addProjectToProjectContainer(testStuff);
+		// Add both active and idle Collaborators to the project team
 		activeProjCollab = testStuff.createProjectCollaborator(activeCollaborator, 400);
 		idleProjCollab = testStuff.createProjectCollaborator(idleCollaborator, 420);
-		testStuff.addProjectCollaboratorToProjectTeam(activeProjCollab);
-		testStuff.addProjectCollaboratorToProjectTeam(idleProjCollab);
+//		testStuff.addProjectCollaboratorToProjectTeam(activeProjCollab);
+//		testStuff.addProjectCollaboratorToProjectTeam(idleProjCollab);
+		
+		projectContainer.addProjectCollaborator(activeProjCollab);
+		projectContainer.addProjectCollaborator(idleProjCollab);
 
 		// creates two tasks and adds the to the project's task repository
-		taskWithTeam = testStuff.getTaskService().createTask("This one has a team");
-		taskWithNoTeam = testStuff.getTaskService().createTask("This one does not");
-		testStuff.getTaskService().addTaskToProject(taskWithTeam);
-		testStuff.getTaskService().addTaskToProject(taskWithNoTeam);
+		taskWithTeam = taskContainer.createTask("This one has a team", testStuff);
+		taskWithNoTeam = taskContainer.createTask("This one does not", testStuff);
+//		testStuff.getTaskService().addTaskToProject(taskWithTeam);
+//		testStuff.getTaskService().addTaskToProject(taskWithNoTeam);
 
 		// adds the active team member to a task, and creates an expected String of data
 		// belonging to the idle team member
@@ -54,23 +113,27 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 
 		idleProjCollabInfo = "003: Lazy Boi (nope@gmail.com; 920000000) - Slacker [COST/EFFORT: 420]";
 
-		us360controller = new US360ViewCollaboratorsWithoutTasksController(testStuff);
+//		us360controller = new US360ViewCollaboratorsWithoutTasksController(testStuff);
+		// creates the controller
+		us360controller = new US360ViewCollaboratorsWithoutTasksController();
+		us360controller.taskService = taskContainer;
+		us360controller.projectService = projectContainer;
 	}
 
-	@After
-	public void tearDown() {
-		userManager = null;
-		activeCollaborator = null;
-		idleCollaborator = null;
-
-		activeProjCollab = null;
-		idleProjCollab = null;
-		taskWithTeam = null;
-		taskWithNoTeam = null;
-
-		us360controller = null;
-
-	}
+//	@After
+//	public void tearDown() {
+//		userManager = null;
+//		activeCollaborator = null;
+//		idleCollaborator = null;
+//
+//		activeProjCollab = null;
+//		idleProjCollab = null;
+//		taskWithTeam = null;
+//		taskWithNoTeam = null;
+//
+//		us360controller = null;
+//
+//	}
 
 	/**
 	 * 
@@ -86,6 +149,10 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 	public void testCollaboratorToString() {
 
 		String testResult = us360controller.collaboratorDataAsString(idleProjCollab);
+		
+		System.out.println(testResult);
+		System.out.println("==============************++++++++++||______________a");
+		System.out.println(idleProjCollabInfo);
 
 		assertTrue(testResult.equals(idleProjCollabInfo));
 	}
@@ -105,13 +172,13 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 
 		// calls the showCollaboratorsWithoutTasks() method from the controller
 		// then saves the output in a testing list
-		List<String> testingList = us360controller.showCollaboratorsWithoutTasks();
+		List<String> testingList = us360controller.showCollaboratorsWithoutTasks(testStuff);
 
 		// given that activeProjectCollaborator has a Task assigned
 		// and idleProjectCollaborator has no tasks assigned
 		// asserts both those conditions are correct
-		assertFalse(testStuff.getTaskService().isCollaboratorActiveOnAnyTask(idleProjCollab));
-		assertTrue(testStuff.getTaskService().isCollaboratorActiveOnAnyTask(activeProjCollab));
+		assertFalse(taskContainer.isCollaboratorActiveOnAnyTask(idleProjCollab));
+		assertTrue(taskContainer.isCollaboratorActiveOnAnyTask(activeProjCollab));
 
 		// then, asserts the list of idle team members contains only one entry
 		// and that the Idle Team member's information is inside the list
@@ -122,10 +189,10 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 		// the Idle Team member is added to a task
 
 		taskWithTeam.addProjectCollaboratorToTask(idleProjCollab);
-		assertTrue(us360controller.showCollaboratorsWithoutTasks().isEmpty());
+		assertTrue(us360controller.showCollaboratorsWithoutTasks(testStuff).isEmpty());
 
 		taskWithTeam.removeAllCollaboratorsFromTaskTeam();
-		assertFalse(us360controller.showCollaboratorsWithoutTasks().isEmpty());
+		assertFalse(us360controller.showCollaboratorsWithoutTasks(testStuff).isEmpty());
 	}
 
 }
