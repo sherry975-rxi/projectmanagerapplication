@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.tasks;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import project.Services.TaskService;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.UpdateDbToContainersController;
@@ -16,12 +18,14 @@ public class PmTaskFunctionalitiesUI {
 	private String taskID;
 	private User user;
 	private Task task;
+	@Autowired
+	TaskService taskService;
 
 	public PmTaskFunctionalitiesUI(String taskID, Project project, User user) {
 		this.taskID = taskID;
 		this.project = project;
 		this.user = user;
-		this.task = project.getTaskRepository().getTaskByID(taskID);
+		this.task = taskService.getTaskByTaskID(taskID);
 	}
 
 	public void taskDataDisplay() {
