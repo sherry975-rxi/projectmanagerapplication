@@ -1,17 +1,23 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Controller
 public class US135andUS136SearchUsersController {
+
+	@Autowired
+	UserService userContainer;
 
 	List<User> userList;
 	User selectedUser = null;
-	UserService userContainer;
 
 	/**
 	 * Este controlador permite ao Administrador pesquisar utilizadores do sistema
@@ -25,6 +31,11 @@ public class US135andUS136SearchUsersController {
 	 * @return This method returns a list of user's Data Strings with the profile
 	 *         that match the user profile
 	 */
+
+	public void setUserContainer(UserService userContainer) {
+		this.userContainer = userContainer;
+	}
+
 	public List<String> searchUsersByProfileController(Profile profileToSearch) {
 		this.userList = userContainer.searchUsersByProfile(profileToSearch);
 
@@ -97,8 +108,8 @@ public class US135andUS136SearchUsersController {
 			profile = "Unassigned";
 		}
 
-		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " ("
-				+ toConvert.getEmail() + "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
+		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " (" + toConvert.getEmail()
+				+ "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
 	}
 
 }

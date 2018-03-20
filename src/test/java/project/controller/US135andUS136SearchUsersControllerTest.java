@@ -1,19 +1,26 @@
 package project.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import project.Services.UserService;
-import project.model.Profile;
-import project.model.User;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import project.Repository.UserRepository;
+import project.Services.UserService;
+import project.model.Profile;
+import project.model.User;
+
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class US135andUS136SearchUsersControllerTest {
 
 	/**
@@ -26,36 +33,45 @@ public class US135andUS136SearchUsersControllerTest {
 	User newUser1;
 	User newUser2;
 	User newUser3;
-	UserService userContainer;
+	UserService userService;
+
+	@Autowired
+	private UserRepository userRepo;
+
 	US135andUS136SearchUsersController searchController;
 
 	@Before
 	public void setUp() {
 
 		// creates an UserContainer
-		userContainer = new UserService();
-
-		// create user
-		newUser1 = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
-		// create user2
-		newUser2 = new User("João", "joao@gmail.com", "001", "Admin", "920000000");
-
-		// create user3
-		newUser3 = new User("Miguel", "miguel@gmail.com", "001", "Admin", "920000000");
-
-		/* Adds the created users to the user Repository */
-		userContainer.addUserToUserRepository(newUser1);
-		userContainer.addUserToUserRepository(newUser2);
-		userContainer.addUserToUserRepository(newUser3);
-
+		userService = new UserService();
+		userService.setUserRepository(userRepo);
 		// Creates a searchController
 		searchController = new US135andUS136SearchUsersController();
+		searchController.setUserContainer(userService);
+
+		// create user
+		newUser1 = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
+				"4480", "Porto", "Porto", "Portugal");
+		// create user2
+		newUser2 = userService.createUser("Joao", "joao@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
+				"4480", "Porto", "Porto", "Portugal");
+		// create user3
+		newUser3 = userService.createUser("Rui", "rui@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
+				"4480", "Porto", "Porto", "Portugal");
+
+		/* Adds the created users to the user Repository */
+		userService.addUserToUserRepositoryX(newUser1);
+		userService.addUserToUserRepositoryX(newUser2);
+		userService.addUserToUserRepositoryX(newUser3);
+
+		userService.updateUserContainer();
 
 	}
 
 	@After
 	public void tearDown() {
-		userContainer = null;
+		userService = null;
 		searchController = null;
 		newUser1 = null;
 		newUser2 = null;
@@ -85,7 +101,7 @@ public class US135andUS136SearchUsersControllerTest {
 
 		// Creates a String data for newUser1 and compares it to the the ToString Method
 		// from the controller
-		String newUser1String = "001 - Collaborator: Daniel (daniel@gmail.com; 910000000) - collaborator";
+		String newUser1String = "01 - Collaborator: Ana (ana@gmail.com; 221238442) - collaborator";
 		assertTrue(searchController.userDataToString(newUser1).equals(newUser1String));
 
 		/*
@@ -145,16 +161,35 @@ public class US135andUS136SearchUsersControllerTest {
 	@Test
 	public void testUserDataToString() {
 
-		String result = "001 - Unassigned: Daniel (daniel@gmail.com; 910000000) - collaborator";
-		assertTrue(result.equals(searchController.userDataToString(newUser1)));
+		/*
+		 * Checks if the method UserDataToString returns the expected values
+		 */
 
+		String result = "01 - Unassigned: Ana (ana@gmail.com; 221238442) - collaborator";
+		assertTrue(searchController.userDataToString(newUser1).equals(result));
+
+		/*
+		 * Updates the userProfile to Collaborator
+		 */
 		newUser1.setUserProfile(Profile.COLLABORATOR);
-		result = "001 - Collaborator: Daniel (daniel@gmail.com; 910000000) - collaborator";
+		result = "01 - Collaborator: Ana (ana@gmail.com; 221238442) - collaborator";
+
+		/*
+		 * Checks that the method returns its new data updated as Collaborator
+		 */
 		assertTrue(result.equals(searchController.userDataToString(newUser1)));
 
+		/*
+		 * Updates the userProfile to Director
+		 */
 		newUser1.setUserProfile(Profile.DIRECTOR);
-		result = "001 - Director: Daniel (daniel@gmail.com; 910000000) - collaborator";
+
+		/*
+		 * Checks that the method returns its new data updated as Collaborator
+		 */
+		result = "01 - Director: Ana (ana@gmail.com; 221238442) - collaborator";
 		assertTrue(result.equals(searchController.userDataToString(newUser1)));
+
 	}
 
 }
