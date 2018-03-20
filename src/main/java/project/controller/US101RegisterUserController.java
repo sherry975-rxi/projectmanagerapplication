@@ -1,22 +1,15 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import project.Services.UserService;
 import project.dto.UserDTO;
 
+@Controller
 public class US101RegisterUserController {
 
+	@Autowired
 	UserService userRegistry;
-
-	/**
-	 * This constructor creates a user Registration controller. *
-	 * 
-	 */
-	public US101RegisterUserController() {
-
-		this.userRegistry = new UserService();
-
-
-	}
 
 
 	/**
