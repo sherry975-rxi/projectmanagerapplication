@@ -4,6 +4,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.Repository.ProjCollabRepository;
+import project.Repository.ProjectsRepository;
+import project.Repository.TaskRepository;
+import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
@@ -16,32 +24,54 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class CalculateReportedProjectCostControllerTest {
 
 	/**
-	 * 
+	 *
 	 * This class tests the CalculateReportedProjectCostController class
 	 *
 	 */
-	private ProjectService projContainer = new ProjectService();
-	UserService userContainer = new UserService();
+
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	ProjectsRepository projectsRepository;
+
+	@Autowired
+	ProjCollabRepository projCollabRepository;
+
+	@Autowired
+	TaskRepository taskRepository;
+
+	private ProjectService projContainer;
+
+	UserService userContainer;
+
+
+	private TaskService taskContainer;
+
+
 	private User userDaniel;
 	private User userJonny;
 	private User userMike;
 	private User userAna;
-	Project project;
+	private User projectManager;
+	private Project project;
 	private ProjectCollaborator projectUserDaniel;
 	private ProjectCollaborator projectUserJonny;
 	private ProjectCollaborator projectUserMike;
 	private ProjectCollaborator projectUserAna;
-	ProjectService projectContainer;
-	private TaskService taskContainer;
+
 	private Task testTask;
 	private Task testTask2;
 	private TaskCollaborator taskWorkerDaniel;
 	private TaskCollaborator taskWorkerJonny;
 	private TaskCollaborator taskWorkerMike;
 	private TaskCollaborator taskWorkerAna;
+
 	private CalculateReportedProjectCostController controllerCost;
 
 	private double totalCost;
@@ -49,26 +79,29 @@ public class CalculateReportedProjectCostControllerTest {
 	@Before
 	public void setUp() {
 
+
+		userContainer = new UserService();
+		userContainer.setUserRepository(userRepository);
+
+		projContainer = new ProjectService(projectsRepository, projCollabRepository);
+
+		taskContainer = new TaskService();
+		taskContainer.setTaskRepository(taskRepository);
+		taskContainer.setProjectCollaboratorRepository(projCollabRepository);
+
 		// create user
-		userDaniel = new User("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000");
+		userDaniel = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "test","test","test","test","test");
 		// create user2
-		userJonny = new User("João", "joao@gmail.com", "002", "Not Admin", "920000000");
+		userJonny = userContainer.createUser("João", "joao@gmail.com", "002", "Not Admin", "920000000", "test","test","test","test","test");
 
 		// create user3
-		userMike = new User("Miguel", "miguel@gmail.com", "003", "Not Admin", "920000000");
+		userMike = userContainer.createUser("Miguel", "miguel@gmail.com", "003", "Not Admin", "920000000", "test","test","test","test","test");
 
 		// create user4
-		userAna = new User("Ana", "ana@gmail.com", "004", "Not Admin", "920000000");
+		userAna = userContainer.createUser("Ana", "ana@gmail.com", "004", "Not Admin", "920000000", "test","test","test","test","test");
 
 		// create projectManager
-		User projectManager = new User("Manager boi", "manger@gmail.com", "005", "Kinda Admin", "920000000");
-
-		// adds all users to user list
-		userContainer.addUserToUserRepository(userDaniel);
-		userContainer.addUserToUserRepository(userJonny);
-		userContainer.addUserToUserRepository(userMike);
-		userContainer.addUserToUserRepository(userAna);
-		userContainer.addUserToUserRepository(projectManager);
+		projectManager = userContainer.createUser("Manager boi", "manger@gmail.com", "005", "Kinda Admin", "920000000", "test","test","test","test","test");
 
 		// set user as collaborator
 		userDaniel.setUserProfile(Profile.COLLABORATOR);
@@ -76,20 +109,21 @@ public class CalculateReportedProjectCostControllerTest {
 		userMike.setUserProfile(Profile.COLLABORATOR);
 		userAna.setUserProfile(Profile.COLLABORATOR);
 
+		// adds all users to user list
+		userContainer.addUserToUserRepositoryX(userDaniel);
+		userContainer.addUserToUserRepositoryX(userJonny);
+		userContainer.addUserToUserRepositoryX(userMike);
+		userContainer.addUserToUserRepositoryX(userAna);
+		userContainer.addUserToUserRepositoryX(projectManager);
+
 		// create project and add it to project list
-		project = new Project(0, "Make things", "Test: CalculateReportedProjectCost", projectManager);
-		projContainer.addProjectToProjectContainer(project);
+		project = projContainer.createProject("Make things", "Test: CalculateReportedProjectCost", projectManager);
 
 		// creates 4 Project Collaborators and adds them to the project
-		projectUserDaniel = project.createProjectCollaborator(userDaniel, 10);
-		projectUserJonny = project.createProjectCollaborator(userJonny, 20);
-		projectUserMike = project.createProjectCollaborator(userMike, 5);
-		projectUserAna = project.createProjectCollaborator(userAna, 3);
-
-		project.addProjectCollaboratorToProjectTeam(projectUserDaniel);
-		project.addProjectCollaboratorToProjectTeam(projectUserJonny);
-		project.addProjectCollaboratorToProjectTeam(projectUserMike);
-		project.addProjectCollaboratorToProjectTeam(projectUserAna);
+		projectUserDaniel = projContainer.createProjectCollaborator(userDaniel, project, 10);
+		projectUserJonny = projContainer.createProjectCollaborator(userJonny, project, 20);
+		projectUserMike = projContainer.createProjectCollaborator(userMike, project, 5);
+		projectUserAna = projContainer.createProjectCollaborator(userAna, project, 10);
 
 		// create a estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -104,16 +138,16 @@ public class CalculateReportedProjectCostControllerTest {
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 20);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// create taskContainer
-		taskContainer = project.getTaskRepository();
-
-		testTask = taskContainer.createTask("Testin once", 10, estimatedTaskStartDateTest, taskDeadlineDateTest, 10);
-		testTask2 = taskContainer.createTask("Test dis agen pls", 10, estimatedTaskStartDateTest, taskDeadlineDateTest,
-				10);
+		testTask = taskContainer.createTask("Testin once", project);
+		testTask2 = taskContainer.createTask("Test dis agen pls", project);
+		testTask.setStartDate(estimatedTaskStartDateTest);
+		testTask2.setStartDate(estimatedTaskStartDateTest);
+		testTask.setTaskDeadline(taskDeadlineDateTest);
+		testTask2.setTaskDeadline(taskDeadlineDateTest);
 
 		// Adds Tasks to TaskContainer
-		taskContainer.addTaskToProject(testTask);
-		taskContainer.addTaskToProject(testTask2);
+		taskContainer.saveTask(testTask);
+		taskContainer.saveTask(testTask2);
 
 		// Creates 4 Task Workers
 		taskWorkerDaniel = testTask.createTaskCollaborator(projectUserDaniel);
@@ -128,6 +162,11 @@ public class CalculateReportedProjectCostControllerTest {
 
 	@After
 	public void tearDown() {
+
+		userRepository.deleteAll();
+		projectsRepository.deleteAll();
+		projCollabRepository.deleteAll();
+		taskRepository.deleteAll();
 
 		projContainer = null;
 		userContainer = null;
@@ -146,7 +185,7 @@ public class CalculateReportedProjectCostControllerTest {
 		testTask = null;
 		testTask2 = null;
 		project = null;
-		projectContainer = null;
+
 		taskContainer = null;
 		totalCost = 0.0;
 		controllerCost = null;
@@ -167,6 +206,9 @@ public class CalculateReportedProjectCostControllerTest {
 		testTask2.createReport(taskWorkerMike, Calendar.getInstance(), 2);
 		testTask2.createReport(taskWorkerAna, Calendar.getInstance(), 3);
 
+		taskContainer.saveTask(testTask);
+		taskContainer.saveTask(testTask2);
+
 		// Calculates the value of the project - Equals to to the sum of the total hours
 		// spent times the cost of each TaskWorker
 
@@ -179,6 +221,7 @@ public class CalculateReportedProjectCostControllerTest {
 
 		// Creates a CalculateReportedProjectCostController
 		controllerCost = new CalculateReportedProjectCostController();
+		controllerCost.taskService=this.taskContainer;
 
 		// Compares the 2 values
 		assertEquals(totalCost, controllerCost.calculateReportedProjectCostController(project), 0.01);
@@ -198,6 +241,11 @@ public class CalculateReportedProjectCostControllerTest {
 		testTask.createReport(taskWorkerJonny, Calendar.getInstance(), 10);
 		testTask.getReports().get(1).setReportedTime(10);
 
+
+		taskContainer.saveTask(testTask);
+		taskContainer.saveTask(testTask2);
+
+
 		// Creates a new list of ReporCcost
 		List<String> reportedCost = new ArrayList<>();
 
@@ -208,6 +256,8 @@ public class CalculateReportedProjectCostControllerTest {
 
 		// Creates a CalculateReportedProjectCostController
 		controllerCost = new CalculateReportedProjectCostController();
+		controllerCost.taskService=this.taskContainer;
+
 		assertEquals(reportedCost, controllerCost.calculeReportedCostOfEachTaskController(project));
 
 	}
@@ -216,9 +266,14 @@ public class CalculateReportedProjectCostControllerTest {
 	public void testGetTaskId() {
 		// Creates a CalculateReportedProjectCostController
 		controllerCost = new CalculateReportedProjectCostController();
+		controllerCost.taskService=this.taskContainer;
 
-		assertTrue("0.1".equals(controllerCost.getTaskId(project).get(0)));
-		assertTrue("0.2".equals(controllerCost.getTaskId(project).get(1)));
+		System.out.print(project.getId());
+
+		Integer projectID = project.getId();
+
+		assertTrue((projectID+".1").equals(controllerCost.getTaskId(project).get(0)));
+		assertTrue((projectID+".2").equals(controllerCost.getTaskId(project).get(1)));
 	}
 
 }

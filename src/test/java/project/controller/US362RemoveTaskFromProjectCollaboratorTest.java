@@ -75,7 +75,7 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 
 		// create taskContainer
 
-		taskContainer = project.getTaskRepository();
+		taskContainer = project.getTaskService();
 
 		// create 4 tasks
 		testTask = taskContainer.createTask("Test dis agen pls");

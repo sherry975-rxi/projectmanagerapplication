@@ -1,0 +1,19 @@
+title Project manager: Calculate reported cost of project
+
+Actor->UI: View Project cost
+note right of UI: Bob thinks about it
+UI->Controller: getReportedCostOfProject(project)
+
+Controller->Service: calculateProjectCost(project)
+
+Service->Database:getProjectTasks(project)
+
+Database->Service:List<Task> projectTasks
+
+note right of Service: Sum cost of all tasks
+
+Service->Controller: total reported cost
+
+Controller-> UI: reported cost of project
+
+UI->Actor: reported cost

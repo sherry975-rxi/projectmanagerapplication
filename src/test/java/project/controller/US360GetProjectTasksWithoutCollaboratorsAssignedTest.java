@@ -108,6 +108,7 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedTest {
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create tasks in project 1
+
 		//task1 = project1.createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest1, 10);
 		task1 = taskContainer.createTask("Do this", project1);
 		task1.setEstimatedTaskEffort(10);
@@ -153,12 +154,13 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedTest {
 		
 
 //		// add tasks to task repository of project 1
-//		project1.getTaskRepository().addTaskToProject(task1);
-//		project1.getTaskRepository().addTaskToProject(task2);
-//		project1.getTaskRepository().addTaskToProject(task3);
-//		project1.getTaskRepository().addTaskToProject(task4);
-//		project1.getTaskRepository().addTaskToProject(task5);
-//		project1.getTaskRepository().addTaskToProject(task6);
+//		project1.getTaskService().addTaskToProject(task1);
+//		project1.getTaskService().addTaskToProject(task2);
+//		project1.getTaskService().addTaskToProject(task3);
+//		project1.getTaskService().addTaskToProject(task4);
+//		project1.getTaskService().addTaskToProject(task5);
+//		project1.getTaskService().addTaskToProject(task6);
+
 
 		// add costPerEffort to users in project 1, resulting in a Project Collaborator
 		// for each one
