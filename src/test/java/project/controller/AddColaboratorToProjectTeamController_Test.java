@@ -4,6 +4,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.Repository.ProjCollabRepository;
+import project.Repository.ProjectsRepository;
+import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.UserService;
 import project.model.*;
@@ -11,6 +18,8 @@ import project.model.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class AddColaboratorToProjectTeamController_Test {
 
 	/**
@@ -24,8 +33,17 @@ public class AddColaboratorToProjectTeamController_Test {
 	 * 
 	 */
 
-	private ProjectService projContainer = new ProjectService();
-	UserService userContainer = new UserService();
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	ProjectsRepository projectsRepository;
+
+	@Autowired
+	ProjCollabRepository projCollabRepository;
+
+	private ProjectService projContainer;
+	UserService userContainer;
 	private User u1;
 	private User u2;
 	private User u3;
@@ -36,6 +54,11 @@ public class AddColaboratorToProjectTeamController_Test {
 
 	@Before
 	public void setUp() {
+
+		userContainer = new UserService();
+		userContainer.setUserRepository(userRepository);
+
+		projContainer = new ProjectService(projectsRepository, projCollabRepository);
 
 		// create users
 		u1 = userContainer.createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",
@@ -51,13 +74,6 @@ public class AddColaboratorToProjectTeamController_Test {
 		u5 = userContainer.createUser("Raquel", "raquel@gmail.com", "129", "Empregado", "930000000",
 				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
 
-		// add users to company
-		userContainer.addUserToUserRepository(u1);
-		userContainer.addUserToUserRepository(u2);
-		userContainer.addUserToUserRepository(u3);
-		userContainer.addUserToUserRepository(u4);
-		userContainer.addUserToUserRepository(u5);
-
 		// set user as Director
 		u1.setUserProfile(Profile.DIRECTOR);
 
@@ -67,14 +83,19 @@ public class AddColaboratorToProjectTeamController_Test {
 		u4.setUserProfile(Profile.COLLABORATOR);
 		u5.setUserProfile(Profile.COLLABORATOR);
 
+
+		// update Users
+		userContainer.addUserToUserRepositoryX(u1);
+		userContainer.addUserToUserRepositoryX(u2);
+		userContainer.addUserToUserRepositoryX(u3);
+		userContainer.addUserToUserRepositoryX(u4);
+		userContainer.addUserToUserRepositoryX(u5);
+
+
 		// create the project and set a user to Project manager
 		p1 = projContainer.createProject("Teste", "blablabla", u2);
-		p1.getProjectTeam().clear();
-		p1.getTaskRepository().getAllTasksfromProject().clear();
-		contextualProject = projContainer.createProject("Teste", "blablabla", u2);
 
-		// add project to project repository
-		projContainer.addProjectToProjectContainer(contextualProject);
+		contextualProject = projContainer.createProject("Teste", "blablabla", u2);
 
 	}
 
@@ -100,13 +121,14 @@ public class AddColaboratorToProjectTeamController_Test {
 	public void addColaboratorToProjectTeam_Test() {
 		// create controller
 		US351AddColaboratorToProjectTeamController controller = new US351AddColaboratorToProjectTeamController();
+		controller.projectService=this.projContainer;
 
-		assertFalse(contextualProject.isUserInProjectTeam(u1));
+		assertFalse(projContainer.isUserInProjectTeam(u1, contextualProject));
 
 		// add user to project team
 		controller.addUserToProjectTeam(u1, contextualProject, 0);
 
-		assertTrue(contextualProject.isUserInProjectTeam(u1));
+		assertTrue(projContainer.isUserInProjectTeam(u1, contextualProject));
 
 	}
 
