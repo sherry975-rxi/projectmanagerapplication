@@ -1241,19 +1241,27 @@ public class Task {
 	 * state machine does not let the task change its state, the finish date is set
 	 * to its previous value.
 	 */
-	public void UnfinishTask() {
-		int year = finishDate.get(Calendar.YEAR);
-		int month = finishDate.get(Calendar.MONTH);
-		int date = finishDate.get(Calendar.DAY_OF_MONTH);
+	public boolean UnfinishTask() {
+		boolean unfinishTask = true;
 		Calendar finishDateCopy = Calendar.getInstance();
-		finishDate.set(year, month, date);
+
+		if (!(finishDate == null)) {
+			int year = finishDate.get(Calendar.YEAR);
+			int month = finishDate.get(Calendar.MONTH);
+			int date = finishDate.get(Calendar.DAY_OF_MONTH);
+
+			finishDateCopy.set(year, month, date);
+		}
 
 		this.finishDate = null;
 		this.taskState.doAction(this);
 
 		if (!(this.taskState instanceof OnGoing)) {
 			this.finishDate = finishDateCopy;
+			unfinishTask = false;
 		}
+
+		return unfinishTask;
 	}
 
 	/**
