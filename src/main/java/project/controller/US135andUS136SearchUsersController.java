@@ -14,7 +14,7 @@ import project.model.User;
 public class US135andUS136SearchUsersController {
 
 	@Autowired
-	UserService userContainer;
+	public UserService userContainer;
 
 	List<User> userList;
 	User selectedUser = null;
@@ -31,10 +31,6 @@ public class US135andUS136SearchUsersController {
 	 * @return This method returns a list of user's Data Strings with the profile
 	 *         that match the user profile
 	 */
-
-	public void setUserContainer(UserService userContainer) {
-		this.userContainer = userContainer;
-	}
 
 	public List<String> searchUsersByProfileController(Profile profileToSearch) {
 		this.userList = userContainer.searchUsersByProfile(profileToSearch);

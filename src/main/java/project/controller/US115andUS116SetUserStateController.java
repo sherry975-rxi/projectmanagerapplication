@@ -10,7 +10,7 @@ import project.model.User;
 public class US115andUS116SetUserStateController {
 
 	@Autowired
-	private UserService userContainer;
+	public UserService userContainer;
 
 	User toChangeState;
 
@@ -22,13 +22,6 @@ public class US115andUS116SetUserStateController {
 		this.toChangeState = toChangeState;
 	}
 
-	public UserService getUserContainer() {
-		return userContainer;
-	}
-
-	public void setUserContainer(UserService userContainer) {
-		this.userContainer = userContainer;
-	}
 
 	/**
 	 * This controller recieves a user whose state is to be changed

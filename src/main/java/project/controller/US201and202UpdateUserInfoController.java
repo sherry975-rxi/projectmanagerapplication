@@ -1,11 +1,14 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import project.Services.UserService;
 import project.model.Address;
 import project.model.User;
 
 import java.util.List;
 
+@Controller
 public class US201and202UpdateUserInfoController {
 
 	/**
@@ -16,12 +19,12 @@ public class US201and202UpdateUserInfoController {
 	 * @param name
 	 */
 
-	UserService userContainer;
+	@Autowired
+	public UserService userContainer;
 
 	public void updateUserName(User user, String name) {
 
 		user.setName(name);
-		this.userContainer = new UserService();
 
 	}
 

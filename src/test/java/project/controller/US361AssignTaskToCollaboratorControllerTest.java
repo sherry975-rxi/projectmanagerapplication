@@ -56,7 +56,7 @@ public class US361AssignTaskToCollaboratorControllerTest {
 		nullProjectCollaborator = null;
 
 		// creates the task
-		testTask = project.getTaskRepository().createTask("Task AAAA");
+		testTask = project.getTaskService().createTask("Task AAAA");
 		controller = new US361AssignTaskToCollaboratorsController(project, testTask);
 
 	}

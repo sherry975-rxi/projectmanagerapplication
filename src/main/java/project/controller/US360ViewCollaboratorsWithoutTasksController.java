@@ -9,22 +9,18 @@ import project.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class US360ViewCollaboratorsWithoutTasksController {
 
-	private Project toSearch;
-	private ProjectService projectService;
-	private TaskService taskService;
 
+	@Autowired
+	public ProjectService projectService;
+	@Autowired
+	public TaskService taskService;
 
-	/**
-	 * This controller receives a project and stores it in a private field
-	 * 
-	 * @param the
-	 *            selected Project
-	 */
-	public US360ViewCollaboratorsWithoutTasksController(Project selectedProject) {
-		toSearch = selectedProject;
-	}
 
 	/**
 	 * This method takes the selected project stored upon instanciating the
@@ -35,10 +31,10 @@ public class US360ViewCollaboratorsWithoutTasksController {
 	 * 
 	 * @return A list of all idle team members as a String
 	 */
-	public List<String> showCollaboratorsWithoutTasks() {
+	public List<String> showCollaboratorsWithoutTasks(Project selectedProject) {
 		List<String> idleProjectCollaborators = new ArrayList<>();
 
-		List<ProjectCollaborator> activeProjectTeam = projectService.getActiveProjectTeam(toSearch);
+		List<ProjectCollaborator> activeProjectTeam = projectService.getActiveProjectTeam(selectedProject);
 
 		Integer index = 1;
 

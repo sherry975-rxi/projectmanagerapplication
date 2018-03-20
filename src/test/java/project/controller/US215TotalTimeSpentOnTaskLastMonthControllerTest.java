@@ -56,7 +56,7 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		proj.addUserToProjectTeam(userA, 5);
 
 		// Initialize Task Repository
-		taskRepo = proj.getTaskRepository();
+		taskRepo = proj.getTaskService();
 
 		// Create and add tasks to Task Repository
 		taskA = new Task(1, 1, "Faind fek quin!");
