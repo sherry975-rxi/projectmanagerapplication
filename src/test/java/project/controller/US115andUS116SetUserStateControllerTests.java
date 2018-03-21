@@ -47,7 +47,7 @@ public class US115andUS116SetUserStateControllerTests {
 		newUser2 = userService.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "Rua Bla",
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		userService.updateUserContainer();
+		userService.getAllUsersFromUserContainer();
 
 	}
 
@@ -66,7 +66,7 @@ public class US115andUS116SetUserStateControllerTests {
 		assertFalse(newUser2.isSystemUserStateActive());
 
 		// when the userContainer is refreshed from the database info
-		userService.updateUserContainer();
+		userService.getAllUsersFromUserContainer();
 		newUser2 = userService.getAllUsersFromUserContainer().get(0);
 
 		// then newUser2 must be Manel, and must be inactive
@@ -89,7 +89,7 @@ public class US115andUS116SetUserStateControllerTests {
 		assertTrue(newUser2.isSystemUserStateActive());
 
 		// when the userContainer is refreshed from the database info
-		userService.updateUserContainer();
+		userService.getAllUsersFromUserContainer();
 		newUser2 = userService.getAllUsersFromUserContainer().get(0);
 
 		// then newUser2 must be Manel, and must be active
