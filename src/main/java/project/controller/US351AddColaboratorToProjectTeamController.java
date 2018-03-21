@@ -1,18 +1,29 @@
 package project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import project.Services.ProjectService;
 import project.Services.UserService;
-import project.model.*;
-
-import java.util.List;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.User;
 
 @Controller
 public class US351AddColaboratorToProjectTeamController {
 
 	@Autowired
 	public ProjectService projectService;
+
+	/*
+	 * Default constructor for controller
+	 */
+
+	public US351AddColaboratorToProjectTeamController() {
+
+	}
 
 	/**
 	 * This controller add user to project team
