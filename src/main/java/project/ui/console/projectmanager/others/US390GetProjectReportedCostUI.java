@@ -46,7 +46,7 @@ public class US390GetProjectReportedCostUI {
 		System.out.println(line);
 		System.out.println("     PROJECT COST");
 		System.out.println(line);
-		
+
 		System.out.println();
 
 		System.out.println("The reported project cost until now is:");
