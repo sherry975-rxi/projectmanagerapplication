@@ -215,4 +215,17 @@ public class PrintProjectInfoController {
 		return taskService.getProjectTasks(project);
 	}
 
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public void setDateFormat(SimpleDateFormat dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	public void setProjID(int projID) {
+		this.projID = projID;
+	}
+
 }
