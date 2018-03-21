@@ -20,6 +20,9 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 	}
 
 	public void viewLastMonthFinishedTasks() {
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();
 		Scanner scannerInput = new Scanner(System.in);
@@ -37,30 +40,21 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 		}
 		System.out.println("______________________________________________");
 
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		System.out.println("[B] Back \n");
 
 		System.out.println("");
 
-		boolean repeat = true;
-		while (repeat) {
+
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "B":
-				UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
-				previousMenu.displayFunctionalities();
-				repeat = false;
-				break;
-			case "M":
-				MainMenuUI.mainMenu();
-				repeat = false;
 				break;
 			default:
 				System.out.println("Invalid input. Please retry:");
-
+				loop = true;
+				break;
 			}
 
-		}
+	}
 	}
 }

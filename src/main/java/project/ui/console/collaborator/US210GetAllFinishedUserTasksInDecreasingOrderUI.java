@@ -15,6 +15,9 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 	}
 
 	public void getAllFinishedUserTasksInDecreasingOrderUI() {
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();
 
@@ -32,23 +35,18 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 		}
 		System.out.println("______________________________________________");
 
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
+		System.out.println("[B] Back \n");
 		
 
 		String choice = scannerInput.nextLine().toUpperCase();
 		switch (choice) {
 		case "B":
-			UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(currentUser);
-			previousMenu.displayFunctionalities();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
 			break;
 		default:
 			System.out.println("Invalid input. Please retry:");
-			getAllFinishedUserTasksInDecreasingOrderUI();
+			loop = true;
 
+		}
 		}
 	}
 

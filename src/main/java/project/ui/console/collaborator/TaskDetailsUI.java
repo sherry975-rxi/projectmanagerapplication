@@ -12,14 +12,12 @@ public class TaskDetailsUI {
 	private User user;
 	private Integer projectID;
 	private String taskID;
-	private Boolean isPreviousUIFromTasks;
 	private Task task;
 
-	public TaskDetailsUI(String taskID, Integer projectID, User user, Boolean previous) {
+	public TaskDetailsUI(String taskID, Integer projectID, User user) {
 		this.taskID = taskID;
 		this.projectID = projectID;
 		this.user = user;
-		this.isPreviousUIFromTasks = previous;
 	}
 
 	private static void printMenuOption(PrintProjectInfoController projectInfo, PrintTaskInfoController taskInfo){
@@ -46,9 +44,7 @@ public class TaskDetailsUI {
 		System.out.println("[3] Request task team unassignment");
 		System.out.println("[4] Create/Update task report");
 		System.out.println("______________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		System.out.println("[B] Back \n");
 	}
 
 	/**
@@ -65,6 +61,7 @@ public class TaskDetailsUI {
 
 		boolean condition = true;
 		while (condition) {
+			condition = false;
 
 			printMenuOption(projectInfo, taskInfo);
 
@@ -98,27 +95,18 @@ public class TaskDetailsUI {
 				ProjectCollaborator projCollaborator1 = new ProjectCollaborator(this.user, this.projectID);
 				checkAndAddRemovalRequest(projCollaborator1, cantDoIt);
 				break;
-			case "B":
-				goToPreviousUI(this.projectID, this.user);
-				break;
 			case "4":
 				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember2 = new US204v2createRequestAddCollaboratorToTaskTeamController(this.taskID, this.user);
 				task = controllerMember2.getTaskByTaskID(this.taskID);
 				ProjectCollaborator projCollaborator2 = new ProjectCollaborator(this.user, this.projectID);
 				checkAndCreateReportRequest(projCollaborator2, cantDoIt);
 				break;
-			case "M":
-				MainMenuUI.mainMenu();
-				break;
-			case "E":
-				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-				condition = false;
+			case "B":
 				break;
 			default:
 				System.out.println("Please choose a valid option.");
 				System.out.println("");
-				TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user, this.isPreviousUIFromTasks);
-				myAtualUIView.taskDataDisplay();
+				condition = true;
 				break;
 			}
 		}
@@ -146,15 +134,15 @@ public class TaskDetailsUI {
 		}
 	}
 
-	public void goToPreviousUI(Integer projectID, User user) {
-		this.projectID = projectID;
-		this.user = user;
-		if (this.isPreviousUIFromTasks) {
-			ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
-			projectView.projectDataDisplay();
-		} else {
-			UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
-			userTasks.displayFunctionalities();
-		}
-	}
+//	public void goToPreviousUI(Integer projectID, User user) {
+//		this.projectID = projectID;
+//		this.user = user;
+//		if (this.isPreviousUIFromTasks) {
+//			ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
+//			projectView.projectDataDisplay();
+//		} else {
+//			UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
+//			userTasks.displayFunctionalities();
+//		}
+//	}
 }

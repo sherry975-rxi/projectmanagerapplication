@@ -37,6 +37,11 @@ public class CollectProjectsFromUserUI {
 	 * This method executes all options to execute through this UI
 	 */
 	public void collectProjectsFromUser() {
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+		
+		
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();
 
@@ -54,9 +59,7 @@ public class CollectProjectsFromUserUI {
 		// show all projects from a user
 
 		System.out.println("___________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = input.nextLine().toUpperCase();
 
@@ -84,12 +87,8 @@ public class CollectProjectsFromUserUI {
 				projectViewMenuUI.projectDataDisplay();
 				}
 			} else if ("B".equals(option)) {
-				CollaboratorMainMenuUI menu = new CollaboratorMainMenuUI(user);
-				menu.displayOptions();
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
-			} else if ("E".equals(option)) {
-				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
+				//da maneira que isto esta, nem precisa desta opçao...
+				
 			}
 			listOfOptionsToCompare.add(projectIDCodeToString);
 		}
@@ -98,9 +97,8 @@ public class CollectProjectsFromUserUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			CollectProjectsFromUserUI collectProjectsFromUserUI = new CollectProjectsFromUserUI(user);
-			collectProjectsFromUserUI.collectProjectsFromUser();
+			loop = true;
 		}
 	}
-
+	}
 }
