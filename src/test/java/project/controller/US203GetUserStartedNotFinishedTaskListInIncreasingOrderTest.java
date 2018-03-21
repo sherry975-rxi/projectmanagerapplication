@@ -184,8 +184,11 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		task6.addProjectCollaboratorToTask(projCollab1);
 
         task2.setTaskState(new OnGoing());
+        task2.setCurrentState(StateEnum.ONGOING);
         task3.setTaskState(new OnGoing());
+		task3.setCurrentState(StateEnum.ONGOING);
         task4.setTaskState(new OnGoing());
+		task4.setCurrentState(StateEnum.ONGOING);
 
 		taskService.saveTask(task1);
         taskService.saveTask(task2);
@@ -214,6 +217,8 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 	    assertTrue(task3.isProjectCollaboratorActiveInTaskTeam(projCollab1));
 
 	    assertTrue("Ongoing".equals(task3.viewTaskStateName()));
+	    assertTrue(task3.getStartDate()!=null);
+		assertTrue(task3.getTaskDeadline()!=null);
 
 		// asserts the list contains five tasks, and the first two are the ones with the
 		// earliest deadline
