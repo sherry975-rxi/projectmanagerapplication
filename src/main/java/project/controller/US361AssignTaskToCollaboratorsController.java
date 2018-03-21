@@ -1,13 +1,16 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Group 3
@@ -15,13 +18,51 @@ import java.util.List;
  *         * US 361 - Como Gestor de projeto, quero poder atribuir uma tarefa a
  *         um colaborador.
  */
+@Controller
 public class US361AssignTaskToCollaboratorsController {
+
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private TaskService taskService;
 
 	private Project project;
 	private Task task;
 	private ProjectCollaborator projectCollaborator;
-	private ProjectService projectService;
-	private TaskService taskService;
+
+	/*
+	 * Default contructor
+	 */
+	public US361AssignTaskToCollaboratorsController() {
+
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
+	public ProjectCollaborator getProjectCollaborator() {
+		return projectCollaborator;
+	}
+
+	public void setProjectCollaborator(ProjectCollaborator projectCollaborator) {
+		this.projectCollaborator = projectCollaborator;
+	}
 
 	/**
 	 * Constructor to instantiate a new US361TaskToCollaboratorsController
@@ -82,7 +123,7 @@ public class US361AssignTaskToCollaboratorsController {
 	 */
 	public boolean assignCollaboratorToTask() {
 		boolean assignCollaboratorToTask = false;
-		if(task.addProjectCollaboratorToTask(this.projectCollaborator)){
+		if (task.addProjectCollaboratorToTask(this.projectCollaborator)) {
 			projectService.updateProject(this.project);
 			taskService.saveTask(this.task);
 			assignCollaboratorToTask = true;
