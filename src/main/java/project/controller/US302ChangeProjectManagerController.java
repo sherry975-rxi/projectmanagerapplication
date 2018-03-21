@@ -22,12 +22,46 @@ public class US302ChangeProjectManagerController {
 
 	@Autowired
 	public UserService userService;
-	private List<User> activeCollaboratorList;
+	
 	private User selectedManager;
 	private Project selectedProject;
-
-	public US302ChangeProjectManagerController() {
+	
+	private List<User> activeCollaboratorList;
+	public List<User> getActiveCollaboratorList() {
+		return activeCollaboratorList;
 	}
+
+
+	public void setActiveCollaboratorList(List<User> activeCollaboratorList) {
+		this.activeCollaboratorList = activeCollaboratorList;
+	}
+
+
+	public User getSelectedManager() {
+		return selectedManager;
+	}
+
+
+	public void setSelectedManager(User selectedManager) {
+		this.selectedManager = selectedManager;
+	}
+
+
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
+	}
+
+	
+	
+	public US302ChangeProjectManagerController() {
+		
+	}
+	
 
 	/**
 	 * Constructor for project creation controller, it receives a project whose

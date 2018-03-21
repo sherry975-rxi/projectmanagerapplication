@@ -831,5 +831,11 @@ public class TaskServiceTest {
         assertEquals(victim.viewAllProjectTaskRemovalRequests(project), 0);
 
     }
+    
+    @Test
+    public void testGetTaskByTaskID() {
+        when(taskRepository.findByTaskID("12")).thenReturn(taskMock);
+        assertEquals(taskMock, victim.getTaskByTaskID("12"));
+    }
 
 }

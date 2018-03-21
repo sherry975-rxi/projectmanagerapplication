@@ -1,7 +1,6 @@
 package project.ui.console.collaborator;
 
 import project.controller.US215TotalTimeSpentOnTaskLastMonthController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
 
 public class US215TotalTimeSpentOnTaskLastMonthUI {
@@ -9,8 +8,6 @@ public class US215TotalTimeSpentOnTaskLastMonthUI {
 	User user;
 
 	public void displayTotalTimeSpentOnTasksLastMonth(User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();

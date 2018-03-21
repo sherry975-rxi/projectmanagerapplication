@@ -4,10 +4,8 @@
 package project.ui.console.collaborator;
 
 import project.controller.CollectProjectsFromUserController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 
 import java.util.ArrayList;
@@ -37,15 +35,9 @@ public class CollectProjectsFromUserUI {
 	 * This method executes all options to execute through this UI
 	 */
 	public void collectProjectsFromUser() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		
-		
-		
-		infoUpdater.updateDBtoContainer();
-
 		System.out.println("\n                  PROJETOS ");
 		System.out.println("___________________________________________________");
 
@@ -88,7 +80,7 @@ public class CollectProjectsFromUserUI {
 				projectViewMenuUI.projectDataDisplay();
 				}
 			} else if ("B".equals(option)) {
-				//da maneira que isto esta, nem precisa desta opçao...
+				//da maneira que isto esta, nem precisa desta opï¿½ao...
 				
 			}
 			listOfOptionsToCompare.add(projectIDCodeToString);

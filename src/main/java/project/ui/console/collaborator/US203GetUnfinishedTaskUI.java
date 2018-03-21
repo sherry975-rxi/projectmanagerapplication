@@ -1,21 +1,16 @@
 package project.ui.console.collaborator;
 
 import project.controller.US203GetUserStartedNotFinishedTaskListInIncreasingOrderController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
 public class US203GetUnfinishedTaskUI {
 
 	public void displayOptions(User user1) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		
-		infoUpdater.updateDBtoContainer();
 		int projID;
 		String[] split;
 		User user = user1;

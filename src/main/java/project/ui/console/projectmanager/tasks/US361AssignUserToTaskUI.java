@@ -1,7 +1,6 @@
 package project.ui.console.projectmanager.tasks;
 
 import project.controller.US361AssignTaskToCollaboratorsController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
@@ -22,8 +21,6 @@ public class US361AssignUserToTaskUI {
 	}
 
 	public void displayUsersToAssign() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 
 		System.out.println("            PROJECT COLLABORATORS           ");
 		System.out.println("____________________________________________");

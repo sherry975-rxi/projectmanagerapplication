@@ -24,17 +24,13 @@ import project.model.User;
 @Service
 public class UserService {
 
-
-
 	@Autowired
 	private UserRepository userRepository;
-	private List<User> usersContainer;
 
 	/**
 	 * Constructor for UserContainer includes usersList creation
 	 */
 	public UserService() {
-		this.usersContainer = new ArrayList<>();
 	}
 
 	/**
@@ -124,24 +120,6 @@ public class UserService {
 	}
 
 	/**
-	 * This method allows the administrator to see if a given user already exists in
-	 * company (userContainer) DB
-	 *
-	 * @param addedUser
-	 *            user
-	 * @return TRUE if user exists in company. FALSE if user doesn’t exist in the
-	 *         company's userContainer
-	 */
-	public boolean isUserinUserContainer(User addedUser) {
-
-		boolean result = false;
-		if (this.userRepository.findByEmail(addedUser.getEmail()) != null) {
-			result = true;
-		}
-		return result;
-	}
-
-	/**
 	 * This method returns a copy of the list of all users (usersContainer)
 	 *
 	 * @return allUsers This is the copy of the List of all Users in the
@@ -169,10 +147,10 @@ public class UserService {
 	 * This method feeds the list of all Users in the Company (userContainer) with
 	 * the user data that is in the DB
 	 */
-	public void updateUserContainer() {
-		usersContainer.clear();
-		this.userRepository.findAll().forEach(usersContainer::add);
-	}
+//	public void updateUserContainer() {
+//		usersContainer.clear();
+//		this.userRepository.findAll().forEach(usersContainer::add);
+//	}
 
 	/**
 	 * This method returns a list of all active collaborators in the Company

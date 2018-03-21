@@ -1,25 +1,53 @@
 package project.controller;
 
-import project.Services.ProjectService;
-import project.model.Project;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import project.Services.ProjectService;
+import project.model.Project;
+
+@Controller
 public class US320ViewProjectsController {
 
-	ProjectService projRepository = new ProjectService();
-	List<Project> chosenList;
-	Project selectedProject = null;
+	@Autowired
+	private ProjectService projectService;
+	private List<Project> chosenList;
+	private Project selectedProject = null;
 
-    /**
-     * This method generates lists all project and converts them to a list of strings
-     * to be displayed in the UI
-     *
-     * @return a list of String with Projects' data
-     */
+	public US320ViewProjectsController() {
+
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+	public List<Project> getChosenList() {
+		return chosenList;
+	}
+
+	public void setChosenList(List<Project> chosenList) {
+		this.chosenList = chosenList;
+	}
+
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
+	}
+
+	/**
+	 * This method generates lists all project and converts them to a list of
+	 * strings to be displayed in the UI
+	 *
+	 * @return a list of String with Projects' data
+	 */
 	public List<String> viewAllProjects() {
-		this.chosenList = projRepository.getAllProjectsfromProjectsContainer();
+		this.chosenList = projectService.getAllProjectsfromProjectsContainer();
 		List<String> allProjectsList = new ArrayList<>();
 
 		for (int i = 0; i < chosenList.size(); i++) {
@@ -31,14 +59,14 @@ public class US320ViewProjectsController {
 		return allProjectsList;
 	}
 
-    /**
-     * This method generates lists all active project and converts them to
-     * a list of strings to be displayed in the UI
-     *
-     * @return a list of String with Projects' data
-     */
+	/**
+	 * This method generates lists all active project and converts them to a list of
+	 * strings to be displayed in the UI
+	 *
+	 * @return a list of String with Projects' data
+	 */
 	public List<String> viewActiveProjects() {
-		this.chosenList = projRepository.getActiveProjects();
+		this.chosenList = projectService.getActiveProjects();
 		List<String> activeProjectsList = new ArrayList<>();
 
 		for (int i = 0; i < chosenList.size(); i++) {
@@ -50,15 +78,18 @@ public class US320ViewProjectsController {
 		return activeProjectsList;
 	}
 
-    /**
-     * This method is called when the user selects a project from the visible index listed
-     * in the UI
-     *
-     * @param integer of the visible index
-     *
-     * @return the selected Project, to be stored by the UI and handled by other controllers
-     */
+	/**
+	 * This method is called when the user selects a project from the visible index
+	 * listed in the UI
+	 *
+	 * @param integer
+	 *            of the visible index
+	 *
+	 * @return the selected Project, to be stored by the UI and handled by other
+	 *         controllers
+	 */
 	public Project selectProject(int visibleIndex) {
+		selectedProject = null;
 		int actualIndex = visibleIndex - 1;
 		if (actualIndex >= 0 && actualIndex < chosenList.size()) {
 			selectedProject = chosenList.get(actualIndex);
@@ -66,11 +97,12 @@ public class US320ViewProjectsController {
 		return selectedProject;
 	}
 
-    /**
+	/**
 	 * This is a simple utility method that converts a project's basic data into a
 	 * string to be displayed in the UI
 	 * 
-	 * @param the project to view data in the UI
+	 * @param the
+	 *            project to view data in the UI
 	 *
 	 * @return a String with the Project's data
 	 */
@@ -81,7 +113,6 @@ public class US320ViewProjectsController {
 		String status = toView.getProjectStatusName();
 
 		int headerSize = 15 + id.length() + toView.getName().length();
-
 
 		char headerChar = '=';
 		String header = generateHeader(headerChar, headerSize);
@@ -99,15 +130,16 @@ public class US320ViewProjectsController {
 		return output;
 	}
 
-/**
- * This is a utility method to generate a header with the selected character and size, to be called by the project view
- *
- */
- public String generateHeader(char toRepeat, int repeat) {
-        StringBuilder gen = new StringBuilder();
+	/**
+	 * This is a utility method to generate a header with the selected character and
+	 * size, to be called by the project view
+	 *
+	 */
+	public String generateHeader(char toRepeat, int repeat) {
+		StringBuilder gen = new StringBuilder();
 
 		for (int i = 0; i < repeat; i++) {
-		    gen.append(toRepeat);
+			gen.append(toRepeat);
 		}
 
 		return gen.toString();

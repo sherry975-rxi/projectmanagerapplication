@@ -3,7 +3,6 @@ package project.ui.console.collaborator;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US206RemovalTaskRequestController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
 
 import java.util.Scanner;
@@ -31,8 +30,6 @@ public class US206CreateRemovalTaskRequestUI {
 	}
 
 	public void cancelRemovalTaskRequestUI() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 
 		US206RemovalTaskRequestController controller = new US206RemovalTaskRequestController(this.user);
 		controller.setProjectIDFromTaskID(taskID);
