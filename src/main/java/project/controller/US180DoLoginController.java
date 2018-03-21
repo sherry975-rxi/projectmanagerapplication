@@ -10,7 +10,7 @@ import project.model.User;
 public class US180DoLoginController {
 
 	@Autowired
-	private UserService userService;
+	public UserService userService;
 
 	/**
 	 * Empty constructor
