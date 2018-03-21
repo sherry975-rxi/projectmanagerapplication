@@ -1,24 +1,20 @@
 package project.controller;
 
-import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.HelloJpaApplication;
 import project.Repository.UserRepository;
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -28,37 +24,36 @@ public class US115andUS116SetUserStateControllerTests {
 	Profile collaborator = Profile.COLLABORATOR;
 	User newUser2;
 	User newUser3;
-	
+
 	US115andUS116SetUserStateController testUserStateController;
-	
+
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	private UserService userService;
 
 	@Before
 	public void setUp() {
-		
+
 		userService = new UserService();
 		userService.setUserRepository(userRepo);
-		
+
 		testUserStateController = new US115andUS116SetUserStateController();
 		testUserStateController.setToChangeState(newUser2);
 		testUserStateController.userContainer = userService;
-		
-		// creates the user and adds it to the dummy database, then refreshes the in memory User List
-		newUser2 = userService.createUser("Manel", "user2@gmail.com", "001", "Empregado",
-				"930000000", "Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		userService.addUserToUserRepositoryX(newUser2);
+		// creates the user and adds it to the dummy database, then refreshes the in
+		// memory User List
+		newUser2 = userService.createUser("Manel", "user2@gmail.com", "001", "Empregado", "930000000", "Rua Bla",
+				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
+
 		userService.updateUserContainer();
 
 	}
 
 	@Test
 	public void testSetUserAsInactiveController() {
-		
-		
+
 		// given only 1 user in the database
 		assertEquals(userService.getAllUsersFromUserContainer().size(), 1);
 
@@ -92,7 +87,6 @@ public class US115andUS116SetUserStateControllerTests {
 		// Uses the controller to reactivate the user and confirms its state.
 		testUserStateController.changeUserState();
 		assertTrue(newUser2.isSystemUserStateActive());
-
 
 		// when the userContainer is refreshed from the database info
 		userService.updateUserContainer();
