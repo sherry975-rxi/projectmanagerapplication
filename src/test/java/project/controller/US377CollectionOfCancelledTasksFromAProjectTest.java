@@ -1,31 +1,52 @@
 package project.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
-import project.model.*;
-import project.model.taskstateinterface.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import project.Repository.ProjectsRepository;
+import project.Repository.TaskRepository;
+import project.Repository.UserRepository;
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.TaskCollaborator;
+import project.model.User;
+import project.model.taskstateinterface.Cancelled;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Planned;
+import project.model.taskstateinterface.Ready;
 
 public class US377CollectionOfCancelledTasksFromAProjectTest {
 
-	UserService userContainer;
-	ProjectService projectContainer;
-	
+	@Autowired
+	private UserService userService;
+
+	private UserRepository userRepository;
+
+	@Autowired
+	private ProjectService projectService;
+
+	private ProjectsRepository projectRepository;
+
+	@Autowired
+	private TaskService taskService;
+
+	private TaskRepository taskRepository;
+
 	User user1;
 	User userAdmin;
-
-	TaskService taskContainer;
 
 	TaskCollaborator taskWorker1;
 
@@ -42,42 +63,41 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 	Calendar taskDeadlineDateTest;
 	Calendar startDateTest;
 
+	@Autowired
 	US377CollectionOfCancelledTasksFromAProjectController controller;
 
 	@Before
 	public void setUp() {
-		// creates an UserContainer
-		userContainer = new UserService();
-								
-		// creates a Project Container
-		projectContainer = new ProjectService();
+		// creates an User service
+		userService = new UserService();
+
+		// creates a Project service
+		projectService = new ProjectService();
+
+		// creates a Task service
+		taskService = new TaskService();
+
+		// Creates the controller to be tested
+		controller = new US377CollectionOfCancelledTasksFromAProjectController(project);
 
 		// create user
-		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
-				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
+		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000",
-				"Rua", "2401-00", "Test", "Testo", "Testistan");
-
-		// add user to user list
-		userContainer.addUserToUserRepository(user1);
-		userContainer.addUserToUserRepository(userAdmin);
+		userAdmin = userService.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+				"Test", "Testo", "Testistan");
 
 		// Creates one Project
-		project = projectContainer.createProject("name3", "description4", userAdmin);
-		project2 = projectContainer.createProject("name1", "description4", userAdmin);
-
-		// add project to project repository
-		projectContainer.addProjectToProjectContainer(project);
-		projectContainer.addProjectToProjectContainer(project2);
+		project = projectService.createProject("name3", "description4", userAdmin);
+		project2 = projectService.createProject("name1", "description4", userAdmin);
 
 		// create project collaborators
-		collab1 = new ProjectCollaborator(user1, 2);
+		collab1 = projectService.createProjectCollaborator(user1, project, 2);
 
 		// create taskContainer
 
-		taskContainer = project.getTaskService();
+		taskService = project.getTaskService();
 
 		// create task workers
 		taskWorker1 = new TaskCollaborator(collab1);
@@ -88,7 +108,7 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 
 		// add user to project team
-		project.addProjectCollaboratorToProjectTeam(collab1);
+
 		project2.addProjectCollaboratorToProjectTeam(collab1);
 
 		// create a estimated Task Start Date
@@ -116,14 +136,14 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create 4 tasks
-		testTask = taskContainer.createTask("Test dis agen pls");
-		testTask2 = taskContainer.createTask("Test dis agen pls");
-		testTask3 = taskContainer.createTask("Test moar yeh");
+		testTask = taskService.createTask("Test dis agen pls");
+		testTask2 = taskService.createTask("Test dis agen pls");
+		testTask3 = taskService.createTask("Test moar yeh");
 
 		// Adds 5 tasks to the TaskContainer
-		taskContainer.addTaskToProject(testTask);
-		taskContainer.addTaskToProject(testTask2);
-		taskContainer.addTaskToProject(testTask3);
+		taskService.addTaskToProject(testTask);
+		taskService.addTaskToProject(testTask2);
+		taskService.addTaskToProject(testTask3);
 
 		// set estimated task start date and task dead line to tasks
 		testTask.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
@@ -163,26 +183,6 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		// Sets the tasks to "cancelled"
 		testTask.setTaskState(new Cancelled());
 		testTask2.setTaskState(new Cancelled());
-
-		// Creates the controller to be tested
-		controller = new US377CollectionOfCancelledTasksFromAProjectController(project);
-	}
-
-	@After
-	public void tearDown() {
-		userContainer = null;
-		projectContainer = null;
-		user1 = null;
-		testTask = null;
-		testTask2 = null;
-		testTask3 = null;
-		project = null;
-		taskContainer = null;
-		taskWorker1 = null;
-		collab1 = null;
-		estimatedTaskStartDateTest = null;
-		taskDeadlineDateTest = null;
-		startDateTest = null;
 	}
 
 	/**

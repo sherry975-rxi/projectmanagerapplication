@@ -1,21 +1,35 @@
 package project.controller;
 
-import project.Services.UserService;
-import project.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import project.Services.UserService;
+import project.model.User;
+
 @Controller
 public class US130ListUsersController {
 
 	@Autowired
 	public UserService userContainer;
-	
+
 	List<User> userList;
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+
+	/**
+	 * Empty constructor
+	 */
+	public US130ListUsersController() {
+	};
 
 	/**
 	 * This controller returns a list of all users in the User Repository
@@ -75,7 +89,7 @@ public class US130ListUsersController {
 			profile = "Unassigned";
 		}
 
-		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " ("
-				+ toConvert.getEmail() + "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
+		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " (" + toConvert.getEmail()
+				+ "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
 	}
 }

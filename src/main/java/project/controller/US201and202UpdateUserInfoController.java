@@ -1,12 +1,13 @@
 package project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import project.Services.UserService;
 import project.model.Address;
 import project.model.User;
-
-import java.util.List;
 
 @Controller
 public class US201and202UpdateUserInfoController {
@@ -21,6 +22,12 @@ public class US201and202UpdateUserInfoController {
 
 	@Autowired
 	public UserService userContainer;
+
+	/**
+	 * Empty constructor
+	 */
+	public US201and202UpdateUserInfoController() {
+	};
 
 	public void updateUserName(User user, String name) {
 
@@ -84,7 +91,7 @@ public class US201and202UpdateUserInfoController {
 	 * @param newCountry
 	 */
 	public Address createNewAddress(String newStreet, String newZipCode, String newCity, String newDistrict,
-									String newCountry) {
+			String newCountry) {
 		return new Address(newStreet, newZipCode, newCity, newDistrict, newCountry);
 	}
 
