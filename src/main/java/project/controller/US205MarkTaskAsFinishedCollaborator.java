@@ -1,13 +1,17 @@
 package project.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.model.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 
 @Controller
 public class US205MarkTaskAsFinishedCollaborator {
@@ -21,6 +25,28 @@ public class US205MarkTaskAsFinishedCollaborator {
 
 	@Autowired
 	public TaskService taskService;
+
+	public void setUsername(User username) {
+		this.username = username;
+	}
+
+	public void setProjectIndex(int projectIndex) {
+		this.projectIndex = projectIndex;
+	}
+
+	public void setTaskToBeMarked(Task taskToBeMarked) {
+		this.taskToBeMarked = taskToBeMarked;
+	}
+
+	public void setUnfinishedTaskFromProject(List<Task> unfinishedTaskFromProject) {
+		this.unfinishedTaskFromProject = unfinishedTaskFromProject;
+	}
+
+	/**
+	 * Empty constructor
+	 */
+	public US205MarkTaskAsFinishedCollaborator() {
+	};
 
 	public List<Project> getProjectsThatIAmCollaborator(User user) {
 		List<Project> projectsThatImProjectCollaborator = new ArrayList<>();

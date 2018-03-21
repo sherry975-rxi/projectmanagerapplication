@@ -2,6 +2,7 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import project.Services.UserService;
 import project.model.User;
 
@@ -10,6 +11,12 @@ public class US180DoLoginController {
 
 	@Autowired
 	public UserService userService;
+
+	/**
+	 * Empty constructor
+	 */
+	public US180DoLoginController() {
+	};
 
 	/**
 	 * This method does the login of the user
@@ -26,10 +33,9 @@ public class US180DoLoginController {
 		username = userService.getUserByEmail(email);
 		password = password1;
 		boolean loginSuccess = false;
-		if (username== null) {
+		if (username == null) {
 			return loginSuccess;
-		} else if (userService.isUserinUserContainer(username)
-				&& username.checkLogin(password)) {
+		} else if (userService.isUserinUserContainer(username) && username.checkLogin(password)) {
 			loginSuccess = true;
 		}
 

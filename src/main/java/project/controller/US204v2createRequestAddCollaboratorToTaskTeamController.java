@@ -5,18 +5,20 @@ import org.springframework.stereotype.Controller;
 
 import project.Services.ProjectService;
 import project.Services.TaskService;
-import project.model.*;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 
 @Controller
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
-	
 
 	@Autowired
-	public TaskService taskContainer;
+	public TaskService taskService;
 
 	@Autowired
-	public ProjectService projectContainer;
-	
+	public ProjectService projectService;
+
 	public User user;
 	public Project project;
 	public Integer projectID;
@@ -30,6 +32,22 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 * This controller allows a user to create a request to add be added to the
 	 * TaskTeam that Project Manager will latter approve.
 	 */
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public void setTaskID(String taskID) {
+		this.taskID = taskID;
+	}
+
+	public void setProjectID(Integer projectID) {
+		this.projectID = projectID;
+	}
 
 	/**
 	 * Constructor
@@ -46,36 +64,37 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	//
 	// }
 
-//	/**
-//	 * Constructor
-//	 * 
-//	 * @param taskID
-//	 *            ID of a Task that the User wants to add himself to
-//	 */
-//	public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID, User user) {
-//		this.taskID = taskID;
-//		this.user = user;
-//		setProjectIDFromTaskID(taskID);
-//
-//		this.project = projectContainer.getProjectById(this.projectID);
-//		this.user = user;
-//
-//	}
-	
-	public US204v2createRequestAddCollaboratorToTaskTeamController(){
-		
-	}
-	
+	// /**
+	// * Constructor
+	// *
+	// * @param taskID
+	// * ID of a Task that the User wants to add himself to
+	// */
+	// public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID,
+	// User user) {
+	// this.taskID = taskID;
+	// this.user = user;
+	// setProjectIDFromTaskID(taskID);
+	//
+	// this.project = projectContainer.getProjectById(this.projectID);
+	// this.user = user;
+	//
+	// }
 
-//	public boolean createTaskTeamRequest() {
-//
-//		Task taskToAddCollaboratorTo = taskContainer.getTaskByTaskID(this.taskID);
-//		return taskToAddCollaboratorTo.createTaskAssignementRequest(getProjectCollaboratorFromUser(this.user));
-//	}
-	
+	public US204v2createRequestAddCollaboratorToTaskTeamController() {
+
+	}
+
+	// public boolean createTaskTeamRequest() {
+	//
+	// Task taskToAddCollaboratorTo = taskContainer.getTaskByTaskID(this.taskID);
+	// return
+	// taskToAddCollaboratorTo.createTaskAssignementRequest(getProjectCollaboratorFromUser(this.user));
+	// }
+
 	public boolean createTaskTeamRequest(String taskID, User user) {
 
-		Task taskToAddCollaboratorTo = taskContainer.getTaskByTaskID(taskID);
+		Task taskToAddCollaboratorTo = taskService.getTaskByTaskID(taskID);
 		return taskToAddCollaboratorTo.createTaskAssignementRequest(getProjectCollaboratorFromUser(user));
 	}
 
@@ -114,7 +133,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 		ProjectCollaborator projcollab;
 
-		projcollab = projectContainer.findActiveProjectCollaborator(user, project);
+		projcollab = projectService.findActiveProjectCollaborator(user, project);
 
 		return projcollab;
 	}
@@ -128,7 +147,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 * @return Task from taskID
 	 */
 	public Task getTaskByTaskID(String taskID) {
-		return taskContainer.getTaskByTaskID(taskID);
+		return taskService.getTaskByTaskID(taskID);
 
 	}
 

@@ -131,22 +131,6 @@ public class UserServiceTest {
 	}
 
 	/**
-	 * Test method call of testUpdateUserContainer
-	 */
-	@Test
-	public final void testUpdateUserContainer() {
-
-		List<User> userInDB = new ArrayList<>();
-		userInDB.add(user1);
-
-		when(userRepositoryMock.findAll()).thenReturn(userInDB);
-
-		userContainer.updateUserContainer();
-
-		assertEquals(userInDB, userContainer.getAllUsersFromUserContainer());
-	}
-
-	/**
 	 * Test method call of testGetAllActiveCollaboratorsFromRepository
 	 */
 	@Test
