@@ -3,6 +3,8 @@
  */
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.model.User;
 
 import java.util.Scanner;
@@ -11,18 +13,33 @@ import java.util.Scanner;
  * @author Group3
  *
  */
+
+@Component
 public class UserTasksFunctionalitiesMenuUI {
+
+	@Autowired
+	private	US203GetUnfinishedTaskUI unfinishedTasksFromUser;
+
+	@Autowired
+	private US210GetAllFinishedUserTasksInDecreasingOrderUI finishedTasksFromUserDecreasingOrder;
+
+	@Autowired
+	private US211GetFinishedUserTasksFromLastMonthDecreasingOrder userTasksLastMonthDecreasingOrder;
+
+	@Autowired
+	private US215TotalTimeSpentOnTaskLastMonthUI totalTimeSpentOnTasksLastMonthUi;
+
+	@Autowired
+	private US216AverageTimeSpentByTaskLastMonthUI averegeTimeSpentOnTasksLastMonthUi;
 
 	private User user;
 
 	/**
 	 * Constructor to instantiate a new UserTasksFunctionalitiesMenuUI
-	 * 
-	 * @param user
-	 *            User to get tasks from
+	 *
 	 */
-	public UserTasksFunctionalitiesMenuUI(User user) {
-		this.user = user;
+	public UserTasksFunctionalitiesMenuUI() {
+
 	}
 
 	/**
@@ -66,25 +83,20 @@ public class UserTasksFunctionalitiesMenuUI {
 
 		switch (option) {
 		case "1":
-			US203GetUnfinishedTaskUI unfinishedTasksFromUser = new US203GetUnfinishedTaskUI();
 			unfinishedTasksFromUser.displayOptions(this.user);
 			break;
 		case "2":
-			US210GetAllFinishedUserTasksInDecreasingOrderUI finishedTasksFromUserDecreasingOrder = new US210GetAllFinishedUserTasksInDecreasingOrderUI(
-					this.user);
+			finishedTasksFromUserDecreasingOrder.setCurrentUser(this.user);
 			finishedTasksFromUserDecreasingOrder.getAllFinishedUserTasksInDecreasingOrderUI();
 			break;
 		case "3":
-			US211GetFinishedUserTasksFromLastMonthDecreasingOrder userTasksLastMonthDecreasingOrder = new US211GetFinishedUserTasksFromLastMonthDecreasingOrder(
-					this.user);
+			userTasksLastMonthDecreasingOrder.setUser(this.user);
 			userTasksLastMonthDecreasingOrder.viewLastMonthFinishedTasks();
 			break;
 		case "4":
-			US215TotalTimeSpentOnTaskLastMonthUI totalTimeSpentOnTasksLastMonthUi = new US215TotalTimeSpentOnTaskLastMonthUI();
 			totalTimeSpentOnTasksLastMonthUi.displayTotalTimeSpentOnTasksLastMonth(user);
 			break;
 		case "5":
-			US216AverageTimeSpentByTaskLastMonthUI averegeTimeSpentOnTasksLastMonthUi = new US216AverageTimeSpentByTaskLastMonthUI();
 			averegeTimeSpentOnTasksLastMonthUi.displayAveregeTimeSpentByTaskLastMonth(user);
 			break;
 		case "B":
@@ -92,8 +104,11 @@ public class UserTasksFunctionalitiesMenuUI {
 
 		default:
 			System.out.println("Error! Option not valid. Please insert an option again.");
-			displayFunctionalities();
 			loop = true;
 		}
 	}}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

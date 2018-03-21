@@ -4,9 +4,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.Services.UserService;
 import project.model.*;
+import project.model.taskstateinterface.Finished;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,111 +25,72 @@ import static org.junit.Assert.assertEquals;
  * US370 v2
  *
  */
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller", "project.Repository" })
 public class US370V2GetProjectFinishedTaskListTest {
 
-	US370GetProjectFinishedTaskListController tasksFiltersController;
+
+	@Autowired
 	UserService myUsers;
+
+	@Autowired
 	ProjectService myProjects;
+
+	@Autowired
+	TaskService taskService;
 
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
 	Task task1, task2, task3, task4, task5, task6;
-	TaskCollaborator taskCollab1, taskCollab2, taskCollab3, taskCollab4, taskCollab5, taskCollab6;
 	Calendar estimatedTaskStartDate, taskDeadline;
+
+
+	@Autowired
+	US370GetProjectFinishedTaskListController tasksFiltersController;
 
 	@Before
 	public void setUp() {
-		// create company 1
-		myUsers = new UserService();
-		myProjects = new ProjectService();
 
 		// create users in company
 		user2 = myUsers.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
 				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
-		myUsers.addUserToUserRepository(user2);
+
 		user1 = myUsers.createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
-		myUsers.addUserToUserRepository(user1);
+
 
 		// change profiles of users from VISITOR (default) to COLLABORATOR
 		user2.setUserProfile(Profile.COLLABORATOR);
 		user1.setUserProfile(Profile.COLLABORATOR);
 
+		myUsers.addUserToUserRepositoryX(user2);
+		myUsers.addUserToUserRepositoryX(user1);
+
 		// create project 1 in company 1
 		project1 = myProjects.createProject("name3", "description4", user2);
 
-		// add project 1 to company 1
-		myProjects.addProjectToProjectContainer(project1);
+
 
 		// create tasks in project 1
-		task1 = project1.getTaskService().createTask("Do this");
-		task2 = project1.getTaskService().createTask("Do that");
-		task3 = project1.getTaskService().createTask("Merge everything");
-		task4 = project1.getTaskService().createTask("Do this");
-		task5 = project1.getTaskService().createTask("Do this");
-		task6 = project1.getTaskService().createTask("Do this");
+		task1 = taskService.createTask("Do this", project1);
+		task2 = taskService.createTask("Do that", project1);
+		task3 = taskService.createTask("Merge everything", project1);
+		task4 = taskService.createTask("Do this x4", project1);
+		task5 = taskService.createTask("Do this x5", project1);
+		task6 = taskService.createTask("Do this x6", project1);
 
-		// add tasks to task repository of project 1
-		project1.getTaskService().addTaskToProject(task1);
-		project1.getTaskService().addTaskToProject(task2);
-		project1.getTaskService().addTaskToProject(task3);
-		project1.getTaskService().addTaskToProject(task4);
-		project1.getTaskService().addTaskToProject(task5);
-		project1.getTaskService().addTaskToProject(task6);
 
 		// add costPerEffort to users in project 1, resulting in a Project Collaborator
 		// for each one
-		projCollab1 = project1.createProjectCollaborator(user1, 250);
-		projCollab2 = project1.createProjectCollaborator(user2, 120);
-		projCollab3 = project1.createProjectCollaborator(user2, 200);
+		projCollab1 = myProjects.createProjectCollaborator(user1,project1, 250);
+		projCollab2 = myProjects.createProjectCollaborator(user2,project1, 120);
 
-		// associate Project Collaborators to project 1 (info user + costPerEffort)
-		project1.addProjectCollaboratorToProjectTeam(projCollab1);
-		project1.addProjectCollaboratorToProjectTeam(projCollab2);
+		// add ProjectCollaborators  to tasks
+		task2.addProjectCollaboratorToTask(projCollab2);
+		task3.addProjectCollaboratorToTask(projCollab2);
 
-		// create Task Collaborator to register the period that the user was in the task
-		// while he was active in project 1
-		taskCollab1 = task1.createTaskCollaborator(projCollab1);
-		taskCollab2 = task2.createTaskCollaborator(projCollab2);
-		taskCollab3 = task3.createTaskCollaborator(projCollab2);
-		taskCollab4 = task4.createTaskCollaborator(projCollab2);
-		taskCollab5 = task5.createTaskCollaborator(projCollab2);
-		taskCollab6 = task6.createTaskCollaborator(projCollab2);
-
-		// associate Task Collaborators to task (info project collaborator + period he
-		// was in the task)
-		task2.addTaskCollaboratorToTask(taskCollab2);
-		task3.addTaskCollaboratorToTask(taskCollab3);
-
-		// creates the controller
-		tasksFiltersController = new US370GetProjectFinishedTaskListController();
-	}
-
-	@After
-	public void tearDown() {
-		myUsers=null;
-		myProjects=null;
-		user1 = null;
-		user2 = null;
-		user3 = null;
-		project1 = null;
-		projCollab1 = null;
-		projCollab2 = null;
-		projCollab3 = null;
-		task1 = null;
-		task2 = null;
-		task3 = null;
-		task4 = null;
-		task5 = null;
-		task6 = null;
-		taskCollab1 = null;
-		taskCollab2 = null;
-		taskCollab3 = null;
-		taskCollab4 = null;
-		taskCollab5 = null;
-		taskCollab6 = null;
-		tasksFiltersController = null;
 	}
 
 	/**
@@ -151,13 +119,17 @@ public class US370V2GetProjectFinishedTaskListTest {
 		task1.setStartDate(projStartDate);
 
 		// pass from "OnGoing" to "Finished"
-		Calendar testDate4 = (Calendar) estimatedTaskStartDate.clone();
+		Calendar testDate4 = Calendar.getInstance();
 		testDate4.set(Calendar.YEAR, 2017);
 		testDate4.set(Calendar.MONTH, Calendar.APRIL);
 		testDate4.set(Calendar.DAY_OF_MONTH, 20);
 		testDate4.set(Calendar.HOUR_OF_DAY, 14);
 		task1.setFinishDate(testDate4);
 		task1.getTaskState().doAction(task1);
+
+		// temporary force state
+        task1.setCurrentState(StateEnum.FINISHED);
+        task1.setTaskState(new Finished());
 
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task1.viewTaskStateName());
@@ -179,13 +151,18 @@ public class US370V2GetProjectFinishedTaskListTest {
 		task6.setStartDate(projStartDate);
 
 		// pass from "OnGoing" to "Finished"
-		Calendar testDate3 = (Calendar) estimatedTaskStartDate.clone();
+		Calendar testDate3 = Calendar.getInstance();
 		testDate3.set(Calendar.YEAR, 2017);
 		testDate3.set(Calendar.MONTH, Calendar.MARCH);
 		testDate3.set(Calendar.DAY_OF_MONTH, 20);
 		testDate3.set(Calendar.HOUR_OF_DAY, 14);
 		task6.setFinishDate(testDate3);
 		task6.getTaskState().doAction(task6);
+
+        // temporary force state!
+        task6.setCurrentState(StateEnum.FINISHED);
+        task6.setTaskState(new Finished());
+
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task6.viewTaskStateName());
 
@@ -206,13 +183,18 @@ public class US370V2GetProjectFinishedTaskListTest {
 		task5.setStartDate(projStartDate);
 
 		// pass from "OnGoing" to "Finished"
-		Calendar testDate2 = (Calendar) estimatedTaskStartDate.clone();
+		Calendar testDate2 = Calendar.getInstance();
 		testDate2.set(Calendar.YEAR, 2017);
 		testDate2.set(Calendar.MONTH, Calendar.FEBRUARY);
 		testDate2.set(Calendar.DAY_OF_MONTH, 20);
 		testDate2.set(Calendar.HOUR_OF_DAY, 14);
 		task5.setFinishDate(testDate2);
 		task5.getTaskState().doAction(task5);
+
+        // temporary force state!
+        task5.setCurrentState(StateEnum.FINISHED);
+        task5.setTaskState(new Finished());
+
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task5.viewTaskStateName());
 
@@ -233,13 +215,18 @@ public class US370V2GetProjectFinishedTaskListTest {
 		task4.setStartDate(projStartDate);
 
 		// pass from "OnGoing" to "Finished"
-		Calendar testDate = (Calendar) estimatedTaskStartDate.clone();
+		Calendar testDate = Calendar.getInstance();
 		testDate.set(Calendar.YEAR, 2017);
 		testDate.set(Calendar.MONTH, Calendar.JANUARY);
 		testDate.set(Calendar.DAY_OF_MONTH, 20);
 		testDate.set(Calendar.HOUR_OF_DAY, 14);
 		task4.setFinishDate(testDate);
 		task4.getTaskState().doAction(task4);
+
+        // temporary force state!
+        task4.setCurrentState(StateEnum.FINISHED);
+        task4.setTaskState(new Finished());
+
 		// assures that the taskTest state is Finished
 		assertEquals("Finished", task4.viewTaskStateName());
 

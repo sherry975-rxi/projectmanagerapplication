@@ -12,16 +12,13 @@ import java.util.Scanner;
 @Component
 public class US390GetProjectReportedCostUI {
 
-	// Integer projectID
-	// Display projectCost
+	@Autowired
+	private PrintProjectInfoController projectInfo;
 
 	@Autowired
-	PrintProjectInfoController projectInfo;
+	private US390CalculateReportedProjectCostController controller;
 
-	@Autowired
-	US390CalculateReportedProjectCostController controller;
-
-	public void displayProjectCost(Project project, User user) {
+	public void displayProjectCost(Project project) {
 		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);

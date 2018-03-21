@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US372GetProjectUnfinishedTaskListController;
 import project.model.Project;
@@ -10,8 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US372ProjectUnfinishedTasksUI {
 
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US372GetProjectUnfinishedTaskListController controller;
+
+	@Autowired
+	private PmTaskFunctionalitiesUI taskFuntionatities;
 
 
 	public void displayUnfinishedOfProject(Project project, User user) {
@@ -21,7 +32,7 @@ public class US372ProjectUnfinishedTasksUI {
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
 		boolean loop = true;
 		while (loop) {
@@ -40,8 +51,6 @@ public class US372ProjectUnfinishedTasksUI {
 		System.out.println(line);
 		System.out.println("     UNFINISHED TASKS");
 		System.out.println(line);
-
-		US372GetProjectUnfinishedTaskListController controller = new US372GetProjectUnfinishedTaskListController();
 
 		List<String> listOfOnGoingTasks = new ArrayList<>();
 
@@ -64,7 +73,9 @@ public class US372ProjectUnfinishedTasksUI {
 		for (String ii : listOfOnGoingTasks) {
 
 			if (option.equals(ii)) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
+				taskFuntionatities.setTaskID(ii);
+				taskFuntionatities.setProject(project);
+				taskFuntionatities.setUser(user);
 				taskFuntionatities.taskDataDisplay();
 			} 
 			listOfOptionsToCompare.add(ii);

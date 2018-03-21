@@ -1,14 +1,21 @@
 package project.ui.console.projectmanager.tasks;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US347CancelOnGoingTaskController;
 import project.model.Project;
 
 import java.util.Scanner;
 
+@Component
 public class US347CancelOnGoingTaskUI {
 
+	@Autowired
+	private US347CancelOnGoingTaskController controller;
+
 	public void cancelOnGoingTask(String taskID, Project project) {
-		US347CancelOnGoingTaskController controller = new US347CancelOnGoingTaskController(taskID, project);
+		controller.setTaskID(taskID);
+		controller.setProject(project);
 		Scanner dataInput = new Scanner(System.in);
 
 		System.out.println("Are you sure you want to mark this task as cancelled?");

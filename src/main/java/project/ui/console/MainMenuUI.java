@@ -8,7 +8,7 @@ import project.model.User;
 import project.ui.console.administrator.AdminMenuUI;
 import project.ui.console.collaborator.CollaboratorMainMenuUI;
 import project.ui.console.collaborator.US101UserRegisterUI;
-import project.ui.console.collaborator.US208LoginUI;
+import project.ui.console.collaborator.US180LoginUI;
 import project.ui.console.director.DirectorMenuUI;
 
 import java.util.Scanner;
@@ -21,7 +21,7 @@ public class MainMenuUI {
 	@Autowired
 	private US101UserRegisterUI userRegister;
 	@Autowired
-	private US208LoginUI doLogin;
+	private US180LoginUI doLogin;
 	@Autowired
 	private AdminMenuUI adminMenu;
 	@Autowired

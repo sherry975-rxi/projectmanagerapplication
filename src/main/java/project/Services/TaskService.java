@@ -530,7 +530,7 @@ public class TaskService {
 
 			List<Task> finishedTaskListDecreasingOrder = new ArrayList<>();
 
-			finishedTaskListDecreasingOrder.addAll(this.getProjectTasks(project));
+			finishedTaskListDecreasingOrder.addAll(this.getProjectFinishedTasks(project));
 
 			return sortTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
 		}

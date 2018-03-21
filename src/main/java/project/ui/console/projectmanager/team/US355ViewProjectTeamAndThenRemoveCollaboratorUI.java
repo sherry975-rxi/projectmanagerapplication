@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US355ViewProjectTeamAndThenRemoveCollaboratorController;
+import project.controller.US377CollectionOfCancelledTasksFromAProjectController;
 import project.model.Project;
 import project.model.User;
+import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +17,10 @@ import java.util.Scanner;
 public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 
 	@Autowired
-	US355ViewProjectTeamAndThenRemoveCollaboratorController controller;
+	private PrintProjectInfoController projectInfo;
 
 	@Autowired
-	PrintProjectInfoController projectInfo;
+	private US355ViewProjectTeamAndThenRemoveCollaboratorController controller;
 
 	public void viewProjectTeamAndThenRemoveCollaboratorUI(Project project, User user) {
 		
@@ -79,10 +81,10 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 					System.out.println("\nInvalid answer. Try again (\"y\" or \"n\")");
 					yesOrNo = scannerInput.nextLine();
 				}
-				collaboratorRemovalUI(yesOrNo, controller, listOfUser, i, project, user);
+				collaboratorRemovalUI(yesOrNo, listOfUser, i);
 
 			} else if ("B".equals(option)) {
-				return;
+				break;
 
 			}
 			listOfOptionsToCompare.add(String.valueOf(i + 1));
@@ -97,16 +99,12 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		}
 	}
 
-	private void collaboratorRemovalUI(String yesOrNo,
-			US355ViewProjectTeamAndThenRemoveCollaboratorController controller, List<User> listOfUser, int i,
-			Project project, User user) {
+	private void collaboratorRemovalUI(String yesOrNo, List<User> listOfUser, int i) {
 		if ("y".equalsIgnoreCase(yesOrNo)) {
 			if (controller.removeCollaboratorFromProjectTeam(listOfUser.get(i))) {
 				System.out.println("You removed the user from this Project.");
-				this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
 			} else {
 				System.out.println("Your request was not successful.");
-				this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
 			}
 
 		}

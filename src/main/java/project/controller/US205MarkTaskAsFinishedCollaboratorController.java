@@ -14,7 +14,7 @@ import project.model.Task;
 import project.model.User;
 
 @Controller
-public class US205MarkTaskAsFinishedCollaborator {
+public class US205MarkTaskAsFinishedCollaboratorController {
 	private User username;
 	private int projectIndex;
 	private Task taskToBeMarked;
@@ -45,7 +45,7 @@ public class US205MarkTaskAsFinishedCollaborator {
 	/**
 	 * Empty constructor
 	 */
-	public US205MarkTaskAsFinishedCollaborator() {
+	public US205MarkTaskAsFinishedCollaboratorController() {
 	};
 
 	public List<Project> getProjectsThatIAmCollaborator(User user) {

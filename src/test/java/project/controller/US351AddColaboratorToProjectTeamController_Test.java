@@ -1,25 +1,26 @@
 package project.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import project.Repository.ProjCollabRepository;
-import project.Repository.ProjectsRepository;
-import project.Repository.UserRepository;
-import project.Services.ProjectService;
-import project.Services.UserService;
-import project.model.*;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import project.Services.ProjectService;
+import project.Services.UserService;
+import project.model.Profile;
+import project.model.Project;
+import project.model.User;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
+
 public class US351AddColaboratorToProjectTeamController_Test {
 
 	/**
@@ -34,16 +35,9 @@ public class US351AddColaboratorToProjectTeamController_Test {
 	 */
 
 	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	ProjectsRepository projectsRepository;
-
-	@Autowired
-	ProjCollabRepository projCollabRepository;
-
 	private ProjectService projContainer;
-	UserService userContainer;
+	@Autowired
+	private UserService userContainer;
 	private User u1;
 	private User u2;
 	private User u3;
@@ -51,28 +45,25 @@ public class US351AddColaboratorToProjectTeamController_Test {
 	private User u5;
 	private Project p1;
 	private Project contextualProject;
+	@Autowired
+	US351AddColaboratorToProjectTeamController controller;
 
 	@Before
 	public void setUp() {
 
-		userContainer = new UserService();
-		userContainer.setUserRepository(userRepository);
-
-		projContainer = new ProjectService(projectsRepository, projCollabRepository);
-
 		// create users
-		u1 = userContainer.createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",
-				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
-		u2 = userContainer.createUser("Joaquim", "joaquim@gmail.com", "126", "Empregado", "940000000",
-				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
-		u3 = userContainer.createUser("Maria", "maria@gmail.com", "127", "Empregado", "930000000",
-				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
+		u1 = userContainer.createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000", "Rua Maria",
+				"4444-444", "221234567", "Porto", "Portugal");
+		u2 = userContainer.createUser("Joaquim", "joaquim@gmail.com", "126", "Empregado", "940000000", "Rua Maria",
+				"4444-444", "221234567", "Porto", "Portugal");
+		u3 = userContainer.createUser("Maria", "maria@gmail.com", "127", "Empregado", "930000000", "Rua Maria",
+				"4444-444", "221234567", "Porto", "Portugal");
 
-		u4 = userContainer.createUser("Leonor", "leonor@gmail.com", "128", "Empregado", "930000000",
-				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
+		u4 = userContainer.createUser("Leonor", "leonor@gmail.com", "128", "Empregado", "930000000", "Rua Maria",
+				"4444-444", "221234567", "Porto", "Portugal");
 
-		u5 = userContainer.createUser("Raquel", "raquel@gmail.com", "129", "Empregado", "930000000",
-				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
+		u5 = userContainer.createUser("Raquel", "raquel@gmail.com", "129", "Empregado", "930000000", "Rua Maria",
+				"4444-444", "221234567", "Porto", "Portugal");
 
 		// set user as Director
 		u1.setUserProfile(Profile.DIRECTOR);
@@ -83,7 +74,6 @@ public class US351AddColaboratorToProjectTeamController_Test {
 		u4.setUserProfile(Profile.COLLABORATOR);
 		u5.setUserProfile(Profile.COLLABORATOR);
 
-
 		// update Users
 		userContainer.addUserToUserRepositoryX(u1);
 		userContainer.addUserToUserRepositoryX(u2);
@@ -91,25 +81,11 @@ public class US351AddColaboratorToProjectTeamController_Test {
 		userContainer.addUserToUserRepositoryX(u4);
 		userContainer.addUserToUserRepositoryX(u5);
 
-
 		// create the project and set a user to Project manager
 		p1 = projContainer.createProject("Teste", "blablabla", u2);
 
 		contextualProject = projContainer.createProject("Teste", "blablabla", u2);
 
-	}
-
-	@After
-	public void tearDown() {
-		projContainer = null;
-		userContainer = null;
-		u1 = null;
-		u2 = null;
-		u3 = null;
-		u4 = null;
-		u5 = null;
-		p1 = null;
-		contextualProject = null;
 	}
 
 	/**
@@ -119,9 +95,6 @@ public class US351AddColaboratorToProjectTeamController_Test {
 	 */
 	@Test
 	public void addColaboratorToProjectTeam_Test() {
-		// create controller
-		US351AddColaboratorToProjectTeamController controller = new US351AddColaboratorToProjectTeamController();
-		controller.projectService=this.projContainer;
 
 		assertFalse(projContainer.isUserInProjectTeam(u1, contextualProject));
 

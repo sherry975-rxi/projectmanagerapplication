@@ -1,6 +1,9 @@
 package project.controller;
 
-import org.junit.After;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Calendar;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,29 +12,26 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Repository.ProjectsRepository;
-import project.Repository.TaskRepository;
-import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.model.*;
-
-import java.util.Calendar;
-
-import static org.junit.Assert.assertEquals;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.TaskCollaborator;
+import project.model.User;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
-	
+
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
 	Task task1, task2, task3, task4, task5, task6;
 	TaskCollaborator taskCollab1, taskCollab2, taskCollab3, taskCollab4, taskCollab5, taskCollab6;
-	
+
 	@Autowired
 	US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController tasksFiltersController;
 	@Autowired
@@ -40,19 +40,18 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 	ProjectService projectService;
 	@Autowired
 	TaskService taskService;
-	
-	
+
 	@Before
 	public void setUp() {
 		// create users in company
-		user2 = userService.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
-				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
+		user2 = userService.createUser("João", "user2@gmail.com", "001", "Manager", "930025000", "rua doutor antónio",
+				"7689-654", "porto", "porto", "portugal");
 		user1 = userService.createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
 
 		// create project 1 in company 1
 		project1 = projectService.createProject("name3", "description4", user2);
-	
+
 		// create an estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
@@ -90,7 +89,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		task5 = taskService.createTask("fifth task", project1);
 		task6 = taskService.createTask("sixth task", project1);
 
-		//create projectCollaborator of project1
+		// create projectCollaborator of project1
 		projCollab1 = project1.createProjectCollaborator(user1, 250);
 		projCollab2 = project1.createProjectCollaborator(user2, 120);
 		projCollab3 = project1.createProjectCollaborator(user2, 200);

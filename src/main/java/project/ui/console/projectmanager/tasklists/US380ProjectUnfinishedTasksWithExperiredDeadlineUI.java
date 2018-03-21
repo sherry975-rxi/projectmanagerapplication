@@ -13,10 +13,10 @@ import java.util.Scanner;
 public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 	@Autowired
-	PrintProjectInfoController projectInfo;
+	private PrintProjectInfoController projectInfo;
 
 	@Autowired
-	US380GetProjectExpiredTaskListController controller;
+	private US380GetProjectExpiredTaskListController controller;
 
 	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
 		Scanner scannerInput = new Scanner(System.in);
@@ -43,7 +43,6 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		System.out.println("     UNFINISHED TASKS WITH EXPIRED DEADLINE");
 		System.out.println(line);
 
-
 		for (int i = 0; i < controller.getUnfinishedTaskListWithExpiredDeadline(project).size(); i++) {
 			String taskInfo = controller.getUnfinishedTaskListWithExpiredDeadline(project).get(i);
 			System.out.println(taskInfo);
@@ -57,7 +56,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		switch (option) {
 
 		case ("B"):
-			return;
+			break;
 
 		default:
 			System.out.println("Please choose a valid option: ");

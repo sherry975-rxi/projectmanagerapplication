@@ -1,29 +1,32 @@
 package project.controller;
 
-import net.bytebuddy.asm.Advice;
-import org.junit.After;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Calendar;
+
 import org.junit.Before;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.model.*;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Report;
+import project.model.StateEnum;
+import project.model.Task;
+import project.model.User;
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
 
-import java.util.Calendar;
-
-import static org.junit.Assert.assertEquals;
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan(basePackages = {"project.Services", "project.controller", "project.model"})
+@ComponentScan(basePackages = { "project.Services", "project.controller", "project.model" })
 public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 
 	@Autowired
@@ -48,25 +51,19 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 	@Before
 	public void setUp() {
 
-
-
 		// Add user to User Repository
-		userA = userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337",
-				"Follower of da wae", "919898997", "Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA");
-
-
+		userA = userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae",
+				"919898997", "Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA");
 
 		userB = userContainer.createUser("Fek Quin2", "ugandan2@nackls.com", "cluck13372", "Follower of da wae2",
-						"9198989972", "Debil Strit2", "SP1T-0N-H1M2", "NacklsCiti2", "QuinLend2", "UGANDA2");
-
+				"9198989972", "Debil Strit2", "SP1T-0N-H1M2", "NacklsCiti2", "QuinLend2", "UGANDA2");
 
 		// Add a project to the project repository
-		proj = projectContainer.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", userA);
-
+		proj = projectContainer.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!",
+				userA);
 
 		// Add user to proj
-		projCollabA=projectContainer.createProjectCollaborator(userA, proj, 5);
-
+		projCollabA = projectContainer.createProjectCollaborator(userA, proj, 5);
 
 		// Create and add tasks to Task Repository
 		taskA = taskRepo.createTask("Faind fek quin!", proj);
@@ -92,12 +89,9 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		taskB.createReport(taskB.getTaskCollaboratorByEmail("ugandan@nackls.com"), Calendar.getInstance(), 0);
 		taskC.createReport(taskC.getTaskCollaboratorByEmail("ugandan@nackls.com"), Calendar.getInstance(), 0);
 
-
-
 		// Set task state as finished last month, forces state as finished
 		Calendar finishDate = Calendar.getInstance();
 		finishDate.add(Calendar.MONTH, -1);
-
 
 		taskA.setFinishDate(finishDate);
 
@@ -114,12 +108,10 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		taskC.setTaskState(new Finished());
 		taskC.setCurrentState(StateEnum.FINISHED);
 
-
 		taskRepo.saveTask(taskA);
 		taskRepo.saveTask(taskB);
 		taskRepo.saveTask(taskC);
 	}
-
 
 	@Test
 	public final void testGetTotalTimeOfFinishedTasksFromUserLastMonth() {

@@ -2,16 +2,21 @@ package project.ui.console.projectmanager.tasks;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US365MarkTaskAsFinishedControllerProjectManager;
 import project.model.Project;
 
+@Component
 public class US365MarkTaskAsFinishedUI {
 
-	US365MarkTaskAsFinishedControllerProjectManager controller;
+	 @Autowired
+	private US365MarkTaskAsFinishedControllerProjectManager controller;
 
 	public void markTaskAsFinished(String taskID, Project selectedProject) {
 
-		controller = new US365MarkTaskAsFinishedControllerProjectManager(taskID, selectedProject);
+		controller.setTaskToBeMarked(taskID);
+		controller.setSelectedProject(selectedProject);
 
 		Scanner input = new Scanner(System.in);
 		System.out.println("Would you really like to mark this task as completed?");
@@ -31,7 +36,7 @@ public class US365MarkTaskAsFinishedUI {
 		}
 
 		System.out.println("");
-		System.out.println("Returning to main menu...");
+		System.out.println("Returning...");
 		System.out.println("");
 
 	}

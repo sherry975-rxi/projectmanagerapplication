@@ -1,6 +1,9 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
+import project.controller.US360GetProjectTasksWithoutCollaboratorsAssignedController;
 import project.controller.US377CollectionOfCancelledTasksFromAProjectController;
 import project.model.Project;
 import project.model.User;
@@ -10,8 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US377ProjectCancelledTasks {
 
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US377CollectionOfCancelledTasksFromAProjectController controller;
+
+	@Autowired
+	private PmTaskFunctionalitiesUI taskFuntionatities;
 
 	public void displayCancelledTasksOfProject(Project project, User user) {
 
@@ -19,7 +31,7 @@ public class US377ProjectCancelledTasks {
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
 		boolean loop = true;
 		while (loop) {
@@ -39,8 +51,7 @@ public class US377ProjectCancelledTasks {
 		System.out.println("     CANCELLED TASKS");
 		System.out.println(line);
 
-		US377CollectionOfCancelledTasksFromAProjectController controller = new US377CollectionOfCancelledTasksFromAProjectController(
-				project);
+		controller.setProject(project);
 
 		List<String> listOfCancelledTasks = new ArrayList<>();
 
@@ -61,7 +72,9 @@ public class US377ProjectCancelledTasks {
 		for (String ii : listOfCancelledTasks) {
 
 			if (option.equals(ii)) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
+				taskFuntionatities.setTaskID(ii);
+				taskFuntionatities.setProject(project);
+				taskFuntionatities.setUser(user);
 				taskFuntionatities.taskDataDisplay();
 			} 
 			listOfOptionsToCompare.add(ii);

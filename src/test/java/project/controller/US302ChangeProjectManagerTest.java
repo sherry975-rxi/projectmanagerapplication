@@ -12,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Repository.ProjectsRepository;
-import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.UserService;
 import project.model.Profile;
@@ -31,18 +29,18 @@ import project.model.User;
 @ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US302ChangeProjectManagerTest {
 
-	UserService userService;
-	ProjectService projectService;
 	User userFirstManager;
 	User userNewManager;
 	Project newProject;
+
+	@Autowired
 	US302ChangeProjectManagerController changeManagerController;
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 
 	@Autowired
-	private ProjectsRepository projectRepository;
+	private ProjectService projectService;
 
 	@Before
 	public void setUp() {
@@ -58,8 +56,8 @@ public class US302ChangeProjectManagerTest {
 
 		newProject = projectService.createProject("name", "description", userFirstManager);
 
-		changeManagerController = new US302ChangeProjectManagerController(newProject);
-		changeManagerController.userService = userService;
+		changeManagerController.setSelectedProject(newProject);
+		changeManagerController.setSelectedManager(userFirstManager);
 
 	}
 

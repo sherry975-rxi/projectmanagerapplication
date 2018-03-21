@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.tasks;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US361AssignTaskToCollaboratorsController;
 import project.model.Project;
 import project.model.Task;
@@ -8,16 +10,16 @@ import project.model.User;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US361AssignUserToTaskUI {
 
-	User user;
-	Project project;
-	Task task;
+	@Autowired
+	private US361AssignTaskToCollaboratorsController assignController;
 
-	public US361AssignUserToTaskUI(Project project, Task task, User user) {
-		this.user = user;
-		this.project = project;
-		this.task = task;
+	private Project project;
+	private Task task;
+
+	public US361AssignUserToTaskUI() {
 	}
 
 	public void displayUsersToAssign() {
@@ -25,8 +27,8 @@ public class US361AssignUserToTaskUI {
 		System.out.println("            PROJECT COLLABORATORS           ");
 		System.out.println("____________________________________________");
 
-		US361AssignTaskToCollaboratorsController assignController = new US361AssignTaskToCollaboratorsController(
-				project, task);
+		assignController.setProject(project);
+		assignController.setTask(task);
 		List<String> userList = assignController.getProjectActiveTeam();
 		int number = 1;
 
@@ -35,10 +37,10 @@ public class US361AssignUserToTaskUI {
 			number++;
 		}
 
-		chooseAction(assignController);
+		chooseAction();
 	}
 
-	public void chooseAction(US361AssignTaskToCollaboratorsController assignController) {
+	public void chooseAction() {
 
 		Scanner input = new Scanner(System.in);
 		boolean condition = true;
@@ -55,13 +57,13 @@ public class US361AssignUserToTaskUI {
 				System.out.println("--YOU HAVE QUITTED THE MENU--");
 				condition = false;
 			} else {
-				chooseUserToAssign(assignController, choice);
+				chooseUserToAssign(choice);
 			}
 
 		}
 	}
 
-	public void chooseUserToAssign(US361AssignTaskToCollaboratorsController assignController, String choice) {
+	public void chooseUserToAssign(String choice) {
 
 		Integer choiceInt;
 
@@ -73,21 +75,23 @@ public class US361AssignUserToTaskUI {
 				assignController.setUserToAddToTask(choiceInt - 1);
 				if (assignController.assignCollaboratorToTask()) {
 					System.out.println("--------USER ASSIGNED--------");
-					PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
-							this.user);
-					caseBack.taskDataDisplay();
 
 				} else {
-					System.out.println("Choose a valid user!");
-					PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
-							this.user);
-					caseBack.taskDataDisplay();
+					System.out.println("The selected user cannot be assigned to the chosen task!");
 				}
 			}
 		}
 
-		catch (NumberFormatException npe) {
-			System.out.println("-----Insert a valid user!-----");
+		catch (NumberFormatException nfe) {
+			System.out.println("-----An invalid number was inserted!-----");
 		}
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 }

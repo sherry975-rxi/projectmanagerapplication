@@ -3,6 +3,8 @@
  */
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US204v2createRequestAddCollaboratorToTaskTeamController;
@@ -22,7 +24,18 @@ import java.util.Scanner;
  *
  */
 
+@Component
 public class US204v2CreateTaskAssignmentToCollaboratorUI {
+
+	@Autowired
+	private PrintTaskInfoController printTaskInfoController;
+
+	@Autowired
+	private PrintProjectInfoController printProjectInfoController;
+
+	@Autowired
+	private US204v2createRequestAddCollaboratorToTaskTeamController controller;
+
 
 	User user;
 	String taskID;
@@ -31,25 +44,16 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 
 	/**
 	 * Constructor
-	 * 
-	 * @param user
-	 *            User to add task to user task list
-	 * 
-	 * @param taskID
-	 *            Task to add to user task list
 	 */
-	public US204v2CreateTaskAssignmentToCollaboratorUI(User user, String taskID, Integer projID) {
-
-		this.user = user;
-		this.taskID = taskID;
-		this.projID = projID;
+	public US204v2CreateTaskAssignmentToCollaboratorUI() {
 	}
 
 	public void createTaskAssignment() {
 
-		PrintProjectInfoController printProjectInfoController = new PrintProjectInfoController(this.projID);
+		printProjectInfoController.setProjID(this.projID);
 		String projectName = printProjectInfoController.printProjectNameInfo();
-		PrintTaskInfoController printTaskInfoController = new PrintTaskInfoController(this.taskID, this.projID);
+		printTaskInfoController.setProjeID(this.projID);
+		printTaskInfoController.setTaskID(this.taskID);
 		String taskName = printTaskInfoController.printTaskNameInfo();
 
 		System.out.println("PROJECT - " + projectName);
@@ -66,8 +70,8 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 
 		String yerOrNo = input.nextLine();
 
-		US204v2createRequestAddCollaboratorToTaskTeamController controller = new US204v2createRequestAddCollaboratorToTaskTeamController(
-				taskID, user);
+		controller.setTaskID(this.taskID);
+		controller.setUser(this.user);
 
 		// In case user writes something different from "y" or "n"
 		while (!("n".equalsIgnoreCase(yerOrNo)) && !("y".equalsIgnoreCase(yerOrNo))) {
@@ -76,20 +80,27 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 		}
 
 		if ("y".equalsIgnoreCase(yerOrNo)) {
-			if (controller.createTaskTeamRequest()) {
+			if (controller.createTaskTeamRequest(this.taskID, this.user)) {
 				System.out.println("Your request is pending approval.");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user);
-				taskDetailsUI.taskDataDisplay();
 			} else {
 				System.out.println("Your request was not done.");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user);
-				taskDetailsUI.taskDataDisplay();
 			}
 		} else {
 			System.out.println("Your request was not created.");
-			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user);
-			taskDetailsUI.taskDataDisplay();
 		}
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setTaskID(String taskID) {
+		this.taskID = taskID;
+	}
+
+	public void setProjID(Integer projID) {
+		this.projID = projID;
 	}
 
 }
