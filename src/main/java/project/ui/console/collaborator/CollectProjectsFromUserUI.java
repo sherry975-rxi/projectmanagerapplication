@@ -37,12 +37,13 @@ public class CollectProjectsFromUserUI {
 	 * This method executes all options to execute through this UI
 	 */
 	public void collectProjectsFromUser() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean loop = true;
 		while (loop) {
 			loop = false;
 		
 		
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		
 		infoUpdater.updateDBtoContainer();
 
 		System.out.println("\n                  PROJETOS ");

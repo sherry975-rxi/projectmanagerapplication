@@ -17,13 +17,17 @@ public class US375ProjectNotStartedTasksUI {
 
 	public void projectNotStartedTasksUI(Project project, User user) {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+			infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -51,30 +55,20 @@ public class US375ProjectNotStartedTasksUI {
 		}
 
 		System.out.println(line);
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		// creation of a list with the options B,E and M
 		List<String> listOfOptionsToCompare = new ArrayList<>();
 		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
 
 		for (String ii : listOfExpiredTaskID) {
 
 			if ((ii.equals(option))) {
 				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
 				taskFuntionatities.taskDataDisplay();
-			} else if ("B".equals(option)) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(user, project);
-				projectManagerMainMenuUI.displayOptions();
-
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
-			}
+			} 
 
 			listOfOptionsToCompare.add(ii);
 		}
@@ -83,8 +77,8 @@ public class US375ProjectNotStartedTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.projectNotStartedTasksUI(project, user);
+			loop = true;
 		}
 	}
 
-}
+}}

@@ -23,11 +23,12 @@ public class ProjectViewMenuUI {
 	 * the user's input
 	 */
 	public void projectDataDisplay() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean loop = true;
 		while (loop) {
 			loop = false;
 		
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		
 		infoUpdater.updateDBtoContainer();
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
