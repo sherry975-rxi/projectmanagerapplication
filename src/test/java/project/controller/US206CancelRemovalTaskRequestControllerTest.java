@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Repository.ProjCollabRepository;
@@ -30,6 +31,7 @@ import project.model.taskstateinterface.OnGoing;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US206CancelRemovalTaskRequestControllerTest {
 
 	@Autowired
@@ -61,17 +63,6 @@ public class US206CancelRemovalTaskRequestControllerTest {
 
 	@Before
 	public void setUp() {
-
-		// Creates the Project Repository and User Repository
-		projectService = new ProjectService();
-		userService = new UserService();
-		taskService = new TaskService();
-
-		projectService.setProjectsRepository(projectsRepository);
-		projectService.setProjectCollaboratorRepository(projCollabRepository);
-		userService.setUserRepository(userRepository);
-		taskService.setProjectCollaboratorRepository(projCollabRepository);
-		taskService.setTaskRepository(taskRepository);
 
 		// Creates the users
 		userDaniel = userService.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto", "967387654", "Rua",

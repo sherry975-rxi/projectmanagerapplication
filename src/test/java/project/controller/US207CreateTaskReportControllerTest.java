@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Repository.ProjCollabRepository;
@@ -30,6 +31,7 @@ import project.model.User;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({"project.model", "project.services", "project.repositories", "project.controller"})
 public class US207CreateTaskReportControllerTest {
 
 	@Autowired
@@ -47,7 +49,7 @@ public class US207CreateTaskReportControllerTest {
 	Task task1, task2;
 	TaskCollaborator taskCollab1, taskCollab2;
 	US207CreateTaskReportController controller;
-	US207CreateTaskReportController controller2;
+	//US207CreateTaskReportController controller2;
 
 	private UserService userService;
 
@@ -58,17 +60,7 @@ public class US207CreateTaskReportControllerTest {
 	@Before
 	public void setUp() {
 
-		userService = new UserService();
-		userService.setUserRepository(userRepository);
-
-		projectService = new ProjectService();
-		projectService.setProjectsRepository(projectRepository);
-		projectService.setProjectCollaboratorRepository(projCollabRepo);
-
-		taskService = new TaskService();
-		taskService.setTaskRepository(taskRepository);
-		taskService.setProjectCollaboratorRepository(projCollabRepo);
-
+		
 		/*
 		 * Creates two CreateTaskReport Controllers
 		 */
@@ -149,8 +141,9 @@ public class US207CreateTaskReportControllerTest {
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDateTask1);
 
-		userService.updateUserContainer();
-
+		//userService.updateUserContainer();
+		
+		// creates the controller
 		controller = new US207CreateTaskReportController();
 		controller.taskService = taskService;
 		controller.userContainer = userService;
@@ -216,8 +209,8 @@ public class US207CreateTaskReportControllerTest {
 		 */
 		controller.createReportController(10, Calendar.getInstance());
 		controller.createReportController(20, Calendar.getInstance());
-		controller2.createReportController(5, Calendar.getInstance());
-		controller2.createReportController(3, Calendar.getInstance());
+		//controller2.createReportController(5, Calendar.getInstance());
+		//controller2.createReportController(3, Calendar.getInstance());
 		controller.createReportController(9, Calendar.getInstance());
 
 		reportIndex.add(0);

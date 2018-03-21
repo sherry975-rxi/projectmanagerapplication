@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Repository.ProjectsRepository;
@@ -27,6 +28,7 @@ import project.model.User;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US302ChangeProjectManagerTest {
 
 	UserService userService;
@@ -44,14 +46,6 @@ public class US302ChangeProjectManagerTest {
 
 	@Before
 	public void setUp() {
-
-		// creates an UserContainer
-		userService = new UserService();
-		userService.setUserRepository(userRepository);
-
-		// creates a Project Container
-		projectService = new ProjectService();
-		projectService.setProjectsRepository(projectRepository);
 
 		// User creation
 		userFirstManager = userService.createUser("Leonor", "leonor@gmail.com", "001", "Empregado", "930000000",
