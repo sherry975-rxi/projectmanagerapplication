@@ -216,15 +216,15 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 	public void testGetUserStartedNotFinishedTaskList() {
 	    assertTrue(task3.isProjectCollaboratorActiveInTaskTeam(projCollab1));
 
-	    assertTrue("Ongoing".equals(task3.viewTaskStateName()));
+	    assertTrue("OnGoing".equals(task3.viewTaskStateName()));
 	    assertTrue(task3.getStartDate()!=null);
 		assertTrue(task3.getTaskDeadline()!=null);
 
 		// asserts the list contains five tasks, and the first two are the ones with the
 		// earliest deadline
 		assertEquals(3, tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).size());
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(0), task3);
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(1), task2);
-		assertEquals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(2), task4);
+		assertTrue(task3.equals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(0)));
+		assertTrue(task2.equals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(1)));
+		assertTrue(task4.equals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(2)));
 	}
 }
