@@ -23,6 +23,7 @@ import project.model.EffortUnit;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
+import project.model.TaskCollaborator;
 import project.model.User;
 
 @Service
@@ -196,13 +197,34 @@ public class LoadProjectData {
 
 								task.addProjectCollaboratorToTask(projCollaborator);
 
-								taskService.saveTask(task);
+								//taskService.saveTask(task);
+
+								NodeList nTaskListConnections = documentProjects.getElementsByTagName("colaborador_tarefa");
+
+								for (int indexTaskListConnections = 0; indexTaskListConnections < nTaskListConnections
+										.getLength(); indexTaskListConnections++) {
+
+									Node nNodeTaskListConnections = nTaskListConnections.item(indexTaskListConnections);
+
+									if (nNodeTaskListConnections.getNodeType() == Node.ELEMENT_NODE) {
+										Element eElementNodeTaskListConnections = (Element) nNodeTaskListConnections;
+
+										Calendar StartDate = convertStringToCalendar(eElementNodeTaskListConnections
+												.getElementsByTagName("data_inicio").item(0).getTextContent());
+
+										TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(
+												eElementnNodeTaskCollaborator.getElementsByTagName("colaborador_id")
+														.item(0).getTextContent());
+
+										taskCollab.setStartDate(StartDate);
+
+										taskService.saveTask(task);
+									}
+								}
 							}
 						}
 					}
-
 				}
-
 			}
 		}
 	}
