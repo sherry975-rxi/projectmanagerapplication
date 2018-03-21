@@ -17,38 +17,32 @@ import project.model.Task;
 @Controller
 public class US347CancelOnGoingTaskController {
 
+	@Autowired
+	public TaskService taskService;
+
 	private String taskID;
 	private Project project;
-	
+
+	public US347CancelOnGoingTaskController() {
+
+	}
+
 	public String getTaskID() {
 		return taskID;
 	}
-
 
 	public void setTaskID(String taskID) {
 		this.taskID = taskID;
 	}
 
-
 	public Project getProject() {
 		return project;
 	}
-
 
 	public void setProject(Project project) {
 		this.project = project;
 	}
 
-
-	@Autowired
-	public TaskService taskService;
-
-	
-	public US347CancelOnGoingTaskController() {
-		
-	}
-	
-	
 	/**
 	 * Constructor
 	 * 

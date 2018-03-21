@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Repository.ProjectsRepository;
@@ -41,18 +42,21 @@ import project.model.taskstateinterface.Ready;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US347CancelOnGoingTaskControllerTest {
 
 	// TasksFiltersController tasksFiltersController;
 	@Autowired
-	private UserRepository userRepository;
+	US347CancelOnGoingTaskController controllerCancel;
+	
+	@Autowired
 	UserService userService;
+	
+	@Autowired
 	ProjectService projectService;
 	@Autowired
-	ProjectsRepository projectRepository;
 	TaskService taskService;
-	@Autowired
-	TaskRepository taskRepository;
+	
 	User user1, user2, projectManager;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2;
@@ -62,22 +66,10 @@ public class US347CancelOnGoingTaskControllerTest {
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 	Calendar taskExpiredDeadlineDateTest;
-	US347CancelOnGoingTaskController controllerCancel;
+	
 
 	@Before
 	public void setUp() {
-
-		// creates an UserService
-		userService = new UserService();
-		userService.setUserRepository(userRepository);
-
-		// creates a ProjectService
-		projectService = new ProjectService();
-		projectService.setProjectsRepository(projectRepository);
-
-		// creates a TaskService
-		taskService = new TaskService();
-		taskService.setTaskRepository(taskRepository);
 
 		// create users
 		user1 = userService.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer", "930000000",

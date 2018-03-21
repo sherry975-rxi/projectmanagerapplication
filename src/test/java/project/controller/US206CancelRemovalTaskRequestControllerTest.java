@@ -15,10 +15,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Repository.ProjCollabRepository;
-import project.Repository.ProjectsRepository;
-import project.Repository.TaskRepository;
-import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
@@ -33,24 +29,17 @@ import project.model.taskstateinterface.OnGoing;
 @DataJpaTest
 @ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US206CancelRemovalTaskRequestControllerTest {
-
 	@Autowired
-	UserRepository userRepository;
-
+	US206RemovalTaskRequestController us206v2Controller;
 	@Autowired
-	ProjectsRepository projectsRepository;
-
+	ProjectService projectService;
 	@Autowired
-	ProjCollabRepository projCollabRepository;
-
+	UserService userService;
 	@Autowired
-	TaskRepository taskRepository;
+	TaskService taskService;
 
 	User userDaniel;
 	User userRui;
-	ProjectService projectService;
-	UserService userService;
-	TaskService taskService;
 	Project projectA;
 	ProjectCollaborator userRuiCollaborator;
 	Task taskA;
@@ -59,7 +48,6 @@ public class US206CancelRemovalTaskRequestControllerTest {
 	String stringRequest1;
 	String stringRequest2;
 	List<String> pendingRemovalRequests;
-	US206RemovalTaskRequestController us206v2Controller;
 
 	@Before
 	public void setUp() {
