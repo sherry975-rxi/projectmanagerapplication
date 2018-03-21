@@ -1,22 +1,26 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.*;
 
+@Controller
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
-	private User user;
+	
 
 	@Autowired
-	private TaskService taskContainer;
+	public TaskService taskContainer;
 
 	@Autowired
-	private ProjectService projectContainer;
-
-	private Project project;
-	private Integer projectID;
-	private String taskID;
+	public ProjectService projectContainer;
+	
+	public User user;
+	public Project project;
+	public Integer projectID;
+	public String taskID;
 
 	/**
 	 * 
@@ -42,26 +46,37 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	//
 	// }
 
-	/**
-	 * Constructor
-	 * 
-	 * @param taskID
-	 *            ID of a Task that the User wants to add himself to
-	 */
-	public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID, User user) {
-		this.taskID = taskID;
-		this.user = user;
-		setProjectIDFromTaskID(taskID);
-
-		this.project = projectContainer.getProjectById(this.projectID);
-		this.user = user;
-
+//	/**
+//	 * Constructor
+//	 * 
+//	 * @param taskID
+//	 *            ID of a Task that the User wants to add himself to
+//	 */
+//	public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID, User user) {
+//		this.taskID = taskID;
+//		this.user = user;
+//		setProjectIDFromTaskID(taskID);
+//
+//		this.project = projectContainer.getProjectById(this.projectID);
+//		this.user = user;
+//
+//	}
+	
+	public US204v2createRequestAddCollaboratorToTaskTeamController(){
+		
 	}
+	
 
-	public boolean createTaskTeamRequest() {
+//	public boolean createTaskTeamRequest() {
+//
+//		Task taskToAddCollaboratorTo = taskContainer.getTaskByTaskID(this.taskID);
+//		return taskToAddCollaboratorTo.createTaskAssignementRequest(getProjectCollaboratorFromUser(this.user));
+//	}
+	
+	public boolean createTaskTeamRequest(String taskID, User user) {
 
-		Task taskToAddCollaboratorTo = taskContainer.getTaskByTaskID(this.taskID);
-		return taskToAddCollaboratorTo.createTaskAssignementRequest(getProjectCollaboratorFromUser(this.user));
+		Task taskToAddCollaboratorTo = taskContainer.getTaskByTaskID(taskID);
+		return taskToAddCollaboratorTo.createTaskAssignementRequest(getProjectCollaboratorFromUser(user));
 	}
 
 	/**
