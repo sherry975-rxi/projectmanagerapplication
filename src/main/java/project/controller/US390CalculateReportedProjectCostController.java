@@ -10,20 +10,18 @@ import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
-/*
- * 
- * This controller allows a Project Manager to get the reported cost to the
- * Project he is the manager of
- *
- */
 @Controller
 public class US390CalculateReportedProjectCostController {
 
 	@Autowired
-	TaskService taskService;
+	private TaskService taskService;
 
-	public US390CalculateReportedProjectCostController() {
-	};
+	/*
+	 * 
+	 * This controller allows a Project Manager to get the reported cost to the
+	 * Project he is the manager of
+	 *
+	 */
 
 	/**
 	 * @param project
