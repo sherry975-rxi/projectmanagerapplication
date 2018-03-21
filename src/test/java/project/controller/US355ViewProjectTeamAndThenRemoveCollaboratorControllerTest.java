@@ -4,6 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 import project.Services.ProjectService;
 import project.Services.UserService;
 import project.model.Project;
@@ -16,9 +21,15 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan(basePackages = {"project.Services", "project.controller", "project.model"})
 public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
+	@Autowired
 	UserService userContainer;
+
+	@Autowired
 	ProjectService projectContainer;
 
 	User managerTester, teamPermanentMember;
@@ -27,15 +38,12 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
 	ProjectCollaborator teamPermanentCollaborator;
 
+	@Autowired
 	US355ViewProjectTeamAndThenRemoveCollaboratorController viewProjectTeamAndThenRemoveCollaborator;
 
 	@Before
 	public void setUp() {
-		// creates an UserContainer
-		userContainer = new UserService();
-				
-		// creates a Project Container
-		projectContainer = new ProjectService();
+
 		
 		// creates test users for a manager and collaborator.
 		// declares the collaborator's relevant data as Strings to facilitate assertions
@@ -46,42 +54,32 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 		teamPermanentMember = userContainer.createUser("Mr permanent",
 				"permie@mail.mail", "33333", "placeholding", "98644", "rua", "0000", "porto", "porto", "PORTO");
 
-		userContainer.addUserToUserRepository(managerTester);
-		userContainer.addUserToUserRepository(teamPermanentMember);
 
 		// creates a new test project, and adds the test Collaborator to the team
 		testProject = projectContainer.createProject("testing proj",
 				"shoot rocket... again", managerTester);
 
-		teamPermanentCollaborator = new ProjectCollaborator(teamPermanentMember, 2000);
+		teamPermanentCollaborator = projectContainer.createProjectCollaborator(teamPermanentMember, testProject, 2000);
 
-		testProject.addProjectCollaboratorToProjectTeam(teamPermanentCollaborator);
-		projectContainer.addProjectToProjectContainer(testProject);
+		projectContainer.updateProject(testProject);
 
-		viewProjectTeamAndThenRemoveCollaborator = new US355ViewProjectTeamAndThenRemoveCollaboratorController(
-				this.testProject);
+		viewProjectTeamAndThenRemoveCollaborator.setProj(testProject);
 	}
 
-	@After
-	public void breakDown() {
-		userContainer = null;
-		projectContainer = null;
 
-		managerTester = null;
-
-		teamPermanentMember = null;
-
-		testProject = null;
-
-	}
 
 	@Test
 	public final void testRemoveCollaboratorFromProjectTeam() {
-		assertEquals(1, testProject.getActiveProjectTeam().size());
+		//given a project with one team member
+		assertEquals(1, projectContainer.getActiveProjectTeam(testProject).size());
 
+		//when the team member is removed via the controller
 		assertTrue(viewProjectTeamAndThenRemoveCollaborator.removeCollaboratorFromProjectTeam(teamPermanentMember));
 
-		assertEquals(0, testProject.getActiveProjectTeam().size());
+		// then the active team must be empty
+		assertEquals(0, projectContainer.getActiveProjectTeam(testProject).size());
+		//and the list of all collaborators (active/inactive) must contain 1
+        assertEquals(1, projectContainer.getProjectTeam(testProject).size());
 	}
 
 	@Test

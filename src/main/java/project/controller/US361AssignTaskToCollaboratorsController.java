@@ -31,7 +31,7 @@ public class US361AssignTaskToCollaboratorsController {
 	private ProjectCollaborator projectCollaborator;
 
 	/*
-	 * Default contructor
+	 * Default constructor
 	 */
 	public US361AssignTaskToCollaboratorsController() {
 

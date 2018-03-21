@@ -1,13 +1,19 @@
 package project.controller;
 
-import org.junit.After;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
 import project.Repository.TaskRepository;
@@ -15,17 +21,17 @@ import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.model.*;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.StateEnum;
+import project.model.Task;
+import project.model.User;
 import project.model.taskstateinterface.OnGoing;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US205MarkTaskAsFinishedCollaboratorTest {
 
 	/**
@@ -48,7 +54,6 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	@Autowired
 	TaskRepository taskRepository;
 
-
 	UserService userContainer;
 	ProjectService projectContainer;
 	TaskService taskService;
@@ -56,7 +61,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	// TasksFiltersController tasksFiltersController;
 	User user1, user2, projectManager, projectManager2;
 	Project project1, project2, project3;
-	ProjectCollaborator projCollab1, projCollab2,projCollab12, projCollab22,projCollab13, projCollab23;
+	ProjectCollaborator projCollab1, projCollab2, projCollab12, projCollab22, projCollab13, projCollab23;
 
 	Task task1, task2, task3, task4, task5, task6;
 	Calendar startDateTest;
@@ -64,10 +69,11 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	Calendar taskDeadlineDateTest;
 	Calendar taskExpiredDeadlineDateTest;
 
-    Integer project1ID;
-    String task1ID;
+	Integer project1ID;
+	String task1ID;
 
-    US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator;
+	@Autowired
+	US205MarkTaskAsFinishedCollaboratorController uS205MarkTaskAsFinishedCollaborator;
 
 	@Before
 	public void setUp() {
@@ -80,20 +86,15 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		taskService = new TaskService(taskRepository);
 		taskService.setProjectCollaboratorRepository(projCollabRepository);
 
-
 		// create users
-		user1 = userContainer.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
-				"930000000", "Rua da Caparica, 19", "7894-654", "Porto", "Porto", "Portugal");
-		user2 = userContainer.createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager",
-				"930025000", "Rua Doutor Armando", "4455-654", "Rio Tinto", "Gondomar", "Portugal");
-		projectManager = userContainer.createUser("Mary MacJohn", "mmacjohn@gmail.com", "003",
-				"Product Manager", "930025000", "Rua Terceira, 44", "4455-122", "Leça da Palmeira", "Matosinhos",
-				"Portugal");
-		projectManager2 = userContainer.createUser("John MacMary", "jmacmary2@gmail.com", "003",
-				"Product Manager2", "930025356", "Rua Segunda, 45", "4455-122", "Leça da Palmeira", "Matosinhos",
-				"Portugal");
-
-
+		user1 = userContainer.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer", "930000000",
+				"Rua da Caparica, 19", "7894-654", "Porto", "Porto", "Portugal");
+		user2 = userContainer.createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager", "930025000",
+				"Rua Doutor Armando", "4455-654", "Rio Tinto", "Gondomar", "Portugal");
+		projectManager = userContainer.createUser("Mary MacJohn", "mmacjohn@gmail.com", "003", "Product Manager",
+				"930025000", "Rua Terceira, 44", "4455-122", "Leça da Palmeira", "Matosinhos", "Portugal");
+		projectManager2 = userContainer.createUser("John MacMary", "jmacmary2@gmail.com", "003", "Product Manager2",
+				"930025356", "Rua Segunda, 45", "4455-122", "Leça da Palmeira", "Matosinhos", "Portugal");
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -107,26 +108,22 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		userContainer.addUserToUserRepositoryX(projectManager);
 		userContainer.addUserToUserRepositoryX(projectManager2);
 
-
 		// create project and establishes collaborator projectManager as project manager
 		// of project 1
-		project1 = projectContainer.createProject("Project Management software",
-				"This software main goals are ....", projectManager);
-		project2 = projectContainer.createProject("Project Management software",
-				"This software main goals are ....", projectManager2);
-		project3 = projectContainer.createProject("Project Management software",
-				"This software main goals are ....", projectManager);
-
+		project1 = projectContainer.createProject("Project Management software", "This software main goals are ....",
+				projectManager);
+		project2 = projectContainer.createProject("Project Management software", "This software main goals are ....",
+				projectManager2);
+		project3 = projectContainer.createProject("Project Management software", "This software main goals are ....",
+				projectManager);
 
 		// add users 1 and 2 to all projects
-        projCollab1 = projectContainer.createProjectCollaborator(user1, project1, 2);
-        projCollab2 = projectContainer.createProjectCollaborator(user2, project1, 2);
-        projCollab12 = projectContainer.createProjectCollaborator(user1, project2, 2);
-        projCollab22 = projectContainer.createProjectCollaborator(user2, project2, 2);
-        projCollab13 = projectContainer.createProjectCollaborator(user1, project3, 2);
-        projCollab23 = projectContainer.createProjectCollaborator(user2, project3, 2);
-
-
+		projCollab1 = projectContainer.createProjectCollaborator(user1, project1, 2);
+		projCollab2 = projectContainer.createProjectCollaborator(user2, project1, 2);
+		projCollab12 = projectContainer.createProjectCollaborator(user1, project2, 2);
+		projCollab22 = projectContainer.createProjectCollaborator(user2, project2, 2);
+		projCollab13 = projectContainer.createProjectCollaborator(user1, project3, 2);
+		projCollab23 = projectContainer.createProjectCollaborator(user2, project3, 2);
 
 		// create tasks for all projects
 		task1 = taskService.createTask("Create class User", project1);
@@ -142,7 +139,6 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		projectContainer.updateProject(project1);
 		projectContainer.updateProject(project2);
 		projectContainer.updateProject(project3);
-
 
 		// create a estimated Task Start Date
 		startDateTest = Calendar.getInstance();
@@ -163,11 +159,10 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 
 		// create a expired estimated Task Dead line Date
 		taskExpiredDeadlineDateTest = Calendar.getInstance();
-        estimatedTaskStartDateTest.add(Calendar.YEAR, -1);
+		estimatedTaskStartDateTest.add(Calendar.YEAR, -1);
 		taskExpiredDeadlineDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
 		taskExpiredDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
-
 
 		int taskEffortAndBudget = 10;
 
@@ -178,30 +173,29 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		task1.setTaskDeadline(taskDeadlineDateTest);
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task2.setTaskBudget(taskEffortAndBudget);
-        task2.setEstimatedTaskEffort(taskEffortAndBudget);
+		task2.setTaskBudget(taskEffortAndBudget);
+		task2.setEstimatedTaskEffort(taskEffortAndBudget);
 		task2.setTaskDeadline(taskDeadlineDateTest);
 
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task3.setTaskBudget(taskEffortAndBudget);
-        task3.setEstimatedTaskEffort(taskEffortAndBudget);
+		task3.setTaskBudget(taskEffortAndBudget);
+		task3.setEstimatedTaskEffort(taskEffortAndBudget);
 		task3.setTaskDeadline(taskDeadlineDateTest);
 
 		task4.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task4.setTaskBudget(taskEffortAndBudget);
-        task4.setEstimatedTaskEffort(taskEffortAndBudget);
+		task4.setTaskBudget(taskEffortAndBudget);
+		task4.setEstimatedTaskEffort(taskEffortAndBudget);
 		task4.setTaskDeadline(taskDeadlineDateTest);
 
 		task5.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task5.setTaskBudget(taskEffortAndBudget);
-        task5.setEstimatedTaskEffort(taskEffortAndBudget);
+		task5.setTaskBudget(taskEffortAndBudget);
+		task5.setEstimatedTaskEffort(taskEffortAndBudget);
 		task5.setTaskDeadline(taskDeadlineDateTest);
 
 		task6.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task6.setTaskBudget(taskEffortAndBudget);
-        task6.setEstimatedTaskEffort(taskEffortAndBudget);
+		task6.setTaskBudget(taskEffortAndBudget);
+		task6.setEstimatedTaskEffort(taskEffortAndBudget);
 		task6.setTaskDeadline(taskDeadlineDateTest);
-
 
 		// set active user for all tasks and give them a start date
 		task1.addProjectCollaboratorToTask(projCollab1);
@@ -213,57 +207,53 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		task5.addProjectCollaboratorToTask(projCollab23);
 		task6.addProjectCollaboratorToTask(projCollab13);
 
-        task1.setStartDate(estimatedTaskStartDateTest);
-        task2.setStartDate(estimatedTaskStartDateTest);
-        task3.setStartDate(estimatedTaskStartDateTest);
-        task4.setStartDate(estimatedTaskStartDateTest);
-        task5.setStartDate(estimatedTaskStartDateTest);
-        task6.setStartDate(estimatedTaskStartDateTest);
+		task1.setStartDate(estimatedTaskStartDateTest);
+		task2.setStartDate(estimatedTaskStartDateTest);
+		task3.setStartDate(estimatedTaskStartDateTest);
+		task4.setStartDate(estimatedTaskStartDateTest);
+		task5.setStartDate(estimatedTaskStartDateTest);
+		task6.setStartDate(estimatedTaskStartDateTest);
 
-        // force the task states, ensuring they're all ONGOING
-        task1.setTaskState(new OnGoing());
-        task2.setTaskState(new OnGoing());
-        task3.setTaskState(new OnGoing());
-        task4.setTaskState(new OnGoing());
-        task5.setTaskState(new OnGoing());
-        task6.setTaskState(new OnGoing());
+		// force the task states, ensuring they're all ONGOING
+		task1.setTaskState(new OnGoing());
+		task2.setTaskState(new OnGoing());
+		task3.setTaskState(new OnGoing());
+		task4.setTaskState(new OnGoing());
+		task5.setTaskState(new OnGoing());
+		task6.setTaskState(new OnGoing());
 
-        task1.setCurrentState(StateEnum.ONGOING);
-        task2.setCurrentState(StateEnum.ONGOING);
-        task3.setCurrentState(StateEnum.ONGOING);
-        task4.setCurrentState(StateEnum.ONGOING);
-        task5.setCurrentState(StateEnum.ONGOING);
-        task6.setCurrentState(StateEnum.ONGOING);
-
+		task1.setCurrentState(StateEnum.ONGOING);
+		task2.setCurrentState(StateEnum.ONGOING);
+		task3.setCurrentState(StateEnum.ONGOING);
+		task4.setCurrentState(StateEnum.ONGOING);
+		task5.setCurrentState(StateEnum.ONGOING);
+		task6.setCurrentState(StateEnum.ONGOING);
 
 		// update all tasks and project collaborators to database
 		taskService.saveTask(task1);
-        taskService.saveTask(task2);
-        taskService.saveTask(task3);
-        taskService.saveTask(task4);
-        taskService.saveTask(task5);
-        taskService.saveTask(task6);
+		taskService.saveTask(task2);
+		taskService.saveTask(task3);
+		taskService.saveTask(task4);
+		taskService.saveTask(task5);
+		taskService.saveTask(task6);
 
-        projectContainer.updateProjectCollaborator(projCollab1);
-        projectContainer.updateProjectCollaborator(projCollab2);
-        projectContainer.updateProjectCollaborator(projCollab12);
-        projectContainer.updateProjectCollaborator(projCollab13);
-        projectContainer.updateProjectCollaborator(projCollab23);
+		projectContainer.updateProjectCollaborator(projCollab1);
+		projectContainer.updateProjectCollaborator(projCollab2);
+		projectContainer.updateProjectCollaborator(projCollab12);
+		projectContainer.updateProjectCollaborator(projCollab13);
+		projectContainer.updateProjectCollaborator(projCollab23);
 
-        project1ID = project1.getId();
-        task1ID = task1.getTaskID();
+		project1ID = project1.getId();
+		task1ID = task1.getTaskID();
 
 	}
-
-
-
 
 	@Test
 	public void testGetProjectsFromProjectCollaborator1() {
 		// create controller
-		uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
-		uS205MarkTaskAsFinishedCollaborator.taskService=this.taskService;
-		uS205MarkTaskAsFinishedCollaborator.projectContainer=this.projectContainer;
+		uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaboratorController();
+		uS205MarkTaskAsFinishedCollaborator.taskService = this.taskService;
+		uS205MarkTaskAsFinishedCollaborator.projectContainer = this.projectContainer;
 
 		// create list of tasks to compare to taskContainer of project
 		List<Project> allProjectsInTest = new ArrayList<>();
@@ -281,9 +271,9 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	@Test
 	public void testGetTasksFromProject1Collaborator1() {
 		// create controller
-        uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
-        uS205MarkTaskAsFinishedCollaborator.taskService=this.taskService;
-        uS205MarkTaskAsFinishedCollaborator.projectContainer=this.projectContainer;
+		uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaboratorController();
+		uS205MarkTaskAsFinishedCollaborator.taskService = this.taskService;
+		uS205MarkTaskAsFinishedCollaborator.projectContainer = this.projectContainer;
 
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
 
@@ -304,9 +294,9 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	@Test
 	public void testSelectTask1FromProject1Manager1Finished() {
 		// create controller
-        uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
-        uS205MarkTaskAsFinishedCollaborator.taskService=this.taskService;
-        uS205MarkTaskAsFinishedCollaborator.projectContainer=this.projectContainer;
+		uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaboratorController();
+		uS205MarkTaskAsFinishedCollaborator.taskService = this.taskService;
+		uS205MarkTaskAsFinishedCollaborator.projectContainer = this.projectContainer;
 
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
 		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(project1ID);
@@ -319,9 +309,9 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	@Test
 	public void testSetTask1FromProject1Manager1Finished() {
 		// create controller
-        uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
-        uS205MarkTaskAsFinishedCollaborator.taskService=this.taskService;
-        uS205MarkTaskAsFinishedCollaborator.projectContainer=this.projectContainer;
+		uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaboratorController();
+		uS205MarkTaskAsFinishedCollaborator.taskService = this.taskService;
+		uS205MarkTaskAsFinishedCollaborator.projectContainer = this.projectContainer;
 
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
 		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(project1ID);

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
@@ -26,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan(basePackages = {"project.Services", "project.controller", "project.model"})
 public class US390CalculateReportedProjectCostControllerTest {
 
 	/**
@@ -35,22 +37,11 @@ public class US390CalculateReportedProjectCostControllerTest {
 	 */
 
 	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	ProjectsRepository projectsRepository;
-
-	@Autowired
-	ProjCollabRepository projCollabRepository;
-
-	@Autowired
-	TaskRepository taskRepository;
-
 	private ProjectService projContainer;
+	@Autowired
+	private UserService userContainer;
 
-	UserService userContainer;
-
-
+	@Autowired
 	private TaskService taskContainer;
 
 
@@ -72,22 +63,15 @@ public class US390CalculateReportedProjectCostControllerTest {
 	private TaskCollaborator taskWorkerMike;
 	private TaskCollaborator taskWorkerAna;
 
+	private double totalCost;
+
+	@Autowired
 	private US390CalculateReportedProjectCostController controllerCost;
 
-	private double totalCost;
 
 	@Before
 	public void setUp() {
 
-
-		userContainer = new UserService();
-		userContainer.setUserRepository(userRepository);
-
-		projContainer = new ProjectService(projectsRepository, projCollabRepository);
-
-		taskContainer = new TaskService();
-		taskContainer.setTaskRepository(taskRepository);
-		taskContainer.setProjectCollaboratorRepository(projCollabRepository);
 
 		// create user
 		userDaniel = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "test","test","test","test","test");
@@ -160,37 +144,6 @@ public class US390CalculateReportedProjectCostControllerTest {
 
 	}
 
-	@After
-	public void tearDown() {
-
-		userRepository.deleteAll();
-		projectsRepository.deleteAll();
-		projCollabRepository.deleteAll();
-		taskRepository.deleteAll();
-
-		projContainer = null;
-		userContainer = null;
-		userDaniel = null;
-		userJonny = null;
-		userMike = null;
-		userAna = null;
-		projectUserDaniel = null;
-		projectUserJonny = null;
-		projectUserMike = null;
-		projectUserAna = null;
-		taskWorkerDaniel = null;
-		taskWorkerJonny = null;
-		taskWorkerMike = null;
-		taskWorkerAna = null;
-		testTask = null;
-		testTask2 = null;
-		project = null;
-
-		taskContainer = null;
-		totalCost = 0.0;
-		controllerCost = null;
-
-	}
 
 	@Test
 	public void calculateReportedProjectCostControllerTest() {
@@ -218,10 +171,6 @@ public class US390CalculateReportedProjectCostControllerTest {
 		int anaCost = 3 * taskWorkerAna.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
 
 		totalCost = danielCost + jonnyCost + mikeCost + anaCost;
-
-		// Creates a CalculateReportedProjectCostController
-		controllerCost = new US390CalculateReportedProjectCostController();
-		controllerCost.taskService=this.taskContainer;
 
 		// Compares the 2 values
 		assertEquals(totalCost, controllerCost.calculateReportedProjectCostController(project), 0.01);
@@ -254,9 +203,6 @@ public class US390CalculateReportedProjectCostControllerTest {
 		// Task2 has no reports
 		reportedCost.add("0.0");
 
-		// Creates a CalculateReportedProjectCostController
-		controllerCost = new US390CalculateReportedProjectCostController();
-		controllerCost.taskService=this.taskContainer;
 
 		assertEquals(reportedCost, controllerCost.calculeReportedCostOfEachTaskController(project));
 
@@ -264,11 +210,6 @@ public class US390CalculateReportedProjectCostControllerTest {
 
 	@Test
 	public void testGetTaskId() {
-		// Creates a CalculateReportedProjectCostController
-		controllerCost = new US390CalculateReportedProjectCostController();
-		controllerCost.taskService=this.taskContainer;
-
-		System.out.print(project.getId());
 
 		Integer projectID = project.getId();
 
