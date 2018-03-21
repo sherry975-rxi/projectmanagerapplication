@@ -40,10 +40,6 @@ public class US206RemovalTaskRequestController {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public void setProjectID(Integer projectID) {
-		this.projectID = projectID;
-	}
 	
 	public US206RemovalTaskRequestController() {
 		
