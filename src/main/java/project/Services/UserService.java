@@ -116,7 +116,9 @@ public class UserService {
 	 *            user to save
 	 */
 	public void addUserToUserRepositoryX(User user) {
-		this.userRepository.save(user);
+		if (this.isUserinUserContainer(user) == false) {
+			this.userRepository.save(user);
+		}
 	}
 
 	/**
@@ -147,10 +149,10 @@ public class UserService {
 	 * This method feeds the list of all Users in the Company (userContainer) with
 	 * the user data that is in the DB
 	 */
-//	public void updateUserContainer() {
-//		usersContainer.clear();
-//		this.userRepository.findAll().forEach(usersContainer::add);
-//	}
+	// public void updateUserContainer() {
+	// usersContainer.clear();
+	// this.userRepository.findAll().forEach(usersContainer::add);
+	// }
 
 	/**
 	 * This method returns a list of all active collaborators in the Company
@@ -235,6 +237,24 @@ public class UserService {
 
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
+	}
+
+	/**
+	 * This method allows the administrator to see if a given user already exists in
+	 * company (userContainer) DB
+	 *
+	 * @param addedUser
+	 *            user
+	 * @return TRUE if user exists in company. FALSE if user doesn’t exist in the
+	 *         company's userContainer
+	 */
+	public boolean isUserinUserContainer(User addedUser) {
+
+		boolean result = false;
+		if (this.userRepository.existsByEmail(addedUser.getEmail())) {
+			result = true;
+		}
+		return result;
 	}
 
 }
