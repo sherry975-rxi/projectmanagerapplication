@@ -219,8 +219,8 @@ public class TaskServiceTest {
         result.add(taskMock);
 
         List<Task> orderedListToCompare = new ArrayList<>();
-        orderedListToCompare.add(taskMock);
         orderedListToCompare.add(task2Mock);
+        orderedListToCompare.add(taskMock);
 
         assertEquals(orderedListToCompare, victim.sortTaskListByDeadline(result));
     }
@@ -349,8 +349,8 @@ public class TaskServiceTest {
         when(task2Mock.getCurrentState()).thenReturn(StateEnum.ONGOING);
 
         List<Task> expectedList = new ArrayList<>();
-        expectedList.add(taskMock);
         expectedList.add(task2Mock);
+        expectedList.add(taskMock);
         assertEquals(expectedList, victim.getStartedNotFinishedUserTasksInIncreasingDeadlineOrder(user));
     }
 

@@ -19,6 +19,20 @@ public class US135andUS136SearchUsersController {
 	List<User> userList;
 	User selectedUser = null;
 
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+
+	/**
+	 * Empty constructor
+	 */
+	public US135andUS136SearchUsersController() {
+	};
+
 	/**
 	 * Este controlador permite ao Administrador pesquisar utilizadores do sistema
 	 * Pode pesquisar pelo email, ou pelo perfil de utilizador
