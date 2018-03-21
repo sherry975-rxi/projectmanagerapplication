@@ -3,8 +3,17 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import project.Repository.ProjectsRepository;
+import project.Repository.TaskRepository;
+import project.Repository.UserRepository;
 import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.Services.UserService;
 import project.model.*;
 
@@ -12,40 +21,38 @@ import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
-	US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController tasksFiltersController;
+	
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
 	Task task1, task2, task3, task4, task5, task6;
 	TaskCollaborator taskCollab1, taskCollab2, taskCollab3, taskCollab4, taskCollab5, taskCollab6;
-	ProjectService projectContainer;
-	UserService userContainer;
-
+	
+	@Autowired
+	US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController tasksFiltersController;
+	@Autowired
+	UserService userService;
+	@Autowired
+	ProjectService projectService;
+	@Autowired
+	TaskService taskService;
+	
+	
 	@Before
 	public void setUp() {
-		// creates an UserContainer
-		userContainer = new UserService();
-						
-		// creates a Project Container
-		projectContainer = new ProjectService();
-
 		// create users in company
-		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
+		user2 = userService.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
 				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
-		user1 = userContainer.createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
+		user1 = userService.createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
 
-		// change profiles of users from VISITOR (default) to COLLABORATOR
-		user2.setUserProfile(Profile.COLLABORATOR);
-		user1.setUserProfile(Profile.COLLABORATOR);
-
 		// create project 1 in company 1
-		project1 = projectContainer.createProject("name3", "description4", user2);
-
-		// add project 1 to company 1
-		projectContainer.addProjectToProjectContainer(project1);
-
+		project1 = projectService.createProject("name3", "description4", user2);
+	
 		// create an estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
@@ -76,104 +83,46 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create tasks in project 1
-		task1 = project1.getTaskService().createTask("Do this", 10, estimatedTaskStartDateTest,
-				taskDeadlineDateTest1, 10);
-		task2 = project1.getTaskService().createTask("Do that", 10, estimatedTaskStartDateTest,
-				taskDeadlineDateTest2, 10);
-		task3 = project1.getTaskService().createTask("Merge everything", 10, estimatedTaskStartDateTest,
-				taskExpiredDeadlineDateTest, 10);
-		task4 = project1.getTaskService().createTask("Do this", 10, estimatedTaskStartDateTest,
-				taskDeadlineDateTest3, 10);
-		task5 = project1.getTaskService().createTask("Do this", 10, estimatedTaskStartDateTest,
-				taskDeadlineDateTest4, 10);
-		task6 = project1.getTaskService().createTask("Do this", 10, estimatedTaskStartDateTest,
-				taskExpiredDeadlineDateTest, 10);
+		task1 = taskService.createTask("first task", project1);
+		task2 = taskService.createTask("second task", project1);
+		task3 = taskService.createTask("third task", project1);
+		task4 = taskService.createTask("fourth task", project1);
+		task5 = taskService.createTask("fifth task", project1);
+		task6 = taskService.createTask("sixth task", project1);
 
-		// add tasks to task repository of project 1
-		project1.getTaskService().addTaskToProject(task1);
-		project1.getTaskService().addTaskToProject(task2);
-		project1.getTaskService().addTaskToProject(task3);
-		project1.getTaskService().addTaskToProject(task4);
-		project1.getTaskService().addTaskToProject(task5);
-		project1.getTaskService().addTaskToProject(task6);
-
-		// add costPerEffort to users in project 1, resulting in a Project Collaborator
-		// for each one
+		//create projectCollaborator of project1
 		projCollab1 = project1.createProjectCollaborator(user1, 250);
 		projCollab2 = project1.createProjectCollaborator(user2, 120);
 		projCollab3 = project1.createProjectCollaborator(user2, 200);
 
-		// associate Project Collaborators to project 1 (info user + costPerEffort)
-		project1.addProjectCollaboratorToProjectTeam(projCollab1);
-		project1.addProjectCollaboratorToProjectTeam(projCollab2);
-
 		// defines finish date to task, and mark it as Finished
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task1.setTaskDeadline(taskDeadlineDateTest1);
-//		task1.setTaskState(new Planned());
 		task1.addProjectCollaboratorToTask(projCollab1);
-//		task1.getTaskState().changeToAssigned();
-//		task1.setTaskState(new Ready());
+		task1.setTaskBudget(55);
+		task1.setEstimatedTaskEffort(45);
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDateTask1);
-//		task1.setTaskState(new OnGoing());
 		task1.markTaskAsFinished();
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task2.setTaskDeadline(taskDeadlineDateTest1);
-//		task2.setTaskState(new Planned());
 		task2.addProjectCollaboratorToTask(projCollab1);
-//		task2.getTaskState().changeToAssigned();
-//		task2.setTaskState(new Ready());
 		Calendar startDateTask2 = estimatedTaskStartDateTest;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDateTask1);
-//		task2.setTaskState(new OnGoing());
 		task2.markTaskAsFinished();
 
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskDeadlineDateTest1);
-//		task3.setTaskState(new Planned());
 		task3.addProjectCollaboratorToTask(projCollab1);
-//		task3.getTaskState().changeToAssigned();
-//		task3.setTaskState(new Ready());
 		task3.setTaskBudget(55);
 		task3.setEstimatedTaskEffort(45);
 		Calendar startDateTask3 = estimatedTaskStartDateTest;
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		task3.setStartDate(startDateTask1);
-//		task3.setTaskState(new OnGoing());
 		task3.markTaskAsFinished();
-
-		// creates the controller
-		tasksFiltersController = new US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController();
-	}
-
-	@After
-	public void tearDown() {
-		userContainer = null;
-		projectContainer = null;
-		user1 = null;
-		user2 = null;
-		user3 = null;
-		project1 = null;
-		projCollab1 = null;
-		projCollab2 = null;
-		projCollab3 = null;
-		task1 = null;
-		task2 = null;
-		task3 = null;
-		task4 = null;
-		task5 = null;
-		task6 = null;
-		taskCollab1 = null;
-		taskCollab2 = null;
-		taskCollab3 = null;
-		taskCollab4 = null;
-		taskCollab5 = null;
-		taskCollab6 = null;
-		tasksFiltersController = null;
 	}
 
 	/**
@@ -184,6 +133,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 	public void testGetFinishedUserTasksFromLastMonthInDecreasingOrder() {
 
 		// Adds Collaborator 1 to all tasks
+		task1.addProjectCollaboratorToTask(projCollab1);
 		task2.addProjectCollaboratorToTask(projCollab1);
 		task3.addProjectCollaboratorToTask(projCollab1);
 
