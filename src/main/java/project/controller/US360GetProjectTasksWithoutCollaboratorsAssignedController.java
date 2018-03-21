@@ -1,22 +1,27 @@
 package project.controller;
 
-
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.model.Project;
-import project.model.Task;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import project.Services.TaskService;
+import project.model.Project;
+import project.model.Task;
+
 @Controller
 public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
-	
+
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
+
+	/*
+	 * Default constructor
+	 */
+	public US360GetProjectTasksWithoutCollaboratorsAssignedController() {
+
+	}
 
 	/**
 	 * this method return the list of not assigned tasks
@@ -40,7 +45,7 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 	 */
 	public List<String> getProjectNotAssignedTaskList(Project proj) {
 
-		List<Task> taskListNotAssigned =taskService.getProjectTasksWithoutCollaboratorsAssigned(proj);
+		List<Task> taskListNotAssigned = taskService.getProjectTasksWithoutCollaboratorsAssigned(proj);
 		List<String> taskListToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListNotAssigned.size(); i++) {
