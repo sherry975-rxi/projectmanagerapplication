@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.others;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US390CalculateReportedProjectCostController;
 import project.controller.PrintProjectInfoController;
 import project.model.Project;
@@ -7,19 +9,25 @@ import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class US390GetProjectReportedCostUI {
 
 	// Integer projectID
 	// Display projectCost
 
+	@Autowired
+	PrintProjectInfoController projectInfo;
 
+	@Autowired
+	US390CalculateReportedProjectCostController controller;
 
 	public void displayProjectCost(Project project, User user) {
 		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
+
 		boolean loop = true;
 		while (loop) {
 			loop = false;
@@ -38,9 +46,7 @@ public class US390GetProjectReportedCostUI {
 		System.out.println(line);
 		System.out.println("     PROJECT COST");
 		System.out.println(line);
-
-		US390CalculateReportedProjectCostController controller = new US390CalculateReportedProjectCostController();
-
+		
 		System.out.println();
 
 		System.out.println("The reported project cost until now is:");
