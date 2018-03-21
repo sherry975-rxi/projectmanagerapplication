@@ -1,75 +1,88 @@
 package project.controller;
 
-import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import project.Repository.ProjectsRepository;
+import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.UserService;
 import project.model.Project;
 import project.model.User;
 
-import static org.junit.Assert.*;
-
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US320ViewProjectsControllerTest {
 
-	UserService userContainer;
-	ProjectService projectContainer;
+	UserService userService;
+	@Autowired
+	UserRepository userRepository;
+	ProjectService projectService;
+	@Autowired
+	ProjectsRepository projectRepository;
+
 	Project activeProject;
 	Project inactiveProject;
 	User activeManager;
 	User inactiveManager;
 	US320ViewProjectsController projectListsController;
-	String activeProjectData;
+	String activeProjectData, activeProjectData2;
 
 	@Before
 	public void setUp() {
+
+		// Creates a viewProjectController
+		projectListsController = new US320ViewProjectsController();
+
+		activeProjectData = null;
+
 		// creates an UserContainer
-		userContainer = new UserService();
-								
+		userService = new UserService();
+		userService.setUserRepository(userRepository);
+
 		// creates a Project Container
-		projectContainer = new ProjectService();
+		projectService = new ProjectService();
+		projectService.setProjectsRepository(projectRepository);
 
-		activeManager = new User("Daniel", "email", "idNumber", "function", "123456789");
-		inactiveManager = new User("Johnny", "email2", "idNumber2", "function2", "987654321");
+		activeManager = userService.createUser("Manel", "user1@gmail.com", "001", "Empregado", "930000000", "Rua Bla",
+				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		userContainer.addUserToUserRepository(activeManager);
-		userContainer.addUserToUserRepository(inactiveManager);
+		inactiveManager = userService.createUser("Joaquim", "user2@gmail.com", "002", "Inactive", "930000000",
+				"Rua Bla", "BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
-		// creates both an active and an Inactive Project using their rewspective
+		// creates both an active and an Inactive Project using their respective
 		// Project Managers
-		activeProject = new Project(1, "Active Project", "this Project is active", activeManager);
-		inactiveProject = new Project(2, "Inactive Project", "this Project is inactive", inactiveManager);
+		activeProject = projectService.createProject("Active Project", "this Project is active", activeManager);
+		inactiveProject = projectService.createProject("Inactive Project", "this Project is inactive", inactiveManager);
 
 		activeProject.setProjectStatus(Project.EXECUTION);
-		inactiveProject.setProjectStatus(Project.PLANNING);
+		inactiveProject.setProjectStatus(Project.CLOSE);
 
-		projectContainer.addProjectToProjectContainer(activeProject);
-		projectContainer.addProjectToProjectContainer(inactiveProject);
+		projectService.addProjectToProjectContainer(activeProject);
+		projectService.addProjectToProjectContainer(inactiveProject);
 
 		// creates a string from activeProject's overview data, to be compared with the
 		// various tests
 		activeProjectData = "==============================\n";
 		activeProjectData += "===== ";
-		activeProjectData += "1";
+		activeProjectData += "5";
 		activeProjectData += " - Active Project =====\n";
 		activeProjectData += "==============================";
 		activeProjectData += "\n - Status: Execution";
-		activeProjectData += "\n - Manager: Daniel";
+		activeProjectData += "\n - Manager: Manel";
 		activeProjectData += "\n - Description: this Project is active";
 		activeProjectData += "\n==============================";
 
-	}
-
-	@After
-	public void tearDown() {
-		userContainer = null;
-		projectContainer = null;
-		activeProject = null;
-		inactiveProject = null;
-		activeManager = null;
-		inactiveManager = null;
-		projectListsController = null;
 	}
 
 	/**
@@ -77,7 +90,6 @@ public class US320ViewProjectsControllerTest {
 	 */
 	@Test
 	public void generateHeaderTest() {
-		projectListsController = new US320ViewProjectsController();
 
 		char headerChar = '=';
 		int headerSize = 20;
@@ -95,8 +107,6 @@ public class US320ViewProjectsControllerTest {
 	@Test
 	public void projectToStringTest() {
 
-		projectListsController = new US320ViewProjectsController();
-
 		assertTrue(activeProjectData.equals(projectListsController.overviewProjectAsString(activeProject)));
 	}
 
@@ -107,13 +117,12 @@ public class US320ViewProjectsControllerTest {
 	 */
 	@Test
 	public void activeProjectsListTest() {
-		projectListsController = new US320ViewProjectsController();
 
 		assertEquals(1, projectListsController.viewActiveProjects().size());
 
 		// also asserts that the contents of index 0 matches the data of the only active
 		// project
-		assertTrue(projectListsController.viewAllProjects().get(0).equals("[1] \n" + activeProjectData));
+		assertTrue(projectListsController.viewAllProjects().get(0).equals("[1] \n" + activeProjectData2));
 	}
 
 	/**
@@ -122,8 +131,7 @@ public class US320ViewProjectsControllerTest {
 	 */
 	@Test
 	public void allProjectsListTest() {
-		projectListsController = new US320ViewProjectsController();
-		int ProjectContainerSize = projectContainer.getAllProjectsfromProjectsContainer().size();
+		int ProjectContainerSize = projectService.getAllProjectsfromProjectsContainer().size();
 
 		assertEquals(ProjectContainerSize, projectListsController.viewAllProjects().size());
 
@@ -141,23 +149,16 @@ public class US320ViewProjectsControllerTest {
 	@Test
 	public void selectProjectTest() {
 		// visible index 1 must match the index 0 of the actual list, "activeProject"
-		projectListsController = new US320ViewProjectsController();
 		projectListsController.viewAllProjects();
 
 		assertEquals(projectListsController.selectProject(1), activeProject);
 
 		// visible index 2 must match the index 1 of the actual list, "inactiveProject"
-		projectListsController = new US320ViewProjectsController();
 		projectListsController.viewAllProjects();
 
 		assertEquals(projectListsController.selectProject(2), inactiveProject);
 
-		// invalid visible index must return null
-		projectListsController = new US320ViewProjectsController();
-		projectListsController.viewAllProjects();
-
 		assertEquals(projectListsController.selectProject(0), null);
-		assertEquals(projectListsController.selectProject(-1), null);
 
 	}
 
