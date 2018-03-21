@@ -33,7 +33,7 @@ public class US340CreateTaskController {
 	 *
 	 * @return the added task
 	 */
-	public boolean addTask(String description) {
+	public boolean addTask(String description, Project chosenProject) {
 		Boolean wasTaskSaved = true;
 		Task newTask = taskService.createTask(description, chosenProject);
 		if (newTask == null) {

@@ -37,7 +37,7 @@ public class US351AddColaboratorToProjectTeamController {
 	public void addUserToProjectTeam(User user, Project project, int effort) {
 
 		ProjectCollaborator projectCollaborator = projectService.createProjectCollaborator(user, project, effort);
-		projectService.addProjectCollaborator(projectCollaborator);
+//		projectService.addProjectCollaborator(projectCollaborator);
 
 	}
 

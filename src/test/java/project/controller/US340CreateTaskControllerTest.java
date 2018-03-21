@@ -56,7 +56,7 @@ public class US340CreateTaskControllerTest {
 		taskService = new TaskService();
 		taskService.setTaskRepository(taskRepository);
 
-		userService.getAllUsersFromUserContainer().clear();
+//		userService.getAllUsersFromUserContainer().clear();
 
 		// create user
 		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
@@ -72,12 +72,12 @@ public class US340CreateTaskControllerTest {
 		project = projectService.createProject("name3", "description4", userAdmin);// !!!
 
 		// creates the Controller and asserts the list of unstarted tasks starts at 0
-		testControl = new US340CreateTaskController(project);
-
+		testControl = new US340CreateTaskController();
+		testControl.taskService = taskService;
 		/*
 		 * Sets a TaskService to the Controller
 		 */
-		testControl.taskService = taskService;
+		
 
 	}
 
@@ -90,7 +90,7 @@ public class US340CreateTaskControllerTest {
 		assertEquals(taskService.getProjectUnstartedTasks(project).size(), 0);
 
 		// creates and adds a task using the controller and asserts a task was added
-		assertTrue(testControl.addTask("Test dis agen pls"));
+		assertTrue(testControl.addTask("Test dis agen pls", project));
 		assertEquals(taskService.getProjectUnstartedTasks(project).size(), 1);
 
 		// asserts the added task matches the added task

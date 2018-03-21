@@ -14,7 +14,7 @@ import project.model.Task;
 public class US375GetProjectNotStartedTaskListController {
 
 	@Autowired
-	private TaskService taskService;
+	public TaskService taskService;
 
 	/*
 	 * Default constructor
