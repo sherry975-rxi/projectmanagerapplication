@@ -17,21 +17,21 @@ import java.util.Scanner;
 public class MainMenuUI {
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	@Autowired
-	US101UserRegisterUI userRegister;
+	private US101UserRegisterUI userRegister;
 	@Autowired
-	US208LoginUI doLogin;
+	private US208LoginUI doLogin;
 	@Autowired
-	AdminMenuUI adminMenu;
+	private AdminMenuUI adminMenu;
 	@Autowired
-	DirectorMenuUI directorMenu;
+	private DirectorMenuUI directorMenu;
 	@Autowired
-	CollaboratorMainMenuUI collaboratorMenu;
+	private CollaboratorMainMenuUI collaboratorMenu;
 
-	protected static User userAdmin;
-	protected static User userDirector;
-	protected static User userJSilva;
+	private static User userAdmin;
+	private static User userDirector;
+	private static User userJSilva;
 
 
 
