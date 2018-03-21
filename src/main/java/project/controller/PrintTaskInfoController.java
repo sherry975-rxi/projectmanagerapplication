@@ -22,6 +22,7 @@ public class PrintTaskInfoController {
 	@Autowired
 	public TaskService taskService;
 
+
 	private Task task;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	private String taskID;
@@ -180,4 +181,25 @@ public class PrintTaskInfoController {
 	public String printProjectNameInfo() {
 		return this.project.getName();
 	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
+	public void setDateFormat(SimpleDateFormat dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	public void setTaskID(String taskID) {
+		this.taskID = taskID;
+	}
+
+	public void setProjeID(Integer projeID) {
+		this.projeID = projeID;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
 }
