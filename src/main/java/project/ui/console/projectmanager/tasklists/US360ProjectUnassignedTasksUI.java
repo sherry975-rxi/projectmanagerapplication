@@ -2,10 +2,8 @@ package project.ui.console.projectmanager.tasklists;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.US360GetProjectTasksWithoutCollaboratorsAssignedController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 import java.util.ArrayList;
@@ -15,7 +13,6 @@ import java.util.Scanner;
 public class US360ProjectUnassignedTasksUI {
 
 	public void projectUnassignedTasksUI(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		
 
 		Scanner scannerInput = new Scanner(System.in);
@@ -25,7 +22,6 @@ public class US360ProjectUnassignedTasksUI {
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-			infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);

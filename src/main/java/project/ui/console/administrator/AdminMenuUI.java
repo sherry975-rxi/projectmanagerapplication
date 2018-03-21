@@ -1,6 +1,5 @@
 package project.ui.console.administrator;
 
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
 
 import java.util.Scanner;
@@ -21,12 +20,11 @@ public class AdminMenuUI {
 	}
 
 	public void adminMenu() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+
 		Scanner input = new Scanner(System.in);
 
 		boolean cycle = true;
 		while (cycle) {
-			infoUpdater.updateDBtoContainer();
 			System.out.println("");
 			System.out.println(
 					"———————————————————————————————————————————MENU ADMIN——————————————————————————————————————————————————");

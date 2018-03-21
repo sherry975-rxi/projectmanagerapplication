@@ -1,16 +1,7 @@
 package project.model;
 
+import javax.persistence.*;
 import java.util.Calendar;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  * 
@@ -25,11 +16,11 @@ import javax.persistence.Table;
 public class Report {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private double reportedTime;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "TaskCollaborator_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "TaskCollaborator_id")
 	private TaskCollaborator taskCollaborator;
 	private double cost;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -38,7 +29,11 @@ public class Report {
 	private Calendar dateOfReport;
 	private Calendar dateOfUpdate;
 
-	public Report() {
+
+
+
+
+	public Report(){
 
 	}
 
@@ -49,8 +44,9 @@ public class Report {
 	 *            Task Collaborator
 	 */
 
-	public Report(TaskCollaborator taskCollaborator, Calendar reportDate) {
 
+	public Report(TaskCollaborator taskCollaborator, Calendar reportDate) {
+		
 		this.reportedTime = 0;
 		this.taskCollaborator = taskCollaborator;
 		this.cost = taskCollaborator.getCost();
@@ -117,8 +113,7 @@ public class Report {
 	/**
 	 * Sets the time that a a Task Collaborator spent on a task
 	 *
-	 * @param time
-	 *            Time spent on task
+	 * @param time Time spent on task
 	 */
 	public void updateReportedTime(double time) {
 		this.reportedTime = time;
@@ -163,6 +158,7 @@ public class Report {
 		this.dateOfReport = reportDate;
 	}
 
+
 	/**
 	 * Gets the date of the report
 	 *
@@ -199,5 +195,6 @@ public class Report {
 	public void setDateOfUpdate(Calendar dateOfUpdate) {
 		this.dateOfUpdate = dateOfUpdate;
 	}
+
 
 }

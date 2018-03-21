@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class ProjectCollaborator implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "User_id")

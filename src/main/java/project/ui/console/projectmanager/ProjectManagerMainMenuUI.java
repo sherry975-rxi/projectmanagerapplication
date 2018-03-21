@@ -1,11 +1,8 @@
 package project.ui.console.projectmanager;
 
 import project.controller.PrintProjectInfoController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
-import project.ui.console.collaborator.CollectProjectsFromUserUI;
 import project.ui.console.projectmanager.others.US340CreateTaskUI;
 import project.ui.console.projectmanager.others.US342DefineDependenciesBetweenTasksUI;
 import project.ui.console.projectmanager.others.US390GetProjectReportedCostUI;
@@ -38,14 +35,12 @@ public class ProjectManagerMainMenuUI {
 		
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
 		projectInfo.setProject();
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		
 
 		Scanner scannerInput = new Scanner(System.in);
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-			infoUpdater.updateDBtoContainer();
 		System.out.println(
 				"———————————————————————————————————————————MENU PROJECT MANAGER——————————————————————————————————————————————————");
 		System.out.println("                               Project " + projectInfo.printProjectNameInfo().toUpperCase()

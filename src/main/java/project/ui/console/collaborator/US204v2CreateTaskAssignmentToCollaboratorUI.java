@@ -6,7 +6,6 @@ package project.ui.console.collaborator;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US204v2createRequestAddCollaboratorToTaskTeamController;
-import project.controller.UpdateDbToContainersController;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
@@ -47,8 +46,6 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 	}
 
 	public void createTaskAssignment() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 
 		PrintProjectInfoController printProjectInfoController = new PrintProjectInfoController(this.projID);
 		String projectName = printProjectInfoController.printProjectNameInfo();

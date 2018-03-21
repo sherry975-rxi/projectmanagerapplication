@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.controller.UpdateDbToContainersController;
 import project.model.Profile;
 import project.model.User;
 import project.ui.console.administrator.AdminMenuUI;
@@ -33,12 +32,6 @@ public class MainMenuUI {
 
 
 	public void mainMenu() {
-		//Updates de DataBase
-        UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-        infoUpdater.setProjectContainer(projService);
-        infoUpdater.setUserContainer(userService);
-		infoUpdater.updateDBtoContainer();
-
 
 		userJSilva = userService.getAllUsersFromUserContainer().get(2);
 		userDirector = userService.getAllUsersFromUserContainer().get(1);

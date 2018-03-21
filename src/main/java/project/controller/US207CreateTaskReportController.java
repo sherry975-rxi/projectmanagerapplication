@@ -18,6 +18,9 @@ import project.model.User;
 public class US207CreateTaskReportController {
 
 	private User username;
+	private String email;
+	private Task task;
+
 
 	@Autowired
 	public UserService userContainer;
@@ -25,10 +28,28 @@ public class US207CreateTaskReportController {
 	@Autowired
 	public TaskService taskService;
 
-	private String email;
-	private Task task;
+	public User getUsername() {
+		return username;
+	}
 
-	public US207CreateTaskReportController() {
+	public void setUsername(User username) {
+		this.username = username;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 
 	/**
@@ -37,7 +58,10 @@ public class US207CreateTaskReportController {
 	 * @param email
 	 *            The email of the user that will create a task report
 	 */
-	public US207CreateTaskReportController(String email, String taskID) {
+	public US207CreateTaskReportController() {
+	}
+
+	public void US207setTaskReportController(String email, String taskID) {
 
 		this.username = userContainer.getUserByEmail(email);
 		this.email = email;

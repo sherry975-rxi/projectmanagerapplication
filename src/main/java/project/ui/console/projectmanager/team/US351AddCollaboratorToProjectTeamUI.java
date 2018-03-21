@@ -2,7 +2,6 @@ package project.ui.console.projectmanager.team;
 
 import project.Services.UserService;
 import project.controller.US351AddColaboratorToProjectTeamController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 
@@ -15,8 +14,6 @@ public class US351AddCollaboratorToProjectTeamUI {
 
 	public void addCollaboratorToProjectTeam(Project project) {
 		UserService userContainer = new UserService();
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 		String line = "______________________________________________";
 		US351AddColaboratorToProjectTeamController controller = new US351AddColaboratorToProjectTeamController();
 		Scanner dataIn = new Scanner(System.in);

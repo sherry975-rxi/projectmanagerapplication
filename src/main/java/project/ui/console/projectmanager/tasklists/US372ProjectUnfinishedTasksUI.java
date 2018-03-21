@@ -2,11 +2,8 @@ package project.ui.console.projectmanager.tasklists;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.US372GetProjectUnfinishedTaskListController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 import java.util.ArrayList;
@@ -18,8 +15,6 @@ public class US372ProjectUnfinishedTasksUI {
 
 
 	public void displayUnfinishedOfProject(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		
 
 
 		String line = "___________________________________________________";
@@ -31,7 +26,6 @@ public class US372ProjectUnfinishedTasksUI {
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-			infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);

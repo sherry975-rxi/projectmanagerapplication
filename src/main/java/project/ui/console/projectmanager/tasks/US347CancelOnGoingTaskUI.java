@@ -1,7 +1,6 @@
 package project.ui.console.projectmanager.tasks;
 
 import project.controller.US347CancelOnGoingTaskController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 
 import java.util.Scanner;
@@ -9,8 +8,6 @@ import java.util.Scanner;
 public class US347CancelOnGoingTaskUI {
 
 	public void cancelOnGoingTask(String taskID, Project project) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 		US347CancelOnGoingTaskController controller = new US347CancelOnGoingTaskController(taskID, project);
 		Scanner dataInput = new Scanner(System.in);
 
