@@ -1,7 +1,6 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import org.springframework.stereotype.Controller;
 import project.Services.TaskService;
@@ -15,18 +14,6 @@ public class US340CreateTaskController {
 	public TaskService taskService;
 
 	private Project chosenProject;
-
-	/*
-	 * Default constructor
-	 */
-
-	public US340CreateTaskController() {
-
-	}
-
-	public void setChosenProject(Project chosenProject) {
-		this.chosenProject = chosenProject;
-	}
 
 	/**
 	 * This constructor creates a target controller. Currently, it receives a
