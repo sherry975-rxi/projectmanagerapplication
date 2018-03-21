@@ -2,9 +2,7 @@ package project.ui.console.projectmanager.others;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.US340CreateTaskController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
@@ -61,8 +59,7 @@ public class US340CreateTaskUI {
 
 		String yerOrNo = input.nextLine();
 		US340CreateTaskController createTaskController = new US340CreateTaskController(this.project);
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+
 		while (!("n".equalsIgnoreCase(yerOrNo)) && !("y".equalsIgnoreCase(yerOrNo))) {
 			System.out.println("\nInvalid answer. Please try again (\"y\" or \"n\")");
 			yerOrNo = input.nextLine();

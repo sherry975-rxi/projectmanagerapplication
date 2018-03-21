@@ -1,7 +1,6 @@
 package project.ui.console.collaborator;
 
 import project.controller.US201and202UpdateUserInfoController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Address;
 import project.model.User;
 
@@ -24,8 +23,6 @@ public class US201and202UpdateUserInfoUI {
 	}
 
 	public void chooseWhatInfoToUpdate() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 		String processCancelled = "Process Cancelled";
 		Scanner input = new Scanner(System.in);
 		US201and202UpdateUserInfoController getInfo = new US201and202UpdateUserInfoController();

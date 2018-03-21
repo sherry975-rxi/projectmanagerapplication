@@ -3,9 +3,7 @@
  */
 package project.ui.console.collaborator;
 
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
@@ -32,8 +30,7 @@ public class UserTasksFunctionalitiesMenuUI {
 	 * tasks
 	 */
 	public void displayFunctionalities() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();

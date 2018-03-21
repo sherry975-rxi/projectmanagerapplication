@@ -21,8 +21,6 @@ public class TaskDetailsUI {
 	}
 
 	private static void printMenuOption(PrintProjectInfoController projectInfo, PrintTaskInfoController taskInfo){
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
 		System.out.println("");

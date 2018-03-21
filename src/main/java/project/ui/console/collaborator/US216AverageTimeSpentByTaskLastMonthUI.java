@@ -1,14 +1,11 @@
 package project.ui.console.collaborator;
 
 import project.controller.US216AverageTimeSpentOnTaskLastMonthController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
 
 public class US216AverageTimeSpentByTaskLastMonthUI {
 
 	public void displayAveregeTimeSpentByTaskLastMonth(User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();

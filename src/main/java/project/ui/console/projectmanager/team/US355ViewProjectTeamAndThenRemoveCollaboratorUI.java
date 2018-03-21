@@ -2,10 +2,8 @@ package project.ui.console.projectmanager.team;
 
 import project.controller.PrintProjectInfoController;
 import project.controller.US355ViewProjectTeamAndThenRemoveCollaboratorController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,6 @@ import java.util.Scanner;
 public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 
 	public void viewProjectTeamAndThenRemoveCollaboratorUI(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		
 
 		Scanner scannerInput = new Scanner(System.in);
@@ -23,7 +20,6 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println("___________________________________________________");

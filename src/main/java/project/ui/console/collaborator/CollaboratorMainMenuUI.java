@@ -1,8 +1,6 @@
 package project.ui.console.collaborator;
 
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
@@ -26,11 +24,9 @@ public class CollaboratorMainMenuUI {
 	}
 
 	public void displayOptions() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		infoUpdater.updateDBtoContainer();
 		Scanner scannerInput = new Scanner(System.in);
 
 		String myname = user.getName();

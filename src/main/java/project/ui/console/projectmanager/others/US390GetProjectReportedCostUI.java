@@ -2,10 +2,8 @@ package project.ui.console.projectmanager.others;
 
 import project.controller.US390CalculateReportedProjectCostController;
 import project.controller.PrintProjectInfoController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
@@ -17,9 +15,6 @@ public class US390GetProjectReportedCostUI {
 
 
 	public void displayProjectCost(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		
-
 		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
@@ -28,7 +23,6 @@ public class US390GetProjectReportedCostUI {
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-			infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);

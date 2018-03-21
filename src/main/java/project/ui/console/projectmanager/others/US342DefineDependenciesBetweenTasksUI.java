@@ -1,7 +1,6 @@
 package project.ui.console.projectmanager.others;
 
 import project.controller.US342CreateTaskDependencyController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.Task;
 
@@ -27,9 +26,6 @@ public class US342DefineDependenciesBetweenTasksUI {
 	 * 
 	 */
 	public void chooseProject() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
-
 		boolean checkA = true;
 		boolean checkB = true;
 		boolean checkC = true;
