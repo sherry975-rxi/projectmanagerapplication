@@ -1,6 +1,7 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.Task;
@@ -12,37 +13,52 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+@Component
 public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 
-	User myUser;
+
+	User user;
 
 
 	@Autowired
-	ProjectService myProjRepo;
+	private ProjectService myProjRepo;
 
 	@Autowired
-	TaskService taskService;
+	private TaskService taskService;
 
+
+	/**
+	 * Empty controller created for JPA integration tests
+	 */
+	public US210GetAllFinishedUserTasksInDecreasingOrderController() {
+
+	}
 
 	/**
 	 * Creator of the controller, receives a user
 	 * @param user
 	 */
 	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
-		this.myUser = user;
+		this.user = user;
 	}
 	
-	public US210GetAllFinishedUserTasksInDecreasingOrderController() {}
 
-	
-	
-	
+
+	/**
+	 * Creator of the controller, receives a user
+	 * @param user
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
 	/**
 	 * Method to return the user name in string
 	 * @return string
 	 */
 	public String printUserNameInfo() {
-		return this.myUser.getName();
+		return this.user.getName();
 	}
 	
 	/** Receives a gregorian calendar date
@@ -66,37 +82,13 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	 * 
 	 */
 	public List<String> getAllFinishedUserTasksInDecreasingOrder(){
-		List<Task> taskList = taskService.getAllFinishedUserTasksInDecreasingOrder(this.myUser);
+		List<Task> taskList = taskService.getAllFinishedUserTasksInDecreasingOrder(this.user);
 		List<String> finishedTaskListDecreasingOrder = new ArrayList<>();
 		for (Task finishedTask : taskList) {
 			String[] stringList = finishedTask.getTaskID().split("\\.");
 			finishedTaskListDecreasingOrder.add("[" + stringList[0] + "." + stringList[1] + "]" + " " + convertCalendarToString(finishedTask.getFinishDate()) + " - " +  finishedTask.getDescription());
 		}
 	return finishedTaskListDecreasingOrder;
-	}
-	
-	public User getMyUser() {
-		return myUser;
-	}
-
-	public void setMyUser(User myUser) {
-		this.myUser = myUser;
-	}
-
-	public ProjectService getMyProjRepo() {
-		return myProjRepo;
-	}
-
-	public void setMyProjRepo(ProjectService myProjRepo) {
-		this.myProjRepo = myProjRepo;
-	}
-
-	public TaskService getTaskService() {
-		return taskService;
-	}
-
-	public void setTaskService(TaskService taskService) {
-		this.taskService = taskService;
 	}
 	
 }
