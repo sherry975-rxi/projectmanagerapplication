@@ -8,9 +8,11 @@ import project.dto.UserDTO;
 
 @Controller
 public class US101RegisterUserController {
-
 	@Autowired
-	public UserService userService;
+	UserService userService;
+
+	public US101RegisterUserController() {
+	}
 
 	/**
 	 * After creating the Controller, this method is called to both create and add
@@ -39,21 +41,15 @@ public class US101RegisterUserController {
 	 * @param country
 	 *            country of the User
 	 */
-
 	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
 			String street, String zipCode, String city, String district, String country) {
-
 		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password);
-
 		newUser.setUserAddress(street, zipCode, city, district, country);
-
 		userService.createUserWithDTO(newUser);
 	}
 
 	public boolean isUserInUserRepository(String email) {
-
 		return userService.getUserByEmail(email) != null;
-
 	}
 
 	public boolean isUserEmailValid(String email) {
@@ -66,7 +62,5 @@ public class US101RegisterUserController {
 
 	public boolean isEmailValidController(String email) {
 		return this.userService.isEmailAddressValid(email);
-
 	}
-
 }
