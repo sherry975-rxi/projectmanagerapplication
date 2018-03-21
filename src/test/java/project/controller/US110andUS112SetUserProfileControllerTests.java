@@ -8,21 +8,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Repository.UserRepository;
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US110andUS112SetUserProfileControllerTests {
-
 	@Autowired
-	UserRepository userRepository;
-
 	UserService userContainer;
+	@Autowired
 	US110andUS112SetUserProfileController us110andUS112SetUserProfileController;
 
 	User newUser2;
@@ -30,13 +29,6 @@ public class US110andUS112SetUserProfileControllerTests {
 
 	@Before
 	public void setUp() {
-
-		userContainer = new UserService();
-
-		userContainer.setUserRepository(userRepository);
-
-		us110andUS112SetUserProfileController = new US110andUS112SetUserProfileController();
-		us110andUS112SetUserProfileController.userService = userContainer;
 
 		newUser2 = us110andUS112SetUserProfileController.getUserContainer().createUser("Manel", "user2@gmail.com",
 				"001", "Empregado", "930000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
