@@ -75,7 +75,7 @@ public class TaskDetailsUI {
 				if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator)) {
 					System.out.println(cantDoIt);
 				} else {
-					US205MarkTaskAsFinishedCollaborator taskToMark = new US205MarkTaskAsFinishedCollaborator();
+					US205MarkTaskAsFinishedCollaboratorController taskToMark = new US205MarkTaskAsFinishedCollaboratorController();
 					taskToMark.getProjectsThatIAmCollaborator(this.user);
 					taskToMark.getUnfinishedTasksOfProjectFromCollaborator(this.projectID);
 					taskToMark.getTaskToBeMarkedFinished(this.taskID);
