@@ -1,5 +1,6 @@
 package project.ui.console.administrator;
 
+import org.springframework.stereotype.Component;
 import project.controller.US135andUS136SearchUsersController;
 import project.model.Profile;
 import project.model.User;
@@ -7,6 +8,7 @@ import project.model.User;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US135andUS136ListUsersUI {
 
 	String options = "[0] - search Unassigned Users \n" + "[1] - search Directors \n" + "[2] - search Collaborators \n"

@@ -1,11 +1,13 @@
 package project.ui.console.administrator;
 
+import org.springframework.stereotype.Component;
 import project.controller.US130ListUsersController;
 import project.model.User;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US130ListUsersUI {
 
 	public User displayUsersList(User userToReturn) {
