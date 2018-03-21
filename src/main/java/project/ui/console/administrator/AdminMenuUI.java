@@ -1,12 +1,15 @@
 package project.ui.console.administrator;
 
+import org.springframework.stereotype.Component;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class AdminMenuUI {
 
 	User adminLoggedIn;
+
 	User selectedUser;
 
 	String options = "[1] - View all users \n" + "[2] - Search users by profile or email \n"
@@ -15,8 +18,7 @@ public class AdminMenuUI {
 
 	String command;
 
-	public AdminMenuUI(User admin) {
-		this.adminLoggedIn = admin;
+	public AdminMenuUI() {
 	}
 
 	public void adminMenu() {
@@ -88,6 +90,11 @@ public class AdminMenuUI {
 
 		}
 
+	}
+
+
+	public void setAdminLoggedIn(User adminLoggedIn) {
+		this.adminLoggedIn = adminLoggedIn;
 	}
 
 }

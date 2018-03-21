@@ -1,12 +1,15 @@
 package project.ui.console.director;
 
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.model.Project;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class DirectorMenuUI {
+
 
 	User directorLoggedIn;
 	Project selectedProject = null;
@@ -17,8 +20,7 @@ public class DirectorMenuUI {
 
 	String command;
 
-	public DirectorMenuUI(User admin) {
-		this.directorLoggedIn = admin;
+	public DirectorMenuUI() {
 	}
 
 	public void directorMenu() {
@@ -100,4 +102,7 @@ public class DirectorMenuUI {
 
 	}
 
+	public void setDirectorLoggedIn(User directorLoggedIn) {
+		this.directorLoggedIn = directorLoggedIn;
+	}
 }

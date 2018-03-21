@@ -2,8 +2,6 @@ package project.ui.console;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.Services.ProjectService;
-import project.Services.TaskService;
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
@@ -21,9 +19,15 @@ public class MainMenuUI {
 	@Autowired
 	UserService userService;
 	@Autowired
-	ProjectService projService;
+	US101UserRegisterUI userRegister;
 	@Autowired
-	TaskService taskService;
+	US208LoginUI doLogin;
+	@Autowired
+	AdminMenuUI adminMenu;
+	@Autowired
+	DirectorMenuUI directorMenu;
+	@Autowired
+	CollaboratorMainMenuUI collaboratorMenu;
 
 	protected static User userAdmin;
 	protected static User userDirector;
@@ -40,7 +44,7 @@ public class MainMenuUI {
 		displayOptions();
 	}
 
-	public static void displayOptions() {
+	public void displayOptions() {
 
 		printImage();
 
@@ -66,28 +70,26 @@ public class MainMenuUI {
 			System.out.println();
 			switch (choice) {
 				case "1":
-					US101UserRegisterUI userRegister = new US101UserRegisterUI();
 					userRegister.userRegister();
 					break;
 				case "2":
-					US208LoginUI doLogin = new US208LoginUI();
 					doLogin.doLogin();
 					break;
 				case "3":
-					AdminMenuUI adminMenu = new AdminMenuUI(userAdmin);
+					adminMenu.setAdminLoggedIn(userAdmin);
 					adminMenu.adminMenu();
 					break;
 
 				case "4":
 					userDirector.setUserProfile(Profile.DIRECTOR);
-					DirectorMenuUI directorMenu = new DirectorMenuUI(userDirector);
+					directorMenu.setDirectorLoggedIn(userDirector);
 					directorMenu.directorMenu();
 					break;
 
 
 				case "5":
 					//userJSilva.setUserProfile(Profile.COLLABORATOR);
-					CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(userJSilva);
+					collaboratorMenu.setUser(userJSilva);
 					collaboratorMenu.displayOptions();
 
 					break;
