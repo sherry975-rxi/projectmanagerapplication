@@ -455,7 +455,7 @@ public class TaskService {
 		 */
 		public List<Task> getAllTasksFromProjectCollaborator(ProjectCollaborator collab) {
 			List<Task> allTasks = new ArrayList<>();
-			for (Task other : this.getTaskRepository()) {
+			for (Task other : this.getProjectTasks(collab.getProject())) {
 				if (other.isProjectCollaboratorInTaskTeam(collab)) {
 					allTasks.add(other);
 				}
