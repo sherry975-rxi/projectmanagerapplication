@@ -1,11 +1,14 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import project.Services.UserService;
 import project.model.Project;
 import project.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Group 3
@@ -14,13 +17,14 @@ import java.util.List;
  *         Project.
  *
  */
+@Controller
 public class US302ChangeProjectManagerController {
 
-
-	UserService userContainer;
-	List<User> activeCollaboratorList;
-	User selectedManager;
-	Project selectedProject;
+	@Autowired
+	public UserService userService;
+	private List<User> activeCollaboratorList;
+	private User selectedManager;
+	private Project selectedProject;
 
 	/**
 	 * Constructor for project creation controller, it receives a project whose
@@ -38,7 +42,7 @@ public class US302ChangeProjectManagerController {
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listPossibleManagers() {
-		this.activeCollaboratorList = userContainer.getAllActiveCollaboratorsFromRepository();
+		this.activeCollaboratorList = userService.getAllActiveCollaboratorsFromRepository();
 		List<String> collabListAsString = new ArrayList<>();
 
 		for (int i = 0; i < activeCollaboratorList.size(); i++) {
