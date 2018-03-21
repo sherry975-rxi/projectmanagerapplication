@@ -1,14 +1,47 @@
 package project.controller;
 
-import project.Services.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
+@Controller
 public class US365MarkTaskAsFinishedControllerProjectManager {
-	private Task taskToBeMarked;
+
+	@Autowired
 	private TaskService projectTaskList;
+	private Task taskToBeMarked;
 	private Project selectedProject;
+
+	/*
+	 * Default constructor
+	 */
+
+	public US365MarkTaskAsFinishedControllerProjectManager() {
+
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+
+	public Task getTaskToBeMarked() {
+		return taskToBeMarked;
+	}
+
+	public void setTaskToBeMarked(Task taskToBeMarked) {
+		this.taskToBeMarked = taskToBeMarked;
+	}
+
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
+	}
 
 	public US365MarkTaskAsFinishedControllerProjectManager(String taskID, Project selectedProject) {
 		this.selectedProject = selectedProject;

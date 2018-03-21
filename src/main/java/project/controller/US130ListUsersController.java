@@ -16,7 +16,6 @@ public class US130ListUsersController {
 	public UserService userContainer;
 
 	List<User> userList;
-	User selectedUser = null;
 
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
@@ -58,13 +57,14 @@ public class US130ListUsersController {
 	 * @return User to be Returned and handled by the Admin
 	 */
 	public User selectUser(int index) {
+		User result;
 		int actualIndex = index - 1;
 		if (actualIndex >= 0 && actualIndex < userList.size()) {
-			selectedUser = userList.get(actualIndex);
+			result = userList.get(actualIndex);
 		} else {
-			selectedUser = null;
+			result = null;
 		}
-		return selectedUser;
+		return result;
 
 	}
 
