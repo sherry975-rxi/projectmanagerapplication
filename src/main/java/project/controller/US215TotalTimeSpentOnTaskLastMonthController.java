@@ -19,7 +19,7 @@ import project.model.User;
 public class US215TotalTimeSpentOnTaskLastMonthController {
 
 	@Autowired
-	TaskService taskService;
+	private TaskService taskService;
 
 	public US215TotalTimeSpentOnTaskLastMonthController() {
 
