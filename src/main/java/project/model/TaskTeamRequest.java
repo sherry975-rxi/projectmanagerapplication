@@ -1,13 +1,21 @@
 package project.model;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "TaskTeamRequest")
 public class TaskTeamRequest {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
@@ -21,10 +29,9 @@ public class TaskTeamRequest {
 	public static final int ASSIGNMENT = 0;
 	public static final int REMOVAL = 1;
 
-
 	/*
-	 * 	Constructor of TaskTeamRequest
-	 * 	Receives as Parameters the ProjectCollaborator who makes the request and the task that he wants to be associated to
+	 * Constructor of TaskTeamRequest Receives as Parameters the ProjectCollaborator
+	 * who makes the request and the task that he wants to be associated to
 	 */
 	public TaskTeamRequest(ProjectCollaborator projCollab, Task task) {
 		this.projCollab = projCollab;
@@ -33,7 +40,7 @@ public class TaskTeamRequest {
 	}
 
 	/*
-	 * 	Empty Constructor for TaskTeamRequest
+	 * Empty Constructor for TaskTeamRequest
 	 */
 	public TaskTeamRequest() {
 
@@ -54,7 +61,7 @@ public class TaskTeamRequest {
 	}
 
 	/*
-	 *	Sets a Project Collaborator to Parameter projCollab of the TaskTeamRequest
+	 * Sets a Project Collaborator to Parameter projCollab of the TaskTeamRequest
 	 */
 	public void setProjCollab(ProjectCollaborator projCollab) {
 		this.projCollab = projCollab;
@@ -67,12 +74,11 @@ public class TaskTeamRequest {
 		this.task = task;
 	}
 
-
 	/*
 	 * This method returns the projectCollaborator parameter of the TaskTeamRequest
 	 *
-	 * @return ProjectCollaborator
-	 * 	 The Project Collaborator associated to the TaskTeamRequest
+	 * @return ProjectCollaborator The Project Collaborator associated to the
+	 * TaskTeamRequest
 	 */
 	public ProjectCollaborator getProjCollab() {
 		return projCollab;
@@ -81,38 +87,35 @@ public class TaskTeamRequest {
 	/*
 	 * This method returns the Task associated of the TaskTeamRequest
 	 *
-	 * @return Task
-	 * 	 The Task associated to the TaskTeamRequest
+	 * @return Task The Task associated to the TaskTeamRequest
 	 */
 	public Task getTask() {
 		return task;
 	}
 
-
 	public String getType() {
-	    String typeString ="N/A";
-	    Integer assignement = 0;
-	    Integer removal = 1;
-	    if (assignement.equals(type)) {
-            typeString = "Assignment";
-        } else if (removal.equals(type)) {
-            typeString = "Removal";
-        }
-	    return typeString;
-    }
+		String typeString = "N/A";
+		Integer assignement = 0;
+		Integer removal = 1;
+		if (assignement.equals(type)) {
+			typeString = "Assignment";
+		} else if (removal.equals(type)) {
+			typeString = "Removal";
+		}
+		return typeString;
+	}
 
-    public boolean isAssignmentRequest() {
-	    return type==TaskTeamRequest.ASSIGNMENT;
-    }
+	public boolean isAssignmentRequest() {
+		return type == TaskTeamRequest.ASSIGNMENT;
+	}
 
-    public boolean isRemovalRequest() {
-        return type==TaskTeamRequest.REMOVAL;
-    }
+	public boolean isRemovalRequest() {
+		return type == TaskTeamRequest.REMOVAL;
+	}
 
-    public void setType(int typ) {
-	    this.type=typ;
-    }
-
+	public void setType(int typ) {
+		this.type = typ;
+	}
 
 	@Override
 	public int hashCode() {
@@ -153,12 +156,12 @@ public class TaskTeamRequest {
 			return false;
 		}
 		if (type == null) {
-		    if (other.type != null) {
-		        return false;
-            }
-        } else if (type != other.type) {
-		    return false;
-        }
+			if (other.type != null) {
+				return false;
+			}
+		} else if (type != other.type) {
+			return false;
+		}
 		return true;
 	}
 
@@ -168,13 +171,13 @@ public class TaskTeamRequest {
 	 *
 	 * @return The string representation
 	 */
-	public String viewStringRepresentation() { 
-		
-		//Este m�todo n�o devia estar noutro s�tio? Controladores ou assim...
+	public String viewStringRepresentation() {
+
+		// Este m�todo n�o devia estar noutro s�tio? Controladores ou assim...
 
 		return this.projCollab.getUserFromProjectCollaborator().getName() + "\n"
-				+ this.projCollab.getUserFromProjectCollaborator().getEmail() + "\n"
-				+ this.task.getTaskID() + "\n" + this.task.getDescription();
+				+ this.projCollab.getUserFromProjectCollaborator().getEmail() + "\n" + this.task.getTaskID() + "\n"
+				+ this.task.getDescription();
 
 	}
 

@@ -1,12 +1,17 @@
 package project.model;
 
-
-
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * Class to build Projects.
@@ -20,10 +25,10 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "Project")
-public class Project implements Serializable{
+public class Project implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private int status;
@@ -45,11 +50,10 @@ public class Project implements Serializable{
 	public static final int CLOSE = 5; // fecho
 	static final long serialVersionUID = 43L;
 
-
 	/**
 	 * Empty Constructor for Project
 	 */
-	public Project(){
+	public Project() {
 
 	}
 
@@ -93,7 +97,6 @@ public class Project implements Serializable{
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
 
 	public void setName(String name) {
 		this.name = name;
@@ -203,8 +206,6 @@ public class Project implements Serializable{
 	public User getProjectManager() {
 		return this.projectManager;
 	}
-
-
 
 	/**
 	 * Get the project's description
@@ -358,7 +359,6 @@ public class Project implements Serializable{
 		this.budget = newBudget;
 	}
 
-
 	/**
 	 * This method returns the name of the project in a String
 	 * 
@@ -373,8 +373,9 @@ public class Project implements Serializable{
 	 * 
 	 * @return TRUE if is active FALSE if not
 	 */
-	public Boolean isProjectActive() { 
-		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION || this.getProjectStatus() ==  EXECUTION  || this.getProjectStatus() == DELIVERY;
+	public Boolean isProjectActive() {
+		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION
+				|| this.getProjectStatus() == EXECUTION || this.getProjectStatus() == DELIVERY;
 	}
 
 }
