@@ -1,167 +1,177 @@
 package project.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
-import project.model.*;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import project.Services.TaskService;
+import project.Services.UserService;
+import project.model.Report;
+import project.model.Task;
+import project.model.TaskCollaborator;
+import project.model.User;
+
 @Controller
 public class US207CreateTaskReportController {
 
-    private User username;
+	private User username;
 
-    @Autowired
-    public UserService userContainer;
+	@Autowired
+	public UserService userContainer;
 
-    @Autowired
-    public TaskService taskService;
+	@Autowired
+	public TaskService taskService;
 
-    private String email;
-    private Task task;
+	private String email;
+	private Task task;
 
-    /**
-     * Constructor of US207CreateTaskReportController
-     *
-     * @param email The email of the user that will create a task report
-     */
-    public US207CreateTaskReportController(String email, String taskID) {
+	/**
+	 * Constructor of US207CreateTaskReportController
+	 *
+	 * @param email
+	 *            The email of the user that will create a task report
+	 */
+	public US207CreateTaskReportController() {
+	}
 
-        this.username = userContainer.getUserByEmail(email);
-        this.email = email;
+	public void US207setTaskReportController(String email, String taskID) {
 
-        for (Task other : taskService.getStartedNotFinishedUserTaskList(username)) {
-            if (other.getTaskID().equals(taskID)) {
-                task = other;
-            }
-        }
+		this.username = userContainer.getUserByEmail(email);
+		this.email = email;
 
-    }
+		for (Task other : taskService.getStartedNotFinishedUserTaskList(username)) {
+			if (other.getTaskID().equals(taskID)) {
+				task = other;
+			}
+		}
 
+	}
 
-    /**
-     * This method returns a TaskCollaborator by its email
-     *
-     * @return
-     */
-    public TaskCollaborator getTaskCollaboratorByEmail(String userEmail) {
+	/**
+	 * This method returns a TaskCollaborator by its email
+	 *
+	 * @return
+	 */
+	public TaskCollaborator getTaskCollaboratorByEmail(String userEmail) {
 
-        TaskCollaborator taskCollaboratorByEmail = null;
+		TaskCollaborator taskCollaboratorByEmail = null;
 
-        for (TaskCollaborator other : this.task.getTaskTeam()) {
-            if (other.getProjCollaborator().getUserFromProjectCollaborator().getEmail().equals(userEmail) && other.getFinishDate() == null) {
-                taskCollaboratorByEmail = other;
-            }
-        }
+		for (TaskCollaborator other : this.task.getTaskTeam()) {
+			if (other.getProjCollaborator().getUserFromProjectCollaborator().getEmail().equals(userEmail)
+					&& other.getFinishDate() == null) {
+				taskCollaboratorByEmail = other;
+			}
+		}
 
-        return taskCollaboratorByEmail;
-    }
+		return taskCollaboratorByEmail;
+	}
 
+	/**
+	 * This method creates or updates a Report with a given time
+	 *
+	 * @param timeToReport
+	 *            The time associated to the report
+	 * @return TRUE if the report is created, FALSE if not
+	 */
+	public boolean createReportController(double timeToReport, Calendar dateOfReport) {
 
-    /**
-     * This method creates or updates a Report with a given time
-     *
-     * @param timeToReport The time associated to the report
-     * @return TRUE if the report is created, FALSE if not
-     */
-    public boolean createReportController(double timeToReport, Calendar dateOfReport) {
+		boolean wasReportCreated = false;
 
-        boolean wasReportCreated = false;
+		wasReportCreated = task.createReport(task.getTaskCollaboratorByEmail(email), dateOfReport, timeToReport);
 
-        wasReportCreated = task.createReport(task.getTaskCollaboratorByEmail(email), dateOfReport, timeToReport);
+		return wasReportCreated;
 
-        return wasReportCreated;
+	}
 
-    }
+	/**
+	 * This method gets the report Index of a given user
+	 *
+	 * @return A List with the index of the reports of a given taskCollaborator
+	 */
+	public List<Integer> getReportsIndexByGivenUser() {
 
-    /**
-     * This method gets the report Index of a given user
-     *
-     * @return A List with the index of the reports of a given taskCollaborator
-     */
-    public List<Integer> getReportsIndexByGivenUser() {
+		List<Integer> reportsOfGivenUser;
 
-        List<Integer> reportsOfGivenUser;
+		reportsOfGivenUser = task.getReportsIndexOfTaskCollaborator(username.getEmail());
 
-        reportsOfGivenUser = task.getReportsIndexOfTaskCollaborator(username.getEmail());
+		return reportsOfGivenUser;
 
-        return reportsOfGivenUser;
+	}
 
-    }
+	/**
+	 * @param newReportTime
+	 *            The update reported time
+	 * @param taskCollaborator
+	 *            The TaskCollaborator associated to the Report
+	 * @param reportToChange
+	 *            The report index to change
+	 * @return TRUE if the report was updated, FALSE if not
+	 */
+	public boolean updateTaskReport(double newReportTime, TaskCollaborator taskCollaborator, Integer reportToChange) {
+		Boolean wasReportUpdated = false;
+		wasReportUpdated = task.updateReportedTime(newReportTime, taskCollaborator, reportToChange);
 
+		return wasReportUpdated;
 
-    /**
-     * @param newReportTime    The update reported time
-     * @param taskCollaborator The TaskCollaborator associated to the Report
-     * @param reportToChange   The report index to change
-     * @return TRUE if the report was updated, FALSE if not
-     */
-    public boolean updateTaskReport(double newReportTime, TaskCollaborator taskCollaborator, Integer reportToChange) {
-        Boolean wasReportUpdated = false;
-        wasReportUpdated = task.updateReportedTime(newReportTime, taskCollaborator, reportToChange);
+	}
 
-        return wasReportUpdated;
+	/**
+	 * This method returns the dates of when the reports were created
+	 *
+	 * @param taskCollaborator
+	 *            The TaskCollaborator to search its reports for
+	 * @return A List with the dates of the report creation dates
+	 */
+	public List<Calendar> getReportsCreationDateByGivenUser(TaskCollaborator taskCollaborator) {
 
-    }
+		List<Calendar> reportsDate = new ArrayList<>();
+		for (Report other : this.task.getReports()) {
+			if (other.getTaskCollaborator().equals(taskCollaborator)) {
+				reportsDate.add(other.getDateOfReport());
+			}
+		}
 
-    /**
-     * This method returns the dates of when the reports were created
-     *
-     * @param taskCollaborator The TaskCollaborator to search its reports for
-     * @return A List with the dates of the report creation dates
-     */
-    public List<Calendar> getReportsCreationDateByGivenUser(TaskCollaborator taskCollaborator) {
+		return reportsDate;
+	}
 
-        List<Calendar> reportsDate = new ArrayList<>();
-        for (Report other : this.task.getReports()) {
-            if (other.getTaskCollaborator().equals(taskCollaborator)) {
-                reportsDate.add(other.getDateOfReport());
-            }
-        }
+	/**
+	 * This method returns the dates of when the reports were updated
+	 *
+	 * @param taskCollaborator
+	 *            The TaskCollaborator to search its reports for
+	 * @return A List with the dates of the report update dates
+	 */
+	public List<Calendar> getReportsUpdateDateByGivenUser(TaskCollaborator taskCollaborator) {
 
-        return reportsDate;
-    }
+		List<Calendar> reportsDate = new ArrayList<>();
+		for (Report other : this.task.getReports()) {
+			if (other.getTaskCollaborator().equals(taskCollaborator)) {
+				reportsDate.add(other.getDateOfUpdate());
+			}
+		}
 
+		return reportsDate;
+	}
 
-    /**
-     * This method returns the dates of when the reports were updated
-     *
-     * @param taskCollaborator The TaskCollaborator to search its reports for
-     * @return A List with the dates of the report update dates
-     */
-    public List<Calendar> getReportsUpdateDateByGivenUser(TaskCollaborator taskCollaborator) {
+	/**
+	 * This method returns the reported times of a given TaskCollaborator
+	 *
+	 * @param taskCollaborator
+	 *            The TaskCollaborator to search its reports for
+	 * @return A List with the reported times in the reports by a given user
+	 */
+	public List<Double> getReportTimeByGivenUser(TaskCollaborator taskCollaborator) {
 
-        List<Calendar> reportsDate = new ArrayList<>();
-        for (Report other : this.task.getReports()) {
-            if (other.getTaskCollaborator().equals(taskCollaborator)) {
-                reportsDate.add(other.getDateOfUpdate());
-            }
-        }
+		List<Double> reportsTime = new ArrayList<>();
+		for (Report other : this.task.getReports()) {
+			if (other.getTaskCollaborator().equals(taskCollaborator)) {
+				reportsTime.add(other.getReportedTime());
+			}
+		}
 
-        return reportsDate;
-    }
-
-    /**
-     * This method returns the reported times of a given TaskCollaborator
-     *
-     * @param taskCollaborator The TaskCollaborator to search its reports for
-     * @return A List with the reported times in the reports by a given user
-     */
-    public List<Double> getReportTimeByGivenUser(TaskCollaborator taskCollaborator) {
-
-        List<Double> reportsTime = new ArrayList<>();
-        for (Report other : this.task.getReports()) {
-            if (other.getTaskCollaborator().equals(taskCollaborator)) {
-                reportsTime.add(other.getReportedTime());
-            }
-        }
-
-        return reportsTime;
-    }
+		return reportsTime;
+	}
 }
