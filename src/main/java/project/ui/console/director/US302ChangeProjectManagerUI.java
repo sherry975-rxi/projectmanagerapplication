@@ -1,13 +1,18 @@
 package project.ui.console.director;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US302ChangeProjectManagerController;
 import project.model.Project;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US302ChangeProjectManagerUI {
 
+	@Autowired
+	private US302ChangeProjectManagerController changeManagerController;
 	String command;
 	List<String> possibleManagers;
 
@@ -23,8 +28,7 @@ public class US302ChangeProjectManagerUI {
 		command = input.nextLine().toUpperCase();
 
 		if ("Y".equals(command)) {
-			US302ChangeProjectManagerController changeManagerController = new US302ChangeProjectManagerController(
-					toChangeManager);
+			changeManagerController.setSelectedProject(toChangeManager);
 			System.out.println("Select a collaborator from the list:");
 			System.out.println("");
 			possibleManagers = changeManagerController.listPossibleManagers();

@@ -1,5 +1,6 @@
 package project.ui.console.collaborator;
 
+import org.springframework.stereotype.Component;
 import project.model.User;
 
 import java.util.Scanner;
@@ -8,7 +9,7 @@ import java.util.Scanner;
  * @author group3
  *
  */
-
+@Component
 public class CollaboratorMainMenuUI {
 
 	private User user;
@@ -18,8 +19,7 @@ public class CollaboratorMainMenuUI {
 	 * 
 	 * @param user
 	 */
-	public CollaboratorMainMenuUI(User user) {
-		this.user = user;
+	public CollaboratorMainMenuUI() {
 
 	}
 
@@ -64,4 +64,9 @@ public class CollaboratorMainMenuUI {
 			loop = true;
 		}
 	}}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }
