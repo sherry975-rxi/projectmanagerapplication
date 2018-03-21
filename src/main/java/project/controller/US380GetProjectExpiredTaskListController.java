@@ -1,14 +1,14 @@
 package project.controller;
 
-import project.Services.TaskService;
-import project.model.Project;
-import project.model.Task;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import project.Services.TaskService;
+import project.model.Project;
+import project.model.Task;
 
 /**
  * This controller is used to respond to US380 (Como Gestor de projeto, quero
@@ -23,8 +23,7 @@ import org.springframework.stereotype.Controller;
 public class US380GetProjectExpiredTaskListController {
 
 	@Autowired
-	public TaskService taskService;
-
+	private TaskService taskService;
 
 	/**
 	 * This methods gets all the unfinished tasks with expired deadline and returns
