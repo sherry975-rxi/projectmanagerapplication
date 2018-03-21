@@ -8,12 +8,12 @@ Controller->Service: calculateProjectCost(project)
 
 Service->Database:getProjectTasks(project)
 
-Database->Service:List<Task> projectTasks
+Database-->Service:List<Task> projectTasks
 
 note right of Service: Sum cost of all tasks
 
-Service->Controller: total reported cost
+Service-->Controller: total reported cost
 
-Controller-> UI: reported cost of project
+Controller--> UI: reported cost of project
 
-UI->Actor: reported cost
+UI-->Actor: reported cost
