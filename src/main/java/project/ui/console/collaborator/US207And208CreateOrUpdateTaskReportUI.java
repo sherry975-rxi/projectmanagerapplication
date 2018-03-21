@@ -14,7 +14,7 @@ public class US207And208CreateOrUpdateTaskReportUI {
 
     public US207And208CreateOrUpdateTaskReportUI(String email, String taskID) {
 
-        this.createUpdateReportController = new US207CreateTaskReportController(email, taskID);
+        this.createUpdateReportController = new US207CreateTaskReportController();
         this.taskCollaborator = createUpdateReportController.getTaskCollaboratorByEmail(email);
     }
 
