@@ -1,71 +1,53 @@
 package project.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import project.Repository.ProjCollabRepository;
-import project.Repository.ProjectsRepository;
-import project.Repository.TaskRepository;
-import project.Repository.UserRepository;
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
-import project.model.*;
-import project.model.taskstateinterface.OnGoing;
-
-import java.util.Calendar;
-
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Calendar;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.StateEnum;
+import project.model.Task;
+import project.model.User;
+import project.model.taskstateinterface.OnGoing;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
-
-
 	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	ProjectsRepository projectsRepository;
-
-	@Autowired
-	ProjCollabRepository projCollabRepository;
-
-	@Autowired
-	TaskRepository taskRepository;
-
 	UserService userContainer;
+	@Autowired
 	ProjectService projectContainer;
+	@Autowired
 	TaskService taskService;
+	@Autowired
+	US203GetUserStartedNotFinishedTaskListInIncreasingOrderController tasksFiltersController;
 
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
 	Task task1, task2, task3, task4, task5, task6;
 
-	US203GetUserStartedNotFinishedTaskListInIncreasingOrderController tasksFiltersController;
-
 	@Before
 	public void setUp() {
 
-		//Creates an UserContainer
-		userContainer = new UserService(userRepository);
-
-		//Creates a ProjectContainer
-		projectContainer = new ProjectService(projectsRepository, projCollabRepository);
-
-		taskService = new TaskService(taskRepository);
-		taskService.setProjectCollaboratorRepository(projCollabRepository);
-
 		// create users in UserContainer
-		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
-				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
+		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000", "rua doutor antónio",
+				"7689-654", "porto", "porto", "portugal");
 		user1 = userContainer.createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
 				"rua engenheiro joão", "789-654", "porto", "porto", "portugal");
 
@@ -76,10 +58,8 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		userContainer.addUserToUserRepositoryX(user2);
 		userContainer.addUserToUserRepositoryX(user1);
 
-
 		// create project 1 in company 1
 		project1 = projectContainer.createProject("name3", "description4", user2);
-
 
 		// create an estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
@@ -101,7 +81,6 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		taskDeadlineDateTest3.add(Calendar.YEAR, 2);
 		taskDeadlineDateTest3.set(Calendar.MONTH, Calendar.MARCH);
 
-
 		// create a Date before to the previous Dead line created in order to result in
 		// an expired Task
 		Calendar taskExpiredDeadlineDateTest = Calendar.getInstance();
@@ -109,7 +88,6 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		taskExpiredDeadlineDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
 		taskExpiredDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
-
 
 		int taskEffortAndBudget = 10;
 
@@ -141,7 +119,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		task4.setTaskBudget(taskEffortAndBudget);
 		task4.setEstimatedTaskEffort(taskEffortAndBudget);
 
-		//task 5 is expired
+		// task 5 is expired
 		task5 = taskService.createTask("Do this", project1);
 		task5.setStartDate(estimatedTaskStartDateTest);
 		task5.setTaskDeadline(taskExpiredDeadlineDateTest);
@@ -153,14 +131,10 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		task6.setTaskBudget(taskEffortAndBudget);
 		task6.setEstimatedTaskEffort(taskEffortAndBudget);
 
-
-
 		// add costPerEffort to users in project 1, resulting in a Project Collaborator
 		// for each one
-		projCollab1 = projectContainer.createProjectCollaborator(user1, project1,250);
-		projCollab2 = projectContainer.createProjectCollaborator(user2, project1,120);
-
-
+		projCollab1 = projectContainer.createProjectCollaborator(user1, project1, 250);
+		projCollab2 = projectContainer.createProjectCollaborator(user2, project1, 120);
 
 		// set the state of the tasks
 
@@ -180,29 +154,29 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		task5.setStartDate(Calendar.getInstance());
 		task5.markTaskAsFinished();
 
-		//task 6 is planned due to no deadline
+		// task 6 is planned due to no deadline
 		task6.addProjectCollaboratorToTask(projCollab1);
 
-        task2.setTaskState(new OnGoing());
-        task2.setCurrentState(StateEnum.ONGOING);
-        task3.setTaskState(new OnGoing());
+		task2.setTaskState(new OnGoing());
+		task2.setCurrentState(StateEnum.ONGOING);
+		task3.setTaskState(new OnGoing());
 		task3.setCurrentState(StateEnum.ONGOING);
-        task4.setTaskState(new OnGoing());
+		task4.setTaskState(new OnGoing());
 		task4.setCurrentState(StateEnum.ONGOING);
 
 		taskService.saveTask(task1);
-        taskService.saveTask(task2);
-        taskService.saveTask(task3);
-        taskService.saveTask(task4);
-        taskService.saveTask(task5);
-        taskService.saveTask(task6);
+		taskService.saveTask(task2);
+		taskService.saveTask(task3);
+		taskService.saveTask(task4);
+		taskService.saveTask(task5);
+		taskService.saveTask(task6);
 
-        projectContainer.updateProjectCollaborator(projCollab1);
-        projectContainer.updateProjectCollaborator(projCollab2);
+		projectContainer.updateProjectCollaborator(projCollab1);
+		projectContainer.updateProjectCollaborator(projCollab2);
 
 		// creates the controller
 		tasksFiltersController = new US203GetUserStartedNotFinishedTaskListInIncreasingOrderController();
-		tasksFiltersController.taskService=this.taskService;
+		tasksFiltersController.taskService = this.taskService;
 	}
 
 	/**
@@ -214,17 +188,20 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 
 	@Test
 	public void testGetUserStartedNotFinishedTaskList() {
-	    assertTrue(task3.isProjectCollaboratorActiveInTaskTeam(projCollab1));
+		assertTrue(task3.isProjectCollaboratorActiveInTaskTeam(projCollab1));
 
-	    assertTrue("OnGoing".equals(task3.viewTaskStateName()));
-	    assertTrue(task3.getStartDate()!=null);
-		assertTrue(task3.getTaskDeadline()!=null);
+		assertTrue("OnGoing".equals(task3.viewTaskStateName()));
+		assertTrue(task3.getStartDate() != null);
+		assertTrue(task3.getTaskDeadline() != null);
 
 		// asserts the list contains five tasks, and the first two are the ones with the
 		// earliest deadline
 		assertEquals(3, tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).size());
-		assertTrue(task3.equals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(0)));
-		assertTrue(task2.equals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(1)));
-		assertTrue(task4.equals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(2)));
+		assertTrue(
+				task3.equals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(0)));
+		assertTrue(
+				task2.equals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(1)));
+		assertTrue(
+				task4.equals(tasksFiltersController.getUserStartedNotFinishedTaskListInIncreasingOrder(user1).get(2)));
 	}
 }
