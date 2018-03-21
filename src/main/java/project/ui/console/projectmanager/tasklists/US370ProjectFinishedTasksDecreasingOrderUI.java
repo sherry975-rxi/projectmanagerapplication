@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US370GetProjectFinishedTaskListController;
@@ -10,14 +12,27 @@ import project.model.User;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US370ProjectFinishedTasksDecreasingOrderUI {
+
+	@Autowired
+	PrintProjectInfoController projectInfo;
+
+	@Autowired
+	US370GetProjectFinishedTaskListController projectFinishedTaskList;
 
 	private Project proj;
 	private User user;
 
-	public US370ProjectFinishedTasksDecreasingOrderUI(Project project, User user) {
+	public US370ProjectFinishedTasksDecreasingOrderUI() {
+	}
+
+	public void setProj(Project proj) {
+		this.proj = proj;
+	}
+
+	public void setUser(User user) {
 		this.user = user;
-		this.proj = project;
 	}
 
 	/**
@@ -28,10 +43,8 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	public void projectDataDisplay() {
 		
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.proj.getIdCode());
-		int projectID = proj.getIdCode();
-		projectInfo.setProject();
-		US370GetProjectFinishedTaskListController projectFinishedTaskList = new US370GetProjectFinishedTaskListController();
+		projectInfo.setProject(proj);
+
 
 		String line = "___________________________________________________";
 		Scanner scannerInput = new Scanner(System.in);
@@ -70,6 +83,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 			break;
 		default:
 			try {
+				//TODO make this controller autowirable
 				US367MarkFinishedTaskAsUnfinishedController taskToMarkAsUnfinished = new US367MarkFinishedTaskAsUnfinishedController(
 						this.proj, choice);
 				taskToMarkAsUnfinished.markFinishedTaskAsUnfinished();
