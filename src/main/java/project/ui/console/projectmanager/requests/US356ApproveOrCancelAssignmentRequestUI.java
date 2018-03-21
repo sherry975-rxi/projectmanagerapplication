@@ -1,11 +1,8 @@
 package project.ui.console.projectmanager.requests;
 
 import project.controller.US356ManageAssigmentRequestController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 
 import java.util.Scanner;
 
@@ -31,11 +28,9 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 	 * Displays the assignment task requests and the options available to the user
 	 */
 	public void displayAssignmentTaskRequests() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean condition = true;
 		while (condition) {
 			condition = false;
-			infoUpdater.updateDBtoContainer();
 
 			System.out.println("\n   TASK ASSIGNMENT REQUESTS : PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");

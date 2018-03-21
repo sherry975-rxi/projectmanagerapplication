@@ -1,7 +1,6 @@
 package project.ui.console.administrator;
 
 import project.controller.US135andUS136SearchUsersController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Profile;
 import project.model.User;
 
@@ -14,8 +13,7 @@ public class US135andUS136ListUsersUI {
 			+ "Else, find emails containing your input\n";
 
 	public User displayUsersList(User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+
 
 		Scanner input = new Scanner(System.in);
 

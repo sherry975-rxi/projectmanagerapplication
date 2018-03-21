@@ -4,14 +4,11 @@ import java.util.Scanner;
 
 import project.Services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import project.Services.TaskService;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 public class PmTaskFunctionalitiesUI {
 
@@ -30,7 +27,6 @@ public class PmTaskFunctionalitiesUI {
 	}
 
 	public void taskDataDisplay() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		PrintTaskInfoController taskInfo = new PrintTaskInfoController(this.taskID, this.project.getIdCode());
 		taskInfo.setProjectAndTask();
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project.getIdCode());
@@ -38,7 +34,6 @@ public class PmTaskFunctionalitiesUI {
 
 		boolean condition = true;
 		while (condition) {
-			infoUpdater.updateDBtoContainer();
 			System.out.println("");
 			System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
 			System.out.println("");
