@@ -18,6 +18,9 @@ import project.model.User;
 public class US207CreateTaskReportController {
 
 	private User username;
+	private String email;
+	private Task task;
+
 
 	@Autowired
 	public UserService userContainer;
@@ -25,8 +28,29 @@ public class US207CreateTaskReportController {
 	@Autowired
 	public TaskService taskService;
 
-	private String email;
-	private Task task;
+	public User getUsername() {
+		return username;
+	}
+
+	public void setUsername(User username) {
+		this.username = username;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
 
 	/**
 	 * Constructor of US207CreateTaskReportController
