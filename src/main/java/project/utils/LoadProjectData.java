@@ -41,6 +41,8 @@ public class LoadProjectData {
 			throws ParserConfigurationException, SAXException, IOException, DOMException, ParseException {
 
 		Document documentProjects = FileUtils.readFromXmlFile(pathFile);
+
+		// Node projectList
 		NodeList nProjectList = documentProjects.getElementsByTagName("projeto");
 
 		for (int indexProject = 0; indexProject < nProjectList.getLength(); indexProject++) {
@@ -80,9 +82,11 @@ public class LoadProjectData {
 
 				projectService.updateProject(project);
 
+				// Node lista_colaboradores
 				NodeList nProjectCollaboratorList = documentProjects.getElementsByTagName("colaborador_projeto");
 
-				for (int indexProjCollab = 0; indexProjCollab < nProjectList.getLength(); indexProjCollab++) {
+				for (int indexProjCollab = 0; indexProjCollab < nProjectCollaboratorList
+						.getLength(); indexProjCollab++) {
 
 					Node nNodeProjectCollaborator = nProjectCollaboratorList.item(indexProjCollab);
 
@@ -93,6 +97,7 @@ public class LoadProjectData {
 						User userCollaborator = userService.getUserByEmail(eElementProjectCollaborator
 								.getElementsByTagName("colaborador_id").item(0).getTextContent());
 						projCollaborator.setCollaborator(userCollaborator);
+						projCollaborator.setProject(project);
 						projectService.addProjectCollaborator(projCollaborator);
 
 						NodeList nLigProjectList = documentProjects.getElementsByTagName("colaborador_projeto");
@@ -109,12 +114,14 @@ public class LoadProjectData {
 										.getElementsByTagName("custo_unitario_colaborador").item(0).getTextContent());
 
 								projCollaborator.setCostPerEffort(costEffort);
+
 								projectService.updateProjectCollaborator(projCollaborator);
 							}
+
 						}
 					}
 				}
-
+				// Node Lista de Tarefas
 				NodeList nTaskList = documentProjects.getElementsByTagName("tarefa");
 
 				for (int indexTask = 0; indexTask < nTaskList.getLength(); indexTask++) {
@@ -154,9 +161,12 @@ public class LoadProjectData {
 
 						taskService.saveTask(task);
 
-						for (int indexTaskDependencies = 0; indexTaskDependencies < nTaskList
+						NodeList nTaskDependenceList = documentProjects.getElementsByTagName("lista_dependencias");
+
+						for (int indexTaskDependencies = 0; indexTaskDependencies < nTaskDependenceList
 								.getLength(); indexTaskDependencies++) {
-							Node nNodeTaskDependencies = nProjectList.item(indexTaskDependencies);
+
+							Node nNodeTaskDependencies = nTaskDependenceList.item(indexTaskDependencies);
 
 							if (nNodeTaskDependencies.getNodeType() == Node.ELEMENT_NODE) {
 								Element eElementTaskDependencies = (Element) nNodeTaskDependencies;
@@ -166,7 +176,27 @@ public class LoadProjectData {
 								Task taskMain = taskService.getTaskByTaskID(idTaskMain);
 
 								taskService.saveTask(task);
+							}
+						}
 
+						NodeList nTaskCollaborators = documentProjects.getElementsByTagName("colaborador_tarefa");
+
+						for (int indexTaskCollaborators = 0; indexTaskCollaborators < nTaskCollaborators
+								.getLength(); indexTaskCollaborators++) {
+
+							Node nNodeTaskCollaborator = nTaskCollaborators.item(indexTaskCollaborators);
+
+							if (nNodeTaskCollaborator.getNodeType() == Node.ELEMENT_NODE) {
+								Element eElementnNodeTaskCollaborator = (Element) nNodeTaskCollaborator;
+
+								User userOfProjectCollab = userService.getUserByEmail(eElementnNodeTaskCollaborator
+										.getElementsByTagName("colaborador_id").item(0).getTextContent());
+								ProjectCollaborator projCollaborator = projectService
+										.findProjectCollaborator(userOfProjectCollab, task.getProject()).get();
+
+								task.addProjectCollaboratorToTask(projCollaborator);
+
+								taskService.saveTask(task);
 							}
 						}
 					}

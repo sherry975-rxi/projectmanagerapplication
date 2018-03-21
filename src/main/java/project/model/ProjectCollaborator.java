@@ -1,8 +1,15 @@
 package project.model;
 
-
-import javax.persistence.*;
 import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "ProjectCollaborator")
@@ -11,21 +18,20 @@ public class ProjectCollaborator implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "User_id")
 	private User collaborator;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Project_id")
 	private Project project;
 	private boolean status;
 	private int costPerEffort;
 	static final long serialVersionUID = 51L;
 
-
 	/**
 	 * Empty Constructor for ProjectCollaborator
 	 */
-	public ProjectCollaborator(){
+	public ProjectCollaborator() {
 	}
 
 	/**
@@ -71,6 +77,7 @@ public class ProjectCollaborator implements Serializable {
 	public void setCostPerEffort(int costPerEffort) {
 		this.costPerEffort = costPerEffort;
 	}
+
 	/**
 	 * This method sets the Project Collaborator as working or not working on the
 	 * project.
@@ -119,12 +126,11 @@ public class ProjectCollaborator implements Serializable {
 		return toCompare.equals(this.collaborator);
 	}
 
-
-	public Project getProject(){
+	public Project getProject() {
 		return project;
 	}
 
-	public void setProject(Project project){
+	public void setProject(Project project) {
 		this.project = project;
 	}
 

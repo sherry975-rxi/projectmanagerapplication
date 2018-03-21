@@ -35,6 +35,7 @@ public class US357ApproveOrCancelRemovalRequestUI {
 
 		boolean condition = true;
 		while (condition) {
+			condition = false;
 			infoUpdater.updateDBtoContainer();
 			System.out.println("\n    TASKS REMOVAL REQUESTS PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");
@@ -53,7 +54,7 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			System.out.println("[B] Back");
 			System.out.println("[M] MainMenu");
 
-			chooseOption(cancelRequest);
+			condition = chooseOption(cancelRequest);
 		}
 	}
 
@@ -63,8 +64,10 @@ public class US357ApproveOrCancelRemovalRequestUI {
 	 * @param cancelRequest
 	 *            US357CancelRemovalTaskRequestController previously instantiated
 	 */
-	private void chooseOption(US357CancelRemovalTaskRequestController cancelRequest) {
+	private boolean chooseOption(US357CancelRemovalTaskRequestController cancelRequest) {
 
+		boolean loop = false;
+		
 		Scanner input = new Scanner(System.in);
 
 		String choice = input.nextLine().toUpperCase();
@@ -75,16 +78,12 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			chooseRequest(cancelRequest);
 			break;
 		case "B":
-			ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(user, project);
-			previousMenu.displayOptions();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
 			break;
 		default:
 			System.out.println("Choose a valid option");
-			displayRemovalTaskRequests();
+			loop = true;
 		}
+		return loop;
 	}
 
 	/**

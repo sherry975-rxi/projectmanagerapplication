@@ -35,13 +35,17 @@ public class ProjectManagerMainMenuUI {
 
 	public void displayOptions() {
 
+		
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
 		projectInfo.setProject();
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		Scanner scannerInput = new Scanner(System.in);
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+			infoUpdater.updateDBtoContainer();
 		System.out.println(
 				"———————————————————————————————————————————MENU PROJECT MANAGER——————————————————————————————————————————————————");
 		System.out.println("                               Project " + projectInfo.printProjectNameInfo().toUpperCase()
@@ -144,17 +148,12 @@ public class ProjectManagerMainMenuUI {
 			break;
 
 		case "B":
-			CollectProjectsFromUserUI backUI = new CollectProjectsFromUserUI(this.projectManager);
-			backUI.collectProjectsFromUser();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
 			break;
 		
 		default:
 			System.out.println("Invalid input. Please retry:");
-			displayOptions();
+			loop = true;
 		}
 	}
 
-}
+}}

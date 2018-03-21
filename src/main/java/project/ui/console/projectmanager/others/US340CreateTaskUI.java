@@ -33,7 +33,9 @@ public class US340CreateTaskUI {
 		String line = "___________________________________________________";
 		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
 
 		System.out.println(blank);
@@ -123,20 +125,18 @@ public class US340CreateTaskUI {
 
 		System.out.println(line);
 		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu \n");
+		System.out.println("[R] Retry \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		while (!("M".equals(option)) && !("B".equals(option))) {
+		while (!("R".equals(option)) && !("B".equals(option))) {
 			System.out.println("Please enter a valid option!");
 			option = scannerInput.nextLine().toUpperCase();
 		}
 
-		if ("B".equals(option)) {
-			return;
-		} else if ("M".equals(option)) {
-			MainMenuUI.mainMenu();
-		}
+		if ("R".equals(option)) {
+			loop = true;
+		} }
 	}
 
 	private static int estimatedTaskEffortUI(Scanner estimatedTaskEffort) {

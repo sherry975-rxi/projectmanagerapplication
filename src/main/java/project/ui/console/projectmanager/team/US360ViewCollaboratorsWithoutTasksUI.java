@@ -21,15 +21,18 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 
 	public void viewUnassignedCollaborators() {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		List<String> idleCollaboratorsInfo;
 
-		US360ViewCollaboratorsWithoutTasksController controller = new US360ViewCollaboratorsWithoutTasksController(
-				this.selectedProject);
+		US360ViewCollaboratorsWithoutTasksController controller = new US360ViewCollaboratorsWithoutTasksController();
 
-		idleCollaboratorsInfo = controller.showCollaboratorsWithoutTasks();
+		idleCollaboratorsInfo = controller.showCollaboratorsWithoutTasks(selectedProject);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+		infoUpdater.updateDBtoContainer();
 		System.out.println(
 				"_________________________________________________________________________________________________________________");
 		if (idleCollaboratorsInfo.isEmpty())
@@ -44,8 +47,6 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 		System.out.println(
 				"_________________________________________________________________________________________________________________");
 		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-
 		Scanner input = new Scanner(System.in);
 		String choice = input.nextLine().toUpperCase();
 
@@ -53,15 +54,11 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 		case "B":
 			return;
 
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-
 		default:
 			System.out.println("Please choose a valid option!");
-			viewUnassignedCollaborators();
+			loop = true;
 
 		}
-
+		}
 	}
 }
