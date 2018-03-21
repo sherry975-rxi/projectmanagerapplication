@@ -1,29 +1,29 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
+
 import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
+/*
+ * 
+ * This controller allows a Project Manager to get the reported cost to the
+ * Project he is the manager of
+ *
+ */
 @Controller
 public class US390CalculateReportedProjectCostController {
 
 	@Autowired
 	TaskService taskService;
 
-
-	/*
-	 * 
-	 * This controller allows a Project Manager to get the reported cost to the
-	 * Project he is the manager of
-	 *
-	 */
+	public US390CalculateReportedProjectCostController() {
+	};
 
 	/**
 	 * @param project
