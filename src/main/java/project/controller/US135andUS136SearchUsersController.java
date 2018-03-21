@@ -14,10 +14,10 @@ import project.model.User;
 public class US135andUS136SearchUsersController {
 
 	@Autowired
-	public UserService userContainer;
+	private UserService userService;
 
-	List<User> userList;
-	User selectedUser = null;
+	private List<User> userList;
+	private User selectedUser = null;
 
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
@@ -47,7 +47,7 @@ public class US135andUS136SearchUsersController {
 	 */
 
 	public List<String> searchUsersByProfileController(Profile profileToSearch) {
-		this.userList = userContainer.searchUsersByProfile(profileToSearch);
+		this.userList = userService.searchUsersByProfile(profileToSearch);
 
 		List<String> userListString = new ArrayList<>();
 
@@ -68,7 +68,7 @@ public class US135andUS136SearchUsersController {
 	 *         contain the same text that the user typed
 	 */
 	public List<String> searchUsersByEmailController(String emailToSearch) {
-		this.userList = userContainer.searchUsersByPartsOfEmail(emailToSearch);
+		this.userList = userService.searchUsersByPartsOfEmail(emailToSearch);
 
 		List<String> userListString = new ArrayList<>();
 
