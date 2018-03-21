@@ -45,7 +45,10 @@ public class US206RemovalTaskRequestController {
 		this.projectID = projectID;
 	}
 	
-	
+	public US206RemovalTaskRequestController() {
+		
+	}
+		
 	/**
 	 * Constructor to instantiate a new CollaboratorRemovalrequest
 	 * 
