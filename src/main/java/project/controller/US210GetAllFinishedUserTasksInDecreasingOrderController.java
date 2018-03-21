@@ -19,6 +19,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 
 	User user;
 
+
 	@Autowired
 	private ProjectService myProjRepo;
 
@@ -40,6 +41,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
 		this.user = user;
 	}
+	
 
 
 	/**
@@ -88,6 +90,5 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 		}
 	return finishedTaskListDecreasingOrder;
 	}
-	
 	
 }
