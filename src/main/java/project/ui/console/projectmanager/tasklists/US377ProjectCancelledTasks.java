@@ -18,7 +18,7 @@ public class US377ProjectCancelledTasks {
 
 	public void displayCancelledTasksOfProject(Project project, User user) {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 
 		String line = "___________________________________________________";
@@ -27,6 +27,10 @@ public class US377ProjectCancelledTasks {
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+			infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -54,34 +58,19 @@ public class US377ProjectCancelledTasks {
 		}
 
 		System.out.println(line);
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
-
+		System.out.println("[B] Back \n");
 		String option = scannerInput.nextLine().toUpperCase();
 
 		// creation of a list with the options B,E and M
 		List<String> listOfOptionsToCompare = new ArrayList<>();
 		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
 
 		for (String ii : listOfCancelledTasks) {
 
 			if (option.equals(ii)) {
 				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
 				taskFuntionatities.taskDataDisplay();
-			} else if ("B".equals(option)) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(user,
-						project);
-				projectManagerMainMenuUI.displayOptions();
-
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
-			} else if ("E".equals(option)) {
-				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-				break;
-			}
+			} 
 			listOfOptionsToCompare.add(ii);
 		}
 
@@ -89,8 +78,8 @@ public class US377ProjectCancelledTasks {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.displayCancelledTasksOfProject(project, user);
+			loop = true;
 		}
 	}
-
+	}
 }

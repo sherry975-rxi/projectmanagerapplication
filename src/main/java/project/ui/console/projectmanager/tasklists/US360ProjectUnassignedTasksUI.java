@@ -16,12 +16,16 @@ public class US360ProjectUnassignedTasksUI {
 
 	public void projectUnassignedTasksUI(Project project, User user) {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+			infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -49,29 +53,20 @@ public class US360ProjectUnassignedTasksUI {
 		}
 
 		System.out.println(line);
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		// creation of a list with the options B,E and M
 		List<String> listOfOptionsToCompare = new ArrayList<>();
 		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
 
 		for (String ii : listOfExpiredTaskID) {
 
 			if (option.equals(ii)) {
 				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
 				taskFuntionatities.taskDataDisplay();
-			} else if ("B".equals(option)) {
-				return;
-
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
-			}
+			} 
 			listOfOptionsToCompare.add(ii);
 		}
 
@@ -79,8 +74,8 @@ public class US360ProjectUnassignedTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.projectUnassignedTasksUI(project, user);
+			loop = true;
 		}
 	}
 
-}
+}}

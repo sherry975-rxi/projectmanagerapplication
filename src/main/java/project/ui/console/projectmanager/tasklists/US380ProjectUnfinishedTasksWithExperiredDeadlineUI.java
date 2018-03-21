@@ -13,12 +13,16 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+			infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -43,8 +47,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		}
 
 		System.out.println(line);
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
@@ -53,16 +56,12 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		case ("B"):
 			return;
 
-		case ("M"):
-			MainMenuUI.mainMenu();
-			break;
-
 		default:
 			System.out.println("Please choose a valid option: ");
-			this.displayUnfinishedTasksWithExpiredDeadline(project, user);
+			loop = true;
 			break;
 		}
 
-	}
+	}}
 
 }
