@@ -1,14 +1,28 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Controller
 public class US372GetProjectUnfinishedTaskListController {
+
+	@Autowired
 	private TaskService taskService;
+
+	/*
+	 * Default constructor
+	 */
+	public US372GetProjectUnfinishedTaskListController() {
+
+	}
+
 	/**
 	 * Returns a list of tasks that belong to a Project and are not marked as
 	 * finished. - US372
