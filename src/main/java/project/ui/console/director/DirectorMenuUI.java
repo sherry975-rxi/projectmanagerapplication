@@ -1,5 +1,6 @@
 package project.ui.console.director;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.model.Project;
@@ -10,9 +11,15 @@ import java.util.Scanner;
 @Component
 public class DirectorMenuUI {
 
+	@Autowired
+	private US301CreateProjectUI createProject;
+	@Autowired
+	private US302ChangeProjectManagerUI changeManager;
+	@Autowired
+	private	US320ViewProjectsUI viewProjects;
 
-	User directorLoggedIn;
-	Project selectedProject = null;
+	private User directorLoggedIn;
+	private Project selectedProject = null;
 
 	String options = "[1] - View projects \n" + "[2] - Create a project \n"
 			+ "[3] - Change selected project's manager \n" + "______________________________________________\n"
@@ -67,12 +74,10 @@ public class DirectorMenuUI {
 
 			switch (command) {
 			case "1":
-				US320ViewProjectsUI viewProjects = new US320ViewProjectsUI();
 				selectedProject = viewProjects.viewProjectsUI(selectedProject);
 				break;
 
 			case "2":
-				US301CreateProjectUI createProject = new US301CreateProjectUI();
 				createProject.createProject();
 				break;
 
@@ -81,7 +86,6 @@ public class DirectorMenuUI {
 					System.out.println("Please select a project first");
 					System.out.println("");
 				} else {
-					US302ChangeProjectManagerUI changeManager = new US302ChangeProjectManagerUI();
 					changeManager.changeProjectManager(selectedProject);
 				}
 				break;

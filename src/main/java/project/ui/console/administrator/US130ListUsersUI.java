@@ -1,5 +1,6 @@
 package project.ui.console.administrator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controller.US130ListUsersController;
 import project.model.User;
@@ -9,10 +10,11 @@ import java.util.Scanner;
 
 @Component
 public class US130ListUsersUI {
+	@Autowired
+	private US130ListUsersController controller;
 
 	public User displayUsersList(User userToReturn) {
 		Scanner input = new Scanner(System.in);
-		US130ListUsersController controller = new US130ListUsersController();
 		List<String> usersList = controller.listUsersController();
 		
 		for (int i = 0; i < usersList.size(); i++) {

@@ -1,5 +1,6 @@
 package project.ui.console.director;
 
+import org.springframework.stereotype.Component;
 import project.controller.US301CreateProjectController;
 import project.model.EffortUnit;
 import project.model.User;
@@ -7,6 +8,7 @@ import project.model.User;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US301CreateProjectUI {
 
 	String projectName = "(Insert Name)";
