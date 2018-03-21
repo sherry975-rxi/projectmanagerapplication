@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,11 @@ import project.Services.UserService;
 import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
+import project.model.StateEnum;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.model.taskstateinterface.OnGoing;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -35,37 +38,31 @@ import project.model.User;
 public class US207CreateTaskReportControllerTest {
 
 	@Autowired
-	public UserRepository userRepository;
+	US207CreateTaskReportController controller;
+	
 	@Autowired
-	public ProjectsRepository projectRepository;
+	private UserService userService;
+	
 	@Autowired
-	public TaskRepository taskRepository;
+	private ProjectService projectService;
+	
 	@Autowired
-	public ProjCollabRepository projCollabRepo;
-
+	private TaskService taskService;
+	
+	
 	User user1, user2;
 	Project project;
 	ProjectCollaborator projCollab1, projCollab2;
 	Task task1, task2;
 	TaskCollaborator taskCollab1, taskCollab2;
-	US207CreateTaskReportController controller;
+	
 	//US207CreateTaskReportController controller2;
 
-	private UserService userService;
-
-	private ProjectService projectService;
-
-	private TaskService taskService;
-
+	
 	@Before
 	public void setUp() {
 
-		
-		/*
-		 * Creates two CreateTaskReport Controllers
-		 */
-
-		// create users in company
+		// create users
 		user2 = userService.createUser("João", "user2@gmail.com", "001", "Manager", "930025000", "rua doutor antónio",
 				"7689-654", "porto", "porto", "portugal");
 		user1 = userService.createUser("Juni", "user3@gmail.com", "002", "Code Monkey", "930000000",
@@ -83,7 +80,12 @@ public class US207CreateTaskReportControllerTest {
 
 		// add project 1 to company 1
 		projectService.addProjectToProjectContainer(project);
-
+		
+		//create tasks
+		
+		task1 = taskService.createTask("Create tests", project);
+		task2 = taskService.createTask("Create UI", project);
+		
 		// create an estimated Task Start Date
 		Calendar estimatedTaskStartDateTest = Calendar.getInstance();
 		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
@@ -119,12 +121,8 @@ public class US207CreateTaskReportControllerTest {
 
 		// add costPerEffort to users in project 1, resulting in a Project Collaborator
 		// for each one
-		projCollab1 = project.createProjectCollaborator(user1, 250);
-		projCollab2 = project.createProjectCollaborator(user2, 120);
-
-		// associate Project Collaborators to project 1 (info user + costPerEffort)
-		projCollab1 = project.createProjectCollaborator(user1, 10);
-		projCollab2 = project.createProjectCollaborator(user2, 20);
+		projCollab1 = projectService.createProjectCollaborator(user1, project, 250);
+		projCollab2 = projectService.createProjectCollaborator(user2, project, 120);
 
 		// defines finish date to task, and mark it as Finished7
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
@@ -133,6 +131,9 @@ public class US207CreateTaskReportControllerTest {
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDateTask1);
+		task1.setTaskState(new OnGoing());
+		task1.setCurrentState(StateEnum.ONGOING);
+		
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task2.setTaskDeadline(taskDeadlineDateTest1);
@@ -140,20 +141,21 @@ public class US207CreateTaskReportControllerTest {
 		Calendar startDateTask2 = estimatedTaskStartDateTest;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDateTask1);
-
-		//userService.updateUserContainer();
+		task2.setTaskState(new OnGoing());
+		task2.setCurrentState(StateEnum.ONGOING);
 		
-		// creates the controller
-		controller = new US207CreateTaskReportController();
-		controller.taskService = taskService;
-		controller.userContainer = userService;
-		controller.US207setTaskReportController(user1.getEmail(), task1.getTaskID());
-
-	}
+		taskService.saveTask(task1);
+		taskService.saveTask(task2);
+		
+		controller.setTask(task1);
+		
+		
+		}
 
 	/*
 	 * Tests the constructor
 	 */
+	
 	@Test
 	public void testUS207CreateTaskReportControllerConstructor() {
 		taskCollab1 = task1.createTaskCollaborator(projCollab1);
@@ -186,18 +188,9 @@ public class US207CreateTaskReportControllerTest {
 
 	@Test
 	public void testUS207getReportsIndexByGivenUser() {
-
-		/*
-		 * Creates two TaskCollaborators
-		 */
-		taskCollab1 = task1.createTaskCollaborator(projCollab1);
-		taskCollab2 = task1.createTaskCollaborator(projCollab2);
-
-		/*
-		 * Adds the TaskCollaborators to the task
-		 */
-		task1.addTaskCollaboratorToTask(taskCollab1);
-		task1.addTaskCollaboratorToTask(taskCollab2);
+		
+		controller.setUsername(user1);
+		controller.setEmail(user1.getEmail());
 
 		/*
 		 * Creates a list of integer, to compare with the list returned by the method
@@ -209,13 +202,11 @@ public class US207CreateTaskReportControllerTest {
 		 */
 		controller.createReportController(10, Calendar.getInstance());
 		controller.createReportController(20, Calendar.getInstance());
-		//controller2.createReportController(5, Calendar.getInstance());
-		//controller2.createReportController(3, Calendar.getInstance());
 		controller.createReportController(9, Calendar.getInstance());
 
 		reportIndex.add(0);
 		reportIndex.add(1);
-		reportIndex.add(4);
+		reportIndex.add(2);
 
 		assertEquals(reportIndex, controller.getReportsIndexByGivenUser());
 
@@ -224,18 +215,9 @@ public class US207CreateTaskReportControllerTest {
 	@Test
 	public void testUS207UpdateReport() {
 
-		/*
-		 * Creates two TaskCollaborators
-		 */
-		taskCollab1 = task1.createTaskCollaborator(projCollab1);
-		taskCollab2 = task1.createTaskCollaborator(projCollab2);
-
-		/*
-		 * Adds the TaskCollaborators to the task
-		 */
-		task1.addTaskCollaboratorToTask(taskCollab1);
-		task1.addTaskCollaboratorToTask(taskCollab2);
-
+		controller.setUsername(user1);
+		controller.setEmail(user1.getEmail());
+		
 		/*
 		 * Creates a report
 		 */
@@ -244,17 +226,17 @@ public class US207CreateTaskReportControllerTest {
 		/*
 		 * Checks that the report date is 10;
 		 */
-		assertEquals(controller.getReportTimeByGivenUser(taskCollab1).get(0), 10, 0.0);
+		assertEquals(controller.getReportTimeByGivenUser(task1.getTaskCollaboratorByEmail(user1.getEmail())).get(0), 10, 0.0);
 
 		/*
 		 * Updates TaskReport to 30
 		 */
-		assertTrue(controller.updateTaskReport(30, taskCollab1, 0));
+		assertTrue(controller.updateTaskReport(30, task1.getTaskCollaboratorByEmail(user1.getEmail()), 0));
 
 		/*
 		 * Checks that the report date is 30;
 		 */
-		assertEquals(controller.getReportTimeByGivenUser(taskCollab1).get(0), 30, 0.0);
+		assertEquals(controller.getReportTimeByGivenUser(task1.getTaskCollaboratorByEmail(user1.getEmail())).get(0), 30, 0.0);
 
 	}
 
@@ -282,16 +264,9 @@ public class US207CreateTaskReportControllerTest {
 	@Test
 	public void testUS207getReportUpdateDateByGivenUser() {
 
-		/*
-		 * Creates two TaskCollaborators
-		 */
-		taskCollab1 = task1.createTaskCollaborator(projCollab1);
-
-		/*
-		 * Adds the TaskCollaborators to the task
-		 */
-		task1.addTaskCollaboratorToTask(taskCollab1);
-
+		controller.setUsername(user1);
+		controller.setEmail(user1.getEmail());
+		
 		Calendar dayOfReport = Calendar.getInstance();
 
 		/*
@@ -299,9 +274,9 @@ public class US207CreateTaskReportControllerTest {
 		 */
 		controller.createReportController(10, dayOfReport);
 
-		controller.updateTaskReport(20, taskCollab1, 0);
+		controller.updateTaskReport(20, task1.getActiveTaskCollaboratorByEmail(user1.getEmail()), 0);
 
-		assertEquals(controller.getReportsUpdateDateByGivenUser(taskCollab1).get(0), dayOfReport);
+		assertEquals(controller.getReportsUpdateDateByGivenUser(task1.getActiveTaskCollaboratorByEmail(user1.getEmail())).get(0), dayOfReport);
 	}
 
 }

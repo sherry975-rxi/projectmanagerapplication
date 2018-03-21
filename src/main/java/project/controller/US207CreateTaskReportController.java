@@ -22,10 +22,10 @@ public class US207CreateTaskReportController {
 	private Task task;
 
 	@Autowired
-	public UserService userContainer;
+	private UserService userContainer;
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	/**
 	 * Constructor of US207CreateTaskReportController
