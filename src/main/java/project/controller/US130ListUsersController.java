@@ -6,8 +6,15 @@ import project.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class US130ListUsersController {
 
+	@Autowired
+	public UserService userContainer;
+	
 	List<User> userList;
 	User selectedUser = null;
 
@@ -17,8 +24,6 @@ public class US130ListUsersController {
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listUsersController() {
-		UserService userContainer = new UserService();
-
 		this.userList = userContainer.getAllUsersFromUserContainer();
 		List<String> userListAsString = new ArrayList<>();
 
