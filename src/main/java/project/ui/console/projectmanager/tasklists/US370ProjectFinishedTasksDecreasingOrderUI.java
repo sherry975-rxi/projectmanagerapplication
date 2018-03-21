@@ -31,7 +31,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	 */
 	public void projectDataDisplay() {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.proj.getIdCode());
 		int projectID = proj.getIdCode();
@@ -40,7 +40,10 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 
 		String line = "___________________________________________________";
 		Scanner scannerInput = new Scanner(System.in);
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+			infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -65,21 +68,11 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 
 		System.out.println("To roll back a task from Finish back to Ongoing, choose the task ID number.");
 		System.out.println("");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		System.out.println("[B] Back \n");
 
 		String choice = scannerInput.nextLine().toUpperCase();
 		switch (choice) {
 		case "B":
-			ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(user, proj);
-			previousMenu.displayOptions();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 			break;
 		default:
 			try {
@@ -91,13 +84,12 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 			catch (NullPointerException npe) {
 				System.out.println("Please choose a valid option: ");
 				System.out.println("");
-				ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(projectID, user);
-				myAtualUIView.projectDataDisplay();
+				loop = true;
 			}
 
 			break;
 		}
-	}
+	}}
 }
 
 // Integer projectID

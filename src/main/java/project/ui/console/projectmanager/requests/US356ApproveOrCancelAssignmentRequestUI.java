@@ -34,6 +34,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean condition = true;
 		while (condition) {
+			condition = false;
 			infoUpdater.updateDBtoContainer();
 
 			System.out.println("\n   TASK ASSIGNMENT REQUESTS : PENDING APPROVAL      ");
@@ -50,10 +51,9 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			}
 
 			System.out.println("[C] Choose a Request");
-			System.out.println("[B] Back");
-			System.out.println("[M] MainMenu");
+			System.out.println("[B] Back \n");
 
-			chooseOption(assignmentRequest);
+			condition = chooseOption(assignmentRequest);
 		}
 	}
 
@@ -63,8 +63,10 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 	 * @param assignmentRequest
 	 *            US356ManageAssigmentRequestController previously instantiated
 	 */
-	private void chooseOption(US356ManageAssigmentRequestController assignmentRequest) {
+	private boolean chooseOption(US356ManageAssigmentRequestController assignmentRequest) {
 
+		boolean loop = false;
+		
 		Scanner input = new Scanner(System.in);
 
 		String choice = input.nextLine().toUpperCase();
@@ -75,16 +77,12 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			chooseRequest(assignmentRequest);
 			break;
 		case "B":
-			ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(user, project);
-			previousMenu.displayOptions();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
 			break;
 		default:
 			System.out.println("Choose a valid option");
-			displayAssignmentTaskRequests();
+			loop = true;
 		}
+		return loop;
 	}
 
 	/**

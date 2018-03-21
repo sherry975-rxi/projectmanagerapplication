@@ -85,14 +85,6 @@ public class PmTaskFunctionalitiesUI {
 				break;
 			case "B":
 				condition = false;
-				break;
-			case "M":
-				MainMenuUI.mainMenu();
-				break;
-			case "E":
-				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-				condition = false;
-				break;
 			default:
 				System.out.println("Please choose a valid option.");
 				System.out.println("");

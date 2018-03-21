@@ -10,10 +10,11 @@ import java.util.Scanner;
 public class US203GetUnfinishedTaskUI {
 
 	public void displayOptions(User user1) {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		
 		infoUpdater.updateDBtoContainer();
 		int projID;
 		String[] split;

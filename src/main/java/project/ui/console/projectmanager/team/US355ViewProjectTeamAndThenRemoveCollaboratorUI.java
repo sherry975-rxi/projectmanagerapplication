@@ -15,13 +15,15 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 
 	public void viewProjectTeamAndThenRemoveCollaboratorUI(Project project, User user) {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
-		infoUpdater.updateDBtoContainer();
+		
 
 		Scanner scannerInput = new Scanner(System.in);
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+		infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println("___________________________________________________");
@@ -51,16 +53,13 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		System.out.println();
 		System.out.println("\nChoose an collaborator to remove or choose an option:");
 		System.out.println("_______________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		// creation of a list with the options B,E and M
 		List<String> listOfOptionsToCompare = new ArrayList<>();
 		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
 
 		List<User> listOfUser = controller.getActiveProjectCollaboratorFromTeam();
 
@@ -80,8 +79,6 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 			} else if ("B".equals(option)) {
 				return;
 
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
 			}
 			listOfOptionsToCompare.add(String.valueOf(i + 1));
 		}
@@ -90,7 +87,8 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
+			loop = true;
+		}
 		}
 	}
 

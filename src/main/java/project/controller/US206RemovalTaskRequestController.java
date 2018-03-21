@@ -1,12 +1,17 @@
 package project.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.model.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 
 /**
  * @author Group 3
@@ -15,6 +20,7 @@ import java.util.List;
  *         uma tarefa que consta na minha lista de tarefas.
  *
  */
+@Controller
 public class US206RemovalTaskRequestController {
 
 	private Integer projectID;
@@ -22,10 +28,10 @@ public class US206RemovalTaskRequestController {
 	private User user;
 
 	@Autowired
-	private ProjectService projectContainer;
+	public ProjectService projectContainer;
 
 	@Autowired
-	private TaskService taskService;
+	public TaskService taskService;
 
 	/**
 	 * Constructor to instantiate a new CollaboratorRemovalrequest

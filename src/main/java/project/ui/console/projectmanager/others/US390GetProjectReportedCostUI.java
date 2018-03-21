@@ -18,14 +18,17 @@ public class US390GetProjectReportedCostUI {
 
 	public void displayProjectCost(Project project, User user) {
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+			infoUpdater.updateDBtoContainer();
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -61,19 +64,13 @@ public class US390GetProjectReportedCostUI {
 		}
 
 		System.out.println(line);
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		if ("M".equals(option)) {
-			MainMenuUI.mainMenu();
-		} else if ("E".equals(option)) {
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-		} else {
+		if (!("B".equals(option))){
 			System.out.println("Please choose a valid option: ");
-			this.displayProjectCost(project, user);
+			loop = true;
 		}
-
-	}
+	}}
 }

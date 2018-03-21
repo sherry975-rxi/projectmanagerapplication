@@ -15,10 +15,11 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 	}
 
 	public void getAllFinishedUserTasksInDecreasingOrderUI() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		
 		infoUpdater.updateDBtoContainer();
 
 		Scanner scannerInput = new Scanner(System.in);

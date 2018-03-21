@@ -20,10 +20,11 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 	}
 
 	public void viewLastMonthFinishedTasks() {
+		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+		
 		infoUpdater.updateDBtoContainer();
 		Scanner scannerInput = new Scanner(System.in);
 		US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController viewTasksFinishedLastMonth = new US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController();
