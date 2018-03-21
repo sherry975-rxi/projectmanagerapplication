@@ -12,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Repository.ProjectsRepository;
-import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.UserService;
 import project.model.Project;
@@ -23,36 +21,24 @@ import project.model.User;
 @DataJpaTest
 @ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US320ViewProjectsControllerTest {
-
+	@Autowired
 	UserService userService;
 	@Autowired
-	UserRepository userRepository;
 	ProjectService projectService;
 	@Autowired
-	ProjectsRepository projectRepository;
+	US320ViewProjectsController projectListsController;
 
 	Project activeProject;
 	Project inactiveProject;
 	User activeManager;
 	User inactiveManager;
-	US320ViewProjectsController projectListsController;
+
 	String activeProjectData, activeProjectData2;
 
 	@Before
 	public void setUp() {
 
-		// Creates a viewProjectController
-		projectListsController = new US320ViewProjectsController();
-
 		activeProjectData = null;
-
-		// creates an UserContainer
-		userService = new UserService();
-		userService.setUserRepository(userRepository);
-
-		// creates a Project Container
-		projectService = new ProjectService();
-		projectService.setProjectsRepository(projectRepository);
 
 		activeManager = userService.createUser("Manel", "user1@gmail.com", "001", "Empregado", "930000000", "Rua Bla",
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
@@ -67,9 +53,6 @@ public class US320ViewProjectsControllerTest {
 
 		activeProject.setProjectStatus(Project.EXECUTION);
 		inactiveProject.setProjectStatus(Project.CLOSE);
-
-		projectService.addProjectToProjectContainer(activeProject);
-		projectService.addProjectToProjectContainer(inactiveProject);
 
 		// creates a string from activeProject's overview data, to be compared with the
 		// various tests
@@ -122,7 +105,7 @@ public class US320ViewProjectsControllerTest {
 
 		// also asserts that the contents of index 0 matches the data of the only active
 		// project
-		assertTrue(projectListsController.viewAllProjects().get(0).equals("[1] \n" + activeProjectData2));
+		assertTrue(projectListsController.viewAllProjects().get(0).equals("[1] \n" + activeProjectData));
 	}
 
 	/**
