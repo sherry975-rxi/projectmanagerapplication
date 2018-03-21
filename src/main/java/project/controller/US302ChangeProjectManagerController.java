@@ -26,9 +26,6 @@ public class US302ChangeProjectManagerController {
 	private User selectedManager;
 	private Project selectedProject;
 
-	public US302ChangeProjectManagerController() {
-	}
-
 	/**
 	 * Constructor for project creation controller, it receives a project whose
 	 * manager is to be changed and stores its project manager

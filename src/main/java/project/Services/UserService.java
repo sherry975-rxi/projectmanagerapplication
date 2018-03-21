@@ -24,8 +24,6 @@ import project.model.User;
 @Service
 public class UserService {
 
-
-
 	@Autowired
 	private UserRepository userRepository;
 
@@ -119,24 +117,6 @@ public class UserService {
 	 */
 	public void addUserToUserRepositoryX(User user) {
 		this.userRepository.save(user);
-	}
-
-	/**
-	 * This method allows the administrator to see if a given user already exists in
-	 * company (userContainer) DB
-	 *
-	 * @param addedUser
-	 *            user
-	 * @return TRUE if user exists in company. FALSE if user doesn’t exist in the
-	 *         company's userContainer
-	 */
-	public boolean isUserinUserContainer(User addedUser) {
-
-		boolean result = false;
-		if (this.userRepository.findByEmail(addedUser.getEmail()) != null) {
-			result = true;
-		}
-		return result;
 	}
 
 	/**

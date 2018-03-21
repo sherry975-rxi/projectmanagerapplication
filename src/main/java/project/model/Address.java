@@ -1,12 +1,7 @@
 package project.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+
 
 /**
  * Class to builds an Address.
@@ -18,25 +13,24 @@ import javax.persistence.ManyToOne;
  *
  */
 @Entity
-public class Address {
-
+public class Address{
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
+	
 	private String street;
 	private String zipCode;
 	private String city;
 	private String district;
 	private String country;
 	static final long serialVersionUID = 42L;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "User_id")
 	private User user;
 
-	public Address() {
-	}
+	public Address(){}
 
 	/**
 	 * This method defines the Constructor Address which will have the following
@@ -56,6 +50,8 @@ public class Address {
 		this.country = country;
 
 	}
+
+
 
 	/**
 	 * Sets the street
@@ -196,4 +192,7 @@ public class Address {
 		this.user = user;
 	}
 
-}
+	}
+
+
+

@@ -37,7 +37,7 @@ public class TaskTest {
 	private Report report;
 
 	@Before
-	public void setUp(){
+	public void setUp() {
 
 		// create user
 		userTest = new User("Pedro Silva", "pedrosilva@gmail.com", "001", "Developer", "912364896");
@@ -991,6 +991,8 @@ public class TaskTest {
 		assertFalse(testTask2.equals(testTask1));// different counter
 
 		Task testTask3 = new Task(1, 1, "Task 1");
+		testTask3.setTaskID("1");
+		testTask2.setTaskID("1");
 
 		assertTrue(testTask2.equals(testTask3));// same counter
 	}
@@ -1336,7 +1338,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#getAssignementTaskTeamRequest(ProjectCollaborator)}.
+	 * Test method for
+	 * {@link project.model.Task#getAssignementTaskTeamRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void testGetAssignementTaskTeamRequest() {
@@ -1349,7 +1352,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#getRemovalTaskTeamRequest(ProjectCollaborator)}.
+	 * Test method for
+	 * {@link project.model.Task#getRemovalTaskTeamRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void testGetRemovalTaskTeamRequest() {
@@ -1424,7 +1428,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#createTaskAssignementRequest(ProjectCollaborator)}.
+	 * Test method for
+	 * {@link project.model.Task#createTaskAssignementRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void testCreateTaskAssignementRequest() {
@@ -1438,7 +1443,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#createTaskAssignementRequest(ProjectCollaborator)}.
+	 * Test method for
+	 * {@link project.model.Task#createTaskAssignementRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void testCreateTaskAssignementRequestRequestsAlreadyCreated() {
@@ -1454,7 +1460,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#createTaskRemovalRequest(ProjectCollaborator)}.
+	 * Test method for
+	 * {@link project.model.Task#createTaskRemovalRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void testCreateTaskRemovalRequest() {
@@ -1468,7 +1475,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#createTaskRemovalRequest(ProjectCollaborator)}.
+	 * Test method for
+	 * {@link project.model.Task#createTaskRemovalRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void testCreateTaskRemovalRequestRequestsAlreadyCreated() {
@@ -1499,7 +1507,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isRemovalRequestAlreadyCreated(ProjectCollaborator)}.
+	 * Test method for
+	 * {@link project.model.Task#isRemovalRequestAlreadyCreated(ProjectCollaborator)}.
 	 */
 	@Test
 	public void testIsRemovalRequestAlreadyCreated() {
@@ -1513,7 +1522,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#deleteTaskRemovalRequest(ProjectCollaborator)}.
+	 * Test method for
+	 * {@link project.model.Task#deleteTaskRemovalRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void testDeleteTaskRemovalRequest() {
@@ -1529,7 +1539,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#deleteTaskAssignementRequest(ProjectCollaborator)}.
+	 * Test method for
+	 * {@link project.model.Task#deleteTaskAssignementRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void testDeleteTaskAssignementRequest() {
@@ -1598,7 +1609,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValid() {
@@ -1612,7 +1624,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValidSameTask() {
@@ -1623,7 +1636,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValidWithoutDeadline() {
@@ -1637,7 +1651,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValidSetToOnGoing() {
@@ -1651,7 +1666,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValidSetToCancelled() {
@@ -1666,7 +1682,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValidSetToReady() {
@@ -1681,7 +1698,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValidSetToCancel() {
@@ -1695,7 +1713,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValidSetToStandBy() {
@@ -1710,7 +1729,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void isCreatingTaskDependencyValidSetToFinished() {
@@ -1726,7 +1746,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void isCreatingTaskDependencyValidSetToFinishedOtherTaskSetToCancelled() {
@@ -1741,7 +1762,8 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
 	public void testIsCreatingTaskDependencyValidWithTheSameDependency() {

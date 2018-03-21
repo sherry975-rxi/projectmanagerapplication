@@ -103,17 +103,6 @@ public class UserServiceTest {
 	}
 
 	/**
-	 * Test method call for isUserinUserContainer
-	 */
-	@Test
-	public final void testIsUserinUserContainer() {
-
-		when(userRepositoryMock.findByEmail(user2.getEmail())).thenReturn(user2);
-
-		assertEquals(true, userContainer.isUserinUserContainer(user2));
-	}
-
-	/**
 	 * Test method call getAllUsersFromUserContainer.
 	 */
 	@Test
