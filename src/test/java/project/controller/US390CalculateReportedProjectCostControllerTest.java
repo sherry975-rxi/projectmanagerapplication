@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class CalculateReportedProjectCostControllerTest {
+public class US390CalculateReportedProjectCostControllerTest {
 
 	/**
 	 *
@@ -72,7 +72,7 @@ public class CalculateReportedProjectCostControllerTest {
 	private TaskCollaborator taskWorkerMike;
 	private TaskCollaborator taskWorkerAna;
 
-	private CalculateReportedProjectCostController controllerCost;
+	private US390CalculateReportedProjectCostController controllerCost;
 
 	private double totalCost;
 
@@ -220,7 +220,7 @@ public class CalculateReportedProjectCostControllerTest {
 		totalCost = danielCost + jonnyCost + mikeCost + anaCost;
 
 		// Creates a CalculateReportedProjectCostController
-		controllerCost = new CalculateReportedProjectCostController();
+		controllerCost = new US390CalculateReportedProjectCostController();
 		controllerCost.taskService=this.taskContainer;
 
 		// Compares the 2 values
@@ -255,7 +255,7 @@ public class CalculateReportedProjectCostControllerTest {
 		reportedCost.add("0.0");
 
 		// Creates a CalculateReportedProjectCostController
-		controllerCost = new CalculateReportedProjectCostController();
+		controllerCost = new US390CalculateReportedProjectCostController();
 		controllerCost.taskService=this.taskContainer;
 
 		assertEquals(reportedCost, controllerCost.calculeReportedCostOfEachTaskController(project));
@@ -265,7 +265,7 @@ public class CalculateReportedProjectCostControllerTest {
 	@Test
 	public void testGetTaskId() {
 		// Creates a CalculateReportedProjectCostController
-		controllerCost = new CalculateReportedProjectCostController();
+		controllerCost = new US390CalculateReportedProjectCostController();
 		controllerCost.taskService=this.taskContainer;
 
 		System.out.print(project.getId());

@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Controller
-public class CalculateReportedProjectCostController {
+public class US390CalculateReportedProjectCostController {
 
 	@Autowired
 	TaskService taskService;
