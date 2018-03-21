@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class AddColaboratorToProjectTeamController_Test {
+public class US351AddColaboratorToProjectTeamController_Test {
 
 	/**
 	 * Tests US350v02

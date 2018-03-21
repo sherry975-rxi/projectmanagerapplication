@@ -6,7 +6,7 @@ import project.Services.UserService;
 import project.model.User;
 
 @Controller
-public class DoLoginController {
+public class US180DoLoginController {
 
 	@Autowired
 	public UserService userService;

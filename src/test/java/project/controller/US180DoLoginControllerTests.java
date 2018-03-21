@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class DoLoginControllerTests {
+public class US180DoLoginControllerTests {
 
 	@Autowired
 	UserRepository userRepository;
@@ -28,7 +28,7 @@ public class DoLoginControllerTests {
 	User user1;
 	User userAdmin;
 
-	DoLoginController doLoginController;
+	US180DoLoginController doLoginController;
 
 
 	@Before
@@ -65,7 +65,7 @@ public class DoLoginControllerTests {
 		String validEmail = new String("daniel@gmail.com");
 		String validPassword = new String("123456");
 
-		doLoginController = new DoLoginController();
+		doLoginController = new US180DoLoginController();
 		doLoginController.userService=this.userContainer;
 
 		assertTrue(doLoginController.doLogin(validEmail, validPassword));
@@ -79,7 +79,7 @@ public class DoLoginControllerTests {
 		String validEmail = new String("daniel@gmail.com");
 		String invalidPassword = new String("12345");
 
-		doLoginController = new DoLoginController();
+		doLoginController = new US180DoLoginController();
 		doLoginController.userService=this.userContainer;
 
 		assertFalse(doLoginController.doLogin(validEmail, invalidPassword));
@@ -93,7 +93,7 @@ public class DoLoginControllerTests {
 		String invalidEmail = new String("invalid@gmail.com");
 		String validPassword = new String("123456");
 
-		doLoginController = new DoLoginController();
+		doLoginController = new US180DoLoginController();
 		doLoginController.userService=this.userContainer;
 
 		assertFalse(doLoginController.doLogin(invalidEmail, validPassword));
@@ -107,7 +107,7 @@ public class DoLoginControllerTests {
 		String invalidEmail = new String("invalid@gmail.com");
 		String invalidPassword = new String("12345");
 
-		doLoginController = new DoLoginController();
+		doLoginController = new US180DoLoginController();
 		doLoginController.userService=this.userContainer;
 
 		assertFalse(doLoginController.doLogin(invalidEmail, invalidPassword));
