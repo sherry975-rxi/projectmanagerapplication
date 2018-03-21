@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface ProjectsRepository extends JpaRepository<Project, Integer>{
 
-    Project findById(long id);
+    Project findById(int id);
 
     List<Project> findAllByProjectManager(User user);
 }

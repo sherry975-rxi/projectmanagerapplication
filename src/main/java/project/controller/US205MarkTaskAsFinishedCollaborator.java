@@ -1,6 +1,7 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.*;
@@ -8,6 +9,7 @@ import project.model.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class US205MarkTaskAsFinishedCollaborator {
 	private User username;
 	private int projectIndex;
@@ -15,10 +17,10 @@ public class US205MarkTaskAsFinishedCollaborator {
 	List<Task> unfinishedTaskFromProject;
 
 	@Autowired
-	private ProjectService projectContainer;
+	public ProjectService projectContainer;
 
 	@Autowired
-	private TaskService taskService;
+	public TaskService taskService;
 
 	public List<Project> getProjectsThatIAmCollaborator(User user) {
 		List<Project> projectsThatImProjectCollaborator = new ArrayList<>();

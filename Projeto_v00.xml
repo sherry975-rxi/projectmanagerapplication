@@ -19,6 +19,16 @@
 				</ligacao_projeto>
 			</lista_ligacoes_projeto>
 		</colaborador_projeto>
+		<colaborador_projeto>						<!-- US350 v02-->
+			<colaborador_id>js@mymail2.com</colaborador_id>
+			<lista_ligacoes_projeto>
+				<ligacao_projeto>					<!-- US351 e futuras-->
+					<data_inicio></data_inicio>
+					<data_fim></data_fim>
+					<custo_unitario_colaborador>50</custo_unitario_colaborador>
+				</ligacao_projeto>
+			</lista_ligacoes_projeto>
+		</colaborador_projeto>
 	</lista_colaboradores>
 	<lista_tarefas>
 		<tarefa>
@@ -36,7 +46,21 @@
 			</lista_dependencias>
 			<lista_colaboradores_tarefa>
 				<colaborador_tarefa>
-					<colaborador_id></colaborador_id>
+					<colaborador_id>js@mymail1.com</colaborador_id>
+					<lista_ligacoes_tarefa>
+						<data_inicio></data_inicio>
+						<data_fim></data_fim>
+						<lista_report_tarefa>
+							<report>
+								<data_inicio></data_inicio>
+								<data_fim></data_fim>
+								<esforco></esforco>
+							</report>
+						</lista_report_tarefa>
+					</lista_ligacoes_tarefa>
+				</colaborador_tarefa>
+				<colaborador_tarefa>
+					<colaborador_id>js@mymail2.com</colaborador_id>
 					<lista_ligacoes_tarefa>
 						<data_inicio></data_inicio>
 						<data_fim></data_fim>
