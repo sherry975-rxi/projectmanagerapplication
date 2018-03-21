@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US370GetProjectFinishedTaskListController;
@@ -10,16 +12,19 @@ import project.model.User;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US370ProjectFinishedTasksDecreasingOrderUI {
 
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US370GetProjectFinishedTaskListController projectFinishedTaskList;
+
 	private Project proj;
-	private User user;
 
-	public US370ProjectFinishedTasksDecreasingOrderUI(Project project, User user) {
-		this.user = user;
-		this.proj = project;
+	public US370ProjectFinishedTasksDecreasingOrderUI() {
 	}
-
 	/**
 	 * This method executes all options to execute through this UI Presents the
 	 * project details and the task's list of project Uses a switch case to treat
@@ -28,10 +33,8 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	public void projectDataDisplay() {
 		
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.proj.getIdCode());
-		int projectID = proj.getIdCode();
+		projectInfo.setProjID(proj.getIdCode());
 		projectInfo.setProject();
-		US370GetProjectFinishedTaskListController projectFinishedTaskList = new US370GetProjectFinishedTaskListController();
 
 		String line = "___________________________________________________";
 		Scanner scannerInput = new Scanner(System.in);
@@ -84,7 +87,14 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 			break;
 		}
 	}}
+
+	public void setProj(Project proj) {
+		this.proj = proj;
+	}
+
 }
+
+
 
 // Integer projectID
 // Display list

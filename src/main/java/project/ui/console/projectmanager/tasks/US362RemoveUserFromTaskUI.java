@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.tasks;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US362RemoveTaskFromProjectCollaborator;
 import project.model.Project;
 import project.model.Task;
@@ -8,16 +10,16 @@ import project.model.User;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US362RemoveUserFromTaskUI {
 
-	Project project;
-	Task task;
-	User user;
+	@Autowired
+	private US362RemoveTaskFromProjectCollaborator removeColController;
 
-	public US362RemoveUserFromTaskUI(Project project, Task task, User user) {
-		this.user = user;
-		this.project = project;
-		this.task = task;
+	private Project project;
+	private Task task;
+
+	public US362RemoveUserFromTaskUI() {
 	}
 
 	public void displayUsersToRemove() {
@@ -26,8 +28,8 @@ public class US362RemoveUserFromTaskUI {
 		System.out.println("____________________________________________");
 		System.out.println("\n");
 
-		US362RemoveTaskFromProjectCollaborator removeColController = new US362RemoveTaskFromProjectCollaborator(project,
-				task);
+		removeColController.setProject(project);
+		removeColController.setTask(task);
 		List<String> userList = removeColController.getProjectCollaboratorsFromTask();
 		int number = 1;
 
@@ -41,11 +43,11 @@ public class US362RemoveUserFromTaskUI {
 				number++;
 			}
 
-			chooseAction(removeColController);
+			chooseAction();
 		}
 	}
 
-	public void chooseAction(US362RemoveTaskFromProjectCollaborator removeColController) {
+	public void chooseAction() {
 
 		Scanner input = new Scanner(System.in);
 		boolean repeat = true;
@@ -62,12 +64,12 @@ public class US362RemoveUserFromTaskUI {
 				System.out.println("--YOU HAVE QUITTED THE MENU--");
 				repeat = false;
 			} else {
-				chooseUserToRemove(removeColController, option);
+				chooseUserToRemove(option);
 			}
 		}
 	}
 
-	public void chooseUserToRemove(US362RemoveTaskFromProjectCollaborator removeColController, String choice) {
+	public void chooseUserToRemove(String choice) {
 
 		Integer choiceInt;
 
@@ -79,21 +81,26 @@ public class US362RemoveUserFromTaskUI {
 				removeColController.setProjectCollaborator(choiceInt - 1);
 				if (removeColController.removeCollaboratorFromTask()) {
 					System.out.println("--------USER REMOVED--------");
-					PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
-							this.user);
-					caseBack.taskDataDisplay();
 
 				} else {
-					System.out.println("Choose a valid user!");
-					PmTaskFunctionalitiesUI caseBack = new PmTaskFunctionalitiesUI(task.getTaskID(), this.project,
-							this.user);
-					caseBack.taskDataDisplay();
+					System.out.println("The selected user cannot be removed from the chosen task!");
 				}
 			}
 		}
 
 		catch (NumberFormatException npe) {
-			System.out.println("-----Insert a valid user!-----");
+			System.out.println("-----An invalid number was inserted!-----");
 		}
 	}
+
+
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
 }

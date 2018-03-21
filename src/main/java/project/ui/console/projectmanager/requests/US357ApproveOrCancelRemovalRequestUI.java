@@ -1,27 +1,26 @@
 package project.ui.console.projectmanager.requests;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US357CancelRemovalTaskRequestController;
 import project.model.Project;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class US357ApproveOrCancelRemovalRequestUI {
 
+	@Autowired
+	private US357CancelRemovalTaskRequestController cancelRequest;
+
 	Project project;
-	User user;
 
 	/**
 	 * Constructor to instantiate a new US357ApproveOrCancelRemvalRequestUI
-	 * 
-	 * @param user
-	 *            User Project Manager
-	 * @param project
-	 *            Project where the user is Project manager
+	 *
 	 */
-	public US357ApproveOrCancelRemovalRequestUI(User user, Project project) {
-		this.project = project;
-		this.user = user;
+	public US357ApproveOrCancelRemovalRequestUI() {
 	}
 
 	/**
@@ -35,8 +34,7 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			System.out.println("\n    TASKS REMOVAL REQUESTS PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");
 
-			US357CancelRemovalTaskRequestController cancelRequest = new US357CancelRemovalTaskRequestController(
-					this.project);
+			cancelRequest.setProject(project);
 			int number = 1;
 
 			for (String other : cancelRequest.viewPendingRemovalRequests()) {
@@ -49,17 +47,15 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			System.out.println("[B] Back");
 			System.out.println("[M] MainMenu");
 
-			condition = chooseOption(cancelRequest);
+			condition = chooseOption();
 		}
 	}
 
 	/**
 	 * Switch case that allows the user to choose a functionality
-	 * 
-	 * @param cancelRequest
-	 *            US357CancelRemovalTaskRequestController previously instantiated
+	 *
 	 */
-	private boolean chooseOption(US357CancelRemovalTaskRequestController cancelRequest) {
+	private boolean chooseOption() {
 
 		boolean loop = false;
 		
@@ -70,7 +66,7 @@ public class US357ApproveOrCancelRemovalRequestUI {
 		switch (choice) {
 
 		case "C":
-			chooseRequest(cancelRequest);
+			chooseRequest();
 			break;
 		case "B":
 			break;
@@ -83,11 +79,9 @@ public class US357ApproveOrCancelRemovalRequestUI {
 
 	/**
 	 * Method that allows the user to choose a request
-	 * 
-	 * @param cancelRequest
-	 *            US357CancelRemovalTaskRequestController previously instantiated
+	 *
 	 */
-	private void chooseRequest(US357CancelRemovalTaskRequestController cancelRequest) {
+	private void chooseRequest() {
 
 		System.out.println("\n                 CHOOSE A REQUEST:                  ");
 
@@ -101,7 +95,7 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			Integer choiceInt = Integer.parseInt(choice);
 
 			if (choiceInt > 0 && choiceInt <= listSize) {
-				chooseApproveOrDisaprove(cancelRequest, choiceInt);
+				chooseApproveOrDisaprove(choiceInt);
 			}
 
 			else {
@@ -118,13 +112,11 @@ public class US357ApproveOrCancelRemovalRequestUI {
 
 	/**
 	 * Method that allows the user to choose to approve or cancel a specific request
-	 * 
-	 * @param cancelRequest
-	 *            US357CancelRemovalTaskRequestController previously instantiated
+	 *
 	 * @param request
 	 *            Index of the chosen request
 	 */
-	private void chooseApproveOrDisaprove(US357CancelRemovalTaskRequestController cancelRequest, int request) {
+	private void chooseApproveOrDisaprove(int request) {
 
 		Scanner input = new Scanner(System.in);
 
@@ -157,5 +149,9 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			cancelRequest.cancelRemovalRequestFromTask();
 			displayRemovalTaskRequests();
 		}
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 }

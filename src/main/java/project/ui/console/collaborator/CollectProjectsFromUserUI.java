@@ -3,6 +3,8 @@
  */
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.CollectProjectsFromUserController;
 import project.model.Project;
 import project.model.User;
@@ -18,17 +20,19 @@ import java.util.Scanner;
  * @author Group3
  *
  */
+@Component
 public class CollectProjectsFromUserUI {
+	@Autowired
+	private CollectProjectsFromUserController collectProjectsFromUserController;
 
 	private User user;
 
 	/**
 	 * Constructor
-	 * 
-	 * @param user
+	 *
 	 */
-	public CollectProjectsFromUserUI(User user) {
-		this.user = user;
+	public CollectProjectsFromUserUI() {
+
 	}
 
 	/**
@@ -42,9 +46,7 @@ public class CollectProjectsFromUserUI {
 		System.out.println("___________________________________________________");
 
 		Scanner input = new Scanner(System.in);
-
-		CollectProjectsFromUserController collectProjectsFromUserController = new CollectProjectsFromUserController(
-				user);
+		collectProjectsFromUserController.setUser(this.user);
 
 		for (int i = 0; i < collectProjectsFromUserController.getProjectsFromUserAndProjectManager().size(); i++) {
 			System.out.println(collectProjectsFromUserController.getProjectsFromUserAndProjectManager().get(i));
@@ -93,5 +95,9 @@ public class CollectProjectsFromUserUI {
 			loop = true;
 		}
 	}
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

@@ -1,18 +1,22 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class ProjectViewMenuUI {
+
+	@Autowired
+	private TaskDetailsUI userTasks;
 
 	private Integer projectID;
 	private User user;
 
-	public ProjectViewMenuUI(Integer projectID, User user) {
-		this.user = user;
-		this.projectID = projectID;	
+	public ProjectViewMenuUI() {
 	}
 
 	/**
@@ -63,17 +67,26 @@ public class ProjectViewMenuUI {
 		}
 	}
 
+	public void setProjectID(Integer projectID) {
+		this.projectID = projectID;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public boolean taskIDToSeeTaskDetaisls(String choice){
 		try {
-			TaskDetailsUI userTasks = new TaskDetailsUI(choice, this.projectID, this.user);
+			userTasks.setTaskID(choice);
+			userTasks.setUser(user);
+			userTasks.setProjectID(projectID);
 			userTasks.taskDataDisplay();
 			return false;
 		}
 		catch (NullPointerException npe) {
 			System.out.println("Please choose a valid option: ");
 			System.out.println("");
-			ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(projectID, user);
-			myAtualUIView.projectDataDisplay();
+
 			return true;
 		}
 

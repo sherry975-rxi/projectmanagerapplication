@@ -31,8 +31,8 @@ public class US365MarkTaskAsFinishedControllerProjectManager {
 		return taskToBeMarked;
 	}
 
-	public void setTaskToBeMarked(Task taskToBeMarked) {
-		this.taskToBeMarked = taskToBeMarked;
+	public void setTaskToBeMarked(String taskID) {
+		this.taskToBeMarked = projectTaskList.getTaskByTaskID(taskID);
 	}
 
 	public Project getSelectedProject() {

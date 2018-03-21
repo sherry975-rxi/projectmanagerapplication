@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US360GetProjectTasksWithoutCollaboratorsAssignedController;
 import project.model.Project;
@@ -10,14 +12,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US360ProjectUnassignedTasksUI {
+
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US360GetProjectTasksWithoutCollaboratorsAssignedController controller;
+
+	@Autowired
+	private PmTaskFunctionalitiesUI taskFuntionatities;
 
 	public void projectUnassignedTasksUI(Project project, User user) {
 		
 
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
 		boolean loop = true;
 		while (loop) {
@@ -37,8 +49,6 @@ public class US360ProjectUnassignedTasksUI {
 		System.out.println(line);
 		System.out.println("                 UNASSIGNED TASKS");
 		System.out.println(line);
-
-		US360GetProjectTasksWithoutCollaboratorsAssignedController controller = new US360GetProjectTasksWithoutCollaboratorsAssignedController();
 
 		List<String> listOfExpiredTaskID = new ArrayList<>();
 
@@ -60,7 +70,9 @@ public class US360ProjectUnassignedTasksUI {
 		for (String ii : listOfExpiredTaskID) {
 
 			if (option.equals(ii)) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
+				taskFuntionatities.setTaskID(ii);
+				taskFuntionatities.setProject(project);
+				taskFuntionatities.setUser(user);
 				taskFuntionatities.taskDataDisplay();
 			} 
 			listOfOptionsToCompare.add(ii);
