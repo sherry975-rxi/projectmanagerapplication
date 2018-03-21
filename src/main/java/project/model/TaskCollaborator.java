@@ -1,15 +1,24 @@
 package project.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Calendar;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "TaskCollaborator")
 public class TaskCollaborator implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
@@ -18,14 +27,14 @@ public class TaskCollaborator implements Serializable {
 	private Calendar finishDate;
 	private boolean status;
 	static final long serialVersionUID = 52L;
-    @ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
 	private Task task;
 
 	/**
 	 * Empty Constructor for TaskCollaborator
 	 */
-	protected TaskCollaborator(){
+	protected TaskCollaborator() {
 	}
 
 	/**
@@ -39,7 +48,7 @@ public class TaskCollaborator implements Serializable {
 	 */
 	public TaskCollaborator(ProjectCollaborator projCollaborator) {
 		this.projCollaborator = projCollaborator;
-		this.startDate = Calendar.getInstance();
+		this.startDate = null;
 		this.finishDate = null;
 		this.status = true;
 	}
@@ -71,7 +80,6 @@ public class TaskCollaborator implements Serializable {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -181,64 +189,64 @@ public class TaskCollaborator implements Serializable {
 		return projCollaborator.equals(other.projCollaborator);
 	}
 
+	public void setTask(Task task) {
+		this.task = task;
+	}
 
-    public void setTask(Task task) {
-        this.task = task;
-    }
+	public Task getTask() {
+		return task;
+	}
 
-    public Task getTask() {
-        return task;
-    }
-    
-    public int getCost() {
-    	return this.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
-    }
+	public int getCost() {
+		return this.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+	}
 }
 
+/**
+ * Returns the total hours spent by the collaborator
+ *
+ *
+ * @return TotalHoursSpent
+ */
 
- /**
-	 * Returns the total hours spent by the collaborator
-	 *
-	 *
-	 * @return TotalHoursSpent
-	 */
+/*
+ * public int getTotalHoursSpent() {
+ * 
+ * int result = 0;
+ * 
+ * for (int indexHoursSpent = 0; indexHoursSpent < this.hoursSpent.size();
+ * indexHoursSpent++) {
+ * 
+ * result = result + this.hoursSpent.get(indexHoursSpent); }
+ * 
+ * return result;
+ * 
+ * }
+ */
 
- /*public int getTotalHoursSpent() {
-  
-  int result = 0;
-  
-  for (int indexHoursSpent = 0; indexHoursSpent < this.hoursSpent.size();
-  indexHoursSpent++) {
-  
-  result = result + this.hoursSpent.get(indexHoursSpent); }
-  
-  return result;
- 
-  }*/
-  
- /**
-	 * Returns the cost of the collaborator in a specific period
-	 *
-	 * @param i
-	 *            index of the cost wanted
-	 *
-	 * @return cost
-	 */
+/**
+ * Returns the cost of the collaborator in a specific period
+ *
+ * @param i
+ *            index of the cost wanted
+ *
+ * @return cost
+ */
 
- /* public int getCost(int i) { return cost.get(i); }*/
- 
- /**
-	 * Sets the hours spent by the user in this task in this period
-	 *
-	 * @param hoursSpent
-	 */
+/* public int getCost(int i) { return cost.get(i); } */
 
-  /*public void setHoursSpent(int hoursSpent) {
-  this.hoursSpent.set(this.hoursSpent.size() - 1, hoursSpent); }
-  */
- /**
-	 * Gets the size of the cost list
-	 *
-	 */
-/*		  public int getCostListSize() { return this.cost.size(); }*/
-		 
+/**
+ * Sets the hours spent by the user in this task in this period
+ *
+ * @param hoursSpent
+ */
+
+/*
+ * public void setHoursSpent(int hoursSpent) {
+ * this.hoursSpent.set(this.hoursSpent.size() - 1, hoursSpent); }
+ */
+/**
+ * Gets the size of the cost list
+ *
+ */
+/* public int getCostListSize() { return this.cost.size(); } */
