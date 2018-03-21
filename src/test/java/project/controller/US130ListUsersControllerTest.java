@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Repository.UserRepository;
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
@@ -20,27 +20,18 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US130ListUsersControllerTest {
-
-	User user1, user2, newUser2, newUser3;
-	
-	UserService userService;
+	@Autowired
+	US130ListUsersController listUsersController;
 	
 	@Autowired
-	public UserRepository userRepo;
+	UserService userService;
 	
-	US130ListUsersController listUsersController;
-
+	User user1, user2, newUser2, newUser3;
+	
 	@Before
 	public void setUp() {
-
-		// creates an UserContainer
-		userService = new UserService();
-		userService.setUserRepository(userRepo);
-		
-		listUsersController = new US130ListUsersController();
-		listUsersController.userContainer = userService;
-		
 		// creates user four users
 		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000",
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
@@ -50,8 +41,6 @@ public class US130ListUsersControllerTest {
 				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		newUser3 = userService.createUser("Manelinho", "user3@gmail.com", "002", "Telefonista",
 				"940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-
-		userService.updateUserContainer();	
 		}
 
 	/**
