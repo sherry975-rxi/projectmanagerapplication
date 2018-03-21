@@ -61,7 +61,9 @@ public class UserTasksFunctionalitiesMenuUI {
 	 * Switch case that allows to choose the functionality
 	 */
 	public void chooseFunctionality() {
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		Scanner scannerInput = new Scanner(System.in);
 		String option = scannerInput.nextLine().toUpperCase();
 
@@ -90,13 +92,11 @@ public class UserTasksFunctionalitiesMenuUI {
 			break;
 		case "B":
 			return;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
 
 		default:
 			System.out.println("Error! Option not valid. Please insert an option again.");
 			displayFunctionalities();
+			loop = true;
 		}
-	}
+	}}
 }

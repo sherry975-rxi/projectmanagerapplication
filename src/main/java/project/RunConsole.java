@@ -3,6 +3,11 @@ package project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
+import project.model.*;
+import project.ui.console.MainMenuUI;
 import project.utils.LoadProjectData;
 import project.utils.LoadUserData;
 
@@ -13,7 +18,9 @@ public class RunConsole implements CommandLineRunner {
 
 	@Autowired
 	LoadUserData feedDb;
-	
+	@Autowired
+	MainMenuUI main;
+
 	@Autowired
 	LoadProjectData projectDb;
 
@@ -24,6 +31,8 @@ public class RunConsole implements CommandLineRunner {
 
     	projectDb.loadProject("Projeto_v00.xml");
 
+
+        main.mainMenu();
     }
     
 }

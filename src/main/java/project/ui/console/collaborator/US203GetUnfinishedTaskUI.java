@@ -8,9 +8,11 @@ import project.ui.console.MainMenuUI;
 import java.util.Scanner;
 
 public class US203GetUnfinishedTaskUI {
-	private Boolean isPreviousUIFromTasks;
 
 	public void displayOptions(User user1) {
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();
 		int projID;
@@ -34,23 +36,15 @@ public class US203GetUnfinishedTaskUI {
 					+ unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).get(i).getDescription());
 		}
 		System.out.println("___________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		switch (option) {
 
 		case "B":
-			UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
-			previousMenu.displayFunctionalities();
 			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			break;
+
 		default:
 
 
@@ -58,18 +52,18 @@ public class US203GetUnfinishedTaskUI {
 				split = option.split("\\.");
 				projID = Integer.valueOf(split[0]);
 
-				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, user, this.isPreviousUIFromTasks);
+				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, user);
 				taskSelected.taskDataDisplay();
 			}
 
 			catch (NullPointerException npe) {
 				System.out.println("Please choose a valid option: ");
 				System.out.println("");
-				US203GetUnfinishedTaskUI unfinishedTaskByUser1 = new US203GetUnfinishedTaskUI();
-				unfinishedTaskByUser1.displayOptions(user);
+				loop = true;
 			}
 
 			break;
 		}
 	}
+}
 }

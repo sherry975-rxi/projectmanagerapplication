@@ -29,7 +29,6 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 	String taskID;
 	Integer projID;
 	ProjectCollaborator projcollab;
-	private Boolean isPreviousUIFromTasks;
 
 	/**
 	 * Constructor
@@ -82,16 +81,16 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 		if ("y".equalsIgnoreCase(yerOrNo)) {
 			if (controller.createTaskTeamRequest()) {
 				System.out.println("Your request is pending approval.");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user, this.isPreviousUIFromTasks);
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user);
 				taskDetailsUI.taskDataDisplay();
 			} else {
 				System.out.println("Your request was not done.");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user, this.isPreviousUIFromTasks);
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user);
 				taskDetailsUI.taskDataDisplay();
 			}
 		} else {
 			System.out.println("Your request was not created.");
-			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user, this.isPreviousUIFromTasks);
+			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(taskID, projID, user);
 			taskDetailsUI.taskDataDisplay();
 		}
 	}

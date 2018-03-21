@@ -9,11 +9,19 @@ public class UpdateDbToContainersController {
     ProjectService projectContainer;
 
     public void updateDBtoContainer(){
-        this.projectContainer = new ProjectService();
-        this.userContainer = new UserService();
+//        this.projectContainer = new ProjectService();
+//        this.userContainer = new UserService();
         //projectContainer.updateProjectContainer();
         userContainer.updateUserContainer();
 
+    }
+
+    public void setUserContainer(UserService userContainer) {
+        this.userContainer = userContainer;
+    }
+
+    public void setProjectContainer(ProjectService projectContainer) {
+        this.projectContainer = projectContainer;
     }
 
 }

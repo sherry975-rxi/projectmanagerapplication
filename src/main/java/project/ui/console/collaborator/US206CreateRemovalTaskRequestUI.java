@@ -65,18 +65,15 @@ public class US206CreateRemovalTaskRequestUI {
 		if ("Y".equalsIgnoreCase(yerOrNo)) {
 			if (controller.createRequest()) {
 				System.out.println("Your task removal is pending Project Manager approval");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user,
-						this.isPreviousUIFromTasks);
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user);
 				taskDetailsUI.taskDataDisplay();
 			} else {
 				System.out.println("[ERROR!: Please choose a valid Task]");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user,
-						this.isPreviousUIFromTasks);
+				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user);
 				taskDetailsUI.taskDataDisplay();
 			}
 		} else {
-			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user,
-					this.isPreviousUIFromTasks);
+			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user);
 			taskDetailsUI.taskDataDisplay();
 		}
 	}
