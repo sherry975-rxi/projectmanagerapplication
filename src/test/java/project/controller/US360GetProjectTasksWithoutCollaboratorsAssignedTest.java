@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Repository.ProjectsRepository;
@@ -23,21 +24,21 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({"project.model", "project.services", "project.repositories", "project.controller"})
 public class US360GetProjectTasksWithoutCollaboratorsAssignedTest {
 	
 	@Autowired
-	UserRepository userRepository;
-	
-	@Autowired
-	ProjectsRepository projectRepository;
-	
-	@Autowired
-	TaskRepository taskRepository;
-
 	US360GetProjectTasksWithoutCollaboratorsAssignedController tasksFiltersController;
+	
+	@Autowired
 	UserService userContainer;
+	
+	@Autowired
 	ProjectService projectContainer;
+	
+	@Autowired
 	TaskService taskContainer;
+	
 	User user1, user2, user3;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2, projCollab3;
@@ -46,22 +47,6 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedTest {
 
 	@Before
 	public void setUp() {
-		// creates an UserContainer
-		userContainer = new UserService();
-		userContainer.setUserRepository(userRepository);
-								
-		// creates a Project Container
-		projectContainer = new ProjectService();
-		projectContainer.setProjectsRepository(projectRepository);
-		
-		// creates a Task Container
-		taskContainer = new TaskService();
-		taskContainer.setTaskRepository(taskRepository);
-		
-		// creates the controller
-		tasksFiltersController = new US360GetProjectTasksWithoutCollaboratorsAssignedController();
-		tasksFiltersController.taskService = taskContainer;
-
 		// create users in company
 		user2 = userContainer.createUser("João", "user2@gmail.com", "001", "Manager", "930025000",
 				"rua doutor antónio", "7689-654", "porto", "porto", "portugal");
