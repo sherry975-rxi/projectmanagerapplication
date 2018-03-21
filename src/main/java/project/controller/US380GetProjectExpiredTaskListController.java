@@ -25,6 +25,13 @@ public class US380GetProjectExpiredTaskListController {
 	@Autowired
 	private TaskService taskService;
 
+	/*
+	 * Default constructor
+	 */
+	public US380GetProjectExpiredTaskListController() {
+
+	}
+
 	/**
 	 * This methods gets all the unfinished tasks with expired deadline and returns
 	 * the Tasks with these conditions in the form of a List of Strings, with the
