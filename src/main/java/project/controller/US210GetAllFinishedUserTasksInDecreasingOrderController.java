@@ -16,6 +16,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 
 	User myUser;
 
+
 	@Autowired
 	ProjectService myProjRepo;
 
@@ -30,6 +31,8 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
 		this.myUser = user;
 	}
+	
+	public US210GetAllFinishedUserTasksInDecreasingOrderController() {}
 
 	
 	
@@ -72,5 +75,28 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	return finishedTaskListDecreasingOrder;
 	}
 	
+	public User getMyUser() {
+		return myUser;
+	}
+
+	public void setMyUser(User myUser) {
+		this.myUser = myUser;
+	}
+
+	public ProjectService getMyProjRepo() {
+		return myProjRepo;
+	}
+
+	public void setMyProjRepo(ProjectService myProjRepo) {
+		this.myProjRepo = myProjRepo;
+	}
+
+	public TaskService getTaskService() {
+		return taskService;
+	}
+
+	public void setTaskService(TaskService taskService) {
+		this.taskService = taskService;
+	}
 	
 }
