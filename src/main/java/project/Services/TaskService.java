@@ -214,7 +214,7 @@ public class TaskService {
 		Collections.sort(toSort, new Comparator<Task>() {
             @Override
             public int compare(Task t1, Task t2) {
-                return t2.getTaskDeadline().compareTo(t1.getTaskDeadline());
+                return t1.getTaskDeadline().compareTo(t2.getTaskDeadline());
             }
         });
 		return toSort;

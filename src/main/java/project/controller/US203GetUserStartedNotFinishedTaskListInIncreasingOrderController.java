@@ -1,6 +1,7 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.Task;
@@ -9,10 +10,11 @@ import project.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 
 	@Autowired
-	TaskService taskService;
+	public TaskService taskService;
 
 	public US203GetUserStartedNotFinishedTaskListInIncreasingOrderController() {
 

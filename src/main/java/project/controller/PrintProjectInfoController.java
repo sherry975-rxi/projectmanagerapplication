@@ -1,6 +1,7 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.Project;
@@ -12,18 +13,24 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Controller
 public class PrintProjectInfoController {
 
 	@Autowired
-	private ProjectService projService;
+	public ProjectService projService;
 
 	@Autowired
-	private TaskService taskService;
+	public TaskService taskService;
 
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 	int projID;
-	
+
+	public PrintProjectInfoController() {
+
+	}
+
+
 
 	public PrintProjectInfoController(Project project) {
 
@@ -35,7 +42,6 @@ public class PrintProjectInfoController {
 	public PrintProjectInfoController(int projID) {
 
 		this.projID = projID;
-		project = projService.getProjectById(this.projID);
 	}
 
 	public void setProject() {

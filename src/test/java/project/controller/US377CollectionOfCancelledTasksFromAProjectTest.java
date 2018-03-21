@@ -77,7 +77,7 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 
 		// create taskContainer
 
-		taskContainer = project.getTaskRepository();
+		taskContainer = project.getTaskService();
 
 		// create task workers
 		taskWorker1 = new TaskCollaborator(collab1);

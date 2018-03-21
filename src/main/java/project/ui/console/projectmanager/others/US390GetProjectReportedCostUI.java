@@ -1,6 +1,6 @@
 package project.ui.console.projectmanager.others;
 
-import project.controller.CalculateReportedProjectCostController;
+import project.controller.US390CalculateReportedProjectCostController;
 import project.controller.PrintProjectInfoController;
 import project.controller.UpdateDbToContainersController;
 import project.model.Project;
@@ -42,7 +42,7 @@ public class US390GetProjectReportedCostUI {
 		System.out.println("     PROJECT COST");
 		System.out.println(line);
 
-		CalculateReportedProjectCostController controller = new CalculateReportedProjectCostController();
+		US390CalculateReportedProjectCostController controller = new US390CalculateReportedProjectCostController();
 
 		System.out.println();
 

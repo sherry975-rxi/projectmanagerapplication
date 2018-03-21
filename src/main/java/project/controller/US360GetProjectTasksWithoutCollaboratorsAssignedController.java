@@ -9,9 +9,14 @@ import project.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-	private TaskService taskService;
+@Controller
+public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
+	
+	@Autowired
+	public TaskService taskService;
 
 	/**
 	 * this method return the list of not assigned tasks

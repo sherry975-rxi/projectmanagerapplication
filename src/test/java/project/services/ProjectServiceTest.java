@@ -131,11 +131,12 @@ public class ProjectServiceTest {
 		/*
 		 * Verifies that the method createProject calls the method save in the
 		 * ProjectRepository once
+		 * 
+		 * 
 		 */
+
 		Mockito.when(projectService.createProject("Project 1", "Descricao", projectManager)).thenReturn(project1);
-
-		assertEquals(projectService.createProject("Project 1", "Descricao", projectManager), project1);
-
+		projectService.createProject("Project 1", "Descricao", projectManager);
 		Mockito.verify(projectRep, Mockito.times(1)).save(project1);
 
 	}
