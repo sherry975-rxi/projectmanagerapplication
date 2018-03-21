@@ -1,18 +1,48 @@
 package project.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import project.Services.ProjectService;
-import project.Services.UserService;
-import project.model.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.StateEnum;
+import project.model.Task;
+import project.model.TaskCollaborator;
+import project.model.User;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.OnGoing;
+
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US365MarkTaskAsFInishedControllerTest {
+
+	@Autowired
+	US365MarkTaskAsFinishedControllerProjectManager us365controller;
+
+	@Autowired
+	UserService userService;
+
+	@Autowired
+	ProjectService projectService;
+
+	@Autowired
+	TaskService taskService;
 
 	/**
 	 * This class tests the methods that are called in Controller to execute the
@@ -23,8 +53,6 @@ public class US365MarkTaskAsFInishedControllerTest {
 	 */
 
 	// TasksFiltersController tasksFiltersController;
-	UserService myUsers;
-	ProjectService myProjects;
 
 	User user1, user2, projectManager, projectManager2;
 	Project project1, project2, project3;
@@ -35,32 +63,19 @@ public class US365MarkTaskAsFInishedControllerTest {
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 	Calendar taskExpiredDeadlineDateTest;
-	US365MarkTaskAsFinishedControllerProjectManager us365controller;
 
 	@Before
 	public void setUp() {
 
-		// create user and project container
-		myUsers= new UserService();
-		myProjects = new ProjectService();
-
 		// create users
-		user1 = myUsers.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
-				"930000000", "Rua da Caparica, 19", "7894-654", "Porto", "Porto", "Portugal");
-		user2 = myUsers.createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager",
-				"930025000", "Rua Doutor Armando", "4455-654", "Rio Tinto", "Gondomar", "Portugal");
-		projectManager = myUsers.createUser("Mary MacJohn", "mmacjohn@gmail.com", "003",
-				"Product Manager", "930025000", "Rua Terceira, 44", "4455-122", "Leça da Palmeira", "Matosinhos",
-				"Portugal");
-		projectManager2 = myUsers.createUser("John MacMary", "jmacmary2@gmail.com", "003",
-				"Product Manager2", "930025356", "Rua Segunda, 45", "4455-122", "Leça da Palmeira", "Matosinhos",
-				"Portugal");
-
-		// add users to company
-		myUsers.addUserToUserRepository(user1);
-		myUsers.addUserToUserRepository(user2);
-		myUsers.addUserToUserRepository(projectManager);
-		myUsers.addUserToUserRepository(projectManager2);
+		user1 = userService.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer", "930000000",
+				"Rua da Caparica, 19", "7894-654", "Porto", "Porto", "Portugal");
+		user2 = userService.createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager", "930025000",
+				"Rua Doutor Armando", "4455-654", "Rio Tinto", "Gondomar", "Portugal");
+		projectManager = userService.createUser("Mary MacJohn", "mmacjohn@gmail.com", "003", "Product Manager",
+				"930025000", "Rua Terceira, 44", "4455-122", "Leça da Palmeira", "Matosinhos", "Portugal");
+		projectManager2 = userService.createUser("John MacMary", "jmacmary2@gmail.com", "003", "Product Manager2",
+				"930025356", "Rua Segunda, 45", "4455-122", "Leça da Palmeira", "Matosinhos", "Portugal");
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -68,47 +83,41 @@ public class US365MarkTaskAsFInishedControllerTest {
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 		projectManager2.setUserProfile(Profile.COLLABORATOR);
 
+		// add users to company
+		userService.addUserToUserRepositoryX(user1);
+		userService.addUserToUserRepositoryX(user2);
+		userService.addUserToUserRepositoryX(projectManager);
+		userService.addUserToUserRepositoryX(projectManager2);
+
 		// create project and establishes collaborator projectManager as project manager
 		// of project 1
-		project1 = myProjects.createProject("Project Management software",
-				"This software main goals are ....", projectManager);
-		project2 = myProjects.createProject("Project Management software",
-				"This software main goals are ....", projectManager2);
-		project3 = myProjects.createProject("Project Management software",
-				"This software main goals are ....", projectManager);
+		project1 = projectService.createProject("Project Management software", "This software main goals are ....",
+				projectManager);
+		project2 = projectService.createProject("Project Management software", "This software main goals are ....",
+				projectManager2);
+		project3 = projectService.createProject("Project Management software", "This software main goals are ....",
+				projectManager);
 
 		// add project to company
-		myProjects.addProjectToProjectContainer(project1);
-		myProjects.addProjectToProjectContainer(project2);
-		myProjects.addProjectToProjectContainer(project3);
-
-		// create project collaborators
-		projCollab1 = new ProjectCollaborator(user1, 2);
-		projCollab2 = new ProjectCollaborator(user2, 2);
+		projectService.addProjectToProjectContainer(project1);
+		projectService.addProjectToProjectContainer(project2);
+		projectService.addProjectToProjectContainer(project3);
 
 		// add collaborators to Project
-		project1.addProjectCollaboratorToProjectTeam(projCollab1);
-		project1.addProjectCollaboratorToProjectTeam(projCollab2);
-		project2.addProjectCollaboratorToProjectTeam(projCollab1);
-		project2.addProjectCollaboratorToProjectTeam(projCollab2);
-		project3.addProjectCollaboratorToProjectTeam(projCollab1);
-		project3.addProjectCollaboratorToProjectTeam(projCollab2);
+		projectService.createProjectCollaborator(user1, project1, 2);
+		projectService.createProjectCollaborator(user2, project1, 2);
+		projectService.createProjectCollaborator(user1, project2, 2);
+		projectService.createProjectCollaborator(user2, project2, 2);
+		projectService.createProjectCollaborator(user1, project3, 2);
+		projectService.createProjectCollaborator(user2, project3, 2);
 
 		// create tasks
-		task1OnGoing = project1.getTaskService().createTask("Create class User");
-		task2OnGoing = project1.getTaskService().createTask("Create class User");
-		task3 = project2.getTaskService().createTask("create test for method set name in class user");
-		task4 = project2.getTaskService().createTask("Create class User");
-		task5 = project3.getTaskService().createTask("Create class User");
-		task6 = project3.getTaskService().createTask("create test for method set name in class user");
-
-		// add tasks to task repository
-		project1.getTaskService().addTaskToProject(task1OnGoing);
-		project1.getTaskService().addTaskToProject(task2OnGoing);
-		project2.getTaskService().addTaskToProject(task3);
-		project2.getTaskService().addTaskToProject(task4);
-		project3.getTaskService().addTaskToProject(task5);
-		project3.getTaskService().addTaskToProject(task6);
+		task1OnGoing = taskService.createTask("Create class User", project1);
+		task2OnGoing = taskService.createTask("Create class User", project1);
+		task3 = taskService.createTask("create test for method set name in class user", project2);
+		task4 = taskService.createTask("Create class User", project2);
+		task5 = taskService.createTask("Create class User", project3);
+		task6 = taskService.createTask("create test for method set name in class user", project3);
 
 		// create a estimated Task Start Date
 		startDateTest = Calendar.getInstance();
@@ -134,11 +143,12 @@ public class US365MarkTaskAsFInishedControllerTest {
 		taskExpiredDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-
 		// set estimated task start date and task dead line to tasks
 		task1OnGoing.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task1OnGoing.setStartDate(estimatedTaskStartDateTest);
 		task1OnGoing.setTaskDeadline(taskDeadlineDateTest);
+		task1OnGoing.setTaskState(new OnGoing());
+		task1OnGoing.setCurrentState(StateEnum.ONGOING);
 
 		task2OnGoing.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task2OnGoing.setStartDate(estimatedTaskStartDateTest);
@@ -147,6 +157,8 @@ public class US365MarkTaskAsFInishedControllerTest {
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task3.setStartDate(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskDeadlineDateTest);
+		task3.setTaskState(new OnGoing());
+		task3.setCurrentState(StateEnum.ONGOING);
 
 		task4.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task4.setStartDate(estimatedTaskStartDateTest);
@@ -160,48 +172,24 @@ public class US365MarkTaskAsFInishedControllerTest {
 		task6.setStartDate(estimatedTaskStartDateTest);
 		task6.setTaskDeadline(taskDeadlineDateTest);
 
-
 		// create task workers
-		taskCollab1 = new TaskCollaborator(projCollab1);
-		taskCollab2 = new TaskCollaborator(projCollab2);
+		taskCollab1 = task3.getTaskCollaboratorByEmail("smith@gmail.com");
+		taskCollab2 = task5.getTaskCollaboratorByEmail("johnsmith@gmail.com");
 
-		// set active user
-		task1OnGoing.addTaskCollaboratorToTask(taskCollab1);
-		task2OnGoing.addTaskCollaboratorToTask(taskCollab2);
-		task3.addTaskCollaboratorToTask(taskCollab1);
-		task4.addTaskCollaboratorToTask(taskCollab1);
-		task5.addTaskCollaboratorToTask(taskCollab2);
-		task6.addTaskCollaboratorToTask(taskCollab1);
+		task1OnGoing.addProjectCollaboratorToTask(projCollab1);
+		task2OnGoing.addProjectCollaboratorToTask(projCollab2);
+		task3.addProjectCollaboratorToTask(projCollab1);
+		task4.addProjectCollaboratorToTask(projCollab1);
+		task5.addProjectCollaboratorToTask(projCollab2);
+		task6.addProjectCollaboratorToTask(projCollab1);
 
-
-	}
-
-	@After
-	public void tearDown() {
-		myUsers=null;
-		myProjects= null;
-		user1 = null;
-		user2 = null;
-		projectManager = null;
-		projectManager2 = null;
-		project1 = null;
-		project2 = null;
-		project3 = null;
-		projCollab1 = null;
-		projCollab2 = null;
-		task1OnGoing = null;
-		task2OnGoing = null;
-		task3 = null;
-		task4 = null;
-		task5 = null;
-		task6 = null;
-		taskCollab1 = null;
-		taskCollab2 = null;
-		startDateTest = null;
-		estimatedTaskStartDateTest = null;
-		taskDeadlineDateTest = null;
-		taskExpiredDeadlineDateTest = null;
-		us365controller = null;
+		// save Tasks
+		taskService.saveTask(task1OnGoing);
+		taskService.saveTask(task2OnGoing);
+		taskService.saveTask(task3);
+		taskService.saveTask(task4);
+		taskService.saveTask(task5);
+		taskService.saveTask(task6);
 	}
 
 	/**
@@ -219,9 +207,12 @@ public class US365MarkTaskAsFInishedControllerTest {
 
 		// create controller for ongoing task 1 (of project 1), and asserts Task1Ongoing
 		// has been properly marked as finished
-		us365controller = new US365MarkTaskAsFinishedControllerProjectManager(task1OnGoing.getTaskID(), project1);
-
-		us365controller.setTaskAsFinished();
+		us365controller.setSelectedProject(project1);
+		us365controller.setTaskToBeMarked(task1OnGoing);
+		task1OnGoing.setTaskState(new Finished());
+		task1OnGoing.setCurrentState(StateEnum.FINISHED);
+		taskService.saveTask(task1OnGoing);
+		assertTrue(us365controller.setTaskAsFinished());
 
 		assertTrue(task1OnGoing.isTaskFinished());
 		assertTrue(task1OnGoing.getFinishDate() != null);
@@ -229,8 +220,9 @@ public class US365MarkTaskAsFInishedControllerTest {
 
 		// create controller for ready task 3 (of project 2), then asserts task3 cannot
 		// be marked as finished, since it's not ongoing
-		us365controller = new US365MarkTaskAsFinishedControllerProjectManager(task3.getTaskID(), project2);
-
+		us365controller.setSelectedProject(project2);
+		us365controller.setTaskToBeMarked(task3);
+		taskService.saveTask(task3);
 		us365controller.setTaskAsFinished();
 
 		assertFalse(task3.isTaskFinished());
