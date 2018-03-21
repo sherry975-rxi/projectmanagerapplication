@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.team;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US355ViewProjectTeamAndThenRemoveCollaboratorController;
 import project.model.Project;
@@ -9,14 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
+
+	@Autowired
+	US355ViewProjectTeamAndThenRemoveCollaboratorController controller;
+
+	@Autowired
+	PrintProjectInfoController projectInfo;
 
 	public void viewProjectTeamAndThenRemoveCollaboratorUI(Project project, User user) {
 		
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
+
 		boolean loop = true;
 		while (loop) {
 			loop = false;
@@ -35,8 +45,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		System.out.println(" Project Team");
 		System.out.println("___________________________________________________");
 
-		US355ViewProjectTeamAndThenRemoveCollaboratorController controller = new US355ViewProjectTeamAndThenRemoveCollaboratorController(
-				project);
+		controller.setProj(project);
 
 		List<String> listOfProjectCollaboratorsName = new ArrayList<>();
 
