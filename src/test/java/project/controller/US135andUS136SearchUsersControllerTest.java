@@ -47,7 +47,7 @@ public class US135andUS136SearchUsersControllerTest {
 		userService.setUserRepository(userRepo);
 		// Creates a searchController
 		searchController = new US135andUS136SearchUsersController();
-		searchController.userContainer = userService;
+		searchController.userService = userService;
 
 		// create user
 		newUser1 = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
@@ -64,7 +64,7 @@ public class US135andUS136SearchUsersControllerTest {
 		userService.addUserToUserRepositoryX(newUser2);
 		userService.addUserToUserRepositoryX(newUser3);
 
-		userService.updateUserContainer();
+		userService.getAllUsersFromUserContainer();
 
 	}
 
