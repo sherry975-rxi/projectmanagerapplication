@@ -23,6 +23,10 @@ public class ProjectViewMenuUI {
 	 * the user's input
 	 */
 	public void projectDataDisplay() {
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+		
 		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		infoUpdater.updateDBtoContainer();
 
@@ -51,39 +55,31 @@ public class ProjectViewMenuUI {
 
 		System.out.println("To see task's details, choose the task ID number.");
 		System.out.println("");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		System.out.println("[B] Back \n");
 
 		String choice = scannerInput.nextLine().toUpperCase();
 		switch (choice) {
 		case "B":
-			CollectProjectsFromUserUI previousMenu = new CollectProjectsFromUserUI(user);
-			previousMenu.collectProjectsFromUser();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 			break;
 		default:
-			taskIDToSeeTaskDetaisls(choice);
+			loop = taskIDToSeeTaskDetaisls(choice);
 			break;
+		}
 		}
 	}
 
-	public void taskIDToSeeTaskDetaisls(String choice){
+	public boolean taskIDToSeeTaskDetaisls(String choice){
 		try {
-			boolean isPreviousUIFromTasks = true;
-			TaskDetailsUI userTasks = new TaskDetailsUI(choice, this.projectID, this.user, isPreviousUIFromTasks);
+			TaskDetailsUI userTasks = new TaskDetailsUI(choice, this.projectID, this.user);
 			userTasks.taskDataDisplay();
+			return false;
 		}
 		catch (NullPointerException npe) {
 			System.out.println("Please choose a valid option: ");
 			System.out.println("");
 			ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(projectID, user);
 			myAtualUIView.projectDataDisplay();
+			return true;
 		}
 
 	}

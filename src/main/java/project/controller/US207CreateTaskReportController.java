@@ -1,6 +1,8 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
@@ -10,18 +12,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Controller
 public class US207CreateTaskReportController {
 
     private User username;
 
     @Autowired
-    private UserService userContainer;
+    public UserService userContainer;
 
     @Autowired
-    private ProjectService projectContainer;
-
-    @Autowired
-    private TaskService taskService;
+    public TaskService taskService;
 
     private String email;
     private Task task;

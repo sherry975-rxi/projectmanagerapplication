@@ -25,6 +25,9 @@ public class CollaboratorMainMenuUI {
 	}
 
 	public void displayOptions() {
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		//UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		//infoUpdater.updateDBtoContainer();
 		Scanner scannerInput = new Scanner(System.in);
@@ -41,9 +44,7 @@ public class CollaboratorMainMenuUI {
 		System.out.println("[2] Projects");
 		System.out.println("[3] Tasks\n");
 		System.out.println("___________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
@@ -60,17 +61,10 @@ public class CollaboratorMainMenuUI {
 			UserTasksFunctionalitiesMenuUI tasksFunctionalities = new UserTasksFunctionalitiesMenuUI(user);
 			tasksFunctionalities.displayFunctionalities();
 			break;
-
 		case "B":
 			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			break;
 		default:
-			displayOptions();
+			loop = true;
 		}
-	}
+	}}
 }
