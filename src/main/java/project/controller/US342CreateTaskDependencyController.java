@@ -1,14 +1,16 @@
 package project.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import project.Services.TaskService;
-import project.model.Project;
-import project.model.Task;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import project.Services.TaskService;
+import project.model.Project;
+import project.model.Task;
 
 /**
  * @author Group 3
@@ -17,12 +19,33 @@ import java.util.List;
  *         createDependenceFromTask functionality.
  *
  */
+@Controller
 public class US342CreateTaskDependencyController {
 
 	private Project project;
 
 	@Autowired
 	private TaskService taskService;
+
+	/*
+	 * Default constructor
+	 */
+
+	public US342CreateTaskDependencyController() {
+
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
 
 	/**
 	 * Constructor

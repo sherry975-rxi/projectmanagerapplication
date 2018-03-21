@@ -3,6 +3,7 @@ package project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import project.Services.ProjectService;
 import project.Services.TaskService;
@@ -19,6 +20,7 @@ import project.model.User;
  *         poder cancelar a remoção de uma tarefa por um colaborado
  *
  */
+@Controller
 public class US357CancelRemovalTaskRequestController {
 
 	private Project project;
@@ -26,13 +28,13 @@ public class US357CancelRemovalTaskRequestController {
 	private User userToRemove;
 
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	@Autowired
-	ProjectService projectService;
+	private ProjectService projectService;
 
 	@Autowired
-	TaskService taskService;
+	private TaskService taskService;
 
 	/*
 	 * Default Constructor

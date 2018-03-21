@@ -1,5 +1,7 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import project.Services.ProjectService;
 import project.Services.UserService;
 import project.model.*;
@@ -14,17 +16,21 @@ import java.util.List;
  *         Project.
  *
  */
+
+@Controller
 public class US301CreateProjectController {
 
+	@Autowired
     private ProjectService projects;
+	@Autowired
     private UserService users;
     private List<User> activeCollaboratorList;
     private User selectedUser = null;
 	private Project createdProject = null;
 
+
+
 	public US301CreateProjectController() {
-		projects = new ProjectService();
-		users = new UserService();
 	}
 
 	/**
@@ -123,5 +129,20 @@ public class US301CreateProjectController {
 		return toConvert.getIdNumber() + ": " + toConvert.getName() + " (" + toConvert.getEmail() + "; "
 				+ toConvert.getPhone() + ") - " + toConvert.getFunction();
 	}
+
+
+	public void setActiveCollaboratorList(List<User> activeCollaboratorList) {
+		this.activeCollaboratorList = activeCollaboratorList;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+
+	public void setCreatedProject(Project createdProject) {
+		this.createdProject = createdProject;
+	}
+
+
 
 }
