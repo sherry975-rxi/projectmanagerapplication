@@ -1,13 +1,16 @@
 package project.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import project.Services.ProjectService;
-import project.Services.UserService;
-import project.model.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import project.Services.ProjectService;
+import project.Services.UserService;
+import project.model.EffortUnit;
+import project.model.Project;
+import project.model.User;
 
 /**
  * @author Group 3
@@ -16,21 +19,31 @@ import java.util.List;
  *         Project.
  *
  */
-
 @Controller
 public class US301CreateProjectController {
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private UserService userService;
 
-	@Autowired
-    private ProjectService projects;
-	@Autowired
-    private UserService users;
-    private List<User> activeCollaboratorList;
-    private User selectedUser = null;
+	private List<User> activeCollaboratorList;
+	private User selectedUser = null;
 	private Project createdProject = null;
 
-
-
 	public US301CreateProjectController() {
+
+	}
+
+	public void setActiveCollaboratorList(List<User> activeCollaboratorList) {
+		this.activeCollaboratorList = activeCollaboratorList;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+
+	public void setCreatedProject(Project createdProject) {
+		this.createdProject = createdProject;
 	}
 
 	/**
@@ -49,9 +62,9 @@ public class US301CreateProjectController {
 	 */
 	public Project createProject(String name, String description, User projectManager) {
 
-		createdProject = projects.createProject(name, description, projectManager);
+		createdProject = projectService.createProject(name, description, projectManager);
 
-		projects.addProjectToProjectContainer(createdProject);
+		projectService.addProjectToProjectContainer(createdProject);
 
 		return createdProject;
 	}
@@ -64,7 +77,7 @@ public class US301CreateProjectController {
 	 */
 	public List<String> listActiveCollaborators() {
 
-	    activeCollaboratorList = this.users.getAllActiveCollaboratorsFromRepository();
+		activeCollaboratorList = this.userService.getAllActiveCollaboratorsFromRepository();
 
 		List<String> userListAsString = new ArrayList<>();
 
@@ -129,20 +142,5 @@ public class US301CreateProjectController {
 		return toConvert.getIdNumber() + ": " + toConvert.getName() + " (" + toConvert.getEmail() + "; "
 				+ toConvert.getPhone() + ") - " + toConvert.getFunction();
 	}
-
-
-	public void setActiveCollaboratorList(List<User> activeCollaboratorList) {
-		this.activeCollaboratorList = activeCollaboratorList;
-	}
-
-	public void setSelectedUser(User selectedUser) {
-		this.selectedUser = selectedUser;
-	}
-
-	public void setCreatedProject(Project createdProject) {
-		this.createdProject = createdProject;
-	}
-
-
 
 }
