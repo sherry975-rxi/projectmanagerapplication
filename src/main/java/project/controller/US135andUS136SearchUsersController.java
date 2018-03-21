@@ -14,18 +14,11 @@ import project.model.User;
 public class US135andUS136SearchUsersController {
 
 	@Autowired
-	private UserService userService;
+	public UserService userService;
 
 	private List<User> userList;
 	private User selectedUser = null;
 
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
-	}
-
-	public void setSelectedUser(User selectedUser) {
-		this.selectedUser = selectedUser;
-	}
 
 	/**
 	 * Empty constructor
@@ -120,6 +113,15 @@ public class US135andUS136SearchUsersController {
 
 		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " (" + toConvert.getEmail()
 				+ "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
+	}
+	
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
 	}
 
 }
