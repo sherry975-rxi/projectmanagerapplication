@@ -21,7 +21,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 
 	@Autowired
-	public UserService userContainer;
+	private UserService userContainer;
 
 	/**
 	 * Empty constructor

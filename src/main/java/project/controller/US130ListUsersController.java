@@ -20,11 +20,6 @@ public class US130ListUsersController {
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
 	}
-
-	public void setSelectedUser(User selectedUser) {
-		this.selectedUser = selectedUser;
-	}
-
 	/**
 	 * Empty constructor
 	 */
