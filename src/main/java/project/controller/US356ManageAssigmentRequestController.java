@@ -1,13 +1,14 @@
 package project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 import project.model.TaskTeamRequest;
-
-import java.util.List;
 
 public class US356ManageAssigmentRequestController {
 
@@ -16,11 +17,45 @@ public class US356ManageAssigmentRequestController {
 	Task selectedTask;
 
 	@Autowired
-	ProjectService projectContainer;
+	ProjectService projectService;
 
 	@Autowired
 	TaskService taskService;
 
+	/*
+	 * Default constructor
+	 */
+
+	public US356ManageAssigmentRequestController() {
+
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
+	}
+
+	public TaskTeamRequest getSelectedAdditionRequest() {
+		return selectedAdditionRequest;
+	}
+
+	public void setSelectedAdditionRequest(TaskTeamRequest selectedAdditionRequest) {
+		this.selectedAdditionRequest = selectedAdditionRequest;
+	}
+
+	public Task getSelectedTask() {
+		return selectedTask;
+	}
+
+	public void setSelectedTask(Task selectedTask) {
+		this.selectedTask = selectedTask;
+	}
 
 	/*
 	 * This controller manages Addition Requests by Project Collaborators * respond
@@ -56,7 +91,7 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public void setSelectedAdditionRequest(int index) {
 		this.selectedAdditionRequest = taskService.getAllProjectTaskAssignmentRequests(selectedProject).get(index);
-		this.selectedTask= selectedAdditionRequest.getTask();
+		this.selectedTask = selectedAdditionRequest.getTask();
 	}
 
 	/**
