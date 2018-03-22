@@ -149,6 +149,10 @@ public class Address{
 		return country;
 	}
 
+	public void setUserInAddress(User userInAddress){
+		this.user = userInAddress;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

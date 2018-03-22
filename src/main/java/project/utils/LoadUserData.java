@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import project.model.Profile;
 import project.services.UserService;
 import project.model.Address;
 import project.model.User;
@@ -43,6 +44,14 @@ public class LoadUserData {
 				eachUser.setName(eElementUtilizador.getElementsByTagName("nome_utilizador").item(0).getTextContent());
 				eachUser.setEmail(eElementUtilizador.getElementsByTagName("email_utilizador").item(0).getTextContent());
 				eachUser.setPassword(eElementUtilizador.getElementsByTagName("password").item(0).getTextContent());
+				eachUser.setPassword(eElementUtilizador.getElementsByTagName("telefone").item(0).getTextContent());
+
+
+
+				//sets users as Collaborators when they are created
+
+				eachUser.setUserProfile(Profile.COLLABORATOR);
+
 
 				NodeList nList = (NodeList) eElementUtilizador.getElementsByTagName("lista_enderecos").item(0);
 
@@ -54,12 +63,14 @@ public class LoadUserData {
 						Address eachUserAddress = new Address();
 
 						eachUserAddress.setStreet(eElement.getElementsByTagName("rua").item(0).getTextContent());
-						eachUserAddress
-								.setDistrict(eElement.getElementsByTagName("localidade").item(0).getTextContent());
+						eachUserAddress.setDistrict(eElement.getElementsByTagName("cp_loc").item(0).getTextContent());
 						eachUserAddress.setZipCode(eElement.getElementsByTagName("cp_num").item(0).getTextContent());
+						eachUserAddress.setCity(eElement.getElementsByTagName("localidade").item(0).getTextContent());
 						eachUserAddress.setCountry(eElement.getElementsByTagName("pais").item(0).getTextContent());
 
+						eachUserAddress.setUserInAddress(eachUser);
 						eachUser.addAddress(eachUserAddress);
+
 					}
 					
 				}

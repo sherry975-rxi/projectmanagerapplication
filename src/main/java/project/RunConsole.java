@@ -67,7 +67,9 @@ public class RunConsole implements CommandLineRunner {
 		userRepository.save(projectManager);
 
 
-		feedDb.loadUsers("Utilizador_v00.xml");
+
+    	feedDb.loadUsers("Utilizador_v00_Dt1.xml");
+
 
     	projectDb.loadProject("Projeto_v00.xml");
 
