@@ -7,7 +7,6 @@ import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US370GetProjectFinishedTaskListController;
 import project.model.Project;
 import project.model.Task;
-import project.model.User;
 
 import java.util.List;
 import java.util.Scanner;
@@ -20,6 +19,9 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 
 	@Autowired
 	private US370GetProjectFinishedTaskListController projectFinishedTaskList;
+
+	@Autowired
+	private US367MarkFinishedTaskAsUnfinishedController taskToMarkAsUnfinished;
 
 	private Project proj;
 
@@ -73,9 +75,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 			break;
 		default:
 			try {
-				US367MarkFinishedTaskAsUnfinishedController taskToMarkAsUnfinished = new US367MarkFinishedTaskAsUnfinishedController(
-						this.proj, choice);
-				taskToMarkAsUnfinished.markFinishedTaskAsUnfinished();
+				taskToMarkAsUnfinished.markFinishedTaskAsUnfinished(choice);
 			}
 
 			catch (NullPointerException npe) {

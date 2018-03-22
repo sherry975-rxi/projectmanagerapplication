@@ -3,16 +3,15 @@
  */
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import project.Services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Group3

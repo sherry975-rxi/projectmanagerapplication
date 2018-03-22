@@ -1,19 +1,17 @@
 package project.Services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import project.Repository.UserRepository;
 import project.dto.UserDTO;
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class UserContainer that contains all lists and methods to build lists of

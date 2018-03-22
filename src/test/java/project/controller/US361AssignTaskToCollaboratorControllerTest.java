@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
@@ -50,7 +49,7 @@ public class US361AssignTaskToCollaboratorControllerTest {
 				"2401-00", "Test", "Testo", "Testistan");
 		
 		// create user administrator
-		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		userAdmin = userContainer.createUser("Joï¿½o", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
 		
 		// set user as collaborator

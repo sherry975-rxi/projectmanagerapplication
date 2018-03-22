@@ -1,14 +1,13 @@
 package project.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 import project.model.TaskTeamRequest;
+
+import java.util.List;
 
 @Controller
 public class US356ManageAssigmentRequestController {
@@ -18,7 +17,7 @@ public class US356ManageAssigmentRequestController {
 	private Task selectedTask;
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	/*
 	 * Default constructor

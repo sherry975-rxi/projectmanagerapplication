@@ -3,6 +3,7 @@ package project.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +36,14 @@ public class US110andUS112SetUserProfileControllerTests {
 
 		newUser3 = us110andUS112SetUserProfileController.getUserContainer().createUser("Manelinho", "user3@gmail.com",
 				"002", "Telefonista", "940000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+
+	}
+
+	@After
+	public void clear() {
+
+		newUser2 = null;
+		newUser3 = null;
 
 	}
 

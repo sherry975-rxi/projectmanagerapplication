@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +41,14 @@ public class US101RegisterUserControllerTest {
 		testUserRegistrationController.addNewUser("João", "joão.gmail.com", "034", "Testes", "919876787", "Street",
 				"2401-343", "Testburg", "Testo", "Testistan", "Portugal");
 
+	}
+
+	@After
+	public void clear() {
+
+		user1 = null;
+		user2 = null;
+		user3 = null;
 	}
 
 	/**

@@ -1,34 +1,15 @@
 package project.model;
 
-import static javax.persistence.CascadeType.ALL;
+import project.model.taskstateinterface.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import static javax.persistence.CascadeType.ALL;
 
 //
-import project.model.taskstateinterface.Cancelled;
-import project.model.taskstateinterface.Created;
-import project.model.taskstateinterface.Finished;
-import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.Ready;
-import project.model.taskstateinterface.StandBy;
-import project.model.taskstateinterface.TaskStateInterface;
 
 /**
  * Class that allows building and accessing Task attributes.

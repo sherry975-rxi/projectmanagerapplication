@@ -1,14 +1,5 @@
 package project.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.MockitoAnnotations.initMocks;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,7 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
 import project.Services.ProjectService;
@@ -28,6 +18,13 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import static org.junit.Assert.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProjectServiceTest {

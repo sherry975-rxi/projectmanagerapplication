@@ -1,9 +1,7 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.Task;
 import project.model.User;
@@ -19,10 +17,6 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 
 
 	User user;
-
-
-	@Autowired
-	private ProjectService myProjRepo;
 
 	@Autowired
 	private TaskService taskService;

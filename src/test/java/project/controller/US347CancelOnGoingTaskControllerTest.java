@@ -163,8 +163,8 @@ public class US347CancelOnGoingTaskControllerTest {
 		task3.setTaskState(new OnGoing());
 
 		// create controller
-		controllerCancel = new US347CancelOnGoingTaskController(task1.getTaskID(), project1);
-		controllerCancel.taskService = taskService;
+		controllerCancel.setTaskID(task1.getTaskID());
+		controllerCancel.setProject(project1);
 
 	}
 

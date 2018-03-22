@@ -2,14 +2,13 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import project.Services.UserService;
 import project.dto.UserDTO;
 
 @Controller
 public class US101RegisterUserController {
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	public US101RegisterUserController() {
 	}

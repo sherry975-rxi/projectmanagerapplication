@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Repository.UserRepository;
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
@@ -31,26 +31,18 @@ public class US135andUS136SearchUsersControllerTest {
 	 * profile or by email
 	 *
 	 */
+	@Autowired
+	UserService userService;
+
 	User newUser1;
 	User newUser2;
 	User newUser3;
-	UserService userService;
-
-	@Autowired
-	public UserRepository userRepo;
 
 	@Autowired
 	US135andUS136SearchUsersController searchController;
 
 	@Before
 	public void setUp() {
-
-		// creates an UserContainer
-		userService = new UserService();
-		userService.setUserRepository(userRepo);
-		// Creates a searchController
-		searchController = new US135andUS136SearchUsersController();
-		searchController.userService = userService;
 
 		// create user
 		newUser1 = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
@@ -68,6 +60,14 @@ public class US135andUS136SearchUsersControllerTest {
 		userService.addUserToUserRepositoryX(newUser3);
 
 		userService.getAllUsersFromUserContainer();
+
+	}
+
+	@After
+	public void clear() {
+		newUser1 = null;
+		newUser2 = null;
+		newUser3 = null;
 
 	}
 

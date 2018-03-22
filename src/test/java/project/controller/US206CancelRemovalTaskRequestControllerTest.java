@@ -1,12 +1,5 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,16 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.StateEnum;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
 import project.model.taskstateinterface.OnGoing;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -79,9 +72,7 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		taskService.saveTask(taskA);
 		taskService.saveTask(taskB);
 
-		us206v2Controller = new US206RemovalTaskRequestController(userRui);
-		us206v2Controller.taskService = taskService;
-		us206v2Controller.projectContainer = projectService;
+		us206v2Controller.setUser(userRui);
 
 	}
 

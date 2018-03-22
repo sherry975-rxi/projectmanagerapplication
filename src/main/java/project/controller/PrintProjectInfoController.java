@@ -17,10 +17,10 @@ import java.util.List;
 public class PrintProjectInfoController {
 
 	@Autowired
-	public ProjectService projService;
+	private ProjectService projService;
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
