@@ -1,5 +1,6 @@
 package project.controller;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -165,6 +166,22 @@ public class US372GetProjectUnfinishedTaskListTest {
 		task6.setTaskState(new OnGoing());
 		task6.setCurrentState(StateEnum.ONGOING);
 
+	}
+
+	@After
+	public void tearDown(){
+		user1 = null;
+		user2 = null;
+		user3 = null;
+		project1 = null;
+		projCollab1= null;
+		projCollab2 = null;
+		task1= null;
+		task2= null;
+		task3= null;
+		task4= null;
+		task5= null;
+		task6= null;
 	}
 
 

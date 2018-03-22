@@ -1,5 +1,6 @@
 package project.controller;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +41,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 
 	User user1, user2, user3;
 	Project project1;
-	ProjectCollaborator projCollab1, projCollab2, projCollab3;
+	ProjectCollaborator projCollab1, projCollab2;
 	Task task1, task2, task3, task4, task5, task6;
 	Calendar estimatedTaskStartDate, taskDeadline;
 
@@ -89,6 +90,24 @@ public class US370V2GetProjectFinishedTaskListTest {
 		task2.addProjectCollaboratorToTask(projCollab2);
 		task3.addProjectCollaboratorToTask(projCollab2);
 
+	}
+
+	@After
+	public void tearDown(){
+		user1 = null;
+		user2 = null;
+		user3 = null;
+		project1 = null;
+		projCollab1= null;
+		projCollab2 = null;
+		task1= null;
+		task2= null;
+		task3= null;
+		task4= null;
+		task5= null;
+		task6= null;
+		estimatedTaskStartDate = null;
+		taskDeadline = null;
 	}
 
 	/**
