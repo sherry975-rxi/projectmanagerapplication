@@ -25,6 +25,12 @@ public class CollectProjectsFromUserUI {
 	@Autowired
 	private CollectProjectsFromUserController collectProjectsFromUserController;
 
+	@Autowired
+	private ProjectManagerMainMenuUI pmMenu;
+
+	@Autowired
+	private ProjectViewMenuUI projectViewMenuUI;
+
 	private User user;
 
 	/**
@@ -74,11 +80,13 @@ public class CollectProjectsFromUserUI {
 
 			if (option.equals(projectIDCodeToString)) {
 				if(this.user.equals(project.getProjectManager())) {
-					ProjectManagerMainMenuUI pmMenu = new ProjectManagerMainMenuUI(this.user, project);
+					pmMenu.setProjectManager(user);
+					pmMenu.setProject(project);
 					pmMenu.displayOptions();
 				}
 				else {
-				ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI(project.getIdCode(), user);
+				projectViewMenuUI.setProjectID(project.getIdCode());
+				projectViewMenuUI.setUser(user);
 				projectViewMenuUI.projectDataDisplay();
 				}
 			} else if ("B".equals(option)) {

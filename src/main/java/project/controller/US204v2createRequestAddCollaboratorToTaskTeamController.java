@@ -2,7 +2,6 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.model.Project;
@@ -14,10 +13,10 @@ import project.model.User;
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	@Autowired
-	public ProjectService projectService;
+	private ProjectService projectService;
 
 	public User user;
 	public Project project;

@@ -1,26 +1,27 @@
 package project.controller;
 
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.User;
+
 @Controller
 public class US360ViewCollaboratorsWithoutTasksController {
 
-
 	@Autowired
-	public ProjectService projectService;
+	private ProjectService projectService;
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
+	public US360ViewCollaboratorsWithoutTasksController() {
+	}
 
 	/**
 	 * This method takes the selected project stored upon instanciating the
@@ -40,8 +41,6 @@ public class US360ViewCollaboratorsWithoutTasksController {
 
 		for (ProjectCollaborator other : activeProjectTeam) {
 			if (!taskService.isCollaboratorActiveOnAnyTask(other)) {
-
-
 
 				String idleProjCollabInfo = collaboratorDataAsString(other);
 

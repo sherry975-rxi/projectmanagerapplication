@@ -1,11 +1,5 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
 import project.Repository.TaskRepository;
@@ -21,13 +14,14 @@ import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.StateEnum;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
 import project.model.taskstateinterface.OnGoing;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -43,19 +37,10 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	 */
 
 	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	ProjectsRepository projectsRepository;
-
-	@Autowired
-	ProjCollabRepository projCollabRepository;
-
-	@Autowired
-	TaskRepository taskRepository;
-
 	UserService userContainer;
+	@Autowired
 	ProjectService projectContainer;
+	@Autowired
 	TaskService taskService;
 
 	// TasksFiltersController tasksFiltersController;
@@ -78,13 +63,6 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	@Before
 	public void setUp() {
 
-		// create all services
-		userContainer = new UserService(userRepository);
-
-		projectContainer = new ProjectService(projectsRepository, projCollabRepository);
-
-		taskService = new TaskService(taskRepository);
-		taskService.setProjectCollaboratorRepository(projCollabRepository);
 
 		// create users
 		user1 = userContainer.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer", "930000000",
@@ -250,10 +228,6 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 
 	@Test
 	public void testGetProjectsFromProjectCollaborator1() {
-		// create controller
-		uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaboratorController();
-		uS205MarkTaskAsFinishedCollaborator.taskService = this.taskService;
-		uS205MarkTaskAsFinishedCollaborator.projectContainer = this.projectContainer;
 
 		// create list of tasks to compare to taskContainer of project
 		List<Project> allProjectsInTest = new ArrayList<>();
@@ -270,10 +244,6 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 
 	@Test
 	public void testGetTasksFromProject1Collaborator1() {
-		// create controller
-		uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaboratorController();
-		uS205MarkTaskAsFinishedCollaborator.taskService = this.taskService;
-		uS205MarkTaskAsFinishedCollaborator.projectContainer = this.projectContainer;
 
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
 
@@ -293,10 +263,6 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 
 	@Test
 	public void testSelectTask1FromProject1Manager1Finished() {
-		// create controller
-		uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaboratorController();
-		uS205MarkTaskAsFinishedCollaborator.taskService = this.taskService;
-		uS205MarkTaskAsFinishedCollaborator.projectContainer = this.projectContainer;
 
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
 		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(project1ID);
@@ -308,10 +274,6 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 
 	@Test
 	public void testSetTask1FromProject1Manager1Finished() {
-		// create controller
-		uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaboratorController();
-		uS205MarkTaskAsFinishedCollaborator.taskService = this.taskService;
-		uS205MarkTaskAsFinishedCollaborator.projectContainer = this.projectContainer;
 
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
 		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(project1ID);
