@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan(basePackages = {"project.Services", "project.controller", "project.model"})
+@ComponentScan(basePackages = {"project.services", "project.controller", "project.model"})
 public class US390CalculateReportedProjectCostControllerTest {
 
 	/**

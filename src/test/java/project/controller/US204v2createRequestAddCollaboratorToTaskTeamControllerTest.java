@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan({ "project.services", "project.model", "project.controller", "project.Repository" })
+@ComponentScan({ "project.services", "project.model", "project.controller", "project.repository"})
 public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 	
 
@@ -53,7 +53,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 
 		projCollab = projectContainer.createProjectCollaborator(user, proj, 0);
 
-		// Create and add tasks to Task Repository
+		// Create and add tasks to Task repository
 //		taskA = taskRepo.createTask("Faind fek quin!", proj);
 		taskA = new Task(1, 1, "Faind fek quin!");
 		taskA.setProject(proj);

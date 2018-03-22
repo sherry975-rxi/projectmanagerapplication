@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;

@@ -1,7 +1,7 @@
 package project.model;
 
 import org.junit.Test;
-import project.Services.ProjectService;
+import project.services.ProjectService;
 
 import static org.junit.Assert.*;
 

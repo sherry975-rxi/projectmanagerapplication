@@ -1,8 +1,8 @@
-package project.Services;
+package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.Repository.UserRepository;
+import project.repository.UserRepository;
 import project.dto.UserDTO;
 import project.model.Address;
 import project.model.Profile;

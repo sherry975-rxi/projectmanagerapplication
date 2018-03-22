@@ -1,9 +1,9 @@
-package project.Services;
+package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.Repository.ProjCollabRepository;
-import project.Repository.TaskRepository;
+import project.repository.ProjCollabRepository;
+import project.repository.TaskRepository;
 import project.model.*;
 import project.model.taskstateinterface.*;
 
@@ -323,7 +323,7 @@ public class TaskService {
 	}
 
 	/**
-		 * This method saves the task in the Repository
+		 * This method saves the task in the repository
 		 * @param task
 		 * @return
 		 */
@@ -630,7 +630,7 @@ public class TaskService {
 		 * task hasnâ€™t started
 		 * 
 		 * @param taskToDelete
-		 *            the task that will be removed from the task Repository
+		 *            the task that will be removed from the task repository
 		 * 
 		 */
 		public boolean deleteTask(Task taskToDelete) {

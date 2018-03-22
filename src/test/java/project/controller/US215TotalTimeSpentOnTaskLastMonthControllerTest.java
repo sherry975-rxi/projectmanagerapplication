@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 import project.model.*;
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan(basePackages = { "project.Services", "project.controller", "project.model" })
+@ComponentScan(basePackages = { "project.services", "project.controller", "project.model" })
 public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 
 	@Autowired
@@ -45,7 +45,7 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 	@Before
 	public void setUp() {
 
-		// Add user to User Repository
+		// Add user to User repository
 		userA = userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae",
 				"919898997", "Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA");
 
@@ -59,7 +59,7 @@ public class US215TotalTimeSpentOnTaskLastMonthControllerTest {
 		// Add user to proj
 		projCollabA = projectContainer.createProjectCollaborator(userA, proj, 5);
 
-		// Create and add tasks to Task Repository
+		// Create and add tasks to Task repository
 		taskA = taskRepo.createTask("Faind fek quin!", proj);
 		taskB = taskRepo.createTask("Spit on non-beleevahs!", proj);
 		taskC = taskRepo.createTask("Follou da wae!", proj);

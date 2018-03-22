@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -12,16 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 import project.model.*;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 @Service
 public class LoadProjectData {

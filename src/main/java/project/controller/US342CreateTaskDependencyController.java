@@ -2,7 +2,7 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.Services.TaskService;
+import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -182,7 +182,7 @@ public class US342CreateTaskDependencyController {
 	/**
 	 * @param id
 	 *            Checks if a project contains a task by its ID
-	 * @return TRUE if the ID matches a task in the Task Repository, FALSE if not
+	 * @return TRUE if the ID matches a task in the Task repository, FALSE if not
 	 */
 	public boolean projectContainsSelectedTask(String id) {
 		boolean result = false;

@@ -4,12 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import project.Repository.ProjCollabRepository;
-import project.Repository.ProjectsRepository;
-import project.Repository.TaskRepository;
-import project.Repository.UserRepository;
-import project.Services.ProjectService;
-import project.Services.TaskService;
+import project.repository.ProjCollabRepository;
+import project.repository.ProjectsRepository;
+import project.repository.TaskRepository;
+import project.repository.UserRepository;
 import project.model.*;
 import project.model.taskstateinterface.*;
 

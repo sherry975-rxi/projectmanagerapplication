@@ -2,7 +2,7 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.Services.UserService;
+import project.services.UserService;
 import project.model.User;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class US130ListUsersController {
 	};
 
 	/**
-	 * This controller returns a list of all users in the User Repository
+	 * This controller returns a list of all users in the User repository
 	 * 
 	 * @return List<User> a copy of the User database
 	 */

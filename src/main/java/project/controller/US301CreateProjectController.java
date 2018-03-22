@@ -2,8 +2,8 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.Services.ProjectService;
-import project.Services.UserService;
+import project.services.ProjectService;
+import project.services.UserService;
 import project.model.EffortUnit;
 import project.model.Project;
 import project.model.User;
@@ -70,7 +70,7 @@ public class US301CreateProjectController {
 
 	/**
 	 * This controller returns a list of all activeCollaborators in the User
-	 * Repository
+	 * repository
 	 * 
 	 * @return List<User> a copy of the User database
 	 */

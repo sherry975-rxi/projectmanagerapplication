@@ -15,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Services.UserService;
+import project.services.UserService;
 import project.model.Profile;
 import project.model.User;
 
@@ -54,7 +54,7 @@ public class US135andUS136SearchUsersControllerTest {
 		newUser3 = userService.createUser("Rui", "rui@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
 				"4480", "Porto", "Porto", "Portugal");
 
-		/* Adds the created users to the user Repository */
+		/* Adds the created users to the user repository */
 		userService.addUserToUserRepositoryX(newUser1);
 		userService.addUserToUserRepositoryX(newUser2);
 		userService.addUserToUserRepositoryX(newUser3);

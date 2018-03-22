@@ -17,9 +17,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 import project.model.Project;
 import project.model.StateEnum;
 import project.model.Task;
@@ -29,7 +29,7 @@ import project.model.taskstateinterface.OnGoing;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan(basePackages = { "project.Services", "project.controller", "project.model" })
+@ComponentScan(basePackages = { "project.services", "project.controller", "project.model" })
 public class US342CreateTaskDependencyTest {
 
 	@Autowired
@@ -49,18 +49,18 @@ public class US342CreateTaskDependencyTest {
 	@Before
 	public void setUp() {
 
-		// Add user to User Repository
+		// Add user to User repository
 		user = userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
 				"Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA");
 
 		// Add a project to the project repository
 		proj = projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user);
 
-		// Create and add tasks to Task Repository
+		// Create and add tasks to Task repository
 		// Task A isn't added to test the method that checks if the list contains a
 		// certain task
 
-		// Create and add tasks to Task Repository
+		// Create and add tasks to Task repository
 		taskA = taskRepo.createTask("Faind fek quin!", proj);
 		taskB = taskRepo.createTask("Spit on non-beleevahs!", proj);
 		taskC = taskRepo.createTask("Follou da wae!", proj);

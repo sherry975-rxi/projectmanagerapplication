@@ -11,9 +11,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
-import project.Repository.ProjCollabRepository;
-import project.Repository.ProjectsRepository;
-import project.Services.ProjectService;
+import project.repository.ProjCollabRepository;
+import project.repository.ProjectsRepository;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -391,7 +390,7 @@ public class ProjectServiceTest {
 	@Test
 	public void testAddProjectCollaborator() {
 
-		// Adds a ProjectCollaborator to the Repository
+		// Adds a ProjectCollaborator to the repository
 		projectService.addProjectCollaborator(projCollab1);
 
 		// Verifies that the method save was called once

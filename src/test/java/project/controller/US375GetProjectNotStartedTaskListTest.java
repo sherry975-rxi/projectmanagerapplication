@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 import project.model.*;
 import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.Finished;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan({ "project.services", "project.model", "project.controller", "project.Repository" })
+@ComponentScan({ "project.services", "project.model", "project.controller", "project.repository"})
 public class US375GetProjectNotStartedTaskListTest {
 	
 	@Autowired	

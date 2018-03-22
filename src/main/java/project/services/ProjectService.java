@@ -1,9 +1,9 @@
-package project.Services;
+package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.Repository.ProjCollabRepository;
-import project.Repository.ProjectsRepository;
+import project.repository.ProjCollabRepository;
+import project.repository.ProjectsRepository;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
@@ -23,7 +23,7 @@ public class ProjectService {
 	private ProjCollabRepository projectCollaboratorRepository;
 
 	/**
-	 * Constructor that allows one to create a new Project Repository. There are no
+	 * Constructor that allows one to create a new Project repository. There are no
 	 * mandatory fields.
 	 */
 	public ProjectService() {

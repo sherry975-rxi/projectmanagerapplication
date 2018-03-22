@@ -2,7 +2,7 @@ package project.ui.console.projectmanager.tasks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.Services.TaskService;
+import project.services.TaskService;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.model.Project;

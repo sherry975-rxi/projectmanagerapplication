@@ -2,7 +2,7 @@ package project.ui.console;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.Services.UserService;
+import project.services.UserService;
 import project.model.Profile;
 import project.model.User;
 import project.ui.console.administrator.AdminMenuUI;
