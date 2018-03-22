@@ -1,0 +1,33 @@
+title US 202: Add address to user info
+
+
+
+Actor->UI: Update user info
+
+UI->Controller: create getInfo controller
+
+Controller ->UserService: getInfo
+
+UserService->Database: findByEmail()
+
+Database-->UserService: return user info
+
+UserService-->Controller: return user info
+
+Controller-->UI: return user info
+
+UI-->Actor: show user info
+
+Actor->UI: Add new address
+
+UI->Controller: use getInfo controller
+
+Controller->UserService: getAddress()
+
+UserService->Database: save updated user
+
+UserService-->Controller: return user info
+
+Controller--> UI: return user info
+
+UI-->Actor: Address successfully added!
