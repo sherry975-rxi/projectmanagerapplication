@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,6 +77,19 @@ public class US320ViewProjectsControllerTest {
 		activeProjectData2 += "\n - Manager: Manel";
 		activeProjectData2 += "\n - Description: this Project is active";
 		activeProjectData2 += "\n===============================";
+
+	}
+
+	@After
+	public void clear() {
+
+		activeProject = null;
+		inactiveProject = null;
+		activeManager = null;
+		inactiveManager = null;
+
+		activeProjectData = null;
+		activeProjectData2 = null;
 
 	}
 

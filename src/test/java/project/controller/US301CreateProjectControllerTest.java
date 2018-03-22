@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +54,14 @@ public class US301CreateProjectControllerTest {
 
 		// add users to company
 		userContainer.addUserToUserRepositoryX(u1);
+	}
+
+	@After
+	public void clear() {
+
+		u1 = null;
+		newProject = null;
+
 	}
 
 	/**

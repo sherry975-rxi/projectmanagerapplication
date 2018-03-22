@@ -3,6 +3,7 @@ package project.controller;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,6 +86,19 @@ public class US351AddColaboratorToProjectTeamController_Test {
 		p1 = projContainer.createProject("Teste", "blablabla", u2);
 
 		contextualProject = projContainer.createProject("Teste", "blablabla", u2);
+
+	}
+
+	@After
+	public void clear() {
+
+		u1 = null;
+		u2 = null;
+		u3 = null;
+		u4 = null;
+		u5 = null;
+		p1 = null;
+		contextualProject = null;
 
 	}
 

@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Calendar;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +16,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Repository.ProjectsRepository;
-import project.Repository.TaskRepository;
-import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
@@ -48,15 +46,15 @@ public class US347CancelOnGoingTaskControllerTest {
 	// TasksFiltersController tasksFiltersController;
 	@Autowired
 	US347CancelOnGoingTaskController controllerCancel;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	ProjectService projectService;
 	@Autowired
 	TaskService taskService;
-	
+
 	User user1, user2, projectManager;
 	Project project1;
 	ProjectCollaborator projCollab1, projCollab2;
@@ -66,7 +64,6 @@ public class US347CancelOnGoingTaskControllerTest {
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 	Calendar taskExpiredDeadlineDateTest;
-	
 
 	@Before
 	public void setUp() {
@@ -168,6 +165,27 @@ public class US347CancelOnGoingTaskControllerTest {
 		// create controller
 		controllerCancel = new US347CancelOnGoingTaskController(task1.getTaskID(), project1);
 		controllerCancel.taskService = taskService;
+
+	}
+
+	@After
+	public void clear() {
+
+		user1 = null;
+		user2 = null;
+		projectManager = null;
+		project1 = null;
+		projCollab1 = null;
+		projCollab2 = null;
+		task1 = null;
+		task2 = null;
+		task3 = null;
+		taskCollab1 = null;
+		taskCollab2 = null;
+		startDateTest = null;
+		estimatedTaskStartDateTest = null;
+		taskDeadlineDateTest = null;
+		taskExpiredDeadlineDateTest = null;
 
 	}
 
