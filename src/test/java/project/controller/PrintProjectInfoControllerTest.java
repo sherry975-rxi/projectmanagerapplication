@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
@@ -24,48 +25,30 @@ import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan(basePackages = {"project.Services", "project.controller", "project.model"})
 public class PrintProjectInfoControllerTest {
-
-
-	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	ProjectsRepository projRepository;
-
-	@Autowired
-	ProjCollabRepository projCollabRepository;
-
-	@Autowired
-	TaskRepository taskRepository;
 
 	User user1;
 	User joaoPM;
 	ProjectCollaborator collab1, collab2;
 
+	@Autowired
 	ProjectService projectContainer;
-
+	@Autowired
 	UserService userContainer;
-
+	@Autowired
 	TaskService taskService;
 
 	Project project, project1;
 	Calendar startDate, finishDate;
 	TaskService taskContainer;
 	Task task1, task2, task3;
-	PrintProjectInfoController controller, controller1;
+
+	@Autowired
+	PrintProjectInfoController controller;
 
 	@Before
 	public void setUp() {
-		// create company
-		projectContainer = new ProjectService(projRepository, projCollabRepository);
-
-		// create user
-		userContainer = new UserService();
-		userContainer.setUserRepository(userRepository);
-
-		taskService = new TaskService(taskRepository);
-		taskService.setProjectCollaboratorRepository(projCollabRepository);
 
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
 				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
@@ -122,11 +105,8 @@ public class PrintProjectInfoControllerTest {
 		taskService.saveTask(task3);
 
 		// Instantiates de controller
-		controller = new PrintProjectInfoController(project);
+		controller.setProject(project);;
 
-		controller.projService=this.projectContainer;
-		controller.taskService=this.taskService;
-        //controller.setProject();
 
 	}
 
@@ -291,12 +271,9 @@ public class PrintProjectInfoControllerTest {
 				"Este projeto está focado em solidariedade.", user1);
 
 		// Instantiates de controller
-		controller1 = new PrintProjectInfoController(project1);
-		controller1.projService=this.projectContainer;
-		controller1.taskService=this.taskService;
-		//controller1.setProject();
+		controller.setProject(project1);
 
-		assertEquals(controller1.printProjectNameInfo(), "Projeto de voluntariado");
+		assertEquals(controller.printProjectNameInfo(), "Projeto de voluntariado");
 
 		// add user to project team
 		projectContainer.createProjectCollaborator(user1, project1, 10);
@@ -309,10 +286,8 @@ public class PrintProjectInfoControllerTest {
 		projectContainer.updateProject(project1);
 		projectContainer.updateProjectCollaborator(joaoPMcolab);
 
-		controller1.projService=this.projectContainer;
-		controller1.taskService=this.taskService;
 
-		assertEquals(controller1.printProjectTeamInfo(), "Daniel [ACTIVE], João [INACTIVE]");
+		assertEquals(controller.printProjectTeamInfo(), "Daniel [ACTIVE], João [INACTIVE]");
 
 
 	}
