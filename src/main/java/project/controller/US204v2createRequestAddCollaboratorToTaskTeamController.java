@@ -18,10 +18,10 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	@Autowired
 	private ProjectService projectService;
 
-	public User user;
-	public Project project;
-	public Integer projectID;
-	public String taskID;
+	private User user;
+	private Project project;
+	private Integer projectID;
+	private String taskID;
 
 	/**
 	 * 
