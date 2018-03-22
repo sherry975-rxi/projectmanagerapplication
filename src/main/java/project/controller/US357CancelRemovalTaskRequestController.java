@@ -36,16 +36,10 @@ public class US357CancelRemovalTaskRequestController {
 	@Autowired
 	private TaskService taskService;
 
-	/*
-	 * Default Constructor
-	 */
 	public US357CancelRemovalTaskRequestController() {
 
 	}
 
-	/*
-	 * Getters and Setters
-	 */
 	public Project getProject() {
 		return project;
 	}
@@ -70,12 +64,6 @@ public class US357CancelRemovalTaskRequestController {
 		this.userToRemove = userToRemove;
 	}
 
-	/**
-	 * Constructor to instantiate a new US357CancelRemoveTaskRequestController
-	 * 
-	 * @param project
-	 *            project to show the removal task requests
-	 */
 	public US357CancelRemovalTaskRequestController(Project project) {
 		this.project = project;
 		this.task = null;
@@ -119,11 +107,11 @@ public class US357CancelRemovalTaskRequestController {
 	 * 
 	 * @return TRUE if the user removal was successfully done or FALSE if not.
 	 */
-	public boolean acceptRemovalRequestFromTask() {
+	public boolean acceptRemovalRequestFromTask(User userToRemove, Project project) {
 		boolean acceptRemovalRequestFromTask = false;
 		// Gets the project collaborator correspondent to the user
 		ProjectCollaborator projectCollaboratorFromUser = projectService
-				.findActiveProjectCollaborator(this.userToRemove, project);
+				.findActiveProjectCollaborator(userToRemove, project);
 
 		// Removes the project Collaborator correspondent to the user from task.
 		this.task.removeProjectCollaboratorFromTask(projectCollaboratorFromUser);
