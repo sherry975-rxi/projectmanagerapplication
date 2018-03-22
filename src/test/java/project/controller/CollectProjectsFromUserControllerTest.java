@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
@@ -31,20 +32,12 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan(basePackages = {"project.Services", "project.controller", "project.model"})
 public class CollectProjectsFromUserControllerTest {
 
 	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	ProjectsRepository projectsRepository;
-
-	@Autowired
-	ProjCollabRepository projCollabRepository;
-
-
-
 	ProjectService projContainer;
+	@Autowired
 	UserService userContainer;
 
 	User user1;
@@ -55,6 +48,7 @@ public class CollectProjectsFromUserControllerTest {
 	Project project;
 	private Project project2;
 
+	@Autowired
 	CollectProjectsFromUserController controller;
 
 
@@ -62,12 +56,6 @@ public class CollectProjectsFromUserControllerTest {
 	@Before
 	public void setUp() {
 
-
-
-		userContainer = new UserService();
-		userContainer.setUserRepository(userRepository);
-
-		projContainer= new ProjectService(projectsRepository, projCollabRepository);
 
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
@@ -98,20 +86,6 @@ public class CollectProjectsFromUserControllerTest {
 
 	}
 
-	@After
-	public void tearDown() {
-		projContainer = null;
-		userContainer = null;
-
-		user1 = null;
-		userAdmin = null;
-		project = null;
-		project2 = null;
-		collab1 = null;
-
-		controller = null;
-
-	}
 
 	/**
 	 * this test verify if the list of projects is equals to the list created.
@@ -121,10 +95,7 @@ public class CollectProjectsFromUserControllerTest {
 
 		// create controller for user 1
 
-		controller = new CollectProjectsFromUserController(this.user1);
-
-		controller.projService=this.projContainer;
-
+		controller.setUser(this.user1);
 		// create list with cancelled task to compare
 		List<Project> projectsFromUser = new ArrayList<>();
 
@@ -146,9 +117,7 @@ public class CollectProjectsFromUserControllerTest {
 
         // create controller
 
-		controller = new CollectProjectsFromUserController(userAdmin);
-
-		controller.projService=this.projContainer;
+		controller.setUser(userAdmin);
 
 		// create list with cancelled task to compare
 		List<Project> projectsFromManager = new ArrayList<>();
