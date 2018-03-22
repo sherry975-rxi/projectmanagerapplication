@@ -3,8 +3,10 @@ package project.ui.console.collaborator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controller.US203GetUserStartedNotFinishedTaskListInIncreasingOrderController;
+import project.model.Task;
 import project.model.User;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -28,15 +30,19 @@ public class US203GetUnfinishedTaskUI {
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();
+			List<Task> taskList = unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user);
 
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
 
-		for (int i = 0; i < unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).size(); i++) {
+			if (taskList.size() == 0) {
+				System.out.println("You have no unfinished tasks.");
+			}
+			for (int i = 0; i < taskList.size(); i++) {
 			t = t + 1;
 			System.out.println("["
-					+ unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).get(i).getTaskID() + "]" + " "
-					+ unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).get(i).getDescription());
+					+ taskList.get(i).getTaskID() + "]" + " "
+					+ taskList.get(i).getDescription());
 		}
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back \n");
