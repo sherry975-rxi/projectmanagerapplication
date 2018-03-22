@@ -1,5 +1,14 @@
 package project.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
@@ -17,15 +27,9 @@ import project.model.User;
 import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.OnGoing;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan(basePackages = {"project.Services", "project.controller", "project.model"})
+@ComponentScan(basePackages = { "project.Services", "project.controller", "project.model" })
 public class US342CreateTaskDependencyTest {
 
 	@Autowired
@@ -45,14 +49,12 @@ public class US342CreateTaskDependencyTest {
 	@Before
 	public void setUp() {
 
-
 		// Add user to User Repository
 		user = userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
 				"Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA");
 
 		// Add a project to the project repository
 		proj = projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user);
-
 
 		// Create and add tasks to Task Repository
 		// Task A isn't added to test the method that checks if the list contains a
@@ -63,10 +65,19 @@ public class US342CreateTaskDependencyTest {
 		taskB = taskRepo.createTask("Spit on non-beleevahs!", proj);
 		taskC = taskRepo.createTask("Follou da wae!", proj);
 
-
 		controller.setProject(proj);
 	}
 
+	@After
+	public void clear() {
+
+		proj = null;
+		taskA = null;
+		taskB = null;
+		taskC = null;
+		user = null;
+
+	}
 
 	@Test
 	public final void testGetTasksFromAProject() {
@@ -118,8 +129,8 @@ public class US342CreateTaskDependencyTest {
 
 		Integer projectID = proj.getId();
 
-		assertEquals(taskB, controller.getTaskByID((projectID+".2")));
-		assertEquals(taskC, controller.getTaskByID((projectID+".3")));
+		assertEquals(taskB, controller.getTaskByID((projectID + ".2")));
+		assertEquals(taskC, controller.getTaskByID((projectID + ".3")));
 
 	}
 
@@ -128,8 +139,8 @@ public class US342CreateTaskDependencyTest {
 
 		Integer projectID = proj.getId();
 
-		assertTrue(controller.projectContainsSelectedTask(projectID+".2"));
-		assertFalse(controller.projectContainsSelectedTask(projectID+".4"));
+		assertTrue(controller.projectContainsSelectedTask(projectID + ".2"));
+		assertFalse(controller.projectContainsSelectedTask(projectID + ".4"));
 	}
 
 	@Test
@@ -156,7 +167,6 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public void removeTaskDependency() {
 
-
 		taskA.setTaskState(new OnGoing());
 		taskA.setCurrentState(StateEnum.ONGOING);
 		taskB.setTaskState(new Created());
@@ -181,8 +191,6 @@ public class US342CreateTaskDependencyTest {
 
 	@Test
 	public void getTaskDeadlineString() {
-
-
 
 		taskA.setTaskState(new OnGoing());
 		taskA.setCurrentState(StateEnum.ONGOING);
