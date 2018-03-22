@@ -2,6 +2,7 @@ package project.model;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -57,6 +58,7 @@ public class ReportTest {
 	/**
 	 * Tests the setters and getters
 	 */
+	@Ignore
 	@Test
 	public void testSettersAndGetters() {
 
