@@ -1,20 +1,19 @@
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class US135andUS136SearchUsersController {
 
 	@Autowired
-	public UserService userService;
+	private UserService userService;
 
 	private List<User> userList;
 	private User selectedUser = null;

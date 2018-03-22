@@ -1,13 +1,12 @@
 package project.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import project.Services.UserService;
 import project.model.Address;
 import project.model.User;
+
+import java.util.List;
 
 @Controller
 public class US201and202UpdateUserInfoController {
@@ -21,7 +20,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 
 	@Autowired
-	public UserService userContainer;
+	private UserService userContainer;
 
 	/**
 	 * Empty constructor

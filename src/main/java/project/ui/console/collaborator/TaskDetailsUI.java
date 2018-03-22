@@ -2,11 +2,13 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.*;
+import project.controller.PrintProjectInfoController;
+import project.controller.PrintTaskInfoController;
+import project.controller.US204v2createRequestAddCollaboratorToTaskTeamController;
+import project.controller.US205MarkTaskAsFinishedCollaboratorController;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
@@ -26,7 +28,7 @@ public class TaskDetailsUI {
 	private US204v2CreateTaskAssignmentToCollaboratorUI createAssignmentRequest;
 
 	@Autowired
-	private US205MarkTaskAsFinishedCollaborator taskToMark;
+	private US205MarkTaskAsFinishedCollaboratorController taskToMark;
 
 	@Autowired
 	private US206CreateRemovalTaskRequestUI createCollabRemovalRequest;

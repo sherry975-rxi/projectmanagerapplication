@@ -3,7 +3,6 @@ package project.ui.console.projectmanager.tasklists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
-import project.controller.US360GetProjectTasksWithoutCollaboratorsAssignedController;
 import project.controller.US377CollectionOfCancelledTasksFromAProjectController;
 import project.model.Project;
 import project.model.User;
