@@ -21,7 +21,7 @@ public class RunConsole implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
 
-    	feedDb.loadUsers("Utilizador_v00.xml");
+    	feedDb.loadUsers("Utilizador_v00_Dt1.xml");
 
     	//projectDb.loadProject("Projeto_v00.xml");
 
