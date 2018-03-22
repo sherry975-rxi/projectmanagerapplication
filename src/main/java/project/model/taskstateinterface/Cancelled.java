@@ -1,9 +1,9 @@
 package project.model.taskstateinterface;
 
+import java.util.Calendar;
+
 import project.model.StateEnum;
 import project.model.Task;
-
-import java.util.Calendar;
 
 public class Cancelled implements TaskStateInterface {
 

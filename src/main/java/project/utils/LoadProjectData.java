@@ -10,18 +10,22 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.*;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.model.*;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import project.model.EffortUnit;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.TaskCollaborator;
+import project.model.User;
 
 @Service
 public class LoadProjectData {
@@ -115,21 +119,20 @@ public class LoadProjectData {
 
 								projectService.updateProjectCollaborator(projCollaborator);
 							}
-
 						}
 					}
 				}
+
 				// Node Lista de Tarefas
 				NodeList nTaskList = documentProjects.getElementsByTagName("tarefa");
 
 				for (int indexTask = 0; indexTask < nTaskList.getLength(); indexTask++) {
-					Node nNodeTask = nProjectList.item(indexTask);
+					Node nNodeTask = nTaskList.item(indexTask);
 
 					if (nNodeTask.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElementTask = (Element) nNodeTask;
 
-						String description = eElementTask.getElementsByTagName("descricao_tarefa").item(0)
-								.getTextContent();
+						String description = eElementTask.getElementsByTagName("nome_tarefa").item(0).getTextContent();
 
 						Task task = project.createTask(description);
 
@@ -158,7 +161,7 @@ public class LoadProjectData {
 						task.setFinishDate(finishDate);
 
 						taskService.saveTask(task);
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 						NodeList nTaskDependenceList = documentProjects.getElementsByTagName("lista_dependencias");
 
 						for (int indexTaskDependencies = 0; indexTaskDependencies < nTaskDependenceList
@@ -171,12 +174,13 @@ public class LoadProjectData {
 
 								String idTaskMain = eElementTaskDependencies.getElementsByTagName("tarefa_id").item(0)
 										.getTextContent();
-								Task taskMain = taskService.getTaskByTaskID(idTaskMain);
-
-								taskService.saveTask(task);
+								if (idTaskMain != "") {
+									Task taskMain = taskService.getTaskByTaskID(idTaskMain);
+								}
 							}
 						}
-
+             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						
 						NodeList nTaskCollaborators = documentProjects.getElementsByTagName("colaborador_tarefa");
 
 						for (int indexTaskCollaborators = 0; indexTaskCollaborators < nTaskCollaborators
@@ -194,59 +198,61 @@ public class LoadProjectData {
 
 								task.addProjectCollaboratorToTask(projCollaborator);
 
-								NodeList nTaskListConnections = documentProjects.getElementsByTagName("lista_ligacoes_tarefa");
+								NodeList nTaskListConnections = documentProjects
+										.getElementsByTagName("lista_ligacoes_tarefa");
 
-								for (int indexTaskListConnections = 0; indexTaskListConnections < nTaskListConnections.getLength() -1; indexTaskListConnections++) {
+								for (int indexTaskListConnections = 0; indexTaskListConnections < 1; indexTaskListConnections++) {
 
 									Node nNodeTaskListConnections = nTaskListConnections.item(indexTaskListConnections);
 
 									if (nNodeTaskListConnections.getNodeType() == Node.ELEMENT_NODE) {
 										Element eElementNodeTaskListConnections = (Element) nNodeTaskListConnections;
 
-									String startDateString = eElementNodeTaskListConnections
+										String startDateString = eElementNodeTaskListConnections
 												.getElementsByTagName("data_inicio").item(0).getTextContent();
 
-									Calendar startDateTaskCollaborator = convertStringToCalendar(startDateString);
+										Calendar startDateTaskCollaborator = convertStringToCalendar(startDateString);
 
-                                    TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(eElementnNodeTaskCollaborator.getElementsByTagName("colaborador_id").item(0).getTextContent());
+										TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(
+												eElementnNodeTaskCollaborator.getElementsByTagName("colaborador_id")
+														.item(0).getTextContent());
 
-                                    taskCollab.setStartDate(startDateTaskCollaborator);
+										taskCollab.setStartDate(startDateTaskCollaborator);
 
-                                    String finishDateString = eElementNodeTaskListConnections
-											.getElementsByTagName("data_fim").item(0).getTextContent();
+										String finishDateString = eElementNodeTaskListConnections
+												.getElementsByTagName("data_fim").item(0).getTextContent();
 
-                                    Calendar finishDateTaskCollaborator = convertStringToCalendar(finishDateString);
+										Calendar finishDateTaskCollaborator = convertStringToCalendar(finishDateString);
 
-                                   // taskCollab.setFinishDate(finishDateTaskCollaborator);
+										taskCollab.setFinishDate(finishDateTaskCollaborator);
 
+										NodeList nReportList = documentProjects.getElementsByTagName("lista_report_tarefa");
 
+										for (int indexReport = 0; indexReport < 1; indexReport++) {
 
-                                	NodeList nReportList = documentProjects.getElementsByTagName("report");
+											Node nNodeReport = nReportList.item(indexReport);
 
-    								for (int indexReport = 0; indexReport < nReportList.getLength() -1; indexReport++) {
+											if (nNodeReport.getNodeType() == Node.ELEMENT_NODE) {
+												Element eElementNodeReport = (Element) nNodeReport;
 
-    									Node nNodeReport = nReportList.item(indexReport);
+												Calendar reportStartDate = convertStringToCalendar(eElementNodeReport
+														.getElementsByTagName("data_inicio").item(0).getTextContent());
 
-    									if (nNodeReport.getNodeType() == Node.ELEMENT_NODE) {
-    										Element eElementNodeReport = (Element) nNodeReport;
+												String integer = eElementNodeReport.getElementsByTagName("esforco")
+														.item(0).getTextContent();
 
-    										Calendar reportStartDate = convertStringToCalendar(eElementNodeReport.getElementsByTagName("data_inicio").item(0).getTextContent());
+												Integer timeToReport = Integer.valueOf(eElementNodeReport
+														.getElementsByTagName("esforco").item(0).getTextContent());
 
-    										String integer = eElementNodeReport.getElementsByTagName("esforco").item(0).getTextContent();
-
-    										Integer timeToReport = Integer.valueOf(eElementNodeReport.getElementsByTagName("esforco").item(0).getTextContent());
-
-    										task.createReport(taskCollab, reportStartDate, timeToReport);
-
-    										}
-    									}
+												task.createReport(taskCollab, reportStartDate, timeToReport);
+											}
+										}
 									}
 								}
 							}
 						}
 
 						taskService.saveTask(task);
-
 					}
 				}
 			}
@@ -265,7 +271,7 @@ public class LoadProjectData {
 	 */
 	private Calendar convertStringToCalendar(String calendar) throws ParseException {
 
-		if(calendar != "") {
+		if (calendar != "") {
 			Calendar date = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			date.setTime(sdf.parse(calendar));
@@ -273,9 +279,9 @@ public class LoadProjectData {
 			date.set(Calendar.MINUTE, 0);
 			date.set(Calendar.SECOND, 0);
 			date.set(Calendar.MILLISECOND, 0);
-
 			return date;
-	}
+		}
+
 		return null;
 	}
 }

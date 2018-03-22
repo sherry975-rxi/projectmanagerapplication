@@ -9,15 +9,12 @@ import java.util.Scanner;
 
 @Component
 public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
-
+	User currentUser;
 	@Autowired
 	US210GetAllFinishedUserTasksInDecreasingOrderController userTasks;
 
-	User currentUser;
-
-
-	public US210GetAllFinishedUserTasksInDecreasingOrderUI() {
-
+	public US210GetAllFinishedUserTasksInDecreasingOrderUI(User user) {
+		this.currentUser = user;
 	}
 
 	public void getAllFinishedUserTasksInDecreasingOrderUI() {

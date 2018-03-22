@@ -1,15 +1,15 @@
 package project.ui.console.projectmanager.tasks;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Scanner;
+
 import org.springframework.stereotype.Component;
 import project.Services.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
-
-import java.util.Scanner;
 
 @Component
 public class PmTaskFunctionalitiesUI {
@@ -100,7 +100,6 @@ public class PmTaskFunctionalitiesUI {
 				break;
 			case "B":
 				condition = false;
-				break;
 			default:
 				System.out.println("Please choose a valid option.");
 				System.out.println("");

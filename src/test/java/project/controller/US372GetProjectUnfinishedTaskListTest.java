@@ -3,6 +3,7 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,6 +15,8 @@ import project.Services.UserService;
 import project.model.*;
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Planned;
+import project.model.taskstateinterface.Ready;
 
 import java.util.Calendar;
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controller.US356ManageAssigmentRequestController;
 import project.model.Project;
+import project.model.User;
 
 import java.util.Scanner;
 
@@ -36,7 +37,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			assignmentRequest.setSelectedProject(project);
 			int number = 1;
 
-			for (String other : assignmentRequest.showAllAssignmentRequests(project)) {
+			for (String other : assignmentRequest.showAllAssignmentRequests()) {
 				System.out.println("[" + number + "]" + "Request: " + other);
 				System.out.println("==========================================\n");
 				number++;
@@ -85,7 +86,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 
 		Scanner input = new Scanner(System.in);
 		String choice = input.nextLine();
-		int listSize = assignmentRequest.showAllAssignmentRequests(project).size();
+		int listSize = assignmentRequest.showAllAssignmentRequests().size();
 
 		// Guarantees that the input is valid
 		try {
@@ -132,7 +133,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 
 		if ("y".equalsIgnoreCase(yerOrNo)) {
 			int requestNumber = request - 1;
-			assignmentRequest.setSelectedAdditionRequest(requestNumber, project);
+			assignmentRequest.setSelectedAdditionRequest(requestNumber);
 			if (assignmentRequest.approveAssignmentRequest()) {
 				System.out.println("----REQUEST APPROVED----");
 				System.out.println("--User assigned to Task--");

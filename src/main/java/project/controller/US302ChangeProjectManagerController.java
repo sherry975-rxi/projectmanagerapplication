@@ -1,13 +1,14 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import project.Services.UserService;
 import project.model.Project;
 import project.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Group 3

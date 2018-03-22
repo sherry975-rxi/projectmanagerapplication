@@ -3,13 +3,8 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.junit4.SpringRunner;
+
 import project.Services.ProjectService;
-import project.Services.TaskService;
 import project.Services.UserService;
 import project.model.*;
 
@@ -25,20 +20,12 @@ import static org.junit.Assert.assertTrue;
  * @author Group 3
  *
  */
-
-@RunWith(SpringRunner.class)
-@DataJpaTest
-@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US357CancelRemovalTaskRequestControllerTest {
 
 	User userDaniel;
 	User userRui;
-	@Autowired
 	ProjectService projectContainer;
-	@Autowired
 	UserService userContainer;
-	@Autowired
-	TaskService taskContainer;
 	Project projectA;
 	ProjectCollaborator userRuiProjectCollaborator;
 	Task taskA;
@@ -48,11 +35,15 @@ public class US357CancelRemovalTaskRequestControllerTest {
 	String stringRequest2;
 	TaskCollaborator userRuiTaskCollaborator;
 	List<String> pendingRemovalRequests;
-	@Autowired
 	US357CancelRemovalTaskRequestController us357Controller;
 
 	@Before
 	public void setUp() {
+
+
+		// Creates the Project Repository and User Repository
+		projectContainer = new ProjectService();
+		userContainer = new UserService();
 
 		// Creates the users
 		userDaniel = userContainer.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto", "967387654", "Rua",
@@ -60,21 +51,24 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		userRui = userContainer.createUser("Rui", "rui@gmail.com", "12345", "Arquitecto", "967387654", "Rua", "3800",
 				"Porto", "Porto", "Portugal");
 		// Adds users to the user repository
-		userContainer.addUserToUserRepositoryX(userDaniel);
-		userContainer.addUserToUserRepositoryX(userRui);
+		userContainer.addUserToUserRepository(userDaniel);
+		userContainer.addUserToUserRepository(userRui);
 
 		// Creates the Project and adds it to the project repository
 		projectA = projectContainer.createProject("Museu Serralves", "Projecto do Museu de Serralves", userDaniel);
 		projectContainer.addProjectToProjectContainer(projectA);
 
 		// Adds the user to the project team
-		projectA.createProjectCollaborator(userRui, 20);
-		userRuiProjectCollaborator = projectContainer.getActiveProjectTeam(projectA).get(0);
+		projectA.addUserToProjectTeam(userRui, 20);
+		userRuiProjectCollaborator = projectA.findProjectCollaborator(userRui);
 
 		// Creates the tasks and adds them to the projectTasks
-		taskA = projectA.createTask("Implementar US100");
-		taskB = projectA.createTask("Implementar US200");
-		taskC = projectA.createTask("Implementar US300");
+		taskA = projectA.getTaskService().createTask("Implementar US100");
+		projectA.getTaskService().addTaskToProject(taskA);
+		taskB = projectA.getTaskService().createTask("Implementar US200");
+		projectA.getTaskService().addTaskToProject(taskB);
+		taskC = projectA.getTaskService().createTask("Implementar US300");
+		projectA.getTaskService().addTaskToProject(taskC);
 
 		// Adds the project collaborator to the tasks
 		taskA.addProjectCollaboratorToTask(userRuiProjectCollaborator);
@@ -82,8 +76,8 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		taskC.addProjectCollaboratorToTask(userRuiProjectCollaborator);
 
 		// Creates the removal requests from userRui and TaskA and TaskB
-		taskA.createTaskRemovalRequest(userRuiProjectCollaborator);
-		taskB.createTaskRemovalRequest(userRuiProjectCollaborator);
+		projectA.createTaskRemovalRequest(userRuiProjectCollaborator, taskA);
+		projectA.createTaskRemovalRequest(userRuiProjectCollaborator, taskB);
 
 		// Creates the list of strings with the information of the pending removal
 		// requests
@@ -98,6 +92,26 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		// Creates the taskCollaborator
 		userRuiTaskCollaborator = taskA.getTaskTeam().get(0);
+
+	}
+
+	@After
+	public void tearDown() {
+
+		projectA = null;
+		userDaniel = null;
+		userRui = null;
+		projectContainer = null;
+		userContainer = null;
+		userRuiProjectCollaborator = null;
+		taskA = null;
+		taskB = null;
+		taskC = null;
+		stringRequest1 = null;
+		stringRequest2 = null;
+		userRuiTaskCollaborator = null;
+		pendingRemovalRequests = null;
+		us357Controller = null;
 
 	}
 
@@ -122,7 +136,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		// PreAssert: the taskCollaborator correspondent to the user does not have a
 		// finish date and the pendingRemovalListSize is 2
 		us357Controller.setTaskIDandUserEmailWithRequestString(stringRequest1);
-		int pendingRemovalListSizeBefore = taskContainer.getAllProjectTaskRemovalRequests(projectA).size();
+		int pendingRemovalListSizeBefore = projectA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
 		assertEquals(2, pendingRemovalListSizeBefore);
 
@@ -131,7 +145,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		// Assert: the taskCollaborator correspondent to the user has to have a finish
 		// date and the pendinfRemovalListSize is 1
-		int pendingRemovalListSizeAfter = taskContainer.getAllProjectTaskRemovalRequests(projectA).size();
+		int pendingRemovalListSizeAfter = projectA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() != null));
 		assertEquals(1, pendingRemovalListSizeAfter);
 
@@ -148,7 +162,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		// PreAssert- the taskCollaborator correspondent to the user does not have a
 		// finish date and the pendingRemovalListSize is 2
 		us357Controller.setTaskIDandUserEmailWithRequestString(stringRequest1);
-		int pendingRemovalListSizeBefore = taskContainer.getAllProjectTaskRemovalRequests(projectA).size();
+		int pendingRemovalListSizeBefore = projectA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
 		assertEquals(2, pendingRemovalListSizeBefore);
 
@@ -157,7 +171,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		// Assert - the taskCollaborator still does'nt have a finish date and the
 		// pendingRemovalList has one less request
-		int pendingRemovalListSizeAfter = taskContainer.getAllProjectTaskRemovalRequests(projectA).size();
+		int pendingRemovalListSizeAfter = projectA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
 		assertEquals(1, pendingRemovalListSizeAfter);
 

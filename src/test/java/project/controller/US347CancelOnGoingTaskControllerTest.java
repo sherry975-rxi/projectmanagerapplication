@@ -3,6 +3,10 @@
  */
 package project.controller;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.Calendar;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,18 +14,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import project.Repository.ProjectsRepository;
+import project.Repository.TaskRepository;
+import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.model.*;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.TaskCollaborator;
+import project.model.User;
 import project.model.taskstateinterface.Cancelled;
 import project.model.taskstateinterface.OnGoing;
 import project.model.taskstateinterface.Planned;
 import project.model.taskstateinterface.Ready;
-
-import java.util.Calendar;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * This class tests the methods that are called in Controller to execute the

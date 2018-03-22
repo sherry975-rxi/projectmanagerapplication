@@ -1,12 +1,12 @@
 package project.Repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
-
-import java.util.List;
 
 @Repository
 public interface ProjCollabRepository extends JpaRepository<ProjectCollaborator, Integer>{

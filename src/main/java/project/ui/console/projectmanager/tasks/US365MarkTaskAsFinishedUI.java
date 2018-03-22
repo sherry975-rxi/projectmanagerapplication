@@ -1,11 +1,11 @@
 package project.ui.console.projectmanager.tasks;
 
+import java.util.Scanner;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controller.US365MarkTaskAsFinishedControllerProjectManager;
 import project.model.Project;
-
-import java.util.Scanner;
 
 @Component
 public class US365MarkTaskAsFinishedUI {

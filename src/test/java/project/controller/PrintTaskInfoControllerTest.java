@@ -1,11 +1,12 @@
 package project.controller;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
@@ -22,17 +23,24 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan(basePackages = {"project.Services", "project.controller", "project.model"})
 public class PrintTaskInfoControllerTest {
 
 
 	@Autowired
-	ProjectService projContainer;
+	UserRepository userRepository;
 
 	@Autowired
+	ProjectsRepository projectsRepository;
+
+	@Autowired
+	ProjCollabRepository projCollabRepository;
+
+	@Autowired
+    TaskRepository taskRepository;
+
+	ProjectService projContainer;
 	UserService userContainer;
 
-	@Autowired
 	TaskService taskService;
 
 
@@ -45,12 +53,17 @@ public class PrintTaskInfoControllerTest {
 
 	Integer projectID;
 
-	@Autowired
 	PrintTaskInfoController controller;
 
 	@Before
 	public void setUp() {
 
+		projContainer = new ProjectService(projectsRepository, projCollabRepository);
+
+		userContainer = new UserService(userRepository);
+
+		taskService = new TaskService(taskRepository);
+        taskService.setProjectCollaboratorRepository(projCollabRepository);
 
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
@@ -108,9 +121,9 @@ public class PrintTaskInfoControllerTest {
 		projectID = project.getId();
 
 		// Instantiates the controller
-		controller.setTask(task1);
-		controller.setProject(project);
-
+		controller = new PrintTaskInfoController(task1, project);
+		controller.taskService=this.taskService;
+		controller.projService=this.projContainer;
 
 	}
 

@@ -1,16 +1,24 @@
 
 package project.model;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import project.model.taskstateinterface.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import project.model.taskstateinterface.Cancelled;
+import project.model.taskstateinterface.Created;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Ready;
+import project.model.taskstateinterface.StandBy;
+import project.model.taskstateinterface.TaskStateInterface;
 
 /**
  * @author Grupo 3

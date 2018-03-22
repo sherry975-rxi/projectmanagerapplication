@@ -53,7 +53,7 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 	Calendar taskExpiredDeadlineDateTest;
-
+	
 	@Autowired
 	US367MarkFinishedTaskAsUnfinishedController controller;
 
@@ -175,7 +175,7 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task3.setStartDate(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskDeadlineDateTest);
-
+		
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task3.setStartDate(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskDeadlineDateTest);
@@ -199,7 +199,7 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		task4.addProjectCollaboratorToTask(projCollab21);
 		task5.addProjectCollaboratorToTask(projCollab32);
 		task6.addProjectCollaboratorToTask(projCollab31);
-
+		
 //		taskCollab1 = new TaskCollaborator(projCollab1);
 //		taskCollab2 = new TaskCollaborator(projCollab2);
 
@@ -210,7 +210,7 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 //		task4.addTaskCollaboratorToTask(taskCollab1);
 //		task5.addTaskCollaboratorToTask(taskCollab2);
 //		task6.addTaskCollaboratorToTask(taskCollab1);
-
+		
 		// create a estimated Task Start Date
 		startDateTest = Calendar.getInstance();
 		task1.setEstimatedTaskEffort(10);
@@ -225,7 +225,7 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		task4.markTaskAsFinished();
 		task5.markTaskAsFinished();
 		task6.markTaskAsFinished();
-
+		
 //		task1.getTaskState().doAction(task1);
 	}
 
@@ -260,7 +260,7 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 
 	@Test
 	public void test() {
-
+		
 //		Calendar finishDate = startDateTest;
 //		finishDate.set(Calendar.HOUR_OF_DAY, 14);
 //		task1.setFinishDate(finishDate);
@@ -269,21 +269,21 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 //		task1.getTaskState().doAction(task1);
 //		assertEquals("OnGoing", task1.viewTaskStateName());
 //		System.out.println(task1.viewTaskStateName());
-
+		
 	    // given a task in "Finished" state
         assertTrue("Finished".equals(task1.viewTaskStateName()));
 
 //		US367MarkFinishedTaskAsUnfinishedController unmarkTask = new US367MarkFinishedTaskAsUnfinishedController(
 //				project1, task1.getTaskID());
-
-
+        
+        
         //add again a project collaborator to task (finishing a task removes project collaborators)
         task1.addProjectCollaboratorToTask(projCollab12);
-
+        
         // when the controller is created and its method called
 		controller.markFinishedTaskAsUnfinished(task1.getTaskID());
 		System.out.println(task1.viewTaskStateName());
-
+		
 
 		// then the chosen task must no longer have "Finished" state
 		assertFalse("Finished".equals(task1.viewTaskStateName()));
