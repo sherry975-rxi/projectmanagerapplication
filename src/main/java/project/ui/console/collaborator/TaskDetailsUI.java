@@ -158,18 +158,6 @@ public class TaskDetailsUI {
 		}
 	}
 
-//	public void goToPreviousUI(Integer projectID, User user) {
-//		this.projectID = projectID;
-//		this.user = user;
-//		if (this.isPreviousUIFromTasks) {
-//			ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
-//			projectView.projectDataDisplay();
-//		} else {
-//			UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
-//			userTasks.displayFunctionalities();
-//		}
-//	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}
