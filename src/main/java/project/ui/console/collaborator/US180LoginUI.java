@@ -16,9 +16,9 @@ public class US180LoginUI {
 
 		Scanner input = new Scanner(System.in);
 		System.out.println("Username: ");
-		String user = input.next();
+		String user = input.nextLine();
 		System.out.println("Password: ");
-		String pass = input.next();
+		String pass = input.nextLine();
 		if (login.doLogin(user, pass)) {
 			System.out.println(" Login Successful! ");
 		} else {
