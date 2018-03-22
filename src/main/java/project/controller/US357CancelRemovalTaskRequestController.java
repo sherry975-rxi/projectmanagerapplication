@@ -106,11 +106,11 @@ public class US357CancelRemovalTaskRequestController {
 	 * 
 	 * @return TRUE if the user removal was successfully done or FALSE if not.
 	 */
-	public boolean acceptRemovalRequestFromTask(User userToRemove, Project project) {
+	public boolean acceptRemovalRequestFromTask() {
 		boolean acceptRemovalRequestFromTask = false;
 		// Gets the project collaborator correspondent to the user
 		ProjectCollaborator projectCollaboratorFromUser = projectService
-				.findActiveProjectCollaborator(userToRemove, project);
+				.findActiveProjectCollaborator(this.userToRemove, this.project);
 
 		// Removes the project Collaborator correspondent to the user from task.
 		this.task.removeProjectCollaboratorFromTask(projectCollaboratorFromUser);

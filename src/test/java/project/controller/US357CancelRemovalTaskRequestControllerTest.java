@@ -122,7 +122,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		assertEquals(1, pendingRemovalListSizeBefore);
 
 		// AcceptRemovalRequestFromTask method call.
-		us357Controller.acceptRemovalRequestFromTask(userRui, projectA);
+		us357Controller.acceptRemovalRequestFromTask();
 
 		// Assert: the taskCollaborator correspondent to the user has to have a finish
 		// date and the pendinfRemovalListSize is 1
