@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.controller.US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController;
 import project.model.User;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 

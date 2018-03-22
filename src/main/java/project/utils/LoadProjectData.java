@@ -1,30 +1,19 @@
 package project.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
+import project.model.*;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
-import project.model.EffortUnit;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.User;
 
 @Service
 public class LoadProjectData {

@@ -1,18 +1,17 @@
 package project.Services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {

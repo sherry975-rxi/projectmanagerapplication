@@ -7,7 +7,6 @@ import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US370GetProjectFinishedTaskListController;
 import project.model.Project;
 import project.model.Task;
-import project.model.User;
 
 import java.util.List;
 import java.util.Scanner;

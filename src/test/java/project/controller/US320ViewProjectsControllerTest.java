@@ -1,9 +1,5 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import project.Services.ProjectService;
 import project.Services.UserService;
 import project.model.Project;
 import project.model.User;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -58,7 +55,7 @@ public class US320ViewProjectsControllerTest {
 		// various tests
 		activeProjectData = "==============================\n";
 		activeProjectData += "===== ";
-		activeProjectData += "5";
+		activeProjectData += "11";
 		activeProjectData += " - Active Project =====\n";
 		activeProjectData += "==============================";
 		activeProjectData += "\n - Status: Execution";
@@ -105,7 +102,7 @@ public class US320ViewProjectsControllerTest {
 
 		// also asserts that the contents of index 0 matches the data of the only active
 		// project
-		assertTrue(projectListsController.viewAllProjects().get(0).equals("[1] \n" + activeProjectData));
+		assertEquals(projectListsController.viewAllProjects().get(0), ("[1] \n" + activeProjectData));
 	}
 
 	/**

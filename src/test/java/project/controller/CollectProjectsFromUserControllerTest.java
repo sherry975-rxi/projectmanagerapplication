@@ -3,21 +3,19 @@ package project.controller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 import project.Repository.ProjCollabRepository;
 import project.Repository.ProjectsRepository;
 import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.UserService;
-import project.model.*;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
