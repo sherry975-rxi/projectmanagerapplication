@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lista_utilizadores id="TestListj01" description="Lista de utilizadores de exemplo 01">
+<utilizador>
+		<nome_utilizador>João Silva0</nome_utilizador> 		<!-- US201-->
+		<email_utilizador>js@mymail0.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>									<!-- US202-->
+				<rua>custodio pereir0a</rua>
+				<localidade>porto0</localidade>
+				<cp_num>44550</cp_num>
+				<cp_loc>550</cp_loc>
+				<pais>portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone></telefone>
+		<password></password>								<!-- Para fazer login -->
+		<estado_utilizador></estado_utilizador>
+	</utilizador>
+<utilizador>
+		<nome_utilizador>João Silva1</nome_utilizador> 		<!-- US201-->
+		<email_utilizador>js@mymail1.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>									<!-- US202-->
+				<rua>custodio pereira1</rua>
+				<localidade>porto</localidade>
+				<cp_num>4455</cp_num>
+				<cp_loc>55</cp_loc>
+				<pais>portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone></telefone>
+		<password></password>								<!-- Para fazer login -->
+		<estado_utilizador></estado_utilizador>
+	</utilizador>
+<utilizador>
+		<nome_utilizador>João Silva2</nome_utilizador> 		<!-- US201-->
+		<email_utilizador>js@mymail2.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>									<!-- US202-->
+				<rua>custodio pereira2</rua>
+				<localidade>porto</localidade>
+				<cp_num>4455</cp_num>
+				<cp_loc>55</cp_loc>
+				<pais>portugal</pais>
+			</endereco_postal>
+			<endereco_postal>									<!-- US202-->
+				<rua>custodio pereira21</rua>
+				<localidade>porto</localidade>
+				<cp_num>4455</cp_num>
+				<cp_loc>55</cp_loc>
+				<pais>portugal</pais>
+			</endereco_postal>
+			<endereco_postal>									<!-- US202-->
+				<rua>custodio pereira22</rua>
+				<localidade>porto</localidade>
+				<cp_num>4455</cp_num>
+				<cp_loc>55</cp_loc>
+				<pais>portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone></telefone>
+		<password></password>								<!-- Para fazer login -->
+		<estado_utilizador></estado_utilizador>
+	</utilizador>
+<utilizador>
+		<nome_utilizador>João Silva3</nome_utilizador> 		<!-- US201-->
+		<email_utilizador>js@mymail3.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>									<!-- US202-->
+				<rua>custodio pereira3</rua>
+				<localidade>porto</localidade>
+				<cp_num>4455</cp_num>
+				<cp_loc>55</cp_loc>
+				<pais>portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone></telefone>
+		<password></password>								<!-- Para fazer login -->
+		<estado_utilizador></estado_utilizador>
+	</utilizador>
+<utilizador>
+		<nome_utilizador>João Silva4</nome_utilizador> 		<!-- US201-->
+		<email_utilizador>js@mymail4.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>									<!-- US202-->
+				<rua>custodio pereira4</rua>
+				<localidade>porto</localidade>
+				<cp_num>4455</cp_num>
+				<cp_loc>55</cp_loc>
+				<pais>portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone></telefone>
+		<password></password>								<!-- Para fazer login -->
+		<estado_utilizador></estado_utilizador>
+	</utilizador>
+
+	<utilizador>
+		<nome_utilizador>João Silva5</nome_utilizador> 		<!-- US201-->
+		<email_utilizador>js@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>									<!-- US202-->
+				<rua>custodio pereir5a</rua>
+				<localidade>porto</localidade>
+				<cp_num>4455</cp_num>
+				<cp_loc>55</cp_loc>
+				<pais>portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone></telefone>
+		<password></password>								<!-- Para fazer login -->
+		<estado_utilizador></estado_utilizador>
+	</utilizador>
+</lista_utilizadores>

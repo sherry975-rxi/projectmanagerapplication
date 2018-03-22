@@ -1,29 +1,40 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US375GetProjectNotStartedTaskListController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US375ProjectNotStartedTasksUI {
 
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private PmTaskFunctionalitiesUI taskFuntionatities;
+
+	@Autowired
+	private US375GetProjectNotStartedTaskListController controller;
+
 	public void projectNotStartedTasksUI(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -40,7 +51,6 @@ public class US375ProjectNotStartedTasksUI {
 		System.out.println("                NOT STARTED TASKS");
 		System.out.println(line);
 
-		US375GetProjectNotStartedTaskListController controller = new US375GetProjectNotStartedTaskListController();
 
 		List<String> listOfExpiredTaskID = new ArrayList<>();
 
@@ -51,30 +61,22 @@ public class US375ProjectNotStartedTasksUI {
 		}
 
 		System.out.println(line);
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		// creation of a list with the options B,E and M
 		List<String> listOfOptionsToCompare = new ArrayList<>();
 		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
 
 		for (String ii : listOfExpiredTaskID) {
 
 			if ((ii.equals(option))) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
+				taskFuntionatities.setTaskID(ii);
+				taskFuntionatities.setProject(project);
+				taskFuntionatities.setUser(user);
 				taskFuntionatities.taskDataDisplay();
-			} else if ("B".equals(option)) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(user, project);
-				projectManagerMainMenuUI.displayOptions();
-
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
-			}
+			} 
 
 			listOfOptionsToCompare.add(ii);
 		}
@@ -83,8 +85,8 @@ public class US375ProjectNotStartedTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.projectNotStartedTasksUI(project, user);
+			loop = true;
 		}
 	}
 
-}
+}}

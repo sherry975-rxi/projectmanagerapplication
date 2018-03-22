@@ -1,11 +1,26 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
 import java.util.List;
 
+@Controller
 public class US370GetProjectFinishedTaskListController {
+
+	@Autowired
+	private TaskService taskService;
+
+	/*
+	 * Default constructor
+	 */
+
+	public US370GetProjectFinishedTaskListController() {
+
+	}
 
 	/**
 	 * Returns a list of tasks that belong to a Project and were marked as finished.
@@ -18,7 +33,7 @@ public class US370GetProjectFinishedTaskListController {
 
 	public List<Task> getProjectFinishedTaskList(Project proj) {
 
-		return proj.getTaskRepository().getFinishedTasks();
+		return taskService.getProjectFinishedTasks(proj);
 
 	}
 
@@ -33,7 +48,7 @@ public class US370GetProjectFinishedTaskListController {
 	 */
 	public List<Task> getFinishedTasksInDescreasingOrder(Project project) {
 
-		return project.getTaskRepository().getFinishedTasksInDecreasingOrder();
+		return taskService.getProjectFinishedTasksInDecreasingOrder(project);
 	}
 
 }

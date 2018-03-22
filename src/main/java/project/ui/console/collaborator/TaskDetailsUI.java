@@ -1,30 +1,50 @@
 package project.ui.console.collaborator;
 
-import project.controller.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import project.controller.PrintProjectInfoController;
+import project.controller.PrintTaskInfoController;
+import project.controller.US204v2createRequestAddCollaboratorToTaskTeamController;
+import project.controller.US205MarkTaskAsFinishedCollaboratorController;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
+@Component
 public class TaskDetailsUI {
+
+	@Autowired
+	private PrintTaskInfoController taskInfo;
+
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US204v2createRequestAddCollaboratorToTaskTeamController controllerMember;
+
+	@Autowired
+	private US204v2CreateTaskAssignmentToCollaboratorUI createAssignmentRequest;
+
+	@Autowired
+	private US205MarkTaskAsFinishedCollaboratorController taskToMark;
+
+	@Autowired
+	private US206CreateRemovalTaskRequestUI createCollabRemovalRequest;
+
+	@Autowired
+	private US207And208CreateOrUpdateTaskReportUI reportUI;
+
 	private User user;
 	private Integer projectID;
 	private String taskID;
-	private Boolean isPreviousUIFromTasks;
 	private Task task;
 
-	public TaskDetailsUI(String taskID, Integer projectID, User user, Boolean previous) {
-		this.taskID = taskID;
-		this.projectID = projectID;
-		this.user = user;
-		this.isPreviousUIFromTasks = previous;
+	public TaskDetailsUI() {
 	}
 
-	private static void printMenuOption(PrintProjectInfoController projectInfo, PrintTaskInfoController taskInfo){
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+	private void printMenuOption(){
 		System.out.println("");
 		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
 		System.out.println("");
@@ -46,9 +66,7 @@ public class TaskDetailsUI {
 		System.out.println("[3] Request task team unassignment");
 		System.out.println("[4] Create/Update task report");
 		System.out.println("______________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		System.out.println("[B] Back \n");
 	}
 
 	/**
@@ -58,29 +76,30 @@ public class TaskDetailsUI {
 	 */
 	public void taskDataDisplay() {
 		String cantDoIt = "You can't do it because you aren't assigned to this task.";
-		PrintTaskInfoController taskInfo = new PrintTaskInfoController(this.taskID, this.projectID);
+		taskInfo.setProjeID(this.projectID);
+		taskInfo.setTaskID(this.taskID);
 		taskInfo.setProjectAndTask();
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
+		projectInfo.setProjID(this.projectID);
 		projectInfo.setProject();
 
 		boolean condition = true;
 		while (condition) {
+			condition = false;
 
-			printMenuOption(projectInfo, taskInfo);
+			printMenuOption();
 
 			Scanner scannerInput = new Scanner(System.in);
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "1":
-				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember = new US204v2createRequestAddCollaboratorToTaskTeamController(
-						this.taskID, this.user);
+				controllerMember.setTaskID(this.taskID);
+				controllerMember.setUser(this.user);
 				task = controllerMember.getTaskByTaskID(this.taskID);
 				ProjectCollaborator projCollaborator = new ProjectCollaborator(this.user, this.projectID);
 
 				if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator)) {
 					System.out.println(cantDoIt);
 				} else {
-					US205MarkTaskAsFinishedCollaborator taskToMark = new US205MarkTaskAsFinishedCollaborator();
 					taskToMark.getProjectsThatIAmCollaborator(this.user);
 					taskToMark.getUnfinishedTasksOfProjectFromCollaborator(this.projectID);
 					taskToMark.getTaskToBeMarkedFinished(this.taskID);
@@ -89,36 +108,31 @@ public class TaskDetailsUI {
 				}
 				break;
 			case "2":
-				US204v2CreateTaskAssignmentToCollaboratorUI createAssignmentRequest = new US204v2CreateTaskAssignmentToCollaboratorUI(user, taskID, projectID);
+				createAssignmentRequest.setProjID(this.projectID);
+				createAssignmentRequest.setTaskID(this.taskID);
+				createAssignmentRequest.setUser(this.user);
 				createAssignmentRequest.createTaskAssignment();
 				break;
 			case "3":
-				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember1 = new US204v2createRequestAddCollaboratorToTaskTeamController(this.taskID, this.user);
-				task = controllerMember1.getTaskByTaskID(this.taskID);
+				controllerMember.setTaskID(this.taskID);
+				controllerMember.setUser(this.user);
+				task = controllerMember.getTaskByTaskID(this.taskID);
 				ProjectCollaborator projCollaborator1 = new ProjectCollaborator(this.user, this.projectID);
 				checkAndAddRemovalRequest(projCollaborator1, cantDoIt);
 				break;
-			case "B":
-				goToPreviousUI(this.projectID, this.user);
-				break;
 			case "4":
-				US204v2createRequestAddCollaboratorToTaskTeamController controllerMember2 = new US204v2createRequestAddCollaboratorToTaskTeamController(this.taskID, this.user);
-				task = controllerMember2.getTaskByTaskID(this.taskID);
+				controllerMember.setTaskID(this.taskID);
+				controllerMember.setUser(this.user);
+				task = controllerMember.getTaskByTaskID(this.taskID);
 				ProjectCollaborator projCollaborator2 = new ProjectCollaborator(this.user, this.projectID);
 				checkAndCreateReportRequest(projCollaborator2, cantDoIt);
 				break;
-			case "M":
-				MainMenuUI.mainMenu();
-				break;
-			case "E":
-				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-				condition = false;
+			case "B":
 				break;
 			default:
 				System.out.println("Please choose a valid option.");
 				System.out.println("");
-				TaskDetailsUI myAtualUIView = new TaskDetailsUI(this.taskID, this.projectID, user, this.isPreviousUIFromTasks);
-				myAtualUIView.taskDataDisplay();
+				condition = true;
 				break;
 			}
 		}
@@ -128,8 +142,8 @@ public class TaskDetailsUI {
 		if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator1)) {
 			System.out.println(cantDoIt);
 		} else {
-			US206CreateRemovalTaskRequestUI createCollabRemovalRequest = new US206CreateRemovalTaskRequestUI(user,
-					taskID);
+			createCollabRemovalRequest.setUser(this.user);
+			createCollabRemovalRequest.setTaskID(this.taskID);
 			createCollabRemovalRequest.cancelRemovalTaskRequestUI();
 		}
 	}
@@ -138,23 +152,33 @@ public class TaskDetailsUI {
 		if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator2)) {
 			System.out.println(cantDoIt);
 		} else {
-			US207And208CreateOrUpdateTaskReportUI reportUI = new US207And208CreateOrUpdateTaskReportUI(user.getEmail(),
-					taskID);
-
+			reportUI.setTaskCollaboratorThroughEmail(this.user.getEmail());
 
 			reportUI.createReport();
 		}
 	}
 
-	public void goToPreviousUI(Integer projectID, User user) {
-		this.projectID = projectID;
+//	public void goToPreviousUI(Integer projectID, User user) {
+//		this.projectID = projectID;
+//		this.user = user;
+//		if (this.isPreviousUIFromTasks) {
+//			ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
+//			projectView.projectDataDisplay();
+//		} else {
+//			UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
+//			userTasks.displayFunctionalities();
+//		}
+//	}
+
+	public void setUser(User user) {
 		this.user = user;
-		if (this.isPreviousUIFromTasks) {
-			ProjectViewMenuUI projectView = new ProjectViewMenuUI(projectID, user);
-			projectView.projectDataDisplay();
-		} else {
-			UserTasksFunctionalitiesMenuUI userTasks = new UserTasksFunctionalitiesMenuUI(user);
-			userTasks.displayFunctionalities();
-		}
+	}
+
+	public void setProjectID(Integer projectID) {
+		this.projectID = projectID;
+	}
+
+	public void setTaskID(String taskID) {
+		this.taskID = taskID;
 	}
 }

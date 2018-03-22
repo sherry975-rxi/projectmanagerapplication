@@ -1,86 +1,87 @@
 package project.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import project.model.*;
-import project.model.taskstateinterface.Created;
-import project.model.taskstateinterface.OnGoing;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
+import project.model.Project;
+import project.model.StateEnum;
+import project.model.Task;
+import project.model.User;
+import project.model.taskstateinterface.Created;
+import project.model.taskstateinterface.OnGoing;
+
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan(basePackages = { "project.Services", "project.controller", "project.model" })
 public class US342CreateTaskDependencyTest {
 
-	Company myComp;
-	ProjectContainer projRepo;
-	UserContainer userRepo;
-	TaskContainer taskRepo;
+	@Autowired
+	ProjectService projRepo;
+	@Autowired
+	UserService userRepo;
+	@Autowired
+	TaskService taskRepo;
 	Project proj;
 	Task taskA;
 	Task taskB;
 	Task taskC;
 	User user;
+	@Autowired
 	US342CreateTaskDependencyController controller;
 
 	@Before
 	public void setUp() {
-		// Initialize company
-		myComp = Company.getTheInstance();
-
-		// Initialize Project Repository
-		projRepo = myComp.getProjectsContainer();
-
-		// Initialize User Repository
-		userRepo = myComp.getUsersContainer();
 
 		// Add user to User Repository
-		userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
+		user = userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
 				"Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA");
-		user = userRepo.getUserByEmail("ugandan@nackls.com");
 
 		// Add a project to the project repository
-		projRepo.addProjectToProjectContainer(
-				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user));
-		proj = projRepo.getAllProjectsfromProjectsContainer().get(0);
-
-		// Initialize Task Repository
-		taskRepo = proj.getTaskRepository();
+		proj = projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user);
 
 		// Create and add tasks to Task Repository
 		// Task A isn't added to test the method that checks if the list contains a
 		// certain task
-		taskA = new Task(1, 1, "Faind fek quin!");
-		taskB = new Task(2, 1, "Spit on non-beleevahs!");
-		taskC = new Task(3, 1, "Follou da wae!");
-		taskRepo.addTaskToProject(taskC);
-		taskRepo.addTaskToProject(taskB);
 
-		// Initialize Controller
-		controller = new US342CreateTaskDependencyController(proj);
+		// Create and add tasks to Task Repository
+		taskA = taskRepo.createTask("Faind fek quin!", proj);
+		taskB = taskRepo.createTask("Spit on non-beleevahs!", proj);
+		taskC = taskRepo.createTask("Follou da wae!", proj);
 
+		controller.setProject(proj);
 	}
 
 	@After
-	public void tearDown() {
-		Company.clear();
-		projRepo = null;
-		userRepo = null;
-		taskRepo = null;
+	public void clear() {
+
 		proj = null;
 		taskA = null;
 		taskB = null;
 		taskC = null;
 		user = null;
-		controller = null;
+
 	}
 
 	@Test
 	public final void testGetTasksFromAProject() {
-		assertEquals(2, controller.getTasksFromAProject().size());
+		assertEquals(3, controller.getTasksFromAProject().size());
 	}
 
 	@Test
@@ -89,9 +90,12 @@ public class US342CreateTaskDependencyTest {
 		// Give estimated start date to task C
 		taskC.setEstimatedTaskStartDate(Calendar.getInstance());
 		taskC.setTaskDeadline(Calendar.getInstance());
+		taskRepo.saveTask(taskC);
 
 		// Create dependency
-		controller.createDependenceFromTask("1.2", "1.3", 20);
+		controller.createDependenceFromTask(taskB.getTaskID(), taskC.getTaskID(), 20);
+
+		taskRepo.saveTask(taskB);
 
 		assertTrue(taskB.hasDependencies());
 		assertTrue(taskB.getEstimatedTaskStartDate() != null);
@@ -113,7 +117,9 @@ public class US342CreateTaskDependencyTest {
 		taskB.getEstimatedTaskStartDate().set(Calendar.MONTH, 5);
 		taskB.getEstimatedTaskStartDate().set(Calendar.YEAR, 2005);
 
-		String date = controller.getTaskEstimatedStartDateString("1.2");
+		taskRepo.saveTask(taskB);
+
+		String date = controller.getTaskEstimatedStartDateString(taskB.getTaskID());
 
 		assertTrue("13/06/2005".equals(date));
 	}
@@ -121,34 +127,29 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public final void testGetTaskByID() {
 
-		assertEquals(taskB, controller.getTaskByID("1.2"));
-		assertEquals(taskC, controller.getTaskByID("1.3"));
+		Integer projectID = proj.getId();
+
+		assertEquals(taskB, controller.getTaskByID((projectID + ".2")));
+		assertEquals(taskC, controller.getTaskByID((projectID + ".3")));
 
 	}
 
 	@Test
 	public final void projectContainsSelectedTask() {
 
-		assertTrue(controller.projectContainsSelectedTask("1.2"));
-		assertFalse(controller.projectContainsSelectedTask("1.1"));
+		Integer projectID = proj.getId();
+
+		assertTrue(controller.projectContainsSelectedTask(projectID + ".2"));
+		assertFalse(controller.projectContainsSelectedTask(projectID + ".4"));
 	}
 
 	@Test
 	public void isTaskDependencyPossibleTest() {
-		// Adds taskA to TaskContainer
-		taskRepo.addTaskToProject(taskA);
 
-		/*
-		 * Creates four tasks states
-		 */
-		OnGoing onGoing = new OnGoing(taskA);
-		Created created = new Created(taskA);
-
-		OnGoing onGoingB = new OnGoing(taskB);
-		Created createdB = new Created(taskB);
-
-		taskA.setTaskState(onGoing);
-		taskB.setTaskState(createdB);
+		taskA.setTaskState(new OnGoing());
+		taskA.setCurrentState(StateEnum.ONGOING);
+		taskB.setTaskState(new Created());
+		taskB.setCurrentState(StateEnum.CREATED);
 		taskA.setTaskDeadline(Calendar.getInstance());
 
 		// Checks if transition is valid
@@ -157,27 +158,19 @@ public class US342CreateTaskDependencyTest {
 		/*
 		 * Sets taskB to "OnGoing" Transition won't be valid
 		 */
-		taskB.setTaskState(onGoingB);
+		taskB.setTaskState(new OnGoing());
+		taskB.setCurrentState(StateEnum.ONGOING);
 		assertFalse(controller.isTaskDependencyPossible(taskB.getTaskID(), taskA.getTaskID()));
 
 	}
 
 	@Test
 	public void removeTaskDependency() {
-		// Adds taskA to TaskContainer
-		taskRepo.addTaskToProject(taskA);
 
-		/*
-		 * Creates four tasks states
-		 */
-		OnGoing onGoing = new OnGoing(taskA);
-		Created created = new Created(taskA);
-
-		OnGoing onGoingB = new OnGoing(taskB);
-		Created createdB = new Created(taskB);
-
-		taskA.setTaskState(onGoing);
-		taskB.setTaskState(createdB);
+		taskA.setTaskState(new OnGoing());
+		taskA.setCurrentState(StateEnum.ONGOING);
+		taskB.setTaskState(new Created());
+		taskB.setCurrentState(StateEnum.CREATED);
 		taskA.setTaskDeadline(Calendar.getInstance());
 
 		// Creates a task dependency
@@ -199,20 +192,10 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public void getTaskDeadlineString() {
 
-		// Adds taskA to TaskContainer
-		taskRepo.addTaskToProject(taskA);
-
-		/*
-		 * Creates four tasks states
-		 */
-		OnGoing onGoing = new OnGoing(taskA);
-		Created created = new Created(taskA);
-
-		OnGoing onGoingB = new OnGoing(taskB);
-		Created createdB = new Created(taskB);
-
-		taskA.setTaskState(onGoing);
-		taskB.setTaskState(createdB);
+		taskA.setTaskState(new OnGoing());
+		taskA.setCurrentState(StateEnum.ONGOING);
+		taskB.setTaskState(new Created());
+		taskB.setCurrentState(StateEnum.CREATED);
 		taskA.setTaskDeadline(Calendar.getInstance());
 
 		// Creates a task dependency

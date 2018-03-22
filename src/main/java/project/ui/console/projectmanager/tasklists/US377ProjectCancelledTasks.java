@@ -1,32 +1,40 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US377CollectionOfCancelledTasksFromAProjectController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US377ProjectCancelledTasks {
 
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US377CollectionOfCancelledTasksFromAProjectController controller;
+
+	@Autowired
+	private PmTaskFunctionalitiesUI taskFuntionatities;
 
 	public void displayCancelledTasksOfProject(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
-
 
 		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -42,8 +50,7 @@ public class US377ProjectCancelledTasks {
 		System.out.println("     CANCELLED TASKS");
 		System.out.println(line);
 
-		US377CollectionOfCancelledTasksFromAProjectController controller = new US377CollectionOfCancelledTasksFromAProjectController(
-				project);
+		controller.setProject(project);
 
 		List<String> listOfCancelledTasks = new ArrayList<>();
 
@@ -54,34 +61,21 @@ public class US377ProjectCancelledTasks {
 		}
 
 		System.out.println(line);
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
-
+		System.out.println("[B] Back \n");
 		String option = scannerInput.nextLine().toUpperCase();
 
 		// creation of a list with the options B,E and M
 		List<String> listOfOptionsToCompare = new ArrayList<>();
 		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
 
 		for (String ii : listOfCancelledTasks) {
 
 			if (option.equals(ii)) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
+				taskFuntionatities.setTaskID(ii);
+				taskFuntionatities.setProject(project);
+				taskFuntionatities.setUser(user);
 				taskFuntionatities.taskDataDisplay();
-			} else if ("B".equals(option)) {
-				ProjectManagerMainMenuUI projectManagerMainMenuUI = new ProjectManagerMainMenuUI(user,
-						project);
-				projectManagerMainMenuUI.displayOptions();
-
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
-			} else if ("E".equals(option)) {
-				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-				break;
-			}
+			} 
 			listOfOptionsToCompare.add(ii);
 		}
 
@@ -89,8 +83,8 @@ public class US377ProjectCancelledTasks {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.displayCancelledTasksOfProject(project, user);
+			loop = true;
 		}
 	}
-
+	}
 }

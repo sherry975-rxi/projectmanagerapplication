@@ -1,6 +1,9 @@
 package project.controller;
 
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.ProjectService;
+import project.Services.UserService;
 import project.model.EffortUnit;
 import project.model.Project;
 import project.model.User;
@@ -15,12 +18,32 @@ import java.util.List;
  *         Project.
  *
  */
+@Controller
 public class US301CreateProjectController {
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private UserService userService;
 
-	Company myCompany = Company.getTheInstance();
-	List<User> activeCollaboratorList;
-	User selectedUser = null;
-	Project createdProject = null;
+	private List<User> activeCollaboratorList;
+	private User selectedUser = null;
+	private Project createdProject = null;
+
+	public US301CreateProjectController() {
+
+	}
+
+	public void setActiveCollaboratorList(List<User> activeCollaboratorList) {
+		this.activeCollaboratorList = activeCollaboratorList;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
+	}
+
+	public void setCreatedProject(Project createdProject) {
+		this.createdProject = createdProject;
+	}
 
 	/**
 	 * This method creates a project from the controller by calling the create
@@ -38,9 +61,9 @@ public class US301CreateProjectController {
 	 */
 	public Project createProject(String name, String description, User projectManager) {
 
-		createdProject = myCompany.getProjectsContainer().createProject(name, description, projectManager);
+		createdProject = projectService.createProject(name, description, projectManager);
 
-		myCompany.getProjectsContainer().addProjectToProjectContainer(createdProject);
+		projectService.addProjectToProjectContainer(createdProject);
 
 		return createdProject;
 	}
@@ -52,7 +75,9 @@ public class US301CreateProjectController {
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listActiveCollaborators() {
-		this.activeCollaboratorList = myCompany.getUsersContainer().getAllActiveCollaboratorsFromRepository();
+
+		activeCollaboratorList = this.userService.getAllActiveCollaboratorsFromRepository();
+
 		List<String> userListAsString = new ArrayList<>();
 
 		for (int i = 0; i < activeCollaboratorList.size(); i++) {
@@ -95,7 +120,7 @@ public class US301CreateProjectController {
 	 * This method is called after the project is created and sets the project's
 	 * budget as the chosen value. By default, budget is set to "0"
 	 * 
-	 * @param Integer
+	 * @param budget
 	 *            value that will become the project's budget
 	 */
 	public void changeBudget(int budget) {
@@ -107,7 +132,7 @@ public class US301CreateProjectController {
 	 * This is a utility method that converts a User object into a String of data,
 	 * to be displayed in the UI
 	 * 
-	 * @param User
+	 * @param toConvert
 	 *            to be converted
 	 * @return String of the user's data
 	 */

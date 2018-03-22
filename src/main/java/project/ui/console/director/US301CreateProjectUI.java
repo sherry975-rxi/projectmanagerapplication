@@ -1,14 +1,18 @@
 package project.ui.console.director;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US301CreateProjectController;
-import project.controller.UpdateDbToContainersController;
 import project.model.EffortUnit;
 import project.model.User;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US301CreateProjectUI {
+	@Autowired
+	private US301CreateProjectController controller;
 
 	String projectName = "(Insert Name)";
 	String projectDescription = "(Insert Description)";
@@ -25,8 +29,6 @@ public class US301CreateProjectUI {
 	String dataInput;
 
 	public void createProject() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		US301CreateProjectController controller = new US301CreateProjectController();
 		Scanner mainComm = new Scanner(System.in);
 		Scanner dataIn = new Scanner(System.in);
 
@@ -35,7 +37,6 @@ public class US301CreateProjectUI {
 		System.out.println("");
 
 		while (isProjectCreationOngoing) {
-			infoUpdater.updateDBtoContainer();
 			System.out.println("Please choose a command to input a field:");
 			mainCommand = mainComm.nextLine().toUpperCase();
 
@@ -157,7 +158,6 @@ public class US301CreateProjectUI {
 	 * and current Effort Units as String, and executes the selection method
 	 * 
 	 * @param dataIn
-	 * @param hourString
 	 * 
 	 * @return the given scanner, so its input can be refreshed and not read by the
 	 *         next scanner

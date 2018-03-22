@@ -1,9 +1,20 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
+@Controller
 public class US110andUS112SetUserProfileController {
+
+	@Autowired
+	private UserService userService;
+
+	public UserService getUserContainer() {
+		return userService;
+	}
 
 	/**
 	 * This method sets the assigned user as Director
@@ -42,5 +53,4 @@ public class US110andUS112SetUserProfileController {
 
 		return output;
 	}
-
 }

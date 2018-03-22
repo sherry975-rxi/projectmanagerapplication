@@ -1,19 +1,20 @@
 package project.ui.console.director;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US320ViewProjectsController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US320ViewProjectsUI {
+	@Autowired
+	private	US320ViewProjectsController controller;
 
 	public Project viewProjectsUI(Project selectedProject) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 		Scanner input = new Scanner(System.in);
-		US320ViewProjectsController controller = new US320ViewProjectsController();
 		List<String> projectsList;
 
 		System.out.println("Type [0] to view active projects, or any key to view all projects:");

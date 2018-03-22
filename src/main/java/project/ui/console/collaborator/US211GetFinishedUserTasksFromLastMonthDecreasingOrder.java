@@ -1,29 +1,31 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 
-	User user;
-	String date;
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	@Autowired
+	private US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController viewTasksFinishedLastMonth;
 
-	public US211GetFinishedUserTasksFromLastMonthDecreasingOrder(User user) {
-		this.user = user;
+
+	User user;
+
+	public US211GetFinishedUserTasksFromLastMonthDecreasingOrder() {
+
 	}
 
 	public void viewLastMonthFinishedTasks() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		Scanner scannerInput = new Scanner(System.in);
-		US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController viewTasksFinishedLastMonth = new US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController();
 		List<String> lastMonthFinishedTasks = viewTasksFinishedLastMonth
 				.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
 		System.out.println("Finished Tasks by Decreasing Order of:");
@@ -37,30 +39,25 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 		}
 		System.out.println("______________________________________________");
 
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		System.out.println("[B] Back \n");
 
 		System.out.println("");
 
-		boolean repeat = true;
-		while (repeat) {
+
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "B":
-				UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
-				previousMenu.displayFunctionalities();
-				repeat = false;
-				break;
-			case "M":
-				MainMenuUI.mainMenu();
-				repeat = false;
 				break;
 			default:
 				System.out.println("Invalid input. Please retry:");
-
+				loop = true;
+				break;
 			}
 
-		}
+	}
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

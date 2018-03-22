@@ -1,22 +1,22 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US216AverageTimeSpentOnTaskLastMonthController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
 
+@Component
 public class US216AverageTimeSpentByTaskLastMonthUI {
+	@Autowired
+	private US216AverageTimeSpentOnTaskLastMonthController averageTime;
 
 	public void displayAveregeTimeSpentByTaskLastMonth(User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();
 
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
-
-		US216AverageTimeSpentOnTaskLastMonthController averageTime = new US216AverageTimeSpentOnTaskLastMonthController();
 		Double average = averageTime.getAverageTimeOfFinishedTasksFromUserLastMonth(user);
 
 		System.out.println("\n");

@@ -1,5 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -14,7 +17,19 @@ import java.util.List;
  * @author Group3
  *
  */
+
+@Controller
 public class US380GetProjectExpiredTaskListController {
+
+	@Autowired
+	private TaskService taskService;
+
+	/*
+	 * Default constructor
+	 */
+	public US380GetProjectExpiredTaskListController() {
+
+	}
 
 	/**
 	 * This methods gets all the unfinished tasks with expired deadline and returns
@@ -28,7 +43,7 @@ public class US380GetProjectExpiredTaskListController {
 	 */
 	public List<String> getUnfinishedTaskListWithExpiredDeadline(Project proj) {
 
-		List<Task> taskListExpDeadline = proj.getTaskRepository().getExpiredTasks();
+		List<Task> taskListExpDeadline = taskService.getProjectExpiredTasks(proj);
 		List<String> taskListToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListExpDeadline.size(); i++) {

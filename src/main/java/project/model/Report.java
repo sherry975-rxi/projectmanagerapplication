@@ -1,8 +1,5 @@
 package project.model;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -19,16 +16,14 @@ import java.util.Calendar;
 public class Report {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private double reportedTime;
-    @ManyToOne(cascade = CascadeType.PERSIST)
-	@LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "TaskCollaborator_id")
 	private TaskCollaborator taskCollaborator;
 	private double cost;
-	@ManyToOne
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
 	private Task task;
 	private Calendar dateOfReport;
@@ -54,7 +49,7 @@ public class Report {
 		
 		this.reportedTime = 0;
 		this.taskCollaborator = taskCollaborator;
-		this.cost = taskCollaborator.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+		this.cost = taskCollaborator.getCost();
 		this.dateOfReport = reportDate;
 		this.dateOfUpdate = reportDate;
 	}

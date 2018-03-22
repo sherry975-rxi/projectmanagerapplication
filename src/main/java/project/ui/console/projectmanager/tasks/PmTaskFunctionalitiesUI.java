@@ -1,39 +1,59 @@
 package project.ui.console.projectmanager.tasks;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import project.Services.TaskService;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
+@Component
 public class PmTaskFunctionalitiesUI {
+
+	@Autowired
+	private TaskService taskService; //QUE E ISTO PA?!
+
+	@Autowired
+	private PrintTaskInfoController taskInfo;
+
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US361AssignUserToTaskUI case1UI;
+
+	@Autowired
+	private US362RemoveUserFromTaskUI case2UI;
+
+	@Autowired
+	private US365MarkTaskAsFinishedUI case3UI;
+
+	@Autowired
+	private US347CancelOnGoingTaskUI us347UI;
 
 	private Project project;
 	private String taskID;
 	private User user;
 	private Task task;
 
-	public PmTaskFunctionalitiesUI(String taskID, Project project, User user) {
-		this.taskID = taskID;
-		this.project = project;
-		this.user = user;
-		this.task = project.getTaskRepository().getTaskByID(taskID);
+
+	public PmTaskFunctionalitiesUI() {
 	}
 
 	public void taskDataDisplay() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		PrintTaskInfoController taskInfo = new PrintTaskInfoController(this.taskID, this.project.getIdCode());
+		this.task = taskService.getTaskByTaskID(taskID);
+		taskInfo.setTaskID(taskID);
+		taskInfo.setProjeID(project.getIdCode());
 		taskInfo.setProjectAndTask();
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project.getIdCode());
+		projectInfo.setProjID(project.getIdCode());
 		projectInfo.setProject();
 
 		boolean condition = true;
 		while (condition) {
-			infoUpdater.updateDBtoContainer();
 			System.out.println("");
 			System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
 			System.out.println("");
@@ -62,30 +82,23 @@ public class PmTaskFunctionalitiesUI {
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "1":
-				US361AssignUserToTaskUI case1UI = new US361AssignUserToTaskUI(this.project, this.task, this.user);
+				case1UI.setProject(project);
+				case1UI.setTask(task);
 				case1UI.displayUsersToAssign();
 				break;
 			case "2":
-				US362RemoveUserFromTaskUI case2UI = new US362RemoveUserFromTaskUI(this.project, this.task, this.user);
+				case2UI.setProject(project);
+				case2UI.setTask(task);
 				case2UI.displayUsersToRemove();
 
 				break;
 			case "3":
-				US365MarkTaskAsFinishedUI case3UI = new US365MarkTaskAsFinishedUI();
 				case3UI.markTaskAsFinished(taskID, project);
 				break;
 			case "4":
-				US347CancelOnGoingTaskUI us347UI = new US347CancelOnGoingTaskUI();
 				us347UI.cancelOnGoingTask(taskID, project);
 				break;
 			case "B":
-				condition = false;
-				break;
-			case "M":
-				MainMenuUI.mainMenu();
-				break;
-			case "E":
-				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 				condition = false;
 				break;
 			default:
@@ -94,5 +107,17 @@ public class PmTaskFunctionalitiesUI {
 				break;
 			}
 		}
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public void setTaskID(String taskID) {
+		this.taskID = taskID;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

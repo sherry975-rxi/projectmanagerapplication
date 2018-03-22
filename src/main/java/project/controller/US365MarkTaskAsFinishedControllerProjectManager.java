@@ -1,20 +1,61 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
-import project.model.TaskContainer;
 
+@Controller
 public class US365MarkTaskAsFinishedControllerProjectManager {
+
+	@Autowired
+	private TaskService taskService;
+
 	private Task taskToBeMarked;
-	private TaskContainer projectTaskList;
+	private Project selectedProject;
+
+	/*
+	 * Default constructor
+	 */
+
+	public US365MarkTaskAsFinishedControllerProjectManager() {
+
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+
+	public Task getTaskToBeMarked() {
+		return taskToBeMarked;
+	}
+
+	public void setTaskToBeMarked(String taskID) {
+		this.taskToBeMarked = taskService.getTaskByTaskID(taskID);
+	}
+
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
+	}
 
 	public US365MarkTaskAsFinishedControllerProjectManager(String taskID, Project selectedProject) {
-		this.projectTaskList = selectedProject.getTaskRepository();
-		this.taskToBeMarked = projectTaskList.getTaskByID(taskID);
+		this.selectedProject = selectedProject;
+		this.taskToBeMarked = taskService.getTaskByTaskID(taskID);
 	}
 
 	public boolean setTaskAsFinished() {
-		return taskToBeMarked.markTaskAsFinished();
+		boolean wasTaskChangedToFinished = taskToBeMarked.markTaskAsFinished();
+
+		if (wasTaskChangedToFinished) {
+			taskService.saveTask(this.taskToBeMarked);
+		}
+
+		return wasTaskChangedToFinished;
 	}
 
 	/**

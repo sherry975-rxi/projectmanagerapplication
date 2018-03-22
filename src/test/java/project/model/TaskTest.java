@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package project.model;
 
 import org.junit.After;
@@ -14,1104 +12,1762 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-//
-
 /**
- * @author Group 3
+ * @author Grupo 3
  *
  */
 public class TaskTest {
 
-	Company myCompany;
-	ProjectContainer myProjRep;
-	User user1, user2;
-	Project myProject;
-	Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6;
-	ProjectCollaborator collab1, collab2, collab3;
-	Calendar estimatedTaskStartDate, taskDeadline;
-	TaskCollaborator tWorker1, tWorker2, tWorker3;
-	Finished finishedTaskState;
-	StandBy standByTaskState;
-	Cancelled cancelledTaskState;
-	Task task;
-	OnGoing taskState;
-
-	double expectedCost;
+	private User userTest;
+	private Project projectTest;
+	private Project projectTestSecond;
+	private Task taskTest;
+	private Task taskTestSecond;
+	private Task taskReadyToFinishTest;
+	private TaskCollaborator taskCollaborator;
+	private ProjectCollaborator projectCollaborator;
+	private Report report;
 
 	@Before
 	public void setUp() {
 
-		myCompany = Company.getTheInstance();
-		myProjRep = myCompany.getProjectsContainer();
+		// create user
+		userTest = new User("Pedro Silva", "pedrosilva@gmail.com", "001", "Developer", "912364896");
 
-		user1 = new User("pepe", "user@gmail.com", "66", "debugger", "1234567");
-		user2 = new User("doge", "suchmail@mail.com", "666", "debugger", "1234567");
-		myProject = new Project(1, "Projecto 1", "Projecto Abcd", user1);
+		// create project
+		projectTest = new Project("ProjectX", "Make x stuff", userTest);
+		projectTest.setStartdate(Calendar.getInstance());
+		projectTestSecond = new Project("ProjectZ", "Make z stuff", userTest);
 
-		myProjRep.addProjectToProjectContainer(myProject);
+		// create task
+		taskTest = new Task("Make x", projectTest);
+		taskReadyToFinishTest = new Task("Make j", projectTest);
+		taskTestSecond = new Task("Make z", projectTest);
 
-		collab1 = myProject.createProjectCollaborator(user1, 5);
-		collab2 = myProject.createProjectCollaborator(user2, 5);
+		// create project collaborator
+		projectCollaborator = new ProjectCollaborator(userTest, 10);
 
-		myProject.addProjectCollaboratorToProjectTeam(collab1);
-		myProject.addProjectCollaboratorToProjectTeam(collab2);
+		// create task collaborator
+		taskCollaborator = new TaskCollaborator(projectCollaborator);
 
-		tWorker1 = new TaskCollaborator(collab1);
-		tWorker2 = new TaskCollaborator(collab2);
+		// create report
+		report = new Report(taskCollaborator, Calendar.getInstance());
 
-		Calendar projStartDate = Calendar.getInstance();
-		myProject.setStartdate(projStartDate);
+		// Finish task
 
-		testTask = new Task(1, 1, "Description of task");
-		testTask.setProject(myProject);
-		testTask2 = new Task(2, 2, "Description of task");
-		testTask2.setProject(myProject);
-		testTask3 = new Task(3, 3, "Description of task 3");
-		testTask3.setProject(myProject);
-		testTask4 = new Task(testTask);
-		testTask4.setProject(myProject);
-		testTask5 = new Task(5, 1, "Description of task 5");
-		testTask5.setProject(myProject);
-		testTask5.setDeadlineInterval(Calendar.DAY_OF_YEAR + 5);
-		testTask5.setStartDateInterval(Calendar.DAY_OF_YEAR + 6);
-		Task task = new Task();
-		OnGoing taskState = new OnGoing(task);
+		taskReadyToFinishTest.setTaskID("1");
 
+		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
+
+		taskReadyToFinishTest.setEstimatedTaskStartDate(Calendar.getInstance());
+
+		taskReadyToFinishTest.setTaskDeadline(Calendar.getInstance());
+
+		taskReadyToFinishTest.setEstimatedTaskEffort(1);
+
+		taskReadyToFinishTest.setTaskBudget(1);
+
+		taskReadyToFinishTest.setStartDate(Calendar.getInstance());
+
+		// OnGoing task tasReadyToFinish
+
+		// Finish task
+
+		taskTestSecond.setTaskID("2");
+
+		taskTestSecond.addProjectCollaboratorToTask(projectCollaborator);
+
+		taskTestSecond.setEstimatedTaskStartDate(Calendar.getInstance());
+
+		taskTestSecond.setTaskDeadline(Calendar.getInstance());
+
+		taskTestSecond.setEstimatedTaskEffort(1);
+
+		taskTestSecond.setTaskBudget(1);
+
+		taskTestSecond.setStartDate(Calendar.getInstance());
 	}
 
 	@After
-	public void tearDown() {
-		Company.clear();
-		myProjRep = null;
-		user1 = null;
-		user2 = null;
-		myProject = null;
-		testTask = null;
-		testTask2 = null;
-		testTask3 = null;
-		testTask4 = null;
-		testTask5 = null;
-		testTask6 = null;
-		collab1 = null;
-		collab2 = null;
-		collab3 = null;
-		tWorker1 = null;
-		tWorker2 = null;
-		tWorker3 = null;
-		expectedCost = 0;
-		estimatedTaskStartDate = null;
-		taskDeadline = null;
-		finishedTaskState = null;
-		standByTaskState = null;
-		cancelledTaskState = null;
+	public void tearDown() throws Exception {
+
+		userTest = null;
+		projectTest = null;
+		projectTestSecond = null;
+		taskTest = null;
+		taskTestSecond = null;
+		taskReadyToFinishTest = null;
+		taskCollaborator = null;
+		projectCollaborator = null;
+		report = null;
 
 	}
 
 	/**
-	 * Tests getDescription method by comparing it against a task with the same one
-	 * And afterwards comparing it against a different one
+	 * Test method for {@link project.model.Task#hashCode()}.
 	 */
 	@Test
-	public void testTaskConstructor() {
-		testTask.addTaskCollaboratorToTask(tWorker1);
+	public void testHashCode() {
 
-		assertTrue(testTask.getDescription().equals(testTask2.getDescription()));
-		assertFalse(testTask.getDescription().equals(testTask3.getDescription()));
-	}
+		taskTest.setTaskID("1");
+		taskTestSecond.setTaskID("2");
 
-	@Test
-	public void testTaskConstructorDatesMutatorStartNull() {
-		Integer startDateTest = null;
-		testTask4.addTaskCollaboratorToTask(tWorker1);
-		assertEquals(testTask4.getStartDateInterval(), startDateTest);
-	}
+		assertFalse(taskTest.hashCode() == taskTestSecond.hashCode());
 
-	@Test
-	public void testTaskConstructorDatesMutatorDeadNull() {
-		Integer deadlineDateTest = null;
-		testTask4.addTaskCollaboratorToTask(tWorker1);
-		assertEquals(testTask4.getDeadlineInterval(), deadlineDateTest);
-	}
-
-	@Test
-	public void estTaskConstructorDatesMutatorStartDate() {
-		testTask6 = new Task(testTask5);
-		Integer startDateTest = Calendar.DAY_OF_YEAR + 6;
-		testTask6.addTaskCollaboratorToTask(tWorker1);
-		assertEquals(testTask6.getStartDateInterval(), startDateTest);
-	}
-
-	@Test
-	public void estTaskConstructorDatesMutatorDeadDate() {
-		testTask6 = new Task(testTask5);
-		Integer deadlineDateTest = Calendar.DAY_OF_YEAR + 5;
-		testTask6.addTaskCollaboratorToTask(tWorker1);
-		assertEquals(testTask6.getDeadlineInterval(), deadlineDateTest);
-	}
-
-	@Test
-	public void testGettersAndSetters() {
-
-		// Creates an int variable
-		int valueToCompare = 10;
-
-		// Tests the set and getEstimatedTaskEffort methods
-		testTask.setEstimatedTaskEffort(valueToCompare);
-		assertEquals(valueToCompare, testTask.getEstimatedTaskEffort());
-
-		// Tests the set and getTaskBudget methods
-		testTask.setTaskBudget(valueToCompare);
-		assertEquals(valueToCompare, testTask.getTaskBudget());
-
-		// Tests the set and getTaskStartDate methods
-		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
-		assertEquals(estimatedTaskStartDate, testTask.getEstimatedTaskStartDate());
-
-		/*
-		 * Task is created in project MyProject, which is the first and only project to
-		 * be created in this unitTest, so it starts with one Since testTask is the
-		 * first task to be created, the number associated to it its also 1
-		 */
-
-		String taskIDToCompare = "1.1";
-
-		assertEquals(testTask.getTaskID(), taskIDToCompare);
+		int result = 3 * 31 + taskTest.getTaskID().hashCode();
+		assertEquals(taskTest.hashCode(), result);
 	}
 
 	/**
-	 * Tests add and remove users to task team: verifying true or false depending on
-	 * if they exist) Then compares the Team list with a test List
-	 */
-	@Test
-	public void testTaskTeam() {
-
-		// given a task and two task workers
-		// when the task is empty
-		// then the addTaskCollaborator to task method must return true
-		assertTrue(testTask.addTaskCollaboratorToTask(tWorker1));
-		assertTrue(testTask.addTaskCollaboratorToTask(tWorker2));
-		assertTrue(
-				testTask.isProjectCollaboratorInTaskTeam(collab1) && testTask.isProjectCollaboratorInTaskTeam(collab2));
-
-		// when task workers 1 and 2 are active in the task
-		// then they cannot be added to the same task again (addTaskCollaboratorToTask must return false)
-		assertFalse(testTask.addTaskCollaboratorToTask(tWorker1));
-		assertFalse(testTask.addTaskCollaboratorToTask(tWorker2));
-
-		// when task worker 1 is inactive and 2 is active in the task
-		tWorker1.addFinishDateForTaskCollaborator();
-		// then only task worker 1 can be added to the task
-		assertTrue(testTask.addTaskCollaboratorToTask(tWorker1));
-		assertFalse(testTask.addTaskCollaboratorToTask(tWorker2));
-
-		// given that taskWorker 1 still has a finish date (considered inactive)
-		// when the add Project Collaborator to task method is called for Collaborator 1
-		// then the expected result must be false
-		assertTrue(testTask.addProjectCollaboratorToTask(collab1));
-		assertFalse(testTask.addProjectCollaboratorToTask(collab2));
-
-	}
-
-	/**
-	 * Checks if clear date is different from a random date
-	 */
-	@Test
-	public void testGetFinishDate() {
-		testTask.setFinishDate();
-		Calendar c = Calendar.getInstance();
-		c.add(Calendar.DAY_OF_MONTH, 5);
-		assertFalse(testTask.getFinishDate().equals(c));
-	}
-
-	/**
-	 * First checks if new task is not finished After setting it as finished,
-	 * confirms it's indeed finished
-	 */
-	@Test
-	public void testIsFinished() {
-		// necessary to pass from "Created" to "Planned"
-		estimatedTaskStartDate = Calendar.getInstance();
-		estimatedTaskStartDate.add(Calendar.MONTH, -1);
-		testTask.setEstimatedTaskStartDate(estimatedTaskStartDate);
-		taskDeadline = Calendar.getInstance();
-		taskDeadline.add(Calendar.MONTH, 1);
-		testTask.setTaskDeadline(taskDeadline);
-
-		testTask.getTaskState().changeToPlanned();
-
-		// necessary to pass from "Planned" to "Assigned"
-		testTask.addProjectCollaboratorToTask(collab2);
-		testTask.getTaskState().changeToAssigned();
-
-		// pass from "Assigned" to "Ready"
-		testTask.getTaskState().changeToReady();
-
-		// necessary to pass from "Ready" to "OnGoing"
-		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
-		testTask.setStartDate(projStartDate);
-		testTask.getTaskState().changeToOnGoing();
-
-		assertFalse(testTask.isTaskFinished());
-
-		// pass from "OnGoing" to "Finished"
-		assertTrue(testTask.markTaskAsFinished());
-	}
-
-	/**
-	 * Tests the task equals override
-	 */
-	@Test
-	public void testTaskEquals() {
-		assertTrue(testTask.equals(testTask));// same object
-		Task testTask4 = null;
-		assertFalse(testTask.equals(testTask4));// null object
-		assertFalse(testTask.equals(user1));// different classes
-		assertFalse(testTask.equals(testTask2));// different counter
-		testTask4 = new Task(1, 1, "Task 1", 1, estimatedTaskStartDate, taskDeadline, 0);
-		assertTrue(testTask.equals(testTask4));// same counter
-	}
-
-	/**
-	 * Tests the getTimeSpentOnTaskMethod First with 0 hours (confirming if report
-	 * is created with time set to 0), then 15 hours;
-	 */
-	@Test
-	public void testGetTimeSpentOnTask() {
-		testTask.addTaskCollaboratorToTask(tWorker1);
-		testTask.addTaskCollaboratorToTask(tWorker2);
-
-		testTask.createReport(tWorker1, Calendar.getInstance(), 0);
-		testTask.createReport(tWorker2, Calendar.getInstance(), 15);
-
-		testTask.getReports().get(1).setReportedTime(15);
-
-		double i = 0;
-		double j = 15;
-
-		// checks getTimeSpentOnTask for individual Collaborators
-		assertEquals(i, testTask.getTimeSpentByProjectCollaboratorOntask(collab1), 0.01);
-		assertEquals(j, testTask.getTimeSpentByProjectCollaboratorOntask(collab2), 0.01);
-
-		// Collab3 doesnt belong to task, so he doesnt have any task assigned, and
-		// expected result is 0
-		assertEquals(0, testTask.getTimeSpentByProjectCollaboratorOntask(collab3), 0.01);
-
-		// then checks global getTimeSpentOnTask
-		assertEquals(j, testTask.getTimeSpentOntask(), 0.01);
-
-	}
-
-	/**
-	 * Verifies if Second constructor correctly duplicates tasks; Afterwards, gives
-	 * both duplicated tasks different finish dates and confirms difference; Also
-	 * confirms if override equals still sees both tasks as the same
-	 */
-	@Test
-	public void testSecondConstructor() {
-		// first, clone and compare a task without start date and deadline intervals
-		Task testDupe = new Task(testTask);
-		assertTrue(testTask.equals(testDupe));
-
-		// second, clone and compare a task with start date and deadline intervals
-		testTask.setStartDateInterval(5);
-		testTask.setDeadlineInterval(10);
-		testDupe = new Task(testTask);
-		assertTrue(testTask.equals(testDupe));
-
-		// third, compare that two tasks are the same despite having different start
-		// dates
-		Calendar startDate1 = Calendar.getInstance();
-		Calendar startDateDupe = Calendar.getInstance();
-		startDateDupe.add(Calendar.DAY_OF_MONTH, -5);
-		testTask.setStartDate(startDate1);
-		testDupe.setStartDate(startDateDupe);
-		assertTrue(testTask.equals(testDupe));
-		assertFalse(testTask.getStartDate().equals(testDupe.getStartDate()));
-	}
-
-	@Test
-	public void testSecondConstructorNullIntervals() {
-		Task testDupe = new Task(testTask);
-		assertTrue(testTask.equals(testDupe));
-		Calendar startDate1 = Calendar.getInstance();
-		Calendar startDateDupe = Calendar.getInstance();
-		startDateDupe.add(Calendar.DAY_OF_MONTH, -5);
-		testTask.setStartDate(startDate1);
-		testDupe.setStartDate(startDateDupe);
-		assertTrue(testTask.equals(testDupe));
-		assertFalse(testTask.getStartDate().equals(testDupe.getStartDate()));
-	}
-
-	/**
-	 * Verifies if the task team is empty. Must be true (is empty).
-	 */
-	@Test
-	public void isTaskTeamEmpty_true() {
-
-		assertTrue(testTask2.isTaskTeamEmpty());
-	}
-
-	/**
-	 * Verifies if the task team is empty. Must be false (not empty).
-	 */
-	@Test
-	public void isTaskTeamEmpty_false() {
-
-		testTask2.addTaskCollaboratorToTask(tWorker1);
-
-		assertFalse(testTask2.isTaskTeamEmpty());
-	}
-
-	/**
-	 * A test to confirm that the addUserToTask method updates Task Worker info if
-	 * the user already worked in a specific task
-	 */
-	@Test
-	public void updateTaskWorker() {
-		testTask2.addProjectCollaboratorToTask(collab1);
-		testTask2.removeProjectCollaboratorFromTask(collab1);
-		testTask2.addProjectCollaboratorToTask(collab1);
-		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
-		testTask2.getReports().get(0).setReportedTime(15);
-
-		assertEquals(5, collab1.getCollaboratorCost());
-		assertEquals(15, testTask2.getReports().get(0).getReportedTime(), 0.0);
-		assertTrue(tWorker1.getStartDate() != null);
-		assertTrue(testTask2.isProjectCollaboratorActiveInTaskTeam(collab1));
-	}
-
-	/**
-	 * tests if the method to get the reported budget to the task returns the
-	 * expected value, according to the taskWorker value and the hours he spent on
-	 * that task
+	 * Test method for {@link project.model.Task#Task()}.
+	 * 
+	 * Empty Constructor ____
 	 * 
 	 */
 	@Test
-	public void testGetReportedBudgetToTheTask() {
-		// Adds two users to the task
-		testTask2.addTaskCollaboratorToTask(tWorker1);
-		testTask2.addTaskCollaboratorToTask(tWorker2);
+	public void testTask() {
 
-		// sets the hours spent on the task by each user
-		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
-		testTask2.getReports().get(0).setReportedTime(10);
-		testTask2.createReport(tWorker2, Calendar.getInstance(), 0);
-		testTask2.getReports().get(1).setReportedTime(5);
+		Task task = new Task();
 
-		// calculates the expected cost of the task
-		expectedCost = 10 * collab1.getCollaboratorCost();
-		expectedCost += 5 * collab2.getCollaboratorCost();
-
-		// Checks if the two values are the smae
-		assertEquals(expectedCost, testTask2.getTaskCost(), 0.001);
-
-		finishedTaskState = new Finished(testTask2);
-		testTask2.setTaskState(finishedTaskState);
-
-		assertEquals(testTask2.viewTaskStateName(), "Finished");
+		assertTrue(task instanceof Task);
 
 	}
 
 	/**
-	 * tests if the method to get the reported budget to the task returns the
-	 * expected value, according to the taskWorker value and the hours he spent on
-	 * that task
+	 * Test method for
+	 * {@link project.model.Task#Task(java.lang.String, project.model.Project)}.
 	 * 
+	 * Constructor ____
 	 */
 	@Test
-	public void testTaskTeamHasActiveUsers() {
-		// Adds two users to the task
-		// Adds two users to the task
-		testTask2.addTaskCollaboratorToTask(tWorker1);
+	public void testTaskStringProject() {
 
-		// Checks if task has active users
-		assertTrue(testTask2.doesTaskTeamHaveActiveUsers());
-		// Set finish date for taskWorker - this method also changes is state to false
-		// in the task
-		tWorker1.addFinishDateForTaskCollaborator();
-		// Checks if the task doesnt have any active user
-		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
+		Task task = new Task("task test", projectTest);
+
+		assertTrue(task instanceof Task);
 
 	}
 
 	/**
-	 * tests the removeProjectCollaboratorFromTask method
-	 */
-
-	@Test
-	public void testRemoveProjectCollaboratorFromTask() {
-		testTask2.addTaskCollaboratorToTask(tWorker1);
-		assertTrue(testTask2.removeProjectCollaboratorFromTask(collab1));
-		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
-
-		/*
-		 * tries to remove collab1 from testTask. Wont do anything because collab1 was
-		 * already deactivated from task
-		 */
-		testTask2.removeProjectCollaboratorFromTask(collab1);
-		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
-
-		/*
-		 * tries to remove collab2 from testTask. Wont do anything because collab2 is
-		 * not in task
-		 */
-		testTask2.removeProjectCollaboratorFromTask(collab2);
-		assertFalse(testTask2.removeProjectCollaboratorFromTask(collab2));
-		assertFalse(testTask2.doesTaskTeamHaveActiveUsers());
-	}
-
-	/**
-	 * Tests the dependence of Task2 from Task1. This method will create the
-	 * dependence of testTask2 to testTask and increment 10 days to the
-	 * estimatedStartDate of Task1. This new date corresponds to the
-	 * estimatedStartDate of Task2.
-	 */
-
-	@Test
-	public void testDependeceOfTasks() {
-
-		// set testTask estimated start date
-		Calendar dateTask1 = Calendar.getInstance();
-		dateTask1.set(2017, Calendar.DECEMBER, 02);
-		dateTask1.set(Calendar.HOUR, 16);
-		dateTask1.set(Calendar.MINUTE, 10);
-		dateTask1.set(Calendar.SECOND, 10);
-		dateTask1.set(Calendar.MILLISECOND, 100);
-		testTask.setEstimatedTaskStartDate(dateTask1);
-
-		// Confirms that the task has no dependencies
-		assertFalse(testTask2.hasDependencies());
-
-		// instantiate dependence of Task2 to Task1 in parameter taskDependence and sets
-		// the estimated task start date of testTask2 to the estimated task start date
-		// of testTask plus 10 days
-
-		testTask2.setEstimatedTaskStartDate(Calendar.getInstance());
-		testTask.setTaskDeadline(Calendar.getInstance());
-		testTask2.createTaskDependence(testTask, 10);
-
-		// Confirms that the task has active dependencies
-		assertTrue(testTask2.hasActiveDependencies());
-		assertEquals(testTask2.getTaskDependency().size(), 1);
-
-		// should not allow to apply an existing dependency
-		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
-
-		// Apply same testTask2 dependencies in testTask3
-		assertEquals(testTask3.getTaskDependency().size(), 0);
-		List<Task> cloneTaskDependency = testTask2.getTaskDependency();
-		testTask3.setTaskDependency(cloneTaskDependency);
-		assertEquals(testTask3.getTaskDependency().size(), 1);
-
-		// Task dependencies no longer update Start Date!!!
-
-		// // set of the newEstimatedStartDateTestTask2 which corresponds to the
-		// estimated
-		// // task start date of testTask plus 10 days
-		// Calendar newEstimatedStartDateTestTask2 = Calendar.getInstance();
-		// newEstimatedStartDateTestTask2.set(2017, Calendar.DECEMBER, 12);
-		// newEstimatedStartDateTestTask2.set(Calendar.HOUR, 16);
-		// newEstimatedStartDateTestTask2.set(Calendar.MINUTE, 10);
-		// newEstimatedStartDateTestTask2.set(Calendar.SECOND, 10);
-		// newEstimatedStartDateTestTask2.set(Calendar.MILLISECOND, 100);
-		//
-		//
-		//
-		// assertEquals(newEstimatedStartDateTestTask2.DAY_OF_YEAR,
-		// testTask2.getEstimatedTaskStartDate().DAY_OF_YEAR);
-
-	}
-
-	/**
-	 * Checks if the estimated task start date is the same that was introduced.
-	 */
-	@Test
-	public void testGetEstimatedStartDateWithoutInterval() {
-		assertEquals(estimatedTaskStartDate, testTask.getEstimatedTaskStartDate());
-	}
-
-	/**
-	 * This test checks if the estimated star date of task was changed because of
-	 * the interval that was introduced between the start date of the project and
-	 * the task estimated start date.
-	 */
-	@Test
-	public void testGetEstimatedStartDateWithInterval() {
-
-		// adds interval of time between the start date of the project and the task
-		// estimated start date.
-		testTask.setStartDateInterval(10);
-
-		// simulates the new estimated start date for the task
-		Calendar expectedStartDate = (Calendar) myProject.getStartdate().clone();
-		expectedStartDate.add(Calendar.DAY_OF_YEAR, 10);
-
-		// compares the simulated date to the one that the method returns
-		assertEquals(expectedStartDate.get(Calendar.DAY_OF_YEAR),
-				testTask.getEstimatedTaskStartDate().get(Calendar.DAY_OF_YEAR));
-	}
-
-	/**
-	 * Checks if the estimated task start date is the same that was introduced in
-	 * the beginning.
-	 */
-	@Test
-	public void testGetDeadlineWithoutInterval() {
-		assertEquals(taskDeadline, testTask.getTaskDeadline());
-	}
-
-	/**
-	 * This test checks if the estimated deadline date of task was changed because
-	 * of the interval that was introduced between the start date of the project and
-	 * the task estimated deadline.
-	 */
-	@Test
-	public void testGetDeadlineWithInterval() {
-
-		// adds interval of time between the start date of the project and the task
-		// estimated deadline.
-		testTask.setDeadlineInterval(15);
-
-		// simulates the new estimated deadline for the task
-		Calendar expectedDeadline = (Calendar) myProject.getStartdate().clone();
-		expectedDeadline.add(Calendar.DAY_OF_YEAR, 15);
-
-		// compares the simulated date to the one that the method returns
-		assertEquals(expectedDeadline.get(Calendar.DAY_OF_YEAR), testTask.getTaskDeadline().get(Calendar.DAY_OF_YEAR));
-	}
-
-	/**
-	 * Checks if the task deadline interval is the same that was introduced.
-	 */
-	@Test
-	public void testGetDeadlineInterval() {
-		testTask.setDeadlineInterval(15);
-		assertEquals(15, (int) testTask.getDeadlineInterval());
-	}
-
-	/**
-	 * Checks if the task deadline date is the same that was introduced.
-	 */
-	@Test
-	public void testTaskDeadline() {
-		Calendar newTaskDeadline = Calendar.getInstance();
-		newTaskDeadline.add(Calendar.DAY_OF_MONTH, 5);
-		testTask2.setTaskDeadline(newTaskDeadline);
-		assertEquals(newTaskDeadline, testTask2.getTaskDeadline());
-	}
-
-	/**
-	 * This test changes the task finish date, and checks the new finish date.
-	 */
-	@Test
-	public void testSetFinishDate() {
-		estimatedTaskStartDate = Calendar.getInstance();
-		estimatedTaskStartDate.add(Calendar.MONTH, -1);
-		taskDeadline = Calendar.getInstance();
-		taskDeadline.add(Calendar.MONTH, 1);
-
-		taskDeadline.add(Calendar.DAY_OF_YEAR, -5);
-		testTask.setFinishDate(taskDeadline);
-		assertEquals(taskDeadline, testTask.getFinishDate());
-	}
-
-	/**
-	 * Checks if the task start date interval is the same that was introduced.
+	 * Test method for {@link project.model.Task#Task(int, int, java.lang.String)}.
 	 * 
+	 * Constructor ____
+	 */
+	@Test
+	public void testTaskIntIntString() {
+
+		Task task = new Task(1, 1, "task test");
+
+		assertTrue(task instanceof Task);
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#Task(java.lang.String, int, java.util.Calendar, java.util.Calendar, int)}.
+	 * 
+	 * Constructor to delete _____
+	 */
+	@Test
+	public void testTaskStringIntCalendarCalendarInt() {
+
+		Task task = new Task("task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
+
+		assertTrue(task instanceof Task);
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#Task(int, int, java.lang.String, int, java.util.Calendar, java.util.Calendar, int)}.
+	 * 
+	 * Constructor to delete_____
+	 */
+	@Test
+	public void testTaskIntIntStringIntCalendarCalendarInt() {
+
+		Task task = new Task(1, 1, "task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
+
+		assertTrue(task instanceof Task);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#Task(project.model.Task)}.
+	 * 
+	 * Constructor ______
+	 */
+	@Test
+	public void testTaskTask() {
+
+		Task task = new Task(1, 1, "task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
+
+		Task taskCopy = new Task(task);
+
+		assertTrue(taskCopy instanceof Task);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#Task(project.model.Task)}.
+	 * 
+	 * Constructor ______
+	 */
+	@Test
+	public void testTaskTaskWhithStartDateIntervalandDeadlineInterval() {
+
+		taskReadyToFinishTest.setStartDateInterval(1);
+		taskReadyToFinishTest.setDeadlineInterval(2);
+
+		Task taskCopy = new Task(taskReadyToFinishTest);
+
+		assertTrue(taskCopy instanceof Task);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getCurrentState()}.
+	 */
+	@Test
+	public void testGetCurrentState() {
+
+		StateEnum currentState = StateEnum.CREATED;
+
+		taskTest.setCurrentState(currentState);
+
+		assertEquals(currentState, taskTest.getCurrentState());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#setCurrentState(project.model.StateEnum)}.
+	 */
+	@Test
+	public void testSetCurrentState() {
+
+		StateEnum currentState = StateEnum.CREATED;
+
+		taskTest.setCurrentState(currentState);
+
+		assertEquals(currentState, taskTest.getCurrentState());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getId()}.
+	 */
+	@Test
+	public void testGetId() {
+
+		Long expected = 1L;
+
+		taskTest.setId(expected);
+
+		assertEquals(expected, taskTest.getId());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setId(java.lang.Long)}.
+	 */
+	@Test
+	public void testSetId() {
+
+		Long expected = 1L;
+
+		taskTest.setId(expected);
+
+		assertEquals(expected, taskTest.getId());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setProject(project.model.Project)}.
+	 */
+	@Test
+	public void testSetProject() {
+
+		taskTest.setProject(projectTestSecond);
+
+		assertEquals(projectTestSecond, taskTest.getProject());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getProject()}.
+	 */
+	@Test
+	public void testGetProject() {
+
+		taskTest.setProject(projectTestSecond);
+
+		assertEquals(projectTestSecond, taskTest.getProject());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setTaskID}.
+	 */
+	@Test
+	public void testSetTaskId() {
+
+		taskTest.setTaskID("testTask");
+
+		assertEquals("testTask", taskTest.getTaskID());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getStartDateInterval()}.
 	 */
 	@Test
 	public void testGetStartDateInterval() {
 
-		testTask.setStartDateInterval(10);
-		assertEquals(10, (int) testTask.getStartDateInterval());
+		Integer expected = 10;
+
+		taskReadyToFinishTest.setStartDateInterval(expected);
+
+		assertEquals(expected, taskReadyToFinishTest.getStartDateInterval());
 	}
 
 	/**
-	 * Tests the HashCodes of each Task
-	 * 
+	 * Test method for {@link project.model.Task#setStartDateInterval(int)}.
 	 */
 	@Test
-	public void testHashcode() {
+	public void testSetStartDateInterval() {
 
-		assertFalse(testTask.hashCode() == testTask2.hashCode());
+		Integer expected = 10;
 
-		int result = 3*31 + testTask.getTaskID().hashCode();
-		assertEquals(testTask.hashCode(), result);
+		taskReadyToFinishTest.setStartDateInterval(expected);
 
-	}
-
-	/**
-	 * Tests the removal of the finish date of testTask
-	 */
-	@Test
-	public void testRemoveFinishDate() {
-		testTask.removeFinishDate();
-		assertEquals(null, testTask.getFinishDate());
-	}
-
-	/**
-	 * Tests the change of reported time
-	 */
-	@Test
-	public void testChangeReportedTime() {
-
-		testTask.addTaskCollaboratorToTask(tWorker1);
-		testTask.addTaskCollaboratorToTask(tWorker2);
-
-
-		// add three reports to reports's list
-		testTask.createReport(tWorker1, Calendar.getInstance(), 0);
-		testTask.createReport(tWorker1, Calendar.getInstance(), 0);
-		testTask.createReport(tWorker1, Calendar.getInstance(), 0);
-
-
-		// change reportedTime to 10 of report with index 0
-		assertTrue(testTask.updateReportedTime(10, tWorker1, 0));
-
-		// change reportedTime to 20 of report with index 1
-		assertTrue(testTask.updateReportedTime(20, tWorker1, 1));
-
-		/*
-		 * asserts that cannot change a reported time with an email that doesnt exist in
-		 * the TaskTeam
-		 */
-		assertFalse(testTask.updateReportedTime(30, tWorker3, 2));
-
-		/*
-		Tries to change a report that's not associated to the taskCollaborator
-		 */
-		assertFalse(testTask.updateReportedTime(30, tWorker3, 0));
-
+		assertEquals(expected, taskReadyToFinishTest.getStartDateInterval());
 
 	}
 
 	/**
-	 * Tests the get and set of cancel date
+	 * Test method for {@link project.model.Task#getDeadlineInterval()}.
 	 */
 	@Test
-	public void testGetCancelDate() {
-		// asserts that the testTask don't have a cancel date defined
-		assertEquals(testTask.getCancelDate(), null);
+	public void testGetDeadlineInterval() {
 
-		// set the testTask cancel date and then assert that this date exists
-		testTask.setCancelDate();
-		assertTrue(testTask.getCancelDate() != null);
+		Integer expected = 10;
+
+		taskReadyToFinishTest.setDeadlineInterval(expected);
+
+		assertEquals(expected, taskReadyToFinishTest.getDeadlineInterval());
 	}
 
 	/**
-	 * Tests if the this method actually empties the task team
+	 * Test method for {@link project.model.Task#setDeadlineInterval(int)}.
 	 */
 	@Test
-	public void testRemoveAllCollaboratorsFromTaskTeam() {
-		// Adds 2 collabs to testTask
-		testTask.addProjectCollaboratorToTask(collab2);
-		testTask.addProjectCollaboratorToTask(collab1);
+	public void testSetDeadlineInterval() {
 
-		// Removes collab2 from testTask
-		testTask.removeProjectCollaboratorFromTask(collab2);
-		// Removes All Collaborators from TaskTeam
-		testTask.removeAllCollaboratorsFromTaskTeam();
+		Integer expected = 10;
 
-		assertFalse(testTask.doesTaskTeamHaveActiveUsers());
+		taskReadyToFinishTest.setDeadlineInterval(expected);
+
+		assertEquals(expected, taskReadyToFinishTest.getDeadlineInterval());
 	}
 
 	/**
-	 * Tests if the this method actually empties the task team
+	 * Test method for {@link project.model.Task#getEstimatedTaskEffort()}.
 	 */
 	@Test
-	public void testCreateReportNotPossible() {
-		// Adds two users to the task
-		testTask2.addTaskCollaboratorToTask(tWorker1);
+	public void testGetEstimatedTaskEffort() {
 
-		finishedTaskState = new Finished(testTask2);
-		testTask2.setTaskState(finishedTaskState);
-		assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
+		int expected = 10;
 
-		/*
-		 * Checks that the tastState is set to Finished
-		 */
-		assertEquals(testTask2.viewTaskStateName(), "Finished");
+		taskTest.setEstimatedTaskEffort(expected);
 
-		/*
-		 * Creates a StandBy State object
-		 */
-		standByTaskState = new StandBy(testTask2);
+		assertEquals(expected, taskTest.getEstimatedTaskEffort());
+	}
 
-		/*
-		 * sets testTask2 to StandBy State
-		 */
-		testTask2.setTaskState(standByTaskState);
+	/**
+	 * Test method for {@link project.model.Task#setEstimatedTaskEffort(int)}.
+	 */
+	@Test
+	public void testSetEstimatedTaskEffort() {
 
-		/*
-		 * Checks that its not possible to add a report to a task set to "StandBy"
-		 */
-		assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
+		int expected = 10;
 
-		cancelledTaskState = new Cancelled(testTask2);
+		taskTest.setEstimatedTaskEffort(expected);
 
-		/*
-		 * sets testTask2 to Cancelled State
-		 */
-		testTask2.setTaskState(cancelledTaskState);
+		assertEquals(expected, taskTest.getEstimatedTaskEffort());
+	}
 
-		/*
-		 * Checks that its not possible to add a report to a task set to "Cancelled"
-		 */
-		assertFalse(testTask2.createReport(tWorker1, Calendar.getInstance(), 0));
+	/**
+	 * Test method for {@link project.model.Task#getEstimatedTaskStartDate()}.
+	 */
+	@Test
+	public void testGetEstimatedTaskStartDate() {
+
+		Calendar expected = Calendar.getInstance();
+
+		taskTest.setEstimatedTaskStartDate(expected);
+
+		assertEquals(expected, taskTest.getEstimatedTaskStartDate());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#setEstimatedTaskStartDate(java.util.Calendar)}.
+	 */
+	@Test
+	public void testSetEstimatedTaskStartDate() {
+
+		Calendar expected = Calendar.getInstance();
+
+		taskTest.setEstimatedTaskStartDate(expected);
+
+		assertEquals(expected, taskTest.getEstimatedTaskStartDate());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getTaskDeadline()}.
+	 */
+	@Test
+	public void testGetTaskDeadline() {
+
+		Calendar expected = Calendar.getInstance();
+
+		taskTest.setTaskDeadline(expected);
+
+		assertEquals(expected, taskTest.getTaskDeadline());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#setTaskDeadline(java.util.Calendar)}.
+	 */
+	@Test
+	public void testSetTaskDeadline() {
+
+		Calendar expected = Calendar.getInstance();
+
+		taskTest.setTaskDeadline(expected);
+
+		assertEquals(expected, taskTest.getTaskDeadline());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getTaskBudget()}.
+	 */
+	@Test
+	public void testGetTaskBudget() {
+
+		int expected = 100;
+
+		taskTest.setTaskBudget(expected);
+
+		assertEquals(expected, taskTest.getTaskBudget());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setTaskBudget(int)}.
+	 */
+	@Test
+	public void testSetTaskBudget() {
+
+		int expected = 100;
+
+		taskTest.setTaskBudget(expected);
+
+		assertEquals(expected, taskTest.getTaskBudget());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getTaskID()}.
+	 */
+	@Test
+	public void testGetTaskID() {
+
+		assertEquals(null, taskTest.getTaskID());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getStartDate()}.
+	 */
+	@Test
+	public void testGetStartDate() {
+
+		Calendar expected = Calendar.getInstance();
+
+		taskTest.setStartDate(expected);
+
+		assertEquals(expected, taskTest.getStartDate());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setStartDate(java.util.Calendar)}.
+	 */
+	@Test
+	public void testSetStartDate() {
+
+		Calendar expected = Calendar.getInstance();
+
+		taskTest.setStartDate(expected);
+
+		assertEquals(expected, taskTest.getStartDate());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getDescription()}.
+	 */
+	@Test
+	public void testGetDescription() {
+
+		assertFalse(taskTest.getDescription() == null);
 
 	}
 
-	/*
-	 * Tests the getTaskCollaboratorByEmail
+	/**
+	 * Test method for {@link project.model.Task#getFinishDate()}.
+	 */
+	@Test
+	public void testGetFinishDate() {
+
+		taskTest.setFinishDate(Calendar.getInstance());
+
+		assertFalse(taskTest.getFinishDate() == null);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setFinishDate(Calendar)}.
+	 */
+	@Test
+	public void testSetFinishDate() {
+
+		taskTest.setFinishDate(Calendar.getInstance());
+
+		assertFalse(taskTest.getFinishDate() == null);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getTaskTeam()}.
+	 */
+	@Test
+	public void testGetTaskTeam() {
+
+		List<TaskCollaborator> expected = new ArrayList<>();
+		expected.add(taskCollaborator);
+
+		taskTest.setTaskTeam(expected);
+
+		assertEquals(expected, taskTest.getTaskTeam());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setTaskTeam(java.util.List)}.
+	 */
+	@Test
+	public void testSetTaskTeam() {
+
+		List<TaskCollaborator> expected = new ArrayList<>();
+		expected.add(taskCollaborator);
+
+		taskTest.setTaskTeam(expected);
+
+		assertEquals(expected, taskTest.getTaskTeam());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getReports()}.
+	 */
+	@Test
+	public void testGetReports() {
+
+		List<Report> expected = new ArrayList<>();
+		expected.add(report);
+
+		taskTest.setReports(expected);
+
+		assertEquals(expected, taskTest.getReports());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setReports(java.util.List)}.
+	 */
+	@Test
+	public void testSetReports() {
+
+		List<Report> expected = new ArrayList<>();
+		expected.add(report);
+
+		taskTest.setReports(expected);
+
+		assertEquals(expected, taskTest.getReports());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getTaskDependency()}.
+	 */
+	@Test
+	public void testGetTaskDependency() {
+
+		List<Task> expected = new ArrayList<>();
+		expected.add(taskReadyToFinishTest);
+
+		taskTest.setTaskDependency(expected);
+
+		assertEquals(expected, taskTest.getTaskDependency());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setTaskDependency(java.util.List)}.
+	 */
+	@Test
+	public void testSetTaskDependency() {
+
+		List<Task> expected = new ArrayList<>();
+		expected.add(taskTestSecond);
+
+		taskTest.setTaskDependency(expected);
+
+		assertEquals(expected, taskTest.getTaskDependency());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isTaskFinished()}.
+	 */
+	@Test
+	public void testIsTaskFinished() {
+
+		taskReadyToFinishTest.markTaskAsFinished();
+
+		assertTrue(taskReadyToFinishTest.isTaskFinished());
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#markTaskAsFinished()}.
+	 */
+	@Test
+	public void testMarkTaskAsFinished() {
+
+		taskReadyToFinishTest.addTaskCollaboratorToTask(taskCollaborator);
+
+		assertTrue(taskReadyToFinishTest.doesTaskTeamHaveActiveUsers());
+
+		assertFalse(taskReadyToFinishTest.isTaskFinished());
+
+		taskReadyToFinishTest.markTaskAsFinished();
+
+		assertTrue(taskReadyToFinishTest.isTaskFinished());
+
+		assertFalse(taskReadyToFinishTest.doesTaskTeamHaveActiveUsers());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#markTaskAsFinished()}.
+	 */
+	@Test
+	public void testMarkTaskAsFinishedTaskStateFinished() {
+
+		taskReadyToFinishTest.addTaskCollaboratorToTask(taskCollaborator);
+
+		TaskStateInterface created = new Created();
+
+		taskReadyToFinishTest.setTaskState(created);
+
+		assertFalse(taskReadyToFinishTest.markTaskAsFinished());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#addProjectCollaboratorToTask(project.model.ProjectCollaborator)}.
+	 */
+	@Test
+	public void testAddProjectCollaboratorToTask() {
+
+		assertTrue(taskTest.getTaskTeam().isEmpty());
+
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+
+		assertFalse(taskTest.getTaskTeam().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#addTaskCollaboratorToTask(project.model.TaskCollaborator)}.
+	 */
+	@Test
+	public void testAddTaskCollaboratorToTask() {
+
+		assertTrue(taskTest.getTaskTeam().isEmpty());
+
+		taskTest.addTaskCollaboratorToTask(taskCollaborator);
+
+		assertFalse(taskTest.getTaskTeam().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createTaskCollaborator(project.model.ProjectCollaborator)}.
+	 */
+	@Test
+	public void testCreateTaskCollaborator() {
+
+		assertTrue(taskTest.getTaskTeam().isEmpty());
+
+		taskTest.createTaskCollaborator(projectCollaborator);
+
+		assertTrue(taskTest.getTaskTeam().isEmpty());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReport() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2);
+
+		assertFalse(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportTaskStateFinished() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		taskReadyToFinishTest.markTaskAsFinished();
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportTaskStateCancelled() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		taskReadyToFinishTest.cancelTask();
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportTaskStateStandBy() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		TaskStateInterface standBy = new StandBy();
+
+		taskReadyToFinishTest.setTaskState(standBy);
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportWhitoutTaskCollaborator() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		taskReadyToFinishTest.removeAllCollaboratorsFromTaskTeam();
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
+	 */
+	@Test
+	public void testCreateReportWhitTaskCollaborator() {
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
+		taskReadyToFinishTest.getTaskTeam().get(0).setFinishDate(Calendar.getInstance());
+
+		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
+
+		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#getReportsIndexOfTaskCollaborator(java.lang.String)}.
+	 */
+	@Test
+	public void testGetReportsIndexOfTaskCollaborator() {
+
+		assertTrue(taskReadyToFinishTest
+				.getReportsIndexOfTaskCollaborator(taskCollaborator.getTaskCollaborator().getEmail()).isEmpty());
+
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.1);
+
+		assertFalse(taskReadyToFinishTest
+				.getReportsIndexOfTaskCollaborator(taskCollaborator.getTaskCollaborator().getEmail()).isEmpty());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#updateReportedTime(double, project.model.TaskCollaborator, int)}.
+	 */
+	@Test
+	public void testUpdateReportedTime() {
+
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 2.0);
+
+		assertEquals(2.0, taskReadyToFinishTest.getReports().get(0).getReportedTime(), 0.1);
+
+		int reportToChange = taskReadyToFinishTest.getReports().get(0).getId();
+
+		taskReadyToFinishTest.updateReportedTime(3.0, taskCollaborator, reportToChange);
+
+		assertEquals(3.0, taskReadyToFinishTest.getReports().get(0).getReportedTime(), 0.1);
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#doesTaskHaveReportByGivenUser(java.lang.String)}.
+	 */
+	@Test
+	public void testDoesTaskHaveReportByGivenUser() {
+
+		assertFalse(
+				taskReadyToFinishTest.doesTaskHaveReportByGivenUser(taskCollaborator.getTaskCollaborator().getEmail()));
+
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
+
+		assertTrue(
+				taskReadyToFinishTest.doesTaskHaveReportByGivenUser(taskCollaborator.getTaskCollaborator().getEmail()));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#getTaskCollaboratorByEmail(java.lang.String)}.
 	 */
 	@Test
 	public void testGetTaskCollaboratorByEmail() {
 
-		// Adds collab1(tWorker1) to the task
-		testTask2.addProjectCollaboratorToTask(collab1);
-
-		// Checks if the method returns tWorker1
-		assertEquals(testTask2.getTaskCollaboratorByEmail("user@gmail.com"), tWorker1);
-
-		// Checks in an inexistent email returns null
-		assertEquals(testTask2.getTaskCollaboratorByEmail("null@gmail.com"), null);
+		assertEquals(taskCollaborator,
+				taskReadyToFinishTest.getTaskCollaboratorByEmail(taskCollaborator.getTaskCollaborator().getEmail()));
 
 	}
 
+	/**
+	 * Test method for
+	 * {@link project.model.Task#getActiveTaskCollaboratorByEmail(java.lang.String)}.
+	 */
 	@Test
-	public void doesTaskHaveReportByGivenUser() {
-		// Adds collab1(tWorker1) to the task
-		testTask2.addProjectCollaboratorToTask(collab1);
+	public void testGetActiveTaskCollaboratorByEmail() {
 
-		// Creates a report by tWorker1
-		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
-
-		// Checks if the task a report by its user
-		assertTrue(testTask2.doesTaskHaveReportByGivenUser("user@gmail.com"));
-
-		// checks that the task doesnt have a report by an email from an user that
-		// doesn't exist in the task
-		assertFalse(testTask2.doesTaskHaveReportByGivenUser("nullr@gmail.com"));
+		assertEquals(taskCollaborator, taskReadyToFinishTest
+				.getActiveTaskCollaboratorByEmail(taskCollaborator.getTaskCollaborator().getEmail()));
 
 	}
 
-
+	/**
+	 * Test method for
+	 * {@link project.model.Task#getReportedTimeByTaskCollaborator(java.lang.String)}.
+	 */
 	@Test
-	public void testGetReportsIndexOfGivenTaskCollaborator() {
+	public void testGetReportedTimeByTaskCollaborator() {
 
-		testTask.addTaskCollaboratorToTask(tWorker1);
-		testTask.addTaskCollaboratorToTask(tWorker2);
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
-		/*
-		Creates Reports by two different task Collaborators
-		 */
-		testTask.createReport(tWorker1, Calendar.getInstance(), 10);
-		testTask.createReport(tWorker2, Calendar.getInstance(), 30);
-		testTask.createReport(tWorker2, Calendar.getInstance(), 20);
-		testTask.createReport(tWorker1, Calendar.getInstance(), 5);
-
-		/*
-		Creates a list with the index of the reports by tWorker1
-		 */
-		List<Integer> reportsIndex1 = new ArrayList<>();
-		reportsIndex1.add(0);
-		reportsIndex1.add(3);
-
-		List<Integer> reportsIndex2 = new ArrayList<>();
-		reportsIndex2.add(1);
-		reportsIndex2.add(2);
-
-		assertEquals(testTask.getReportsIndexOfTaskCollaborator(tWorker1.getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail()), reportsIndex1);
-
-		assertEquals(testTask.getReportsIndexOfTaskCollaborator(tWorker2.getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail()), reportsIndex2);
-
+		assertEquals(1.0, taskReadyToFinishTest
+				.getReportedTimeByTaskCollaborator(taskCollaborator.getTaskCollaborator().getEmail()), 0.1);
 
 	}
 
+	/**
+	 * Test method for {@link project.model.Task#getReporterName(java.lang.String)}.
+	 */
 	@Test
-	public void getReportedTimeByTaskCollaborator() {
+	public void testGetReporterName() {
 
-		// Adds collab1(tWorker1) to the task
-		testTask2.addProjectCollaboratorToTask(collab1);
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
-		// Creates a report by tWorker1
-		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
+		String nameToCompare = taskCollaborator.getTaskCollaborator().getName();
 
-		// updates the report time
-		testTask2.updateReportedTime(20, tWorker1, 0);
-
-		// Checks if the task
-		assertEquals(testTask2.getReportedTimeByTaskCollaborator("user@gmail.com"), 20, 0.0);
-
-		// Checks if the task a report by its user
-		assertEquals(testTask2.getReportedTimeByTaskCollaborator("null@gmail.com"), 0, 0.0);
+		assertEquals(nameToCompare,
+				taskReadyToFinishTest.getReporterName(taskCollaborator.getTaskCollaborator().getEmail()));
 
 	}
 
+	/**
+	 * Test method for
+	 * {@link project.model.Task#removeProjectCollaboratorFromTask(project.model.ProjectCollaborator)}.
+	 */
 	@Test
+	public void testRemoveProjectCollaboratorFromTask() {
 
-	public void getReportedNameByTaskCollaborator() {
+		assertTrue(taskReadyToFinishTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
 
-		// Adds collab1(tWorker1) to the task
-		testTask2.addProjectCollaboratorToTask(collab1);
+		taskReadyToFinishTest.removeProjectCollaboratorFromTask(projectCollaborator);
 
-		// Creates a report by tWorker1
-		testTask2.createReport(tWorker1, Calendar.getInstance(), 0);
+		assertFalse(taskReadyToFinishTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
 
-		// updates the report time
-		testTask2.updateReportedTime(20, tWorker1, 0);
-
-		// Checks the getReporterName method
-		assertEquals(testTask2.getReporterName("user@gmail.com"), "pepe");
-
-		// Checks if the getReporterName returns an empty string when it doesnt have an
-		// user with given email
-		assertEquals(testTask2.getReporterName("null@gmail.com"), "");
 	}
 
+	/**
+	 * Test method for {@link project.model.Task#getTimeSpentOntask()}.
+	 */
 	@Test
-	public void isCreatingTaskDependencyValid() {
+	public void testGetTimeSpentOntask() {
 
-		OnGoing onGoing1 = new OnGoing(testTask2);
-		Finished finished1 = new Finished(testTask2);
-		Ready ready1 = new Ready(testTask2);
-		Cancelled cancelled1 = new Cancelled(testTask2);
-		StandBy standBy1 = new StandBy(testTask2);
-		Created created1 = new Created(testTask2);
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
-		Created created2 = new Created(testTask2);
-		Cancelled cancelled2 = new Cancelled(testTask);
+		assertEquals(1.0, taskReadyToFinishTest.getTimeSpentOntask(), 0.1);
 
-		testTask2.setTaskState(created2);
+		taskReadyToFinishTest.updateReportedTime(2.0, taskCollaborator,
+				taskReadyToFinishTest.getReports().get(0).getId());
+
+		assertEquals(2.0, taskReadyToFinishTest.getTimeSpentOntask(), 0.1);
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#getTimeSpentByProjectCollaboratorOntask(project.model.ProjectCollaborator)}.
+	 */
+	@Test
+	public void testGetTimeSpentByProjectCollaboratorOntask() {
+
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
+
+		assertEquals(1.0, taskReadyToFinishTest.getTimeSpentByProjectCollaboratorOntask(projectCollaborator), 0.1);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#equals(java.lang.Object)}.
+	 */
+	@Test
+	public void testEqualsObject() {
+
+		assertTrue(taskTest.equals(taskTest));// same object
+
+		Task testTask4 = null;
+
+		assertFalse(taskTest.equals(testTask4));// null object
+
+		assertFalse(taskTest.equals(userTest));// different classes
+
+		Task testTask2 = new Task(1, 10, "Task 1");
+		Task testTask1 = new Task(1, 20, "Task 2");
+
+		assertFalse(testTask2.equals(testTask1));// different counter
+
+		Task testTask3 = new Task(1, 1, "Task 1");
+		testTask3.setTaskID("1");
+		testTask2.setTaskID("1");
+
+		assertTrue(testTask2.equals(testTask3));// same counter
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isProjectCollaboratorInTaskTeam(project.model.ProjectCollaborator)}.
+	 */
+	@Test
+	public void testIsProjectCollaboratorInTaskTeam() {
+
+		assertFalse(taskTest.isProjectCollaboratorInTaskTeam(projectCollaborator));
+
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+
+		assertTrue(taskTest.isProjectCollaboratorInTaskTeam(projectCollaborator));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isProjectCollaboratorActiveInTaskTeam(project.model.ProjectCollaborator)}.
+	 */
+	@Test
+	public void testIsProjectCollaboratorActiveInTaskTeam() {
+
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
+
+		assertTrue(taskReadyToFinishTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
+
+		taskReadyToFinishTest.removeProjectCollaboratorFromTask(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#doesTaskTeamHaveActiveUsers()}.
+	 */
+	@Test
+	public void testDoesTaskTeamHaveActiveUsers() {
+
+		assertFalse(taskTest.doesTaskTeamHaveActiveUsers());
+
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+
+		assertTrue(taskTest.doesTaskTeamHaveActiveUsers());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#isTaskTeamEmpty()}.
+	 */
+	@Test
+	public void testIsTaskTeamEmpty() {
+
+		assertTrue(taskTest.isTaskTeamEmpty());
+
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+
+		assertFalse(taskTest.isTaskTeamEmpty());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getTaskCost()}.
+	 */
+	@Test
+	public void testGetTaskCost() {
+
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+
+		taskTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
+
+		assertEquals(10.0, taskTest.getTaskCost(), 0.1);
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createTaskDependence(project.model.Task, int)}.
+	 */
+	@Test
+	public void testCreateTaskDependence() {
+
+		taskTest.setTaskID("3");
+
+		assertFalse(taskTest.hasDependencies());
+
+		assertTrue(taskTest.createTaskDependence(taskReadyToFinishTest, 1));
+
+		assertTrue(taskTest.hasDependencies());
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#removeTaskDependence(project.model.Task)}.
+	 */
+	@Test
+	public void testRemoveTaskDependence() {
+
+		taskTest.setTaskID("3");
+
+		assertTrue(taskTest.createTaskDependence(taskReadyToFinishTest, 1));
+
+		assertTrue(taskTest.hasDependencies());
+
+		assertTrue(taskTest.removeTaskDependence(taskReadyToFinishTest));
+
+		assertFalse(taskTest.hasDependencies());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#hasActiveDependencies()}.
+	 */
+	@Test
+	public void testHasActiveDependencies() {
+
+		taskTest.setTaskID("3");
+
+		assertFalse(taskTest.hasActiveDependencies());
+
+		assertTrue(taskTest.createTaskDependence(taskReadyToFinishTest, 1));
+
+		assertTrue(taskTest.hasActiveDependencies());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getTaskState()}.
+	 */
+	@Test
+	public void testGetTaskState() {
+
+		TaskStateInterface taskState = new Created();
+
+		taskReadyToFinishTest.setTaskState(taskState);
+
+		assertTrue(taskReadyToFinishTest.getTaskState() instanceof Created);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#viewTaskStateName()}.
+	 */
+	@Test
+	public void testViewTaskStateName() {
+
+		TaskStateInterface taskState = new Created();
+
+		taskReadyToFinishTest.setTaskState(taskState);
+
+		assertEquals("Created", taskReadyToFinishTest.viewTaskStateName());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#viewTaskStateNameFromEnum()}.
+	 */
+	@Test
+	public void testViewTaskStateNameFromEnum() {
+
+		taskReadyToFinishTest.setCurrentState(StateEnum.CREATED);
+
+		assertEquals("CREATED", taskReadyToFinishTest.viewTaskStateNameFromEnum());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#setTaskState(project.model.taskstateinterface.TaskStateInterface)}.
+	 */
+	@Test
+	public void testSetTaskState() {
+
+		assertTrue(taskReadyToFinishTest.getTaskState() instanceof OnGoing);
+
+		TaskStateInterface taskState = new Created();
+
+		taskReadyToFinishTest.setTaskState(taskState);
+
+		assertTrue(taskReadyToFinishTest.getTaskState() instanceof Created);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#hasDependencies()}.
+	 */
+	@Test
+	public void testHasDependencies() {
+
+		taskTest.setTaskID("3");
+
+		assertFalse(taskTest.hasDependencies());
+
+		assertTrue(taskTest.createTaskDependence(taskReadyToFinishTest, 1));
+
+		assertTrue(taskTest.hasDependencies());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#removeFinishDate()}.
+	 */
+	@Test
+	public void testRemoveFinishDate() {
+
+		taskReadyToFinishTest.setFinishDate(Calendar.getInstance());
+
+		assertFalse(taskReadyToFinishTest.getFinishDate() == null);
+
+		taskReadyToFinishTest.removeFinishDate();
+
+		assertEquals(null, taskReadyToFinishTest.getFinishDate());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#cancelTask()}.
+	 */
+	@Test
+	public void testCancelTask() {
+
+		assertFalse(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
+
+		assertEquals(null, taskReadyToFinishTest.getCancelDate());
+
+		taskReadyToFinishTest.cancelTask();
+
+		assertTrue(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
+
+		assertFalse(taskReadyToFinishTest.getCancelDate() == null);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#cancelTask()}.
+	 */
+	@Test
+	public void testCancelTaskWhithTaskStateFinished() {
+
+		assertFalse(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
+
+		taskReadyToFinishTest.markTaskAsFinished();
+
+		taskReadyToFinishTest.cancelTask();
+
+		assertFalse(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setCancelDate()}.
+	 */
+	@Test
+	public void testSetCancelDate() {
+
+		assertEquals(null, taskReadyToFinishTest.getCancelDate());
+
+		taskReadyToFinishTest.setCancelDate();
+
+		assertFalse(taskReadyToFinishTest.getCancelDate() == null);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getCancelDate()}.
+	 */
+	@Test
+	public void testGetCancelDate() {
+
+		assertEquals(null, taskReadyToFinishTest.getCancelDate());
+
+		taskReadyToFinishTest.setCancelDate();
+
+		assertFalse(taskReadyToFinishTest.getCancelDate() == null);
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#removeAllCollaboratorsFromTaskTeam()}.
+	 */
+	@Test
+	public void testRemoveAllCollaboratorsFromTaskTeam() {
+
+		assertFalse(taskTest.doesTaskTeamHaveActiveUsers());
+
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+
+		assertTrue(taskTest.doesTaskTeamHaveActiveUsers());
+
+		taskTest.removeAllCollaboratorsFromTaskTeam();
+
+		assertFalse(taskTest.doesTaskTeamHaveActiveUsers());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#cancelledDateClear()}.
+	 */
+	@Test
+	public void testCancelledDateClear() {
+
+		taskReadyToFinishTest.cancelTask();
+
+		assertTrue(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
+
+		taskReadyToFinishTest.cancelledDateClear();
+
+		assertFalse(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#UnfinishTask()}.
+	 */
+	@Test
+	public void testUnfinishTask() {
+
+		taskReadyToFinishTest.markTaskAsFinished();
+
+		assertTrue(taskReadyToFinishTest.isTaskFinished());
+
+		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.UnfinishTask());
+
+		assertFalse(taskReadyToFinishTest.isTaskFinished());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#UnfinishTask()}.
+	 */
+	@Test
+	public void testUnfinishTaskWhithTaskStateSetToOnGoing() {
+
+		taskReadyToFinishTest.cancelTask();
+
+		assertFalse(taskReadyToFinishTest.UnfinishTask());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#getAssignementTaskTeamRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testGetAssignementTaskTeamRequest() {
+
+		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.getAssignementTaskTeamRequest(projectCollaborator).getProjCollab()
+				.equals(projectCollaborator));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#getRemovalTaskTeamRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testGetRemovalTaskTeamRequest() {
+
+		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+
+		assertEquals(projectCollaborator,
+				taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getProjCollab());
+
+		taskReadyToFinishTest.deleteTaskRemovalRequest(projectCollaborator);
+
+		assertEquals(null, taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#viewPendingTaskAssignementRequests()}.
+	 */
+	@Test
+	public void testViewPendingTaskAssignementRequests() {
+
+		assertTrue(taskReadyToFinishTest.viewPendingTaskAssignementRequests().isEmpty());
+
+		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.viewPendingTaskAssignementRequests().isEmpty());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#viewPendingTaskRemovalRequests()}.
+	 */
+	@Test
+	public void testViewPendingTaskRemovalRequests() {
+
+		assertTrue(taskReadyToFinishTest.viewPendingTaskRemovalRequests().isEmpty());
+
+		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.viewPendingTaskRemovalRequests().isEmpty());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#getPendingTaskAssignementRequests()}.
+	 */
+	@Test
+	public void testGetPendingTaskAssignementRequests() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+
+		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getPendingTaskRemovalRequests()}.
+	 */
+	@Test
+	public void testGetPendingTaskRemovalRequests() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
+
+		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createTaskAssignementRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testCreateTaskAssignementRequest() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+
+		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createTaskAssignementRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testCreateTaskAssignementRequestRequestsAlreadyCreated() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+
+		assertTrue(taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator));
+
+		assertFalse(taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator));
+
+		assertEquals(1, taskReadyToFinishTest.getPendingTaskAssignementRequests().size());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createTaskRemovalRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testCreateTaskRemovalRequest() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
+
+		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#createTaskRemovalRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testCreateTaskRemovalRequestRequestsAlreadyCreated() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
+
+		assertTrue(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
+
+		assertFalse(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
+
+		assertEquals(1, taskReadyToFinishTest.getPendingTaskRemovalRequests().size());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isAssignmentRequestAlreadyCreated(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testIsAssignmentRequestAlreadyCreated() {
+
+		assertFalse(taskReadyToFinishTest.isAssignmentRequestAlreadyCreated(projectCollaborator));
+
+		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.isAssignmentRequestAlreadyCreated(projectCollaborator));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isRemovalRequestAlreadyCreated(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testIsRemovalRequestAlreadyCreated() {
+
+		assertFalse(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+
+		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#deleteTaskRemovalRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testDeleteTaskRemovalRequest() {
+
+		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+
+		taskReadyToFinishTest.deleteTaskRemovalRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#deleteTaskAssignementRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void testDeleteTaskAssignementRequest() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+
+		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+
+		taskReadyToFinishTest.deleteTaskAssignementRequest(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#removeAllRequestsWithASpecificTask()}.
+	 */
+	@Test
+	public void testRemoveAllRequestsWithASpecificTask() {
+
+		assertTrue(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskTeamRequests().isEmpty());
+
+		taskReadyToFinishTest.removeAllRequestsWithASpecificTask();
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskTeamRequests().isEmpty());
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#setPendingTaskTeamRequests(List)}.
+	 */
+	@Test
+	public void testSetPendingTaskTeamRequests() {
+
+		TaskTeamRequest request = new TaskTeamRequest();
+
+		List<TaskTeamRequest> victim = new ArrayList<>();
+		victim.add(request);
+
+		taskReadyToFinishTest.setPendingTaskTeamRequests(victim);
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskTeamRequests().equals(victim));
+
+	}
+
+	/**
+	 * Test method for {@link project.model.Task#getPendingTaskTeamRequests()}.
+	 */
+	@Test
+	public void testGetPendingTaskTeamRequests() {
+
+		TaskTeamRequest request = new TaskTeamRequest();
+
+		List<TaskTeamRequest> victim = new ArrayList<>();
+		victim.add(request);
+
+		taskReadyToFinishTest.setPendingTaskTeamRequests(victim);
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskTeamRequests().equals(victim));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValid() {
+
+		TaskStateInterface created = new Created();
+
+		taskTestSecond.setTaskState(created);
+
+		assertTrue(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSameTask() {
 
 		// Asserts false, because both tasks are the same
-		assertFalse(testTask.isCreatingTaskDependencyValid(testTask));
+		assertFalse(taskReadyToFinishTest.isCreatingTaskDependencyValid(taskReadyToFinishTest));
 
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidWithoutDeadline() {
 		/*
-		 * Its not possible to create a task dependency with a task without task
+		 * Its not possible to create a task dependency with a mother task without task
 		 * deadline
 		 */
 
-		testTask2.setTaskDeadline(null);
-		assertFalse(testTask.isCreatingTaskDependencyValid(testTask2));
+		taskTestSecond.setTaskDeadline(null);
+		assertFalse(taskReadyToFinishTest.isCreatingTaskDependencyValid(taskTestSecond));
+	}
 
-		// Sets a task deadline
-		testTask2.setTaskDeadline(Calendar.getInstance());
-
-		// Sets testTask2 to OnGoing
-		testTask2.setTaskState(onGoing1);
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSetToOnGoing() {
 
 		/*
 		 * Its not possible to create a dependency to a daughter task that is set to
 		 * onGoing
 		 */
-		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
 
-		// Sets testTask2 to Cancelled
-		testTask2.setTaskState(cancelled1);
+	}
 
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSetToCancelled() {
 		/*
 		 * Its not possible to create a dependency to a daughter task that is set to
 		 * Cancelled
 		 */
-		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+		taskTestSecond.cancelTask();
 
-		// Sets testTask2 to Ready
-		testTask2.setTaskState(ready1);
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
 
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidSetToReady() {
 		/*
 		 * Its not possible to create a dependency to a daughter task that is set to
 		 * Ready
 		 */
-		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
+		TaskStateInterface ready = new Ready();
 
-		// Sets testTask2 to Cancelled
-		testTask2.setTaskState(finished1);
-
-		/*
-		 * Its not possible to create a dependency to a daughter task that is set to
-		 * Cancelled
-		 */
-		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
-
-		// Sets testTask2 to StandBy
-		testTask2.setTaskState(standBy1);
-
-		/*
-		 * Its not possible to create a dependency to a daughter task that is set to
-		 * Standby
-		 */
-		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
-
-		/*
-		 * Sets a task deadline to testTask
-		 */
-		testTask.setTaskDeadline(Calendar.getInstance());
-
-		/*
-		 * Changes testTaskState to "CREATED"
-		 */
-		testTask2.setTaskState(created1);
-
-		/*
-		 * Its possible to create task dependency
-		 */
-		assertTrue(testTask2.isCreatingTaskDependencyValid(testTask));
-
-		// Sets mother task to "CANCELLED"
-		testTask.setTaskState(cancelled2);
-
-		/*
-		 * It's not possible to create a task dependency with a mother task set to
-		 * Cancelled
-		 */
-		assertFalse(testTask2.isCreatingTaskDependencyValid(testTask));
-
-	}
-
-	@Test
-	public void createRemoveTaskDependencyTest() {
-
-		OnGoing onGoing1 = new OnGoing(testTask2);
-		Finished finished1 = new Finished(testTask2);
-		Ready ready1 = new Ready(testTask2);
-		Cancelled cancelled1 = new Cancelled(testTask2);
-		StandBy standBy1 = new StandBy(testTask2);
-		Created created1 = new Created(testTask2);
-
-		Created created2 = new Created(testTask2);
-		Cancelled cancelled2 = new Cancelled(testTask);
-
-		testTask2.setTaskState(created2);
-
-		// Sets a task deadline
-		testTask2.setTaskDeadline(Calendar.getInstance());
-
-		/*
-		 	Checks that the testTask has no active dependencies yet
-		 */
-		assertFalse(testTask.hasActiveDependencies());
-
-		// Checks if its possible to remove a task dependency
-		assertTrue(testTask.createTaskDependence(testTask2, 10));
-
-
-
-
-		/*
-		 * It's not possible to create task dependency because testTask1 doesn't have
-		 * the requirements to be a mother task
-		 */
-		assertFalse(testTask2.createTaskDependence(testTask, 10));
-
-		/*
-		 * Checks if its possible to remove the task dependency
-		 */
-		assertTrue(testTask.removeTaskDependence(testTask2));
-
-		/*
-		 * Checks if it's valid to create task Dependency with a negative value.
-		 * It is, but the days to postpone will be equal to 0
-		 */
-		assertTrue(testTask.createTaskDependence(testTask2, -10));
-
-
-		/*
-		 * Checks if its possible to remove the task dependency It won't be because
-		 * dependency doesn't exist anymore
-		 */
-		testTask.removeTaskDependence(testTask2);
-
-		assertFalse(testTask.removeTaskDependence(testTask2));
-	}
-
-	@Test
-	public void testClearCancelDate() {
-
-		testTask.setCancelDate();
-
-		assertFalse(testTask.getCancelDate() == null);
-
-		testTask.cancelledDateClear();
-
-		assertTrue(testTask.getCancelDate() == null);
-	}
-
-
-	@Test
-	public void testSettersAndGetters() {
-
-		Task task = new Task();
-		OnGoing taskState = new OnGoing(task);
-
-		//Checks get/set taskState
-		task.setTaskState(taskState);
-		assertEquals(task.getTaskState(), taskState);
-
-		//Checks get/set taskID
-		task.setId(10L);
-		assertEquals(task.getId(), 10L, 0);
-
-		//Checks get/set Project
-		task.setProject(myProject);
-		assertEquals(task.getProject(), myProject);
-
-
-		//checks get/set TaskTeam
-		List<TaskCollaborator> taskCollaborators = new ArrayList<>();
-		taskCollaborators.add(tWorker1);
-		taskCollaborators.add(tWorker2);
-
-
-		task.setTaskTeam(taskCollaborators);
-		assertEquals(task.getTaskTeam(), taskCollaborators);
-
-
-		//checks get/set Reports
-		List<Report> reports = new ArrayList<>();
-		Report report1 = new Report();
-		Report report2 = new Report();
-
-		reports.add(report1);
-		reports.add(report2);
-
-		task.setReports(reports);
-		assertEquals(task.getReports(), reports);
-
-		//checks get/set taskDependency
-
-	
+		taskTestSecond.setTaskState(ready);
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
 	}
 
 	/**
-	 * Tests the getter of task current state
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
 	 */
 	@Test
-	public void testGetCurrentState(){
-		//testTask was only created
-		assertEquals(testTask.getCurrentState(), StateEnum.CREATED);
+	public void testIsCreatingTaskDependencyValidSetToCancel() {
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Cancelled
+		 */
+		taskTestSecond.cancelTask();
+
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
 	}
 
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
 	@Test
-	public void testGetActiveTaskCollaboratorByEmail() {
+	public void testIsCreatingTaskDependencyValidSetToStandBy() {
+		/*
+		 * Its not possible to create a dependency to task that is set to Standby
+		 */
+		TaskStateInterface standBy = new StandBy();
+		taskTestSecond.setTaskState(standBy);
 
-		Task task = new Task();
-		OnGoing taskState = new OnGoing(task);
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
 
-		//Checks get/set Project
-		task.setProject(myProject);
-		assertEquals(task.getProject(), myProject);
+	}
 
-		//checks get/set TaskTeam
-		List<TaskCollaborator> taskCollaborators = new ArrayList<>();
-		taskCollaborators.add(tWorker1);
-		taskCollaborators.add(tWorker2);
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
+	@Test
+	public void isCreatingTaskDependencyValidSetToFinished() {
 
-		task.setTaskTeam(taskCollaborators);
-		assertEquals(task.getTaskTeam(), taskCollaborators);
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Finished
+		 */
+		taskTestSecond.markTaskAsFinished();
 
-		//tWorker2 is collab2 which is user2 (suchmail@mail.com)
-		assertTrue(tWorker2.equals(task.getActiveTaskCollaboratorByEmail("suchmail@mail.com")));
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
+	@Test
+	public void isCreatingTaskDependencyValidSetToFinishedOtherTaskSetToCancelled() {
+
+		/*
+		 * Its not possible to create a dependency to a daughter task that is set to
+		 * Cancelled
+		 */
+		taskTestSecond.cancelTask();
+
+		assertFalse(taskReadyToFinishTest.isCreatingTaskDependencyValid(taskTestSecond));
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#isCreatingTaskDependencyValid(Task)}.
+	 */
+	@Test
+	public void testIsCreatingTaskDependencyValidWithTheSameDependency() {
+
+		TaskStateInterface created = new Created();
+
+		taskTestSecond.setTaskState(created);
+
+		assertTrue(taskTestSecond.createTaskDependence(taskReadyToFinishTest, 1));
+
+		assertFalse(taskTestSecond.isCreatingTaskDependencyValid(taskReadyToFinishTest));
+
 	}
 
 }

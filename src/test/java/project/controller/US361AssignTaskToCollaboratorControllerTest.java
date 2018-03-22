@@ -1,8 +1,15 @@
 package project.controller;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.*;
 
 import java.util.ArrayList;
@@ -10,70 +17,65 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({"project.model", "project.services", "project.repositories", "project.controller"})
 public class US361AssignTaskToCollaboratorControllerTest {
 
-	Company myCompany;
-	UserContainer userContainer;
+	@Autowired
+	US361AssignTaskToCollaboratorsController controller;
+
+	@Autowired
+	private UserService userContainer;
+	
+	@Autowired
+	private ProjectService projectContainer;
+	
+	@Autowired
+	private TaskService taskContainer;
+	
 	User user1;
 	User userAdmin;
 	Project project;
-	ProjectContainer projectContainer;
 	Task testTask, testTask2, testTask3, testTask4, testTask5, testTask6, testTask7;
 	ProjectCollaborator projCollaborator;
-	TaskCollaborator taskCollaborator;
 	ProjectCollaborator nullProjectCollaborator;
-	US361AssignTaskToCollaboratorsController controller;
-
+	
 	@Before
 	public void setUp() {
-		// create company
-
-		myCompany = Company.getTheInstance();
-
-		// creates an UserContainer
-		userContainer = myCompany.getUsersContainer();
-
-		// creates a ProjectsRepository
-		projectContainer = myCompany.getProjectsContainer();
-
-		userContainer.getAllUsersFromUserContainer().clear();
-
+	
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
-		// create user admin
-		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		
+		// create user administrator
+		userAdmin = userContainer.createUser("Jo�o", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
-		// add user to user list
-		userContainer.addUserToUserRepository(user1);
-		userContainer.addUserToUserRepository(userAdmin);
+		
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
-		// create project
+		
+		// add user to user list
+		userContainer.addUserToUserRepositoryX(user1);
+		userContainer.addUserToUserRepositoryX(userAdmin);
+		
+		// create project, added it to the ProjectContainer and add projectCollaborator
 		project = projectContainer.createProject("name3", "description4", userAdmin);// !!!
-		projectContainer.addProjectToProjectContainer(project);
-		projCollaborator = new ProjectCollaborator(user1, 0);
-		project.addProjectCollaboratorToProjectTeam(projCollaborator);
-		nullProjectCollaborator = null;
-
+		
+		projCollaborator = projectContainer.createProjectCollaborator(user1, project, 100);
+	
 		// creates the task
-		testTask = project.getTaskRepository().createTask("Task AAAA");
-		controller = new US361AssignTaskToCollaboratorsController(project, testTask);
-
-	}
-
-	@After
-	public void tearDown() {
-		Company.clear();
-		user1 = null;
-		testTask = null;
-		testTask2 = null;
-		project = null;
-		projectContainer = null;
-		userContainer = null;
-		projCollaborator = null;
-
+		testTask = taskContainer.createTask("Fix tests", project);
+		testTask2 = taskContainer.createTask("Fix controller", project);
+		
+		
+		taskContainer.saveTask(testTask);
+		taskContainer.saveTask(testTask2);
+		
+		//controller.setTask(testTask);
+		//controller.setTask(testTask2);
+		
 	}
 
 	/**
@@ -81,6 +83,10 @@ public class US361AssignTaskToCollaboratorControllerTest {
 	 */
 	@Test
 	public void assignTaskToCollaboratorControllerTest() {
+		
+		controller.setProject(project);
+		controller.setTask(testTask);
+			
 		controller.setUserToAddToTask(0);
 		assertTrue(controller.assignCollaboratorToTask());
 
@@ -93,7 +99,9 @@ public class US361AssignTaskToCollaboratorControllerTest {
 	 */
 	@Test
 	public void setProjectCollaborator() {
-
+		
+		controller.setProject(project);
+		
 		// asserts that the projectCollaborator is null
 		assertEquals(controller.getUserToAddToTask(), null);
 
@@ -108,6 +116,8 @@ public class US361AssignTaskToCollaboratorControllerTest {
 	 */
 	@Test
 	public void getProjectActiveTeam() {
+		
+		controller.setProject(project);
 
 		String info = "Name: " + user1.getName() + "\n" + "Email: " + user1.getEmail() + "\n" + "Function: "
 				+ user1.getFunction();

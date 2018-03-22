@@ -1,0 +1,7 @@
+Administrator->UI: Ask to see all users's list
+
+UI -> Controller: listUsers()
+Controller->TaskService: getAllUsersFromUserContainer()
+TaskService->DataBase: findAll()
+DataBase-->UI: return all users list
+UI-->Administrator: show all users list

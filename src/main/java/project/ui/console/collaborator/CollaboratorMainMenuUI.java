@@ -1,7 +1,8 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
@@ -9,24 +10,32 @@ import java.util.Scanner;
  * @author group3
  *
  */
-
+@Component
 public class CollaboratorMainMenuUI {
+
+	@Autowired
+	private US201and202UpdateUserInfoUI updateUserInfoUI;
+
+	@Autowired
+	private CollectProjectsFromUserUI collectProjectsFromUserUI;
+
+	@Autowired
+	private UserTasksFunctionalitiesMenuUI tasksFunctionalities;
 
 	private User user;
 
 	/**
 	 * Creates the UI
-	 * 
-	 * @param user
+	 *
 	 */
-	public CollaboratorMainMenuUI(User user) {
-		this.user = user;
+	public CollaboratorMainMenuUI() {
 
 	}
 
 	public void displayOptions() {
-		//UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		//infoUpdater.updateDBtoContainer();
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		Scanner scannerInput = new Scanner(System.in);
 
 		String myname = user.getName();
@@ -41,36 +50,32 @@ public class CollaboratorMainMenuUI {
 		System.out.println("[2] Projects");
 		System.out.println("[3] Tasks\n");
 		System.out.println("___________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		switch (option) {
 		case "1":
-			US201and202UpdateUserInfoUI updateUserInfoUI = new US201and202UpdateUserInfoUI(this.user);
+			updateUserInfoUI.setUser(this.user);
 			updateUserInfoUI.chooseWhatInfoToUpdate();
 			break;
 		case "2":
-			CollectProjectsFromUserUI collectProjectsFromUserUI = new CollectProjectsFromUserUI(this.user);
+			collectProjectsFromUserUI.setUser(this.user);
 			collectProjectsFromUserUI.collectProjectsFromUser();
 			break;
 		case "3":
-			UserTasksFunctionalitiesMenuUI tasksFunctionalities = new UserTasksFunctionalitiesMenuUI(user);
+			tasksFunctionalities.setUser(this.user);
 			tasksFunctionalities.displayFunctionalities();
 			break;
-
 		case "B":
 			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-			break;
 		default:
-			displayOptions();
+			loop = true;
 		}
+	}}
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

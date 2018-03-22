@@ -1,22 +1,38 @@
 package project.controller;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
 import project.model.*;
+import project.model.taskstateinterface.OnGoing;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US206CancelRemovalTaskRequestControllerTest {
+	@Autowired
+	US206RemovalTaskRequestController us206v2Controller;
+	@Autowired
+	ProjectService projectService;
+	@Autowired
+	UserService userService;
+	@Autowired
+	TaskService taskService;
 
-	Company company;
 	User userDaniel;
 	User userRui;
-	ProjectContainer projectContainer;
-	UserContainer userContainer;
 	Project projectA;
 	ProjectCollaborator userRuiCollaborator;
 	Task taskA;
@@ -25,69 +41,39 @@ public class US206CancelRemovalTaskRequestControllerTest {
 	String stringRequest1;
 	String stringRequest2;
 	List<String> pendingRemovalRequests;
-	US206RemovalTaskRequestController us206v2Controller;
 
 	@Before
 	public void setUp() {
 
-		// Sets the Company
-		company = Company.getTheInstance();
-
-		// Creates the Project Repository and User Repository
-		projectContainer = Company.getTheInstance().getProjectsContainer();
-		userContainer = Company.getTheInstance().getUsersContainer();
-
 		// Creates the users
-		userDaniel = userContainer.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto", "967387654", "Rua",
+		userDaniel = userService.createUser("Daniel", "daniel@gmail.com", "1234", "Arquitecto", "967387654", "Rua",
 				"3700", "Porto", "Porto", "Portugal");
-		userRui = userContainer.createUser("Rui", "rui@gmail.com", "12345", "Arquitecto", "967387654", "Rua", "3800",
+		userRui = userService.createUser("Rui", "rui@gmail.com", "12345", "Arquitecto", "967387654", "Rua", "3800",
 				"Porto", "Porto", "Portugal");
-		// Adds users to the user repository
-		userContainer.addUserToUserRepository(userDaniel);
-		userContainer.addUserToUserRepository(userRui);
 
 		// Creates the Project and adds it to the project repository
-		projectA = projectContainer.createProject("Museu Serralves", "Projecto do Museu de Serralves", userDaniel);
-		projectContainer.addProjectToProjectContainer(projectA);
+		projectA = projectService.createProject("Museu Serralves", "Projecto do Museu de Serralves", userDaniel);
 
 		// Adds the user to the project team
-		projectA.addUserToProjectTeam(userRui, 20);
-		userRuiCollaborator = projectA.findProjectCollaborator(userRui);
+		userRuiCollaborator = projectService.createProjectCollaborator(userRui, projectA, 20);
 
 		// Creates the tasks and adds them to the projectTasks
-		taskA = projectA.getTaskRepository().createTask("Implementar US100");
-		projectA.getTaskRepository().addTaskToProject(taskA);
-
-		taskB = projectA.getTaskRepository().createTask("Implementar US200");
-		projectA.getTaskRepository().addTaskToProject(taskB);
-
-		taskC = projectA.getTaskRepository().createTask("Implementar US300");
-		projectA.getTaskRepository().addTaskToProject(taskC);
+		taskA = taskService.createTask("Implementar US100", projectA);
+		taskA.setTaskState(new OnGoing());
+		taskA.setCurrentState(StateEnum.ONGOING);
+		taskB = taskService.createTask("Implementar US200", projectA);
+		taskB.setTaskState(new OnGoing());
+		taskB.setCurrentState(StateEnum.ONGOING);
+		taskC = taskService.createTask("Implementar US300", projectA);
 
 		// Adds the project collaborator to the tasks
 		taskA.addProjectCollaboratorToTask(userRuiCollaborator);
 		taskB.addProjectCollaboratorToTask(userRuiCollaborator);
-		// taskC.addProjectCollaboratorToTask(userRuiCollaborator);
+		taskService.saveTask(taskA);
+		taskService.saveTask(taskB);
 
-	}
+		us206v2Controller.setUser(userRui);
 
-	@After
-	public void tearDown() {
-		Company.clear();
-		company = null;
-		userDaniel = null;
-		userRui = null;
-		projectContainer = null;
-		userContainer = null;
-		projectA = null;
-		userRuiCollaborator = null;
-		taskA = null;
-		taskB = null;
-		taskC = null;
-		stringRequest1 = null;
-		stringRequest2 = null;
-		pendingRemovalRequests = null;
-		us206v2Controller = null;
 	}
 
 	@Test
@@ -95,12 +81,11 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		// Creates the US206V2RemovalTaskRequestController
 		// to create a request to remove from first task added - taskA (Task ID = 1.1,
 		// projectID = 1)
-		us206v2Controller = new US206RemovalTaskRequestController(userRui);
-		us206v2Controller.setProjectID(1);
-		us206v2Controller.setTaskID("1.1");
+		us206v2Controller.setProjectID(projectA.getId());
+		us206v2Controller.setTaskID(projectA.getId() + ".1");
 
-		//checks the change in task ID
-		assertEquals(us206v2Controller.getTaskID(), "1.1");
+		// checks the change in task ID
+		assertEquals(us206v2Controller.getTaskID(), projectA.getId() + ".1");
 
 		// Creates the removal requests from userRui and TaskA
 		assertTrue(us206v2Controller.createRequest());
@@ -119,7 +104,6 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		String taskID = "5.3";
 
 		// Instantiates the controller
-		us206v2Controller = new US206RemovalTaskRequestController(userRui);
 		// Calls the method setTaskIDandProjectID
 		us206v2Controller.setProjectIDFromTaskID(taskID);
 
@@ -136,12 +120,9 @@ public class US206CancelRemovalTaskRequestControllerTest {
 	@Test
 	public void testGetUnfinishedTaskFromUser() {
 
-		// Instantiates the controller
-		us206v2Controller = new US206RemovalTaskRequestController(userRui);
-
 		//// Creates the strings with a task description and task id
-		String taskIDandDescription1 = "[1.1] Implementar US100";
-		String taskIDandDescription2 = "[1.2] Implementar US200";
+		String taskIDandDescription1 = "[" + projectA.getId() + ".1] Implementar US100";
+		String taskIDandDescription2 = "[" + projectA.getId() + ".2] Implementar US200";
 
 		// List with the expected result strings
 		List<String> expResult = new ArrayList<>();

@@ -1,6 +1,4 @@
 package project.model;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,39 +11,37 @@ import java.util.List;
  * number, and by its profile.
  *
  * @author Group 3
- *
  */
 @Entity
 @Table(name = "User")
-public class User implements Serializable{
+public class User implements Serializable {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "User_ID")
 	private int id;
-	@OneToMany (cascade = CascadeType.ALL, mappedBy = "project")
-			@LazyCollection(LazyCollectionOption.FALSE)
-	List<ProjectCollaborator> projCollabs;
 	private String name;
 	private String email;
 	private String idNumber;
 	private String function;
 	static final long serialVersionUID = 44L;
 
-
-	@Embedded
-	//@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="user")
-	private ArrayList<Address> addressList;
-
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+	private List<Address> addressList;
+	
 	private String phone;
 	@Enumerated(EnumType.STRING)
 	private Profile userProfile;
-
 	private boolean systemUserStateActive;
 	private String password;
+
 	/**
 	 * Empty Constructor for User
 	 */
-	protected User () {}
+	public User() {
+		this.addressList = new ArrayList<>();
+	}
+
 	/**
 	 * Constructor of the class User. Every user has list of Addresses.
 	 *
@@ -71,10 +67,6 @@ public class User implements Serializable{
 		this.systemUserStateActive = true;
 	}
 
-	public void setSystemUserStateActive(boolean systemUserStateActive) {
-		this.systemUserStateActive = systemUserStateActive;
-	}
-
 	/**
 	 * Creates an instance of Address.
 	 *
@@ -83,19 +75,30 @@ public class User implements Serializable{
 	 * @param city
 	 * @param district
 	 * @param country
-	 *
 	 * @return the address created.
 	 */
 	public Address createAddress(String street, String zipCode, String city, String district, String country) {
 		return new Address(street, zipCode, city, district, country);
 	}
 
+	/**
+	 * Returns the id of the user.
+	 *
+	 * @return id
+	 */
 	public int getId() {
 		return id;
 	}
+
+	/**
+	 * Id to be set as the new id of the user
+	 *
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	/**
 	 * Returns the name of the user.
 	 *
@@ -104,6 +107,7 @@ public class User implements Serializable{
 	public String getName() {
 		return this.name;
 	}
+
 	/**
 	 * Name to be set as the new name of the user
 	 *
@@ -113,8 +117,8 @@ public class User implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/**
-	 *
 	 * Returns the user Email
 	 *
 	 * @return the user Email.
@@ -122,15 +126,16 @@ public class User implements Serializable{
 	public String getEmail() {
 		return this.email;
 	}
+
 	/**
 	 * Email to be set as the new email address of the user
 	 *
 	 * @param email
-	 *
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	/**
 	 * Returns the ID number of the user
 	 *
@@ -139,31 +144,43 @@ public class User implements Serializable{
 	public String getIdNumber() {
 		return this.idNumber;
 	}
+
+	/**
+	 * Set new ID Number of User
+	 *
+	 * @param idNumber
+	 */
 	public void setIdNumber(String idNumber) {
 		this.idNumber = idNumber;
 	}
-
 
 	/**
 	 * Returns the user address list
 	 *
 	 * @return Returns the user address list.
 	 */
-	public ArrayList<Address> getAddressList() {
+	public List<Address> getAddressList() {
 		return addressList;
 	}
-	public void setAddressList (ArrayList<Address> addresseses){
-		this.addressList = addresseses;
+
+	/**
+	 * Set new addressList to User
+	 *
+	 * @param addresses
+	 */
+	public void setAddressList(List<Address> addresses) {
+		this.addressList = addresses;
 	}
+
 	/**
 	 * Address to be added to the user address list.
 	 *
 	 * @param address
-	 *
 	 */
 	public void addAddress(Address address) {
 		this.addressList.add(address);
 	}
+
 	/**
 	 * Returns the phone number of a certain user
 	 *
@@ -172,6 +189,7 @@ public class User implements Serializable{
 	public String getPhone() {
 		return phone;
 	}
+
 	/**
 	 * This method sets the phone number attribute in User
 	 *
@@ -181,6 +199,7 @@ public class User implements Serializable{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	/**
 	 * Returns the function of the user
 	 *
@@ -189,6 +208,7 @@ public class User implements Serializable{
 	public String getFunction() {
 		return function;
 	}
+
 	/**
 	 * This method allows the function of a user to be changed.
 	 *
@@ -198,6 +218,16 @@ public class User implements Serializable{
 	public void setFunction(String function) {
 		this.function = function;
 	}
+
+	/**
+	 * Set the state of User
+	 *
+	 * @param systemUserStateActive
+	 */
+	public void setSystemUserStateActive(boolean systemUserStateActive) {
+		this.systemUserStateActive = systemUserStateActive;
+	}
+
 	/**
 	 * Returns the SystemUserState boolean that returns true if the user is active
 	 * and false if it is not active
@@ -207,11 +237,29 @@ public class User implements Serializable{
 	public boolean isSystemUserStateActive() {
 		return this.systemUserStateActive;
 	}
+
+	/**
+	 * Sets the user profile.
+	 *
+	 * @param userProfile
+	 *            Profile that will be set as the user profile.
+	 * @return Sets the user profile equal to the @param userProfile received.
+	 */
+	public void setUserProfile(Profile userProfile) {
+		this.userProfile = userProfile;
+	}
+
+	/**
+	 * Gets the user profile.
+	 *
+	 * @return the user profile.
+	 */
+	public Profile getUserProfile() {
+		return this.userProfile;
+	}
+
 	/**
 	 * Sets the state of the user state.
-	 *
-	 *            State of the user to be set
-	 *
 	 */
 	public void changeUserState() {
 		if (this.systemUserStateActive) {
@@ -220,6 +268,46 @@ public class User implements Serializable{
 			this.systemUserStateActive = true;
 		}
 	}
+
+	/**
+	 * this method search one specific address in user address list, if find one
+	 * match, the method return this specific address object.
+	 *
+	 * @param street
+	 * @return address
+	 */
+	public Address searchUserAddress(String street) {
+		for (Address other : this.addressList) {
+			if (other.getStreet().equals(street))
+				return other;
+		}
+		return null;
+	}
+
+	/**
+	 * Set Password to user
+	 *
+	 * @param password
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * this method verify if the given password match with User password
+	 *
+	 * @param password
+	 * @return true or false if the password match
+	 */
+	public boolean checkLogin(String password) {
+		boolean found;
+		found = false;
+		if (this.password.equals(password)) {
+			found = true;
+		}
+		return found;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -232,6 +320,7 @@ public class User implements Serializable{
 		result = prime * result + email.hashCode();
 		return result;
 	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -248,59 +337,4 @@ public class User implements Serializable{
 		User other = (User) obj;
 		return email.equals(other.email);
 	}
-	/**
-	 * Sets the user profile.
-	 *
-	 * @param userProfile
-	 *            Profile that will be set as the user profile.
-	 *
-	 * @return Sets the user profile equal to the @param userProfile received.
-	 */
-	public void setUserProfile(Profile userProfile) {
-		this.userProfile = userProfile;
-	}
-	/**
-	 * Gets the user profile.
-	 *
-	 *
-	 * @return the user profile.
-	 */
-	public Profile getUserProfile() {
-		return this.userProfile;
-	}
-	/**
-	 * this method search one specific address in user address list, if find one
-	 * match, the method return this specific address object.
-	 *
-	 * @param street
-	 * @return address
-	 */
-	public Address searchUserAddress(String street) {
-		for (Address other : this.addressList) {
-			if (other.getStreet().equals(street))
-				return other;
-		}
-		return null;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public boolean checkLogin(String password) {
-		boolean found;
-		found = false;
-		if (this.password.equals(password)) {
-			found = true;
-		}
-		return found;
-	}
-
-
-	public List<ProjectCollaborator> getProjCollabs() {
-		return projCollabs;
-	}
-
-	public void setProjCollabs(List<ProjectCollaborator> projCollabs) {
-		this.projCollabs = projCollabs;
-	}
-
 }

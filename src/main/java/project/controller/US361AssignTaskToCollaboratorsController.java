@@ -1,5 +1,9 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -13,11 +17,51 @@ import java.util.List;
  *         * US 361 - Como Gestor de projeto, quero poder atribuir uma tarefa a
  *         um colaborador.
  */
+@Controller
 public class US361AssignTaskToCollaboratorsController {
+
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private TaskService taskService;
 
 	private Project project;
 	private Task task;
 	private ProjectCollaborator projectCollaborator;
+
+	/*
+	 * Default constructor
+	 */
+	public US361AssignTaskToCollaboratorsController() {
+
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
+	public ProjectCollaborator getProjectCollaborator() {
+		return projectCollaborator;
+	}
+
+	public void setProjectCollaborator(ProjectCollaborator projectCollaborator) {
+		this.projectCollaborator = projectCollaborator;
+	}
 
 	/**
 	 * Constructor to instantiate a new US361TaskToCollaboratorsController
@@ -42,7 +86,7 @@ public class US361AssignTaskToCollaboratorsController {
 
 		List<String> projectTeam = new ArrayList<>();
 
-		for (ProjectCollaborator other : this.project.getProjectTeam()) {
+		for (ProjectCollaborator other : projectService.getProjectTeam(this.project)) {
 			String userName = other.getUserFromProjectCollaborator().getName();
 			String userEmail = other.getUserFromProjectCollaborator().getEmail();
 			String userFunction = other.getUserFromProjectCollaborator().getFunction();
@@ -60,7 +104,8 @@ public class US361AssignTaskToCollaboratorsController {
 	 *            Index of the projectCollaborator in the ActiveProjectTeam List
 	 */
 	public void setUserToAddToTask(int userIndex) {
-		this.projectCollaborator = project.getActiveProjectTeam().get(userIndex);
+		this.projectCollaborator = projectService.getActiveProjectTeam(this.project).get(userIndex);
+
 	}
 
 	/**
@@ -76,7 +121,13 @@ public class US361AssignTaskToCollaboratorsController {
 	 * @return TRUE if it was possible to add or FALSE if not
 	 */
 	public boolean assignCollaboratorToTask() {
-		return task.addProjectCollaboratorToTask(this.projectCollaborator);
+		boolean assignCollaboratorToTask = false;
+		if (task.addProjectCollaboratorToTask(this.projectCollaborator)) {
+			projectService.updateProject(this.project);
+			taskService.saveTask(this.task);
+			assignCollaboratorToTask = true;
+		}
+		return assignCollaboratorToTask;
 	}
 
 }

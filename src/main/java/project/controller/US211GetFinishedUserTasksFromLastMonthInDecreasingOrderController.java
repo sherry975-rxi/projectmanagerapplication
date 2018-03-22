@@ -1,17 +1,29 @@
 package project.controller;
 
-import project.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.model.Project;
+import project.model.Task;
+import project.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Controller
 public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
-	ProjectContainer myProjRepo;
+
+	@Autowired
+	ProjectService projectContainer;
+
+	@Autowired
+	TaskService taskService;
 
 	public US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
+
 	}
 
 	/**
@@ -25,7 +37,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
 	 * 
 	 */
 	public List<String> getFinishedUserTasksFromLastMonthInDecreasingOrder(User myUser) {
-		List<Task> lastMonthFinishedTasks = this.myProjRepo.getFinishedUserTasksFromLastMonthInDecreasingOrder(myUser);
+		List<Task> lastMonthFinishedTasks = taskService.getFinishedUserTasksFromLastMonthInDecreasingOrder(myUser);
 		List<String> lastMonthFinishedTasksString = new ArrayList<>();
 
 		for (Task other : lastMonthFinishedTasks) {
@@ -67,7 +79,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController {
 		String projectName = "404 Project Not found!";
 		String[] splitTaskID = toSeeProject.getTaskID().split("\\.");
 		int projectID = Integer.parseInt(splitTaskID[0]);
-		Project projectContainingTask = myProjRepo.getProjById(projectID);
+		Project projectContainingTask = projectContainer.getProjectById(projectID);
 		if (projectContainingTask != null) {
 			projectName = projectContainingTask.getName();
 		}

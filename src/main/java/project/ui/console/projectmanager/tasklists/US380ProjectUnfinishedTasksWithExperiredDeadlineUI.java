@@ -1,24 +1,32 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US380GetProjectExpiredTaskListController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
+@Component
 public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US380GetProjectExpiredTaskListController controller;
+
 	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -35,34 +43,27 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		System.out.println("     UNFINISHED TASKS WITH EXPIRED DEADLINE");
 		System.out.println(line);
 
-		US380GetProjectExpiredTaskListController controller = new US380GetProjectExpiredTaskListController();
-
 		for (int i = 0; i < controller.getUnfinishedTaskListWithExpiredDeadline(project).size(); i++) {
 			String taskInfo = controller.getUnfinishedTaskListWithExpiredDeadline(project).get(i);
 			System.out.println(taskInfo);
 		}
 
 		System.out.println(line);
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		switch (option) {
 
 		case ("B"):
-			return;
-
-		case ("M"):
-			MainMenuUI.mainMenu();
 			break;
 
 		default:
 			System.out.println("Please choose a valid option: ");
-			this.displayUnfinishedTasksWithExpiredDeadline(project, user);
+			loop = true;
 			break;
 		}
 
-	}
+	}}
 
 }

@@ -1,14 +1,19 @@
 package project.controller;
 
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.ProjectService;
 import project.model.Project;
-import project.model.ProjectContainer;
 import project.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class CollectProjectsFromUserController {
+
+	@Autowired
+	private ProjectService projService;
 
 	private User user;
 
@@ -16,25 +21,31 @@ public class CollectProjectsFromUserController {
 	 * Constructor
 	 * 
 	 */
-	public CollectProjectsFromUserController(User user) {
-		this.user = user;
+	public CollectProjectsFromUserController() {
+
 	}
 
-	/**
+    public CollectProjectsFromUserController(User user) {
+
+	    this.user=user;
+
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
 	 * This method returns a set of Projects where a certain user
-	 * 
-	 * @param User
-	 * 
 	 * @return List of Projects from user
 	 */
 	public List<String> getProjectsFromUserAndProjectManager() {
 
 		List<String> myProjects = new ArrayList<>();
-		ProjectContainer myProjRepo = Company.getTheInstance().getProjectsContainer();
-		for (Project ii : myProjRepo.getAllProjectsfromProjectsContainer()) {
+		for (Project ii : projService.getAllProjectsfromProjectsContainer()) {
 			if (ii.isProjectManager(user)) {
-				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName() + " - PM ");
-			} else if (ii.isUserActiveInProject(user)) {
+				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName() + " - PM");
+			} else if (projService.isUserActiveInProject(user, ii)) {
 				myProjects.add("[" + ii.getIdCode() + "]" + " " + ii.getName());
 			}
 		}
@@ -42,32 +53,20 @@ public class CollectProjectsFromUserController {
 	}
 
 	/**
-	 * This method returns a set of Projects where a certain user
-	 * 
-	 * @param User
-	 * 
+	 * This method returns a set of Projects which a certain user has joined as a collaborator
 	 * @return List of Projects of a user
 	 */
 	public List<Project> getProjectsFromUser() {
-		List<Project> listOfProjectsOfUser = new ArrayList<>();
-		listOfProjectsOfUser.addAll(Company.getTheInstance().getProjectsContainer().getProjectsFromUser(this.user));
-		return listOfProjectsOfUser;
+		return new ArrayList<>(projService.getProjectsFromUser(this.user));
 	}
 
 	/**
 	 * This method returns a set of Projects where a certain user was defined as
 	 * Project Manager
-	 * 
-	 * @param projectManager
-	 *            User defined as Project Manager
-	 * 
 	 * @return List of Projects of a Project Manager
 	 */
 	public List<Project> getProjectsFromProjectManager() {
-		List<Project> listOfProjectsOfProjectManager = new ArrayList<>();
-		listOfProjectsOfProjectManager
-				.addAll(Company.getTheInstance().getProjectsContainer().getProjectsFromProjectManager(this.user));
-		return listOfProjectsOfProjectManager;
+		return new ArrayList<>(projService.getProjectsFromProjectManager(this.user));
 	}
 
 }

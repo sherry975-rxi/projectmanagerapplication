@@ -1,14 +1,23 @@
 package project.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import project.model.Company;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import project.Services.ProjectService;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.Project;
 import project.model.User;
-
-import static org.junit.Assert.*;
 
 /**
  * @author Group 3
@@ -16,44 +25,50 @@ import static org.junit.Assert.*;
  *         Tests the Create Project Controller.
  *
  */
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US302ChangeProjectManagerTest {
 
-	Company c1;
 	User userFirstManager;
 	User userNewManager;
 	Project newProject;
+
+	@Autowired
 	US302ChangeProjectManagerController changeManagerController;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private ProjectService projectService;
 
 	@Before
 	public void setUp() {
 
-		// Company creation
-		c1 = Company.getTheInstance();
-
 		// User creation
-		userFirstManager = c1.getUsersContainer().createUser("Leonor", "leonor@gmail.com", "001", "Empregado",
-				"930000000", "Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
-		userNewManager = c1.getUsersContainer().createUser("Lenny", "lenny@gmail.com", "002", "Empregado", "940000000",
+		userFirstManager = userService.createUser("Leonor", "leonor@gmail.com", "001", "Empregado", "930000000",
 				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
-		// add users to company
-		c1.getUsersContainer().addUserToUserRepository(userFirstManager);
-		c1.getUsersContainer().addUserToUserRepository(userNewManager);
+		userNewManager = userService.createUser("Lenny", "lenny@gmail.com", "002", "Empregado", "940000000",
+				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
 
 		// set user as Director
 		userFirstManager.setUserProfile(Profile.COLLABORATOR);
 
-		newProject = c1.getProjectsContainer().createProject("name", "description", userFirstManager);
-		c1.getProjectsContainer().addProjectToProjectContainer(newProject);
+		newProject = projectService.createProject("name", "description", userFirstManager);
+
+		changeManagerController.setSelectedProject(newProject);
+		changeManagerController.setSelectedManager(userFirstManager);
+
 	}
 
 	@After
-	public void tearDown() {
-		Company.clear();
-		c1 = null;
+	public void clear() {
+
 		userFirstManager = null;
 		userNewManager = null;
 		newProject = null;
-		changeManagerController = null;
+
 	}
 
 	/**
@@ -63,7 +78,6 @@ public class US302ChangeProjectManagerTest {
 	 */
 	@Test
 	public void testlistActiveCollaboratorsController() {
-		changeManagerController = new US302ChangeProjectManagerController(newProject);
 
 		// given userFirstManager as the only collaborator, asserts one
 		// ActiveCollaborators are listed
@@ -84,27 +98,32 @@ public class US302ChangeProjectManagerTest {
 	 */
 	@Test
 	public void testListCollaborators_SelectUser() {
-		// calls the List Active Collaborators method to generate a List and display it
-		// to the user
-		changeManagerController = new US302ChangeProjectManagerController(newProject);
+
+		/*
+		 * calls the List Active Collaborators method to generate a List and display it
+		 * to the user
+		 */
 		changeManagerController.listPossibleManagers();
 
-		// selects user from "Collaborator number 2" (corresponding to the User List's
-		// index 1
-		// as only one collaborator exists, index 1 must return the original project
-		// managger
+		/*
+		 * selects user from "Collaborator number 2" (corresponding to the User List's
+		 * index 1 as only one collaborator exists, index 1 must return the original
+		 * project manager
+		 */
 		assertEquals(changeManagerController.selectNewManager(1), userFirstManager);
 
-		// sets userNewManager as collaborator and remakes the controller, and asserts
-		// the same
-		// selection now returns userNewManager
+		/*
+		 * sets userNewManager as collaborator and remakes the controller, and asserts
+		 * the same selection now returns userNewManager
+		 */
 		userNewManager.setUserProfile(Profile.COLLABORATOR);
-		changeManagerController = new US302ChangeProjectManagerController(newProject);
 		assertEquals(changeManagerController.listPossibleManagers().size(), 2);
 		assertEquals(changeManagerController.selectNewManager(2), userNewManager);
 
-		// then, without resetting the controller, asserts that selecting an invalid
-		// index number will maintain the existing selection
+		/*
+		 * then, without resetting the controller, asserts that selecting an invalid
+		 * index number will maintain the existing selection
+		 */
 		assertEquals(changeManagerController.selectNewManager(5), userNewManager);
 	}
 
@@ -120,7 +139,6 @@ public class US302ChangeProjectManagerTest {
 		// calls the List Active Collaborators method to generate a List and display it
 		// to the user
 		userNewManager.setUserProfile(Profile.COLLABORATOR);
-		changeManagerController = new US302ChangeProjectManagerController(newProject);
 		changeManagerController.listPossibleManagers();
 
 		// selects user from invalid index entry (corresponding to the User List's
@@ -146,8 +164,6 @@ public class US302ChangeProjectManagerTest {
 	 */
 	@Test
 	public void testManagerDataToStringController() {
-
-		changeManagerController = new US302ChangeProjectManagerController(newProject);
 
 		// creates a string matching u1's data and asserts as true
 		String firstManagerString = "001: Leonor (leonor@gmail.com; 930000000) - Empregado";

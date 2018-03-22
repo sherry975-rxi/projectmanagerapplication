@@ -1,6 +1,9 @@
 package project.controller;
 
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -10,23 +13,39 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Controller
 public class PrintProjectInfoController {
+
+	@Autowired
+	private ProjectService projService;
+
+	@Autowired
+	private TaskService taskService;
 
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-	Integer projID;
+	int projID;
 
-	public PrintProjectInfoController(Project project) {
-		this.project = project;
+	public PrintProjectInfoController() {
+
 	}
 
-	public PrintProjectInfoController(Integer projID) {
+
+
+	public PrintProjectInfoController(Project project) {
+
+		this.project = project;
+		
+
+	}
+
+	public PrintProjectInfoController(int projID) {
+
 		this.projID = projID;
-		project = Company.getTheInstance().getProjectsContainer().getProjById(this.projID);
 	}
 
 	public void setProject() {
-		this.project = Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode());
+		this.project = projService.getProjectById(this.projID);
 	}
 
 	/**
@@ -125,7 +144,7 @@ public class PrintProjectInfoController {
 	 * @return String project's team
 	 */
 	public String printProjectTeamInfo() {
-		List<ProjectCollaborator> projectTeam = this.project.getProjectTeam();
+		List<ProjectCollaborator> projectTeam =  projService.getProjectTeam(project);
 
 		List<String> team = new ArrayList<>();
 
@@ -162,10 +181,9 @@ public class PrintProjectInfoController {
 	 * @return List of Strings of project's task (task ID + task description)
 	 */
 	public List<String> getProjectTaskList() {
-		List<Task> taskList = Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode())
-				.getTaskRepository().getAllTasksfromProject();
 		List<String> projectTaskList = new ArrayList<>();
-		for (Task projectTask : taskList) {
+
+		for (Task projectTask : getTasks()) {
 			String[] stringList = projectTask.getTaskID().split("\\.");
 			projectTaskList.add("[" + stringList[0] + "." + stringList[1] + "]" + " " + projectTask.getDescription());
 		}
@@ -180,11 +198,9 @@ public class PrintProjectInfoController {
 	 */
 	public List<String> getTasksIDs() {
 
-		List<Task> taskList = Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode())
-
-				.getTaskRepository().getAllTasksfromProject();
 		List<String> projectTasksID = new ArrayList<>();
-		for (Task projectTask : taskList) {
+
+		for (Task projectTask : getTasks()) {
 			projectTasksID.add(projectTask.getTaskID());
 		}
 		return projectTasksID;
@@ -196,8 +212,20 @@ public class PrintProjectInfoController {
 	 * @return List of project's task
 	 */
 	public List<Task> getTasks() {
-		return Company.getTheInstance().getProjectsContainer().getProjById(this.project.getIdCode())
-				.getTaskRepository().getAllTasksfromProject();
+		return taskService.getProjectTasks(project);
+	}
+
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public void setDateFormat(SimpleDateFormat dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	public void setProjID(int projID) {
+		this.projID = projID;
 	}
 
 }

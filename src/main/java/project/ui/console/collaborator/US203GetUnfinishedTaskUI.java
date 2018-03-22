@@ -1,22 +1,27 @@
 package project.ui.console.collaborator;
 
-import project.controller.US203GetUnfinishedTaskByUser;
-import project.controller.UpdateDbToContainersController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import project.controller.US203GetUserStartedNotFinishedTaskListInIncreasingOrderController;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
+@Component
 public class US203GetUnfinishedTaskUI {
-	private Boolean isPreviousUIFromTasks;
+	@Autowired
+	private US203GetUserStartedNotFinishedTaskListInIncreasingOrderController unfinishedTaskByUser;
+
+	@Autowired
+	private TaskDetailsUI taskSelected;
 
 	public void displayOptions(User user1) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		int projID;
 		String[] split;
 		User user = user1;
-		US203GetUnfinishedTaskByUser unfinishedTaskByUser = new US203GetUnfinishedTaskByUser();
 		int t;
 		t = 0;
 		Scanner scannerInput = new Scanner(System.in);
@@ -27,30 +32,22 @@ public class US203GetUnfinishedTaskUI {
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
 
-		for (int i = 0; i < unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).size(); i++) {
+		for (int i = 0; i < unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).size(); i++) {
 			t = t + 1;
 			System.out.println("["
-					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getTaskID() + "]" + " "
-					+ unfinishedTaskByUser.getUnfinishedTasksOfProjectCollaborator(user).get(i).getDescription());
+					+ unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).get(i).getTaskID() + "]" + " "
+					+ unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user).get(i).getDescription());
 		}
 		System.out.println("___________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		switch (option) {
 
 		case "B":
-			UserTasksFunctionalitiesMenuUI previousMenu = new UserTasksFunctionalitiesMenuUI(user);
-			previousMenu.displayFunctionalities();
 			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			break;
+
 		default:
 
 
@@ -58,18 +55,20 @@ public class US203GetUnfinishedTaskUI {
 				split = option.split("\\.");
 				projID = Integer.valueOf(split[0]);
 
-				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, user, this.isPreviousUIFromTasks);
+				taskSelected.setProjectID(projID);
+				taskSelected.setTaskID(option);
+				taskSelected.setUser(user);
 				taskSelected.taskDataDisplay();
 			}
 
 			catch (NullPointerException npe) {
 				System.out.println("Please choose a valid option: ");
 				System.out.println("");
-				US203GetUnfinishedTaskUI unfinishedTaskByUser1 = new US203GetUnfinishedTaskUI();
-				unfinishedTaskByUser1.displayOptions(user);
+				loop = true;
 			}
 
 			break;
 		}
 	}
+}
 }

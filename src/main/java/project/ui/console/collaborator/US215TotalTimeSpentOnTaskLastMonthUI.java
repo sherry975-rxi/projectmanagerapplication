@@ -1,16 +1,19 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US215TotalTimeSpentOnTaskLastMonthController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
 
+@Component
 public class US215TotalTimeSpentOnTaskLastMonthUI {
 
 	User user;
 
+	@Autowired
+	US215TotalTimeSpentOnTaskLastMonthController totalTime;
+
 	public void displayTotalTimeSpentOnTasksLastMonth(User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();
@@ -18,7 +21,6 @@ public class US215TotalTimeSpentOnTaskLastMonthUI {
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
 
-		US215TotalTimeSpentOnTaskLastMonthController totalTime = new US215TotalTimeSpentOnTaskLastMonthController();
 		Double result = totalTime.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
 
 		System.out.println("\n");

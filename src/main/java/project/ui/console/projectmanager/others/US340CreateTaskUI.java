@@ -1,31 +1,30 @@
 package project.ui.console.projectmanager.others;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US340CreateTaskController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
 /**
  * Constructor to instantiate a new US340CreateTaskUI
  * 
- * @param user
- *            User Project Manager
- * @param project
- *            Project where the user is Project manager
- * @param task
- *            Task which will be created by the Project manager in the target
- *            project
- * 
  */
+@Component
 public class US340CreateTaskUI {
+
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US340CreateTaskController createTaskController;
 
 	private Project project;
 
-	public US340CreateTaskUI(Project project) {
-		this.project = project;
+	public US340CreateTaskUI() {
+
 	}
 
 	public void createTask() {
@@ -33,8 +32,10 @@ public class US340CreateTaskUI {
 		String line = "___________________________________________________";
 		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
-
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		boolean loop = true;
+		while (loop) {
+			loop = false;
+		projectInfo.setProject(project);
 
 		System.out.println(blank);
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -58,9 +59,8 @@ public class US340CreateTaskUI {
 		System.out.println("[N] to cancel \n");
 
 		String yerOrNo = input.nextLine();
-		US340CreateTaskController createTaskController = new US340CreateTaskController(this.project);
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		createTaskController.setChosenProject(project);
+
 		while (!("n".equalsIgnoreCase(yerOrNo)) && !("y".equalsIgnoreCase(yerOrNo))) {
 			System.out.println("\nInvalid answer. Please try again (\"y\" or \"n\")");
 			yerOrNo = input.nextLine();
@@ -109,7 +109,7 @@ public class US340CreateTaskUI {
 		String confirm = scannerInput.nextLine();
 
 		if ("y".equalsIgnoreCase(confirm)) {
-			createTaskController.addTask(description);
+			createTaskController.addTask(description, project);
 			System.out.println();
 			System.out.println("Task was successfully added to this project.");
 			System.out.println();
@@ -123,20 +123,18 @@ public class US340CreateTaskUI {
 
 		System.out.println(line);
 		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu \n");
+		System.out.println("[R] Retry \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		while (!("M".equals(option)) && !("B".equals(option))) {
+		while (!("R".equals(option)) && !("B".equals(option))) {
 			System.out.println("Please enter a valid option!");
 			option = scannerInput.nextLine().toUpperCase();
 		}
 
-		if ("B".equals(option)) {
-			return;
-		} else if ("M".equals(option)) {
-			MainMenuUI.mainMenu();
-		}
+		if ("R".equals(option)) {
+			loop = true;
+		} }
 	}
 
 	private static int estimatedTaskEffortUI(Scanner estimatedTaskEffort) {
@@ -167,5 +165,9 @@ public class US340CreateTaskUI {
 		} while (result <= 0);
 
 		return result;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 }

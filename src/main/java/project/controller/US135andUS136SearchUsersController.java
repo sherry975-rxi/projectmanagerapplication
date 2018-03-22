@@ -1,16 +1,29 @@
 package project.controller;
 
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class US135andUS136SearchUsersController {
 
-	List<User> userList;
-	User selectedUser = null;
+	@Autowired
+	private UserService userService;
+
+	private List<User> userList;
+	private User selectedUser = null;
+
+
+	/**
+	 * Empty constructor
+	 */
+	public US135andUS136SearchUsersController() {
+	};
 
 	/**
 	 * Este controlador permite ao Administrador pesquisar utilizadores do sistema
@@ -24,8 +37,9 @@ public class US135andUS136SearchUsersController {
 	 * @return This method returns a list of user's Data Strings with the profile
 	 *         that match the user profile
 	 */
+
 	public List<String> searchUsersByProfileController(Profile profileToSearch) {
-		this.userList = Company.getTheInstance().getUsersContainer().searchUsersByProfile(profileToSearch);
+		this.userList = userService.searchUsersByProfile(profileToSearch);
 
 		List<String> userListString = new ArrayList<>();
 
@@ -46,7 +60,7 @@ public class US135andUS136SearchUsersController {
 	 *         contain the same text that the user typed
 	 */
 	public List<String> searchUsersByEmailController(String emailToSearch) {
-		this.userList = Company.getTheInstance().getUsersContainer().searchUsersByEmail(emailToSearch);
+		this.userList = userService.searchUsersByPartsOfEmail(emailToSearch);
 
 		List<String> userListString = new ArrayList<>();
 
@@ -96,8 +110,17 @@ public class US135andUS136SearchUsersController {
 			profile = "Unassigned";
 		}
 
-		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " ("
-				+ toConvert.getEmail() + "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
+		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " (" + toConvert.getEmail()
+				+ "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
+	}
+	
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+
+	public void setSelectedUser(User selectedUser) {
+		this.selectedUser = selectedUser;
 	}
 
 }

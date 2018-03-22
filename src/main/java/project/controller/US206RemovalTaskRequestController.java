@@ -1,6 +1,13 @@
 package project.controller;
 
-import project.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +19,31 @@ import java.util.List;
  *         uma tarefa que consta na minha lista de tarefas.
  *
  */
+@Controller
 public class US206RemovalTaskRequestController {
 
 	private Integer projectID;
 	private String taskID;
 	private User user;
 
+	@Autowired
+	private ProjectService projectContainer;
+
+	@Autowired
+	private TaskService taskService;
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	public US206RemovalTaskRequestController() {
+		
+	}
+		
 	/**
 	 * Constructor to instantiate a new CollaboratorRemovalrequest
 	 * 
@@ -28,6 +54,7 @@ public class US206RemovalTaskRequestController {
 		this.user = user;
 		this.projectID = null;
 		this.taskID = null;
+
 	}
 
 	/**
@@ -39,15 +66,16 @@ public class US206RemovalTaskRequestController {
 
 		boolean createdSucess = false;
 
-		Project project = Company.getTheInstance().getProjectsContainer().getProjById(this.projectID);
-		Task taskBeRemovedOf = project.getTaskRepository().getTaskByID(this.taskID);
-		ProjectCollaborator projectCollaborator = project.findProjectCollaborator(this.user);
+		Project project = projectContainer.getProjectById(this.projectID);
+		Task taskBeRemovedOf = taskService.getTaskByTaskID(this.taskID);
+		ProjectCollaborator projectCollaborator = projectContainer.findActiveProjectCollaborator(this.user, project);
 
-		if (taskBeRemovedOf != null && !project.isRemovalRequestAlreadyCreated(projectCollaborator, taskBeRemovedOf)) {
+		if (taskBeRemovedOf != null && !taskBeRemovedOf.isRemovalRequestAlreadyCreated(projectCollaborator)) {
 
-			project.createTaskRemovalRequest(projectCollaborator, taskBeRemovedOf);
+			taskBeRemovedOf.createTaskRemovalRequest(projectCollaborator);
 			createdSucess = true;
 		}
+
 		return createdSucess;
 	}
 
@@ -60,7 +88,7 @@ public class US206RemovalTaskRequestController {
 	 */
 	public List<String> getUnfinishedTaskListFromUser() {
 
-		List<Task> usersTask = Company.getTheInstance().getProjectsContainer().getUnfinishedUserTaskList(user);
+		List<Task> usersTask = taskService.getUnfinishedUserTaskList(user);
 		List<String> userTaskDetails = new ArrayList<>();
 
 		for (int i = 0; i < usersTask.size(); i++) {

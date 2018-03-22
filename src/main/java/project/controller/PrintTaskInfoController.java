@@ -1,16 +1,28 @@
 package project.controller;
 
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.ProjectService;
+import project.Services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
+import project.model.User;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Controller
 public class PrintTaskInfoController {
+
+	@Autowired
+	private ProjectService projService;
+
+	@Autowired
+	private TaskService taskService;
+
 
 	private Task task;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
@@ -18,7 +30,25 @@ public class PrintTaskInfoController {
 	private Integer projeID;
 	private Project project;
 
-	public PrintTaskInfoController(Task task) {
+	/**
+	 * This constructor exists only JPA integration testing
+	 *
+	 */
+	public PrintTaskInfoController() {
+
+	}
+
+	/**
+	 * This constructor exists only for JPA integration testing
+	 *
+	 */
+	public PrintTaskInfoController(Task task, Project project) {
+		this.task=task;
+		this.project=project;
+	}
+
+
+	PrintTaskInfoController(Task task) {
 		this.task = task;
 	}
 
@@ -29,9 +59,8 @@ public class PrintTaskInfoController {
 	}
 
 	public void setProjectAndTask() {
-		this.project = Company.getTheInstance().getProjectsContainer().getProjById(this.projeID);
-		this.task = Company.getTheInstance().getProjectsContainer().getProjById(this.projeID).getTaskRepository()
-				.getTaskByID(this.taskID);
+		this.project = projService.getProjectById(projeID);
+		this.task = taskService.getTaskByTaskID(taskID);
 	}
 
 	/**
@@ -125,11 +154,14 @@ public class PrintTaskInfoController {
 	 * @return String task's team
 	 */
 	public String printTaskTeamInfo() {
-		List<ProjectCollaborator> projectTeam = this.project.getProjectCollaboratorsFromTask(this.task);
-		List<String> team = new ArrayList<>();
-		for (ProjectCollaborator projectMember : projectTeam) {
-			team.add(projectMember.getUserFromProjectCollaborator().getName());
-		}
+		List<ProjectCollaborator> projectTeam = taskService.getProjectCollaboratorsFromTask(project, task);
+
+
+		List<String> team = projectTeam.stream()
+				.map(ProjectCollaborator::getUserFromProjectCollaborator)
+				.map(User::getName)
+				.collect(Collectors.toList());
+
 		return String.join(", ", team);
 	}
 
@@ -150,4 +182,25 @@ public class PrintTaskInfoController {
 	public String printProjectNameInfo() {
 		return this.project.getName();
 	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
+	public void setDateFormat(SimpleDateFormat dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	public void setTaskID(String taskID) {
+		this.taskID = taskID;
+	}
+
+	public void setProjeID(Integer projeID) {
+		this.projeID = projeID;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
 }

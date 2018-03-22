@@ -1,7 +1,8 @@
 package project.controller;
 
-import project.model.Company;
-import project.model.ProjectContainer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.Services.TaskService;
 import project.model.Task;
 import project.model.User;
 
@@ -11,29 +12,48 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+@Controller
 public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 
-	User myUser;
-	ProjectContainer myProjRepo;
+
+	User user;
+
+	@Autowired
+	private TaskService taskService;
+
+
+	/**
+	 * Empty controller created for JPA integration tests
+	 */
+	public US210GetAllFinishedUserTasksInDecreasingOrderController() {
+
+	}
 
 	/**
 	 * Creator of the controller, receives a user
 	 * @param user
 	 */
 	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
-		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
-		this.myUser = user;
+		this.user = user;
+	}
+	
+
+
+	/**
+	 * Creator of the controller, receives a user
+	 * @param user
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	
-	
-	
+
 	/**
 	 * Method to return the user name in string
 	 * @return string
 	 */
 	public String printUserNameInfo() {
-		return this.myUser.getName();
+		return this.user.getName();
 	}
 	
 	/** Receives a gregorian calendar date
@@ -52,14 +72,12 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	
 	/**
 	 * Returns the list of user finished tasks in decreasing order. - US210
-	 * 
-	 * @param myUser
-	 *            The User to search for it's finished tasks in decreasing order
+	 *
 	 * @return Task List
 	 * 
 	 */
 	public List<String> getAllFinishedUserTasksInDecreasingOrder(){
-		List<Task> taskList = this.myProjRepo.getAllFinishedUserTasksInDecreasingOrder(this.myUser);
+		List<Task> taskList = taskService.getAllFinishedUserTasksInDecreasingOrder(this.user);
 		List<String> finishedTaskListDecreasingOrder = new ArrayList<>();
 		for (Task finishedTask : taskList) {
 			String[] stringList = finishedTask.getTaskID().split("\\.");
@@ -67,6 +85,5 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 		}
 	return finishedTaskListDecreasingOrder;
 	}
-	
 	
 }

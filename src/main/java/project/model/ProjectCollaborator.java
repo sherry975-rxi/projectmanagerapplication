@@ -1,9 +1,5 @@
 package project.model;
 
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,25 +8,22 @@ import java.io.Serializable;
 public class ProjectCollaborator implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@ManyToOne
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "User_id")
 	private User collaborator;
-	@ManyToOne
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Project_id")
 	private Project project;
 	private boolean status;
 	private int costPerEffort;
 	static final long serialVersionUID = 51L;
 
-
 	/**
 	 * Empty Constructor for ProjectCollaborator
 	 */
-	protected ProjectCollaborator(){
+	public ProjectCollaborator() {
 	}
 
 	/**
@@ -76,6 +69,7 @@ public class ProjectCollaborator implements Serializable {
 	public void setCostPerEffort(int costPerEffort) {
 		this.costPerEffort = costPerEffort;
 	}
+
 	/**
 	 * This method sets the Project Collaborator as working or not working on the
 	 * project.
@@ -124,12 +118,11 @@ public class ProjectCollaborator implements Serializable {
 		return toCompare.equals(this.collaborator);
 	}
 
-
-	public Project getProject(){
+	public Project getProject() {
 		return project;
 	}
 
-	public void setProject(Project project){
+	public void setProject(Project project) {
 		this.project = project;
 	}
 
