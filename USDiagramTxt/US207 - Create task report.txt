@@ -5,9 +5,21 @@ UI->Controller: Create controller
 Controller -> TaskService: getStartedNotFinishedUserTaskList()
 TaskService->Database: findAllTasks()
 Database-->TaskService: returns allTasks
-TaskService-->Controller: return task
+
+TaskService-->Controller: return User tasks
+
+Controller--> UI:return User tasks
+
+UI-->Actor: Display User taks
+
+Actor->UI: Input a task ID and time
+
+UI->Controller: select task and time
+
+Controller -> TaskService: createReport(taskID, time)
+
 TaskService -> TaskService: findTaskByID()
-TaskService -->Controller: return task
-Controller--> UI:return task
-UI-->Actor: return task
-Actor->UI: 
+TaskService -> TaskService: if task exists, create report
+TaskService -->Controller: return true 
+Controller--> UI: return true
+UI-->Actor: Task report created!
