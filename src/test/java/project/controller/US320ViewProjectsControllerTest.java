@@ -56,7 +56,7 @@ public class US320ViewProjectsControllerTest {
 		// various tests
 		activeProjectData = "==============================\n";
 		activeProjectData += "===== ";
-		activeProjectData += "5";
+		activeProjectData += activeProject.getId();
 		activeProjectData += " - Active Project =====\n";
 		activeProjectData += "==============================";
 		activeProjectData += "\n - Status: Execution";
@@ -66,7 +66,7 @@ public class US320ViewProjectsControllerTest {
 
 		activeProjectData2 = "===============================\n";
 		activeProjectData2 += "===== ";
-		activeProjectData2 += "11";
+		activeProjectData2 += activeProject.getId();
 		activeProjectData2 += " - Active Project =====\n";
 		activeProjectData2 += "===============================";
 		activeProjectData2 += "\n - Status: Execution";
