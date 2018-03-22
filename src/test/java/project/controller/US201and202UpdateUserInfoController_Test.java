@@ -21,16 +21,15 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan({ "project.services", "project.model", "project.controller" })
-
 public class US201and202UpdateUserInfoController_Test {
 
 	@Autowired
-	UserRepository userRepository;
+	UserService userContainer;
 
 	User u1;
 	Address address1;
 	Address address2;
-	UserService userContainer;
+
 
 	@Autowired
 	US201and202UpdateUserInfoController controller;
@@ -38,8 +37,6 @@ public class US201and202UpdateUserInfoController_Test {
 	@Before
 	public void setUp() {
 		// create company and clear ProjectsRepository and UsersRepository
-
-		userContainer = new UserService(userRepository);
 
 		// create users
 		u1 = userContainer.createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000", "Rua Maria",
@@ -57,8 +54,6 @@ public class US201and202UpdateUserInfoController_Test {
 		// add users to company
 		userContainer.addUserToUserRepositoryX(u1);
 
-		controller = new US201and202UpdateUserInfoController();
-		controller.userContainer = this.userContainer;
 
 	}
 
@@ -286,7 +281,6 @@ public class US201and202UpdateUserInfoController_Test {
 		u1.setUserProfile(Profile.COLLABORATOR);
 
 		userContainer.addUserToUserRepositoryX(u1);
-		controller.userContainer = this.userContainer;
 
 		// Creates a list with the addresses of the user
 		List<Address> userAddresses = new ArrayList<>();
