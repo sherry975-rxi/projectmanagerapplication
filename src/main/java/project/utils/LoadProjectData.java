@@ -16,12 +16,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import project.model.EffortUnit;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.User;
+import project.model.*;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.OnGoing;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -86,7 +83,7 @@ public class LoadProjectData {
 				projectService.updateProject(project);
 
 				// Node lista_colaboradores
-				NodeList nProjectCollaboratorList = documentProjects.getElementsByTagName("colaborador_projeto");
+				NodeList nProjectCollaboratorList = eElementProject.getElementsByTagName("colaborador_projeto");
 
 				for (int indexProjCollab = 0; indexProjCollab < nProjectCollaboratorList
 						.getLength(); indexProjCollab++) {
@@ -96,13 +93,15 @@ public class LoadProjectData {
 					if (nNodeProjectCollaborator.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElementProjectCollaborator = (Element) nNodeProjectCollaborator;
 
-						ProjectCollaborator projCollaborator = new ProjectCollaborator();
+                        ProjectCollaborator projCollaborator;
+
 						User userCollaborator = userService.getUserByEmail(eElementProjectCollaborator
 								.getElementsByTagName("colaborador_id").item(0).getTextContent());
-						projCollaborator.setCollaborator(userCollaborator);
-						projCollaborator.setProject(project);
 
-						NodeList nLigProjectList = documentProjects.getElementsByTagName("ligacao_projeto");
+						NodeList nLigProjectList = eElementProjectCollaborator.getElementsByTagName("ligacao_projeto");
+
+                        System.out.println(userCollaborator.getEmail() + " Ligacoes:" + nLigProjectList.getLength());
+
 
 						for (int indexLigProject = 0; indexLigProject < nLigProjectList
 								.getLength(); indexLigProject++) {
@@ -112,19 +111,25 @@ public class LoadProjectData {
 							if (nNodeLigProject.getNodeType() == Node.ELEMENT_NODE) {
 								Element eElementLigProject = (Element) nNodeLigProject;
 
+                                eElementLigProject
+                                        .getElementsByTagName("data_inicio").item(0).getTextContent();
+
+								boolean isProjCollabActive = eElementLigProject
+                                        .getElementsByTagName("data_fim").item(0).getTextContent().isEmpty();
+
 								Integer costEffort = Integer.valueOf(eElementLigProject
 										.getElementsByTagName("custo_unitario_colaborador").item(0).getTextContent());
 
-								projCollaborator.setCostPerEffort(costEffort);
-
-								projectService.addProjectCollaborator(projCollaborator);
+                                projCollaborator=projectService.createProjectCollaborator(userCollaborator, project, costEffort);
+								projCollaborator.setStatus(isProjCollabActive);
+								projectService.updateProjectCollaborator(projCollaborator);
 							}
 						}
 					}
 				}
 
 				// Node Lista de Tarefas
-				NodeList nTaskList = documentProjects.getElementsByTagName("tarefa");
+				NodeList nTaskList = eElementProject.getElementsByTagName("tarefa");
 
 				for (int indexTask = 0; indexTask < nTaskList.getLength(); indexTask++) {
 					Node nNodeTask = nTaskList.item(indexTask);
@@ -150,6 +155,8 @@ public class LoadProjectData {
 								eElementTask.getElementsByTagName("data_inicio_prevista").item(0).getTextContent());
 						task.setEstimatedTaskStartDate(estimatedStartDate);
 
+
+
 						Calendar estimatedFinishDate = convertStringToCalendar(
 								eElementTask.getElementsByTagName("data_conclusao_prevista").item(0).getTextContent());
 
@@ -158,12 +165,16 @@ public class LoadProjectData {
 						Calendar finishDate = convertStringToCalendar(
 								eElementTask.getElementsByTagName("data_conclusao_efetiva").item(0).getTextContent());
 
-						task.setFinishDate(finishDate);
+                        if(Calendar.getInstance().after(estimatedStartDate)) {
+                            task.setStartDate(estimatedStartDate);
+                            task.setTaskState(new OnGoing());
+                            task.setCurrentState(StateEnum.ONGOING);
+                        }
 
 						taskService.saveTask(task);
 
 						///////////////////////////////////
-						NodeList nTaskDependenceList = documentProjects.getElementsByTagName("lista_dependencias");
+						NodeList nTaskDependenceList = eElementTask.getElementsByTagName("lista_dependencias");
 
 						for (int indexTaskDependencies = 0; indexTaskDependencies < nTaskDependenceList
 								.getLength(); indexTaskDependencies++) {
@@ -177,13 +188,14 @@ public class LoadProjectData {
 										.getTextContent();
 								if (idTaskMain != "") {
 									Task taskMain = taskService.getTaskByTaskID(idTaskMain);
+									task.getTaskDependency().add(taskMain);
 								}
 							}
 						}
 						
 						//TaskCollaborator creation
 
-						NodeList nTaskCollaborators = documentProjects.getElementsByTagName("colaborador_tarefa");
+						NodeList nTaskCollaborators = eElementTask.getElementsByTagName("colaborador_tarefa");
 
 						for (int indexTaskCollaborators = 0; indexTaskCollaborators < nTaskCollaborators
 								.getLength(); indexTaskCollaborators++) {
@@ -224,7 +236,10 @@ public class LoadProjectData {
 
 								taskCollab.setFinishDate(finishDateTaskCollaborator);
 
-								NodeList nReportList = documentProjects.getElementsByTagName("report_tarefa");
+								taskCollab.setStatus(finishDateTaskCollaborator==null);
+
+
+								NodeList nReportList = eElementnNodeTaskCollaborator.getElementsByTagName("report");
 
 								for (int indexReport = 0; indexReport < nReportList.getLength(); indexReport++) {
 
@@ -248,6 +263,12 @@ public class LoadProjectData {
 							}
 						}
 
+                        if(finishDate!=null) {
+                            task.setStartDate(estimatedStartDate);
+                            task.setFinishDate(finishDate);
+                            task.setTaskState(new Finished());
+                            task.setCurrentState(StateEnum.FINISHED);
+                        }
 						taskService.saveTask(task);
 					}
 				}
