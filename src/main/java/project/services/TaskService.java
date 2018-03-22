@@ -7,10 +7,12 @@ import project.repository.TaskRepository;
 import project.model.*;
 import project.model.taskstateinterface.*;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TaskService {
 
 

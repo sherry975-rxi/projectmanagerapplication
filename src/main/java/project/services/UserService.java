@@ -10,6 +10,7 @@ import project.model.User;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
  * @author Group3
  */
 @Service
+@Transactional
 public class UserService {
 
 	@Autowired
