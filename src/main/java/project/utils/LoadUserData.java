@@ -49,6 +49,9 @@ public class LoadUserData {
 				// sets users as Collaborators when they are created
 				eachUser.setUserProfile(Profile.COLLABORATOR);
 
+				eachUser.setIdNumber("XML gen");
+				eachUser.setFunction("XML gen");
+
 				// feeds DB with user state
 				boolean systemUserStateActive = false;
 				String active = eElementUtilizador.getElementsByTagName("estado_utilizador").item(0).getTextContent();
