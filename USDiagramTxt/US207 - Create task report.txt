@@ -1,13 +1,9 @@
-title US 207: Create Task Report
-
 Actor->UI: Create report for a task
 UI->Controller: Create controller
 Controller -> TaskService: getStartedNotFinishedUserTaskList()
 TaskService->Database: findAllTasks()
 Database-->TaskService: returns allTasks
-TaskService-->Controller: return task
 TaskService -> TaskService: findTaskByID()
 TaskService -->Controller: return task
 Controller--> UI:return task
 UI-->Actor: return task
-Actor->UI: 
