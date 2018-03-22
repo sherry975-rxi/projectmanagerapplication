@@ -18,12 +18,9 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan({ "project.services", "project.model", "project.controller" })
-
 public class US180DoLoginControllerTests {
 
 	@Autowired
-	UserRepository userRepository;
-
 	UserService userContainer;
 
 	User user1;
@@ -34,8 +31,6 @@ public class US180DoLoginControllerTests {
 	@Before
 	public void setUp() {
 
-		userContainer = new UserService();
-		userContainer.setUserRepository(userRepository);
 
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
@@ -57,9 +52,6 @@ public class US180DoLoginControllerTests {
 		String validEmail = new String("daniel@gmail.com");
 		String validPassword = new String("123456");
 
-		doLoginController = new US180DoLoginController();
-		doLoginController.userService = this.userContainer;
-
 		assertTrue(doLoginController.doLogin(validEmail, validPassword));
 
 	}
@@ -70,9 +62,6 @@ public class US180DoLoginControllerTests {
 
 		String validEmail = new String("daniel@gmail.com");
 		String invalidPassword = new String("12345");
-
-		doLoginController = new US180DoLoginController();
-		doLoginController.userService = this.userContainer;
 
 		assertFalse(doLoginController.doLogin(validEmail, invalidPassword));
 
@@ -85,9 +74,6 @@ public class US180DoLoginControllerTests {
 		String invalidEmail = new String("invalid@gmail.com");
 		String validPassword = new String("123456");
 
-		doLoginController = new US180DoLoginController();
-		doLoginController.userService = this.userContainer;
-
 		assertFalse(doLoginController.doLogin(invalidEmail, validPassword));
 
 	}
@@ -98,9 +84,6 @@ public class US180DoLoginControllerTests {
 
 		String invalidEmail = new String("invalid@gmail.com");
 		String invalidPassword = new String("12345");
-
-		doLoginController = new US180DoLoginController();
-		doLoginController.userService = this.userContainer;
 
 		assertFalse(doLoginController.doLogin(invalidEmail, invalidPassword));
 

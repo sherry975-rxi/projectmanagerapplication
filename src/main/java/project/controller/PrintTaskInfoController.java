@@ -18,10 +18,10 @@ import java.util.stream.Collectors;
 public class PrintTaskInfoController {
 
 	@Autowired
-	public ProjectService projService;
+	private ProjectService projService;
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 
 	private Task task;

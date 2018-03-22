@@ -8,7 +8,7 @@ import project.dto.UserDTO;
 @Controller
 public class US101RegisterUserController {
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
 	public US101RegisterUserController() {
 	}

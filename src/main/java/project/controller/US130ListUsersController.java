@@ -12,7 +12,7 @@ import java.util.List;
 public class US130ListUsersController {
 
 	@Autowired
-	public UserService userContainer;
+	private UserService userContainer;
 
 	List<User> userList;
 

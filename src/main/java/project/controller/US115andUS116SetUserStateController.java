@@ -9,7 +9,7 @@ import project.model.User;
 public class US115andUS116SetUserStateController {
 
 	@Autowired
-	public UserService userContainer;
+	private UserService userContainer;
 
 	User toChangeState;
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class CollectProjectsFromUserController {
 
 	@Autowired
-	public ProjectService projService;
+	private ProjectService projService;
 
 	private User user;
 

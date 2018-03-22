@@ -13,7 +13,7 @@ import java.util.List;
 public class US135andUS136SearchUsersController {
 
 	@Autowired
-	public UserService userService;
+	private UserService userService;
 
 	private List<User> userList;
 	private User selectedUser = null;
