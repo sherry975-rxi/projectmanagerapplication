@@ -3,6 +3,10 @@
  */
 package project.utils;
 
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -10,13 +14,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import project.model.Profile;
-import project.services.UserService;
-import project.model.Address;
-import project.model.User;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
+import project.model.Address;
+import project.model.Profile;
+import project.model.User;
+import project.services.UserService;
 
 /**
  * @author Group3
@@ -26,12 +28,10 @@ import java.io.IOException;
 public class LoadUserData {
 	@Autowired
 	UserService users;
+
 	public void loadUsers(String pathFile) throws ParserConfigurationException, SAXException, IOException {
 
 		Document documentUsers = FileUtils.readFromXmlFile(pathFile);
-
-		
-		
 
 		NodeList nListUtilizadores = documentUsers.getElementsByTagName("utilizador");
 
@@ -44,14 +44,16 @@ public class LoadUserData {
 				eachUser.setName(eElementUtilizador.getElementsByTagName("nome_utilizador").item(0).getTextContent());
 				eachUser.setEmail(eElementUtilizador.getElementsByTagName("email_utilizador").item(0).getTextContent());
 				eachUser.setPassword(eElementUtilizador.getElementsByTagName("password").item(0).getTextContent());
-				eachUser.setPassword(eElementUtilizador.getElementsByTagName("telefone").item(0).getTextContent());
+				eachUser.setPhone(eElementUtilizador.getElementsByTagName("telefone").item(0).getTextContent());
 
-
-
-				//sets users as Collaborators when they are created
-
+				// sets users as Collaborators when they are created
 				eachUser.setUserProfile(Profile.COLLABORATOR);
 
+				// feeds DB with user state
+				boolean systemUserStateActive = false;
+				String active = eElementUtilizador.getElementsByTagName("estado_utilizador").item(0).getTextContent();
+				if (active.equals("Ativo")){ systemUserStateActive = true;}
+				eachUser.setSystemUserStateActive(systemUserStateActive);
 
 				NodeList nList = (NodeList) eElementUtilizador.getElementsByTagName("lista_enderecos").item(0);
 
@@ -72,7 +74,7 @@ public class LoadUserData {
 						eachUser.addAddress(eachUserAddress);
 
 					}
-					
+
 				}
 				users.addUserToUserRepositoryX(eachUser);
 			}
