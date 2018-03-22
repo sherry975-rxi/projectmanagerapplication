@@ -30,26 +30,19 @@ public class US135andUS136SearchUsersControllerTest {
 	 * profile or by email
 	 *
 	 */
+	@Autowired
+	UserService userService;
+
 	User newUser1;
 	User newUser2;
 	User newUser3;
-	UserService userService;
-
-	@Autowired
-	public UserRepository userRepo;
 
 	@Autowired
 	US135andUS136SearchUsersController searchController;
 
 	@Before
 	public void setUp() {
-
-		// creates an UserContainer
-		userService = new UserService();
-		userService.setUserRepository(userRepo);
-		// Creates a searchController
-		searchController = new US135andUS136SearchUsersController();
-		searchController.userService = userService;
+		
 
 		// create user
 		newUser1 = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
