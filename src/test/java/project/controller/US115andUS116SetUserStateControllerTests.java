@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.Repository.UserRepository;
 import project.Services.UserService;
@@ -15,29 +16,27 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US115andUS116SetUserStateControllerTests {
+
+	@Autowired
+	private UserService userService;
 
 	Profile director = Profile.DIRECTOR;
 	Profile collaborator = Profile.COLLABORATOR;
 	User newUser2;
 	User newUser3;
 
+	@Autowired
 	US115andUS116SetUserStateController testUserStateController;
 
-	@Autowired
-	private UserRepository userRepo;
-
-	private UserService userService;
 
 	@Before
 	public void setUp() {
 
-		userService = new UserService();
-		userService.setUserRepository(userRepo);
 
-		testUserStateController = new US115andUS116SetUserStateController();
+
 		testUserStateController.setToChangeState(newUser2);
-		testUserStateController.userContainer = userService;
 
 		// creates the user and adds it to the dummy database, then refreshes the in
 		// memory User List
