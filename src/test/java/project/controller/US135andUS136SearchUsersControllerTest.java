@@ -1,5 +1,12 @@
 package project.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,16 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.Repository.UserRepository;
+
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -42,7 +43,6 @@ public class US135andUS136SearchUsersControllerTest {
 
 	@Before
 	public void setUp() {
-		
 
 		// create user
 		newUser1 = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
@@ -60,6 +60,14 @@ public class US135andUS136SearchUsersControllerTest {
 		userService.addUserToUserRepositoryX(newUser3);
 
 		userService.getAllUsersFromUserContainer();
+
+	}
+
+	@After
+	public void clear() {
+		newUser1 = null;
+		newUser2 = null;
+		newUser3 = null;
 
 	}
 

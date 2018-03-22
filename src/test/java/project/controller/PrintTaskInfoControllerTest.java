@@ -1,5 +1,10 @@
 package project.controller;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.Calendar;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,24 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.Repository.ProjCollabRepository;
-import project.Repository.ProjectsRepository;
-import project.Repository.TaskRepository;
-import project.Repository.UserRepository;
+
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.model.*;
-
-import java.util.Calendar;
-
-import static org.junit.Assert.assertEquals;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan(basePackages = {"project.Services", "project.controller", "project.model"})
+@ComponentScan(basePackages = { "project.Services", "project.controller", "project.model" })
 public class PrintTaskInfoControllerTest {
-
 
 	@Autowired
 	ProjectService projContainer;
@@ -34,7 +35,6 @@ public class PrintTaskInfoControllerTest {
 
 	@Autowired
 	TaskService taskService;
-
 
 	User user1;
 	private User joaoPM;
@@ -51,29 +51,25 @@ public class PrintTaskInfoControllerTest {
 	@Before
 	public void setUp() {
 
-
 		// create user
-		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
-				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
-
-		// create user admin
-		joaoPM = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
-        // set user as collaborator
-        user1.setUserProfile(Profile.COLLABORATOR);
-        joaoPM.setUserProfile(Profile.COLLABORATOR);
+		// create user admin
+		joaoPM = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+				"Test", "Testo", "Testistan");
+
+		// set user as collaborator
+		user1.setUserProfile(Profile.COLLABORATOR);
+		joaoPM.setUserProfile(Profile.COLLABORATOR);
 
 		// add user to user list
 		userContainer.addUserToUserRepositoryX(user1);
 		userContainer.addUserToUserRepositoryX(joaoPM);
 
-
 		// Creates one Project
-		project = projContainer.createProject("Projeto de gestão",
-				"Este projeto está focado na gestão.", joaoPM);
+		project = projContainer.createProject("Projeto de gestão", "Este projeto está focado na gestão.", joaoPM);
 		project.setProjectBudget(3000);
-
 
 		// add start date to project
 		startDate = Calendar.getInstance();
@@ -85,14 +81,12 @@ public class PrintTaskInfoControllerTest {
 		finishDate.set(2017, Calendar.FEBRUARY, 2, 12, 31, 0);
 		project.setFinishdate(finishDate);
 
-        // add project to project repository
-        projContainer.updateProject(project);
+		// add project to project repository
+		projContainer.updateProject(project);
 
 		// create project collaborators
 		collab1 = projContainer.createProjectCollaborator(user1, project, 2);
 		collab2 = projContainer.createProjectCollaborator(joaoPM, project, 2);
-
-
 
 		// create three tasks
 		task1 = taskService.createTask("First task", project);
@@ -111,9 +105,21 @@ public class PrintTaskInfoControllerTest {
 		controller.setTask(task1);
 		controller.setProject(project);
 
-
 	}
 
+	@After
+	public void clear() {
+
+		user1 = null;
+		joaoPM = null;
+		collab1 = null;
+		collab2 = null;
+		project = null;
+		startDate = null;
+		finishDate = null;
+		task1 = null;
+		projectID = null;
+	}
 
 	/**
 	 * Tests if the method of controller gets the task's name
@@ -137,7 +143,7 @@ public class PrintTaskInfoControllerTest {
 	 */
 	@Test
 	public void testPrintTaskIDCodeInfo() {
-		assertEquals(controller.printTaskIDCodeInfo(), (projectID+".1"));
+		assertEquals(controller.printTaskIDCodeInfo(), (projectID + ".1"));
 	}
 
 	/**
@@ -236,8 +242,10 @@ public class PrintTaskInfoControllerTest {
 
 		assertEquals(controller.printTaskTeamInfo(), "Daniel");
 	}
+
 	/**
-	 * Tests if the method of controller gets the project name where the task is associated
+	 * Tests if the method of controller gets the project name where the task is
+	 * associated
 	 */
 	@Test
 	public void testPrintInfoFromTask() {
@@ -245,11 +253,12 @@ public class PrintTaskInfoControllerTest {
 		String projectName = controller.printProjectNameInfo();
 		assertEquals("Projeto de gestão", projectName);
 	}
+
 	/**
 	 * Tests if the method of controller gets the task's budget
 	 */
 	@Test
-	public void testPrintTaskBudgetInfo(){
+	public void testPrintTaskBudgetInfo() {
 		task1.setTaskBudget(20);
 		assertEquals(controller.printTaskBudgetInfo(), "20");
 

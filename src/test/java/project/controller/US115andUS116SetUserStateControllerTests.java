@@ -1,5 +1,10 @@
 package project.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,12 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.Repository.UserRepository;
+
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -30,11 +33,8 @@ public class US115andUS116SetUserStateControllerTests {
 	@Autowired
 	US115andUS116SetUserStateController testUserStateController;
 
-
 	@Before
 	public void setUp() {
-
-
 
 		testUserStateController.setToChangeState(newUser2);
 
@@ -44,6 +44,14 @@ public class US115andUS116SetUserStateControllerTests {
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
 
 		userService.getAllUsersFromUserContainer();
+
+	}
+
+	@After
+	public void clear() {
+
+		newUser2 = null;
+		newUser3 = null;
 
 	}
 

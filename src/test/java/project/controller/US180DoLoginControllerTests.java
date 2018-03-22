@@ -1,5 +1,9 @@
 package project.controller;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,13 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.Repository.UserRepository;
+
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -31,7 +32,6 @@ public class US180DoLoginControllerTests {
 	@Before
 	public void setUp() {
 
-
 		// create user
 		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
@@ -43,6 +43,12 @@ public class US180DoLoginControllerTests {
 
 		userContainer.addUserToUserRepositoryX(user1);
 
+	}
+
+	@After
+	public void clear() {
+		user1 = null;
+		userAdmin = null;
 	}
 
 	// Test with a valid password and valid email
