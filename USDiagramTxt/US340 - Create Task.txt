@@ -1,14 +1,14 @@
-
 Actor->UI: Input task details
 UI-->Actor: Ask to confirm task details
 Actor->UI: Confirm Task details
 
-UI->Controller: Create task controller
-Controller->TaskService: Create Task
+UI->Controller: Create controller
+Controller->TaskService: createTask()
+TaskService->TaskService: createTask()
 TaskService->TaskRepository: saveTask()
 TaskRepository->DataBase: saveTask()
-DataBase-->Controller: return savedTask
-Controller-->UI: return taskAddedSucess
+DataBase-->TaskService: return createdTask
+TaskService-->Controller: return createdTask
+Controller-->UI: return true
 
-UI-->Actor: return taskAddedSucess
-
+UI-->Actor: Show message "Task successfuly created!"
