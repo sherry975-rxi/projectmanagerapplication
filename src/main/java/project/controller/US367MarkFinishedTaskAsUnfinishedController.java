@@ -10,7 +10,7 @@ import project.model.Task;
 public class US367MarkFinishedTaskAsUnfinishedController {
 
 	@Autowired
-	private TaskService taskService;
+	public TaskService taskService;
 
 	private Project project;
 	private String taskID;
@@ -62,10 +62,10 @@ public class US367MarkFinishedTaskAsUnfinishedController {
 	 *
 	 */
 
-	public void markFinishedTaskAsUnfinished() {
+	public void markFinishedTaskAsUnfinished(String idTask) {
 		Task task;
-		task = taskService.getTaskByTaskID(this.taskID);
-		task.removeFinishDate();
+		task = taskService.getTaskByTaskID(idTask);
+		task.UnfinishTask();
 		taskService.saveTask(task);
 
 	}

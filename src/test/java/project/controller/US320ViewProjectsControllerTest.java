@@ -36,6 +36,7 @@ public class US320ViewProjectsControllerTest {
 	public void setUp() {
 
 		activeProjectData = null;
+		activeProjectData2 = null;
 
 		activeManager = userService.createUser("Manel", "user1@gmail.com", "001", "Empregado", "930000000", "Rua Bla",
 				"BlaBla", "BlaBlaBla", "BlaBlaBlaBla", "Blalandia");
@@ -55,13 +56,23 @@ public class US320ViewProjectsControllerTest {
 		// various tests
 		activeProjectData = "==============================\n";
 		activeProjectData += "===== ";
-		activeProjectData += "11";
+		activeProjectData += "5";
 		activeProjectData += " - Active Project =====\n";
 		activeProjectData += "==============================";
 		activeProjectData += "\n - Status: Execution";
 		activeProjectData += "\n - Manager: Manel";
 		activeProjectData += "\n - Description: this Project is active";
 		activeProjectData += "\n==============================";
+
+		activeProjectData2 = "===============================\n";
+		activeProjectData2 += "===== ";
+		activeProjectData2 += "11";
+		activeProjectData2 += " - Active Project =====\n";
+		activeProjectData2 += "===============================";
+		activeProjectData2 += "\n - Status: Execution";
+		activeProjectData2 += "\n - Manager: Manel";
+		activeProjectData2 += "\n - Description: this Project is active";
+		activeProjectData2 += "\n===============================";
 
 	}
 
@@ -102,7 +113,7 @@ public class US320ViewProjectsControllerTest {
 
 		// also asserts that the contents of index 0 matches the data of the only active
 		// project
-		assertEquals(projectListsController.viewAllProjects().get(0), ("[1] \n" + activeProjectData));
+		assertTrue(projectListsController.viewAllProjects().get(0).equals("[1] \n" + activeProjectData2));
 	}
 
 	/**
