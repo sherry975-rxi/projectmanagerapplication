@@ -1,70 +1,62 @@
 package project.ui.console.projectmanager.requests;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US356ManageAssigmentRequestController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
-import project.model.User;
-import project.ui.console.MainMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 
 import java.util.Scanner;
 
+@Component
 public class US356ApproveOrCancelAssignmentRequestUI {
 
-	Project project;
-	User user;
+	@Autowired
+	private US356ManageAssigmentRequestController assignmentRequest;
+
+	private Project project;
 
 	/**
 	 * Constructor to instantiate a new US357ApproveOrCancelAssignmentRequestUI
-	 * 
-	 * @param user
-	 *            User Project Manager
-	 * @param project
-	 *            Project where the user is Project manager
+	 *
 	 */
-	public US356ApproveOrCancelAssignmentRequestUI(User user, Project project) {
-		this.project = project;
-		this.user = user;
+	public US356ApproveOrCancelAssignmentRequestUI() {
 	}
 
 	/**
 	 * Displays the assignment task requests and the options available to the user
 	 */
 	public void displayAssignmentTaskRequests() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 		boolean condition = true;
 		while (condition) {
-			infoUpdater.updateDBtoContainer();
+			condition = false;
 
 			System.out.println("\n   TASK ASSIGNMENT REQUESTS : PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");
 
-			US356ManageAssigmentRequestController assignmentRequest = new US356ManageAssigmentRequestController(
-					this.project);
+			assignmentRequest.setSelectedProject(project);
 			int number = 1;
 
-			for (String other : assignmentRequest.showAllAssignmentRequests()) {
+			for (String other : assignmentRequest.showAllAssignmentRequests(project)) {
 				System.out.println("[" + number + "]" + "Request: " + other);
 				System.out.println("==========================================\n");
 				number++;
 			}
 
 			System.out.println("[C] Choose a Request");
-			System.out.println("[B] Back");
-			System.out.println("[M] MainMenu");
+			System.out.println("[B] Back \n");
 
-			chooseOption(assignmentRequest);
+			condition = chooseOption();
 		}
 	}
 
 	/**
 	 * Switch case that allows the user to choose a functionality
-	 * 
-	 * @param assignmentRequest
-	 *            US356ManageAssigmentRequestController previously instantiated
+	 *
 	 */
-	private void chooseOption(US356ManageAssigmentRequestController assignmentRequest) {
+	private boolean chooseOption() {
 
+		boolean loop = false;
+		
 		Scanner input = new Scanner(System.in);
 
 		String choice = input.nextLine().toUpperCase();
@@ -72,34 +64,28 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 		switch (choice) {
 
 		case "C":
-			chooseRequest(assignmentRequest);
+			chooseRequest();
 			break;
 		case "B":
-			ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(user, project);
-			previousMenu.displayOptions();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
 			break;
 		default:
 			System.out.println("Choose a valid option");
-			displayAssignmentTaskRequests();
+			loop = true;
 		}
+		return loop;
 	}
 
 	/**
 	 * Method that allows the user to choose a request
-	 * 
-	 * @param assignmentRequest
-	 *            US356ManageAssigmentRequestController previously instantiated
+	 *
 	 */
-	private void chooseRequest(US356ManageAssigmentRequestController assignmentRequest) {
+	private void chooseRequest() {
 
 		System.out.println("\n                 CHOOSE A REQUEST:                  ");
 
 		Scanner input = new Scanner(System.in);
 		String choice = input.nextLine();
-		int listSize = assignmentRequest.showAllAssignmentRequests().size();
+		int listSize = assignmentRequest.showAllAssignmentRequests(project).size();
 
 		// Guarantees that the input is valid
 		try {
@@ -107,7 +93,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			Integer choiceInt = Integer.parseInt(choice);
 
 			if (choiceInt > 0 && choiceInt <= listSize) {
-				chooseApproveOrDisaprove(assignmentRequest, choiceInt);
+				chooseApproveOrDisaprove(choiceInt);
 			}
 
 			else {
@@ -124,13 +110,11 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 
 	/**
 	 * Method that allows the user to choose to approve or cancel a specific request
-	 * 
-	 * @param assignmentRequest
-	 *            US356ManageAssigmentRequestController previously instantiated
+	 *
 	 * @param request
 	 *            Index of the chosen request
 	 */
-	private void chooseApproveOrDisaprove(US356ManageAssigmentRequestController assignmentRequest, int request) {
+	private void chooseApproveOrDisaprove(int request) {
 
 		Scanner input = new Scanner(System.in);
 
@@ -148,7 +132,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 
 		if ("y".equalsIgnoreCase(yerOrNo)) {
 			int requestNumber = request - 1;
-			assignmentRequest.setSelectedAdditionRequest(requestNumber);
+			assignmentRequest.setSelectedAdditionRequest(requestNumber, project);
 			if (assignmentRequest.approveAssignmentRequest()) {
 				System.out.println("----REQUEST APPROVED----");
 				System.out.println("--User assigned to Task--");
@@ -162,5 +146,9 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			assignmentRequest.approveAssignmentRequest();
 			displayAssignmentTaskRequests();
 		}
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 }

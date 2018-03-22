@@ -1,27 +1,39 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US360GetProjectTasksWithoutCollaboratorsAssignedController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US360ProjectUnassignedTasksUI {
 
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US360GetProjectTasksWithoutCollaboratorsAssignedController controller;
+
+	@Autowired
+	private PmTaskFunctionalitiesUI taskFuntionatities;
+
 	public void projectUnassignedTasksUI(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -38,8 +50,6 @@ public class US360ProjectUnassignedTasksUI {
 		System.out.println("                 UNASSIGNED TASKS");
 		System.out.println(line);
 
-		US360GetProjectTasksWithoutCollaboratorsAssignedController controller = new US360GetProjectTasksWithoutCollaboratorsAssignedController();
-
 		List<String> listOfExpiredTaskID = new ArrayList<>();
 
 		for (int i = 0; i < controller.getProjectNotAssignedTaskList(project).size(); i++) {
@@ -49,29 +59,22 @@ public class US360ProjectUnassignedTasksUI {
 		}
 
 		System.out.println(line);
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		// creation of a list with the options B,E and M
 		List<String> listOfOptionsToCompare = new ArrayList<>();
 		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
 
 		for (String ii : listOfExpiredTaskID) {
 
 			if (option.equals(ii)) {
-				PmTaskFunctionalitiesUI taskFuntionatities = new PmTaskFunctionalitiesUI(ii, project, user);
+				taskFuntionatities.setTaskID(ii);
+				taskFuntionatities.setProject(project);
+				taskFuntionatities.setUser(user);
 				taskFuntionatities.taskDataDisplay();
-			} else if ("B".equals(option)) {
-				return;
-
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
-			}
+			} 
 			listOfOptionsToCompare.add(ii);
 		}
 
@@ -79,8 +82,8 @@ public class US360ProjectUnassignedTasksUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.projectUnassignedTasksUI(project, user);
+			loop = true;
 		}
 	}
 
-}
+}}

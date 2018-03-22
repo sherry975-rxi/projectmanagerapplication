@@ -1,35 +1,34 @@
 package project.ui.console.projectmanager.team;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US360ViewCollaboratorsWithoutTasksController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
-import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US360ViewCollaboratorsWithoutTasksUI {
 
-	Project selectedProject;
-	User user;
+	@Autowired
+	private US360ViewCollaboratorsWithoutTasksController controller;
 
-	public US360ViewCollaboratorsWithoutTasksUI(Project selectedProject, User user) {
-		this.selectedProject = selectedProject;
-		this.user = user;
+	private Project selectedProject;
+
+	public US360ViewCollaboratorsWithoutTasksUI() {
 	}
 
 	public void viewUnassignedCollaborators() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		List<String> idleCollaboratorsInfo;
 
-		US360ViewCollaboratorsWithoutTasksController controller = new US360ViewCollaboratorsWithoutTasksController(
-				this.selectedProject);
+		idleCollaboratorsInfo = controller.showCollaboratorsWithoutTasks(selectedProject);
 
-		idleCollaboratorsInfo = controller.showCollaboratorsWithoutTasks();
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println(
 				"_________________________________________________________________________________________________________________");
 		if (idleCollaboratorsInfo.isEmpty())
@@ -44,8 +43,6 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 		System.out.println(
 				"_________________________________________________________________________________________________________________");
 		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-
 		Scanner input = new Scanner(System.in);
 		String choice = input.nextLine().toUpperCase();
 
@@ -53,15 +50,15 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 		case "B":
 			return;
 
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-
 		default:
 			System.out.println("Please choose a valid option!");
-			viewUnassignedCollaborators();
+			loop = true;
 
 		}
+		}
+	}
 
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
 	}
 }

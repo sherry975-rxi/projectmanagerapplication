@@ -1,8 +1,5 @@
 package project.model;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,22 +7,15 @@ import javax.persistence.*;
 public class TaskTeamRequest {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollab;
 
-	@ManyToOne
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Task_id")
 	private Task task;
-
-	@ManyToOne
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@JoinColumn(name = "Project_id")
-	private Project project;
 
 	private Integer type;
 	public static final int ASSIGNMENT = 0;
@@ -99,20 +89,13 @@ public class TaskTeamRequest {
 	}
 
 
-	public void setProject(Project proj) {
-		this.project=proj;
-	}
-
-	public Project getProject() {
-		return project;
-	}
-
-
 	public String getType() {
 	    String typeString ="N/A";
-	    if (type==0) {
+	    Integer assignement = 0;
+	    Integer removal = 1;
+	    if (assignement.equals(type)) {
             typeString = "Assignment";
-        } else if (type==1) {
+        } else if (removal.equals(type)) {
             typeString = "Removal";
         }
 	    return typeString;
@@ -185,7 +168,9 @@ public class TaskTeamRequest {
 	 *
 	 * @return The string representation
 	 */
-	public String viewStringRepresentation() {
+	public String viewStringRepresentation() { 
+		
+		//Este m�todo n�o devia estar noutro s�tio? Controladores ou assim...
 
 		return this.projCollab.getUserFromProjectCollaborator().getName() + "\n"
 				+ this.projCollab.getUserFromProjectCollaborator().getEmail() + "\n"

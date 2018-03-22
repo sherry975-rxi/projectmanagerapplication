@@ -1,11 +1,10 @@
 package project.ui.console.projectmanager;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
-import project.ui.console.collaborator.CollectProjectsFromUserUI;
 import project.ui.console.projectmanager.others.US340CreateTaskUI;
 import project.ui.console.projectmanager.others.US342DefineDependenciesBetweenTasksUI;
 import project.ui.console.projectmanager.others.US390GetProjectReportedCostUI;
@@ -18,30 +17,73 @@ import project.ui.console.projectmanager.team.US360ViewCollaboratorsWithoutTasks
 
 import java.util.Scanner;
 
+@Component
 public class ProjectManagerMainMenuUI {
+
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US372ProjectUnfinishedTasksUI optionA1;
+
+	@Autowired
+	private US380ProjectUnfinishedTasksWithExperiredDeadlineUI optionA2;
+
+	@Autowired
+	private US370ProjectFinishedTasksDecreasingOrderUI optionA3;
+
+	@Autowired
+	private US375ProjectNotStartedTasksUI optionA4;
+
+	@Autowired
+	private US360ProjectUnassignedTasksUI optionA5;
+
+	@Autowired
+	private	US377ProjectCancelledTasks optionA6;
+
+	@Autowired
+	private	US355ViewProjectTeamAndThenRemoveCollaboratorUI optionB1;
+
+	@Autowired
+	private US351AddCollaboratorToProjectTeamUI optionB2;
+
+	@Autowired
+	private US360ViewCollaboratorsWithoutTasksUI optionB3;
+
+	@Autowired
+	private US356ApproveOrCancelAssignmentRequestUI optionC1;
+
+	@Autowired
+	private US357ApproveOrCancelRemovalRequestUI optionC2;
+
+	@Autowired
+	private US390GetProjectReportedCostUI optionD1;
+
+	@Autowired
+	private US340CreateTaskUI optionD2;
+
+	@Autowired
+	private	US342DefineDependenciesBetweenTasksUI optionD3;
+
 	private User projectManager;
 	private Project project;
 
 	/**
 	 * Creates the UI
-	 * 
-	 * @param user
 	 */
-	public ProjectManagerMainMenuUI(User user, Project project) {
-		this.projectManager = user;
-		this.project = project;
-
+	public ProjectManagerMainMenuUI() {
 	}
 
 	public void displayOptions() {
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.project);
+		projectInfo.setProject(project);
 		projectInfo.setProject();
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
 		Scanner scannerInput = new Scanner(System.in);
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println(
 				"———————————————————————————————————————————MENU PROJECT MANAGER——————————————————————————————————————————————————");
 		System.out.println("                               Project " + projectInfo.printProjectNameInfo().toUpperCase()
@@ -83,78 +125,70 @@ public class ProjectManagerMainMenuUI {
 
 		switch (option) {
 		case "A1":
-			US372ProjectUnfinishedTasksUI optionA1 = new US372ProjectUnfinishedTasksUI();
 			optionA1.displayUnfinishedOfProject(this.project, this.projectManager);
 			break;
 		case "A2":
-			US380ProjectUnfinishedTasksWithExperiredDeadlineUI optionA2 = new US380ProjectUnfinishedTasksWithExperiredDeadlineUI();
 			optionA2.displayUnfinishedTasksWithExpiredDeadline(this.project, this.projectManager);
 			break;
 		case "A3":
-			US370ProjectFinishedTasksDecreasingOrderUI optionA3 = new US370ProjectFinishedTasksDecreasingOrderUI(
-					this.project, this.projectManager);
+			optionA3.setProj(project);
 			optionA3.projectDataDisplay();
 			break;
 		case "A4":
-			US375ProjectNotStartedTasksUI optionA4 = new US375ProjectNotStartedTasksUI();
 			optionA4.projectNotStartedTasksUI(this.project, this.projectManager);
 			break;
 		case "A5":
-			US360ProjectUnassignedTasksUI optionA5 = new US360ProjectUnassignedTasksUI();
 			optionA5.projectUnassignedTasksUI(this.project, this.projectManager);
 			break;
 		case "A6":
-			US377ProjectCancelledTasks optionA6 = new US377ProjectCancelledTasks();
 			optionA6.displayCancelledTasksOfProject(this.project, this.projectManager);
 			break;
 		case "B1":
-			US355ViewProjectTeamAndThenRemoveCollaboratorUI optionB1 = new US355ViewProjectTeamAndThenRemoveCollaboratorUI();
 			optionB1.viewProjectTeamAndThenRemoveCollaboratorUI(this.project, this.projectManager);
 			break;
 		case "B2":
-			US351AddCollaboratorToProjectTeamUI optionB2 = new US351AddCollaboratorToProjectTeamUI();
 			optionB2.addCollaboratorToProjectTeam(project);
 			break;
 		case "B3":
-			US360ViewCollaboratorsWithoutTasksUI optionB3 = new US360ViewCollaboratorsWithoutTasksUI(this.project,
-					this.projectManager);
+			optionB3.setSelectedProject(project);
 			optionB3.viewUnassignedCollaborators();
 			break;
 		case "C1":
-			US356ApproveOrCancelAssignmentRequestUI optionC1 = new US356ApproveOrCancelAssignmentRequestUI(
-					this.projectManager, this.project);
+			optionC1.setProject(project);
 			optionC1.displayAssignmentTaskRequests();
 			break;
 		case "C2":
-			US357ApproveOrCancelRemovalRequestUI optionC2 = new US357ApproveOrCancelRemovalRequestUI(
-					this.projectManager, this.project);
+			optionC2.setProject(project);
 			optionC2.displayRemovalTaskRequests();
 			break;
 		case "D1":
-			US390GetProjectReportedCostUI optionD1 = new US390GetProjectReportedCostUI();
-			optionD1.displayProjectCost(this.project, this.projectManager);
+			optionD1.displayProjectCost(this.project);
 			break;
 		case "D2":
-			US340CreateTaskUI optionD2 = new US340CreateTaskUI(this.project);
+			optionD2.setProject(project);
 			optionD2.createTask();
 			break;
 		case "D3":
-			US342DefineDependenciesBetweenTasksUI optionD3 = new US342DefineDependenciesBetweenTasksUI(this.project);
+			optionD3.setProject(project);
 			optionD3.chooseProject();
 			break;
 
 		case "B":
-			CollectProjectsFromUserUI backUI = new CollectProjectsFromUserUI(this.projectManager);
-			backUI.collectProjectsFromUser();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
 			break;
 		
 		default:
 			System.out.println("Invalid input. Please retry:");
-			displayOptions();
+			loop = true;
 		}
 	}
 
+}
+
+	public void setProjectManager(User projectManager) {
+		this.projectManager = projectManager;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
 }

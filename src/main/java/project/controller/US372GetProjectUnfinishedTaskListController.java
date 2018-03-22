@@ -1,12 +1,26 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class US372GetProjectUnfinishedTaskListController {
+
+	@Autowired
+	private TaskService taskService;
+
+	/*
+	 * Default constructor
+	 */
+	public US372GetProjectUnfinishedTaskListController() {
+
+	}
 
 	/**
 	 * Returns a list of tasks that belong to a Project and are not marked as
@@ -19,7 +33,7 @@ public class US372GetProjectUnfinishedTaskListController {
 
 	public List<Task> getProjectUnfinishedTaskList(Project proj) {
 
-		return proj.getTaskRepository().getUnFinishedTasks();
+		return taskService.getProjectUnFinishedTasks(proj);
 
 	}
 
@@ -34,7 +48,7 @@ public class US372GetProjectUnfinishedTaskListController {
 	 */
 	public List<String> getUnfinishedTaskListId(Project proj) {
 
-		List<Task> taskListOnGoing = proj.getTaskRepository().getUnFinishedTasks();
+		List<Task> taskListOnGoing = taskService.getProjectUnFinishedTasks(proj);
 		List<String> taskListOnGoingToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListOnGoing.size(); i++) {

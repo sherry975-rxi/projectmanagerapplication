@@ -1,23 +1,28 @@
 package project.ui.console.projectmanager.team;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import project.services.UserService;
 import project.controller.US351AddColaboratorToProjectTeamController;
-import project.controller.UpdateDbToContainersController;
-import project.model.Company;
 import project.model.Project;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class US351AddCollaboratorToProjectTeamUI {
 
-	User user;
-	int costPerEffort;
+	@Autowired
+	private UserService userContainer;
+
+	@Autowired
+	private US351AddColaboratorToProjectTeamController controller;
+
+	private User user;
+	private int costPerEffort;
 
 	public void addCollaboratorToProjectTeam(Project project) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 		String line = "______________________________________________";
-		US351AddColaboratorToProjectTeamController controller = new US351AddColaboratorToProjectTeamController();
 		Scanner dataIn = new Scanner(System.in);
 		boolean invalidInputA = true;
 		boolean invalidInputB = true;
@@ -26,7 +31,7 @@ public class US351AddCollaboratorToProjectTeamUI {
 		System.out.println(line);
 		System.out.println("USER LIST");
 		System.out.println(line);
-		for (User each : Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer()) {
+		for (User each : userContainer.getAllUsersFromUserContainer()) {
 			System.out.println(each.getName());
 			System.out.println(each.getIdNumber());
 			System.out.println(each.getEmail());
@@ -95,4 +100,6 @@ public class US351AddCollaboratorToProjectTeamUI {
 		}
 		return result;
 	}
+
+
 }

@@ -5,102 +5,38 @@ import project.model.Task;
 
 public class Planned implements TaskStateInterface {
 
-	Task task;
-
-	public Planned(Task taskToUpdate) {
-		this.task = taskToUpdate;
-	}
-
 	/**
-	 * This method verifies if the State "Planned" requirements are fulfilled for a
-	 * specific Task. It has to have estimated dates and no users working on it. If
-	 * so, it returns true, If not, it returns false
-	 * 
-	 * @return true if is Valid, false if not
+	 * Method that checks if a task that is currently in the planned state meets the conditions to change to the ready state.
+	 *
+	 * @param task to check if it has the conditions to change to the ready state
 	 */
 	@Override
-	public boolean isValid() {
-		return task.getEstimatedTaskStartDate() != null && task.getTaskDeadline() != null
-				&& !task.doesTaskTeamHaveActiveUsers();
-	}
+	public void doAction(Task task) {
 
-	/**
-	 * This method changes the state of a Task to the "Created" state.
-	 * 
-	 */
-	@Override
-	public boolean changeToCreated() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Planned" state
-	 * 
-	 */
-	@Override
-	public boolean changeToPlanned() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Assigned" state
-	 * 
-	 */
-	@Override
-	public boolean changeToAssigned() {
-		boolean condition = false;
-		TaskStateInterface stateAssigned = new Assigned(task);
-		if (stateAssigned.isValid()) {
-			task.setTaskState(stateAssigned);
-			task.setCurrentState(StateEnum.ASSIGNED);
-			condition = true;
+		Ready readyState = new Ready();
+		if(readyState.isValid(task)) {
+			task.setTaskState(readyState);
+			task.setCurrentState(StateEnum.READY);
 		}
-		return condition;
 	}
 
 	/**
-	 * This method changes the state of a Task to the "Ready" state
-	 * 
+	 * Method that checks if a certain task meets the conditions to be in the planned state
+	 *
+	 * @param task to check if it meets the conditions
+	 *
+	 * @return TRUE if it meets the conditions, FALSE if not
 	 */
-	@Override
-	public boolean changeToReady() {
-		return false;
-	}
+	public boolean isValid(Task task) {
 
-	/**
-	 * This method changes the state of a Task to the "OnGoing" state.
-	 * 
-	 */
-	@Override
-	public boolean changeToOnGoing() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "StandBy" state.
-	 * 
-	 */
-	@Override
-	public boolean changeToStandBy() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Cancelled" state.
-	 * 
-	 */
-	@Override
-	public boolean changeToCancelled() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Finished" state.
-	 * 
-	 */
-	@Override
-	public boolean changeToFinished() {
-		return false;
-
+		if(task.getTaskState() instanceof Created) {
+			return ((task.getEstimatedTaskStartDate() != null) || (task.getTaskDeadline() != null) ||
+					task.doesTaskTeamHaveActiveUsers());
+		} else if (task.getTaskState() instanceof Ready) {
+			return ((task.getEstimatedTaskStartDate() == null) || (task.getTaskDeadline() == null) ||
+					!task.doesTaskTeamHaveActiveUsers());
+		} else {
+			return false;
+		}
 	}
 }

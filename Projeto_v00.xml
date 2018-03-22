@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projeto id="TestProj01">
+	<nome_projeto>Teste Projecto</nome_projeto>					<!-- US301 v02 -->
+	<descricao_projeto>Teste Description</descricao_projeto>
+	<data_inicio_projeto>01/01/2018</data_inicio_projeto>
+	<data_conclusao_projeto>01/01/2018</data_conclusao_projeto>
+	<unidade_esforco>HOURS</unidade_esforco>
+	<orcamento_projeto>300</orcamento_projeto>
+	<estado_projeto></estado_projeto>
+	<gestor_projeto>js@mymail4.com</gestor_projeto>
+	<lista_colaboradores>
+		<colaborador_projeto>						<!-- US350 v02-->
+			<colaborador_id>js@mymail1.com</colaborador_id>
+			<lista_ligacoes_projeto>
+				<ligacao_projeto>					<!-- US351 e futuras-->
+					<data_inicio>01/01/2018</data_inicio>
+					<data_fim>01/01/2018</data_fim>
+					<custo_unitario_colaborador>10000</custo_unitario_colaborador>
+				</ligacao_projeto>
+			</lista_ligacoes_projeto>
+		</colaborador_projeto>
+		<colaborador_projeto>						<!-- US350 v02-->
+			<colaborador_id>js@mymail2.com</colaborador_id>
+			<lista_ligacoes_projeto>
+				<ligacao_projeto>					<!-- US351 e futuras-->
+					<data_inicio></data_inicio>
+					<data_fim></data_fim>
+					<custo_unitario_colaborador>50</custo_unitario_colaborador>
+				</ligacao_projeto>
+			</lista_ligacoes_projeto>
+		</colaborador_projeto>
+	</lista_colaboradores>
+	<lista_tarefas>
+		<tarefa>
+			<nome_tarefa></nome_tarefa>					<!-- US nova? -->
+			<descricao_tarefa>Teste description</descricao_tarefa>
+			<codigo_tarefa>69</codigo_tarefa>
+			<estado_tarefa></estado_tarefa>			<!-- US347 -->	
+			<esforco_estimado>100000</esforco_estimado>	<!-- US340 v02-->
+			<custo_unitario_orcamentado>3</custo_unitario_orcamentado>
+			<data_inicio_prevista>01/01/2018</data_inicio_prevista>
+			<data_conclusao_prevista>01/01/2018</data_conclusao_prevista>
+			<data_conclusao_efetiva>01/01/2018</data_conclusao_efetiva>	<!-- US205, US210, US365-->
+			<lista_dependencias>
+				<tarefa_id></tarefa_id>				<!-- US342-->
+			</lista_dependencias>
+			<lista_colaboradores_tarefa>
+				<colaborador_tarefa>
+					<colaborador_id>js@mymail1.com</colaborador_id>
+					<lista_ligacoes_tarefa>
+						<data_inicio>01/01/2018</data_inicio>
+						<data_fim>01/01/2018</data_fim>
+						<lista_report_tarefa>
+							<report>
+								<data_inicio>01/01/2018</data_inicio>
+								<data_fim></data_fim>
+								<esforco>100</esforco>
+							</report>
+						</lista_report_tarefa>
+					</lista_ligacoes_tarefa>
+				</colaborador_tarefa>
+				<colaborador_tarefa>
+					<colaborador_id>js@mymail2.com</colaborador_id>
+					<lista_ligacoes_tarefa>
+						<data_inicio>01/01/2018</data_inicio>
+						<data_fim>01/01/2018</data_fim>
+						<lista_report_tarefa>
+							<report>
+								<data_inicio>01/01/2018</data_inicio>
+								<data_fim></data_fim>
+								<esforco>100</esforco>
+							</report>
+						</lista_report_tarefa>
+					</lista_ligacoes_tarefa>
+				</colaborador_tarefa>
+			</lista_colaboradores_tarefa>
+		</tarefa>
+	</lista_tarefas>
+</projeto>

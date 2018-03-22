@@ -1,31 +1,32 @@
 package project.ui.console.projectmanager.others;
 
-import project.controller.CalculateReportedProjectCostController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
-import project.controller.UpdateDbToContainersController;
+import project.controller.US390CalculateReportedProjectCostController;
 import project.model.Project;
-import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
+@Component
 public class US390GetProjectReportedCostUI {
 
-	// Integer projectID
-	// Display projectCost
+	@Autowired
+	private PrintProjectInfoController projectInfo;
 
+	@Autowired
+	private US390CalculateReportedProjectCostController controller;
 
-
-	public void displayProjectCost(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
-
+	public void displayProjectCost(Project project) {
 		String line = "___________________________________________________";
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -41,8 +42,6 @@ public class US390GetProjectReportedCostUI {
 		System.out.println(line);
 		System.out.println("     PROJECT COST");
 		System.out.println(line);
-
-		CalculateReportedProjectCostController controller = new CalculateReportedProjectCostController();
 
 		System.out.println();
 
@@ -61,19 +60,13 @@ public class US390GetProjectReportedCostUI {
 		}
 
 		System.out.println(line);
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		if ("M".equals(option)) {
-			MainMenuUI.mainMenu();
-		} else if ("E".equals(option)) {
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-		} else {
+		if (!("B".equals(option))){
 			System.out.println("Please choose a valid option: ");
-			this.displayProjectCost(project, user);
+			loop = true;
 		}
-
-	}
+	}}
 }

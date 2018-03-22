@@ -1,24 +1,26 @@
 package project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import project.services.ProjectService;
+import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Controller
 public class US360ViewCollaboratorsWithoutTasksController {
 
-	private Project toSearch;
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private TaskService taskService;
 
-	/**
-	 * This controller receives a project and stores it in a private field
-	 * 
-	 * @param the
-	 *            selected Project
-	 */
-	public US360ViewCollaboratorsWithoutTasksController(Project selectedProject) {
-		toSearch = selectedProject;
+	public US360ViewCollaboratorsWithoutTasksController() {
 	}
 
 	/**
@@ -30,15 +32,15 @@ public class US360ViewCollaboratorsWithoutTasksController {
 	 * 
 	 * @return A list of all idle team members as a String
 	 */
-	public List<String> showCollaboratorsWithoutTasks() {
+	public List<String> showCollaboratorsWithoutTasks(Project selectedProject) {
 		List<String> idleProjectCollaborators = new ArrayList<>();
 
-		List<ProjectCollaborator> activeProjectTeam = toSearch.getActiveProjectTeam();
+		List<ProjectCollaborator> activeProjectTeam = projectService.getActiveProjectTeam(selectedProject);
 
 		Integer index = 1;
 
 		for (ProjectCollaborator other : activeProjectTeam) {
-			if (!toSearch.getTaskRepository().isCollaboratorActiveOnAnyTask(other)) {
+			if (!taskService.isCollaboratorActiveOnAnyTask(other)) {
 
 				String idleProjCollabInfo = collaboratorDataAsString(other);
 

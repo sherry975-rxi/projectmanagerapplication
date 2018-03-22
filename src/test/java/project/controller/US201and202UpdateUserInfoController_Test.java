@@ -1,10 +1,14 @@
 package project.controller;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.services.UserService;
 import project.model.Address;
-import project.model.Company;
 import project.model.Profile;
 import project.model.User;
 
@@ -13,25 +17,33 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US201and202UpdateUserInfoController_Test {
 
-	Company c1;
+	@Autowired
+	UserService userContainer;
+
 	User u1;
 	Address address1;
 	Address address2;
+
+
+	@Autowired
+	US201and202UpdateUserInfoController controller;
 
 	@Before
 	public void setUp() {
 		// create company and clear ProjectsRepository and UsersRepository
 
-		c1 = Company.getTheInstance();
-
 		// create users
-		u1 = c1.getUsersContainer().createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",
-				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
+		u1 = userContainer.createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000", "Rua Maria",
+				"4444-444", "221234567", "Porto", "Portugal");
 		u1.getAddressList().clear();
 		// create a new address
 		address1 = u1.createAddress("Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		address1.setUser(u1);
 		address2 = u1.createAddress("Testy Street2", "2401-342", "Testburg2", "Testo2", "Testistan2");
 
 		u1.addAddress(address1);
@@ -39,17 +51,30 @@ public class US201and202UpdateUserInfoController_Test {
 		u1.setUserProfile(Profile.COLLABORATOR);
 
 		// add users to company
-		c1.getUsersContainer().addUserToUserRepository(u1);
+		userContainer.addUserToUserRepositoryX(u1);
+
 
 	}
 
-	@After
-	public void tearDown() {
-		Company.clear();
-		u1 = null;
+	/**
+	 * this tests database saving method
+	 */
+	@Test
+	public void updateAndSaveToDB() {
 
-		address1 = null;
-		address2 = null;
+		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 1);
+
+		assertTrue(u1.getName() == "Daniel");
+
+		controller.updateUserName(u1, "Pedro");
+
+		assertTrue(u1.getName() == "Pedro");
+
+		controller.alterUser(u1);
+
+		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 1);
+
+		assertTrue("Pedro".equals(userContainer.getAllUsersFromUserContainer().get(0).getName()));
 	}
 
 	/**
@@ -57,8 +82,6 @@ public class US201and202UpdateUserInfoController_Test {
 	 */
 	@Test
 	public void updateUserName() {
-		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertTrue(u1.getName() == "Daniel");
 
@@ -72,8 +95,6 @@ public class US201and202UpdateUserInfoController_Test {
 	 */
 	@Test
 	public void updateUserEmail() {
-		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertTrue(u1.getEmail() == "user2@gmail.com");
 
@@ -87,8 +108,6 @@ public class US201and202UpdateUserInfoController_Test {
 	 */
 	@Test
 	public void updateUserPhone() {
-		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertTrue(u1.getPhone() == "930000000");
 
@@ -105,7 +124,6 @@ public class US201and202UpdateUserInfoController_Test {
 	 */
 	@Test
 	public void addNewAddressTest() {
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals(null, u1.searchUserAddress(address2.getStreet()));
 
@@ -116,18 +134,16 @@ public class US201and202UpdateUserInfoController_Test {
 
 	@Test
 	public void updateUserStreet() {
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("Testy Street", u1.searchUserAddress(address1.getStreet()).getStreet());
 
-		controller.updateUserStreet(u1, address1.getStreet(), "New Street");
+		controller.updateUserStreet(u1, "Testy Street", "New Street");
 
-		assertEquals("New Street", u1.searchUserAddress(address1.getStreet()).getStreet());
+		assertEquals("New Street", u1.searchUserAddress("New Street").getStreet());
 	}
 
 	@Test
 	public void updateUserZipCode() {
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("2401-343", u1.searchUserAddress(address1.getStreet()).getZipCode());
 
@@ -138,7 +154,6 @@ public class US201and202UpdateUserInfoController_Test {
 
 	@Test
 	public void updateUserCity() {
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("Testburg", u1.searchUserAddress(address1.getStreet()).getCity());
 
@@ -149,7 +164,6 @@ public class US201and202UpdateUserInfoController_Test {
 
 	@Test
 	public void updateUserDistrict() {
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("Testo", u1.searchUserAddress(address1.getStreet()).getDistrict());
 
@@ -160,7 +174,6 @@ public class US201and202UpdateUserInfoController_Test {
 
 	@Test
 	public void updateUserCountry() {
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		assertEquals("Testistan", u1.searchUserAddress(address1.getStreet()).getCountry());
 
@@ -174,7 +187,6 @@ public class US201and202UpdateUserInfoController_Test {
 	 */
 	@Test
 	public void getAllAddressesTest() {
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		// controller.addNewAddress(u1, address2);
 
@@ -189,7 +201,6 @@ public class US201and202UpdateUserInfoController_Test {
 	@Test
 	public void isEmailValid() {
 		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 		// checks if the email is valid
 		assertTrue(controller.isEmailValid(u1.getEmail()));
 		// Sets the email to an invalid email
@@ -205,7 +216,6 @@ public class US201and202UpdateUserInfoController_Test {
 	@Test
 	public void isEmailAlreadyInUse() {
 		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 		// Creates a new string with an email that is already in use
 		String newEmail = new String("user2@gmail.com");
 		// Checks that the email is already in use
@@ -223,7 +233,6 @@ public class US201and202UpdateUserInfoController_Test {
 	@Test
 	public void updateUserPassword() {
 		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 		String newPassword = new String("newPassword");
 		controller.updateUserPassword(u1, "newPassword");
 
@@ -234,8 +243,6 @@ public class US201and202UpdateUserInfoController_Test {
 	 */
 	@Test
 	public void getMethodsTests() {
-		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 		// Gets the name and see if it matches with the user name
 		assertEquals(controller.getName(u1), "Daniel");
 		// Gets the user email and see if it matches with the user email
@@ -261,8 +268,6 @@ public class US201and202UpdateUserInfoController_Test {
 
 	@Test
 	public void getAddressList() {
-		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 
 		u1.getAddressList().clear();
 
@@ -274,8 +279,7 @@ public class US201and202UpdateUserInfoController_Test {
 		// set user profile to collaborator
 		u1.setUserProfile(Profile.COLLABORATOR);
 
-		// add users to company
-		c1.getUsersContainer().addUserToUserRepository(u1);
+		userContainer.addUserToUserRepositoryX(u1);
 
 		// Creates a list with the addresses of the user
 		List<Address> userAddresses = new ArrayList<>();
@@ -283,8 +287,10 @@ public class US201and202UpdateUserInfoController_Test {
 		// Adds address 1 to the user address list
 		userAddresses.add(address1);
 
-		// checks that both objects contain the same addresses
-		assertEquals(controller.getAllAddresses(u1), userAddresses);
+		// checks that both objects contain the same addresses (same size and matching
+		// street)
+		assertEquals(controller.getAllAddresses(u1).size(), userAddresses.size());
+		assertTrue("Testy Street".equals(controller.getAllAddresses(u1).get(0).getStreet()));
 
 		// adds a new address to User 1
 		u1.addAddress(address2);
@@ -292,15 +298,16 @@ public class US201and202UpdateUserInfoController_Test {
 		// adds a new address to the comparison list
 		userAddresses.add(address2);
 
-		// check if both results are the same
-		assertEquals(controller.getAllAddresses(u1), userAddresses);
+		// check if both results are the same, both lists having the same size and
+		// streets matching
+		assertEquals(controller.getAllAddresses(u1).size(), userAddresses.size());
+		assertTrue("Testy Street".equals(controller.getAllAddresses(u1).get(0).getStreet()));
+		assertTrue("Testy Street2".equals(controller.getAllAddresses(u1).get(1).getStreet()));
 
 	}
 
 	@Test
 	public void searchUserAddress() {
-		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
 		// create a new address
 		address1 = u1.createAddress("Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 		address2 = u1.createAddress("Testy Street2", "2401-342", "Testburg2", "Testo2", "Testistan2");
@@ -323,16 +330,13 @@ public class US201and202UpdateUserInfoController_Test {
 	 * Tests the creator of an address in controller
 	 */
 	@Test
-	public void testCreateNewAddress(){
-		// create controller
-		US201and202UpdateUserInfoController controller = new US201and202UpdateUserInfoController();
+	public void testCreateNewAddress() {
 		// create a new address in user u1
 		address2 = u1.createAddress("Testy Street2", "2401-342", "Testburg2", "Testo2", "Testistan2");
 		// create an identical address in controller
 		address1 = controller.createNewAddress("Testy Street2", "2401-342", "Testburg2", "Testo2", "Testistan2");
-		//compares similar objects
+		// compares similar objects
 		assertTrue(address2.equals(address1));
-
 
 	}
 

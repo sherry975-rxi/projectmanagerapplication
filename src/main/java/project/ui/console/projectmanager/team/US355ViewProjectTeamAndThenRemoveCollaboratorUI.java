@@ -1,27 +1,35 @@
 package project.ui.console.projectmanager.team;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US355ViewProjectTeamAndThenRemoveCollaboratorController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US355ViewProjectTeamAndThenRemoveCollaboratorController controller;
+
 	public void viewProjectTeamAndThenRemoveCollaboratorUI(Project project, User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
-		infoUpdater.updateDBtoContainer();
+		
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println("___________________________________________________");
@@ -37,8 +45,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		System.out.println(" Project Team");
 		System.out.println("___________________________________________________");
 
-		US355ViewProjectTeamAndThenRemoveCollaboratorController controller = new US355ViewProjectTeamAndThenRemoveCollaboratorController(
-				project);
+		controller.setProj(project);
 
 		List<String> listOfProjectCollaboratorsName = new ArrayList<>();
 
@@ -51,16 +58,13 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		System.out.println();
 		System.out.println("\nChoose an collaborator to remove or choose an option:");
 		System.out.println("_______________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
+		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
 		// creation of a list with the options B,E and M
 		List<String> listOfOptionsToCompare = new ArrayList<>();
 		listOfOptionsToCompare.add("B");
-		listOfOptionsToCompare.add("M");
-		listOfOptionsToCompare.add("E");
 
 		List<User> listOfUser = controller.getActiveProjectCollaboratorFromTeam();
 
@@ -75,13 +79,11 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 					System.out.println("\nInvalid answer. Try again (\"y\" or \"n\")");
 					yesOrNo = scannerInput.nextLine();
 				}
-				collaboratorRemovalUI(yesOrNo, controller, listOfUser, i, project, user);
+				collaboratorRemovalUI(yesOrNo, listOfUser, i);
 
 			} else if ("B".equals(option)) {
-				return;
+				break;
 
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
 			}
 			listOfOptionsToCompare.add(String.valueOf(i + 1));
 		}
@@ -90,20 +92,17 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
+			loop = true;
+		}
 		}
 	}
 
-	private void collaboratorRemovalUI(String yesOrNo,
-			US355ViewProjectTeamAndThenRemoveCollaboratorController controller, List<User> listOfUser, int i,
-			Project project, User user) {
+	private void collaboratorRemovalUI(String yesOrNo, List<User> listOfUser, int i) {
 		if ("y".equalsIgnoreCase(yesOrNo)) {
 			if (controller.removeCollaboratorFromProjectTeam(listOfUser.get(i))) {
 				System.out.println("You removed the user from this Project.");
-				this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
 			} else {
 				System.out.println("Your request was not successful.");
-				this.viewProjectTeamAndThenRemoveCollaboratorUI(project, user);
 			}
 
 		}

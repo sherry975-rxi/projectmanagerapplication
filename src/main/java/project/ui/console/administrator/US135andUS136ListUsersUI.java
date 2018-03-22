@@ -1,28 +1,29 @@
 package project.ui.console.administrator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US135andUS136SearchUsersController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Profile;
 import project.model.User;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US135andUS136ListUsersUI {
+	@Autowired
+	private US135andUS136SearchUsersController controller;
 
 	String options = "[0] - search Unassigned Users \n" + "[1] - search Directors \n" + "[2] - search Collaborators \n"
 			+ "Else, find emails containing your input\n";
 
 	public User displayUsersList(User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+
 
 		Scanner input = new Scanner(System.in);
 
 		List<String> searchList;
 		String command;
-
-		US135andUS136SearchUsersController controller = new US135andUS136SearchUsersController();
 
 		System.out.println("To find Users, press...");
 		System.out.println(options);

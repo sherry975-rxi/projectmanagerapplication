@@ -1,12 +1,31 @@
 package project.controller;
 
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.services.ProjectService;
+import project.services.UserService;
 import project.model.Project;
+import project.model.ProjectCollaborator;
 import project.model.User;
 
 import java.util.List;
 
+@Controller
 public class US351AddColaboratorToProjectTeamController {
+
+	@Autowired
+	private ProjectService projectService;
+
+	@Autowired
+	private UserService userContainer;
+
+	/*
+	 * Default constructor for controller
+	 */
+
+	public US351AddColaboratorToProjectTeamController() {
+
+	}
 
 	/**
 	 * This controller add user to project team
@@ -19,7 +38,8 @@ public class US351AddColaboratorToProjectTeamController {
 	 */
 	public void addUserToProjectTeam(User user, Project project, int effort) {
 
-		project.addUserToProjectTeam(user, effort);
+		ProjectCollaborator projectCollaborator = projectService.createProjectCollaborator(user, project, effort);
+		// projectService.addProjectCollaborator(projectCollaborator);
 
 	}
 
@@ -29,14 +49,14 @@ public class US351AddColaboratorToProjectTeamController {
 	 * @return List with all the available users
 	 */
 	public List<User> getAllUsers() {
-		return Company.getTheInstance().getUsersContainer().getAllActiveCollaboratorsFromRepository();
+		return userContainer.getAllActiveCollaboratorsFromRepository();
 	}
 
 	public boolean isUserAlreadyInProject(User user, Project project) {
 
 		boolean result = false;
 		if (user != null) {
-			result = project.isUserActiveInProject(user);
+			result = projectService.isUserActiveInProject(user, project);
 		}
 		return result;
 

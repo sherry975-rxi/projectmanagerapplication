@@ -1,6 +1,8 @@
 package project.controller;
 
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.services.UserService;
 import project.model.Project;
 import project.model.User;
 
@@ -14,12 +16,19 @@ import java.util.List;
  *         Project.
  *
  */
+@Controller
 public class US302ChangeProjectManagerController {
 
-	Company myCompany = Company.getTheInstance();
-	List<User> activeCollaboratorList;
-	User selectedManager;
-	Project selectedProject;
+	@Autowired
+	private UserService userService;
+
+	private User selectedManager;
+	private Project selectedProject;
+	private List<User> activeCollaboratorList;
+
+	public US302ChangeProjectManagerController() {
+
+	}
 
 	/**
 	 * Constructor for project creation controller, it receives a project whose
@@ -32,12 +41,12 @@ public class US302ChangeProjectManagerController {
 
 	/**
 	 * This controller returns a list of all activeCollaborators in the User
-	 * Repository
+	 * repository
 	 * 
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listPossibleManagers() {
-		this.activeCollaboratorList = myCompany.getUsersContainer().getAllActiveCollaboratorsFromRepository();
+		this.activeCollaboratorList = userService.getAllActiveCollaboratorsFromRepository();
 		List<String> collabListAsString = new ArrayList<>();
 
 		for (int i = 0; i < activeCollaboratorList.size(); i++) {
@@ -97,6 +106,30 @@ public class US302ChangeProjectManagerController {
 
 		return toConvert.getIdNumber() + ": " + toConvert.getName() + " (" + toConvert.getEmail() + "; "
 				+ toConvert.getPhone() + ") - " + toConvert.getFunction();
+	}
+
+	public List<User> getActiveCollaboratorList() {
+		return activeCollaboratorList;
+	}
+
+	public void setActiveCollaboratorList(List<User> activeCollaboratorList) {
+		this.activeCollaboratorList = activeCollaboratorList;
+	}
+
+	public User getSelectedManager() {
+		return selectedManager;
+	}
+
+	public void setSelectedManager(User selectedManager) {
+		this.selectedManager = selectedManager;
+	}
+
+	public Project getSelectedProject() {
+		return selectedProject;
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
 	}
 
 }

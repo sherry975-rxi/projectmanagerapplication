@@ -1,61 +1,73 @@
 package project.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import project.model.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
+import project.model.Profile;
+import project.model.Project;
+import project.model.Task;
+import project.model.User;
+
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 
 public class US340CreateTaskControllerTest {
 
-	Company myCompany;
-	UserContainer userContainer;
+	@Autowired
+	UserService userService;
+	@Autowired
+	TaskService taskService;
 	User user1;
 	User userAdmin;
 	Project project;
-	ProjectContainer projectContainer;
+	@Autowired
+	ProjectService projectService;
 	Task testTask;
+	@Autowired
+	US340CreateTaskController testControl;
 
 	@Before
 	public void setUp() {
-		// create company
 
-		myCompany = Company.getTheInstance();
-
-		// creates an UserContainer
-		userContainer = myCompany.getUsersContainer();
-
-		// creates a ProjectsRepository
-		projectContainer = myCompany.getProjectsContainer();
-
-		userContainer.getAllUsersFromUserContainer().clear();
+		// userService.getAllUsersFromUserContainer().clear();
 
 		// create user
-		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 		// create user admin
-		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+		userAdmin = userService.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Test", "Testo", "Testistan");
-		// add user to user list
-		userContainer.addUserToUserRepository(user1);
-		userContainer.addUserToUserRepository(userAdmin);
+
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
-		project = projectContainer.createProject("name3", "description4", userAdmin);// !!!
+		project = projectService.createProject("name3", "description4", userAdmin);// !!!
 
 	}
 
 	@After
-	public void tearDown() {
-		Company.clear();
+	public void clear() {
+
 		user1 = null;
-		testTask = null;
+		userAdmin = null;
 		project = null;
-		projectContainer = null;
-		userContainer = null;
+		testTask = null;
+
 	}
 
 	@Test
@@ -64,20 +76,17 @@ public class US340CreateTaskControllerTest {
 		assertFalse(project.isProjectManager(user1));
 		assertTrue(project.isProjectManager(userAdmin));
 
-		// creates the Controller and asserts the list of unstarted tasks starts at 0
-		US340CreateTaskController testControl = new US340CreateTaskController(project);
-		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 0);
+		assertEquals(taskService.getProjectUnstartedTasks(project).size(), 0);
 
 		// creates and adds a task using the controller and asserts a task was added
-		testTask = testControl.addTask("Test dis agen pls");
-		assertEquals(project.getTaskRepository().getUnstartedTasks().size(), 1);
+		assertTrue(testControl.addTask("Test dis agen pls", project));
+		assertEquals(taskService.getProjectUnstartedTasks(project).size(), 1);
 
 		// asserts the added task matches the added task
-		assertTrue(project.getTaskRepository().getUnstartedTasks().get(0).getDescription().equals("Test dis agen pls"));
-		assertFalse(project.getTaskRepository().getUnstartedTasks().get(0).getDescription().equals(""));
+		assertTrue(taskService.getProjectUnstartedTasks(project).get(0).getDescription().equals("Test dis agen pls"));
 
-		// Tests the get Task Repository
-		assertEquals(testControl.getTaskRepository(), project.getTaskRepository());
+		assertEquals(this.taskService, testControl.getTaskService());
+
 	}
 
 }

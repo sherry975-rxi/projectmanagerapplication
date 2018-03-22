@@ -1,23 +1,37 @@
 package project.controller;
 
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.services.UserService;
 import project.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class US130ListUsersController {
 
+	@Autowired
+	private UserService userContainer;
+
 	List<User> userList;
-	User selectedUser = null;
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
+	}
+	/**
+	 * Empty constructor
+	 */
+	public US130ListUsersController() {
+	};
 
 	/**
-	 * This controller returns a list of all users in the User Repository
+	 * This controller returns a list of all users in the User repository
 	 * 
 	 * @return List<User> a copy of the User database
 	 */
 	public List<String> listUsersController() {
-		this.userList = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer();
+		this.userList = userContainer.getAllUsersFromUserContainer();
 		List<String> userListAsString = new ArrayList<>();
 
 		for (int i = 0; i < userList.size(); i++) {
@@ -37,13 +51,14 @@ public class US130ListUsersController {
 	 * @return User to be Returned and handled by the Admin
 	 */
 	public User selectUser(int index) {
+		User result;
 		int actualIndex = index - 1;
 		if (actualIndex >= 0 && actualIndex < userList.size()) {
-			selectedUser = userList.get(actualIndex);
+			result = userList.get(actualIndex);
 		} else {
-			selectedUser = null;
+			result = null;
 		}
-		return selectedUser;
+		return result;
 
 	}
 
@@ -68,7 +83,7 @@ public class US130ListUsersController {
 			profile = "Unassigned";
 		}
 
-		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " ("
-				+ toConvert.getEmail() + "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
+		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " (" + toConvert.getEmail()
+				+ "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
 	}
 }

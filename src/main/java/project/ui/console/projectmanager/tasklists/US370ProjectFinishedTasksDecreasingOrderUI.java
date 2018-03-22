@@ -1,46 +1,48 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US367MarkFinishedTaskAsUnfinishedController;
 import project.controller.US370GetProjectFinishedTaskListController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.Task;
-import project.model.User;
-import project.ui.console.MainMenuUI;
-import project.ui.console.collaborator.ProjectViewMenuUI;
-import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US370ProjectFinishedTasksDecreasingOrderUI {
 
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US370GetProjectFinishedTaskListController projectFinishedTaskList;
+
+	@Autowired
+	private US367MarkFinishedTaskAsUnfinishedController taskToMarkAsUnfinished;
+
 	private Project proj;
-	private User user;
 
-	public US370ProjectFinishedTasksDecreasingOrderUI(Project project, User user) {
-		this.user = user;
-		this.proj = project;
+	public US370ProjectFinishedTasksDecreasingOrderUI() {
 	}
-
 	/**
 	 * This method executes all options to execute through this UI Presents the
 	 * project details and the task's list of project Uses a switch case to treat
 	 * the user's input
 	 */
 	public void projectDataDisplay() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.proj.getIdCode());
-		int projectID = proj.getIdCode();
+		projectInfo.setProjID(proj.getIdCode());
 		projectInfo.setProject();
-		US370GetProjectFinishedTaskListController projectFinishedTaskList = new US370GetProjectFinishedTaskListController();
 
 		String line = "___________________________________________________";
 		Scanner scannerInput = new Scanner(System.in);
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
@@ -65,40 +67,34 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 
 		System.out.println("To roll back a task from Finish back to Ongoing, choose the task ID number.");
 		System.out.println("");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		System.out.println("[B] Back \n");
 
 		String choice = scannerInput.nextLine().toUpperCase();
 		switch (choice) {
 		case "B":
-			ProjectManagerMainMenuUI previousMenu = new ProjectManagerMainMenuUI(user, proj);
-			previousMenu.displayOptions();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 			break;
 		default:
 			try {
-				US367MarkFinishedTaskAsUnfinishedController taskToMarkAsUnfinished = new US367MarkFinishedTaskAsUnfinishedController(
-						this.proj, choice);
-				taskToMarkAsUnfinished.markFinishedTaskAsUnfinished();
+				taskToMarkAsUnfinished.markFinishedTaskAsUnfinished(choice);
 			}
 
 			catch (NullPointerException npe) {
 				System.out.println("Please choose a valid option: ");
 				System.out.println("");
-				ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(projectID, user);
-				myAtualUIView.projectDataDisplay();
+				loop = true;
 			}
 
 			break;
 		}
+	}}
+
+	public void setProj(Project proj) {
+		this.proj = proj;
 	}
+
 }
+
+
 
 // Integer projectID
 // Display list

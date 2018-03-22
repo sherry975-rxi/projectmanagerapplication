@@ -1,20 +1,22 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
+@Component
 public class ProjectViewMenuUI {
+
+	@Autowired
+	private TaskDetailsUI userTasks;
 
 	private Integer projectID;
 	private User user;
 
-	public ProjectViewMenuUI(Integer projectID, User user) {
-		this.user = user;
-		this.projectID = projectID;	
+	public ProjectViewMenuUI() {
 	}
 
 	/**
@@ -23,8 +25,9 @@ public class ProjectViewMenuUI {
 	 * the user's input
 	 */
 	public void projectDataDisplay() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
 		projectInfo.setProject();
@@ -51,39 +54,40 @@ public class ProjectViewMenuUI {
 
 		System.out.println("To see task's details, choose the task ID number.");
 		System.out.println("");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit");
+		System.out.println("[B] Back \n");
 
 		String choice = scannerInput.nextLine().toUpperCase();
 		switch (choice) {
 		case "B":
-			CollectProjectsFromUserUI previousMenu = new CollectProjectsFromUserUI(user);
-			previousMenu.collectProjectsFromUser();
-			break;
-		case "M":
-			MainMenuUI.mainMenu();
-			break;
-		case "E":
-			System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 			break;
 		default:
-			taskIDToSeeTaskDetaisls(choice);
+			loop = taskIDToSeeTaskDetaisls(choice);
 			break;
+		}
 		}
 	}
 
-	public void taskIDToSeeTaskDetaisls(String choice){
+	public void setProjectID(Integer projectID) {
+		this.projectID = projectID;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public boolean taskIDToSeeTaskDetaisls(String choice){
 		try {
-			boolean isPreviousUIFromTasks = true;
-			TaskDetailsUI userTasks = new TaskDetailsUI(choice, this.projectID, this.user, isPreviousUIFromTasks);
+			userTasks.setTaskID(choice);
+			userTasks.setUser(user);
+			userTasks.setProjectID(projectID);
 			userTasks.taskDataDisplay();
+			return false;
 		}
 		catch (NullPointerException npe) {
 			System.out.println("Please choose a valid option: ");
 			System.out.println("");
-			ProjectViewMenuUI myAtualUIView = new ProjectViewMenuUI(projectID, user);
-			myAtualUIView.projectDataDisplay();
+
+			return true;
 		}
 
 	}

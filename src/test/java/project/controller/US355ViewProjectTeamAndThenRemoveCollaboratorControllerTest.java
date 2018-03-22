@@ -1,9 +1,14 @@
 package project.controller;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import project.model.Company;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.services.ProjectService;
+import project.services.UserService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
@@ -14,9 +19,16 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan(basePackages = {"project.services", "project.controller", "project.model"})
 public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
-	Company spaceX;
+	@Autowired
+	UserService userContainer;
+
+	@Autowired
+	ProjectService projectContainer;
 
 	User managerTester, teamPermanentMember;
 
@@ -24,56 +36,48 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
 	ProjectCollaborator teamPermanentCollaborator;
 
+	@Autowired
 	US355ViewProjectTeamAndThenRemoveCollaboratorController viewProjectTeamAndThenRemoveCollaborator;
 
 	@Before
 	public void setUp() {
-		spaceX = Company.getTheInstance();
+
+		
 		// creates test users for a manager and collaborator.
 		// declares the collaborator's relevant data as Strings to facilitate assertions
 
-		managerTester = Company.getTheInstance().getUsersContainer().createUser("menager", "manager@mail.mail",
+		managerTester = userContainer.createUser("menager", "manager@mail.mail",
 				"11111", "function", "123456789", "rua", "0000", "porto", "porto", "PORTO");
 
-		teamPermanentMember = Company.getTheInstance().getUsersContainer().createUser("Mr permanent",
+		teamPermanentMember = userContainer.createUser("Mr permanent",
 				"permie@mail.mail", "33333", "placeholding", "98644", "rua", "0000", "porto", "porto", "PORTO");
 
-		spaceX.getUsersContainer().addUserToUserRepository(managerTester);
-		spaceX.getUsersContainer().addUserToUserRepository(teamPermanentMember);
 
 		// creates a new test project, and adds the test Collaborator to the team
-		testProject = Company.getTheInstance().getProjectsContainer().createProject("testing proj",
+		testProject = projectContainer.createProject("testing proj",
 				"shoot rocket... again", managerTester);
 
-		teamPermanentCollaborator = new ProjectCollaborator(teamPermanentMember, 2000);
+		teamPermanentCollaborator = projectContainer.createProjectCollaborator(teamPermanentMember, testProject, 2000);
 
-		testProject.addProjectCollaboratorToProjectTeam(teamPermanentCollaborator);
-		spaceX.getProjectsContainer().addProjectToProjectContainer(testProject);
+		projectContainer.updateProject(testProject);
 
-		viewProjectTeamAndThenRemoveCollaborator = new US355ViewProjectTeamAndThenRemoveCollaboratorController(
-				this.testProject);
+		viewProjectTeamAndThenRemoveCollaborator.setProj(testProject);
 	}
 
-	@After
-	public void breakDown() {
-		Company.clear();
-		spaceX = null;
 
-		managerTester = null;
-
-		teamPermanentMember = null;
-
-		testProject = null;
-
-	}
 
 	@Test
 	public final void testRemoveCollaboratorFromProjectTeam() {
-		assertEquals(1, testProject.getActiveProjectTeam().size());
+		//given a project with one team member
+		assertEquals(1, projectContainer.getActiveProjectTeam(testProject).size());
 
+		//when the team member is removed via the controller
 		assertTrue(viewProjectTeamAndThenRemoveCollaborator.removeCollaboratorFromProjectTeam(teamPermanentMember));
 
-		assertEquals(0, testProject.getActiveProjectTeam().size());
+		// then the active team must be empty
+		assertEquals(0, projectContainer.getActiveProjectTeam(testProject).size());
+		//and the list of all collaborators (active/inactive) must contain 1
+        assertEquals(1, projectContainer.getProjectTeam(testProject).size());
 	}
 
 	@Test

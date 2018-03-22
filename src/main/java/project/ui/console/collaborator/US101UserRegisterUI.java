@@ -1,7 +1,8 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US101RegisterUserController;
-import project.controller.UpdateDbToContainersController;
 
 import java.util.Scanner;
 
@@ -9,14 +10,15 @@ import java.util.Scanner;
  * UI for register a user (US102)
  *
  */
+
+@Component
 public class US101UserRegisterUI {
+	@Autowired
+	private US101RegisterUserController registerUsercontroller1;
 
 	public void userRegister() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
-		US101RegisterUserController registerUsercontroller1 = new US101RegisterUserController();
 
 		System.out.println("USER REGISTRATION");
 		System.out.println();

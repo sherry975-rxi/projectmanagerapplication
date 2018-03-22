@@ -1,9 +1,18 @@
 package project.controller;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 import project.model.*;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.OnGoing;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +20,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US216AverageTimeSpentOnTaskLastMonthTests {
 
 	/**
@@ -31,16 +43,19 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 	 * @return Returns the average time spent by finished task in the last month.
 	 * 
 	 */
+	@Autowired
+	TaskService taskService;
+	@Autowired
+	ProjectService projectService;
+	@Autowired
+	UserService userService;
+	@Autowired
+	US216AverageTimeSpentOnTaskLastMonthController controller;
 
-	Company myCompany;
-	UserContainer userContainer;
 	User user1;
 	User user2;
 	ProjectCollaborator projectCollaborator1;
-	TaskCollaborator taskWorker1;
-	ProjectContainer projectContainer;
 	Project myProject;
-	TaskContainer taskContainer;
 	Task task1;
 	Task task2;
 	Task task3;
@@ -49,15 +64,13 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 	@Before
 	public void setUp() {
 
-		myCompany = Company.getTheInstance();
-
-		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "Programador",
-				"910000000", "Rua Azul", "5679-987", "braga", "braga", "portugal");
-		user2 = myCompany.getUsersContainer().createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto",
-				"920000000", "rua verde", "6789", "porto", "porto", "portugal");
+		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "Programador", "910000000", "Rua Azul",
+				"5679-987", "braga", "braga", "portugal");
+		user2 = userService.createUser("Rita", "rita@gmail.com", "002", "Gestora de Projeto", "920000000", "rua verde",
+				"6789", "porto", "porto", "portugal");
 
 		// create myProject
-		myProject = myCompany.getProjectsContainer().createProject("Projecto I", "Projecto de Gestão", user1);
+		myProject = projectService.createProject("Projecto I", "Projecto de Gestão", user1);
 
 		// Generate a Start Calendar
 		Calendar startDate = Calendar.getInstance();
@@ -70,72 +83,59 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		otherFinishDate.add(Calendar.MONTH, -1);
 
 		// Four new tasks were created and added to project1
-		task1 = myProject.getTaskRepository().createTask("Task 1", 1, startDate, finishDate, 10);
-		task2 = myProject.getTaskRepository().createTask("Task 2", 2, startDate, finishDate, 10);
-		task3 = myProject.getTaskRepository().createTask("Task 3", 3, startDate, finishDate, 10);
-		task4 = myProject.getTaskRepository().createTask("Task 4", 4, startDate, finishDate, 10);
-
-		// Users 1 and 2 added to the users repository.
-		myCompany.getUsersContainer().addUserToUserRepository(user1);
-		myCompany.getUsersContainer().addUserToUserRepository(user2);
+		task1 = taskService.createTask("Task 1", myProject);
+		task2 = taskService.createTask("Task 2", myProject);
+		task3 = taskService.createTask("Task 3", myProject);
+		task4 = taskService.createTask("Task 4", myProject);
 
 		// Project 1 added to the project repository.
-		myCompany.getProjectsContainer().addProjectToProjectContainer(myProject);
+		projectService.addProjectToProjectContainer(myProject);
 
 		// create project collaborators
 		projectCollaborator1 = myProject.createProjectCollaborator(user1, 10);
 
 		// user2 added user 1 to the ProjectTeam
-		myProject.addProjectCollaboratorToProjectTeam(projectCollaborator1);
-
-		// Add Tasks to project 1
-		myProject.getTaskRepository().addTaskToProject(task1);
-		myProject.getTaskRepository().addTaskToProject(task2);
-		myProject.getTaskRepository().addTaskToProject(task3);
-		myProject.getTaskRepository().addTaskToProject(task4);
-
-		// create task workers
-		taskWorker1 = task1.createTaskCollaborator(projectCollaborator1);
+		projectService.addProjectCollaborator(projectCollaborator1);
 
 		// defines finish date to task, and mark it as Finished
 		task1.setEstimatedTaskStartDate(startDate);
 		task1.setTaskDeadline(finishDate);
-		task1.getTaskState().changeToPlanned();
 		task1.addProjectCollaboratorToTask(projectCollaborator1);
-		task1.getTaskState().changeToAssigned();
-		task1.getTaskState().changeToReady();
 		Calendar startDateTask1 = startDate;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
 		task1.setStartDate(startDateTask1);
-		task1.getTaskState().changeToOnGoing();
 		task1.setFinishDate(finishDate);
-		task1.getTaskState().changeToFinished();
+		taskService.saveTask(task1);
 
 		task2.setEstimatedTaskStartDate(startDate);
 		task2.setTaskDeadline(finishDate);
-		task2.getTaskState().changeToPlanned();
 		task2.addProjectCollaboratorToTask(projectCollaborator1);
-		task2.getTaskState().changeToAssigned();
-		task2.getTaskState().changeToReady();
 		Calendar startDateTask2 = startDate;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
 		task2.setStartDate(startDateTask1);
-		task2.getTaskState().changeToOnGoing();
 		task2.setFinishDate(otherFinishDate);
-		task2.getTaskState().changeToFinished();
+		task2.setCurrentState(StateEnum.ONGOING);
+		task2.setTaskState(new OnGoing());
+		task2.createReport(task2.getTaskCollaboratorByEmail("daniel@gmail.com"), Calendar.getInstance(), 0);
+		task2.updateReportedTime(5, task2.getTaskCollaboratorByEmail("daniel@gmail.com"), 0);
+		task2.setCurrentState(StateEnum.FINISHED);
+		task2.setTaskState(new Finished());
+		taskService.saveTask(task2);
 
 		task3.setEstimatedTaskStartDate(startDate);
 		task3.setTaskDeadline(finishDate);
-		task3.getTaskState().changeToPlanned();
 		task3.addProjectCollaboratorToTask(projectCollaborator1);
-		task3.getTaskState().changeToAssigned();
-		task3.getTaskState().changeToReady();
 		Calendar startDateTask3 = startDate;
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
 		task3.setStartDate(startDateTask1);
-		task3.getTaskState().changeToOnGoing();
 		task3.setFinishDate(otherFinishDate);
-		task3.getTaskState().changeToFinished();
+		task3.setCurrentState(StateEnum.ONGOING);
+		task3.setTaskState(new OnGoing());
+		task3.createReport(task2.getTaskCollaboratorByEmail("daniel@gmail.com"), Calendar.getInstance(), 0);
+		task3.updateReportedTime(10, task2.getTaskCollaboratorByEmail("daniel@gmail.com"), 0);
+		task3.setCurrentState(StateEnum.FINISHED);
+		task3.setTaskState(new Finished());
+		taskService.saveTask(task3);
 
 		// List to compare to the getLastMonthFinishedUserTaskList.
 		List<Task> expResult = new ArrayList<Task>();
@@ -145,37 +145,8 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 
 	}
 
-	@After
-	public void tearDown() {
-		Company.clear();
-		userContainer = null;
-		user1 = null;
-		user2 = null;
-		projectCollaborator1 = null;
-		taskWorker1 = null;
-		projectContainer = null;
-		myProject = null;
-		taskContainer = null;
-		task1 = null;
-		task2 = null;
-		task3 = null;
-		task4 = null;
-	}
-
 	@Test
 	public void getAverageTimeLastMonthFinishedTasksUser() {
-
-		US216AverageTimeSpentOnTaskLastMonthController controller = new US216AverageTimeSpentOnTaskLastMonthController();
-		task2.addTaskCollaboratorToTask(taskWorker1);
-		task3.addTaskCollaboratorToTask(taskWorker1);
-
-		Report report2 = new Report(taskWorker1, Calendar.getInstance());
-		task2.getReports().add(report2);
-		task2.updateReportedTime(5, taskWorker1, 0);
-
-		Report report3 = new Report(taskWorker1, Calendar.getInstance());
-		task3.getReports().add(report3);
-		task3.updateReportedTime(10, taskWorker1, 0);
 
 		double expectAverageTime = 7.5;
 

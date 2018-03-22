@@ -1,5 +1,8 @@
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
@@ -10,13 +13,29 @@ import java.util.List;
  * @author Group 3
  *
  */
+@Controller
 public class US377CollectionOfCancelledTasksFromAProjectController {
+
 	private Project project;
+
+	@Autowired
+	private TaskService taskService;
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	/**
+	 * Empty Constructor
+	 */
+	public US377CollectionOfCancelledTasksFromAProjectController() {
+	};
 
 	/**
 	 * Constructor
 	 * 
-	 * @param project Project ID of the project with which this controller will work
+	 * @param project
+	 *            Project ID of the project with which this controller will work
 	 */
 	public US377CollectionOfCancelledTasksFromAProjectController(Project project) {
 		this.project = project;
@@ -29,7 +48,7 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	 */
 	public List<Task> getCancelledTasksFromAProject() {
 
-		return project.getTaskRepository().getCancelledTasksFromProject();
+		return taskService.getProjectCancelledTasks(this.project);
 	}
 
 	/**
@@ -43,7 +62,7 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	 */
 	public List<String> getCancelledTaskListId(Project proj) {
 
-		List<Task> taskListCancelled = proj.getTaskRepository().getCancelledTasksFromProject();
+		List<Task> taskListCancelled = taskService.getProjectCancelledTasks(proj);
 		List<String> taskCancelledListToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListCancelled.size(); i++) {

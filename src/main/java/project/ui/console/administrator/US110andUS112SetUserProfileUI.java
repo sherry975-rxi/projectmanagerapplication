@@ -1,21 +1,24 @@
 package project.ui.console.administrator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US110andUS112SetUserProfileController;
 import project.controller.US115andUS116SetUserStateController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class US110andUS112SetUserProfileUI {
 
+	@Autowired
+	private US110andUS112SetUserProfileController controllerA;
+	@Autowired
+	private US115andUS116SetUserStateController controllerB;
+
 	public void changeUserProfile(User user) {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 		Scanner input = new Scanner(System.in);
 		String option;
-		US110andUS112SetUserProfileController controllerA = new US110andUS112SetUserProfileController();
-		US115andUS116SetUserStateController controllerB = new US115andUS116SetUserStateController(user);
 		System.out.println(user.getIdNumber() + " - " + controllerB.userStateAsString() + ": " + user.getName() + " - "
 				+ controllerA.userProfileAsString(user));
 		switch (user.getUserProfile()) {

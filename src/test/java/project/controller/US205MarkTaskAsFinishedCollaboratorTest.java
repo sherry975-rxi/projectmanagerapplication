@@ -1,13 +1,17 @@
 package project.controller;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 import project.model.*;
-import project.model.taskstateinterface.Assigned;
 import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.Planned;
-import project.model.taskstateinterface.Ready;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,6 +19,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US205MarkTaskAsFinishedCollaboratorTest {
 
 	/**
@@ -25,65 +32,43 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 	 *
 	 */
 
+	@Autowired
+	UserService userContainer;
+	@Autowired
+	ProjectService projectContainer;
+	@Autowired
+	TaskService taskService;
+
 	// TasksFiltersController tasksFiltersController;
-	Company company1;
 	User user1, user2, projectManager, projectManager2;
 	Project project1, project2, project3;
-	ProjectCollaborator projCollab1, projCollab2;
+	ProjectCollaborator projCollab1, projCollab2, projCollab12, projCollab22, projCollab13, projCollab23;
+
 	Task task1, task2, task3, task4, task5, task6;
-	TaskCollaborator taskCollab1, taskCollab2;
-	Planned PlannedTestTask;
-	Planned PlannedTestTask2;
-	Planned PlannedTestTask3;
-	Planned PlannedTestTask4;
-	Planned PlannedTestTask5;
-	Planned PlannedTestTask6;
-	Assigned AssignedTestTask;
-	Assigned AssignedTestTask2;
-	Assigned AssignedTestTask3;
-	Assigned AssignedTestTask4;
-	Assigned AssignedTestTask5;
-	Assigned AssignedTestTask6;
-	Ready ReadyTestTask;
-	Ready ReadyTestTask2;
-	Ready ReadyTestTask3;
-	Ready ReadyTestTask4;
-	Ready ReadyTestTask5;
-	Ready ReadyTestTask6;
-	OnGoing onGoingTestTask;
-	OnGoing onGoingTestTask2;
-	OnGoing onGoingTestTask3;
-	OnGoing onGoingTestTask4;
-	OnGoing onGoingTestTask5;
-	OnGoing onGoingTestTask6;
 	Calendar startDateTest;
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 	Calendar taskExpiredDeadlineDateTest;
 
+	Integer project1ID;
+	String task1ID;
+
+	@Autowired
+	US205MarkTaskAsFinishedCollaboratorController uS205MarkTaskAsFinishedCollaborator;
+
 	@Before
 	public void setUp() {
 
-		// create company
-		company1 = Company.getTheInstance();
 
 		// create users
-		user1 = company1.getUsersContainer().createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
-				"930000000", "Rua da Caparica, 19", "7894-654", "Porto", "Porto", "Portugal");
-		user2 = company1.getUsersContainer().createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager",
-				"930025000", "Rua Doutor Armando", "4455-654", "Rio Tinto", "Gondomar", "Portugal");
-		projectManager = company1.getUsersContainer().createUser("Mary MacJohn", "mmacjohn@gmail.com", "003",
-				"Product Manager", "930025000", "Rua Terceira, 44", "4455-122", "Leça da Palmeira", "Matosinhos",
-				"Portugal");
-		projectManager2 = company1.getUsersContainer().createUser("John MacMary", "jmacmary2@gmail.com", "003",
-				"Product Manager2", "930025356", "Rua Segunda, 45", "4455-122", "Leça da Palmeira", "Matosinhos",
-				"Portugal");
-
-		// add users to company
-		company1.getUsersContainer().addUserToUserRepository(user1);
-		company1.getUsersContainer().addUserToUserRepository(user2);
-		company1.getUsersContainer().addUserToUserRepository(projectManager);
-		company1.getUsersContainer().addUserToUserRepository(projectManager2);
+		user1 = userContainer.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer", "930000000",
+				"Rua da Caparica, 19", "7894-654", "Porto", "Porto", "Portugal");
+		user2 = userContainer.createUser("John Smith", "johnsmith@gmail.com", "001", "General Manager", "930025000",
+				"Rua Doutor Armando", "4455-654", "Rio Tinto", "Gondomar", "Portugal");
+		projectManager = userContainer.createUser("Mary MacJohn", "mmacjohn@gmail.com", "003", "Product Manager",
+				"930025000", "Rua Terceira, 44", "4455-122", "Leça da Palmeira", "Matosinhos", "Portugal");
+		projectManager2 = userContainer.createUser("John MacMary", "jmacmary2@gmail.com", "003", "Product Manager2",
+				"930025356", "Rua Segunda, 45", "4455-122", "Leça da Palmeira", "Matosinhos", "Portugal");
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
@@ -91,228 +76,154 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		projectManager.setUserProfile(Profile.COLLABORATOR);
 		projectManager2.setUserProfile(Profile.COLLABORATOR);
 
+		// update Database with users
+		userContainer.addUserToUserRepositoryX(user1);
+		userContainer.addUserToUserRepositoryX(user2);
+		userContainer.addUserToUserRepositoryX(projectManager);
+		userContainer.addUserToUserRepositoryX(projectManager2);
+
 		// create project and establishes collaborator projectManager as project manager
 		// of project 1
-		project1 = company1.getProjectsContainer().createProject("Project Management software",
-				"This software main goals are ....", projectManager);
-		project2 = company1.getProjectsContainer().createProject("Project Management software",
-				"This software main goals are ....", projectManager2);
-		project3 = company1.getProjectsContainer().createProject("Project Management software",
-				"This software main goals are ....", projectManager);
+		project1 = projectContainer.createProject("Project Management software", "This software main goals are ....",
+				projectManager);
+		project2 = projectContainer.createProject("Project Management software", "This software main goals are ....",
+				projectManager2);
+		project3 = projectContainer.createProject("Project Management software", "This software main goals are ....",
+				projectManager);
 
-		// add project to company
-		company1.getProjectsContainer().addProjectToProjectContainer(project1);
-		company1.getProjectsContainer().addProjectToProjectContainer(project2);
-		company1.getProjectsContainer().addProjectToProjectContainer(project3);
+		// add users 1 and 2 to all projects
+		projCollab1 = projectContainer.createProjectCollaborator(user1, project1, 2);
+		projCollab2 = projectContainer.createProjectCollaborator(user2, project1, 2);
+		projCollab12 = projectContainer.createProjectCollaborator(user1, project2, 2);
+		projCollab22 = projectContainer.createProjectCollaborator(user2, project2, 2);
+		projCollab13 = projectContainer.createProjectCollaborator(user1, project3, 2);
+		projCollab23 = projectContainer.createProjectCollaborator(user2, project3, 2);
 
-		// create project collaborators
-		projCollab1 = new ProjectCollaborator(user1, 2);
-		projCollab2 = new ProjectCollaborator(user2, 2);
+		// create tasks for all projects
+		task1 = taskService.createTask("Create class User", project1);
+		task2 = taskService.createTask("Create class User", project1);
 
-		// add collaborators to Project
-		project1.addProjectCollaboratorToProjectTeam(projCollab1);
-		project1.addProjectCollaboratorToProjectTeam(projCollab2);
-		project2.addProjectCollaboratorToProjectTeam(projCollab1);
-		project2.addProjectCollaboratorToProjectTeam(projCollab2);
-		project3.addProjectCollaboratorToProjectTeam(projCollab1);
-		project3.addProjectCollaboratorToProjectTeam(projCollab2);
+		task3 = taskService.createTask("create test for method set name in class user", project2);
+		task4 = taskService.createTask("Create class User", project2);
 
-		// create tasks
-		task1 = project1.getTaskRepository().createTask("Create class User");
-		task2 = project1.getTaskRepository().createTask("Create class User");
-		task3 = project2.getTaskRepository().createTask("create test for method set name in class user");
-		task4 = project2.getTaskRepository().createTask("Create class User");
-		task5 = project3.getTaskRepository().createTask("Create class User");
-		task6 = project3.getTaskRepository().createTask("create test for method set name in class user");
+		task5 = taskService.createTask("Create class User", project3);
+		task6 = taskService.createTask("create test for method set name in class user", project3);
 
-		// add tasks to task repository
-		project1.getTaskRepository().addTaskToProject(task1);
-		project1.getTaskRepository().addTaskToProject(task2);
-		project2.getTaskRepository().addTaskToProject(task3);
-		project2.getTaskRepository().addTaskToProject(task4);
-		project3.getTaskRepository().addTaskToProject(task5);
-		project3.getTaskRepository().addTaskToProject(task6);
+		// update all projects
+		projectContainer.updateProject(project1);
+		projectContainer.updateProject(project2);
+		projectContainer.updateProject(project3);
 
 		// create a estimated Task Start Date
 		startDateTest = Calendar.getInstance();
 
 		// create a estimated Task Start Date
 		estimatedTaskStartDateTest = Calendar.getInstance();
-		estimatedTaskStartDateTest.set(Calendar.YEAR, 2017);
+		estimatedTaskStartDateTest.add(Calendar.YEAR, -1);
 		estimatedTaskStartDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
 		estimatedTaskStartDateTest.set(Calendar.DAY_OF_MONTH, 25);
 		estimatedTaskStartDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create a estimated Task Dead line Date
 		taskDeadlineDateTest = Calendar.getInstance();
-		taskDeadlineDateTest.set(Calendar.YEAR, 2018);
+		taskDeadlineDateTest.add(Calendar.YEAR, 1);
 		taskDeadlineDateTest.set(Calendar.MONTH, Calendar.JANUARY);
 		taskDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
 		// create a expired estimated Task Dead line Date
 		taskExpiredDeadlineDateTest = Calendar.getInstance();
-		taskExpiredDeadlineDateTest.set(Calendar.YEAR, 2017);
+		estimatedTaskStartDateTest.add(Calendar.YEAR, -1);
 		taskExpiredDeadlineDateTest.set(Calendar.MONTH, Calendar.SEPTEMBER);
 		taskExpiredDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// Creates State Objects planned for task.
-		PlannedTestTask = new Planned(task1);
-		PlannedTestTask2 = new Planned(task2);
-		PlannedTestTask3 = new Planned(task3);
-		PlannedTestTask4 = new Planned(task4);
-		PlannedTestTask5 = new Planned(task5);
-		PlannedTestTask6 = new Planned(task6);
+		int taskEffortAndBudget = 10;
 
 		// set estimated task start date and task dead line to tasks
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task1.setStartDate(estimatedTaskStartDateTest);
+		task1.setTaskBudget(taskEffortAndBudget);
+		task1.setEstimatedTaskEffort(taskEffortAndBudget);
 		task1.setTaskDeadline(taskDeadlineDateTest);
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task2.setStartDate(estimatedTaskStartDateTest);
+		task2.setTaskBudget(taskEffortAndBudget);
+		task2.setEstimatedTaskEffort(taskEffortAndBudget);
 		task2.setTaskDeadline(taskDeadlineDateTest);
 
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task3.setStartDate(estimatedTaskStartDateTest);
+		task3.setTaskBudget(taskEffortAndBudget);
+		task3.setEstimatedTaskEffort(taskEffortAndBudget);
 		task3.setTaskDeadline(taskDeadlineDateTest);
 
 		task4.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task4.setStartDate(estimatedTaskStartDateTest);
+		task4.setTaskBudget(taskEffortAndBudget);
+		task4.setEstimatedTaskEffort(taskEffortAndBudget);
 		task4.setTaskDeadline(taskDeadlineDateTest);
 
 		task5.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task5.setStartDate(estimatedTaskStartDateTest);
+		task5.setTaskBudget(taskEffortAndBudget);
+		task5.setEstimatedTaskEffort(taskEffortAndBudget);
 		task5.setTaskDeadline(taskDeadlineDateTest);
 
 		task6.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task6.setStartDate(estimatedTaskStartDateTest);
+		task6.setTaskBudget(taskEffortAndBudget);
+		task6.setEstimatedTaskEffort(taskEffortAndBudget);
 		task6.setTaskDeadline(taskDeadlineDateTest);
 
-		// Sets the tasks to "Planned"
-		task1.setTaskState(PlannedTestTask);
-		task2.setTaskState(PlannedTestTask2);
-		task3.setTaskState(PlannedTestTask3);
-		task4.setTaskState(PlannedTestTask4);
-		task5.setTaskState(PlannedTestTask5);
-		task6.setTaskState(PlannedTestTask6);
+		// set active user for all tasks and give them a start date
+		task1.addProjectCollaboratorToTask(projCollab1);
+		task2.addProjectCollaboratorToTask(projCollab2);
 
-		// create task workers
-		taskCollab1 = new TaskCollaborator(projCollab1);
-		taskCollab2 = new TaskCollaborator(projCollab2);
+		task3.addProjectCollaboratorToTask(projCollab12);
+		task4.addProjectCollaboratorToTask(projCollab12);
 
-		// set active user
-		task1.addTaskCollaboratorToTask(taskCollab1);
-		task2.addTaskCollaboratorToTask(taskCollab2);
-		task3.addTaskCollaboratorToTask(taskCollab1);
-		task4.addTaskCollaboratorToTask(taskCollab1);
-		task5.addTaskCollaboratorToTask(taskCollab2);
-		task6.addTaskCollaboratorToTask(taskCollab1);
+		task5.addProjectCollaboratorToTask(projCollab23);
+		task6.addProjectCollaboratorToTask(projCollab13);
 
-		// Creates State Objects assigned for task.
-		AssignedTestTask = new Assigned(task1);
-		AssignedTestTask2 = new Assigned(task2);
-		AssignedTestTask3 = new Assigned(task3);
-		AssignedTestTask4 = new Assigned(task4);
-		AssignedTestTask5 = new Assigned(task5);
-		AssignedTestTask6 = new Assigned(task6);
+		task1.setStartDate(estimatedTaskStartDateTest);
+		task2.setStartDate(estimatedTaskStartDateTest);
+		task3.setStartDate(estimatedTaskStartDateTest);
+		task4.setStartDate(estimatedTaskStartDateTest);
+		task5.setStartDate(estimatedTaskStartDateTest);
+		task6.setStartDate(estimatedTaskStartDateTest);
 
-		// Sets the tasks to "Assigned"
-		task1.setTaskState(AssignedTestTask);
-		task2.setTaskState(AssignedTestTask2);
-		task3.setTaskState(AssignedTestTask3);
-		task4.setTaskState(AssignedTestTask4);
-		task5.setTaskState(AssignedTestTask5);
-		task6.setTaskState(AssignedTestTask6);
+		// force the task states, ensuring they're all ONGOING
+		task1.setTaskState(new OnGoing());
+		task2.setTaskState(new OnGoing());
+		task3.setTaskState(new OnGoing());
+		task4.setTaskState(new OnGoing());
+		task5.setTaskState(new OnGoing());
+		task6.setTaskState(new OnGoing());
 
-		// Creates State Objects Ready for task.
-		ReadyTestTask = new Ready(task1);
-		ReadyTestTask2 = new Ready(task2);
-		ReadyTestTask3 = new Ready(task3);
-		ReadyTestTask4 = new Ready(task4);
-		ReadyTestTask5 = new Ready(task5);
-		ReadyTestTask6 = new Ready(task6);
+		task1.setCurrentState(StateEnum.ONGOING);
+		task2.setCurrentState(StateEnum.ONGOING);
+		task3.setCurrentState(StateEnum.ONGOING);
+		task4.setCurrentState(StateEnum.ONGOING);
+		task5.setCurrentState(StateEnum.ONGOING);
+		task6.setCurrentState(StateEnum.ONGOING);
 
-		// Sets the tasks to "Ready"
-		task1.setTaskState(ReadyTestTask);
-		task2.setTaskState(ReadyTestTask2);
-		task3.setTaskState(ReadyTestTask3);
-		task4.setTaskState(ReadyTestTask4);
-		task5.setTaskState(ReadyTestTask5);
-		task6.setTaskState(ReadyTestTask6);
+		// update all tasks and project collaborators to database
+		taskService.saveTask(task1);
+		taskService.saveTask(task2);
+		taskService.saveTask(task3);
+		taskService.saveTask(task4);
+		taskService.saveTask(task5);
+		taskService.saveTask(task6);
 
-		// Creates State Objects OnGoing for task.
-		onGoingTestTask = new OnGoing(task1);
-		onGoingTestTask2 = new OnGoing(task2);
-		onGoingTestTask3 = new OnGoing(task3);
-		onGoingTestTask4 = new OnGoing(task4);
-		onGoingTestTask5 = new OnGoing(task5);
-		onGoingTestTask6 = new OnGoing(task6);
+		projectContainer.updateProjectCollaborator(projCollab1);
+		projectContainer.updateProjectCollaborator(projCollab2);
+		projectContainer.updateProjectCollaborator(projCollab12);
+		projectContainer.updateProjectCollaborator(projCollab13);
+		projectContainer.updateProjectCollaborator(projCollab23);
 
-		// Sets the tasks to "onGoing"
-		task1.setTaskState(onGoingTestTask);
-		task2.setTaskState(onGoingTestTask2);
-		task3.setTaskState(onGoingTestTask3);
-		task4.setTaskState(onGoingTestTask4);
-		task5.setTaskState(onGoingTestTask5);
-		task6.setTaskState(onGoingTestTask6);
-	}
+		project1ID = project1.getId();
+		task1ID = task1.getTaskID();
 
-	@After
-	public void tearDown() {
-		Company.clear();
-		user1 = null;
-		user2 = null;
-		projectManager = null;
-		projectManager2 = null;
-		project1 = null;
-		project2 = null;
-		project3 = null;
-		projCollab1 = null;
-		projCollab2 = null;
-		task1 = null;
-		task2 = null;
-		task3 = null;
-		task4 = null;
-		task5 = null;
-		task6 = null;
-		taskCollab1 = null;
-		taskCollab2 = null;
-		PlannedTestTask = null;
-		PlannedTestTask2 = null;
-		PlannedTestTask3 = null;
-		PlannedTestTask4 = null;
-		PlannedTestTask5 = null;
-		PlannedTestTask6 = null;
-		AssignedTestTask = null;
-		AssignedTestTask2 = null;
-		AssignedTestTask3 = null;
-		AssignedTestTask4 = null;
-		AssignedTestTask5 = null;
-		AssignedTestTask6 = null;
-		ReadyTestTask = null;
-		ReadyTestTask2 = null;
-		ReadyTestTask3 = null;
-		ReadyTestTask4 = null;
-		ReadyTestTask5 = null;
-		ReadyTestTask6 = null;
-		onGoingTestTask = null;
-		onGoingTestTask2 = null;
-		onGoingTestTask3 = null;
-		onGoingTestTask4 = null;
-		onGoingTestTask5 = null;
-		onGoingTestTask6 = null;
-		startDateTest = null;
-		estimatedTaskStartDateTest = null;
-		taskDeadlineDateTest = null;
-		taskExpiredDeadlineDateTest = null;
 	}
 
 	@Test
 	public void testGetProjectsFromProjectCollaborator1() {
-		// create controller
-		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
 
 		// create list of tasks to compare to taskContainer of project
 		List<Project> allProjectsInTest = new ArrayList<>();
@@ -329,14 +240,13 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 
 	@Test
 	public void testGetTasksFromProject1Collaborator1() {
-		// create controller
-		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
+
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
 
 		// create list of tasks to compare to taskContainer of project
 		List<Task> allTasksInProject1Test = new ArrayList<>();
 		List<Task> allTasksInProject1 = uS205MarkTaskAsFinishedCollaborator
-				.getUnfinishedTasksOfProjectFromCollaborator(1);
+				.getUnfinishedTasksOfProjectFromCollaborator(project1ID);
 
 		// add task to the list allTasksInTest
 		allTasksInProject1Test.add(task1);
@@ -349,23 +259,21 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 
 	@Test
 	public void testSelectTask1FromProject1Manager1Finished() {
-		// create controller
-		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
-		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
-		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(1);
 
-		Task taskToBeMarked = uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished("1.1");
+		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
+		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(project1ID);
+
+		Task taskToBeMarked = uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished(task1ID);
 
 		assertEquals(task1, taskToBeMarked);
 	}
 
 	@Test
 	public void testSetTask1FromProject1Manager1Finished() {
-		// create controller
-		US205MarkTaskAsFinishedCollaborator uS205MarkTaskAsFinishedCollaborator = new US205MarkTaskAsFinishedCollaborator();
+
 		uS205MarkTaskAsFinishedCollaborator.getProjectsThatIAmCollaborator(user1);
-		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(1);
-		uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished("1.1");
+		uS205MarkTaskAsFinishedCollaborator.getUnfinishedTasksOfProjectFromCollaborator(project1ID);
+		uS205MarkTaskAsFinishedCollaborator.getTaskToBeMarkedFinished(task1ID);
 		uS205MarkTaskAsFinishedCollaborator.markTaskAsFinished();
 
 		assertEquals("Finished", task1.viewTaskStateName());

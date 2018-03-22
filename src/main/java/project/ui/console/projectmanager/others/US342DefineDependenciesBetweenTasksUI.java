@@ -1,7 +1,8 @@
 package project.ui.console.projectmanager.others;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US342CreateTaskDependencyController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.Task;
 
@@ -12,24 +13,26 @@ import java.util.Scanner;
  * @author group3
  *
  */
+@Component
 public class US342DefineDependenciesBetweenTasksUI {
+
+	@Autowired
+	private US342CreateTaskDependencyController us342Controller;
 
 	private Project project;
 
-	/**
-	 * @param project
-	 */
-	public US342DefineDependenciesBetweenTasksUI(Project project) {
-		this.project = project;
+
+	public US342DefineDependenciesBetweenTasksUI() {
 	}
 
-	/**
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    /**
 	 * 
 	 */
 	public void chooseProject() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
-
 		boolean checkA = true;
 		boolean checkB = true;
 		boolean checkC = true;
@@ -46,7 +49,9 @@ public class US342DefineDependenciesBetweenTasksUI {
 		System.out.println("                  CREATE TASK DEPENDENCY");
 		System.out.println("______________________________________________");
 		System.out.println();
-		US342CreateTaskDependencyController us342Controller = new US342CreateTaskDependencyController(project);
+
+		us342Controller.setProject(project);
+
 		List<Task> projTaskList = us342Controller.getTasksFromAProject();
 
 		for (int i = 0; i < us342Controller.getTasksFromAProject().size(); i++) {

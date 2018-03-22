@@ -1,14 +1,25 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
 import project.controller.US206RemovalTaskRequestController;
-import project.controller.UpdateDbToContainersController;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class US206CreateRemovalTaskRequestUI {
+	@Autowired
+	private US206RemovalTaskRequestController controller;
+
+	@Autowired
+	private PrintTaskInfoController taskInfo;
+
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
 	User user;
 	String taskID;
 	Integer projID;
@@ -16,33 +27,23 @@ public class US206CreateRemovalTaskRequestUI {
 
 	/**
 	 * Constructor
-	 * 
-	 * @param user
-	 *            User to add task to user task list
-	 * 
-	 * @param taskID
-	 *            Task to add to user task list
+	 *
 	 */
-	public US206CreateRemovalTaskRequestUI(User user, String taskID) {
-
-		this.user = user;
-		this.taskID = taskID;
-		this.projID = null;
+	public US206CreateRemovalTaskRequestUI() {
 	}
 
 	public void cancelRemovalTaskRequestUI() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
 
-		US206RemovalTaskRequestController controller = new US206RemovalTaskRequestController(this.user);
+		controller.setUser(this.user);
 		controller.setProjectIDFromTaskID(taskID);
 		controller.setTaskID(taskID);
 		projID = controller.getProjectID();
 
-		PrintProjectInfoController printProjectInfoController = new PrintProjectInfoController(this.projID);
-		String projectName = printProjectInfoController.printProjectNameInfo();
-		PrintTaskInfoController printTaskInfoController = new PrintTaskInfoController(this.taskID, this.projID);
-		String taskName = printTaskInfoController.printTaskNameInfo();
+		projectInfo.setProjID(this.projID);
+		String projectName = projectInfo.printProjectNameInfo();
+		taskInfo.setTaskID(this.taskID);
+		taskInfo.setProjeID(this.projID);
+		String taskName = taskInfo.printTaskNameInfo();
 
 		System.out.println("PROJECT - " + projectName);
 		System.out.println("__________________________________________________");
@@ -65,19 +66,19 @@ public class US206CreateRemovalTaskRequestUI {
 		if ("Y".equalsIgnoreCase(yerOrNo)) {
 			if (controller.createRequest()) {
 				System.out.println("Your task removal is pending Project Manager approval");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user,
-						this.isPreviousUIFromTasks);
-				taskDetailsUI.taskDataDisplay();
 			} else {
 				System.out.println("[ERROR!: Please choose a valid Task]");
-				TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user,
-						this.isPreviousUIFromTasks);
-				taskDetailsUI.taskDataDisplay();
 			}
 		} else {
-			TaskDetailsUI taskDetailsUI = new TaskDetailsUI(this.taskID, this.projID, this.user,
-					this.isPreviousUIFromTasks);
-			taskDetailsUI.taskDataDisplay();
+			System.out.println("Your task removal was not created");
 		}
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setTaskID(String taskID) {
+		this.taskID = taskID;
 	}
 }

@@ -3,6 +3,9 @@
  */
 package project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
@@ -14,11 +17,47 @@ import java.util.List;
  * @author Group3
  *
  */
+
+@Controller
 public class US362RemoveTaskFromProjectCollaborator {
+
+	@Autowired
+	private TaskService taskService;
 
 	private ProjectCollaborator projectCollaborator;
 	private Project project;
 	private Task task;
+
+	/*
+	 * Default constructor
+	 */
+	public US362RemoveTaskFromProjectCollaborator() {
+
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
+
+	public void setProjectCollaborator(ProjectCollaborator projectCollaborator) {
+		this.projectCollaborator = projectCollaborator;
+	}
 
 	/**
 	 * Constructor
@@ -39,7 +78,7 @@ public class US362RemoveTaskFromProjectCollaborator {
 	public List<String> getProjectCollaboratorsFromTask() {
 
 		List<String> taskTeam = new ArrayList<>();
-		for (ProjectCollaborator other : this.project.getProjectCollaboratorsFromTask(task)) {
+		for (ProjectCollaborator other : taskService.getProjectCollaboratorsFromTask(this.project, this.task)) {
 
 			String userName = other.getUserFromProjectCollaborator().getName();
 			String userEmail = other.getUserFromProjectCollaborator().getEmail();
@@ -57,8 +96,12 @@ public class US362RemoveTaskFromProjectCollaborator {
 	 */
 
 	public boolean removeCollaboratorFromTask() {
-
-		return this.task.removeProjectCollaboratorFromTask(this.projectCollaborator);
+		boolean removeCollaboratorFromTask = false;
+		if (this.task.removeProjectCollaboratorFromTask(this.projectCollaborator)) {
+			taskService.saveTask(this.task);
+			removeCollaboratorFromTask = true;
+		}
+		return removeCollaboratorFromTask;
 	}
 
 	/**
@@ -68,7 +111,9 @@ public class US362RemoveTaskFromProjectCollaborator {
 	 *            Position of the project Collaborator in the task team list
 	 */
 	public void setProjectCollaborator(Integer projectCollaboratorIndex) {
-		this.projectCollaborator = project.getProjectCollaboratorsFromTask(task).get(projectCollaboratorIndex);
+		this.projectCollaborator = taskService.getProjectCollaboratorsFromTask(this.project, this.task)
+				.get(projectCollaboratorIndex);
+
 	}
 
 	/**

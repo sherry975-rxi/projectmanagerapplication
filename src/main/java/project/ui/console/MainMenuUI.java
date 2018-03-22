@@ -1,39 +1,50 @@
 package project.ui.console;
 
-import project.controller.UpdateDbToContainersController;
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import project.services.UserService;
 import project.model.Profile;
 import project.model.User;
 import project.ui.console.administrator.AdminMenuUI;
 import project.ui.console.collaborator.CollaboratorMainMenuUI;
 import project.ui.console.collaborator.US101UserRegisterUI;
-import project.ui.console.collaborator.US208LoginUI;
+import project.ui.console.collaborator.US180LoginUI;
 import project.ui.console.director.DirectorMenuUI;
 
 import java.util.Scanner;
 
+@Component
 public class MainMenuUI {
 
-	protected static User userAdmin;
-	protected static User userDirector;
-	protected static User userJSilva;
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private US101UserRegisterUI userRegister;
+	@Autowired
+	private US180LoginUI doLogin;
+	@Autowired
+	private AdminMenuUI adminMenu;
+	@Autowired
+	private DirectorMenuUI directorMenu;
+	@Autowired
+	private CollaboratorMainMenuUI collaboratorMenu;
+
+	private static User userAdmin;
+	private static User userDirector;
+	private static User userJSilva;
 
 
 
-	public static void mainMenu() {
-		//Updates de DataBase
-        UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
+	public void mainMenu() {
 
-
-		userJSilva = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(2);
-		userDirector = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(1);
-		userAdmin = Company.getTheInstance().getUsersContainer().getAllUsersFromUserContainer().get(0);
+		userJSilva = userService.getAllUsersFromUserContainer().get(2);
+		userDirector = userService.getAllUsersFromUserContainer().get(1);
+		userAdmin = userService.getAllUsersFromUserContainer().get(0);
 		
 		displayOptions();
 	}
 
-	public static void displayOptions() {
+	public void displayOptions() {
 
 		printImage();
 
@@ -59,28 +70,26 @@ public class MainMenuUI {
 			System.out.println();
 			switch (choice) {
 				case "1":
-					US101UserRegisterUI userRegister = new US101UserRegisterUI();
 					userRegister.userRegister();
 					break;
 				case "2":
-					US208LoginUI doLogin = new US208LoginUI();
 					doLogin.doLogin();
 					break;
 				case "3":
-					AdminMenuUI adminMenu = new AdminMenuUI(userAdmin);
+					adminMenu.setAdminLoggedIn(userAdmin);
 					adminMenu.adminMenu();
 					break;
 
 				case "4":
 					userDirector.setUserProfile(Profile.DIRECTOR);
-					DirectorMenuUI directorMenu = new DirectorMenuUI(userDirector);
+					directorMenu.setDirectorLoggedIn(userDirector);
 					directorMenu.directorMenu();
 					break;
 
 
 				case "5":
 					//userJSilva.setUserProfile(Profile.COLLABORATOR);
-					CollaboratorMainMenuUI collaboratorMenu = new CollaboratorMainMenuUI(userJSilva);
+					collaboratorMenu.setUser(userJSilva);
 					collaboratorMenu.displayOptions();
 
 					break;

@@ -1,13 +1,25 @@
 package project.ui.console.administrator;
 
-import project.controller.UpdateDbToContainersController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class AdminMenuUI {
 
+    @Autowired
+    private US130ListUsersUI listUsersUI;
+    @Autowired
+	private US135andUS136ListUsersUI searchUsersUI;
+    @Autowired
+	private US110andUS112SetUserProfileUI changeUserProfileUI;
+	@Autowired
+	private US115andUS116SetUserStateUI changeUserStateUI;
+
 	User adminLoggedIn;
+
 	User selectedUser;
 
 	String options = "[1] - View all users \n" + "[2] - Search users by profile or email \n"
@@ -16,17 +28,15 @@ public class AdminMenuUI {
 
 	String command;
 
-	public AdminMenuUI(User admin) {
-		this.adminLoggedIn = admin;
+	public AdminMenuUI() {
 	}
 
 	public void adminMenu() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
+
 		Scanner input = new Scanner(System.in);
 
 		boolean cycle = true;
 		while (cycle) {
-			infoUpdater.updateDBtoContainer();
 			System.out.println("");
 			System.out.println(
 					"--------------------------------------------------------------------------MENU ADMIN--------------------------------------------------------------------------");
@@ -49,11 +59,9 @@ public class AdminMenuUI {
 
 			switch (command) {
 			case "1":
-				US130ListUsersUI listUsersUI = new US130ListUsersUI();
 				selectedUser = listUsersUI.displayUsersList(selectedUser);
 				break;
 			case "2":
-				US135andUS136ListUsersUI searchUsersUI = new US135andUS136ListUsersUI();
 				selectedUser = searchUsersUI.displayUsersList(selectedUser);
 				break;
 
@@ -61,7 +69,6 @@ public class AdminMenuUI {
 				if (selectedUser == null)
 					System.out.println("No user selected!");
 				else {
-					US110andUS112SetUserProfileUI changeUserProfileUI = new US110andUS112SetUserProfileUI();
 					changeUserProfileUI.changeUserProfile(selectedUser);
 				}
 				break;
@@ -70,7 +77,6 @@ public class AdminMenuUI {
 				if (selectedUser == null)
 					System.out.println("No user selected!");
 				else {
-					US115andUS116SetUserStateUI changeUserStateUI = new US115andUS116SetUserStateUI();
 					changeUserStateUI.changeUserState(selectedUser);
 				}
 				break;
@@ -90,6 +96,11 @@ public class AdminMenuUI {
 
 		}
 
+	}
+
+
+	public void setAdminLoggedIn(User adminLoggedIn) {
+		this.adminLoggedIn = adminLoggedIn;
 	}
 
 }

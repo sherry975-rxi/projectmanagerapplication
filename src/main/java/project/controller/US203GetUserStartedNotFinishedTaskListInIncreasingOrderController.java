@@ -1,19 +1,22 @@
 package project.controller;
 
-import project.model.Company;
-import project.model.ProjectContainer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.services.TaskService;
 import project.model.Task;
 import project.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 
-	ProjectContainer myProjRepo;
+	@Autowired
+	private TaskService taskService;
 
 	public US203GetUserStartedNotFinishedTaskListInIncreasingOrderController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
+
 	}
 
 	/**
@@ -26,7 +29,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 	 */
 	public List<Task> getUserStartedNotFinishedTaskListInIncreasingOrder(User myUser) {
 
-		List<Task> myUnfinishedAllTasks = myProjRepo.getStartedNotFinishedUserTaskList(myUser);
+		List<Task> myUnfinishedAllTasks = taskService.getStartedNotFinishedUserTaskList(myUser);
 		List<Task> myUnfinishedTasksWDeadline = new ArrayList<>();
 		List<Task> myUnfinishedAllTasksWODeadline = new ArrayList<>();
 
@@ -37,7 +40,7 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 				myUnfinishedAllTasksWODeadline.add(other);
 			}
 		}
-		myUnfinishedAllTasks = myProjRepo.sortTaskListByDeadline(myUnfinishedTasksWDeadline);
+		myUnfinishedAllTasks = taskService.sortTaskListByDeadline(myUnfinishedTasksWDeadline);
 		myUnfinishedAllTasks.addAll(myUnfinishedAllTasksWODeadline);
 		return myUnfinishedAllTasks;
 	}

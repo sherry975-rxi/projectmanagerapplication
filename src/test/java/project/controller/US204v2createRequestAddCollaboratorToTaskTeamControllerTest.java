@@ -1,81 +1,103 @@
 package project.controller;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import project.model.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller", "project.repository"})
 public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
+	
 
-	Company myComp;
-	ProjectContainer projRepo;
-	UserContainer userRepo;
-	TaskContainer taskRepo;
+	@Autowired
+	ProjectService projectContainer;
+	@Autowired
+	UserService userContainer;
+	@Autowired
+	TaskService taskRepo;
 	Project proj;
 	Task taskA;
 	Task taskB;
 	Task taskC;
 	User user;
+	ProjectCollaborator projCollab;
+	@Autowired
 	US204v2createRequestAddCollaboratorToTaskTeamController controller;
 
 	@Before
 	public void setUp() {
-		// Initialize company
-		myComp = Company.getTheInstance();
 
-		// Initialize Project Repository
-		projRepo = myComp.getProjectsContainer();
 
-		// Initialize User Repository
-		userRepo = myComp.getUsersContainer();
-
-		// Add user to User Repository
-		userRepo.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
+		// Add user to User Container
+		user = userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
 				"Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA");
-		user = userRepo.getUserByEmail("ugandan@nackls.com");
+//		user = userContainer.getUserByEmail("ugandan@nackls.com");
 
 		// Add a project to the project repository
-		projRepo.addProjectToProjectContainer(
-				projRepo.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user));
-		proj = projRepo.getAllProjectsfromProjectsContainer().get(0);
+		proj = projectContainer.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user);
+//		proj = projectContainer.getAllProjectsfromProjectsContainer().get(0);
 
-		// Initialize Task Repository
-		taskRepo = proj.getTaskRepository();
+		projCollab = projectContainer.createProjectCollaborator(user, proj, 0);
 
-		// Create and add tasks to Task Repository
+		// Create and add tasks to Task repository
+//		taskA = taskRepo.createTask("Faind fek quin!", proj);
 		taskA = new Task(1, 1, "Faind fek quin!");
+		taskA.setProject(proj);
+		taskRepo.saveTask(taskA);
+		
 		taskB = new Task(2, 1, "Spit on non-beleevahs!");
+		taskB.setProject(proj);
+		taskRepo.saveTask(taskB);
+		
 		taskC = new Task(3, 1, "Follou da wae!");
-		taskRepo.addTaskToProject(taskA);
-		taskRepo.addTaskToProject(taskB);
-		taskRepo.addTaskToProject(taskC);
+		taskC.setProject(proj);
+		taskRepo.saveTask(taskC);
+		
+//		taskRepo.addTaskToProject(taskA);	
+//		taskRepo.addTaskToProject(taskB);
+//		taskRepo.addTaskToProject(taskC);
+		
 
-		// Create controller to be used
-		controller = new US204v2createRequestAddCollaboratorToTaskTeamController("1.1", user);
+
 
 	}
 
-	@After
-	public void tearDown() {
-		Company.clear();
-		projRepo = null;
-		userRepo = null;
-		taskRepo = null;
-		proj = null;
-		taskA = null;
-		taskB = null;
-		taskC = null;
-		user = null;
-		controller = null;
-	}
+//	@After
+//	public void tearDown() {
+//
+//		projectContainer = null;
+//		userContainer = null;
+//		taskRepo = null;
+//		proj = null;
+//		taskA = null;
+//		taskB = null;
+//		taskC = null;
+//		user = null;
+//		controller = null;
+//	}
 
 	@Test
 	public final void testCreateTaskTeamRequest() {
-		assertEquals(0, proj.getPendingTaskAssignementRequests().size());
-		controller.createTaskTeamRequest();
-		assertEquals(1, proj.getPendingTaskAssignementRequests().size());
+
+		
+		assertEquals(0, taskA.getPendingTaskAssignementRequests().size());
+		controller.createTaskTeamRequest("1.1", user);
+		assertEquals(1, taskA.getPendingTaskAssignementRequests().size());
+		
 	}
 
 	@Test

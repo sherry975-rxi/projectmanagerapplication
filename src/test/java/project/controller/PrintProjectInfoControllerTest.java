@@ -1,60 +1,74 @@
 package project.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import project.model.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
+
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan(basePackages = { "project.services", "project.controller", "project.model" })
 public class PrintProjectInfoControllerTest {
-
-	Company myCompany;
 
 	User user1;
 	User joaoPM;
 	ProjectCollaborator collab1, collab2;
-	ProjectContainer projectContainer;
+
+	@Autowired
+	ProjectService projectContainer;
+	@Autowired
+	UserService userContainer;
+	@Autowired
+	TaskService taskService;
+
 	Project project, project1;
 	Calendar startDate, finishDate;
-	TaskContainer taskContainer;
 	Task task1, task2, task3;
-	PrintProjectInfoController controller, controller1;
+
+	@Autowired
+	PrintProjectInfoController controller;
 
 	@Before
 	public void setUp() {
-		// create company
-		myCompany = Company.getTheInstance();
-		myCompany.getProjectsContainer().setProjCounter(1);
 
-		// create user
-		user1 = myCompany.getUsersContainer().createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
-				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
-
-		// create user admin
-		joaoPM = myCompany.getUsersContainer().createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua",
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
 				"2401-00", "Test", "Testo", "Testistan");
 
-		// add user to user list
-		myCompany.getUsersContainer().addUserToUserRepository(user1);
-		myCompany.getUsersContainer().addUserToUserRepository(joaoPM);
+		// create user admin
+		joaoPM = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+				"Test", "Testo", "Testistan");
 
 		// creates project repository
-		projectContainer = myCompany.getProjectsContainer();
+		// projectContainer = myCompany.getProjectsContainer();
 
 		// Creates one Project
-		project = myCompany.getProjectsContainer().createProject("Projeto de gestão",
-				"Este projeto está focado na gestão.", joaoPM);
+		project = projectContainer.createProject("Projeto de gestão", "Este projeto está focado na gestão.", joaoPM);
 
 		project.setProjectBudget(1000);
 		project.setProjectStatus(3);
 
 		// add project to project repository
-		myCompany.getProjectsContainer().addProjectToProjectContainer(project);
+		projectContainer.updateProject(project);
 
 		// add start date to project
 		Calendar startDate = Calendar.getInstance();
@@ -67,55 +81,49 @@ public class PrintProjectInfoControllerTest {
 		project.setFinishdate(finishDate);
 
 		// create project collaborators
-		collab1 = new ProjectCollaborator(user1, 2);
-		collab2 = new ProjectCollaborator(joaoPM, 3);
-
-		// create taskContainer
-		taskContainer = project.getTaskRepository();
+		collab1 = projectContainer.createProjectCollaborator(user1, project, 2);
+		collab2 = projectContainer.createProjectCollaborator(joaoPM, project, 3);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 		joaoPM.setUserProfile(Profile.COLLABORATOR);
 
-		// add user to project team
-		project.addProjectCollaboratorToProjectTeam(collab1);
-		project.addProjectCollaboratorToProjectTeam(collab2);
-
 		// create three tasks
-		task1 = project.getTaskRepository().createTask("First task");
-		task2 = project.getTaskRepository().createTask("Second task");
-		task3 = project.getTaskRepository().createTask("Third task");
-
-		// add task to project
-		project.getTaskRepository().addTaskToProject(task1);
-		project.getTaskRepository().addTaskToProject(task2);
-		project.getTaskRepository().addTaskToProject(task3);
+		task1 = taskService.createTask("First task", project);
+		task2 = taskService.createTask("Second task", project);
+		task3 = taskService.createTask("Third task", project);
 
 		// add project's collaborators to tasks
 		task1.addProjectCollaboratorToTask(collab1);
 		task2.addProjectCollaboratorToTask(collab1);
 		task3.addProjectCollaboratorToTask(collab2);
 
+		taskService.saveTask(task1);
+		taskService.saveTask(task2);
+		taskService.saveTask(task3);
+
 		// Instantiates de controller
-		controller = new PrintProjectInfoController(project.getIdCode());
-		controller.setProject();
+		controller.setProject(project);
+		;
 
 	}
 
 	@After
-	public void tearDown() {
-		Company.clear();
+	public void clear() {
+
 		user1 = null;
 		joaoPM = null;
+		collab1 = null;
+		collab2 = null;
+
 		project = null;
-		projectContainer = null;
+		project1 = null;
 		startDate = null;
 		finishDate = null;
-		taskContainer = null;
 		task1 = null;
 		task2 = null;
 		task3 = null;
-		collab1 = null;
+
 	}
 
 	/**
@@ -133,7 +141,9 @@ public class PrintProjectInfoControllerTest {
 	@Test
 	public void testPrintProjectIDCodeInfo() {
 
-		assertEquals(controller.printProjectIDCodeInfo(), "1");
+		String projectID = String.valueOf(project.getIdCode());
+
+		assertEquals(controller.printProjectIDCodeInfo(), projectID);
 	}
 
 	/**
@@ -207,10 +217,12 @@ public class PrintProjectInfoControllerTest {
 
 		// create a list of Strings with ID and description of task, to compare in
 		// assert
+		Integer projectID = project.getIdCode();
+
 		List<String> toCompare = new ArrayList<>();
-		toCompare.add("[1.1] First task");
-		toCompare.add("[1.2] Second task");
-		toCompare.add("[1.3] Third task");
+		toCompare.add("[" + projectID + ".1] First task");
+		toCompare.add("[" + projectID + ".2] Second task");
+		toCompare.add("[" + projectID + ".3] Third task");
 
 		assertEquals(controller.getProjectTaskList(), toCompare);
 	}
@@ -221,11 +233,13 @@ public class PrintProjectInfoControllerTest {
 	@Test
 	public void testGetTasksIDs() {
 
+		Integer projectID = project.getIdCode();
+
 		// create a list of Strings with ID of task, to compare in assert
 		List<String> toCompare = new ArrayList<>();
-		toCompare.add("1.1");
-		toCompare.add("1.2");
-		toCompare.add("1.3");
+		toCompare.add(projectID + ".1");
+		toCompare.add(projectID + ".2");
+		toCompare.add(projectID + ".3");
 
 		assertEquals(controller.getTasksIDs(), toCompare);
 	}
@@ -251,8 +265,10 @@ public class PrintProjectInfoControllerTest {
 		Integer projectID = project.getIdCode();
 
 		// create controller
-		PrintProjectInfoController controller = new PrintProjectInfoController(projectID);
-		controller.setProject();
+		// controller = new PrintProjectInfoController(projectID);
+		// controller.projService=this.projectContainer;
+		// controller.taskService=this.taskService;
+		// controller.setProject();
 
 		String projectName = controller.printProjectNameInfo();
 
@@ -261,30 +277,29 @@ public class PrintProjectInfoControllerTest {
 	}
 
 	@Test
-	public void testPrintProjectInfoController(){
+	public void testPrintProjectInfoController() {
 
 		// Creates one Project
-		project1 = myCompany.getProjectsContainer().createProject("Projeto de voluntariado",
+		project1 = projectContainer.createProject("Projeto de voluntariado",
 				"Este projeto está focado em solidariedade.", user1);
 
-		// add project to project repository
-		myCompany.getProjectsContainer().addProjectToProjectContainer(project1);
-
 		// Instantiates de controller
-		controller1 = new PrintProjectInfoController(project1);
-		controller1.setProject();
+		controller.setProject(project1);
 
-		assertEquals(controller1.printProjectNameInfo(), "Projeto de voluntariado");
+		assertEquals(controller.printProjectNameInfo(), "Projeto de voluntariado");
 
 		// add user to project team
-		project1.addProjectCollaboratorToProjectTeam(collab1);
-		project1.addProjectCollaboratorToProjectTeam(collab2);
+		projectContainer.createProjectCollaborator(user1, project1, 10);
+		ProjectCollaborator joaoPMcolab = projectContainer.createProjectCollaborator(joaoPM, project1, 10);
 
-		//remove user from project team
-		project1.removeProjectCollaboratorFromProjectTeam(joaoPM);
+		// remove user from project team
+		joaoPMcolab.setStatus(false);
+		assertFalse(joaoPMcolab.isProjectCollaboratorActive());
 
-		assertEquals(controller1.printProjectTeamInfo(), "Daniel [ACTIVE], João [INACTIVE]");
+		projectContainer.updateProject(project1);
+		projectContainer.updateProjectCollaborator(joaoPMcolab);
 
+		assertEquals(controller.printProjectTeamInfo(), "Daniel [ACTIVE], João [INACTIVE]");
 
 	}
 

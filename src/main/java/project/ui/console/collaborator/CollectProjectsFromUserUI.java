@@ -3,11 +3,11 @@
  */
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.CollectProjectsFromUserController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
-import project.ui.console.MainMenuUI;
 import project.ui.console.projectmanager.ProjectManagerMainMenuUI;
 
 import java.util.ArrayList;
@@ -20,33 +20,39 @@ import java.util.Scanner;
  * @author Group3
  *
  */
+@Component
 public class CollectProjectsFromUserUI {
+	@Autowired
+	private CollectProjectsFromUserController collectProjectsFromUserController;
+
+	@Autowired
+	private ProjectManagerMainMenuUI pmMenu;
+
+	@Autowired
+	private ProjectViewMenuUI projectViewMenuUI;
 
 	private User user;
 
 	/**
 	 * Constructor
-	 * 
-	 * @param user
+	 *
 	 */
-	public CollectProjectsFromUserUI(User user) {
-		this.user = user;
+	public CollectProjectsFromUserUI() {
+
 	}
 
 	/**
 	 * This method executes all options to execute through this UI
 	 */
 	public void collectProjectsFromUser() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
-		infoUpdater.updateDBtoContainer();
-
+		boolean loop = true;
+		while (loop) {
+			loop = false;
 		System.out.println("\n                  PROJETOS ");
 		System.out.println("___________________________________________________");
 
 		Scanner input = new Scanner(System.in);
-
-		CollectProjectsFromUserController collectProjectsFromUserController = new CollectProjectsFromUserController(
-				user);
+		collectProjectsFromUserController.setUser(this.user);
 
 		for (int i = 0; i < collectProjectsFromUserController.getProjectsFromUserAndProjectManager().size(); i++) {
 			System.out.println(collectProjectsFromUserController.getProjectsFromUserAndProjectManager().get(i));
@@ -54,9 +60,7 @@ public class CollectProjectsFromUserUI {
 		// show all projects from a user
 
 		System.out.println("___________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu");
-		System.out.println("[E] Exit \n");
+		System.out.println("[B] Back \n");
 
 		String option = input.nextLine().toUpperCase();
 
@@ -76,20 +80,18 @@ public class CollectProjectsFromUserUI {
 
 			if (option.equals(projectIDCodeToString)) {
 				if(this.user.equals(project.getProjectManager())) {
-					ProjectManagerMainMenuUI pmMenu = new ProjectManagerMainMenuUI(this.user, project);
+					pmMenu.setProjectManager(user);
+					pmMenu.setProject(project);
 					pmMenu.displayOptions();
 				}
 				else {
-				ProjectViewMenuUI projectViewMenuUI = new ProjectViewMenuUI(project.getIdCode(), user);
+				projectViewMenuUI.setProjectID(project.getIdCode());
+				projectViewMenuUI.setUser(user);
 				projectViewMenuUI.projectDataDisplay();
 				}
 			} else if ("B".equals(option)) {
-				CollaboratorMainMenuUI menu = new CollaboratorMainMenuUI(user);
-				menu.displayOptions();
-			} else if ("M".equals(option)) {
-				MainMenuUI.mainMenu();
-			} else if ("E".equals(option)) {
-				System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
+				//da maneira que isto esta, nem precisa desta op�ao...
+				
 			}
 			listOfOptionsToCompare.add(projectIDCodeToString);
 		}
@@ -98,9 +100,12 @@ public class CollectProjectsFromUserUI {
 		// returns to the beginning of this same menu
 		if (!(listOfOptionsToCompare.contains(option))) {
 			System.out.println("Please choose a valid option: ");
-			CollectProjectsFromUserUI collectProjectsFromUserUI = new CollectProjectsFromUserUI(user);
-			collectProjectsFromUserUI.collectProjectsFromUser();
+			loop = true;
 		}
 	}
+	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

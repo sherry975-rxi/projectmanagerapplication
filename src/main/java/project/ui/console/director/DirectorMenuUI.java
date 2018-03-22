@@ -1,16 +1,25 @@
 package project.ui.console.director;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
-import project.controller.UpdateDbToContainersController;
 import project.model.Project;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class DirectorMenuUI {
 
-	User directorLoggedIn;
-	Project selectedProject = null;
+	@Autowired
+	private US301CreateProjectUI createProject;
+	@Autowired
+	private US302ChangeProjectManagerUI changeManager;
+	@Autowired
+	private	US320ViewProjectsUI viewProjects;
+
+	private User directorLoggedIn;
+	private Project selectedProject = null;
 
 	String options = "[1] - View projects \n" + "[2] - Create a project \n"
 			+ "[3] - Change selected project's manager \n" + "______________________________________________\n"
@@ -18,18 +27,15 @@ public class DirectorMenuUI {
 
 	String command;
 
-	public DirectorMenuUI(User admin) {
-		this.directorLoggedIn = admin;
+	public DirectorMenuUI() {
 	}
 
 	public void directorMenu() {
-		UpdateDbToContainersController infoUpdater = new UpdateDbToContainersController();
 
 		Scanner input = new Scanner(System.in);
 
 		boolean cycle = true;
 		while (cycle) {
-			infoUpdater.updateDBtoContainer();
 			System.out.println("");
 			System.out.println(
 					"———————————————————————————————————————————MENU DIRECTOR——————————————————————————————————————————————————");
@@ -68,12 +74,10 @@ public class DirectorMenuUI {
 
 			switch (command) {
 			case "1":
-				US320ViewProjectsUI viewProjects = new US320ViewProjectsUI();
 				selectedProject = viewProjects.viewProjectsUI(selectedProject);
 				break;
 
 			case "2":
-				US301CreateProjectUI createProject = new US301CreateProjectUI();
 				createProject.createProject();
 				break;
 
@@ -82,7 +86,6 @@ public class DirectorMenuUI {
 					System.out.println("Please select a project first");
 					System.out.println("");
 				} else {
-					US302ChangeProjectManagerUI changeManager = new US302ChangeProjectManagerUI();
 					changeManager.changeProjectManager(selectedProject);
 				}
 				break;
@@ -103,4 +106,7 @@ public class DirectorMenuUI {
 
 	}
 
+	public void setDirectorLoggedIn(User directorLoggedIn) {
+		this.directorLoggedIn = directorLoggedIn;
+	}
 }

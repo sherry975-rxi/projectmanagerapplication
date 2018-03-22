@@ -1,19 +1,25 @@
 package project.controller;
 
-import project.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import project.services.TaskService;
 import project.model.Project;
-import project.model.ProjectContainer;
 import project.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 
-	ProjectContainer myProjRepo;
+	@Autowired
+	private TaskService taskService;
 
+	/*
+	 * Default constructor
+	 */
 	public US360GetProjectTasksWithoutCollaboratorsAssignedController() {
-		this.myProjRepo = Company.getTheInstance().getProjectsContainer();
+
 	}
 
 	/**
@@ -23,7 +29,7 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 	 * @return
 	 */
 	public List<Task> getProjectNotAssigned(Project proj) {
-		return proj.getTaskRepository().getAllTasksWithoutCollaboratorsAssigned();
+		return taskService.getProjectTasksWithoutCollaboratorsAssigned(proj);
 	}
 
 	/**
@@ -38,7 +44,7 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedController {
 	 */
 	public List<String> getProjectNotAssignedTaskList(Project proj) {
 
-		List<Task> taskListNotAssigned = proj.getTaskRepository().getAllTasksWithoutCollaboratorsAssigned();
+		List<Task> taskListNotAssigned = taskService.getProjectTasksWithoutCollaboratorsAssigned(proj);
 		List<String> taskListToPrint = new ArrayList<>();
 
 		for (int i = 0; i < taskListNotAssigned.size(); i++) {

@@ -5,114 +5,49 @@ import project.model.Task;
 
 public class StandBy implements TaskStateInterface {
 
-	private Task task;
-
 	/**
-	 * Constructor of StandBy class
-	 * 
-	 * @param t
-	 *            The task that will be associated to the parameter Task of the
-	 *            instance of the object StandBy
-	 */
-	public StandBy(Task taskToUpdate) {
-		this.task = taskToUpdate;
-	}
-
-	/**
-	 * This method verifies if the transition to "StandBy" State is possible. If the
-	 * state of the task is set to "OnGoing" and doesn't have any active users and
-	 * doesnt have any finish date, the method returns true, else, returns false
-	 * 
-	 * @return true if possible, false if not
+	 * Method that checks if a task that is currently in the standBy state meets the
+	 * conditions to change to the onGoing state, cancelled state or finished state
+	 *
+	 * @param task
+	 *            to check if it has the conditions to change to the onGoing state,
+	 *            cancelled state or finished state
+	 * @param task
 	 */
 	@Override
-	public boolean isValid() {
-		return !task.doesTaskTeamHaveActiveUsers() && task.getFinishDate() == null;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Created" state
-	 */
-	@Override
-	public boolean changeToCreated() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Planned" state
-	 */
-	@Override
-	public boolean changeToPlanned() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Assigned" state
-	 */
-	@Override
-	public boolean changeToAssigned() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Ready" state
-	 */
-	@Override
-	public boolean changeToReady() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "OnGoing" state
-	 */
-	@Override
-	public boolean changeToOnGoing() {
-		boolean condition = false;
-		TaskStateInterface stateOnGoing = new OnGoing(task);
-		if (stateOnGoing.isValid()) {
-			task.setTaskState(stateOnGoing);
+	public void doAction(Task task) {
+		OnGoing onGoingState = new OnGoing();
+		if (onGoingState.isValid(task)) {
+			task.setTaskState(onGoingState);
 			task.setCurrentState(StateEnum.ONGOING);
-			condition = true;
 		}
-		return condition;
-	}
 
-	/**
-	 * This method changes the state of a Task to the "StandBy" state
-	 */
-	@Override
-	public boolean changeToStandBy() {
-		return false;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Cancelled" state
-	 */
-	@Override
-	public boolean changeToCancelled() {
-		boolean condition = false;
-		TaskStateInterface stateCancelled = new Cancelled(task);
-		if (stateCancelled.isValid()) {
-			task.setTaskState(stateCancelled);
+		Cancelled cancelledState = new Cancelled();
+		if (cancelledState.isValid(task)) {
+			task.setTaskState(cancelledState);
 			task.setCurrentState(StateEnum.CANCELLED);
-			condition = true;
 		}
-		return condition;
-	}
-
-	/**
-	 * This method changes the state of a Task to the "Finished" state
-	 * 
-	 */
-	@Override
-	public boolean changeToFinished() {
-		boolean condition = false;
-		TaskStateInterface finishedState = new Finished(task);
-		if (finishedState.isValid()) {
+		Finished finishedState = new Finished();
+		if (finishedState.isValid(task)) {
 			task.setTaskState(finishedState);
 			task.setCurrentState(StateEnum.FINISHED);
-			condition = true;
+			task.removeAllCollaboratorsFromTaskTeam();
 		}
-		return condition;
+	}
+
+	/**
+	 * Method that checks if a certain task meets the conditions to be in the
+	 * StandBy state
+	 *
+	 * @param task
+	 *            to check if it meets the conditions
+	 *
+	 * @return TRUE if it meets the conditions, FALSE if not
+	 */
+	public boolean isValid(Task task) {
+		return (task.getTaskState() instanceof OnGoing) && (task.getEstimatedTaskStartDate() != null)
+				&& (task.getTaskDeadline() != null) && !task.doesTaskTeamHaveActiveUsers()
+				&& (task.getStartDate() != null) && (task.getFinishDate() == null) && (task.getCancelDate() == null)
+				&& (task.getEstimatedTaskEffort() != 0) && (task.getTaskBudget() != 0);
 	}
 }
