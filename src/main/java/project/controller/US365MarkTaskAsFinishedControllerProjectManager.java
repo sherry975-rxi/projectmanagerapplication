@@ -2,7 +2,6 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import project.Services.TaskService;
 import project.model.Project;
 import project.model.Task;
@@ -33,7 +32,7 @@ public class US365MarkTaskAsFinishedControllerProjectManager {
 	}
 
 	public void setTaskToBeMarked(String taskID) {
-		this.taskToBeMarked = projectTaskList.getTaskByTaskID(taskID);
+		this.taskToBeMarked = taskService.getTaskByTaskID(taskID);
 	}
 
 	public Project getSelectedProject() {

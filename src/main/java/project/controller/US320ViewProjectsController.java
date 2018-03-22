@@ -1,13 +1,12 @@
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import project.Services.ProjectService;
 import project.model.Project;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class US320ViewProjectsController {

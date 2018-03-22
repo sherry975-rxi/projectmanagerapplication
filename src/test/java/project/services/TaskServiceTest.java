@@ -64,13 +64,14 @@ public class TaskServiceTest {
     private void mocksGetTaskRepository() {
         List<Task> taskList = new ArrayList<>();
         taskList.add(taskMock);
+        when(taskRepository.findAllByProject(any(Project.class))).thenReturn(taskList);
         when(taskRepository.findAll()).thenReturn(taskList);
     }
 
     private void mocksGetProjectTasks() {
         List<Task> taskList = new ArrayList<>();
         taskList.add(taskMock);
-        when(taskRepository.findAllByProject(project)).thenReturn(taskList);
+        when(taskRepository.findAllByProject(any(Project.class))).thenReturn(taskList);
     }
 
     public void mocksGetAllFinishedTasksFromUser() {
@@ -106,6 +107,8 @@ public class TaskServiceTest {
         this.projectCollaborator2 = new ProjectCollaborator(user, 10);
         this.taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
         this.taskCollaborator2 = new TaskCollaborator(new ProjectCollaborator(user, 10));
+
+
 
     }
 
@@ -449,12 +452,14 @@ public class TaskServiceTest {
 
         List<Task> expectedTaskList = new ArrayList<>();
         expectedTaskList.add(taskMock);
+
         assertEquals(expectedTaskList, victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
         assertEquals(expectedTaskList, victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, -1));
 
 
         calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
         when(taskMock.getFinishDate()).thenReturn(calendar);
+
         assertEquals(new ArrayList<>(), victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
     }
 
@@ -812,10 +817,10 @@ public class TaskServiceTest {
 
         notAmock.createTaskRemovalRequest(projectCollaborator);
 
-        assertEquals(victim.getAllProjectTaskAssignmentRequests(project), 0);
-        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project), 0);
-        assertEquals(victim.getAllProjectTaskRemovalRequests(project), 1);
-        assertEquals(victim.viewAllProjectTaskRemovalRequests(project), 1);
+        assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 0);
+        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project).size(), 0);
+        assertEquals(victim.getAllProjectTaskRemovalRequests(project).size(), 1);
+        assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 1);
 
 
         // then, approves the request and deletes it, asserting the list of requests all contain 0 entries
@@ -825,10 +830,10 @@ public class TaskServiceTest {
 
         assertFalse(notAmock.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
 
-        assertEquals(victim.getAllProjectTaskAssignmentRequests(project), 0);
-        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project), 0);
-        assertEquals(victim.getAllProjectTaskRemovalRequests(project), 0);
-        assertEquals(victim.viewAllProjectTaskRemovalRequests(project), 0);
+        assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 0);
+        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project).size(), 0);
+        assertEquals(victim.getAllProjectTaskRemovalRequests(project).size(), 0);
+        assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 0);
 
     }
     

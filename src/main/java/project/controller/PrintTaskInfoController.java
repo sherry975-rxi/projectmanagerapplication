@@ -1,14 +1,15 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import project.Services.ProjectService;
 import project.Services.TaskService;
-import project.model.*;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,10 +18,10 @@ import java.util.stream.Collectors;
 public class PrintTaskInfoController {
 
 	@Autowired
-	public ProjectService projService;
+	private ProjectService projService;
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 
 	private Task task;

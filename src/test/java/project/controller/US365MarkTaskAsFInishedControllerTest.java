@@ -1,11 +1,5 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Calendar;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,19 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.StateEnum;
-import project.model.Task;
-import project.model.TaskCollaborator;
-import project.model.User;
+import project.model.*;
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
+
+import java.util.Calendar;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -208,7 +199,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 		// create controller for ongoing task 1 (of project 1), and asserts Task1Ongoing
 		// has been properly marked as finished
 		us365controller.setSelectedProject(project1);
-		us365controller.setTaskToBeMarked(task1OnGoing);
+		us365controller.setTaskToBeMarked(task1OnGoing.getTaskID());
 		task1OnGoing.setTaskState(new Finished());
 		task1OnGoing.setCurrentState(StateEnum.FINISHED);
 		taskService.saveTask(task1OnGoing);
@@ -221,7 +212,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 		// create controller for ready task 3 (of project 2), then asserts task3 cannot
 		// be marked as finished, since it's not ongoing
 		us365controller.setSelectedProject(project2);
-		us365controller.setTaskToBeMarked(task3);
+		us365controller.setTaskToBeMarked(task3.getTaskID());
 		taskService.saveTask(task3);
 		us365controller.setTaskAsFinished();
 

@@ -1,14 +1,12 @@
 package project.controller;
 
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import project.Services.ProjectService;
 import project.Services.TaskService;
@@ -21,6 +19,12 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Tests the US357CancelRemovalTaskrequestController
+ *
+ * @author Group 3
+ *
+ */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan({ "project.services", "project.model", "project.controller" })
@@ -34,7 +38,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 	UserService userService;
 	@Autowired
 	TaskService taskService;
-	
+
 	User userDaniel;
 	User userRui;
 	Project projectA;
@@ -46,7 +50,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 	String stringRequest2;
 	TaskCollaborator userRuiTaskCollaborator;
 	List<String> pendingRemovalRequests;
-	
+
 	@Before
 	public void setUp() {
 		// Creates the users
@@ -60,7 +64,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		userRuiProjectCollaborator = projectA.createProjectCollaborator(userRui, 25);
 		projectService.addProjectCollaborator(userRuiProjectCollaborator);
-		
+
 
 		// create tasks in project A
 		taskA = taskService.createTask("task A", projectA);
@@ -75,7 +79,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		// Creates the removal requests from userRui and TaskA and TaskB
 		taskA.createTaskRemovalRequest(userRuiProjectCollaborator);
 		taskB.createTaskRemovalRequest(userRuiProjectCollaborator);
-		
+
 		// Creates the list of strings with the information of the pending removal
 		// requests
 		stringRequest1 = "Rui" + "\n" + "rui@gmail.com" + "\n" + "19.1" + "\n" + "task A";
@@ -86,7 +90,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		// Creates the taskCollaborator
 		userRuiTaskCollaborator = taskA.getTaskTeam().get(0);
-		
+
 		us357Controller.setProject(projectA);
 
 	}
@@ -113,7 +117,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		us357Controller.setTaskIDandUserEmailWithRequestString(stringRequest1);
 		us357Controller.setTask(taskA);
 		int pendingRemovalListSizeBefore = taskA.getPendingTaskRemovalRequests().size();
-		
+
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
 		assertEquals(1, pendingRemovalListSizeBefore);
 

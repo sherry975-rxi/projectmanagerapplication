@@ -3,16 +3,14 @@ package project.model.states;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
-import project.model.taskstateinterface.Created;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TaskStateInterfaceTests {
 

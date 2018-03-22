@@ -1,33 +1,52 @@
 package project.controller;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-import project.Services.ProjectService;
-import project.Services.TaskService;
-import project.Services.UserService;
-import project.model.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import project.Services.ProjectService;
+import project.Services.TaskService;
+import project.Services.UserService;
+import project.model.Profile;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.TaskCollaborator;
+import project.model.User;
+
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US362RemoveTaskFromProjectCollaboratorTest {
 
+	@Autowired
 	UserService userContainer;
+	@Autowired
 	ProjectService projectContainer;
-	
+	@Autowired
+	TaskService taskContainer;
+	@Autowired
+	US362RemoveTaskFromProjectCollaborator controller;
+
 	User user1;
 	User userAdmin;
-
-	TaskService taskContainer;
 
 	TaskCollaborator taskWorker1;
 
 	ProjectCollaborator collab1;
+	ProjectCollaborator collab2;
 
 	Project project;
 	Project project2;
@@ -39,28 +58,21 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 	Calendar estimatedTaskStartDateTest;
 	Calendar taskDeadlineDateTest;
 	Calendar startDateTest;
-	US362RemoveTaskFromProjectCollaborator controller;
 
 	@Before
 	public void setUp() {
-		
-		// creates an UserContainer
-		userContainer = new UserService();
-								
-		// creates a Project Container
-		projectContainer = new ProjectService();
 
 		// create user
-		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator",
-				"910000000", "Rua", "2401-00", "Test", "Testo", "Testistan");
+		user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
+				"2401-00", "Test", "Testo", "Testistan");
 
 		// create user admin
-		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000",
-				"Rua", "2401-00", "Test", "Testo", "Testistan");
+		userAdmin = userContainer.createUser("João", "joao@gmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
+				"Test", "Testo", "Testistan");
 
 		// add user to user list
-		userContainer.addUserToUserRepository(user1);
-		userContainer.addUserToUserRepository(userAdmin);
+		userContainer.addUserToUserRepositoryX(user1);
+		userContainer.addUserToUserRepositoryX(userAdmin);
 
 		// Creates one Project
 		project = projectContainer.createProject("name3", "description4", userAdmin);
@@ -71,36 +83,23 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		projectContainer.addProjectToProjectContainer(project2);
 
 		// create project collaborators
-		collab1 = new ProjectCollaborator(user1, 2);
+		collab1 = projectContainer.createProjectCollaborator(user1, project, 0);
+		projectContainer.addProjectCollaborator(collab1);
 
-		// create taskContainer
-
-		taskContainer = project.getTaskService();
-
-		// create 4 tasks
-		testTask = taskContainer.createTask("Test dis agen pls");
-		testTask2 = taskContainer.createTask("Test dis agen pls");
-		testTask3 = taskContainer.createTask("Test moar yeh");
-
-		// Adds 5 tasks to the TaskContainer
-		taskContainer.addTaskToProject(testTask);
-		taskContainer.addTaskToProject(testTask2);
-		taskContainer.addTaskToProject(testTask3);
+		// create 3 tasks
+		testTask = taskContainer.createTask("Test dis agen pls", project);
+		testTask2 = taskContainer.createTask("Test dis agen pls", project);
+		testTask3 = taskContainer.createTask("Test moar yeh", project);
 
 		// create task workers
-		taskWorker1 = new TaskCollaborator(collab1);
+		testTask.addProjectCollaboratorToTask(collab1);
+		testTask2.addProjectCollaboratorToTask(collab1);
+		testTask3.addProjectCollaboratorToTask(collab1);
 
 		// set user as collaborator
 		user1.setUserProfile(Profile.COLLABORATOR);
 
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
-
-		// add user to project team
-		project.addProjectCollaboratorToProjectTeam(collab1);
-		project2.addProjectCollaboratorToProjectTeam(collab1);
-
-		// adds user to task
-		testTask.addProjectCollaboratorToTask(collab1);
 
 		// create a estimated Task Start Date
 		Calendar startDateTest = Calendar.getInstance();
@@ -126,26 +125,9 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		taskExpiredDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// Instantiates the controller
-		controller = new US362RemoveTaskFromProjectCollaborator(project, testTask);
+		controller.setProject(project);
+		controller.setTask(testTask);
 
-	}
-
-	@After
-	public void tearDown() {
-		userContainer = null;
-		projectContainer = null;
-		user1 = null;
-		testTask = null;
-		testTask2 = null;
-		testTask3 = null;
-		project = null;
-		taskContainer = null;
-		taskWorker1 = null;
-		collab1 = null;
-		estimatedTaskStartDateTest = null;
-		taskDeadlineDateTest = null;
-		startDateTest = null;
 	}
 
 	/**
@@ -169,11 +151,12 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 	@Test
 	public void testSetandGetProjectCollaborator() {
 
+		controller.setProjectCollaborator(collab2);
 		// Asserts that the project collaborator is null
 		assertEquals(controller.getProjectCollaborator(), null);
 
 		// sets the projectCollaborator
-		controller.setProjectCollaborator(0);
+		controller.setProjectCollaborator(collab1);
 
 		// Asserts that the project collaborator is not equal to collab1
 		assertEquals(controller.getProjectCollaborator(), collab1);

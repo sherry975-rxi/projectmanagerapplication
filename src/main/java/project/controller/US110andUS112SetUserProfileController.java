@@ -2,7 +2,6 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
@@ -11,7 +10,7 @@ import project.model.User;
 public class US110andUS112SetUserProfileController {
 
 	@Autowired
-	public UserService userService;
+	private UserService userService;
 
 	public UserService getUserContainer() {
 		return userService;
