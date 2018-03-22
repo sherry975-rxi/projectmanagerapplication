@@ -48,48 +48,9 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 		this.projectID = projectID;
 	}
 
-	/**
-	 * Constructor
-	 *
-	 * @param projectID
-	 *            The ProjectId that corresponds to the taskID that the User wants
-	 *            to add himself to
-	 */
-	// public US204v2createRequestAddCollaboratorToTaskTeamController(int projId) {
-	//
-	// company = Company.getTheInstance();
-	// projectContainer = company.getProjectsContainer();
-	// project = projectContainer.getProjById(projId);
-	//
-	// }
-
-	// /**
-	// * Constructor
-	// *
-	// * @param taskID
-	// * ID of a Task that the User wants to add himself to
-	// */
-	// public US204v2createRequestAddCollaboratorToTaskTeamController(String taskID,
-	// User user) {
-	// this.taskID = taskID;
-	// this.user = user;
-	// setProjectIDFromTaskID(taskID);
-	//
-	// this.project = projectContainer.getProjectById(this.projectID);
-	// this.user = user;
-	//
-	// }
-
 	public US204v2createRequestAddCollaboratorToTaskTeamController() {
 
 	}
-
-	// public boolean createTaskTeamRequest() {
-	//
-	// Task taskToAddCollaboratorTo = taskContainer.getTaskByTaskID(this.taskID);
-	// return
-	// taskToAddCollaboratorTo.createTaskAssignementRequest(getProjectCollaboratorFromUser(this.user));
-	// }
 
 	public boolean createTaskTeamRequest(String taskID, User user) {
 

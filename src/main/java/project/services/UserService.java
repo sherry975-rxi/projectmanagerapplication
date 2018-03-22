@@ -144,15 +144,6 @@ public class UserService {
 	}
 
 	/**
-	 * This method feeds the list of all Users in the Company (userContainer) with
-	 * the user data that is in the DB
-	 */
-	// public void updateUserContainer() {
-	// usersContainer.clear();
-	// this.userRepository.findAll().forEach(usersContainer::add);
-	// }
-
-	/**
 	 * This method returns a list of all active collaborators in the Company
 	 * accessed by DB
 	 *
