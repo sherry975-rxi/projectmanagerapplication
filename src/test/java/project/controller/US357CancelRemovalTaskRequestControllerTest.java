@@ -82,8 +82,8 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		// Creates the list of strings with the information of the pending removal
 		// requests
-		stringRequest1 = "Rui" + "\n" + "rui@gmail.com" + "\n" + "19.1" + "\n" + "task A";
-		stringRequest2 = "Rui" + "\n" + "rui@gmail.com" + "\n" + "19.2" + "\n" + "task B";
+		stringRequest1 = "Rui" + "\n" + "rui@gmail.com" + "\n" + taskA.getTaskID() + "\n" + "task A";
+		stringRequest2 = "Rui" + "\n" + "rui@gmail.com" + "\n" + taskB.getTaskID() + "\n" + "task B";
 		pendingRemovalRequests = new ArrayList<>();
 		pendingRemovalRequests.add(stringRequest1);
 		pendingRemovalRequests.add(stringRequest2);
