@@ -1,5 +1,6 @@
 package project.controller;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -136,6 +137,30 @@ public class US390CalculateReportedProjectCostControllerTest {
 		// create variable to calculate total cost reported to project
 		totalCost = 0.0;
 
+	}
+
+	@After
+	public void tearDown(){
+
+		userDaniel = null;
+		userJonny = null;
+		userMike = null;
+		userAna = null;
+		projectManager = null;
+		project = null;
+		projectUserDaniel = null;
+		projectUserJonny = null;
+		projectUserMike = null;
+		projectUserAna = null;
+
+		testTask = null;
+		testTask2 = null;
+		taskWorkerDaniel = null;
+		taskWorkerJonny = null;
+		taskWorkerMike = null;
+		taskWorkerAna = null;
+
+		totalCost = 0;
 	}
 
 

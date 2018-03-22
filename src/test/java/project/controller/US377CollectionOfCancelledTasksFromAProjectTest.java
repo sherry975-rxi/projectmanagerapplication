@@ -1,5 +1,13 @@
 package project.controller;
 
+import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -146,6 +154,21 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 		controller.setProject(project);
 	}
 
+	@After
+	public void tearDown(){
+
+		user1 = null;
+		userAdmin = null;
+		collab1 = null;
+		project = null;
+		project2 = null;
+		testTask = null;
+		testTask2 = null;
+		testTask3 = null;
+		estimatedTaskStartDateTest = null;
+		taskDeadlineDateTest = null;
+		startDateTest = null;
+	}
 	/**
 	 * this test verify if the list of canceled projects is equals to the list
 	 * created.
