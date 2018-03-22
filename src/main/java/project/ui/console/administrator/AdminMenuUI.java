@@ -29,7 +29,7 @@ public class AdminMenuUI {
 			infoUpdater.updateDBtoContainer();
 			System.out.println("");
 			System.out.println(
-					"———————————————————————————————————————————MENU ADMIN——————————————————————————————————————————————————");
+					"--------------------------------------------------------------------------MENU ADMIN--------------------------------------------------------------------------");
 			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName());
 			System.out.println("______________________________________________");
 
