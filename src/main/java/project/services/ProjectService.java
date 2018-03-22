@@ -8,12 +8,14 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ProjectService {
 
 	@Autowired
