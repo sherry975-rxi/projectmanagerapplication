@@ -1,5 +1,7 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US201and202UpdateUserInfoController;
 import project.model.Address;
 import project.model.User;
@@ -10,22 +12,23 @@ import java.util.Scanner;
  * UI for updating User info US201 v2
  *
  */
+@Component
 public class US201and202UpdateUserInfoUI {
+	@Autowired
+	private US201and202UpdateUserInfoController getInfo;
+
 	private User user;
 
 	/**
 	 * Creates the UI
-	 * 
-	 * @param user
 	 */
-	public US201and202UpdateUserInfoUI(User user) {
-		this.user = user;
+	public US201and202UpdateUserInfoUI() {
+
 	}
 
 	public void chooseWhatInfoToUpdate() {
 		String processCancelled = "Process Cancelled";
 		Scanner input = new Scanner(System.in);
-		US201and202UpdateUserInfoController getInfo = new US201and202UpdateUserInfoController();
 
 		String currentName = getInfo.getName(user);
 		String currentEmail = getInfo.getEmail(user);
@@ -77,23 +80,21 @@ public class US201and202UpdateUserInfoUI {
 			confirmInfoToUpdatePhone(input, phone, updateSuccessful);
 			break;
 		case "4":
-			// Updates address
-			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
 			// Shows all addresses
 			System.out.println("Please select the number of the address to update:");
 			int i = 0;
 
-			for (Address address : updater.getAllAddresses(user)) {
+			for (Address address : getInfo.getAllAddresses(user)) {
 				System.out.println();
 
 				System.out.println("[" + (i + 1) + "].");
 				System.out.println();
 
-				System.out.println("Street:    " + updater.getStreet(address));
-				System.out.println("ZipCode:   " + updater.getZipCode(address));
-				System.out.println("City:      " + updater.getCity(address));
-				System.out.println("District:  " + updater.getDistrict(address));
-				System.out.println("Country:   " + updater.getCountry(address));
+				System.out.println("Street:    " + getInfo.getStreet(address));
+				System.out.println("ZipCode:   " + getInfo.getZipCode(address));
+				System.out.println("City:      " + getInfo.getCity(address));
+				System.out.println("District:  " + getInfo.getDistrict(address));
+				System.out.println("Country:   " + getInfo.getCountry(address));
 				System.out.println();
 				i++;
 
@@ -104,13 +105,13 @@ public class US201and202UpdateUserInfoUI {
 			if (input.hasNextInt()) {
 				int nrAddress = input.nextInt();
 
-				if (nrAddress > updater.getAllAddresses(user).size() || nrAddress < 0) {
+				if (nrAddress > getInfo.getAllAddresses(user).size() || nrAddress < 0) {
 					System.out.println();
 					System.out.println(processCancelled);
 					System.out.println();
 
 				} else {
-					chooseAddressFieldAndUpdateIt(updater, input, nrAddress);
+					chooseAddressFieldAndUpdateIt(getInfo, input, nrAddress);
 				}
 			} else {
 				System.out.println();
@@ -121,7 +122,6 @@ public class US201and202UpdateUserInfoUI {
 			break;
 
 		case "5":
-			US201and202UpdateUserInfoController addAdress = new US201and202UpdateUserInfoController();
 			// Adds new street
 			System.out.println("Street: ");
 			String newStreet = input.nextLine();
@@ -138,7 +138,7 @@ public class US201and202UpdateUserInfoUI {
 
 			String newCountry = input.nextLine();
 
-			Address newAddress = addAdress.createNewAddress(newStreet, newZipCode, newCity, newDistrict, newCountry);
+			Address newAddress = this.getInfo.createNewAddress(newStreet, newZipCode, newCity, newDistrict, newCountry);
 			System.out.println();
 
 			System.out.println("Verify if new adress is correct:");
@@ -151,7 +151,7 @@ public class US201and202UpdateUserInfoUI {
 			System.out.println("Country:    " + newCountry);
 			System.out.println();
 
-			confirmOrCancelAddNewAddress(input, newAddress, addAdress);
+			confirmOrCancelAddNewAddress(input, newAddress, this.getInfo);
 			break;
 		default:
 			System.out.println("The user cancelled the process");
@@ -213,13 +213,12 @@ public class US201and202UpdateUserInfoUI {
 	 */
 	private void confirmInfoToUpdateEmail(Scanner input, String email, String updateSuccessful) {
 		if (confirmInfoYOrN(input)) {
-			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-			if (!updater.isEmailValid(email)) {
+			if (!getInfo.isEmailValid(email)) {
 				System.out.println("Invalid email.");
-			} else if (updater.isEmailAlreadyInUse(email)) {
+			} else if (getInfo.isEmailAlreadyInUse(email)) {
 				System.out.println("Email is already in use.");
 			} else {
-				updater.updateUserEmail(user, email);
+				getInfo.updateUserEmail(user, email);
 				System.out.println(updateSuccessful);
 			}
 			System.out.println();
@@ -236,9 +235,8 @@ public class US201and202UpdateUserInfoUI {
 	 */
 	private void confirmInfoToUpdatePhone(Scanner input, String phone, String updateSuccessful) {
 		if (confirmInfoYOrN(input)) {
-			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-			updater.updateUserPhone(user, phone);
-			updater.alterUser(user);
+			getInfo.updateUserPhone(user, phone);
+			getInfo.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -254,9 +252,8 @@ public class US201and202UpdateUserInfoUI {
 	 */
 	private void confirmInfoToUpdateName(Scanner input, String name, String updateSuccessful) {
 		if (confirmInfoYOrN(input)) {
-			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-			updater.updateUserName(user, name);
-			updater.alterUser(user);
+			getInfo.updateUserName(user, name);
+			getInfo.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -274,9 +271,8 @@ public class US201and202UpdateUserInfoUI {
 	private void confirmInfoToUpdateStreet(Scanner input, String currentStreet, String newStreet,
 			String updateSuccessful) {
 		if (confirmInfoYOrN(input)) {
-			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-			updater.updateUserStreet(user, currentStreet, newStreet);
-			updater.alterUser(user);
+			getInfo.updateUserStreet(user, currentStreet, newStreet);
+			getInfo.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -294,9 +290,8 @@ public class US201and202UpdateUserInfoUI {
 	private void confirmInfoToUpdateZipCode(Scanner input, String currentStreet, String newZipCode,
 			String updateSuccessful) {
 		if (confirmInfoYOrN(input)) {
-			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-			updater.updateUserZipCode(user, currentStreet, newZipCode);
-			updater.alterUser(user);
+			getInfo.updateUserZipCode(user, currentStreet, newZipCode);
+			getInfo.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -313,9 +308,8 @@ public class US201and202UpdateUserInfoUI {
 	 */
 	private void confirmInfoToUpdateCity(Scanner input, String currentStreet, String newCity, String updateSuccessful) {
 		if (confirmInfoYOrN(input)) {
-			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-			updater.updateUserCity(user, currentStreet, newCity);
-			updater.alterUser(user);
+			getInfo.updateUserCity(user, currentStreet, newCity);
+			getInfo.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -333,9 +327,8 @@ public class US201and202UpdateUserInfoUI {
 	private void confirmInfoToUpdateDistrict(Scanner input, String currentStreet, String newDistrict,
 			String updateSuccessful) {
 		if (confirmInfoYOrN(input)) {
-			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-			updater.updateUserDistrict(user, currentStreet, newDistrict);
-			updater.alterUser(user);
+			getInfo.updateUserDistrict(user, currentStreet, newDistrict);
+			getInfo.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
@@ -353,15 +346,14 @@ public class US201and202UpdateUserInfoUI {
 	private void confirmInfoToUpdateCountry(Scanner input, String currentStreet, String newCountry,
 			String updateSuccessful) {
 		if (confirmInfoYOrN(input)) {
-			US201and202UpdateUserInfoController updater = new US201and202UpdateUserInfoController();
-			updater.updateUserCountry(user, currentStreet, newCountry);
-			updater.alterUser(user);
+			getInfo.updateUserCountry(user, currentStreet, newCountry);
+			getInfo.alterUser(user);
 			System.out.println(updateSuccessful);
 			System.out.println();
 		}
 	}
 
-	private void chooseAddressFieldAndUpdateIt(US201and202UpdateUserInfoController updater, Scanner input,
+	private void chooseAddressFieldAndUpdateIt(US201and202UpdateUserInfoController getInfo, Scanner input,
 			int nrAddress) {
 
 		String inputNewInfo = "Please insert the new info:";
@@ -369,13 +361,13 @@ public class US201and202UpdateUserInfoUI {
 		String updateSuccessful = "-----UPDATE SUCCESSFUL-----";
 
 		// Chooses address
-		Address chosen = updater.getAllAddresses(user).get(nrAddress - 1);
+		Address chosen = getInfo.getAllAddresses(user).get(nrAddress - 1);
 		// Shows fields of the address
-		String currentStreet = updater.getStreet(chosen);
-		String currentZipCode = updater.getZipCode(chosen);
-		String currentCity = updater.getCity(chosen);
-		String currentDistrict = updater.getDistrict(chosen);
-		String currentCountry = updater.getCountry(chosen);
+		String currentStreet = getInfo.getStreet(chosen);
+		String currentZipCode = getInfo.getZipCode(chosen);
+		String currentCity = getInfo.getCity(chosen);
+		String currentDistrict = getInfo.getDistrict(chosen);
+		String currentCountry = getInfo.getCountry(chosen);
 		System.out.println("Please select the number of the field to update:");
 		System.out.println("[1] Street: " + currentStreet);
 		System.out.println("[2] ZipCode: " + currentZipCode);
@@ -427,5 +419,9 @@ public class US201and202UpdateUserInfoUI {
 			System.out.println("");
 			break;
 		}
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

@@ -1,9 +1,15 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.stereotype.Component;
 import project.controller.US216AverageTimeSpentOnTaskLastMonthController;
 import project.model.User;
 
+@Component
 public class US216AverageTimeSpentByTaskLastMonthUI {
+	@Autowired
+	private US216AverageTimeSpentOnTaskLastMonthController averageTime;
 
 	public void displayAveregeTimeSpentByTaskLastMonth(User user) {
 
@@ -12,8 +18,6 @@ public class US216AverageTimeSpentByTaskLastMonthUI {
 
 		System.out.println("\n" + myname + " \n" + function);
 		System.out.println("___________________________________________________");
-
-		US216AverageTimeSpentOnTaskLastMonthController averageTime = new US216AverageTimeSpentOnTaskLastMonthController();
 		Double average = averageTime.getAverageTimeOfFinishedTasksFromUserLastMonth(user);
 
 		System.out.println("\n");

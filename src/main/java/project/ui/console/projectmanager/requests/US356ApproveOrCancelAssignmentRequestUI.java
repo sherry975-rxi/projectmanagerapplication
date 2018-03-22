@@ -1,27 +1,26 @@
 package project.ui.console.projectmanager.requests;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US356ManageAssigmentRequestController;
 import project.model.Project;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class US356ApproveOrCancelAssignmentRequestUI {
 
-	Project project;
-	User user;
+	@Autowired
+	private US356ManageAssigmentRequestController assignmentRequest;
+
+	private Project project;
 
 	/**
 	 * Constructor to instantiate a new US357ApproveOrCancelAssignmentRequestUI
-	 * 
-	 * @param user
-	 *            User Project Manager
-	 * @param project
-	 *            Project where the user is Project manager
+	 *
 	 */
-	public US356ApproveOrCancelAssignmentRequestUI(User user, Project project) {
-		this.project = project;
-		this.user = user;
+	public US356ApproveOrCancelAssignmentRequestUI() {
 	}
 
 	/**
@@ -35,8 +34,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			System.out.println("\n   TASK ASSIGNMENT REQUESTS : PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");
 
-			US356ManageAssigmentRequestController assignmentRequest = new US356ManageAssigmentRequestController(
-					this.project);
+			assignmentRequest.setSelectedProject(project);
 			int number = 1;
 
 			for (String other : assignmentRequest.showAllAssignmentRequests()) {
@@ -48,17 +46,15 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			System.out.println("[C] Choose a Request");
 			System.out.println("[B] Back \n");
 
-			condition = chooseOption(assignmentRequest);
+			condition = chooseOption();
 		}
 	}
 
 	/**
 	 * Switch case that allows the user to choose a functionality
-	 * 
-	 * @param assignmentRequest
-	 *            US356ManageAssigmentRequestController previously instantiated
+	 *
 	 */
-	private boolean chooseOption(US356ManageAssigmentRequestController assignmentRequest) {
+	private boolean chooseOption() {
 
 		boolean loop = false;
 		
@@ -69,7 +65,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 		switch (choice) {
 
 		case "C":
-			chooseRequest(assignmentRequest);
+			chooseRequest();
 			break;
 		case "B":
 			break;
@@ -82,11 +78,9 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 
 	/**
 	 * Method that allows the user to choose a request
-	 * 
-	 * @param assignmentRequest
-	 *            US356ManageAssigmentRequestController previously instantiated
+	 *
 	 */
-	private void chooseRequest(US356ManageAssigmentRequestController assignmentRequest) {
+	private void chooseRequest() {
 
 		System.out.println("\n                 CHOOSE A REQUEST:                  ");
 
@@ -100,7 +94,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			Integer choiceInt = Integer.parseInt(choice);
 
 			if (choiceInt > 0 && choiceInt <= listSize) {
-				chooseApproveOrDisaprove(assignmentRequest, choiceInt);
+				chooseApproveOrDisaprove(choiceInt);
 			}
 
 			else {
@@ -117,13 +111,11 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 
 	/**
 	 * Method that allows the user to choose to approve or cancel a specific request
-	 * 
-	 * @param assignmentRequest
-	 *            US356ManageAssigmentRequestController previously instantiated
+	 *
 	 * @param request
 	 *            Index of the chosen request
 	 */
-	private void chooseApproveOrDisaprove(US356ManageAssigmentRequestController assignmentRequest, int request) {
+	private void chooseApproveOrDisaprove(int request) {
 
 		Scanner input = new Scanner(System.in);
 
@@ -155,5 +147,9 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			assignmentRequest.approveAssignmentRequest();
 			displayAssignmentTaskRequests();
 		}
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 }

@@ -1,5 +1,6 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.model.User;
 
@@ -12,12 +13,20 @@ import java.util.Scanner;
 @Component
 public class CollaboratorMainMenuUI {
 
+	@Autowired
+	private US201and202UpdateUserInfoUI updateUserInfoUI;
+
+	@Autowired
+	private CollectProjectsFromUserUI collectProjectsFromUserUI;
+
+	@Autowired
+	private UserTasksFunctionalitiesMenuUI tasksFunctionalities;
+
 	private User user;
 
 	/**
 	 * Creates the UI
-	 * 
-	 * @param user
+	 *
 	 */
 	public CollaboratorMainMenuUI() {
 
@@ -47,15 +56,15 @@ public class CollaboratorMainMenuUI {
 
 		switch (option) {
 		case "1":
-			US201and202UpdateUserInfoUI updateUserInfoUI = new US201and202UpdateUserInfoUI(this.user);
+			updateUserInfoUI.setUser(this.user);
 			updateUserInfoUI.chooseWhatInfoToUpdate();
 			break;
 		case "2":
-			CollectProjectsFromUserUI collectProjectsFromUserUI = new CollectProjectsFromUserUI(this.user);
+			collectProjectsFromUserUI.setUser(this.user);
 			collectProjectsFromUserUI.collectProjectsFromUser();
 			break;
 		case "3":
-			UserTasksFunctionalitiesMenuUI tasksFunctionalities = new UserTasksFunctionalitiesMenuUI(user);
+			tasksFunctionalities.setUser(this.user);
 			tasksFunctionalities.displayFunctionalities();
 			break;
 		case "B":

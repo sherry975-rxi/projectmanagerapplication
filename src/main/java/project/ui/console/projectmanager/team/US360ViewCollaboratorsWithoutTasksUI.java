@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.team;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US360ViewCollaboratorsWithoutTasksController;
 import project.model.Project;
 import project.model.User;
@@ -7,22 +9,21 @@ import project.model.User;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US360ViewCollaboratorsWithoutTasksUI {
 
-	Project selectedProject;
-	User user;
+	@Autowired
+	private US360ViewCollaboratorsWithoutTasksController controller;
 
-	public US360ViewCollaboratorsWithoutTasksUI(Project selectedProject, User user) {
-		this.selectedProject = selectedProject;
-		this.user = user;
+	private Project selectedProject;
+
+	public US360ViewCollaboratorsWithoutTasksUI() {
 	}
 
 	public void viewUnassignedCollaborators() {
 		
 
 		List<String> idleCollaboratorsInfo;
-
-		US360ViewCollaboratorsWithoutTasksController controller = new US360ViewCollaboratorsWithoutTasksController();
 
 		idleCollaboratorsInfo = controller.showCollaboratorsWithoutTasks(selectedProject);
 
@@ -56,5 +57,9 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 
 		}
 		}
+	}
+
+	public void setSelectedProject(Project selectedProject) {
+		this.selectedProject = selectedProject;
 	}
 }

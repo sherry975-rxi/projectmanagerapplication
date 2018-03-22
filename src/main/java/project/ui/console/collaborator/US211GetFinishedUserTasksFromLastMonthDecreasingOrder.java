@@ -1,5 +1,7 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController;
 import project.model.User;
 
@@ -7,14 +9,17 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 
-	User user;
-	String date;
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	@Autowired
+	private US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController viewTasksFinishedLastMonth;
 
-	public US211GetFinishedUserTasksFromLastMonthDecreasingOrder(User user) {
-		this.user = user;
+
+	User user;
+
+	public US211GetFinishedUserTasksFromLastMonthDecreasingOrder() {
+
 	}
 
 	public void viewLastMonthFinishedTasks() {
@@ -22,7 +27,6 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 		while (loop) {
 			loop = false;
 		Scanner scannerInput = new Scanner(System.in);
-		US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController viewTasksFinishedLastMonth = new US211GetFinishedUserTasksFromLastMonthInDecreasingOrderController();
 		List<String> lastMonthFinishedTasks = viewTasksFinishedLastMonth
 				.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
 		System.out.println("Finished Tasks by Decreasing Order of:");
@@ -52,5 +56,9 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 			}
 
 	}
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

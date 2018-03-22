@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import project.Repository.UserRepository;
@@ -20,6 +21,7 @@ import project.model.User;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US135andUS136SearchUsersControllerTest {
 
 	/**
@@ -37,6 +39,7 @@ public class US135andUS136SearchUsersControllerTest {
 	@Autowired
 	public UserRepository userRepo;
 
+	@Autowired
 	US135andUS136SearchUsersController searchController;
 
 	@Before

@@ -9,11 +9,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import project.Repository.ProjectsRepository;
-import project.Repository.TaskRepository;
-import project.Repository.UserRepository;
 import project.Services.ProjectService;
 import project.Services.TaskService;
 import project.Services.UserService;
@@ -24,39 +22,27 @@ import project.model.User;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
+
 public class US340CreateTaskControllerTest {
 
+	@Autowired
 	UserService userService;
+	@Autowired
 	TaskService taskService;
 	User user1;
 	User userAdmin;
 	Project project;
+	@Autowired
 	ProjectService projectService;
 	Task testTask;
+	@Autowired
 	US340CreateTaskController testControl;
-
-	@Autowired
-	private TaskRepository taskRepository;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private ProjectsRepository projectRepository;
 
 	@Before
 	public void setUp() {
-		// creates an UserContainer
-		userService = new UserService();
-		userService.setUserRepository(userRepository);
 
-		projectService = new ProjectService();
-		projectService.setProjectsRepository(projectRepository);
-
-		taskService = new TaskService();
-		taskService.setTaskRepository(taskRepository);
-
-//		userService.getAllUsersFromUserContainer().clear();
+		// userService.getAllUsersFromUserContainer().clear();
 
 		// create user
 		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
@@ -70,14 +56,6 @@ public class US340CreateTaskControllerTest {
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
 		project = projectService.createProject("name3", "description4", userAdmin);// !!!
-
-		// creates the Controller and asserts the list of unstarted tasks starts at 0
-		testControl = new US340CreateTaskController();
-		testControl.taskService = taskService;
-		/*
-		 * Sets a TaskService to the Controller
-		 */
-		
 
 	}
 

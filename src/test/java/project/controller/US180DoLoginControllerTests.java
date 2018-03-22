@@ -1,23 +1,25 @@
 package project.controller;
 
-import org.junit.After;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import project.Repository.UserRepository;
 import project.Services.UserService;
 import project.model.Profile;
 import project.model.User;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
+
 public class US180DoLoginControllerTests {
 
 	@Autowired
@@ -27,9 +29,8 @@ public class US180DoLoginControllerTests {
 
 	User user1;
 	User userAdmin;
-
+	@Autowired
 	US180DoLoginController doLoginController;
-
 
 	@Before
 	public void setUp() {
@@ -50,14 +51,6 @@ public class US180DoLoginControllerTests {
 
 	}
 
-	@After
-	public void tearDown() {
-		userRepository.deleteAll();
-		user1 = null;
-		userContainer = null;
-		doLoginController = null;
-	}
-
 	// Test with a valid password and valid email
 	@Test
 	public void DoValidLoginControllerTest() {
@@ -66,7 +59,7 @@ public class US180DoLoginControllerTests {
 		String validPassword = new String("123456");
 
 		doLoginController = new US180DoLoginController();
-		doLoginController.userService=this.userContainer;
+		doLoginController.userService = this.userContainer;
 
 		assertTrue(doLoginController.doLogin(validEmail, validPassword));
 
@@ -80,7 +73,7 @@ public class US180DoLoginControllerTests {
 		String invalidPassword = new String("12345");
 
 		doLoginController = new US180DoLoginController();
-		doLoginController.userService=this.userContainer;
+		doLoginController.userService = this.userContainer;
 
 		assertFalse(doLoginController.doLogin(validEmail, invalidPassword));
 
@@ -94,7 +87,7 @@ public class US180DoLoginControllerTests {
 		String validPassword = new String("123456");
 
 		doLoginController = new US180DoLoginController();
-		doLoginController.userService=this.userContainer;
+		doLoginController.userService = this.userContainer;
 
 		assertFalse(doLoginController.doLogin(invalidEmail, validPassword));
 
@@ -108,7 +101,7 @@ public class US180DoLoginControllerTests {
 		String invalidPassword = new String("12345");
 
 		doLoginController = new US180DoLoginController();
-		doLoginController.userService=this.userContainer;
+		doLoginController.userService = this.userContainer;
 
 		assertFalse(doLoginController.doLogin(invalidEmail, invalidPassword));
 

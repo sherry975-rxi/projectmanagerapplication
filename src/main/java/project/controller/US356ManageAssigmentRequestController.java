@@ -18,7 +18,7 @@ public class US356ManageAssigmentRequestController {
 	private Task selectedTask;
 
 	@Autowired
-	private TaskService taskService;
+	public TaskService taskService;
 
 	/*
 	 * Default constructor
@@ -75,7 +75,7 @@ public class US356ManageAssigmentRequestController {
 	 * @return returns a list of strings with all addition requests, or an empty
 	 *         list if the project is null
 	 */
-	public List<String> showAllAssignmentRequests() {
+	public List<String> showAllAssignmentRequests(Project selectedProject) {
 
 		return taskService.viewAllProjectTaskAssignmentRequests(selectedProject);
 	}
@@ -87,7 +87,7 @@ public class US356ManageAssigmentRequestController {
 	 * @param index
 	 *            Index of the request.
 	 */
-	public void setSelectedAdditionRequest(int index) {
+	public void setSelectedAdditionRequest(int index, Project selectedProject) {
 		this.selectedAdditionRequest = taskService.getAllProjectTaskAssignmentRequests(selectedProject).get(index);
 		this.selectedTask = selectedAdditionRequest.getTask();
 	}

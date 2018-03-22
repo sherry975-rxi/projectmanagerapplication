@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.PrintProjectInfoController;
 import project.controller.US380GetProjectExpiredTaskListController;
 import project.model.Project;
@@ -7,13 +9,20 @@ import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
+
+	@Autowired
+	private PrintProjectInfoController projectInfo;
+
+	@Autowired
+	private US380GetProjectExpiredTaskListController controller;
 
 	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(project);
+		projectInfo.setProject(project);
 
 		boolean loop = true;
 		while (loop) {
@@ -34,8 +43,6 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		System.out.println("     UNFINISHED TASKS WITH EXPIRED DEADLINE");
 		System.out.println(line);
 
-		US380GetProjectExpiredTaskListController controller = new US380GetProjectExpiredTaskListController();
-
 		for (int i = 0; i < controller.getUnfinishedTaskListWithExpiredDeadline(project).size(); i++) {
 			String taskInfo = controller.getUnfinishedTaskListWithExpiredDeadline(project).get(i);
 			System.out.println(taskInfo);
@@ -49,7 +56,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		switch (option) {
 
 		case ("B"):
-			return;
+			break;
 
 		default:
 			System.out.println("Please choose a valid option: ");

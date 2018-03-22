@@ -51,4 +51,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 		}
 	}
 
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
+	}
 }

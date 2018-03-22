@@ -1,26 +1,30 @@
 package project.controller;
 
-import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import project.Repository.UserRepository;
 import project.Services.UserService;
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@ComponentScan({ "project.services", "project.model", "project.controller" })
+
 public class US201and202UpdateUserInfoController_Test {
 
 	@Autowired
@@ -31,6 +35,7 @@ public class US201and202UpdateUserInfoController_Test {
 	Address address2;
 	UserService userContainer;
 
+	@Autowired
 	US201and202UpdateUserInfoController controller;
 
 	@Before
@@ -40,8 +45,8 @@ public class US201and202UpdateUserInfoController_Test {
 		userContainer = new UserService(userRepository);
 
 		// create users
-		u1 = userContainer.createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000",
-				"Rua Maria", "4444-444", "221234567", "Porto", "Portugal");
+		u1 = userContainer.createUser("Daniel", "user2@gmail.com", "123", "Empregado", "930000000", "Rua Maria",
+				"4444-444", "221234567", "Porto", "Portugal");
 		u1.getAddressList().clear();
 		// create a new address
 		address1 = u1.createAddress("Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
@@ -55,35 +60,31 @@ public class US201and202UpdateUserInfoController_Test {
 		// add users to company
 		userContainer.addUserToUserRepositoryX(u1);
 
-
 		controller = new US201and202UpdateUserInfoController();
-		controller.userContainer=this.userContainer;
+		controller.userContainer = this.userContainer;
 
 	}
 
+	/**
+	 * this tests database saving method
+	 */
+	@Test
+	public void updateAndSaveToDB() {
 
-    /**
-     * this tests database saving method
-     */
-    @Test
-    public void updateAndSaveToDB() {
+		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 1);
 
-        assertEquals(userContainer.getAllUsersFromUserContainer().size(), 1);
+		assertTrue(u1.getName() == "Daniel");
 
-        assertTrue(u1.getName() == "Daniel");
+		controller.updateUserName(u1, "Pedro");
 
-        controller.updateUserName(u1, "Pedro");
+		assertTrue(u1.getName() == "Pedro");
 
-        assertTrue(u1.getName() == "Pedro");
+		controller.alterUser(u1);
 
-        controller.alterUser(u1);
+		assertEquals(userContainer.getAllUsersFromUserContainer().size(), 1);
 
-        assertEquals(userContainer.getAllUsersFromUserContainer().size(), 1);
-
-        assertTrue("Pedro".equals(userContainer.getAllUsersFromUserContainer().get(0).getName()));
-    }
-
-
+		assertTrue("Pedro".equals(userContainer.getAllUsersFromUserContainer().get(0).getName()));
+	}
 
 	/**
 	 * this test update name
@@ -288,7 +289,7 @@ public class US201and202UpdateUserInfoController_Test {
 		u1.setUserProfile(Profile.COLLABORATOR);
 
 		userContainer.addUserToUserRepositoryX(u1);
-		controller.userContainer=this.userContainer;
+		controller.userContainer = this.userContainer;
 
 		// Creates a list with the addresses of the user
 		List<Address> userAddresses = new ArrayList<>();
@@ -296,7 +297,8 @@ public class US201and202UpdateUserInfoController_Test {
 		// Adds address 1 to the user address list
 		userAddresses.add(address1);
 
-		// checks that both objects contain the same addresses (same size and matching street)
+		// checks that both objects contain the same addresses (same size and matching
+		// street)
 		assertEquals(controller.getAllAddresses(u1).size(), userAddresses.size());
 		assertTrue("Testy Street".equals(controller.getAllAddresses(u1).get(0).getStreet()));
 
@@ -306,10 +308,11 @@ public class US201and202UpdateUserInfoController_Test {
 		// adds a new address to the comparison list
 		userAddresses.add(address2);
 
-		// check if both results are the same, both lists having the same size and streets matching
+		// check if both results are the same, both lists having the same size and
+		// streets matching
 		assertEquals(controller.getAllAddresses(u1).size(), userAddresses.size());
-        assertTrue("Testy Street".equals(controller.getAllAddresses(u1).get(0).getStreet()));
-        assertTrue("Testy Street2".equals(controller.getAllAddresses(u1).get(1).getStreet()));
+		assertTrue("Testy Street".equals(controller.getAllAddresses(u1).get(0).getStreet()));
+		assertTrue("Testy Street2".equals(controller.getAllAddresses(u1).get(1).getStreet()));
 
 	}
 
@@ -337,14 +340,13 @@ public class US201and202UpdateUserInfoController_Test {
 	 * Tests the creator of an address in controller
 	 */
 	@Test
-	public void testCreateNewAddress(){
+	public void testCreateNewAddress() {
 		// create a new address in user u1
 		address2 = u1.createAddress("Testy Street2", "2401-342", "Testburg2", "Testo2", "Testistan2");
 		// create an identical address in controller
 		address1 = controller.createNewAddress("Testy Street2", "2401-342", "Testburg2", "Testo2", "Testistan2");
-		//compares similar objects
+		// compares similar objects
 		assertTrue(address2.equals(address1));
-
 
 	}
 

@@ -75,14 +75,13 @@ public class US207CreateTaskReportControllerTest {
 		user2.setUserProfile(Profile.COLLABORATOR);
 		user1.setUserProfile(Profile.COLLABORATOR);
 
-		// create project 1 in company 1
+		// create project 
 		project = projectService.createProject("name3", "description4", user2);
 
-		// add project 1 to company 1
+		// add project 1 to ProjectService
 		projectService.addProjectToProjectContainer(project);
 		
-		//create tasks
-		
+		//create tasks		
 		task1 = taskService.createTask("Create tests", project);
 		task2 = taskService.createTask("Create UI", project);
 		
@@ -242,23 +241,17 @@ public class US207CreateTaskReportControllerTest {
 
 	@Test
 	public void testUS207getReportsCreationDateByGivenUser() {
-		/*
-		 * Creates two TaskCollaborators
-		 */
-		taskCollab1 = task1.createTaskCollaborator(projCollab1);
-
-		/*
-		 * Adds the TaskCollaborators to the task
-		 */
-		task1.addTaskCollaboratorToTask(taskCollab1);
-
+		
+		controller.setUsername(user1);
+		controller.setEmail(user1.getEmail());
+		
 		Calendar dayOfReport = Calendar.getInstance();
 		/*
 		 * Creates a report
 		 */
 		controller.createReportController(10, dayOfReport);
 
-		assertEquals(controller.getReportsCreationDateByGivenUser(taskCollab1).get(0), dayOfReport);
+		assertEquals(controller.getReportsCreationDateByGivenUser(task1.getActiveTaskCollaboratorByEmail(user1.getEmail())).get(0), dayOfReport);
 	}
 
 	@Test

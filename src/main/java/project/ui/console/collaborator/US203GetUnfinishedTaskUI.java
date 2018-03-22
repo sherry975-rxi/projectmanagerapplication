@@ -1,11 +1,19 @@
 package project.ui.console.collaborator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import project.controller.US203GetUserStartedNotFinishedTaskListInIncreasingOrderController;
 import project.model.User;
 
 import java.util.Scanner;
 
+@Component
 public class US203GetUnfinishedTaskUI {
+	@Autowired
+	private US203GetUserStartedNotFinishedTaskListInIncreasingOrderController unfinishedTaskByUser;
+
+	@Autowired
+	private TaskDetailsUI taskSelected;
 
 	public void displayOptions(User user1) {
 		boolean loop = true;
@@ -14,7 +22,6 @@ public class US203GetUnfinishedTaskUI {
 		int projID;
 		String[] split;
 		User user = user1;
-		US203GetUserStartedNotFinishedTaskListInIncreasingOrderController unfinishedTaskByUser = new US203GetUserStartedNotFinishedTaskListInIncreasingOrderController();
 		int t;
 		t = 0;
 		Scanner scannerInput = new Scanner(System.in);
@@ -48,7 +55,9 @@ public class US203GetUnfinishedTaskUI {
 				split = option.split("\\.");
 				projID = Integer.valueOf(split[0]);
 
-				TaskDetailsUI taskSelected = new TaskDetailsUI(option, projID, user);
+				taskSelected.setProjectID(projID);
+				taskSelected.setTaskID(option);
+				taskSelected.setUser(user);
 				taskSelected.taskDataDisplay();
 			}
 

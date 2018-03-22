@@ -15,7 +15,10 @@ import project.model.User;
 public class US351AddColaboratorToProjectTeamController {
 
 	@Autowired
-	public ProjectService projectService;
+	private ProjectService projectService;
+
+	@Autowired
+	private UserService userContainer = new UserService();
 
 	/*
 	 * Default constructor for controller
@@ -37,7 +40,7 @@ public class US351AddColaboratorToProjectTeamController {
 	public void addUserToProjectTeam(User user, Project project, int effort) {
 
 		ProjectCollaborator projectCollaborator = projectService.createProjectCollaborator(user, project, effort);
-//		projectService.addProjectCollaborator(projectCollaborator);
+		// projectService.addProjectCollaborator(projectCollaborator);
 
 	}
 
@@ -47,7 +50,6 @@ public class US351AddColaboratorToProjectTeamController {
 	 * @return List with all the available users
 	 */
 	public List<User> getAllUsers() {
-		UserService userContainer = new UserService();
 		return userContainer.getAllActiveCollaboratorsFromRepository();
 	}
 
