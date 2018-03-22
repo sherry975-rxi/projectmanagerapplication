@@ -17,7 +17,7 @@ public class US115andUS116SetUserStateUI {
 	private US115andUS116SetUserStateController controllerA;
 
 	public void changeUserState(User user) {
-
+		controllerA.setToChangeState(user);
 		System.out.println(user.getIdNumber() + " - " + controllerA.userStateAsString() + ": " + user.getName() + " - "
 				+ controllerB.userProfileAsString(user));
 

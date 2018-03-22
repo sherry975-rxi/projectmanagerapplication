@@ -17,6 +17,7 @@ public class US110andUS112SetUserProfileUI {
 	private US115andUS116SetUserStateController controllerB;
 
 	public void changeUserProfile(User user) {
+		controllerB.setToChangeState(user);
 		Scanner input = new Scanner(System.in);
 		String option;
 		System.out.println(user.getIdNumber() + " - " + controllerB.userStateAsString() + ": " + user.getName() + " - "
