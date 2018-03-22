@@ -72,9 +72,7 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		taskService.saveTask(taskA);
 		taskService.saveTask(taskB);
 
-		us206v2Controller = new US206RemovalTaskRequestController(userRui);
-		us206v2Controller.taskService = taskService;
-		us206v2Controller.projectContainer = projectService;
+		us206v2Controller.setUser(userRui);
 
 	}
 

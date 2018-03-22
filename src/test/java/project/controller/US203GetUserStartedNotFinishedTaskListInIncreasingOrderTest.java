@@ -168,9 +168,6 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		projectContainer.updateProjectCollaborator(projCollab1);
 		projectContainer.updateProjectCollaborator(projCollab2);
 
-		// creates the controller
-		tasksFiltersController = new US203GetUserStartedNotFinishedTaskListInIncreasingOrderController();
-		tasksFiltersController.taskService = this.taskService;
 	}
 
 	/**
