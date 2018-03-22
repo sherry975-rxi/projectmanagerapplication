@@ -1,12 +1,11 @@
 
-Actor->UI: Get project unassigned tasks
-UI-->Actor: Ask which project
-Actor->UI: Input Project
+Actor->UI: Get project unassigned tasks (project)
 
-UI->Controller: Create controller
+UI->Controller: Create controller (project)
 Controller->TaskService: Get project tasks without active collaborators assigned
 TaskService->TaskRepository: getProjectTasks(Project project)
 TaskRepository->DataBase: findAllTasksByProject(project)
+DataBase->TaskRepository: return Project Tasks
 TaskRepository-->TaskService: return Project Tasks
 TaskService->Task: isTaskTeamEmpty or doesTaskTeamHaveNOActiveUsers
 Task-->TaskService:return true
