@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -197,32 +198,59 @@ public class LoadProjectData {
 
 								task.addProjectCollaboratorToTask(projCollaborator);
 
-								//taskService.saveTask(task);
+								NodeList nTaskListConnections = documentProjects.getElementsByTagName("lista_ligacoes_tarefa");
 
-								NodeList nTaskListConnections = documentProjects.getElementsByTagName("colaborador_tarefa");
-
-								for (int indexTaskListConnections = 0; indexTaskListConnections < nTaskListConnections
-										.getLength(); indexTaskListConnections++) {
+								for (int indexTaskListConnections = 0; indexTaskListConnections < nTaskListConnections.getLength() -1; indexTaskListConnections++) {
 
 									Node nNodeTaskListConnections = nTaskListConnections.item(indexTaskListConnections);
 
 									if (nNodeTaskListConnections.getNodeType() == Node.ELEMENT_NODE) {
 										Element eElementNodeTaskListConnections = (Element) nNodeTaskListConnections;
+										
+									String startDateString = eElementNodeTaskListConnections
+												.getElementsByTagName("data_inicio").item(0).getTextContent();
+									
+									Calendar startDateTaskCollaborator = convertStringToCalendar(startDateString);
+																
+                                    TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(eElementnNodeTaskCollaborator.getElementsByTagName("colaborador_id").item(0).getTextContent());
+                                    
+                                    taskCollab.setStartDate(startDateTaskCollaborator);		
+                                    
+                                    String finishDateString = eElementNodeTaskListConnections
+											.getElementsByTagName("data_fim").item(0).getTextContent();
+                                    
+                                    Calendar finishDateTaskCollaborator = convertStringToCalendar(finishDateString); 
+                                    
+                                   // taskCollab.setFinishDate(finishDateTaskCollaborator);
+                                    
+						
+                                    
+                                	NodeList nReportList = documentProjects.getElementsByTagName("report");
 
-										Calendar StartDate = convertStringToCalendar(eElementNodeTaskListConnections
-												.getElementsByTagName("data_inicio").item(0).getTextContent());
+    								for (int indexReport = 0; indexReport < nReportList.getLength() -1; indexReport++) {
 
-										TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(
-												eElementnNodeTaskCollaborator.getElementsByTagName("colaborador_id")
-														.item(0).getTextContent());
+    									Node nNodeReport = nReportList.item(indexReport);
 
-										taskCollab.setStartDate(StartDate);
-
-										taskService.saveTask(task);
+    									if (nNodeReport.getNodeType() == Node.ELEMENT_NODE) {
+    										Element eElementNodeReport = (Element) nNodeReport;
+    																	
+    										Calendar reportStartDate = convertStringToCalendar(eElementNodeReport.getElementsByTagName("data_inicio").item(0).getTextContent());
+                                    
+    										String integer = eElementNodeReport.getElementsByTagName("esforco").item(0).getTextContent(); 
+    										
+    										Integer timeToReport = Integer.valueOf(eElementNodeReport.getElementsByTagName("esforco").item(0).getTextContent());
+    										
+    										task.createReport(taskCollab, reportStartDate, timeToReport);
+    							  										
+    										}
+    									}                              		
 									}
-								}
+								}							
 							}
 						}
+						
+						taskService.saveTask(task);
+						
 					}
 				}
 			}
@@ -240,15 +268,18 @@ public class LoadProjectData {
 	 * @throws ParseException
 	 */
 	private Calendar convertStringToCalendar(String calendar) throws ParseException {
+		
+		if(calendar != "") { 
+			Calendar date = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			date.setTime(sdf.parse(calendar));
+			date.set(Calendar.HOUR_OF_DAY, 0);
+			date.set(Calendar.MINUTE, 0);
+			date.set(Calendar.SECOND, 0);
+			date.set(Calendar.MILLISECOND, 0);
 
-		Calendar date = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-		date.setTime(sdf.parse(calendar));
-		date.set(Calendar.HOUR_OF_DAY, 0);
-		date.set(Calendar.MINUTE, 0);
-		date.set(Calendar.SECOND, 0);
-		date.set(Calendar.MILLISECOND, 0);
-
-		return date;
+			return date;
+	}
+		return null;
 	}
 }
