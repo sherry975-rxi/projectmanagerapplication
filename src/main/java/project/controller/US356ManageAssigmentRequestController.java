@@ -17,7 +17,7 @@ public class US356ManageAssigmentRequestController {
 	private Task selectedTask;
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	/*
 	 * Default constructor

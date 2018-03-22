@@ -17,7 +17,7 @@ public class US351AddColaboratorToProjectTeamController {
 	private ProjectService projectService;
 
 	@Autowired
-	private UserService userContainer = new UserService();
+	private UserService userContainer;
 
 	/*
 	 * Default constructor for controller

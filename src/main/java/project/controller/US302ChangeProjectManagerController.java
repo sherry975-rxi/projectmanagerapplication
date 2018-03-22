@@ -20,7 +20,7 @@ import java.util.List;
 public class US302ChangeProjectManagerController {
 
 	@Autowired
-	public UserService userService;
+	private UserService userService;
 
 	private User selectedManager;
 	private Project selectedProject;

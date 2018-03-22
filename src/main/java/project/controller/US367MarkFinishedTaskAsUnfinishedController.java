@@ -10,7 +10,7 @@ import project.model.Task;
 public class US367MarkFinishedTaskAsUnfinishedController {
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	private String taskID;
 

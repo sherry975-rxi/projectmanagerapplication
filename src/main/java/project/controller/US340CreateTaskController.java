@@ -10,7 +10,7 @@ import project.model.Task;
 public class US340CreateTaskController {
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	private Project chosenProject;
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderController {
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	public US203GetUserStartedNotFinishedTaskListInIncreasingOrderController() {
 

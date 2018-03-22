@@ -13,7 +13,7 @@ import java.util.List;
 public class US375GetProjectNotStartedTaskListController {
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	/*
 	 * Default constructor

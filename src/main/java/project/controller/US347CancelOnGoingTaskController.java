@@ -17,7 +17,7 @@ import project.model.Task;
 public class US347CancelOnGoingTaskController {
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	private String taskID;
 	private Project project;

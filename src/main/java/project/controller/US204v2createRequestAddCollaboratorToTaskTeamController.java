@@ -13,10 +13,10 @@ import project.model.User;
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	@Autowired
-	public ProjectService projectService;
+	private ProjectService projectService;
 
 	public User user;
 	public Project project;

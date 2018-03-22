@@ -20,10 +20,10 @@ public class US205MarkTaskAsFinishedCollaboratorController {
 	List<Task> unfinishedTaskFromProject;
 
 	@Autowired
-	public ProjectService projectContainer;
+	private ProjectService projectContainer;
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 	public void setUsername(User username) {
 		this.username = username;

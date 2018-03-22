@@ -27,10 +27,10 @@ public class US206RemovalTaskRequestController {
 	private User user;
 
 	@Autowired
-	public ProjectService projectContainer;
+	private ProjectService projectContainer;
 
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 	
 	public User getUser() {
 		return user;

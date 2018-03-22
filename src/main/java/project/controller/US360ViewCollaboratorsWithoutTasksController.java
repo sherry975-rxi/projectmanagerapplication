@@ -16,9 +16,9 @@ public class US360ViewCollaboratorsWithoutTasksController {
 
 
 	@Autowired
-	public ProjectService projectService;
+	private ProjectService projectService;
 	@Autowired
-	public TaskService taskService;
+	private TaskService taskService;
 
 
 	/**
