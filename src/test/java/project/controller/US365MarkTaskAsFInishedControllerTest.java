@@ -199,7 +199,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 		// create controller for ongoing task 1 (of project 1), and asserts Task1Ongoing
 		// has been properly marked as finished
 		us365controller.setSelectedProject(project1);
-		us365controller.setTaskToBeMarked(task1OnGoing);
+		us365controller.setTaskToBeMarked(task1OnGoing.getTaskID());
 		task1OnGoing.setTaskState(new Finished());
 		task1OnGoing.setCurrentState(StateEnum.FINISHED);
 		taskService.saveTask(task1OnGoing);
@@ -212,7 +212,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 		// create controller for ready task 3 (of project 2), then asserts task3 cannot
 		// be marked as finished, since it's not ongoing
 		us365controller.setSelectedProject(project2);
-		us365controller.setTaskToBeMarked(task3);
+		us365controller.setTaskToBeMarked(task3.getTaskID());
 		taskService.saveTask(task3);
 		us365controller.setTaskAsFinished();
 
