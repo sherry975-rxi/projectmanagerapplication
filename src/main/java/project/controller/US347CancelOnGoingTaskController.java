@@ -22,20 +22,12 @@ public class US347CancelOnGoingTaskController {
 	private String taskID;
 	private Project project;
 
-	public US347CancelOnGoingTaskController() {
-		//Empty constructor created for JPA integration tests
-
-	}
-
 	/**
-	 * Constructor
+	 * Empty constructor created for JPA integration tests
 	 *
-	 * @param taskID  task id to give to the task
-	 * @param project project in which to create the task
 	 */
-	public US347CancelOnGoingTaskController(String taskID, Project project) {
-		this.taskID = taskID;
-		this.project = project;
+	public US347CancelOnGoingTaskController() {
+
 	}
 
 	public String getTaskID() {
