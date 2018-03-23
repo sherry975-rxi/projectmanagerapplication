@@ -12,7 +12,7 @@ public class US340CreateTaskController {
 	@Autowired
 	private TaskService taskService;
 
-	private Project chosenProject;
+
 
 	/**
 	 * This constructor creates a target controller. Currently, it receives a
@@ -22,10 +22,6 @@ public class US340CreateTaskController {
 	public US340CreateTaskController() {
 		//Empty constructor created for JPA integration tests
 
-	}
-
-	public void setChosenProject(Project chosenProject) {
-		this.chosenProject = chosenProject;
 	}
 
 	public TaskService getTaskService() {
