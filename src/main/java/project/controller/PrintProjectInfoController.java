@@ -169,7 +169,7 @@ public class PrintProjectInfoController {
 		String toPrint = "---";
 
 		if (String.valueOf(this.project.getProjectBudget()) != null) {
-			toPrint = String.valueOf(this.project.getProjectBudget());
+			toPrint = String.valueOf(this.project.getBudget());
 		}
 
 		return toPrint;

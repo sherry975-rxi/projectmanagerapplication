@@ -77,7 +77,7 @@ public class ProjectTest {
 		p1.setEffortUnit(EffortUnit.HOURS);
 		p1.setProjectBudget(100);
 		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
-		assertEquals(100, p1.getProjectBudget());
+		assertEquals(100, p1.getProjectBudget(), 0.001);
 		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
 		assertEquals(0, p1.getProjectStatus());
 		assertTrue(p1.isProjectManager(user1));
@@ -344,7 +344,7 @@ public class ProjectTest {
 		assertEquals("Desenvolver código", p1.getDescription());
 		
 		p1.setBudget(10);
-		assertEquals(10, p1.getBudget()); 		
+		assertEquals(10, p1.getBudget(), 0.001); 		
 
 	}
 	

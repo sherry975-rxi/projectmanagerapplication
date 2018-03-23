@@ -112,7 +112,7 @@ public class US301CreateProjectController {
 	 */
 	public void changeEffortUnitToPersonMonth() {
 
-		createdProject.setEffortUnit(EffortUnit.PERSON_MONTH);
+		createdProject.setEffortUnit(EffortUnit.PM);
 
 	}
 

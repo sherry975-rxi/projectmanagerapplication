@@ -185,7 +185,7 @@ public class US301CreateProjectUI {
 		dataInput = dataIn.nextLine();
 		if ("0".equals(dataInput)) {
 			if (currentEffortUnit.equals(EffortUnit.HOURS)) {
-				currentEffortUnit = EffortUnit.PERSON_MONTH;
+				currentEffortUnit = EffortUnit.PM;
 				System.out.println("The effort Unit of this project changed to Person/Month.");
 			} else {
 				currentEffortUnit = EffortUnit.HOURS;
@@ -234,7 +234,7 @@ public class US301CreateProjectUI {
 		} else {
 			controller.createProject(projectName, projectDescription, projectManager);
 			controller.changeBudget(budget);
-			if (currentEffortUnit.equals(EffortUnit.PERSON_MONTH)) {
+			if (currentEffortUnit.equals(EffortUnit.PM)) {
 				controller.changeEffortUnitToPersonMonth();
 			}
 			System.out.println("Project created!");
