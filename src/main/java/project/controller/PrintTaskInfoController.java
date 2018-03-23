@@ -36,31 +36,15 @@ public class PrintTaskInfoController {
 
 	}
 
-	/**
-	 * This constructor exists only for JPA integration testing
-	 *
-	 */
-	public PrintTaskInfoController(Task task, Project project) {
-		this.task=task;
-		this.project=project;
-	}
-
-
 	PrintTaskInfoController(Task task) {
 		this.task = task;
-	}
-
-	public PrintTaskInfoController(String taskID, Integer projeID) {
-		this.taskID = taskID;
-		this.projeID = projeID;
-		setProjectAndTask();
 	}
 
 	public void setProjectAndTask() {
 		this.project = projService.getProjectById(projeID);
 		this.task = taskService.getTaskByTaskID(taskID);
 	}
-
+	
 	/**
 	 * This method get the task's name and return it as a String
 	 *

@@ -101,9 +101,6 @@ public class US361AssignTaskToCollaboratorControllerTest {
 	public void setProjectCollaborator() {
 		
 		controller.setProject(project);
-		
-		// asserts that the projectCollaborator is null
-		assertEquals(controller.getUserToAddToTask(), null);
 
 		// sets the projectCollaborator and then checks if is equal to the
 		// projCollaborator
@@ -126,5 +123,18 @@ public class US361AssignTaskToCollaboratorControllerTest {
 		expResult.add(info);
 
 		assertEquals(expResult, controller.getProjectActiveTeam());
+	}
+	
+	@Test
+	public void testGettersAndSetters() {
+		controller.setProjectCollaborator(projCollaborator);
+		assertEquals(projCollaborator, controller.getProjectCollaborator());
+		
+		controller.setTask(testTask2);
+		assertEquals(testTask2, controller.getTask());
+		
+		controller.setProject(project);
+		assertEquals(project, controller.getProject());
+		
 	}
 }

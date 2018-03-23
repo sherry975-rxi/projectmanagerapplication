@@ -29,16 +29,7 @@ public class US302ChangeProjectManagerController {
 	public US302ChangeProjectManagerController() {
 
 	}
-
-	/**
-	 * Constructor for project creation controller, it receives a project whose
-	 * manager is to be changed and stores its project manager
-	 */
-	public US302ChangeProjectManagerController(Project toChangeManager) {
-		selectedProject = toChangeManager;
-		selectedManager = toChangeManager.getProjectManager();
-	}
-
+	
 	/**
 	 * This controller returns a list of all activeCollaborators in the User
 	 * repository

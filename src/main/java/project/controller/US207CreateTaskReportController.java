@@ -32,24 +32,6 @@ public class US207CreateTaskReportController {
 
     }
 
-    /**
-     * Constructor of US207CreateTaskReportController
-     *
-     * @param email The email of the user that will create a task report
-     */
-    public void us207setTaskReportController(String email, String taskID) {
-
-		this.username = userContainer.getUserByEmail(email);
-		this.email = email;
-
-		for (Task other : taskService.getStartedNotFinishedUserTaskList(username)) {
-			if (other.getTaskID().equals(taskID)) {
-				task = other;
-			}
-		}
-
-	}
-
 	/**
 	 * This method returns a TaskCollaborator by its email
 	 *
