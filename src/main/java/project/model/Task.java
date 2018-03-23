@@ -43,10 +43,10 @@ public class Task {
 	private Calendar finishDate;
 	@javax.persistence.Transient
 	private TaskStateInterface taskState;
-	private Integer estimatedTaskEffort;
+	private double estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;
 	private Calendar taskDeadline;
-	private Integer taskBudget;
+	private double taskBudget;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Task> taskDependency;
@@ -341,7 +341,7 @@ public class Task {
 	 * 
 	 * @return estimatedTaskEffort
 	 */
-	public int getEstimatedTaskEffort() {
+	public double getEstimatedTaskEffort() {
 		return this.estimatedTaskEffort;
 	}
 
@@ -351,7 +351,7 @@ public class Task {
 	 * @param newEstimatedTaskEffort
 	 *            the effort estimated for a task
 	 */
-	public void setEstimatedTaskEffort(int newEstimatedTaskEffort) {
+	public void setEstimatedTaskEffort(double newEstimatedTaskEffort) {
 		this.estimatedTaskEffort = newEstimatedTaskEffort;
 		this.taskState.doAction(this);
 	}
@@ -428,7 +428,7 @@ public class Task {
 	 * 
 	 * @return estimatedBudgetCostTask
 	 */
-	public int getTaskBudget() {
+	public double getTaskBudget() {
 		return this.taskBudget;
 	}
 
@@ -438,7 +438,7 @@ public class Task {
 	 * @param newEstimatedBudgetCostTask
 	 *            an estimated budget for the task
 	 */
-	public void setTaskBudget(int newEstimatedBudgetCostTask) {
+	public void setTaskBudget(double newEstimatedBudgetCostTask) {
 		this.taskBudget = newEstimatedBudgetCostTask;
 		this.taskState.doAction(this);
 	}
@@ -1287,7 +1287,7 @@ public class Task {
 	 * Removes request to add a certain project collaborator to a specific task
 	 * team.
 	 *
-	 * @param request
+	 * @param projCollaborator
 	 *            Request to remove from the list
 	 */
 
