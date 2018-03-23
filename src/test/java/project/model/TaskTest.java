@@ -377,11 +377,11 @@ public class TaskTest {
 
 		taskTest.setEstimatedTaskEffort(expected);
 
-		assertEquals(expected, taskTest.getEstimatedTaskEffort());
+		assertEquals(expected, taskTest.getEstimatedTaskEffort(), 0.001);
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#setEstimatedTaskEffort(int)}.
+	 * Test method for {@link project.model.Task#setEstimatedTaskEffort(double)}.
 	 */
 	@Test
 	public void testSetEstimatedTaskEffort() {
@@ -390,7 +390,7 @@ public class TaskTest {
 
 		taskTest.setEstimatedTaskEffort(expected);
 
-		assertEquals(expected, taskTest.getEstimatedTaskEffort());
+		assertEquals(expected, taskTest.getEstimatedTaskEffort(), 0.01);
 	}
 
 	/**
@@ -457,20 +457,20 @@ public class TaskTest {
 
 		taskTest.setTaskBudget(expected);
 
-		assertEquals(expected, taskTest.getTaskBudget());
+		assertEquals(expected, taskTest.getTaskBudget(), 0.01);
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#setTaskBudget(int)}.
+	 * Test method for {@link project.model.Task#setTaskBudget(double)}.
 	 */
 	@Test
 	public void testSetTaskBudget() {
 
-		int expected = 100;
+		double expected = 100.0;
 
 		taskTest.setTaskBudget(expected);
 
-		assertEquals(expected, taskTest.getTaskBudget());
+		assertEquals(expected, taskTest.getTaskBudget(), 0.01);
 	}
 
 	/**
@@ -1300,7 +1300,7 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#UnfinishTask()}.
+	 * Test method for {@link project.model.Task#isUnfinishTask()}.
 	 */
 	@Test
 	public void testUnfinishTask() {
@@ -1311,21 +1311,21 @@ public class TaskTest {
 
 		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
 
-		assertTrue(taskReadyToFinishTest.UnfinishTask());
+		assertTrue(taskReadyToFinishTest.isUnfinishTask());
 
 		assertFalse(taskReadyToFinishTest.isTaskFinished());
 
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#UnfinishTask()}.
+	 * Test method for {@link project.model.Task#isUnfinishTask()}.
 	 */
 	@Test
 	public void testUnfinishTaskWhithTaskStateSetToOnGoing() {
 
 		taskReadyToFinishTest.cancelTask();
 
-		assertFalse(taskReadyToFinishTest.UnfinishTask());
+		assertFalse(taskReadyToFinishTest.isUnfinishTask());
 
 	}
 

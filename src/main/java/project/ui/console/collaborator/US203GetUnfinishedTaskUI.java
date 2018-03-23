@@ -58,11 +58,12 @@ public class US203GetUnfinishedTaskUI {
 
 
 			try {
-				split = option.split("\\.");
-				projID = Integer.valueOf(split[0]);
+				//split = option.split("\\.");
+				//projID = Integer.valueOf(split[0]);
 
-				taskSelected.setProjectID(projID);
-				taskSelected.setTaskID(option);
+
+                taskSelected.setTaskID(option);
+				//taskSelected.setProjectID(projID);
 				taskSelected.setUser(user);
 				taskSelected.taskDataDisplay();
 			}

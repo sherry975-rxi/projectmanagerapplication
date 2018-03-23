@@ -1,10 +1,12 @@
 package project.model;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "ProjectCollaborator")
+@Transactional
 public class ProjectCollaborator implements Serializable {
 
 	@Id
@@ -36,7 +38,7 @@ public class ProjectCollaborator implements Serializable {
 	 * @param costPerEffort
 	 *            how much the Project Collaborator costs per unit of effort
 	 */
-	public ProjectCollaborator(User collab, int costPerEffort) {
+	public ProjectCollaborator(User collab, double costPerEffort) {
 		this.collaborator = collab;
 		this.status = true;
 		this.costPerEffort = costPerEffort;
@@ -66,7 +68,7 @@ public class ProjectCollaborator implements Serializable {
 		return costPerEffort;
 	}
 
-	public void setCostPerEffort(int costPerEffort) {
+	public void setCostPerEffort(double costPerEffort) {
 		this.costPerEffort = costPerEffort;
 	}
 
@@ -105,6 +107,7 @@ public class ProjectCollaborator implements Serializable {
 	 * 
 	 * @return Returns the User Data
 	 */
+	@Transactional
 	public User getUserFromProjectCollaborator() {
 		return this.collaborator;
 	}

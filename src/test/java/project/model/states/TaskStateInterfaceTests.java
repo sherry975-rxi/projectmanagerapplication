@@ -119,7 +119,7 @@ public class TaskStateInterfaceTests {
 		
 		//Marks the task as Unfinished
 		task.addProjectCollaboratorToTask(collaborator);
-		task.UnfinishTask();
+		task.isUnfinishTask();
 		
 		//Asserts that the taskState changed to Ongoing again
 		assertEquals("OnGoing", task.viewTaskStateName()); 

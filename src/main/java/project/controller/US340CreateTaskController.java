@@ -22,7 +22,14 @@ public class US340CreateTaskController {
 	 * controller
 	 */
 	public US340CreateTaskController() {
+		//Empty constructor created for JPA integration tests
+
 	}
+
+	public void setChosenProject(Project chosenProject) {
+		this.chosenProject = chosenProject;
+	}
+
 
 	public TaskService getTaskService() {
 		return this.taskService;

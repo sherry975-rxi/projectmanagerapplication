@@ -1,9 +1,5 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import project.model.*;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -151,7 +147,7 @@ public class PrintTaskInfoControllerTest {
 	 */
 	@Test
 	public void testPrintTaskStateInfo() {
-		assertEquals(controller.printTaskStateInfo(), "Planned");
+		assertEquals(controller.printTaskStateInfo(), "PLANNED");
 	}
 
 	/**
@@ -259,8 +255,28 @@ public class PrintTaskInfoControllerTest {
 	 */
 	@Test
 	public void testPrintTaskBudgetInfo() {
-		task1.setTaskBudget(20);
-		assertEquals(controller.printTaskBudgetInfo(), "20");
-
+		task1.setTaskBudget(20.0);
+		assertEquals(controller.printTaskBudgetInfo(), "20.0");
+	}
+	
+	@Test
+	public void testSettersAndGetters() {
+		controller.setDateFormat(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss"));
+		assertEquals(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss"), controller.getDateFormat());
+		
+		Integer projectIDExpected = project.getIdCode();
+		controller.setProject(project);
+		controller.setProjeID(projectIDExpected);
+		assertEquals(projectIDExpected, controller.getProjeID());
+		
+		String taskIDExpected = task1.getTaskID();
+		controller.setTask(task1);
+		controller.setTaskID(taskIDExpected);
+		assertEquals(taskIDExpected, controller.getTaskID());
+		
+		controller.setProjectAndTask();
+		assertEquals(task1, controller.getTask());
+		assertEquals(project, controller.getProject());
+		
 	}
 }

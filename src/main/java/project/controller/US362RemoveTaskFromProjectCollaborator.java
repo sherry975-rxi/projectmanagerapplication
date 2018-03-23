@@ -5,10 +5,10 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
+import project.services.TaskService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +28,12 @@ public class US362RemoveTaskFromProjectCollaborator {
 	private Project project;
 	private Task task;
 
-	/*
-	 * Default constructor
+	/**
+	 * Empty constructor created for JPA integration tests
+	 *
 	 */
 	public US362RemoveTaskFromProjectCollaborator() {
+		//
 
 	}
 
@@ -59,16 +61,6 @@ public class US362RemoveTaskFromProjectCollaborator {
 		this.projectCollaborator = projectCollaborator;
 	}
 
-	/**
-	 * Constructor
-	 * 
-	 * @param projectIDtoInstantiate
-	 */
-	public US362RemoveTaskFromProjectCollaborator(Project project, Task task) {
-		this.project = project;
-		this.task = task;
-		this.projectCollaborator = null;
-	}
 
 	/**
 	 * This method returns the List of Collaborators from a specific task

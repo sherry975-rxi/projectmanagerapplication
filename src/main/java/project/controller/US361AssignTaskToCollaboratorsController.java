@@ -2,11 +2,11 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
+import project.services.ProjectService;
+import project.services.TaskService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +29,9 @@ public class US361AssignTaskToCollaboratorsController {
 	private Task task;
 	private ProjectCollaborator projectCollaborator;
 
-	/*
-	 * Default constructor
-	 */
+
 	public US361AssignTaskToCollaboratorsController() {
+		//Empty constructor created for JPA integration tests
 
 	}
 
@@ -61,19 +60,6 @@ public class US361AssignTaskToCollaboratorsController {
 
 	public void setProjectCollaborator(ProjectCollaborator projectCollaborator) {
 		this.projectCollaborator = projectCollaborator;
-	}
-
-	/**
-	 * Constructor to instantiate a new US361TaskToCollaboratorsController
-	 * 
-	 * @param project
-	 *            Project
-	 * @param task
-	 *            Task to add the user to
-	 */
-	public US361AssignTaskToCollaboratorsController(Project project, Task task) {
-		this.project = project;
-		this.task = task;
 	}
 
 	/**

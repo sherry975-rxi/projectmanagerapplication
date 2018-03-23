@@ -2,12 +2,12 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.TaskService;
 
 @Controller
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
@@ -17,11 +17,15 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 	@Autowired
 	private ProjectService projectService;
-
 	private User user;
 	private Project project;
 	private Integer projectID;
 	private String taskID;
+
+
+	public US204v2createRequestAddCollaboratorToTaskTeamController() {
+		//Default constructor
+	}
 
 	/**
 	 * 
@@ -31,7 +35,6 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 * This controller allows a user to create a request to add be added to the
 	 * TaskTeam that Project Manager will latter approve.
 	 */
-
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -46,10 +49,6 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 	public void setProjectID(Integer projectID) {
 		this.projectID = projectID;
-	}
-
-	public US204v2createRequestAddCollaboratorToTaskTeamController() {
-
 	}
 
 	public boolean createTaskTeamRequest(String taskID, User user) {
@@ -90,11 +89,8 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 * @return Project collaborator of a project from a user
 	 */
 	private ProjectCollaborator getProjectCollaboratorFromUser(User user) {
-
 		ProjectCollaborator projcollab;
-
 		projcollab = projectService.findActiveProjectCollaborator(user, project);
-
 		return projcollab;
 	}
 
@@ -108,7 +104,6 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 */
 	public Task getTaskByTaskID(String taskID) {
 		return taskService.getTaskByTaskID(taskID);
-
 	}
 
 	/**

@@ -212,7 +212,7 @@ public class ProjectService {
 	 * 
 	 * @return the projectCollaborator created
 	 */
-	public ProjectCollaborator createProjectCollaborator(User user, Project project, int costPerEffort) {
+	public ProjectCollaborator createProjectCollaborator(User user, Project project, double costPerEffort) {
 
 		ProjectCollaborator newProjectCollaborator = new ProjectCollaborator(user, costPerEffort);
 		newProjectCollaborator.setProject(project);

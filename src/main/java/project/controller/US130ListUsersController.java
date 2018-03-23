@@ -2,8 +2,8 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.UserService;
 import project.model.User;
+import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,10 @@ public class US130ListUsersController {
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
 	}
-	/**
-	 * Empty constructor
-	 */
+
 	public US130ListUsersController() {
-	};
+		//Empty constructor created for JPA integration tests
+	}
 
 	/**
 	 * This controller returns a list of all users in the User repository

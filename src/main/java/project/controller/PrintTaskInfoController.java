@@ -2,12 +2,12 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.TaskService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,39 +30,21 @@ public class PrintTaskInfoController {
 	private Integer projeID;
 	private Project project;
 
-	/**
-	 * This constructor exists only JPA integration testing
-	 *
-	 */
+
 	public PrintTaskInfoController() {
+		//Empty constructor created for JPA integration tests
 
 	}
-
-	/**
-	 * This constructor exists only for JPA integration testing
-	 *
-	 */
-	public PrintTaskInfoController(Task task, Project project) {
-		this.task=task;
-		this.project=project;
-	}
-
 
 	PrintTaskInfoController(Task task) {
 		this.task = task;
-	}
-
-	public PrintTaskInfoController(String taskID, Integer projeID) {
-		this.taskID = taskID;
-		this.projeID = projeID;
-		setProjectAndTask();
 	}
 
 	public void setProjectAndTask() {
 		this.project = projService.getProjectById(projeID);
 		this.task = taskService.getTaskByTaskID(taskID);
 	}
-
+	
 	/**
 	 * This method get the task's name and return it as a String
 	 *
@@ -88,7 +70,7 @@ public class PrintTaskInfoController {
 	 */
 	public String printTaskStateInfo() {
 
-		return this.task.viewTaskStateName();
+		return this.task.viewTaskStateNameFromEnum();
 	}
 
 	/**
@@ -201,6 +183,26 @@ public class PrintTaskInfoController {
 
 	public void setProject(Project project) {
 		this.project = project;
+	}
+	
+	public Task getTask() {
+		return task;
+	}
+
+	public SimpleDateFormat getDateFormat() {
+		return dateFormat;
+	}
+
+	public String getTaskID() {
+		return taskID;
+	}
+
+	public Integer getProjeID() {
+		return projeID;
+	}
+
+	public Project getProject() {
+		return project;
 	}
 
 }

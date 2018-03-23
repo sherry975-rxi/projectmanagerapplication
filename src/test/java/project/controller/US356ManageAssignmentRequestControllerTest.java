@@ -51,11 +51,6 @@ public class US356ManageAssignmentRequestControllerTest {
 	@Before
 	public void setUp() {
 		
-//		// creates an UserContainer
-//		userContainer = new UserService();
-//						
-//		// creates a Project Container
-//		projectContainer = new ProjectService();
 		
 		// creates test users for a manager and collaborator.
 		// declares the collaborator's relevant data as Strings to facilitate assertions
@@ -117,34 +112,6 @@ public class US356ManageAssignmentRequestControllerTest {
 		standByTask.createTaskAssignementRequest(teamTesterCollaborator);
 	}
 
-//	@After
-//	public void breakDown() {
-//		userContainer = null;
-//		projectContainer = null;
-//
-//		managerTester = null;
-//
-//		teamPermanentMember = null;
-//
-//		teamTesterName = null;
-//		teamTesterID = null;
-//		teamTester = null;
-//
-//		testProject = null;
-//
-//		teamTesterCollaborator = null;
-//
-//		estimatedStartDate = null;
-//		estimatedTaskDeadline = null;
-//
-//		taskDescription = null;
-//		taskIDnumber = null;
-//		taskWithNoTeam = null;
-//
-//		testingTaskState = null;
-//
-//		assignmentRequestsController = null;
-//	}
 
 	// this test asserts the showAssignmentRequests() Method returns a list of
 	// requests converted to String

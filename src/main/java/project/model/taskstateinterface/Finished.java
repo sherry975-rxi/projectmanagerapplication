@@ -37,8 +37,8 @@ public class Finished implements TaskStateInterface {
                 (task.getTaskDeadline() != null) &&
                 (task.getStartDate() != null) &&
                 (task.getFinishDate() != null) &&
-                (task.getEstimatedTaskEffort() != 0) &&
-                (task.getTaskBudget() != 0);
+				(Double.compare(task.getEstimatedTaskEffort(),0.0) != 0) &&
+				(Double.compare(task.getTaskBudget(),0.0) != 0);
 	}
 
 }

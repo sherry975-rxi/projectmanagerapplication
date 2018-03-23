@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.UserService;
 import project.model.Address;
 import project.model.User;
+import project.services.UserService;
 
 import java.util.List;
 
@@ -22,11 +22,11 @@ public class US201and202UpdateUserInfoController {
 	@Autowired
 	private UserService userContainer;
 
-	/**
-	 * Empty constructor
-	 */
+
 	public US201and202UpdateUserInfoController() {
-	};
+		//Empty constructor created for JPA integration tests
+
+	}
 
 	public void updateUserName(User user, String name) {
 

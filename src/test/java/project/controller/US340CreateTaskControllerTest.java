@@ -43,7 +43,6 @@ public class US340CreateTaskControllerTest {
 	@Before
 	public void setUp() {
 
-		// userService.getAllUsersFromUserContainer().clear();
 
 		// create user
 		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
@@ -57,21 +56,13 @@ public class US340CreateTaskControllerTest {
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
 		project = projectService.createProject("name3", "description4", userAdmin);// !!!
-
-	}
-
-	@After
-	public void clear() {
-
-		user1 = null;
-		userAdmin = null;
-		project = null;
-		testTask = null;
-
+		testControl.setChosenProject(project);
 	}
 
 	@Test
 	public void testTaskController() {
+		
+	
 		// asserts which user is the Project Manager
 		assertFalse(project.isProjectManager(user1));
 		assertTrue(project.isProjectManager(userAdmin));

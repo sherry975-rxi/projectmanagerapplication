@@ -45,8 +45,8 @@ public class Ready implements TaskStateInterface {
 				(task.getStartDate() == null) &&
 				(task.getFinishDate() == null) &&
 				(task.getCancelDate() == null) &&
-				(task.getEstimatedTaskEffort() != 0) &&
-				(task.getTaskBudget() != 0) &&
+				(Double.compare(task.getEstimatedTaskEffort(),0.0) != 0) &&
+				(Double.compare(task.getTaskBudget(),0.0) != 0) &&
 				!task.hasActiveDependencies();
 	}
 }

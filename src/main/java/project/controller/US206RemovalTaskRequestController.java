@@ -2,12 +2,12 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.TaskService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,24 +31,11 @@ public class US206RemovalTaskRequestController {
 
 	@Autowired
 	private TaskService taskService;
-	
-	public User getUser() {
-		return user;
-	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	public US206RemovalTaskRequestController() {
-		
-	}
-		
 	/**
 	 * Constructor to instantiate a new CollaboratorRemovalrequest
-	 * 
-	 * @param user
-	 *            User that asks for the removal
+	 *
+	 * @param user User that asks for the removal
 	 */
 	public US206RemovalTaskRequestController(User user) {
 		this.user = user;
@@ -56,6 +43,19 @@ public class US206RemovalTaskRequestController {
 		this.taskID = null;
 
 	}
+
+	public US206RemovalTaskRequestController() {
+		//Default constructor
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 
 	/**
 	 * This method instantiates a new removalRequest and adds it to the

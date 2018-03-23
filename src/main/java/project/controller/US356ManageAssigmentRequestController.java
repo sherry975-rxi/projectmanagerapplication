@@ -2,10 +2,10 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
 import project.model.TaskTeamRequest;
+import project.services.TaskService;
 
 import java.util.List;
 
@@ -20,9 +20,11 @@ public class US356ManageAssigmentRequestController {
 	private TaskService taskService;
 
 	/*
-	 * Default constructor
+	 * This controller manages Addition Requests by Project Collaborators * respond
+	 * to US 356
+	 * Empty constructor created for JPA integration tests
+	 *
 	 */
-
 	public US356ManageAssigmentRequestController() {
 
 	}
@@ -54,17 +56,6 @@ public class US356ManageAssigmentRequestController {
 		this.selectedTask = selectedTask;
 	}
 
-	/*
-	 * This controller manages Addition Requests by Project Collaborators * respond
-	 * to US 356
-	 * 
-	 * @param ProjectID - the ID of the selected Project
-	 * 
-	 */
-	public US356ManageAssigmentRequestController(Project project) {
-		this.selectedProject = project;
-		this.selectedAdditionRequest = null;
-	}
 
 	/**
 	 * This method shows a list of strings from all addition requests from the

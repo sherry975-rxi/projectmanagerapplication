@@ -87,7 +87,6 @@ public class MainMenuUI {
 
 				case "5":
 					collaboratorMenu.displayOptions();
-
 					break;
 
 				case "E":

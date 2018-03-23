@@ -2,8 +2,8 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.UserService;
 import project.model.User;
+import project.services.UserService;
 
 @Controller
 public class US180DoLoginController {
@@ -11,11 +11,10 @@ public class US180DoLoginController {
 	@Autowired
 	private UserService userService;
 
-	/**
-	 * Empty constructor
-	 */
+
 	public US180DoLoginController() {
-	};
+		//Empty constructor created for JPA integration tests
+	}
 
 	/**
 	 * This method does the login of the user

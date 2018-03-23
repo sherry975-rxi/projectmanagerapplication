@@ -219,5 +219,13 @@ public class US365MarkTaskAsFInishedControllerTest {
 		assertFalse(task3.isTaskFinished());
 
 	}
+	
+	@Test
+	public void testGetters_Setters() {
+		us365controller.setSelectedProject(project2);
+		us365controller.setTaskToBeMarked(task3.getTaskID());
+		assertTrue(project2.equals(us365controller.getSelectedProject()));
+		assertTrue(task3.equals(us365controller.getTaskToBeMarked()));
+	}
 
 }

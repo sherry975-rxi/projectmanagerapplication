@@ -2,8 +2,8 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.User;
+import project.services.TaskService;
 
 /**
  * @author Group 3
@@ -21,6 +21,7 @@ public class US215TotalTimeSpentOnTaskLastMonthController {
 	private TaskService taskService;
 
 	public US215TotalTimeSpentOnTaskLastMonthController() {
+		//Empty constructor created for JPA integration tests
 
 	}
 

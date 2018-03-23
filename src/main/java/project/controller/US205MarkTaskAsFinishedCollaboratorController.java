@@ -2,12 +2,12 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.TaskService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,11 @@ public class US205MarkTaskAsFinishedCollaboratorController {
 
 	@Autowired
 	private TaskService taskService;
+
+
+	public US205MarkTaskAsFinishedCollaboratorController() {
+		//Default constructor
+	}
 
 	public void setUsername(User username) {
 		this.username = username;
@@ -44,8 +49,7 @@ public class US205MarkTaskAsFinishedCollaboratorController {
 	/**
 	 * Empty constructor
 	 */
-	public US205MarkTaskAsFinishedCollaboratorController() {
-	};
+
 
 	public List<Project> getProjectsThatIAmCollaborator(User user) {
 		List<Project> projectsThatImProjectCollaborator = new ArrayList<>();

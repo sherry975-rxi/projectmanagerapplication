@@ -123,8 +123,8 @@ public class Project implements Serializable{
 	public Task createTask(String description) {
 		Objects.requireNonNull(description, "Description of the Task cannot be null");
 
-		Task newTask = new Task(description, this);
-		return newTask;
+		
+		return new Task(description, this);
 	}
 
 	/**

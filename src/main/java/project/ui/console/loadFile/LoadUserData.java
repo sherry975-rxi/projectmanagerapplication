@@ -49,8 +49,8 @@ public class LoadUserData {
 				// sets users as Collaborators when they are created
 				eachUser.setUserProfile(Profile.COLLABORATOR);
 
-				eachUser.setIdNumber("XML gen");
-				eachUser.setFunction("XML gen");
+				eachUser.setIdNumber("XML ID");
+				eachUser.setFunction("XML parser");
 
 				// feeds DB with user state
 				boolean systemUserStateActive = false;
