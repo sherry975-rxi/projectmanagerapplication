@@ -124,10 +124,6 @@ public class US347CancelOnGoingTaskControllerTest {
 		taskExpiredDeadlineDateTest.set(Calendar.DAY_OF_MONTH, 29);
 		taskExpiredDeadlineDateTest.set(Calendar.HOUR_OF_DAY, 14);
 
-		// Creates State Objects planned for task.
-		task1.setTaskState(new Planned());
-		task2.setTaskState(new Planned());
-		task3.setTaskState(new Planned());
 
 		// set estimated task start date and task dead line to tasks
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
@@ -139,10 +135,9 @@ public class US347CancelOnGoingTaskControllerTest {
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskDeadlineDateTest);
 
-		// Sets the tasks to "Planned"
-		task1.setTaskState(new Planned());
-		task2.setTaskState(new Planned());
-		task3.setTaskState(new Planned());
+		task1.setTaskBudget(100.0);
+		task1.setEstimatedTaskEffort(100.0);
+
 
 		// create task workers
 		taskCollab1 = new TaskCollaborator(projCollab1);
@@ -153,15 +148,8 @@ public class US347CancelOnGoingTaskControllerTest {
 		task2.addTaskCollaboratorToTask(taskCollab2);
 		task3.addTaskCollaboratorToTask(taskCollab1);
 
-		// Sets the tasks to "Ready"
-		task1.setTaskState(new Ready());
-		task2.setTaskState(new Ready());
-		task3.setTaskState(new Ready());
+		task1.setStartDate(startDateTest);
 
-		// Sets the tasks to "onGoing"
-		task1.setTaskState(new OnGoing());
-		task2.setTaskState(new OnGoing());
-		task3.setTaskState(new OnGoing());
 
 		// create controller
 		controllerCancel.setTaskID(task1.getTaskID());
@@ -211,7 +199,7 @@ public class US347CancelOnGoingTaskControllerTest {
 		task1.setTaskState(new Cancelled());
 
 		// Sets a cancel date for the task1
-		task1.setCancelDate();
+		task1.cancelTask();
 
 		// use of control to set task1 to state cancelled
 		controllerCancel.cancelOnGoingTask();
@@ -234,7 +222,7 @@ public class US347CancelOnGoingTaskControllerTest {
 		controllerCancel.cancelOnGoingTask();
 
 		// asserts that task1 has state cancelled
-		assertEquals("OnGoing", task1.viewTaskStateName());
+		assertEquals("Finished", task1.viewTaskStateName());
 	}
 	
 
