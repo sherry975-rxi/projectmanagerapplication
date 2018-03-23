@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -168,6 +171,21 @@ public class US302ChangeProjectManagerTest {
 		// creates a string matching u1's data and asserts as true
 		String firstManagerString = "001: Leonor (leonor@gmail.com; 930000000) - Empregado";
 		assertTrue(firstManagerString.equals(changeManagerController.collaboratorInfoToString(userFirstManager)));
+	}
+	
+	@Test
+	public void testGettersAndSetters() {
+		changeManagerController.setSelectedManager(userFirstManager);
+		assertEquals(userFirstManager, changeManagerController.getSelectedManager());
+		
+		changeManagerController.setSelectedProject(newProject);
+		assertEquals(newProject, changeManagerController.getSelectedProject());
+		
+		
+		List<User> listToCompare = new ArrayList<>();
+		listToCompare.add(userFirstManager);
+		changeManagerController.setActiveCollaboratorList(listToCompare);
+		assertEquals(listToCompare, changeManagerController.getActiveCollaboratorList());
 	}
 
 }

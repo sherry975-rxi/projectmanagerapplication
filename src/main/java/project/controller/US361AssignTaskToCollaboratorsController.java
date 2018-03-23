@@ -63,19 +63,6 @@ public class US361AssignTaskToCollaboratorsController {
 	}
 
 	/**
-	 * Constructor to instantiate a new US361TaskToCollaboratorsController
-	 * 
-	 * @param project
-	 *            Project
-	 * @param task
-	 *            Task to add the user to
-	 */
-	public US361AssignTaskToCollaboratorsController(Project project, Task task) {
-		this.project = project;
-		this.task = task;
-	}
-
-	/**
 	 * Gets the project active users
 	 * 
 	 * @return Returns a list of strings with the name and email of the active
