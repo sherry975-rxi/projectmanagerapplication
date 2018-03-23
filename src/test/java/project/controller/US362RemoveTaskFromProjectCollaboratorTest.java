@@ -178,5 +178,15 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		assertFalse(taskCollaborator.isTaskCollaboratorActiveInTask());
 
 	}
+	
+	@Test
+	public void testGetters_Setters() {
+		
+		controller.setProject(project);
+		controller.setTask(testTask);
+
+		assertTrue(project.equals(controller.getProject()));
+		assertTrue(testTask.equals(controller.getTask()));
+	}
 
 }
