@@ -28,9 +28,12 @@ public class US362RemoveTaskFromProjectCollaborator {
 	private Project project;
 	private Task task;
 
-
+	/**
+	 * Empty constructor created for JPA integration tests
+	 *
+	 */
 	public US362RemoveTaskFromProjectCollaborator() {
-		//Empty constructor created for JPA integration tests
+		//
 
 	}
 
@@ -58,16 +61,6 @@ public class US362RemoveTaskFromProjectCollaborator {
 		this.projectCollaborator = projectCollaborator;
 	}
 
-	/**
-	 * Constructor
-	 *
-	 * @param project
-	 */
-	public US362RemoveTaskFromProjectCollaborator(Project project, Task task) {
-		this.project = project;
-		this.task = task;
-		this.projectCollaborator = null;
-	}
 
 	/**
 	 * This method returns the List of Collaborators from a specific task
