@@ -31,13 +31,12 @@ public class MainMenuUI {
 
 	private static User userAdmin;
 	private static User userDirector;
-	private static User userJSilva;
-
+	private static User userManager;
 
 
 	public void mainMenu() {
 
-		userJSilva = userService.getAllUsersFromUserContainer().get(2);
+		userManager = userService.getUserByEmail("tc@mymail.com");
 		userDirector = userService.getAllUsersFromUserContainer().get(1);
 		userAdmin = userService.getAllUsersFromUserContainer().get(0);
 		
@@ -88,10 +87,9 @@ public class MainMenuUI {
 
 
 				case "5":
-					//userJSilva.setUserProfile(Profile.COLLABORATOR);
-					collaboratorMenu.setUser(userJSilva);
+					userManager.setUserProfile(Profile.COLLABORATOR);
+					collaboratorMenu.setUser(userManager);
 					collaboratorMenu.displayOptions();
-
 					break;
 
 				case "E":
