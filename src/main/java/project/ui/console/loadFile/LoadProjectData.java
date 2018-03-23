@@ -272,6 +272,7 @@ public class LoadProjectData {
                         if(finishDate!=null) {
                             task.setStartDate(estimatedStartDate);
                             task.setFinishDate(finishDate);
+                            task.removeAllCollaboratorsFromTaskTeam();
                             task.setTaskState(new Finished());
                             task.setCurrentState(StateEnum.FINISHED);
                         }
