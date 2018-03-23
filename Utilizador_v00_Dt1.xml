@@ -17,66 +17,66 @@
 		<estado_utilizador>Ativo</estado_utilizador>
 	</utilizador>
 	<utilizador>
-		<nome_utilizador>João Silva</nome_utilizador> 		<!-- US201-->
+		<nome_utilizador>Teresa Costa</nome_utilizador> 		<!-- US201-->
 		<email_utilizador>tc@mymail.com</email_utilizador>
 		<lista_enderecos>
 			<endereco_postal>									<!-- US202-->
-				<rua>Rua da Urzes, 25</rua>
+				<rua>Rua da Flores, 25</rua>
 				<localidade>Pancas</localidade>
-				<cp_num>2135-012</cp_num>
+				<cp_num>2135-044</cp_num>
 				<cp_loc>Samora Correia</cp_loc>
 				<pais>Portugal</pais>
 			</endereco_postal>
 		</lista_enderecos>
-		<telefone>263650670</telefone>
+		<telefone>263650671</telefone>
 		<password>qwerty1!</password>								<!-- Para fazer login -->
 		<estado_utilizador>Ativo</estado_utilizador>
 	</utilizador>
 	<utilizador>
-		<nome_utilizador>João Silva</nome_utilizador> 		<!-- US201-->
+		<nome_utilizador>Miguel Sousa</nome_utilizador> 		<!-- US201-->
 		<email_utilizador>ms@mymail.com</email_utilizador>
 		<lista_enderecos>
 			<endereco_postal>									<!-- US202-->
-				<rua>Rua da Urzes, 25</rua>
+				<rua>Rua Direita, 25</rua>
 				<localidade>Pancas</localidade>
-				<cp_num>2135-012</cp_num>
+				<cp_num>2135-030</cp_num>
 				<cp_loc>Samora Correia</cp_loc>
 				<pais>Portugal</pais>
 			</endereco_postal>
 		</lista_enderecos>
-		<telefone>263650670</telefone>
+		<telefone>263650672</telefone>
 		<password>qwerty1!</password>								<!-- Para fazer login -->
 		<estado_utilizador>Ativo</estado_utilizador>
 	</utilizador>
 	<utilizador>
-		<nome_utilizador>João Silva</nome_utilizador> 		<!-- US201-->
+		<nome_utilizador>Xavier Franco</nome_utilizador> 		<!-- US201-->
 		<email_utilizador>xf@mymail.com</email_utilizador>
 		<lista_enderecos>
 			<endereco_postal>									<!-- US202-->
-				<rua>Rua da Urzes, 25</rua>
+				<rua>Rua Torta, 25</rua>
 				<localidade>Pancas</localidade>
-				<cp_num>2135-012</cp_num>
+				<cp_num>2135-055</cp_num>
 				<cp_loc>Samora Correia</cp_loc>
 				<pais>Portugal</pais>
 			</endereco_postal>
 		</lista_enderecos>
-		<telefone>263650670</telefone>
+		<telefone>263650673</telefone>
 		<password>qwerty1!</password>								<!-- Para fazer login -->
 		<estado_utilizador>Ativo</estado_utilizador>
 	</utilizador>
 	<utilizador>
-		<nome_utilizador>João Silva</nome_utilizador> 		<!-- US201-->
+		<nome_utilizador>Tiago Soares</nome_utilizador> 		<!-- US201-->
 		<email_utilizador>tc@mymail.com</email_utilizador>
 		<lista_enderecos>
 			<endereco_postal>									<!-- US202-->
-				<rua>Rua da Urzes, 25</rua>
+				<rua>Rua do Horto, 25</rua>
 				<localidade>Pancas</localidade>
-				<cp_num>2135-012</cp_num>
+				<cp_num>2135-020</cp_num>
 				<cp_loc>Samora Correia</cp_loc>
 				<pais>Portugal</pais>
 			</endereco_postal>
 		</lista_enderecos>
-		<telefone>263650670</telefone>
+		<telefone>263650674</telefone>
 		<password>qwerty1!</password>								<!-- Para fazer login -->
 		<estado_utilizador>Ativo</estado_utilizador>
 	</utilizador>
