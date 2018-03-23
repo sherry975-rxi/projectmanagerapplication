@@ -31,7 +31,7 @@ public class MainMenuUI {
 
 	private static User userAdmin;
 	private static User userDirector;
-
+    private static User loggedIn;
 
 
 	public void mainMenu() {
@@ -71,7 +71,7 @@ public class MainMenuUI {
 					userRegister.userRegister();
 					break;
 				case "2":
-					doLogin.doLogin();
+					loggedIn=doLogin.doLogin();
 					break;
 				case "3":
 					adminMenu.setAdminLoggedIn(userAdmin);
@@ -86,6 +86,7 @@ public class MainMenuUI {
 
 
 				case "5":
+				    collaboratorMenu.setUser(loggedIn);
 					collaboratorMenu.displayOptions();
 					break;
 
