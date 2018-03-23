@@ -19,22 +19,14 @@ public class US356ManageAssigmentRequestController {
 	@Autowired
 	private TaskService taskService;
 
-
-	public US356ManageAssigmentRequestController() {
-		//Empty constructor created for JPA integration tests
-
-	}
-
 	/*
 	 * This controller manages Addition Requests by Project Collaborators * respond
 	 * to US 356
-	 *
-	 * @param ProjectID - the ID of the selected Project
+	 * Empty constructor created for JPA integration tests
 	 *
 	 */
-	public US356ManageAssigmentRequestController(Project project) {
-		this.selectedProject = project;
-		this.selectedAdditionRequest = null;
+	public US356ManageAssigmentRequestController() {
+
 	}
 
 	/*
