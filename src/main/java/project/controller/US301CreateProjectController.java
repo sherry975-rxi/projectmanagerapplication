@@ -2,11 +2,11 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.UserService;
 import project.model.EffortUnit;
 import project.model.Project;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class US301CreateProjectController {
 	private Project createdProject = null;
 
 	public US301CreateProjectController() {
-
+		//Empty constructor created for JPA integration tests
 	}
 
 	public void setActiveCollaboratorList(List<User> activeCollaboratorList) {
@@ -112,7 +112,7 @@ public class US301CreateProjectController {
 	 */
 	public void changeEffortUnitToPersonMonth() {
 
-		createdProject.setEffortUnit(EffortUnit.PERSON_MONTH);
+		createdProject.setEffortUnit(EffortUnit.PM);
 
 	}
 

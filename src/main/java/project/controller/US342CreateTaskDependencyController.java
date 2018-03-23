@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
+import project.services.TaskService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,12 +26,19 @@ public class US342CreateTaskDependencyController {
 	@Autowired
 	private TaskService taskService;
 
-	/*
-	 * Default constructor
-	 */
 
 	public US342CreateTaskDependencyController() {
+		//Empty constructor created for JPA integration tests
 
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param project
+	 */
+	public US342CreateTaskDependencyController(Project project) {
+		this.project = project;
 	}
 
 	/*
@@ -46,14 +53,6 @@ public class US342CreateTaskDependencyController {
 		this.project = project;
 	}
 
-	/**
-	 * Constructor
-	 * 
-	 * @param project
-	 */
-	public US342CreateTaskDependencyController(Project project) {
-		this.project = project;
-	}
 
 	/**
 	 * This method returns the tasks from a specific project

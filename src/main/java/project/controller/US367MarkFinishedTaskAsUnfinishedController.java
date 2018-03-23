@@ -2,8 +2,8 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Task;
+import project.services.TaskService;
 
 @Controller
 public class US367MarkFinishedTaskAsUnfinishedController {
@@ -13,10 +13,9 @@ public class US367MarkFinishedTaskAsUnfinishedController {
 
 	private String taskID;
 
-	/*
-	 * Default constructor
-	 */
+
 	public US367MarkFinishedTaskAsUnfinishedController() {
+		//Empty constructor created for JPA integration tests
 
 	}
 

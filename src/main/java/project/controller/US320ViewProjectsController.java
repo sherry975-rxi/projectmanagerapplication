@@ -2,8 +2,8 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
 import project.model.Project;
+import project.services.ProjectService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ public class US320ViewProjectsController {
 	private Project selectedProject = null;
 
 	public US320ViewProjectsController() {
+		//Empty constructor created for JPA integration tests
 
 	}
 

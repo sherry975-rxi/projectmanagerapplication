@@ -278,4 +278,15 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 
 		assertEquals("Finished", task1.viewTaskStateName());
 	}
+	
+	@Test
+	public final void testGetters_Setters() {
+		uS205MarkTaskAsFinishedCollaborator.setUsername(user1);
+		uS205MarkTaskAsFinishedCollaborator.setProjectIndex(1);
+		uS205MarkTaskAsFinishedCollaborator.setTaskToBeMarked(task1);
+		uS205MarkTaskAsFinishedCollaborator.setUnfinishedTaskFromProject(taskService.getProjectUnFinishedTasks(project1));
+
+		
+		assertEquals(task1, taskService.getProjectUnFinishedTasks(project1).get(0));
+	}
 }

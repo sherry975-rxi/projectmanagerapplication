@@ -2,12 +2,12 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
-import project.services.UserService;
 import project.model.Report;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.model.User;
+import project.services.TaskService;
+import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,16 +26,18 @@ public class US207CreateTaskReportController {
 	@Autowired
 	private TaskService taskService;
 
-	/**
-	 * Constructor of US207CreateTaskReportController
-	 *
-	 * @param email
-	 *            The email of the user that will create a task report
-	 */
-	public US207CreateTaskReportController() {
-	}
 
-	public void US207setTaskReportController(String email, String taskID) {
+	public US207CreateTaskReportController() {
+        //  Empty controller created for JPA integration tests
+
+    }
+
+    /**
+     * Constructor of US207CreateTaskReportController
+     *
+     * @param email The email of the user that will create a task report
+     */
+    public void us207setTaskReportController(String email, String taskID) {
 
 		this.username = userContainer.getUserByEmail(email);
 		this.email = email;

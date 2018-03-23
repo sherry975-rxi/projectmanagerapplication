@@ -206,7 +206,7 @@ public class PrintProjectInfoControllerTest {
 	@Test
 	public void testPrintProjectBudgetInfo() {
 
-		assertEquals(controller.printProjectBudgetInfo(), "1000");
+		assertEquals(controller.printProjectBudgetInfo(), "1000.0"); 
 	}
 
 	/**

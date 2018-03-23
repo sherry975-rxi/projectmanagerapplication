@@ -106,20 +106,20 @@ public class US301CreateProjectControllerTest {
 		newProject = us301CreateProjectController.createProject("name", "description", u1);
 
 		// asserts the created project starts with default
-		assertEquals(newProject.getProjectBudget(), 0);
+		assertEquals(newProject.getProjectBudget(), 0, 0.001);
 		assertTrue(newProject.getEffortUnit().equals(EffortUnit.HOURS));
 
 		// then calls both setBudget and changeEffortUnits methods
 		// and asserts both values have been changed successfully
 		us301CreateProjectController.changeEffortUnitToPersonMonth();
 		us301CreateProjectController.changeBudget(123456);
-		assertEquals(newProject.getProjectBudget(), 123456);
-		assertTrue(newProject.getEffortUnit().equals(EffortUnit.PERSON_MONTH));
+		assertEquals(newProject.getProjectBudget(), 123456, 0.001);
+		assertTrue(newProject.getEffortUnit().equals(EffortUnit.PM));
 
 		// finally, attempts to call the changeEffortUnit() method again
 		// and that the project remains measured in "Person_Month"
 		us301CreateProjectController.changeEffortUnitToPersonMonth();
-		assertTrue(newProject.getEffortUnit().equals(EffortUnit.PERSON_MONTH));
+		assertTrue(newProject.getEffortUnit().equals(EffortUnit.PM));
 
 	}
 

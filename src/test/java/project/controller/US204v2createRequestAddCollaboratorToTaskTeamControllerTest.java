@@ -45,16 +45,13 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 		// Add user to User Container
 		user = userContainer.createUser("Fek Quin", "ugandan@nackls.com", "cluck1337", "Follower of da wae", "919898997",
 				"Debil Strit", "SP1T-0N-H1M", "NacklsCiti", "QuinLend", "UGANDA");
-//		user = userContainer.getUserByEmail("ugandan@nackls.com");
 
 		// Add a project to the project repository
 		proj = projectContainer.createProject("Best project", "Fainding da quin an spitting on de non-beleevahs!", user);
-//		proj = projectContainer.getAllProjectsfromProjectsContainer().get(0);
 
 		projCollab = projectContainer.createProjectCollaborator(user, proj, 0);
 
 		// Create and add tasks to Task repository
-//		taskA = taskRepo.createTask("Faind fek quin!", proj);
 		taskA = new Task(1, 1, "Faind fek quin!");
 		taskA.setProject(proj);
 		taskRepo.saveTask(taskA);
@@ -66,38 +63,16 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 		taskC = new Task(3, 1, "Follou da wae!");
 		taskC.setProject(proj);
 		taskRepo.saveTask(taskC);
-		
-//		taskRepo.addTaskToProject(taskA);	
-//		taskRepo.addTaskToProject(taskB);
-//		taskRepo.addTaskToProject(taskC);
-		
-
-
 
 	}
 
-//	@After
-//	public void tearDown() {
-//
-//		projectContainer = null;
-//		userContainer = null;
-//		taskRepo = null;
-//		proj = null;
-//		taskA = null;
-//		taskB = null;
-//		taskC = null;
-//		user = null;
-//		controller = null;
-//	}
 
 	@Test
 	public final void testCreateTaskTeamRequest() {
 
-		
 		assertEquals(0, taskA.getPendingTaskAssignementRequests().size());
 		controller.createTaskTeamRequest("1.1", user);
-		assertEquals(1, taskA.getPendingTaskAssignementRequests().size());
-		
+		assertEquals(1, taskA.getPendingTaskAssignementRequests().size());		
 	}
 
 	@Test
@@ -116,6 +91,19 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 
 	@Test
 	public final void testGetTaskByTaskID() {
+		assertEquals(taskA, controller.getTaskByTaskID("1.1"));
+	}
+	
+	@Test
+	public final void testGetters_Setters() {
+		controller.setUser(user);
+		controller.setProject(proj);
+		controller.setTaskID(taskA.getTaskID());
+		controller.setProjectID(proj.getId());
+		
+		Integer projID = proj.getIdCode();	
+		controller.setProjectID(projID);
+		
 		assertEquals(taskA, controller.getTaskByTaskID("1.1"));
 	}
 

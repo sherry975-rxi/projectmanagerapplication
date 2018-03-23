@@ -31,7 +31,7 @@ public class Project implements Serializable{
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private EffortUnit effortUnit;
-	private int budget;
+	private double budget;
 	private Calendar startdate;
 	private Calendar finishdate;
 
@@ -105,7 +105,7 @@ public class Project implements Serializable{
 		this.description = description;
 	}
 
-	public int getBudget() {
+	public double getBudget() {
 		return budget;
 	}
 
@@ -345,14 +345,14 @@ public class Project implements Serializable{
 	 * 
 	 * @return Budget (int) of Project
 	 */
-	public int getProjectBudget() {
+	public double getProjectBudget() {
 		return this.budget;
 	}
 
 	/**
 	 * Set Project budget
 	 */
-	public void setProjectBudget(int newBudget) {
+	public void setProjectBudget(double newBudget) {
 		this.budget = newBudget;
 	}
 

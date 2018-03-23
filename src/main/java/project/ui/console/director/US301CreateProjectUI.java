@@ -14,21 +14,37 @@ public class US301CreateProjectUI {
 	@Autowired
 	private US301CreateProjectController controller;
 
-	String projectName = "(Insert Name)";
-	String projectDescription = "(Insert Description)";
-	String projectManagerName = "(Select Manager)";
+	String projectName;
+	String projectDescription;
+	String projectManagerName;
 
-	EffortUnit currentEffortUnit = EffortUnit.HOURS;
+	EffortUnit currentEffortUnit;
 
-	Integer budget = 0;
-	User projectManager = null;
+	Integer budget;
+	User projectManager;
 
-	boolean isProjectCreationOngoing = true;
+	boolean isProjectCreationOngoing;
 
 	String mainCommand;
 	String dataInput;
 
 	public void createProject() {
+
+
+		projectName = "(Insert Name)";
+		projectDescription = "(Insert Description)";
+		projectManagerName = "(Select Manager)";
+
+		currentEffortUnit = EffortUnit.HOURS;
+
+		budget = 0;
+		projectManager = null;
+
+		isProjectCreationOngoing = true;
+
+		mainCommand = null;
+		dataInput=null;
+
 		Scanner mainComm = new Scanner(System.in);
 		Scanner dataIn = new Scanner(System.in);
 
@@ -169,7 +185,7 @@ public class US301CreateProjectUI {
 		dataInput = dataIn.nextLine();
 		if ("0".equals(dataInput)) {
 			if (currentEffortUnit.equals(EffortUnit.HOURS)) {
-				currentEffortUnit = EffortUnit.PERSON_MONTH;
+				currentEffortUnit = EffortUnit.PM;
 				System.out.println("The effort Unit of this project changed to Person/Month.");
 			} else {
 				currentEffortUnit = EffortUnit.HOURS;
@@ -218,7 +234,7 @@ public class US301CreateProjectUI {
 		} else {
 			controller.createProject(projectName, projectDescription, projectManager);
 			controller.changeBudget(budget);
-			if (currentEffortUnit.equals(EffortUnit.PERSON_MONTH)) {
+			if (currentEffortUnit.equals(EffortUnit.PM)) {
 				controller.changeEffortUnitToPersonMonth();
 			}
 			System.out.println("Project created!");

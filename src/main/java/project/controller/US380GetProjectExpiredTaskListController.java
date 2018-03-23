@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
+import project.services.TaskService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +24,9 @@ public class US380GetProjectExpiredTaskListController {
 	@Autowired
 	private TaskService taskService;
 
-	/*
-	 * Default constructor
-	 */
+
 	public US380GetProjectExpiredTaskListController() {
+		//Empty constructor created for JPA integration tests
 
 	}
 

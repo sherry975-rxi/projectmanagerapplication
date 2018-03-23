@@ -89,7 +89,7 @@ public class US360ViewCollaboratorsWithoutTasksTests {
 		// belonging to the idle team member
 		taskWithTeam.addProjectCollaboratorToTask(activeProjCollab);
 
-		idleProjCollabInfo = "003: Lazy Boi (nope@gmail.com; 920000000) - Slacker [COST/EFFORT: 420]";
+		idleProjCollabInfo = "003: Lazy Boi (nope@gmail.com; 920000000) - Slacker [COST/EFFORT: 420.0]";
 
 	}
 

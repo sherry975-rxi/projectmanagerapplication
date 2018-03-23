@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.UserService;
 import project.model.Profile;
 import project.model.User;
+import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,9 @@ public class US135andUS136SearchUsersController {
 	private User selectedUser = null;
 
 
-	/**
-	 * Empty constructor
-	 */
 	public US135andUS136SearchUsersController() {
-	};
+		//Empty constructor created for JPA integration tests
+	}
 
 	/**
 	 * Este controlador permite ao Administrador pesquisar utilizadores do sistema

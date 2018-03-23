@@ -8,8 +8,8 @@ import project.model.Profile;
 import project.repository.UserRepository;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.utils.LoadProjectData;
-import project.utils.LoadUserData;
+import project.ui.console.loadFile.LoadProjectData;
+import project.ui.console.loadFile.LoadUserData;
 
 @Component
 public class RunConsole implements CommandLineRunner {
@@ -71,7 +71,7 @@ public class RunConsole implements CommandLineRunner {
     	feedDb.loadUsers("Utilizador_v00_Dt1.xml");
 
 
-    	projectDb.loadProject("Projeto_v00.xml");
+    	projectDb.loadProject("Projeto_v00_Dt1.xml");
 
 
         main.mainMenu();

@@ -2,8 +2,8 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.UserService;
 import project.model.User;
+import project.services.UserService;
 
 @Controller
 public class US115andUS116SetUserStateController {
@@ -11,7 +11,11 @@ public class US115andUS116SetUserStateController {
 	@Autowired
 	private UserService userContainer;
 
-	User toChangeState;
+	private User toChangeState;
+
+	public US115andUS116SetUserStateController() {
+		//Empty constructor created for JPA integration tests
+	}
 
 	public User getToChangeState() {
 		return toChangeState;
@@ -21,11 +25,6 @@ public class US115andUS116SetUserStateController {
 		this.toChangeState = toChangeState;
 	}
 
-
-	/**
-	 * This controller recieves a user whose state is to be changed
-	 */
-	public US115andUS116SetUserStateController() {	}
 
 	/**
 	 * 

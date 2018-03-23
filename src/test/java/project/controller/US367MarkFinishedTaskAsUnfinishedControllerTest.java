@@ -19,20 +19,20 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+/**
+ * This class tests the methods that are called in Controller to execute the
+ * action of Canceling an OnGoing Task
+ * 
+ * @author Group3
+ *
+ */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan({ "project.services", "project.model", "project.controller" })
 public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 
-	/**
-	 * This class tests the methods that are called in Controller to execute the
-	 * action of Canceling an OnGoing Task
-	 * 
-	 * @author Group3
-	 *
-	 */
+	
 
-	// TasksFiltersController tasksFiltersController;
 	@Autowired
 	UserService myUsers;
 	@Autowired
@@ -57,9 +57,6 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 	@Before
 	public void setUp() {
 
-//		// create user and project container
-//		myUsers= new UserService();
-//		myProjects = new ProjectService();
 
 		// create users
 		user1 = myUsers.createUser("Joe Smith", "jsmith@gmail.com", "001", "Junior Programmer",
@@ -93,22 +90,6 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		project3 = myProjects.createProject("Project Management software",
 				"This software main goals are ....", projectManager);
 
-//		// add project to company
-//		myProjects.addProjectToProjectContainer(project1);
-//		myProjects.addProjectToProjectContainer(project2);
-//		myProjects.addProjectToProjectContainer(project3);
-
-//		// create project collaborators
-//		projCollab1 = new ProjectCollaborator(user1, 2);
-//		projCollab2 = new ProjectCollaborator(user2, 2);
-
-		// add collaborators to Project
-//		project1.addProjectCollaboratorToProjectTeam(projCollab1);
-//		project1.addProjectCollaboratorToProjectTeam(projCollab2);
-//		project2.addProjectCollaboratorToProjectTeam(projCollab1);
-//		project2.addProjectCollaboratorToProjectTeam(projCollab2);
-//		project3.addProjectCollaboratorToProjectTeam(projCollab1);
-//		project3.addProjectCollaboratorToProjectTeam(projCollab2);
 		projCollab11 = myProjects.createProjectCollaborator(user1, project1, 2);
 		projCollab12 = myProjects.createProjectCollaborator(user2, project1, 2);
 		projCollab21 = myProjects.createProjectCollaborator(user1, project1, 2);
@@ -116,27 +97,13 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		projCollab31 = myProjects.createProjectCollaborator(user1, project1, 2);
 		projCollab32 = myProjects.createProjectCollaborator(user2, project1, 2);
 
-		// create tasks
-//		task1 = project1.getTaskService().createTask("Create class User");
-//		task2 = project1.getTaskService().createTask("Create class User");
-//		task3 = project2.getTaskService().createTask("create test for method set name in class user");
-//		task4 = project2.getTaskService().createTask("Create class User");
-//		task5 = project3.getTaskService().createTask("Create class User");
-//		task6 = project3.getTaskService().createTask("create test for method set name in class user");
+		// create tasks and save them
 		task1 = myTasks.createTask("Create class User", project1);
 		task2 = myTasks.createTask("Create class User", project1);
 		task3 = myTasks.createTask("create test for method set name in class user", project2);
 		task4 = myTasks.createTask("Create class User", project2);
 		task5 = myTasks.createTask("Create class User", project3);
 		task6 = myTasks.createTask("create test for method set name in class user", project3);
-
-//		// add tasks to task repository
-//		project1.getTaskService().addTaskToProject(task1);
-//		project1.getTaskService().addTaskToProject(task2);
-//		project2.getTaskService().addTaskToProject(task3);
-//		project2.getTaskService().addTaskToProject(task4);
-//		project3.getTaskService().addTaskToProject(task5);
-//		project3.getTaskService().addTaskToProject(task6);
 
 		// create a estimated Task Start Date
 		estimatedTaskStartDateTest = Calendar.getInstance();
@@ -162,7 +129,6 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 
 		// set estimated task start date and task dead line to tasks
 		task1.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-//		task1.setStartDate(startDateTest);
 		task1.setTaskDeadline(taskDeadlineDateTest);
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
@@ -197,17 +163,6 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		task5.addProjectCollaboratorToTask(projCollab32);
 		task6.addProjectCollaboratorToTask(projCollab31);
 
-//		taskCollab1 = new TaskCollaborator(projCollab1);
-//		taskCollab2 = new TaskCollaborator(projCollab2);
-
-		// set active user
-//		task1.addTaskCollaboratorToTask(taskCollab1);
-//		task2.addTaskCollaboratorToTask(taskCollab2);
-//		task3.addTaskCollaboratorToTask(taskCollab1);
-//		task4.addTaskCollaboratorToTask(taskCollab1);
-//		task5.addTaskCollaboratorToTask(taskCollab2);
-//		task6.addTaskCollaboratorToTask(taskCollab1);
-
 		// create a estimated Task Start Date
 		startDateTest = Calendar.getInstance();
 		task1.setEstimatedTaskEffort(10);
@@ -223,56 +178,13 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		task5.markTaskAsFinished();
 		task6.markTaskAsFinished();
 
-//		task1.getTaskState().doAction(task1);
 	}
-
-//	@After
-//	public void tearDown() {
-//		myUsers=null;
-//		myProjects=null;
-//
-//		user1 = null;
-//		user2 = null;
-//		projectManager = null;
-//		projectManager2 = null;
-//		project1 = null;
-//		project2 = null;
-//		project3 = null;
-//		projCollab1 = null;
-//		projCollab2 = null;
-//		task1 = null;
-//		task2 = null;
-//		task3 = null;
-//		task4 = null;
-//		task5 = null;
-//		task6 = null;
-//		taskCollab1 = null;
-//		taskCollab2 = null;
-//
-//		startDateTest = null;
-//		estimatedTaskStartDateTest = null;
-//		taskDeadlineDateTest = null;
-//		taskExpiredDeadlineDateTest = null;
-//	}
 
 	@Test
 	public void test() {
 
-//		Calendar finishDate = startDateTest;
-//		finishDate.set(Calendar.HOUR_OF_DAY, 14);
-//		task1.setFinishDate(finishDate);
-//		task1.setTaskState(new Finished());
-//		task1.setCurrentState(StateEnum.FINISHED);
-//		task1.getTaskState().doAction(task1);
-//		assertEquals("OnGoing", task1.viewTaskStateName());
-//		System.out.println(task1.viewTaskStateName());
-
 	    // given a task in "Finished" state
         assertTrue("Finished".equals(task1.viewTaskStateName()));
-
-//		US367MarkFinishedTaskAsUnfinishedController unmarkTask = new US367MarkFinishedTaskAsUnfinishedController(
-//				project1, task1.getTaskID());
-
 
         //add again a project collaborator to task (finishing a task removes project collaborators)
         task1.addProjectCollaboratorToTask(projCollab12);
@@ -285,5 +197,15 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		// then the chosen task must no longer have "Finished" state
 		assertFalse("Finished".equals(task1.viewTaskStateName()));
 	}
+	
+	@Test
+	public void testGetter_Setter() {
+		
+		controller.setTaskID(task1.getTaskID());
+		String expect = controller.getTaskID();
+		assertEquals(expect, task1.getTaskID());
+		
+	}
+	
 
 }

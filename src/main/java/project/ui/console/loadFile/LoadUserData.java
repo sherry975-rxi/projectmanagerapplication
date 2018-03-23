@@ -1,7 +1,7 @@
 /**
  * 
  */
-package project.utils;
+package project.ui.console.loadFile;
 
 import java.io.IOException;
 
@@ -48,6 +48,9 @@ public class LoadUserData {
 
 				// sets users as Collaborators when they are created
 				eachUser.setUserProfile(Profile.COLLABORATOR);
+
+				eachUser.setIdNumber("XML gen");
+				eachUser.setFunction("XML gen");
 
 				// feeds DB with user state
 				boolean systemUserStateActive = false;
