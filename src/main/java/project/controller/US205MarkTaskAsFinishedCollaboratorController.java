@@ -2,14 +2,13 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
+import project.model.taskstateinterface.Finished;
 import project.services.ProjectService;
 import project.services.TaskService;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -79,7 +78,11 @@ public class US205MarkTaskAsFinishedCollaboratorController {
 	}
 
 	public void markTaskAsFinished() {
-		taskToBeMarked.markTaskAsFinished();
+		taskToBeMarked.setCurrentState(StateEnum.FINISHED);
+		taskToBeMarked.setTaskState(new Finished());
+		taskToBeMarked.setFinishDate(Calendar.getInstance());
+		taskService.saveTask(taskToBeMarked);
+
 	}
 
 	private Project findProjectByID() {

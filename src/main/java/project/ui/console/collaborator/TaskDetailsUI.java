@@ -96,21 +96,19 @@ public class TaskDetailsUI {
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "1":
-				controllerMember.setTaskID(this.taskID);
-				controllerMember.setUser(this.user);
-				task = controllerMember.getTaskByTaskID(this.taskID);
-				ProjectCollaborator projCollaborator = new ProjectCollaborator(this.user, this.projectID);
+                ProjectCollaborator projCollaborator = new ProjectCollaborator(this.user, this.projectID);
 
-				if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator)) {
-					System.out.println(cantDoIt);
-				} else {
-					taskToMark.getProjectsThatIAmCollaborator(this.user);
-					taskToMark.getUnfinishedTasksOfProjectFromCollaborator(this.projectID);
-					taskToMark.getTaskToBeMarkedFinished(this.taskID);
-					taskToMark.markTaskAsFinished();
-					System.out.println("---- SUCCESS Task Marked As Finished ----");
-				}
-				break;
+                if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator)) {
+                    System.out.println(cantDoIt);
+                } else {
+                //taskToMark.getProjectsThatIAmCollaborator(this.user);
+                //taskToMark.getUnfinishedTasksOfProjectFromCollaborator(this.projectID);
+                taskToMark.setTaskToBeMarked(task);
+                taskToMark.markTaskAsFinished();
+                System.out.println("---- SUCCESS Task Marked As Finished ----");
+                }
+                break;
+
 			case "2":
 				createAssignmentRequest.setProjID(this.projectID);
 				createAssignmentRequest.setTaskID(this.taskID);

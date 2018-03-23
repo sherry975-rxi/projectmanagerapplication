@@ -49,6 +49,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 	public void setProjectID(Integer projectID) {
 		this.projectID = projectID;
+		this.project=projectService.getProjectById(projectID);
 	}
 
 	public boolean createTaskTeamRequest(String taskID, User user) {

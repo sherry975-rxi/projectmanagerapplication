@@ -71,6 +71,7 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 		String yerOrNo = input.nextLine();
 
 		controller.setTaskID(this.taskID);
+		controller.setProjectID(this.projID);
 		controller.setUser(this.user);
 
 		// In case user writes something different from "y" or "n"

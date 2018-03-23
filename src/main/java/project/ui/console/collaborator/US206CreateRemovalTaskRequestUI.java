@@ -35,7 +35,7 @@ public class US206CreateRemovalTaskRequestUI {
 	public void cancelRemovalTaskRequestUI() {
 
 		controller.setUser(this.user);
-		controller.setProjectIDFromTaskID(taskID);
+		controller.setProjectID(projID);
 		controller.setTaskID(taskID);
 		projID = controller.getProjectID();
 
