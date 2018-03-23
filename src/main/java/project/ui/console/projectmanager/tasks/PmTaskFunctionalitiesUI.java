@@ -128,6 +128,7 @@ public class PmTaskFunctionalitiesUI {
 							}
 						} catch (Exception forex) {
 							System.out.println("Something went wrong, please try again.");
+							tempdate = null;
 						}
 						if (tempdate == null) {
 							System.out.println("Invalid date format, please try again.");
@@ -157,6 +158,7 @@ public class PmTaskFunctionalitiesUI {
 							}
 						} catch (Exception forex) {
 							System.out.println("Something went wrong, please try again.");
+							tempdate = null;
 						}
 						if (tempdate == null) {
 							System.out.println("Invalid date format, please try again.");
