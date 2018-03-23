@@ -62,7 +62,13 @@ public class TaskService {
 	 * @return Project Task List
 	 */
 	public List<Task> getTaskRepository() {
-		return this.taskRepository.findAll();
+		List<Task> allTasks = this.taskRepository.findAll();
+
+		for (Task other : allTasks){
+			assignStateAccordingToEnum(other);
+		}
+
+		return allTasks;
 	}
 
 	/**
@@ -71,7 +77,13 @@ public class TaskService {
 	 * @return Project Task List
 	 */
 	public List<Task> getProjectTasks(Project project) {
-		return this.taskRepository.findAllByProject(project);
+		List<Task> projTasks = this.taskRepository.findAllByProject(project);
+
+		for(Task other : projTasks){
+			assignStateAccordingToEnum(other);
+		}
+
+		return projTasks;
 	}
 
 
@@ -609,8 +621,11 @@ public class TaskService {
 		 */
 		public Task getTaskByTaskID(String id) {
 
-			return this.taskRepository.findByTaskID(id);
+			Task task = this.taskRepository.findByTaskID(id);
 
+			assignStateAccordingToEnum(task);
+
+			return task;
 		}
 
 
@@ -623,7 +638,11 @@ public class TaskService {
 		 */
 		public Task getTaskByID(Long id) {
 
-			return this.taskRepository.findById(id);
+			Task result = this.taskRepository.findById(id);
+
+			assignStateAccordingToEnum(result);
+
+			return result;
 
 		}
 
@@ -811,5 +830,46 @@ public class TaskService {
 		this.projectCollaboratorRepository = projectCollaboratorRepository;
 	}
 
+	public Task assignStateAccordingToEnum(Task task){
+		if (!(task.getCurrentState()==null)){
+			StateEnum state = task.getCurrentState();
+			switch(state){
+				case CREATED:
+					TaskStateInterface created = new Created();
+					task.setTaskState(created);
+					break;
+				case CANCELLED:
+					TaskStateInterface cancelled = new Cancelled();
+					task.setTaskState(cancelled);
+					break;
+				case ONGOING:
+					TaskStateInterface ongoing = new OnGoing();
+					task.setTaskState(ongoing);
+					break;
+				case READY:
+					TaskStateInterface ready = new Ready();
+					task.setTaskState(ready);
+					break;
+				case STANDBY:
+					TaskStateInterface standby = new StandBy();
+					task.setTaskState(standby);
+					break;
+				case PLANNED:
+					TaskStateInterface planned = new Planned();
+					task.setTaskState(planned);
+					break;
+				case FINISHED:
+					TaskStateInterface finished = new Finished();
+					task.setTaskState(finished);
+					break;
+				default:
+					break;
+			}
+		} else {
+			TaskStateInterface created = new Created();
+			task.setTaskState(created);
+		}
+		return task;
+	}
 
 }
