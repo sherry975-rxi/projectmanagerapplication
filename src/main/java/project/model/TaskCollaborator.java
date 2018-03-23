@@ -1,6 +1,7 @@
 package project.model;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -11,7 +12,7 @@ public class TaskCollaborator implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollaborator;
 	private Calendar startDate;
@@ -87,6 +88,7 @@ public class TaskCollaborator implements Serializable {
 	 * 
 	 * @return user
 	 */
+	@Transactional
 	public User getTaskCollaborator() {
 		return this.projCollaborator.getUserFromProjectCollaborator();
 	}

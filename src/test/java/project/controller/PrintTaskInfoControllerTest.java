@@ -1,10 +1,5 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,15 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
+import project.model.*;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -152,7 +147,7 @@ public class PrintTaskInfoControllerTest {
 	 */
 	@Test
 	public void testPrintTaskStateInfo() {
-		assertEquals(controller.printTaskStateInfo(), "Planned");
+		assertEquals(controller.printTaskStateInfo(), "PLANNED");
 	}
 
 	/**

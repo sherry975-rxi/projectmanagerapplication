@@ -70,7 +70,7 @@ public class PrintTaskInfoController {
 	 */
 	public String printTaskStateInfo() {
 
-		return this.task.viewTaskStateName();
+		return this.task.viewTaskStateNameFromEnum();
 	}
 
 	/**

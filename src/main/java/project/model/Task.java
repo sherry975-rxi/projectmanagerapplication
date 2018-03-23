@@ -26,7 +26,7 @@ public class Task {
 	private Long id;
 	private String taskID;
 	private String description;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "task")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
 	private List<TaskCollaborator> taskTeam;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "task")
@@ -35,7 +35,7 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private StateEnum currentState;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = ALL, mappedBy = "task")
+	@OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "task")
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	private Calendar creationDate;

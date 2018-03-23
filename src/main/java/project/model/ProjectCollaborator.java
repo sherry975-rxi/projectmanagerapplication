@@ -1,10 +1,12 @@
 package project.model;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "ProjectCollaborator")
+@Transactional
 public class ProjectCollaborator implements Serializable {
 
 	@Id
@@ -105,6 +107,7 @@ public class ProjectCollaborator implements Serializable {
 	 * 
 	 * @return Returns the User Data
 	 */
+	@Transactional
 	public User getUserFromProjectCollaborator() {
 		return this.collaborator;
 	}
