@@ -56,21 +56,13 @@ public class US340CreateTaskControllerTest {
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
 		project = projectService.createProject("name3", "description4", userAdmin);// !!!
-
-	}
-
-	@After
-	public void clear() {
-
-		user1 = null;
-		userAdmin = null;
-		project = null;
-		testTask = null;
-
+		testControl.setChosenProject(project);
 	}
 
 	@Test
 	public void testTaskController() {
+		
+	
 		// asserts which user is the Project Manager
 		assertFalse(project.isProjectManager(user1));
 		assertTrue(project.isProjectManager(userAdmin));
@@ -84,7 +76,7 @@ public class US340CreateTaskControllerTest {
 		// asserts the added task matches the added task
 		assertTrue(taskService.getProjectUnstartedTasks(project).get(0).getDescription().equals("Test dis agen pls"));
 
-		assertEquals(taskService, testControl.getTaskService());
+		assertEquals(this.taskService, testControl.getTaskService());
 
 	}
 
