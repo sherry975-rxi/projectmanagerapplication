@@ -4,6 +4,7 @@
 package project.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
@@ -234,6 +235,17 @@ public class US347CancelOnGoingTaskControllerTest {
 
 		// asserts that task1 has state cancelled
 		assertEquals("OnGoing", task1.viewTaskStateName());
+	}
+	
+	/**
+	 * This test verifies if task in state OnGoing and then marked with a finish
+	 * date can not be changed to Cancelled using the controller.
+	 */
+	@Test
+	public void testGetters_Setters() {
+
+		assertEquals(task1.getTaskID(), controllerCancel.getTaskID());
+		assertTrue(project1.equals(controllerCancel.getProject()));
 	}
 
 }
