@@ -17,7 +17,6 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 	@Autowired
 	private ProjectService projectService;
-
 	private User user;
 	private Project project;
 	private Integer projectID;
@@ -25,7 +24,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 
 
 	public US204v2createRequestAddCollaboratorToTaskTeamController() {
-//Default constructor
+		//Default constructor
 	}
 
 	/**
@@ -36,7 +35,6 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 * This controller allows a user to create a request to add be added to the
 	 * TaskTeam that Project Manager will latter approve.
 	 */
-
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -52,8 +50,6 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	public void setProjectID(Integer projectID) {
 		this.projectID = projectID;
 	}
-
-
 
 	public boolean createTaskTeamRequest(String taskID, User user) {
 
@@ -93,11 +89,8 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 * @return Project collaborator of a project from a user
 	 */
 	private ProjectCollaborator getProjectCollaboratorFromUser(User user) {
-
 		ProjectCollaborator projcollab;
-
 		projcollab = projectService.findActiveProjectCollaborator(user, project);
-
 		return projcollab;
 	}
 
@@ -111,7 +104,6 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	 */
 	public Task getTaskByTaskID(String taskID) {
 		return taskService.getTaskByTaskID(taskID);
-
 	}
 
 	/**

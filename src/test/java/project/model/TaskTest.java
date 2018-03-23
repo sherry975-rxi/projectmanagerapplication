@@ -1300,7 +1300,7 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#UnfinishTask()}.
+	 * Test method for {@link project.model.Task#isUnfinishTask()}.
 	 */
 	@Test
 	public void testUnfinishTask() {
@@ -1311,21 +1311,21 @@ public class TaskTest {
 
 		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
 
-		assertTrue(taskReadyToFinishTest.UnfinishTask());
+		assertTrue(taskReadyToFinishTest.isUnfinishTask());
 
 		assertFalse(taskReadyToFinishTest.isTaskFinished());
 
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#UnfinishTask()}.
+	 * Test method for {@link project.model.Task#isUnfinishTask()}.
 	 */
 	@Test
 	public void testUnfinishTaskWhithTaskStateSetToOnGoing() {
 
 		taskReadyToFinishTest.cancelTask();
 
-		assertFalse(taskReadyToFinishTest.UnfinishTask());
+		assertFalse(taskReadyToFinishTest.isUnfinishTask());
 
 	}
 

@@ -169,8 +169,6 @@ public class TaskTeamRequest {
 	 * @return The string representation
 	 */
 	public String viewStringRepresentation() { 
-		
-		//Este m�todo n�o devia estar noutro s�tio? Controladores ou assim...
 
 		return this.projCollab.getUserFromProjectCollaborator().getName() + "\n"
 				+ this.projCollab.getUserFromProjectCollaborator().getEmail() + "\n"

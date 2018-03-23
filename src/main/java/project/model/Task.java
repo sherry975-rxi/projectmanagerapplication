@@ -1222,11 +1222,11 @@ public class Task {
 	 * state machine does not let the task change its state, the finish date is set
 	 * to its previous value.
 	 */
-	public boolean UnfinishTask() {
+	public boolean isUnfinishTask() {
 		boolean unfinishTask = true;
 		Calendar finishDateCopy = Calendar.getInstance();
 
-		if (!(finishDate == null)) {
+		if (finishDate != null) {
 			int year = finishDate.get(Calendar.YEAR);
 			int month = finishDate.get(Calendar.MONTH);
 			int date = finishDate.get(Calendar.DAY_OF_MONTH);
@@ -1466,6 +1466,5 @@ public class Task {
 	 */
 	public void removeAllRequestsWithASpecificTask() {
 		this.pendingTaskTeamRequests.clear();
-		;
 	}
 }
