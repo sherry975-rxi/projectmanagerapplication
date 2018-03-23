@@ -6,6 +6,7 @@ import project.controller.US203GetUserStartedNotFinishedTaskListInIncreasingOrde
 import project.model.Task;
 import project.model.User;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,6 +17,8 @@ public class US203GetUnfinishedTaskUI {
 
 	@Autowired
 	private TaskDetailsUI taskSelected;
+
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
 
 	public void displayOptions(User user1) {
 		boolean loop = true;
@@ -40,10 +43,14 @@ public class US203GetUnfinishedTaskUI {
 			}
 			for (int i = 0; i < taskList.size(); i++) {
 			t = t + 1;
-			System.out.println("["
-					+ taskList.get(i).getTaskID() + "]" + " "
-					+ taskList.get(i).getDescription());
-		}
+				System.out.println("\n");
+				System.out.println("TASK DESCRIPTION: " + taskList.get(i).getDescription() + ".........................[TASK ID] " + taskList.get(i).getTaskID());
+				System.out.println("        --> [Estimated Start Date ]: " + this.dateFormat.format(taskList.get(i).getEstimatedTaskStartDate().getTime()));
+				System.out.println("        --> [Estimated Finish Date]: " + this.dateFormat.format(taskList.get(i).getStartDate().getTime()));
+				System.out.println("        --> [Start Date           ]: " + this.dateFormat.format(taskList.get(i).getEstimatedTaskStartDate().getTime()));
+				System.out.println("        --> [Current State        ]: " + taskList.get(i).getCurrentState());
+				System.out.println("\n");
+			}
 		System.out.println("___________________________________________________");
 		System.out.println("[B] Back \n");
 
