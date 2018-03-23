@@ -77,7 +77,6 @@ public class ProjectManagerMainMenuUI {
 	public void displayOptions() {
 
 		projectInfo.setProject(project);
-		projectInfo.setProject();
 		
 
 		Scanner scannerInput = new Scanner(System.in);

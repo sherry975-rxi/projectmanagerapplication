@@ -106,8 +106,6 @@ public class LoadProjectData {
 
 						NodeList nLigProjectList = eElementProjectCollaborator.getElementsByTagName("ligacao_projeto");
 
-                        System.out.println(userCollaborator.getEmail() + " Ligacoes:" + nLigProjectList.getLength());
-
 
 						for (int indexLigProject = 0; indexLigProject < nLigProjectList
 								.getLength(); indexLigProject++) {

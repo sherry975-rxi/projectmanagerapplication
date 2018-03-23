@@ -9,6 +9,7 @@ import project.controller.US205MarkTaskAsFinishedCollaboratorController;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.services.TaskService;
 
 import java.util.Scanner;
 
@@ -35,6 +36,9 @@ public class TaskDetailsUI {
 
 	@Autowired
 	private US207And208CreateOrUpdateTaskReportUI reportUI;
+
+	@Autowired
+	private TaskService taskService;
 
 	private User user;
 	private Integer projectID;
@@ -166,7 +170,14 @@ public class TaskDetailsUI {
 		this.projectID = projectID;
 	}
 
+	/**
+	 * hotfix for crashes in task details UI due to letter values in XML Task ID's
+	 *
+	 * @param taskID
+	 */
 	public void setTaskID(String taskID) {
 		this.taskID = taskID;
+		this.task = taskService.getTaskByTaskID(taskID);
+		this.projectID = task.getProject().getId();
 	}
 }
