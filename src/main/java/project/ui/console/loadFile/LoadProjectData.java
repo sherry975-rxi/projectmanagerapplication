@@ -1,10 +1,9 @@
-package project.utils;
+package project.ui.console.loadFile;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.xml.parsers.ParserConfigurationException;
 

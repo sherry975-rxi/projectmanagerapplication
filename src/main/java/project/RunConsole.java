@@ -8,8 +8,8 @@ import project.model.Profile;
 import project.repository.UserRepository;
 import project.model.User;
 import project.ui.console.MainMenuUI;
-import project.utils.LoadProjectData;
-import project.utils.LoadUserData;
+import project.ui.console.loadFile.LoadProjectData;
+import project.ui.console.loadFile.LoadUserData;
 
 @Component
 public class RunConsole implements CommandLineRunner {

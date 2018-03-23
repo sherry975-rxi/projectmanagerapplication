@@ -1,7 +1,7 @@
 /**
  * 
  */
-package project.utils;
+package project.ui.console.loadFile;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
