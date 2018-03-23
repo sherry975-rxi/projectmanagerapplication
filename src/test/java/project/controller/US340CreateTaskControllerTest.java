@@ -43,7 +43,6 @@ public class US340CreateTaskControllerTest {
 	@Before
 	public void setUp() {
 
-		// userService.getAllUsersFromUserContainer().clear();
 
 		// create user
 		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
@@ -85,7 +84,7 @@ public class US340CreateTaskControllerTest {
 		// asserts the added task matches the added task
 		assertTrue(taskService.getProjectUnstartedTasks(project).get(0).getDescription().equals("Test dis agen pls"));
 
-		assertEquals(this.taskService, testControl.getTaskService());
+		assertEquals(taskService, testControl.getTaskService());
 
 	}
 
