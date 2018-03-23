@@ -202,5 +202,25 @@ public class PrintTaskInfoController {
 	public void setProject(Project project) {
 		this.project = project;
 	}
+	
+	public Task getTask() {
+		return task;
+	}
+
+	public SimpleDateFormat getDateFormat() {
+		return dateFormat;
+	}
+
+	public String getTaskID() {
+		return taskID;
+	}
+
+	public Integer getProjeID() {
+		return projeID;
+	}
+
+	public Project getProject() {
+		return project;
+	}
 
 }

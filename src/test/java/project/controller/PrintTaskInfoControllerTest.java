@@ -2,6 +2,7 @@ package project.controller;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.junit.After;
@@ -261,6 +262,26 @@ public class PrintTaskInfoControllerTest {
 	public void testPrintTaskBudgetInfo() {
 		task1.setTaskBudget(20);
 		assertEquals(controller.printTaskBudgetInfo(), "20");
-
+	}
+	
+	@Test
+	public void testSettersAndGetters() {
+		controller.setDateFormat(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss"));
+		assertEquals(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss"), controller.getDateFormat());
+		
+		Integer projectIDExpected = project.getIdCode();
+		controller.setProject(project);
+		controller.setProjeID(projectIDExpected);
+		assertEquals(projectIDExpected, controller.getProjeID());
+		
+		String taskIDExpected = task1.getTaskID();
+		controller.setTask(task1);
+		controller.setTaskID(taskIDExpected);
+		assertEquals(taskIDExpected, controller.getTaskID());
+		
+		controller.setProjectAndTask();
+		assertEquals(task1, controller.getTask());
+		assertEquals(project, controller.getProject());
+		
 	}
 }
