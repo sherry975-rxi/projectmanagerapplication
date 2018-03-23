@@ -26,9 +26,6 @@ public class US340CreateTaskController {
 
 	}
 
-	public void setChosenProject(Project chosenProject) {
-		this.chosenProject = chosenProject;
-	}
 
 
 	public TaskService getTaskService() {
