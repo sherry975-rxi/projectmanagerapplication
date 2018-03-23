@@ -39,11 +39,6 @@ public class US357CancelRemovalTaskRequestController {
 		//Empty constructor created for JPA integration tests
 	}
 
-	public US357CancelRemovalTaskRequestController(Project project) {
-		this.project = project;
-		this.task = null;
-		this.userToRemove = null;
-	}
 
 	public Project getProject() {
 		return project;
