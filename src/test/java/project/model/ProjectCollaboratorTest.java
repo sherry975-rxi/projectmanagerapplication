@@ -52,7 +52,7 @@ public class ProjectCollaboratorTest {
         testMoar.setStatus(true);
         assertTrue(testMoar.isProjectCollaboratorActive());
 
-        assertEquals(testMoar.getCollaboratorCost(), 100000);
+        assertEquals(testMoar.getCollaboratorCost(), 100000.0, 001);
 
         assertEquals(tester, testMoar.getUserFromProjectCollaborator());
 
@@ -132,14 +132,14 @@ public class ProjectCollaboratorTest {
     @Test
     public void testGetCostPerEffort() {
 
-        assertEquals(100000, testMoar.getCostPerEffort());
+        assertEquals(100000, testMoar.getCostPerEffort(), 0.001);
     }
 
     @Test
     public void testSetCostPerEffort() {
         testMoar.setCostPerEffort(10);
 
-        assertEquals(10, testMoar.getCostPerEffort());
+        assertEquals(10, testMoar.getCostPerEffort(), 0.001);
     }
 
     @Test

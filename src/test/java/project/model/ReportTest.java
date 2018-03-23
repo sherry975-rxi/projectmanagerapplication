@@ -35,7 +35,7 @@ public class ReportTest {
 
 	@Before
 	public void setUp() {
-		Mockito.when(taskWorker1.getCost()).thenReturn(1);
+		Mockito.when(taskWorker1.getCost()).thenReturn(1.0);
 		estimatedStartDate = Calendar.getInstance();
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
 		taskDeadline = Calendar.getInstance();
