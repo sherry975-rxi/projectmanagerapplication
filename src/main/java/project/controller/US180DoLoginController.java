@@ -40,4 +40,9 @@ public class US180DoLoginController {
 		return loginSuccess;
 	}
 
+	public User findUserByEmail(String email) {
+		User loggedIn =this.userService.getUserByEmail(email);
+		return loggedIn;
+	}
+
 }

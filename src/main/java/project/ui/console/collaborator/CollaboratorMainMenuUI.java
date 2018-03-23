@@ -43,8 +43,10 @@ public class CollaboratorMainMenuUI {
 		boolean loopB = true;
 
 
-		while (loopA) {
+		while (loopA && user==null) {
 
+
+			System.out.println("DEMO MODE ENABLED!");
 			System.out.println("Please choose a User by inserting its email:");
 
 			String email = scannerInput.nextLine();

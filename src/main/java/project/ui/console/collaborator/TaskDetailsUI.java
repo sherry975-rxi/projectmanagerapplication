@@ -127,7 +127,7 @@ public class TaskDetailsUI {
 			case "4":
 				controllerMember.setTaskID(this.taskID);
 				controllerMember.setUser(this.user);
-				task = controllerMember.getTaskByTaskID(this.taskID);
+				System.out.println("Test the report creation");
 				ProjectCollaborator projCollaborator2 = new ProjectCollaborator(this.user, this.projectID);
 				checkAndCreateReportRequest(projCollaborator2, cantDoIt);
 				break;
