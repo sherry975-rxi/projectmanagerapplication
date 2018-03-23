@@ -260,8 +260,8 @@ public class PrintTaskInfoControllerTest {
 	 */
 	@Test
 	public void testPrintTaskBudgetInfo() {
-		task1.setTaskBudget(20);
-		assertEquals(controller.printTaskBudgetInfo(), "20");
+		task1.setTaskBudget(20.0);
+		assertEquals(controller.printTaskBudgetInfo(), "20.0");
 	}
 	
 	@Test
