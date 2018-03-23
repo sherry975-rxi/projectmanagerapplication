@@ -237,10 +237,7 @@ public class US347CancelOnGoingTaskControllerTest {
 		assertEquals("OnGoing", task1.viewTaskStateName());
 	}
 	
-	/**
-	 * This test verifies if task in state OnGoing and then marked with a finish
-	 * date can not be changed to Cancelled using the controller.
-	 */
+
 	@Test
 	public void testGetters_Setters() {
 
