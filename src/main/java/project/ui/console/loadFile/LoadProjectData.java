@@ -69,11 +69,18 @@ public class LoadProjectData {
 				project.setEffortUnit(effortUnit);
 
 				// Converts string to integer
-				Integer budget = Integer
+				Double budget = Double
 						.valueOf(eElementProject.getElementsByTagName("orcamento_projeto").item(0).getTextContent());
-				project.setBudget(budget);
+				project.setProjectBudget(budget);
 
-				// project.setProjectStatus(eElementProject.getElementsByTagName("estado_projeto").item(0).getTextContent())
+				String state = eElementProject.getElementsByTagName("estado_projeto").item(0).getTextContent();
+
+				project.setProjectStatus(6);
+
+					if(state.equals("Ativo")) {
+
+						project.setProjectStatus(2);
+					}
 
 				User user = userService.getUserByEmail(
 						eElementProject.getElementsByTagName("gestor_projeto").item(0).getTextContent());
@@ -116,7 +123,7 @@ public class LoadProjectData {
 								boolean isProjCollabActive = eElementLigProject
                                         .getElementsByTagName("data_fim").item(0).getTextContent().isEmpty();
 
-								Integer costEffort = Integer.valueOf(eElementLigProject
+								Double costEffort = Double.valueOf(eElementLigProject
 										.getElementsByTagName("custo_unitario_colaborador").item(0).getTextContent());
 
                                 projCollaborator=projectService.createProjectCollaborator(userCollaborator, project, costEffort);
@@ -142,11 +149,11 @@ public class LoadProjectData {
 
 						task.setTaskID(eElementTask.getElementsByTagName("codigo_tarefa").item(0).getTextContent());
 
-						Integer taskEffort = Integer.valueOf(
+						Double taskEffort = Double.valueOf(
 								eElementTask.getElementsByTagName("esforco_estimado").item(0).getTextContent());
 						task.setEstimatedTaskEffort(taskEffort);
 
-						Integer taskBudget = Integer.valueOf(eElementTask
+						Double taskBudget = Double.valueOf(eElementTask
 								.getElementsByTagName("custo_unitario_orcamentado").item(0).getTextContent());
 						task.setTaskBudget(taskBudget);
 
@@ -253,7 +260,7 @@ public class LoadProjectData {
 										String integer = eElementNodeReport.getElementsByTagName("esforco").item(0)
 												.getTextContent();
 
-										Integer timeToReport = Integer.valueOf(eElementNodeReport
+										Double timeToReport = Double.valueOf(eElementNodeReport
 												.getElementsByTagName("esforco").item(0).getTextContent());
 
 										task.createReport(taskCollab, reportStartDate, timeToReport);
