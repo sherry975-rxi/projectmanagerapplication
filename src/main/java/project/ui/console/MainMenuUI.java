@@ -72,6 +72,10 @@ public class MainMenuUI {
 					break;
 				case "2":
 					loggedIn=doLogin.doLogin();
+					if(loggedIn!=null) {
+					    System.out.println("");
+					    System.out.println("Welcome to Project Management, " + loggedIn.getName());
+                    }
 					break;
 				case "3":
 					adminMenu.setAdminLoggedIn(userAdmin);
