@@ -3,6 +3,7 @@ package project.ui.console.collaborator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.model.User;
+import project.services.UserService;
 
 import java.util.Scanner;
 
@@ -12,6 +13,9 @@ import java.util.Scanner;
  */
 @Component
 public class CollaboratorMainMenuUI {
+
+	@Autowired
+	private UserService userService; //TIRAR ISTO QUANDO PUDER SER!!!
 
 	@Autowired
 	private US201and202UpdateUserInfoUI updateUserInfoUI;
@@ -33,10 +37,38 @@ public class CollaboratorMainMenuUI {
 	}
 
 	public void displayOptions() {
-		boolean loop = true;
-		while (loop) {
-			loop = false;
 		Scanner scannerInput = new Scanner(System.in);
+
+		boolean loopA = true;
+		boolean loopB = true;
+
+
+		while (loopA) {
+
+			System.out.println("Please choose a User by inserting its email:");
+
+			String email = scannerInput.nextLine();
+
+			user = userService.getUserByEmail(email);
+
+			if(user == null){
+				System.out.println("Invalid email inserted. Would you like to try again?");
+				System.out.println("[Y]-Yes");
+				System.out.println("[Any Key]-No");
+
+				String yon = scannerInput.nextLine().toLowerCase();
+				if (!("y".equals(yon))){
+					loopA = false;
+					loopB = false;
+				}
+			} else {
+				loopA = false;
+			}
+		}
+
+		while (loopB) {
+			loopB = false;
+
 
 		String myname = user.getName();
 		String function = user.getFunction().toUpperCase();
@@ -70,7 +102,7 @@ public class CollaboratorMainMenuUI {
 		case "B":
 			break;
 		default:
-			loop = true;
+			loopB = true;
 		}
 	}}
 

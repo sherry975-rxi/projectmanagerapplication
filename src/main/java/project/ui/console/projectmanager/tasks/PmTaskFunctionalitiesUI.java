@@ -1,7 +1,10 @@
 package project.ui.console.projectmanager.tasks;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import project.controller.US340CreateTaskController;
+import project.controller.US342CreateTaskDependencyController;
 import project.services.TaskService;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
@@ -9,13 +12,16 @@ import project.model.Project;
 import project.model.Task;
 import project.model.User;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 @Component
 public class PmTaskFunctionalitiesUI {
 
 	@Autowired
-	private TaskService taskService; //QUE E ISTO PA?!
+	private TaskService taskService; //ISTO TEM DE SAIR MAL POSSA?!
 
 	@Autowired
 	private PrintTaskInfoController taskInfo;
@@ -35,6 +41,9 @@ public class PmTaskFunctionalitiesUI {
 	@Autowired
 	private US347CancelOnGoingTaskUI us347UI;
 
+	@Autowired
+	private US340CreateTaskController us340;
+
 	private Project project;
 	private String taskID;
 	private User user;
@@ -52,6 +61,9 @@ public class PmTaskFunctionalitiesUI {
 		projectInfo.setProjID(project.getIdCode());
 		projectInfo.setProject();
 
+
+		boolean loopESD = true;
+		boolean loopDL = true;
 		boolean condition = true;
 		while (condition) {
 			System.out.println("");
@@ -73,6 +85,8 @@ public class PmTaskFunctionalitiesUI {
 			System.out.println("[2] Remove User");
 			System.out.println("[3] Mark task as finished");
 			System.out.println("[4] Cancel task");
+			System.out.println("[5] Set Estimated Start Date");
+			System.out.println("[6] Set Deadline");
 			System.out.println("______________________________________________");
 			System.out.println("[B] Back");
 			System.out.println("[M] MainMenu");
@@ -97,6 +111,64 @@ public class PmTaskFunctionalitiesUI {
 				break;
 			case "4":
 				us347UI.cancelOnGoingTask(taskID, project);
+				break;
+			case "5":
+				while (loopESD) {
+					System.out.println("Please insert a date (DD/MM/YYYY):");
+					System.out.println("Alternatively, insert [B] to go back.");
+					String value = scannerInput.nextLine();
+					if (!"b".equalsIgnoreCase(value)) {
+						Calendar date = Calendar.getInstance();
+						Date tempdate = null;
+						try {
+							SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY");
+							tempdate = sdf.parse(value);
+							if (!value.equals(sdf.format(date))) {
+								tempdate = null;
+							}
+						} catch (Exception forex) {
+							System.out.println("Something went wrong, please try again.");
+						}
+						if (tempdate == null) {
+							System.out.println("Invalid date format, please try again.");
+						} else {
+							date.setTime(tempdate);
+							us340.setEstimatedStartDate(task, date);
+							System.out.println("Estimated Start Date successfully added");
+						}
+					} else {
+						loopESD = false;
+					}
+				}
+				break;
+			case "6":
+				while (loopDL) {
+					System.out.println("Please insert a date (DD/MM/YYYY):");
+					System.out.println("Alternatively, insert [B] to go back.");
+					String value = scannerInput.nextLine();
+					if (!"b".equalsIgnoreCase(value)) {
+						Calendar date = Calendar.getInstance();
+						Date tempdate = null;
+						try {
+							SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY");
+							tempdate = sdf.parse(value);
+							if (!value.equals(sdf.format(date))) {
+								tempdate = null;
+							}
+						} catch (Exception forex) {
+							System.out.println("Something went wrong, please try again.");
+						}
+						if (tempdate == null) {
+							System.out.println("Invalid date format, please try again.");
+						} else {
+							date.setTime(tempdate);
+							us340.setDeadline(task, date);
+							System.out.println("Deadline successfully added");
+						}
+					} else {
+						loopDL = false;
+					}
+				}
 				break;
 			case "B":
 				condition = false;

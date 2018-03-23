@@ -6,6 +6,8 @@ import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
 
+import java.util.Calendar;
+
 @Controller
 public class US340CreateTaskController {
 
@@ -40,6 +42,14 @@ public class US340CreateTaskController {
 		}
 		return wasTaskSaved;
 
+	}
+
+	public void setEstimatedStartDate(Task task, Calendar estimatedStartDate){
+		task.setEstimatedTaskStartDate(estimatedStartDate);
+	}
+
+	public void setDeadline(Task task, Calendar Deadline){
+		task.setTaskDeadline(Deadline);
 	}
 
 	public void setChosenProject(Project chosenProject) {
