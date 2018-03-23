@@ -158,5 +158,18 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		assertEquals(0, pendingRemovalListSizeAfter);
 
 	}
+	
+	/**
+	 * Test for setters and getters
+	 */
+	@Test
+	public void testGetters_Setters() {
+		us357Controller.setProject(projectA);
+		us357Controller.setTask(taskA);
+		us357Controller.setUserToRemove(userRui);
+		assertTrue(projectA.equals(us357Controller.getProject()));
+		assertTrue(taskA.equals(us357Controller.getTask()));
+		assertTrue(userRui.equals(us357Controller.getUserToRemove()));
+	}
 
 }
