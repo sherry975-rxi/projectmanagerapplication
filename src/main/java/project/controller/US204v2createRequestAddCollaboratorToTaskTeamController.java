@@ -2,12 +2,12 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.TaskService;
 
 @Controller
 public class US204v2createRequestAddCollaboratorToTaskTeamController {
@@ -22,6 +22,11 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	private Project project;
 	private Integer projectID;
 	private String taskID;
+
+
+	public US204v2createRequestAddCollaboratorToTaskTeamController() {
+//Default constructor
+	}
 
 	/**
 	 * 
@@ -48,9 +53,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 		this.projectID = projectID;
 	}
 
-	public US204v2createRequestAddCollaboratorToTaskTeamController() {
 
-	}
 
 	public boolean createTaskTeamRequest(String taskID, User user) {
 

@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
 import project.model.Project;
 import project.model.User;
+import project.services.ProjectService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +17,9 @@ public class CollectProjectsFromUserController {
 
 	private User user;
 
-	/**
-	 * Constructor
-	 * 
-	 */
+	
 	public CollectProjectsFromUserController() {
+		//Empty constructor created for JPA integration tests
 
 	}
 

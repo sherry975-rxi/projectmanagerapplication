@@ -1,16 +1,15 @@
 package project.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import project.services.ProjectService;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.TaskService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class US360ViewCollaboratorsWithoutTasksController {
@@ -21,6 +20,8 @@ public class US360ViewCollaboratorsWithoutTasksController {
 	private TaskService taskService;
 
 	public US360ViewCollaboratorsWithoutTasksController() {
+		//Empty constructor created for JPA integration tests
+
 	}
 
 	/**

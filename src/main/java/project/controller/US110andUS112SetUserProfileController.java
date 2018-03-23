@@ -2,15 +2,20 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.UserService;
 import project.model.Profile;
 import project.model.User;
+import project.services.UserService;
 
 @Controller
 public class US110andUS112SetUserProfileController {
 
 	@Autowired
 	private UserService userService;
+
+	public US110andUS112SetUserProfileController() {
+		//Empty constructor created for JPA integration tests
+
+	}
 
 	public UserService getUserContainer() {
 		return userService;

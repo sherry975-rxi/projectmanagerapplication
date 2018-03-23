@@ -2,13 +2,13 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.TaskService;
-import project.services.UserService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 
 import java.util.List;
 
@@ -36,7 +36,13 @@ public class US357CancelRemovalTaskRequestController {
 	private TaskService taskService;
 
 	public US357CancelRemovalTaskRequestController() {
+		//Empty constructor created for JPA integration tests
+	}
 
+	public US357CancelRemovalTaskRequestController(Project project) {
+		this.project = project;
+		this.task = null;
+		this.userToRemove = null;
 	}
 
 	public Project getProject() {
@@ -63,11 +69,6 @@ public class US357CancelRemovalTaskRequestController {
 		this.userToRemove = userToRemove;
 	}
 
-	public US357CancelRemovalTaskRequestController(Project project) {
-		this.project = project;
-		this.task = null;
-		this.userToRemove = null;
-	}
 
 	/**
 	 * This method returns a list of Strings that allows a Project Manager to check

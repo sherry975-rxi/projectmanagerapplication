@@ -2,11 +2,11 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
+import project.services.ProjectService;
+import project.services.TaskService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +27,7 @@ public class PrintProjectInfoController {
 	int projID;
 
 	public PrintProjectInfoController() {
+		//Empty constructor created for JPA integration tests
 
 	}
 

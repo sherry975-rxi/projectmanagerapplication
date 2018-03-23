@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
+import project.services.TaskService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,10 @@ public class US390CalculateReportedProjectCostController {
 
 	@Autowired
 	private TaskService taskService;
+
+	public US390CalculateReportedProjectCostController() {
+		//Empty constructor created for JPA integration tests
+	}
 
 	/*
 	 * 

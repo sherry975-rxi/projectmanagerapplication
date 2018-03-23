@@ -2,11 +2,11 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.ProjectService;
-import project.services.UserService;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.UserService;
 
 import java.util.List;
 
@@ -19,11 +19,9 @@ public class US351AddColaboratorToProjectTeamController {
 	@Autowired
 	private UserService userContainer;
 
-	/*
-	 * Default constructor for controller
-	 */
 
 	public US351AddColaboratorToProjectTeamController() {
+		//Empty constructor created for JPA integration tests
 
 	}
 

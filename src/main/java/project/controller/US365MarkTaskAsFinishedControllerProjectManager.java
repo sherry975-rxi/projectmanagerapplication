@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
+import project.services.TaskService;
 
 @Controller
 public class US365MarkTaskAsFinishedControllerProjectManager {
@@ -15,11 +15,9 @@ public class US365MarkTaskAsFinishedControllerProjectManager {
 	private Task taskToBeMarked;
 	private Project selectedProject;
 
-	/*
-	 * Default constructor
-	 */
 
 	public US365MarkTaskAsFinishedControllerProjectManager() {
+		//Empty constructor created for JPA integration tests
 
 	}
 

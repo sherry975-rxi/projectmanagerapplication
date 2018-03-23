@@ -5,9 +5,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
+import project.services.TaskService;
 
 /**
  * @author Group3
@@ -23,7 +23,19 @@ public class US347CancelOnGoingTaskController {
 	private Project project;
 
 	public US347CancelOnGoingTaskController() {
+		//Empty constructor created for JPA integration tests
 
+	}
+
+	/**
+	 * Constructor
+	 *
+	 * @param taskID  task id to give to the task
+	 * @param project project in which to create the task
+	 */
+	public US347CancelOnGoingTaskController(String taskID, Project project) {
+		this.taskID = taskID;
+		this.project = project;
 	}
 
 	public String getTaskID() {
@@ -42,18 +54,6 @@ public class US347CancelOnGoingTaskController {
 		this.project = project;
 	}
 
-	/**
-	 * Constructor
-	 * 
-	 * @param taskID
-	 *            task id to give to the task
-	 * @param project
-	 *            project in which to create the task
-	 */
-	public US347CancelOnGoingTaskController(String taskID, Project project) {
-		this.taskID = taskID;
-		this.project = project;
-	}
 
 	/**
 	 * Returns a string with the state of a certain Task

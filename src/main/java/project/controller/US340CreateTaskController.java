@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
+import project.services.TaskService;
 
 @Controller
 public class US340CreateTaskController {
@@ -20,6 +20,12 @@ public class US340CreateTaskController {
 	 * controller
 	 */
 	public US340CreateTaskController() {
+		//Empty constructor created for JPA integration tests
+
+	}
+
+	public void setChosenProject(Project chosenProject) {
+		this.chosenProject = chosenProject;
 	}
 
 	public TaskService getTaskService() {
@@ -42,7 +48,5 @@ public class US340CreateTaskController {
 
 	}
 
-	public void setChosenProject(Project chosenProject) {
-		this.chosenProject = chosenProject;
-	}
+
 }
