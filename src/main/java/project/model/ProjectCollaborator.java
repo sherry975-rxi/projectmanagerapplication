@@ -17,7 +17,7 @@ public class ProjectCollaborator implements Serializable {
 	@JoinColumn(name = "Project_id")
 	private Project project;
 	private boolean status;
-	private int costPerEffort;
+	private double costPerEffort;
 	static final long serialVersionUID = 51L;
 
 	/**
@@ -62,7 +62,7 @@ public class ProjectCollaborator implements Serializable {
 		return status;
 	}
 
-	public int getCostPerEffort() {
+	public double getCostPerEffort() {
 		return costPerEffort;
 	}
 
@@ -95,7 +95,7 @@ public class ProjectCollaborator implements Serializable {
 	 * This method views the Project Collaborator's cost per effort unit
 	 * 
 	 */
-	public int getCollaboratorCost() {
+	public double getCollaboratorCost() {
 		return this.costPerEffort;
 	}
 
