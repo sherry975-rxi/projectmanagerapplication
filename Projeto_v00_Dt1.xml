@@ -4,7 +4,7 @@
 	<descricao_projeto>Projeto de teste inicial</descricao_projeto>
 	<data_inicio_projeto>01/10/2017</data_inicio_projeto>
 	<data_conclusao_projeto>30/06/2018</data_conclusao_projeto>
-	<unidade_esforco>PERSON_MONTH</unidade_esforco>
+	<unidade_esforco>PM</unidade_esforco>
 	<orcamento_projeto>50</orcamento_projeto>
 	<estado_projeto>Ativo</estado_projeto>
 	<gestor_projeto>tc@mymail.com</gestor_projeto>
