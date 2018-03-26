@@ -2,11 +2,11 @@ package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.repository.ProjCollabRepository;
-import project.repository.ProjectsRepository;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
+import project.repository.ProjCollabRepository;
+import project.repository.ProjectsRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;

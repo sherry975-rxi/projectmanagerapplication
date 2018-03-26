@@ -2,11 +2,11 @@ package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.repository.UserRepository;
 import project.dto.UserDTO;
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
+import project.repository.UserRepository;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;

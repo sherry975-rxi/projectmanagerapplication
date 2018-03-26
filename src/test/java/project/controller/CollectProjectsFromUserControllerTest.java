@@ -1,10 +1,5 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import project.services.ProjectService;
-import project.services.UserService;
 import project.model.Profile;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * 

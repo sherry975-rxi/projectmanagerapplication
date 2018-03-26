@@ -1,13 +1,5 @@
 package project.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,16 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import project.services.ProjectService;
-import project.services.TaskService;
-import project.services.UserService;
 import project.model.Project;
 import project.model.StateEnum;
 import project.model.Task;
 import project.model.User;
 import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.OnGoing;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

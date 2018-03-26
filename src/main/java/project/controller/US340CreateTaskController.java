@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Project;
 import project.model.Task;
+import project.services.TaskService;
 
 import java.util.Calendar;
 
@@ -52,8 +52,8 @@ public class US340CreateTaskController {
 		task.setEstimatedTaskStartDate(estimatedStartDate);
 	}
 
-	public void setDeadline(Task task, Calendar Deadline){
-		task.setTaskDeadline(Deadline);
+	public void setDeadline(Task task, Calendar deadLine){
+		task.setTaskDeadline(deadLine);
 	}
 
 	public void setChosenProject(Project chosenProject) {

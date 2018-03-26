@@ -11,10 +11,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import project.repository.UserRepository;
 import project.dto.UserDTO;
 import project.model.Profile;
 import project.model.User;
+import project.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -11,12 +11,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
-import project.repository.ProjCollabRepository;
-import project.repository.ProjectsRepository;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.repository.ProjCollabRepository;
+import project.repository.ProjectsRepository;
 
 import java.util.ArrayList;
 import java.util.Calendar;

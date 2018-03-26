@@ -3,14 +3,13 @@ package project.ui.console.projectmanager.tasks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US340CreateTaskController;
-import project.controller.US342CreateTaskDependencyController;
-import project.services.TaskService;
 import project.controller.PrintProjectInfoController;
 import project.controller.PrintTaskInfoController;
+import project.controller.US340CreateTaskController;
 import project.model.Project;
 import project.model.Task;
 import project.model.User;
+import project.services.TaskService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

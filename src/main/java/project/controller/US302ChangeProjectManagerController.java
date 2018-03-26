@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.UserService;
 import project.model.Project;
 import project.model.User;
+import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +25,6 @@ public class US302ChangeProjectManagerController {
 	private User selectedManager;
 	private Project selectedProject;
 	private List<User> activeCollaboratorList;
-
-	public US302ChangeProjectManagerController() {
-
-	}
 	
 	/**
 	 * This controller returns a list of all activeCollaborators in the User

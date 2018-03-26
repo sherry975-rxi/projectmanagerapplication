@@ -3,10 +3,6 @@
  */
 package project.ui.console.loadFile;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -14,11 +10,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
 import project.services.UserService;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 /**
  * @author Group3

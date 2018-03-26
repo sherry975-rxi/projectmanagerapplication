@@ -2,9 +2,9 @@ package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.services.TaskService;
 import project.model.Task;
 import project.model.User;
+import project.services.TaskService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

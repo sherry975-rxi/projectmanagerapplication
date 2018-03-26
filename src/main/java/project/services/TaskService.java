@@ -2,10 +2,10 @@ package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.repository.ProjCollabRepository;
-import project.repository.TaskRepository;
 import project.model.*;
 import project.model.taskstateinterface.*;
+import project.repository.ProjCollabRepository;
+import project.repository.TaskRepository;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -831,7 +831,7 @@ public class TaskService {
 	}
 
 	public Task assignStateAccordingToEnum(Task task){
-		if (!(task.getCurrentState()==null)){
+		if (task.getCurrentState()!= null){
 			StateEnum state = task.getCurrentState();
 			switch(state){
 				case CREATED:

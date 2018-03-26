@@ -22,12 +22,7 @@ public class US356ManageAssigmentRequestController {
 	/*
 	 * This controller manages Addition Requests by Project Collaborators * respond
 	 * to US 356
-	 * Empty constructor created for JPA integration tests
-	 *
-	 */
-	public US356ManageAssigmentRequestController() {
-
-	}
+	*/
 
 	/*
 	 * Getters and Setters

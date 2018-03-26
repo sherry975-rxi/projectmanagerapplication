@@ -4,12 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import project.model.*;
+import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 import project.repository.TaskRepository;
 import project.repository.UserRepository;
-import project.model.*;
-import project.model.taskstateinterface.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
