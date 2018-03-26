@@ -293,8 +293,8 @@ public class TaskServiceTest {
         when(task2Mock.getCurrentState()).thenReturn(StateEnum.FINISHED);
 
         List<Task> taskList = new ArrayList<>();
-        taskList.add(task2Mock);
         taskList.add(taskMock);
+        taskList.add(task2Mock);
         when(taskRepository.findAll()).thenReturn(taskList);
 
         List<TaskCollaborator> listTaskCollaborator = new ArrayList<>();
@@ -303,10 +303,12 @@ public class TaskServiceTest {
         when(task2Mock.getTaskTeam()).thenReturn(listTaskCollaborator);
 
         List<Task> orderedListToCompare = new ArrayList<>();
-        orderedListToCompare.add(taskMock);
         orderedListToCompare.add(task2Mock);
+        orderedListToCompare.add(taskMock);
 
-        assertEquals(orderedListToCompare, victim.getFinishedUserTasksFromLastMonthInDecreasingOrder(user));
+        List<Task> trueList = victim.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
+
+        assertEquals(orderedListToCompare, trueList);
     }
 
     /**
