@@ -145,11 +145,6 @@ public class US365MarkTaskAsFInishedControllerTest {
 		task2OnGoing.setStartDate(estimatedTaskStartDateTest);
 		task2OnGoing.setTaskDeadline(taskDeadlineDateTest);
 
-		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task3.setStartDate(estimatedTaskStartDateTest);
-		task3.setTaskDeadline(taskDeadlineDateTest);
-		task3.setTaskState(new OnGoing());
-		task3.setCurrentState(StateEnum.ONGOING);
 
 		task4.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task4.setStartDate(estimatedTaskStartDateTest);
@@ -214,6 +209,7 @@ public class US365MarkTaskAsFInishedControllerTest {
 		us365controller.setSelectedProject(project2);
 		us365controller.setTaskToBeMarked(task3.getTaskID());
 		taskService.saveTask(task3);
+		System.out.println(task3.getCurrentState());
 		us365controller.setTaskAsFinished();
 
 		assertFalse(task3.isTaskFinished());
