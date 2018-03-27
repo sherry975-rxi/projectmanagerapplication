@@ -116,7 +116,7 @@ public class UserService {
 	 *            user to save
 	 */
 	public void addUserToUserRepositoryX(User user) {
-		if (this.isUserinUserContainer(user) == false) {
+		if (!this.isUserinUserContainer(user)) {
 			this.userRepository.save(user);
 		}
 	}
@@ -254,11 +254,7 @@ public class UserService {
 	 */
 	public boolean isUserinUserContainer(User addedUser) {
 
-		boolean result = false;
-		if (this.userRepository.existsByEmail(addedUser.getEmail())) {
-			result = true;
-		}
-		return result;
+		return this.userRepository.existsByEmail(addedUser.getEmail());
 	}
 
 }

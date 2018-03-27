@@ -107,16 +107,21 @@ public class UserServiceTest {
 	@Test
 	public final void testUpdateUserRepository() {
 
-        // given two users in the database
+        // given two users in the database, with save method called once for each of them
+
+
 
 		// when the same method is called again, it must NOT call the repository's save method as the user already exists
         // (mocked exists by email method to return true
         Mockito.when(userRepositoryMock.existsByEmail(user1.getEmail())).thenReturn(true);
         userContainer.addUserToUserRepositoryX(user1);
 
+        // then, save must only have been called once, for user 1
+        verify(userRepositoryMock, times(1)).save(user1);
 
-		// to update the user, updateUser method must be called instead
 
+		// to update the user, updateUser method must be called instead. When called, it will call the save method regardless of ther user existing
+        // then, save must have been called a total of two times for user 1
         userContainer.updateUser(user1);
         verify(userRepositoryMock, times(2)).save(user1);
 	}
