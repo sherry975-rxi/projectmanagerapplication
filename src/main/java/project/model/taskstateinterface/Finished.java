@@ -3,6 +3,8 @@ package project.model.taskstateinterface;
 import project.model.StateEnum;
 import project.model.Task;
 
+import javax.swing.plaf.nimbus.State;
+
 public class Finished implements TaskStateInterface {
 
 	/**
@@ -30,15 +32,16 @@ public class Finished implements TaskStateInterface {
 	 */
 	public boolean isValid(Task task) {
 
-		return ((task.getTaskState() instanceof OnGoing) ||
-                (task.getTaskState() instanceof Cancelled) ||
-                (task.getTaskState() instanceof StandBy)) &&
-                (task.getEstimatedTaskStartDate() != null) &&
-                (task.getTaskDeadline() != null) &&
-                (task.getStartDate() != null) &&
-                (task.getFinishDate() != null) &&
-				(Double.compare(task.getEstimatedTaskEffort(),0.0) != 0) &&
-				(Double.compare(task.getTaskBudget(),0.0) != 0);
+		Boolean isValid = false;
+
+		if(task.getCurrentState() == StateEnum.ONGOING || task.getCurrentState() == StateEnum.CANCELLED ||
+				task.getCurrentState() == StateEnum.STANDBY) {
+			if (task.getStartDate() != null && task.getFinishDate() != null) {
+				isValid = true;
+			}
+		}
+		return isValid;
+
 	}
 
 }
