@@ -25,7 +25,6 @@ public class Cancelled implements TaskStateInterface {
 	}
 	}
 
-
 	/**
 	 * Method that checks if a certain task meets the conditions to be in the Cancelled state
 	 *
@@ -35,17 +34,15 @@ public class Cancelled implements TaskStateInterface {
 	 */
 	public boolean isValid(Task task) {
 
-		return ((task.getTaskState() instanceof OnGoing) ||
-				(task.getTaskState() instanceof StandBy)) &&
-				(task.getFinishDate() == null) &&
-				(task.getEstimatedTaskStartDate() != null) &&
-				(task.getTaskDeadline() != null) &&
-				(task.getCancelDate() != null) &&
-				task.doesTaskTeamHaveActiveUsers() &&
-				(task.getStartDate() != null) &&
-				(Double.compare(task.getEstimatedTaskEffort(),0.0) != 0) &&
-				(Double.compare(task.getTaskBudget(),0.0) != 0);
+		Boolean isValid = false;
 
-
+		if((task.getCurrentState() == StateEnum.ONGOING) || (task.getCurrentState() == StateEnum.STANDBY)) {
+			if (task.getFinishDate() == null && task.getStartDate() != null) {
+				if (task.getCancelDate() != null) {
+					isValid = true;
+				}
+			}
+		}
+		return isValid;
 	}
 }
