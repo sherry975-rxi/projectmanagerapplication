@@ -12,7 +12,6 @@ public class StandBy implements TaskStateInterface {
 	 * @param task
 	 *            to check if it has the conditions to change to the onGoing state,
 	 *            cancelled state or finished state
-	 * @param task
 	 */
 	@Override
 	public void doAction(Task task) {
@@ -45,16 +44,21 @@ public class StandBy implements TaskStateInterface {
 	 * @return TRUE if it meets the conditions, FALSE if not
 	 */
 	public boolean isValid(Task task) {
-		Boolean isValid = true;
 
-		if (task.getCurrentState() != StateEnum.ONGOING)
-			isValid = false;
-		if (task.getStartDate() == null && task.getFinishDate() != null && task.getCancelDate() != null)
-			isValid = false;
-		if (task.doesTaskTeamHaveActiveUsers())
-			isValid = false;
+		return (task.getCurrentState() == StateEnum.ONGOING) &&
+				hasRequiredDates(task) &&
+				!task.doesTaskTeamHaveActiveUsers();
 
-		return isValid;
+	}
 
+	/**
+	 * This private method verifies if a task has the required dates to be in the StandBy state. It is called by the isValid method.
+	 *
+	 * @param task to verify dates
+	 *
+	 * @return TRUE if it has, FALSE if not
+	 */
+	private static boolean hasRequiredDates(Task task) {
+		return (task.getStartDate() != null) && (task.getFinishDate() == null) && (task.getCancelDate() == null);
 	}
 }

@@ -34,15 +34,20 @@ public class Cancelled implements TaskStateInterface {
 	 */
 	public boolean isValid(Task task) {
 
-		Boolean isValid = false;
+		return ((task.getCurrentState() == StateEnum.ONGOING)
+				|| (task.getCurrentState() == StateEnum.STANDBY))
+				&& hasRequiredDates(task);
 
-		if((task.getCurrentState() == StateEnum.ONGOING) || (task.getCurrentState() == StateEnum.STANDBY)) {
-			if (task.getFinishDate() == null && task.getStartDate() != null) {
-				if (task.getCancelDate() != null) {
-					isValid = true;
-				}
-			}
-		}
-		return isValid;
+	}
+
+	/**
+	 * This private method verifies if a task has the required dates to be in the StandBy state. It is called by the isValid method.
+	 *
+	 * @param task to verify dates
+	 *
+	 * @return TRUE if it has, FALSE if not
+	 */
+	private static boolean hasRequiredDates(Task task) {
+		return (task.getStartDate() != null) && (task.getFinishDate() == null) && (task.getCancelDate() != null);
 	}
 }

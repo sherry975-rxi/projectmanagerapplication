@@ -2,9 +2,6 @@ package project.model.taskstateinterface;
 
 import project.model.StateEnum;
 import project.model.Task;
-
-import javax.swing.plaf.nimbus.State;
-
 public class OnGoing implements TaskStateInterface {
 
 	/**
@@ -48,18 +45,23 @@ public class OnGoing implements TaskStateInterface {
 	 */
 	public boolean isValid(Task task) {
 
-		Boolean isValid = false;
+		if(task.getCurrentState() == StateEnum.READY || task.getCurrentState() == StateEnum.FINISHED || task.getCurrentState() == StateEnum.STANDBY)
+			return (hasRequiredDates(task) && task.doesTaskTeamHaveActiveUsers());
 
-		if(task.getCurrentState() == StateEnum.READY || task.getCurrentState() == StateEnum.FINISHED ||
-				task.getCurrentState() == StateEnum.STANDBY) {
-			if (task.getStartDate() != null && task.getFinishDate() == null) {
-				if (task.getCancelDate() == null && task.doesTaskTeamHaveActiveUsers()) {
-					isValid = true;
-				}
-			}
-		}
+		return false;
 
-		return isValid;
+	}
+
+
+	/**
+	 * This private method verifies if a task has the required dates to be in the StandBy state. It is called by the isValid method.
+	 *
+	 * @param task to verify dates
+	 *
+	 * @return TRUE if it has, FALSE if not
+	 */
+	private static boolean hasRequiredDates(Task task) {
+		return (task.getStartDate() != null) && (task.getFinishDate() == null) && (task.getCancelDate() == null);
 	}
 
 }

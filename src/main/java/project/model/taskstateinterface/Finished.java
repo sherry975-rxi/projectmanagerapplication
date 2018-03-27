@@ -3,8 +3,6 @@ package project.model.taskstateinterface;
 import project.model.StateEnum;
 import project.model.Task;
 
-import javax.swing.plaf.nimbus.State;
-
 public class Finished implements TaskStateInterface {
 
 	/**
@@ -32,16 +30,23 @@ public class Finished implements TaskStateInterface {
 	 */
 	public boolean isValid(Task task) {
 
-		Boolean isValid = false;
-
 		if(task.getCurrentState() == StateEnum.ONGOING || task.getCurrentState() == StateEnum.CANCELLED ||
-				task.getCurrentState() == StateEnum.STANDBY) {
-			if (task.getStartDate() != null && task.getFinishDate() != null) {
-				isValid = true;
-			}
-		}
-		return isValid;
+				task.getCurrentState() == StateEnum.STANDBY)
+			return hasRequiredDates(task);
 
+		return false;
+
+	}
+
+	/**
+	 * This private method verifies if a task has the required dates to be in the StandBy state. It is called by the isValid method.
+	 *
+	 * @param task to verify dates
+	 *
+	 * @return TRUE if it has, FALSE if not
+	 */
+	private static boolean hasRequiredDates(Task task) {
+		return (task.getStartDate() != null) && (task.getFinishDate() != null);
 	}
 
 }
