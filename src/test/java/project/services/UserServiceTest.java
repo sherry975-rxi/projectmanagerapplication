@@ -55,6 +55,8 @@ public class UserServiceTest {
 		user2 = userContainer.createUser("João", "joaogmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
 				"Porto", "Porto", "Portugal");
 
+        Mockito.when(userRepositoryMock.save(Mockito.any(User.class))).thenReturn(user1);
+
 	}
 
 	/**
@@ -97,6 +99,29 @@ public class UserServiceTest {
 
 		verify(userRepositoryMock, times(2)).save(user1);
 	}
+
+
+	/**
+	 * Test method call updateUserData
+	 */
+	@Test
+	public final void testUpdateUserRepository() {
+
+        // given two users in the database
+
+		// when the same method is called again, it must NOT call the repository's save method as the user already exists
+        // (mocked exists by email method to return true
+        Mockito.when(userRepositoryMock.existsByEmail(user1.getEmail())).thenReturn(true);
+        userContainer.addUserToUserRepositoryX(user1);
+
+
+		// to update the user, updateUser method must be called instead
+
+        userContainer.updateUser(user1);
+        verify(userRepositoryMock, times(2)).save(user1);
+	}
+
+
 
 	/**
 	 * Test method call getAllUsersFromUserContainer.

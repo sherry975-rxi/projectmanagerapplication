@@ -27,7 +27,7 @@ public class US110andUS112SetUserProfileController {
 	 */
 	public void setUserAsDirector(User user) {
 		user.setUserProfile(Profile.DIRECTOR);
-		userService.addUserToUserRepositoryX(user);
+		userService.updateUser(user);
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class US110andUS112SetUserProfileController {
 	 */
 	public void setUserAsCollaborator(User user) {
 		user.setUserProfile(Profile.COLLABORATOR);
-		userService.addUserToUserRepositoryX(user);
+		userService.updateUser(user);
 	}
 
 	/**

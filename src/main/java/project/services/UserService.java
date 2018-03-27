@@ -121,6 +121,19 @@ public class UserService {
 		}
 	}
 
+
+	/**
+	 * Method that saves the user to the database
+	 *
+	 * @param user
+	 *            user to save
+	 */
+	public void updateUser(User user) {
+		this.userRepository.save(user);
+	}
+
+
+
 	/**
 	 * This method returns a copy of the list of all users (usersContainer)
 	 *

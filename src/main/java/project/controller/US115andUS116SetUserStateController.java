@@ -36,7 +36,7 @@ public class US115andUS116SetUserStateController {
 	 */
 	public void changeUserState() {
 		toChangeState.changeUserState();
-		userContainer.addUserToUserRepositoryX(toChangeState);
+		userContainer.updateUser(toChangeState);
 
 	}
 
