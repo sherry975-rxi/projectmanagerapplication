@@ -1,7 +1,7 @@
 /**
  * 
  */
-package project.ui.console.loadFile;
+package project.ui.console.loadfiles;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

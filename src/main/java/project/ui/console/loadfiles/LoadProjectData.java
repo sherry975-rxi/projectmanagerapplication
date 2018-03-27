@@ -1,4 +1,4 @@
-package project.ui.console.loadFile;
+package project.ui.console.loadfiles;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -222,20 +222,20 @@ public class LoadProjectData {
 
 								Calendar startDateTaskCollaborator = convertStringToCalendar(startDateString);
 
-								TaskCollaborator taskCollab = task
+								TaskCollaborator taskCollaborator = task
 										.getTaskCollaboratorByEmail(eElementnNodeTaskCollaborator
 												.getElementsByTagName("colaborador_id").item(0).getTextContent());
 
-								taskCollab.setStartDate(startDateTaskCollaborator);
+								taskCollaborator.setStartDate(startDateTaskCollaborator);
 
 								String finishDateString = eElementnNodeTaskCollaborator.getElementsByTagName("data_fim")
 										.item(0).getTextContent();
 
 								Calendar finishDateTaskCollaborator = convertStringToCalendar(finishDateString);
 
-								taskCollab.setFinishDate(finishDateTaskCollaborator);
+								taskCollaborator.setFinishDate(finishDateTaskCollaborator);
 
-								taskCollab.setStatus(finishDateTaskCollaborator==null);
+								taskCollaborator.setStatus(finishDateTaskCollaborator==null);
 
 
 								NodeList nReportList = eElementnNodeTaskCollaborator.getElementsByTagName("report");
@@ -250,13 +250,10 @@ public class LoadProjectData {
 										Calendar reportStartDate = convertStringToCalendar(eElementNodeReport
 												.getElementsByTagName("data_inicio").item(0).getTextContent());
 
-										String integer = eElementNodeReport.getElementsByTagName("esforco").item(0)
-												.getTextContent();
-
 										Double timeToReport = Double.valueOf(eElementNodeReport
 												.getElementsByTagName("esforco").item(0).getTextContent());
 
-										task.createReport(taskCollab, reportStartDate, timeToReport);
+										task.createReport(taskCollaborator, reportStartDate, timeToReport);
 									}
 								}
 							}
@@ -286,7 +283,7 @@ public class LoadProjectData {
 	 *
 	 * @throws ParseException
 	 */
-	private Calendar convertStringToCalendar(String calendar) throws ParseException {
+	private static Calendar convertStringToCalendar(String calendar) throws ParseException {
 
 		if (calendar != "") {
 			Calendar date = Calendar.getInstance();
