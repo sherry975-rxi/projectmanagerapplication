@@ -72,7 +72,7 @@ public class LoadProjectData {
 
 				project.setProjectStatus(6);
 
-					if(state.equals("Ativo")) {
+					if("Ativo".equals(state)) {
 
 						project.setProjectStatus(2);
 					}
