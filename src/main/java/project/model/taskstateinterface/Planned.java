@@ -29,10 +29,10 @@ public class Planned implements TaskStateInterface {
 	 */
 	public boolean isValid(Task task) {
 
-		if(task.getTaskState() instanceof Created) {
+		if(task.getCurrentState() == StateEnum.CREATED) {
 			return ((task.getEstimatedTaskStartDate() != null) || (task.getTaskDeadline() != null) ||
 					task.doesTaskTeamHaveActiveUsers());
-		} else if (task.getTaskState() instanceof Ready) {
+		} else if (task.getCurrentState() == StateEnum.READY) {
 			return ((task.getEstimatedTaskStartDate() == null) || (task.getTaskDeadline() == null) ||
 					!task.doesTaskTeamHaveActiveUsers());
 		} else {

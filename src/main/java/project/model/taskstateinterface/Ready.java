@@ -38,15 +38,18 @@ public class Ready implements TaskStateInterface {
 	 */
 	public boolean isValid(Task task) {
 
-		return (task.getTaskState() instanceof Planned) &&
-				(task.getEstimatedTaskStartDate() != null) &&
-				(task.getTaskDeadline() != null) &&
-				task.doesTaskTeamHaveActiveUsers() &&
-				(task.getStartDate() == null) &&
-				(task.getFinishDate() == null) &&
-				(task.getCancelDate() == null) &&
-				(Double.compare(task.getEstimatedTaskEffort(),0.0) != 0) &&
-				(Double.compare(task.getTaskBudget(),0.0) != 0) &&
-				!task.hasActiveDependencies();
+		Boolean isValid = true;
+
+		if(task.getCurrentState() != StateEnum.PLANNED)
+			isValid = false;
+		if(task.getEstimatedTaskStartDate() != null && task.getTaskDeadline() != null && !task.doesTaskTeamHaveActiveUsers())
+			isValid = false;
+		if((Double.compare(task.getEstimatedTaskEffort(),0.0) == 0) && (Double.compare(task.getTaskBudget(),0.0) == 0))
+			isValid = false;
+		if(task.hasActiveDependencies())
+			isValid = false;
+
+		return isValid;
+
 	}
 }
