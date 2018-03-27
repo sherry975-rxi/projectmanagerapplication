@@ -45,9 +45,16 @@ public class StandBy implements TaskStateInterface {
 	 * @return TRUE if it meets the conditions, FALSE if not
 	 */
 	public boolean isValid(Task task) {
-		return (task.getTaskState() instanceof OnGoing) && (task.getEstimatedTaskStartDate() != null)
-				&& (task.getTaskDeadline() != null) && !task.doesTaskTeamHaveActiveUsers()
-				&& (task.getStartDate() != null) && (task.getFinishDate() == null) && (task.getCancelDate() == null)
-				&& (Double.compare(task.getEstimatedTaskEffort(),0.0) != 0) && (Double.compare(task.getTaskBudget(),0.0) != 0);
+		Boolean isValid = true;
+
+		if (task.getCurrentState() != StateEnum.ONGOING)
+			isValid = false;
+		if (task.getStartDate() == null && task.getFinishDate() != null && task.getCancelDate() != null)
+			isValid = false;
+		if (task.doesTaskTeamHaveActiveUsers())
+			isValid = false;
+
+		return isValid;
+
 	}
 }
