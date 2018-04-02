@@ -1,6 +1,7 @@
 package project.services;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -247,25 +248,28 @@ public class TaskServiceTest {
 
     @Test
     public void testGetAverageTimeOfFinishedTasksFromUserLastMonth() {
+
         when(projectCollaboratorMock.getCollaborator()).thenReturn(user);
+
         List<ProjectCollaborator> projectCollaboratorsList = new ArrayList<>();
         projectCollaboratorsList.add(projectCollaborator);
-        when(projectCollaboratorRepository.findAll()).thenReturn(projectCollaboratorsList);
 
+        when(projectCollaboratorRepository.findAll()).thenReturn(projectCollaboratorsList);
         when(taskMock.getTimeSpentByProjectCollaboratorOntask(any(ProjectCollaborator.class))).thenReturn(10.0);
         when(task2Mock.getTimeSpentByProjectCollaboratorOntask(any(ProjectCollaborator.class))).thenReturn(20.0);
 
         List<TaskCollaborator> taskCollaboratorsList = new ArrayList<>();
         taskCollaboratorsList.add(taskCollaborator);
+
         when(taskMock.getTaskTeam()).thenReturn(taskCollaboratorsList);
         when(task2Mock.getTaskTeam()).thenReturn(taskCollaboratorsList);
         when(taskCollaboratorMock.getProjectCollaboratorFromTaskCollaborator()).thenReturn(projectCollaborator);
-        when(projectCollaboratorMock.getCollaborator()).thenReturn(user);
+       // when(projectCollaboratorMock.getCollaborator()).thenReturn(user);
         when(task2Mock.getCurrentState()).thenReturn(StateEnum.FINISHED);
         when(taskMock.getCurrentState()).thenReturn(StateEnum.FINISHED);
 
         Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(Calendar.MONTH, Calendar.FEBRUARY);
+        calendar1.set(Calendar.MONTH, Calendar.MARCH);
         when(taskMock.getFinishDate()).thenReturn(calendar1);
         when(task2Mock.getFinishDate()).thenReturn(calendar1);
 
@@ -281,12 +285,12 @@ public class TaskServiceTest {
     public void testGetFinishedUserTasksFromLastMonthInDecreasingOrder() {
         Calendar calendar1 = Calendar.getInstance();
         calendar1.set(Calendar.DAY_OF_MONTH, 25);
-        calendar1.set(Calendar.MONTH, Calendar.FEBRUARY);
+        calendar1.set(Calendar.MONTH, Calendar.MARCH);
         when(taskMock.getFinishDate()).thenReturn(calendar1);
 
         Calendar calendar2 = Calendar.getInstance();
         calendar1.set(Calendar.DAY_OF_MONTH, 24);
-        calendar2.set(Calendar.MONTH, Calendar.FEBRUARY);
+        calendar2.set(Calendar.MONTH, Calendar.MARCH);
         when(task2Mock.getFinishDate()).thenReturn(calendar2);
 
         when(taskMock.getCurrentState()).thenReturn(StateEnum.FINISHED);
@@ -303,8 +307,8 @@ public class TaskServiceTest {
         when(task2Mock.getTaskTeam()).thenReturn(listTaskCollaborator);
 
         List<Task> orderedListToCompare = new ArrayList<>();
-        orderedListToCompare.add(task2Mock);
         orderedListToCompare.add(taskMock);
+        orderedListToCompare.add(task2Mock);
 
         List<Task> trueList = victim.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
 
