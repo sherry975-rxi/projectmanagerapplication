@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/{profileToSearch}")
+@RequestMapping("/user/{profileNameToSearch}")
 public class US136FindUserByProfile {
 
     private final UserService userService;
@@ -67,4 +67,5 @@ public class US136FindUserByProfile {
         return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " (" + toConvert.getEmail()
                 + "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
     }
+
 }
