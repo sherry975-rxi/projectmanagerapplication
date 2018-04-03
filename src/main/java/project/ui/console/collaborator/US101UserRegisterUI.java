@@ -2,7 +2,7 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US101RegisterUserController;
+import project.controllers.US101RegisterUserController;
 
 import java.util.Scanner;
 

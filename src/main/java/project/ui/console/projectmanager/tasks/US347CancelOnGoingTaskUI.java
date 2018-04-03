@@ -2,7 +2,7 @@ package project.ui.console.projectmanager.tasks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US347CancelOnGoingTaskController;
+import project.controllers.US347CancelOnGoingTaskController;
 import project.model.Project;
 
 import java.util.Scanner;

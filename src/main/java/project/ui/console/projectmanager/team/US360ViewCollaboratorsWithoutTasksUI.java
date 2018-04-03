@@ -2,7 +2,7 @@ package project.ui.console.projectmanager.team;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US360ViewCollaboratorsWithoutTasksController;
+import project.controllers.US360ViewCollaboratorsWithoutTasksController;
 import project.model.Project;
 
 import java.util.List;

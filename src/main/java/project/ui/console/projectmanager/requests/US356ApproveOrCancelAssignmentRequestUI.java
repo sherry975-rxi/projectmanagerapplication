@@ -2,7 +2,7 @@ package project.ui.console.projectmanager.requests;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US356ManageAssigmentRequestController;
+import project.controllers.US356ManageAssigmentRequestController;
 import project.model.Project;
 
 import java.util.Scanner;

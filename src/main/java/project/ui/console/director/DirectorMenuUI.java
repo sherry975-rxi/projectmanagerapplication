@@ -2,7 +2,7 @@ package project.ui.console.director;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.PrintProjectInfoController;
+import project.controllers.PrintProjectInfoController;
 import project.model.Project;
 import project.model.User;
 

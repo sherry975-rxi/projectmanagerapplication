@@ -2,8 +2,8 @@ package project.ui.console.projectmanager.tasklists;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.PrintProjectInfoController;
-import project.controller.US372GetProjectUnfinishedTaskListController;
+import project.controllers.PrintProjectInfoController;
+import project.controllers.US372GetProjectUnfinishedTaskListController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;

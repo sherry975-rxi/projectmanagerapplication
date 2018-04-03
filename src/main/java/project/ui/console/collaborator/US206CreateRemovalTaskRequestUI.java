@@ -2,9 +2,9 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.PrintProjectInfoController;
-import project.controller.PrintTaskInfoController;
-import project.controller.US206RemovalTaskRequestController;
+import project.controllers.PrintProjectInfoController;
+import project.controllers.PrintTaskInfoController;
+import project.controllers.US206RemovalTaskRequestController;
 import project.model.User;
 
 import java.util.Scanner;

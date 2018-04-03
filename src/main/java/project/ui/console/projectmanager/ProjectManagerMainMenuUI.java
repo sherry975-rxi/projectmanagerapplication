@@ -2,7 +2,7 @@ package project.ui.console.projectmanager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.PrintProjectInfoController;
+import project.controllers.PrintProjectInfoController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.projectmanager.others.US340CreateTaskUI;

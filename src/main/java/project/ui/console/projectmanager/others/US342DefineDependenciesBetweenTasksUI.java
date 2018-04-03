@@ -2,7 +2,7 @@ package project.ui.console.projectmanager.others;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US342CreateTaskDependencyController;
+import project.controllers.US342CreateTaskDependencyController;
 import project.model.Project;
 import project.model.Task;
 

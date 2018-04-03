@@ -2,7 +2,7 @@ package project.ui.console.director;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US302ChangeProjectManagerController;
+import project.controllers.US302ChangeProjectManagerController;
 import project.model.Project;
 
 import java.util.List;

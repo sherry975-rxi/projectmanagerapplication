@@ -2,7 +2,7 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US216AverageTimeSpentOnTaskLastMonthController;
+import project.controllers.US216AverageTimeSpentOnTaskLastMonthController;
 import project.model.User;
 
 @Component

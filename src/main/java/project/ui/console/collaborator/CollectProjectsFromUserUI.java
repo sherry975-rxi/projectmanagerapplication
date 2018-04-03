@@ -5,7 +5,7 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.CollectProjectsFromUserController;
+import project.controllers.CollectProjectsFromUserController;
 import project.model.Project;
 import project.model.User;
 import project.ui.console.projectmanager.ProjectManagerMainMenuUI;

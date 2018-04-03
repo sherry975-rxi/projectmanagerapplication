@@ -2,7 +2,7 @@ package project.ui.console.director;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US301CreateProjectController;
+import project.controllers.US301CreateProjectController;
 import project.model.EffortUnit;
 import project.model.User;
 
@@ -125,7 +125,7 @@ public class US301CreateProjectUI {
 
 	/**
 	 * Case three deals with the selection of a project manager. It receives the
-	 * controller and the data Input Scanner, and executes the Project Manager
+	 * controllers and the data Input Scanner, and executes the Project Manager
 	 * selection method
 	 * 
 	 * @param controller

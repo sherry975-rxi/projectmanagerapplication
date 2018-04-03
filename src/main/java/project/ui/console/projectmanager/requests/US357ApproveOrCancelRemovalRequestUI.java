@@ -2,7 +2,7 @@ package project.ui.console.projectmanager.requests;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US357CancelRemovalTaskRequestController;
+import project.controllers.US357CancelRemovalTaskRequestController;
 import project.model.Project;
 
 import java.util.Scanner;

@@ -2,7 +2,7 @@ package project.ui.console.projectmanager.team;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US351AddColaboratorToProjectTeamController;
+import project.controllers.US351AddColaboratorToProjectTeamController;
 import project.model.Project;
 import project.model.User;
 import project.services.UserService;

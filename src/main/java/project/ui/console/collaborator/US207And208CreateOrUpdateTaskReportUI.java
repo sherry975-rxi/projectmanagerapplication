@@ -2,7 +2,7 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US207CreateTaskReportController;
+import project.controllers.US207CreateTaskReportController;
 import project.model.TaskCollaborator;
 
 import java.util.Calendar;

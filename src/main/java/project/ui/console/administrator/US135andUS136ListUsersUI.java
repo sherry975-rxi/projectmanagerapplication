@@ -2,7 +2,7 @@ package project.ui.console.administrator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US135andUS136SearchUsersController;
+import project.controllers.US135andUS136SearchUsersController;
 import project.model.Profile;
 import project.model.User;
 

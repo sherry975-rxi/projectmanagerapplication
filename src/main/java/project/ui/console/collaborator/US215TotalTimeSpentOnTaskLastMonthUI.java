@@ -2,7 +2,7 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US215TotalTimeSpentOnTaskLastMonthController;
+import project.controllers.US215TotalTimeSpentOnTaskLastMonthController;
 import project.model.User;
 
 @Component

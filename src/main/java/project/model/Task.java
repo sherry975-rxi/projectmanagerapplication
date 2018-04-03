@@ -1373,7 +1373,7 @@ public class Task {
 
 	/**
 	 * Returns the list of Task assigment requests by collaborators, to be handled
-	 * by the model or controller
+	 * by the model or controllers
 	 *
 	 * @return List of TaskTeamRequest Objects from all users asking to be assigned
 	 *         to a certain task
@@ -1391,12 +1391,12 @@ public class Task {
 		return assignmentRequests;
 	}
 
-	// Do we use this method give the Removal requests to the controller, or
+	// Do we use this method give the Removal requests to the controllers, or
 	// create a method in Project that handles the approvals/rejections by receiving
-	// index numbers from the controller?
+	// index numbers from the controllers?
 	/**
 	 * Returns the list of Task removal requests by collaborators, to be handled by
-	 * the model or controller
+	 * the model or controllers
 	 *
 	 * @return List of TaskTeamRequest Objects from all users asking to be assigned
 	 *         to a certain task

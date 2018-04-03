@@ -2,7 +2,7 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US201and202UpdateUserInfoController;
+import project.controllers.US201and202UpdateUserInfoController;
 import project.model.Address;
 import project.model.User;
 

@@ -2,7 +2,7 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US203GetUserStartedNotFinishedTaskListInIncreasingOrderController;
+import project.controllers.US203GetUserStartedNotFinishedTaskListInIncreasingOrderController;
 import project.model.Task;
 import project.model.User;
 

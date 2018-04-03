@@ -2,7 +2,7 @@ package project.ui.console.projectmanager.tasks;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US362RemoveTaskFromProjectCollaborator;
+import project.controllers.US362RemoveTaskFromProjectCollaborator;
 import project.model.Project;
 import project.model.Task;
 

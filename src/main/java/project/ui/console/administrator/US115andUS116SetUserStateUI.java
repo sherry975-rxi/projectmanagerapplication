@@ -2,8 +2,8 @@ package project.ui.console.administrator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controller.US110andUS112SetUserProfileController;
-import project.controller.US115andUS116SetUserStateController;
+import project.controllers.US110andUS112SetUserProfileController;
+import project.controllers.US115andUS116SetUserStateController;
 import project.model.User;
 
 import java.util.Scanner;
