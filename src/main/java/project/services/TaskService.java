@@ -769,7 +769,7 @@ public class TaskService {
 	public List <TaskTeamRequest> getAllProjectTaskAssignmentRequests(Project project) {
 		List<TaskTeamRequest> assignmentRequests = new ArrayList<>();
 
-		getProjectTasks(project).stream().forEach(Task -> assignmentRequests.addAll(Task.getPendingTaskAssignementRequests()));
+		getProjectTasks(project).stream().forEach(task -> assignmentRequests.addAll(task.getPendingTaskAssignementRequests()));
 
 		return assignmentRequests;
 	}
@@ -785,7 +785,7 @@ public class TaskService {
 	public List <TaskTeamRequest> getAllProjectTaskRemovalRequests(Project project) {
 		List<TaskTeamRequest> removalRequests = new ArrayList<>();
 
-		getProjectTasks(project).stream().forEach(Task -> removalRequests.addAll(Task.getPendingTaskRemovalRequests()));
+		getProjectTasks(project).stream().forEach(task -> removalRequests.addAll(task.getPendingTaskRemovalRequests()));
 
 		return removalRequests;
 	}
@@ -801,7 +801,7 @@ public class TaskService {
 	public List <String> viewAllProjectTaskAssignmentRequests(Project project) {
 		List<String> assignmentRequests = new ArrayList<>();
 
-		getProjectTasks(project).stream().forEach(Task -> assignmentRequests.addAll(Task.viewPendingTaskAssignementRequests()));
+		getProjectTasks(project).stream().forEach(task -> assignmentRequests.addAll(task.viewPendingTaskAssignementRequests()));
 
 		return assignmentRequests;
 	}
@@ -817,7 +817,7 @@ public class TaskService {
 	public List <String> viewAllProjectTaskRemovalRequests(Project project) {
 		List<String> removalRequests = new ArrayList<>();
 
-		getProjectTasks(project).stream().forEach(Task -> removalRequests.addAll(Task.viewPendingTaskRemovalRequests()));
+		getProjectTasks(project).stream().forEach(task -> removalRequests.addAll(task.viewPendingTaskRemovalRequests()));
 
 		return removalRequests;
 	}
