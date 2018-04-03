@@ -3,7 +3,6 @@ package project.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import project.model.Project;
-import project.model.ProjectCollaborator;
 import project.model.User;
 import project.services.ProjectService;
 import project.services.UserService;
@@ -36,7 +35,7 @@ public class US351AddColaboratorToProjectTeamController {
 	 */
 	public void addUserToProjectTeam(User user, Project project, int effort) {
 
-		ProjectCollaborator projectCollaborator = projectService.createProjectCollaborator(user, project, effort);
+		projectService.createProjectCollaborator(user, project, effort);
 
 	}
 
