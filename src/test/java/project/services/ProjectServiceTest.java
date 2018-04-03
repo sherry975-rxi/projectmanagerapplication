@@ -1,9 +1,7 @@
 package project.services;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -137,23 +135,7 @@ public class ProjectServiceTest {
 
 	}
 
-	@Test
-	public void testGetProjectById() {
-
-		// Creates a project
-		Project project1 = projectService.createProject("Project 1", "Descricao", projectManager);
-
-		/*
-		 * Verifies that the method getProjectById calls the method findById of the
-		 * ProjectRepository when the method "getProjectById" is used
-		 */
-
-		Mockito.when(projectRep.findById(project1.getId())).thenReturn(project1);
-		assertEquals(project1, projectService.getProjectById(project1.getId()));
-
-		Mockito.verify(projectRep, Mockito.times(1)).findById(project1.getId());
-
-	}
+	
 
 	@Test
 	public void testAddProjectToProjectContainer() {
