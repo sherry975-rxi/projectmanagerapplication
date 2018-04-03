@@ -6,11 +6,12 @@ import project.model.Project;
 import project.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProjectsRepository extends JpaRepository<Project, Integer>{
 
-    Project findById(int id);
+    Optional<Project> findById(Integer id);
 
     List<Project> findAllByProjectManager(User user);
 }
