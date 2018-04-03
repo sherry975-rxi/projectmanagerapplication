@@ -216,6 +216,22 @@ public class UserService {
 	}
 
 	/**
+	 * This method allows the administrator to search users in the Company by
+	 * profile name. This method accesses the DB
+	 *
+	 * @param searchProfileName
+	 *            Profile of a user
+	 * @return list of users from the userContainer with users that possess a
+	 *         certain profile
+	 */
+	public List<User> searchUsersByProfileName(String searchProfileName) {
+
+		Profile searchProfile = Profile.valueOf(searchProfileName);
+
+		return userRepository.findAllByUserProfile(searchProfile);
+	}
+
+	/**
 	 * This method checks if an e-mail inserted by the user is valid or not
 	 *
 	 * @param email
