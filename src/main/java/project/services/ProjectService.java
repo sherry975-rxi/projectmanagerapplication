@@ -7,6 +7,7 @@ import project.model.ProjectCollaborator;
 import project.model.User;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
+import project.services.exceptions.ObjectNotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -67,8 +68,11 @@ public class ProjectService {
 	 *
 	 * @return project found
 	 */
-	public Project getProjectById(int id) {
-		return this.projectsRepository.findById(id);
+	public Project getProjectById(Integer id) {
+		Optional<Project> project = this.projectsRepository.findById(id);
+
+		//it returns an optional object and if not, it throws the exception ObjectNotFoundException
+		return project.orElseThrow(() -> new ObjectNotFoundException("Project not found! Id: " + id));
 	}
 
 	/**
