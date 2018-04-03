@@ -1,7 +1,6 @@
 package project.services;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -269,7 +268,8 @@ public class TaskServiceTest {
         when(taskMock.getCurrentState()).thenReturn(StateEnum.FINISHED);
 
         Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(Calendar.MONTH, Calendar.MARCH);
+        calendar1.add(Calendar.MONTH, -1);
+
         when(taskMock.getFinishDate()).thenReturn(calendar1);
         when(task2Mock.getFinishDate()).thenReturn(calendar1);
 
@@ -285,12 +285,14 @@ public class TaskServiceTest {
     public void testGetFinishedUserTasksFromLastMonthInDecreasingOrder() {
         Calendar calendar1 = Calendar.getInstance();
         calendar1.set(Calendar.DAY_OF_MONTH, 25);
-        calendar1.set(Calendar.MONTH, Calendar.MARCH);
+        calendar1.add(Calendar.MONTH, -1);
+
         when(taskMock.getFinishDate()).thenReturn(calendar1);
 
         Calendar calendar2 = Calendar.getInstance();
         calendar1.set(Calendar.DAY_OF_MONTH, 24);
-        calendar2.set(Calendar.MONTH, Calendar.MARCH);
+        calendar2.add(Calendar.MONTH, -1);
+
         when(task2Mock.getFinishDate()).thenReturn(calendar2);
 
         when(taskMock.getCurrentState()).thenReturn(StateEnum.FINISHED);
