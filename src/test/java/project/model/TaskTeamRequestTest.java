@@ -177,7 +177,7 @@ public class TaskTeamRequestTest {
 		@Test
 		public void testStringRepresentation() {
 			
-			User user = new User("Daniel", "daniel@gmail.com", "Id", "Função", "Telefone");
+			User user = new User("Daniel", "daniel@gmail.com", "Id", "aaaaaa", "Telefone");
 			
 			ProjectCollaborator anotherProjCollab = new ProjectCollaborator(user, 5);
 			
