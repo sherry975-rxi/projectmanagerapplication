@@ -34,41 +34,7 @@ public class US136FindUserByProfile {
         this.userList = userService.searchUsersByProfileName(profileNameToSearch);
 
         return new ResponseEntity<>(userList, HttpStatus.OK);
-//        List<String> userListString = new ArrayList<>();
-//
-//        for (int i = 0; i < userList.size(); i++) {
-//            Integer visibleIndex = i + 1;
-//            String toShowUser = "[" + visibleIndex.toString() + "] \n" + userDataToString(userList.get(i));
-//            userListString.add(toShowUser);
-//        }
-//
-//        return userListString;
 
-    }
-
-    /**
-     * This is a utility method that converts a User object into a String of data,
-     * to be displayed in the UI
-     *
-     * @param toConvert
-     *            to be converted
-     * @return String of the user's data
-     */
-    private String userDataToString(User toConvert) {
-        String profile;
-        switch (toConvert.getUserProfile()) {
-            case DIRECTOR:
-                profile = "Director";
-                break;
-            case COLLABORATOR:
-                profile = "Collaborator";
-                break;
-            default:
-                profile = "Unassigned";
-        }
-
-        return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " (" + toConvert.getEmail()
-                + "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
     }
 
 }
