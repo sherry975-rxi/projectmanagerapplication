@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional
 public class UserService {
 
-	@Autowired
+    @Autowired
 	private UserRepository userRepository;
 
 	/**
@@ -168,7 +168,7 @@ public class UserService {
 
 	*/
 
-	public User getUserByID(String id) { return this.userRepository.findByID(id); }
+	public User getUserByID(int id) { return this.userRepository.findById(id); }
 
 
 	/**

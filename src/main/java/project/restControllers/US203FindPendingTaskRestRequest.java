@@ -1,4 +1,4 @@
-package project.restControllers.exceptions;
+package project.restControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/{userID}/viewPendingTasks")
+@RequestMapping("users/{userID}")
 class US203FindPendingTaskRestRequest {
 
     private final UserService userService;
@@ -34,9 +34,20 @@ class US203FindPendingTaskRestRequest {
     @RequestMapping(method = RequestMethod.GET)
     List<String> findPendingTasksController(@PathVariable String userID) {
 
-        this.user = userService.getUserByID(userID);
+
+        Integer ID;
 
         List<String> userListString = new ArrayList<>();
+
+        try {
+            ID = Integer.parseInt(userID);
+            this.user = userService.getUserByID(ID);
+        } catch (NumberFormatException e) {
+            userListString.add("401 Unauthorized");
+            return userListString;
+        }
+
+
 
         if (user == null) {
 
