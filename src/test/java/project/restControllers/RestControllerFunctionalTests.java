@@ -5,27 +5,63 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.model.*;
-import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.Planned;
-import project.model.taskstateinterface.TaskStateInterface;
-import project.services.ProjectService;
-import project.services.TaskService;
-import project.services.UserService;
+import org.springframework.test.web.servlet.MockMvc;
 
+import org.springframework.web.context.WebApplicationContext;
+import project.model.*;
+import project.model.taskstateinterface.*;
+import project.services.*;
+
+import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Calendar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@WebMvcTest
+@Transactional
+@AutoConfigureDataJpa
+@AutoConfigureTestDatabase
+@AutoConfigureTestEntityManager
 @ComponentScan({ "project.services", "project.model", "project.controllers", "project.restControllers"  })
-public class US203FindPendingTasksTest {
+public class RestControllerFunctionalTests {
+
+    /**
+     * This is a functional test to be used for ALL rest controllers
+     * TODO add missing tests!
+     *
+     * Currently implented:
+     *
+     * US203 - Find Pending Tasks of given user
+     */
+
+    private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
+            MediaType.APPLICATION_JSON.getSubtype(),
+            Charset.forName("utf8"));
+
+    private MockMvc mockMvc;
+
+    private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
+    @Autowired
+    WebApplicationContext webApplicationContext;
 
     @Autowired
     TaskService taskService;
@@ -51,8 +87,24 @@ public class US203FindPendingTasksTest {
     Task secondOngoingTask;
     Task unstartedTask;
 
+
+    @Autowired
+    void setConverters(HttpMessageConverter<?>[] converters) {
+
+        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
+                .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
+                .findAny()
+                .orElse(null);
+
+        assertNotNull("the JSON message converter must not be null",
+                this.mappingJackson2HttpMessageConverter);
+    }
+
+
     @Before
     public void setUp(){
+
+        this.mockMvc = webAppContextSetup(webApplicationContext).build();
 
         // creates two users
         owner = userService.createUser("Owner boi", "hue@hue.com", "001", "Owns projects", "0000000", "here", "there", "where", "dunno", "mars");
@@ -128,8 +180,9 @@ public class US203FindPendingTasksTest {
 
 
     /**
-     * This test asserts all the set up data is in the database, to isolate variables when solving errors in HTTP tests below
-     */
+     * This test asserts all the set up data is in the database, to isolate variables when solving errors in HTTP tests below.
+     * REMOVE THE COMMENT IF INTEGRATION TEST BREAKS!!
+
     @Test
     public void databaseContainsDataTest() {
         // asserts that owner and mike's email returns his object, while a non existing email returns null
@@ -148,4 +201,32 @@ public class US203FindPendingTasksTest {
         assertTrue(secondOngoingTask.isProjectCollaboratorActiveInTaskTeam(collabMike));
         assertFalse(unstartedTask.isProjectCollaboratorActiveInTaskTeam(collabMike));
     }
+     */
+
+    /**
+     * This test confirms the rest Controller for US203 works correctly (currently not yet implemented)
+     */
+    @Test
+    public void US203testBrowserOutput() throws Exception {
+        // this confirms mike's ID returns a "501 not yet implemented"
+        mockMvc.perform(get("/users/" + String.valueOf(mike.getId()) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("501 Not implemented")));
+
+        // this confirms an Invalid (non INT) ID returns a "401 unauthorized"
+        mockMvc.perform(get("/users/" + "INVALID" + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("401 Unauthorized")));
+
+        // this confirms an Invalid (negative) ID returns a "401 unauthorized"
+        mockMvc.perform(get("/users/" + String.valueOf(-2) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("401 Unauthorized")));
+    }
+
+
+    protected String json(Object o) throws IOException {
+        MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
+        this.mappingJackson2HttpMessageConverter.write(
+                o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
+        return mockHttpOutputMessage.getBodyAsString();
+    }
+
 }

@@ -52,6 +52,9 @@ class US203FindPendingTaskRestRequest {
             return ResponseEntity.ok().body(userListString);
         } else {
     /*
+      u
+
+
            this.taskList = taskService.getStartedNotFinishedUserTaskList(user);
 
             List<Task> taskListString = new ArrayList<>();
@@ -62,6 +65,7 @@ class US203FindPendingTaskRestRequest {
                 taskListString.add(toShowTask);
             }
 */
+            userListString.add("501 Not implemented");
             return ResponseEntity.ok().body(userListString);
            //return ResponseEntity.ok().body(taskListString);
 
