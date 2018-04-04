@@ -1,14 +1,17 @@
 package project.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import project.model.Task;
 import project.services.ProjectService;
 import project.services.TaskService;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -29,18 +32,17 @@ public class US372GetStartedNotFinishedProjectTasksRestController {
     }
 
     @RequestMapping(value = "unfinished", method = RequestMethod.GET)
-    List<String> getStartedNotFinishedTasks(@PathVariable Integer projectID) {
-        this.validateProject(projectID);
-        // return this.taskService.getProjectUnFinishedTasks(projectsService.getProjectById(projectID));
-        List<String> teste = new ArrayList<>();
-        teste.add("ola");
-        return teste;
+    public ResponseEntity<?> getStartedNotFinishedTasks(@PathVariable Integer projectID, HttpServletRequest request) {
+        //this.validateProject(projectID);
+
+        List<Task> taskList = this.taskService.getProjectUnFinishedTasks(projectsService.getProjectById(projectID));
+        return new ResponseEntity<>(taskList, HttpStatus.OK);
+
     }
 
 
     private void validateProject(int projectId) {
         this.projectsService.getProjectById(projectId);
-        String a;
 
     }
 }
