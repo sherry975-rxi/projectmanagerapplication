@@ -159,6 +159,19 @@ public class UserService {
 	}
 
 	/**
+	 * This method returns all users that possess a certain ID. It
+	 * fetches information directly from the Database.
+	 *
+	 * @param id
+	 *            parameter used to fetch users from the DataBase
+	 * @return all users that possess a certain id
+
+	*/
+
+	public User getUserByID(String id) { return this.userRepository.findByID(id); }
+
+
+	/**
 	 * This method returns a list of all active collaborators in the Company
 	 * accessed by DB
 	 *
