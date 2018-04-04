@@ -14,7 +14,7 @@ import project.services.TaskService;
 import project.services.UserService;
 
 @RestController
-@RequestMapping("/{taskID}/taskTeam")
+@RequestMapping("/projects/{projectID}/tasks/{taskID}/assignmentrequests")
 public class us204AssignTaskRequest {
 
     private UserService userService;
