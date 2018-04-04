@@ -1,5 +1,6 @@
 package project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -30,7 +31,7 @@ public class Address{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "User_id")
-	@JsonManagedReference
+	@JsonBackReference
 	private User user;
 
 	public Address(){}
