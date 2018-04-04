@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import project.model.Project;
 import project.model.Task;
 import project.model.User;
-import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("users/{userID}/viewPendingTask")
+@RequestMapping("users/{userID}/viewPendingTasks")
 class US203FindPendingTaskRestRequest {
 
     private final UserService userService;
@@ -34,7 +32,6 @@ class US203FindPendingTaskRestRequest {
     @RequestMapping(method = RequestMethod.GET)
     List<String> findPendingTasksController(@PathVariable String userID) {
 
-
         Integer ID;
 
         List<String> userListString = new ArrayList<>();
@@ -46,9 +43,6 @@ class US203FindPendingTaskRestRequest {
             userListString.add("401 Unauthorized");
             return userListString;
         }
-
-
-
         if (user == null) {
 
             userListString.add("401 Unauthorized");
