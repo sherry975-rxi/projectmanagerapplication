@@ -1,4 +1,4 @@
-package project.restControllers.exceptions;
+package project.rest.exceptions;
 
 import java.io.Serializable;
 
