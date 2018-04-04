@@ -32,8 +32,10 @@ public class us204AssignTaskRequest {
 
 
     @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskID, @PathVariable int projectId, String email, HttpServletRequest request,  ){
+    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskID, @PathVariable int projectId, HttpServletRequest request){
         ProjectCollaborator projectCollaborator;
+
+        String email = "tc@mymail.com";
 
         Project project = projectService.getProjectById(projectId);
 
