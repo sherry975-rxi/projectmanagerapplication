@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("users/{userID}")
+@RequestMapping("users/{userID}/viewPendingTask")
 class US203FindPendingTaskRestRequest {
 
     private final UserService userService;
