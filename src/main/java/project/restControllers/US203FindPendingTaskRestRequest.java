@@ -1,6 +1,7 @@
 package project.restControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,12 +24,46 @@ class US203FindPendingTaskRestRequest {
     private Task task;
 
     @Autowired
-    public US203FindPendingTaskRestRequest(UserService userService, TaskService taskService){
+    public US203FindPendingTaskRestRequest(UserService userService, TaskService taskService) {
         this.userService = userService;
         this.taskService = taskService;
 
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getPendingTasks(@PathVariable String userID) {
+
+        Integer ID;
+
+        List<String> userListString = new ArrayList<>();
+
+        try {
+            ID = Integer.parseInt(userID);
+            this.user = userService.getUserByID(ID);
+        } catch (NumberFormatException e) {
+            userListString.add("401 Unauthorized");
+            return ResponseEntity.ok().body(userListString);
+        }
+        if (user == null) {
+
+            userListString.add("401 Unauthorized");
+
+            return ResponseEntity.ok().body(userListString);
+        } else {
+
+            userListString.add("501 Not implemented");
+
+            return ResponseEntity.ok().body(userListString);
+
+        }
+
+    }
+
+
+}
+
+
+    /*
     @RequestMapping(method = RequestMethod.GET)
     List<String> findPendingTasksController(@PathVariable String userID) {
 
@@ -55,16 +90,18 @@ class US203FindPendingTaskRestRequest {
             return userListString;
 
         }
-    }
+
+    */
+
+
+
+
 
 
     /*
     @RequestMapping(method = RequestMethod.GET)
     public User getUserByEmail (String email){
         return this.user = userService.getUserByEmail(email);
-
-
-
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -75,5 +112,4 @@ class US203FindPendingTaskRestRequest {
     }
    */
 
-   }
 
