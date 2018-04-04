@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import project.model.User;
 import project.services.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
