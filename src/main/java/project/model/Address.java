@@ -34,7 +34,6 @@ public class Address{
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "User_id")
-	@JsonManagedReference
 	private User user;
 
 	public Address(){}
