@@ -1,9 +1,8 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import javassist.SerialVersionUID;
 import project.model.taskstateinterface.*;
 
 import javax.persistence.*;
@@ -34,17 +33,17 @@ public class Task implements Serializable {
 	private String taskID;
 	private String description;
 
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
+	@JsonManagedReference
 	private List<TaskCollaborator> taskTeam;
 
-	@JsonIgnore
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
+	@JsonManagedReference
 	private List<Report> reports;
 
-	@JsonIgnore
 	@Enumerated(EnumType.STRING)
 	private StateEnum currentState;
 
@@ -56,8 +55,8 @@ public class Task implements Serializable {
 	private Calendar startDate;
 	private Calendar finishDate;
 
-	@JsonIgnore
 	@javax.persistence.Transient
+	@JsonIgnore
 	private TaskStateInterface taskState;
 	private double estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;

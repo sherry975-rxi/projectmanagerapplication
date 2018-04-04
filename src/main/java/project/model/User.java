@@ -1,7 +1,9 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,11 +33,14 @@ public class User implements Serializable {
 
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonBackReference
 	private List<Address> addressList;
 	
 	private String phone;
+
 	@Enumerated(EnumType.STRING)
 	private Profile userProfile;
+
 	private boolean systemUserStateActive;
 	private String password;
 
