@@ -33,7 +33,6 @@ public class US372GetStartedNotFinishedProjectTasksRestController {
 
     @RequestMapping(value = "unfinished", method = RequestMethod.GET)
     public ResponseEntity<?> getStartedNotFinishedTasks(@PathVariable Integer projectID, HttpServletRequest request) {
-        //this.validateProject(projectID);
 
         List<Task> taskList = this.taskService.getProjectUnFinishedTasks(projectsService.getProjectById(projectID));
         return new ResponseEntity<>(taskList, HttpStatus.OK);
@@ -41,10 +40,6 @@ public class US372GetStartedNotFinishedProjectTasksRestController {
     }
 
 
-    private void validateProject(int projectId) {
-        this.projectsService.getProjectById(projectId);
-
-    }
 }
 
 
