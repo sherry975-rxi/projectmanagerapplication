@@ -13,6 +13,9 @@ import project.services.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This controller allows the administrator to search system user by profile
+ */
 @RestController
 @RequestMapping("/users/{profileNameToSearch}")
 public class US136FindUserByProfile {
@@ -28,6 +31,12 @@ public class US136FindUserByProfile {
 
     }
 
+    /**
+     * This method allows the administrator to search users by profile.
+     *
+     * @param profileNameToSearch
+     * @return ResponseEntity
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> searchUsersByProfileController(@PathVariable String profileNameToSearch) {
 
