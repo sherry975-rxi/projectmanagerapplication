@@ -22,6 +22,7 @@ class US203FindPendingTaskRestRequest {
     private final TaskService taskService;
     private User user;
     private Task task;
+    private List<Task> taskList;
 
     @Autowired
     public US203FindPendingTaskRestRequest(UserService userService, TaskService taskService) {
@@ -50,58 +51,31 @@ class US203FindPendingTaskRestRequest {
 
             return ResponseEntity.ok().body(userListString);
         } else {
+    /*
+           this.taskList = taskService.getStartedNotFinishedUserTaskList(user);
 
-            userListString.add("501 Not implemented");
+            List<Task> taskListString = new ArrayList<>();
 
+            for (int i = 0; i< taskList.size(); i++) {
+                Integer visibleIndex = i+1;
+                String toShowTask = "[" + visibleIndex.toString() + "] \n" + taskDataToString(taskList.get(i));
+                taskListString.add(toShowTask);
+            }
+*/
             return ResponseEntity.ok().body(userListString);
+           //return ResponseEntity.ok().body(taskListString);
 
         }
+    }
+}
+/*
+    }
 
+    private String taskDataToString(Task toConvert){
+        String
     }
 
 
-}
-
-
-    /*
-    @RequestMapping(method = RequestMethod.GET)
-    List<String> findPendingTasksController(@PathVariable String userID) {
-
-        Integer ID;
-
-        List<String> userListString = new ArrayList<>();
-
-        try {
-            ID = Integer.parseInt(userID);
-            this.user = userService.getUserByID(ID);
-        } catch (NumberFormatException e) {
-            userListString.add("401 Unauthorized");
-            return userListString;
-        }
-        if (user == null) {
-
-            userListString.add("401 Unauthorized");
-
-            return userListString;
-        } else {
-
-            userListString.add("501 Not implemented");
-
-            return userListString;
-
-        }
-
-    */
-
-
-
-
-
-
-    /*
-    @RequestMapping(method = RequestMethod.GET)
-    public User getUserByEmail (String email){
-        return this.user = userService.getUserByEmail(email);
 
 
     @RequestMapping(method = RequestMethod.GET)
