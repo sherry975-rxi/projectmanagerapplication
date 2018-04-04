@@ -1,5 +1,7 @@
 package project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -19,8 +21,10 @@ public class TaskCollaborator implements Serializable {
 	private Calendar finishDate;
 	private boolean status;
 	static final long serialVersionUID = 52L;
+
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
+	@JsonBackReference
 	private Task task;
 
 	/**

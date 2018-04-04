@@ -1,5 +1,7 @@
 package project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import project.model.taskstateinterface.*;
 
 import javax.persistence.*;
@@ -26,12 +28,17 @@ public class Task {
 	private Long id;
 	private String taskID;
 	private String description;
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
+	@JsonManagedReference
 	private List<TaskCollaborator> taskTeam;
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
+	@JsonManagedReference
 	private List<Report> reports;
+
 	@Enumerated(EnumType.STRING)
 	private StateEnum currentState;
 
@@ -41,7 +48,9 @@ public class Task {
 	private Calendar creationDate;
 	private Calendar startDate;
 	private Calendar finishDate;
+
 	@javax.persistence.Transient
+	@JsonIgnore
 	private TaskStateInterface taskState;
 	private double estimatedTaskEffort;
 	private Calendar estimatedTaskStartDate;
