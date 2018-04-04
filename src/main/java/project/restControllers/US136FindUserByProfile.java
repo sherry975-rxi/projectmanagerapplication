@@ -1,6 +1,8 @@
 package project.restControllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,19 +29,20 @@ public class US136FindUserByProfile {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    List<String> searchUsersByProfileController(@PathVariable String profileNameToSearch) {
+    public ResponseEntity<?> searchUsersByProfileController(@PathVariable String profileNameToSearch) {
 
         this.userList = userService.searchUsersByProfileName(profileNameToSearch);
 
-        List<String> userListString = new ArrayList<>();
-
-        for (int i = 0; i < userList.size(); i++) {
-            Integer visibleIndex = i + 1;
-            String toShowUser = "[" + visibleIndex.toString() + "] \n" + userDataToString(userList.get(i));
-            userListString.add(toShowUser);
-        }
-
-        return userListString;
+        return new ResponseEntity<>(userList, HttpStatus.OK);
+//        List<String> userListString = new ArrayList<>();
+//
+//        for (int i = 0; i < userList.size(); i++) {
+//            Integer visibleIndex = i + 1;
+//            String toShowUser = "[" + visibleIndex.toString() + "] \n" + userDataToString(userList.get(i));
+//            userListString.add(toShowUser);
+//        }
+//
+//        return userListString;
 
     }
 
