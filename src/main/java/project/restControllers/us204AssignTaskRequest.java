@@ -17,7 +17,7 @@ public class us204AssignTaskRequest {
     private UserService userService;
     private TaskService taskService;
     private ProjectService projectService;
-    private User user;
+
 
     @Autowired
     public us204AssignTaskRequest(UserService userService, TaskService taskService, ProjectService projectService) {
@@ -35,10 +35,10 @@ public class us204AssignTaskRequest {
 
         Task task = taskService.getTaskByTaskID(taskID);
 
-        this.user = userService.getUserByEmail(email);
+        User user = userService.getUserByEmail(email);
 
-        if(this.projectService.isUserActiveInProject(this.user, project)){
-            projectCollaborator = this.projectService.findActiveProjectCollaborator(this.user, project);
+        if(this.projectService.isUserActiveInProject(user, project)){
+            projectCollaborator = this.projectService.findActiveProjectCollaborator(user, project);
             task.createTaskAssignementRequest(projectCollaborator);
         }
     }
