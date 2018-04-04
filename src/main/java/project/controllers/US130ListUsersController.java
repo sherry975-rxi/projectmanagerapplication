@@ -16,13 +16,14 @@ public class US130ListUsersController {
 
 	List<User> userList;
 
+	public US130ListUsersController() {
+		//Empty constructor created for JPA integration tests
+	}
+
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
 	}
 
-	public US130ListUsersController() {
-		//Empty constructor created for JPA integration tests
-	}
 
 	/**
 	 * This controllers returns a list of all users in the User repository
