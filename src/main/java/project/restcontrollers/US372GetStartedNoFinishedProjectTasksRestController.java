@@ -40,6 +40,7 @@ public class US372GetStartedNoFinishedProjectTasksRestController {
 
     private void validateProject(int projectId) {
         this.projectsService.getProjectById(projectId);
+        String a;
 
     }
 }
