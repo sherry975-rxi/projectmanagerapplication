@@ -44,6 +44,7 @@ public class us204AssignTaskRequest {
         if(this.projectService.isUserActiveInProject(user, project)){
             projectCollaborator = this.projectService.findActiveProjectCollaborator(user, project);
             task.createTaskAssignementRequest(projectCollaborator);
+            taskService.saveTask(task);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
