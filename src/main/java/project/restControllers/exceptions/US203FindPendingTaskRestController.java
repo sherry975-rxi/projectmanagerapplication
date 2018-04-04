@@ -5,8 +5,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import project.model.User;
 import project.services.TaskService;
 import project.services.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -24,10 +27,16 @@ public class US203FindPendingTaskRestController {
 
     @RequestMapping(method = RequestMethod.GET)
     List<User> readUsers (@PathVariable String userID){
+        if(userService.getUserByID(userID)==null){
+
+            return "401 Unauthorized";
+        }
+
+        else return "501 Not implemented";
 
 
-        this.validadeUSer(userID);
-        return this.userService.getUserByID(userID);
+
+       //return this.userService.getUserByID(userID);
     }
 
 
