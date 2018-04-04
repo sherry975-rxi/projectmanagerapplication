@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/{profileNameToSearch}")
+@RequestMapping("/users/{profileNameToSearch}")
 public class US136FindUserByProfile {
 
     private final UserService userService;
