@@ -74,7 +74,7 @@ public class RunConsole implements CommandLineRunner {
     	projectDb.loadProject("Projeto_v00_Dt1.xml");
 
 
-        //main.mainMenu();
+        main.mainMenu();
     }
     
 }

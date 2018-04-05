@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional
 public class UserService {
 
-	@Autowired
+
 	private UserRepository userRepository;
 
 	/**
@@ -38,6 +38,7 @@ public class UserService {
 	 * 
 	 * @param userRepository
 	 */
+	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}

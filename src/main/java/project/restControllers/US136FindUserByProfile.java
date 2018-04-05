@@ -20,9 +20,6 @@ import java.util.List;
 public class US136FindUserByProfile {
 
     private final UserService userService;
-
-    private List<User> userList;
-
     @Autowired
     US136FindUserByProfile(UserService userService){
 
@@ -39,7 +36,7 @@ public class US136FindUserByProfile {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> searchUsersByProfileController(@PathVariable String profileNameToSearch) {
 
-        this.userList = userService.searchUsersByProfileName(profileNameToSearch);
+        List<User> userList = userService.searchUsersByProfileName(profileNameToSearch);
 
         return new ResponseEntity<>(userList, HttpStatus.OK);
 
