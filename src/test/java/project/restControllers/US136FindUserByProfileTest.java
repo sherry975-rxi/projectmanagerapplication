@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import project.TesCon;
 import project.model.Profile;
 import project.model.User;
 import project.services.UserService;
@@ -18,13 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 //Configurar H2
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = TesCon.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class US136FindUserByProfileTest {
 
@@ -36,6 +37,8 @@ public class US136FindUserByProfileTest {
      *
      */
 
+    @Autowired
+    US136FindUserByProfile us136FindUserByProfileController;
 
     @Autowired
     UserService userService;
@@ -44,7 +47,6 @@ public class US136FindUserByProfileTest {
     private User newUser2;
     private User newUser3;
 
-    @Autowired
     private MockMvc mockMvc;
 
     @Before
@@ -93,4 +95,10 @@ public class US136FindUserByProfileTest {
         this.mockMvc.perform(get("/users/COLLABORATOR")).andExpect(status().isOk())
                 .andExpect(content().string("Ana"));
     }
+
+    @Test
+    public void controllerInitializedCorrectly() {
+        assertNotNull(us136FindUserByProfileController);
+    }
+
 }
