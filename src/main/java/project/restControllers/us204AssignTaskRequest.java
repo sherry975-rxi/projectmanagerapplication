@@ -15,7 +15,7 @@ import project.services.UserService;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("user/{userId}/projects/{projectId}/tasks/{taskId}")
+@RequestMapping("/projects/{projectId}/tasks/{taskId}")
 public class us204AssignTaskRequest {
 
     private UserService userService;
@@ -33,7 +33,7 @@ public class us204AssignTaskRequest {
 
 
     @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable int userId,HttpServletRequest request){
+    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader int userId,HttpServletRequest request){
         ProjectCollaborator projectCollaborator;
 
         Project project = projectService.getProjectById(projectId);
