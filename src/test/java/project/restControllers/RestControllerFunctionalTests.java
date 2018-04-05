@@ -36,10 +36,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
-@Transactional
 @AutoConfigureDataJpa
-@AutoConfigureTestDatabase
-@AutoConfigureTestEntityManager
 @ComponentScan({ "project.services", "project.model", "project.controllers", "project.restControllers"  })
 public class RestControllerFunctionalTests {
 
