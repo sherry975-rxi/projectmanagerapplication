@@ -31,6 +31,7 @@ public class us204AssignTaskRequest {
     }
 
 
+
     @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
     public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable int userId,HttpServletRequest request){
         ProjectCollaborator projectCollaborator;
@@ -44,7 +45,7 @@ public class us204AssignTaskRequest {
         if(this.projectService.isUserActiveInProject(user, project)){
             projectCollaborator = this.projectService.findActiveProjectCollaborator(user, project);
             task.createTaskAssignementRequest(projectCollaborator);
-            taskService.saveTask(task);
+            this.taskService.saveTask(task);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
