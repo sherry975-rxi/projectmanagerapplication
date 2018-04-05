@@ -33,21 +33,23 @@ public class us204AssignTaskRequest {
 
 
     @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader int userId,HttpServletRequest request){
+    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail,HttpServletRequest request){
+        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
         ProjectCollaborator projectCollaborator;
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserById(userId);
+        User user = userService.getUserByEmail(userEmail);
 
         if(this.projectService.isUserActiveInProject(user, project)){
             projectCollaborator = this.projectService.findActiveProjectCollaborator(user, project);
             task.createTaskAssignementRequest(projectCollaborator);
             this.taskService.saveTask(task);
-            return new ResponseEntity<>(HttpStatus.OK);
+            result = new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return result;
     }
 }
