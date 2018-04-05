@@ -44,7 +44,7 @@ public class RestControllerFunctionalTests {
      * This is a functional test to be used for ALL rest controllers
      * TODO add missing tests!
      *
-     * Currently implented:
+     * Currently implemented:
      *
      * US203 - Find Pending Tasks of given user
      */
@@ -108,7 +108,7 @@ public class RestControllerFunctionalTests {
         mike = userService.createUser("Mike", "mike@mike.com", "002", "Tests tasks", "1111111", "here", "there", "where", "dunno", "mars");
 
 
-        // creates a project with ownder as manager
+        // creates a project with user owner as manager
         findPendingTasks = projectService.createProject("Find tasks!", "Please help me find tasks", owner);
 
 
@@ -128,7 +128,7 @@ public class RestControllerFunctionalTests {
         expectedDeadline= Calendar.getInstance();
         expectedDeadline.add(Calendar.MONTH, 1);
 
-        //adds necessary information for ongoing task and second ongoing task to enter the Ongoing
+        //adds necessary information for ongoing task and second ongoing task to enter the Ongoing state
         ongoingTask.setTaskBudget(10);
         ongoingTask.setEstimatedTaskEffort(10);
         ongoingTask.setStartDate(expectedStartDate);
@@ -148,15 +148,13 @@ public class RestControllerFunctionalTests {
         secondOngoingTask.setTaskState(new OnGoing());
         secondOngoingTask.setCurrentState(StateEnum.ONGOING);
 
-        // adds info for unstarted task to become Planning state
+        // adds info for unstartedtask to enter Planning state
         unstartedTask.setTaskBudget(10);
         unstartedTask.setEstimatedTaskEffort(10);
         unstartedTask.setStartDate(expectedStartDate);
         unstartedTask.setTaskDeadline(expectedDeadline);
         unstartedTask.setTaskState(new Planned());
         unstartedTask.setCurrentState(StateEnum.PLANNED);
-
-
 
         // saves all tasks with updated info
         taskService.saveTask(ongoingTask);
@@ -205,9 +203,12 @@ public class RestControllerFunctionalTests {
      */
     @Test
     public void US203testBrowserOutput() throws Exception {
+
+        String onGoingTaskString = ongoingTask.getId() + " - " + ongoingTask.getDescription();
+
         // this confirms mike's ID returns a "501 not yet implemented"
         mockMvc.perform(get("/users/" + String.valueOf(mike.getId()) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("501 Not implemented")));
+                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is(onGoingTaskString)));
 
         // this confirms an Invalid (non INT) ID returns a "401 unauthorized"
         mockMvc.perform(get("/users/" + "INVALID" + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
