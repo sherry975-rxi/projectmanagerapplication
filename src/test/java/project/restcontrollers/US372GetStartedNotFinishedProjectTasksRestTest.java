@@ -118,6 +118,26 @@ public class US372GetStartedNotFinishedProjectTasksRestTest {
         assertEquals(response.getStatus(),HttpStatus.OK.value());
         assertEquals(response.getContentAsString(), "[" + taskJack.write(task1).getJson() + "]");
     }
+
+    @Test
+    public void canRetrieveByIdWhenDoesNotExistTest() throws Exception {
+
+        //Given
+        int projectIdDoesNotExist = 2;
+        given(projectService.getProjectById(projectIdDoesNotExist)).willThrow(new ObjectNotFoundException ("Project not found!"));
+        taskList.add(task1);
+        given(taskService.getProjectUnFinishedTasks(project)).willReturn(taskList);
+
+        //When
+        MockHttpServletResponse response = mockMvc.perform(get("/projects/" + projectId + "/tasks/unfinished").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //Then
+        //assertEquals(response.getStatus(),HttpStatus.NOT_FOUND.value());
+        assertEquals(response.getContentAsString(), "[" + new String() + "]");
+
+
+
+    }
     }
 
 
