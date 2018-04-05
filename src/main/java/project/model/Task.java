@@ -43,6 +43,7 @@ public class Task {
 	private StateEnum currentState;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "task")
+	@JsonManagedReference
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	private Calendar creationDate;
