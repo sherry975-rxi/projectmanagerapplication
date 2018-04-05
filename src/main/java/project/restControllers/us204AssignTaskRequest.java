@@ -15,7 +15,7 @@ import project.services.UserService;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/projects/{projectId}/tasks/{taskID}")
+@RequestMapping("user/{userId}/projects/{projectId}/tasks/{taskId}")
 public class us204AssignTaskRequest {
 
     private UserService userService;
@@ -32,16 +32,14 @@ public class us204AssignTaskRequest {
 
 
     @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskID, @PathVariable int projectId, HttpServletRequest request){
+    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable int userId,HttpServletRequest request){
         ProjectCollaborator projectCollaborator;
-
-        String email = "tc@mymail.com";
 
         Project project = projectService.getProjectById(projectId);
 
-        Task task = taskService.getTaskByTaskID(taskID);
+        Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserByEmail(email);
+        User user = userService.getUserById(userId);
 
         if(this.projectService.isUserActiveInProject(user, project)){
             projectCollaborator = this.projectService.findActiveProjectCollaborator(user, project);
