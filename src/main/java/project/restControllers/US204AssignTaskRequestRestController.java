@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/projects/{projectId}/tasks/{taskId}")
-public class us204AssignTaskRequest {
+public class US204AssignTaskRequestRestController {
 
     private UserService userService;
     private TaskService taskService;
@@ -24,7 +24,7 @@ public class us204AssignTaskRequest {
 
 
     @Autowired
-    public us204AssignTaskRequest(UserService userService, TaskService taskService, ProjectService projectService) {
+    public US204AssignTaskRequestRestController(UserService userService, TaskService taskService, ProjectService projectService) {
         this.taskService = taskService;
         this.userService = userService;
         this.projectService = projectService;

@@ -12,12 +12,10 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockMultipartHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.model.*;
-import project.restControllers.us204AssignTaskRequest;
+import project.restControllers.US204AssignTaskRequestRestController;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -43,7 +41,7 @@ public class US204AssignTaskRequestTest {
     TaskService taskService;
 
     @InjectMocks
-    private us204AssignTaskRequest controller;
+    private US204AssignTaskRequestRestController controller;
 
     private User userPM;
     private User userTwo;
