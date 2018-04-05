@@ -67,7 +67,7 @@ class US203FindPendingTaskRestRequest {
 
     private String taskDataToString(Task toConvert){
 
-       return toConvert.getId() + " - " + toConvert.getDescription();
+       return toConvert.getTaskID() + " - " + toConvert.getDescription();
     }
 }
 
