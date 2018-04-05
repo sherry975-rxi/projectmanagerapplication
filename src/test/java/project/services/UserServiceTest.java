@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+
+
 import project.dto.UserDTO;
 import project.model.Profile;
 import project.model.User;
@@ -18,6 +20,7 @@ import project.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -151,7 +154,7 @@ public class UserServiceTest {
 	@Test
 	public final void testGetUserByEmail() {
 
-		when(userRepositoryMock.findByEmail("daniel@gmail.com")).thenReturn(user1);
+		when(userRepositoryMock.findByEmail("daniel@gmail.com")).thenReturn(Optional.of(user1));
 
 		assertEquals(user1, userContainer.getUserByEmail("daniel@gmail.com"));
 	}

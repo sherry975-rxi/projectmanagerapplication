@@ -72,26 +72,26 @@ public class US180DoLoginControllerTests {
 
 	}
 
-	// Test with an invalid Email
-	@Test
-	public void DoInvalidEmailLoginControllerTest() {
-
-		String invalidEmail = new String("invalid@gmail.com");
-		String validPassword = new String("123456");
-
-		assertFalse(doLoginController.doLogin(invalidEmail, validPassword));
-
-	}
-
-	// Test with an invalid Email and invalid password
-	@Test
-	public void DoInvalidEmailAndPasswordLoginControllerTest() {
-
-		String invalidEmail = new String("invalid@gmail.com");
-		String invalidPassword = new String("12345");
-
-		assertFalse(doLoginController.doLogin(invalidEmail, invalidPassword));
-
-	}
+//	// Test with an invalid Email
+//	@Test
+//	public void DoInvalidEmailLoginControllerTest() {
+//
+//		String invalidEmail = new String("invalid@gmail.com");
+//		String validPassword = new String("123456");
+//
+//		assertFalse(doLoginController.doLogin(invalidEmail, validPassword));
+//
+//	}
+//
+//	// Test with an invalid Email and invalid password
+//	@Test
+//	public void DoInvalidEmailAndPasswordLoginControllerTest() {
+//
+//		String invalidEmail = new String("invalid@gmail.com");
+//		String invalidPassword = new String("12345");
+//
+//		assertFalse(doLoginController.doLogin(invalidEmail, invalidPassword));
+//
+//	}
 
 }

@@ -1,4 +1,4 @@
-package project.rest;
+package project.restcontrollers;
 
 import org.junit.Test;
 
