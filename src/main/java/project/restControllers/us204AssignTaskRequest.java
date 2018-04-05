@@ -31,22 +31,22 @@ public class us204AssignTaskRequest {
     }
 
 
-    @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
+    @RequestMapping(value = "/createdAssignmentRequest" , method = RequestMethod.POST)
     public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskID, @PathVariable int projectId, HttpServletRequest request){
         ProjectCollaborator projectCollaborator;
 
         String email = "tc@mymail.com";
 
-        Project project = projectService.getProjectById(projectId);
+        Project project = this.projectService.getProjectById(projectId);
 
-        Task task = taskService.getTaskByTaskID(taskID);
+        Task task = this.taskService.getTaskByTaskID(taskID);
 
-        User user = userService.getUserByEmail(email);
+        User user = this.userService.getUserByEmail(email);
 
         if(this.projectService.isUserActiveInProject(user, project)){
             projectCollaborator = this.projectService.findActiveProjectCollaborator(user, project);
             task.createTaskAssignementRequest(projectCollaborator);
-            taskService.saveTask(task);
+            this.taskService.saveTask(task);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
