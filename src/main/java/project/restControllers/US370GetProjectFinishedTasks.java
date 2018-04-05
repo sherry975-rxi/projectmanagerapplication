@@ -31,7 +31,7 @@ public class US370GetProjectFinishedTasks {
     @RequestMapping(value = "/finished", method = RequestMethod.GET)
     public ResponseEntity<?> getStartedNotFinishedTasks(@PathVariable int projectId) {
 
-        Project project = projectsService.getProjectById(projectId);
+        Project project = this.projectsService.getProjectById(projectId);
         List<Task> tasks =  this.taskService.getProjectFinishedTasks(project);
 
         return ResponseEntity.ok().body(tasks);
