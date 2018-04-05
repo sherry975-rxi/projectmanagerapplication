@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @RunWith(MockitoJUnitRunner.class)
 //@SpringBootTest
 //@AutoConfigureMockMvc
-public class US204AssignTaskRequestTest {
+public class US204AssignTaskRequestRestControllerTest {
 
     private MockMvc mockMvc;
 
