@@ -204,11 +204,11 @@ public class RestControllerFunctionalTests {
     @Test
     public void US203testBrowserOutput() throws Exception {
 
-        String onGoingTaskString = ongoingTask.getId() + " - " + ongoingTask.getDescription();
+        String onGoingTaskString = ongoingTask.getTaskID() + " - " + ongoingTask.getDescription();
 
         // this confirms mike's ID returns a "501 not yet implemented"
         mockMvc.perform(get("/users/" + String.valueOf(mike.getId()) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is(onGoingTaskString)));
+                .andExpect(jsonPath("$", hasSize(2))).andExpect(jsonPath("$[0]", is(onGoingTaskString)));
 
         // this confirms an Invalid (non INT) ID returns a "401 unauthorized"
         mockMvc.perform(get("/users/" + "INVALID" + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
