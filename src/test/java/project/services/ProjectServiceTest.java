@@ -19,6 +19,7 @@ import project.repository.ProjectsRepository;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -541,6 +542,24 @@ public class ProjectServiceTest {
 	}
 
 	@Test
+	public void testGetProjectById() {
+
+		// Creates a project
+		Project project1 = projectService.createProject("Project 1", "Descricao", projectManager);
+
+		/*
+		 * Verifies that the method getProjectById calls the method findById of the
+		 * ProjectRepository when the method "getProjectById" is used
+		 */
+
+		Mockito.when(projectRep.findById(project1.getId())).thenReturn(Optional.of(project1));
+		assertEquals(project1, projectService.getProjectById(project1.getId()));
+
+		Mockito.verify(projectRep, Mockito.times(1)).findById(project1.getId());
+
+	}
+
+		@Test
 	public void testFindActiveProjectCollaborator() {
 
 		/*

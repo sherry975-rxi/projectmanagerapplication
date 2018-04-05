@@ -1,5 +1,7 @@
 package project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -19,12 +21,16 @@ public class Report {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private double reportedTime;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "TaskCollaborator_id")
 	private TaskCollaborator taskCollaborator;
+
 	private double cost;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
+	@JsonBackReference
 	private Task task;
 	private Calendar dateOfReport;
 	private Calendar dateOfUpdate;

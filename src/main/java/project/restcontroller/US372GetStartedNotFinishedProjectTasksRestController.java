@@ -1,4 +1,4 @@
-package project.rest;
+package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,6 @@ import project.model.Task;
 import project.services.ProjectService;
 import project.services.TaskService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -32,18 +31,11 @@ public class US372GetStartedNotFinishedProjectTasksRestController {
     }
 
     @RequestMapping(value = "unfinished", method = RequestMethod.GET)
-    public ResponseEntity<?> getStartedNotFinishedTasks(@PathVariable Integer projectID, HttpServletRequest request) {
-        //this.validateProject(projectID);
+    public ResponseEntity<?> getStartedNotFinishedTasks(@PathVariable Integer projectID) {
 
         List<Task> taskList = this.taskService.getProjectUnFinishedTasks(projectsService.getProjectById(projectID));
+
         return new ResponseEntity<>(taskList, HttpStatus.OK);
-
-    }
-
-
-    private void validateProject(int projectId) {
-        this.projectsService.getProjectById(projectId);
-
     }
 }
 
