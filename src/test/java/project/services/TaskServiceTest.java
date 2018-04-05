@@ -14,6 +14,7 @@ import project.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
@@ -680,7 +681,7 @@ public class TaskServiceTest {
 
     @Test
     public void testGetTaskByID() {
-        when(taskRepository.findById(12L)).thenReturn(taskMock);
+        when(taskRepository.findById(12L)).thenReturn(Optional.of(taskMock));
         assertEquals(taskMock, victim.getTaskByID(12L));
     }
 
@@ -842,10 +843,10 @@ public class TaskServiceTest {
         assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 0);
 
     }
-    
+
     @Test
     public void testGetTaskByTaskID() {
-        when(taskRepository.findByTaskID("12")).thenReturn(taskMock);
+        when(taskRepository.findByTaskID("12")).thenReturn(Optional.of(taskMock));
         assertEquals(taskMock, victim.getTaskByTaskID("12"));
     }
 

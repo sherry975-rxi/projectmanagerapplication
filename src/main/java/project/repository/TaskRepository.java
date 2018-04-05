@@ -6,13 +6,14 @@ import project.model.Project;
 import project.model.Task;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public interface TaskRepository extends JpaRepository<Task, Integer>{
 	
-	Task findById(Long id);
+	Optional<Task> findById(Long id);
 
-	Task findByTaskID(String id);
+	Optional<Task> findByTaskID(String id);
 
 	List<Task> findAllByProject(Project project);
 }

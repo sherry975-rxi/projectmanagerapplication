@@ -6,6 +6,7 @@ import project.model.*;
 import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.TaskRepository;
+import project.services.exceptions.ObjectNotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -621,11 +622,11 @@ public class TaskService {
 		 */
 		public Task getTaskByTaskID(String id) {
 
-			Task task = this.taskRepository.findByTaskID(id);
+			Optional<Task> task = this.taskRepository.findByTaskID(id);
 
-			assignStateAccordingToEnum(task);
+			assignStateAccordingToEnum(task.orElseThrow(() -> new ObjectNotFoundException("Task not found! Id: " + id)));
 
-			return task;
+			return task.orElseThrow(() -> new ObjectNotFoundException("Task not found! Id: " + id));
 		}
 
 
@@ -638,11 +639,11 @@ public class TaskService {
 		 */
 		public Task getTaskByID(Long id) {
 
-			Task result = this.taskRepository.findById(id);
+			Optional<Task> result = this.taskRepository.findById(id);
 
-			assignStateAccordingToEnum(result);
+			assignStateAccordingToEnum(result.orElseThrow(() -> new ObjectNotFoundException("Task not found! Id: " + id)));
 
-			return result;
+			return result.orElseThrow(() -> new ObjectNotFoundException("Task not found! Id: " + id));
 
 		}
 
