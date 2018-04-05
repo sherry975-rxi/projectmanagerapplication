@@ -50,44 +50,24 @@ class US203FindPendingTaskRestRequest {
             userListString.add("401 Unauthorized");
 
             return ResponseEntity.ok().body(userListString);
+
         } else {
-    /*
-      u
 
+             this.taskList = taskService.getStartedNotFinishedUserTaskList(user);
 
-           this.taskList = taskService.getStartedNotFinishedUserTaskList(user);
+            List<String> taskListString = new ArrayList<>();
 
-            List<Task> taskListString = new ArrayList<>();
+            taskService.getStartedNotFinishedUserTaskList(user).stream().forEach(Task -> taskListString.add(taskDataToString(Task)));
 
-            for (int i = 0; i< taskList.size(); i++) {
-                Integer visibleIndex = i+1;
-                String toShowTask = "[" + visibleIndex.toString() + "] \n" + taskDataToString(taskList.get(i));
-                taskListString.add(toShowTask);
-            }
-*/
-            userListString.add("501 Not implemented");
-            return ResponseEntity.ok().body(userListString);
-           //return ResponseEntity.ok().body(taskListString);
+            return ResponseEntity.ok().body(taskListString);
 
         }
-    }
-}
-/*
-    }
+
+        }
 
     private String taskDataToString(Task toConvert){
-        String
+
+       return toConvert.getId() + " - " + toConvert.getDescription();
     }
-
-
-
-
-    @RequestMapping(method = RequestMethod.GET)
-    List<Task> viewPendingTasks(@PathVariable int userID){
-
-        return this.taskService.getStartedNotFinishedUserTaskList(user);
-
-    }
-   */
-
+}
 
