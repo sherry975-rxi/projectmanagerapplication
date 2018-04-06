@@ -1,32 +1,36 @@
-package project.restcontrollers;
+package project.restControllers;
 
-import org.junit.After;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+
 import org.springframework.test.web.servlet.MockMvc;
-import project.model.Profile;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
+import project.model.Project;
 import project.model.User;
+import project.restcontroller.US136FindUserByProfile;
 import project.services.UserService;
+import project.services.exceptions.ObjectNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.BDDMockito.given;
 
-
-//Configurar H2
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+@RunWith(MockitoJUnitRunner.class)
 public class US136FindUserByProfileTest {
 
     /**
@@ -37,64 +41,43 @@ public class US136FindUserByProfileTest {
      *
      */
 
-    @Autowired
+    @InjectMocks
     US136FindUserByProfile us136FindUserByProfileController;
 
-    @Autowired
+    @Mock
     UserService userService;
 
+    private MockMvc mockMvc;
     private User newUser1;
     private User newUser2;
     private User newUser3;
+    private List<User> collaborators = new ArrayList<>();
 
-    @Autowired
-    private MockMvc mockMvc;
+    //This method will be initialized by the initFields below
+    private JacksonTester<Project> projectJack;
+    private JacksonTester<User> taskJack;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() {
+
+        JacksonTester.initFields(this, new ObjectMapper());
+
+        mockMvc = MockMvcBuilders.standaloneSetup(us136FindUserByProfileController).build();
 
         // create user
-        newUser1 = userService.createUser("Pedro", "Pedro@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
-                "4480", "Porto", "Porto", "Portugal");
+        newUser1 = new User("Joao", "jl@gmail.com", "01", "Project Manager", "555555555");
         // create user2
-        newUser2 = userService.createUser("Joao", "joao@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
-                "4480", "Porto", "Porto", "Portugal");
+        newUser2 = new User("Ana", "joao@gmail.com", "01", "collaborator", "221238442");
         // create user3
-        newUser3 = userService.createUser("Rui", "rui@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
-                "4480", "Porto", "Porto", "Portugal");
+        newUser3 = new User("Rui", "rui@gmail.com", "01", "collaborator", "221238442");
 
         /* Adds the created users to the user repository */
         userService.addUserToUserRepositoryX(newUser1);
         userService.addUserToUserRepositoryX(newUser2);
         userService.addUserToUserRepositoryX(newUser3);
 
-        userService.getAllUsersFromUserContainer();
+        collaborators.clear();
 
-    }
-
-    @After
-    public void clear() throws Exception{
-        newUser1 = null;
-        newUser2 = null;
-        newUser3 = null;
-
-    }
-
-    @Test
-    public void test()
-            throws Exception {
-
-        newUser1.setUserProfile(Profile.COLLABORATOR);
-        newUser3.setUserProfile(Profile.COLLABORATOR);
-
-        List<User> userListResult = new ArrayList<>();
-
-        userListResult.add(newUser1);
-        userListResult.add(newUser3);
-
-
-        this.mockMvc.perform(get("/users/COLLABORATOR")).andExpect(status().isOk())
-                .andExpect(content().string("Pedro"));
     }
 
     @Test
@@ -102,6 +85,33 @@ public class US136FindUserByProfileTest {
         assertNotNull(us136FindUserByProfileController);
     }
 
+    @Test
+    public void searchUsersByProfileWhenExistsTest() throws Exception {
+
+        //Given
+        collaborators.add(newUser1);
+        given(userService.searchUsersByProfileName("COLLABORATOR")).willReturn(collaborators);
+
+        //When
+        MockHttpServletResponse response = mockMvc.perform(get("/users/COLLABORATOR").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //Then
+        assertEquals(response.getStatus(),HttpStatus.OK.value());
+        assertEquals(response.getContentAsString(), "[" + taskJack.write(newUser1).getJson() + "]");
+    }
+
+    @Test
+    public void searchUsersByProfileWhenDoesNotExistTest() throws Exception {
+
+        //Given
+        given(userService.searchUsersByProfileName("aaaaaa")).willThrow(new ObjectNotFoundException("Users not found!"));
+
+        //When
+        MockHttpServletResponse response = mockMvc.perform(get("/users/aaaaaa").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        assertEquals(response.getStatus(),HttpStatus.NOT_FOUND.value());
+
+    }
 
 
 }
