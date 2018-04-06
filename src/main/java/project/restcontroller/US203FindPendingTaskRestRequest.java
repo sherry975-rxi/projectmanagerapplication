@@ -22,8 +22,8 @@ public class US203FindPendingTaskRestRequest {
     private final UserService userService;
     private final TaskService taskService;
     private User user;
-    private Task task;
-    private List<Task> taskList;
+
+    List<Task> taskList;
 
     @Autowired
     public US203FindPendingTaskRestRequest(UserService userService, TaskService taskService) {
@@ -48,13 +48,13 @@ public class US203FindPendingTaskRestRequest {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getPendingTasks(@PathVariable String userID) {
 
-        Integer ID;
+        Integer id;
 
         List<String> userListString = new ArrayList<>();
 
         try {
-            ID = Integer.parseInt(userID);
-            this.user = userService.getUserByID(ID);
+            id = Integer.parseInt(userID);
+            this.user = userService.getUserByID(id);
         } catch (NumberFormatException e) {
             userListString.add("401 Unauthorized");
             return ResponseEntity.ok().body(userListString);
@@ -70,7 +70,7 @@ public class US203FindPendingTaskRestRequest {
              this.taskList = taskService.getStartedNotFinishedUserTaskList(user);
 
             List<String> taskListString = taskService.getStartedNotFinishedUserTaskList(user)
-                    .stream().map(Task -> taskDataToString(Task)).collect(Collectors.toList());
+                    .stream().map(task -> taskDataToString(task)).collect(Collectors.toList());
 
             if(taskListString.isEmpty()) {
                 taskListString.add("You have no ongoing tasks!");
