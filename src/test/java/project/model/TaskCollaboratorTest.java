@@ -99,14 +99,15 @@ public class TaskCollaboratorTest {
 	}
 
 	/**
-	 * Tests the set and get finish date methods
+	 * Tests the set and get finish date methods, the created date must equal the returned date
 	 */
 	@Test
 	public final void testGetFinishDate() {
 
 		workerTester.addFinishDateForTaskCollaborator();
-		finishDate = Calendar.getInstance();
-		assertTrue(workerTester.getFinishDate().getTime().equals(finishDate.getTime()));
+		finishDate = workerTester.getFinishDate();
+		assertTrue(workerTester.getFinishDate().equals(finishDate));
+		assertEquals(Calendar.getInstance().get(Calendar.DAY_OF_YEAR), workerTester.getFinishDate().get(Calendar.DAY_OF_YEAR));
 
 	}
 
