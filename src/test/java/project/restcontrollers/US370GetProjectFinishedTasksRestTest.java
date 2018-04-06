@@ -17,7 +17,7 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
-import project.restControllers.US370GetProjectFinishedTasks;
+import project.restcontroller.US370GetProjectFinishedTasks;
 import project.services.ProjectService;
 import project.services.TaskService;
 
