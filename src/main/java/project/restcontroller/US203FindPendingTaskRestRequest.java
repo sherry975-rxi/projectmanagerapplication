@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("users/{userID}/viewPendingTasks")
-class US203FindPendingTaskRestRequest {
+public class US203FindPendingTaskRestRequest {
 
     private final UserService userService;
     private final TaskService taskService;
