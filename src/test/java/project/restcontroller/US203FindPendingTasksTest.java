@@ -1,4 +1,4 @@
-package project.restControllers;
+package project.restcontroller;
 
 
 import org.junit.After;

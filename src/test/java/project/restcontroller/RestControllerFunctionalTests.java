@@ -1,4 +1,4 @@
-package project.restControllers;
+package project.restcontroller;
 
 import org.junit.After;
 import org.junit.Before;
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 @RunWith(SpringRunner.class)
 @WebMvcTest
 @AutoConfigureDataJpa
-@ComponentScan({ "project.services", "project.model", "project.controllers", "project.restControllers"  })
+@ComponentScan({ "project.services", "project.model", "project.controllers", "project.restcontroller"})
 public class RestControllerFunctionalTests {
 
     /**

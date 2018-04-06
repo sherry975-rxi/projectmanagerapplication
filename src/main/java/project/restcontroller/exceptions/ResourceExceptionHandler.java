@@ -1,4 +1,4 @@
-package project.restControllers.exceptions;
+package project.restcontroller.exceptions;
 
 
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import project.services.exceptions.ObjectNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * This class intercepts the Exceptions thrown by the services classes to the restControllers Classes
+ * This class intercepts the Exceptions thrown by the services classes to the restcontroller Classes
  */
 @ControllerAdvice
 public class ResourceExceptionHandler {
