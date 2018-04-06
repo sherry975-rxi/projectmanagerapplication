@@ -148,7 +148,7 @@ public class US203FindPendingTasksTest {
         // creates a mocked restController for unit testing
         restController = new US203FindPendingTaskRestRequest(userService, taskService);
 
-        // creates mock returns to find Mike's data by ID number, and the task list
+        // creates mock returns to find Owner and Mike's data by ID number, as well as the task list
         Mockito.when(userRepository.findById(mike.getId())).thenReturn(mike);
 
         Mockito.when(taskRepository.findAll()).thenReturn(taskList);
@@ -194,6 +194,41 @@ public class US203FindPendingTasksTest {
 
         // then the getPendingTasks method must return those two tasks when called to search for mike's ID
         assertEquals(ResponseEntity.ok().body(expected), restController.getPendingTasks(mikeID));
+
+    }
+
+    /**
+     *
+     * This tests all the unhappy cases, such as invalid inputs and a user with no ongoing tasks
+     *
+     *
+     */
+    @Test
+    public void us203UnitTestInvalidInputs() {
+
+        // given invalid inputs, getPendingTasks must return only a List with a single entry "401 Unauthorized"
+        List<String> unauthorized = new ArrayList<>();
+        unauthorized.add("401 Unauthorized");
+
+        // when inputted a non integer, then it must return 401
+        assertEquals(ResponseEntity.ok().body(unauthorized), restController.getPendingTasks("Not A Number"));
+
+        // when inputted a non existing ID, then it must return 401
+        assertEquals(ResponseEntity.ok().body(unauthorized), restController.getPendingTasks("-2"));
+
+
+        // given a user with no Tasks, getPendingTasks must return only a List with a single entry "You have no ongoing tasks!"
+        List<String> noTasks = new ArrayList<>();
+        noTasks.add("You have no ongoing tasks!");
+
+
+        // when Owner's ID is converted into string and fed to get Pending Tasks
+        String ownerID = String.valueOf(owner.getId());
+        Mockito.when(userRepository.findById(owner.getId())).thenReturn(owner);
+
+        // then it must return a list with the "no tasks" message
+        assertEquals(ResponseEntity.ok().body(noTasks), restController.getPendingTasks(ownerID));
+
 
     }
 

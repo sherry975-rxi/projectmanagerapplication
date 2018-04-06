@@ -13,6 +13,7 @@ import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("users/{userID}/viewPendingTasks")
@@ -31,6 +32,19 @@ class US203FindPendingTaskRestRequest {
 
     }
 
+    /**
+     *
+     * This method converts the string of a User's ID from the URI into an integer,
+     * Locates the User's data, and then finds all Ongoing tasks associated with that user.
+     * Tasks are returned as a list of Strings
+     *
+     * It performs several checks to ensure consistency:
+     *  - ensuring the User's ID is an integer
+     *  - ensuring the User's ID actually exists
+     *  - ensuring the User's ID matches the logged in user (TO BE IMPLEMENTED)
+     *
+     *  All of these cases return a List containing only "401 Unauthorized" to ensure database privacy
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getPendingTasks(@PathVariable String userID) {
 
@@ -55,15 +69,20 @@ class US203FindPendingTaskRestRequest {
 
              this.taskList = taskService.getStartedNotFinishedUserTaskList(user);
 
-            List<String> taskListString = new ArrayList<>();
+            List<String> taskListString = taskService.getStartedNotFinishedUserTaskList(user)
+                    .stream().map(Task -> taskDataToString(Task)).collect(Collectors.toList());
 
-            taskService.getStartedNotFinishedUserTaskList(user).stream().forEach(Task -> taskListString.add(taskDataToString(Task)));
+            if(taskListString.isEmpty()) {
+                taskListString.add("You have no ongoing tasks!");
+            }
 
             return ResponseEntity.ok().body(taskListString);
 
         }
 
-        }
+    }
+
+
 
     private String taskDataToString(Task toConvert){
 
