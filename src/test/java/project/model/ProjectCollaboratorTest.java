@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Calendar;
+
 import static org.junit.Assert.*;
 
 public class ProjectCollaboratorTest {
@@ -46,13 +48,30 @@ public class ProjectCollaboratorTest {
     @Test
     public void testProjectCollaborator() {
 
+        // given a newly created project Collaborator
+        // when created
+        // he must be active and his "Start date" must equal the system date at the moment of creation
+        // finish date field must be null
+
         assertTrue(testMoar.isProjectCollaboratorActive());
+        assertEquals(testMoar.getStartDate().get(Calendar.DAY_OF_YEAR), Calendar.getInstance().get(Calendar.DAY_OF_YEAR));
+        assertNull(testMoar.getFinishDate());
+
+        // when the collaborator is set as inactive, it must recieve a finish date
+        // calling the setter must result in a non-null finish date
         testMoar.setStatus(false);
+        testMoar.setFinishDate(Calendar.getInstance());
+
         assertFalse(testMoar.isProjectCollaboratorActive());
+        assertNotNull(testMoar.getFinishDate());
+
+        // under normal circumstances, the collaborator's status could never be returned to active, a new collaborator must be created
+        // then, when set as active again
         testMoar.setStatus(true);
         assertTrue(testMoar.isProjectCollaboratorActive());
+        assertNotNull(testMoar.getFinishDate());
 
-        assertEquals(testMoar.getCollaboratorCost(), 100000.0, 001);
+        assertEquals(testMoar.getCostPerEffort(), 100000.0, 001);
 
         assertEquals(tester, testMoar.getUserFromProjectCollaborator());
 
