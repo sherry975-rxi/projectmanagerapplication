@@ -26,7 +26,7 @@ import java.util.Optional;
 @Transactional
 public class UserService {
 
-	@Autowired
+    @Autowired
 	private UserRepository userRepository;
 
 	/**
@@ -40,6 +40,7 @@ public class UserService {
 	 * 
 	 * @param userRepository
 	 */
+	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
@@ -164,6 +165,7 @@ public class UserService {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * This method returns all users that possess a certain id. It
 	 * fetches information directly from the Database. \
 	 *
@@ -174,6 +176,19 @@ public class UserService {
 	public User getUserById(int id) {
 		return this.userRepository.findById(id);
 	}
+=======
+	 * This method returns all users that possess a certain ID. It
+	 * fetches information directly from the Database.
+	 *
+	 * @param id
+	 *            parameter used to fetch users from the DataBase
+	 * @return all users that possess a certain id
+
+	*/
+
+	public User getUserByID(int id) { return this.userRepository.findById(id); }
+
+>>>>>>> master
 
 	/**
 	 * This method returns a list of all active collaborators in the Company
@@ -228,6 +243,22 @@ public class UserService {
 	 *         certain profile
 	 */
 	public List<User> searchUsersByProfile(Profile searchProfile) {
+
+		return userRepository.findAllByUserProfile(searchProfile);
+	}
+
+	/**
+	 * This method allows the administrator to search users in the Company by
+	 * profile name. This method accesses the DB
+	 *
+	 * @param searchProfileName
+	 *            Profile of a user
+	 * @return list of users from the userContainer with users that possess a
+	 *         certain profile
+	 */
+	public List<User> searchUsersByProfileName(String searchProfileName) {
+
+		Profile searchProfile = Profile.valueOf(searchProfileName);
 
 		return userRepository.findAllByUserProfile(searchProfile);
 	}

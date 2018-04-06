@@ -1,10 +1,12 @@
 package project.model;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import project.model.taskstateinterface.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -21,7 +23,9 @@ import static javax.persistence.CascadeType.ALL;
  */
 @Entity
 @Table(name = "Task")
-public class Task {
+public class Task implements Serializable {
+
+	static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +38,7 @@ public class Task {
 	@JsonManagedReference
 	private List<TaskCollaborator> taskTeam;
 
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
 	@JsonManagedReference
@@ -42,6 +47,7 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private StateEnum currentState;
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "task")
 	@JsonManagedReference
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
@@ -58,6 +64,7 @@ public class Task {
 	private Calendar taskDeadline;
 	private double taskBudget;
 
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Task> taskDependency;
 

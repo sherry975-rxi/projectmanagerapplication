@@ -1,6 +1,6 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,8 +28,8 @@ public class User implements Serializable {
 	private String function;
 	static final long serialVersionUID = 44L;
 
+	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonBackReference
 	private List<Address> addressList;
 	
 	private String phone;

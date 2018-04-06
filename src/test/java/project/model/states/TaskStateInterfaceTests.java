@@ -66,12 +66,15 @@ public class TaskStateInterfaceTests {
 		//Adds the estimated start and deadline dates to the task 
 		task.setEstimatedTaskStartDate(estimatedTaskStartDate);
 		task.setTaskDeadline(taskDeadline);
-		
+
+		//Asserts that the state changed to Planned
+		assertEquals("Planned", task.viewTaskStateName());
+
 		//Adds someone to the task team
 		ProjectCollaborator collaborator = project.createProjectCollaborator(user, 10);
 		task.addProjectCollaboratorToTask(collaborator);
 		
-		//Asserts that the state changed to Planned
+		//Asserts that the state is still planned
 		assertEquals("Planned", task.viewTaskStateName()); 		
 	
 		//Adds the estimated task effort and budget

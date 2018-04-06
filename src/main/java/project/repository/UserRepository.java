@@ -13,11 +13,18 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	Optional<User> findByEmail(String email);
 
+	User findById(int id);
+
 	List<User> findAllByUserProfile(Profile profile);
 
 	void deleteByEmail(String email);
 
 	Boolean existsByEmail(String userEmail);
 
+<<<<<<< HEAD
 	User findById (int id);
+=======
+>>>>>>> master
 }
+
+
