@@ -20,6 +20,7 @@ import java.util.List;
 public class US136FindUserByProfile {
 
     private final UserService userService;
+
     @Autowired
     US136FindUserByProfile(UserService userService){
 

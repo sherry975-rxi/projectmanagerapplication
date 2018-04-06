@@ -32,4 +32,22 @@ public class ResourceExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
+    /**
+     * This method returns the  Http status of the error thrown, the Error message and Instant when the error occurred
+     * when an exception is thrown by the services classes upon not finding the searched object in the Repository.
+     * This is the standard signature for this profileNotFound method in the Framework with annotation @ControllerAdvice
+     *
+     * @param e       Exception thrown message and cause
+     * @param request Http request
+     * @return
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<StandardError> profileNotFound(IllegalArgumentException e, HttpServletRequest request) {
+
+        //StandardError for object not found
+        StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
 }
