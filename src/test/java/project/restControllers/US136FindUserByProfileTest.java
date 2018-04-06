@@ -47,13 +47,14 @@ public class US136FindUserByProfileTest {
     private User newUser2;
     private User newUser3;
 
+    @Autowired
     private MockMvc mockMvc;
 
     @Before
     public void setUp() throws Exception{
 
         // create user
-        newUser1 = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
+        newUser1 = userService.createUser("Pedro", "Pedro@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
                 "4480", "Porto", "Porto", "Portugal");
         // create user2
         newUser2 = userService.createUser("Joao", "joao@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
@@ -93,12 +94,14 @@ public class US136FindUserByProfileTest {
 
 
         this.mockMvc.perform(get("/users/COLLABORATOR")).andExpect(status().isOk())
-                .andExpect(content().string("Ana"));
+                .andExpect(content().string("Pedro"));
     }
 
     @Test
     public void controllerInitializedCorrectly() {
         assertNotNull(us136FindUserByProfileController);
     }
+
+
 
 }
