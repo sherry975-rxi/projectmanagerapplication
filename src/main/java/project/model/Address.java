@@ -1,13 +1,6 @@
 package project.model;
 
-<<<<<<< HEAD
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-=======
-import com.fasterxml.jackson.annotation.JsonBackReference;
->>>>>>> origin/US136FindUserByProfile
-
 
 import javax.persistence.*;
 
@@ -38,11 +31,6 @@ public class Address{
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "User_id")
-<<<<<<< HEAD
-=======
-
-	@JsonBackReference
->>>>>>> origin/US136FindUserByProfile
 	private User user;
 
 	public Address(){}

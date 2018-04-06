@@ -1,12 +1,6 @@
 package project.model;
 
-<<<<<<< HEAD
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-=======
-import com.fasterxml.jackson.annotation.JsonManagedReference;
->>>>>>> origin/US136FindUserByProfile
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,10 +30,6 @@ public class User implements Serializable {
 
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-<<<<<<< HEAD
-=======
-	@JsonManagedReference
->>>>>>> origin/US136FindUserByProfile
 	private List<Address> addressList;
 	
 	private String phone;
