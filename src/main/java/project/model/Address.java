@@ -1,5 +1,10 @@
 package project.model;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 import javax.persistence.*;
 
 
@@ -25,7 +30,8 @@ public class Address{
 	private String district;
 	private String country;
 	static final long serialVersionUID = 42L;
-	
+
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "User_id")
 	private User user;

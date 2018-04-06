@@ -10,7 +10,11 @@ import project.services.exceptions.ObjectNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+<<<<<<< HEAD:src/main/java/project/restcontroller/exceptions/ResourceExceptionHandler.java
  * This class intercepts the Exceptions thrown by the services classes to the restcontroller Classes
+=======
+ * This class intercepts the Exceptions thrown by the services classes to the rest Classes
+>>>>>>> master:src/main/java/project/restcontroller/exceptions/ResourceExceptionHandler.java
  */
 @ControllerAdvice
 public class ResourceExceptionHandler {
