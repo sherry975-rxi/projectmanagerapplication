@@ -1,4 +1,4 @@
-package project.restcontrollers;
+package project.restControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
