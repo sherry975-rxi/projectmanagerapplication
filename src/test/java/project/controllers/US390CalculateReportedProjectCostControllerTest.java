@@ -184,10 +184,10 @@ public class US390CalculateReportedProjectCostControllerTest {
 		// Calculates the value of the project - Equals to to the sum of the total hours
 		// spent times the cost of each TaskWorker
 
-		double danielCost = 5 * taskWorkerDaniel.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
-		double jonnyCost = 10 * taskWorkerJonny.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
-		double mikeCost = 2 * taskWorkerMike.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
-		double anaCost = 3 * taskWorkerAna.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+		double danielCost = 5 * taskWorkerDaniel.getProjectCollaboratorFromTaskCollaborator().getCostPerEffort();
+		double jonnyCost = 10 * taskWorkerJonny.getProjectCollaboratorFromTaskCollaborator().getCostPerEffort();
+		double mikeCost = 2 * taskWorkerMike.getProjectCollaboratorFromTaskCollaborator().getCostPerEffort();
+		double anaCost = 3 * taskWorkerAna.getProjectCollaboratorFromTaskCollaborator().getCostPerEffort();
 
 		totalCost = danielCost + jonnyCost + mikeCost + anaCost;
 

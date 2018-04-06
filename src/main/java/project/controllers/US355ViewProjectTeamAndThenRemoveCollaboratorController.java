@@ -8,6 +8,7 @@ import project.model.User;
 import project.services.ProjectService;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +54,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 		if (toRemove != null) {
 			remove = true;
 			toRemove.setStatus(false);
+			toRemove.setFinishDate(Calendar.getInstance());
 			projectService.updateProjectCollaborator(toRemove);
 		}
 
@@ -65,10 +67,9 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	 * @return a list of user
 	 */
 	public List<User> getActiveProjectCollaboratorFromTeam() {
-		List<User> projectTeam = projectService.getActiveProjectTeam(proj).stream()
-				.map(ProjectCollaborator::getUserFromProjectCollaborator).collect(Collectors.toList());
 
-		return projectTeam;
+		return projectService.getActiveProjectTeam(proj).stream()
+				.map(ProjectCollaborator::getUserFromProjectCollaborator).collect(Collectors.toList());
 	}
 
 	/**

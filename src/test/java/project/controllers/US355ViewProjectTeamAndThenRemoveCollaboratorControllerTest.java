@@ -16,8 +16,7 @@ import project.services.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -70,9 +69,14 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 	public final void testRemoveCollaboratorFromProjectTeam() {
 		//given a project with one team member
 		assertEquals(1, projectContainer.getActiveProjectTeam(testProject).size());
+		assertTrue(teamPermanentCollaborator.isStatus());
+		assertNull(teamPermanentCollaborator.getFinishDate());
+
 
 		//when the team member is removed via the controllers
 		assertTrue(viewProjectTeamAndThenRemoveCollaborator.removeCollaboratorFromProjectTeam(teamPermanentMember));
+        assertFalse(teamPermanentCollaborator.isStatus());
+		assertNotNull(teamPermanentCollaborator.getFinishDate());
 
 		// then the active team must be empty
 		assertEquals(0, projectContainer.getActiveProjectTeam(testProject).size());
