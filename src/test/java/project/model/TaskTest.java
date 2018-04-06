@@ -934,19 +934,19 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#getTimeSpentOntask()}.
+	 * Test method for {@link project.model.Task#getTimeSpentOnTask()}.
 	 */
 	@Test
 	public void testGetTimeSpentOntask() {
 
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
-		assertEquals(1.0, taskReadyToFinishTest.getTimeSpentOntask(), 0.1);
+		assertEquals(1.0, taskReadyToFinishTest.getTimeSpentOnTask(), 0.1);
 
 		taskReadyToFinishTest.updateReportedTime(2.0, taskCollaborator,
 				taskReadyToFinishTest.getReports().get(0).getId());
 
-		assertEquals(2.0, taskReadyToFinishTest.getTimeSpentOntask(), 0.1);
+		assertEquals(2.0, taskReadyToFinishTest.getTimeSpentOnTask(), 0.1);
 
 	}
 

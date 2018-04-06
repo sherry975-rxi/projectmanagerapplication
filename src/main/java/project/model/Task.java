@@ -858,7 +858,7 @@ public class Task implements Serializable {
 	 * 
 	 * @return Time spent on task
 	 */
-	public double getTimeSpentOntask() {
+	public double getTimeSpentOnTask() {
 
 		double timeSpentOnTask = 0.0;
 
