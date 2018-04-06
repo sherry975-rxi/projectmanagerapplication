@@ -33,7 +33,7 @@ public class US204AssignTaskRequestRestController {
 
 
     @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail,HttpServletRequest request){
+    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         ProjectCollaborator projectCollaborator;

@@ -165,7 +165,7 @@ public class UserService {
 	}
 
 	/**
-<<<<<<< HEAD
+
 	 * This method returns all users that possess a certain id. It
 	 * fetches information directly from the Database. \
 	 *
@@ -173,22 +173,8 @@ public class UserService {
 	 *            parameter used to fetch users from the DataBase
 	 * @return all users that possess a certain email address
 	 */
-	public User getUserById(int id) {
-		return this.userRepository.findById(id);
-	}
-=======
-	 * This method returns all users that possess a certain ID. It
-	 * fetches information directly from the Database.
-	 *
-	 * @param id
-	 *            parameter used to fetch users from the DataBase
-	 * @return all users that possess a certain id
-
-	*/
-
 	public User getUserByID(int id) { return this.userRepository.findById(id); }
 
->>>>>>> master
 
 	/**
 	 * This method returns a list of all active collaborators in the Company

@@ -21,10 +21,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	Boolean existsByEmail(String userEmail);
 
-<<<<<<< HEAD
-	User findById (int id);
-=======
->>>>>>> master
 }
 
 
