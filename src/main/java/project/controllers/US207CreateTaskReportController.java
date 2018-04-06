@@ -112,7 +112,7 @@ public class US207CreateTaskReportController {
 		List<Calendar> reportsDate = new ArrayList<>();
 		for (Report other : this.task.getReports()) {
 			if (other.getTaskCollaborator().equals(taskCollaborator)) {
-				reportsDate.add(other.getDateOfReport());
+				reportsDate.add(other.getFirstDateOfReport());
 			}
 		}
 
@@ -131,7 +131,7 @@ public class US207CreateTaskReportController {
 		List<Calendar> reportsDate = new ArrayList<>();
 		for (Report other : this.task.getReports()) {
 			if (other.getTaskCollaborator().equals(taskCollaborator)) {
-				reportsDate.add(other.getDateOfUpdate());
+				reportsDate.add(other.getDateOfLastUpdate());
 			}
 		}
 

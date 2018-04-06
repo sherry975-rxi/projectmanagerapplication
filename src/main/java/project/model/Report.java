@@ -32,12 +32,9 @@ public class Report {
 	@JoinColumn(name = "Task_id")
 	@JsonBackReference
 	private Task task;
-	private Calendar dateOfReport;
-	private Calendar dateOfUpdate;
-
-
-
-
+	private Calendar firstDateOfReport;
+	private Calendar lastDateOfReport;
+	private Calendar dateOfLastUpdate;
 
 	public Report(){
 
@@ -56,8 +53,9 @@ public class Report {
 		this.reportedTime = 0;
 		this.taskCollaborator = taskCollaborator;
 		this.cost = taskCollaborator.getCost();
-		this.dateOfReport = reportDate;
-		this.dateOfUpdate = reportDate;
+		this.firstDateOfReport = reportDate;
+		this.lastDateOfReport = reportDate;
+		this.dateOfLastUpdate = reportDate;
 	}
 
 	/**
@@ -123,7 +121,7 @@ public class Report {
 	 */
 	public void updateReportedTime(double time) {
 		this.reportedTime = time;
-		this.dateOfUpdate = Calendar.getInstance();
+		this.dateOfLastUpdate = Calendar.getInstance();
 
 	}
 
@@ -160,8 +158,8 @@ public class Report {
 	 *
 	 * @return void
 	 */
-	public void setDateOfReport(Calendar reportDate) {
-		this.dateOfReport = reportDate;
+	public void setFirstDateOfReport(Calendar reportDate) {
+		this.firstDateOfReport = reportDate;
 	}
 
 
@@ -170,8 +168,28 @@ public class Report {
 	 *
 	 * @return void
 	 */
-	public Calendar getDateOfReport() {
-		return this.dateOfReport;
+	public Calendar getFirstDateOfReport() {
+		return this.firstDateOfReport;
+	}
+
+
+	/**
+	 * Sets a date to the report
+	 *
+	 * @return void
+	 */
+	public void setLastDateOfReport(Calendar reportDate) {
+		this.lastDateOfReport = reportDate;
+	}
+
+
+	/**
+	 * Gets the date of the report
+	 *
+	 * @return void
+	 */
+	public Calendar getLastDateOfReport() {
+		return this.lastDateOfReport;
 	}
 
 	/**
@@ -189,8 +207,8 @@ public class Report {
 	 *
 	 * @return LocalDate
 	 */
-	public Calendar getDateOfUpdate() {
-		return dateOfUpdate;
+	public Calendar getDateOfLastUpdate() {
+		return dateOfLastUpdate;
 	}
 
 	/**
@@ -198,8 +216,8 @@ public class Report {
 	 *
 	 * @return LocalDate
 	 */
-	public void setDateOfUpdate(Calendar dateOfUpdate) {
-		this.dateOfUpdate = dateOfUpdate;
+	public void setDateOfLastUpdate(Calendar dateOfLastUpdate) {
+		this.dateOfLastUpdate = dateOfLastUpdate;
 	}
 
 
