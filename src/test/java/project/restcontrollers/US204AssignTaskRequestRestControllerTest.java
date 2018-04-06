@@ -3,7 +3,6 @@ package project.restcontrollers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,13 +15,12 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.model.*;
-import project.restControllers.US204AssignTaskRequestRestController;
+import project.restcontroller.US204AssignTaskRequestRestController;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
 
-import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
