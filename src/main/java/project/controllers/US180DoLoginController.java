@@ -31,9 +31,7 @@ public class US180DoLoginController {
 		username = userService.getUserByEmail(email);
 		password = password1;
 		boolean loginSuccess = false;
-		if (username == null) {
-			return loginSuccess;
-		} else if (userService.isUserinUserContainer(username) && username.checkLogin(password)) {
+		if (username != null && userService.isUserinUserContainer(username) && username.checkLogin(password)) {
 			loginSuccess = true;
 		}
 

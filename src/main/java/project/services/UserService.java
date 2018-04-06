@@ -7,12 +7,14 @@ import project.model.Address;
 import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
+import project.services.exceptions.ObjectNotFoundException;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Class UserContainer that contains all lists and methods to build lists of
@@ -156,7 +158,10 @@ public class UserService {
 	 * @return all users that possess a certain email address
 	 */
 	public User getUserByEmail(String email) {
-		return this.userRepository.findByEmail(email);
+		
+		Optional<User> user = this.userRepository.findByEmail(email);
+		
+		return user.orElseThrow(() -> new ObjectNotFoundException("User not found! The email " + email + " does not exist."));
 	}
 
 	/**

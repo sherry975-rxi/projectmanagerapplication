@@ -1,6 +1,5 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -34,8 +33,10 @@ public class User implements Serializable {
 	private List<Address> addressList;
 	
 	private String phone;
+
 	@Enumerated(EnumType.STRING)
 	private Profile userProfile;
+
 	private boolean systemUserStateActive;
 	private String password;
 
