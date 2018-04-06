@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import project.model.Project;
 import project.model.Task;
 import project.services.ProjectService;
 import project.services.TaskService;
@@ -33,9 +34,11 @@ public class US372GetStartedNotFinishedProjectTasksRestController {
     @RequestMapping(value = "unfinished", method = RequestMethod.GET)
     public ResponseEntity<?> getStartedNotFinishedTasks(@PathVariable Integer projectID) {
 
-        List<Task> taskList = this.taskService.getProjectUnFinishedTasks(projectsService.getProjectById(projectID));
+        Project project = this.projectsService.getProjectById(projectID);
+        List<Task> taskList = this.taskService.getProjectUnFinishedTasks(project);
 
-        return new ResponseEntity<>(taskList, HttpStatus.OK);
+
+        return ResponseEntity.ok().body(taskList);
     }
 }
 
