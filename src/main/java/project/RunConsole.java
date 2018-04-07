@@ -8,8 +8,9 @@ import project.model.User;
 import project.repository.UserRepository;
 import project.services.UserService;
 import project.ui.console.MainMenuUI;
-import project.ui.console.loadfiles.LoadProjectData;
 import project.ui.console.loadfiles.LoadUserData;
+import project.ui.console.loadfiles.loadprojects.LoadProject;
+import project.ui.console.loadfiles.loadprojects.LoadProjectFactory;
 
 @Component
 public class RunConsole implements CommandLineRunner {
@@ -25,8 +26,8 @@ public class RunConsole implements CommandLineRunner {
 	@Autowired
 	MainMenuUI main;
 
-	@Autowired
-	LoadProjectData projectDb;
+    @Autowired
+    LoadProjectFactory loadProjectFactory;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -70,8 +71,9 @@ public class RunConsole implements CommandLineRunner {
 
     	feedDb.loadUsers("Utilizador_v00_Dt1.xml");
 
-
-    	projectDb.loadProject("Projeto_v00_Dt1.xml");
+    	String projectFilePath = "Projeto_v00_Dt1.xml";
+       LoadProject loadInterface = loadProjectFactory.getLoadProjectType(projectFilePath);
+       loadInterface.loadProject(projectFilePath);
 
 
         main.mainMenu();
