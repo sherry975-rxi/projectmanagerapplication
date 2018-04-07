@@ -25,6 +25,7 @@ import project.restcontroller.US204AssignTaskRequestRestController;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
+import project.services.exceptions.ObjectNotFoundException;
 
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 //@AutoConfigureMockMvc
 public class US204AssignTaskRequestRestControllerTest {
 
-//    private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Mock
     TaskRepository taskRepository;
@@ -176,14 +177,21 @@ public class US204AssignTaskRequestRestControllerTest {
         projCollabTwo = projectService.createProjectCollaborator(userTwo, projectOne, 20);
         projCollabThree = projectService.createProjectCollaborator(userThree, projectOne, 60);
 
-//        Mockito.when(userService.getUserByEmail(userTwoEmail)).thenReturn(userTwo);
 //        Mockito.when(projectService.getProjectById(projectId)).thenReturn(projectOne);
 //        Mockito.when(taskService.getTaskByTaskID(taskIdOne)).thenReturn(taskOne);
-//        Mockito.when(projectService.findActiveProjectCollaborator(userTwo, projectOne)).thenReturn(projCollabTwo);
+//        Mockito.when(userService.getUserByEmail(userTwoEmail)).thenReturn(userTwo);
 //        Mockito.when(projectService.isUserActiveInProject(userTwo, projectOne)).thenReturn(true);
+//        Mockito.when(projectService.findActiveProjectCollaborator(userTwo, projectOne)).thenReturn(projCollabTwo);
+//        Mockito.when(taskOne.isAssignmentRequestAlreadyCreated(projCollabTwo)).thenReturn(false);
 //        Mockito.when(taskService.saveTask(taskOne)).thenReturn(taskOne);
 
         controller = new US204AssignTaskRequestRestController(userService, taskService, projectService);
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+        List<ProjectCollaborator> projCollabsList = new ArrayList<>();
+        projCollabsList.add(projCollabTwo);
+        projCollabsList.add(projCollabThree);
 
         List<ProjectCollaborator> userTwoProjCollab = new ArrayList<>();
         userTwoProjCollab.add(projCollabTwo);
@@ -191,7 +199,7 @@ public class US204AssignTaskRequestRestControllerTest {
         Mockito.when(userRepository.findByEmail(userTwoEmail)).thenReturn(Optional.of(userTwo));
         Mockito.when(projectsRepository.findById(projectId)).thenReturn(Optional.of(projectOne));
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
-        Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(userTwoProjCollab);
+        Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
         Mockito.when(taskRepository.findByTaskID(taskIdOne)).thenReturn(Optional.of(taskOne));
 
 
@@ -241,15 +249,76 @@ public class US204AssignTaskRequestRestControllerTest {
 
 
         //given(taskOne.createTaskAssignementRequest(projCollabTwo)).willReturn(true);
-
+//
 //        MockHttpServletResponse response = mockMvc.perform(
-//                post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest").contentType(MediaType.APPLICATION_JSON).content(taskJack.write(taskOne).getJson()).header(userTwoEmail)).andReturn().getResponse();
+//                post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest").contentType(MediaType.APPLICATION_JSON).header("userEmail", userTwoEmail)).andReturn().getResponse();
 
 
         // then
         //assertEquals(response.getStatus(),HttpStatus.OK.value());
         ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.OK);
         assertEquals(expected, controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail));
+
+//        assertEquals(response.getStatus(),HttpStatus.OK.value());
+
+
+
+//        MockHttpServletResponse responseTwo = mockMvc.perform(
+//                post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest")
+//                        .contentType(MediaType.APPLICATION_JSON)
+////                        .content(taskJack.write(taskOne).getJson())
+//                        .header("userEmail", userTwoEmail))
+//                .andReturn().getResponse();
+//
+//
+//        assertEquals(HttpStatus.FORBIDDEN.value(), responseTwo.getStatus());
+
+        ResponseEntity<?> expectedTwo = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        assertEquals(expectedTwo, controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail));
+
+
     }
+
+    @Test
+    public void canNotCreateAnAssignmentRequest() throws Exception {
+
+        //Given
+        //Assignment Request created for userTwo
+        mockMvc.perform(
+                post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("userEmail", userTwoEmail))
+                .andReturn().getResponse();
+
+        //When
+        // Creating again assignment request that already exists for userTwo
+        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail);
+
+        //Then
+        //expects Forbidden message
+        ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        assertEquals(expected,result);
+
+    }
+
+    @Test
+    public void canNotCreateAnAssignmentRequestTwo() throws Exception {
+
+        //Given
+        //Add userTwo to taskOne
+        taskOne.addProjectCollaboratorToTask(projCollabTwo);
+
+        //When
+        // Create assignment request for userTwo but already is added to taskOne
+        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail);
+
+        //Then
+        //expects Forbidden message
+        ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        assertEquals(expected,result);
+
+    }
+
+
 
 }
