@@ -44,12 +44,12 @@ public class US204AssignTaskRequestRestController {
 
         User user = userService.getUserByEmail(userEmail);
 
-        if(this.projectService.isUserActiveInProject(user, project)){
-            projectCollaborator = this.projectService.findActiveProjectCollaborator(user, project);
-            task.createTaskAssignementRequest(projectCollaborator);
-            this.taskService.saveTask(task);
-            result = new ResponseEntity<>(HttpStatus.OK);
-        }
+            if(task.createTaskAssignementRequest(this.projectService.findActiveProjectCollaborator(user, project))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, project))){
+                this.taskService.saveTask(task);
+                result = new ResponseEntity<>(HttpStatus.OK);
+            }
+
+
         return result;
     }
 }
