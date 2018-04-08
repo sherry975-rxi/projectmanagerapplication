@@ -146,72 +146,11 @@ public class US204AssignTaskRequestRestControllerTest {
 
     @Test
     public void canCreateAnAssignmentRequest() throws Exception {
-
-//        TaskTeamRequest newReq = new TaskTeamRequest(projCollabTwo, taskOne);
-//        newReq.setType(TaskTeamRequest.ASSIGNMENT);
-//        taskOne.getPendingTaskAssignementRequests().add(newReq);
-//
-//        //Given
-//        given(userService.getUserByEmail(userTwoEmail)).willReturn(userTwo);
-//        given(userService.getUserByEmail(userThreeEmail)).willReturn(userThree);
-//
-//        given(projectService.getProjectById(projectId)).willReturn(projectOne);
-//
-//        given(taskService.getTaskByTaskID(taskIdOne)).willReturn(taskOne);
-//        given(taskService.getTaskByTaskID(taskIdTwo)).willReturn(taskTwo);
-//
-//        given(projectService.findActiveProjectCollaborator(userTwo, projectOne)).willReturn(projCollabTwo);
-//        given(projectService.findActiveProjectCollaborator(userThree, projectOne)).willReturn(projCollabThree);
-//
-//        given(projectService.isUserActiveInProject(userTwo, projectOne)).willReturn(true);
-//
-//        given(taskService.saveTask(taskOne)).willReturn(taskOne);
-
-
-
-        // when
-//        MockHttpServletResponse response2 = mockMvc.perform(
-//                post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest").contentType(MediaType.APPLICATION_JSON)).andReturn().getResponse();
-
-//        MockHttpServletResponse response = mockMvc.perform(
-//                post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest").contentType(MediaType.APPLICATION_JSON).header(userTwoEmail)).andReturn().getResponse();
-
-        //        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.
-//                post(uRi).contentType(MediaType.APPLICATION_JSON).content(requestJacksonTester.write(newReq).getJson()).header(userTwoEmail)).andReturn().getResponse();
-
-        //String uRi = "/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest";
-
-
-
-        //given(taskOne.createTaskAssignementRequest(projCollabTwo)).willReturn(true);
-//
-//        MockHttpServletResponse response = mockMvc.perform(
-//                post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest").contentType(MediaType.APPLICATION_JSON).header("userEmail", userTwoEmail)).andReturn().getResponse();
-
-
-        // then
-        //assertEquals(response.getStatus(),HttpStatus.OK.value());
         ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.OK);
         assertEquals(expected, controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail));
 
-//        assertEquals(response.getStatus(),HttpStatus.OK.value());
-
-
-
-//        MockHttpServletResponse responseTwo = mockMvc.perform(
-//                post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest")
-//                        .contentType(MediaType.APPLICATION_JSON)
-////                        .content(taskJack.write(taskOne).getJson())
-//                        .header("userEmail", userTwoEmail))
-//                .andReturn().getResponse();
-//
-//
-//        assertEquals(HttpStatus.FORBIDDEN.value(), responseTwo.getStatus());
-
         ResponseEntity<?> expectedTwo = new ResponseEntity<>(HttpStatus.FORBIDDEN);
         assertEquals(expectedTwo, controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail));
-
-
     }
 
     @Test
