@@ -70,9 +70,9 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 	@Test
 	public final void testCreateTaskTeamRequest() {
 
-		assertEquals(0, taskA.getPendingTaskAssignementRequests().size());
+		assertEquals(0, taskA.getPendingTaskAssignmentRequests().size());
 		controller.createTaskTeamRequest("1.1", user);
-		assertEquals(1, taskA.getPendingTaskAssignementRequests().size());		
+		assertEquals(1, taskA.getPendingTaskAssignmentRequests().size());
 	}
 
 	@Test

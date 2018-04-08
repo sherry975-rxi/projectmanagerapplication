@@ -119,7 +119,7 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public void deleteRequest() {
 
-		selectedTask.deleteTaskAssignementRequest(selectedAdditionRequest.getProjCollab());
+		selectedTask.deleteTaskAssignmentRequest(selectedAdditionRequest.getProjCollab());
 		taskService.saveTask(selectedTask);
 	}
 }
