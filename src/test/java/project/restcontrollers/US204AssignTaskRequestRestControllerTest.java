@@ -121,14 +121,6 @@ public class US204AssignTaskRequestRestControllerTest {
         projCollabTwo = projectService.createProjectCollaborator(userTwo, projectOne, 20);
         projCollabThree = projectService.createProjectCollaborator(userThree, projectOne, 60);
 
-//        Mockito.when(projectService.getProjectById(projectId)).thenReturn(projectOne);
-//        Mockito.when(taskService.getTaskByTaskID(taskIdOne)).thenReturn(taskOne);
-//        Mockito.when(userService.getUserByEmail(userTwoEmail)).thenReturn(userTwo);
-//        Mockito.when(projectService.isUserActiveInProject(userTwo, projectOne)).thenReturn(true);
-//        Mockito.when(projectService.findActiveProjectCollaborator(userTwo, projectOne)).thenReturn(projCollabTwo);
-//        Mockito.when(taskOne.isAssignmentRequestAlreadyCreated(projCollabTwo)).thenReturn(false);
-//        Mockito.when(taskService.saveTask(taskOne)).thenReturn(taskOne);
-
         controller = new US204AssignTaskRequestRestController(userService, taskService, projectService);
 
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
@@ -145,9 +137,8 @@ public class US204AssignTaskRequestRestControllerTest {
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
         Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
         Mockito.when(taskRepository.findByTaskID(taskIdOne)).thenReturn(Optional.of(taskOne));
-
-
     }
+
     @Test
     public void controllerInitializedCorrectly() {
         assertNotNull(controller);
