@@ -33,7 +33,6 @@ public class US180DoLoginController {
 		boolean loginSuccess = false;
 		if (username != null && userService.isUserinUserContainer(username) && username.checkLogin(password)) {
 			loginSuccess = true;
-			username.setFirstLogin(false);
 		}
 
 		return loginSuccess;
