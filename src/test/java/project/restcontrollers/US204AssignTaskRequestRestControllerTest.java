@@ -88,51 +88,6 @@ public class US204AssignTaskRequestRestControllerTest {
 
     @Before
     public void setUp() throws Exception{
-
-//        JacksonTester.initFields(this, new ObjectMapper());
-//
-//        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-//
-//        userPM = new User("Ana", "ana@gmail.com", "01", "Project Manager", "221238442");
-//        userTwo = new User("Joao", "joao@gmail.com", "02", "collaborator", "221238447");
-//        userThree = new User("Rui", "rui@gmail.com", "03", "collaborator", "221378449");
-//
-//        /* Adds the created users to the user repository */
-//        userService.addUserToUserRepositoryX(userPM);
-//        userService.addUserToUserRepositoryX(userTwo);
-//        userService.addUserToUserRepositoryX(userThree);
-//
-//        userTwoEmail = "joao@gmail.com";
-//        userThreeEmail = "rui@gmail.com";
-//
-//        projectOne = new Project("Restful", "Implement API Rest", userPM);
-//        projectId = 1;
-//        projectService.addProjectToProjectContainer(projectOne);
-//
-//        projCollabTwo = new ProjectCollaborator (userTwo,  20);
-//        projCollabTwo.setProject(projectOne);
-//        projectService.addProjectCollaborator(projCollabTwo);
-//
-//        projCollabThree = new ProjectCollaborator (userThree,  60);
-//        projCollabThree.setProject(projectOne);
-//        projectService.addProjectCollaborator(projCollabThree);
-//
-//        //Created task1
-//        taskOne = new Task("Rest Controller", projectOne);
-//        taskOne.setProject(projectOne);
-//        taskOne.setId(1L);
-//        taskOne.setTaskID("1");
-//        taskService.saveTask(taskOne);
-//
-//
-//        //Created Task2
-//        taskTwo = new Task("Rest Controller Test", projectOne);
-//        taskTwo.setProject(projectOne);
-//        taskTwo.setId(2L);
-//        taskTwo.setTaskID("2");
-//        taskService.saveTask(taskTwo);
-
-
         initMocks(this);
 
         // create userPM and save in DB
