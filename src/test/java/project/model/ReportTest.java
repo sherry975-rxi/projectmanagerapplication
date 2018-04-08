@@ -131,7 +131,7 @@ public class ReportTest {
 
 		report.updateReportedTime(20);
 		assertEquals(report.getReportedTime(), 20, 0);
-		;
+
 
 	}
 

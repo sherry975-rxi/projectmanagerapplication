@@ -186,7 +186,7 @@ public class ProjectTest {
 //		// and
 //		// 2
 //		// and so, get the Project Cost Until Now.
-//		// t1.getTaskCost();
+//		// t1.getTaskCostBasedOnWeightedMeanOfAllReports();
 //
 //		// Task 4 will be added to Project 1 and associated to a new created
 //		p1.getTaskRepository().addTaskToProject(task4);

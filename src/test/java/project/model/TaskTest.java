@@ -25,8 +25,11 @@ public class TaskTest {
 	private Task taskTestSecond;
 	private Task taskReadyToFinishTest;
 	private TaskCollaborator taskCollaborator;
+	private TaskCollaborator taskCollaborator2;
 	private ProjectCollaborator projectCollaborator;
+	private ProjectCollaborator projectCollaborator2;
 	private Report report;
+	//private Report report2;
 
 	@Before
 	public void setUp() {
@@ -46,12 +49,15 @@ public class TaskTest {
 
 		// create project collaborator
 		projectCollaborator = new ProjectCollaborator(userTest, 10);
+		projectCollaborator2 = new ProjectCollaborator(userTest, 20);
 
 		// create task collaborator
 		taskCollaborator = new TaskCollaborator(projectCollaborator);
+		taskCollaborator2 = new TaskCollaborator(projectCollaborator2);
 
 		// create report
 		report = new Report(taskCollaborator, Calendar.getInstance());
+		//report2 = new Report(taskCollaborator2, Calendar.getInstance());
 
 		// Finish task
 
@@ -69,7 +75,7 @@ public class TaskTest {
 
 		taskReadyToFinishTest.setStartDate(Calendar.getInstance());
 
-		// OnGoing task tasReadyToFinish
+		// OnGoing task taskReadyToFinish
 
 		// Finish task
 
@@ -98,8 +104,11 @@ public class TaskTest {
 		taskTestSecond = null;
 		taskReadyToFinishTest = null;
 		taskCollaborator = null;
+		taskCollaborator2 = null;
 		projectCollaborator = null;
+		projectCollaborator2 = null;
 		report = null;
+		//report2 = null;
 
 	}
 
@@ -1049,16 +1058,30 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#getTaskCost()}.
+	 * Test method for {@link project.model.Task#getTaskCostBasedOnWeightedMeanOfAllReports()}.
 	 */
 	@Test
-	public void testGetTaskCost() {
+	public void testGetTaskCostBasedOnTheWeightedMeanOfAllReports() {
+
+		//taskTest has 2 different projectCollaborators, which are also 2 distinct task collaborators
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+		taskTest.addProjectCollaboratorToTask(projectCollaborator2);
+
+		//Each of the task collaborators present a different report to the same task
+
+		taskTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
+		taskTest.createReport(taskCollaborator2, Calendar.getInstance(), 2.0);
+
+		assertEquals(50.0, taskTest.getTaskCostBasedOnWeightedMeanOfAllReports(), 0.1);
+
+		//Task collaborator presents a new report to the same task
 
 		taskTest.addProjectCollaboratorToTask(projectCollaborator);
 
-		taskTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
+		taskTest.createReport(taskCollaborator, Calendar.getInstance(), 1.5);
 
-		assertEquals(10.0, taskTest.getTaskCost(), 0.1);
+		assertEquals(65, taskTest.getTaskCostBasedOnWeightedMeanOfAllReports(), 0.1 );
+
 
 	}
 

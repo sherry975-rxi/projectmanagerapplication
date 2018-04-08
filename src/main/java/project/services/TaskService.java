@@ -735,7 +735,7 @@ public class TaskService {
 		List<String> reportTaskCost = new ArrayList<>();
 
 		for (Task other : this.taskRepository.findAllByProject(project)) {
-			reportTaskCost.add(String.valueOf(other.getTaskCost()));
+			reportTaskCost.add(String.valueOf(other.getTaskCostBasedOnWeightedMeanOfAllReports()));
 
 		}
 
@@ -754,7 +754,7 @@ public class TaskService {
 		double reportedCost = 0.0;
 
 		for (Task task : this.taskRepository.findAllByProject(project)) {
-			reportedCost += task.getTaskCost();
+			reportedCost += task.getTaskCostBasedOnWeightedMeanOfAllReports();
 		}
 
 		return reportedCost;
