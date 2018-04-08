@@ -1,4 +1,4 @@
-package project.restcontrollers;
+package project.restControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
@@ -72,9 +72,6 @@ public class US204AssignTaskRequestRestControllerTest {
     //@InjectMocks
     private US204AssignTaskRequestRestController controller;
 
-
-
-
     private User userPM;
     private User userTwo;
     private String userTwoEmail;
@@ -88,14 +85,6 @@ public class US204AssignTaskRequestRestControllerTest {
     private String taskIdTwo;
     private ProjectCollaborator projCollabTwo;
     private ProjectCollaborator projCollabThree;
-
-//    //This objects will be initialized by the initFields below
-//    private JacksonTester<User> userJack;
-//    private JacksonTester<Project> projectJack;
-//    private JacksonTester<Task> taskJack;
-//    private JacksonTester<TaskTeamRequest> requestJacksonTester;
-//    private JacksonTester<List<TaskTeamRequest>> requestsListJacksonTester;
-
 
     @Before
     public void setUp() throws Exception{
