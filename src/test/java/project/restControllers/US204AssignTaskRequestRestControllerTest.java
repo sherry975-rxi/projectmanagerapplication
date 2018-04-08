@@ -1,7 +1,5 @@
 package project.restControllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,11 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.model.*;
@@ -25,7 +21,7 @@ import project.restcontroller.US204AssignTaskRequestRestController;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
-import project.services.exceptions.ObjectNotFoundException;
+
 
 
 import java.util.ArrayList;
