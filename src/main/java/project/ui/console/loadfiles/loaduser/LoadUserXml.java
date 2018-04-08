@@ -1,7 +1,7 @@
 /**
  * 
  */
-package project.ui.console.loadfiles;
+package project.ui.console.loadfiles.loaduser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,10 @@ import org.xml.sax.SAXException;
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
+import project.services.ProjectService;
+import project.services.TaskService;
 import project.services.UserService;
+import project.ui.console.loadfiles.FileUtils;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -23,9 +26,17 @@ import java.io.IOException;
  *
  */
 @Service
-public class LoadUserData {
+public class LoadUserXml implements LoadUser {
+	ProjectService projectService;
+	UserService userService;
+	TaskService taskService;
+
 	@Autowired
-	UserService users;
+	public LoadUserXml(ProjectService projectService, UserService userService, TaskService taskService){
+		this.projectService = projectService;
+		this.userService = userService;
+		this.taskService = taskService;
+	}
 
 	public void loadUsers(String pathFile) throws ParserConfigurationException, SAXException, IOException {
 
@@ -77,7 +88,7 @@ public class LoadUserData {
 					}
 
 				}
-				users.addUserToUserRepositoryX(eachUser);
+				userService.addUserToUserRepositoryX(eachUser);
 			}
 
 		}
