@@ -16,6 +16,8 @@ public class US105CreatePasswordAndAuthenticationMechanism {
 
     }
 
+
+
     /**
      * This method set a new password to user and change the variable firstLogin to false and
      * save the changes in DB
