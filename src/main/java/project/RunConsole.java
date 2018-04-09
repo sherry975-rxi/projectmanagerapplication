@@ -9,6 +9,7 @@ import project.repository.UserRepository;
 import project.services.UserService;
 import project.ui.console.MainMenuUI;
 import project.ui.console.loadfiles.loadprojects.LoadProject;
+import project.ui.console.loadfiles.loadprojects.LoadProjectFactory;
 import project.ui.console.loadfiles.loaduser.LoadUser;
 import project.ui.console.loadfiles.loaduser.LoadUserFactory;
 
@@ -22,7 +23,7 @@ public class RunConsole implements CommandLineRunner {
 	@Autowired
 	MainMenuUI main;
 	@Autowired
-	LoadProject projectDb;
+	LoadProjectFactory loadProjectFactory;
 	@Autowired
 	LoadUserFactory loadUserFactory;
 
@@ -67,7 +68,9 @@ public class RunConsole implements CommandLineRunner {
 		LoadUser loadUserDb = loadUserFactory.getLoadUserType("Utilizador_v00_Dt1.xml");
 		loadUserDb.loadUsers("Utilizador_v00_Dt1.xml");
 
-    	projectDb.loadProject("Projeto_v00_Dt1.xml");
+		LoadProject loadProjectDb = loadProjectFactory.getLoadProjectType("Projeto_v00_Dt1.xml");
+
+    	loadProjectDb.loadProject("Projeto_v00_Dt1.xml");
 
 
         main.mainMenu();
