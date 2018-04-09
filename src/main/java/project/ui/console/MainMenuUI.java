@@ -34,7 +34,7 @@ public class MainMenuUI {
     private static User loggedIn;
 
 
-	public void mainMenu() {
+	public void mainMenu()  throws Exception {
 
 		userDirector = userService.getAllUsersFromUserContainer().get(1);
 		userAdmin = userService.getAllUsersFromUserContainer().get(0);
@@ -42,7 +42,7 @@ public class MainMenuUI {
 		displayOptions();
 	}
 
-	public void displayOptions() {
+	public void displayOptions() throws Exception {
 
 		printImage();
 
