@@ -54,6 +54,25 @@ public class US105CreatePasswordAndAuthenticationMechanism {
         user.setHasLoggedIn(true);
     }
 
+    /**
+     * Method to find and return the question associated with a specific user
+     * @param user user whose question we are searching for
+     * @return the question of the user
+     */
+    public String questionAuthentication(User user){
 
+        return user.getQuestion();
+
+    }
+
+    /**
+     * Method to determine if the answer provided is the right one
+     * @param answer the answer provided by the user
+     * @param user the user trying to login
+     * @return true if it's the right answer, false if it isn't
+     */
+    public boolean isRightAnswer(String answer, User user){
+        return answer.equalsIgnoreCase(user.getAnswer());
+    }
 
 }
