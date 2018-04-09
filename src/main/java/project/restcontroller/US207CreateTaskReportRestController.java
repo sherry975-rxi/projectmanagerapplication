@@ -29,7 +29,7 @@ public class US207CreateTaskReportRestController {
     }
 
     @RequestMapping(value = "/CreateReport" , method = RequestMethod.POST)
-    public ResponseEntity<?> createTaskReport (@RequestBody double timeToReport, @PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
+    public ResponseEntity<?> createTaskReport (@RequestHeader double timeToReport, @PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
 
@@ -37,13 +37,11 @@ public class US207CreateTaskReportRestController {
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserByEmail(userEmail);
-
         Calendar dateOfReport = Calendar.getInstance();
 
         if(task.createReport(task.getTaskCollaboratorByEmail(userEmail), dateOfReport, timeToReport)){
             this.taskService.saveTask(task);
-            result = ResponseEntity.status(HttpStatus.OK).body("Report created!/n Info: " + timeToReport);
+            result = ResponseEntity.status(HttpStatus.OK).body("Report created!" + "\nValue of: " + timeToReport);
             //result = new ResponseEntity<>(HttpStatus.OK);
 
         }
