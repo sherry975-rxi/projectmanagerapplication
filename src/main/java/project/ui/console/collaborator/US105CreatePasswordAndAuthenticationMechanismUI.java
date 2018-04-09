@@ -33,15 +33,37 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
         System.out.println("[2] Email authentication");
         System.out.println("[3] Answer authentication/n");
 
-      //  int choice = input.nextLine();
+        String choice = input.nextLine();
 
-//        controller.smsAuthentication();
-       // controller.emailAuthentication();
-   //     controller.answerAuthentication();
+        switch (choice) {
+            case "1":
+                controller.smsAuthentication();
 
-        controller.setUserPassword(user, newPassword);
-        System.out.println("Password changed successfully!");
+                System.out.println("Please enter the code sent to the associated phone number:");
+                String code = input.nextLine();
+                controller.smsCodeValid(code);
 
+                break;
+
+            case "2":
+                String question = controller.questionAuthentication(user);
+                System.out.println(question);
+
+                String answer = input.nextLine();
+                if(controller.isRightAnswer(answer, user))
+                    controller.setUserPassword(user, newPassword);
+                System.out.println("Password changed successfully!");
+
+                break;
+
+            case"3":
+                controller.emailAuthentication();
+
+                System.out.println("");
+
+                break;
+
+        }
 
     }
 }
