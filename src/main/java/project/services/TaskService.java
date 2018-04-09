@@ -894,7 +894,7 @@ public class TaskService {
      * This is a utility method that recieves a list of project collaborators belonging to the creator of a report, and returns the earliest instance
      *
      * @param collaborators
-     * @return
+     * @return first collaborator to provide a report
      */
     public ProjectCollaborator findEarliestCollaborator(List <ProjectCollaborator> collaborators) {
         ProjectCollaborator firstInstance = collaborators.get(0);

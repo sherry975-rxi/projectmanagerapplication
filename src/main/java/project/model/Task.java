@@ -1001,18 +1001,20 @@ public class Task implements Serializable {
 	 * 
 	 * @return Returns a double with the total cost of the task, based on the weighted means
      * of all task reports (cost x time)
-	 * 
+	 *
+	 * WARNING: this method is now obsolete according to U392
 	 */
 	public double getTaskCostBasedOnWeightedMeanOfAllReports() {
-		double taskCostBasedOnLastReport = 0.0;
+		double taskCostBasedOnWeightedMeanReport = 0.0;
 
 		for (Report reported : this.reports) {
-			taskCostBasedOnLastReport += reported.getReportedTime() * reported.getCost();
+			taskCostBasedOnWeightedMeanReport += reported.getReportedTime() * reported.getCost();
 		}
-		return taskCostBasedOnLastReport;
+		return taskCostBasedOnWeightedMeanReport;
 	}
 
-     /**
+
+	 /**
 	 * This method creates a dependence between tasks. It determines from which task
 	 * the dependence is being created. Checks if the estimated this Task estimated
 	 * start date is after the one on which this task depends, and adds it if this

@@ -1,6 +1,7 @@
 package project.services;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -36,9 +37,6 @@ public class TaskServiceTest {
     private ProjectsRepository projectsRepository;
 
     @Mock
-    private UserRepository userRepository;
-
-    @Mock
     private ProjCollabRepository projectCollaboratorRepository;
 
     @Mock
@@ -50,11 +48,18 @@ public class TaskServiceTest {
     private Calendar startDate;
     private Project project;
     private User user;
+    private User user2;
     private Task notAmock;
+    private Report reportA;
+    private Calendar reportDate;
+    private Calendar reportDate2;
+    private Report reportB;
     private ProjectCollaborator projectCollaborator;
     private ProjectCollaborator projectCollaborator2;
+    private ProjectCollaborator projectCollaborator3;
     private TaskCollaborator taskCollaborator;
     private TaskCollaborator taskCollaborator2;
+    private TaskCollaborator taskCollaborator3;
     private ProjectService projectService;
 
     @InjectMocks
@@ -101,11 +106,28 @@ public class TaskServiceTest {
         this.startDate.set(Calendar.HOUR_OF_DAY, 14);
 
         this.user = new User("name", "email", "idNumber", "function", "phone");
+        this.user2 = new User ("Nuno", "nuno@emai.com", "1012", "tester", "987-23");
         this.project = projectService.createProject("testing", "Test", user);
         this.projectCollaborator = new ProjectCollaborator(user, 10);
         this.projectCollaborator2 = new ProjectCollaborator(user, 10);
+        this.projectCollaborator3 = new ProjectCollaborator(user2, 20);
         this.taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
         this.taskCollaborator2 = new TaskCollaborator(new ProjectCollaborator(user, 10));
+        this.taskCollaborator3 = new TaskCollaborator(new ProjectCollaborator(user2, 20));
+
+        this.reportDate = Calendar.getInstance();
+        this.reportDate.set(Calendar.YEAR, 2017);
+        this.reportDate.set(Calendar.MONTH, Calendar.MARCH);
+        this.reportDate.set(Calendar.DAY_OF_MONTH, 10);
+        this.reportDate.set(Calendar.HOUR_OF_DAY, 15);
+        this.reportA = new Report(taskCollaborator, reportDate);
+
+        this.reportDate2 = Calendar.getInstance();
+        this.reportDate2.set(Calendar.YEAR, 2017);
+        this.reportDate2.set(Calendar.MONTH, Calendar.JUNE);
+        this.reportDate2.set(Calendar.DAY_OF_MONTH, 10);
+        this.reportDate2.set(Calendar.HOUR_OF_DAY, 15);
+        this.reportB = new Report(taskCollaborator, reportDate2);
 
 
 
@@ -812,6 +834,91 @@ public class TaskServiceTest {
     }
 
     /**
+     * This test confirms that the method findEarliestCollaborator() will return the first
+     * project collaborator that provided a task report
+     */
+
+    @Test
+    public void testFindEarliestCollaborator(){
+
+        taskMock = new Task("test", project);
+
+        List<ProjectCollaborator> collaborators = new ArrayList<>();
+        collaborators.add(projectCollaborator);
+        collaborators.add(projectCollaborator2);
+        collaborators.add(projectCollaborator3);
+
+        taskMock.addProjectCollaboratorToTask(projectCollaborator);
+        taskMock.addProjectCollaboratorToTask(projectCollaborator2);
+        taskMock.addProjectCollaboratorToTask(projectCollaborator3);
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        Report reportB = new Report();
+        reportB.setTask(taskMock);
+        reportB.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        reportB.setFirstDateOfReport(threeMonthsAgo);
+
+        Report reportA= new Report();
+        reportA.setTask(taskMock);
+        reportA.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
+        reportA.setFirstDateOfReport(fourMonthsAgo);
+
+        assertEquals(projectCollaborator2, victim.findEarliestCollaborator(collaborators));
+
+
+    }
+
+    /**
+     * This test confirms that the method findLatestCollaborator() will return the last
+     * project collaborator that provided a task report
+     */
+    @Test
+    public void testFindLatestCollaborator(){
+
+        taskMock = new Task("test", project);
+
+        List<ProjectCollaborator> collaborators = new ArrayList<>();
+        collaborators.add(projectCollaborator);
+        collaborators.add(projectCollaborator2);
+        collaborators.add(projectCollaborator3);
+
+        taskMock.addProjectCollaboratorToTask(projectCollaborator);
+        taskMock.addProjectCollaboratorToTask(projectCollaborator2);
+        taskMock.addProjectCollaboratorToTask(projectCollaborator3);
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        Report reportB = new Report();
+        reportB.setTask(taskMock);
+        reportB.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        reportB.setFirstDateOfReport(threeMonthsAgo);
+
+        Report reportA= new Report();
+        reportA.setTask(taskMock);
+        reportA.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
+        reportA.setFirstDateOfReport(fourMonthsAgo);
+
+        assertEquals(projectCollaborator, victim.findLatestCollaborator(collaborators));
+
+
+    }
+
+    /**
      * This method tests the ability to find all collaborators from the same user in the project during the period of a single report
      */
     @Test
@@ -879,10 +986,6 @@ public class TaskServiceTest {
 
 
     }
-
-
-
-
 
     @Test
     public void testGetTaskListOfWhichDependenciesCanBeCreated() {
