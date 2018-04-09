@@ -14,6 +14,9 @@ import project.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * This rest controller allows a collaborator to create a request of assignment to a specific task
+ */
 @RestController
 @RequestMapping("/projects/{projectId}/tasks/{taskId}")
 public class US204AssignTaskRequestRestController {
@@ -31,7 +34,17 @@ public class US204AssignTaskRequestRestController {
     }
 
 
-
+    /**
+     * This method allows the administrator to search users by profile.
+     *
+     * @param taskId
+     *          Task id associated to the task to be made the request
+     * @param projectId
+     *          Project id associated to the project where the task belongs
+     * @param userEmail
+     *          User email related to the collaborator that wants to make the request.
+     * @return ResponseEntity
+     */
     @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
     public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);

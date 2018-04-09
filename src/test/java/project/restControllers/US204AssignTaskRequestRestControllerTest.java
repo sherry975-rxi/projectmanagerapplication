@@ -86,16 +86,16 @@ public class US204AssignTaskRequestRestControllerTest {
     public void setUp() throws Exception{
         initMocks(this);
 
-        // create userPM and save in DB
+        // create userPM
         userPM = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
                 "4480", "Porto", "Porto", "Portugal");
 
-        // create userTwo and save in DB
+        // create userTwo
         userTwo = userService.createUser("Joao", "joao@gmail.com", "02", "collaborator", "221238447", "Rua Porto",
                 "5480", "Porto", "Porto", "Portugal");
         userTwoEmail = "joao@gmail.com";
 
-        // create user3
+        // create userThree
         userThree = userService.createUser("Rui", "rui@gmail.com", "03", "collaborator", "221378449", "Rua Porto",
                 "4480", "Porto", "Porto", "Portugal");
         userThreeEmail = "rui@gmail.com";
@@ -117,14 +117,18 @@ public class US204AssignTaskRequestRestControllerTest {
         projCollabTwo = projectService.createProjectCollaborator(userTwo, projectOne, 20);
         projCollabThree = projectService.createProjectCollaborator(userThree, projectOne, 60);
 
+        // initialing the rest controller
         controller = new US204AssignTaskRequestRestController(userService, taskService, projectService);
 
+        // building mockMVC
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
+        //creating an expected list of project collaborators from projectOne
         List<ProjectCollaborator> projCollabsList = new ArrayList<>();
         projCollabsList.add(projCollabTwo);
         projCollabsList.add(projCollabThree);
 
+        //creating an expected list of project collaborators of userTwo
         List<ProjectCollaborator> userTwoProjCollab = new ArrayList<>();
         userTwoProjCollab.add(projCollabTwo);
 
@@ -142,11 +146,20 @@ public class US204AssignTaskRequestRestControllerTest {
 
     @Test
     public void canCreateAnAssignmentRequest() throws Exception {
-        ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.OK);
-        assertEquals(expected, controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail));
 
-        ResponseEntity<?> expectedTwo = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        assertEquals(expectedTwo, controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail));
+        //Given
+        // taskOne in projectOne, with no collaborators, neither requests
+
+        //When
+        //creating assignment request to taskOne from userTwo
+        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail);
+
+        //Then
+        // It is expected to be successfully created
+        ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.OK);
+        assertEquals(expected,result);
+
+
     }
 
     @Test
@@ -159,6 +172,9 @@ public class US204AssignTaskRequestRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("userEmail", userTwoEmail))
                 .andReturn().getResponse();
+
+/*        //or could be created calling the method of the rest controller
+        controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail)*/
 
         //When
         // Creating again assignment request that already exists for userTwo
