@@ -427,9 +427,8 @@ public class TaskService {
 
 			for (Task other : this.getAllTasksFromProjectCollaborator(collab)) {
 				if (other.isTaskFinished()) {
-					if (monthsAgo < 0) {
-						lastMonthFinishedTaskList.add(other);
-					} else if (other.getFinishDate().get(Calendar.MONTH) == givenMonth.get(Calendar.MONTH)) {
+					if ((monthsAgo < 0) ||
+                            (other.getFinishDate().get(Calendar.MONTH) == givenMonth.get(Calendar.MONTH))) {
 						lastMonthFinishedTaskList.add(other);
 					}
 				}
@@ -718,7 +717,7 @@ public class TaskService {
 		collaboratorsFromTask.addAll(this.projectCollaboratorRepository.findAllByProject(project));
 
 		return collaboratorsFromTask.stream()
-				.filter(projCollab -> projCollab.isProjectCollaboratorActive())
+				.filter(ProjectCollaborator::isProjectCollaboratorActive)
 				.filter(projCollab -> task.isProjectCollaboratorActiveInTaskTeam(projCollab))
 				.collect(Collectors.toList());
 
