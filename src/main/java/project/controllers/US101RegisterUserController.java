@@ -53,6 +53,10 @@ public class US101RegisterUserController {
 		newUser.setUserAddress(street, zipCode, city, district, country);
 
 		userService.createUserWithDTO(newUser);
+
+		setFirstLogin(userService.getUserByEmail(email));
+
+		updateUser(userService.getUserByEmail(email));
 	}
 
 	/**
@@ -98,7 +102,7 @@ public class US101RegisterUserController {
 	 * @return TRUE if there's an user with the email, FALSE if it doesn't
 	 */
 	public boolean isUserInUserRepository(String email) {
-		
+
 		boolean isUserInUserRepository = userService.isUserEmailInUserContainer(email);
 
 		return isUserInUserRepository;
@@ -116,4 +120,25 @@ public class US101RegisterUserController {
 	public boolean isEmailValidController(String email) {
 		return this.userService.isEmailAddressValid(email);
 	}
+
+	/**
+	 * This method change the user variable firstLogin to false.
+	 *
+	 * @param user
+	 */
+	private void setFirstLogin(User user) {
+
+		user.setFirstLogin(false);
+	}
+
+	/**
+	 *  Method that saves the user to the database
+	 *
+	 * @param user
+	 */
+	private void updateUser(User user) {
+
+		userService.updateUser(user);
+	}
+
 }

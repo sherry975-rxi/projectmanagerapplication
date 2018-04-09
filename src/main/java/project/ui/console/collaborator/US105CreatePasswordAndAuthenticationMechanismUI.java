@@ -22,13 +22,26 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
         Scanner input = new Scanner(System.in);
 
         System.out.println("");
-        System.out.println("You must change your password");
+        System.out.println("/nYou must change your password");
         System.out.println("Please enter a new password:");
 
         String newPassword;
         newPassword = input.nextLine();
+
+        System.out.println("Choose an authentication method:/n");
+        System.out.println("[1] Sms authentication");
+        System.out.println("[2] Email authentication");
+        System.out.println("[3] Answer authentication/n");
+
+      //  int choice = input.nextLine();
+
+//        controller.smsAuthentication();
+       // controller.emailAuthentication();
+   //     controller.answerAuthentication();
+
         controller.setUserPassword(user, newPassword);
         System.out.println("Password changed successfully!");
+
 
     }
 }
