@@ -77,15 +77,17 @@ public class RunConsole implements CommandLineRunner {
 
 
     	//Test sending an email
+
 		/*
+
 		SendEmail testMail = new SendEmail();
 		EmailMessage messageBody = new EmailMessage();
 		messageBody.setSubject("Ola");
 		messageBody.setToAddress("jmscrl@hotmail.com");
 		messageBody.setBody("Ola");
 		testMail.sendEmail(messageBody);
-		*/
 
+*/
         //main.mainMenu();
     }
     

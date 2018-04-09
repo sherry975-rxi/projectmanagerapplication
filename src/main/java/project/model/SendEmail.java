@@ -15,9 +15,9 @@ import java.util.Properties;
 public class SendEmail {
 
     //@Value("{gmail.usernmae}")
-    private String username = "joao.mscr.leite@gmail.com";
+    private String username = "isepswitch3@gmail.com";
     //@Value("{gmail.password}")
-    private String passToUse = "252646816-Cinco";
+    private String passToUse = "Switch_Isep2018";
 
 
     //@RequestMapping(value="/send", method = RequestMethod.POST)
@@ -47,11 +47,14 @@ public class SendEmail {
                 });
 
 
+
+        //SEND EMAIL PART
+
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress(username, false));
 
-        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rita_silverio@hotmail.com"));
-        msg.setSubject("teste");
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("isepswitch3@gmail.com"));
+        msg.setSubject("Teste");
         msg.setContent("Funciona?", "text/html");
         msg.setSentDate(new Date());
 
