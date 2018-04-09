@@ -807,6 +807,8 @@ public class TaskService {
     /**
      * This method sets the cost for each report based on the cost of the earliest project Collaborator active during that period(Default)
      *
+     * It doesn't calculate the the total cost, but simply updates the cost per effort in the report, to be calculated by each Task
+     *
      * @param project
      */
     public void calculateReportCostFromFirstCollaboratorCost(Project project) {
@@ -830,6 +832,8 @@ public class TaskService {
 
     /**
      * This method sets the cost for each report based on the cost of the latest project Collaborator active during that period
+     *
+     * It doesn't calculate the the total cost, but simply updates the cost per effort in the report, to be calculated by each Task
      *
      * @param project
      */
@@ -856,6 +860,8 @@ public class TaskService {
     /**
      * This method sets the cost for each task report in the project based on the average cost of each project collaborator active during that period
      *
+     * It doesn't calculate the the total cost, but simply updates the cost per effort in the report, to be calculated by each Task
+     *
      * @param project
      */
     public void calculateReportCostFromAverageCollaboratorCost(Project project) {
@@ -881,7 +887,10 @@ public class TaskService {
     /**
      * This method sets the cost for each task report in the project based on the average cost
      * of the first and last project collaborator active during that period
-     *     *
+     *
+     * It doesn't calculate the the total cost, but simply updates the cost per effort in the report, to be calculated by each Task
+     *
+     *
      * @param project
      */
     public void calculateReportCostFromFirstAndLastCollaboratorCost(Project project) {
@@ -907,6 +916,32 @@ public class TaskService {
 
             other.setCost(firstLastAverage);
         }
+    }
+
+    public ProjectCollaborator findEarliestCollaborator(List <ProjectCollaborator> collaborators) {
+        ProjectCollaborator firstInstance = collaborators.get(0);
+
+        for(ProjectCollaborator collab : collaborators) {
+
+            if(collab.getStartDate().before(firstInstance)) {
+                firstInstance=collab;
+            }
+
+        }
+
+        return firstInstance;
+    }
+
+    public ProjectCollaborator findLatestCollaborator(List <ProjectCollaborator> collaborators) {
+        ProjectCollaborator lastInstance = collaborators.get(0);
+
+        for(ProjectCollaborator collab : collaborators) {
+            if(collab.getStartDate().after(lastInstance)) {
+                lastInstance=collab;
+            }
+        }
+
+        return lastInstance;
     }
 
 
