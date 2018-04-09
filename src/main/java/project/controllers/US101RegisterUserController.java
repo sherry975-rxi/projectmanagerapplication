@@ -51,6 +51,7 @@ public class US101RegisterUserController {
 			String street, String zipCode, String city, String district, String country) {
 		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password);
 		newUser.setUserAddress(street, zipCode, city, district, country);
+
 		userService.createUserWithDTO(newUser);
 	}
 
@@ -70,7 +71,7 @@ public class US101RegisterUserController {
 		String emailSubject = "Verification Code";
 		emailMessage.setSubject(emailSubject);
 
-		String message = "This the code you should provide for register in Project Management App";
+		String message = "This the code you should provide for register in Project Management App:  ";
 		String generatedCode = user.getGeneratedCode();
 		emailMessage.setBody(message + generatedCode);
 
@@ -91,8 +92,17 @@ public class US101RegisterUserController {
 	}
 
 
+	/**
+	 *
+	 * @param email The email to check if exists in the user repository
+	 * @return TRUE if there's an user with the email, FALSE if it doesn't
+	 */
 	public boolean isUserInUserRepository(String email) {
-		return userService.getUserByEmail(email) != null;
+		
+		boolean isUserInUserRepository = userService.isUserEmailInUserContainer(email);
+
+		return isUserInUserRepository;
+
 	}
 
 	public boolean isUserEmailValid(String email) {

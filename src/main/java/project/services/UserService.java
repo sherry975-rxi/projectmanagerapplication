@@ -1,5 +1,6 @@
 package project.services;
 
+import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.UserDTO;
@@ -111,6 +112,15 @@ public class UserService {
 
 		// Sets the user password
 		newUser.setPassword(userDTO.getPassword());
+
+		//Creates a new CodeGenerator instance
+		CodeGenerator codeGenerator = new CodeGenerator();
+
+		//Creates a new code
+		String generatedCode = codeGenerator.generateCode();
+
+		//Sets the generated code to the created user
+		newUser.setGeneratedCode(generatedCode);
 
 		// Adds the user to User repository
 		this.addUserToUserRepositoryX(newUser);
@@ -306,6 +316,13 @@ public class UserService {
 	public boolean isUserinUserContainer(User addedUser) {
 
 		return this.userRepository.existsByEmail(addedUser.getEmail());
+	}
+
+	public boolean isUserEmailInUserContainer(String email){
+		boolean doesContainerHasEmail = false;
+
+		doesContainerHasEmail = this.userRepository.existsByEmail(email);
+		return doesContainerHasEmail;
 	}
 
 }
