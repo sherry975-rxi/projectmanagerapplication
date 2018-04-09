@@ -811,15 +811,7 @@ public class TaskService {
         List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
 
         for(Report other : reports) {
-            List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
-            ProjectCollaborator firstInstance = collaborators.get(0);
-
-            for(ProjectCollaborator collab : collaborators) {
-                if(collab.getStartDate().before(firstInstance)) {
-                    firstInstance=collab;
-                }
-
-            }
+            ProjectCollaborator firstInstance = findEarliestCollaborator(getAllCollaboratorInstancesFromReport(other));
 
             other.setCost(firstInstance.getCostPerEffort());
         }
@@ -838,15 +830,7 @@ public class TaskService {
         List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
 
         for(Report other : reports) {
-            List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
-            ProjectCollaborator lastInstance = collaborators.get(0);
-
-            for(ProjectCollaborator collab : collaborators) {
-                if(collab.getStartDate().after(lastInstance)) {
-                    lastInstance=collab;
-                }
-
-            }
+            ProjectCollaborator lastInstance = findLatestCollaborator(getAllCollaboratorInstancesFromReport(other));
 
             other.setCost(lastInstance.getCostPerEffort());
         }
@@ -866,14 +850,9 @@ public class TaskService {
 
         for(Report other : reports) {
             List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
-            double cost=0;
 
-            for(ProjectCollaborator collab : collaborators) {
-                cost+=collab.getCostPerEffort();
-
-            }
-
-            double average = cost/collaborators.size();
+            double average=
+                    collaborators.stream().mapToDouble(ProjectCollaborator::getCostPerEffort).average().orElse(0);
 
             other.setCost(average);
         }
@@ -894,19 +873,8 @@ public class TaskService {
         List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
 
         for(Report other : reports) {
-            List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
-            ProjectCollaborator firstInstance = collaborators.get(0);
-            ProjectCollaborator lastInstance = collaborators.get(0);
-
-            for(ProjectCollaborator collab : collaborators) {
-                if(collab.getStartDate().after(lastInstance)) {
-                    lastInstance=collab;
-                }
-                if(collab.getStartDate().before(firstInstance)) {
-                    firstInstance=collab;
-                }
-
-            }
+            ProjectCollaborator firstInstance = findEarliestCollaborator(getAllCollaboratorInstancesFromReport(other));
+            ProjectCollaborator lastInstance = findLatestCollaborator(getAllCollaboratorInstancesFromReport(other));
 
             double firstLastAverage = (firstInstance.getCostPerEffort()+lastInstance.getCostPerEffort())/2;
 
@@ -914,12 +882,18 @@ public class TaskService {
         }
     }
 
+    /**
+     * This is a utility method that recieves a list of project collaborators belonging to the creator of a report, and returns the earliest instance
+     *
+     * @param collaborators
+     * @return
+     */
     public ProjectCollaborator findEarliestCollaborator(List <ProjectCollaborator> collaborators) {
         ProjectCollaborator firstInstance = collaborators.get(0);
 
         for(ProjectCollaborator collab : collaborators) {
 
-            if(collab.getStartDate().before(firstInstance)) {
+            if(collab.getStartDate().before(firstInstance.getStartDate())) {
                 firstInstance=collab;
             }
 
@@ -928,11 +902,17 @@ public class TaskService {
         return firstInstance;
     }
 
+    /**
+     * This is a utility method that recieves a list of project collaborators belonging to the creator of a report, and returns the latest instance
+     *
+     * @param collaborators
+     * @return
+     */
     public ProjectCollaborator findLatestCollaborator(List <ProjectCollaborator> collaborators) {
         ProjectCollaborator lastInstance = collaborators.get(0);
 
         for(ProjectCollaborator collab : collaborators) {
-            if(collab.getStartDate().after(lastInstance)) {
+            if(collab.getStartDate().after(lastInstance.getStartDate())) {
                 lastInstance=collab;
             }
         }
