@@ -782,7 +782,7 @@ public class TaskService {
 
 	    boolean wasActive=false;
         Calendar reportStartDate = report.getFirstDateOfReport();
-        Calendar reportLastDate = report.getLastDateOfReport();
+        Calendar reportLastDate = report.getDateOfUpdate();
 
         if(toCheck.getStartDate().before(reportLastDate)) {
             wasActive=true;

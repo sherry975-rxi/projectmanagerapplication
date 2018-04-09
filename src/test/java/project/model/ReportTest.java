@@ -86,13 +86,9 @@ public class ReportTest {
 		report.setFirstDateOfReport(Calendar.getInstance());
 		assertEquals(report.getFirstDateOfReport(), Calendar.getInstance());
 
-		//Sets the last date to the report
-		report.setLastDateOfReport(Calendar.getInstance());
-		assertEquals(report.getLastDateOfReport(), Calendar.getInstance());
-
 		//Sets a date to the update of the report (according to US203)
-		report.setDateOfLastUpdate(Calendar.getInstance());
-		assertEquals(report.getDateOfLastUpdate(), Calendar.getInstance());
+		report.setDateOfUpdate(Calendar.getInstance());
+		assertEquals(report.getDateOfUpdate(), Calendar.getInstance());
 
 		//Sets an Id to the report
 		report.setId(2);

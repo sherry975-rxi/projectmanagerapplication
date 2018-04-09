@@ -33,8 +33,7 @@ public class Report {
 	@JsonBackReference
 	private Task task;
 	private Calendar firstDateOfReport;
-	private Calendar lastDateOfReport;
-	private Calendar dateOfLastUpdate;
+	private Calendar dateOfUpdate;
 
 	public Report(){
 
@@ -54,8 +53,7 @@ public class Report {
 		this.taskCollaborator = taskCollaborator;
 		this.cost = taskCollaborator.getCost();
 		this.firstDateOfReport = reportDate;
-		this.lastDateOfReport = reportDate;
-		this.dateOfLastUpdate = reportDate;
+		this.dateOfUpdate = reportDate;
 	}
 
 	/**
@@ -121,7 +119,7 @@ public class Report {
 	 */
 	public void updateReportedTime(double time) {
 		this.reportedTime = time;
-		this.dateOfLastUpdate = Calendar.getInstance();
+		this.dateOfUpdate = Calendar.getInstance();
 
 	}
 
@@ -172,26 +170,6 @@ public class Report {
 		return this.firstDateOfReport;
 	}
 
-
-	/**
-	 * Sets a date to the report
-	 *
-	 * @return void
-	 */
-	public void setLastDateOfReport(Calendar reportDate) {
-		this.lastDateOfReport = reportDate;
-	}
-
-
-	/**
-	 * Gets the date of the report
-	 *
-	 * @return void
-	 */
-	public Calendar getLastDateOfReport() {
-		return this.lastDateOfReport;
-	}
-
 	/**
 	 * Sets a cost to the Report
 	 *
@@ -207,8 +185,8 @@ public class Report {
 	 *
 	 * @return LocalDate
 	 */
-	public Calendar getDateOfLastUpdate() {
-		return dateOfLastUpdate;
+	public Calendar getDateOfUpdate() {
+		return dateOfUpdate;
 	}
 
 	/**
@@ -216,8 +194,8 @@ public class Report {
 	 *
 	 * @return LocalDate
 	 */
-	public void setDateOfLastUpdate(Calendar dateOfLastUpdate) {
-		this.dateOfLastUpdate = dateOfLastUpdate;
+	public void setDateOfUpdate(Calendar dateOfUpdate) {
+		this.dateOfUpdate = dateOfUpdate;
 	}
 
 
