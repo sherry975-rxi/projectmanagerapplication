@@ -40,6 +40,7 @@ public class UserService {
 	 * 
 	 * @param userRepository
 	 */
+	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
@@ -164,15 +165,14 @@ public class UserService {
 	}
 
 	/**
-	 * This method returns all users that possess a certain ID. It
-	 * fetches information directly from the Database.
+
+	 * This method returns all users that possess a certain id. It
+	 * fetches information directly from the Database. \
 	 *
 	 * @param id
 	 *            parameter used to fetch users from the DataBase
-	 * @return all users that possess a certain id
-
-	*/
-
+	 * @return all users that possess a certain email address
+	 */
 	public User getUserByID(int id) { return this.userRepository.findById(id); }
 
 
@@ -229,6 +229,22 @@ public class UserService {
 	 *         certain profile
 	 */
 	public List<User> searchUsersByProfile(Profile searchProfile) {
+
+		return userRepository.findAllByUserProfile(searchProfile);
+	}
+
+	/**
+	 * This method allows the administrator to search users in the Company by
+	 * profile name. This method accesses the DB
+	 *
+	 * @param searchProfileName
+	 *            Profile of a user
+	 * @return list of users from the userContainer with users that possess a
+	 *         certain profile
+	 */
+	public List<User> searchUsersByProfileName(String searchProfileName) {
+
+		Profile searchProfile = Profile.valueOf(searchProfileName);
 
 		return userRepository.findAllByUserProfile(searchProfile);
 	}

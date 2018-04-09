@@ -1,5 +1,7 @@
 package project.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class TaskTeamRequest {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Task_id")
+	@JsonBackReference
 	private Task task;
 
 	private Integer type;

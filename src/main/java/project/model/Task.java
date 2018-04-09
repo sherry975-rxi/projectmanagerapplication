@@ -49,6 +49,7 @@ public class Task implements Serializable {
 
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "task")
+	@JsonManagedReference
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	private Calendar creationDate;
