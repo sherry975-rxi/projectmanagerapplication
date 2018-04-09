@@ -777,7 +777,7 @@ public class TaskService {
 	    User user = report.getTaskCollaborator().getProjCollaborator().getUserFromProjectCollaborator();
 
 	    return projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user).stream()
-                .filter(ProjectCollaborator -> wasCollaboratorActiveDuringReport(ProjectCollaborator, report)).collect(Collectors.toList());
+                .filter(projectCollaborator -> wasCollaboratorActiveDuringReport(projectCollaborator, report)).collect(Collectors.toList());
 	}
 
     /**
@@ -796,9 +796,7 @@ public class TaskService {
         Calendar reportStartDate = report.getFirstDateOfReport();
         Calendar reportLastDate = report.getDateOfUpdate();
 
-        if(toCheck.getFinishDate()==null){
-            wasActive=toCheck.getStartDate().before(reportLastDate);
-        } else if (toCheck.getFinishDate().after(reportStartDate)){
+        if((toCheck.getFinishDate()==null) || toCheck.getFinishDate().after(reportStartDate)){
             wasActive=toCheck.getStartDate().before(reportLastDate);
         }
 
@@ -806,10 +804,13 @@ public class TaskService {
     }
 
 
+    /**
+     * This method sets the cost for each report based on the cost of the earliest project Collaborator active during that period(Default)
+     *
+     * @param project
+     */
     public void calculateReportCostFromFirstCollaboratorCost(Project project) {
-        List<Report> reports = new ArrayList<>();
-
-        getProjectTasks(project).stream().map(Task -> reports.addAll(Task.getReports()));
+        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
 
         for(Report other : reports) {
             List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
@@ -827,11 +828,14 @@ public class TaskService {
 
     }
 
+    /**
+     * This method sets the cost for each report based on the cost of the latest project Collaborator active during that period
+     *
+     * @param project
+     */
     public void calculateReportCostFromLastCollaboratorCost(Project project) {
 
-        List<Report> reports = new ArrayList<>();
-
-        getProjectTasks(project).stream().map(Task -> reports.addAll(Task.getReports()));
+        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
 
         for(Report other : reports) {
             List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
@@ -849,12 +853,60 @@ public class TaskService {
 
     }
 
+    /**
+     * This method sets the cost for each task report in the project based on the average cost of each project collaborator active during that period
+     *
+     * @param project
+     */
     public void calculateReportCostFromAverageCollaboratorCost(Project project) {
+
+        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
+
+        for(Report other : reports) {
+            List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
+            double cost=0;
+
+            for(ProjectCollaborator collab : collaborators) {
+                cost+=collab.getCostPerEffort();
+
+            }
+
+            double average = cost/collaborators.size();
+
+            other.setCost(average);
+        }
 
     }
 
+    /**
+     * This method sets the cost for each task report in the project based on the average cost
+     * of the first and last project collaborator active during that period
+     *     *
+     * @param project
+     */
     public void calculateReportCostFromFirstAndLastCollaboratorCost(Project project) {
 
+        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
+
+        for(Report other : reports) {
+            List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
+            ProjectCollaborator firstInstance = collaborators.get(0);
+            ProjectCollaborator lastInstance = collaborators.get(0);
+
+            for(ProjectCollaborator collab : collaborators) {
+                if(collab.getStartDate().after(lastInstance)) {
+                    lastInstance=collab;
+                }
+                if(collab.getStartDate().before(firstInstance)) {
+                    firstInstance=collab;
+                }
+
+            }
+
+            double firstLastAverage = (firstInstance.getCostPerEffort()+lastInstance.getCostPerEffort())/2;
+
+            other.setCost(firstLastAverage);
+        }
     }
 
 
