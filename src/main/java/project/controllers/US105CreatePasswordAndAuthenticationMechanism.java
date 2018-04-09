@@ -54,4 +54,6 @@ public class US105CreatePasswordAndAuthenticationMechanism {
         user.setHasLoggedIn(true);
     }
 
+
+
 }
