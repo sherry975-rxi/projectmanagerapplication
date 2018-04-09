@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.UserDTO;
 import project.model.Address;
+import project.model.CodeGenerator;
 import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
@@ -80,6 +81,10 @@ public class UserService {
 
 		newUser.addAddress(newAddress);
 
+		CodeGenerator code = new CodeGenerator();
+
+		newUser.setGeneratedCode(code.generateCode());
+
 		userRepository.save(newUser);
 
 		return newUser;
@@ -110,6 +115,17 @@ public class UserService {
 		// Adds the user to User repository
 		this.addUserToUserRepositoryX(newUser);
 
+	}
+
+	/**
+	 * If User exists in DB, it will be deleted. If it exists, nothing happens
+	 * @param emailToDeleteUser Email of User to delete
+	 */
+	public void deleteUser(String emailToDeleteUser){
+
+		if(this.userRepository.existsByEmail(emailToDeleteUser)){
+			this.userRepository.deleteByEmail(emailToDeleteUser);
+		}
 	}
 
 	/**
