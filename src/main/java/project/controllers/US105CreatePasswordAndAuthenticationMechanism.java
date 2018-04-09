@@ -54,4 +54,13 @@ public class US105CreatePasswordAndAuthenticationMechanism {
         user.setHasLoggedIn(true);
     }
 
+    public String questionAuthentication(User user){
+
+        return user.getQuestion();
+
+    }
+
+    public boolean isRightAnswer(String answer, User user){
+        return answer.equalsIgnoreCase(user.getAnswer());
+    }
 }

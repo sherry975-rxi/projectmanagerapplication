@@ -44,6 +44,8 @@ public class User implements Serializable {
 	private boolean firstLogin;
 
 	private boolean hasLoggedIn;
+	private String question;
+	private String answer;
 	/**
 	 * Empty Constructor for User
 	 */
@@ -390,4 +392,23 @@ public class User implements Serializable {
 		User other = (User) obj;
 		return email.equals(other.email);
 	}
+
+
+
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
 }
