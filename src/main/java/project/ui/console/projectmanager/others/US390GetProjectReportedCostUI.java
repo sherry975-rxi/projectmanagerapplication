@@ -48,9 +48,7 @@ public class US390GetProjectReportedCostUI {
 		System.out.println("");
 		System.out.println(line);
 
-		// TODO TEST controller that calculates cost using the chosen method
-
-        int calculationMethod = selectReportCostCalculation(project);
+        int calculationMethod = selectReportCostCalculation();
         System.out.print(controller.selectReportCostCalculation(project, calculationMethod));
 
 		System.out.println("     PROJECT COST");
@@ -84,7 +82,7 @@ public class US390GetProjectReportedCostUI {
 		}
 	}
 
-	private int selectReportCostCalculation(Project project) {
+	private int selectReportCostCalculation() {
 		System.out.println("");
 		System.out.println("Should a single user have different costs through the same report, calculate using:");
 		System.out.println("");
@@ -98,13 +96,13 @@ public class US390GetProjectReportedCostUI {
 
 		switch(option) {
             case '1':
-                return this.FIRST_COLLABORATOR;
+                return FIRST_COLLABORATOR;
             case '2':
-                return this.LAST_COLLABORATOR;
+                return LAST_COLLABORATOR;
             case '3':
-                return this.FIRST_LAST_COLLABORATOR;
+                return FIRST_LAST_COLLABORATOR;
             default:
-                return this.AVERAGE_COLLABORATOR;
+                return AVERAGE_COLLABORATOR;
         }
 
 
