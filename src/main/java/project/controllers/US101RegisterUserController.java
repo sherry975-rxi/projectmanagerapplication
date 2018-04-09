@@ -3,7 +3,12 @@ package project.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import project.dto.UserDTO;
+import project.model.EmailMessage;
+import project.model.SendEmail;
+import project.model.User;
 import project.services.UserService;
+
+import javax.mail.MessagingException;
 
 @Controller
 public class US101RegisterUserController {
@@ -48,6 +53,43 @@ public class US101RegisterUserController {
 		newUser.setUserAddress(street, zipCode, city, district, country);
 		userService.createUserWithDTO(newUser);
 	}
+
+	/**
+	 * Sends Verification Code
+	 * @param email
+	 * @throws MessagingException
+	 */
+	public void sendVerificationCode (String email) throws MessagingException {
+
+		SendEmail sendEmail = new SendEmail();
+		EmailMessage emailMessage = new EmailMessage();
+
+		User user = userService.getUserByEmail(email);
+		emailMessage.setEmailAddress(email);
+
+		String emailSubject = "Verification Code";
+		emailMessage.setSubject(emailSubject);
+
+		String message = "This the code you should provide for register in Project Management App";
+		String generatedCode = user.getGeneratedCode();
+		emailMessage.setBody(message + generatedCode);
+
+		sendEmail.sendmail(emailMessage);
+	}
+
+	public Boolean doesCodeGeneratedMatch (String codeToCheck, String recipientEmail){
+
+		User user = userService.getUserByEmail(recipientEmail);
+
+		Boolean doCodesMatch = user.doesCodeGeneratedMatch(codeToCheck);
+
+		if (!doCodesMatch){
+			userService.deleteUser(recipientEmail);
+		}
+
+		return doCodesMatch;
+	}
+
 
 	public boolean isUserInUserRepository(String email) {
 		return userService.getUserByEmail(email) != null;
