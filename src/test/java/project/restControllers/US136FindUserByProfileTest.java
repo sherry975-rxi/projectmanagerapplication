@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -96,7 +95,6 @@ public class US136FindUserByProfileTest {
         MockHttpServletResponse response = mockMvc.perform(get("/users/COLLABORATOR").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //Then
-        assertEquals(response.getStatus(),HttpStatus.OK.value());
         assertEquals(response.getContentAsString(), "[" + taskJack.write(newUser1).getJson() + "]");
     }
 
@@ -110,7 +108,7 @@ public class US136FindUserByProfileTest {
         //When
         MockHttpServletResponse response = mockMvc.perform(get("/users/DD").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
-        assertEquals(response.getStatus(),200);
+        assertEquals(0, response.getContentLength());
 
     }
     
