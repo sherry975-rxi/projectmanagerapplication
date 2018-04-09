@@ -760,6 +760,17 @@ public class TaskService {
 		return reportedCost;
 	}
 
+    /**
+     * This method recieves a report, and uses its fields to find the corresponding user and project.
+     * Using those objects, it asks ProjectCollaboratorRepository for all Collaborators from that user in that project.
+     *
+     * And filters out the ones who weren't active during the report's period.
+     *
+     *
+     * @param report
+     * @return  A list of project Collaborators active during the period of the report
+     *     *
+     */
 
 	public List<ProjectCollaborator> getAllCollaboratorInstancesFromReport(Report report) {
 	    Project project = report.getTask().getProject();
@@ -779,7 +790,6 @@ public class TaskService {
      * @param report
      * @return
      */
-
     public boolean wasCollaboratorActiveDuringReport(ProjectCollaborator toCheck, Report report) {
 
         boolean wasActive = false;
