@@ -3,10 +3,7 @@ package project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import project.model.Profile;
-import project.model.SendEmail;
-import project.model.User;
-import project.model.EmailMessage;
+import project.model.*;
 import project.repository.UserRepository;
 import project.services.UserService;
 import project.ui.console.MainMenuUI;
@@ -32,6 +29,8 @@ public class RunConsole implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+
 
 		// Instantiate the users, sets their passwords
 		User userAdmin = userService.createUser("Teresa Ribeiro", "admin@gmail.com", "001",
@@ -78,17 +77,17 @@ public class RunConsole implements CommandLineRunner {
 
     	//Test sending an email
 
-		/*
 
+/*
 		SendEmail testMail = new SendEmail();
 		EmailMessage messageBody = new EmailMessage();
 		messageBody.setSubject("Ola");
-		messageBody.setToAddress("jmscrl@hotmail.com");
+		messageBody.setEmailAddress("jmscrl@hotmail.com");
 		messageBody.setBody("Ola");
-		testMail.sendEmail(messageBody);
-
+		testMail.sendmail(messageBody);
 */
-        //main.mainMenu();
+
+        main.mainMenu();
     }
     
 }
