@@ -43,6 +43,7 @@ public class User implements Serializable {
 	private String generatedCode;
 	private boolean firstLogin;
 
+	private boolean hasLoggedIn;
 	/**
 	 * Empty Constructor for User
 	 */
@@ -73,7 +74,7 @@ public class User implements Serializable {
 		this.phone = phone;
 		this.userProfile = Profile.UNASSIGNED;
 		this.systemUserStateActive = true;
-		this.firstLogin = true;
+		this.hasLoggedIn = false;
 	}
 
 	/**
@@ -94,18 +95,18 @@ public class User implements Serializable {
 	 *
 	 * @return true if it is the first login, false if not
 	 */
-	public boolean isFirstLogin() {
-		return firstLogin;
+	public boolean hasLoggedIn() {
+		return hasLoggedIn;
 	}
 
 	/**
 	 * Change to false when the user make the fist login
 	 *
-	 * @param firstLogin
+	 * @param hasLoggedIn
 	 */
-	public void setFirstLogin(boolean firstLogin) {
+	public void setHasLoggedIn(boolean hasLoggedIn) {
 		
-		this.firstLogin = firstLogin;
+		this.hasLoggedIn = hasLoggedIn;
 	}
 
 	/**

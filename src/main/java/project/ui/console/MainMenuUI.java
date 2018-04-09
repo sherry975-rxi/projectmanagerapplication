@@ -79,7 +79,7 @@ public class MainMenuUI {
 					    System.out.println("");
 					    System.out.println("Welcome to Project Management, " + loggedIn.getName());
                     }
-                    if(loggedIn.isFirstLogin()) {
+                    if(loggedIn.hasLoggedIn()) {
 						authenticationMechanismUI.changePassword(loggedIn);
 					}
 					break;
