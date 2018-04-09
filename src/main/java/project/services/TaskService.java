@@ -503,9 +503,7 @@ public class TaskService {
 
 			for (Task other :  this.getProjectTasks(project)) {
 
-				if (other.isTaskTeamEmpty()) {
-					listOfTasksWithoutCollaboratorsAssigned.add(other);
-				} else if (!other.doesTaskTeamHaveActiveUsers()) {
+				if (!other.doesTaskTeamHaveActiveUsers()) {
 					listOfTasksWithoutCollaboratorsAssigned.add(other);
 				}
 			}
