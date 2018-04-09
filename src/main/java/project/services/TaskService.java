@@ -806,6 +806,58 @@ public class TaskService {
     }
 
 
+    public void calculateReportCostFromFirstCollaboratorCost(Project project) {
+        List<Report> reports = new ArrayList<>();
+
+        getProjectTasks(project).stream().map(Task -> reports.addAll(Task.getReports()));
+
+        for(Report other : reports) {
+            List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
+            ProjectCollaborator firstInstance = collaborators.get(0);
+
+            for(ProjectCollaborator collab : collaborators) {
+                if(collab.getStartDate().before(firstInstance)) {
+                    firstInstance=collab;
+                }
+
+            }
+
+            other.setCost(firstInstance.getCostPerEffort());
+        }
+
+    }
+
+    public void calculateReportCostFromLastCollaboratorCost(Project project) {
+
+        List<Report> reports = new ArrayList<>();
+
+        getProjectTasks(project).stream().map(Task -> reports.addAll(Task.getReports()));
+
+        for(Report other : reports) {
+            List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
+            ProjectCollaborator lastInstance = collaborators.get(0);
+
+            for(ProjectCollaborator collab : collaborators) {
+                if(collab.getStartDate().after(lastInstance)) {
+                    lastInstance=collab;
+                }
+
+            }
+
+            other.setCost(lastInstance.getCostPerEffort());
+        }
+
+    }
+
+    public void calculateReportCostFromAverageCollaboratorCost(Project project) {
+
+    }
+
+    public void calculateReportCostFromFirstAndLastCollaboratorCost(Project project) {
+
+    }
+
+
 	/**
 	 * This method gathers all Project task assignment requests from a given project
 	 *
