@@ -86,7 +86,7 @@ public class RunConsole implements CommandLineRunner {
 		testMail.sendEmail(messageBody);
 		*/
 
-        //main.mainMenu();
+        main.mainMenu();
     }
     
 }

@@ -161,7 +161,7 @@ public class UserService {
 		
 		Optional<User> user = this.userRepository.findByEmail(email);
 		
-		return user.orElseThrow(() -> new ObjectNotFoundException("User not found! The email " + email + " does not exist."));
+		return user.orElse(null);
 	}
 
 	/**
