@@ -737,7 +737,7 @@ public class TaskServiceTest {
         taskList.add(task2Mock);
         when(taskRepository.findAllByProject(project)).thenReturn(taskList);
 
-        when(taskMock.getTaskCost()).thenReturn(10.0);
+        when(taskMock.getTaskCostBasedOnWeightedMeanOfAllReports()).thenReturn(10.0);
 
         List<String> expectedList = new ArrayList<>();
         expectedList.add("10.0, 0.0");
@@ -799,7 +799,7 @@ public class TaskServiceTest {
 
 
         // when the task assignment requests is created, asserts the lists of assignment requests contain 1 entry
-        notAmock.createTaskAssignementRequest(projectCollaborator);
+        notAmock.createTaskAssignmentRequest(projectCollaborator);
 
         assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 1);
         assertEquals(victim.viewAllProjectTaskAssignmentRequests(project).size(), 1);
@@ -809,7 +809,7 @@ public class TaskServiceTest {
 
         // then, deletes the request and adds the collaborator to the task, asseting all lists become empty
         // and that the task team contains the project collaborator
-        assertTrue(notAmock.deleteTaskAssignementRequest(projectCollaborator));
+        assertTrue(notAmock.deleteTaskAssignmentRequest(projectCollaborator));
         notAmock.addProjectCollaboratorToTask(projectCollaborator);
 
         assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 0);

@@ -976,7 +976,7 @@ public class Task implements Serializable {
 		return false;
 	}
 
-	// TODO What does copyListOfUsersInTask do that getUserList doesn't?
+	// What does copyListOfUsersInTask do that getUserList doesn't?
 	// Why does it need to receive an empty list input?
 	/**
 	 * @return Returns a list of users copied from another task.
@@ -999,19 +999,20 @@ public class Task implements Serializable {
 	 * multiplying the cost of each task Collaborator with the time that each
 	 * Collaborator spent on this particular task.
 	 * 
-	 * @return Returns a double with the total cost of the task
+	 * @return Returns a double with the total cost of the task, based on the weighted means
+     * of all task reports (cost x time)
 	 * 
 	 */
-	public double getTaskCost() {
-		double taskCost = 0.0;
+	public double getTaskCostBasedOnWeightedMeanOfAllReports() {
+		double taskCostBasedOnLastReport = 0.0;
 
 		for (Report reported : this.reports) {
-			taskCost += reported.getReportedTime() * reported.getCost();
+			taskCostBasedOnLastReport += reported.getReportedTime() * reported.getCost();
 		}
-		return taskCost;
+		return taskCostBasedOnLastReport;
 	}
 
-	/**
+     /**
 	 * This method creates a dependence between tasks. It determines from which task
 	 * the dependence is being created. Checks if the estimated this Task estimated
 	 * start date is after the one on which this task depends, and adds it if this
@@ -1238,8 +1239,8 @@ public class Task implements Serializable {
 	 * state machine does not let the task change its state, the finish date is set
 	 * to its previous value.
 	 */
-	public boolean isUnfinishTask() {
-		boolean unfinishTask = true;
+	public boolean isUnfinishedTask() {
+		boolean unfinishedTask = true;
 		Calendar finishDateCopy = Calendar.getInstance();
 
 		if (finishDate != null) {
@@ -1255,10 +1256,10 @@ public class Task implements Serializable {
 
 		if (!(this.taskState instanceof OnGoing)) {
 			this.finishDate = finishDateCopy;
-			unfinishTask = false;
+			unfinishedTask = false;
 		}
 
-		return unfinishTask;
+		return unfinishedTask;
 	}
 
 	/**
@@ -1269,7 +1270,7 @@ public class Task implements Serializable {
 	 *            projCollab to create Request
 	 * @return True if it adds, false if there is already an equal request
 	 */
-	public boolean createTaskAssignementRequest(ProjectCollaborator projCollab) {// uso de if incorreto?
+	public boolean createTaskAssignmentRequest(ProjectCollaborator projCollab) {// uso de if incorreto?
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, this);
 		newReq.setType(TaskTeamRequest.ASSIGNMENT);
 		if (!this.isAssignmentRequestAlreadyCreated(projCollab)) {
@@ -1307,9 +1308,9 @@ public class Task implements Serializable {
 	 *            Request to remove from the list
 	 */
 
-	public boolean deleteTaskAssignementRequest(ProjectCollaborator projCollaborator) {
+	public boolean deleteTaskAssignmentRequest(ProjectCollaborator projCollaborator) {
 
-		TaskTeamRequest request = this.getAssignementTaskTeamRequest(projCollaborator);
+		TaskTeamRequest request = this.getAssignmentTaskTeamRequest(projCollaborator);
 
 		request.setType(TaskTeamRequest.ASSIGNMENT);
 
@@ -1337,7 +1338,7 @@ public class Task implements Serializable {
 	 * @return toString List of strings which contains the info about the task and
 	 *         the project collaborator for each request
 	 */
-	public List<String> viewPendingTaskAssignementRequests() {
+	public List<String> viewPendingTaskAssignmentRequests() {
 		List<String> toString = new ArrayList<>();
 		for (TaskTeamRequest req : this.pendingTaskTeamRequests) {
 			if (req.isAssignmentRequest()) {
@@ -1395,7 +1396,7 @@ public class Task implements Serializable {
 	 *         to a certain task
 	 */
 
-	public List<TaskTeamRequest> getPendingTaskAssignementRequests() {
+	public List<TaskTeamRequest> getPendingTaskAssignmentRequests() {
 
 		List<TaskTeamRequest> assignmentRequests = new ArrayList<>();
 
@@ -1464,12 +1465,12 @@ public class Task implements Serializable {
 	 * @return The request associated with the data provided, if it exists, else
 	 *         return null.
 	 */
-	public TaskTeamRequest getAssignementTaskTeamRequest(ProjectCollaborator projCollaborator) {
+	public TaskTeamRequest getAssignmentTaskTeamRequest(ProjectCollaborator projCollaborator) {
 		TaskTeamRequest result = null;
-		TaskTeamRequest assignementRequestToFind = new TaskTeamRequest(projCollaborator, this);
-		assignementRequestToFind.setType(TaskTeamRequest.ASSIGNMENT);
+		TaskTeamRequest assignmentRequestToFind = new TaskTeamRequest(projCollaborator, this);
+		assignmentRequestToFind.setType(TaskTeamRequest.ASSIGNMENT);
 		for (TaskTeamRequest other : this.pendingTaskTeamRequests) {
-			if (assignementRequestToFind.equals(other)) {
+			if (assignmentRequestToFind.equals(other)) {
 				result = other;
 			}
 		}
