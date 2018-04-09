@@ -761,6 +761,40 @@ public class TaskService {
 	}
 
 
+	public List<ProjectCollaborator> getAllCollaboratorInstancesFromReport(Report report) {
+	    Project project = report.getTask().getProject();
+	    User user = report.getTaskCollaborator().getProjCollaborator().getUserFromProjectCollaborator();
+
+        List<ProjectCollaborator> allProjectCollabs = projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user);
+        List<ProjectCollaborator> projectCollabsOfUser = new ArrayList<>();
+
+        for(ProjectCollaborator other : allProjectCollabs) {
+            if(wasCollaboratorActiveDuringReport(other, report)) {
+                projectCollabsOfUser.add(other);
+            }
+        }
+
+	    return allProjectCollabs;
+    }
+
+
+    public boolean wasCollaboratorActiveDuringReport(ProjectCollaborator toCheck, Report report) {
+
+	    boolean wasActive=false;
+        Calendar reportStartDate = report.getFirstDateOfReport();
+        Calendar reportLastDate = report.getLastDateOfReport();
+
+        if(toCheck.getStartDate().before(reportLastDate)) {
+            wasActive=true;
+        } else if(!toCheck.isStatus()) {
+            wasActive=toCheck.getFinishDate().after(reportStartDate);
+        }
+
+
+	    return wasActive;
+    }
+
+
 	/**
 	 * This method gathers all Project task assignment requests from a given project
 	 *
