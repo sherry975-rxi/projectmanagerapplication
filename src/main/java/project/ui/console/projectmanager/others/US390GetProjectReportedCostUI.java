@@ -17,10 +17,10 @@ public class US390GetProjectReportedCostUI {
 	@Autowired
 	private US390CalculateReportedProjectCostController controller;
 
-	public final int FIRST_COLLABORATOR = 1;
-	public final int LAST_COLLABORATOR = 2;
-	public final int FIRST_LAST_COLLABORATOR = 3;
-	public final int AVERAGE_COLLABORATOR = 4;
+	public static final int FIRST_COLLABORATOR = 1;
+	public static final int LAST_COLLABORATOR = 2;
+	public static final int FIRST_LAST_COLLABORATOR = 3;
+	public static final int AVERAGE_COLLABORATOR = 4;
 
 	Scanner scannerInput;
 
@@ -48,7 +48,10 @@ public class US390GetProjectReportedCostUI {
 		System.out.println("");
 		System.out.println(line);
 
-		// TODO Create controller that calculates cost using the chosen method
+		// TODO TEST controller that calculates cost using the chosen method
+
+        int calculationMethod = selectReportCostCalculation(project);
+        System.out.print(controller.selectReportCostCalculation(project, calculationMethod));
 
 		System.out.println("     PROJECT COST");
 		System.out.println(line);
@@ -81,7 +84,7 @@ public class US390GetProjectReportedCostUI {
 		}
 	}
 
-	private int selectReportCostCalculation() {
+	private int selectReportCostCalculation(Project project) {
 		System.out.println("");
 		System.out.println("Should a single user have different costs through the same report, calculate using:");
 		System.out.println("");
@@ -95,16 +98,12 @@ public class US390GetProjectReportedCostUI {
 
 		switch(option) {
             case '1':
-                System.out.println("First Cost Selected!");
                 return this.FIRST_COLLABORATOR;
             case '2':
-                System.out.println("Last Cost Selected!");
                 return this.LAST_COLLABORATOR;
             case '3':
-                System.out.println("First/Last Average Cost Selected!");
                 return this.FIRST_LAST_COLLABORATOR;
             default:
-                System.out.println("Average Cost Selected!");
                 return this.AVERAGE_COLLABORATOR;
         }
 

@@ -61,4 +61,21 @@ public class US390CalculateReportedProjectCostController {
 		return taskID;
 	}
 
+	public String selectReportCostCalculation(Project project, int chosenMethod) {
+		switch(chosenMethod) {
+			case 1:
+				taskService.calculateReportCostFromFirstCollaboratorCost(project);
+				return "Earliest Collaborator Cost Selected!";
+			case 2:
+				taskService.calculateReportCostFromLastCollaboratorCost(project);
+                return "Latest Collaborator Cost Selected!";
+			case 3:
+				taskService.calculateReportCostFromFirstAndLastCollaboratorCost(project);
+				return "First/Last Average Cost Selected!";
+			default:
+				taskService.calculateReportCostFromAverageCollaboratorCost(project);
+                return "Average Collaborator Cost Selected!";
+		}
+	}
+
 }

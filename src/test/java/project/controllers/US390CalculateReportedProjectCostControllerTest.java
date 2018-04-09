@@ -227,6 +227,104 @@ public class US390CalculateReportedProjectCostControllerTest {
 
 	}
 
+	/**
+	 *
+	 * This test confirms that the set calculation method for report cost works correctly
+	 *
+	 */
+	@Test
+	public void setReportCostCalculationMethod() {
+		// given 6 start dates
+		Calendar sixMonthsAgo = Calendar.getInstance();
+		sixMonthsAgo.add(Calendar.MONTH, -6);
+		Calendar fiveMonthsAgo = Calendar.getInstance();
+		fiveMonthsAgo.add(Calendar.MONTH, -5);
+		Calendar fourMonthsAgo = Calendar.getInstance();
+		fourMonthsAgo.add(Calendar.MONTH, -4);
+		Calendar threeMonthsAgo = Calendar.getInstance();
+		threeMonthsAgo.add(Calendar.MONTH, -3);
+		Calendar twoMonthsAgo = Calendar.getInstance();
+		twoMonthsAgo.add(Calendar.MONTH, -2);
+		Calendar oneMonthAgo = Calendar.getInstance();
+		oneMonthAgo.add(Calendar.MONTH, -1);
+
+		// and task worker Daniel with a cost per effort set to 10
+		// creates a report with 3 hours, from 6 months ago
+		projectUserDaniel.setStartDate(sixMonthsAgo);
+		testTask.addTaskCollaboratorToTask(taskWorkerDaniel);
+		testTask.createReport(taskWorkerDaniel, sixMonthsAgo, 3);
+
+		// when the report is updated to five hours.
+		testTask.getReports().get(0).updateReportedTime(5);
+
+		taskContainer.saveTask(testTask);
+
+		// then the report must contain 5 hours effort, and the day of update matching the current day
+		assertEquals(5, testTask.getReports().get(0).getReportedTime(), 0.01);
+		assertEquals(Calendar.getInstance().get(Calendar.DAY_OF_YEAR), testTask.getReports().get(0).getDateOfUpdate().get(Calendar.DAY_OF_YEAR));
+
+
+		// when project Collaborator Daniel is readded to the project twice (with different costs)
+		assertEquals(1, testTask.getTaskTeam().size());
+
+		projectUserDaniel.setFinishDate(fourMonthsAgo);
+		projectUserDaniel.setStatus(false);
+		projContainer.updateProjectCollaborator(projectUserDaniel);
+
+        ProjectCollaborator projectUserDaniel2 = projContainer.createProjectCollaborator(userDaniel, project, 25);
+        projectUserDaniel2.setStartDate(fourMonthsAgo);
+        projectUserDaniel2.setFinishDate(twoMonthsAgo);
+        projectUserDaniel2.setStatus(false);
+        projContainer.updateProjectCollaborator(projectUserDaniel2);
+
+        ProjectCollaborator projectUserDaniel3 = projContainer.createProjectCollaborator(userDaniel, project, 100);
+        projectUserDaniel3.setStartDate(twoMonthsAgo);
+        projContainer.updateProjectCollaborator(projectUserDaniel3);
+
+
+        // then the project team must contain 6 users (active or inactive), 3 instances from Daniel, and 3 from the others
+
+        assertEquals(6, projContainer.getProjectTeam(project).size());
+
+        // and the same collaborator Daniel contains 3 instances in the project during the report's time
+        assertEquals(3, taskContainer.getAllCollaboratorInstancesFromReport(testTask.getReports().get(0)).size());
+
+        // when the initial cost is calculated, tehn it must return 50: Daniel's inital cost(10) x the number of hours (5)
+        assertEquals(50, controllerCost.calculateReportedProjectCostController(project), 0.01);
+
+        // since the first calculation method (first collaborator instance) is the default one
+        controllerCost.selectReportCostCalculation(project, 1);
+
+        // when chose, the cost must remain unchanged
+        assertEquals(50, controllerCost.calculateReportedProjectCostController(project), 0.01);
+
+
+        // when cost is set to last collaborator instance
+        controllerCost.selectReportCostCalculation(project, 2);
+
+        // then the cost must be Daniel's last cost (100) x 5
+        assertEquals(500, controllerCost.calculateReportedProjectCostController(project), 0.01);
+
+
+        // when cost is set  to first/last average collaborator cost
+        controllerCost.selectReportCostCalculation(project, 3);
+
+        // then the cost must be the average of Daniel's fist and last cost, times hours: ((100+10) /2 ) x 5
+        assertEquals(275, controllerCost.calculateReportedProjectCostController(project), 0.01);
+
+        // when cost is set is to 4, then the result must be the average of all costs from the user x hours
+        controllerCost.selectReportCostCalculation(project, 4);
+
+
+        // then the total cost must be 225: ((10+25+100)/3)*5
+        double average = 225;
+
+        assertEquals(average, controllerCost.calculateReportedProjectCostController(project), 0.01);
+
+
+    }
+
+
 	@Test
 	public void testGetTaskId() {
 
