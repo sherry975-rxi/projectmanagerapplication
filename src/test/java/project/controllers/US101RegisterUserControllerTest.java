@@ -83,8 +83,6 @@ public class US101RegisterUserControllerTest {
 		// verifies if the addNewUser method returns false when user email is valid
 		assertEquals(testUserRegistrationController.isUserEmailValid(user1.getEmail()), true);
 
-		assertTrue(user1.hasLoggedIn());
-
 	}
 
 	@Test
