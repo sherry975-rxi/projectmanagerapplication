@@ -760,6 +760,51 @@ public class TaskService {
 		return reportedCost;
 	}
 
+    /**
+     * This method recieves a report, and uses its fields to find the corresponding user and project.
+     * Using those objects, it asks ProjectCollaboratorRepository for all Collaborators from that user in that project.
+     *
+     * And filters out the ones who weren't active during the report's period.
+     *
+     *
+     * @param report
+     * @return  A list of project Collaborators active during the period of the report
+     *     *
+     */
+
+	public List<ProjectCollaborator> getAllCollaboratorInstancesFromReport(Report report) {
+	    Project project = report.getTask().getProject();
+	    User user = report.getTaskCollaborator().getProjCollaborator().getUserFromProjectCollaborator();
+
+	    return projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user).stream()
+                .filter(ProjectCollaborator -> wasCollaboratorActiveDuringReport(ProjectCollaborator, report)).collect(Collectors.toList());
+	}
+
+    /**
+     * This method compares the date intervals of a Project Collaborator and a report.
+     * If the Project Collaborator has no finish date, then their date intervals intersect
+     * if the collaborator started before the request ended.
+     *
+     *
+     * @param toCheck
+     * @param report
+     * @return
+     */
+    public boolean wasCollaboratorActiveDuringReport(ProjectCollaborator toCheck, Report report) {
+
+        boolean wasActive = false;
+        Calendar reportStartDate = report.getFirstDateOfReport();
+        Calendar reportLastDate = report.getDateOfUpdate();
+
+        if(toCheck.getFinishDate()==null){
+            wasActive=toCheck.getStartDate().before(reportLastDate);
+        } else if (toCheck.getFinishDate().after(reportStartDate)){
+            wasActive=toCheck.getStartDate().before(reportLastDate);
+        }
+
+        return wasActive;
+    }
+
 
 	/**
 	 * This method gathers all Project task assignment requests from a given project
