@@ -421,16 +421,15 @@ public class TaskService {
 		 *         month, by the user
 		 */
 		public List<Task> getFinishedTasksFromProjectCollaboratorInGivenMonth(ProjectCollaborator collab, int monthsAgo) {
-			Calendar givenMonth = Calendar.getInstance();
-			givenMonth.add(Calendar.MONTH, -monthsAgo);
+			int givenMonth = Calendar.getInstance().get(Calendar.MONTH) -monthsAgo;
+
 			List<Task> lastMonthFinishedTaskList = new ArrayList<>();
 
 			for (Task other : this.getAllTasksFromProjectCollaborator(collab)) {
-				if (other.isTaskFinished()) {
-					if ((monthsAgo < 0) ||
-                            (other.getFinishDate().get(Calendar.MONTH) == givenMonth.get(Calendar.MONTH))) {
+				if ((other.isTaskFinished()) &&
+                        ((monthsAgo < 0) ||
+                                (other.getFinishDate().get(Calendar.MONTH) == givenMonth))) {
 						lastMonthFinishedTaskList.add(other);
-					}
 				}
 			}
 			return lastMonthFinishedTaskList;
