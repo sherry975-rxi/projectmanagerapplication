@@ -374,7 +374,7 @@ public class UserTest {
 
         User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
-        assertTrue(u1.hasLoggedIn());
+        assertFalse(u1.hasLoggedIn());
     }
 
     @Test
