@@ -816,6 +816,8 @@ public class TaskService {
             other.setCost(firstInstance.getCostPerEffort());
         }
 
+        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
+
     }
 
     /**
@@ -834,6 +836,8 @@ public class TaskService {
 
             other.setCost(lastInstance.getCostPerEffort());
         }
+
+        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
 
     }
 
@@ -856,6 +860,8 @@ public class TaskService {
 
             other.setCost(average);
         }
+
+        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
 
     }
 
@@ -880,6 +886,8 @@ public class TaskService {
 
             other.setCost(firstLastAverage);
         }
+
+        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
     }
 
     /**
