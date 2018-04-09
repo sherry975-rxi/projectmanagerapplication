@@ -68,10 +68,10 @@ public class US105CreatePasswordAndAuthenticationMechanismTest {
     public void isFirstLoginTest() {
         String newPassword = "testPassword";
 
-        assertTrue(user1.isFirstLogin());
+        assertTrue(user1.hasLoggedIn());
 
         controller.setUserPassword(user1, newPassword);
 
-        assertFalse(user1.isFirstLogin());
+        assertFalse(user1.hasLoggedIn());
     }
 }

@@ -51,7 +51,7 @@ public class US105CreatePasswordAndAuthenticationMechanism {
      */
     private void setFirstLogin(User user) {
 
-        user.setFirstLogin(false);
+        user.setHasLoggedIn(true);
     }
 
 }
