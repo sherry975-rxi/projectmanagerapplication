@@ -765,33 +765,34 @@ public class TaskService {
 	    Project project = report.getTask().getProject();
 	    User user = report.getTaskCollaborator().getProjCollaborator().getUserFromProjectCollaborator();
 
-        List<ProjectCollaborator> allProjectCollabs = projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user);
-        List<ProjectCollaborator> projectCollabsOfUser = new ArrayList<>();
+	    return projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user).stream()
+                .filter(ProjectCollaborator -> wasCollaboratorActiveDuringReport(ProjectCollaborator, report)).collect(Collectors.toList());
+	}
 
-        for(ProjectCollaborator other : allProjectCollabs) {
-            if(wasCollaboratorActiveDuringReport(other, report)) {
-                projectCollabsOfUser.add(other);
-            }
-        }
-
-	    return allProjectCollabs;
-    }
-
+    /**
+     * This method compares the date intervals of a Project Collaborator and a report.
+     * If the Project Collaborator has no finish date, then their date intervals intersect
+     * if the collaborator started before the request ended.
+     *
+     *
+     * @param toCheck
+     * @param report
+     * @return
+     */
 
     public boolean wasCollaboratorActiveDuringReport(ProjectCollaborator toCheck, Report report) {
 
-	    boolean wasActive=false;
+        boolean wasActive = false;
         Calendar reportStartDate = report.getFirstDateOfReport();
         Calendar reportLastDate = report.getDateOfUpdate();
 
-        if(toCheck.getStartDate().before(reportLastDate)) {
-            wasActive=true;
-        } else if(!toCheck.isStatus()) {
-            wasActive=toCheck.getFinishDate().after(reportStartDate);
+        if(toCheck.getFinishDate()==null){
+            wasActive=toCheck.getStartDate().before(reportLastDate);
+        } else if (toCheck.getFinishDate().after(reportStartDate)){
+            wasActive=toCheck.getStartDate().before(reportLastDate);
         }
 
-
-	    return wasActive;
+        return wasActive;
     }
 
 

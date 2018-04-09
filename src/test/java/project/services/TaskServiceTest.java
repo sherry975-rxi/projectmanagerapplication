@@ -745,6 +745,145 @@ public class TaskServiceTest {
         assertEquals(expectedList.toString().trim(), victim.getReportedCostOfEachTask(project).toString().trim());
     }
 
+
+    /**
+     * Tests the various boolean condition checks to validate if a single collaborator was active during the period of a report
+     */
+    @Test
+    public void testWasCollaboratorActiveDuringReport() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        //given a task report created started 3 months, and finished two months ago,
+        Report testing = new Report();
+        testing.setTask(taskMock);
+        testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(twoMonthsAgo);
+
+
+        // when a project collaborator has its start date set to one month ago, after the report
+        projectCollaborator2.setStartDate(oneMonthAgo);
+
+        // then their date intervals Don't intersect, and "wasCollaboratorActiveDuringReport" must return false
+        assertFalse(victim.wasCollaboratorActiveDuringReport(projectCollaborator2, testing));
+
+
+        // when the report is updated and its date set to Today...
+        testing.setDateOfUpdate(Calendar.getInstance());
+
+        // then their date intervals now interset, and "wasCollaboratorActiveDuringReport" must return true
+        assertTrue(victim.wasCollaboratorActiveDuringReport(projectCollaborator2, testing));
+
+
+        //given then a different instance of projectCollaborator
+
+        // when he's started and finished on the same date, before the report, their start dates don't intersect
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(fourMonthsAgo);
+
+        //then the tested method must return false
+        assertFalse(victim.wasCollaboratorActiveDuringReport(projectCollaborator, testing));
+
+
+        // when projectCollaborator is given a finish date of two months ago
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+
+        //then heir date intervals must now interset
+        assertTrue(victim.wasCollaboratorActiveDuringReport(projectCollaborator, testing));
+
+        // when the projectCollaborator is given a start date of two months ago, and the report set to three months ago
+        projectCollaborator.setStartDate(twoMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(threeMonthsAgo);
+
+        //then heir date intervals no longer intersect, as the collaborator started after the report
+        assertFalse(victim.wasCollaboratorActiveDuringReport(projectCollaborator, testing));
+
+    }
+
+    /**
+     * This method tests the ability to find all collaborators from the same user in the project during the period of a single report
+     */
+    @Test
+    public void testFindCollaboratorActiveDuringReport() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        // given the same collaborator started four months and ended two months ago
+        // then the same collaborator started two months ago and still active
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+        projectCollaborator2.setStartDate(twoMonthsAgo);
+
+        List<ProjectCollaborator> allCollabs = new ArrayList<>();
+        allCollabs.add(projectCollaborator);
+        allCollabs.add(projectCollaborator2);
+
+        when(taskMock.getProject()).thenReturn(project);
+
+        when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(allCollabs);
+
+        // when the report was started and finished three months ago, meaning only one instance of project collaborator was active
+        Report testing = new Report();
+        testing.setTask(taskMock);
+        testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(threeMonthsAgo);
+
+        // then only projectCollaborator 1 was active during that period
+        assertEquals(1, victim.getAllCollaboratorInstancesFromReport(testing).size());
+        assertEquals(projectCollaborator, victim.getAllCollaboratorInstancesFromReport(testing).get(0));
+
+
+        // when the report's last update is set to one month ago
+        testing.setDateOfUpdate(oneMonthAgo);
+
+        // then the active collaborators list must contain two instances
+        assertEquals(2, victim.getAllCollaboratorInstancesFromReport(testing).size());
+        assertEquals(projectCollaborator2, victim.getAllCollaboratorInstancesFromReport(testing).get(1));
+
+        // when the report is set as a hypothetical future date (only to test the method's boolean checks)
+        Calendar futureDate = Calendar.getInstance();
+        futureDate.add(Calendar.MONTH, 2);
+        testing.setFirstDateOfReport(futureDate);
+        testing.setDateOfUpdate(futureDate);
+
+
+        // then the list must contain only collaborators who are still active (ie, no finish date)
+        assertEquals(1, victim.getAllCollaboratorInstancesFromReport(testing).size());
+        assertEquals(projectCollaborator2, victim.getAllCollaboratorInstancesFromReport(testing).get(0));
+
+
+        // when their finish date is set to present day
+        projectCollaborator2.setFinishDate(Calendar.getInstance());
+
+        // then no collaborators are active during that future report.
+        assertEquals(0, victim.getAllCollaboratorInstancesFromReport(testing).size());
+
+
+    }
+
+
+
+
+
     @Test
     public void testGetTaskListOfWhichDependenciesCanBeCreated() {
         this.mocksGetProjectTasks();
