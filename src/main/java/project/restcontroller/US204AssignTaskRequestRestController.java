@@ -35,7 +35,7 @@ public class US204AssignTaskRequestRestController {
 
 
     /**
-     * This method allows the administrator to search users by profile.
+     * This method allows the collaborator to create a request of assignment to a specific task.
      *
      * @param taskId
      *          Task id associated to the task to be made the request
