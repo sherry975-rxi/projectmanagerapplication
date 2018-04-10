@@ -1,7 +1,6 @@
 package project.services;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -10,7 +9,6 @@ import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 import project.repository.TaskRepository;
-import project.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,16 +48,10 @@ public class TaskServiceTest {
     private User user;
     private User user2;
     private Task notAmock;
-    private Report reportA;
-    private Calendar reportDate;
-    private Calendar reportDate2;
-    private Report reportB;
     private ProjectCollaborator projectCollaborator;
     private ProjectCollaborator projectCollaborator2;
     private ProjectCollaborator projectCollaborator3;
     private TaskCollaborator taskCollaborator;
-    private TaskCollaborator taskCollaborator2;
-    private TaskCollaborator taskCollaborator3;
     private ProjectService projectService;
 
     @InjectMocks
@@ -112,24 +104,7 @@ public class TaskServiceTest {
         this.projectCollaborator2 = new ProjectCollaborator(user, 10);
         this.projectCollaborator3 = new ProjectCollaborator(user2, 20);
         this.taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
-        this.taskCollaborator2 = new TaskCollaborator(new ProjectCollaborator(user, 10));
-        this.taskCollaborator3 = new TaskCollaborator(new ProjectCollaborator(user2, 20));
 
-        /*
-        this.reportDate = Calendar.getInstance();
-        this.reportDate.set(Calendar.YEAR, 2017);
-        this.reportDate.set(Calendar.MONTH, Calendar.MARCH);
-        this.reportDate.set(Calendar.DAY_OF_MONTH, 10);
-        this.reportDate.set(Calendar.HOUR_OF_DAY, 15);
-        this.reportA = new Report(taskCollaborator, reportDate);
-
-        this.reportDate2 = Calendar.getInstance();
-        this.reportDate2.set(Calendar.YEAR, 2017);
-        this.reportDate2.set(Calendar.MONTH, Calendar.JUNE);
-        this.reportDate2.set(Calendar.DAY_OF_MONTH, 10);
-        this.reportDate2.set(Calendar.HOUR_OF_DAY, 15);
-        this.reportB = new Report(taskCollaborator2, reportDate2);
-*/
     }
 
     /**
