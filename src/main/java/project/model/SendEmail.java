@@ -1,17 +1,14 @@
 package project.model;
 
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
 
-//@RestController
 public class SendEmail {
 
 

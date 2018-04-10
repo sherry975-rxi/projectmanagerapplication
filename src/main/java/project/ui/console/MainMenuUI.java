@@ -35,8 +35,27 @@ public class MainMenuUI {
 	private static User userAdmin;
 	private static User userDirector;
     private static User loggedIn;
-    private static User noPasswordUser;
+	private static User myUser;
+	private static User noPasswordUser;
 
+	public static void printImage() {
+
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("          `.----..  ...    ...`   `..` .:-            `.----.`  ...    `..`           ");
+		System.out.println("         +dmddddhy  dmd`  +dddd`  /dd/ omd`  :++`    /hdmddddo `dmh    :mm/          ");
+		System.out.println("         mNd-.....  sNN-  dN/mN/  yNm. -/: `.sNN/.. /NNh-....` `mNd    /NN+       ");
+		System.out.println("         yNmyo:-`   :NN+ -Nm`yNh  mNy  smm`.ydNNhhs hNN:       `mNm++++yNN+        ");
+		System.out.println("         `:shdmmds` `mNh oNy /Nm`-NN/  yNN`  oNN-   hNN-       `mNmyyyyhNN+           ");
+		System.out.println("            `-sNN+  yNm`dN/ `mN/oNm`  yNN`  oNN-   sNN+        `mNd    /NN+       ");
+		System.out.println("        /+++++hNN/  /NNsNm`  hNhhNy   yNN`  oNNs/- -dNms++++/  `mNd    /NN+         ");
+		System.out.println("         oyhhhhhs/   `syyy+   -yyyy-   +yy`  `oyhy/  .+yhhhhyo `yys    -yy:           ");
+		System.out.println(
+				"                                                                                                   ");
+		System.out.println();
+		System.out.println();
+	}
 
 	public void mainMenu()  throws Exception {
 
@@ -44,6 +63,7 @@ public class MainMenuUI {
 		userAdmin = userService.getAllUsersFromUserContainer().get(0);
 		noPasswordUser = new User ("Daniel", "dsomonteiro@gmail.com", "1", "function", "91000000" );
 		userService.addUserToUserRepositoryX(noPasswordUser);
+		myUser = userService.createUser("Daniel", "dspereira93@hotmail.com", "id", "func", "+351937429087", "street", "zip", "city", "dist", "coun");
 
 		displayOptions();
 	}
@@ -79,7 +99,7 @@ public class MainMenuUI {
 				case "2":
 					loggedIn=doLogin.doLogin();
 					if(loggedIn!=null) {
-					    System.out.println("");
+						System.out.println();
 					    System.out.println("Welcome to Project Management, " + loggedIn.getName());
                     }
                     if(!(loggedIn.hasPassword())) {
@@ -108,30 +128,14 @@ public class MainMenuUI {
 					System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 					break;
 
+				case "H":
+					authenticationMechanismUI.changePassword(myUser);
+					break;
 				default:
 					System.out.println("Choose a valid option:");
 					break;
 			}
 		}
 
-	}
-
-	public static void printImage() {
-
-		System.out.println();
-		System.out.println("");
-		System.out.println("");
-		System.out.println("          `.----..  ...    ...`   `..` .:-            `.----.`  ...    `..`           ");
-		System.out.println("         +dmddddhy  dmd`  +dddd`  /dd/ omd`  :++`    /hdmddddo `dmh    :mm/          ");
-		System.out.println("         mNd-.....  sNN-  dN/mN/  yNm. -/: `.sNN/.. /NNh-....` `mNd    /NN+       ");
-		System.out.println("         yNmyo:-`   :NN+ -Nm`yNh  mNy  smm`.ydNNhhs hNN:       `mNm++++yNN+        ");
-		System.out.println("         `:shdmmds` `mNh oNy /Nm`-NN/  yNN`  oNN-   hNN-       `mNmyyyyhNN+           ");
-		System.out.println("            `-sNN+  yNm`dN/ `mN/oNm`  yNN`  oNN-   sNN+        `mNd    /NN+       ");
-		System.out.println("        /+++++hNN/  /NNsNm`  hNhhNy   yNN`  oNNs/- -dNms++++/  `mNd    /NN+         ");
-		System.out.println("         oyhhhhhs/   `syyy+   -yyyy-   +yy`  `oyhy/  .+yhhhhyo `yys    -yy:           ");
-		System.out.println(
-				"                                                                                                   ");
-		System.out.println("");
-		System.out.println("");
 	}
 }

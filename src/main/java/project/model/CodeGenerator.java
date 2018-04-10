@@ -7,7 +7,7 @@ public class CodeGenerator {
     private String generatedCode;
 
 
-    public String generateCode(){
+    public static String generateCode() {
 
         Random rand = new Random();
         Integer randomNumber = 100000 + rand.nextInt(900000);

@@ -13,18 +13,17 @@ import project.model.User;
 import project.services.UserService;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan({ "project.services", "project.model", "project.controllers" })
-public class US105CreatePasswordAndAuthenticationMechanismTest {
+@ComponentScan({"project.services", "project.model", "project.controllers"})
+public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
 
     @Autowired
     UserService userService;
     @Autowired
-    US105CreatePasswordAndAuthenticationMechanism controller;
+    US105CreatePasswordAndAuthenticationMechanismController controller;
 
 
     User user1;
@@ -36,8 +35,6 @@ public class US105CreatePasswordAndAuthenticationMechanismTest {
         user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
                 "2401-00", "Test", "Testo", "Testistan");
 
-        // Sets a password for the user1
-        user1.setPassword("123456");
         // set user as collaborator
         user1.setUserProfile(Profile.COLLABORATOR);
 
@@ -56,22 +53,11 @@ public class US105CreatePasswordAndAuthenticationMechanismTest {
     public void setUserPasswordTest() {
         String newPassword = "testPassword";
 
-        assertFalse(user1.checkLogin(newPassword));
-
-        controller.setUserPassword(user1, newPassword);
-
-        assertTrue(user1.checkLogin(newPassword));
-
-    }
-
-    @Test
-    public void isFirstLoginTest() {
-        String newPassword = "testPassword";
-
         assertFalse(user1.hasPassword());
 
         controller.setUserPassword(user1, newPassword);
 
         assertTrue(user1.hasPassword());
+
     }
 }
