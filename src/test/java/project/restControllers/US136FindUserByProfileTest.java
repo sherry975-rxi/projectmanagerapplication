@@ -111,16 +111,11 @@ public class US136FindUserByProfileTest {
     }
 
     //TODO
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void searchUsersByProfileWhenDoesNotExistTest() throws Exception {
-        //Given
-        given(userService.searchUsersByProfileName("randomsh*t")).willReturn(new ArrayList<>());
 
-        //When
-        List<User> result = us136FindUserByProfileController.searchUsersByProfileController("randomsh*t");
+            List<User> result = us136FindUserByProfileController.searchUsersByProfileController("randomsh*t");
 
-        //Then
-        assertEquals(new ArrayList<>(), result);
 
     }
     

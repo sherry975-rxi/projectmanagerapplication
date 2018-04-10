@@ -243,14 +243,10 @@ public class UserService {
 	 *         certain profile
 	 */
 	public List<User> searchUsersByProfileName(String searchProfileName) {
-
-		if(Profile.contains(searchProfileName)) {
 			Profile searchProfile = Profile.valueOf(searchProfileName);
 
 			return userRepository.findAllByUserProfile(searchProfile);
-		}else{
-			return new ArrayList<>();
-		}
+
 	}
 
 	/**
