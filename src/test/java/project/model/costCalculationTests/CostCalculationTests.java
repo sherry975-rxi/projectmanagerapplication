@@ -52,17 +52,27 @@ public class CostCalculationTests {
         calendar3.set(Calendar.MONTH, Calendar.OCTOBER);
         calendar3.set(Calendar.DAY_OF_MONTH, 30);
 
+
+
         projectCollaborator = project.createProjectCollaborator(user, 10);
         projectCollaborator.setStartDate(calendar1);
         projectCollaborator.setFinishDate(calendar2);
         task.addProjectCollaboratorToTask(projectCollaborator);
 
-        projectCollaborator2 = project.createProjectCollaborator(user, 10);
+        projectCollaborator2 = project.createProjectCollaborator(user, 20);
         projectCollaborator2.setStartDate(calendar2);
         projectCollaborator2.setFinishDate(calendar3);
         task.addProjectCollaboratorToTask(projectCollaborator2);
 
-        ProjectCollaborator projectCollaborator3 = project.createProjectCollaborator(user2, 20);
+
+        Calendar calendarExtra = Calendar.getInstance();
+        calendarExtra.set(Calendar.YEAR, 2017);
+        calendarExtra.set(Calendar.MONTH, Calendar.MAY);
+        calendarExtra.set(Calendar.DAY_OF_MONTH, 24);
+
+        projectCollaborator3 = project.createProjectCollaborator(user, 15);
+        projectCollaborator3.setStartDate(calendarExtra);
+        projectCollaborator3.setFinishDate(calendarExtra);
         task.addProjectCollaboratorToTask(projectCollaborator3);
 
         taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
@@ -70,7 +80,7 @@ public class CostCalculationTests {
         taskCollaborator3 = new TaskCollaborator(new ProjectCollaborator(user2, 20));
 
         report = new Report(taskCollaborator, calendar1);
-        report2 = new Report(taskCollaborator2, calendar2);
+        report.setDateOfUpdate(calendar3);
 
 
 
@@ -105,6 +115,7 @@ public class CostCalculationTests {
         List<ProjectCollaborator> collaborators = new ArrayList<>();
         collaborators.add(projectCollaborator2);
         collaborators.add(projectCollaborator);
+        collaborators.add(projectCollaborator3);
 
         task.addProjectCollaboratorToTask(projectCollaborator);
         task.addProjectCollaboratorToTask(projectCollaborator2);
@@ -166,9 +177,9 @@ public class CostCalculationTests {
         double costLastUserInstance = taskCollaborator2.getProjectCollaboratorFromTaskCollaborator().getCostPerEffort();
 
         calculationLast = new LastCollaboratorCost();
-        calculationLast.updateCalculationMethod(report2, collaborators);
+        calculationLast.updateCalculationMethod(report, collaborators);
 
-        assertEquals(costLastUserInstance, report2.getCost(), 0.01);
+        assertEquals(costLastUserInstance, report.getCost(), 0.01);
 
         /**
          * tests if the method in interface FirstAndLastCollaboratorCost() correctly calculates the project cost
@@ -187,7 +198,7 @@ public class CostCalculationTests {
          * based on the average of first and last instance of the user
          */
 
-        double costAverage = costFirstAndLastInstance;
+        double costAverage = (costFirstUserInstance + costLastUserInstance + projectCollaborator3.getCostPerEffort())/3;
 
         calculationAverage = new AverageCollaboratorCost();
         calculationAverage.updateCalculationMethod(report, collaborators);
