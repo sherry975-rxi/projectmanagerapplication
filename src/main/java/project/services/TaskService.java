@@ -948,11 +948,11 @@ public class TaskService {
 
 	public CostCalculationInterface chooseCalculationMethod(Project project) {
         switch(project.getCalculationMethod()) {
-            case 1:
+            case 0:
                 return new FirstCollaboratorCost();
-            case 2:
+            case 1:
                 return new LastCollaboratorCost();
-            case 3:
+            case 2:
                 return new FirstAndLastCollaboratorCost();
             default:
                 return new AverageCollaboratorCost();

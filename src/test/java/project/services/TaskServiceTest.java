@@ -832,102 +832,7 @@ public class TaskServiceTest {
 
     }
 
-    /**
-     * This test confirms that the method findEarliestCollaborator() will return the first
-     * project collaborator that provided a task report
-     */
 
-    @Test
-    public void testFindEarliestCollaborator(){
-
-        List<ProjectCollaborator> collaborators = new ArrayList<>();
-        collaborators.add(projectCollaborator2);
-        collaborators.add(projectCollaborator);
-
-        taskMock.addProjectCollaboratorToTask(projectCollaborator);
-        taskMock.addProjectCollaboratorToTask(projectCollaborator2);
-
-        taskCollaborator = new TaskCollaborator (projectCollaborator);
-        taskCollaborator2 = new TaskCollaborator(projectCollaborator2);
-
-        //verify if projectCollaborator and projectCollaborator2 are identified as belonging to user
-       assertEquals(user, projectCollaborator.getUserFromProjectCollaborator());
-       assertEquals(user, projectCollaborator2.getUserFromProjectCollaborator());
-
-       Calendar reportA = Calendar.getInstance();
-       reportA.set(Calendar.YEAR, 2017);
-       reportA.set(Calendar.MONTH, Calendar.MARCH);
-       reportA.set(Calendar.DAY_OF_MONTH, 10);
-
-       projectCollaborator.setStartDate(reportA);
-
-       Calendar reportB = Calendar.getInstance();
-       reportB.add(Calendar.DAY_OF_YEAR, +30); //Adds 30 days to the reportA
-       projectCollaborator2.setStartDate(reportB);
-
-        //verifies that the start date in report A is earlier that the start date in report B,
-        //therefore projectCollaborator is the earliest collaborator
-       assertTrue(reportA.before(reportB));
-
-       //verifies that the start dates for both projectCollaborators are different
-       //collaborator
-
-       assertFalse(projectCollaborator.getStartDate().equals(reportB));
-
-       assertEquals(projectCollaborator.getStartDate().get(Calendar.DAY_OF_YEAR),
-               victim.findEarliestCollaborator(collaborators).getStartDate().get(Calendar.DAY_OF_YEAR));
-
-
-    }
-
-
-    /**
-     * This test confirms that the method findLatestCollaborator() will return the last
-     * project collaborator that provided a task report
-     */
-
-    @Test
-    public void testFindLatestCollaborator(){
-
-        List<ProjectCollaborator> collaborators = new ArrayList<>();
-        collaborators.add(projectCollaborator2);
-        collaborators.add(projectCollaborator);
-
-        taskMock.addProjectCollaboratorToTask(projectCollaborator);
-        taskMock.addProjectCollaboratorToTask(projectCollaborator2);
-
-        taskCollaborator = new TaskCollaborator (projectCollaborator);
-        taskCollaborator2 = new TaskCollaborator(projectCollaborator2);
-
-        //verify if projectCollaborator and projectCollaborator2 are identified as belonging to user
-        assertEquals(user, projectCollaborator.getUserFromProjectCollaborator());
-        assertEquals(user, projectCollaborator2.getUserFromProjectCollaborator());
-
-        Calendar reportA = Calendar.getInstance();
-        reportA.set(Calendar.YEAR, 2017);
-        reportA.set(Calendar.MONTH, Calendar.MARCH);
-        reportA.set(Calendar.DAY_OF_MONTH, 10);
-
-        projectCollaborator.setStartDate(reportA);
-
-        Calendar reportB = Calendar.getInstance();
-        reportB.add(Calendar.DAY_OF_YEAR, +30); //Adds 30 days to the reportA
-        projectCollaborator2.setStartDate(reportB);
-
-        //verifies that the start date in report A is earlier that the start date in report B,
-        //therefore projectCollaborator is the earliest collaborator
-        assertTrue(reportA.before(reportB));
-
-        //verifies that the start dates for both projectCollaborators are different
-        //collaborator
-
-        assertFalse(projectCollaborator.getStartDate().equals(reportB));
-
-        assertEquals(projectCollaborator2.getStartDate().get(Calendar.DAY_OF_YEAR),
-                victim.findLatestCollaborator(collaborators).getStartDate().get(Calendar.DAY_OF_YEAR));
-
-
-    }
     /**
      * This method tests the ability to find all collaborators from the same user in the project during the period of a single report
      */
@@ -996,6 +901,138 @@ public class TaskServiceTest {
 
 
     }
+
+
+
+
+    /**
+     * This test validates if the methods to calculate report costs are all working correctly
+     */
+    @Test
+    public void testCalculateReportsCost() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        notAmock = project.createTask("This is not a mock");
+
+
+        // given a project collaborator with start date set to four months ago and ended 2 months ago
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+
+        // when the project collaborator is removed from the project and added again with cost 20,
+        projectCollaborator2.setStartDate(twoMonthsAgo);
+        projectCollaborator2.setCostPerEffort(20);
+
+
+        //the initial report created three months and ended one month ago has a cost 10, but the collaborator also had a cost 20 during that period
+        Report firstReport = new Report();
+        firstReport.setTask(notAmock);
+        firstReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        firstReport.setFirstDateOfReport(threeMonthsAgo);
+        firstReport.setDateOfUpdate(oneMonthAgo);
+        firstReport.setCost(10);
+
+
+        // he only creates a second report during his second instance, giving it an initial cost of 20
+        Report secondReport = new Report();
+        secondReport.setTask(notAmock);
+        secondReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
+        secondReport.setCost(20);
+        secondReport.setFirstDateOfReport(oneMonthAgo);
+        secondReport.setDateOfUpdate(Calendar.getInstance());
+
+
+        List<ProjectCollaborator> collabsFromUser = new ArrayList<>();
+        collabsFromUser.add(projectCollaborator);
+        collabsFromUser.add(projectCollaborator2);
+
+        List<Report> taskReports = new ArrayList<>();
+        taskReports.add(firstReport);
+        taskReports.add(secondReport);
+
+        List<Task> projectTasks = new ArrayList<>();
+        projectTasks.add(notAmock);
+
+        notAmock.setProject(project);
+        notAmock.setReports(taskReports);
+
+        when(taskRepository.findAllByProject(project)).thenReturn(projectTasks);
+
+        when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(collabsFromUser);
+
+        // given the project has a default calculation method of "first collaborator"
+        assertEquals(10, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the report cost is calculated and updated
+        victim.calculateReportCost(project);
+
+        // then it shoulde remain unchanged
+        assertEquals(10, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the project is set to Last Collaborator for each report, and the cost calculated
+        project.setCalculationMethod(Project.LAST_COLLABORATOR);
+        victim.calculateReportCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 20
+        assertEquals(20, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the project is set to First/Last Collaborator average for each report, and the cost calculated
+        project.setCalculationMethod(Project.FIRST_LAST_COLLABORATOR);
+        victim.calculateReportCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 15
+        assertEquals(15, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the project is set to Collaborator cost average for each report, and the cost calculated
+        project.setCalculationMethod(Project.AVERAGE_COLLABORATOR);
+        victim.calculateReportCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 15
+        assertEquals(15, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+
+        // creating a new, testing project Collaborator 3 with a cost 70, should alter the value of the average collaborator cost, but not first/last
+
+        projectCollaborator3 = new ProjectCollaborator(user, 70);
+        projectCollaborator3.setProject(project);
+        projectCollaborator3.setStartDate(twoMonthsAgo);
+        projectCollaborator3.setFinishDate(twoMonthsAgo);
+
+        collabsFromUser.add(projectCollaborator3);
+
+
+        // when the project is set to First/Last Collaborator average for each report, and the cost calculated
+        project.setCalculationMethod(Project.FIRST_LAST_COLLABORATOR);
+        victim.calculateReportCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 15
+        assertEquals(15, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the project is set to Collaborator cost average for each report, and the cost calculated
+        project.setCalculationMethod(Project.AVERAGE_COLLABORATOR);
+        victim.calculateReportCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 33.33 (10+20+70)/3
+        assertEquals(33.33, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+    }
+
+
 
     @Test
     public void testGetTaskListOfWhichDependenciesCanBeCreated() {
