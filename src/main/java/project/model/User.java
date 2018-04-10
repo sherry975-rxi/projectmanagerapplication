@@ -393,8 +393,6 @@ public class User implements Serializable {
 		return email.equals(other.email);
 	}
 
-
-
 	public String getQuestion() {
 		return question;
 	}

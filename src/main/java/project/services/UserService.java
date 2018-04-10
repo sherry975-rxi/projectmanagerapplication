@@ -122,6 +122,12 @@ public class UserService {
 		//Sets the generated code to the created user
 		newUser.setGeneratedCode(generatedCode);
 
+		// Set the question
+		newUser.setQuestion(userDTO.getQuestion());
+
+		// Set answer
+		newUser.setAnswer(userDTO.getAnswer());
+
 		// Adds the user to User repository
 		this.addUserToUserRepositoryX(newUser);
 
