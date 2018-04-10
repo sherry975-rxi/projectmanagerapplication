@@ -20,5 +20,5 @@ public interface LoadProject {
      * @throws DOMException
      * @throws ParseException
      */
-    public void loadProject(String filePath) throws ParserConfigurationException, SAXException, IOException, DOMException, ParseException;
+     void readProjectFile(String filePath) throws ParserConfigurationException, SAXException, IOException, DOMException, ParseException;
 }
