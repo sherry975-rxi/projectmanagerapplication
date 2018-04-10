@@ -25,8 +25,11 @@ public class TaskTest {
 	private Task taskTestSecond;
 	private Task taskReadyToFinishTest;
 	private TaskCollaborator taskCollaborator;
+	private TaskCollaborator taskCollaborator2;
 	private ProjectCollaborator projectCollaborator;
+	private ProjectCollaborator projectCollaborator2;
 	private Report report;
+	//private Report report2;
 
 	@Before
 	public void setUp() {
@@ -46,12 +49,15 @@ public class TaskTest {
 
 		// create project collaborator
 		projectCollaborator = new ProjectCollaborator(userTest, 10);
+		projectCollaborator2 = new ProjectCollaborator(userTest, 20);
 
 		// create task collaborator
 		taskCollaborator = new TaskCollaborator(projectCollaborator);
+		taskCollaborator2 = new TaskCollaborator(projectCollaborator2);
 
 		// create report
 		report = new Report(taskCollaborator, Calendar.getInstance());
+		//report2 = new Report(taskCollaborator2, Calendar.getInstance());
 
 		// Finish task
 
@@ -69,7 +75,7 @@ public class TaskTest {
 
 		taskReadyToFinishTest.setStartDate(Calendar.getInstance());
 
-		// OnGoing task tasReadyToFinish
+		// OnGoing task taskReadyToFinish
 
 		// Finish task
 
@@ -98,8 +104,11 @@ public class TaskTest {
 		taskTestSecond = null;
 		taskReadyToFinishTest = null;
 		taskCollaborator = null;
+		taskCollaborator2 = null;
 		projectCollaborator = null;
+		projectCollaborator2 = null;
 		report = null;
+		//report2 = null;
 
 	}
 
@@ -214,7 +223,7 @@ public class TaskTest {
 	 * Constructor ______
 	 */
 	@Test
-	public void testTaskTaskWhithStartDateIntervalandDeadlineInterval() {
+	public void testTaskTaskWithStartDateIntervalAndDeadlineInterval() {
 
 		taskReadyToFinishTest.setStartDateInterval(1);
 		taskReadyToFinishTest.setDeadlineInterval(2);
@@ -785,7 +794,7 @@ public class TaskTest {
 	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
 	 */
 	@Test
-	public void testCreateReportWhitoutTaskCollaborator() {
+	public void testCreateReportWithoutTaskCollaborator() {
 
 		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
 
@@ -801,7 +810,7 @@ public class TaskTest {
 	 * {@link project.model.Task#createReport(project.model.TaskCollaborator, java.util.Calendar, double)}.
 	 */
 	@Test
-	public void testCreateReportWhitTaskCollaborator() {
+	public void testCreateReportWithTaskCollaborator() {
 
 		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
 
@@ -934,19 +943,19 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#getTimeSpentOntask()}.
+	 * Test method for {@link project.model.Task#getTimeSpentOnTask()}.
 	 */
 	@Test
-	public void testGetTimeSpentOntask() {
+	public void testGetTimeSpentOnTask() {
 
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
-		assertEquals(1.0, taskReadyToFinishTest.getTimeSpentOntask(), 0.1);
+		assertEquals(1.0, taskReadyToFinishTest.getTimeSpentOnTask(), 0.1);
 
 		taskReadyToFinishTest.updateReportedTime(2.0, taskCollaborator,
 				taskReadyToFinishTest.getReports().get(0).getId());
 
-		assertEquals(2.0, taskReadyToFinishTest.getTimeSpentOntask(), 0.1);
+		assertEquals(2.0, taskReadyToFinishTest.getTimeSpentOnTask(), 0.1);
 
 	}
 
@@ -955,7 +964,7 @@ public class TaskTest {
 	 * {@link project.model.Task#getTimeSpentByProjectCollaboratorOntask(project.model.ProjectCollaborator)}.
 	 */
 	@Test
-	public void testGetTimeSpentByProjectCollaboratorOntask() {
+	public void testGetTimeSpentByProjectCollaboratorOnTask() {
 
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 
@@ -1052,13 +1061,27 @@ public class TaskTest {
 	 * Test method for {@link project.model.Task#getTaskCost()}.
 	 */
 	@Test
-	public void testGetTaskCost() {
+	public void testGetTaskCostBasedOnTheWeightedMeanOfAllReports() {
+
+		//taskTest has 2 different projectCollaborators, which are also 2 distinct task collaborators
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+		taskTest.addProjectCollaboratorToTask(projectCollaborator2);
+
+		//Each of the task collaborators present a different report to the same task
+
+		taskTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
+		taskTest.createReport(taskCollaborator2, Calendar.getInstance(), 2.0);
+
+		assertEquals(50.0, taskTest.getTaskCost(), 0.1);
+
+		//Task collaborator presents a new report to the same task
 
 		taskTest.addProjectCollaboratorToTask(projectCollaborator);
 
-		taskTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
+		taskTest.createReport(taskCollaborator, Calendar.getInstance(), 1.5);
 
-		assertEquals(10.0, taskTest.getTaskCost(), 0.1);
+		assertEquals(65, taskTest.getTaskCost(), 0.1 );
+
 
 	}
 
@@ -1224,7 +1247,7 @@ public class TaskTest {
 	 * Test method for {@link project.model.Task#cancelTask()}.
 	 */
 	@Test
-	public void testCancelTaskWhithTaskStateFinished() {
+	public void testCancelTaskWithTaskStateFinished() {
 
 		assertFalse(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
 
@@ -1300,10 +1323,10 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isUnfinishTask()}.
+	 * Test method for {@link project.model.Task#isUnfinishedTask()}.
 	 */
 	@Test
-	public void testUnfinishTask() {
+	public void testUnfinishedTask() {
 
 		taskReadyToFinishTest.markTaskAsFinished();
 
@@ -1311,34 +1334,34 @@ public class TaskTest {
 
 		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
 
-		assertTrue(taskReadyToFinishTest.isUnfinishTask());
+		assertTrue(taskReadyToFinishTest.isUnfinishedTask());
 
 		assertFalse(taskReadyToFinishTest.isTaskFinished());
 
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isUnfinishTask()}.
+	 * Test method for {@link project.model.Task#isUnfinishedTask()}.
 	 */
 	@Test
-	public void testUnfinishTaskWhithTaskStateSetToOnGoing() {
+	public void testUnfinishedTaskWithTaskStateSetToOnGoing() {
 
 		taskReadyToFinishTest.cancelTask();
 
-		assertFalse(taskReadyToFinishTest.isUnfinishTask());
+		assertFalse(taskReadyToFinishTest.isUnfinishedTask());
 
 	}
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#getAssignementTaskTeamRequest(ProjectCollaborator)}.
+	 * {@link project.model.Task#getAssignmentTaskTeamRequest(ProjectCollaborator)}.
 	 */
 	@Test
-	public void testGetAssignementTaskTeamRequest() {
+	public void testGetAssignmentTaskTeamRequest() {
 
-		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
 
-		assertTrue(taskReadyToFinishTest.getAssignementTaskTeamRequest(projectCollaborator).getProjCollab()
+		assertTrue(taskReadyToFinishTest.getAssignmentTaskTeamRequest(projectCollaborator).getProjCollab()
 				.equals(projectCollaborator));
 
 	}
@@ -1363,16 +1386,16 @@ public class TaskTest {
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#viewPendingTaskAssignementRequests()}.
+	 * {@link project.model.Task#viewPendingTaskAssignmentRequests()}.
 	 */
 	@Test
-	public void testViewPendingTaskAssignementRequests() {
+	public void testViewPendingTaskAssignmentRequests() {
 
-		assertTrue(taskReadyToFinishTest.viewPendingTaskAssignementRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.viewPendingTaskAssignmentRequests().isEmpty());
 
-		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
 
-		assertFalse(taskReadyToFinishTest.viewPendingTaskAssignementRequests().isEmpty());
+		assertFalse(taskReadyToFinishTest.viewPendingTaskAssignmentRequests().isEmpty());
 
 	}
 
@@ -1392,16 +1415,16 @@ public class TaskTest {
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#getPendingTaskAssignementRequests()}.
+	 * {@link project.model.Task#getPendingTaskAssignmentRequests()}.
 	 */
 	@Test
-	public void testGetPendingTaskAssignementRequests() {
+	public void testGetPendingTaskAssignmentRequests() {
 
-		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
-		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
 
-		assertFalse(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
 	}
 
@@ -1421,33 +1444,33 @@ public class TaskTest {
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#createTaskAssignementRequest(ProjectCollaborator)}.
+	 * {@link project.model.Task#createTaskAssignmentRequest(ProjectCollaborator)}.
 	 */
 	@Test
-	public void testCreateTaskAssignementRequest() {
+	public void testCreateTaskAssignmentRequest() {
 
-		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
-		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
 
-		assertFalse(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
 	}
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#createTaskAssignementRequest(ProjectCollaborator)}.
+	 * {@link project.model.Task#createTaskAssignmentRequest(ProjectCollaborator)}.
 	 */
 	@Test
-	public void testCreateTaskAssignementRequestRequestsAlreadyCreated() {
+	public void testCreateTaskAssignmentRequestRequestsAlreadyCreated() {
 
-		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
-		assertTrue(taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator));
 
-		assertFalse(taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator));
+		assertFalse(taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator));
 
-		assertEquals(1, taskReadyToFinishTest.getPendingTaskAssignementRequests().size());
+		assertEquals(1, taskReadyToFinishTest.getPendingTaskAssignmentRequests().size());
 
 	}
 
@@ -1492,7 +1515,7 @@ public class TaskTest {
 
 		assertFalse(taskReadyToFinishTest.isAssignmentRequestAlreadyCreated(projectCollaborator));
 
-		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
 
 		assertTrue(taskReadyToFinishTest.isAssignmentRequestAlreadyCreated(projectCollaborator));
 
@@ -1532,20 +1555,20 @@ public class TaskTest {
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#deleteTaskAssignementRequest(ProjectCollaborator)}.
+	 * {@link project.model.Task#deleteTaskAssignmentRequest(ProjectCollaborator)}.
 	 */
 	@Test
-	public void testDeleteTaskAssignementRequest() {
+	public void testDeleteTaskAssignmentRequest() {
 
-		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
-		taskReadyToFinishTest.createTaskAssignementRequest(projectCollaborator);
+		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
 
-		assertFalse(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
-		taskReadyToFinishTest.deleteTaskAssignementRequest(projectCollaborator);
+		taskReadyToFinishTest.deleteTaskAssignmentRequest(projectCollaborator);
 
-		assertTrue(taskReadyToFinishTest.getPendingTaskAssignementRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
 	}
 

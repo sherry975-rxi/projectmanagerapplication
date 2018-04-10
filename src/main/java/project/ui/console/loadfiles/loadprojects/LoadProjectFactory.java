@@ -1,8 +1,6 @@
 package project.ui.console.loadfiles.loadprojects;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +14,25 @@ import javax.annotation.PostConstruct;
 public class LoadProjectFactory {
 
     @Autowired
-    LoadProjectXml loadXml;
+    LoadProjectXmlFactory loadProjectXmlFactory;
+
+    @Autowired
+    LoadProjectXml loadProjectXml;
+
+    @Autowired
+    LoadProjectCsv loadProjectCsv;
 
     private static final Map<String, LoadProject> fileExtensions = new HashMap<>();
 
     @PostConstruct
     public void initFileExtensions() {
-       fileExtensions.put("XML", loadXml);
+       fileExtensions.put("XML", loadProjectXml);
+       fileExtensions.put("CSV", loadProjectCsv);
     }
 
 
     /**
-     * This static class receives a filePath and gets the file extesion in order to decide
+     * This static class receives a filePath and gets the file extension in order to decide
      * which LoadProject has to instantiate
 
      * @param filePath File to load
@@ -36,13 +41,17 @@ public class LoadProjectFactory {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public LoadProject getLoadProjectType(String filePath) throws InstantiationException, IllegalAccessException {
+    public LoadProject getReader(String filePath) throws InstantiationException, IllegalAccessException {
 
-        //Convert to Enum
+
         String fileExtension = filePath.split("\\.")[1].trim().toUpperCase();
+        String fileName = filePath.split("\\.")[0].trim();
+
+        if(fileExtension.equals("XML")) {
+            return loadProjectXmlFactory.getReader(fileName);
+        }
 
         return fileExtensions.get(fileExtension);
 
     }
-
 }

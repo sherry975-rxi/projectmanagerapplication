@@ -55,7 +55,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamController {
 	public boolean createTaskTeamRequest(String taskID, User user) {
 
 		Task taskToAddCollaboratorTo = taskService.getTaskByTaskID(taskID);
-		return taskToAddCollaboratorTo.createTaskAssignementRequest(getProjectCollaboratorFromUser(user));
+		return taskToAddCollaboratorTo.createTaskAssignmentRequest(getProjectCollaboratorFromUser(user));
 	}
 
 	/**

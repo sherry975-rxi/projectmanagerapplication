@@ -29,5 +29,16 @@ public interface ProjCollabRepository extends JpaRepository<ProjectCollaborator,
 	 * @return List of Project Collaborators from a certain project
 	 */
 	List<ProjectCollaborator> findAllByProject(Project project);
+
+	/**
+	 * Finds all projectCollaboators from a certain project and user
+	 *
+	 * @param project project to search
+	 *
+	 * @param user user to search
+	 *
+	 * @return List of Project Collaborators from a certain project and user
+	 */
+	List<ProjectCollaborator> findAllByProjectAndCollaborator(Project project, User user);
 	
 }

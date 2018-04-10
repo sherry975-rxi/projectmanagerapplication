@@ -3,6 +3,7 @@ package project.model;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "ProjectCollaborator")
@@ -20,6 +21,11 @@ public class ProjectCollaborator implements Serializable {
 	private Project project;
 	private boolean status;
 	private double costPerEffort;
+
+
+
+    private Calendar startDate;
+	private Calendar finishDate;
 	static final long serialVersionUID = 51L;
 
 	/**
@@ -41,6 +47,7 @@ public class ProjectCollaborator implements Serializable {
 	public ProjectCollaborator(User collab, double costPerEffort) {
 		this.collaborator = collab;
 		this.status = true;
+		this.startDate = Calendar.getInstance();
 		this.costPerEffort = costPerEffort;
 	}
 
@@ -63,6 +70,11 @@ public class ProjectCollaborator implements Serializable {
 	public boolean isStatus() {
 		return status;
 	}
+
+    /**
+     * This method views the Project Collaborator's cost per effort unit
+     *
+     */
 
 	public double getCostPerEffort() {
 		return costPerEffort;
@@ -93,13 +105,21 @@ public class ProjectCollaborator implements Serializable {
 		return this.status;
 	}
 
-	/**
-	 * This method views the Project Collaborator's cost per effort unit
-	 * 
-	 */
-	public double getCollaboratorCost() {
-		return this.costPerEffort;
-	}
+    public Calendar getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Calendar startDate) {
+        this.startDate = startDate;
+    }
+
+    public Calendar getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(Calendar finishDate) {
+        this.finishDate = finishDate;
+    }
 
 	/**
 	 * This method views the Project Collaborator's User Data. THIS METHOD WILL BE
