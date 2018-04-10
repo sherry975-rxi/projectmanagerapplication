@@ -9,7 +9,7 @@ public class SMSMessage {
 
 
 
-    public void sendMessage(String messageToSend){
+    public void sendMessage(String messageToSend, String numberToSend){
 
         /*
          Settings taken from twilio.com/user/account
@@ -38,7 +38,7 @@ public class SMSMessage {
             Test number. Must be a registered number on Twilio's account.
             In this case, the registered number on the Twilio account is +351937429087 number (João Leite's number)
          */
-        String numberToSendMessage = "+351937429087";
+        String numberToSendMessage = numberToSend;
 
         Message message = Message.creator(new PhoneNumber(numberToSendMessage),
                 new PhoneNumber(numberProvidedByTwilio),
