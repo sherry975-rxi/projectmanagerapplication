@@ -3,7 +3,7 @@ package project.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.model.*;
-import project.model.costCalculationInterface.*;
+import project.model.costcalculationinterface.*;
 import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.TaskRepository;

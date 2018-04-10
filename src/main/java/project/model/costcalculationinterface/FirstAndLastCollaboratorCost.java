@@ -1,4 +1,4 @@
-package project.model.costCalculationInterface;
+package project.model.costcalculationinterface;
 
 import project.model.ProjectCollaborator;
 import project.model.Report;
