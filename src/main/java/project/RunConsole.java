@@ -75,17 +75,7 @@ public class RunConsole implements CommandLineRunner {
 
 
     	//Test sending an email
-
-
-/*
-		SendEmail testMail = new SendEmail();
-		EmailMessage messageBody = new EmailMessage();
-		messageBody.setSubject("Ola");
-		messageBody.setEmailAddress("jmscrl@hotmail.com");
-		messageBody.setBody("Ola");
-		testMail.sendmail(messageBody);
-*/
-
+		
         main.mainMenu();
     }
     
