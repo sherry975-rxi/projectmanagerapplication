@@ -107,6 +107,12 @@ public class UserService {
 		// Sets the user password
 		newUser.setPassword(userDTO.getPassword());
 
+		// Set the question
+		newUser.setQuestion(userDTO.getQuestion());
+
+		// Set answer
+		newUser.setAnswer(userDTO.getAnswer());
+
 		// Adds the user to User repository
 		this.addUserToUserRepositoryX(newUser);
 
