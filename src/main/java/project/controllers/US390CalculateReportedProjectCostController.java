@@ -65,27 +65,19 @@ public class US390CalculateReportedProjectCostController {
 		return taskID;
 	}
 
-	public String selectReportCostCalculation(Project project, int chosenMethod) {
-		switch(chosenMethod) {
-			case 1:
-                updateProjectAndTasks (project, Project.FIRST_COLLABORATOR);
-				return "Earliest Collaborator Cost Selected!";
-			case 2:
-                updateProjectAndTasks (project, Project.LAST_COLLABORATOR);
-                return "Latest Collaborator Cost Selected!";
-			case 3:
-                updateProjectAndTasks (project, Project.FIRST_LAST_COLLABORATOR);
-				return "First/Last Average Cost Selected!";
-			default:
-                updateProjectAndTasks (project, Project.AVERAGE_COLLABORATOR);
-                return "Average Collaborator Cost Selected!";
-		}
+    /**
+     * @param project
+     *            The project that the Project Manager wants to know the reported
+     *            cost edited
+     * @param chosenMethod
+     *            The Project Class number assigned to each calculation method
+     */
+	public void selectReportCostCalculation(Project project, int chosenMethod) {
+        project.setCalculationMethod(chosenMethod);
+
+        projectService.updateProject(project);
+        taskService.calculateReportCost(project);
 	}
 
-	public void updateProjectAndTasks (Project project, int chosenMethod) {
-	    project.setCalculationMethod(chosenMethod);
-	    projectService.updateProject(project);
-	    taskService.calculateReportCost(project);
-    }
 
 }

@@ -802,137 +802,14 @@ public class TaskService {
 
 
     /**
-     * This method sets the cost for each report based on the cost of the earliest project Collaborator active during that period(Default)
+     * This method sets the cost for each report based on the selected method of report calculation:
      *
-     * It doesn't calculate the the total cost, but simply updates the cost per effort in the report, to be calculated by each Task
+     * It doesn't calculate the the total cost of each task or project, but simply updates the cost per effort in the report.
      *
-     * @param project
-     */
-    public void calculateReportCostFromFirstCollaboratorCost(Project project) {
-        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
-
-        for(Report other : reports) {
-            ProjectCollaborator firstInstance = findEarliestCollaborator(getAllCollaboratorInstancesFromReport(other));
-
-            other.setCost(firstInstance.getCostPerEffort());
-        }
-
-        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
-
-    }
-
-    /**
-     * This method sets the cost for each report based on the cost of the latest project Collaborator active during that period
-     *
-     * It doesn't calculate the the total cost, but simply updates the cost per effort in the report, to be calculated by each Task
+     * The actual cost (effort x cost/effort) is calculated by each task
      *
      * @param project
      */
-    public void calculateReportCostFromLastCollaboratorCost(Project project) {
-
-        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
-
-        for(Report other : reports) {
-            ProjectCollaborator lastInstance = findLatestCollaborator(getAllCollaboratorInstancesFromReport(other));
-
-            other.setCost(lastInstance.getCostPerEffort());
-        }
-
-        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
-
-    }
-
-    /**
-     * This method sets the cost for each task report in the project based on the average cost of each project collaborator active during that period
-     *
-     * It doesn't calculate the the total cost, but simply updates the cost per effort in the report, to be calculated by each Task
-     *
-     * @param project
-     */
-    public void calculateReportCostFromAverageCollaboratorCost(Project project) {
-
-        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
-
-        for(Report other : reports) {
-            List<ProjectCollaborator> collaborators = getAllCollaboratorInstancesFromReport(other);
-
-            double average=
-                    collaborators.stream().mapToDouble(ProjectCollaborator::getCostPerEffort).average().orElse(0);
-
-            other.setCost(average);
-        }
-
-        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
-
-    }
-
-    /**
-     * This method sets the cost for each task report in the project based on the average cost
-     * of the first and last project collaborator active during that period
-     *
-     * It doesn't calculate the the total cost, but simply updates the cost per effort in the report, to be calculated by each Task
-     *
-     *
-     * @param project
-     */
-    public void calculateReportCostFromFirstAndLastCollaboratorCost(Project project) {
-
-        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
-
-        for(Report other : reports) {
-            ProjectCollaborator firstInstance = findEarliestCollaborator(getAllCollaboratorInstancesFromReport(other));
-            ProjectCollaborator lastInstance = findLatestCollaborator(getAllCollaboratorInstancesFromReport(other));
-
-            double firstLastAverage = (firstInstance.getCostPerEffort()+lastInstance.getCostPerEffort())/2;
-
-            other.setCost(firstLastAverage);
-        }
-
-        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
-    }
-
-    /**
-     * This is a utility method that recieves a list of project collaborators belonging to the creator of a report, and returns the earliest instance
-     *
-     * @param collaborators
-     * @return first collaborator to provide a report
-     */
-    public ProjectCollaborator findEarliestCollaborator(List <ProjectCollaborator> collaborators) {
-        ProjectCollaborator firstInstance = collaborators.get(0);
-
-        for(ProjectCollaborator collab : collaborators) {
-
-            if(collab.getStartDate().before(firstInstance.getStartDate())) {
-                firstInstance=collab;
-            }
-
-        }
-
-        return firstInstance;
-    }
-
-    /**
-	 *
-     * This is a utility method that recieves a list of project collaborators belonging to the creator of a report, and returns the latest instance
-     *
-	 * DEPRECATED
-	 *
-     * @param collaborators
-     * @return
-     */
-    public ProjectCollaborator findLatestCollaborator(List <ProjectCollaborator> collaborators) {
-        ProjectCollaborator lastInstance = collaborators.get(0);
-
-        for(ProjectCollaborator collab : collaborators) {
-            if(collab.getStartDate().after(lastInstance.getStartDate())) {
-                lastInstance=collab;
-            }
-        }
-
-        return lastInstance;
-    }
-
-
     public void calculateReportCost(Project project) {
         List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
 
@@ -945,14 +822,24 @@ public class TaskService {
         getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
 	}
 
-
+    /**
+     *
+     * This is a utility method that recieves a project and generates a cost calculation interface based on the selected cost calculation method
+     * 1 - The first collaborator instance active during the report's period (Project and reports are created with this value!)
+     * 2 - The last collaborator instance active during the report's period
+     * 3 - Average between first and last collaborator instances active during the report's period
+     * 4 - Average of all collaborators active during the report's period
+     *
+     * @param project
+     * @return the respective interface
+     */
 	public CostCalculationInterface chooseCalculationMethod(Project project) {
         switch(project.getCalculationMethod()) {
-            case 0:
+            case Project.FIRST_COLLABORATOR:
                 return new FirstCollaboratorCost();
-            case 1:
+            case Project.LAST_COLLABORATOR:
                 return new LastCollaboratorCost();
-            case 2:
+            case Project.FIRST_LAST_COLLABORATOR:
                 return new FirstAndLastCollaboratorCost();
             default:
                 return new AverageCollaboratorCost();
