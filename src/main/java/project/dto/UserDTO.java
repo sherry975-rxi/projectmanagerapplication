@@ -17,6 +17,8 @@ public class UserDTO {
 	private String phone;
 	private Profile userProfile;
 	private String password;
+	private String question;
+	private String answer;
 	private String street;
 	private String zipCode;
 	private String city;
@@ -50,13 +52,15 @@ public class UserDTO {
 	 * @param phone phone of the User
 	 * @param password password of the User
 	 */
-	public UserDTO(String name, String email, String idNumber, String function, String phone, String password) {
+	public UserDTO(String name, String email, String idNumber, String function, String phone, String password, String question, String answer) {
 		this.name = name;
 		this.email = email;
 		this.idNumber = idNumber;
 		this.function = function;
 		this.phone = phone;
 		this.password = password;
+		this.question = question;
+		this.answer = answer;
 	}
 
 	/**
@@ -193,4 +197,21 @@ public class UserDTO {
 		return addressList;
 	}
 
+	/**
+	 * Get question
+	 *
+	 * @return return the question
+	 */
+	public String getQuestion() {
+		return question;
+	}
+
+	/**
+	 * Gets answer
+	 *
+	 * @return return answer
+	 */
+	public String getAnswer() {
+		return answer;
+	}
 }
