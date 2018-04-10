@@ -89,7 +89,8 @@ public class US390GetProjectReportedCostUI {
         System.out.println("[1] - The user's first cost");
         System.out.println("[2] - The user's last cost");
         System.out.println("[3] - Average between the users first and last cost");
-        System.out.println("[Any Key] - Average between all of the user's costs");
+		System.out.println("[4] - Average between all of the user's costs");
+        System.out.println("[Any Key] - Keep Current");
         System.out.println("");
         scannerInput = new Scanner(System.in);
 		char option = scannerInput.nextLine().charAt(0);
