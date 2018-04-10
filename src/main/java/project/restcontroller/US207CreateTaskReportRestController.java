@@ -32,116 +32,8 @@ public class US207CreateTaskReportRestController {
         this.projectService = projectService;
     }
 
-    @RequestMapping(value = "/CreateReport" , method = RequestMethod.PUT)
-    public ResponseEntity<?> createTaskReport (@RequestBody String timeToReport, @PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
-        double timeReported = Double.valueOf(timeToReport);
-
-        Project project = projectService.getProjectById(projectId);
-
-        Task task = taskService.getTaskByTaskID(taskId);
-
-        User user = userService.getUserByEmail(userEmail);
-
-        Calendar dateOfReport = Calendar.getInstance();
-
-        if(task.createReport(task.getTaskCollaboratorByEmail(userEmail), dateOfReport, timeReported)){
-            this.taskService.saveTask(task);
-            result = ResponseEntity.status(HttpStatus.OK).body("Report created!\nINFO:" + "\nTask ID: " + task.getTaskID() +"\nDescription: " + task.getDescription() + "\nUser: " + user.getName() + "\nTime reported: " + timeToReport);
-            //result = new ResponseEntity<>(HttpStatus.OK);
-
-        }
-
-
-        return result;
-    }
-
-    @RequestMapping(value = "/CreateReportTwo" , method = RequestMethod.PUT)
-    public ResponseEntity<?> createTaskReportTwo (@RequestBody Report reportOfTime, @PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
-        Project project = projectService.getProjectById(projectId);
-
-        Task task = taskService.getTaskByTaskID(taskId);
-
-        User user = userService.getUserByEmail(userEmail);
-
-        TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmail);
-
-        Calendar dateOfReport = Calendar.getInstance();
-
-        double timeReported = reportOfTime.getReportedTime();
-
-        String time = Double.toString(timeReported);
-
-        System.out.println("Updating Task " + task.getTaskID());
-
-
-
-
-        if(task.createReport(taskCollab, dateOfReport, timeReported)){
-            this.taskService.saveTask(task);
-            System.out.println();
-            result = ResponseEntity.status(HttpStatus.OK).body("Report created!\nINFO:" + "\nTask ID: " + task.getTaskID() +"\nDescription: " + task.getDescription() + "\nUser: " + user.getName() + "\nTime reported: " + time);
-            //result = new ResponseEntity<>(HttpStatus.OK);
-
-        }
-
-
-        return result;
-    }
 
     @RequestMapping(value = "/reports", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> getTaskStringReportsFromUser(@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
-
-        Project project = projectService.getProjectById(projectId);
-
-        Task task = taskService.getTaskByTaskID(taskId);
-
-        User user = userService.getUserByEmail(userEmail);
-
-        if(!task.doesTaskHaveReportByGivenUser(userEmail)){
-
-/*            List<Integer> reportsOfGivenUser;
-
-            reportsOfGivenUser = task.getReportsIndexOfTaskCollaborator(userEmail);
-
-            List<String> reportsList;
-
-            for(int i = 0; i < reportsOfGivenUser.size(); i++){
-                reportsList.add(reportsOfGivenUser.get(i).toString() + " - " + )
-            }*/
-            return new ResponseEntity<List<String>>(HttpStatus.NOT_FOUND);
-        }
-
-
-            List<String> reportsList = task.getReportsFromGivenUser(userEmail)
-                    .stream().map(Report -> repDataToString(Report)).collect(Collectors.toList());
-
-        return new ResponseEntity<List<String>>(reportsList, HttpStatus.OK);
-
-
-
-
-    }
-
-        public String repDataToString (Report rep){
-
-            Calendar firstDate = rep.getFirstDateOfReport();
-
-            String datePrint = this.dateFormat.format(firstDate.getTime());
-
-            Calendar updateDate = rep.getDateOfUpdate();
-
-            String datePrintTwo = this.dateFormat.format(updateDate.getTime());
-
-
-            return " Reported time: " + rep.getReportedTime() + " by " + rep.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getName() + " - Creation Date: " + datePrint + " - Update Date: " + datePrintTwo;
-        }
-
-
-    @RequestMapping(value = "/reportsTwo", method = RequestMethod.GET)
     public ResponseEntity<List<Report>> getTasksReportsFromUser(@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
 
         Project project = projectService.getProjectById(projectId);
@@ -164,6 +56,88 @@ public class US207CreateTaskReportRestController {
 
 
     }
+
+    @RequestMapping(value = "/reportsString", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getTaskStringReportsFromUser(@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
+
+        Project project = projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        User user = userService.getUserByEmail(userEmail);
+
+        if(!task.doesTaskHaveReportByGivenUser(userEmail)){
+
+            return new ResponseEntity<List<String>>(HttpStatus.NOT_FOUND);
+        }
+
+
+        List<String> reportsList = task.getReportsFromGivenUser(userEmail)
+                .stream().map(Report -> repDataToString(Report)).collect(Collectors.toList());
+
+        return new ResponseEntity<List<String>>(reportsList, HttpStatus.OK);
+
+
+
+
+    }
+
+
+    @RequestMapping(value = "/reports/" , method = RequestMethod.PUT)
+    public ResponseEntity<?> createTaskReport (@RequestBody Report reportDTO, @PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
+        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        Project project = projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        User user = userService.getUserByEmail(userEmail);
+
+        TaskCollaborator taskCollab = reportDTO.getTaskCollaborator();
+
+        //TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmail);
+
+        Calendar dateOfReport = Calendar.getInstance();
+
+        double timeReported = reportDTO.getReportedTime();
+
+        String time = Double.toString(timeReported);
+
+        System.out.println("Updating Task " + task.getTaskID());
+
+
+
+
+        if(task.createReport(taskCollab, dateOfReport, timeReported)){
+            this.taskService.saveTask(task);
+            System.out.println();
+            result = ResponseEntity.status(HttpStatus.OK).body("Report created!\nINFO:" + "\nTask ID: " + task.getTaskID() +"\nDescription: " + task.getDescription() + "\nUser: " + user.getName() + "\nTime reported: " + time);
+            //result = new ResponseEntity<>(HttpStatus.OK);
+
+        }
+
+
+        return result;
+    }
+
+
+
+        public String repDataToString (Report rep){
+
+            Calendar firstDate = rep.getFirstDateOfReport();
+
+            String datePrint = this.dateFormat.format(firstDate.getTime());
+
+            Calendar updateDate = rep.getDateOfUpdate();
+
+            String datePrintTwo = this.dateFormat.format(updateDate.getTime());
+
+
+            return " Reported time: " + rep.getReportedTime() + " by " + rep.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getName() + " - Creation Date: " + datePrint + " - Update Date: " + datePrintTwo;
+        }
+
+
+
 
 /*            List<Integer> reportsOfGivenUser;
 
