@@ -35,13 +35,16 @@ public class MainMenuUI {
 	private static User userAdmin;
 	private static User userDirector;
     private static User loggedIn;
+    private static User noPasswordUser;
 
 
 	public void mainMenu()  throws Exception {
 
 		userDirector = userService.getAllUsersFromUserContainer().get(1);
 		userAdmin = userService.getAllUsersFromUserContainer().get(0);
-		
+		noPasswordUser = new User ("Daniel", "dsomonteiro@gmail.com", "1", "function", "91000000" );
+		userService.addUserToUserRepositoryX(noPasswordUser);
+
 		displayOptions();
 	}
 
@@ -79,7 +82,7 @@ public class MainMenuUI {
 					    System.out.println("");
 					    System.out.println("Welcome to Project Management, " + loggedIn.getName());
                     }
-                    if(loggedIn.hasLoggedIn()) {
+                    if(!(loggedIn.hasPassword())) {
 						authenticationMechanismUI.changePassword(loggedIn);
 					}
 					break;

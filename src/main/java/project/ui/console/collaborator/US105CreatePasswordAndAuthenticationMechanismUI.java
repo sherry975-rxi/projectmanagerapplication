@@ -22,8 +22,8 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
         Scanner input = new Scanner(System.in);
 
         System.out.println("");
-        System.out.println("\nYou must change your password");
-        System.out.println("Please enter a new password:");
+        System.out.println("\nYou must create a password");
+        System.out.println("Please enter a password:");
 
         String newPassword;
         newPassword = input.nextLine();
@@ -37,7 +37,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
 
         switch (choice) {
             case "1":
-                controller.smsAuthentication();
+                //controller.smsAuthentication();
 
                 System.out.println("Please enter the code sent to the associated phone number:");
                 String code = input.nextLine();
@@ -57,7 +57,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
                 break;
 
             case"3":
-                controller.emailAuthentication();
+                //controller.emailAuthentication();
 
                 System.out.println("");
 

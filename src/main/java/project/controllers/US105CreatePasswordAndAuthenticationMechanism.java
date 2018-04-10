@@ -16,8 +16,6 @@ public class US105CreatePasswordAndAuthenticationMechanism {
 
     }
 
-
-
     /**
      * This method set a new password to user and change the variable firstLogin to false and
      * save the changes in DB
@@ -29,29 +27,6 @@ public class US105CreatePasswordAndAuthenticationMechanism {
 
         user.setPassword(newPassword);
 
-        setFirstLogin(user);
-
-        updateUser(user);
-    }
-
-    /**
-     *  Method that saves the user to the database
-     *
-     * @param user
-     */
-    private void updateUser(User user) {
-
-        userService.updateUser(user);
-    }
-
-    /**
-     * This method change the user variable firstLogin to false.
-     *
-     * @param user
-     */
-    private void setFirstLogin(User user) {
-
-        user.setHasLoggedIn(true);
     }
 
     /**
@@ -72,6 +47,7 @@ public class US105CreatePasswordAndAuthenticationMechanism {
      * @return true if it's the right answer, false if it isn't
      */
     public boolean isRightAnswer(String answer, User user){
+
         return answer.equalsIgnoreCase(user.getAnswer());
     }
 

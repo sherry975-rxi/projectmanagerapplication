@@ -55,9 +55,6 @@ public class US101RegisterUserController {
 
 		userService.createUserWithDTO(newUser);
 
-		setFirstLogin(userService.getUserByEmail(email));
-
-		updateUser(userService.getUserByEmail(email));
 	}
 
 	/**
@@ -122,25 +119,5 @@ public class US101RegisterUserController {
 		return this.userService.isEmailAddressValid(email);
 	}
 
-	/**
-	 * This method change the user variable firstLogin to false.
-	 *
-	 * @param user
-	 */
-	private void setFirstLogin(User user) {
-
-		user.setHasLoggedIn(true);
-		updateUser(user);
-	}
-
-	/**
-	 *  Method that saves the user to the database
-	 *
-	 * @param user
-	 */
-	private void updateUser(User user) {
-
-		userService.updateUser(user);
-	}
 
 }
