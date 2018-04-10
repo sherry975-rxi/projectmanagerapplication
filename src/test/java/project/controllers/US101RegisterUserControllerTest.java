@@ -36,7 +36,7 @@ public class US101RegisterUserControllerTest {
 				"2401-343", "Testburg", "Testo", "Testistan");
 
 		testUserRegistrationController.addNewUser("João", "joão.gmail.com", "034", "Testes", "919876787", "Street",
-				"2401-343", "Testburg", "Testo", "Testistan", "Portugal");
+				"2401-343", "Testburg", "Testo", "Testistan", "Portugal", "1", "a");
 
 	}
 
@@ -63,15 +63,15 @@ public class US101RegisterUserControllerTest {
 
 		// uses the controllers to both create and add the user
 		testUserRegistrationController.addNewUser("Fabio", "fabio@gmail.com", "003", "worker", "919997775", "Password",
-				"Tasty streets", "4450-150", "Hellcity", "HellsBurg", "HellMam");
+				"Tasty streets", "4450-150", "Hellcity", "HellsBurg", "HellMam", "1", "a");
 		assertEquals(3, userService.getAllUsersFromUserContainer().size());
 		assertTrue(userService.getAllUsersFromUserContainer().get(0).equals(user1));
 
 		// verifies if the addNewUser method returns null when user email already exists
 		testUserRegistrationController.addNewUser("Daniel", "danielq@gmail.com", "001", "Porteiro", "920000000",
-				"Password", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+				"Password", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan", "1", "a");
 		testUserRegistrationController.addNewUser("Daniel", "danicom", "001", "Porteiro", "920000000", "Password",
-				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan", "1", "a");
 		user2 = userService.getAllUsersFromUserContainer().get(0);
 		user3 = userService.getAllUsersFromUserContainer().get(1);
 
@@ -91,14 +91,14 @@ public class US101RegisterUserControllerTest {
 	public void wasUserAddedTest() {
 
 		testUserRegistrationController.addNewUser("Daniel", "danicom", "001", "Porteiro", "920000000", "Password",
-				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan", "1", "a");
 
 		assertTrue(testUserRegistrationController.wasUserAdded(true));
 
 		// user 3 was created, added and email was set as invalid
 
 		testUserRegistrationController.addNewUser("João", "joão@gmail.com", "034", "Testes", "919876787", "Password",
-				"Street", "2401-343", "Testburg", "Testo", "Testistan");
+				"Street", "2401-343", "Testburg", "Testo", "Testistan", "1", "a");
 
 		assertTrue(testUserRegistrationController.wasUserAdded(true));
 
