@@ -74,7 +74,7 @@ public class US207CreateTaskReportRestController {
     }
 
 
-    @RequestMapping(value = "/reports/" , method = RequestMethod.PUT)
+    @RequestMapping(value = "/reports/" , method = RequestMethod.POST)
     public ResponseEntity<?> createTaskReport (@RequestBody Report reportDTO, @PathVariable String taskId, @PathVariable int projectId){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
@@ -138,7 +138,6 @@ public class US207CreateTaskReportRestController {
 
         TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmailDTO);
 
-        Calendar dateOfReport = Calendar.getInstance();
 
         double newTimeReported = reportDTO.getReportedTime();
 
@@ -154,8 +153,9 @@ public class US207CreateTaskReportRestController {
             for (int reportIndex = 0; reportIndex < taskReportsList.size(); reportIndex++) {
                 if (taskReportsList.get(reportIndex).getId() == reportId) {
                     task.updateReportedTime(newTimeReported, taskCollab, reportIndex);
+                    Calendar dateOfReport = Calendar.getInstance();
                     Report reportUpdated = taskReportsList.get(reportIndex);
-                    reportUpdated.setDateOfUpdate(Calendar.getInstance());
+                    reportUpdated.setDateOfUpdate(dateOfReport);
                     this.taskService.saveTask(task);
 
                     return new ResponseEntity<Report>(reportUpdated, HttpStatus.OK);
