@@ -44,8 +44,9 @@ public class US101RegisterUserController {
 	 *            country of the User
 	 */
 	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
-			String street, String zipCode, String city, String district, String country) {
-		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password);
+			String street, String zipCode, String city, String district, String country, String question, String answer) {
+
+		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password, question, answer);
 		newUser.setUserAddress(street, zipCode, city, district, country);
 
 		userService.createUserWithDTO(newUser);

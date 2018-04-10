@@ -22,26 +22,26 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
         Scanner input = new Scanner(System.in);
 
         System.out.println("");
-        System.out.println("/nYou must change your password");
+        System.out.println("\nYou must change your password");
         System.out.println("Please enter a new password:");
 
         String newPassword;
         newPassword = input.nextLine();
 
-        System.out.println("Choose an authentication method:/n");
+        System.out.println("Choose an authentication method:\n");
         System.out.println("[1] Sms authentication");
         System.out.println("[2] Email authentication");
-        System.out.println("[3] Answer authentication/n");
+        System.out.println("[3] Answer authentication\n");
 
         String choice = input.nextLine();
 
         switch (choice) {
             case "1":
-                controller.smsAuthentication();
+                //controller.smsAuthentication();
 
                 System.out.println("Please enter the code sent to the associated phone number:");
                 String code = input.nextLine();
-                controller.smsCodeValid(code);
+               // controller.smsCodeValid(code);
 
                 break;
 
@@ -57,7 +57,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
                 break;
 
             case"3":
-                controller.emailAuthentication();
+              //  controller.emailAuthentication();
 
                 System.out.println("");
 
