@@ -86,6 +86,9 @@ public class US101RegisterUserController {
 
 		if (!doCodesMatch){
 			userService.deleteUser(recipientEmail);
+		} else {
+			user.setGeneratedCode("");
+			userService.updateUser(user);
 		}
 
 		return doCodesMatch;
