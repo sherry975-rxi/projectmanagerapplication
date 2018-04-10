@@ -74,6 +74,8 @@ public class ReportTest {
         // Creates a new Report instance
         report = new Report(taskWorker1, firstDateOfReport);
 
+        firstDateOfReport= Calendar.getInstance();
+
 		//Sets a time to the report
 		report.setReportedTime(10);
 		assertEquals(report.getReportedTime(), 10, 0.0);
@@ -83,12 +85,12 @@ public class ReportTest {
 		assertEquals(report.getTask(), task1);
 
 		//Sets the first date to the report
-		report.setFirstDateOfReport(Calendar.getInstance());
-		assertEquals(report.getFirstDateOfReport(), Calendar.getInstance());
+		report.setFirstDateOfReport(firstDateOfReport);
+		assertEquals(report.getFirstDateOfReport(), firstDateOfReport);
 
 		//Sets a date to the update of the report (according to US203)
-		report.setDateOfUpdate(Calendar.getInstance());
-		assertEquals(report.getDateOfUpdate(), Calendar.getInstance());
+		report.setDateOfUpdate(firstDateOfReport);
+		assertEquals(report.getDateOfUpdate(), firstDateOfReport);
 
 		//Sets an Id to the report
 		report.setId(2);
