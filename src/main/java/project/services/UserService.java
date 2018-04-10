@@ -191,15 +191,14 @@ public class UserService {
 	}
 
 	/**
-	 * This method returns all users that possess a certain ID. It
-	 * fetches information directly from the Database.
+
+	 * This method returns all users that possess a certain id. It
+	 * fetches information directly from the Database. \
 	 *
 	 * @param id
 	 *            parameter used to fetch users from the DataBase
-	 * @return all users that possess a certain id
-
-	*/
-
+	 * @return all users that possess a certain email address
+	 */
 	public User getUserByID(int id) { return this.userRepository.findById(id); }
 
 
@@ -270,10 +269,10 @@ public class UserService {
 	 *         certain profile
 	 */
 	public List<User> searchUsersByProfileName(String searchProfileName) {
+			Profile searchProfile = Profile.valueOf(searchProfileName);
 
-		Profile searchProfile = Profile.valueOf(searchProfileName);
+			return userRepository.findAllByUserProfile(searchProfile);
 
-		return userRepository.findAllByUserProfile(searchProfile);
 	}
 
 	/**

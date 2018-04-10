@@ -8,6 +8,7 @@ import project.services.UserService;
 import project.ui.console.administrator.AdminMenuUI;
 import project.ui.console.collaborator.CollaboratorMainMenuUI;
 import project.ui.console.collaborator.US101UserRegisterUI;
+import project.ui.console.collaborator.US105CreatePasswordAndAuthenticationMechanismUI;
 import project.ui.console.collaborator.US180LoginUI;
 import project.ui.console.director.DirectorMenuUI;
 
@@ -28,6 +29,8 @@ public class MainMenuUI {
 	private DirectorMenuUI directorMenu;
 	@Autowired
 	private CollaboratorMainMenuUI collaboratorMenu;
+	@Autowired
+	private US105CreatePasswordAndAuthenticationMechanismUI authenticationMechanismUI;
 
 	private static User userAdmin;
 	private static User userDirector;
@@ -76,6 +79,9 @@ public class MainMenuUI {
 					    System.out.println("");
 					    System.out.println("Welcome to Project Management, " + loggedIn.getName());
                     }
+                    if(loggedIn.isFirstLogin()) {
+						authenticationMechanismUI.changePassword(loggedIn);
+					}
 					break;
 				case "3":
 					adminMenu.setAdminLoggedIn(userAdmin);

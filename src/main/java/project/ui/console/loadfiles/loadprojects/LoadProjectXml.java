@@ -1,4 +1,4 @@
-package project.ui.console.loadfiles;
+package project.ui.console.loadfiles.loadprojects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +10,7 @@ import project.model.taskstateinterface.OnGoing;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
+import project.ui.console.loadfiles.FileUtils;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -18,16 +19,22 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @Service
-public class LoadProjectData {
+public class LoadProjectXml implements LoadProject{
 
-	@Autowired
 	ProjectService projectService;
 
-	@Autowired
+
 	UserService userService;
 
-	@Autowired
+
 	TaskService taskService;
+
+	@Autowired
+	public LoadProjectXml(ProjectService projectService, UserService userService, TaskService taskService) {
+		this.projectService = projectService;
+		this.userService = userService;
+		this.taskService = taskService;
+	}
 
 	TaskCollaborator taskCollab;
 

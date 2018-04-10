@@ -1,12 +1,15 @@
-package project.restcontrollers;
+package project.restControllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.ComponentScan;
 
 import org.springframework.http.MediaType;
@@ -14,21 +17,27 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.web.context.WebApplicationContext;
 import project.model.*;
 import project.model.taskstateinterface.*;
+import project.restcontroller.US136FindUserByProfile;
 import project.services.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
@@ -69,7 +78,6 @@ public class RestControllerFunctionalTests {
     @Autowired
     UserService userService;
 
-
     User owner;
     User mike;
 
@@ -83,6 +91,8 @@ public class RestControllerFunctionalTests {
     Task ongoingTask;
     Task secondOngoingTask;
     Task unstartedTask;
+
+    private JacksonTester<User> taskJack;
 
 
     @Autowired
@@ -102,6 +112,8 @@ public class RestControllerFunctionalTests {
     public void setUp(){
 
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
+
+        JacksonTester.initFields(this, new ObjectMapper());
 
         // creates two users
         owner = userService.createUser("Owner boi", "hue@hue.com", "001", "Owns projects", "0000000", "here", "there", "where", "dunno", "mars");
@@ -197,6 +209,43 @@ public class RestControllerFunctionalTests {
         assertFalse(unstartedTask.isProjectCollaboratorActiveInTaskTeam(collabMike));
     }
      */
+
+
+    /**
+     * This test confirms the rest Controller for US136 works correctly
+     */
+    @Test
+    public void US136TestBrowserOutput() throws Exception {
+
+        //Tests if there is really nothing when a non-valid profile is inserted
+            mockMvc.perform(get("/users/dadadadad")).andExpect(status().isNotFound());
+
+
+        //Tests if the controller finds collaborators correctly
+        //Given
+        mike.setUserProfile(Profile.COLLABORATOR);
+        userService.updateUser(mike);
+
+        //When
+        mockMvc.perform(get("/users/COLLABORATOR")).andExpect(jsonPath("$[0].name", is("Mike")));
+
+        //Tests if the controller finds the directors correctly
+        //Given
+        mike.setUserProfile(Profile.DIRECTOR);
+        userService.updateUser(mike);
+
+        //When
+        mockMvc.perform(get("/users/DIRECTOR")).andExpect(jsonPath("$[0].name", is("Mike")));
+
+        //Tests if the controller finds the unassigned users correctly
+        //Given
+        userService.updateUser(owner);
+
+        //When
+        mockMvc.perform(get("/users/UNASSIGNED")).andExpect(jsonPath("$[0].name", is("Owner boi")));
+
+
+    }
 
     /**
      * This test confirms the rest Controller for US203 works correctly (currently not yet implemented)

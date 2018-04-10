@@ -369,4 +369,22 @@ public class UserTest {
         //assertEquals(u1.isSystemUserStateActive(), true);
     }
 
+    @Test
+    public void isFirstLogin() {
+
+        User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+
+        assertTrue(u1.isFirstLogin());
+    }
+
+    @Test
+    public void setFirstLogin() {
+
+        User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+
+        u1.setFirstLogin(false);
+
+        assertFalse(u1.isFirstLogin());
+    }
+
 }

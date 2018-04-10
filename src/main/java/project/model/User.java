@@ -40,8 +40,8 @@ public class User implements Serializable {
 
 	private boolean systemUserStateActive;
 	private String password;
-
 	private String generatedCode;
+	private boolean firstLogin;
 
 	/**
 	 * Empty Constructor for User
@@ -73,6 +73,7 @@ public class User implements Serializable {
 		this.phone = phone;
 		this.userProfile = Profile.UNASSIGNED;
 		this.systemUserStateActive = true;
+		this.firstLogin = true;
 	}
 
 	/**
@@ -87,6 +88,24 @@ public class User implements Serializable {
 	 */
 	public Address createAddress(String street, String zipCode, String city, String district, String country) {
 		return new Address(street, zipCode, city, district, country);
+	}
+
+	/**
+	 *
+	 * @return true if it is the first login, false if not
+	 */
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+
+	/**
+	 * Change to false when the user make the fist login
+	 *
+	 * @param firstLogin
+	 */
+	public void setFirstLogin(boolean firstLogin) {
+		
+		this.firstLogin = firstLogin;
 	}
 
 	/**
