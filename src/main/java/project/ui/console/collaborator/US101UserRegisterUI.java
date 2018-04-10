@@ -175,9 +175,9 @@ public class US101UserRegisterUI {
 			System.out.println();
 			System.out.println("-------- A numeric verification code has been sent to the e-mail address you provided. -------");
 			System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
-			SendSMS sms = new SendSMS();
-			sms.sendMessage("ola", phone);
-			us101RegisterUserController.sendVerificationCode(email);
+			//SendSMS sms = new SendSMS();
+			//sms.sendMessage("ola", phone);
+			//us101RegisterUserController.sendVerificationCode(email);
 			System.out.println();
 			String codeInsert = scannerInput.nextLine();
 			if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsert, email)){
