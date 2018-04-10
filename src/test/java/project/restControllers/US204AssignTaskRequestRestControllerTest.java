@@ -112,7 +112,6 @@ public class US204AssignTaskRequestRestControllerTest {
         taskTwo = taskService.createTask("Rest Controller Test", projectOne);
         taskIdTwo = "1.2";
 
-
         // add users to projectOne creating a project collaborator for each
         projCollabTwo = projectService.createProjectCollaborator(userTwo, projectOne, 20);
         projCollabThree = projectService.createProjectCollaborator(userThree, projectOne, 60);
@@ -205,6 +204,61 @@ public class US204AssignTaskRequestRestControllerTest {
         assertEquals(expected,result);
 
     }
+
+    @Test
+    public  void retriveAllRequest() throws Exception {
+        //Given
+        //Create taskTeam requests.
+        taskOne.addProjectCollaboratorToTask(projCollabTwo);
+        taskOne.addProjectCollaboratorToTask(projCollabThree);
+        taskOne.createTaskAssignmentRequest(projCollabTwo);
+        taskOne.createTaskRemovalRequest(projCollabThree);
+
+        ResponseEntity<?> result = controller.getAllRequests(taskIdOne, projectId, userTwoEmail);
+
+        //Then
+        //expects OK message
+        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getPendingTaskTeamRequests(), HttpStatus.OK);
+        assertEquals(expected,result);
+
+    }
+
+    @Test
+    public  void retriveAllAssignementRequest() throws Exception {
+        //Given
+        //Create taskTeam requests.
+        taskOne.addProjectCollaboratorToTask(projCollabTwo);
+        taskOne.addProjectCollaboratorToTask(projCollabThree);
+        taskOne.createTaskAssignmentRequest(projCollabTwo);
+        taskOne.createTaskRemovalRequest(projCollabThree);
+
+        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "assignment", projectId, userTwoEmail);
+
+        //Then
+        //expects OK message
+        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getPendingTaskAssignmentRequests(), HttpStatus.OK);
+        assertEquals(expected,result);
+
+    }
+
+    @Test
+    public  void retriveAllRemovalRequest() throws Exception {
+        //Given
+        //Create taskTeam requests.
+        taskOne.addProjectCollaboratorToTask(projCollabTwo);
+        taskOne.addProjectCollaboratorToTask(projCollabThree);
+        taskOne.createTaskAssignmentRequest(projCollabTwo);
+        taskOne.createTaskRemovalRequest(projCollabThree);
+
+        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "removal", projectId, userTwoEmail);
+
+        //Then
+        //expects OK message
+        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getPendingTaskRemovalRequests(), HttpStatus.OK);
+        assertEquals(expected,result);
+
+    }
+
 
 
 

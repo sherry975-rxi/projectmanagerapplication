@@ -51,7 +51,7 @@ public class US204AssignTaskRequestRestController {
     }
 
     @RequestMapping(value = "/requests/{reqType}" , method = RequestMethod.GET)
-    public ResponseEntity<?> getAllAssignementRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @RequestHeader String userEmail) {
+    public ResponseEntity<?> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @RequestHeader String userEmail) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Project project = projectService.getProjectById(projectId);
