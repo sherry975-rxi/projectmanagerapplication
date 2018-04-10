@@ -854,7 +854,7 @@ public class TaskService {
 
 
 	/**
-	 * This method displays all Project task assignment requests from a given project
+	 * This method displays all Project task removal requests from a given project
 	 *
 	 * @param project
 	 * @return
