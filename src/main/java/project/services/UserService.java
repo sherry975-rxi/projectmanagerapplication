@@ -128,6 +128,15 @@ public class UserService {
 		// Set answer
 		newUser.setAnswer(userDTO.getAnswer());
 
+		//Creates a new CodeGenerator instance
+		CodeGenerator codeGenerator = new CodeGenerator();
+
+		//Creates a new code
+		String generatedCode = codeGenerator.generateCode();
+
+		//Sets the generated code to the created user
+		newUser.setGeneratedCode(generatedCode);
+
 		// Adds the user to User repository
 		this.addUserToUserRepositoryX(newUser);
 

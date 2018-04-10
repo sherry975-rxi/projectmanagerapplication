@@ -46,6 +46,9 @@ public class User implements Serializable {
 	private boolean hasLoggedIn;
 	private String question;
 	private String answer;
+	private String generatedCode;
+	private boolean firstLogin;
+
 	/**
 	 * Empty Constructor for User
 	 */

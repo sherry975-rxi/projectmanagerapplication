@@ -37,7 +37,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
 
         switch (choice) {
             case "1":
-                //controller.smsAuthentication();
+                controller.smsAuthentication();
 
                 System.out.println("Please enter the code sent to the associated phone number:");
                 String code = input.nextLine();
@@ -57,7 +57,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
                 break;
 
             case"3":
-              //  controller.emailAuthentication();
+                controller.emailAuthentication();
 
                 System.out.println("");
 
