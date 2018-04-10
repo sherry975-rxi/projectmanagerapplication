@@ -16,6 +16,12 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     private String code;
 
+    SMSMessage sender = new SMSMessage();
+
+    SendEmail emailSender = new SendEmail();
+
+    CodeGenerator codeGenerator = new CodeGenerator();
+
     public US105CreatePasswordAndAuthenticationMechanismController() {
         //Empty constructor created for JPA integration tests
 
@@ -58,25 +64,23 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
     }
 
     public void smsAuthentication(String phone) {
-        String code = CodeGenerator.generateCode();
+
+        String code = codeGenerator.generateCode();
         this.code = code;
 
-        SMSMessage sender = new SMSMessage();
         sender.sendMessage(code, phone);
 
     }
 
     public void emailAuthentication(String email) {
 
-        String code = CodeGenerator.generateCode();
+        String code = codeGenerator.generateCode();
         this.code = code;
         EmailMessage emsg = new EmailMessage();
 
         emsg.setSubject("Validation Code!");
         emsg.setEmailAddress(email);
         emsg.setBody("Please enter this code to validate your account:\n\n" + code);
-
-        SendEmail emailSender = new SendEmail();
 
         try {
             emailSender.sendmail(emsg);

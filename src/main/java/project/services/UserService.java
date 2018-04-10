@@ -82,7 +82,7 @@ public class UserService {
 
 		CodeGenerator code = new CodeGenerator();
 
-        newUser.setGeneratedCode(CodeGenerator.generateCode());
+        newUser.setGeneratedCode(code.generateCode());
 
 		userRepository.save(newUser);
 
