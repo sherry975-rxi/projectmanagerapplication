@@ -1,22 +1,19 @@
 package project.model;
 
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
 
 
-//@RestController
 public class SendEmail {
 
 
     private String senderEmail = "isepswitch3@gmail.com";
-    private String senderPassword = "Switch_Isep2018";
+    private String senderPass = "Switch_Isep2018";
 
     /**
      * This method sends an email to the recipient with the intended message
@@ -37,7 +34,7 @@ public class SendEmail {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(senderEmail, senderPassword);
+                        return new PasswordAuthentication(senderEmail, senderPass);
                     }
                 });
 
