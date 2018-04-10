@@ -3,6 +3,7 @@ package project.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.model.*;
+import project.model.costCalculationInterface.*;
 import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.TaskRepository;
@@ -911,8 +912,11 @@ public class TaskService {
     }
 
     /**
+	 *
      * This is a utility method that recieves a list of project collaborators belonging to the creator of a report, and returns the latest instance
      *
+	 * DEPRECATED
+	 *
      * @param collaborators
      * @return
      */
@@ -926,6 +930,33 @@ public class TaskService {
         }
 
         return lastInstance;
+    }
+
+
+    public void calculateReportCost(Project project) {
+        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
+
+        CostCalculationInterface calculationMethod = chooseCalculationMethod(project);
+
+        for(Report other : reports) {
+            calculationMethod.updateCalculationMethod(other, getAllCollaboratorInstancesFromReport(other));
+        }
+
+        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
+	}
+
+
+	public CostCalculationInterface chooseCalculationMethod(Project project) {
+        switch(project.getCalculationMethod()) {
+            case 1:
+                return new FirstCollaboratorCost();
+            case 2:
+                return new LastCollaboratorCost();
+            case 3:
+                return new FirstAndLastCollaboratorCost();
+            default:
+                return new AverageCollaboratorCost();
+        }
     }
 
 

@@ -11,4 +11,5 @@ public interface CostCalculationInterface {
     void updateCalculationMethod(Report report, List<ProjectCollaborator> collabsList);
 
 
+
 }
