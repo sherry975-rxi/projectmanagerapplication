@@ -3,6 +3,7 @@ package project.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import project.dto.UserDTO;
+import project.model.CodeGenerator;
 import project.model.EmailMessage;
 import project.model.SendEmail;
 import project.model.User;
@@ -14,6 +15,9 @@ import javax.mail.MessagingException;
 public class US101RegisterUserController {
 	@Autowired
 	private UserService userService;
+
+	private CodeGenerator codeGenerator;
+	private String generatedCode;
 
 	public US101RegisterUserController() {
 		//Empty constructor created for JPA integration tests
@@ -74,7 +78,8 @@ public class US101RegisterUserController {
 		emailMessage.setSubject(emailSubject);
 
 		String message = "This the code you should provide for register in Project Management App:  ";
-		String generatedCode = user.getGeneratedCode();
+		codeGenerator = new CodeGenerator();
+		generatedCode = codeGenerator.generateCode();
 		emailMessage.setBody(message + generatedCode);
 
 		sendEmail.sendMail(emailMessage);
@@ -84,7 +89,7 @@ public class US101RegisterUserController {
 
 		User user = userService.getUserByEmail(recipientEmail);
 
-		Boolean doCodesMatch = user.doesCodeGeneratedMatch(codeToCheck);
+		Boolean doCodesMatch = this.codeGenerator.doesCodeGeneratedMatch(codeToCheck);
 
 		if (!doCodesMatch){
 			userService.deleteUser(recipientEmail);
@@ -121,6 +126,7 @@ public class US101RegisterUserController {
 	public boolean isEmailValidController(String email) {
 		return this.userService.isEmailAddressValid(email);
 	}
+
 
 
 }
