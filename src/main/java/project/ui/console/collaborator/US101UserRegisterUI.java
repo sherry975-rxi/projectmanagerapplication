@@ -16,7 +16,7 @@ public class US101UserRegisterUI {
 	@Autowired
 	private US101RegisterUserController registerUsercontroller1;
 
-	public void userRegister() {
+	public void userRegister() throws Exception{
 		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
 
@@ -172,6 +172,7 @@ public class US101UserRegisterUI {
 					district, country);
 			System.out.println();
 			System.out.println("-----REGISTER SUCCESSFUL-----");
+			registerUsercontroller1.sendVerificationCode(email);
 			System.out.println();
 
 		} else { // In case user choose "n".

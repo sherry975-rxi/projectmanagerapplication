@@ -2,16 +2,18 @@ package project.model;
 
 public class EmailMessage {
 
-    private String toAddress;
+    private String emailAddress;
     private String subject;
     private String body;
 
-    public String getToAddress() {
-        return toAddress;
+
+
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setToAddress(String toAddress) {
-        this.toAddress = toAddress;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getSubject() {

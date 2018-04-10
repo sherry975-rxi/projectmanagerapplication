@@ -1,9 +1,11 @@
 package project.services;
 
+import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.UserDTO;
 import project.model.Address;
+import project.model.CodeGenerator;
 import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
@@ -80,6 +82,10 @@ public class UserService {
 
 		newUser.addAddress(newAddress);
 
+		CodeGenerator code = new CodeGenerator();
+
+		newUser.setGeneratedCode(code.generateCode());
+
 		userRepository.save(newUser);
 
 		return newUser;
@@ -113,9 +119,29 @@ public class UserService {
 		// Set answer
 		newUser.setAnswer(userDTO.getAnswer());
 
+		//Creates a new CodeGenerator instance
+		CodeGenerator codeGenerator = new CodeGenerator();
+
+		//Creates a new code
+		String generatedCode = codeGenerator.generateCode();
+
+		//Sets the generated code to the created user
+		newUser.setGeneratedCode(generatedCode);
+
 		// Adds the user to User repository
 		this.addUserToUserRepositoryX(newUser);
 
+	}
+
+	/**
+	 * If User exists in DB, it will be deleted. If it exists, nothing happens
+	 * @param emailToDeleteUser Email of User to delete
+	 */
+	public void deleteUser(String emailToDeleteUser){
+
+		if(this.userRepository.existsByEmail(emailToDeleteUser)){
+			this.userRepository.deleteByEmail(emailToDeleteUser);
+		}
 	}
 
 	/**
@@ -295,6 +321,13 @@ public class UserService {
 	public boolean isUserinUserContainer(User addedUser) {
 
 		return this.userRepository.existsByEmail(addedUser.getEmail());
+	}
+
+	public boolean isUserEmailInUserContainer(String email){
+		boolean doesContainerHasEmail = false;
+
+		doesContainerHasEmail = this.userRepository.existsByEmail(email);
+		return doesContainerHasEmail;
 	}
 
 }

@@ -14,23 +14,17 @@ import java.util.Properties;
 //@RestController
 public class SendEmail {
 
-    //@Value("{gmail.usernmae}")
-    private String username = "joao.mscr.leite@gmail.com";
-    //@Value("{gmail.password}")
-    private String passToUse = "252646816-Cinco";
 
+    private String senderEmail = "isepswitch3@gmail.com";
+    private String senderPassword = "Switch_Isep2018";
 
-    //@RequestMapping(value="/send", method = RequestMethod.POST)
-
-    public String sendEmail(@RequestBody EmailMessage emailMessage) throws AddressException, MessagingException {
-
-        sendmail(emailMessage);
-        return "Email sent successfully";
-
-    }
-
-    private void sendmail(EmailMessage emailmessage) throws AddressException, MessagingException {
-
+    /**
+     * This method sends an email to the recipient with the intended message
+     * @param emailmessage email address,email subject and email content to send to recipient
+     * @throws AddressException
+     * @throws MessagingException
+     */
+    public void sendmail(EmailMessage emailmessage) throws AddressException, MessagingException {
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -39,30 +33,30 @@ public class SendEmail {
         props.put("mail.smtp.port", "587");
 
 
+        //authenticates sender's email and password
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, passToUse);
+                        return new PasswordAuthentication(senderEmail, senderPassword);
                     }
                 });
 
-
+        //Email sender
         Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(username, false));
+        msg.setFrom(new InternetAddress(senderEmail, false));
 
-        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("rita_silverio@hotmail.com"));
-        msg.setSubject("teste");
-        msg.setContent("Funciona?", "text/html");
+        //recipient email address
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailmessage.getEmailAddress()));
+        //Email subject
+        msg.setSubject(emailmessage.getSubject());
+        //Email context
+        msg.setContent(emailmessage.getBody(), "text/html");
+        //Email date
         msg.setSentDate(new Date());
 
-        MimeBodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setContent(emailmessage.getBody(), "text/html");
 
-
-        //NEXT PART IS TO SEND ATTACHMENTS
+        //In case one wants to send an attachment
 	/*
-
-
 	Multipart multipart = new MimeMultipart();
 	multipart.addBodyPart(messageBodyPart);
 	MimeBodyPart attachPart = new MimeBodyPart();
@@ -71,14 +65,8 @@ public class SendEmail {
 
 	multipart.addBodyPart(attachPart);
 	msg.setContent(multipart);
-
 	*/
-        // sends the e-mail
+        // Shifts the e-mail to recipient
         Transport.send(msg);
-
-
-
-
-
     }
 }
