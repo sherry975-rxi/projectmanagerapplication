@@ -810,7 +810,7 @@ public class TaskService {
      *
      * @param project
      */
-    public void calculateReportCost(Project project) {
+    public void calculateReportEffortCost(Project project) {
         List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
 
         CostCalculationInterface calculationMethod = chooseCalculationMethod(project);

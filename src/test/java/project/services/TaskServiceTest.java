@@ -948,7 +948,7 @@ public class TaskServiceTest {
         assertEquals(20, secondReport.getCost(), 0.01);
 
         // when the report cost is calculated and updated
-        victim.calculateReportCost(project);
+        victim.calculateReportEffortCost(project);
 
         // then it shoulde remain unchanged
         assertEquals(10, firstReport.getCost(), 0.01);
@@ -956,7 +956,7 @@ public class TaskServiceTest {
 
         // when the project is set to Last Collaborator for each report, and the cost calculated
         project.setCalculationMethod(Project.LAST_COLLABORATOR);
-        victim.calculateReportCost(project);
+        victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 20
         assertEquals(20, firstReport.getCost(), 0.01);
@@ -964,7 +964,7 @@ public class TaskServiceTest {
 
         // when the project is set to First/Last Collaborator average for each report, and the cost calculated
         project.setCalculationMethod(Project.FIRST_LAST_COLLABORATOR);
-        victim.calculateReportCost(project);
+        victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 15
         assertEquals(15, firstReport.getCost(), 0.01);
@@ -972,7 +972,7 @@ public class TaskServiceTest {
 
         // when the project is set to Collaborator cost average for each report, and the cost calculated
         project.setCalculationMethod(Project.AVERAGE_COLLABORATOR);
-        victim.calculateReportCost(project);
+        victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 15
         assertEquals(15, firstReport.getCost(), 0.01);
@@ -991,7 +991,7 @@ public class TaskServiceTest {
 
         // when the project is set to First/Last Collaborator average for each report, and the cost calculated
         project.setCalculationMethod(Project.FIRST_LAST_COLLABORATOR);
-        victim.calculateReportCost(project);
+        victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 15
         assertEquals(15, firstReport.getCost(), 0.01);
@@ -999,7 +999,7 @@ public class TaskServiceTest {
 
         // when the project is set to Collaborator cost average for each report, and the cost calculated
         project.setCalculationMethod(Project.AVERAGE_COLLABORATOR);
-        victim.calculateReportCost(project);
+        victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 33.33 (10+20+70)/3
         assertEquals(33.33, firstReport.getCost(), 0.01);
