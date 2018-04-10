@@ -66,11 +66,12 @@ public class RunConsole implements CommandLineRunner {
 		userRepository.save(projectManager);
 
 		LoadUser loadUserDb = loadUserFactory.getLoadUserType("Utilizador_v00_Dt1.xml");
-		loadUserDb.loadUsers("Utilizador_v00_Dt1.xml");
-
+		loadUserDb.usersReader("Utilizador_v00_Dt1.xml");
+		
 		LoadProject loadProjectDb = loadProjectFactory.getReader("Projeto_v00_Dt1.xml");
 
     	loadProjectDb.readProjectFile("Projeto_v00_Dt1.xml");
+
 
 
     	//Test sending an email
