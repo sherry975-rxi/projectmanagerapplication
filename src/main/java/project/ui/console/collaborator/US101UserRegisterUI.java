@@ -109,6 +109,23 @@ public class US101UserRegisterUI {
 		System.out.println("Password accepted!");
 		System.out.println();
 
+		System.out.println("Please choose an identity verification question: ");
+		String question1 = "What is the name of the first pet?";
+		String question2 = "What elementary school did you attend?";
+		String question3 = "Where did you go for your honeymoon?";
+		System.out.println("[1] " + question1);
+		System.out.println("[2] " + question2);
+		System.out.println("[3] " + question3);
+		String question = scannerInput.nextLine();
+		while (!("1".equals(question)) && !("2".equals(question)) && !("3".equals(question))) {
+			System.out.println("\nInvalid question. Try again");
+			question = scannerInput.nextLine();
+		}
+
+		System.out.println("Please answer the selected question: \n");
+		String questionAnswer = scannerInput.nextLine().toUpperCase();
+		System.out.println();
+
 		System.out.println("Enter street: ");
 		String street = scannerInput.nextLine();
 		System.out.println("Street accepted: " + street);
@@ -154,7 +171,7 @@ public class US101UserRegisterUI {
 
 		if ("y".equalsIgnoreCase(confirm)) {
 			us101RegisterUserController.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city,
-					district, country);
+					district, country, "Question?", "Answer");
 			System.out.println();
 			System.out.println("-------- A numeric verification code has been sent to the e-mail address you provided. -------");
 			System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");

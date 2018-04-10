@@ -370,21 +370,11 @@ public class UserTest {
     }
 
     @Test
-    public void isFirstLogin() {
+    public void hasPasswordTest() {
 
         User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
-        assertTrue(u1.isFirstLogin());
-    }
-
-    @Test
-    public void setFirstLogin() {
-
-        User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
-
-        u1.setFirstLogin(false);
-
-        assertFalse(u1.isFirstLogin());
+        assertFalse(u1.hasPassword());
     }
 
 }

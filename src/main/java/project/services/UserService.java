@@ -1,6 +1,5 @@
 package project.services;
 
-import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.UserDTO;
@@ -9,7 +8,6 @@ import project.model.CodeGenerator;
 import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
-import project.services.exceptions.ObjectNotFoundException;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -84,7 +82,7 @@ public class UserService {
 
 		CodeGenerator code = new CodeGenerator();
 
-		newUser.setGeneratedCode(code.generateCode());
+        newUser.setGeneratedCode(code.generateCode());
 
 		userRepository.save(newUser);
 
@@ -113,14 +111,11 @@ public class UserService {
 		// Sets the user password
 		newUser.setPassword(userDTO.getPassword());
 
-		//Creates a new CodeGenerator instance
-		CodeGenerator codeGenerator = new CodeGenerator();
+		// Set the question
+		newUser.setQuestion(userDTO.getQuestion());
 
-		//Creates a new code
-		String generatedCode = codeGenerator.generateCode();
-
-		//Sets the generated code to the created user
-		newUser.setGeneratedCode(generatedCode);
+		// Set answer
+		newUser.setAnswer(userDTO.getAnswer());
 
 		// Adds the user to User repository
 		this.addUserToUserRepositoryX(newUser);
@@ -187,7 +182,7 @@ public class UserService {
 		
 		Optional<User> user = this.userRepository.findByEmail(email);
 		
-		return user.orElseThrow(() -> new ObjectNotFoundException("User not found! The email " + email + " does not exist."));
+		return user.orElse(null);
 	}
 
 	/**

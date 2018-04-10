@@ -13,7 +13,7 @@ public class SendEmail {
 
 
     private String senderEmail = "isepswitch3@gmail.com";
-    private String senderPass = "Switch_Isep2018";
+    private String senderPassword = "Switch_Isep2018";
 
     /**
      * This method sends an email to the recipient with the intended message
@@ -34,7 +34,7 @@ public class SendEmail {
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(senderEmail, senderPass);
+                        return new PasswordAuthentication(senderEmail, senderPassword);
                     }
                 });
 
