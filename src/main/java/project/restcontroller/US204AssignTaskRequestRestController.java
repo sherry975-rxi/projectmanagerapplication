@@ -33,20 +33,8 @@ public class US204AssignTaskRequestRestController {
         this.projectService = projectService;
     }
 
-
-    /**
-     * This method allows the collaborator to create a request of assignment to a specific task.
-     *
-     * @param taskId
-     *          Task id associated to the task to be made the request
-     * @param projectId
-     *          Project id associated to the project where the task belongs
-     * @param userEmail
-     *          User email related to the collaborator that wants to make the request.
-     * @return ResponseEntity
-     */
-    @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
+    @RequestMapping(value = "/requests" , method = RequestMethod.GET)
+    public ResponseEntity<?> getAllRequests (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Project project = projectService.getProjectById(projectId);
@@ -55,12 +43,61 @@ public class US204AssignTaskRequestRestController {
 
         User user = userService.getUserByEmail(userEmail);
 
+
+
+        result = new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
+
+        return result;
+    }
+
+    @RequestMapping(value = "/requests/{reqType}" , method = RequestMethod.GET)
+    public ResponseEntity<?> getAllAssignementRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @RequestHeader String userEmail) {
+        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        Project project = projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        User user = userService.getUserByEmail(userEmail);
+
+        if ("assignment".equals(reqType)){
+
+            result = new ResponseEntity<>(task.getPendingTaskAssignmentRequests(), HttpStatus.OK);
+        }
+        else if ("removal".equals(reqType)){
+
+            result = new ResponseEntity<>(task.getPendingTaskRemovalRequests(), HttpStatus.OK);
+        }
+
+        return result;
+    }
+
+    /**
+     * This method allows the collaborator to create a request of assignment to a specific task.
+     *
+     * @param taskId
+     *          Task id associated to the task to be made the request
+     * @param projectId
+     *          Project id associated to the project where the task belongs
+     * @param userReg
+     *          User email related to the collaborator that wants to make the request.
+     * @return ResponseEntity
+     */
+    @RequestMapping(value = "/requests/assignmentRequest" , method = RequestMethod.POST)
+    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestBody User userReg){
+        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        Project project = projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        String userEmail = userReg.getEmail();
+        User user = userService.getUserByEmail(userEmail);
+
             if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, project))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, project))){
                 this.taskService.saveTask(task);
                 result = new ResponseEntity<>(HttpStatus.OK);
             }
-
-
         return result;
     }
 }

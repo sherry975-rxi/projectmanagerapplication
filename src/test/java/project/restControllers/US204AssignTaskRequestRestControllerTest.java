@@ -152,7 +152,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //When
         //creating assignment request to taskOne from userTwo
-        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail);
+        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwo);
 
         //Then
         // It is expected to be successfully created
@@ -167,18 +167,19 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //Given
         //Assignment Request created for userTwo
+        /*
         mockMvc.perform(
                 post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("userEmail", userTwoEmail))
                 .andReturn().getResponse();
-
-/*        //or could be created calling the method of the rest controller
-        controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail)*/
+        */
+        //or could be created calling the method of the rest controller
+        controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwo);
 
         //When
         // Creating again assignment request that already exists for userTwo
-        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail);
+        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwo);
 
         //Then
         //expects Forbidden message
@@ -196,7 +197,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //When
         // Create assignment request for userTwo but already is added to taskOne
-        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoEmail);
+        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwo);
 
         //Then
         //expects Forbidden message
