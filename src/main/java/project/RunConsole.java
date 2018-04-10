@@ -35,23 +35,33 @@ public class RunConsole implements CommandLineRunner {
 		User userAdmin = userService.createUser("Teresa Ribeiro", "admin@gmail.com", "001",
 				"Administrator", "917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userAdmin.setPassword("123456");
+		userAdmin.setQuestion("1");
+		userAdmin.setAnswer("test answer");
 
 		User userDirector = userService.createUser("Roberto Santos", "director@gmail.com", "002",
 				"Director", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userDirector.setPassword("abcdef");
+		userAdmin.setQuestion("2");
+		userAdmin.setAnswer("test answer");
 
 		User userJMatos = userService.createUser("Jorge Matos", "jmatos@gmail.com", "010", "Comercial",
 				"937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userJMatos.setPassword("switch");
+		userAdmin.setQuestion("3");
+		userAdmin.setAnswer("test answer");
 
 		User userATirapicos = userService.createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
 				"Comercial", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Porto", "Portugal");
 		userATirapicos.setPassword("tirapicos");
+		userAdmin.setQuestion("1");
+		userAdmin.setAnswer("test answer");
 
 		User projectManager = userService.createUser("Sara Pereira", "spereira@gmail.com", "012",
 				"Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
 				"Portugal");
 		projectManager.setPassword("manager");
+		userAdmin.setQuestion("2");
+		userAdmin.setAnswer("test answer");
 
 
 		userDirector.setUserProfile(Profile.DIRECTOR);

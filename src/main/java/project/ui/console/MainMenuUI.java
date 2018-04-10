@@ -29,8 +29,6 @@ public class MainMenuUI {
 	private DirectorMenuUI directorMenu;
 	@Autowired
 	private CollaboratorMainMenuUI collaboratorMenu;
-	@Autowired
-	private US105CreatePasswordAndAuthenticationMechanismUI authenticationMechanismUI;
 
 	private static User userAdmin;
 	private static User userDirector;
@@ -105,9 +103,7 @@ public class MainMenuUI {
 						System.out.println();
 					    System.out.println("Welcome to Project Management, " + loggedIn.getName());
                     }
-                    if(!(loggedIn.hasPassword())) {
-						authenticationMechanismUI.changePassword(loggedIn);
-					}
+
 					break;
 				case "3":
 					adminMenu.setAdminLoggedIn(userAdmin);
@@ -131,9 +127,6 @@ public class MainMenuUI {
 					System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
 					break;
 
-				case "H":
-					authenticationMechanismUI.changePassword(myUser);
-					break;
 				default:
 					System.out.println("Choose a valid option:");
 					break;
