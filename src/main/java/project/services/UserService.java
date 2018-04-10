@@ -113,15 +113,6 @@ public class UserService {
 		// Sets the user password
 		newUser.setPassword(userDTO.getPassword());
 
-		//Creates a new CodeGenerator instance
-		CodeGenerator codeGenerator = new CodeGenerator();
-
-		//Creates a new code
-		String generatedCode = codeGenerator.generateCode();
-
-		//Sets the generated code to the created user
-		newUser.setGeneratedCode(generatedCode);
-
 		// Set the question
 		newUser.setQuestion(userDTO.getQuestion());
 
