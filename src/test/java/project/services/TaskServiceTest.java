@@ -115,6 +115,7 @@ public class TaskServiceTest {
         this.taskCollaborator2 = new TaskCollaborator(new ProjectCollaborator(user, 10));
         this.taskCollaborator3 = new TaskCollaborator(new ProjectCollaborator(user2, 20));
 
+        /*
         this.reportDate = Calendar.getInstance();
         this.reportDate.set(Calendar.YEAR, 2017);
         this.reportDate.set(Calendar.MONTH, Calendar.MARCH);
@@ -127,10 +128,8 @@ public class TaskServiceTest {
         this.reportDate2.set(Calendar.MONTH, Calendar.JUNE);
         this.reportDate2.set(Calendar.DAY_OF_MONTH, 10);
         this.reportDate2.set(Calendar.HOUR_OF_DAY, 15);
-        this.reportB = new Report(taskCollaborator, reportDate2);
-
-
-
+        this.reportB = new Report(taskCollaborator2, reportDate2);
+*/
     }
 
     /**
@@ -841,83 +840,94 @@ public class TaskServiceTest {
     @Test
     public void testFindEarliestCollaborator(){
 
-        taskMock = new Task("test", project);
-
         List<ProjectCollaborator> collaborators = new ArrayList<>();
-        collaborators.add(projectCollaborator);
         collaborators.add(projectCollaborator2);
-        collaborators.add(projectCollaborator3);
+        collaborators.add(projectCollaborator);
 
         taskMock.addProjectCollaboratorToTask(projectCollaborator);
         taskMock.addProjectCollaboratorToTask(projectCollaborator2);
-        taskMock.addProjectCollaboratorToTask(projectCollaborator3);
 
-        Calendar oneMonthAgo = Calendar.getInstance();
-        oneMonthAgo.add(Calendar.MONTH, -1);
-        Calendar twoMonthsAgo = Calendar.getInstance();
-        twoMonthsAgo.add(Calendar.MONTH, -2);
-        Calendar threeMonthsAgo = Calendar.getInstance();
-        threeMonthsAgo.add(Calendar.MONTH, -3);
-        Calendar fourMonthsAgo = Calendar.getInstance();
-        fourMonthsAgo.add(Calendar.MONTH, -4);
+        taskCollaborator = new TaskCollaborator (projectCollaborator);
+        taskCollaborator2 = new TaskCollaborator(projectCollaborator2);
 
-        Report reportB = new Report();
-        reportB.setTask(taskMock);
-        reportB.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
-        reportB.setFirstDateOfReport(threeMonthsAgo);
+        //verify if projectCollaborator and projectCollaborator2 are identified as belonging to user
+       assertEquals(user, projectCollaborator.getUserFromProjectCollaborator());
+       assertEquals(user, projectCollaborator2.getUserFromProjectCollaborator());
 
-        Report reportA= new Report();
-        reportA.setTask(taskMock);
-        reportA.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
-        reportA.setFirstDateOfReport(fourMonthsAgo);
+       Calendar reportA = Calendar.getInstance();
+       reportA.set(Calendar.YEAR, 2017);
+       reportA.set(Calendar.MONTH, Calendar.MARCH);
+       reportA.set(Calendar.DAY_OF_MONTH, 10);
 
-        assertEquals(projectCollaborator2, victim.findEarliestCollaborator(collaborators));
+       projectCollaborator.setStartDate(reportA);
+
+       Calendar reportB = Calendar.getInstance();
+       reportB.add(Calendar.DAY_OF_YEAR, +30); //Adds 30 days to the reportA
+       projectCollaborator2.setStartDate(reportB);
+
+        //verifies that the start date in report A is earlier that the start date in report B,
+        //therefore projectCollaborator is the earliest collaborator
+       assertTrue(reportA.before(reportB));
+
+       //verifies that the start dates for both projectCollaborators are different
+       //collaborator
+
+       assertFalse(projectCollaborator.getStartDate().equals(reportB));
+
+       assertEquals(projectCollaborator.getStartDate().get(Calendar.DAY_OF_YEAR),
+               victim.findEarliestCollaborator(collaborators).getStartDate().get(Calendar.DAY_OF_YEAR));
 
 
     }
+
 
     /**
      * This test confirms that the method findLatestCollaborator() will return the last
      * project collaborator that provided a task report
      */
+
     @Test
     public void testFindLatestCollaborator(){
 
-        taskMock = new Task("test", project);
-
         List<ProjectCollaborator> collaborators = new ArrayList<>();
-        collaborators.add(projectCollaborator);
         collaborators.add(projectCollaborator2);
-        collaborators.add(projectCollaborator3);
+        collaborators.add(projectCollaborator);
 
         taskMock.addProjectCollaboratorToTask(projectCollaborator);
         taskMock.addProjectCollaboratorToTask(projectCollaborator2);
-        taskMock.addProjectCollaboratorToTask(projectCollaborator3);
 
-        Calendar oneMonthAgo = Calendar.getInstance();
-        oneMonthAgo.add(Calendar.MONTH, -1);
-        Calendar twoMonthsAgo = Calendar.getInstance();
-        twoMonthsAgo.add(Calendar.MONTH, -2);
-        Calendar threeMonthsAgo = Calendar.getInstance();
-        threeMonthsAgo.add(Calendar.MONTH, -3);
-        Calendar fourMonthsAgo = Calendar.getInstance();
-        fourMonthsAgo.add(Calendar.MONTH, -4);
+        taskCollaborator = new TaskCollaborator (projectCollaborator);
+        taskCollaborator2 = new TaskCollaborator(projectCollaborator2);
 
-        Report reportB = new Report();
-        reportB.setTask(taskMock);
-        reportB.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
-        reportB.setFirstDateOfReport(threeMonthsAgo);
+        //verify if projectCollaborator and projectCollaborator2 are identified as belonging to user
+        assertEquals(user, projectCollaborator.getUserFromProjectCollaborator());
+        assertEquals(user, projectCollaborator2.getUserFromProjectCollaborator());
 
-        Report reportA= new Report();
-        reportA.setTask(taskMock);
-        reportA.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
-        reportA.setFirstDateOfReport(fourMonthsAgo);
+        Calendar reportA = Calendar.getInstance();
+        reportA.set(Calendar.YEAR, 2017);
+        reportA.set(Calendar.MONTH, Calendar.MARCH);
+        reportA.set(Calendar.DAY_OF_MONTH, 10);
 
-        assertEquals(projectCollaborator, victim.findLatestCollaborator(collaborators));
+        projectCollaborator.setStartDate(reportA);
+
+        Calendar reportB = Calendar.getInstance();
+        reportB.add(Calendar.DAY_OF_YEAR, +30); //Adds 30 days to the reportA
+        projectCollaborator2.setStartDate(reportB);
+
+        //verifies that the start date in report A is earlier that the start date in report B,
+        //therefore projectCollaborator is the earliest collaborator
+        assertTrue(reportA.before(reportB));
+
+        //verifies that the start dates for both projectCollaborators are different
+        //collaborator
+
+        assertFalse(projectCollaborator.getStartDate().equals(reportB));
+
+        assertEquals(projectCollaborator2.getStartDate().get(Calendar.DAY_OF_YEAR),
+                victim.findLatestCollaborator(collaborators).getStartDate().get(Calendar.DAY_OF_YEAR));
 
 
     }
-
     /**
      * This method tests the ability to find all collaborators from the same user in the project during the period of a single report
      */
