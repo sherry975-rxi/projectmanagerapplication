@@ -45,10 +45,10 @@ public class Project implements Serializable{
 	public static final int CLOSE = 5; // fecho
 
     // TODO implement Calculation Strategy interface
-	public static final int FIRST_COLLABORATOR = 0;
-	public static final int LAST_COLLABORATOR = 1;
-	public static final int FIRST_LAST_COLLABORATOR = 2;
-	public static final int AVERAGE_COLLABORATOR = 3;
+	public static final int FIRST_COLLABORATOR = 1;
+	public static final int LAST_COLLABORATOR = 2;
+	public static final int FIRST_LAST_COLLABORATOR = 3;
+	public static final int AVERAGE_COLLABORATOR = 4;
 
 
 	static final long serialVersionUID = 43L;
