@@ -77,7 +77,7 @@ public class US101RegisterUserController {
 		String generatedCode = user.getGeneratedCode();
 		emailMessage.setBody(message + generatedCode);
 
-		sendEmail.sendmail(emailMessage);
+		sendEmail.sendMail(emailMessage);
 	}
 
 	public Boolean doesCodeGeneratedMatch (String codeToCheck, String recipientEmail){

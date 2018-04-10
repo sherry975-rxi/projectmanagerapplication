@@ -3,7 +3,7 @@ package project.ui.console.collaborator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controllers.US101RegisterUserController;
-import project.model.SMSMessage;
+import project.model.SendSMS;
 
 import java.util.Scanner;
 
@@ -175,7 +175,7 @@ public class US101UserRegisterUI {
 			System.out.println();
 			System.out.println("-------- A numeric verification code has been sent to the e-mail address you provided. -------");
 			System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
-			SMSMessage sms = new SMSMessage();
+			SendSMS sms = new SendSMS();
 			sms.sendMessage("ola", phone);
 			us101RegisterUserController.sendVerificationCode(email);
 			System.out.println();

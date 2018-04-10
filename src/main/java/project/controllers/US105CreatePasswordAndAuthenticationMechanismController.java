@@ -16,7 +16,7 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     private String code;
 
-    SMSMessage sender = new SMSMessage();
+    SendSMS sender = new SendSMS();
 
     SendEmail emailSender = new SendEmail();
 
@@ -83,7 +83,7 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
         emsg.setBody("Please enter this code to validate your account:\n\n" + code);
 
         try {
-            emailSender.sendmail(emsg);
+            emailSender.sendMail(emsg);
         } catch (MessagingException e) {
             US105CreatePasswordAndAuthenticationMechanismUI.errorSendingEmail();
         }

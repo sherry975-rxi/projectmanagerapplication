@@ -36,7 +36,7 @@ public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
     US105CreatePasswordAndAuthenticationMechanismController controller;
 
     @Mock
-    SMSMessage smsMessage;
+    SendSMS smsMessage;
 
     @Mock
     SendEmail sendEmail;
@@ -113,7 +113,7 @@ public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
 
         controller.emailAuthentication("dsomonteiro@gmail.com");
 
-        verify(sendEmail, times(1)).sendmail(anyObject());
+        verify(sendEmail, times(1)).sendMail(anyObject());
 
     }
 
