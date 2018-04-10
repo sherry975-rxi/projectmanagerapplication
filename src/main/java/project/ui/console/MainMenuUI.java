@@ -61,9 +61,12 @@ public class MainMenuUI {
 
 		userDirector = userService.getAllUsersFromUserContainer().get(1);
 		userAdmin = userService.getAllUsersFromUserContainer().get(0);
-		noPasswordUser = new User ("Daniel", "dsomonteiro@gmail.com", "1", "function", "91000000" );
+		noPasswordUser = new User ("Daniel", "dsomonteiro@gmail.com", "1", "function", "+351937429087" );
+		noPasswordUser.setQuestion("1");
+		noPasswordUser.setAnswer("1");
 		userService.addUserToUserRepositoryX(noPasswordUser);
 		myUser = userService.createUser("Daniel", "dspereira93@hotmail.com", "id", "func", "+351937429087", "street", "zip", "city", "dist", "coun");
+		userService.addUserToUserRepositoryX(myUser);
 
 		displayOptions();
 	}
