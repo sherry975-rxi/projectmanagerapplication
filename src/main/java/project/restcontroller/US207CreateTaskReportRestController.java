@@ -9,11 +9,9 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -52,9 +50,6 @@ public class US207CreateTaskReportRestController {
 
         return new ResponseEntity<List<Report>>(userReportsList, HttpStatus.OK);
 
-
-
-
     }
 
     @RequestMapping(value = "/reportsString", method = RequestMethod.GET)
@@ -71,58 +66,51 @@ public class US207CreateTaskReportRestController {
             return new ResponseEntity<List<String>>(HttpStatus.NOT_FOUND);
         }
 
-
         List<String> reportsList = task.getReportsFromGivenUser(userEmail)
-                .stream().map(Report -> repDataToString(Report)).collect(Collectors.toList());
+                .stream().map(Report -> dateToString(Report)).collect(Collectors.toList());
 
         return new ResponseEntity<List<String>>(reportsList, HttpStatus.OK);
-
-
-
 
     }
 
 
     @RequestMapping(value = "/reports/" , method = RequestMethod.PUT)
-    public ResponseEntity<?> createTaskReport (@RequestBody Report reportDTO, @PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
+    public ResponseEntity<?> createTaskReport (@RequestBody Report reportDTO, @PathVariable String taskId, @PathVariable int projectId){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserByEmail(userEmail);
+        TaskCollaborator taskCollabDTO = reportDTO.getTaskCollaborator();
+        String userEmailDTO = taskCollabDTO.getProjCollaborator().getUserFromProjectCollaborator().getEmail();
 
-        TaskCollaborator taskCollab = reportDTO.getTaskCollaborator();
-
-        //TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmail);
+        TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmailDTO);
 
         Calendar dateOfReport = Calendar.getInstance();
 
         double timeReported = reportDTO.getReportedTime();
 
-        String time = Double.toString(timeReported);
-
-        System.out.println("Updating Task " + task.getTaskID());
-
-
-
 
         if(task.createReport(taskCollab, dateOfReport, timeReported)){
             this.taskService.saveTask(task);
-            System.out.println();
+
+            String time = Double.toString(timeReported);
+
+            System.out.println("Updating Task " + task.getTaskID());
+
+            User user = userService.getUserByEmail(userEmailDTO);
+
             result = ResponseEntity.status(HttpStatus.OK).body("Report created!\nINFO:" + "\nTask ID: " + task.getTaskID() +"\nDescription: " + task.getDescription() + "\nUser: " + user.getName() + "\nTime reported: " + time);
             //result = new ResponseEntity<>(HttpStatus.OK);
 
         }
 
-
         return result;
     }
 
 
-
-        public String repDataToString (Report rep){
+        public String dateToString(Report rep){
 
             Calendar firstDate = rep.getFirstDateOfReport();
 
@@ -136,31 +124,52 @@ public class US207CreateTaskReportRestController {
             return " Reported time: " + rep.getReportedTime() + " by " + rep.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getName() + " - Creation Date: " + datePrint + " - Update Date: " + datePrintTwo;
         }
 
+    @RequestMapping(value = "/reports/{reportId}", method = RequestMethod.PUT)
+    public ResponseEntity<Report> updateTaskReport(@RequestBody Report reportDTO, @PathVariable int reportId, @PathVariable String taskId, @PathVariable int projectId){
+
+        ResponseEntity<Report> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        Project project = projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        TaskCollaborator taskCollabDTO = reportDTO.getTaskCollaborator();
+        String userEmailDTO = taskCollabDTO.getProjCollaborator().getUserFromProjectCollaborator().getEmail();
+
+        TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmailDTO);
+
+        Calendar dateOfReport = Calendar.getInstance();
+
+        double newTimeReported = reportDTO.getReportedTime();
+
+        if(!task.doesTaskHaveReportByGivenUser(userEmailDTO)){
+
+            return new ResponseEntity<Report>(HttpStatus.NOT_FOUND);
+        }
+        else {
+
+
+            List<Report> taskReportsList = task.getReports();
+
+            for (int reportIndex = 0; reportIndex < taskReportsList.size(); reportIndex++) {
+                if (taskReportsList.get(reportIndex).getId() == reportId) {
+                    task.updateReportedTime(newTimeReported, taskCollab, reportIndex);
+                    Report reportUpdated = taskReportsList.get(reportIndex);
+                    reportUpdated.setDateOfUpdate(Calendar.getInstance());
+                    this.taskService.saveTask(task);
+
+                    return new ResponseEntity<Report>(reportUpdated, HttpStatus.OK);
+
+                }
+            }
+        }
+
+        return result;
 
 
 
-/*            List<Integer> reportsOfGivenUser;
 
-            reportsOfGivenUser = task.getReportsIndexOfTaskCollaborator(userEmail);
-
-            List<String> reportsList;
-
-            for(int i = 0; i < reportsOfGivenUser.size(); i++){
-                reportsList.add(reportsOfGivenUser.get(i).toString() + " - " + )
-            }*//*
-            return new ResponseEntity<List<String>>(HttpStatus.NO_CONTENT);
-}
-//        List<Integer> reportsOfGivenUser = task.getReportsIndexOfTaskCollaborator(userEmail);
-
-    List<Report> reportsList = task.getReportsFromGivenUser(userEmail)
-            .stream().map(Report -> repDataToString(Report).collect(Collectors.toList());
-
-
-
-        return new ResponseEntity<List<String>>(reportsList,HttpStatus.OK);*/
-
-
-
+    }
 
 
 }
