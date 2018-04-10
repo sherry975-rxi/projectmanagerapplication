@@ -97,8 +97,6 @@ public class US207CreateTaskReportRestController {
 
             String time = Double.toString(timeReported);
 
-            System.out.println("Updating Task " + task.getTaskID());
-
             User user = userService.getUserByEmail(userEmailDTO);
 
             result = ResponseEntity.status(HttpStatus.OK).body("Report created!\nINFO:" + "\nTask ID: " + task.getTaskID() +"\nDescription: " + task.getDescription() + "\nUser: " + user.getName() + "\nTime reported: " + time);
@@ -137,8 +135,7 @@ public class US207CreateTaskReportRestController {
         String userEmailDTO = taskCollabDTO.getProjCollaborator().getUserFromProjectCollaborator().getEmail();
 
         TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmailDTO);
-
-
+        
         double newTimeReported = reportDTO.getReportedTime();
 
         if(!task.doesTaskHaveReportByGivenUser(userEmailDTO)){
