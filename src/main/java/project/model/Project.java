@@ -35,7 +35,7 @@ public class Project implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-	private int calculationMethod;
+    private int calculationMethod;
 
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
@@ -82,6 +82,7 @@ public class Project implements Serializable{
 		this.effortUnit = EffortUnit.HOURS;
 		this.budget = 0;
 		this.status = PLANNING;
+		this.calculationMethod = FIRST_COLLABORATOR;
 		this.startdate = null;
 		this.finishdate = null;
 	}
@@ -101,6 +102,14 @@ public class Project implements Serializable{
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+    public int getCalculationMethod() {
+        return calculationMethod;
+    }
+
+    public void setCalculationMethod(int calculationMethod) {
+        this.calculationMethod = calculationMethod;
+    }
 
 
 	public void setName(String name) {
