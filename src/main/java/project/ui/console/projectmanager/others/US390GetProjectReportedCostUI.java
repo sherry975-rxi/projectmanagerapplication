@@ -17,11 +17,6 @@ public class US390GetProjectReportedCostUI {
 	@Autowired
 	private US390CalculateReportedProjectCostController controller;
 
-	public static final int FIRST_COLLABORATOR = 1;
-	public static final int LAST_COLLABORATOR = 2;
-	public static final int FIRST_LAST_COLLABORATOR = 3;
-	public static final int AVERAGE_COLLABORATOR = 4;
-
 	Scanner scannerInput;
 
 	public void displayProjectCost(Project project) {
@@ -48,8 +43,9 @@ public class US390GetProjectReportedCostUI {
 		System.out.println("");
 		System.out.println(line);
 
-        int calculationMethod = selectReportCostCalculation();
-        System.out.print(controller.selectReportCostCalculation(project, calculationMethod));
+        System.out.print(selectReportCostCalculation(project));
+        System.out.println("");
+        System.out.println(line);
 
 		System.out.println("     PROJECT COST");
 		System.out.println(line);
@@ -82,28 +78,34 @@ public class US390GetProjectReportedCostUI {
 		}
 	}
 
-	private int selectReportCostCalculation() {
+	private String selectReportCostCalculation(Project project) {
 		System.out.println("");
-		System.out.println("Should a single user have different costs through the same report, calculate using:");
-		System.out.println("");
+		System.out.println("Should a single user have different costs throughout the same report, calculate using:");
         System.out.println("[1] - The user's first cost");
         System.out.println("[2] - The user's last cost");
         System.out.println("[3] - Average between the users first and last cost");
 		System.out.println("[4] - Average between all of the user's costs");
-        System.out.println("[Any Key] - Keep Current");
+        System.out.println("[Any Key] - Keep Current (Currently: " + project.getCalculationMethod() + ")");
         System.out.println("");
         scannerInput = new Scanner(System.in);
 		char option = scannerInput.nextLine().charAt(0);
 
 		switch(option) {
             case '1':
-                return FIRST_COLLABORATOR;
+				controller.selectReportCostCalculation(project, Project.FIRST_COLLABORATOR);
+				return "Earliest Collaborator Cost Selected!";
             case '2':
-                return LAST_COLLABORATOR;
+				controller.selectReportCostCalculation(project, Project.LAST_COLLABORATOR);
+				return "Latest Collaborator Cost Selected!";
             case '3':
-                return FIRST_LAST_COLLABORATOR;
+				controller.selectReportCostCalculation(project, Project.FIRST_LAST_COLLABORATOR);
+				return "First/Last Average Cost Selected!";
+			case '4':
+				controller.selectReportCostCalculation(project, Project.AVERAGE_COLLABORATOR);
+				return "Average Collaborator Cost Selected!";
             default:
-                return AVERAGE_COLLABORATOR;
+				return "Cost calculation not changed.";
+
         }
 
 
