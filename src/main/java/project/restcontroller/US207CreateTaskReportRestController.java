@@ -21,7 +21,7 @@ public class US207CreateTaskReportRestController {
     private UserService userService;
     private TaskService taskService;
     private ProjectService projectService;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("d/MM/yyyy");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("d/MM/yyyy HH:mm");
 
     @Autowired
     public US207CreateTaskReportRestController(UserService userService, TaskService taskService, ProjectService projectService) {
