@@ -40,6 +40,7 @@ public class US101UserRegisterUI {
 		}
 
 		if ("y".equalsIgnoreCase(answer)) {
+
 			System.out.println();
 
 			System.out.println("Conditions accepted.");
@@ -154,13 +155,22 @@ public class US101UserRegisterUI {
 			us101RegisterUserController.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city,
 					district, country);
 			System.out.println();
-			System.out.println("-----REGISTER SUCCESSFUL-----");
+			System.out.println("-------- A numeric verification code has been sent to the e-mail address you provided. -------");
+			System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
 			us101RegisterUserController.sendVerificationCode(email);
 			System.out.println();
+			String codeInsert = scannerInput.nextLine();
+			if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsert, email)){
+			System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
+			} else {
+			System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
+			System.out.println("----- The numeric verification code that you provided is not correct. -----");
+			}
+
 
 		} else { // In case user choose "n".
 			System.out.println();
-			System.out.println("-----REGISTER CANCELLED-----");
+			System.out.println("----- REGISTER CANCELLED -----");
 			System.out.println();
 
 		}
