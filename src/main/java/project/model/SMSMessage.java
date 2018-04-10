@@ -40,7 +40,7 @@ public class SMSMessage {
          */
         String numberToSendMessage = numberToSend;
 
-        Message message = Message.creator(new PhoneNumber(numberToSendMessage),
+        Message message = Message.creator(new PhoneNumber(numberToSend),
                 new PhoneNumber(numberProvidedByTwilio),
                 messageToSend).create();
 

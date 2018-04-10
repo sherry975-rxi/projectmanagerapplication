@@ -171,7 +171,7 @@ public class US101UserRegisterUI {
 
 		if ("y".equalsIgnoreCase(confirm)) {
 			us101RegisterUserController.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city,
-					district, country);
+					district, country, "Question?", "Answer");
 			System.out.println();
 			System.out.println("-------- A numeric verification code has been sent to the e-mail address you provided. -------");
 			System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");

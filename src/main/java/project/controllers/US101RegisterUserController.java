@@ -132,7 +132,6 @@ public class US101RegisterUserController {
 	 */
 	private void setFirstLogin(User user) {
 
-		user.setHasLoggedIn(true);
 		updateUser(user);
 	}
 

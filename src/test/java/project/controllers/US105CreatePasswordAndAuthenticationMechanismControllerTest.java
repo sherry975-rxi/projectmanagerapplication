@@ -13,18 +13,17 @@ import project.model.User;
 import project.services.UserService;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan({ "project.services", "project.model", "project.controllers" })
-public class US105CreatePasswordAndAuthenticationMechanismTest {
+@ComponentScan({"project.services", "project.model", "project.controllers"})
+public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
 
     @Autowired
     UserService userService;
     @Autowired
-    US105CreatePasswordAndAuthenticationMechanism controller;
+    US105CreatePasswordAndAuthenticationMechanismController controller;
 
 
     User user1;
@@ -68,10 +67,7 @@ public class US105CreatePasswordAndAuthenticationMechanismTest {
     public void isFirstLoginTest() {
         String newPassword = "testPassword";
 
-        assertFalse(user1.hasLoggedIn());
-
         controller.setUserPassword(user1, newPassword);
 
-        assertTrue(user1.hasLoggedIn());
     }
 }
