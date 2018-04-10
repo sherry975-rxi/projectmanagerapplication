@@ -1,11 +1,8 @@
 package project.ui.console.loadfiles.loaduser;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,18 +10,27 @@ import java.util.Map;
 public class LoadUserFactory {
 
     @Autowired
-    LoadUserXml loadUserXml;
+    LoadUserXmlVersionFactory loadUserXmlVersionFactory;
+    @Autowired
+    LoadUserCSV loadUserCSV;
+    @Autowired
+    LoadUserXmlVersion loadUserXmlVersion;
 
     private static final Map<String, LoadUser> fileExtensions = new HashMap<>();
 
     @PostConstruct
     public void initFileExtensions() {
-        fileExtensions.put("XML", loadUserXml);
+        fileExtensions.put("XML", loadUserXmlVersion);
+        fileExtensions.put("CSV", loadUserCSV);
     }
 
-    public LoadUser getLoadUserType(String filePath) throws InstantiationException, IllegalAccessException {
+    public LoadUser getLoadUserType(String filePath){
 
         String fileExtension = filePath.split("\\.")[1].trim().toUpperCase();
+
+        if (fileExtension.equals("XML")){
+            loadUserXmlVersionFactory.getLoadUserType(filePath);
+        }
 
         return fileExtensions.get(fileExtension);
     }
