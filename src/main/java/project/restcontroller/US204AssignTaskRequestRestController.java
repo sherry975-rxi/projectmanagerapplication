@@ -79,18 +79,19 @@ public class US204AssignTaskRequestRestController {
      *          Task id associated to the task to be made the request
      * @param projectId
      *          Project id associated to the project where the task belongs
-     * @param userEmail
+     * @param userReg
      *          User email related to the collaborator that wants to make the request.
      * @return ResponseEntity
      */
-    @RequestMapping(value = "/requests/createAssignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
+    @RequestMapping(value = "/requests/assignmentRequest" , method = RequestMethod.POST)
+    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestBody User userReg){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
+        String userEmail = userReg.getEmail();
         User user = userService.getUserByEmail(userEmail);
 
             if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, project))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, project))){
