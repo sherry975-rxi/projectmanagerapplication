@@ -765,7 +765,7 @@ public class TaskService {
      *
      * @param report
      * @return  A list of project Collaborators active during the period of the report
-     *     *
+     *
      */
 
 	public List<ProjectCollaborator> getAllCollaboratorInstancesFromReport(Report report) {

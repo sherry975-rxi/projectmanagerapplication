@@ -110,16 +110,20 @@ public class LoadProjectData {
 							if (nNodeLigProject.getNodeType() == Node.ELEMENT_NODE) {
 								Element eElementLigProject = (Element) nNodeLigProject;
 
-                                eElementLigProject
-                                        .getElementsByTagName("data_inicio").item(0).getTextContent();
+								Calendar startDate = convertStringToCalendar(
+										eElementProject.getElementsByTagName("data_inicio").item(0).getTextContent());
 
-								boolean isProjCollabActive = eElementLigProject
-                                        .getElementsByTagName("data_fim").item(0).getTextContent().isEmpty();
+								Calendar finishDate = convertStringToCalendar(
+										eElementProject.getElementsByTagName("data_fim").item(0).getTextContent());
+
+								boolean isProjCollabActive = finishDate!=null;
 
 								Double costEffort = Double.valueOf(eElementLigProject
 										.getElementsByTagName("custo_unitario_colaborador").item(0).getTextContent());
 
                                 projCollaborator=projectService.createProjectCollaborator(userCollaborator, project, costEffort);
+                                projCollaborator.setStartDate(startDate);
+                                projCollaborator.setFinishDate(finishDate);
 								projCollaborator.setStatus(isProjCollabActive);
 								projectService.updateProjectCollaborator(projCollaborator);
 							}
@@ -250,10 +254,27 @@ public class LoadProjectData {
 										Calendar reportStartDate = convertStringToCalendar(eElementNodeReport
 												.getElementsByTagName("data_inicio").item(0).getTextContent());
 
-										Double timeToReport = Double.valueOf(eElementNodeReport
+                                        Calendar reportLastDate = convertStringToCalendar(eElementNodeReport
+                                                .getElementsByTagName("data_fim").item(0).getTextContent());
+
+                                        if(reportLastDate==null) {
+                                            reportLastDate=Calendar.getInstance();
+                                        }
+
+                                        Double timeToReport = Double.valueOf(eElementNodeReport
 												.getElementsByTagName("esforco").item(0).getTextContent());
 
-										task.createReport(taskCollaborator, reportStartDate, timeToReport);
+                                        Report report = new Report();
+                                        report.setTaskCollaborator(taskCollab);
+                                        report.setTask(task);
+                                        report.setCost(taskCollaborator.getCost());
+                                        report.setFirstDateOfReport(reportStartDate);
+                                        report.setDateOfUpdate(reportLastDate);
+                                        report.setCost(timeToReport);
+
+                                        task.getReports().add(report);
+
+										//task.createReport(taskCollaborator, reportStartDate, timeToReport);
 									}
 								}
 							}
