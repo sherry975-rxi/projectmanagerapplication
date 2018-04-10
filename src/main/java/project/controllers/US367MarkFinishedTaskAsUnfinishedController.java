@@ -46,7 +46,7 @@ public class US367MarkFinishedTaskAsUnfinishedController {
 	public void markFinishedTaskAsUnfinished(String idTask) {
 		Task task;
 		task = taskService.getTaskByTaskID(idTask);
-		task.isUnfinishTask();
+		task.isUnfinishedTask();
 		taskService.saveTask(task);
 
 	}

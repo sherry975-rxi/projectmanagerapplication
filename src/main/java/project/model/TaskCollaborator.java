@@ -197,7 +197,7 @@ public class TaskCollaborator implements Serializable {
     }
     
     public double getCost() {
-    	return this.getProjectCollaboratorFromTaskCollaborator().getCollaboratorCost();
+    	return this.getProjectCollaboratorFromTaskCollaborator().getCostPerEffort();
     }
 }
 

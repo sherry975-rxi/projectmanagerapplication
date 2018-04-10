@@ -26,19 +26,19 @@ import java.io.IOException;
  *
  */
 @Service
-public class LoadUserXml implements LoadUser {
+public class LoadUserXmlVersion1 implements LoadUserXmlVersion {
 	ProjectService projectService;
 	UserService userService;
 	TaskService taskService;
 
 	@Autowired
-	public LoadUserXml(ProjectService projectService, UserService userService, TaskService taskService){
+	public LoadUserXmlVersion1(ProjectService projectService, UserService userService, TaskService taskService){
 		this.projectService = projectService;
 		this.userService = userService;
 		this.taskService = taskService;
 	}
 
-	public void loadUsers(String pathFile) throws ParserConfigurationException, SAXException, IOException {
+	public void usersReader(String pathFile) throws ParserConfigurationException, SAXException, IOException {
 
 		Document documentUsers = FileUtils.readFromXmlFile(pathFile);
 

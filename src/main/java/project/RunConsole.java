@@ -3,7 +3,9 @@ package project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
 import project.model.*;
+
 import project.repository.UserRepository;
 import project.services.UserService;
 import project.ui.console.MainMenuUI;
@@ -67,11 +69,12 @@ public class RunConsole implements CommandLineRunner {
 		userRepository.save(projectManager);
 
 		LoadUser loadUserDb = loadUserFactory.getLoadUserType("Utilizador_v00_Dt1.xml");
-		loadUserDb.loadUsers("Utilizador_v00_Dt1.xml");
+		loadUserDb.usersReader("Utilizador_v00_Dt1.xml");
+		
+		LoadProject loadProjectDb = loadProjectFactory.getReader("Projeto_v00_Dt1.xml");
 
-		LoadProject loadProjectDb = loadProjectFactory.getLoadProjectType("Projeto_v00_Dt1.xml");
+    	loadProjectDb.readProjectFile("Projeto_v00_Dt1.xml");
 
-    	loadProjectDb.loadProject("Projeto_v00_Dt1.xml");
 
 
     	//Test sending an email

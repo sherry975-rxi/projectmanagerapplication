@@ -72,7 +72,7 @@ public class US360ViewCollaboratorsWithoutTasksController {
 		dataOutput += " (" + collabUserData.getEmail();
 		dataOutput += "; " + collabUserData.getPhone();
 		dataOutput += ") - " + collabUserData.getFunction();
-		dataOutput += " [COST/EFFORT: " + toView.getCollaboratorCost() + "]";
+		dataOutput += " [COST/EFFORT: " + toView.getCostPerEffort() + "]";
 
 		return dataOutput;
 	}

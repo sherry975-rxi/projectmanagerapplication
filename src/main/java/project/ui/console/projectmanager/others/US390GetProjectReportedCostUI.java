@@ -17,10 +17,12 @@ public class US390GetProjectReportedCostUI {
 	@Autowired
 	private US390CalculateReportedProjectCostController controller;
 
+	Scanner scannerInput;
+
 	public void displayProjectCost(Project project) {
 		String line = "___________________________________________________";
 
-		Scanner scannerInput = new Scanner(System.in);
+		scannerInput = new Scanner(System.in);
 
 		projectInfo.setProject(project);
 
@@ -40,6 +42,11 @@ public class US390GetProjectReportedCostUI {
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println("");
 		System.out.println(line);
+
+        System.out.print(selectReportCostCalculation(project));
+        System.out.println("");
+        System.out.println(line);
+
 		System.out.println("     PROJECT COST");
 		System.out.println(line);
 
@@ -53,20 +60,55 @@ public class US390GetProjectReportedCostUI {
 		System.out.println();
 		int i = 0;
 
-		for (String other : controller.calculeReportedCostOfEachTaskController(project)) {
-			System.out.print("TaskID " + controller.getTaskId(project).get(i) + " " + "  Cost: " + other);
-			i++;
-			System.out.println();
-		}
+			for (String other : controller.calculeReportedCostOfEachTaskController(project)) {
+				System.out.print("TaskID " + controller.getTaskId(project).get(i) + " " + "  Cost: " + other);
+				i++;
+				System.out.println();
+			}
 
 		System.out.println(line);
 		System.out.println("[B] Back \n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		if (!("B".equals(option))){
-			System.out.println("Please choose a valid option: ");
-			loop = true;
+			if (!("B".equals(option))){
+				System.out.println("Please choose a valid option: ");
+				loop = true;
+			}
 		}
-	}}
+	}
+
+	private String selectReportCostCalculation(Project project) {
+		System.out.println("");
+		System.out.println("Should a single user have different costs throughout the same report, calculate using:");
+        System.out.println("[1] - The user's first cost");
+        System.out.println("[2] - The user's last cost");
+        System.out.println("[3] - Average between the users first and last cost");
+		System.out.println("[4] - Average between all of the user's costs");
+        System.out.println("[Any Key] - Keep Current (Currently: " + project.getCalculationMethod() + ")");
+        System.out.println("");
+        scannerInput = new Scanner(System.in);
+		char option = scannerInput.nextLine().charAt(0);
+
+		switch(option) {
+            case '1':
+				controller.selectReportCostCalculation(project, Project.FIRST_COLLABORATOR);
+				return "Earliest Collaborator Cost Selected!";
+            case '2':
+				controller.selectReportCostCalculation(project, Project.LAST_COLLABORATOR);
+				return "Latest Collaborator Cost Selected!";
+            case '3':
+				controller.selectReportCostCalculation(project, Project.FIRST_LAST_COLLABORATOR);
+				return "First/Last Average Cost Selected!";
+			case '4':
+				controller.selectReportCostCalculation(project, Project.AVERAGE_COLLABORATOR);
+				return "Average Collaborator Cost Selected!";
+            default:
+				return "Cost calculation not changed.";
+
+        }
+
+
+	}
+
 }

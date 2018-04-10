@@ -32,12 +32,8 @@ public class Report {
 	@JoinColumn(name = "Task_id")
 	@JsonBackReference
 	private Task task;
-	private Calendar dateOfReport;
+	private Calendar firstDateOfReport;
 	private Calendar dateOfUpdate;
-
-
-
-
 
 	public Report(){
 
@@ -56,7 +52,7 @@ public class Report {
 		this.reportedTime = 0;
 		this.taskCollaborator = taskCollaborator;
 		this.cost = taskCollaborator.getCost();
-		this.dateOfReport = reportDate;
+		this.firstDateOfReport = reportDate;
 		this.dateOfUpdate = reportDate;
 	}
 
@@ -160,8 +156,8 @@ public class Report {
 	 *
 	 * @return void
 	 */
-	public void setDateOfReport(Calendar reportDate) {
-		this.dateOfReport = reportDate;
+	public void setFirstDateOfReport(Calendar reportDate) {
+		this.firstDateOfReport = reportDate;
 	}
 
 
@@ -170,8 +166,8 @@ public class Report {
 	 *
 	 * @return void
 	 */
-	public Calendar getDateOfReport() {
-		return this.dateOfReport;
+	public Calendar getFirstDateOfReport() {
+		return this.firstDateOfReport;
 	}
 
 	/**

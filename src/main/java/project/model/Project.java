@@ -35,12 +35,22 @@ public class Project implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
+    private int calculationMethod;
+
 	public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
 	public static final int EXECUTION = 2; // execução
 	public static final int DELIVERY = 3; // entrega
 	public static final int REVIEW = 4; // garantia
 	public static final int CLOSE = 5; // fecho
+
+    // TODO implement Calculation Strategy interface
+	public static final int FIRST_COLLABORATOR = 1;
+	public static final int LAST_COLLABORATOR = 2;
+	public static final int FIRST_LAST_COLLABORATOR = 3;
+	public static final int AVERAGE_COLLABORATOR = 4;
+
+
 	static final long serialVersionUID = 43L;
 
 
@@ -72,6 +82,7 @@ public class Project implements Serializable{
 		this.effortUnit = EffortUnit.HOURS;
 		this.budget = 0;
 		this.status = PLANNING;
+		this.calculationMethod = FIRST_COLLABORATOR;
 		this.startdate = null;
 		this.finishdate = null;
 	}
@@ -91,6 +102,14 @@ public class Project implements Serializable{
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+    public int getCalculationMethod() {
+        return calculationMethod;
+    }
+
+    public void setCalculationMethod(int calculationMethod) {
+        this.calculationMethod = calculationMethod;
+    }
 
 
 	public void setName(String name) {

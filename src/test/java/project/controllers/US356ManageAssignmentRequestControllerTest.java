@@ -94,8 +94,8 @@ public class US356ManageAssignmentRequestControllerTest {
 
 		taskWithNoTeam.setTaskState(new Planned());
 
-//		testProject.createTaskAssignementRequest(teamTesterCollaborator, taskWithNoTeam);
-		taskWithNoTeam.createTaskAssignementRequest(teamTesterCollaborator);
+//		testProject.createTaskAssignmentRequest(teamTesterCollaborator, taskWithNoTeam);
+		taskWithNoTeam.createTaskAssignmentRequest(teamTesterCollaborator);
 //		assignmentRequestsController = new US356ManageAssigmentRequestController(testProject);
 
 		String taskDescriptionB = "do blow up rocket!";
@@ -108,8 +108,8 @@ public class US356ManageAssignmentRequestControllerTest {
 
 		standByTask.setTaskState(new StandBy());
 
-//		testProject.createTaskAssignementRequest(teamTesterCollaborator, standByTask);
-		standByTask.createTaskAssignementRequest(teamTesterCollaborator);
+//		testProject.createTaskAssignmentRequest(teamTesterCollaborator, standByTask);
+		standByTask.createTaskAssignmentRequest(teamTesterCollaborator);
 	}
 
 
@@ -121,7 +121,7 @@ public class US356ManageAssignmentRequestControllerTest {
 		String expectedAssignmentRequest = teamTesterName + "\n" + "collab@mail.mail" + "\n" + taskIDnumber + "\n"
 				+ "dont blow up rocket";
 
-//		assertEquals(testProject.getPendingTaskAssignementRequests().size(), 2);
+//		assertEquals(testProject.getPendingTaskAssignmentRequests().size(), 2);
 		assertEquals(2, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
 		assertEquals(2, taskContainer.viewAllProjectTaskAssignmentRequests(testProject).size());
 
@@ -191,8 +191,8 @@ public class US356ManageAssignmentRequestControllerTest {
 //	public void acceptNullRequest() {
 //
 //		// Sets the controllers request as null
-////		testProject.getPendingTaskAssignementRequests().add(null);
-////		taskWithNoTeam.getPendingTaskAssignementRequests().add(null);
+////		testProject.getPendingTaskAssignmentRequests().add(null);
+////		taskWithNoTeam.getPendingTaskAssignmentRequests().add(null);
 //		assignmentRequestsController.setSelectedAdditionRequest(0, testProject);
 //		assignmentRequestsController.rejectAssignmentRequest();
 //		assignmentRequestsController.setSelectedAdditionRequest(0, testProject);
@@ -203,14 +203,14 @@ public class US356ManageAssignmentRequestControllerTest {
 //		taskContainer.getAllProjectTaskAssignmentRequests(testProject).add(null);
 //		assertEquals(0, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
 //		
-//		assertEquals(0, taskWithNoTeam.viewPendingTaskAssignementRequests().size());
-////		taskWithNoTeam.viewPendingTaskAssignementRequests().add(null);
+//		assertEquals(0, taskWithNoTeam.viewPendingTaskAssignmentRequests().size());
+////		taskWithNoTeam.viewPendingTaskAssignmentRequests().add(null);
 //
-//		taskWithNoTeam.getPendingTaskAssignementRequests().add(null);
+//		taskWithNoTeam.getPendingTaskAssignmentRequests().add(null);
 //		
 ////		taskWithNoTeam.getPendingTaskTeamRequests().add(null);
-////		assertEquals(1, taskWithNoTeam.viewPendingTaskAssignementRequests().size());
-//		assertEquals(1, taskWithNoTeam.getPendingTaskAssignementRequests().size());
+////		assertEquals(1, taskWithNoTeam.viewPendingTaskAssignmentRequests().size());
+//		assertEquals(1, taskWithNoTeam.getPendingTaskAssignmentRequests().size());
 ////		assertEquals(1, taskWithNoTeam.getPendingTaskTeamRequests().size());
 ////		assertEquals(1, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
 //		assertEquals(1, taskContainer.viewAllProjectTaskAssignmentRequests(testProject).size());
@@ -234,7 +234,7 @@ public class US356ManageAssignmentRequestControllerTest {
 //	public void rejectNullRequest() {
 //
 //		// Sets the controllers request as null
-//		testProject.getPendingTaskAssignementRequests().add(null);
+//		testProject.getPendingTaskAssignmentRequests().add(null);
 //
 //		// Tries to reject and fails
 //		assertFalse(assignmentRequestsController.rejectAssignmentRequest());
