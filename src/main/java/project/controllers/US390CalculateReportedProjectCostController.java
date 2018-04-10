@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import project.model.Project;
 import project.model.Task;
+import project.services.ProjectService;
 import project.services.TaskService;
 
 import java.util.ArrayList;
@@ -14,6 +15,9 @@ public class US390CalculateReportedProjectCostController {
 
 	@Autowired
 	private TaskService taskService;
+
+	@Autowired
+	private ProjectService projectService;
 
 	public US390CalculateReportedProjectCostController() {
 		//Empty constructor created for JPA integration tests
@@ -64,18 +68,24 @@ public class US390CalculateReportedProjectCostController {
 	public String selectReportCostCalculation(Project project, int chosenMethod) {
 		switch(chosenMethod) {
 			case 1:
-				taskService.calculateReportCostFromFirstCollaboratorCost(project);
+                updateProjectAndTasks (project, Project.FIRST_COLLABORATOR);
 				return "Earliest Collaborator Cost Selected!";
 			case 2:
-				taskService.calculateReportCostFromLastCollaboratorCost(project);
+                updateProjectAndTasks (project, Project.LAST_COLLABORATOR);
                 return "Latest Collaborator Cost Selected!";
 			case 3:
-				taskService.calculateReportCostFromFirstAndLastCollaboratorCost(project);
+                updateProjectAndTasks (project, Project.FIRST_LAST_COLLABORATOR);
 				return "First/Last Average Cost Selected!";
 			default:
-				taskService.calculateReportCostFromAverageCollaboratorCost(project);
+                updateProjectAndTasks (project, Project.AVERAGE_COLLABORATOR);
                 return "Average Collaborator Cost Selected!";
 		}
 	}
+
+	public void updateProjectAndTasks (Project project, int chosenMethod) {
+	    project.setCalculationMethod(chosenMethod);
+	    projectService.updateProject(project);
+	    taskService.calculateReportCost(project);
+    }
 
 }
