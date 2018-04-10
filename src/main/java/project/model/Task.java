@@ -999,18 +999,16 @@ public class Task implements Serializable {
 	 * multiplying the cost of each task Collaborator with the time that each
 	 * Collaborator spent on this particular task.
 	 * 
-	 * @return Returns a double with the total cost of the task, based on the weighted means
-     * of all task reports (cost x time)
+	 *  @return Returns a double with the total cost of the task
 	 *
-	 * WARNING: this method is now obsolete according to U392
 	 */
-	public double getTaskCostBasedOnWeightedMeanOfAllReports() {
-		double taskCostBasedOnWeightedMeanReport = 0.0;
+	public double getTaskCost() {
+		double taskCost = 0.0;
 
 		for (Report reported : this.reports) {
-			taskCostBasedOnWeightedMeanReport += reported.getReportedTime() * reported.getCost();
+			taskCost += reported.getReportedTime() * reported.getCost();
 		}
-		return taskCostBasedOnWeightedMeanReport;
+		return taskCost;
 	}
 
 

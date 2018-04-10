@@ -733,7 +733,7 @@ public class TaskServiceTest {
         taskList.add(task2Mock);
         when(taskRepository.findAllByProject(project)).thenReturn(taskList);
 
-        when(taskMock.getTaskCostBasedOnWeightedMeanOfAllReports()).thenReturn(10.0);
+        when(taskMock.getTaskCost()).thenReturn(10.0);
 
         List<String> expectedList = new ArrayList<>();
         expectedList.add("10.0, 0.0");
