@@ -188,37 +188,62 @@ public class US101UserRegisterUI {
 				switch (option) {
 
 					case "1":
-						us101RegisterUserController.sendVerificationCode(email, "1");
-						loop = false;
 
-						System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
-						System.out.println();
-						String codeInsertByPhone = scannerInput.nextLine();
+						try{
+							us101RegisterUserController.sendVerificationCode(email, "1");
+							loop = false;
 
-						if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsertByPhone, email)) {
-							System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
-						} else {
-							System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
-							System.out.println("----- The numeric verification code that you provided is not correct. -----");
+							System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
+							System.out.println();
+							String codeInsertByPhone = scannerInput.nextLine();
+
+							if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsertByPhone, email)) {
+								System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
+							} else {
+								System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
+								System.out.println("----- The numeric verification code that you provided is not correct. -----");
+							}
+						} catch(Exception e){
+							System.out.println("");
+							System.out.println("");
+							System.out.println("Message could not be sent. Please, your check internet connection and try again.");
+							loop = false;
+							break;
+
 						}
+
 
 						break;
 					case "2":
 
-						us101RegisterUserController.sendVerificationCode(email, "2");
-						loop = false;
+						try{
+
+							us101RegisterUserController.sendVerificationCode(email, "2");
+							loop = false;
 
 
-						System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
-						System.out.println();
-						String codeInsertByMail = scannerInput.nextLine();
+							System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
+							System.out.println();
+							String codeInsertByMail = scannerInput.nextLine();
 
-						if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsertByMail, email)) {
-							System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
-						} else {
-							System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
-							System.out.println("----- The numeric verification code that you provided is not correct. -----");
+							if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsertByMail, email)) {
+								System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
+							} else {
+								System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
+								System.out.println("----- The numeric verification code that you provided is not correct. -----");
+							}
+
+						} catch(Exception e){
+							System.out.println("");
+							System.out.println("");
+							System.out.println("Message could not be sent. Please, check your internet connection and try again.");
+							loop = false;
+							break;
+
+
 						}
+
+
 
 						break;
 
