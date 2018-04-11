@@ -48,7 +48,7 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
      */
     public String questionAuthentication(User user){
 
-        return user.getQuestion();
+        return questionDecoder(user.getQuestion());
 
     }
 
@@ -63,6 +63,12 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
         return answer.equalsIgnoreCase(user.getAnswer());
     }
 
+    /**
+     * Sends  a code to the phone number provided with the validation code
+     *
+     * @param phone phone number to which to send the code
+     */
+
     public void smsAuthentication(String phone) {
 
         String code = codeGenerator.generateCode();
@@ -72,6 +78,10 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     }
 
+    /**
+     * Sends  a code to the email number provided with the validation code
+     * @param email email to which to send the code
+     */
     public void emailAuthentication(String email) {
 
         String code = codeGenerator.generateCode();
@@ -89,8 +99,31 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
         }
     }
 
+    /**
+     * checks if the code provided by the user is the same as the code sent by the application
+     * @param code code provided by the user
+     * @return true if both codes are the same, false if they aren't
+     */
     public boolean isCodeValid(String code) {
         return code.equals(this.code);
     }
 
+    /**
+     * returns the question associated with the question number saved in the user
+     *
+     * @param num saved question number
+     * @return question associated with the number provided
+     */
+    public String questionDecoder(String num) {
+        switch (num) {
+            case "1":
+                return "What is the name of your first pet?";
+            case "2":
+                return "What elementary school did you attend?";
+            case "3":
+                return "Where did you go for your honeymoon?";
+            default:
+                return "";
+        }
+    }
 }

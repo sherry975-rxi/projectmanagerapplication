@@ -36,7 +36,7 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 		this.taskService = taskService;
 	}
 
-	TaskCollaborator taskCollab;
+	//TaskCollaborator taskCollab;
 
 	public void readProjectFile(String pathFile)
 			throws ParserConfigurationException, SAXException, IOException, DOMException, ParseException {
@@ -87,6 +87,8 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 				User user = userService.getUserByEmail(
 						eElementProject.getElementsByTagName("gestor_projeto").item(0).getTextContent());
 				project.setProjectManager(user);
+
+				project.setCalculationMethod(Project.FIRST_COLLABORATOR);
 
 				projectService.updateProject(project);
 
@@ -272,12 +274,12 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 												.getElementsByTagName("esforco").item(0).getTextContent());
 
                                         Report report = new Report();
-                                        report.setTaskCollaborator(taskCollab);
+                                        report.setTaskCollaborator(taskCollaborator);
                                         report.setTask(task);
                                         report.setCost(taskCollaborator.getCost());
                                         report.setFirstDateOfReport(reportStartDate);
                                         report.setDateOfUpdate(reportLastDate);
-                                        report.setCost(timeToReport);
+                                        report.setReportedTime(timeToReport);
 
                                         task.getReports().add(report);
 
