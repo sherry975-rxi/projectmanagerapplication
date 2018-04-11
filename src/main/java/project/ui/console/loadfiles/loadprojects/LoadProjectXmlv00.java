@@ -120,10 +120,10 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 								Element eElementLigProject = (Element) nNodeLigProject;
 
 								Calendar startDate = convertStringToCalendar(
-										eElementProject.getElementsByTagName("data_inicio").item(0).getTextContent());
+                                        eElementLigProject.getElementsByTagName("data_inicio").item(0).getTextContent());
 
 								Calendar finishDate = convertStringToCalendar(
-										eElementProject.getElementsByTagName("data_fim").item(0).getTextContent());
+                                        eElementLigProject.getElementsByTagName("data_fim").item(0).getTextContent());
 
 								boolean isProjCollabActive = finishDate!=null;
 
@@ -228,15 +228,19 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 
 								task.addProjectCollaboratorToTask(projCollaborator);
 
-								//Dados do Task Collaborator
+								//Dados do Task Collaborator, por ligação
 
-								String startDateString = eElementnNodeTaskCollaborator
+                                // CAMPO LIGAÇÂO TAREFA INEXISTENTE POR AGORA
+                                //NodeList nLigTaskList = eElementnNodeTaskCollaborator.getElementsByTagName("ligacao_tarefa");
+
+
+                                String startDateString = eElementnNodeTaskCollaborator
 										.getElementsByTagName("data_inicio").item(0).getTextContent();
 
 								Calendar startDateTaskCollaborator = convertStringToCalendar(startDateString);
 
 								TaskCollaborator taskCollaborator = task
-										.getTaskCollaboratorByEmail(eElementnNodeTaskCollaborator
+										.getActiveTaskCollaboratorByEmail(eElementnNodeTaskCollaborator
 												.getElementsByTagName("colaborador_id").item(0).getTextContent());
 
 								taskCollaborator.setStartDate(startDateTaskCollaborator);
