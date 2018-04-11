@@ -1,0 +1,10 @@
+title US390 Get Project Reported Cost
+
+Actor->Route: projects/{id}/cost GET
+Route->RestController: getCost(id)
+RestController->ProjectService: getProjectById(id)
+ProjectService->RestController: return project
+RestController->TaskService: getProjectReportedCost(project)
+TaskService->RestController: return cost
+RestController->Route: return cost
+Route->Actor: display cost
