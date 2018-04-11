@@ -2,17 +2,15 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import project.dto.UserDTO;
 import project.model.CodeGenerator;
 import project.model.EmailMessage;
 import project.model.SendEmail;
 import project.model.User;
-import project.model.sendcode.MessageSender;
 import project.model.sendcode.SendCodeFactory;
+import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
 import java.io.IOException;
 
@@ -90,12 +88,14 @@ public class US101RegisterUserController {
 				+ generatedCode;
 
 		sendCodeFactory = new SendCodeFactory();
-		
-		MessageSender messageSender = sendCodeFactory.getCodeSenderType(senderType);
+
+		ValidationMethod validationMethod = sendCodeFactory.getCodeSenderType(senderType).get();
 
 		String userPhone = userService.getUserByEmail(email).getPhone();
 
-		messageSender.codeSender(userPhone,email, message);
+		String userQuestion = userService.getUserByEmail(email).getQuestion();
+
+		validationMethod.performValidationMethod(userPhone, email, userQuestion, message);
 
 
 	}

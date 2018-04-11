@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import project.controllers.US105CreatePasswordAndAuthenticationMechanismController;
 import project.model.User;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.Scanner;
 
 @Component
@@ -24,38 +26,38 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
      *
      * @param user
      */
-    public void changePassword(User user) {
+    public void changePassword(User user) throws IOException, MessagingException {
         Scanner input = new Scanner(System.in);
-        String code;
+        String userInput;
         boolean loopPasswordReenter = true;
         boolean loop = false;
-        String newPassword="";
+        String newPassword = "";
 
-        while (loopPasswordReenter){
+        while (loopPasswordReenter) {
 
-                System.out.println("\nYou must create a password");
-                System.out.println("Please enter a password:");
+            System.out.println("\nYou must create a password");
+            System.out.println("Please enter a password:");
 
-                newPassword = input.nextLine();
-                System.out.println("Re-enter the password:");
+            newPassword = input.nextLine();
+            System.out.println("Re-enter the password:");
 
-                String reEnterPassword = input.nextLine();
+            String reEnterPassword = input.nextLine();
 
-            if(!(newPassword.equals(reEnterPassword))) {
+            if (!(newPassword.equals(reEnterPassword))) {
                 System.out.println("The passwords do not match!");
                 System.out.println("Try again? Y/N");
                 String answer = input.nextLine();
-                if(!("Y".equalsIgnoreCase(answer)))
+                if (!("Y".equalsIgnoreCase(answer)))
                     loopPasswordReenter = false;
 
-            }else if ("".equals(newPassword)) {
+            } else if ("".equals(newPassword)) {
                 System.out.println("The password can't be empty!");
                 System.out.println("Try again? Y/N");
                 String answer = input.nextLine();
-                if(!("Y".equalsIgnoreCase(answer)))
+                if (!("Y".equalsIgnoreCase(answer)))
                     loopPasswordReenter = false;
-                
-            }else{
+
+            } else {
                 loopPasswordReenter = false;
                 loop = true;
             }
@@ -68,65 +70,28 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
 
                 String choice = input.nextLine();
 
-                switch (choice) {
-                    case "1":
-                        System.out.println("Sending SMS...");
-                        controller.smsAuthentication(user.getPhone());
-                        System.out.println("SMS sent! Please input the code sent to you:");
-                        code = input.nextLine();
-                        loop = validatePassword(code, user, newPassword);
+                System.out.println(controller.performAuthentication(user.getPhone(), user.getEmail(), user.getQuestion(), choice));
 
-                        break;
+                if (controller.getValidation() != null) {
+                    userInput = input.nextLine();
 
-                    case "2":
-                        String question = controller.questionAuthentication(user);
-                        if ("".equals(question)) {
-                            System.out.println("You haven't defined a question. Please choose another validation method.");
-                        } else {
+                    if (controller.isCodeValid(userInput, user)) {
+                        System.out.println("The password changed successfully!");
+                        loop = false;
 
-                            System.out.println(question);
+                    } else {
+                        System.out.println("The password wasn't changed. Try again? Y/N");
+                        String answer = input.nextLine();
+                        if (!("Y".equalsIgnoreCase(answer)))
+                            loop = false;
 
-                            String answer = input.nextLine();
-                            if (controller.isRightAnswer(answer, user)) {
-                                controller.setUserPassword(user, newPassword);
-                                System.out.println("The password changed successfully!");
-                                loop = false;
-                            } else {
-                                System.out.println("The password wasn't changed. Please try again.");
-                            }
-                        }
-                        break;
-                    case "3":
-                        System.out.println("Sending e-mail...");
-                        controller.emailAuthentication(user.getEmail());
-
-                        System.out.println("E-mail sent! Please input the code sent to you:");
-                        code = input.nextLine();
-
-                        loop = validatePassword(code, user, newPassword);
-
-                        break;
-                        default:
-                            System.out.println("You inserted an invalid option. Please choose a valid one:");
-                            break;
+                    }
                 }
+
             }
 
         }
-
     }
-
-    private boolean validatePassword(String code,User user,String newPassword){
-        if (controller.isCodeValid(code)) {
-            controller.setUserPassword(user, newPassword);
-            System.out.println("The password changed successfully!");
-             return false;
-        } else {
-            System.out.println("The password wasn't changed. Please try again.");
-            return true;
-        }
-    }
-
 
 
 }

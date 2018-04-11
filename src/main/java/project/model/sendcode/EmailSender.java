@@ -1,22 +1,19 @@
 package project.model.sendcode;
 
-import org.springframework.stereotype.Service;
 import project.model.EmailMessage;
 import project.model.SendEmail;
 
-
 import javax.mail.MessagingException;
-import java.io.IOException;
 
 
-public class EmailSender implements MessageSender{
+public class EmailSender implements ValidationMethod {
 
     private SendEmail sendEmail;
     private EmailMessage emailMessage;
 
 
     @Override
-    public void codeSender (String receipientPhoneNum, String email, String msg) throws IOException, MessagingException {
+    public String performValidationMethod(String receipientPhoneNum, String email, String question, String msg) throws MessagingException {
 
         sendEmail = new SendEmail();
         emailMessage = new EmailMessage();
@@ -25,5 +22,11 @@ public class EmailSender implements MessageSender{
         emailMessage.setBody(msg);
         emailMessage.setSubject("Verification Code");
         sendEmail.sendMail(emailMessage);
+        return "E-mail sent! Please input the code sent to you:";
+    }
+
+    @Override
+    public boolean checkRightAnswer(String userInput, String rightAnswer) {
+        return userInput.equals(rightAnswer);
     }
 }

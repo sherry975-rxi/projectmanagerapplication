@@ -2,11 +2,17 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.model.*;
+import project.model.CodeGenerator;
+import project.model.SendEmail;
+import project.model.SendSMS;
+import project.model.User;
+import project.model.sendcode.AnswerValidation;
+import project.model.sendcode.SendCodeFactory;
+import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
-import project.ui.console.collaborator.US105CreatePasswordAndAuthenticationMechanismUI;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 
 @Controller
 public class US105CreatePasswordAndAuthenticationMechanismController {
@@ -22,6 +28,8 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     CodeGenerator codeGenerator = new CodeGenerator();
 
+
+    ValidationMethod validation;
     public US105CreatePasswordAndAuthenticationMechanismController() {
         //Empty constructor created for JPA integration tests
 
@@ -46,11 +54,6 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
      * @param user user whose question we are searching for
      * @return the question of the user
      */
-    public String questionAuthentication(User user){
-
-        return questionDecoder(user.getQuestion());
-
-    }
 
     /**
      * Method to determine if the answer provided is the right one
@@ -66,64 +69,44 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
     /**
      * Sends  a code to the phone number provided with the validation code
      *
-     * @param phone phone number to which to send the code
+     * @param option phone number to which to send the code
      */
 
-    public void smsAuthentication(String phone) {
+    public String performAuthentication(String userPhone, String userEmail, String userQuestion, String option) throws IOException, MessagingException {
 
         String code = codeGenerator.generateCode();
         this.code = code;
 
-        sender.sendMessage(code, phone);
+        SendCodeFactory factory = new SendCodeFactory();
 
-    }
-
-    /**
-     * Sends  a code to the email number provided with the validation code
-     * @param email email to which to send the code
-     */
-    public void emailAuthentication(String email) {
-
-        String code = codeGenerator.generateCode();
-        this.code = code;
-        EmailMessage emsg = new EmailMessage();
-
-        emsg.setSubject("Validation Code!");
-        emsg.setEmailAddress(email);
-        emsg.setBody("Please enter this code to validate your account:\n\n" + code);
-
-        try {
-            emailSender.sendMail(emsg);
-        } catch (MessagingException e) {
-            US105CreatePasswordAndAuthenticationMechanismUI.errorSendingEmail();
+        if (factory.getCodeSenderType(option).isPresent()) {
+            validation = factory.getCodeSenderType(option).get();
+            return validation.performValidationMethod(userPhone, userEmail, userQuestion, code);
+        } else {
+            validation = null;
+            return "Invalid method selected. Please choose a valid one.";
         }
+
+
     }
+
 
     /**
      * checks if the code provided by the user is the same as the code sent by the application
      * @param code code provided by the user
      * @return true if both codes are the same, false if they aren't
      */
-    public boolean isCodeValid(String code) {
-        return code.equals(this.code);
-    }
-
-    /**
-     * returns the question associated with the question number saved in the user
-     *
-     * @param num saved question number
-     * @return question associated with the number provided
-     */
-    public String questionDecoder(String num) {
-        switch (num) {
-            case "1":
-                return "What is the name of your first pet?";
-            case "2":
-                return "What elementary school did you attend?";
-            case "3":
-                return "Where did you go for your honeymoon?";
-            default:
-                return "";
+    public boolean isCodeValid(String code, User user) {
+        if (validation instanceof AnswerValidation) {
+            return validation.checkRightAnswer(code, user.getQuestion());
+        } else {
+            return validation.checkRightAnswer(code, this.code);
         }
     }
+
+    public ValidationMethod getValidation() {
+        return validation;
+    }
+
+
 }

@@ -1,21 +1,24 @@
 package project.model.sendcode;
 
-import org.springframework.stereotype.Service;
 import project.model.SendSMS;
 
-import java.io.IOException;
 
-
-public class SMSSender implements MessageSender{
+public class SMSSender implements ValidationMethod {
 
 
     private SendSMS sendSMS;
 
 
     @Override
-    public void codeSender (String receipientPhoneNum, String email, String msg) throws IOException{
+    public String performValidationMethod(String receipientPhoneNum, String email, String question, String msg) {
 
         sendSMS = new SendSMS();
         sendSMS.sendMessage(msg, receipientPhoneNum);
+        return "SMS sent! Please input the code sent to you:";
+    }
+
+    @Override
+    public boolean checkRightAnswer(String userInput, String rightAnswer) {
+        return userInput.equals(rightAnswer);
     }
 }
