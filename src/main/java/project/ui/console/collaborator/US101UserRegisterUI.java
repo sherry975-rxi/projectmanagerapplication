@@ -2,8 +2,10 @@ package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import project.controllers.US101RegisterUserController;
 import project.model.SendSMS;
+import project.ui.console.MainMenuUI;
 
 import java.util.Scanner;
 
@@ -12,12 +14,12 @@ import java.util.Scanner;
  *
  */
 
-@Component
+@Controller
 public class US101UserRegisterUI {
 	@Autowired
 	private US101RegisterUserController us101RegisterUserController;
 
-	public void userRegister() throws Exception{
+	public void userRegister() throws Exception {
 		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
 
@@ -76,9 +78,7 @@ public class US101UserRegisterUI {
 			if (!(us101RegisterUserController.isEmailValidController(email))) {
 				System.out.println("Invalid email, try again.");
 				email = scannerInput.nextLine();
-			}
-
-			else if (us101RegisterUserController.isUserInUserRepository(email)) {
+			} else if (us101RegisterUserController.isUserInUserRepository(email)) {
 				System.out.println("User already exists, try again.");
 				email = scannerInput.nextLine();
 			} else {
@@ -173,27 +173,72 @@ public class US101UserRegisterUI {
 			us101RegisterUserController.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city,
 					district, country, "Question?", "Answer");
 			System.out.println();
-			System.out.println("-------- A numeric verification code has been sent to the e-mail address you provided. -------");
-			System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
-			//SendSMS sms = new SendSMS();
-			//sms.sendMessage("ola", phone);
-			//us101RegisterUserController.sendVerificationCode(email);
+			System.out.println("-------- A numeric verification code will be sent to the email address or the phone number that you provided. -------");
 			System.out.println();
-			String codeInsert = scannerInput.nextLine();
-			if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsert, email)){
-			System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
-			} else {
-			System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
-			System.out.println("----- The numeric verification code that you provided is not correct. -----");
+			System.out.println("Please type the number of your choice:");
+			System.out.println("[1] - Send verification code by SMS.");
+			System.out.println("[2] - Send verification code by Email.");
+			System.out.println("[3] - Exit Registration.");
+
+
+			String option = scannerInput.nextLine().toUpperCase();
+
+			Boolean loop = true;
+			while (loop) {
+				switch (option) {
+
+					case "1":
+						us101RegisterUserController.sendVerificationCode(email, "1");
+						loop = false;
+
+						System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
+						System.out.println();
+						String codeInsertByPhone = scannerInput.nextLine();
+
+						if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsertByPhone, email)) {
+							System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
+						} else {
+							System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
+							System.out.println("----- The numeric verification code that you provided is not correct. -----");
+						}
+
+						break;
+					case "2":
+
+						us101RegisterUserController.sendVerificationCode(email, "2");
+						loop = false;
+
+
+						System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
+						System.out.println();
+						String codeInsertByMail = scannerInput.nextLine();
+
+						if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsertByMail, email)) {
+							System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
+						} else {
+							System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
+							System.out.println("----- The numeric verification code that you provided is not correct. -----");
+						}
+
+						break;
+
+					case "E":
+
+						loop = false;
+						System.out.println();
+						System.out.println("----- REGISTER CANCELLED -----");
+						System.out.println();
+						break;
+
+					default:
+						System.out.println("Please, type a valid option");
+						option = scannerInput.nextLine().toUpperCase();
+
+				}
+
 			}
 
 
-		} else { // In case user choose "n".
-			System.out.println();
-			System.out.println("----- REGISTER CANCELLED -----");
-			System.out.println();
-
 		}
-
 	}
 }
