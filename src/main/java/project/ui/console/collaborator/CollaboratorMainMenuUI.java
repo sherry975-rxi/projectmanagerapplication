@@ -63,8 +63,6 @@ public class CollaboratorMainMenuUI {
 					loopA = false;
 					loopB = false;
 				}
-			} else {
-				loopA = false;
 			}
 		}
 
