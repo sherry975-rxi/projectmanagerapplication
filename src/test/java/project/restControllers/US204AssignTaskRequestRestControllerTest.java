@@ -84,7 +84,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
     @Before
     public void setUp() throws Exception{
-        initMocks(this);
+        //initMocks(this);
 
         // create userPM
         userPM = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
@@ -209,8 +209,7 @@ public class US204AssignTaskRequestRestControllerTest {
     public  void retriveAllRequest() throws Exception {
         //Given
         //Create taskTeam requests.
-        taskOne.addProjectCollaboratorToTask(projCollabTwo);
-        taskOne.addProjectCollaboratorToTask(projCollabThree);
+
         taskOne.createTaskAssignmentRequest(projCollabTwo);
         taskOne.createTaskRemovalRequest(projCollabThree);
 
@@ -227,7 +226,7 @@ public class US204AssignTaskRequestRestControllerTest {
     public  void retriveAllAssignementRequest() throws Exception {
         //Given
         //Create taskTeam requests.
-        taskOne.addProjectCollaboratorToTask(projCollabTwo);
+
         taskOne.addProjectCollaboratorToTask(projCollabThree);
         taskOne.createTaskAssignmentRequest(projCollabTwo);
         taskOne.createTaskRemovalRequest(projCollabThree);
@@ -247,7 +246,7 @@ public class US204AssignTaskRequestRestControllerTest {
         //Create taskTeam requests.
         taskOne.addProjectCollaboratorToTask(projCollabTwo);
         taskOne.addProjectCollaboratorToTask(projCollabThree);
-        taskOne.createTaskAssignmentRequest(projCollabTwo);
+
         taskOne.createTaskRemovalRequest(projCollabThree);
 
         ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "removal", projectId, userTwoEmail);
