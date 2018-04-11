@@ -94,9 +94,8 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
                             } else {
                                 System.out.println("The password wasn't changed. Please try again.");
                             }
-
-                            break;
                         }
+                        break;
                     case "3":
                         System.out.println("Sending e-mail...");
                         controller.emailAuthentication(user.getEmail());
@@ -107,7 +106,9 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
                         loop = validatePassword(code, user, newPassword);
 
                         break;
-
+                        default:
+                            System.out.println("You inserted an invalid option. Please choose a valid one:");
+                            break;
                 }
             }
 

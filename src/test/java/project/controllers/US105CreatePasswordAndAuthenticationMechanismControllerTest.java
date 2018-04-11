@@ -78,40 +78,22 @@ public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
         user1 = null;
     }
 
-    /*
-
     @Test
-    public void setUserPasswordTest() {
-        String newPassword = "testPassword";
+    public void questionAuthentication() {
 
-        assertFalse(user1.hasPassword());
-
-
-
-        controller.setUserPassword(user1, newPassword);
-
-        //assertTrue(user1.hasPassword());
-
-    }
-
-    */
-
-    @Test
-    public void questionAuthenticationTest() {
-
-        assertEquals("1",controller.questionAuthentication(user1));
+        assertEquals("What is the name of your first pet?",controller.questionAuthentication(user1));
 
     }
 
     @Test
-    public void isRightAnswerTest() {
+    public void isRightAnswer() {
 
         assertTrue(controller.isRightAnswer("test answer", user1));
 
     }
 
     @Test
-    public void smsAuthenticationTest() {
+    public void smsAuthentication() {
 
         controller.smsAuthentication("+351937429087");
 
@@ -120,7 +102,7 @@ public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
     }
 
     @Test
-    public void emailAuthenticationTest() throws Exception{
+    public void emailAuthentication() throws Exception{
 
         controller.emailAuthentication("dsomonteiro@gmail.com");
 
@@ -129,7 +111,7 @@ public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
     }
 
     @Test
-    public void isCodeValidTest() {
+    public void isCodeValid() {
 
         when(codeGenerator.generateCode()).thenReturn("123456");
 
@@ -139,5 +121,17 @@ public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
 
     }
 
+    @Test
+    public void setUserPassword() {
 
+
+
+    }
+
+    @Test
+    public void questionDecoder() {
+
+        assertEquals("What is the name of your first pet?",controller.questionDecoder("1"));
+
+    }
 }
