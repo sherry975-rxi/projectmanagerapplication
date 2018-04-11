@@ -6,6 +6,9 @@ import project.model.Project;
 import project.services.ProjectService;
 import project.services.TaskService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/projects/{projectId}")
@@ -19,7 +22,7 @@ public class US390and392ChooseCalculationMethodAndCalculateReportedProjectCostRe
         this.projectService = projectsService;
     }
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectbyId(@PathVariable int projectId) {
         Project project = this.projectService.getProjectById(projectId);
         return ResponseEntity.ok(project);
@@ -33,17 +36,17 @@ public class US390and392ChooseCalculationMethodAndCalculateReportedProjectCostRe
     public ResponseEntity<Project> updateCalculationMethod(@RequestBody Project project, @PathVariable int projectId) {
         Project myProject = this.projectService.getProjectById(projectId);
         myProject.setCalculationMethod(project.getCalculationMethod());
-        projectService.updateProject(myProject);
-        taskService.calculateReportEffortCost(myProject);
-        projectService.addProjectToProjectContainer(myProject);
+        this.projectService.updateProject(project);
         return ResponseEntity.ok().body(myProject);
     }
     /**
      * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
      */
     @RequestMapping(value = "/cost", method = RequestMethod.GET)
-    public ResponseEntity<String> getProjectCost(@PathVariable int projectId) {
+    public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
         Project project = this.projectService.getProjectById(projectId);
-        return  ResponseEntity.ok().body("Project Cost: " + Double.toString(taskService.getTotalCostReportedToProjectUntilNow(project)));
+        Map<String, Double> projectCost = new HashMap<>();
+        projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+        return  ResponseEntity.ok().body(projectCost);
     }
 }

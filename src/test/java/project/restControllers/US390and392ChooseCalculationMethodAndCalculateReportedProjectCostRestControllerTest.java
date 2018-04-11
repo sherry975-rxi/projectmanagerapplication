@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
@@ -56,35 +57,50 @@ public class US390and392ChooseCalculationMethodAndCalculateReportedProjectCostRe
         projectId = 1;
         this.projectCollaborator = new ProjectCollaborator(userRui,  2);
         projectCollaborator.setProject(projectMock);
-        this.projectMock = new Project("Project", "description", userRui);
+    }
+
+    @Test
+    public void testUpdateCalculationMethod() throws Exception{
+        //given the project is running
+        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(new Project("Project", "description", userRui));
+        Mockito.doNothing().when(projectServiceMock).updateProject(any(Project.class));
+
+        //when
+        MockHttpServletResponse response = mvc.perform(put("/projects/" + projectId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"calculationMethod\":3}")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        //then
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
     @Test
     public void testGetProjectById() throws Exception {
+        Project projectTest = new Project("Project", "description", userRui);
         //given
-        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectMock);
+        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectTest);
 
         //when
         MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //then
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals(jacksonProject.write(projectMock).getJson(), response.getContentAsString());
+        assertEquals(jacksonProject.write(projectTest).getJson(), response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);
     }
 
     @Test
     public void testGetProjectCost() throws Exception {
-        //given
+        //given the project is running
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectMock);
         when(taskServiceMock.getTotalCostReportedToProjectUntilNow(projectMock)).thenReturn(7.0);
 
-        //when
+        //when we perform a get request to url /projects/<projectId>/cost
         MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId + "/cost").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
-        //then
+        //then we receive a valid message
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Project Cost: 7.0", response.getContentAsString());
+        assertEquals("{\"projectCost\":7.0}", response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);
     }
 }
