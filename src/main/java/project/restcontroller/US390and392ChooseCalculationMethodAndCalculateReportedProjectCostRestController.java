@@ -33,6 +33,8 @@ public class US390CalculateReportedProjectCostRestController {
     public ResponseEntity<Project> setCalculationMethod(@RequestBody Project project, @PathVariable int projectId) {
         Project myProject = this.projectService.getProjectById(projectId);
         myProject.setCalculationMethod(project.getCalculationMethod());
+        projectService.updateProject(myProject);
+        taskService.calculateReportEffortCost(myProject);
         projectService.addProjectToProjectContainer(myProject);
         return ResponseEntity.ok().body(myProject);
     }
