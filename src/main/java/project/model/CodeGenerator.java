@@ -26,13 +26,8 @@ public class CodeGenerator {
      */
     public Boolean doesCodeGeneratedMatch (String codeToCheck){
 
-        Boolean doesItMatch = true;
+        return codeToCheck.equals(this.generatedCode);
 
-        if (!codeToCheck.equals(this.generatedCode)){
-            doesItMatch = false;
-        }
-
-        return doesItMatch;
     }
 
 }
