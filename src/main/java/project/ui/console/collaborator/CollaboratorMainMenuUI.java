@@ -67,7 +67,6 @@ public class CollaboratorMainMenuUI {
 		}
 
 		while (loopB) {
-			loopB = false;
 
 
 		String myname = user.getName();
@@ -86,25 +85,28 @@ public class CollaboratorMainMenuUI {
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		switch (option) {
-		case "1":
-			updateUserInfoUI.setUser(this.user);
-			updateUserInfoUI.chooseWhatInfoToUpdate();
-			break;
-		case "2":
-			collectProjectsFromUserUI.setUser(this.user);
-			collectProjectsFromUserUI.collectProjectsFromUser();
-			break;
-		case "3":
-			tasksFunctionalities.setUser(this.user);
-			tasksFunctionalities.displayFunctionalities();
-			break;
-		case "B":
-			break;
-		default:
-			loopB = true;
-		}
-	}}
+            switch (option) {
+            case "1":
+                updateUserInfoUI.setUser(this.user);
+                updateUserInfoUI.chooseWhatInfoToUpdate();
+                break;
+            case "2":
+                collectProjectsFromUserUI.setUser(this.user);
+                collectProjectsFromUserUI.collectProjectsFromUser();
+                break;
+            case "3":
+                tasksFunctionalities.setUser(this.user);
+                tasksFunctionalities.displayFunctionalities();
+                break;
+            case "B":
+                loopB=false;
+                break;
+            default:
+                System.out.println("Error! Option not valid. Please insert an option again.");
+                break;
+            }
+	    }
+	}
 
 
 	public void setUser(User user) {
