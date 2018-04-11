@@ -3,6 +3,7 @@ package project.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 /**
@@ -15,7 +16,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-public class Address{
+public class Address implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
