@@ -39,8 +39,8 @@ public class UserTasksFunctionalitiesMenuUI {
 	 *
 	 */
 	public UserTasksFunctionalitiesMenuUI() {
-
-	}
+		//Creation of an empty constructor for the interface
+}
 
 	/**
 	 * This method displays the functionalities that the user can do related to its
@@ -106,7 +106,8 @@ public class UserTasksFunctionalitiesMenuUI {
 			System.out.println("Error! Option not valid. Please insert an option again.");
 			loop = true;
 		}
-	}}
+	}
+	}
 
 	public void setUser(User user) {
 		this.user = user;
