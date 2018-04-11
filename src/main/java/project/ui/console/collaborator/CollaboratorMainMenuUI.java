@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.model.User;
 import project.services.UserService;
+import project.services.exceptions.ObjectNotFoundException;
 
 import java.util.Scanner;
 
@@ -43,29 +44,29 @@ public class CollaboratorMainMenuUI {
 		boolean loopB = true;
 
 
+
+
 		while (loopA && user==null) {
 
-
-			System.out.println("DEMO MODE ENABLED!");
+            System.out.println("DEMO MODE ENABLED!");
 			System.out.println("Please choose a User by inserting its email:");
 
 			String email = scannerInput.nextLine();
 
-			user = userService.getUserByEmail(email);
+			try {
+				user = userService.getUserByEmail(email);
 
-			if(user == null){
+			} catch(ObjectNotFoundException o) {
 				System.out.println("Invalid email inserted. Would you like to try again?");
-				System.out.println("[Y]-Yes");
-				System.out.println("[Any Key]-No");
-
+				System.out.println("[Y] Yes");
+				System.out.println("[Any Key] No");
 				String yon = scannerInput.nextLine().toLowerCase();
 				if (!("y".equals(yon))){
 					loopA = false;
-					loopB = false;
+                    loopB=false;
 				}
-			} else {
-				loopA = false;
 			}
+
 		}
 
 		while (loopB) {
@@ -88,25 +89,26 @@ public class CollaboratorMainMenuUI {
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		switch (option) {
-		case "1":
-			updateUserInfoUI.setUser(this.user);
-			updateUserInfoUI.chooseWhatInfoToUpdate();
-			break;
-		case "2":
-			collectProjectsFromUserUI.setUser(this.user);
-			collectProjectsFromUserUI.collectProjectsFromUser();
-			break;
-		case "3":
-			tasksFunctionalities.setUser(this.user);
-			tasksFunctionalities.displayFunctionalities();
-			break;
-		case "B":
-			break;
-		default:
-			loopB = true;
-		}
-	}}
+            switch (option) {
+            case "1":
+                updateUserInfoUI.setUser(this.user);
+                updateUserInfoUI.chooseWhatInfoToUpdate();
+                break;
+            case "2":
+                collectProjectsFromUserUI.setUser(this.user);
+                collectProjectsFromUserUI.collectProjectsFromUser();
+                break;
+            case "3":
+                tasksFunctionalities.setUser(this.user);
+                tasksFunctionalities.displayFunctionalities();
+                break;
+            case "B":
+                break;
+            default:
+                loopB = true;
+            }
+	    }
+	}
 
 
 	public void setUser(User user) {
