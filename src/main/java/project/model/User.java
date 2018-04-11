@@ -28,6 +28,7 @@ public class User implements Serializable {
 	private String function;
 	static final long serialVersionUID = 44L;
 
+
 	@JsonManagedReference
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 	private List<Address> addressList;
@@ -39,7 +40,10 @@ public class User implements Serializable {
 
 	private boolean systemUserStateActive;
 	private String password;
-	private boolean firstLogin;
+	private String question;
+	private String answer;
+	private String generatedCode;
+
 	/**
 	 * Empty Constructor for User
 	 */
@@ -70,7 +74,6 @@ public class User implements Serializable {
 		this.phone = phone;
 		this.userProfile = Profile.UNASSIGNED;
 		this.systemUserStateActive = true;
-		this.firstLogin = true;
 	}
 
 	/**
@@ -89,20 +92,10 @@ public class User implements Serializable {
 
 	/**
 	 *
-	 * @return true if it is the first login, false if not
+	 * @return true if has password, false if not
 	 */
-	public boolean isFirstLogin() {
-		return firstLogin;
-	}
-
-	/**
-	 * Change to false when the user make the fist login
-	 *
-	 * @param firstLogin
-	 */
-	public void setFirstLogin(boolean firstLogin) {
-		
-		this.firstLogin = firstLogin;
+	public boolean hasPassword() {
+		return password != null;
 	}
 
 	/**
@@ -332,6 +325,15 @@ public class User implements Serializable {
 		return found;
 	}
 
+	public String getGeneratedCode() {
+		return generatedCode;
+	}
+
+	public void setGeneratedCode(String generatedCode) {
+		this.generatedCode = generatedCode;
+	}
+
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -361,4 +363,21 @@ public class User implements Serializable {
 		User other = (User) obj;
 		return email.equals(other.email);
 	}
+
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
 }

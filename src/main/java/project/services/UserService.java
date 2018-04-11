@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.UserDTO;
 import project.model.Address;
+import project.model.CodeGenerator;
 import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
-import project.services.exceptions.ObjectNotFoundException;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -80,6 +80,10 @@ public class UserService {
 
 		newUser.addAddress(newAddress);
 
+		CodeGenerator code = new CodeGenerator();
+
+        newUser.setGeneratedCode(code.generateCode());
+
 		userRepository.save(newUser);
 
 		return newUser;
@@ -107,9 +111,26 @@ public class UserService {
 		// Sets the user password
 		newUser.setPassword(userDTO.getPassword());
 
+		// Set the question
+		newUser.setQuestion(userDTO.getQuestion());
+
+		// Set answer
+		newUser.setAnswer(userDTO.getAnswer());
+
 		// Adds the user to User repository
 		this.addUserToUserRepositoryX(newUser);
 
+	}
+
+	/**
+	 * If User exists in DB, it will be deleted. If it exists, nothing happens
+	 * @param emailToDeleteUser Email of User to delete
+	 */
+	public void deleteUser(String emailToDeleteUser){
+
+		if(this.userRepository.existsByEmail(emailToDeleteUser)){
+			this.userRepository.deleteByEmail(emailToDeleteUser);
+		}
 	}
 
 	/**
@@ -161,7 +182,7 @@ public class UserService {
 		
 		Optional<User> user = this.userRepository.findByEmail(email);
 		
-		return user.orElseThrow(() -> new ObjectNotFoundException("User not found! The email " + email + " does not exist."));
+		return user.orElse(null);
 	}
 
 	/**
@@ -289,6 +310,13 @@ public class UserService {
 	public boolean isUserinUserContainer(User addedUser) {
 
 		return this.userRepository.existsByEmail(addedUser.getEmail());
+	}
+
+	public boolean isUserEmailInUserContainer(String email){
+		boolean doesContainerHasEmail = false;
+
+		doesContainerHasEmail = this.userRepository.existsByEmail(email);
+		return doesContainerHasEmail;
 	}
 
 }

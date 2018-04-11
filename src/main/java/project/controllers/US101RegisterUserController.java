@@ -1,14 +1,30 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import project.dto.UserDTO;
+import project.model.CodeGenerator;
+import project.model.EmailMessage;
+import project.model.SendEmail;
+import project.model.User;
+import project.model.sendcode.MessageSender;
+import project.model.sendcode.SendCodeFactory;
 import project.services.UserService;
 
-@Controller
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import java.io.IOException;
+
+@Component
 public class US101RegisterUserController {
 	@Autowired
 	private UserService userService;
+
+	private CodeGenerator codeGenerator;
+	private String generatedCode;
+
+	private SendCodeFactory sendCodeFactory;
 
 	public US101RegisterUserController() {
 		//Empty constructor created for JPA integration tests
@@ -43,14 +59,75 @@ public class US101RegisterUserController {
 	 *            country of the User
 	 */
 	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
-			String street, String zipCode, String city, String district, String country) {
-		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password);
+			String street, String zipCode, String city, String district, String country, String question, String answer) {
+
+		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password, question, answer);
 		newUser.setUserAddress(street, zipCode, city, district, country);
+
 		userService.createUserWithDTO(newUser);
+
 	}
 
+	/**
+	 * Sends Verification Code
+	 * @param email
+	 * @throws MessagingException
+	 */
+	public void sendVerificationCode (String email, String senderType) throws MessagingException, IOException {
+
+		SendEmail sendEmail = new SendEmail();
+		EmailMessage emailMessage = new EmailMessage();
+
+		User user = userService.getUserByEmail(email);
+		emailMessage.setEmailAddress(email);
+
+		String emailSubject = "Verification Code";
+		emailMessage.setSubject(emailSubject);
+
+		codeGenerator = new CodeGenerator();
+		generatedCode = codeGenerator.generateCode();
+		String message = "This is the code you should provide for register in Project Management App:  "
+				+ generatedCode;
+
+		sendCodeFactory = new SendCodeFactory();
+		
+		MessageSender messageSender = sendCodeFactory.getCodeSenderType(senderType);
+
+		String userPhone = userService.getUserByEmail(email).getPhone();
+
+		messageSender.codeSender(userPhone,email, message);
+
+
+	}
+
+	public Boolean doesCodeGeneratedMatch (String codeToCheck, String recipientEmail){
+
+		User user = userService.getUserByEmail(recipientEmail);
+
+		Boolean doCodesMatch = this.codeGenerator.doesCodeGeneratedMatch(codeToCheck);
+
+		if (!doCodesMatch){
+			userService.deleteUser(recipientEmail);
+		} else {
+			user.setGeneratedCode("");
+			userService.updateUser(user);
+		}
+
+		return doCodesMatch;
+	}
+
+
+	/**
+	 *
+	 * @param email The email to check if exists in the user repository
+	 * @return TRUE if there's an user with the email, FALSE if it doesn't
+	 */
 	public boolean isUserInUserRepository(String email) {
-		return userService.getUserByEmail(email) != null;
+
+		boolean isUserInUserRepository = userService.isUserEmailInUserContainer(email);
+
+		return isUserInUserRepository;
+
 	}
 
 	public boolean isUserEmailValid(String email) {
@@ -64,4 +141,7 @@ public class US101RegisterUserController {
 	public boolean isEmailValidController(String email) {
 		return this.userService.isEmailAddressValid(email);
 	}
+
+
+
 }
