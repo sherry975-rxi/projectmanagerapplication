@@ -3,7 +3,6 @@ package project.ui.console.collaborator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controllers.US101RegisterUserController;
-import project.model.SendSMS;
 
 import java.util.Scanner;
 
@@ -17,7 +16,7 @@ public class US101UserRegisterUI {
 	@Autowired
 	private US101RegisterUserController us101RegisterUserController;
 
-	public void userRegister() throws Exception{
+    public void userRegister() {
 		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
 
@@ -110,7 +109,7 @@ public class US101UserRegisterUI {
 		System.out.println();
 
 		System.out.println("Please choose an identity verification question: ");
-		String question1 = "What is the name of the first pet?";
+        String question1 = "What is the name of your first pet?";
 		String question2 = "What elementary school did you attend?";
 		String question3 = "Where did you go for your honeymoon?";
 		System.out.println("[1] " + question1);
