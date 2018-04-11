@@ -14,6 +14,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 @RestController
 @RequestMapping("/projects/{projectId}/tasks/{taskId}")
 public class US207CreateTaskReportRestController {
@@ -76,7 +78,6 @@ public class US207CreateTaskReportRestController {
 
     @RequestMapping(value = "/reports/" , method = RequestMethod.POST)
     public ResponseEntity<?> createTaskReport (@RequestBody Report reportDTO, @PathVariable String taskId, @PathVariable int projectId){
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Project project = projectService.getProjectById(projectId);
 
@@ -86,6 +87,11 @@ public class US207CreateTaskReportRestController {
         String userEmailDTO = taskCollabDTO.getProjCollaborator().getUserFromProjectCollaborator().getEmail();
 
         TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmailDTO);
+
+        if(taskCollab==null){
+
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        }
 
         Calendar dateOfReport = Calendar.getInstance();
 
@@ -99,12 +105,13 @@ public class US207CreateTaskReportRestController {
 
             User user = userService.getUserByEmail(userEmailDTO);
 
-            result = ResponseEntity.status(HttpStatus.OK).body("Report created!\nINFO:" + "\nTask ID: " + task.getTaskID() +"\nDescription: " + task.getDescription() + "\nUser: " + user.getName() + "\nTime reported: " + time);
+            return ResponseEntity.ok().body("Report created!\nINFO:" + "\nTask ID: " + task.getTaskID() +"\nDescription: " + task.getDescription() + "\nUser: " + user.getName() + "\nTime reported: " + time);
             //result = new ResponseEntity<>(HttpStatus.OK);
 
         }
 
-        return result;
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 
 
@@ -125,8 +132,6 @@ public class US207CreateTaskReportRestController {
     @RequestMapping(value = "/reports/{reportId}", method = RequestMethod.PUT)
     public ResponseEntity<Report> updateTaskReport(@RequestBody Report reportDTO, @PathVariable int reportId, @PathVariable String taskId, @PathVariable int projectId){
 
-        ResponseEntity<Report> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
@@ -138,33 +143,29 @@ public class US207CreateTaskReportRestController {
         
         double newTimeReported = reportDTO.getReportedTime();
 
-        if(!task.doesTaskHaveReportByGivenUser(userEmailDTO)){
+        if(!task.doesTaskHaveReportByGivenUser(userEmailDTO) || taskCollab==null){
 
-            return new ResponseEntity<Report>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Report>(HttpStatus.METHOD_NOT_ALLOWED);
         }
-        else {
 
 
-            List<Report> taskReportsList = task.getReports();
+        List<Report> taskReportsList = task.getReports();
 
-            for (int reportIndex = 0; reportIndex < taskReportsList.size(); reportIndex++) {
-                if (taskReportsList.get(reportIndex).getId() == reportId) {
-                    task.updateReportedTime(newTimeReported, taskCollab, reportIndex);
-                    Calendar dateOfReport = Calendar.getInstance();
-                    Report reportUpdated = taskReportsList.get(reportIndex);
-                    reportUpdated.setDateOfUpdate(dateOfReport);
-                    this.taskService.saveTask(task);
+        for (int reportIndex = 0; reportIndex < taskReportsList.size(); reportIndex++) {
+            if (taskReportsList.get(reportIndex).getId() == reportId) {
 
-                    return new ResponseEntity<Report>(reportUpdated, HttpStatus.OK);
+                task.updateReportedTime(newTimeReported, taskCollab, reportIndex);
+                Calendar dateOfReport = Calendar.getInstance();
+                Report reportUpdated = taskReportsList.get(reportIndex);
+                reportUpdated.setDateOfUpdate(dateOfReport);
+                this.taskService.saveTask(task);
 
-                }
+                return new ResponseEntity<Report>(reportUpdated, HttpStatus.OK);
+
             }
         }
 
-        return result;
-
-
-
+        return new ResponseEntity<Report>(HttpStatus.BAD_REQUEST);
 
     }
 
