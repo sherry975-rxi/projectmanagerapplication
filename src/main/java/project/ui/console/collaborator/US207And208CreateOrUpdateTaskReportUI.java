@@ -16,7 +16,9 @@ public class US207And208CreateOrUpdateTaskReportUI {
 
     private TaskCollaborator taskCollaborator;
 
+
     public US207And208CreateOrUpdateTaskReportUI() {
+        //Creation of an empty constructor for the interface
     }
 
 

@@ -16,7 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.*;
 
 @Service
 public class LoadProjectXmlv00 implements LoadProjectXml{
@@ -89,6 +89,7 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 				project.setProjectManager(user);
 
 				project.setCalculationMethod(Project.FIRST_COLLABORATOR);
+				project.setAvailableCalculationMethods(new ArrayList<>(Arrays.asList(1,2,3,4)));
 
 				projectService.updateProject(project);
 
@@ -120,10 +121,10 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 								Element eElementLigProject = (Element) nNodeLigProject;
 
 								Calendar startDate = convertStringToCalendar(
-										eElementProject.getElementsByTagName("data_inicio").item(0).getTextContent());
+                                        eElementLigProject.getElementsByTagName("data_inicio").item(0).getTextContent());
 
 								Calendar finishDate = convertStringToCalendar(
-										eElementProject.getElementsByTagName("data_fim").item(0).getTextContent());
+                                        eElementLigProject.getElementsByTagName("data_fim").item(0).getTextContent());
 
 								boolean isProjCollabActive = finishDate!=null;
 
@@ -228,15 +229,19 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 
 								task.addProjectCollaboratorToTask(projCollaborator);
 
-								//Dados do Task Collaborator
+								//Dados do Task Collaborator, por ligação
 
-								String startDateString = eElementnNodeTaskCollaborator
+                                // CAMPO LIGAÇÂO TAREFA INEXISTENTE POR AGORA
+                                //NodeList nLigTaskList = eElementnNodeTaskCollaborator.getElementsByTagName("ligacao_tarefa");
+
+
+                                String startDateString = eElementnNodeTaskCollaborator
 										.getElementsByTagName("data_inicio").item(0).getTextContent();
 
 								Calendar startDateTaskCollaborator = convertStringToCalendar(startDateString);
 
 								TaskCollaborator taskCollaborator = task
-										.getTaskCollaboratorByEmail(eElementnNodeTaskCollaborator
+										.getActiveTaskCollaboratorByEmail(eElementnNodeTaskCollaborator
 												.getElementsByTagName("colaborador_id").item(0).getTextContent());
 
 								taskCollaborator.setStartDate(startDateTaskCollaborator);

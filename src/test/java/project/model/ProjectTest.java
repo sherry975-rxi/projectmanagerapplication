@@ -6,6 +6,7 @@ import org.junit.Test;
 import project.services.TaskService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -365,5 +366,26 @@ public class ProjectTest {
 		
 		assertTrue(task.equals(taskResult)); 
 	}
+
+	/**
+	 * Tests the getters and setters for permittedCalculationMethods
+	 * as well as the boolean method determining whether or not they're allowed
+	 */
+	@Test
+	public void testSetAndGetPermittedCalculationMethods() {
+		// given a new project, the list of allowed methods should contain four entries, matching 1,2,3,4
+		assertEquals(4, p1.getAvailableCalculationMethods().size());
+		assertEquals((new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4}))), p1.getAvailableCalculationMethods());
+		assertTrue(p1.isCalculationMethodAllowed(2));
+		// when the list of permitted methods is reset as 1,3,4
+		p1.setAvailableCalculationMethods((new ArrayList<>(Arrays.asList(new Integer[]{1,3,4}))));
+		// then the list must contain 3 entries, and 2 must not be allowed
+		assertFalse(p1.isCalculationMethodAllowed(2));
+		assertEquals(3, p1.getAvailableCalculationMethods().size());
+	}
+
+
+
+
 
 }

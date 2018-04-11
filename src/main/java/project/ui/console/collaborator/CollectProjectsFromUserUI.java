@@ -74,35 +74,35 @@ public class CollectProjectsFromUserUI {
 		listOfProjectsFromUser.addAll(collectProjectsFromUserController.getProjectsFromUser());
 		listOfProjectsFromUser.addAll(collectProjectsFromUserController.getProjectsFromProjectManager());
 
-		for (Project project : listOfProjectsFromUser) {
-			int projectIDCode = project.getIdCode();
-			String projectIDCodeToString = String.valueOf(projectIDCode);
+            for (Project project : listOfProjectsFromUser) {
+                int projectIDCode = project.getIdCode();
+                String projectIDCodeToString = String.valueOf(projectIDCode);
+                listOfOptionsToCompare.add(projectIDCodeToString);
 
-			if (option.equals(projectIDCodeToString)) {
-				if(this.user.equals(project.getProjectManager())) {
-					pmMenu.setProjectManager(user);
-					pmMenu.setProject(project);
-					pmMenu.displayOptions();
-				}
-				else {
-				projectViewMenuUI.setProjectID(project.getIdCode());
-				projectViewMenuUI.setUser(user);
-				projectViewMenuUI.projectDataDisplay();
-				}
-			} else if ("B".equals(option)) {
-				//da maneira que isto esta, nem precisa desta op�ao...
-				
-			}
-			listOfOptionsToCompare.add(projectIDCodeToString);
-		}
+                if (option.equals(projectIDCodeToString)) {
+                    if(this.user.equals(project.getProjectManager())) {
+                        System.out.print("TEST: " + listOfProjectsFromUser.size());
+                        pmMenu.setProjectManager(user);
+                        pmMenu.setProject(project);
+                        pmMenu.displayOptions();
+                        break;
+                    }
+                    else {
+                    projectViewMenuUI.setProjectID(project.getIdCode());
+                    projectViewMenuUI.setUser(user);
+                    projectViewMenuUI.projectDataDisplay();
+                    break;
+                    }
+                }
+            }
 
-		// In case the user input is an invalid option, the console shows a message and
-		// returns to the beginning of this same menu
-		if (!(listOfOptionsToCompare.contains(option))) {
-			System.out.println("Please choose a valid option: ");
-			loop = true;
-		}
-	}
+            // In case the user input is an invalid option, the console shows a message and
+            // returns to the beginning of this same menu
+            if (!(listOfOptionsToCompare.contains(option))) {
+                System.out.println("Please choose a valid option: ");
+                loop = true;
+            }
+	    }
 	}
 
 	public void setUser(User user) {

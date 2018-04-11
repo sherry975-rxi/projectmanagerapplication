@@ -1,7 +1,5 @@
 package project.model;
 
-import java.util.Arrays;
-
 /**
  * Profile Class for setting profiles in Users
  * 
