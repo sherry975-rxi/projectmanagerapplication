@@ -24,21 +24,20 @@ public class US203GetUnfinishedTaskUI {
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		int projID;
-		String[] split;
+
 		User user = user1;
 		int t;
 		t = 0;
 		Scanner scannerInput = new Scanner(System.in);
 
-		String myname = user.getName();
+		String myName = user.getName();
 		String function = user.getFunction().toUpperCase();
 			List<Task> taskList = unfinishedTaskByUser.getUserStartedNotFinishedTaskListInIncreasingOrder(user);
 
-		System.out.println("\n" + myname + " \n" + function);
+		System.out.println("\n" + myName + " \n" + function);
 		System.out.println("___________________________________________________");
 
-			if (taskList.size() == 0) {
+			if (taskList.isEmpty()) {
 				System.out.println("You have no unfinished tasks.");
 			}
 			for (int i = 0; i < taskList.size(); i++) {
@@ -65,12 +64,10 @@ public class US203GetUnfinishedTaskUI {
 
 
 			try {
-				//split = option.split("\\.");
-				//projID = Integer.valueOf(split[0]);
 
 
-                taskSelected.setTaskID(option);
-				//taskSelected.setProjectID(projID);
+               taskSelected.setTaskID(option);
+
 				taskSelected.setUser(user);
 				taskSelected.taskDataDisplay();
 			}
