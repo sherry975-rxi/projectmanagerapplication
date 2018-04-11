@@ -1,8 +1,10 @@
 package project.model.sendcode;
 
+import org.springframework.stereotype.Service;
 import project.model.SendSMS;
 
 import java.io.IOException;
+
 
 public class SMSSender implements MessageSender{
 
@@ -11,7 +13,9 @@ public class SMSSender implements MessageSender{
 
 
     @Override
-    public void codeSender (String codeSender, String receipientPhoneNum, String email, String msg) throws IOException{
+    public void codeSender (String receipientPhoneNum, String email, String msg) throws IOException{
+
+        sendSMS = new SendSMS();
         sendSMS.sendMessage(msg, receipientPhoneNum);
     }
 }
