@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping("/projects/{projectId}/tasks/{taskId}")
+@RequestMapping("/users/{userId}/projects/{projectId}/tasks/{taskId}")
 public class US207CreateTaskReportRestController {
 
     private UserService userService;
@@ -34,41 +34,41 @@ public class US207CreateTaskReportRestController {
 
 
     @RequestMapping(value = "/reports", method = RequestMethod.GET)
-    public ResponseEntity<List<Report>> getTasksReportsFromUser(@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
+    public ResponseEntity<List<Report>> getTasksReportsFromUser(@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserByEmail(userEmail);
+        User user = userService.getUserByID(userId);
 
-        if(!task.doesTaskHaveReportByGivenUser(userEmail)){
+        if(!task.doesTaskHaveReportByGivenUser(user.getEmail())){
 
             return new ResponseEntity<List<Report>>(HttpStatus.NOT_FOUND);
         }
 
 
-        List<Report> userReportsList = task.getReportsFromGivenUser(userEmail);
+        List<Report> userReportsList = task.getReportsFromGivenUser(user.getEmail());
 
         return new ResponseEntity<List<Report>>(userReportsList, HttpStatus.OK);
 
     }
 
     @RequestMapping(value = "/reportsString", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> getTaskStringReportsFromUser(@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
+    public ResponseEntity<List<String>> getTaskStringReportsFromUser(@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserByEmail(userEmail);
+        User user = userService.getUserByID(userId);
 
-        if(!task.doesTaskHaveReportByGivenUser(userEmail)){
+        if(!task.doesTaskHaveReportByGivenUser(user.getEmail())){
 
             return new ResponseEntity<List<String>>(HttpStatus.NOT_FOUND);
         }
 
-        List<String> reportsList = task.getReportsFromGivenUser(userEmail)
+        List<String> reportsList = task.getReportsFromGivenUser(user.getEmail())
                 .stream().map(Report -> dateToString(Report)).collect(Collectors.toList());
 
         return new ResponseEntity<List<String>>(reportsList, HttpStatus.OK);
@@ -77,16 +77,15 @@ public class US207CreateTaskReportRestController {
 
 
     @RequestMapping(value = "/reports/" , method = RequestMethod.POST)
-    public ResponseEntity<?> createTaskReport (@RequestBody Report reportDTO, @PathVariable String taskId, @PathVariable int projectId){
+    public ResponseEntity<?> createTaskReport (@RequestBody Report reportDTO, @PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        TaskCollaborator taskCollabDTO = reportDTO.getTaskCollaborator();
-        String userEmailDTO = taskCollabDTO.getProjCollaborator().getUserFromProjectCollaborator().getEmail();
+        User user = userService.getUserByID(userId);
 
-        TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmailDTO);
+        TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(user.getEmail());
 
         if(taskCollab==null){
 
@@ -102,8 +101,6 @@ public class US207CreateTaskReportRestController {
             this.taskService.saveTask(task);
 
             String time = Double.toString(timeReported);
-
-            User user = userService.getUserByEmail(userEmailDTO);
 
             return ResponseEntity.ok().body("Report created!\nINFO:" + "\nTask ID: " + task.getTaskID() +"\nDescription: " + task.getDescription() + "\nUser: " + user.getName() + "\nTime reported: " + time);
             //result = new ResponseEntity<>(HttpStatus.OK);
@@ -130,20 +127,19 @@ public class US207CreateTaskReportRestController {
         }
 
     @RequestMapping(value = "/reports/{reportId}", method = RequestMethod.PUT)
-    public ResponseEntity<Report> updateTaskReport(@RequestBody Report reportDTO, @PathVariable int reportId, @PathVariable String taskId, @PathVariable int projectId){
+    public ResponseEntity<Report> updateTaskReport(@RequestBody Report reportDTO, @PathVariable int reportId, @PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        TaskCollaborator taskCollabDTO = reportDTO.getTaskCollaborator();
-        String userEmailDTO = taskCollabDTO.getProjCollaborator().getUserFromProjectCollaborator().getEmail();
+        User user = userService.getUserByID(userId);
 
-        TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(userEmailDTO);
+        TaskCollaborator taskCollab = task.getTaskCollaboratorByEmail(user.getEmail());
         
         double newTimeReported = reportDTO.getReportedTime();
 
-        if(!task.doesTaskHaveReportByGivenUser(userEmailDTO) || taskCollab==null){
+        if(!task.doesTaskHaveReportByGivenUser(user.getEmail()) || taskCollab==null){
 
             return new ResponseEntity<Report>(HttpStatus.METHOD_NOT_ALLOWED);
         }
