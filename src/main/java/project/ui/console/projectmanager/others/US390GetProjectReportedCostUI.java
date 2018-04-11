@@ -19,15 +19,14 @@ public class US390GetProjectReportedCostUI {
 
 	Scanner scannerInput;
 
-	public void displayProjectCost(Project project) {
+	public Project displayProjectCost(Project project) {
 		String line = "___________________________________________________";
-
-		scannerInput = new Scanner(System.in);
 
 		projectInfo.setProject(project);
 
 		boolean loop = true;
 		while (loop) {
+			scannerInput = new Scanner(System.in);
 			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -71,11 +70,15 @@ public class US390GetProjectReportedCostUI {
 
 		String option = scannerInput.nextLine().toUpperCase();
 
+
 			if (!("B".equals(option))){
 				System.out.println("Please choose a valid option: ");
 				loop = true;
 			}
+
 		}
+
+		return project;
 	}
 
 	private String selectReportCostCalculation(Project project) {
@@ -107,6 +110,7 @@ public class US390GetProjectReportedCostUI {
 				return "Cost calculation not changed.";
 
         }
+
 
 
 	}
