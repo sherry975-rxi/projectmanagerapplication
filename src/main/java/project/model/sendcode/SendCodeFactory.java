@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public class SendCodeFactory {
 
-    private SMSSender smsSender;
-    private EmailSender emailSender;
+    private ValidationMethod smsSender;
+    private ValidationMethod emailSender;
     private static final Map<String, ValidationMethod> codeSenderType = new HashMap<>();
-    private AnswerValidation answerValidation;
+    private ValidationMethod answerValidation;
 
     /**
      *

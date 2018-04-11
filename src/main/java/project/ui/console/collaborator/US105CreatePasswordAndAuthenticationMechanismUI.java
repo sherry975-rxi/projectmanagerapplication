@@ -76,6 +76,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
                     userInput = input.nextLine();
 
                     if (controller.isCodeValid(userInput, user)) {
+                        controller.setUserPassword(user, newPassword);
                         System.out.println("The password changed successfully!");
                         loop = false;
 
