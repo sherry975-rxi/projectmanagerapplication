@@ -31,26 +31,26 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
         String userInput;
         boolean loopPasswordReenter = true;
         boolean loop = false;
-        String newPassword = "";
+        String newPass = "";
 
         while (loopPasswordReenter) {
 
             System.out.println("\nYou must create a password");
             System.out.println("Please enter a password:");
 
-            newPassword = input.nextLine();
+            newPass = input.nextLine();
             System.out.println("Re-enter the password:");
 
             String reEnterPassword = input.nextLine();
 
-            if (!(newPassword.equals(reEnterPassword))) {
+            if (!(newPass.equals(reEnterPassword))) {
                 System.out.println("The passwords do not match!");
                 System.out.println("Try again? Y/N");
                 String answer = input.nextLine();
                 if (!("Y".equalsIgnoreCase(answer)))
                     loopPasswordReenter = false;
 
-            } else if ("".equals(newPassword)) {
+            } else if ("".equals(newPass)) {
                 System.out.println("The password can't be empty!");
                 System.out.println("Try again? Y/N");
                 String answer = input.nextLine();
@@ -65,8 +65,8 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
             while (loop) {
                 System.out.println("Choose an authentication method:\n");
                 System.out.println("[1] Sms authentication");
-                System.out.println("[2] Answer authentication");
-                System.out.println("[3] Email authentication\n");
+                System.out.println("[2] Email authentication");
+                System.out.println("[3] Question authentication\n");
 
                 String choice = input.nextLine();
 
@@ -76,7 +76,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
                     userInput = input.nextLine();
 
                     if (controller.isCodeValid(userInput, user)) {
-                        controller.setUserPassword(user, newPassword);
+                        controller.setUserPassword(user, newPass);
                         System.out.println("The password changed successfully!");
                         loop = false;
 
