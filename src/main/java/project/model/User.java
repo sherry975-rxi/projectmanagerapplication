@@ -45,7 +45,6 @@ public class User implements Serializable {
 	private String password;
 	private String question;
 	private String answer;
-	private String generatedCode;
 
 	/**
 	 * Empty Constructor for User
@@ -328,13 +327,6 @@ public class User implements Serializable {
 		return found;
 	}
 
-	public String getGeneratedCode() {
-		return generatedCode;
-	}
-
-	public void setGeneratedCode(String generatedCode) {
-		this.generatedCode = generatedCode;
-	}
 
 
 	/*

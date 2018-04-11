@@ -1,6 +1,5 @@
 package project.model.sendcode;
 
-import org.springframework.stereotype.Service;
 import project.model.EmailMessage;
 import project.model.SendEmail;
 

@@ -1,6 +1,5 @@
 package project.model.sendcode;
 
-import org.springframework.stereotype.Service;
 import project.model.SendSMS;
 
 import java.io.IOException;

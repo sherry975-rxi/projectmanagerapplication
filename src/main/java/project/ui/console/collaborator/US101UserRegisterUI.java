@@ -1,11 +1,9 @@
 package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import project.controllers.US101RegisterUserController;
-import project.model.SendSMS;
-import project.ui.console.MainMenuUI;
+
 
 import java.util.Scanner;
 
