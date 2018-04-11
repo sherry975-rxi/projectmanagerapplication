@@ -1,0 +1,49 @@
+title US 392: Update Project Tasks Report Calculation method
+
+Actor->UI: Select and Calculate Report cost
+
+
+UI->Controller: Create controller(project)
+UI->Actor: Change Project Cost?
+Actor->UI: Select Average Cost
+UI->Controller : Set Cost Calculation method (project)
+
+Controller -> Project : setProjectCostCalculation(Average)
+
+Controller -> TaskService : calculateReportEffortCost(project)
+
+
+TaskService->Database: findAllProjectTasks(project)
+Database-->TaskService: returns all ProjectTasks
+
+TaskService->TaskService : List all reports
+
+TaskService->*CostCalculationInterface:
+
+loop Each Report
+    TaskService->Database: Find Collaborators active during report
+    TaskService->CostCalculationInterface: Calculate Cost(report, collaborators)
+    CostCalculationInterface->Report:setCostPerEffort
+end
+
+TaskService->Database: Save all tasks
+
+destroy CostCalculationInterface
+
+TaskService--> Controller: Cost Changed!
+
+Controller -> TaskService : calculateTotalProjectCost(project)
+
+loop Each Task
+    TaskService -> TaskService: calculate Total Task Cost
+end
+
+TaskService -> Controller: Return cost of tasks
+
+Controller-> UI: Total cost of Project + Tasks
+
+UI-->Actor: Display All costs
+
+
+
+
