@@ -88,7 +88,7 @@ public class US101RegisterUserController {
 	public Boolean doesCodeGeneratedMatch (String codeToCheck, String recipientEmail){
 
 		User user = userService.getUserByEmail(recipientEmail);
-
+        codeGenerator = new CodeGenerator();
 		Boolean doCodesMatch = this.codeGenerator.doesCodeGeneratedMatch(codeToCheck);
 
 		if (!doCodesMatch){

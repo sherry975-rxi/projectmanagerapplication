@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controllers.US101RegisterUserController;
 
+import javax.mail.MessagingException;
 import java.util.Scanner;
 
 /**
@@ -16,7 +17,7 @@ public class US101UserRegisterUI {
 	@Autowired
 	private US101RegisterUserController us101RegisterUserController;
 
-    public void userRegister() {
+    public void userRegister() throws MessagingException {
 		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
 
@@ -122,7 +123,7 @@ public class US101UserRegisterUI {
 		}
 
 		System.out.println("Please answer the selected question: \n");
-		String questionAnswer = scannerInput.nextLine().toUpperCase();
+        String questionAnswer = scannerInput.nextLine();
 		System.out.println();
 
 		System.out.println("Enter street: ");
@@ -170,13 +171,13 @@ public class US101UserRegisterUI {
 
 		if ("y".equalsIgnoreCase(confirm)) {
 			us101RegisterUserController.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city,
-					district, country, "Question?", "Answer");
+                    district, country, question, questionAnswer);
 			System.out.println();
 			System.out.println("-------- A numeric verification code has been sent to the e-mail address you provided. -------");
 			System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
 			//SendSMS sms = new SendSMS();
 			//sms.sendMessage("ola", phone);
-			//us101RegisterUserController.sendVerificationCode(email);
+            us101RegisterUserController.sendVerificationCode(email);
 			System.out.println();
 			String codeInsert = scannerInput.nextLine();
 			if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsert, email)){
