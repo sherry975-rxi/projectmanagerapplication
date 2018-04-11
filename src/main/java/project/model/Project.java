@@ -38,7 +38,9 @@ public class Project implements Serializable{
 
     private int calculationMethod;
 
-	public static final int PLANNING = 0; // planeado
+    private ArrayList<Integer> availableCalculationMethods;
+
+    public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
 	public static final int EXECUTION = 2; // execução
 	public static final int DELIVERY = 3; // entrega
@@ -49,8 +51,6 @@ public class Project implements Serializable{
 	public static final int LAST_COLLABORATOR = 2;
 	public static final int FIRST_LAST_COLLABORATOR = 3;
 	public static final int AVERAGE_COLLABORATOR = 4;
-
-	public ArrayList<Integer> availableCalculationMethods;
 
 	static final long serialVersionUID = 43L;
 

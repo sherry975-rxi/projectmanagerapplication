@@ -84,33 +84,49 @@ public class US390GetProjectReportedCostUI {
 	private String selectReportCostCalculation(Project project) {
 		System.out.println("");
 		System.out.println("Should a single user have different costs throughout the same report, calculate using:");
-        System.out.println("[1] - The user's first cost");
-        System.out.println("[2] - The user's last cost");
-        System.out.println("[3] - Average between the users first and last cost");
-		System.out.println("[4] - Average between all of the user's costs");
+        System.out.println("[1] - The user's first cost (ALWAYS OK)");
+        System.out.println("[2] - The user's last cost " + project.isCalculationMethodAllowed(Project.LAST_COLLABORATOR));
+        System.out.println("[3] - Average between the users first and last cost " + project.isCalculationMethodAllowed(Project.FIRST_LAST_COLLABORATOR));
+		System.out.println("[4] - Average between all of the user's costs "+ project.isCalculationMethodAllowed(Project.AVERAGE_COLLABORATOR));
         System.out.println("[Any Key] - Keep Current (Currently: " + project.getCalculationMethod() + ")");
         System.out.println("");
         scannerInput = new Scanner(System.in);
 		char option = scannerInput.nextLine().charAt(0);
 
+		Integer selectedMethod =0;
+		String result;
+
 		switch(option) {
             case '1':
-				controller.selectReportCostCalculation(project, Project.FIRST_COLLABORATOR);
-				return "Earliest Collaborator Cost Selected!";
+            	selectedMethod=Project.FIRST_COLLABORATOR;
+                result= "Earliest Collaborator Cost Selected!";
+                break;
             case '2':
-				controller.selectReportCostCalculation(project, Project.LAST_COLLABORATOR);
-				return "Latest Collaborator Cost Selected!";
+				selectedMethod=Project.LAST_COLLABORATOR;
+                result= "Latest Collaborator Cost Selected!";
+                break;
             case '3':
-				controller.selectReportCostCalculation(project, Project.FIRST_LAST_COLLABORATOR);
-				return "First/Last Average Cost Selected!";
+				selectedMethod=Project.FIRST_LAST_COLLABORATOR;
+                result= "First/Last Average Cost Selected!";
+                break;
 			case '4':
-				controller.selectReportCostCalculation(project, Project.AVERAGE_COLLABORATOR);
-				return "Average Collaborator Cost Selected!";
+				selectedMethod=Project.AVERAGE_COLLABORATOR;
+                result= "Average Collaborator Cost Selected!";
+                break;
             default:
-				return "Cost calculation not changed.";
+                result= "Cost calculation not changed.";
+                break;
 
         }
 
+        if(project.isCalculationMethodAllowed(selectedMethod)) {
+            controller.selectReportCostCalculation(project, selectedMethod);
+        } else {
+		    result="This calculation method is unavailable!";
+        }
+
+
+        return result;
 
 
 	}
