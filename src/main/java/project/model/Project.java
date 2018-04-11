@@ -1,10 +1,11 @@
 package project.model;
 
 
+import org.apache.catalina.LifecycleState;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Class to build Projects.
@@ -49,6 +50,7 @@ public class Project implements Serializable{
 	public static final int FIRST_LAST_COLLABORATOR = 3;
 	public static final int AVERAGE_COLLABORATOR = 4;
 
+	public ArrayList<Integer> availableCalculationMethods;
 
 	static final long serialVersionUID = 43L;
 
@@ -84,6 +86,8 @@ public class Project implements Serializable{
 		this.calculationMethod = FIRST_COLLABORATOR;
 		this.startdate = null;
 		this.finishdate = null;
+		this.availableCalculationMethods = new ArrayList<>(Arrays.asList(1,2,3,4));
+
 	}
 
 	public int getId() {
@@ -392,5 +396,25 @@ public class Project implements Serializable{
 	public Boolean isProjectActive() { 
 		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION || this.getProjectStatus() ==  EXECUTION  || this.getProjectStatus() == DELIVERY;
 	}
+
+	public List<Integer> getAvailableCalculationMethods() {
+		return availableCalculationMethods;
+	}
+	public void setAvailableCalculationMethods(ArrayList<Integer> availableCalculationMethods) {
+		this.availableCalculationMethods = availableCalculationMethods;
+	}
+
+
+	/**
+	 * This method recieves an integer corresponding to one of the cost calculation methods,
+	 * and returns true or false depending on whether or not the Director has allowed that calculation method
+	 *
+	 * @param method
+	 * @return
+	 */
+	public boolean isCalculationMethodAllowed(Integer method) {
+		return availableCalculationMethods.contains(method);
+	}
+
 
 }
