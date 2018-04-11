@@ -127,4 +127,6 @@ public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
         assertTrue(controller.isCodeValid("123456"));
 
     }
+
+
 }
