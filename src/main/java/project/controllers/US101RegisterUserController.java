@@ -1,23 +1,30 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import project.dto.UserDTO;
 import project.model.CodeGenerator;
 import project.model.EmailMessage;
 import project.model.SendEmail;
 import project.model.User;
+import project.model.sendcode.MessageSender;
+import project.model.sendcode.SendCodeFactory;
 import project.services.UserService;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import java.io.IOException;
 
-@Controller
+@Component
 public class US101RegisterUserController {
 	@Autowired
 	private UserService userService;
 
 	private CodeGenerator codeGenerator;
 	private String generatedCode;
+
+	private SendCodeFactory sendCodeFactory;
 
 	public US101RegisterUserController() {
 		//Empty constructor created for JPA integration tests
@@ -66,7 +73,7 @@ public class US101RegisterUserController {
 	 * @param email
 	 * @throws MessagingException
 	 */
-	public void sendVerificationCode (String email) throws MessagingException {
+	public void sendVerificationCode (String email, String senderType) throws MessagingException, IOException {
 
 		SendEmail sendEmail = new SendEmail();
 		EmailMessage emailMessage = new EmailMessage();
@@ -77,12 +84,20 @@ public class US101RegisterUserController {
 		String emailSubject = "Verification Code";
 		emailMessage.setSubject(emailSubject);
 
-		String message = "This the code you should provide for register in Project Management App:  ";
 		codeGenerator = new CodeGenerator();
 		generatedCode = codeGenerator.generateCode();
-		emailMessage.setBody(message + generatedCode);
+		String message = "This is the code you should provide for register in Project Management App:  "
+				+ generatedCode;
 
-		sendEmail.sendMail(emailMessage);
+		sendCodeFactory = new SendCodeFactory();
+		
+		MessageSender messageSender = sendCodeFactory.getCodeSenderType(senderType);
+
+		String userPhone = userService.getUserByEmail(email).getPhone();
+
+		messageSender.codeSender(userPhone,email, message);
+
+
 	}
 
 	public Boolean doesCodeGeneratedMatch (String codeToCheck, String recipientEmail){
