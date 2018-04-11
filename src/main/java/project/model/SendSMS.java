@@ -40,7 +40,10 @@ public class SendSMS {
          */
         String numberToSendMessage = numberToSend;
 
-        Message message = Message.creator(new PhoneNumber(numberToSend),
+        //HARDCODING NUMBER SO TWILIO DOESNT CRASH APPLICATION
+        numberToSendMessage = "+351937429087";
+
+        Message message = Message.creator(new PhoneNumber(numberToSendMessage),
                 new PhoneNumber(numberProvidedByTwilio),
                 messageToSend).create();
 
