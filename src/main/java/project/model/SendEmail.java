@@ -33,6 +33,7 @@ public class SendEmail {
         //authenticates sender's email and password
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
+                    @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(senderEmail, senderXPMS);
                     }
@@ -51,19 +52,7 @@ public class SendEmail {
         //Email date
         msg.setSentDate(new Date());
 
-
-        //In case one wants to send an attachment
-	/*
-	Multipart multipart = new MimeMultipart();
-	multipart.addBodyPart(messageBodyPart);
-	MimeBodyPart attachPart = new MimeBodyPart();
-
-	attachPart.attachFile("C:\\talk2amareswaran-downloads\\mysql2.png");
-
-	multipart.addBodyPart(attachPart);
-	msg.setContent(multipart);
-	*/
-        // Shifts the e-mail to recipient
+        
         Transport.send(msg);
     }
 }
