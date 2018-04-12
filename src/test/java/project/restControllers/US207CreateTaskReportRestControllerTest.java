@@ -191,13 +191,27 @@ public class US207CreateTaskReportRestControllerTest {
     @Test
     public void canCreateReports() throws Exception {
 
-        Report reported = new Report();
-        reported.setReportedTime(20.0);
+        Report reportDTO = new Report();
+        reportDTO.setId(1);
+        reportDTO.setReportedTime(20.0);
 
-        ResponseEntity<?> result  = controller.createTaskReport(reported, taskIdOne, projectId, userTwoId);
+        ResponseEntity<?> result  = controller.createTaskReport(reportDTO, taskIdOne, projectId, userTwoId);
 
 
         ResponseEntity<?> expected = ResponseEntity.ok().body("Report created!\nINFO:" + "\nTask ID: " + taskIdOne +"\nDescription: " + taskOne.getDescription() + "\nUser: " + userTwo.getName() + "\nTime reported: " + "20.0");
+    }
+
+    @Test
+    public void canUpdateReports() throws Exception {
+        Report reportDTOUpdate = new Report();
+        reportDTOUpdate.setId(0);
+        reportDTOUpdate.setReportedTime(25.0);
+        reportDTOUpdate.setTaskCollaborator(taskOne.getTaskCollaboratorByEmail(userTwoEmail));
+
+        ResponseEntity<?> result  = controller.updateTaskReport(reportDTOUpdate,0, taskIdOne, projectId, userTwoId);
+        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getReports().get(0) ,HttpStatus.OK);
+        assertEquals(expected, result);
+
     }
 
 }
