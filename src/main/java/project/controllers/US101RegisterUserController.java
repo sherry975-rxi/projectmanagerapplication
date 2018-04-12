@@ -20,10 +20,6 @@ public class US101RegisterUserController {
 
 	private CodeGenerator codeGenerator;
 
-    private String generatedCode;
-
-    private SendCodeFactory sendCodeFactory;
-
 	public US101RegisterUserController() {
 		//Empty constructor created for JPA integration tests
 
@@ -85,9 +81,11 @@ public class US101RegisterUserController {
 		String message = "This is the code you should provide for register in Project Management App:  "
 				+ generatedCode;
 
+		SendCodeFactory sendCodeFactory;
+
 		sendCodeFactory = new SendCodeFactory();
 
-		ValidationMethod validationMethod = sendCodeFactory.getCodeSenderType(senderType).get();
+		ValidationMethod validationMethod = sendCodeFactory.getCodeSenderType(senderType).orElse(null);
 
 		String userPhone = userService.getUserByEmail(email).getPhone();
 
