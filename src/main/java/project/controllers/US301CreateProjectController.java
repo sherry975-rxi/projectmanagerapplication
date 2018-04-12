@@ -126,7 +126,30 @@ public class US301CreateProjectController {
 	public void changeBudget(int budget) {
 
 		createdProject.setProjectBudget(budget);
+        projectService.updateProject(createdProject);
 	}
+
+	/**
+	 * TODO TEST
+	 *
+	 *
+	 */
+	public void selectCalculationMethods(ArrayList<Integer> allowedMethods) {
+	    createdProject.setAvailableCalculationMethods(allowedMethods);
+	    createdProject.setCalculationMethod(allowedMethods.get(0));
+	    projectService.updateProject(createdProject);
+
+    }
+
+    public ArrayList<Integer> allowDisableCalculationMethods(ArrayList<Integer> list, Integer selected) {
+        if(!list.contains(selected)) {
+            list.add(selected);
+        } else if (list.size()>1){
+            list.remove(selected);
+        }
+
+        return list;
+    }
 
 	/**
 	 * This is a utility method that converts a User object into a String of data,

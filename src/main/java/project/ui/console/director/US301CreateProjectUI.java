@@ -6,8 +6,7 @@ import project.controllers.US301CreateProjectController;
 import project.model.EffortUnit;
 import project.model.User;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 @Component
 public class US301CreateProjectUI {
@@ -22,6 +21,8 @@ public class US301CreateProjectUI {
 
 	Integer budget;
 	User projectManager;
+
+	ArrayList<Integer> availableCalculationMethods;
 
 	boolean isProjectCreationOngoing;
 
@@ -40,10 +41,14 @@ public class US301CreateProjectUI {
 		budget = 0;
 		projectManager = null;
 
+		availableCalculationMethods = new ArrayList<>(Arrays.asList(1,2,3));
+
 		isProjectCreationOngoing = true;
 
 		mainCommand = null;
 		dataInput=null;
+
+
 
 		Scanner mainComm = new Scanner(System.in);
 		Scanner dataIn = new Scanner(System.in);
@@ -79,6 +84,9 @@ public class US301CreateProjectUI {
 
 			case "5":
 				dataIn = this.caseFive(dataIn);
+				break;
+			case "6":
+			    dataIn = this.caseSix(dataIn);
 				break;
 
 			case "C":
@@ -116,6 +124,7 @@ public class US301CreateProjectUI {
 		options += "\n[3] - Project Manager: " + projectManagerName;
 		options += "\n[4] - Project Effort Unit: " + currentEffortUnit.toString();
 		options += "\n[5] - Project Budget: " + budget;
+		options += "\n[6] - Project Cost Calculation Methods: " + availableCalculationMethods.toString();
 		options += "\n[any key] - View Data and commands";
 		options += "\n[C] - Create Project with chosen data";
 		options += "\n[B] - Cancel Project creation and return to Director Menu";
@@ -219,6 +228,45 @@ public class US301CreateProjectUI {
 		return dataIn;
 	}
 
+	private Scanner caseSix(Scanner dataIn) {
+		System.out.println("In case the same collaborator works on the same report with different costs, the Project Manager can calculate with:");
+		System.out.println("[1] - The collaborator's earliest cost, when the report was created");
+        System.out.println("[2] - The collaborator's latest cost");
+        System.out.println("[3] - The average of all the collaborator's costs");
+
+        System.out.println("");
+        Integer number;
+        String buffer;
+
+        boolean loop=true;
+        while(loop) {
+            System.out.println("Currently enabled: " + availableCalculationMethods.toString());
+            System.out.println("");
+            System.out.println("[choose between 1 and 3 to activate/inactivate]");
+            System.out.println("[any key exit]");
+            System.out.println("(You must have at least 1 calculation method!)");
+            System.out.println("");
+            try  {
+
+                number = dataIn.nextInt();
+
+                if(number>0 && number <4) {
+                    availableCalculationMethods=controller.allowDisableCalculationMethods(availableCalculationMethods, number);
+                } else {
+                    loop=false;
+                }
+
+            } catch (InputMismatchException i) {
+                loop=false;
+            }
+            buffer = dataIn.nextLine();
+        }
+
+		return dataIn;
+	}
+
+
+
 	/**
 	 * This case attempts to create the project with the data provided. Should a
 	 * project manager not exit, creation will fail and return to data submission
@@ -234,6 +282,7 @@ public class US301CreateProjectUI {
 		} else {
 			controller.createProject(projectName, projectDescription, projectManager);
 			controller.changeBudget(budget);
+			controller.selectCalculationMethods(availableCalculationMethods);
 			if (currentEffortUnit.equals(EffortUnit.PM)) {
 				controller.changeEffortUnitToPersonMonth();
 			}
