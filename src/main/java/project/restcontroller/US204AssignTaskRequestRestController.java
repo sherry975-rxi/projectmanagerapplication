@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * This rest controller allows a collaborator to create a request of assignment to a specific task
  */
 @RestController
-@RequestMapping("/projects/{projectId}/tasks/{taskId}")
+@RequestMapping("/users/{userId}/projects/{projectId}/tasks/{taskId}")
 public class US204AssignTaskRequestRestController {
 
     private UserService userService;
@@ -33,36 +33,70 @@ public class US204AssignTaskRequestRestController {
         this.projectService = projectService;
     }
 
-
-    /**
-     * This method allows the administrator to search users by profile.
-     *
-     * @param taskId
-     *          Task id associated to the task to be made the request
-     * @param projectId
-     *          Project id associated to the project where the task belongs
-     * @param userEmail
-     *          User email related to the collaborator that wants to make the request.
-     * @return ResponseEntity
-     */
-    @RequestMapping(value = "/CreateAssignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail){
+    @RequestMapping(value = "/requests" , method = RequestMethod.GET)
+    public ResponseEntity<?> getAllRequests (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
-        ProjectCollaborator projectCollaborator;
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserByEmail(userEmail);
+        User user = userService.getUserByID(userId);
+
+
+
+        result = new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
+
+        return result;
+    }
+
+    @RequestMapping(value = "/requests/{reqType}" , method = RequestMethod.GET)
+    public ResponseEntity<?> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @PathVariable  int userId) {
+        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        Project project = projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        User user = userService.getUserByID(userId);
+
+        if ("assignment".equals(reqType)){
+
+            result = new ResponseEntity<>(task.getPendingTaskAssignmentRequests(), HttpStatus.OK);
+        }
+        else if ("removal".equals(reqType)){
+
+            result = new ResponseEntity<>(task.getPendingTaskRemovalRequests(), HttpStatus.OK);
+        }
+
+        return result;
+    }
+
+    /**
+     * This method allows the collaborator to create a request of assignment to a specific task.
+     *
+     * @param taskId
+     *          Task id associated to the task to be made the request
+     * @param projectId
+     *          Project id associated to the project where the task belongs
+     * @param userId
+     *          User id related to the collaborator that wants to make the request.
+     * @return ResponseEntity
+     */
+    @RequestMapping(value = "/requests/assignmentRequest" , method = RequestMethod.POST)
+    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
+        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        Project project = projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        User user = userService.getUserByID(userId);
 
             if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, project))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, project))){
                 this.taskService.saveTask(task);
                 result = new ResponseEntity<>(HttpStatus.OK);
             }
-
-
         return result;
     }
 }
