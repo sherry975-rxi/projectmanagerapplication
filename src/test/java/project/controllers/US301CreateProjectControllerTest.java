@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -184,6 +185,87 @@ public class US301CreateProjectControllerTest {
 		// creates a string matching u1's data and asserts as true
 		String user1String = "001: Leonor (leonor@gmail.com; 930000000) - Empregado";
 		assertTrue(user1String.equals(us301CreateProjectController.userDataToString(u1)));
+	}
+
+	/**
+	 * This tests confirms if the method selectCalculationMethod() is working properly,
+	 * by setting the defined cost calculation methods for the given project
+	 */
+
+	@Test
+	public void testSetAndGetCalculationMethods(){
+
+		//creation of the project (new Project, u1 is the project manager
+		newProject = us301CreateProjectController.createProject("name", "description", u1);
+
+		//creation of a list with the allowed calculation methods
+
+		 ArrayList<Integer> allowedMethods = new ArrayList<>();
+		 allowedMethods.add(1);
+		 allowedMethods.add(2);
+
+		 newProject.setAvailableCalculationMethods(allowedMethods);
+
+		 assertEquals(allowedMethods, newProject.getAvailableCalculationMethods());
+
+	}
+
+	/**
+	 * 	 This tests confirms if the method selectCalculationMethod() is working properly,
+	 * 	 by setting the defined cost calculation methods for the given project
+	 */
+
+	@Test
+	public void testSelectCalculationMethods(){
+
+		//creation of the project (new Project, u1 is the project manager
+		newProject = us301CreateProjectController.createProject("name", "description", u1);
+
+		ArrayList<Integer> allowedMethods = new ArrayList<>();
+		allowedMethods.add(2);
+		allowedMethods.add(3);
+
+		us301CreateProjectController.selectCalculationMethods(allowedMethods);
+
+		assertEquals(Project.LAST_COLLABORATOR, newProject.getCalculationMethod());
+
+		assertFalse(newProject.isCalculationMethodAllowed(Project.FIRST_COLLABORATOR));
+
+	}
+
+	/**
+	 * 	 This tests confirms if the method allowDisableCalculationMethod() is working properly,
+	 * 	 by checking the size of the list after insertion or deletion of given method
+	 */
+
+	@Test
+	public void testAllowDisableCalculationMethods(){
+
+		//creation of the project (new Project, u1 is the project manager
+		newProject = us301CreateProjectController.createProject("name", "description", u1);
+
+		ArrayList<Integer> allowedMethods = new ArrayList<>();
+		allowedMethods.add(1);
+		allowedMethods.add(2);
+		allowedMethods.add(3);
+
+		//Checks if after insertion of method #2 (already in the list), the size of the returned list is of 2
+
+		assertEquals(2, us301CreateProjectController.allowDisableCalculationMethods(allowedMethods, 2).size());
+
+		//checks if after insertion of method #2 (removed from the list), the size of the returned list is of 3
+
+		assertEquals(3, us301CreateProjectController.allowDisableCalculationMethods(allowedMethods, 2).size());
+
+		allowedMethods = new ArrayList<>();
+		allowedMethods.add(1);
+
+		//after insertion of method #1 (the only method in the list), the list cannot be empty; so will return size 1
+
+		assertEquals(1, us301CreateProjectController.allowDisableCalculationMethods(allowedMethods, 1). size());
+
+		assertEquals(1, us301CreateProjectController.allowDisableCalculationMethods(allowedMethods, 1). size());
+
 	}
 
 }

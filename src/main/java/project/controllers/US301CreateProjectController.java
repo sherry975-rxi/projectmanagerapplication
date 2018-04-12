@@ -130,9 +130,8 @@ public class US301CreateProjectController {
 	}
 
 	/**
-	 * TODO TEST
-	 *
-	 *
+	 * This method allows the direct to select which cost calculation method he wants
+	 * to make available for the project
 	 */
 	public void selectCalculationMethods(ArrayList<Integer> allowedMethods) {
 	    createdProject.setAvailableCalculationMethods(allowedMethods);
