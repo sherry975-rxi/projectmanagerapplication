@@ -33,6 +33,7 @@ public class SendEmail {
         //authenticates sender's email and password
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
+                    @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(senderEmail, senderXPMS);
                     }
