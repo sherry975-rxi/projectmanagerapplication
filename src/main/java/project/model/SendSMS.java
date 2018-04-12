@@ -38,12 +38,12 @@ public class SendSMS {
             Test number. Must be a registered number on Twilio's account.
             In this case, the registered number on the Twilio account is +351937429087 number (João Leite's number)
          */
-        String numberToSendMessage = numberToSend;
+
 
         //HARDCODING NUMBER SO TWILIO DOESNT CRASH APPLICATION
-        numberToSendMessage = "+351937429087";
+        numberToSend = "+351937429087";
 
-        Message message = Message.creator(new PhoneNumber(numberToSendMessage),
+        Message.creator(new PhoneNumber(numberToSend),
                 new PhoneNumber(numberProvidedByTwilio),
                 messageToSend).create();
 
