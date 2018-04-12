@@ -67,12 +67,10 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
         this.code = code;
 
         SendCodeFactory factory = new SendCodeFactory();
-
-        if (factory.getCodeSenderType(option).isPresent()) {
-            validation = factory.getCodeSenderType(option).get();
+        validation = factory.getCodeSenderType(option).orElse(null);
+        if (validation != null) {
             return validation.performValidationMethod(userPhone, userEmail, userQuestion, code);
         } else {
-            validation = null;
             return "Invalid method selected. Please choose a valid one.";
         }
 
@@ -82,6 +80,7 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     /**
      * checks if the code provided by the user is the same as the code sent by the application
+     *
      * @param code code provided by the user
      * @return true if both codes are the same, false if they aren't
      */
@@ -91,6 +90,8 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
         } else {
             return validation.checkRightAnswer(code, this.code);
         }
+
+
     }
 
     public ValidationMethod getValidation() {
