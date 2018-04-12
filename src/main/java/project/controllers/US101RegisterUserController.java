@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.dto.UserDTO;
 import project.model.CodeGenerator;
 import project.model.EmailMessage;
-import project.model.SendEmail;
 import project.model.User;
 import project.model.sendcode.SendCodeFactory;
 import project.model.sendcode.ValidationMethod;
@@ -20,9 +19,10 @@ public class US101RegisterUserController {
 	private UserService userService;
 
 	private CodeGenerator codeGenerator;
-	private String generatedCode;
 
-	private SendCodeFactory sendCodeFactory;
+    private String generatedCode;
+
+    private SendCodeFactory sendCodeFactory;
 
 	public US101RegisterUserController() {
 		//Empty constructor created for JPA integration tests
@@ -73,17 +73,15 @@ public class US101RegisterUserController {
 	 */
 	public void sendVerificationCode (String email, String senderType) throws MessagingException, IOException {
 
-		SendEmail sendEmail = new SendEmail();
 		EmailMessage emailMessage = new EmailMessage();
 
-		User user = userService.getUserByEmail(email);
 		emailMessage.setEmailAddress(email);
 
 		String emailSubject = "Verification Code";
 		emailMessage.setSubject(emailSubject);
 
 		codeGenerator = new CodeGenerator();
-		generatedCode = codeGenerator.generateCode();
+		String generatedCode = codeGenerator.generateCode();
 		String message = "This is the code you should provide for register in Project Management App:  "
 				+ generatedCode;
 
@@ -102,15 +100,11 @@ public class US101RegisterUserController {
 
 	public Boolean doesCodeGeneratedMatch (String codeToCheck, String recipientEmail){
 
-		User user = userService.getUserByEmail(recipientEmail);
-        codeGenerator = new CodeGenerator();
+
 		Boolean doCodesMatch = this.codeGenerator.doesCodeGeneratedMatch(codeToCheck);
 
 		if (!doCodesMatch){
 			userService.deleteUser(recipientEmail);
-		} else {
-			user.setGeneratedCode("");
-			userService.updateUser(user);
 		}
 
 		return doCodesMatch;
@@ -124,9 +118,8 @@ public class US101RegisterUserController {
 	 */
 	public boolean isUserInUserRepository(String email) {
 
-		boolean isUserInUserRepository = userService.isUserEmailInUserContainer(email);
+		return userService.isUserEmailInUserContainer(email);
 
-		return isUserInUserRepository;
 
 	}
 
