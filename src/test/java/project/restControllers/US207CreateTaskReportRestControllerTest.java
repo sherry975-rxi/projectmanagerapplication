@@ -188,4 +188,16 @@ public class US207CreateTaskReportRestControllerTest {
 
     }
 
-    
+    @Test
+    public void canCreateReports() throws Exception {
+
+        Report reported = new Report();
+        reported.setReportedTime(20.0);
+
+        ResponseEntity<?> result  = controller.createTaskReport(reported, taskIdOne, projectId, userTwoId);
+
+
+        ResponseEntity<?> expected = ResponseEntity.ok().body("Report created!\nINFO:" + "\nTask ID: " + taskIdOne +"\nDescription: " + taskOne.getDescription() + "\nUser: " + userTwo.getName() + "\nTime reported: " + "20.0");
+    }
+
+}
