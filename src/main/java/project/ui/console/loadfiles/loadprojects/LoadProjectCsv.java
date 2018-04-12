@@ -11,7 +11,7 @@ import java.text.ParseException;
 @Service
 public class LoadProjectCsv implements LoadProject {
 
-    public void readProjectFile(String filePath) throws ParserConfigurationException, SAXException, IOException, DOMException, ParseException {
+    public void readProjectFile(String filePath){
         System.out.println("---------------------------------------------------");
         System.out.println("--------------NO IMPLEMENTATION YET----------------");
         System.out.println("---------------------------------------------------");
