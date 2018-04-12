@@ -143,7 +143,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 		else {
 			System.out.println("----REQUEST CANCELLED----");
 			System.out.println("--User not assigned to task--");
-			assignmentRequest.approveAssignmentRequest();
+			assignmentRequest.rejectAssignmentRequest();
 			displayAssignmentTaskRequests();
 		}
 	}

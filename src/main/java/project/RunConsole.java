@@ -9,10 +9,10 @@ import project.model.User;
 import project.repository.UserRepository;
 import project.services.UserService;
 import project.ui.console.MainMenuUI;
-import project.ui.console.loadfiles.loadprojects.LoadProject;
-import project.ui.console.loadfiles.loadprojects.LoadProjectFactory;
+import project.ui.console.loadfiles.loadprojects.ProjectReader;
 import project.ui.console.loadfiles.loaduser.LoadUser;
 import project.ui.console.loadfiles.loaduser.LoadUserFactory;
+import project.ui.console.loadfiles.loaduser.UserReader;
 
 @Component
 public class RunConsole implements CommandLineRunner {
@@ -24,9 +24,10 @@ public class RunConsole implements CommandLineRunner {
 	@Autowired
 	MainMenuUI main;
 	@Autowired
-	LoadProjectFactory loadProjectFactory;
+	ProjectReader reader;
 	@Autowired
-	LoadUserFactory loadUserFactory;
+	UserReader userReader;
+
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -78,14 +79,8 @@ public class RunConsole implements CommandLineRunner {
 		userRepository.save(userATirapicos);
 		userRepository.save(projectManager);
 
-		LoadUser loadUserDb = loadUserFactory.getLoadUserType("Utilizador_v00_Dt1.xml");
-		loadUserDb.usersReader("Utilizador_v00_Dt1.xml");
-
-		LoadProject loadProjectDb = loadProjectFactory.getReader("Projeto_v00_Dt1.xml");
-
-    	loadProjectDb.readProjectFile("Projeto_v00_Dt1.xml");
-
-
+		userReader.readFile("Utilizador_v00_Dt1.xml");
+    	reader.readFile("Projeto_v00_Dt1.xml");
 
     	//Test sending an email
 
