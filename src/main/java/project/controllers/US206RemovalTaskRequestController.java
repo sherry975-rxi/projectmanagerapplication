@@ -73,6 +73,7 @@ public class US206RemovalTaskRequestController {
 		if (taskBeRemovedOf != null && !taskBeRemovedOf.isRemovalRequestAlreadyCreated(projectCollaborator)) {
 
 			taskBeRemovedOf.createTaskRemovalRequest(projectCollaborator);
+			taskService.saveTask(taskBeRemovedOf);
 			createdSucess = true;
 		}
 
