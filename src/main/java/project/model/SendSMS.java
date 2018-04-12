@@ -21,8 +21,8 @@ public class SendSMS {
 
          */
 
-        String accountSid = "AC4ffe069234a3ce253b84b7f7ed678407";
-        String authToken = "7b30788fd931e158fe3846ec7e3866a0";
+        String accountSid = "ACca51735bb18e517813ab9100bfc3cb6a";
+        String authToken = "fb2d11d34cf609f035a0d1c981dfd4df";
 
 
 
@@ -32,7 +32,7 @@ public class SendSMS {
         /*
         This is the host number provided by Twilio's Service
          */
-        String numberProvidedByTwilio = "+17044577646";
+        String numberProvidedByTwilio = "+18123018184";
 
         /*
             Test number. Must be a registered number on Twilio's account.
@@ -41,7 +41,7 @@ public class SendSMS {
 
 
         //HARDCODING NUMBER SO TWILIO DOESNT CRASH APPLICATION
-        numberToSend = "+351911790134";
+        numberToSend = "+351914187778";
 
         Message.creator(new PhoneNumber(numberToSend),
                 new PhoneNumber(numberProvidedByTwilio),

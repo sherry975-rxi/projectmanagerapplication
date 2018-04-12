@@ -3,8 +3,6 @@ package project.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import project.model.CodeGenerator;
-import project.model.SendEmail;
-import project.model.SendSMS;
 import project.model.User;
 import project.model.sendcode.AnswerValidation;
 import project.model.sendcode.SendCodeFactory;
@@ -22,12 +20,9 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     private String code;
 
-    SendSMS sender = new SendSMS();
-
-    SendEmail emailSender = new SendEmail();
-
     CodeGenerator codeGenerator = new CodeGenerator();
 
+    SendCodeFactory factory = new SendCodeFactory();
 
     ValidationMethod validation;
     public US105CreatePasswordAndAuthenticationMechanismController() {
@@ -66,7 +61,6 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
         String code = codeGenerator.generateCode();
         this.code = code;
 
-        SendCodeFactory factory = new SendCodeFactory();
         validation = factory.getCodeSenderType(option).orElse(null);
         if (validation != null) {
             return validation.performValidationMethod(userPhone, userEmail, userQuestion, code);
