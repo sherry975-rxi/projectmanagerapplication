@@ -1,4 +1,4 @@
-package project.ui.console.loadfiles;
+package project.ui.console.loadfiles.loadprojects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 @Service
-public class Reader {
+public class ProjectReader {
 
     ProjectService projectService;
 
@@ -22,17 +22,26 @@ public class Reader {
 
     LoadProjectFactory creator;
 
-    public Reader(){
+    private ProjectReader(){
 
     }
 
     @Autowired
-    public Reader(ProjectService projectService, TaskService taskService, LoadProjectFactory creator) {
+    public ProjectReader(ProjectService projectService, TaskService taskService, LoadProjectFactory creator) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.creator = creator;
     }
 
+    /**
+     *  Instantiates a LoadUser strategy with the LoadUserFactory
+     *
+     * @param file file to read
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     * @throws ParseException
+     */
     public void readFile(String file) throws ParserConfigurationException, SAXException, IOException, ParseException{
         LoadProject reader = creator.getReader(file);
         reader.readProjectFile(file);
