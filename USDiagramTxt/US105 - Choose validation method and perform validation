@@ -1,0 +1,13 @@
+Actor->UI: Do Login
+UI-->Actor: Please enter new password
+Actor->UI: Enter password
+UI-->Actor: Please choose validation method
+Actor->UI: Select validation method
+UI->Controller:Select validation method
+Controller->Model: Select validation method
+Model-->Controller: Validation method
+Controller->Model: Validate
+Model-->Controller: Validation confirmed
+Controller->Model: Set password
+Controller-->UI: Password was set
+UI-->Actor: Password was set
