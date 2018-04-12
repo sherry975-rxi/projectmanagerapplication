@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -81,8 +82,6 @@ public class US207CreateTaskReportRestControllerTest {
     private Task taskTwo;
     private String taskIdTwo;
     private ProjectCollaborator projCollabTwo;
-    private Report report;
-    private Report report2;
 
     @Before
     public void setUp() throws Exception {
@@ -170,4 +169,23 @@ public class US207CreateTaskReportRestControllerTest {
 
     }
 
-}
+    @Test
+    public void canRetrieveReportsToString() throws Exception {
+
+        //Given
+        // taskOne in projectOne, with no collaborators, neither requests
+        controller.getTaskStringReportsFromUser(taskIdOne, projectId, userTwoId);
+        //When
+        //creating assignment request to taskOne from userTwo
+        ResponseEntity<?> result = controller.getTasksReportsFromUser(taskIdOne, projectId, userTwoId);
+
+
+
+        //Then
+        // It is expected to be successfully created
+        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getReportsFromGivenUser(userTwoEmail) ,HttpStatus.OK);
+        assertEquals(expected, result);
+
+    }
+
+    
