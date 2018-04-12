@@ -117,8 +117,7 @@ public class ProjectManagerMainMenuUI {
 		System.out.println("");
 		System.out.println(
 				"_________________________________________________________________________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu \n");
+		System.out.println("[B] Back\n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
