@@ -155,14 +155,14 @@ public class US207CreateTaskReportRestControllerTest {
 
 
         //Given
-        // taskOne in projectOne, with no collaborators, neither requests
+        // taskOne in projectOne, with reports created inside,
         controller.getTasksReportsFromUser(taskIdOne, projectId, userTwoId);
         //When
-        //creating assignment request to taskOne from userTwo
+        //getting all reports associated to a user inside the given task
         ResponseEntity<?> result = controller.getTasksReportsFromUser(taskIdOne, projectId, userTwoId);
 
         //Then
-        // It is expected to be successfully created
+        // It is expected to be successfully retrieved
         ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getReportsFromGivenUser(userTwoEmail),HttpStatus.OK);
         assertEquals(expected, result);
 
@@ -173,42 +173,56 @@ public class US207CreateTaskReportRestControllerTest {
     public void canRetrieveReportsToString() throws Exception {
 
         //Given
-        // taskOne in projectOne, with no collaborators, neither requests
+        // taskOne in projectOne, with reports created inside,
         controller.getTaskStringReportsFromUser(taskIdOne, projectId, userTwoId);
+
+
+        List<String> reportsList = taskOne.getReportsFromGivenUser(userTwoEmail)
+                .stream().map(Report -> controller.dateToString(Report)).collect(Collectors.toList());
+
         //When
-        //creating assignment request to taskOne from userTwo
-        ResponseEntity<?> result = controller.getTasksReportsFromUser(taskIdOne, projectId, userTwoId);
-
-
+        // asked to retrieve all the reports from user as strings
+        ResponseEntity<?> result = controller.getTaskStringReportsFromUser(taskIdOne, projectId, userTwoId);
 
         //Then
-        // It is expected to be successfully created
-        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getReportsFromGivenUser(userTwoEmail) ,HttpStatus.OK);
+        // It is expected to be successfully retrieved as a string
+        ResponseEntity<?> expected = new ResponseEntity<>(reportsList, HttpStatus.OK);
         assertEquals(expected, result);
 
     }
 
     @Test
     public void canCreateReports() throws Exception {
-
+        // Given
+        // a reportDTO that contains a reportTime,
         Report reportDTO = new Report();
         reportDTO.setId(1);
         reportDTO.setReportedTime(20.0);
 
+        // When
+        // asked to be added to the task as a new report
         ResponseEntity<?> result  = controller.createTaskReport(reportDTO, taskIdOne, projectId, userTwoId);
 
-
+        // Then
+        // confirms the added report with a custom message
         ResponseEntity<?> expected = ResponseEntity.ok().body("Report created!\nINFO:" + "\nTask ID: " + taskIdOne +"\nDescription: " + taskOne.getDescription() + "\nUser: " + userTwo.getName() + "\nTime reported: " + "20.0");
     }
 
     @Test
     public void canUpdateReports() throws Exception {
+        // Given
+        // a reportDTO that contains a reportTime,
         Report reportDTOUpdate = new Report();
         reportDTOUpdate.setId(0);
         reportDTOUpdate.setReportedTime(25.0);
         reportDTOUpdate.setTaskCollaborator(taskOne.getTaskCollaboratorByEmail(userTwoEmail));
 
+        // When
+        // asked to be added to the task as a update to an already existing report
         ResponseEntity<?> result  = controller.updateTaskReport(reportDTOUpdate,0, taskIdOne, projectId, userTwoId);
+
+        // Then
+        // confirms the updated report with a custom message
         ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getReports().get(0) ,HttpStatus.OK);
         assertEquals(expected, result);
 
