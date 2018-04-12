@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import project.controllers.US105CreatePasswordAndAuthenticationMechanismController;
 import project.model.User;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
 import java.util.Scanner;
 
 @Component
@@ -26,7 +24,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
      *
      * @param user
      */
-    public void changePassword(User user) throws IOException, MessagingException {
+    public void changePassword(User user) {
         Scanner input = new Scanner(System.in);
         String userInput;
         boolean loopPasswordReenter = true;
@@ -70,25 +68,29 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
 
                 String choice = input.nextLine();
 
-                System.out.println(controller.performAuthentication(user.getPhone(), user.getEmail(), user.getQuestion(), choice));
+                try {
 
-                if (controller.getValidation() != null) {
-                    userInput = input.nextLine();
+                    System.out.println(controller.performAuthentication(user.getPhone(), user.getEmail(), user.getQuestion(), choice));
 
-                    if (controller.isCodeValid(userInput, user)) {
-                        controller.setUserPassword(user, newPass);
-                        System.out.println("The password changed successfully!");
-                        loop = false;
+                    if (controller.getValidation() != null) {
+                        userInput = input.nextLine();
 
-                    } else {
-                        System.out.println("The password wasn't changed. Try again? Y/N");
-                        String answer = input.nextLine();
-                        if (!("Y".equalsIgnoreCase(answer)))
+                        if (controller.isCodeValid(userInput, user)) {
+                            controller.setUserPassword(user, newPass);
+                            System.out.println("The password changed successfully!");
                             loop = false;
 
-                    }
-                }
+                        } else {
+                            System.out.println("The password wasn't changed. Try again? Y/N");
+                            String answer = input.nextLine();
+                            if (!("Y".equalsIgnoreCase(answer)))
+                                loop = false;
 
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("\nSomething went wrong. Please try again.\n");
+                }
             }
 
         }
