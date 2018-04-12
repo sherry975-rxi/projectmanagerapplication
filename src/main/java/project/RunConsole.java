@@ -3,8 +3,8 @@ package project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import project.model.*;
+import project.model.Profile;
+import project.model.User;
 
 import project.repository.UserRepository;
 import project.services.UserService;
@@ -80,7 +80,7 @@ public class RunConsole implements CommandLineRunner {
 
 		LoadUser loadUserDb = loadUserFactory.getLoadUserType("Utilizador_v00_Dt1.xml");
 		loadUserDb.usersReader("Utilizador_v00_Dt1.xml");
-		
+
 		LoadProject loadProjectDb = loadProjectFactory.getReader("Projeto_v00_Dt1.xml");
 
     	loadProjectDb.readProjectFile("Projeto_v00_Dt1.xml");
@@ -88,7 +88,7 @@ public class RunConsole implements CommandLineRunner {
 
 
     	//Test sending an email
-		
+
         main.mainMenu();
     }
     

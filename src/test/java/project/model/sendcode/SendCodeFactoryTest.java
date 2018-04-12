@@ -1,29 +1,29 @@
 package project.model.sendcode;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class SendCodeFactoryTest {
 
 	private SMSSender smsSender;
 	private EmailSender emailSender;
 	private SendCodeFactory sendCodeFactory;
-	private MessageSender messageSender;
-	private static final Map<String, MessageSender> codeSenderType = new HashMap<>();
+	private static final Map<String, ValidationMethod> codeSenderType = new HashMap<>();
+	private AnswerValidation answerValidation;
 
 	@Before
 	public void setup() {
 
 		smsSender = new SMSSender();
 		emailSender = new EmailSender();
-
-		codeSenderType.put("1", smsSender);
-		codeSenderType.put("2", emailSender);
+		answerValidation = new AnswerValidation();
 		sendCodeFactory = new SendCodeFactory();
 
 	}
@@ -31,7 +31,13 @@ public class SendCodeFactoryTest {
 	@Test
 	public void getCodeSenderTypeTest() {
 
-		assertEquals(sendCodeFactory.getCodeSenderType("1").getClass(), smsSender.getClass());
+		assertEquals(sendCodeFactory.getCodeSenderType("1").getClass(), Optional.of(smsSender).getClass());
+
+		assertEquals(sendCodeFactory.getCodeSenderType("2").getClass(), Optional.of(emailSender).getClass());
+
+		assertEquals(sendCodeFactory.getCodeSenderType("3").getClass(), Optional.of(answerValidation).getClass());
+
+		assertFalse(sendCodeFactory.getCodeSenderType("0").isPresent());
 
 	}
 }

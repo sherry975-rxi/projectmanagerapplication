@@ -4,16 +4,16 @@ package project.model.sendcode;
 
 
 import java.util.HashMap;
-import java.lang.Class;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class SendCodeFactory {
 
-    private SMSSender smsSender;
-    private EmailSender emailSender;
-
-    private static final Map<String, MessageSender> codeSenderType = new HashMap<>();
+    private ValidationMethod smsSender;
+    private ValidationMethod emailSender;
+    private static final Map<String, ValidationMethod> codeSenderType = new HashMap<>();
+    private ValidationMethod answerValidation;
 
     /**
      *
@@ -22,9 +22,11 @@ public class SendCodeFactory {
 
         smsSender = new SMSSender();
         emailSender = new EmailSender();
+        answerValidation = new AnswerValidation();
 
         codeSenderType.put("1", smsSender);
         codeSenderType.put("2", emailSender);
+        codeSenderType.put("3", answerValidation);
     }
 
     /**
@@ -32,11 +34,20 @@ public class SendCodeFactory {
      * @param codeSender
      * @return
      */
-    public MessageSender getCodeSenderType (String codeSender){
+    public Optional<ValidationMethod> getCodeSenderType(String codeSender) {
 
         this.initMessageSenderType();
-
-        return codeSenderType.get(codeSender);
+        int num = -1;
+        try {
+            num = Integer.parseInt(codeSender);
+        } catch (NumberFormatException nfe) {
+            return Optional.empty();
+        }
+        if (num > 0 && num <= codeSenderType.size()) {
+            return Optional.of(codeSenderType.get(codeSender));
+        } else {
+            return Optional.empty();
+        }
     }
 
 

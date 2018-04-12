@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import project.controllers.US180DoLoginController;
 import project.model.User;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.Scanner;
 
 @Component
@@ -16,7 +18,7 @@ public class US180LoginUI {
 	@Autowired
 	private US105CreatePasswordAndAuthenticationMechanismUI us105Controller;
 
-	public User doLogin() {
+	public User doLogin() throws IOException, MessagingException {
 
 		Scanner input = new Scanner(System.in);
 		System.out.println("Username: ");

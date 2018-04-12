@@ -6,8 +6,8 @@ import project.dto.UserDTO;
 import project.model.CodeGenerator;
 import project.model.EmailMessage;
 import project.model.User;
-import project.model.sendcode.MessageSender;
 import project.model.sendcode.SendCodeFactory;
+import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
 
 import javax.mail.MessagingException;
@@ -19,6 +19,10 @@ public class US101RegisterUserController {
 	private UserService userService;
 
 	private CodeGenerator codeGenerator;
+
+    private String generatedCode;
+
+    private SendCodeFactory sendCodeFactory;
 
 	public US101RegisterUserController() {
 		//Empty constructor created for JPA integration tests
@@ -81,13 +85,15 @@ public class US101RegisterUserController {
 		String message = "This is the code you should provide for register in Project Management App:  "
 				+ generatedCode;
 
-		SendCodeFactory sendCodeFactory = new SendCodeFactory();
-		
-		MessageSender messageSender = sendCodeFactory.getCodeSenderType(senderType);
+		sendCodeFactory = new SendCodeFactory();
+
+		ValidationMethod validationMethod = sendCodeFactory.getCodeSenderType(senderType).get();
 
 		String userPhone = userService.getUserByEmail(email).getPhone();
 
-		messageSender.codeSender(userPhone,email, message);
+		String userQuestion = userService.getUserByEmail(email).getQuestion();
+
+		validationMethod.performValidationMethod(userPhone, email, userQuestion, message);
 
 
 	}
