@@ -1,8 +1,5 @@
 package project.model;
 
-
-
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -397,9 +394,9 @@ public class Project implements Serializable{
 		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION || this.getProjectStatus() ==  EXECUTION  || this.getProjectStatus() == DELIVERY;
 	}
 
-	public List<Integer> getAvailableCalculationMethods() {
-		return availableCalculationMethods;
-	}
+    public ArrayList<Integer> getAvailableCalculationMethods() {
+        return availableCalculationMethods;
+    }
 	public void setAvailableCalculationMethods(ArrayList<Integer> availableCalculationMethods) {
 		this.availableCalculationMethods = availableCalculationMethods;
 	}
