@@ -29,6 +29,6 @@ public class AnswerValidation implements ValidationMethod {
 
     @Override
     public boolean checkRightAnswer(String userInput, String rightAnswer) {
-        return userInput.toUpperCase().equals(rightAnswer.toUpperCase());
+        return userInput.equalsIgnoreCase(rightAnswer.toUpperCase());
     }
 }
