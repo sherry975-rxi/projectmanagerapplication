@@ -151,3 +151,23 @@ public class US207CreateTaskReportRestControllerTest {
         assertNotNull(controller);
     }
 
+    @Test
+    public void getTaskReportFromUsers() throws Exception {
+
+
+        //Given
+        // taskOne in projectOne, with no collaborators, neither requests
+        controller.getTasksReportsFromUser(taskIdOne, projectId, userTwoId);
+        //When
+        //creating assignment request to taskOne from userTwo
+        ResponseEntity<?> result = controller.getTasksReportsFromUser(taskIdOne, projectId, userTwoId);
+
+        //Then
+        // It is expected to be successfully created
+        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getReportsFromGivenUser(userTwoEmail),HttpStatus.OK);
+        assertEquals(expected, result);
+
+
+    }
+
+}
