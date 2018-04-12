@@ -16,7 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.*;
 
 @Service
 public class LoadProjectXmlv00 implements LoadProjectXml{
@@ -89,6 +89,7 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 				project.setProjectManager(user);
 
 				project.setCalculationMethod(Project.FIRST_COLLABORATOR);
+				project.setAvailableCalculationMethods(new ArrayList<>(Arrays.asList(1,2,3,4)));
 
 				projectService.updateProject(project);
 

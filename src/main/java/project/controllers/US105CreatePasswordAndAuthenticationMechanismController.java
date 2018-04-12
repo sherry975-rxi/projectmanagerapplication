@@ -2,11 +2,17 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.model.*;
+import project.model.CodeGenerator;
+import project.model.SendEmail;
+import project.model.SendSMS;
+import project.model.User;
+import project.model.sendcode.AnswerValidation;
+import project.model.sendcode.SendCodeFactory;
+import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
-import project.ui.console.collaborator.US105CreatePasswordAndAuthenticationMechanismUI;
 
 import javax.mail.MessagingException;
+import java.io.IOException;
 
 @Controller
 public class US105CreatePasswordAndAuthenticationMechanismController {
@@ -22,6 +28,8 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     CodeGenerator codeGenerator = new CodeGenerator();
 
+
+    ValidationMethod validation;
     public US105CreatePasswordAndAuthenticationMechanismController() {
         //Empty constructor created for JPA integration tests
 
@@ -46,51 +54,49 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
      * @param user user whose question we are searching for
      * @return the question of the user
      */
-    public String questionAuthentication(User user){
-
-        return user.getQuestion();
-
-    }
 
     /**
-     * Method to determine if the answer provided is the right one
-     * @param answer the answer provided by the user
-     * @param user the user trying to login
-     * @return true if it's the right answer, false if it isn't
+     * Sends  a code to the phone number provided with the validation code
+     *
+     * @param option phone number to which to send the code
      */
-    public boolean isRightAnswer(String answer, User user){
 
-        return answer.equalsIgnoreCase(user.getAnswer());
-    }
-
-    public void smsAuthentication(String phone) {
+    public String performAuthentication(String userPhone, String userEmail, String userQuestion, String option) throws IOException, MessagingException {
 
         String code = codeGenerator.generateCode();
         this.code = code;
 
-        sender.sendMessage(code, phone);
-
-    }
-
-    public void emailAuthentication(String email) {
-
-        String code = codeGenerator.generateCode();
-        this.code = code;
-        EmailMessage emsg = new EmailMessage();
-
-        emsg.setSubject("Validation Code!");
-        emsg.setEmailAddress(email);
-        emsg.setBody("Please enter this code to validate your account:\n\n" + code);
-
-        try {
-            emailSender.sendMail(emsg);
-        } catch (MessagingException e) {
-            US105CreatePasswordAndAuthenticationMechanismUI.errorSendingEmail();
+        SendCodeFactory factory = new SendCodeFactory();
+        validation = factory.getCodeSenderType(option).orElse(null);
+        if (validation != null) {
+            return validation.performValidationMethod(userPhone, userEmail, userQuestion, code);
+        } else {
+            return "Invalid method selected. Please choose a valid one.";
         }
+
+
     }
 
-    public boolean isCodeValid(String code) {
-        return code.equals(this.code);
+
+    /**
+     * checks if the code provided by the user is the same as the code sent by the application
+     *
+     * @param code code provided by the user
+     * @return true if both codes are the same, false if they aren't
+     */
+    public boolean isCodeValid(String code, User user) {
+        if (validation instanceof AnswerValidation) {
+            return validation.checkRightAnswer(code, user.getQuestion());
+        } else {
+            return validation.checkRightAnswer(code, this.code);
+        }
+
+
     }
+
+    public ValidationMethod getValidation() {
+        return validation;
+    }
+
 
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.UserDTO;
 import project.model.Address;
-import project.model.CodeGenerator;
 import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
@@ -79,10 +78,6 @@ public class UserService {
 		Address newAddress = newUser.createAddress(street, zipCode, city, district, country);
 
 		newUser.addAddress(newAddress);
-
-		CodeGenerator code = new CodeGenerator();
-
-        newUser.setGeneratedCode(code.generateCode());
 
 		userRepository.save(newUser);
 

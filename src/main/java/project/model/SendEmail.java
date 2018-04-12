@@ -21,7 +21,7 @@ public class SendEmail {
      * @throws AddressException
      * @throws MessagingException
      */
-    public void sendMail(EmailMessage emailmessage) throws AddressException, MessagingException {
+    public void sendMail(EmailMessage emailmessage) throws MessagingException {
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");

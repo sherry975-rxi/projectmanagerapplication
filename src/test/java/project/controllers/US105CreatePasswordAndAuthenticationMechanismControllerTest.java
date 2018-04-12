@@ -1,141 +1,99 @@
 package project.controllers;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
+
 import org.springframework.test.context.junit4.SpringRunner;
+
 import project.model.*;
-import project.repository.UserRepository;
+import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import javax.mail.MessagingException;
+import java.io.IOException;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
-@ComponentScan({"project.services", "project.model", "project.controllers"})
 public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-
-    UserRepository userRepository;
 
     @InjectMocks
     US105CreatePasswordAndAuthenticationMechanismController controller;
 
     @Mock
-    SendSMS smsMessage;
-
-    @Mock
-    SendEmail sendEmail;
+    UserService userService;
 
     @Mock
     CodeGenerator codeGenerator;
 
+    @Mock
     User user1;
 
-    @Before
-    public void setUp() {
-
-        // create user
-        user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
-                "2401-00", "Test", "Testo", "Testistan");
-
-        // set user as collaborator
-        user1.setUserProfile(Profile.COLLABORATOR);
-
-        // set question to user
-        user1.setQuestion("1");
-
-        //set answer to user
-        user1.setAnswer("test answer");
-
-        userService.updateUser(user1);
-
-    }
-
-    @After
-    public void clear() {
-
-        user1 = null;
-    }
-
-    /*
-
     @Test
-    public void setUserPasswordTest() {
-        String newPassword = "testPassword";
+    public void setUserPassword() {
 
-        assertFalse(user1.hasPassword());
+        controller.setUserPassword(user1, "testPass");
 
+        verify(user1,times(1)).setPassword("testPass");
 
-
-        controller.setUserPassword(user1, newPassword);
-
-        assertTrue(user1.hasPassword());
-
-    }
-
-    */
-
-    @Test
-    public void questionAuthenticationTest() {
-
-        assertEquals("1",controller.questionAuthentication(user1));
+        verify(userService,times(1)).updateUser(user1);
 
     }
 
     @Test
-    public void isRightAnswerTest() {
+    public void performAuthentication() throws IOException, MessagingException {
 
-        assertTrue(controller.isRightAnswer("test answer", user1));
+        when(codeGenerator.generateCode()).thenReturn("0000");
 
-    }
-
-    @Test
-    public void smsAuthenticationTest() {
-
-        controller.smsAuthentication("+351937429087");
-
-        verify(smsMessage, times(1)).sendMessage(anyString(), anyString());
+        assertTrue("SMS sent! Please input the code sent to you:".equals
+                (controller.performAuthentication(user1.getPhone(),user1.getEmail(),user1.getQuestion(),"1")));
 
     }
 
     @Test
-    public void emailAuthenticationTest() throws Exception{
+    public void performAuthenticationWhenInvalid() throws IOException, MessagingException {
 
-        controller.emailAuthentication("dsomonteiro@gmail.com");
+        when(codeGenerator.generateCode()).thenReturn("0000");
 
-        verify(sendEmail, times(1)).sendMail(anyObject());
+        assertTrue("Invalid method selected. Please choose a valid one.".equals
+                (controller.performAuthentication(user1.getPhone(),user1.getEmail(),user1.getQuestion(),"5")));
 
     }
 
     @Test
-    public void isCodeValidTest() {
+    public void isCodeValid() throws IOException, MessagingException {
 
-        when(codeGenerator.generateCode()).thenReturn("123456");
+        when(codeGenerator.generateCode()).thenReturn("0000");
 
-        controller.emailAuthentication("dsomonteiro@gmail.com");
+        controller.performAuthentication(user1.getPhone(),user1.getEmail(),user1.getQuestion(),"1");
 
-        assertTrue(controller.isCodeValid("123456"));
+        assertTrue(controller.isCodeValid("0000", user1));
+
+    }
+
+    @Test
+    public void isCodeWhenNotValid() throws IOException, MessagingException {
+
+        when(codeGenerator.generateCode()).thenReturn("0000");
+
+        controller.performAuthentication(user1.getPhone(),user1.getEmail(),user1.getQuestion(),"1");
+
+        assertFalse(controller.isCodeValid("1111", user1));
+
+    }
+
+    @Test
+    public void getValidation() throws IOException, MessagingException {
+
+        when(codeGenerator.generateCode()).thenReturn("0000");
+
+        controller.performAuthentication(user1.getPhone(),user1.getEmail(),user1.getQuestion(),"1");
+
+        assertTrue(controller.getValidation() instanceof ValidationMethod);
+
 
     }
 }
