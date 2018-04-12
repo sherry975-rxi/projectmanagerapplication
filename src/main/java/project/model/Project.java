@@ -1,10 +1,11 @@
 package project.model;
 
 
+import org.apache.catalina.LifecycleState;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Class to build Projects.
@@ -35,12 +36,22 @@ public class Project implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-	public static final int PLANNING = 0; // planeado
+    private int calculationMethod;
+
+    private ArrayList<Integer> availableCalculationMethods;
+
+    public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
 	public static final int EXECUTION = 2; // execução
 	public static final int DELIVERY = 3; // entrega
 	public static final int REVIEW = 4; // garantia
 	public static final int CLOSE = 5; // fecho
+
+	public static final int FIRST_COLLABORATOR = 1;
+	public static final int LAST_COLLABORATOR = 2;
+	public static final int AVERAGE_COLLABORATOR = 3;
+	public static final int FIRST_LAST_COLLABORATOR = 4;
+
 	static final long serialVersionUID = 43L;
 
 
@@ -64,7 +75,7 @@ public class Project implements Serializable{
 
 		Objects.requireNonNull(name, "Name of the project cannot be null");
 		Objects.requireNonNull(description, "Description of the project cannot be null");
-		Objects.requireNonNull(projectManager, "Description of the project cannot be null");
+		Objects.requireNonNull(projectManager, "ProjectManager of the project cannot be null");
 
 		this.name = name;
 		this.description = description;
@@ -72,8 +83,11 @@ public class Project implements Serializable{
 		this.effortUnit = EffortUnit.HOURS;
 		this.budget = 0;
 		this.status = PLANNING;
+		this.calculationMethod = FIRST_COLLABORATOR;
 		this.startdate = null;
 		this.finishdate = null;
+		this.availableCalculationMethods = new ArrayList<>(Arrays.asList(1,2,3));
+
 	}
 
 	public int getId() {
@@ -91,6 +105,14 @@ public class Project implements Serializable{
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
+    public int getCalculationMethod() {
+        return calculationMethod;
+    }
+
+    public void setCalculationMethod(int calculationMethod) {
+        this.calculationMethod = calculationMethod;
+    }
 
 
 	public void setName(String name) {
@@ -374,5 +396,25 @@ public class Project implements Serializable{
 	public Boolean isProjectActive() { 
 		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION || this.getProjectStatus() ==  EXECUTION  || this.getProjectStatus() == DELIVERY;
 	}
+
+	public List<Integer> getAvailableCalculationMethods() {
+		return availableCalculationMethods;
+	}
+	public void setAvailableCalculationMethods(ArrayList<Integer> availableCalculationMethods) {
+		this.availableCalculationMethods = availableCalculationMethods;
+	}
+
+
+	/**
+	 * This method recieves an integer corresponding to one of the cost calculation methods,
+	 * and returns true or false depending on whether or not the Director has allowed that calculation method
+	 *
+	 * @param method
+	 * @return
+	 */
+	public boolean isCalculationMethodAllowed(Integer method) {
+		return availableCalculationMethods.contains(method);
+	}
+
 
 }

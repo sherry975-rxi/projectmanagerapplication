@@ -369,4 +369,12 @@ public class UserTest {
         //assertEquals(u1.isSystemUserStateActive(), true);
     }
 
+    @Test
+    public void hasPasswordTest() {
+
+        User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
+
+        assertFalse(u1.hasPassword());
+    }
+
 }

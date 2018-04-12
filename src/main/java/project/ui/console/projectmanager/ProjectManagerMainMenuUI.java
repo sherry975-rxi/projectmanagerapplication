@@ -79,10 +79,10 @@ public class ProjectManagerMainMenuUI {
 		projectInfo.setProject(project);
 		
 
-		Scanner scannerInput = new Scanner(System.in);
+
 		boolean loop = true;
 		while (loop) {
-			loop = false;
+            Scanner scannerInput = new Scanner(System.in);
 		System.out.println(
 				"———————————————————————————————————————————MENU PROJECT MANAGER——————————————————————————————————————————————————");
 		System.out.println("                               Project " + projectInfo.printProjectNameInfo().toUpperCase()
@@ -117,8 +117,7 @@ public class ProjectManagerMainMenuUI {
 		System.out.println("");
 		System.out.println(
 				"_________________________________________________________________________________________________________________");
-		System.out.println("[B] Back");
-		System.out.println("[M] MainMenu \n");
+		System.out.println("[B] Back\n");
 
 		String option = scannerInput.nextLine().toUpperCase();
 
@@ -161,7 +160,7 @@ public class ProjectManagerMainMenuUI {
 			optionC2.displayRemovalTaskRequests();
 			break;
 		case "D1":
-			optionD1.displayProjectCost(this.project);
+			this.project = optionD1.displayProjectCost(this.project);
 			break;
 		case "D2":
 			optionD2.setProject(project);
@@ -173,11 +172,12 @@ public class ProjectManagerMainMenuUI {
 			break;
 
 		case "B":
+		    loop=false;
 			break;
 		
 		default:
 			System.out.println("Invalid input. Please retry:");
-			loop = true;
+			break;
 		}
 	}
 

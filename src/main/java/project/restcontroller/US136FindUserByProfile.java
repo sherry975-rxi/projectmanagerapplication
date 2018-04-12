@@ -20,7 +20,7 @@ public class US136FindUserByProfile {
     private final UserService userService;
 
     @Autowired
-    US136FindUserByProfile(UserService userService){
+    public US136FindUserByProfile(UserService userService){
 
         this.userService = userService;
 
@@ -35,8 +35,7 @@ public class US136FindUserByProfile {
     @RequestMapping(method = RequestMethod.GET)
     public List<User> searchUsersByProfileController(@PathVariable String profileNameToSearch) {
 
-
-        return userService.searchUsersByProfileName(profileNameToSearch);
+        return userService.searchUsersByProfileName(profileNameToSearch.toUpperCase());
 
     }
 

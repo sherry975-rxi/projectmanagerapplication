@@ -1,4 +1,4 @@
-package project.ui.console.loadfiles;
+package project.ui.console.loadfiles.loadprojects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,28 +10,35 @@ import project.model.taskstateinterface.OnGoing;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
+import project.ui.console.loadfiles.FileUtils;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.*;
 
 @Service
-public class LoadProjectData {
+public class LoadProjectXmlv00 implements LoadProjectXml{
 
-	@Autowired
 	ProjectService projectService;
 
-	@Autowired
+
 	UserService userService;
 
-	@Autowired
+
 	TaskService taskService;
 
-	TaskCollaborator taskCollab;
+	@Autowired
+	public LoadProjectXmlv00(ProjectService projectService, UserService userService, TaskService taskService) {
+		this.projectService = projectService;
+		this.userService = userService;
+		this.taskService = taskService;
+	}
 
-	public void loadProject(String pathFile)
+	//TaskCollaborator taskCollab;
+
+	public void readProjectFile(String pathFile)
 			throws ParserConfigurationException, SAXException, IOException, DOMException, ParseException {
 
 		Document documentProjects = FileUtils.readFromXmlFile(pathFile);
@@ -81,6 +88,9 @@ public class LoadProjectData {
 						eElementProject.getElementsByTagName("gestor_projeto").item(0).getTextContent());
 				project.setProjectManager(user);
 
+				project.setCalculationMethod(Project.FIRST_COLLABORATOR);
+				project.setAvailableCalculationMethods(new ArrayList<>(Arrays.asList(1,2,3)));
+
 				projectService.updateProject(project);
 
 				// Node lista_colaboradores
@@ -110,16 +120,20 @@ public class LoadProjectData {
 							if (nNodeLigProject.getNodeType() == Node.ELEMENT_NODE) {
 								Element eElementLigProject = (Element) nNodeLigProject;
 
-                                eElementLigProject
-                                        .getElementsByTagName("data_inicio").item(0).getTextContent();
+								Calendar startDate = convertStringToCalendar(
+                                        eElementLigProject.getElementsByTagName("data_inicio").item(0).getTextContent());
 
-								boolean isProjCollabActive = eElementLigProject
-                                        .getElementsByTagName("data_fim").item(0).getTextContent().isEmpty();
+								Calendar finishDate = convertStringToCalendar(
+                                        eElementLigProject.getElementsByTagName("data_fim").item(0).getTextContent());
+
+								boolean isProjCollabActive = finishDate!=null;
 
 								Double costEffort = Double.valueOf(eElementLigProject
 										.getElementsByTagName("custo_unitario_colaborador").item(0).getTextContent());
 
                                 projCollaborator=projectService.createProjectCollaborator(userCollaborator, project, costEffort);
+                                projCollaborator.setStartDate(startDate);
+                                projCollaborator.setFinishDate(finishDate);
 								projCollaborator.setStatus(isProjCollabActive);
 								projectService.updateProjectCollaborator(projCollaborator);
 							}
@@ -215,15 +229,19 @@ public class LoadProjectData {
 
 								task.addProjectCollaboratorToTask(projCollaborator);
 
-								//Dados do Task Collaborator
+								//Dados do Task Collaborator, por ligação
 
-								String startDateString = eElementnNodeTaskCollaborator
+                                // CAMPO LIGAÇÂO TAREFA INEXISTENTE POR AGORA
+                                //NodeList nLigTaskList = eElementnNodeTaskCollaborator.getElementsByTagName("ligacao_tarefa");
+
+
+                                String startDateString = eElementnNodeTaskCollaborator
 										.getElementsByTagName("data_inicio").item(0).getTextContent();
 
 								Calendar startDateTaskCollaborator = convertStringToCalendar(startDateString);
 
 								TaskCollaborator taskCollaborator = task
-										.getTaskCollaboratorByEmail(eElementnNodeTaskCollaborator
+										.getActiveTaskCollaboratorByEmail(eElementnNodeTaskCollaborator
 												.getElementsByTagName("colaborador_id").item(0).getTextContent());
 
 								taskCollaborator.setStartDate(startDateTaskCollaborator);
@@ -250,10 +268,27 @@ public class LoadProjectData {
 										Calendar reportStartDate = convertStringToCalendar(eElementNodeReport
 												.getElementsByTagName("data_inicio").item(0).getTextContent());
 
-										Double timeToReport = Double.valueOf(eElementNodeReport
+                                        Calendar reportLastDate = convertStringToCalendar(eElementNodeReport
+                                                .getElementsByTagName("data_fim").item(0).getTextContent());
+
+                                        if(reportLastDate==null) {
+                                            reportLastDate=Calendar.getInstance();
+                                        }
+
+                                        Double timeToReport = Double.valueOf(eElementNodeReport
 												.getElementsByTagName("esforco").item(0).getTextContent());
 
-										task.createReport(taskCollaborator, reportStartDate, timeToReport);
+                                        Report report = new Report();
+                                        report.setTaskCollaborator(taskCollaborator);
+                                        report.setTask(task);
+                                        report.setCost(taskCollaborator.getCost());
+                                        report.setFirstDateOfReport(reportStartDate);
+                                        report.setDateOfUpdate(reportLastDate);
+                                        report.setReportedTime(timeToReport);
+
+                                        task.getReports().add(report);
+
+										//task.createReport(taskCollaborator, reportStartDate, timeToReport);
 									}
 								}
 							}

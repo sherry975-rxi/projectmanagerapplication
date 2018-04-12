@@ -1058,7 +1058,7 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#getTaskCostBasedOnWeightedMeanOfAllReports()}.
+	 * Test method for {@link project.model.Task#getTaskCost()}.
 	 */
 	@Test
 	public void testGetTaskCostBasedOnTheWeightedMeanOfAllReports() {
@@ -1072,7 +1072,7 @@ public class TaskTest {
 		taskTest.createReport(taskCollaborator, Calendar.getInstance(), 1.0);
 		taskTest.createReport(taskCollaborator2, Calendar.getInstance(), 2.0);
 
-		assertEquals(50.0, taskTest.getTaskCostBasedOnWeightedMeanOfAllReports(), 0.1);
+		assertEquals(50.0, taskTest.getTaskCost(), 0.1);
 
 		//Task collaborator presents a new report to the same task
 
@@ -1080,7 +1080,7 @@ public class TaskTest {
 
 		taskTest.createReport(taskCollaborator, Calendar.getInstance(), 1.5);
 
-		assertEquals(65, taskTest.getTaskCostBasedOnWeightedMeanOfAllReports(), 0.1 );
+		assertEquals(65, taskTest.getTaskCost(), 0.1 );
 
 
 	}

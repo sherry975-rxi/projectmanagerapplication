@@ -20,12 +20,13 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 
 	private Project proj;
 
-	/*
-	 * Default constructor
-	 */
 
 	public US355ViewProjectTeamAndThenRemoveCollaboratorController() {
+		// Default constructor
+	}
 
+	public US355ViewProjectTeamAndThenRemoveCollaboratorController(Project proj) {
+		this.proj = proj;
 	}
 
 	/*
@@ -33,10 +34,6 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorController {
 	 */
 
 	public void setProj(Project proj) {
-		this.proj = proj;
-	}
-
-	public US355ViewProjectTeamAndThenRemoveCollaboratorController(Project proj) {
 		this.proj = proj;
 	}
 

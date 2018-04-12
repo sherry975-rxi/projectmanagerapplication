@@ -1,6 +1,8 @@
 package project.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,7 +30,9 @@ public class User implements Serializable {
 	private String function;
 	static final long serialVersionUID = 44L;
 
+
 	@JsonManagedReference
+    @LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 	private List<Address> addressList;
 	
@@ -39,6 +43,8 @@ public class User implements Serializable {
 
 	private boolean systemUserStateActive;
 	private String password;
+	private String question;
+	private String answer;
 
 	/**
 	 * Empty Constructor for User
@@ -84,6 +90,14 @@ public class User implements Serializable {
 	 */
 	public Address createAddress(String street, String zipCode, String city, String district, String country) {
 		return new Address(street, zipCode, city, district, country);
+	}
+
+	/**
+	 *
+	 * @return true if has password, false if not
+	 */
+	public boolean hasPassword() {
+		return password != null;
 	}
 
 	/**
@@ -313,6 +327,8 @@ public class User implements Serializable {
 		return found;
 	}
 
+
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -342,4 +358,21 @@ public class User implements Serializable {
 		User other = (User) obj;
 		return email.equals(other.email);
 	}
+
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
 }

@@ -176,6 +176,48 @@ public class PrintProjectInfoController {
 		return toPrint;
 	}
 
+    /**
+     * Generates a printable string from an array of strings. Each index of the array of strings corresponds to an enum
+     * from the Project cost calculation methods.
+     *
+     * For each of the calculation methods, it calls a boolean confirmation to output "Enabled" or "Disabled" depending on the method's availability
+     *
+     *
+     * @return
+     */
+	public String printCostCalculationMethods() {
+
+        String output = "";
+	    String first ="[1] - The user's first cost ";
+		String last ="[2] - The user's last cost ";
+		String average="[3] - Average between all of the user's costs ";
+        String [] calculationMethods = new String [] {output,first,last,average};
+
+
+        for(int i=1; i<4;i++) {
+		    boolean enabled = project.isCalculationMethodAllowed(i);
+		    output += calculationMethods[i] + booleanToEnabledDisabled(enabled) + "\n";
+        }
+        output+="(Currently: " + project.getCalculationMethod() + ")";
+
+        return output;
+	}
+
+    /**
+     * this method converts a boolean true/false to a string output of Enabled/Disabled
+     *
+     *
+     * @param contains
+     * @return
+     */
+	public String booleanToEnabledDisabled(boolean contains) {
+		if(contains) {
+			return "[ENABLED]";
+		}
+		return "[DISABLED]";
+
+	}
+
 	/**
 	 * This method get the project's task list and return it as a list of Strings
 	 *

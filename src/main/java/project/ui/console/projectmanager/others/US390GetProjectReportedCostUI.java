@@ -6,6 +6,7 @@ import project.controllers.PrintProjectInfoController;
 import project.controllers.US390CalculateReportedProjectCostController;
 import project.model.Project;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @Component
@@ -17,22 +18,16 @@ public class US390GetProjectReportedCostUI {
 	@Autowired
 	private US390CalculateReportedProjectCostController controller;
 
-	public final int FIRST_COLLABORATOR = 1;
-	public final int LAST_COLLABORATOR = 2;
-	public final int FIRST_LAST_COLLABORATOR = 3;
-	public final int AVERAGE_COLLABORATOR = 4;
-
 	Scanner scannerInput;
 
-	public void displayProjectCost(Project project) {
+	public Project displayProjectCost(Project project) {
 		String line = "___________________________________________________";
-
-		scannerInput = new Scanner(System.in);
 
 		projectInfo.setProject(project);
 
 		boolean loop = true;
 		while (loop) {
+			scannerInput = new Scanner(System.in);
 			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
@@ -48,7 +43,9 @@ public class US390GetProjectReportedCostUI {
 		System.out.println("");
 		System.out.println(line);
 
-		// TODO Create controller that calculates cost using the chosen method
+        System.out.print(selectReportCostCalculation(project));
+        System.out.println("");
+        System.out.println(line);
 
 		System.out.println("     PROJECT COST");
 		System.out.println(line);
@@ -74,39 +71,47 @@ public class US390GetProjectReportedCostUI {
 
 		String option = scannerInput.nextLine().toUpperCase();
 
+
 			if (!("B".equals(option))){
 				System.out.println("Please choose a valid option: ");
 				loop = true;
 			}
+
 		}
+
+		return project;
 	}
 
-	private int selectReportCostCalculation() {
+	private String selectReportCostCalculation(Project project) {
 		System.out.println("");
-		System.out.println("Should a single user have different costs through the same report, calculate using:");
-		System.out.println("");
-        System.out.println("[1] - The user's first cost");
-        System.out.println("[2] - The user's last cost");
-        System.out.println("[3] - Average between the users first and last cost");
-        System.out.println("[Any Key] - Average between all of the user's costs");
+		System.out.println("Should a single user have different costs throughout the same report, calculate using:");
+        System.out.println(projectInfo.printCostCalculationMethods());
+        System.out.println("[Any Key] - Keep Current Selection");
         System.out.println("");
         scannerInput = new Scanner(System.in);
-		char option = scannerInput.nextLine().charAt(0);
 
-		switch(option) {
-            case '1':
-                System.out.println("First Cost Selected!");
-                return this.FIRST_COLLABORATOR;
-            case '2':
-                System.out.println("Last Cost Selected!");
-                return this.LAST_COLLABORATOR;
-            case '3':
-                System.out.println("First/Last Average Cost Selected!");
-                return this.FIRST_LAST_COLLABORATOR;
-            default:
-                System.out.println("Average Cost Selected!");
-                return this.AVERAGE_COLLABORATOR;
-        }
+		String invalid = "Invalid Input, using current selection.";
+		String valid = "Selected ";
+		String result;
+
+		Integer selectedMethod;
+
+		try{
+			selectedMethod = scannerInput.nextInt();
+			if(project.isCalculationMethodAllowed(selectedMethod)) {
+			    controller.selectReportCostCalculation(project, selectedMethod);
+				result = valid + selectedMethod;
+			} else {
+				result = selectedMethod + ": " + invalid;
+			}
+			scannerInput.nextLine();
+
+		} catch (InputMismatchException i) {
+			result = scannerInput.nextLine() + ": " + invalid;
+		}
+
+
+        return result;
 
 
 	}

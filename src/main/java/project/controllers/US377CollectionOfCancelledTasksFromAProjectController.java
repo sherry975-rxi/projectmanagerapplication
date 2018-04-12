@@ -26,18 +26,18 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 		//Empty constructor created for JPA integration tests
 
 	}
-	public void setProject(Project project) {
-		this.project = project;
-	}
-
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param project
 	 *            Project ID of the project with which this controllers will work
 	 */
 	public US377CollectionOfCancelledTasksFromAProjectController(Project project) {
+		this.project = project;
+	}
+
+	public void setProject(Project project) {
 		this.project = project;
 	}
 

@@ -3,6 +3,7 @@ package project.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.model.*;
+import project.model.costcalculationinterface.*;
 import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.TaskRepository;
@@ -421,17 +422,15 @@ public class TaskService {
 		 *         month, by the user
 		 */
 		public List<Task> getFinishedTasksFromProjectCollaboratorInGivenMonth(ProjectCollaborator collab, int monthsAgo) {
-			Calendar givenMonth = Calendar.getInstance();
-			givenMonth.add(Calendar.MONTH, -monthsAgo);
+			int givenMonth = Calendar.getInstance().get(Calendar.MONTH) -monthsAgo;
+
 			List<Task> lastMonthFinishedTaskList = new ArrayList<>();
 
 			for (Task other : this.getAllTasksFromProjectCollaborator(collab)) {
-				if (other.isTaskFinished()) {
-					if (monthsAgo < 0) {
+				if ((other.isTaskFinished()) &&
+                        ((monthsAgo < 0) ||
+                                (other.getFinishDate().get(Calendar.MONTH) == givenMonth))) {
 						lastMonthFinishedTaskList.add(other);
-					} else if (other.getFinishDate().get(Calendar.MONTH) == givenMonth.get(Calendar.MONTH)) {
-						lastMonthFinishedTaskList.add(other);
-					}
 				}
 			}
 			return lastMonthFinishedTaskList;
@@ -503,9 +502,7 @@ public class TaskService {
 
 			for (Task other :  this.getProjectTasks(project)) {
 
-				if (other.isTaskTeamEmpty()) {
-					listOfTasksWithoutCollaboratorsAssigned.add(other);
-				} else if (!other.doesTaskTeamHaveActiveUsers()) {
+				if (!other.doesTaskTeamHaveActiveUsers()) {
 					listOfTasksWithoutCollaboratorsAssigned.add(other);
 				}
 			}
@@ -720,7 +717,7 @@ public class TaskService {
 		collaboratorsFromTask.addAll(this.projectCollaboratorRepository.findAllByProject(project));
 
 		return collaboratorsFromTask.stream()
-				.filter(projCollab -> projCollab.isProjectCollaboratorActive())
+				.filter(ProjectCollaborator::isProjectCollaboratorActive)
 				.filter(projCollab -> task.isProjectCollaboratorActiveInTaskTeam(projCollab))
 				.collect(Collectors.toList());
 
@@ -735,7 +732,7 @@ public class TaskService {
 		List<String> reportTaskCost = new ArrayList<>();
 
 		for (Task other : this.taskRepository.findAllByProject(project)) {
-			reportTaskCost.add(String.valueOf(other.getTaskCostBasedOnWeightedMeanOfAllReports()));
+			reportTaskCost.add(String.valueOf(other.getTaskCost()));
 
 		}
 
@@ -753,8 +750,9 @@ public class TaskService {
 	public double getTotalCostReportedToProjectUntilNow(Project project) {
 		double reportedCost = 0.0;
 
+		this.calculateReportEffortCost(project);
 		for (Task task : this.taskRepository.findAllByProject(project)) {
-			reportedCost += task.getTaskCostBasedOnWeightedMeanOfAllReports();
+			reportedCost += task.getTaskCost();
 		}
 
 		return reportedCost;
@@ -769,7 +767,7 @@ public class TaskService {
      *
      * @param report
      * @return  A list of project Collaborators active during the period of the report
-     *     *
+     *
      */
 
 	public List<ProjectCollaborator> getAllCollaboratorInstancesFromReport(Report report) {
@@ -777,7 +775,7 @@ public class TaskService {
 	    User user = report.getTaskCollaborator().getProjCollaborator().getUserFromProjectCollaborator();
 
 	    return projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user).stream()
-                .filter(ProjectCollaborator -> wasCollaboratorActiveDuringReport(ProjectCollaborator, report)).collect(Collectors.toList());
+                .filter(projectCollaborator -> wasCollaboratorActiveDuringReport(projectCollaborator, report)).collect(Collectors.toList());
 	}
 
     /**
@@ -796,13 +794,57 @@ public class TaskService {
         Calendar reportStartDate = report.getFirstDateOfReport();
         Calendar reportLastDate = report.getDateOfUpdate();
 
-        if(toCheck.getFinishDate()==null){
-            wasActive=toCheck.getStartDate().before(reportLastDate);
-        } else if (toCheck.getFinishDate().after(reportStartDate)){
+        if((toCheck.getFinishDate()==null) || toCheck.getFinishDate().after(reportStartDate)){
             wasActive=toCheck.getStartDate().before(reportLastDate);
         }
 
         return wasActive;
+    }
+
+
+    /**
+     * This method sets the cost for each report based on the selected method of report calculation:
+     *
+     * It doesn't calculate the the total cost of each task or project, but simply updates the cost per effort in the report.
+     *
+     * The actual cost (effort x cost/effort) is calculated by each task
+     *
+     * @param project
+     */
+    public void calculateReportEffortCost(Project project) {
+        List<Report> reports = getProjectTasks(project).stream().map(Task::getReports).flatMap(List::stream).collect(Collectors.toList());
+
+        CostCalculationInterface calculationMethod = chooseCalculationMethod(project);
+
+        for(Report other : reports) {
+            calculationMethod.updateCalculationMethod(other, getAllCollaboratorInstancesFromReport(other));
+        }
+
+        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
+	}
+
+    /**
+     *
+     * This is a utility method that recieves a project and generates a cost calculation interface based on the selected cost calculation method
+     * 1 - The first collaborator instance active during the report's period (Project and reports are created with this value!)
+     * 2 - The last collaborator instance active during the report's period
+     * 3 - Average between first and last collaborator instances active during the report's period
+     * 4 - Average of all collaborators active during the report's period
+     *
+     * @param project
+     * @return the respective interface
+     */
+	public CostCalculationInterface chooseCalculationMethod(Project project) {
+        switch(project.getCalculationMethod()) {
+            case Project.FIRST_COLLABORATOR:
+                return new FirstCollaboratorCost();
+            case Project.LAST_COLLABORATOR:
+                return new LastCollaboratorCost();
+            case Project.FIRST_LAST_COLLABORATOR:
+                return new FirstAndLastCollaboratorCost();
+            default:
+                return new AverageCollaboratorCost();
+        }
     }
 
 

@@ -9,7 +9,6 @@ import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 import project.repository.TaskRepository;
-import project.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,9 +35,6 @@ public class TaskServiceTest {
     private ProjectsRepository projectsRepository;
 
     @Mock
-    private UserRepository userRepository;
-
-    @Mock
     private ProjCollabRepository projectCollaboratorRepository;
 
     @Mock
@@ -50,11 +46,12 @@ public class TaskServiceTest {
     private Calendar startDate;
     private Project project;
     private User user;
+    private User user2;
     private Task notAmock;
     private ProjectCollaborator projectCollaborator;
     private ProjectCollaborator projectCollaborator2;
+    private ProjectCollaborator projectCollaborator3;
     private TaskCollaborator taskCollaborator;
-    private TaskCollaborator taskCollaborator2;
     private ProjectService projectService;
 
     @InjectMocks
@@ -101,13 +98,12 @@ public class TaskServiceTest {
         this.startDate.set(Calendar.HOUR_OF_DAY, 14);
 
         this.user = new User("name", "email", "idNumber", "function", "phone");
+        this.user2 = new User ("Nuno", "nuno@emai.com", "1012", "tester", "987-23");
         this.project = projectService.createProject("testing", "Test", user);
         this.projectCollaborator = new ProjectCollaborator(user, 10);
         this.projectCollaborator2 = new ProjectCollaborator(user, 10);
+        this.projectCollaborator3 = new ProjectCollaborator(user2, 20);
         this.taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
-        this.taskCollaborator2 = new TaskCollaborator(new ProjectCollaborator(user, 10));
-
-
 
     }
 
@@ -737,7 +733,7 @@ public class TaskServiceTest {
         taskList.add(task2Mock);
         when(taskRepository.findAllByProject(project)).thenReturn(taskList);
 
-        when(taskMock.getTaskCostBasedOnWeightedMeanOfAllReports()).thenReturn(10.0);
+        when(taskMock.getTaskCost()).thenReturn(10.0);
 
         List<String> expectedList = new ArrayList<>();
         expectedList.add("10.0, 0.0");
@@ -811,6 +807,7 @@ public class TaskServiceTest {
 
     }
 
+
     /**
      * This method tests the ability to find all collaborators from the same user in the project during the period of a single report
      */
@@ -881,6 +878,134 @@ public class TaskServiceTest {
     }
 
 
+
+
+    /**
+     * This test validates if the methods to calculate report costs are all working correctly
+     */
+    @Test
+    public void testCalculateReportsCost() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        notAmock = project.createTask("This is not a mock");
+
+
+        // given a project collaborator with start date set to four months ago and ended 2 months ago
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+
+        // when the project collaborator is removed from the project and added again with cost 20,
+        projectCollaborator2.setStartDate(twoMonthsAgo);
+        projectCollaborator2.setCostPerEffort(20);
+
+
+        //the initial report created three months and ended one month ago has a cost 10, but the collaborator also had a cost 20 during that period
+        Report firstReport = new Report();
+        firstReport.setTask(notAmock);
+        firstReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        firstReport.setFirstDateOfReport(threeMonthsAgo);
+        firstReport.setDateOfUpdate(oneMonthAgo);
+        firstReport.setCost(10);
+
+
+        // he only creates a second report during his second instance, giving it an initial cost of 20
+        Report secondReport = new Report();
+        secondReport.setTask(notAmock);
+        secondReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
+        secondReport.setCost(20);
+        secondReport.setFirstDateOfReport(oneMonthAgo);
+        secondReport.setDateOfUpdate(Calendar.getInstance());
+
+
+        List<ProjectCollaborator> collabsFromUser = new ArrayList<>();
+        collabsFromUser.add(projectCollaborator);
+        collabsFromUser.add(projectCollaborator2);
+
+        List<Report> taskReports = new ArrayList<>();
+        taskReports.add(firstReport);
+        taskReports.add(secondReport);
+
+        List<Task> projectTasks = new ArrayList<>();
+        projectTasks.add(notAmock);
+
+        notAmock.setProject(project);
+        notAmock.setReports(taskReports);
+
+        when(taskRepository.findAllByProject(project)).thenReturn(projectTasks);
+
+        when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(collabsFromUser);
+
+        // given the project has a default calculation method of "first collaborator"
+        assertEquals(10, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the report cost is calculated and updated
+        victim.calculateReportEffortCost(project);
+
+        // then it shoulde remain unchanged
+        assertEquals(10, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the project is set to Last Collaborator for each report, and the cost calculated
+        project.setCalculationMethod(Project.LAST_COLLABORATOR);
+        victim.calculateReportEffortCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 20
+        assertEquals(20, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the project is set to First/Last Collaborator average for each report, and the cost calculated
+        project.setCalculationMethod(Project.FIRST_LAST_COLLABORATOR);
+        victim.calculateReportEffortCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 15
+        assertEquals(15, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the project is set to Collaborator cost average for each report, and the cost calculated
+        project.setCalculationMethod(Project.AVERAGE_COLLABORATOR);
+        victim.calculateReportEffortCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 15
+        assertEquals(15, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+
+        // creating a new, testing project Collaborator 3 with a cost 70, should alter the value of the average collaborator cost, but not first/last
+
+        projectCollaborator3 = new ProjectCollaborator(user, 70);
+        projectCollaborator3.setProject(project);
+        projectCollaborator3.setStartDate(twoMonthsAgo);
+        projectCollaborator3.setFinishDate(twoMonthsAgo);
+
+        collabsFromUser.add(projectCollaborator3);
+
+
+        // when the project is set to First/Last Collaborator average for each report, and the cost calculated
+        project.setCalculationMethod(Project.FIRST_LAST_COLLABORATOR);
+        victim.calculateReportEffortCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 15
+        assertEquals(15, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the project is set to Collaborator cost average for each report, and the cost calculated
+        project.setCalculationMethod(Project.AVERAGE_COLLABORATOR);
+        victim.calculateReportEffortCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 33.33 (10+20+70)/3
+        assertEquals(33.33, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+    }
 
 
 

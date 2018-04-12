@@ -8,6 +8,7 @@ import project.services.UserService;
 import project.ui.console.administrator.AdminMenuUI;
 import project.ui.console.collaborator.CollaboratorMainMenuUI;
 import project.ui.console.collaborator.US101UserRegisterUI;
+import project.ui.console.collaborator.US105CreatePasswordAndAuthenticationMechanismUI;
 import project.ui.console.collaborator.US180LoginUI;
 import project.ui.console.director.DirectorMenuUI;
 
@@ -32,17 +33,43 @@ public class MainMenuUI {
 	private static User userAdmin;
 	private static User userDirector;
     private static User loggedIn;
+	private static User myUser;
+	private static User noPasswordUser;
 
+	public static void printImage() {
 
-	public void mainMenu() {
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("          `.----..  ...    ...`   `..` .:-            `.----.`  ...    `..`           ");
+		System.out.println("         +dmddddhy  dmd`  +dddd`  /dd/ omd`  :++`    /hdmddddo `dmh    :mm/          ");
+		System.out.println("         mNd-.....  sNN-  dN/mN/  yNm. -/: `.sNN/.. /NNh-....` `mNd    /NN+       ");
+		System.out.println("         yNmyo:-`   :NN+ -Nm`yNh  mNy  smm`.ydNNhhs hNN:       `mNm++++yNN+        ");
+		System.out.println("         `:shdmmds` `mNh oNy /Nm`-NN/  yNN`  oNN-   hNN-       `mNmyyyyhNN+           ");
+		System.out.println("            `-sNN+  yNm`dN/ `mN/oNm`  yNN`  oNN-   sNN+        `mNd    /NN+       ");
+		System.out.println("        /+++++hNN/  /NNsNm`  hNhhNy   yNN`  oNNs/- -dNms++++/  `mNd    /NN+         ");
+		System.out.println("         oyhhhhhs/   `syyy+   -yyyy-   +yy`  `oyhy/  .+yhhhhyo `yys    -yy:           ");
+		System.out.println(
+				"                                                                                                   ");
+		System.out.println();
+		System.out.println();
+	}
+
+	public void mainMenu()  throws Exception {
 
 		userDirector = userService.getAllUsersFromUserContainer().get(1);
 		userAdmin = userService.getAllUsersFromUserContainer().get(0);
-		
+		noPasswordUser = new User ("Daniel", "dsomonteiro@gmail.com", "1", "function", "+351937429087" );
+		noPasswordUser.setQuestion("1");
+		noPasswordUser.setAnswer("1");
+		userService.addUserToUserRepositoryX(noPasswordUser);
+		myUser = userService.createUser("Daniel", "dspereira93@hotmail.com", "id", "func", "+351937429087", "street", "zip", "city", "dist", "coun");
+		userService.addUserToUserRepositoryX(myUser);
+
 		displayOptions();
 	}
 
-	public void displayOptions() {
+	public void displayOptions() throws Exception {
 
 		printImage();
 
@@ -73,9 +100,12 @@ public class MainMenuUI {
 				case "2":
 					loggedIn=doLogin.doLogin();
 					if(loggedIn!=null) {
-					    System.out.println("");
-					    System.out.println("Welcome to Project Management, " + loggedIn.getName());
+						if(loggedIn.hasPassword()) {
+							System.out.println();
+							System.out.println("Welcome to Project Management, " + loggedIn.getName());
+						}
                     }
+
 					break;
 				case "3":
 					adminMenu.setAdminLoggedIn(userAdmin);
@@ -105,24 +135,5 @@ public class MainMenuUI {
 			}
 		}
 
-	}
-
-	public static void printImage() {
-
-		System.out.println();
-		System.out.println("");
-		System.out.println("");
-		System.out.println("          `.----..  ...    ...`   `..` .:-            `.----.`  ...    `..`           ");
-		System.out.println("         +dmddddhy  dmd`  +dddd`  /dd/ omd`  :++`    /hdmddddo `dmh    :mm/          ");
-		System.out.println("         mNd-.....  sNN-  dN/mN/  yNm. -/: `.sNN/.. /NNh-....` `mNd    /NN+       ");
-		System.out.println("         yNmyo:-`   :NN+ -Nm`yNh  mNy  smm`.ydNNhhs hNN:       `mNm++++yNN+        ");
-		System.out.println("         `:shdmmds` `mNh oNy /Nm`-NN/  yNN`  oNN-   hNN-       `mNmyyyyhNN+           ");
-		System.out.println("            `-sNN+  yNm`dN/ `mN/oNm`  yNN`  oNN-   sNN+        `mNd    /NN+       ");
-		System.out.println("        /+++++hNN/  /NNsNm`  hNhhNy   yNN`  oNNs/- -dNms++++/  `mNd    /NN+         ");
-		System.out.println("         oyhhhhhs/   `syyy+   -yyyy-   +yy`  `oyhy/  .+yhhhhyo `yys    -yy:           ");
-		System.out.println(
-				"                                                                                                   ");
-		System.out.println("");
-		System.out.println("");
 	}
 }
