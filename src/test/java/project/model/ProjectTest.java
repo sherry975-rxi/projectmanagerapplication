@@ -374,14 +374,14 @@ public class ProjectTest {
 	@Test
 	public void testSetAndGetPermittedCalculationMethods() {
 		// given a new project, the list of allowed methods should contain four entries, matching 1,2,3,4
-		assertEquals(4, p1.getAvailableCalculationMethods().size());
-		assertEquals((new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4}))), p1.getAvailableCalculationMethods());
+		assertEquals(3, p1.getAvailableCalculationMethods().size());
+		assertEquals((new ArrayList<>(Arrays.asList(new Integer[]{1,2,3}))), p1.getAvailableCalculationMethods());
 		assertTrue(p1.isCalculationMethodAllowed(2));
 		// when the list of permitted methods is reset as 1,3,4
-		p1.setAvailableCalculationMethods((new ArrayList<>(Arrays.asList(new Integer[]{1,3,4}))));
+		p1.setAvailableCalculationMethods((new ArrayList<>(Arrays.asList(new Integer[]{1,3}))));
 		// then the list must contain 3 entries, and 2 must not be allowed
 		assertFalse(p1.isCalculationMethodAllowed(2));
-		assertEquals(3, p1.getAvailableCalculationMethods().size());
+		assertEquals(2, p1.getAvailableCalculationMethods().size());
 	}
 
 

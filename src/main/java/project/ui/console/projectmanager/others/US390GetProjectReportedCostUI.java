@@ -6,6 +6,7 @@ import project.controllers.PrintProjectInfoController;
 import project.controllers.US390CalculateReportedProjectCostController;
 import project.model.Project;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @Component
@@ -84,46 +85,30 @@ public class US390GetProjectReportedCostUI {
 	private String selectReportCostCalculation(Project project) {
 		System.out.println("");
 		System.out.println("Should a single user have different costs throughout the same report, calculate using:");
-        System.out.println("[1] - The user's first cost (ALWAYS OK)");
-        System.out.println("[2] - The user's last cost " + project.isCalculationMethodAllowed(Project.LAST_COLLABORATOR));
-        System.out.println("[3] - Average between the users first and last cost " + project.isCalculationMethodAllowed(Project.FIRST_LAST_COLLABORATOR));
-		System.out.println("[4] - Average between all of the user's costs "+ project.isCalculationMethodAllowed(Project.AVERAGE_COLLABORATOR));
-        System.out.println("[Any Key] - Keep Current (Currently: " + project.getCalculationMethod() + ")");
+        System.out.println(projectInfo.printCostCalculationMethods());
+        System.out.println("[Any Key] - Keep Current Selection");
         System.out.println("");
         scannerInput = new Scanner(System.in);
-		char option = scannerInput.nextLine().charAt(0);
 
-		Integer selectedMethod =0;
+		String invalid = "Invalid Input, using current selection.";
+		String valid = "Selected ";
 		String result;
 
-		switch(option) {
-            case '1':
-            	selectedMethod=Project.FIRST_COLLABORATOR;
-                result= "Earliest Collaborator Cost Selected!";
-                break;
-            case '2':
-				selectedMethod=Project.LAST_COLLABORATOR;
-                result= "Latest Collaborator Cost Selected!";
-                break;
-            case '3':
-				selectedMethod=Project.FIRST_LAST_COLLABORATOR;
-                result= "First/Last Average Cost Selected!";
-                break;
-			case '4':
-				selectedMethod=Project.AVERAGE_COLLABORATOR;
-                result= "Average Collaborator Cost Selected!";
-                break;
-            default:
-                result= "Cost calculation not changed.";
-                break;
+		Integer selectedMethod;
 
-        }
+		try{
+			selectedMethod = scannerInput.nextInt();
+			if(project.isCalculationMethodAllowed(selectedMethod)) {
+			    controller.selectReportCostCalculation(project, selectedMethod);
+				result = valid + selectedMethod;
+			} else {
+				result = selectedMethod + ": " + invalid;
+			}
+			scannerInput.nextLine();
 
-        if(project.isCalculationMethodAllowed(selectedMethod)) {
-            controller.selectReportCostCalculation(project, selectedMethod);
-        } else {
-		    result="This calculation method is unavailable!";
-        }
+		} catch (InputMismatchException i) {
+			result = scannerInput.nextLine() + ": " + invalid;
+		}
 
 
         return result;
