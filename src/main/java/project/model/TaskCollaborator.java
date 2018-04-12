@@ -202,49 +202,4 @@ public class TaskCollaborator implements Serializable {
 }
 
 
- /**
-	 * Returns the total hours spent by the collaborator
-	 *
-	 *
-	 * @return TotalHoursSpent
-	 */
 
- /*public int getTotalHoursSpent() {
-  
-  int result = 0;
-  
-  for (int indexHoursSpent = 0; indexHoursSpent < this.hoursSpent.size();
-  indexHoursSpent++) {
-  
-  result = result + this.hoursSpent.get(indexHoursSpent); }
-  
-  return result;
- 
-  }*/
-  
- /**
-	 * Returns the cost of the collaborator in a specific period
-	 *
-	 * @param i
-	 *            index of the cost wanted
-	 *
-	 * @return cost
-	 */
-
- /* public int getCost(int i) { return cost.get(i); }*/
- 
- /**
-	 * Sets the hours spent by the user in this task in this period
-	 *
-	 * @param hoursSpent
-	 */
-
-  /*public void setHoursSpent(int hoursSpent) {
-  this.hoursSpent.set(this.hoursSpent.size() - 1, hoursSpent); }
-  */
- /**
-	 * Gets the size of the cost list
-	 *
-	 */
-/*		  public int getCostListSize() { return this.cost.size(); }*/
-		 

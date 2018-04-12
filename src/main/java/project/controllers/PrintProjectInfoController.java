@@ -193,11 +193,13 @@ public class PrintProjectInfoController {
 		String average="[3] - Average between all of the user's costs ";
         String [] calculationMethods = new String [] {output,first,last,average};
 
-
+        StringBuilder bldr = new StringBuilder();
         for(int i=1; i<4;i++) {
 		    boolean enabled = project.isCalculationMethodAllowed(i);
-		    output += calculationMethods[i] + booleanToEnabledDisabled(enabled) + "\n";
+            bldr.append(calculationMethods[i] + booleanToEnabledDisabled(enabled) + "\n");
+
         }
+        output=bldr.toString();
         output+="(Currently: " + project.getCalculationMethod() + ")";
 
         return output;

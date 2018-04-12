@@ -6,6 +6,7 @@ import project.controllers.PrintProjectInfoController;
 import project.controllers.US390CalculateReportedProjectCostController;
 import project.model.Project;
 
+import java.text.DecimalFormat;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -24,6 +25,7 @@ public class US390GetProjectReportedCostUI {
 		String line = "___________________________________________________";
 
 		projectInfo.setProject(project);
+		DecimalFormat numberFormat = new DecimalFormat("#.00");
 
 		boolean loop = true;
 		while (loop) {
@@ -54,7 +56,7 @@ public class US390GetProjectReportedCostUI {
 
 		System.out.println("The reported project cost until now is:");
 		System.out.println();
-		System.out.println(controller.calculateReportedProjectCostController(project));
+		System.out.println(numberFormat.format(controller.calculateReportedProjectCostController(project)));
 		System.out.println();
 		System.out.println("The reported cost to each task of the project is:");
 		System.out.println();

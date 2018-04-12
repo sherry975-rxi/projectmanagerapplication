@@ -1,24 +1,17 @@
 package project.controllers;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.model.*;
-import project.services.ProjectService;
-import project.services.TaskService;
-import project.services.UserService;
+import project.services.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -39,6 +32,8 @@ public class PrintProjectInfoControllerTest {
 	Project project, project1;
 	Calendar startDate, finishDate;
 	Task task1, task2, task3;
+
+    String first, last, average, currently, expectedOptions;
 
 	@Autowired
 	PrintProjectInfoController controller;
@@ -97,9 +92,19 @@ public class PrintProjectInfoControllerTest {
 		taskService.saveTask(task2);
 		taskService.saveTask(task3);
 
+
+		first ="[1] - The user's first cost [ENABLED]\n";
+		last ="[2] - The user's last cost [ENABLED]\n";
+		average="[3] - Average between all of the user's costs [ENABLED]\n";
+		currently="(Currently: 1)";
+		expectedOptions=first+last+average+currently;
+
+
 		// Instantiates de controllers
 		controller.setProject(project);
-		;
+
+
+
 
 	}
 
@@ -203,6 +208,42 @@ public class PrintProjectInfoControllerTest {
 
 		assertEquals(controller.printProjectBudgetInfo(), "1000.0"); 
 	}
+
+	/**
+	 * Tests if the method of controllers gets project's available cost calculation methods
+	 * as well as the present calculation method
+	 */
+	@Test
+	public void testPrintProjectCostCalculationInfo() {
+		// given a new project
+
+		// when no action is taken,
+		// then the cost calculation should return the default values
+
+		assertEquals(expectedOptions, controller.printCostCalculationMethods());
+
+		ArrayList<Integer> expected = project.getAvailableCalculationMethods();
+		expected.remove((Integer) Project.FIRST_COLLABORATOR);
+
+		project.setAvailableCalculationMethods(expected);
+		project.setCalculationMethod(Project.LAST_COLLABORATOR);
+		projectContainer.updateProject(project);
+		controller.setProject(project);
+
+        first ="[1] - The user's first cost [DISABLED]\n";
+        currently="(Currently: 2)";
+
+        expectedOptions=first+last+average+currently;
+
+        // when First Collaborator Cost option has been disabled
+        // then the controller should print that option as [Disabled], and current cost as 2
+        assertEquals(2, expected.size());
+        assertFalse(project.isCalculationMethodAllowed(Project.FIRST_COLLABORATOR));
+        assertEquals(expectedOptions, controller.printCostCalculationMethods());
+
+
+    }
+
 
 	/**
 	 * Tests if the method of controllers gets the project's task list

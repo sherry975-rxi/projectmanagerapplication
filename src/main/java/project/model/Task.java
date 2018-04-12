@@ -1485,4 +1485,23 @@ public class Task implements Serializable {
 	public void removeAllRequestsWithASpecificTask() {
 		this.pendingTaskTeamRequests.clear();
 	}
+
+	/**
+	 * Retrieves a list o reports from a given user
+	 * @param userEmail
+	 *            The user to search for
+	 * @return list of reports
+	 */
+	public List<Report> getReportsFromGivenUser(String userEmail) {
+		List<Report> reportsOfGivenUser = new ArrayList<>();
+		for (Report other : this.reports) {
+			if (other.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator()
+					.getUserFromProjectCollaborator().getEmail().equals(userEmail)) {
+				reportsOfGivenUser.add(other);
+			}
+		}
+
+		return reportsOfGivenUser;
+
+	}
 }
