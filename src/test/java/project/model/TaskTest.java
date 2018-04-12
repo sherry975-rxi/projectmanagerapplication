@@ -1793,4 +1793,21 @@ public class TaskTest {
 
 	}
 
+	/**
+	 * Test method for
+	 * {@link project.model.Task#getReportsFromGivenUser(java.lang.String)}.
+	 */
+	@Test
+	public void testGetReportsFromGivenUser() {
+
+		assertTrue(taskReadyToFinishTest
+				.getReportsFromGivenUser(taskCollaborator.getTaskCollaborator().getEmail()).isEmpty());
+
+		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.1);
+
+		assertFalse(taskReadyToFinishTest
+				.getReportsFromGivenUser(taskCollaborator.getTaskCollaborator().getEmail()).isEmpty());
+
+	}
+
 }
