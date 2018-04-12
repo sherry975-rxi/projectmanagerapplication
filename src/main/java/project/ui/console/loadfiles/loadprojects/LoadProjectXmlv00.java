@@ -89,7 +89,7 @@ public class LoadProjectXmlv00 implements LoadProjectXml{
 				project.setProjectManager(user);
 
 				project.setCalculationMethod(Project.FIRST_COLLABORATOR);
-				project.setAvailableCalculationMethods(new ArrayList<>(Arrays.asList(1,2,3,4)));
+				project.setAvailableCalculationMethods(new ArrayList<>(Arrays.asList(1,2,3)));
 
 				projectService.updateProject(project);
 
