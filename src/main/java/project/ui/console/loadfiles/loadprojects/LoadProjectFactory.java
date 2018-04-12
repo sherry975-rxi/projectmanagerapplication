@@ -41,13 +41,13 @@ public class LoadProjectFactory {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public LoadProject getReader(String filePath) throws InstantiationException, IllegalAccessException {
+    public LoadProject getReader(String filePath){
 
 
         String fileExtension = filePath.split("\\.")[1].trim().toUpperCase();
         String fileName = filePath.split("\\.")[0].trim();
 
-        if(fileExtension.equals("XML")) {
+        if("XML".equals(fileExtension)) {
             return loadProjectXmlFactory.getReader(fileName);
         }
 
