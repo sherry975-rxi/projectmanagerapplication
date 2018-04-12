@@ -32,7 +32,7 @@ public class LoadProjectXmlFactory {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public LoadProjectXmlv00 getReader(String fileName) throws InstantiationException, IllegalAccessException {
+    public LoadProjectXmlv00 getReader(String fileName) {
 
         String xmlVersion = fileName.split("_")[1].trim();
 
