@@ -75,7 +75,7 @@ public class Project implements Serializable{
 
 		Objects.requireNonNull(name, "Name of the project cannot be null");
 		Objects.requireNonNull(description, "Description of the project cannot be null");
-		Objects.requireNonNull(projectManager, "Description of the project cannot be null");
+		Objects.requireNonNull(projectManager, "ProjectManager of the project cannot be null");
 
 		this.name = name;
 		this.description = description;

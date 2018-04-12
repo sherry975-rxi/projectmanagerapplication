@@ -61,7 +61,6 @@ public class US370GetProjectFinishedTasksRestTest {
     @Before
     public void setup() {
         JacksonTester.initFields(this, new ObjectMapper());
-        victim = new US370GetProjectFinishedTasks(projectServiceMock, taskServiceMock);
         mvc = MockMvcBuilders.standaloneSetup(victim).build();
 
         userDaniel = new User("Daniel", "daniel@gmail.com", "01", "ProjectManager", "987543271");

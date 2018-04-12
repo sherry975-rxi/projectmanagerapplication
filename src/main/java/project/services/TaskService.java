@@ -750,6 +750,7 @@ public class TaskService {
 	public double getTotalCostReportedToProjectUntilNow(Project project) {
 		double reportedCost = 0.0;
 
+		this.calculateReportEffortCost(project);
 		for (Task task : this.taskRepository.findAllByProject(project)) {
 			reportedCost += task.getTaskCost();
 		}
