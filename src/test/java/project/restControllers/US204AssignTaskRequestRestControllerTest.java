@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -30,9 +29,6 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 
@@ -70,7 +66,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
     private User userPM;
     private User userTwo;
-    private String userTwoEmail;
+    private int userTwoId;
     private User userThree;
     private String userThreeEmail;
     private Project projectOne;
@@ -93,7 +89,7 @@ public class US204AssignTaskRequestRestControllerTest {
         // create userTwo
         userTwo = userService.createUser("Joao", "joao@gmail.com", "02", "collaborator", "221238447", "Rua Porto",
                 "5480", "Porto", "Porto", "Portugal");
-        userTwoEmail = "joao@gmail.com";
+        userTwoId = 2;
 
         // create userThree
         userThree = userService.createUser("Rui", "rui@gmail.com", "03", "collaborator", "221378449", "Rua Porto",
@@ -131,7 +127,8 @@ public class US204AssignTaskRequestRestControllerTest {
         List<ProjectCollaborator> userTwoProjCollab = new ArrayList<>();
         userTwoProjCollab.add(projCollabTwo);
 
-        Mockito.when(userRepository.findByEmail(userTwoEmail)).thenReturn(Optional.of(userTwo));
+        Mockito.when(userRepository.findByEmail(userTwo.getEmail())).thenReturn(Optional.of(userTwo));
+        Mockito.when(userRepository.findById(userTwoId)).thenReturn(userTwo);
         Mockito.when(projectsRepository.findById(projectId)).thenReturn(Optional.of(projectOne));
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
         Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
@@ -151,7 +148,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //When
         //creating assignment request to taskOne from userTwo
-        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwo);
+        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoId);
 
         //Then
         // It is expected to be successfully created
@@ -170,15 +167,15 @@ public class US204AssignTaskRequestRestControllerTest {
         mockMvc.perform(
                 post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .header("userEmail", userTwoEmail))
+                        .header("userEmail", userTwoId))
                 .andReturn().getResponse();
         */
         //or could be created calling the method of the rest controller
-        controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwo);
+        controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoId);
 
         //When
         // Creating again assignment request that already exists for userTwo
-        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwo);
+        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoId);
 
         //Then
         //expects Forbidden message
@@ -196,7 +193,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //When
         // Create assignment request for userTwo but already is added to taskOne
-        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwo);
+        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoId);
 
         //Then
         //expects Forbidden message
@@ -213,7 +210,7 @@ public class US204AssignTaskRequestRestControllerTest {
         taskOne.createTaskAssignmentRequest(projCollabTwo);
         taskOne.createTaskRemovalRequest(projCollabThree);
 
-        ResponseEntity<?> result = controller.getAllRequests(taskIdOne, projectId, userTwoEmail);
+        ResponseEntity<?> result = controller.getAllRequests(taskIdOne, projectId, userTwoId);
 
         //Then
         //expects OK message
@@ -231,7 +228,7 @@ public class US204AssignTaskRequestRestControllerTest {
         taskOne.createTaskAssignmentRequest(projCollabTwo);
         taskOne.createTaskRemovalRequest(projCollabThree);
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "assignment", projectId, userTwoEmail);
+        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "assignment", projectId, userTwoId);
 
         //Then
         //expects OK message
@@ -249,7 +246,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         taskOne.createTaskRemovalRequest(projCollabThree);
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "removal", projectId, userTwoEmail);
+        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "removal", projectId, userTwoId);
 
         //Then
         //expects OK message

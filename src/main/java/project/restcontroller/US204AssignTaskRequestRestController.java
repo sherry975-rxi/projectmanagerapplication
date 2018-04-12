@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * This rest controller allows a collaborator to create a request of assignment to a specific task
  */
 @RestController
-@RequestMapping("/projects/{projectId}/tasks/{taskId}")
+@RequestMapping("/users/{userId}/projects/{projectId}/tasks/{taskId}")
 public class US204AssignTaskRequestRestController {
 
     private UserService userService;
@@ -34,14 +34,14 @@ public class US204AssignTaskRequestRestController {
     }
 
     @RequestMapping(value = "/requests" , method = RequestMethod.GET)
-    public ResponseEntity<?> getAllRequests (@PathVariable String taskId, @PathVariable int projectId, @RequestHeader String userEmail) {
+    public ResponseEntity<?> getAllRequests (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserByEmail(userEmail);
+        User user = userService.getUserByID(userId);
 
 
 
@@ -51,14 +51,14 @@ public class US204AssignTaskRequestRestController {
     }
 
     @RequestMapping(value = "/requests/{reqType}" , method = RequestMethod.GET)
-    public ResponseEntity<?> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @RequestHeader String userEmail) {
+    public ResponseEntity<?> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @PathVariable  int userId) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserByEmail(userEmail);
+        User user = userService.getUserByID(userId);
 
         if ("assignment".equals(reqType)){
 
@@ -79,20 +79,19 @@ public class US204AssignTaskRequestRestController {
      *          Task id associated to the task to be made the request
      * @param projectId
      *          Project id associated to the project where the task belongs
-     * @param userReg
-     *          User email related to the collaborator that wants to make the request.
+     * @param userId
+     *          User id related to the collaborator that wants to make the request.
      * @return ResponseEntity
      */
     @RequestMapping(value = "/requests/assignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @RequestBody User userReg){
+    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        String userEmail = userReg.getEmail();
-        User user = userService.getUserByEmail(userEmail);
+        User user = userService.getUserByID(userId);
 
             if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, project))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, project))){
                 this.taskService.saveTask(task);
