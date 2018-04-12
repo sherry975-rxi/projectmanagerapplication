@@ -1,0 +1,10 @@
+title US 204: Create Assignment to Task Request Rest Controller
+
+Actor->Browser:request assignment in task
+Browser->RestController:createTaskAssignmentRequest()
+note right of Browser: /users/{userId}/projects/{projectId}/tasks/{taskId}
+RestController->TaskService:createTaskAssignmentRequest(task, user)
+TaskService->TaskService:createTaskAssignmentRequest(task, user)
+TaskService-->RestController: true
+RestController-->Browser:ResponseEntity(request, HttpStatus.OK)
+Browser-->Actor:Task assignment request created!
