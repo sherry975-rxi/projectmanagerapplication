@@ -8,6 +8,7 @@ import project.services.UserService;
 import project.ui.console.administrator.AdminMenuUI;
 import project.ui.console.collaborator.CollaboratorMainMenuUI;
 import project.ui.console.collaborator.US101UserRegisterUI;
+import project.ui.console.collaborator.US105CreatePasswordAndAuthenticationMechanismUI;
 import project.ui.console.collaborator.US180LoginUI;
 import project.ui.console.director.DirectorMenuUI;
 
@@ -126,7 +127,6 @@ public class MainMenuUI {
 				case "E":
 					condition=false;
 					System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-					System.exit(0);
 					break;
 
 				default:
