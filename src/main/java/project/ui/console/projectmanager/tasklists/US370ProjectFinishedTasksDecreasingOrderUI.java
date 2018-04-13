@@ -88,7 +88,8 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 
 			break;
 		}
-	}}
+	}
+	}
 
 	public void setProj(Project proj) {
 		this.proj = proj;
