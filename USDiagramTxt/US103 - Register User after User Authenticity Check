@@ -2,21 +2,37 @@ title US 103: Register User after User Authenticity Check
 
 
 Actor->UI: Register new User
+
 UI-->Actor: Ask for data input
+
 Actor->UI: User inputs data
+
 UI->Controller: addNewUser(parameters)
-Controller ->UserService: addNewUser(parameters)
-UserService->DTO: createNewUserWithDTO(userDTO)
-DTO->Database: saveUser(user)
+
+Controller -> DTO: createUserDTO(parameters)
+
+Controller ->UserService:  createNewUserWithDTO(userDTO)
+
+UserService->Database: saveUser(user)
+
 UI-->Actor: choose SMS or Email
+
 Actor->UI: user selects SMS or Email
+
 UI->Controller: sendVerificationCode()
+
 Controller->Model:getCodeSenderType(type)
+
 Model-->Actor:return message with validation code to verify user's authenticity
+
 UI-->Actor:insert code
+
 Actor->UI:users inserts code
+
 UI->Controller: insertCode(code)
+
 Controller->Controller:doesCodeMatch(code)
+
 alt code matches
     Controller->UI: true
     UI-->Actor:User registered with success

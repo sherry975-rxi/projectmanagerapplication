@@ -509,6 +509,7 @@ public class ProjectServiceTest {
 		 * Deactive projCollab1 from the project team
 		 */
 		projCollab1.setStatus(false);
+		projCollab1.setFinishDate(Calendar.getInstance());
 
 		/*
 		 * Checks that the user1 is no longer active in project1

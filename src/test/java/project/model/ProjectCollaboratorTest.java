@@ -68,8 +68,8 @@ public class ProjectCollaboratorTest {
         // under normal circumstances, the collaborator's status could never be returned to active, a new collaborator must be created
         // then, when set as active again
         testMoar.setStatus(true);
+        testMoar.setFinishDate(null);
         assertTrue(testMoar.isProjectCollaboratorActive());
-        assertNotNull(testMoar.getFinishDate());
 
         assertEquals(testMoar.getCostPerEffort(), 100000.0, 001);
 
