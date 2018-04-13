@@ -17,7 +17,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 
 
 	public US210GetAllFinishedUserTasksInDecreasingOrderUI() {
-
+		//Empty constructor for JPA purposes
 	}
 
 	public void getAllFinishedUserTasksInDecreasingOrderUI() {

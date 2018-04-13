@@ -28,12 +28,8 @@ public class CollaboratorMainMenuUI {
 
 	private User user;
 
-	/**
-	 * Creates the UI
-	 *
-	 */
 	public CollaboratorMainMenuUI() {
-
+		//Empty constructor for JPA purposes
 	}
 
 	public void displayOptions() {

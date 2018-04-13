@@ -46,6 +46,7 @@ public class TaskDetailsUI {
 	private Task task;
 
 	public TaskDetailsUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	private void printMenuOption(){
