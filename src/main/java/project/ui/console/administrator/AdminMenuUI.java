@@ -2,9 +2,12 @@ package project.ui.console.administrator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.controllers.US105CreatePasswordAndAuthenticationMechanismController;
+import org.xml.sax.SAXException;
 import project.model.User;
+import project.ui.console.loadfiles.loaduser.UserReader;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.Scanner;
 
 @Component
@@ -26,7 +29,7 @@ public class AdminMenuUI {
 
 	User selectedUser;
 	@Autowired
-	private US105CreatePasswordAndAuthenticationMechanismController loadUsersCont;
+	UserReader userReader;
 
 	String command;
 
@@ -87,7 +90,19 @@ public class AdminMenuUI {
 
 					System.out.println("Please insert file to load");
 					String file = input.nextLine();
-					System.out.println(loadUsersCont.loadUsers(file));
+					try {
+						userReader.readFile(file);
+						System.out.println("Users loaded successfully!");
+					} catch (ParserConfigurationException e) {
+						e.printStackTrace();
+						System.out.println("Something went wrong. Please review your input and try again.");
+					} catch (SAXException e) {
+						e.printStackTrace();
+						System.out.println("Something went wrong. Please review your input and try again.");
+					} catch (IOException e) {
+						e.printStackTrace();
+						System.out.println("Something went wrong. Please review your input and try again.");
+					}
 					break;
 
 			case "b":

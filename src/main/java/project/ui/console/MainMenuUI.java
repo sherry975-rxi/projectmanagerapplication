@@ -101,7 +101,7 @@ public class MainMenuUI {
 					if(loggedIn!=null) {
 						if(loggedIn.hasPassword()) {
 							System.out.println();
-							System.out.println("Welcome to Project Management, " + loggedIn.getName());
+							System.out.println("Welcome, " + loggedIn.getName());
 						}
                     }
 

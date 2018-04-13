@@ -2,17 +2,14 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.xml.sax.SAXException;
 import project.model.CodeGenerator;
 import project.model.User;
 import project.model.sendcode.AnswerValidation;
 import project.model.sendcode.SendCodeFactory;
 import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
-import project.ui.console.loadfiles.loaduser.UserReader;
 
 import javax.mail.MessagingException;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 @Controller
@@ -20,9 +17,6 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserReader userReader;
 
     private String code;
 
@@ -96,22 +90,6 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     public ValidationMethod getValidation() {
         return validation;
-    }
-
-    public String loadUsers(String file) {
-        try {
-            userReader.readFile(file);
-            return "Users loaded successfully!";
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-            return "Something went wrong. Please review your input and try again.";
-        } catch (SAXException e) {
-            e.printStackTrace();
-            return "Something went wrong. Please review your input and try again.";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "Something went wrong. Please review your input and try again.";
-        }
     }
 
 
