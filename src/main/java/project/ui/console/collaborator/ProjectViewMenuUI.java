@@ -17,6 +17,7 @@ public class ProjectViewMenuUI {
 	private User user;
 
 	public ProjectViewMenuUI() {
+		//empty constructor
 	}
 
 	/**
@@ -57,13 +58,12 @@ public class ProjectViewMenuUI {
 		System.out.println("[B] Back \n");
 
 		String choice = scannerInput.nextLine().toUpperCase();
-		switch (choice) {
-		case "B":
-			break;
-		default:
-			loop = taskIDToSeeTaskDetaisls(choice);
-			break;
-		}
+			if ("B".equals(choice)) {
+				break;
+			} else {
+				loop = taskIDToSeeTaskDetaisls(choice);
+
+			}
 		}
 	}
 
