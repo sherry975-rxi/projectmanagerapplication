@@ -15,11 +15,8 @@ public class US357ApproveOrCancelRemovalRequestUI {
 
 	Project project;
 
-	/**
-	 * Constructor to instantiate a new US357ApproveOrCancelRemvalRequestUI
-	 *
-	 */
 	public US357ApproveOrCancelRemovalRequestUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	/**
