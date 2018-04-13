@@ -403,7 +403,7 @@ public class Project implements Serializable{
     }
 	public void setAvailableCalculationMethods(List<Integer> availableCalculationMethods) {
 
-		this.availableCalculationMethods = Joiner.on(',').join(availableCalculationMethods);
+		this.availableCalculationMethods = Joiner.on(",").join(availableCalculationMethods);
 	}
 
 

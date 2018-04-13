@@ -22,7 +22,7 @@ public class US301CreateProjectUI {
 	Integer budget;
 	User projectManager;
 
-	ArrayList<Integer> availableCalculationMethods;
+	List<Integer> availableCalculationMethods;
 
 	boolean isProjectCreationOngoing;
 
