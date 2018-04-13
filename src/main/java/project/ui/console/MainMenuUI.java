@@ -126,7 +126,6 @@ public class MainMenuUI {
 				case "E":
 					condition=false;
 					System.out.println("----YOU HAVE EXIT FROM APPLICATION----");
-                    System.exit(0);
 					break;
 
 				default:
