@@ -82,13 +82,11 @@ public class US204AssignTaskRequestRestController {
     public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-        Project project = projectService.getProjectById(projectId);
-
         Task task = taskService.getTaskByTaskID(taskId);
 
         User user = userService.getUserByID(userId);
 
-            if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, project))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, project))){
+            if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))){
                 this.taskService.saveTask(task);
                 result = new ResponseEntity<>(HttpStatus.OK);
             }
