@@ -1,5 +1,6 @@
 package project.controllers;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,9 +25,11 @@ public class US351AddColaboratorToProjectTeamControllerTest {
 	UserService userContainer;
 	@Autowired
 	ProjectService projectContainer;
+
 	Project activeProj, inactiveProj;
 	User activeUser, inactiveUser, projectManager;
-	@Autowired
+
+    @Autowired
 	US351AddColaboratorToProjectTeamController controller;
 
 	@Before
@@ -62,6 +65,15 @@ public class US351AddColaboratorToProjectTeamControllerTest {
 
 	}
 
+
+    @After
+    public void tearDown() {
+        activeProj = null;
+        inactiveProj = null;
+        activeUser = null;
+        inactiveUser = null;
+        projectManager = null;
+    }
 	@Test
 	public final void testAddUserToProjectTeam() {
 		controller.addUserToProjectTeam(activeUser, activeProj, 5);

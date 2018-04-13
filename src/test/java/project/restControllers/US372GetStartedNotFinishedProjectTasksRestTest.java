@@ -1,6 +1,7 @@
 package project.restControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,7 +71,7 @@ public class US372GetStartedNotFinishedProjectTasksRestTest {
 
         projectId = 1;
 
-        this.projectCollaborator = new ProjectCollaborator (user,  2);
+        this.projectCollaborator = new ProjectCollaborator(user, 2);
         projectCollaborator.setProject(project);
 
         //Created task1
@@ -97,8 +98,23 @@ public class US372GetStartedNotFinishedProjectTasksRestTest {
         task2.setProject(project);
 
 
+        projectId = 1;
 
         this.taskList.clear();
+
+    }
+
+    @After
+    public void tearDown() {
+        project = null;
+        pm = null;
+        user = null;
+        projectCollaborator = null;
+        task1 = null;
+        task2 = null;
+        projectId = 0;
+        projectJack = null;
+        taskJack = null;
 
     }
 
@@ -115,7 +131,7 @@ public class US372GetStartedNotFinishedProjectTasksRestTest {
         MockHttpServletResponse response = mockMvc.perform(get("/projects/" + projectId + "/tasks/unfinished").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //Then
-        assertEquals(response.getStatus(),HttpStatus.OK.value());
+        assertEquals(response.getStatus(), HttpStatus.OK.value());
         assertEquals(response.getContentAsString(), "[" + taskJack.write(task1).getJson() + "]");
     }
 
@@ -124,7 +140,7 @@ public class US372GetStartedNotFinishedProjectTasksRestTest {
 
         //Given
         int projectIdDoesNotExist = 2;
-        given(projectService.getProjectById(projectIdDoesNotExist)).willThrow(new ObjectNotFoundException ("Project not found!"));
+        given(projectService.getProjectById(projectIdDoesNotExist)).willThrow(new ObjectNotFoundException("Project not found!"));
         taskList.add(task1);
         given(taskService.getProjectUnFinishedTasks(project)).willReturn(taskList);
 
@@ -136,8 +152,7 @@ public class US372GetStartedNotFinishedProjectTasksRestTest {
         assertEquals(response.getContentAsString(), "[" + new String() + "]");
 
 
-
     }
-    }
+}
 
 

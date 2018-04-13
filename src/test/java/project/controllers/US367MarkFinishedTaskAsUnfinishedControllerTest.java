@@ -1,5 +1,6 @@
 package project.controllers;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -178,6 +179,31 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		task6.markTaskAsFinished();
 
 	}
+
+    @After
+    public void tearDown() {
+        user1 = null;
+        user2 = null;
+        projectManager = null;
+        projectManager2 = null;
+        project1 = null;
+        project2 = null;
+        project3 = null;
+        projCollab12 = null;
+        projCollab21 = null;
+        projCollab11 = null;
+        projCollab22 = null;
+        projCollab31 = null;
+        projCollab32 = null;
+        task1 = null;
+        task2 = null;
+        task3 = null;
+        task4 = null;
+        task5 = null;
+        task6 = null;
+        taskCollab1 = null;
+        taskCollab2 = null;
+    }
 
 	@Test
 	public void test() {

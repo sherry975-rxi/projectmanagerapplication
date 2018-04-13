@@ -1,5 +1,6 @@
 package project.controllers;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -93,6 +94,22 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		us357Controller.setProject(projectA);
 
 	}
+
+    @After
+    public void tearDown() {
+        userDaniel = null;
+        userRui = null;
+        projectA = null;
+        userRuiProjectCollaborator = null;
+        taskA = null;
+        taskB = null;
+        taskC = null;
+        stringRequest1 = null;
+        stringRequest2 = null;
+        userRuiTaskCollaborator = null;
+        pendingRemovalRequests = null;
+    }
+
 	/**
 	 * Tests the ViewPendingRemovalRequests method. The result has to be a list of
 	 * strings, with the details of the task removal requests.

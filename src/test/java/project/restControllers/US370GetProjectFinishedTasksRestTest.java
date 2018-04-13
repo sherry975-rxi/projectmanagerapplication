@@ -1,6 +1,7 @@
 package project.restControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,9 +27,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -83,6 +82,15 @@ public class US370GetProjectFinishedTasksRestTest {
         taskList = new ArrayList<>();
         taskList.add(task1);
         taskList.add(task2);
+    }
+
+    @After
+    public void tearDown() {
+        userDaniel = null;
+        userRui = null;
+        project = null;
+        projectId = null;
+        projectCollaborator = null;
     }
 
     @Test
