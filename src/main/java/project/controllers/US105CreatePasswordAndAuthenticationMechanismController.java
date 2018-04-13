@@ -58,11 +58,11 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
     public String performAuthentication(String userPhone, String userEmail, String userQuestion, String option) throws IOException, MessagingException {
 
+        String code = codeGenerator.generateCode();
+        this.code = code;
+
         validation = factory.getCodeSenderType(option).orElse(null);
         if (validation != null) {
-
-            String code = codeGenerator.generateCode();
-            this.code = code;
             return validation.performValidationMethod(userPhone, userEmail, userQuestion, code);
         } else {
             return "Invalid method selected. Please choose a valid one.";

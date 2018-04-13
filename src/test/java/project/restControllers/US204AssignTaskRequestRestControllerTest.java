@@ -179,7 +179,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //Then
         //expects Forbidden message
-        ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        ResponseEntity<?> expected = new ResponseEntity<>("Not Authorized!", HttpStatus.FORBIDDEN);
         assertEquals(expected,result);
 
     }
@@ -197,7 +197,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //Then
         //expects Forbidden message
-        ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        ResponseEntity<?> expected = new ResponseEntity<>("Not Authorized!", HttpStatus.FORBIDDEN);
         assertEquals(expected,result);
 
     }
