@@ -78,6 +78,8 @@ public class US205MarkTaskAsFinishedCollaboratorController {
 	}
 
 	public void markTaskAsFinished() {
+		taskToBeMarked.removeAllCollaboratorsFromTaskTeam();
+		taskToBeMarked.removeAllRequestsWithASpecificTask();
 		taskToBeMarked.setCurrentState(StateEnum.FINISHED);
 		taskToBeMarked.setTaskState(new Finished());
 		taskToBeMarked.setFinishDate(Calendar.getInstance());

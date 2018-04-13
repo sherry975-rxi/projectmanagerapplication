@@ -45,6 +45,8 @@ public class TaskDetailsUI {
 	private String taskID;
 	private Task task;
 
+	private ProjectCollaborator projCollaborator;
+
 	public TaskDetailsUI() {
 	}
 
@@ -96,7 +98,7 @@ public class TaskDetailsUI {
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "1":
-                ProjectCollaborator projCollaborator = new ProjectCollaborator(this.user, this.projectID);
+                projCollaborator = new ProjectCollaborator(this.user, this.projectID);
 
                 if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator)) {
                     System.out.println(cantDoIt);
@@ -110,17 +112,25 @@ public class TaskDetailsUI {
                 break;
 
 			case "2":
+				projCollaborator = new ProjectCollaborator(this.user, this.projectID);
+
+				if (task.isProjectCollaboratorActiveInTaskTeam(projCollaborator) || task.isTaskFinished()) {
+					System.out.println(cantDoIt);
+				} else {
 				createAssignmentRequest.setProjID(this.projectID);
 				createAssignmentRequest.setTaskID(this.taskID);
 				createAssignmentRequest.setUser(this.user);
 				createAssignmentRequest.createTaskAssignment();
+				}
 				break;
 			case "3":
+				projCollaborator = new ProjectCollaborator(this.user, this.projectID);
+
 				controllerMember.setTaskID(this.taskID);
 				controllerMember.setUser(this.user);
 				task = controllerMember.getTaskByTaskID(this.taskID);
-				ProjectCollaborator projCollaborator1 = new ProjectCollaborator(this.user, this.projectID);
-				checkAndAddRemovalRequest(projCollaborator1, cantDoIt);
+				checkAndAddRemovalRequest(projCollaborator, cantDoIt);
+
 				break;
 			case "4":
 				controllerMember.setTaskID(this.taskID);
