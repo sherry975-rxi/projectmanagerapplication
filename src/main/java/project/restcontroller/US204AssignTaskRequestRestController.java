@@ -92,11 +92,11 @@ public class US204AssignTaskRequestRestController {
         Task task = taskService.getTaskByTaskID(taskId);
 
         User user = userService.getUserByID(userId);
+        ProjectCollaborator collab = this.projectService.findActiveProjectCollaborator(user, project);
+        if(projectService.isUserActiveInProject(user, project)&&task.createTaskAssignmentRequest(collab)&&!task.isProjectCollaboratorActiveInTaskTeam(collab)){
+            this.taskService.saveTask(task);
+            result = new ResponseEntity<>(HttpStatus.OK);
 
-
-            if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, project))&&!task.isProjectCollaboratorActiveInTaskTeam(this.projectService.findActiveProjectCollaborator(user, project))){
-                this.taskService.saveTask(task);
-                result = new ResponseEntity<>(HttpStatus.OK);
             }
         return result;
     }
