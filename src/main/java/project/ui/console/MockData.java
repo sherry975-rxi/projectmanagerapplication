@@ -1,6 +1,5 @@
 package project.ui.console;
 
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.model.Profile;
@@ -42,32 +41,32 @@ public class MockData {
             "Administrator", "917653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userAdmin.setPassword("123456");
 		userAdmin.setQuestion("1");
-		userAdmin.setAnswer("test answer");
+        userAdmin.setAnswer("Kiko");
 
     User userDirector = userService.createUser("Roberto Santos", "director@gmail.com", "002",
             "Director", "917653636", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userDirector.setPassword("abcdef");
 		userAdmin.setQuestion("2");
-		userAdmin.setAnswer("test answer");
+        userAdmin.setAnswer("School of Rock");
 
     User userJMatos = userService.createUser("Jorge Matos", "jmatos@gmail.com", "010", "Comercial",
             "937653635", "Avenida dos Aliados", "4000-654", "Porto", "Porto", "Portugal");
 		userJMatos.setPassword("switch");
 		userAdmin.setQuestion("3");
-		userAdmin.setAnswer("test answer");
+        userAdmin.setAnswer("My Home");
 
     User userATirapicos = userService.createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
             "Comercial", "955553635", "Avenida de Franca", "4455-654", "Leca da Palmeira", "Porto", "Portugal");
 		userATirapicos.setPassword("tirapicos");
 		userAdmin.setQuestion("1");
-		userAdmin.setAnswer("test answer");
+        userAdmin.setAnswer("Rocky, the rock");
 
     User projectManager = userService.createUser("Sara Pereira", "spereira@gmail.com", "012",
             "Técnica de recursos humanos", "9333333", "Rua Torta", "4455-666", "Leca da Palmeira", "Porto",
             "Portugal");
 		projectManager.setPassword("manager");
 		userAdmin.setQuestion("2");
-		userAdmin.setAnswer("test answer");
+        userAdmin.setAnswer("South Lake, Utah");
 
     Project project = projectService.createProject("Projecto Sprint 2", "Demo para a sprint", projectManager);
     ProjectCollaborator projectCollaborator = project.createProjectCollaborator(userATirapicos, 10);
