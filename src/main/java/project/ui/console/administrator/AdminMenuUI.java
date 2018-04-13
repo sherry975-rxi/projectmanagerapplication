@@ -43,7 +43,7 @@ public class AdminMenuUI {
 
 		boolean cycle = true;
 		while (cycle) {
-			System.out.println("");
+            System.out.println();
 			System.out.println(
 					"--------------------------------------------------------------------------MENU ADMIN--------------------------------------------------------------------------");
 			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName());
@@ -54,12 +54,12 @@ public class AdminMenuUI {
 				System.out.println(selectedUser.getIdNumber() + ": " + selectedUser.getName() + "("
 						+ selectedUser.getEmail() + ")");
 				System.out.println("(User management commands enabled!)");
-				System.out.println("");
+                System.out.println();
 			}
 
 			System.out.println("Please choose a command:");
 			System.out.println(options);
-			System.out.println("");
+            System.out.println();
 
 			command = input.nextLine().toLowerCase();
 
@@ -94,27 +94,20 @@ public class AdminMenuUI {
 					try {
 						userReader.readFile(file);
 						System.out.println("Users loaded successfully!");
-					} catch (ParserConfigurationException e) {
-						e.printStackTrace();
-						System.out.println("Something went wrong. Please review your input and try again.");
-					} catch (SAXException e) {
-						e.printStackTrace();
-						System.out.println("Something went wrong. Please review your input and try again.");
-					} catch (IOException e) {
-						e.printStackTrace();
+                    } catch (ParserConfigurationException | SAXException | IOException e) {
 						System.out.println("Something went wrong. Please review your input and try again.");
 					}
 					break;
 
 			case "b":
 				System.out.println("Returning to main menu...");
-				System.out.println("");
+                System.out.println();
 				cycle = false;
 				break;
 
 			default:
 				System.out.println("Invalid input!");
-				System.out.println("");
+                System.out.println();
 				break;
 
 			}
