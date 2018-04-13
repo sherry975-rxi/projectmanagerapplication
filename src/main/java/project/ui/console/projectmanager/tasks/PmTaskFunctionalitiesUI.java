@@ -60,10 +60,7 @@ public class PmTaskFunctionalitiesUI {
 		taskInfo.setProjectAndTask();
 		projectInfo.setProjID(project.getIdCode());
 		projectInfo.setProject();
-
-
-		boolean loopESD = true;
-		boolean loopDL = true;
+		
 		boolean condition = true;
 		while (condition) {
 			System.out.println("");
@@ -113,64 +110,10 @@ public class PmTaskFunctionalitiesUI {
 				us347UI.cancelOnGoingTask(taskID, project);
 				break;
 			case "5":
-				while (loopESD) {
-					System.out.println("Please insert a date (DD/MM/YYYY):");
-					System.out.println("Alternatively, insert [B] to go back.");
-					String value = scannerInput.nextLine();
-					if (!"b".equalsIgnoreCase(value)) {
-						Calendar date = Calendar.getInstance();
-						Date tempdate = null;
-						try {
-							SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY");
-							tempdate = sdf.parse(value);
-							if (!value.equals(sdf.format(date))) {
-								tempdate = null;
-							}
-						} catch (Exception forex) {
-							System.out.println("Something went wrong, please try again.");
-							tempdate = null;
-						}
-						if (tempdate == null) {
-							System.out.println("Invalid date format, please try again.");
-						} else {
-							date.setTime(tempdate);
-							us340.setEstimatedStartDate(task, date);
-							System.out.println("Estimated Start Date successfully added");
-						}
-					} else {
-						loopESD = false;
-					}
-				}
+				caseFive(scannerInput);
 				break;
 			case "6":
-				while (loopDL) {
-					System.out.println("Please insert a date (DD/MM/YYYY):");
-					System.out.println("Alternatively, insert [B] to go back.");
-					String value = scannerInput.nextLine();
-					if (!"b".equalsIgnoreCase(value)) {
-						Calendar date = Calendar.getInstance();
-						Date tempdate = null;
-						try {
-							SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY");
-							tempdate = sdf.parse(value);
-							if (!value.equals(sdf.format(date))) {
-								tempdate = null;
-							}
-						} catch (Exception forex) {
-							System.out.println("Something went wrong, please try again.");
-							tempdate = null;
-						}
-						if (tempdate == null) {
-							System.out.println("Invalid date format, please try again.");
-						} else {
-							date.setTime(tempdate);
-							us340.setDeadline(task, date);
-							System.out.println("Deadline successfully added");
-						}
-					} else {
-						loopDL = false;
-					}
-				}
+				caseSix(scannerInput);
 				break;
 			case "B":
 				condition = false;
@@ -181,6 +124,72 @@ public class PmTaskFunctionalitiesUI {
 				break;
 			}
 		}
+	}
+
+	public Scanner caseFive(Scanner scannerInput) {
+		boolean loopESD = true;
+		while (loopESD) {
+			System.out.println("Please insert a date (DD/MM/YYYY):");
+			System.out.println("Alternatively, insert [B] to go back.");
+			String value = scannerInput.nextLine();
+			if (!"b".equalsIgnoreCase(value)) {
+				Calendar date = Calendar.getInstance();
+				Date tempdate = null;
+				try {
+					SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY");
+					tempdate = sdf.parse(value);
+					if (!value.equals(sdf.format(date))) {
+						tempdate = null;
+					}
+				} catch (Exception forex) {
+					System.out.println("Something went wrong, please try again.");
+					tempdate = null;
+				}
+				if (tempdate == null) {
+					System.out.println("Invalid date format, please try again.");
+				} else {
+					date.setTime(tempdate);
+					us340.setEstimatedStartDate(task, date);
+					System.out.println("Estimated Start Date successfully added");
+				}
+			} else {
+				loopESD = false;
+			}
+		}
+		return scannerInput;
+	}
+
+	public Scanner caseSix(Scanner scannerInput) {
+		boolean loopDL = true;
+		while (loopDL) {
+			System.out.println("Please insert a date (DD/MM/YYYY):");
+			System.out.println("Alternatively, insert [B] to go back.");
+			String value = scannerInput.nextLine();
+			if (!"b".equalsIgnoreCase(value)) {
+				Calendar date = Calendar.getInstance();
+				Date tempdate = null;
+				try {
+					SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY");
+					tempdate = sdf.parse(value);
+					if (!value.equals(sdf.format(date))) {
+						tempdate = null;
+					}
+				} catch (Exception forex) {
+					System.out.println("Something went wrong, please try again.");
+					tempdate = null;
+				}
+				if (tempdate == null) {
+					System.out.println("Invalid date format, please try again.");
+				} else {
+					date.setTime(tempdate);
+					us340.setDeadline(task, date);
+					System.out.println("Deadline successfully added");
+				}
+			} else {
+				loopDL = false;
+			}
+		}
+		return scannerInput;
 	}
 
 	public void setProject(Project project) {
