@@ -50,6 +50,7 @@ public class PmTaskFunctionalitiesUI {
 
 
 	public PmTaskFunctionalitiesUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	public void taskDataDisplay() {

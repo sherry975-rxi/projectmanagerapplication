@@ -28,6 +28,7 @@ public class DirectorMenuUI {
 	String command;
 
 	public DirectorMenuUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	public void directorMenu() {

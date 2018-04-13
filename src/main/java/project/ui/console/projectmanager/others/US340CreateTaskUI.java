@@ -24,7 +24,7 @@ public class US340CreateTaskUI {
 	private Project project;
 
 	public US340CreateTaskUI() {
-
+		//Empty constructor for JPA purposes
 	}
 
 	public void createTask() {

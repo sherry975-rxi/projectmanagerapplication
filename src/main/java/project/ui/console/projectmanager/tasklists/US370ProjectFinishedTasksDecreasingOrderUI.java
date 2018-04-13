@@ -26,6 +26,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	private Project proj;
 
 	public US370ProjectFinishedTasksDecreasingOrderUI() {
+		//Empty constructor for JPA purposes
 	}
 	/**
 	 * This method executes all options to execute through this UI Presents the
