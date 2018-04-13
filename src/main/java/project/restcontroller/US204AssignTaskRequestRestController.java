@@ -36,8 +36,6 @@ public class US204AssignTaskRequestRestController {
     public ResponseEntity<?> getAllRequests (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-        Project project = projectService.getProjectById(projectId);
-
         Task task = taskService.getTaskByTaskID(taskId);
 
         User user = userService.getUserByID(userId);
@@ -52,8 +50,6 @@ public class US204AssignTaskRequestRestController {
     @RequestMapping(value = "/requests/{reqType}" , method = RequestMethod.GET)
     public ResponseEntity<?> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @PathVariable  int userId) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
-        Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
