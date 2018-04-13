@@ -10,5 +10,4 @@ public class HelloJpaApplication {
 		SpringApplication.run(HelloJpaApplication.class, args);
 	}
 
-
 }
