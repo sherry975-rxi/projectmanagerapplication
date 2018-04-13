@@ -28,7 +28,7 @@ public class LoadUserFactory {
 
         String fileExtension = filePath.split("\\.")[1].trim().toUpperCase();
 
-        if (fileExtension.equals("XML")){
+        if (("XML").equals(fileExtension)){
             loadUserXmlVersionFactory.getLoadUserType(filePath);
         }
 

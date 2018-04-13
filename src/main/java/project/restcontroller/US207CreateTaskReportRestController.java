@@ -10,11 +10,9 @@ import project.services.TaskService;
 import project.services.UserService;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/users/{userId}/projects/{projectId}/tasks/{taskId}")
@@ -36,7 +34,7 @@ public class US207CreateTaskReportRestController {
     @RequestMapping(value = "/reports", method = RequestMethod.GET)
     public ResponseEntity<List<Report>> getTasksReportsFromUser(@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
 
-        Project project = projectService.getProjectById(projectId);
+        projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
@@ -44,20 +42,20 @@ public class US207CreateTaskReportRestController {
 
         if(!task.doesTaskHaveReportByGivenUser(user.getEmail())){
 
-            return new ResponseEntity<List<Report>>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
 
         List<Report> userReportsList = task.getReportsFromGivenUser(user.getEmail());
 
-        return new ResponseEntity<List<Report>>(userReportsList, HttpStatus.OK);
+        return new ResponseEntity<>(userReportsList, HttpStatus.OK);
 
     }
 
     @RequestMapping(value = "/reportsString", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getTaskStringReportsFromUser(@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
 
-        Project project = projectService.getProjectById(projectId);
+        projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
@@ -65,21 +63,26 @@ public class US207CreateTaskReportRestController {
 
         if(!task.doesTaskHaveReportByGivenUser(user.getEmail())){
 
-            return new ResponseEntity<List<String>>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        List<String> reportsList = task.getReportsFromGivenUser(user.getEmail())
-                .stream().map(Report -> dateToString(Report)).collect(Collectors.toList());
+        List<String> reportsList;
+        List<String> list = new ArrayList<>();
+        for (project.model.Report Report : task.getReportsFromGivenUser(user.getEmail())) {
+            String s = dateToString(Report);
+            list.add(s);
+        }
+        reportsList = list;
 
-        return new ResponseEntity<List<String>>(reportsList, HttpStatus.OK);
+        return new ResponseEntity<>(reportsList, HttpStatus.OK);
 
     }
 
 
     @RequestMapping(value = "/reports/" , method = RequestMethod.POST)
-    public ResponseEntity<?> createTaskReport (@RequestBody Report reportDTO, @PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
+    public ResponseEntity<Object> createTaskReport (@RequestBody Report reportDTO, @PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
 
-        Project project = projectService.getProjectById(projectId);
+        projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
@@ -103,8 +106,6 @@ public class US207CreateTaskReportRestController {
             String time = Double.toString(timeReported);
 
             return ResponseEntity.ok().body("Report created!\nINFO:" + "\nTask ID: " + task.getTaskID() +"\nDescription: " + task.getDescription() + "\nUser: " + user.getName() + "\nTime reported: " + time);
-            //result = new ResponseEntity<>(HttpStatus.OK);
-
         }
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -129,7 +130,7 @@ public class US207CreateTaskReportRestController {
     @RequestMapping(value = "/reports/{reportId}", method = RequestMethod.PUT)
     public ResponseEntity<Report> updateTaskReport(@RequestBody Report reportDTO, @PathVariable int reportId, @PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
 
-        Project project = projectService.getProjectById(projectId);
+        projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
@@ -141,7 +142,7 @@ public class US207CreateTaskReportRestController {
 
         if(!task.doesTaskHaveReportByGivenUser(user.getEmail()) || taskCollab==null){
 
-            return new ResponseEntity<Report>(HttpStatus.METHOD_NOT_ALLOWED);
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         }
 
 
@@ -156,12 +157,11 @@ public class US207CreateTaskReportRestController {
                 reportUpdated.setDateOfUpdate(dateOfReport);
                 this.taskService.saveTask(task);
 
-                return new ResponseEntity<Report>(reportUpdated, HttpStatus.OK);
-
+                return new ResponseEntity<>(reportUpdated, HttpStatus.OK);
             }
         }
 
-        return new ResponseEntity<Report>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
 
