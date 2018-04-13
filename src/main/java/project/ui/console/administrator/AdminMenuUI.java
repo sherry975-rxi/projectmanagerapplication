@@ -2,6 +2,7 @@ package project.ui.console.administrator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import project.controllers.US105CreatePasswordAndAuthenticationMechanismController;
 import project.model.User;
 
 import java.util.Scanner;
@@ -17,14 +18,15 @@ public class AdminMenuUI {
 	private US110andUS112SetUserProfileUI changeUserProfileUI;
 	@Autowired
 	private US115andUS116SetUserStateUI changeUserStateUI;
+	String options = "[1] - View all users \n" + "[2] - Search users by profile or email \n"
+			+ "[3] - Manage selected user profile \n" + "[4] - Manage selected user state\n" + "[5] - Load Users from file\n"
+			+ "______________________________________________\n" + "[B] Back\n";
 
 	User adminLoggedIn;
 
 	User selectedUser;
-
-	String options = "[1] - View all users \n" + "[2] - Search users by profile or email \n"
-			+ "[3] - Manage selected user profile \n" + "[4] - Manage selected user state\n"
-			+ "______________________________________________\n" + "[B] Back\n";
+	@Autowired
+	private US105CreatePasswordAndAuthenticationMechanismController loadUsersCont;
 
 	String command;
 
@@ -37,7 +39,7 @@ public class AdminMenuUI {
 
 		boolean cycle = true;
 		while (cycle) {
-			System.out.println("");
+			System.out.println();
 			System.out.println(
 					"--------------------------------------------------------------------------MENU ADMIN--------------------------------------------------------------------------");
 			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName());
@@ -48,12 +50,12 @@ public class AdminMenuUI {
 				System.out.println(selectedUser.getIdNumber() + ": " + selectedUser.getName() + "("
 						+ selectedUser.getEmail() + ")");
 				System.out.println("(User management commands enabled!)");
-				System.out.println("");
+				System.out.println();
 			}
 
 			System.out.println("Please choose a command:");
 			System.out.println(options);
-			System.out.println("");
+			System.out.println();
 
 			command = input.nextLine().toLowerCase();
 
@@ -81,15 +83,22 @@ public class AdminMenuUI {
 				}
 				break;
 
+				case "5":
+
+					System.out.println("Please insert file to load");
+					String file = input.nextLine();
+					System.out.println(loadUsersCont.loadUsers(file));
+					break;
+
 			case "b":
 				System.out.println("Returning to main menu...");
-				System.out.println("");
+				System.out.println();
 				cycle = false;
 				break;
 
 			default:
 				System.out.println("Invalid input!");
-				System.out.println("");
+				System.out.println();
 				break;
 
 			}
