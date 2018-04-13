@@ -12,13 +12,13 @@ public class LoadProjectXmlFactory {
 
 
     @Autowired
-    LoadProjectXmlv00 loadXmlv00;
+    LoadProjectXmlv01 loadXmlv01;
 
-    private static final Map<String, LoadProjectXmlv00> fileExtensions = new HashMap<>();
+    private static final Map<String, LoadProjectXmlv01> fileExtensions = new HashMap<>();
 
     @PostConstruct
     public void initFileExtensions() {
-        fileExtensions.put("v00", loadXmlv00);
+        fileExtensions.put("v01", loadXmlv01);
     }
 
 
@@ -32,7 +32,7 @@ public class LoadProjectXmlFactory {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public LoadProjectXmlv00 getReader(String fileName) {
+    public LoadProjectXmlv01 getReader(String fileName) {
 
         String xmlVersion = fileName.split("_")[1].trim();
 

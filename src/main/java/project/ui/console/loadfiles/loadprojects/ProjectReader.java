@@ -3,11 +3,9 @@ package project.ui.console.loadfiles.loadprojects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
-import project.model.ProjectCollaborator;
 import project.services.ProjectService;
 import project.services.TaskService;
-import project.ui.console.loadfiles.loadprojects.LoadProject;
-import project.ui.console.loadfiles.loadprojects.LoadProjectFactory;
+import project.services.UserService;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -20,6 +18,8 @@ public class ProjectReader {
 
     TaskService taskService;
 
+    UserService userService;
+
     LoadProjectFactory creator;
 
     private ProjectReader(){
@@ -27,9 +27,10 @@ public class ProjectReader {
     }
 
     @Autowired
-    public ProjectReader(ProjectService projectService, TaskService taskService, LoadProjectFactory creator) {
+    public ProjectReader(ProjectService projectService, TaskService taskService, UserService userService, LoadProjectFactory creator) {
         this.projectService = projectService;
         this.taskService = taskService;
+        this.userService = userService;
         this.creator = creator;
     }
 

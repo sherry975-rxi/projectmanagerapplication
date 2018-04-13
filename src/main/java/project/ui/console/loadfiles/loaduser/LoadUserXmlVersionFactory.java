@@ -16,7 +16,7 @@ public class LoadUserXmlVersionFactory {
 
     @PostConstruct
     public void initFileExtensions() {
-        xmlVersions.put("v00", loadUserXmlVersion1);
+        xmlVersions.put("v01", loadUserXmlVersion1);
     }
 
     public LoadUserXmlVersion getLoadUserType(String filePath){

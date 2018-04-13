@@ -19,18 +19,16 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class LoadProjectXmlv00 implements LoadProjectXml{
+public class LoadProjectXmlv01 implements LoadProjectXml{
 
 	ProjectService projectService;
 
-
 	UserService userService;
-
 
 	TaskService taskService;
 
 	@Autowired
-	public LoadProjectXmlv00(ProjectService projectService, UserService userService, TaskService taskService) {
+	public LoadProjectXmlv01(ProjectService projectService, UserService userService, TaskService taskService) {
 		this.projectService = projectService;
 		this.userService = userService;
 		this.taskService = taskService;
