@@ -93,6 +93,7 @@ public class US204AssignTaskRequestRestController {
 
         User user = userService.getUserByID(userId);
 
+
             if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, project))&&!task.isProjectCollaboratorActiveInTaskTeam(this.projectService.findActiveProjectCollaborator(user, project))){
                 this.taskService.saveTask(task);
                 result = new ResponseEntity<>(HttpStatus.OK);

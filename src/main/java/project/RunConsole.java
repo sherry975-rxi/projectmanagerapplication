@@ -5,11 +5,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import project.ui.console.MainMenuUI;
-import project.ui.console.loadfiles.loadprojects.LoadProjectXmlv01;
 import project.ui.console.loadfiles.loadprojects.ProjectReader;
 
 import project.ui.console.loadfiles.loaduser.UserReader;
-import project.ui.console.mockdata.MockData;
+import project.ui.console.MockData;
 
 @Component
 public class RunConsole implements CommandLineRunner {
