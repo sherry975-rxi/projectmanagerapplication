@@ -222,7 +222,7 @@ public class PrintProjectInfoControllerTest {
 
 		assertEquals(expectedOptions, controller.printCostCalculationMethods());
 
-		ArrayList<Integer> expected = project.getAvailableCalculationMethods();
+		List<Integer> expected = project.getAvailableCalculationMethods();
 		expected.remove((Integer) Project.FIRST_COLLABORATOR);
 
 		project.setAvailableCalculationMethods(expected);

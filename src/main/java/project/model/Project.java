@@ -1,8 +1,11 @@
 package project.model;
 
+import com.google.common.base.Joiner;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Class to build Projects.
@@ -35,7 +38,7 @@ public class Project implements Serializable{
 
     private int calculationMethod;
 
-    private ArrayList<Integer> availableCalculationMethods;
+    private String availableCalculationMethods;
 
     public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque
@@ -83,7 +86,7 @@ public class Project implements Serializable{
 		this.calculationMethod = FIRST_COLLABORATOR;
 		this.startdate = null;
 		this.finishdate = null;
-		this.availableCalculationMethods = new ArrayList<>(Arrays.asList(1,2,3));
+		this.availableCalculationMethods = "1,2,3";
 
 	}
 
@@ -394,11 +397,13 @@ public class Project implements Serializable{
 		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION || this.getProjectStatus() ==  EXECUTION  || this.getProjectStatus() == DELIVERY;
 	}
 
-    public ArrayList<Integer> getAvailableCalculationMethods() {
-        return availableCalculationMethods;
+    public List<Integer> getAvailableCalculationMethods() {
+        return Arrays.asList(availableCalculationMethods.split(",")).stream().
+				map(method -> Integer.parseInt(method)).collect(Collectors.toList());
     }
-	public void setAvailableCalculationMethods(ArrayList<Integer> availableCalculationMethods) {
-		this.availableCalculationMethods = availableCalculationMethods;
+	public void setAvailableCalculationMethods(List<Integer> availableCalculationMethods) {
+
+		this.availableCalculationMethods = Joiner.on(',').join(availableCalculationMethods);
 	}
 
 
@@ -410,7 +415,7 @@ public class Project implements Serializable{
 	 * @return
 	 */
 	public boolean isCalculationMethodAllowed(Integer method) {
-		return availableCalculationMethods.contains(method);
+		return getAvailableCalculationMethods().contains(method);
 	}
 
 
