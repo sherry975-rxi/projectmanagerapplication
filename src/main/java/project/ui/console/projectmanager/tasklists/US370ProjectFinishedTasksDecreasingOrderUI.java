@@ -71,10 +71,11 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 		System.out.println("[B] Back \n");
 
 		String choice = scannerInput.nextLine().toUpperCase();
-		switch (choice) {
-		case "B":
+		if (choice == "B") {
 			break;
-		default:
+		}
+
+		else{
 			try {
 				taskToMarkAsUnfinished.markFinishedTaskAsUnfinished(choice);
 			}
