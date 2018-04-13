@@ -41,8 +41,9 @@ public class US204AssignTaskRequestRestController {
         User user = userService.getUserByID(userId);
 
 
-
-        result = new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
+        if (task.getPendingTaskTeamRequests().size()>0) {
+            result = new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
+        }
 
         return result;
     }
