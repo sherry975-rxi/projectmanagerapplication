@@ -11,7 +11,7 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * This rest controller allows a collaborator to create a request of assignment to a specific task
