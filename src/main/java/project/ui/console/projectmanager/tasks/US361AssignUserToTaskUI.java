@@ -19,6 +19,7 @@ public class US361AssignUserToTaskUI {
 	private Task task;
 
 	public US361AssignUserToTaskUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	public void displayUsersToAssign() {

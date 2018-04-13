@@ -33,12 +33,8 @@ public class CollectProjectsFromUserUI {
 
 	private User user;
 
-	/**
-	 * Constructor
-	 *
-	 */
 	public CollectProjectsFromUserUI() {
-
+		//Empty constructor for JPA purposes
 	}
 
 	/**

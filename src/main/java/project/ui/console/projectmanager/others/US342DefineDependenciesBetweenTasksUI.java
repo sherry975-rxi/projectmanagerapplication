@@ -23,6 +23,7 @@ public class US342DefineDependenciesBetweenTasksUI {
 
 
 	public US342DefineDependenciesBetweenTasksUI() {
+		//Empty constructor for JPA purposes
 	}
 
     public void setProject(Project project) {

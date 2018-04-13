@@ -5,14 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
-import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
-import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * This rest controller allows a collaborator to create a request of assignment to a specific task
@@ -37,15 +36,14 @@ public class US204AssignTaskRequestRestController {
     public ResponseEntity<?> getAllRequests (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-        Project project = projectService.getProjectById(projectId);
-
         Task task = taskService.getTaskByTaskID(taskId);
 
         User user = userService.getUserByID(userId);
 
 
-
-        result = new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
+        if (task.getPendingTaskTeamRequests().size()>0) {
+            result = new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
+        }
 
         return result;
     }
@@ -53,8 +51,6 @@ public class US204AssignTaskRequestRestController {
     @RequestMapping(value = "/requests/{reqType}" , method = RequestMethod.GET)
     public ResponseEntity<?> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @PathVariable  int userId) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
-        Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
@@ -87,13 +83,11 @@ public class US204AssignTaskRequestRestController {
     public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-        Project project = projectService.getProjectById(projectId);
-
         Task task = taskService.getTaskByTaskID(taskId);
 
         User user = userService.getUserByID(userId);
 
-            if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, project))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, project))){
+            if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))){
                 this.taskService.saveTask(task);
                 result = new ResponseEntity<>(HttpStatus.OK);
             }

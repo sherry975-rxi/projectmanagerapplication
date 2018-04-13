@@ -42,10 +42,8 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 	Integer projID;
 	ProjectCollaborator projcollab;
 
-	/**
-	 * Constructor
-	 */
 	public US204v2CreateTaskAssignmentToCollaboratorUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	public void createTaskAssignment() {

@@ -15,11 +15,8 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 
 	private Project project;
 
-	/**
-	 * Constructor to instantiate a new US357ApproveOrCancelAssignmentRequestUI
-	 *
-	 */
 	public US356ApproveOrCancelAssignmentRequestUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	/**
