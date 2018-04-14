@@ -1,5 +1,6 @@
 package project.controllers;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +54,15 @@ public class US340CreateTaskControllerTest {
 		// create project
 		project = projectService.createProject("name3", "description4", userAdmin);// !!!
 		testControl.setChosenProject(project);
+	}
+
+	@After
+	public void tearDown() {
+		user1 = null;
+		userAdmin = null;
+		project = null;
+		testTask = null;
+
 	}
 
 	@Test

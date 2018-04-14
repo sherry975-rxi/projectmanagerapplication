@@ -116,7 +116,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 		Scanner input = new Scanner(System.in);
 
 		System.out.println("Are you sure you want to confirm this  ? \n");
-		System.out.println("[Y] to remove");
+		System.out.println("[Y] to accept");
 		System.out.println("[N] to cancel\n");
 
 		String yerOrNo = input.nextLine();

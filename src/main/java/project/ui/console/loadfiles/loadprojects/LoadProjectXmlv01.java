@@ -124,7 +124,6 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 								Calendar finishDate = convertStringToCalendar(
                                         eElementLigProject.getElementsByTagName("data_fim").item(0).getTextContent());
 
-								boolean isProjCollabActive = finishDate!=null;
 
 								Double costEffort = Double.valueOf(eElementLigProject
 										.getElementsByTagName("custo_unitario_colaborador").item(0).getTextContent());
@@ -132,7 +131,10 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
                                 projCollaborator=projectService.createProjectCollaborator(userCollaborator, project, costEffort);
                                 projCollaborator.setStartDate(startDate);
                                 projCollaborator.setFinishDate(finishDate);
-								projCollaborator.setStatus(isProjCollabActive);
+								projCollaborator.setStatus(true);
+								if(finishDate != null) {
+									projCollaborator.setStatus(false);
+								}
 								projectService.updateProjectCollaborator(projCollaborator);
 							}
 						}

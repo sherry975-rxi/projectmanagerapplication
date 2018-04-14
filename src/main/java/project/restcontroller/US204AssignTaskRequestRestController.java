@@ -81,15 +81,22 @@ public class US204AssignTaskRequestRestController {
      */
     @RequestMapping(value = "/requests/assignmentRequest" , method = RequestMethod.POST)
     public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        ResponseEntity<?> result = new ResponseEntity<>("Not Authorized!", HttpStatus.FORBIDDEN);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
         User user = userService.getUserByID(userId);
+        ProjectCollaborator collab = this.projectService.findActiveProjectCollaborator(user, project);
+        if(projectService.isUserActiveInProject(user, project)&&task.createTaskAssignmentRequest(collab)&&!task.isProjectCollaboratorActiveInTaskTeam(collab)){
+            this.taskService.saveTask(task);
+            result = new ResponseEntity<>(HttpStatus.OK);
 
+<<<<<<< HEAD
             if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))){
                 this.taskService.saveTask(task);
                 result = new ResponseEntity<>(HttpStatus.OK);
+=======
+>>>>>>> master
             }
         return result;
     }

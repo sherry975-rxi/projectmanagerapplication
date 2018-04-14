@@ -1,12 +1,17 @@
 package project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "TaskTeamRequest")
-public class TaskTeamRequest {
+public class TaskTeamRequest implements Serializable {
+
+	static final long serialVersionUID = 61L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,7 +20,8 @@ public class TaskTeamRequest {
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollab;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToOne
 	@JoinColumn(name = "Task_id")
 	@JsonBackReference
 	private Task task;

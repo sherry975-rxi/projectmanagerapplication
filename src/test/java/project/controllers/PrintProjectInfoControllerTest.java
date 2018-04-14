@@ -330,6 +330,7 @@ public class PrintProjectInfoControllerTest {
 
 		// remove user from project team
 		joaoPMcolab.setStatus(false);
+		joaoPMcolab.setFinishDate(Calendar.getInstance());
 		assertFalse(joaoPMcolab.isProjectCollaboratorActive());
 
 		projectContainer.updateProject(project1);

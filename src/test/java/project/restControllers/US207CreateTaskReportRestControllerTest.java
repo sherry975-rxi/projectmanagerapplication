@@ -1,5 +1,6 @@
 package project.restControllers;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -17,13 +17,10 @@ import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 import project.repository.TaskRepository;
 import project.repository.UserRepository;
-import project.restcontroller.US204AssignTaskRequestRestController;
 import project.restcontroller.US207CreateTaskReportRestController;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
-
-
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,10 +30,6 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -84,7 +77,7 @@ public class US207CreateTaskReportRestControllerTest {
     private ProjectCollaborator projCollabTwo;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         //initMocks(this);
 
         // create userPM
@@ -145,13 +138,30 @@ public class US207CreateTaskReportRestControllerTest {
         Mockito.when(taskRepository.findByTaskID(taskIdOne)).thenReturn(Optional.of(taskOne));
     }
 
+    @After
+    public void tearDown() {
+        controller = null;
+
+        userPM = null;
+        userTwo = null;
+        userTwoEmail = null;
+        userTwoId = 0;
+        projectOne = null;
+        projectId = null;
+        taskOne = null;
+        taskIdOne = null;
+        taskTwo = null;
+        taskIdTwo = null;
+        projCollabTwo = null;
+    }
+
     @Test
     public void controllerInitializedCorrectly() {
         assertNotNull(controller);
     }
 
     @Test
-    public void getTaskReportFromUsers() throws Exception {
+    public void getTaskReportFromUsers() {
 
 
         //Given
@@ -170,7 +180,7 @@ public class US207CreateTaskReportRestControllerTest {
     }
 
     @Test
-    public void canRetrieveReportsToString() throws Exception {
+    public void canRetrieveReportsToString() {
 
         //Given
         // taskOne in projectOne, with reports created inside,
@@ -192,7 +202,7 @@ public class US207CreateTaskReportRestControllerTest {
     }
 
     @Test
-    public void canCreateReports() throws Exception {
+    public void canCreateReports() {
         // Given
         // a reportDTO that contains a reportTime,
         Report reportDTO = new Report();
@@ -209,7 +219,7 @@ public class US207CreateTaskReportRestControllerTest {
     }
 
     @Test
-    public void canUpdateReports() throws Exception {
+    public void canUpdateReports() {
         // Given
         // a reportDTO that contains a reportTime,
         Report reportDTOUpdate = new Report();

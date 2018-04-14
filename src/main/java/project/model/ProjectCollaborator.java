@@ -102,7 +102,7 @@ public class ProjectCollaborator implements Serializable {
 	 * 
 	 */
 	public boolean isProjectCollaboratorActive() {
-		return this.status;
+		return this.finishDate==null;
 	}
 
     public Calendar getStartDate() {

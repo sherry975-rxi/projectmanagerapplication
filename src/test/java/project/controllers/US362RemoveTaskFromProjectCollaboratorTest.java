@@ -1,5 +1,6 @@
 package project.controllers;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -120,6 +121,28 @@ public class US362RemoveTaskFromProjectCollaboratorTest {
 		controller.setProject(project);
 		controller.setTask(testTask);
 
+	}
+
+	@After
+	public void tearDown() {
+		user1 = null;
+		userAdmin = null;
+
+		taskWorker1 = null;
+
+		collab1 = null;
+		collab2 = null;
+
+		project = null;
+		project2 = null;
+
+		testTask = null;
+		testTask2 = null;
+		testTask3 = null;
+
+		estimatedTaskStartDateTest = null;
+		taskDeadlineDateTest = null;
+		startDateTest = null;
 	}
 
 	/**

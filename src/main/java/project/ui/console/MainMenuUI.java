@@ -8,7 +8,6 @@ import project.services.UserService;
 import project.ui.console.administrator.AdminMenuUI;
 import project.ui.console.collaborator.CollaboratorMainMenuUI;
 import project.ui.console.collaborator.US101UserRegisterUI;
-import project.ui.console.collaborator.US105CreatePasswordAndAuthenticationMechanismUI;
 import project.ui.console.collaborator.US180LoginUI;
 import project.ui.console.director.DirectorMenuUI;
 
@@ -102,7 +101,7 @@ public class MainMenuUI {
 					if(loggedIn!=null) {
 						if(loggedIn.hasPassword()) {
 							System.out.println();
-							System.out.println("Welcome to Project Management, " + loggedIn.getName());
+							System.out.println("Welcome, " + loggedIn.getName());
 						}
                     }
 

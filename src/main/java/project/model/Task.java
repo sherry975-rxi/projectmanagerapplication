@@ -3,6 +3,8 @@ package project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import project.model.taskstateinterface.*;
 
 import javax.persistence.*;
@@ -33,13 +35,14 @@ public class Task implements Serializable {
 	private String taskID;
 	private String description;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "task")
+    @LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
 	@JsonManagedReference
 	private List<TaskCollaborator> taskTeam;
 
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "task")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
 	@JsonManagedReference
 	private List<Report> reports;
@@ -48,7 +51,8 @@ public class Task implements Serializable {
 	private StateEnum currentState;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "task")
+    @LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(cascade = ALL, mappedBy = "task")
 	@JsonManagedReference
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 

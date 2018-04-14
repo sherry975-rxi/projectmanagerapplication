@@ -2,8 +2,12 @@ package project.ui.console.administrator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.xml.sax.SAXException;
 import project.model.User;
+import project.ui.console.loadfiles.loaduser.UserReader;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.Scanner;
 
 @Component
@@ -21,9 +25,11 @@ public class AdminMenuUI {
 	User adminLoggedIn;
 
 	User selectedUser;
+	@Autowired
+	UserReader userReader;
 
 	String options = "[1] - View all users \n" + "[2] - Search users by profile or email \n"
-			+ "[3] - Manage selected user profile \n" + "[4] - Manage selected user state\n"
+			+ "[3] - Manage selected user profile \n" + "[4] - Manage selected user state\n" + "[5] - Load Users from file\n"
 			+ "______________________________________________\n" + "[B] Back\n";
 
 	String command;
@@ -39,7 +45,7 @@ public class AdminMenuUI {
 
 		boolean cycle = true;
 		while (cycle) {
-			System.out.println("");
+            System.out.println();
 			System.out.println(
 					"--------------------------------------------------------------------------MENU ADMIN--------------------------------------------------------------------------");
 			System.out.println("Welcome to admin menu, " + adminLoggedIn.getName());
@@ -50,12 +56,12 @@ public class AdminMenuUI {
 				System.out.println(selectedUser.getIdNumber() + ": " + selectedUser.getName() + "("
 						+ selectedUser.getEmail() + ")");
 				System.out.println("(User management commands enabled!)");
-				System.out.println("");
+                System.out.println();
 			}
 
 			System.out.println("Please choose a command:");
 			System.out.println(options);
-			System.out.println("");
+            System.out.println();
 
 			command = input.nextLine().toLowerCase();
 
@@ -81,15 +87,27 @@ public class AdminMenuUI {
 					changeUserStateUI.changeUserState(selectedUser);
 				} break;
 
+				case "5":
+
+					System.out.println("Please insert file to load");
+					String file = input.nextLine();
+					try {
+						userReader.readFile(file);
+						System.out.println("Users loaded successfully!");
+                    } catch (ParserConfigurationException | SAXException | IOException e) {
+						System.out.println("Something went wrong. Please review your input and try again.");
+					}
+					break;
+
 			case "b":
 				System.out.println("Returning to main menu...");
-				System.out.println("");
+                System.out.println();
 				cycle = false;
 				break;
 
 			default:
 				System.out.println("Invalid input!");
-				System.out.println("");
+                System.out.println();
 				break;
 
 			}
