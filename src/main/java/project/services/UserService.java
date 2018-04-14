@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+
+
 /**
  * Class UserContainer that contains all lists and methods to build lists of
  * users
@@ -281,6 +284,7 @@ public class UserService {
 			emailAddr.validate();
 		} catch (AddressException ex) {
 			result = false;
+			LOGGER.info(ex.getMessage());
 		}
 		return result;
 	}
