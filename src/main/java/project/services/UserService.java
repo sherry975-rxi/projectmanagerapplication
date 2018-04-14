@@ -14,8 +14,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+import java.util.logging.Logger;
 
 
 /**
@@ -277,6 +276,7 @@ public class UserService {
 	 */
 	public boolean isEmailAddressValid(String email) {
 
+		Logger log = Logger.getAnonymousLogger();
 		boolean result = true;
 
 		try {
@@ -284,7 +284,7 @@ public class UserService {
 			emailAddr.validate();
 		} catch (AddressException ex) {
 			result = false;
-			LOGGER.info(ex.getMessage());
+			log.info(ex.getMessage());
 		}
 		return result;
 	}
