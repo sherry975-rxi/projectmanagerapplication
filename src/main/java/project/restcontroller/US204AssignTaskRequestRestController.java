@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
+import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
 import project.services.ProjectService;
@@ -84,19 +85,10 @@ public class US204AssignTaskRequestRestController {
         ResponseEntity<?> result = new ResponseEntity<>("Not Authorized!", HttpStatus.FORBIDDEN);
 
         Task task = taskService.getTaskByTaskID(taskId);
-
         User user = userService.getUserByID(userId);
-        ProjectCollaborator collab = this.projectService.findActiveProjectCollaborator(user, project);
-        if(projectService.isUserActiveInProject(user, project)&&task.createTaskAssignmentRequest(collab)&&!task.isProjectCollaboratorActiveInTaskTeam(collab)){
-            this.taskService.saveTask(task);
-            result = new ResponseEntity<>(HttpStatus.OK);
-
-<<<<<<< HEAD
             if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))){
                 this.taskService.saveTask(task);
                 result = new ResponseEntity<>(HttpStatus.OK);
-=======
->>>>>>> master
             }
         return result;
     }
