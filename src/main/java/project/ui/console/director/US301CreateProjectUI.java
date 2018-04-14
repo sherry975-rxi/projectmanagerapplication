@@ -7,6 +7,8 @@ import project.model.EffortUnit;
 import project.model.User;
 
 import java.util.*;
+import java.util.logging.Logger;
+
 
 @Component
 public class US301CreateProjectUI {
@@ -108,7 +110,6 @@ public class US301CreateProjectUI {
 		}
 
 		System.out.println("Returning to main menu...");
-		System.out.println("");
 
 	}
 
@@ -217,7 +218,6 @@ public class US301CreateProjectUI {
 	private Scanner caseFive(Scanner dataIn) {
 		System.out.println("Please type the budget of your project:");
 		System.out.println("(Currently:" + budget + ")");
-		System.out.println("");
 		if (dataIn.hasNextInt()) {
 			budget = dataIn.nextInt();
 			dataInput = dataIn.nextLine();
@@ -229,6 +229,9 @@ public class US301CreateProjectUI {
 	}
 
 	private Scanner caseSix(Scanner dataIn) {
+
+		Logger log = Logger.getAnonymousLogger();
+
 		System.out.println("In case the same collaborator works on the same report with different costs, the Project Manager can calculate with:");
 		System.out.println("[1] - The collaborator's earliest cost, when the report was created");
         System.out.println("[2] - The collaborator's latest cost");
@@ -236,7 +239,6 @@ public class US301CreateProjectUI {
 
         System.out.println("");
         Integer number;
-        String buffer;
 
         boolean loop=true;
         while(loop) {
@@ -258,8 +260,8 @@ public class US301CreateProjectUI {
 
             } catch (InputMismatchException i) {
                 loop=false;
+                log.info(i.getMessage());
             }
-            buffer = dataIn.nextLine();
         }
 
 		return dataIn;
