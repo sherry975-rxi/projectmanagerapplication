@@ -42,7 +42,7 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 		Scanner input = new Scanner(System.in);
 		String choice = input.nextLine().toUpperCase();
 
-		if(choice.equals("B")) {
+		if("B".equals(choice)) {
 			return;
 		}
 
