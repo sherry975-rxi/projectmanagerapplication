@@ -825,7 +825,9 @@ public class TaskService {
             calculationMethod.updateCalculationMethod(other, getAllCollaboratorInstancesFromReport(other));
         }
 
-        for(Task other : getProjectTasks(project)){ this.saveTask(other);}
+        for(Task other : getProjectTasks(project)){
+        	this.saveTask(other);
+        }
 	}
 
     /**
