@@ -15,10 +15,6 @@ public class US357ApproveOrCancelRemovalRequestUI {
 
 	Project project;
 
-	public US357ApproveOrCancelRemovalRequestUI() {
-		//Empty constructor for JPA purposes
-	}
-
 	/**
 	 * Displays the removal task requests and the options available to the user
 	 */
@@ -26,7 +22,6 @@ public class US357ApproveOrCancelRemovalRequestUI {
 
 		boolean condition = true;
 		while (condition) {
-			condition = false;
 			System.out.println("\n    TASKS REMOVAL REQUESTS PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");
 
