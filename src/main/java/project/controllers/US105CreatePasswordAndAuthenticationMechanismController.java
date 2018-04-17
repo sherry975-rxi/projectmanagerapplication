@@ -18,7 +18,7 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
     @Autowired
     private UserService userService;
 
-    private String code;
+    private String stringToSend;
 
     CodeGenerator codeGenerator = new CodeGenerator();
 
@@ -51,15 +51,15 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
      */
 
     /**
-     * Sends  a code to the phone number provided with the validation code
+     * Sends  a stringToSend to the phone number provided with the validation stringToSend
      *
-     * @param option phone number to which to send the code
+     * @param option phone number to which to send the stringToSend
      */
 
     public String performAuthentication(String userPhone, String userEmail, String userQuestion, String option) throws IOException, MessagingException {
 
         String code = codeGenerator.generateCode();
-        this.code = code;
+        this.stringToSend = code;
 
         validation = factory.getCodeSenderType(option).orElse(null);
         if (validation != null) {
@@ -73,16 +73,16 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
 
 
     /**
-     * checks if the code provided by the user is the same as the code sent by the application
+     * checks if the stringToSend provided by the user is the same as the stringToSend sent by the application
      *
-     * @param code code provided by the user
+     * @param code stringToSend provided by the user
      * @return true if both codes are the same, false if they aren't
      */
     public boolean isCodeValid(String code, User user) {
         if (validation instanceof AnswerValidation) {
             return validation.checkRightAnswer(code, user.getQuestion());
         } else {
-            return validation.checkRightAnswer(code, this.code);
+            return validation.checkRightAnswer(code, this.stringToSend);
         }
 
 
