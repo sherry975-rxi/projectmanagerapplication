@@ -6,13 +6,10 @@ import project.model.SendSMS;
 public class SMSSender implements ValidationMethod {
 
 
-    private SendSMS sendSMS;
-
-
     @Override
     public String performValidationMethod(String receipientPhoneNum, String email, String question, String msg) {
 
-        sendSMS = new SendSMS();
+        SendSMS sendSMS = new SendSMS();
         sendSMS.sendMessage(msg, receipientPhoneNum);
         return "SMS sent! Please input the code sent to you:";
     }
