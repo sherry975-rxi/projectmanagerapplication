@@ -10,19 +10,17 @@ import java.util.Optional;
 
 public class SendCodeFactory {
 
-    private ValidationMethod smsSender;
-    private ValidationMethod emailSender;
+
     private static final Map<String, ValidationMethod> codeSenderType = new HashMap<>();
-    private ValidationMethod answerValidation;
 
     /**
-     *
+     * This method creates business objects depending on the argument
      */
     public void initMessageSenderType(){
 
-        smsSender = new SMSSender();
-        emailSender = new EmailSender();
-        answerValidation = new AnswerValidation();
+        ValidationMethod smsSender = new SMSSender();
+        ValidationMethod emailSender = new EmailSender();
+        ValidationMethod answerValidation = new AnswerValidation();
 
         codeSenderType.put("1", smsSender);
         codeSenderType.put("2", emailSender);
@@ -32,7 +30,7 @@ public class SendCodeFactory {
     /**
      *
      * @param codeSender
-     * @return
+     * @return Valiad
      */
     public Optional<ValidationMethod> getCodeSenderType(String codeSender) {
 
