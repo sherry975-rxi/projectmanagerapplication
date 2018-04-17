@@ -8,15 +8,11 @@ import javax.mail.MessagingException;
 
 public class EmailSender implements ValidationMethod {
 
-    private SendEmail sendEmail;
-    private EmailMessage emailMessage;
-
-
     @Override
     public String performValidationMethod(String receipientPhoneNum, String email, String question, String msg) throws MessagingException {
 
-        sendEmail = new SendEmail();
-        emailMessage = new EmailMessage();
+        SendEmail sendEmail = new SendEmail();
+        EmailMessage emailMessage = new EmailMessage();
 
         emailMessage.setEmailAddress(email);
         emailMessage.setBody(msg);
