@@ -19,21 +19,57 @@ public class AnswerValidationTests {
     @Test
     public void performValidationMethodTest() {
 
-        //GIVEN
-        String expectedResult = answerValidation.questionDecoder("1");
-        String expectedResult2 = answerValidation.questionDecoder("2");
-        String expectedResult3 = answerValidation.questionDecoder("3");
-        String expectedResult4 = answerValidation.questionDecoder("");
+        //GIVEN A EXPECTED STRING SMELLS
+        String expectedResult = "What is the name of your first pet?";
+        String expectedResult2 = "What elementary school did you attend?";
+        String expectedResult3 = "Where did you go for your honeymoon?";
+        String expectedResult4 = "";
 
+        //WHEN the answerValidation controller executed the perfomValidationMethod, it returns a string with the result;
 
-        //THEN
-        assertEquals(answerValidation.performValidationMethod(testNumber, testMail, "1", msg), expectedResult);
-        assertEquals(answerValidation.performValidationMethod(testNumber, testMail, "2", msg), expectedResult2);
-        assertEquals(answerValidation.performValidationMethod(testNumber, testMail, "3", msg), expectedResult3);
-        assertEquals(answerValidation.performValidationMethod(testNumber, testMail, "4", msg), expectedResult4);
+        String result1 = answerValidation.performValidationMethod(testNumber, testMail, "1", msg);
+        String result2 = answerValidation.performValidationMethod(testNumber, testMail, "2", msg);
+        String result3 = answerValidation.performValidationMethod(testNumber, testMail, "3", msg);
+        String result4 = answerValidation.performValidationMethod(testNumber, testMail, "4", msg);
+
+        //THEN verifies if both results are the same
+        assertEquals(result1, expectedResult);
+        assertEquals(result2, expectedResult2);
+        assertEquals(result3, expectedResult3);
+        assertEquals(result4, expectedResult4);
 
 
     }
+
+
+    @Test
+    public void questionDecoderTest(){
+
+        //GIVEN A EXPECTED STRING SMELLS
+        String expectedResult = "What is the name of your first pet?";
+        String expectedResult2 = "What elementary school did you attend?";
+        String expectedResult3 = "Where did you go for your honeymoon?";
+        String expectedResult4 = "";
+
+        //WHEN the answerValidation controller executed the perfomValidationMethod, it returns a string with the result;
+
+        String result1 = answerValidation.questionDecoder("1");
+        String result2 = answerValidation.questionDecoder("2");
+        String result3 = answerValidation.questionDecoder("3");
+        String result4 = answerValidation.questionDecoder("4");
+
+        //THEN verifies if both results are the same
+        assertEquals(result1, expectedResult);
+        assertEquals(result2, expectedResult2);
+        assertEquals(result3, expectedResult3);
+        assertEquals(result4, expectedResult4);
+
+
+
+
+    }
+
+
 
     @Test
     public void checkRightAnswerTest(){
