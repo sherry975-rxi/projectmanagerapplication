@@ -9,6 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
 import project.restcontroller.RestUserController;
@@ -21,6 +22,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestUserControllerTest {
@@ -104,24 +106,36 @@ public class RestUserControllerTest {
         collaborators.clear();
         directors.clear();
         unassigned.clear();
+
+        }
+
+    /**
+     * This test verifies the correct initialization of the REST use controller
+     */
+
+    @Test
+    public void controllerInitializedCorrectly() {
+        assertNotNull(controller);
     }
+
 
     /**
      * This test verifies the rest user controller can find all users registered in the system.
      */
 
-
     @Test
     public void getAllUsers(){
 
-        //GIVEN an empty user list
+        //GIVEN an empty user list in a mocked database
 
-        //WHEN 1 user is added to the user list
-        expected.add(mike);
-        expected.add(justin);
         when(userRepository.findAll()).thenReturn(expected);
 
-        //THEN the method should return a list with the two users and the status "200 ok"
+        //WHEN 2 users are added to the user list
+        expected.add(mike);
+        expected.add(justin);
+
+        //THEN the method should return a list with the two users and the status OK
+
         expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
 
         assertEquals(expectedResponse, controller.getAllUsers());
@@ -138,6 +152,7 @@ public class RestUserControllerTest {
      */
     @Test
     public void testSearchUserByEmail() {
+
         // GIVEN 3 users in the mock database with email accounts from hotmail and gmail
         when(userRepository.findAll()).thenReturn(allUsers);
 
@@ -167,70 +182,52 @@ public class RestUserControllerTest {
         assertEquals(expectedResponse, controller.searchUsersByEmail("gmail.com"));
     }
 
-
-    @Test
-    public void controllerInitializedCorrectly() {
-        assertNotNull(controller);
-    }
-
     @Test
     public void searchUsersByProfileWhenExistsTest() throws Exception {
 
-        /*
 
-        //GIVEN 1 user in the the mock database with profile as collaborator
+        //GIVEN 1 user in the the mock database with profile set as collaborator
 
         when(userRepository.findAll()).thenReturn(allUsers);
 
-        given(userService.searchUsersByProfileName("COLLABORATOR")).willReturn(collaborators);
+        //WHEN searching for users with the profile set as COLLABORATOR
+
         expected = new ArrayList<>();
         expected.add(ana);
 
-        when(userService.searchUsersByProfileName("@")).thenReturn(expected);
+        when(userService.searchUsersByProfileName("COLLABORATOR")).thenReturn(expected);
 
         expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
 
-        //WHEN searching for users with the profile set as collaborators
+        // THEN the response entity must contain a list with the corresponding profile and status OK
 
-        // THEN the response entity must contain an empty list and status OK
         assertEquals(expectedResponse, controller.searchUsersByProfile("COLLABORATOR"));
 
+        //AND WHEN searching for users with the profile set as DIRECTOR
 
+        expected = new ArrayList<>();
+        expected.add(justin);
 
-        /*
+        when(userService.searchUsersByProfileName("DIRECTOR")).thenReturn(expected);
 
-        //Tests if the controller finds collaborators correctly
-        //Given
-        given(userService.searchUsersByProfileName("COLLABORATOR")).willReturn(collaborators);
+        expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
 
-        //When
-        List<User> resultCol = controller.searchUsersByProfileController("COLLABORATOR");
+        //THEN the response entity must contain a list with the corresponding profile and status OK
 
-        //Then
-        assertEquals(collaborators, resultCol);
+        assertEquals(expectedResponse, controller.searchUsersByProfile("DIRECTOR"));
 
-        //Tests if the controller finds the directors correctly
-        //Given
-        given(userService.searchUsersByProfileName("DIRECTOR")).willReturn(directors);
+        //AND WHEN searching for users with the profile set as UNASSIGNED
 
-        //When
-        List<User> resultDir = controller.searchUsersByProfileController("DIRECTOR");
+        expected = new ArrayList<>();
+        expected.add(joao);
 
-        //Then
-        assertEquals(directors, resultDir);
+        when(userService.searchUsersByProfileName("UNASSIGNED")).thenReturn(expected);
 
-        //Tests if the controller finds the unassigned users correctly
-        //Given
-        given(userService.searchUsersByProfileName("UNASSIGNED")).willReturn(unassigned);
+        expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
 
-        //When
-        List<User> resultUn = controller.searchUsersByProfileController("UNASSIGNED");
+        //THEN the response entity must contain a list with the corresponding profile and status OK
 
-        //Then
-        assertEquals(unassigned, resultUn);
+        assertEquals(expectedResponse, controller.searchUsersByProfile("UNASSIGNED"));
     }
 
-*/
-
-}
 }
