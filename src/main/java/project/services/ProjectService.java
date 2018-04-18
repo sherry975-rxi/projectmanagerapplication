@@ -359,4 +359,18 @@ public class ProjectService {
 	public void setProjectCollaboratorRepository(ProjCollabRepository projectCollaboratorRepository) {
 		this.projectCollaboratorRepository = projectCollaboratorRepository;
 	}
+
+	/**
+	 * This method change the project manager and update project in DB
+	 *
+	 * @param user
+	 * @param project
+	 */
+	public void changeProjectManager(User user, Project project) {
+
+		project.setProjectManager(user);
+
+		updateProject(project);
+
+	}
 }
