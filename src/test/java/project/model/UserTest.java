@@ -21,9 +21,9 @@ public class UserTest {
 
         User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
-        u1.setId(1);
+        u1.setUserID(1);
 
-        assertEquals(1, u1.getId());
+        assertEquals(1, u1.getDBid());
     }
 
     @Test
