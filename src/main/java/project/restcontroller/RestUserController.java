@@ -1,5 +1,3 @@
-
-
 package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,22 +38,14 @@ public class RestUserController {
 
         for(User user : allUsers) {
 
-            //Link selfLink = linkTo(RestUserController.class).slash(user.getUserID()).withSelfRel();
-            //user.add(selfLink);
-
-            //if(!allUsers.isEmpty()) {
-
             Link userLink = linkTo(RestUserController.class).withRel("allUsers");
             user.add(userLink);
-
-
 
         }
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
 
 
     }
-
 
 
     /**

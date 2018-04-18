@@ -9,7 +9,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
 import project.restcontroller.RestUserController;
@@ -18,11 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.BDDMockito.given;
+
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestUserControllerTest {
