@@ -33,15 +33,14 @@ public class US204AssignTaskRequestRestController {
     }
 
     @RequestMapping(value = "/requests" , method = RequestMethod.GET)
-    public ResponseEntity<?> getAllRequests (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId) {
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    public ResponseEntity<Object> getAllRequests (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId) {
+        ResponseEntity<Object> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        User user = userService.getUserByID(userId);
 
 
-        if (task.getPendingTaskTeamRequests().size()>0) {
+        if (!task.getPendingTaskTeamRequests().isEmpty()) {
             result = new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
         }
 
@@ -49,12 +48,10 @@ public class US204AssignTaskRequestRestController {
     }
 
     @RequestMapping(value = "/requests/{reqType}" , method = RequestMethod.GET)
-    public ResponseEntity<?> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @PathVariable  int userId) {
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    public ResponseEntity<Object> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @PathVariable  int userId) {
+        ResponseEntity<Object> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Task task = taskService.getTaskByTaskID(taskId);
-
-        User user = userService.getUserByID(userId);
 
         if ("assignment".equals(reqType)){
 
@@ -80,8 +77,8 @@ public class US204AssignTaskRequestRestController {
      * @return ResponseEntity
      */
     @RequestMapping(value = "/requests/assignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<?> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
-        ResponseEntity<?> result = new ResponseEntity<>("Not Authorized!", HttpStatus.FORBIDDEN);
+    public ResponseEntity<Object> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
+        ResponseEntity<Object> result = new ResponseEntity<>("Not Authorized!", HttpStatus.FORBIDDEN);
 
         Task task = taskService.getTaskByTaskID(taskId);
         User user = userService.getUserByID(userId);
