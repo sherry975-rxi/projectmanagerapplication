@@ -28,10 +28,17 @@ public class RestUserController {
         this.userService=userService;
     }
 
-    @RequestMapping(value = "/email/{emailToSearch}", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> searchUsersByEmail(@PathVariable String emailToSeach) {
 
-        List<User> foundUsers = userService.searchUsersByPartsOfEmail(emailToSeach);
+    /**
+     * This method allows the administrator to search users by a part of the email.
+     *
+     * @param emailToSearch
+     * @return ResponseEntity
+     */
+    @RequestMapping(value = "/email/{emailToSearch}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> searchUsersByEmail(@PathVariable String emailToSearch) {
+
+        List<User> foundUsers = userService.searchUsersByPartsOfEmail(emailToSearch);
 
         for(User other : foundUsers) {
             Link selfRef = linkTo(RestUserController.class).slash(other.getUserID()).withSelfRel();
