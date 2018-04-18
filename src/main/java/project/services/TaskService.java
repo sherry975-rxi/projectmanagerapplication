@@ -48,7 +48,7 @@ public class TaskService {
 
 		Task newTask = selectedProject.createTask(description);
 
-		int projectID = selectedProject.getId();
+		int projectID = selectedProject.getProjectId();
 		int taskNumber = getProjectTasks(selectedProject).size()+1;
 		String taskID = projectID  + "." + taskNumber;
 
