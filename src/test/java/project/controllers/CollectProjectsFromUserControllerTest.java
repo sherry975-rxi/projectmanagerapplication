@@ -105,8 +105,8 @@ public class CollectProjectsFromUserControllerTest {
 
 		List<String> projectsToString2 = new ArrayList<>();
 
-		projectsToString2.add("[" + project.getDbId() + "] name3");
-		projectsToString2.add("[" + project2.getDbId() + "] name1");
+		projectsToString2.add("[" + project.getProjectId() + "] name3");
+		projectsToString2.add("[" + project2.getProjectId() + "] name1");
 		assertEquals(projectsToString2, controller.getProjectsFromUserAndProjectManager());
 
 		// create controllers
@@ -125,8 +125,8 @@ public class CollectProjectsFromUserControllerTest {
 		// create an expected list with projects of userAdmin
 		List<String> projectsToString = new ArrayList<>();
 
-		projectsToString.add("[" + project.getDbId() + "] name3 - PM");
-		projectsToString.add("[" + project2.getDbId() + "] name1 - PM");
+		projectsToString.add("[" + project.getProjectId() + "] name3 - PM");
+		projectsToString.add("[" + project2.getProjectId() + "] name1 - PM");
 		// checks the similarity of expected list and the real list of userAdmin's
 		// projects
 		assertEquals(projectsToString, controller.getProjectsFromUserAndProjectManager());

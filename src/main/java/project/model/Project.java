@@ -23,11 +23,11 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "Project")
-public class Project extends ResourceSupport implements Serializable {
+public class Project extends ResourceSupport implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private int projectId;
 
 	private int status;
 	@OneToOne
@@ -94,12 +94,12 @@ public class Project extends ResourceSupport implements Serializable {
 
 	}
 
-	public int getDbId() {
-		return id;
+	public int getProjectId() {
+		return projectId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
 	public int getStatus() {
@@ -320,7 +320,7 @@ public class Project extends ResourceSupport implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 3;
-		result = prime * result + id;
+		result = prime * result + (Integer) projectId;
 		return result;
 	}
 
@@ -338,7 +338,7 @@ public class Project extends ResourceSupport implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Project other = (Project) obj;
-		return id == other.id;
+		return projectId == other.projectId;
 	}
 
 	/**
@@ -347,7 +347,7 @@ public class Project extends ResourceSupport implements Serializable {
 	 * @return idCode of Project
 	 */
 	public int getIdCode() {
-		return this.id;
+		return this.projectId;
 	}
 
 	/**

@@ -51,9 +51,9 @@ public class TaskDetailsUI {
 	}
 
 	private void printMenuOption(){
-        System.out.println();
+		System.out.println("");
 		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
-        System.out.println();
+		System.out.println("");
 		System.out.println("                     TASK                    ");
 		System.out.println("*** " + taskInfo.printTaskNameInfo().toUpperCase() + " ***");
 		System.out.println("______________________________________________");
@@ -65,7 +65,7 @@ public class TaskDetailsUI {
 		System.out.println("FINISH DATE: " + taskInfo.printTaskFinishDateInfo());
 		System.out.println("TASK TEAM: " + taskInfo.printTaskTeamInfo());
 		System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
-        System.out.println();
+		System.out.println("");
 
 		System.out.println("[1] Mark task as completed");
 		System.out.println("[2] Request assignment to task team");
@@ -143,7 +143,7 @@ public class TaskDetailsUI {
 				break;
 			default:
 				System.out.println("Please choose a valid option.");
-                System.out.println();
+				System.out.println("");
 				condition = true;
 				break;
 			}
@@ -186,6 +186,6 @@ public class TaskDetailsUI {
 	public void setTaskID(String taskID) {
 		this.taskID = taskID;
 		this.task = taskService.getTaskByTaskID(taskID);
-        this.projectID = task.getProject().getDbId();
+		this.projectID = task.getProject().getProjectId();
 	}
 }
