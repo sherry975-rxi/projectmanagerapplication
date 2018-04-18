@@ -81,11 +81,11 @@ public class US206CancelRemovalTaskRequestControllerTest {
 		// Creates the US206V2RemovalTaskRequestController
 		// to create a request to remove from first task added - taskA (Task ID = 1.1,
 		// projectID = 1)
-		us206v2Controller.setProjectID(projectA.getId());
-		us206v2Controller.setTaskID(projectA.getId() + ".1");
+		us206v2Controller.setProjectID(projectA.getProjectId());
+		us206v2Controller.setTaskID(projectA.getProjectId() + ".1");
 
 		// checks the change in task ID
-		assertEquals(us206v2Controller.getTaskID(), projectA.getId() + ".1");
+		assertEquals(us206v2Controller.getTaskID(), projectA.getProjectId() + ".1");
 
 		// Creates the removal requests from userRui and TaskA
 		assertTrue(us206v2Controller.createRequest());
@@ -121,8 +121,8 @@ public class US206CancelRemovalTaskRequestControllerTest {
 	public void testGetUnfinishedTaskFromUser() {
 
 		//// Creates the strings with a task description and task id
-		String taskIDandDescription1 = "[" + projectA.getId() + ".1] Implementar US100";
-		String taskIDandDescription2 = "[" + projectA.getId() + ".2] Implementar US200";
+		String taskIDandDescription1 = "[" + projectA.getProjectId() + ".1] Implementar US100";
+		String taskIDandDescription2 = "[" + projectA.getProjectId() + ".2] Implementar US200";
 
 		// List with the expected result strings
 		List<String> expResult = new ArrayList<>();

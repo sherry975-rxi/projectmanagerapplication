@@ -1,8 +1,10 @@
 package project.model;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import java.util.Random;
 
-public class CodeGenerator {
+public class CodeGenerator extends ResourceSupport {
 
     private String generatedCode;
 

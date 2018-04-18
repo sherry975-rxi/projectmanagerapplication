@@ -8,13 +8,13 @@ import project.controllers.PrintTaskInfoController;
 import project.controllers.US340CreateTaskController;
 import project.model.Project;
 import project.model.Task;
-import project.model.User;
 import project.services.TaskService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 @Component
 public class PmTaskFunctionalitiesUI {
@@ -45,13 +45,8 @@ public class PmTaskFunctionalitiesUI {
 
 	private Project project;
 	private String taskID;
-	private User user;
 	private Task task;
 
-
-	public PmTaskFunctionalitiesUI() {
-		//Empty constructor for JPA purposes
-	}
 
 	public void taskDataDisplay() {
 		this.task = taskService.getTaskByTaskID(taskID);
@@ -134,20 +129,12 @@ public class PmTaskFunctionalitiesUI {
 			String value = scannerInput.nextLine();
 			if (!"b".equalsIgnoreCase(value)) {
 				Calendar date = Calendar.getInstance();
-				Date tempdate = null;
-				try {
-					SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY");
-					tempdate = sdf.parse(value);
-					if (!value.equals(sdf.format(date))) {
-						tempdate = null;
-					}
-				} catch (Exception forex) {
-					System.out.println("Something went wrong, please try again.");
-					tempdate = null;
-				}
+				Date tempdate = parseDate(value);
 				if (tempdate == null) {
 					System.out.println("Invalid date format, please try again.");
-				} else {
+				}
+
+				else {
 					date.setTime(tempdate);
 					us340.setEstimatedStartDate(task, date);
 					System.out.println("Estimated Start Date successfully added");
@@ -166,23 +153,15 @@ public class PmTaskFunctionalitiesUI {
 			System.out.println("Alternatively, insert [B] to go back.");
 			String value = scannerInput.nextLine();
 			if (!"b".equalsIgnoreCase(value)) {
-				Calendar date = Calendar.getInstance();
-				Date tempdate = null;
-				try {
-					SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY");
-					tempdate = sdf.parse(value);
-					if (!value.equals(sdf.format(date))) {
-						tempdate = null;
-					}
-				} catch (Exception forex) {
-					System.out.println("Something went wrong, please try again.");
-					tempdate = null;
-				}
+				Calendar calendar = Calendar.getInstance();
+				Date tempdate = parseDate(value);
 				if (tempdate == null) {
 					System.out.println("Invalid date format, please try again.");
-				} else {
-					date.setTime(tempdate);
-					us340.setDeadline(task, date);
+				}
+
+				else {
+					calendar.setTime(tempdate);
+					us340.setDeadline(task, calendar);
 					System.out.println("Deadline successfully added");
 				}
 			} else {
@@ -200,7 +179,28 @@ public class PmTaskFunctionalitiesUI {
 		this.taskID = taskID;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	/**
+	 * Parses a string to a date.
+	 *
+	 * @param value String to parse to a date
+	 *
+	 * @return Returns the date created
+	 */
+	private Date parseDate(String value) {
+		Calendar date = Calendar.getInstance();
+		Date tempdate = null;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/yyyy");
+			tempdate = sdf.parse(value);
+			if (!value.equals(sdf.format(date))) {
+				tempdate = null;
+			}
+
+		} catch (Exception forex) {
+			Logger log = Logger.getAnonymousLogger();
+			log.info(forex.getMessage() + "Something went wrong, please try again.");
+			tempdate = null;
+		}
+		return tempdate;
 	}
 }
