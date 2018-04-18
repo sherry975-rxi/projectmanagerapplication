@@ -3,6 +3,7 @@ package project.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,12 +19,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "User")
-public class User implements Serializable {
+public class User extends ResourceSupport implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "User_ID")
-	private int id;
+	private int userID;
 	private String name;
 	private String email;
 	private String idNumber;
@@ -101,21 +102,21 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * Returns the id of the user.
+	 * Returns the userID of the user.
 	 *
-	 * @return id
+	 * @return userID
 	 */
-	public int getId() {
-		return id;
+	public int getDBid() {
+		return userID;
 	}
 
 	/**
-	 * Id to be set as the new id of the user
+	 * Id to be set as the new userID of the user
 	 *
-	 * @param id
+	 * @param userID
 	 */
-	public void setId(int id) {
-		this.id = id;
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 
 	/**
