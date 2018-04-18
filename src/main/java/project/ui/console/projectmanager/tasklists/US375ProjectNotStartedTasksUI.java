@@ -74,7 +74,6 @@ public class US375ProjectNotStartedTasksUI {
 			if ((ii.equals(option))) {
 				taskFuntionatities.setTaskID(ii);
 				taskFuntionatities.setProject(project);
-				taskFuntionatities.setUser(user);
 				taskFuntionatities.taskDataDisplay();
 			} 
 

@@ -106,7 +106,7 @@ public class User extends ResourceSupport implements Serializable {
 	 *
 	 * @return userID
 	 */
-	public int getDBid() {
+	public int getUserID() {
 		return userID;
 	}
 

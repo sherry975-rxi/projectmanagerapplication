@@ -250,7 +250,7 @@ public class RestControllerFunctionalTests {
         String onGoingTaskString = ongoingTask.getTaskID() + " - " + ongoingTask.getDescription();
 
         // this confirms mike's ID returns a "501 not yet implemented"
-        mockMvc.perform(get("/users/" + String.valueOf(mike.getDBid()) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+        mockMvc.perform(get("/users/" + String.valueOf(mike.getUserID()) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(2))).andExpect(jsonPath("$[0]", is(onGoingTaskString)));
 
         // this confirms an Invalid (non INT) ID returns a "401 unauthorized"
