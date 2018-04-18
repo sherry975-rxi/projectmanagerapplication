@@ -44,14 +44,15 @@ public class RestUserController {
 
     @RequestMapping(value = "/profiles" , method = RequestMethod.POST)
     public ResponseEntity<?> changeUserProfile (@RequestBody User updatedProfile) {
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         Profile profileChange = updatedProfile.getUserProfile();
 
         User userToChange = userService.getUserByEmail(updatedProfile.getEmail());
         if(userToChange != null){
             userToChange.setUserProfile(profileChange);
-            result = new ResponseEntity<>("User "+userToChange.getName()+"\nProfile changed sucessfully",HttpStatus.OK);
+            userService.updateUser(userToChange);
+            result = new ResponseEntity<>(userToChange ,HttpStatus.OK);
         }
         return result;
     }
