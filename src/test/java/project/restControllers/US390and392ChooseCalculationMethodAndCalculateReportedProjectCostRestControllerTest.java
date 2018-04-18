@@ -75,21 +75,6 @@ public class US390and392ChooseCalculationMethodAndCalculateReportedProjectCostRe
     }
 
     @Test
-    public void testGetProjectById() throws Exception {
-        Project projectTest = new Project("Project", "description", userRui);
-        //given
-        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectTest);
-
-        //when
-        MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
-
-        //then
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals(jacksonProject.write(projectTest).getJson(), response.getContentAsString());
-        verify(projectServiceMock, times(1)).getProjectById(projectId);
-    }
-
-    @Test
     public void testGetProjectCost() throws Exception {
         //given the project is running
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectMock);
