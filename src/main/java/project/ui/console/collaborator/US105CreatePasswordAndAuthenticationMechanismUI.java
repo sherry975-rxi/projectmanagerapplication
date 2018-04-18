@@ -23,9 +23,8 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
     /**
      * this method is so that in the first login it is mandatory to change the password.
      *
-     * @param user
      */
-    public void changePassword(User user) {
+    public void changePassword() {
         Scanner input = new Scanner(System.in);
         boolean loopPasswordReenter = true;
         String newPass = "";

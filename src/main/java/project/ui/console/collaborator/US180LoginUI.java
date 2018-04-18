@@ -24,7 +24,7 @@ public class US180LoginUI {
 
 		if (login.findUserByEmail(user) != null) {
 			if (!(login.findUserByEmail(user).hasPassword())) {
-				us105Controller.changePassword(login.findUserByEmail(user));
+				us105Controller.changePassword();
 				return login.findUserByEmail(user);
 			} else {
 				System.out.println("Password: ");

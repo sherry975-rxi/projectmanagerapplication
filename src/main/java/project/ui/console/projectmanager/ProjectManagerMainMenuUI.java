@@ -133,13 +133,13 @@ public class ProjectManagerMainMenuUI {
 			optionA3.projectDataDisplay();
 			break;
 		case "A4":
-			optionA4.projectNotStartedTasksUI(this.project, this.projectManager);
+			optionA4.projectNotStartedTasksUI(this.project);
 			break;
 		case "A5":
-			optionA5.projectUnassignedTasksUI(this.project, this.projectManager);
+			optionA5.projectUnassignedTasksUI(this.project);
 			break;
 		case "A6":
-			optionA6.displayCancelledTasksOfProject(this.project, this.projectManager);
+			optionA6.displayCancelledTasksOfProject(this.project);
 			break;
 		case "B1":
 			optionB1.viewProjectTeamAndThenRemoveCollaboratorUI(this.project);

@@ -24,7 +24,7 @@ public class US377ProjectCancelledTasks {
 	@Autowired
 	private PmTaskFunctionalitiesUI taskFuntionatities;
 
-	public void displayCancelledTasksOfProject(Project project, User user) {
+	public void displayCancelledTasksOfProject(Project project) {
 
 		String line = "___________________________________________________";
 
