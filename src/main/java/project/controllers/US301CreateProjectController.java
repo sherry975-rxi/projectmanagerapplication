@@ -133,14 +133,14 @@ public class US301CreateProjectController {
 	 * This method allows the direct to select which cost calculation method he wants
 	 * to make available for the project
 	 */
-	public void selectCalculationMethods(ArrayList<Integer> allowedMethods) {
+	public void selectCalculationMethods(List<Integer> allowedMethods) {
 	    createdProject.setAvailableCalculationMethods(allowedMethods);
 	    createdProject.setCalculationMethod(allowedMethods.get(0));
 	    projectService.updateProject(createdProject);
 
     }
 
-    public ArrayList<Integer> allowDisableCalculationMethods(ArrayList<Integer> list, Integer selected) {
+    public List<Integer> allowDisableCalculationMethods(List<Integer> list, Integer selected) {
         if(!list.contains(selected)) {
             list.add(selected);
         } else if (list.size()>1){

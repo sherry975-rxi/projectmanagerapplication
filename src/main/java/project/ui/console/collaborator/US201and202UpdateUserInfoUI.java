@@ -19,11 +19,8 @@ public class US201and202UpdateUserInfoUI {
 
 	private User user;
 
-	/**
-	 * Creates the UI
-	 */
 	public US201and202UpdateUserInfoUI() {
-
+		//Empty constructor for JPA purposes
 	}
 
 	public void chooseWhatInfoToUpdate() {

@@ -21,6 +21,10 @@ import java.util.*;
 @Service
 public class LoadProjectXmlv01 implements LoadProjectXml{
 
+	public static final String DATA_INICIO = "data_inicio";
+	public static final String COLABORATOR_ID = "colaborador_id";
+	public static final String DATA_FIM = "data_fim";
+
 	ProjectService projectService;
 
 	UserService userService;
@@ -34,10 +38,8 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 		this.taskService = taskService;
 	}
 
-	//TaskCollaborator taskCollab;
-
 	public void readProjectFile(String pathFile)
-			throws ParserConfigurationException, SAXException, IOException, DOMException, ParseException {
+			throws ParserConfigurationException, SAXException, IOException, ParseException {
 
 		Document documentProjects = FileUtils.readFromXmlFile(pathFile);
 
@@ -105,7 +107,7 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
                         ProjectCollaborator projCollaborator;
 
 						User userCollaborator = userService.getUserByEmail(eElementProjectCollaborator
-								.getElementsByTagName("colaborador_id").item(0).getTextContent());
+								.getElementsByTagName(COLABORATOR_ID).item(0).getTextContent());
 
 						NodeList nLigProjectList = eElementProjectCollaborator.getElementsByTagName("ligacao_projeto");
 
@@ -119,10 +121,10 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 								Element eElementLigProject = (Element) nNodeLigProject;
 
 								Calendar startDate = convertStringToCalendar(
-                                        eElementLigProject.getElementsByTagName("data_inicio").item(0).getTextContent());
+                                        eElementLigProject.getElementsByTagName(DATA_INICIO).item(0).getTextContent());
 
 								Calendar finishDate = convertStringToCalendar(
-                                        eElementLigProject.getElementsByTagName("data_fim").item(0).getTextContent());
+                                        eElementLigProject.getElementsByTagName(DATA_FIM).item(0).getTextContent());
 
 
 								Double costEffort = Double.valueOf(eElementLigProject
@@ -205,7 +207,7 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 								}
 							}
 						}
-						
+
 						//TaskCollaborator creation
 
 						NodeList nTaskCollaborators = eElementTask.getElementsByTagName("colaborador_tarefa");
@@ -219,34 +221,28 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 								Element eElementnNodeTaskCollaborator = (Element) nNodeTaskCollaborator;
 
 								User userOfProjectCollab = userService.getUserByEmail(eElementnNodeTaskCollaborator
-										.getElementsByTagName("colaborador_id").item(0).getTextContent());
+										.getElementsByTagName(COLABORATOR_ID).item(0).getTextContent());
 
 								Project project1 = projectService.getProjectById(task.getProject().getId());
-								
+
 
 								ProjectCollaborator projCollaborator = projectService
-										.findProjectCollaborator(userOfProjectCollab, project1).orElse(null); 
+										.findProjectCollaborator(userOfProjectCollab, project1).orElse(null);
 
 								task.addProjectCollaboratorToTask(projCollaborator);
 
-								//Dados do Task Collaborator, por ligação
-
-                                // CAMPO LIGAÇÂO TAREFA INEXISTENTE POR AGORA
-                                //NodeList nLigTaskList = eElementnNodeTaskCollaborator.getElementsByTagName("ligacao_tarefa");
-
-
                                 String startDateString = eElementnNodeTaskCollaborator
-										.getElementsByTagName("data_inicio").item(0).getTextContent();
+										.getElementsByTagName(DATA_INICIO).item(0).getTextContent();
 
 								Calendar startDateTaskCollaborator = convertStringToCalendar(startDateString);
 
 								TaskCollaborator taskCollaborator = task
 										.getActiveTaskCollaboratorByEmail(eElementnNodeTaskCollaborator
-												.getElementsByTagName("colaborador_id").item(0).getTextContent());
+												.getElementsByTagName(COLABORATOR_ID).item(0).getTextContent());
 
 								taskCollaborator.setStartDate(startDateTaskCollaborator);
 
-								String finishDateString = eElementnNodeTaskCollaborator.getElementsByTagName("data_fim")
+								String finishDateString = eElementnNodeTaskCollaborator.getElementsByTagName(DATA_FIM)
 										.item(0).getTextContent();
 
 								Calendar finishDateTaskCollaborator = convertStringToCalendar(finishDateString);
@@ -266,10 +262,10 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 
 										Element eElementNodeReport = (Element) nNodeReport;
 										Calendar reportStartDate = convertStringToCalendar(eElementNodeReport
-												.getElementsByTagName("data_inicio").item(0).getTextContent());
+												.getElementsByTagName(DATA_INICIO).item(0).getTextContent());
 
                                         Calendar reportLastDate = convertStringToCalendar(eElementNodeReport
-                                                .getElementsByTagName("data_fim").item(0).getTextContent());
+                                                .getElementsByTagName(DATA_FIM).item(0).getTextContent());
 
                                         if(reportLastDate==null) {
                                             reportLastDate=Calendar.getInstance();
@@ -287,8 +283,6 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
                                         report.setReportedTime(timeToReport);
 
                                         task.getReports().add(report);
-
-										//task.createReport(taskCollaborator, reportStartDate, timeToReport);
 									}
 								}
 							}

@@ -16,9 +16,6 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 
 	private Project selectedProject;
 
-	public US360ViewCollaboratorsWithoutTasksUI() {
-	}
-
 	public void viewUnassignedCollaborators() {
 		
 
@@ -28,7 +25,6 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 
 		boolean loop = true;
 		while (loop) {
-			loop = false;
 		System.out.println(
 				"_________________________________________________________________________________________________________________");
 		if (idleCollaboratorsInfo.isEmpty())
@@ -46,14 +42,12 @@ public class US360ViewCollaboratorsWithoutTasksUI {
 		Scanner input = new Scanner(System.in);
 		String choice = input.nextLine().toUpperCase();
 
-		switch (choice) {
-		case "B":
+		if("B".equals(choice)) {
 			return;
+		}
 
-		default:
+		else {
 			System.out.println("Please choose a valid option!");
-			loop = true;
-
 		}
 		}
 	}

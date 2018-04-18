@@ -236,7 +236,7 @@ public class PrintTaskInfoControllerTest {
 	@Test
 	public void testPrintTaskTeamInfo() {
 
-		assertEquals(controller.printTaskTeamInfo(), "Daniel");
+		assertEquals(controller.printTaskTeamInfo(), "Daniel, João");
 	}
 
 	/**

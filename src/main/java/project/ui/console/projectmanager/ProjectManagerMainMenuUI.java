@@ -142,7 +142,7 @@ public class ProjectManagerMainMenuUI {
 			optionA6.displayCancelledTasksOfProject(this.project, this.projectManager);
 			break;
 		case "B1":
-			optionB1.viewProjectTeamAndThenRemoveCollaboratorUI(this.project, this.projectManager);
+			optionB1.viewProjectTeamAndThenRemoveCollaboratorUI(this.project);
 			break;
 		case "B2":
 			optionB2.addCollaboratorToProjectTeam(project);

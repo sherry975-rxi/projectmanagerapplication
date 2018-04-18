@@ -619,11 +619,13 @@ public class TaskService {
 		 */
 		public Task getTaskByTaskID(String id) {
 
+			String message = "Task not found! TaskID: ";
+
 			Optional<Task> task = this.taskRepository.findByTaskID(id);
 
-			assignStateAccordingToEnum(task.orElseThrow(() -> new ObjectNotFoundException("Task not found! Id: " + id)));
+			assignStateAccordingToEnum(task.orElseThrow(() -> new ObjectNotFoundException(message + id)));
 
-			return task.orElseThrow(() -> new ObjectNotFoundException("Task not found! Id: " + id));
+			return task.orElseThrow(() -> new ObjectNotFoundException(message + id));
 		}
 
 
@@ -636,11 +638,13 @@ public class TaskService {
 		 */
 		public Task getTaskByID(Long id) {
 
+			String message = "Task not found! id: ";
+
 			Optional<Task> result = this.taskRepository.findById(id);
 
-			assignStateAccordingToEnum(result.orElseThrow(() -> new ObjectNotFoundException("Task not found! Id: " + id)));
+			assignStateAccordingToEnum(result.orElseThrow(() -> new ObjectNotFoundException(message + id)));
 
-			return result.orElseThrow(() -> new ObjectNotFoundException("Task not found! Id: " + id));
+			return result.orElseThrow(() -> new ObjectNotFoundException(message + id));
 
 		}
 
@@ -707,7 +711,7 @@ public class TaskService {
 
 
 	/**
-	 * This method returns the List of Collaborators from a specific task
+	 * This method returns the List of Active Collaborators of a specific task
 	 *
 	 * @return Returns a list with the project collaborators that are in the task team
 	 */
@@ -716,11 +720,12 @@ public class TaskService {
 		List<ProjectCollaborator> collaboratorsFromTask = new ArrayList<>();
 		collaboratorsFromTask.addAll(this.projectCollaboratorRepository.findAllByProject(project));
 
-		return collaboratorsFromTask.stream()
-				.filter(ProjectCollaborator::isProjectCollaboratorActive)
-				.filter(projCollab -> task.isProjectCollaboratorActiveInTaskTeam(projCollab))
-				.collect(Collectors.toList());
-
+		for(ProjectCollaborator other : collaboratorsFromTask){
+			if(!other.isProjectCollaboratorActive() && !task.isProjectCollaboratorActiveInTaskTeam(other)){
+				collaboratorsFromTask.remove(other);
+			}
+		}
+		return collaboratorsFromTask;
 	}
 
 
@@ -820,7 +825,9 @@ public class TaskService {
             calculationMethod.updateCalculationMethod(other, getAllCollaboratorInstancesFromReport(other));
         }
 
-        getProjectTasks(project).stream().forEach(task -> this.saveTask(task));
+        for(Task other : getProjectTasks(project)){
+        	this.saveTask(other);
+        }
 	}
 
     /**

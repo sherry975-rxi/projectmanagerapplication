@@ -18,7 +18,7 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 	User user;
 
 	public US211GetFinishedUserTasksFromLastMonthDecreasingOrder() {
-
+		//Empty constructor for JPA purposes
 	}
 
 	public void viewLastMonthFinishedTasks() {

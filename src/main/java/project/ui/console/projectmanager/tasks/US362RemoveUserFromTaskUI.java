@@ -19,6 +19,7 @@ public class US362RemoveUserFromTaskUI {
 	private Task task;
 
 	public US362RemoveUserFromTaskUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	public void displayUsersToRemove() {

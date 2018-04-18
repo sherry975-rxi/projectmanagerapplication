@@ -27,9 +27,6 @@ public class DirectorMenuUI {
 
 	String command;
 
-	public DirectorMenuUI() {
-	}
-
 	public void directorMenu() {
 
 		Scanner input = new Scanner(System.in);
@@ -82,17 +79,11 @@ public class DirectorMenuUI {
 				break;
 
 			case "3":
-				if (selectedProject == null) {
-					System.out.println("Please select a project first");
-					System.out.println("");
-				} else {
-					changeManager.changeProjectManager(selectedProject);
-				}
+				changeProjectManager();
 				break;
 
 			case "b":
 				System.out.println("Returning to Director Menu...");
-				System.out.println("");
 				cycle = false;
 				break;
 
@@ -104,6 +95,15 @@ public class DirectorMenuUI {
 
 		}
 
+	}
+
+	private void changeProjectManager() {
+
+		if (selectedProject == null) {
+			System.out.println("Please select a project first");
+		} else {
+			changeManager.changeProjectManager(selectedProject);
+		}
 	}
 
 	public void setDirectorLoggedIn(User directorLoggedIn) {

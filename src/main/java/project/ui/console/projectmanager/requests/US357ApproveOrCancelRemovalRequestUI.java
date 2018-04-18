@@ -16,20 +16,12 @@ public class US357ApproveOrCancelRemovalRequestUI {
 	Project project;
 
 	/**
-	 * Constructor to instantiate a new US357ApproveOrCancelRemvalRequestUI
-	 *
-	 */
-	public US357ApproveOrCancelRemovalRequestUI() {
-	}
-
-	/**
 	 * Displays the removal task requests and the options available to the user
 	 */
 	public void displayRemovalTaskRequests() {
 
 		boolean condition = true;
 		while (condition) {
-			condition = false;
 			System.out.println("\n    TASKS REMOVAL REQUESTS PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");
 

@@ -1,7 +1,6 @@
 package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +30,8 @@ public class US372GetStartedNotFinishedProjectTasksRestController {
         this.taskService = taskServ;
     }
 
-    @RequestMapping(value = "unfinished", method = RequestMethod.GET)
-    public ResponseEntity<?> getStartedNotFinishedTasks(@PathVariable Integer projectID) {
+    @RequestMapping(value = "/unfinished", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getStartedNotFinishedTasks(@PathVariable int projectID) {
 
         Project project = this.projectsService.getProjectById(projectID);
         List<Task> taskList = this.taskService.getProjectUnFinishedTasks(project);
@@ -40,6 +39,7 @@ public class US372GetStartedNotFinishedProjectTasksRestController {
 
         return ResponseEntity.ok().body(taskList);
     }
+
 }
 
 

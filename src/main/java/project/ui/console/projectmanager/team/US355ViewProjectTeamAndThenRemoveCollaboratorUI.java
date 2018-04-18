@@ -20,14 +20,13 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 	@Autowired
 	private US355ViewProjectTeamAndThenRemoveCollaboratorController controller;
 
-	public void viewProjectTeamAndThenRemoveCollaboratorUI(Project project, User user) {
-		
+	boolean loop;
 
-		Scanner scannerInput = new Scanner(System.in);
+	public void viewProjectTeamAndThenRemoveCollaboratorUI(Project project) {
 
 		projectInfo.setProject(project);
 
-		boolean loop = true;
+		this.loop = true;
 		while (loop) {
 			loop = false;
 		System.out.println("");
@@ -59,6 +58,15 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 		System.out.println("\nChoose an collaborator to remove or choose an option:");
 		System.out.println("_______________________________________________________");
 		System.out.println("[B] Back \n");
+
+		chooseCollaboratorToRemove();
+
+		}
+	}
+
+	private void chooseCollaboratorToRemove() {
+
+		Scanner scannerInput = new Scanner(System.in);
 
 		String option = scannerInput.nextLine().toUpperCase();
 
@@ -94,7 +102,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorUI {
 			System.out.println("Please choose a valid option: ");
 			loop = true;
 		}
-		}
+
 	}
 
 	private void collaboratorRemovalUI(String yesOrNo, List<User> listOfUser, int i) {

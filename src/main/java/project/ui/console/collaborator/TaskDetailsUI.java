@@ -48,6 +48,7 @@ public class TaskDetailsUI {
 	private ProjectCollaborator projCollaborator;
 
 	public TaskDetailsUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	private void printMenuOption(){

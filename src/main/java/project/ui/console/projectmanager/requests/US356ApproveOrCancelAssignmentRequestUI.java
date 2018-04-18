@@ -15,12 +15,6 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 
 	private Project project;
 
-	/**
-	 * Constructor to instantiate a new US357ApproveOrCancelAssignmentRequestUI
-	 *
-	 */
-	public US356ApproveOrCancelAssignmentRequestUI() {
-	}
 
 	/**
 	 * Displays the assignment task requests and the options available to the user
@@ -28,7 +22,6 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 	public void displayAssignmentTaskRequests() {
 		boolean condition = true;
 		while (condition) {
-			condition = false;
 
 			System.out.println("\n   TASK ASSIGNMENT REQUESTS : PENDING APPROVAL      ");
 			System.out.println("___________________________________________________");

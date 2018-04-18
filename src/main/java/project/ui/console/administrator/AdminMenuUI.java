@@ -34,7 +34,9 @@ public class AdminMenuUI {
 
 	String command;
 
+
 	public AdminMenuUI() {
+		//Empty constructor for JPA purposes
 	}
 
 	public void adminMenu() {
@@ -72,20 +74,18 @@ public class AdminMenuUI {
 				break;
 
 			case "3":
-				if (selectedUser == null)
+				if (selectedUser != null)
 					System.out.println("No user selected!");
 				else {
 					changeUserProfileUI.changeUserProfile(selectedUser);
-				}
-				break;
+				} break;
 
 			case "4":
 				if (selectedUser == null)
 					System.out.println("No user selected!");
 				else {
 					changeUserStateUI.changeUserState(selectedUser);
-				}
-				break;
+				} break;
 
 				case "5":
 

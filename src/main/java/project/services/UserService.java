@@ -14,6 +14,8 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
+
 
 /**
  * Class UserContainer that contains all lists and methods to build lists of
@@ -274,6 +276,7 @@ public class UserService {
 	 */
 	public boolean isEmailAddressValid(String email) {
 
+		Logger log = Logger.getAnonymousLogger();
 		boolean result = true;
 
 		try {
@@ -281,6 +284,7 @@ public class UserService {
 			emailAddr.validate();
 		} catch (AddressException ex) {
 			result = false;
+			log.info(ex.getMessage());
 		}
 		return result;
 	}

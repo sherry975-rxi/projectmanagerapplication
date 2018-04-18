@@ -273,4 +273,18 @@ public class PrintProjectInfoController {
 		this.projID = projID;
 	}
 
+	public String getAllProjectInfo() {
+		String projectName = "" + "\n" + "PROJECT " + this.printProjectNameInfo().toUpperCase() + "\n";
+		String line = "__________________________________________\n";
+		String idAndStatus = "ID: " + this.printProjectIDCodeInfo() + "\n" + "STATUS: " + this.printProjectStatusInfo() + "\n";
+		String description = "DESCRIPTION: " + this.printProjectDescriptionInfo() + "\n";
+		String dates = "START DATE: " + this.printProjectStartDateInfo() + "\n " + "FINISH DATE: " + this.printProjectFinishDateInfo() + "\n";
+		String projectManager = "PROJECT MANAGER: " + this.printProjectManagerInfo() + "\n";
+		String projectTeam = "PROJECT TEAM: " + this.printProjectTeamInfo() + "\n";
+		String budget = "PROJECT BUDGET: " + this.printProjectBudgetInfo() + "\n";
+		String tasks = "TASKS OF " + this.printProjectNameInfo().toUpperCase() + ":" + "\n";
+
+		return projectName + line + idAndStatus + description + dates + projectManager + projectTeam + budget + tasks;
+	}
+
 }
