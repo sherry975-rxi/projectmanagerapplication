@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.model.*;
+import project.model.Report;
+import project.model.Task;
+import project.model.TaskCollaborator;
+import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -149,7 +152,7 @@ public class US207CreateTaskReportRestController {
         List<Report> taskReportsList = task.getReports();
 
         for (int reportIndex = 0; reportIndex < taskReportsList.size(); reportIndex++) {
-            if (taskReportsList.get(reportIndex).getId() == reportId) {
+            if (taskReportsList.get(reportIndex).getDbId() == reportId) {
 
                 task.updateReportedTime(newTimeReported, taskCollab, reportIndex);
                 Calendar dateOfReport = Calendar.getInstance();

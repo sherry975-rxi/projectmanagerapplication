@@ -74,8 +74,8 @@ public class US370GetProjectFinishedTasksRestTest {
         this.task2 = new Task("Refactoring US2", project);
         task1.setProject(project);
         task2.setProject(project);
-        task1.setId(1L);
-        task2.setId(2L);
+        task1.setDbTaskId(1L);
+        task2.setDbTaskId(2L);
         task1.setTaskID("1");
         task2.setTaskID("2");
 

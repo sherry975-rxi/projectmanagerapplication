@@ -2,7 +2,10 @@ package project.ui.console.loadfiles.loadprojects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import project.model.*;
 import project.model.taskstateinterface.Finished;
@@ -16,7 +19,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 
 @Service
 public class LoadProjectXmlv01 implements LoadProjectXml{
@@ -223,7 +228,7 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 								User userOfProjectCollab = userService.getUserByEmail(eElementnNodeTaskCollaborator
 										.getElementsByTagName(COLABORATOR_ID).item(0).getTextContent());
 
-								Project project1 = projectService.getProjectById(task.getProject().getId());
+								Project project1 = projectService.getProjectById(task.getProject().getDbId());
 
 
 								ProjectCollaborator projCollaborator = projectService

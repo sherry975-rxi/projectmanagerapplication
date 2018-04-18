@@ -151,9 +151,9 @@ public class ProjectService {
 		// Compares de projectId of the projectCollaborator to the project id of the
 		// projects in the database
 		for (ProjectCollaborator collaborator : userProjCollabs) {
-			projectId = collaborator.getProject().getId();
+			projectId = collaborator.getProject().getDbId();
 			for (Project project : this.getAllProjectsfromProjectsContainer()) {
-				if (project.getId() == projectId) {
+				if (project.getDbId() == projectId) {
 					projects.add(project);
 				}
 			}

@@ -217,7 +217,7 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		projectContainer.updateProjectCollaborator(projCollab13);
 		projectContainer.updateProjectCollaborator(projCollab23);
 
-		project1ID = project1.getId();
+		project1ID = project1.getDbId();
 		task1ID = task1.getTaskID();
 
 	}

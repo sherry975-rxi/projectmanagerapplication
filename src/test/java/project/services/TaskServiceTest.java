@@ -677,7 +677,7 @@ public class TaskServiceTest {
 
     @Test
     public void testGetTaskByID() {
-        when(taskRepository.findById(12L)).thenReturn(Optional.of(taskMock));
+        when(taskRepository.findByDbTaskId(12L)).thenReturn(Optional.of(taskMock));
         assertEquals(taskMock, victim.getTaskByID(12L));
     }
 

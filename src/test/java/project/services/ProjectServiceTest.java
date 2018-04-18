@@ -1,6 +1,9 @@
 package project.services;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -548,14 +551,14 @@ public class ProjectServiceTest {
 		Project project1 = projectService.createProject("Project 1", "Descricao", projectManager);
 
 		/*
-		 * Verifies that the method getProjectById calls the method findById of the
+		 * Verifies that the method getProjectById calls the method findByDbTaskId of the
 		 * ProjectRepository when the method "getProjectById" is used
 		 */
 
-		Mockito.when(projectRep.findById(project1.getId())).thenReturn(Optional.of(project1));
-		assertEquals(project1, projectService.getProjectById(project1.getId()));
+		Mockito.when(projectRep.findById(project1.getDbId())).thenReturn(Optional.of(project1));
+		assertEquals(project1, projectService.getProjectById(project1.getDbId()));
 
-		Mockito.verify(projectRep, Mockito.times(1)).findById(project1.getId());
+		Mockito.verify(projectRep, Mockito.times(1)).findById(project1.getDbId());
 
 	}
 

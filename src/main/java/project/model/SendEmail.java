@@ -1,6 +1,8 @@
 package project.model;
 
 
+import org.springframework.hateoas.ResourceSupport;
+
 import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -9,7 +11,7 @@ import java.util.Date;
 import java.util.Properties;
 
 
-public class SendEmail {
+public class SendEmail extends ResourceSupport {
 
 
     private String senderEmail = "isepswitch3@gmail.com";

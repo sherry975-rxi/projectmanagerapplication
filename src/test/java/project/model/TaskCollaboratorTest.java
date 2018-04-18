@@ -180,13 +180,13 @@ public class TaskCollaboratorTest {
 		TaskCollaborator springTaskCollab = new TaskCollaborator();
 
 		// when no setters are called, then the auto generated ID must not be null, while the project collaborator is null
-		assertFalse(springTaskCollab.getId()== null);
+		assertFalse(springTaskCollab.getDbId() == null);
 		assertTrue(springTaskCollab.getProjectCollaboratorFromTaskCollaborator()==null);
 
 		// given a fixed ID number, when setID is called, then getID must return the same value
 		long thisID = 70;
 		springTaskCollab.setId(thisID);
-		assertTrue(springTaskCollab.getId().equals(thisID));
+		assertTrue(springTaskCollab.getDbId().equals(thisID));
 
 		// given a single test date
 		Calendar testDate = Calendar.getInstance();
@@ -269,7 +269,7 @@ public class TaskCollaboratorTest {
 		long iD = 70;
 		Long thisID = iD;
 		workerTester2.setId(thisID);
-		assertTrue(workerTester2.getId().equals(thisID));
+		assertTrue(workerTester2.getDbId().equals(thisID));
 
 	}
 

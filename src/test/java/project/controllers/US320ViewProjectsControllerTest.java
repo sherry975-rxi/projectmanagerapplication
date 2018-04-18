@@ -48,7 +48,7 @@ public class US320ViewProjectsControllerTest {
 		projectService.updateProject(inactiveProject);
 		// creates expected headers for the project's name
 		// first creates a title header
-		String activeProjNameHeader = "===== " + activeProject.getId() + " - Active Project =====";
+		String activeProjNameHeader = "===== " + activeProject.getDbId() + " - Active Project =====";
 		// then generates the top and bottom headers from the same length as the title
 		String activeProjHeader = projectListsController.generateHeader('=', activeProjNameHeader.length());
 		// creates a string from activeProject's overview data, to be compared with the

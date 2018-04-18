@@ -124,7 +124,7 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public final void testGetTaskByID() {
 
-		Integer projectID = proj.getId();
+		Integer projectID = proj.getDbId();
 
 		assertEquals(taskB, controller.getTaskByID((projectID + ".2")));
 		assertEquals(taskC, controller.getTaskByID((projectID + ".3")));
@@ -134,7 +134,7 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public final void projectContainsSelectedTask() {
 
-		Integer projectID = proj.getId();
+		Integer projectID = proj.getDbId();
 
 		assertTrue(controller.projectContainsSelectedTask(projectID + ".2"));
 		assertFalse(controller.projectContainsSelectedTask(projectID + ".4"));
@@ -205,7 +205,7 @@ public class US342CreateTaskDependencyTest {
 		Date estimatedDeadline = aaa.getTime();
 
 		SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		estimatedDeadlineString = newDateFormat.format(estimatedDeadline).toString();
+		estimatedDeadlineString = newDateFormat.format(estimatedDeadline);
 
 		assertEquals(controller.getTaskDeadlineString(taskA.getTaskID()), estimatedDeadlineString);
 		assertEquals(controller.getTaskDeadlineString(taskB.getTaskID()), "No estimated deadline");

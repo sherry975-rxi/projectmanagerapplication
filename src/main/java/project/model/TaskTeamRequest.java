@@ -3,13 +3,14 @@ package project.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "TaskTeamRequest")
-public class TaskTeamRequest implements Serializable {
+public class TaskTeamRequest extends ResourceSupport implements Serializable {
 
 	static final long serialVersionUID = 61L;
 
@@ -51,7 +52,7 @@ public class TaskTeamRequest implements Serializable {
 	/*
 	 * Returns the id of the task
 	 */
-	public int getId() {
+	public int getDbId() {
 		return id;
 	}
 
@@ -162,13 +163,8 @@ public class TaskTeamRequest implements Serializable {
 			return false;
 		}
 		if (type == null) {
-		    if (other.type != null) {
-		        return false;
-            }
-        } else if (type != other.type) {
-		    return false;
-        }
-		return true;
+			return other.type == null;
+		} else return type == other.type;
 	}
 
 	/**

@@ -1,10 +1,14 @@
 package project.model;
 
 import com.google.common.base.Joiner;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -19,7 +23,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "Project")
-public class Project implements Serializable{
+public class Project extends ResourceSupport implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -90,7 +94,7 @@ public class Project implements Serializable{
 
 	}
 
-	public int getId() {
+	public int getDbId() {
 		return id;
 	}
 
@@ -316,7 +320,7 @@ public class Project implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 3;
-		result = prime * result + (Integer) id;
+		result = prime * result + id;
 		return result;
 	}
 

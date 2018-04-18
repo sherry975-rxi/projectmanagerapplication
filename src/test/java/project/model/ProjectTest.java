@@ -326,10 +326,10 @@ public class ProjectTest {
 	@Test
 	public void testGettersAndSetters(){
 		p1.setId(123);
-		assertEquals(123, p1.getId());
+		assertEquals(123, p1.getDbId());
 		
 		p1.setId(1);
-		assertEquals(1, p1.getId());
+		assertEquals(1, p1.getDbId());
 		
 		Calendar newDate = Calendar.getInstance(); 
 		p1.setStartdate(newDate);
@@ -375,10 +375,10 @@ public class ProjectTest {
 	public void testSetAndGetPermittedCalculationMethods() {
 		// given a new project, the list of allowed methods should contain four entries, matching 1,2,3,4
 		assertEquals(3, p1.getAvailableCalculationMethods().size());
-		assertEquals((new ArrayList<>(Arrays.asList(new Integer[]{1,2,3}))), p1.getAvailableCalculationMethods());
+		assertEquals((new ArrayList<>(Arrays.asList(1, 2, 3))), p1.getAvailableCalculationMethods());
 		assertTrue(p1.isCalculationMethodAllowed(2));
 		// when the list of permitted methods is reset as 1,3,4
-		p1.setAvailableCalculationMethods((new ArrayList<>(Arrays.asList(new Integer[]{1,3}))));
+		p1.setAvailableCalculationMethods((new ArrayList<>(Arrays.asList(1, 3))));
 		// then the list must contain 3 entries, and 2 must not be allowed
 		assertFalse(p1.isCalculationMethodAllowed(2));
 		assertEquals(2, p1.getAvailableCalculationMethods().size());

@@ -327,7 +327,7 @@ public class US390CalculateReportedProjectCostControllerTest {
 	@Test
 	public void testGetTaskId() {
 
-		Integer projectID = project.getId();
+		Integer projectID = project.getDbId();
 
 		assertTrue((projectID+".1").equals(controllerCost.getTaskId(project).get(0)));
 		assertTrue((projectID+".2").equals(controllerCost.getTaskId(project).get(1)));
