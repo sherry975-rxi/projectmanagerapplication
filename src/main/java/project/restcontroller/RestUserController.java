@@ -28,12 +28,8 @@ public class RestUserController {
         this.userService=userService;
     }
 
-
-
-
-
     /**
-     * Refers US130: As an administrator, I want to list all users in the system.
+     * Refers to US130: As an administrator, I want to list all users in the system.
      * This method will return a list of all the users registered in the system.
      */
 
@@ -63,7 +59,7 @@ public class RestUserController {
 
 
     /**
-     * This method allows the administrator to search users by a part of the email.
+     * Refers to US135: This method allows the administrator to search users by a part of the email.
      *
      * @param emailToSearch
      * @return ResponseEntity
@@ -81,5 +77,23 @@ public class RestUserController {
         return new ResponseEntity<>(foundUsers, HttpStatus.OK);
     }
 
+    /**
+     * Refers to US136: This method allows the administrator to search users by profile.
+     *
+     * @param profileNameToSearch
+     * @return ResponseEntity
+     */
+    @RequestMapping(value = "/{profileNameToSearch}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> searchUsersByProfile(@PathVariable String profileNameToSearch) {
 
+        List<User> foundUsersProfile = userService.searchUsersByProfileName(profileNameToSearch.toUpperCase());
+
+        for(User other : foundUsersProfile){
+            Link selfRef = linkTo(RestUserController.class).slash(other.getUserID()).withSelfRel();
+            other.add(selfRef);
+        }
+
+        return new ResponseEntity<>(foundUsersProfile, HttpStatus.OK);
+
+    }
 }
