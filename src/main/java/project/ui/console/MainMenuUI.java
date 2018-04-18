@@ -29,11 +29,9 @@ public class MainMenuUI {
 	@Autowired
 	private CollaboratorMainMenuUI collaboratorMenu;
 
-	private static User userAdmin;
-	private static User userDirector;
-    private static User loggedIn;
-	private static User myUser;
-	private static User noPasswordUser;
+	private User userAdmin;
+	private User userDirector;
+    private User loggedIn;
 
 	public static void printImage() {
 
@@ -54,21 +52,21 @@ public class MainMenuUI {
 		System.out.println();
 	}
 
-	public void mainMenu()  throws Exception {
+	public void mainMenu() {
 
 		userDirector = userService.getAllUsersFromUserContainer().get(1);
 		userAdmin = userService.getAllUsersFromUserContainer().get(0);
-		noPasswordUser = new User ("Daniel", "dsomonteiro@gmail.com", "1", "function", "+351937429087" );
+		User noPasswordUser = new User ("Daniel", "dsomonteiro@gmail.com", "1", "function", "+351937429087" );
 		noPasswordUser.setQuestion("1");
 		noPasswordUser.setAnswer("1");
 		userService.addUserToUserRepositoryX(noPasswordUser);
-		myUser = userService.createUser("Daniel", "dspereira93@hotmail.com", "id", "func", "+351937429087", "street", "zip", "city", "dist", "coun");
+		User myUser = userService.createUser("Daniel", "dspereira93@hotmail.com", "id", "func", "+351937429087", "street", "zip", "city", "dist", "coun");
 		userService.addUserToUserRepositoryX(myUser);
 
 		displayOptions();
 	}
 
-	public void displayOptions() throws Exception {
+	public void displayOptions() {
 
 		printImage();
 
@@ -98,13 +96,9 @@ public class MainMenuUI {
 					break;
 				case "2":
 					loggedIn=doLogin.doLogin();
-					if(loggedIn!=null) {
-						if(loggedIn.hasPassword()) {
-							System.out.println();
+					if(loggedIn!=null && loggedIn.hasPassword()) {
 							System.out.println("Welcome, " + loggedIn.getName());
-						}
                     }
-
 					break;
 				case "3":
 					adminMenu.setAdminLoggedIn(userAdmin);
@@ -116,7 +110,6 @@ public class MainMenuUI {
 					directorMenu.setDirectorLoggedIn(userDirector);
 					directorMenu.directorMenu();
 					break;
-
 
 				case "5":
 				    collaboratorMenu.setUser(loggedIn);

@@ -6,6 +6,7 @@ import project.controllers.US105CreatePasswordAndAuthenticationMechanismControll
 import project.model.User;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 @Component
 public class US105CreatePasswordAndAuthenticationMechanismUI {
@@ -26,9 +27,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
      */
     public void changePassword(User user) {
         Scanner input = new Scanner(System.in);
-        String userInput;
         boolean loopPasswordReenter = true;
-        boolean loop = false;
         String newPass = "";
 
         while (loopPasswordReenter) {
@@ -37,6 +36,7 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
             System.out.println("Please enter a password:");
 
             newPass = input.nextLine();
+
             System.out.println("Re-enter the password:");
 
             String reEnterPassword = input.nextLine();
@@ -57,44 +57,56 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
 
             } else {
                 loopPasswordReenter = false;
-                loop = true;
             }
 
-            while (loop) {
-                System.out.println("Choose an authentication method:\n");
-                System.out.println("[1] Sms authentication");
-                System.out.println("[2] Email authentication");
-                System.out.println("[3] Question authentication\n");
 
-                String choice = input.nextLine();
-
-                try {
-
-                    System.out.println(controller.performAuthentication(user.getPhone(), user.getEmail(), user.getQuestion(), choice));
-
-                    if (controller.getValidation() != null) {
-                        userInput = input.nextLine();
-
-                        if (controller.isCodeValid(userInput, user)) {
-                            controller.setUserPassword(user, newPass);
-                            System.out.println("The password changed successfully!");
-                            loop = false;
-
-                        } else {
-                            System.out.println("The password wasn't changed. Try again? Y/N");
-                            String answer = input.nextLine();
-                            if (!("Y".equalsIgnoreCase(answer)))
-                                loop = false;
-
-                        }
-                    }
-                } catch (Exception e) {
-                    System.out.println("\nSomething went wrong. Please try again.\n");
-                }
-            }
+            displayAndChooseAuthenticationMethod(newPass);
 
         }
     }
 
+    /**
+     * This method displays the authentication method options available
+     *
+      * @param newPass New password of the user
+     */
+    private void displayAndChooseAuthenticationMethod(String newPass) {
 
+        Scanner input = new Scanner(System.in);
+        String userInput;
+        boolean loop = true;
+        while (loop) {
+            System.out.println("Choose an authentication method:\n");
+            System.out.println("[1] Sms authentication");
+            System.out.println("[2] Email authentication");
+            System.out.println("[3] Question authentication\n");
+
+            String choice = input.nextLine();
+
+            try {
+
+                System.out.println(controller.performAuthentication(user.getPhone(), user.getEmail(), user.getQuestion(), choice));
+
+                if (controller.getValidation() != null) {
+                    userInput = input.nextLine();
+
+                    if (controller.isCodeValid(userInput, user)) {
+                        controller.setUserPassword(user, newPass);
+                        System.out.println("The password changed successfully!");
+                        loop = false;
+
+                    } else {
+                        System.out.println("The password wasn't changed. Try again? Y/N");
+                        String answer = input.nextLine();
+                        if (!("Y".equalsIgnoreCase(answer)))
+                            loop = false;
+
+                    }
+                }
+            } catch (Exception e) {
+                Logger log = Logger.getAnonymousLogger();
+                log.info(e.getMessage() + "\nSomething went wrong. Please try again.\n");
+            }
+       }
+    }
 }

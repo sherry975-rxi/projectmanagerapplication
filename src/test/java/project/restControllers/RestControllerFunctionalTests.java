@@ -5,7 +5,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,27 +16,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.web.context.WebApplicationContext;
 import project.model.*;
 import project.model.taskstateinterface.*;
-import project.restcontroller.US136FindUserByProfile;
 import project.services.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
@@ -256,7 +250,7 @@ public class RestControllerFunctionalTests {
         String onGoingTaskString = ongoingTask.getTaskID() + " - " + ongoingTask.getDescription();
 
         // this confirms mike's ID returns a "501 not yet implemented"
-        mockMvc.perform(get("/users/" + String.valueOf(mike.getId()) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+        mockMvc.perform(get("/users/" + String.valueOf(mike.getUserID()) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(2))).andExpect(jsonPath("$[0]", is(onGoingTaskString)));
 
         // this confirms an Invalid (non INT) ID returns a "401 unauthorized"

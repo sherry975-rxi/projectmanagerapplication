@@ -45,7 +45,6 @@ public class TaskDetailsUI {
 	private String taskID;
 	private Task task;
 
-	private ProjectCollaborator projCollaborator;
 
 	public TaskDetailsUI() {
 		//Empty constructor for JPA purposes
@@ -88,6 +87,7 @@ public class TaskDetailsUI {
 		taskInfo.setProjectAndTask();
 		projectInfo.setProjID(this.projectID);
 		projectInfo.setProject();
+		ProjectCollaborator projCollaborator;
 
 		boolean condition = true;
 		while (condition) {
@@ -104,8 +104,7 @@ public class TaskDetailsUI {
                 if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator)) {
                     System.out.println(cantDoIt);
                 } else {
-                //taskToMark.getProjectsThatIAmCollaborator(this.user);
-                //taskToMark.getUnfinishedTasksOfProjectFromCollaborator(this.projectID);
+
                 taskToMark.setTaskToBeMarked(task);
                 taskToMark.markTaskAsFinished();
                 System.out.println("---- SUCCESS Task Marked As Finished ----");
