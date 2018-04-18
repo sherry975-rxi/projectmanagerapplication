@@ -28,7 +28,6 @@ public class ProjectViewMenuUI {
 	public void projectDataDisplay() {
 		boolean loop = true;
 		while (loop) {
-			loop = false;
 
 		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
 		projectInfo.setProject();
