@@ -73,7 +73,6 @@ public class US377ProjectCancelledTasks {
 			if (option.equals(ii)) {
 				taskFuntionatities.setTaskID(ii);
 				taskFuntionatities.setProject(project);
-				taskFuntionatities.setUser(user);
 				taskFuntionatities.taskDataDisplay();
 			} 
 			listOfOptionsToCompare.add(ii);
