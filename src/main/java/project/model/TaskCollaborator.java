@@ -1,6 +1,7 @@
 package project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -9,7 +10,7 @@ import java.util.Calendar;
 
 @Entity
 @Table(name = "TaskCollaborator")
-public class TaskCollaborator implements Serializable {
+public class TaskCollaborator extends ResourceSupport implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -78,7 +79,7 @@ public class TaskCollaborator implements Serializable {
 	}
 
 
-	public Long getId() {
+	public Long getDbId() {
 		return id;
 	}
 

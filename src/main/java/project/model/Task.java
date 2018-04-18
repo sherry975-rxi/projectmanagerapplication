@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.hateoas.ResourceSupport;
 import project.model.taskstateinterface.*;
 
 import javax.persistence.*;
@@ -25,13 +26,13 @@ import static javax.persistence.CascadeType.ALL;
  */
 @Entity
 @Table(name = "Task")
-public class Task implements Serializable {
+public class Task extends ResourceSupport implements Serializable {
 
 	static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long dbTaskId;
 	private String taskID;
 	private String description;
 
@@ -291,12 +292,12 @@ public class Task implements Serializable {
 		this.currentState = currentState;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getDbTaskId() {
+		return dbTaskId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setDbTaskId(Long dbTaskId) {
+		this.dbTaskId = dbTaskId;
 	}
 
 	public void setTaskID(String taskId) {
@@ -466,8 +467,8 @@ public class Task implements Serializable {
 
 	/**
 	 * This method when called returns the taskID
-	 * 
-	 * @return taskID the id of the task
+	 *
+	 * @return taskID the dbTaskId of the task
 	 * 
 	 */
 	public String getTaskID() {

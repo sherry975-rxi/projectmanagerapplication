@@ -1,6 +1,8 @@
 package project.model;
 
-public class EmailMessage {
+import org.springframework.hateoas.ResourceSupport;
+
+public class EmailMessage extends ResourceSupport {
 
     private String emailAddress;
     private String subject;

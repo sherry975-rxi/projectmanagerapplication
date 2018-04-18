@@ -640,7 +640,7 @@ public class TaskService {
 
 			String message = "Task not found! id: ";
 
-			Optional<Task> result = this.taskRepository.findById(id);
+			Optional<Task> result = this.taskRepository.findByDbTaskId(id);
 
 			assignStateAccordingToEnum(result.orElseThrow(() -> new ObjectNotFoundException(message + id)));
 

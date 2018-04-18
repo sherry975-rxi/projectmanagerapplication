@@ -1,5 +1,6 @@
 package project.restcontroller;
 
+
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,4 +21,5 @@ public class RestProjectController extends ResourceSupport {
         Project project = this.projectService.getProjectById(projectId);
         return ResponseEntity.ok(project);
     }
+    
 }

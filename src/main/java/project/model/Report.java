@@ -1,6 +1,7 @@
 package project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -15,7 +16,7 @@ import java.util.Calendar;
 @Entity
 @Table(name = "Report")
 
-public class Report {
+public class Report extends ResourceSupport {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,7 +62,7 @@ public class Report {
 	 *
 	 * @return id
 	 */
-	public int getId() {
+	public int getDbId() {
 		return id;
 	}
 
