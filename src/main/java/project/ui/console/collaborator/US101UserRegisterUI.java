@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import project.controllers.US101RegisterUserController;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * UI for register a user (US102)
@@ -14,10 +17,13 @@ import java.util.Scanner;
 
 @Controller
 public class US101UserRegisterUI {
+
 	@Autowired
 	private US101RegisterUserController us101RegisterUserController;
 
-	public void userRegister() throws Exception {
+	boolean loop = true;
+
+	public void userRegister(){
 		String blank = "";
 		Scanner scannerInput = new Scanner(System.in);
 
@@ -178,90 +184,80 @@ public class US101UserRegisterUI {
 			System.out.println("[2] - Send verification code by Email.");
 			System.out.println("[3] - Exit Registration.");
 
-
-			String option = scannerInput.nextLine().toUpperCase();
-
-			Boolean loop = true;
-			while (loop) {
-				switch (option) {
-
-					case "1":
-
-						try{
-							us101RegisterUserController.sendVerificationCode(email, "1");
-							loop = false;
-
-							System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
-							System.out.println();
-							String codeInsertByPhone = scannerInput.nextLine();
-
-							if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsertByPhone, email)) {
-								System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
-							} else {
-								System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
-								System.out.println("----- The numeric verification code that you provided is not correct. -----");
-							}
-						} catch(Exception e){
-							System.out.println("");
-							System.out.println("");
-							System.out.println("Message could not be sent. Please, your check internet connection and try again.");
-							loop = false;
-							break;
-
-						}
+			displayActivationOptions(email);
+		}
+	}
 
 
-						break;
-					case "2":
+	/**
+	 * This methods displays the account activation options to the user and allows the user to choose one of them.
+	 *
+	 * @param email Email of the user
+	 */
+	private void displayActivationOptions(String email) {
 
-						try{
+		Scanner scannerInput = new Scanner(System.in);
+		String option = scannerInput.nextLine().toUpperCase();
 
-							us101RegisterUserController.sendVerificationCode(email, "2");
-							loop = false;
+		while (loop) {
+			switch (option) {
+
+				case "1":
+					sendMessageOrEmail(email, option);
+					break;
+
+				case "2":
+					sendMessageOrEmail(email, option);
+					break;
+
+				case "E":
+					loop = false;
+					System.out.println();
+					System.out.println("----- REGISTER CANCELLED -----");
+					System.out.println();
+					break;
+
+				default:
+					System.out.println("Please, type a valid option");
+					option = scannerInput.nextLine().toUpperCase();
+			}
+		}
 
 
-							System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
-							System.out.println();
-							String codeInsertByMail = scannerInput.nextLine();
+	}
 
-							if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsertByMail, email)) {
-								System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
-							} else {
-								System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
-								System.out.println("----- The numeric verification code that you provided is not correct. -----");
-							}
+	/**
+	 * This method sends a verification SMS or Email to the user.
+	 *
+	 * @param email Email of the user
+	 * @param option Activation option chosen by the user
+	 */
+	private void sendMessageOrEmail(String email, String option) {
 
-						} catch(Exception e){
-							System.out.println("");
-							System.out.println("");
-							System.out.println("Message could not be sent. Please, check your internet connection and try again.");
-							loop = false;
-							break;
+		Scanner scannerInput = new Scanner(System.in);
 
+		try{
 
-						}
+			us101RegisterUserController.sendVerificationCode(email, option);
+			this.loop = false;
 
 
+			System.out.println("------ Please visit your account and insert the numeric verification code you received : -----");
+			System.out.println();
+			String codeInsertByMail = scannerInput.nextLine();
 
-						break;
+			if (us101RegisterUserController.doesCodeGeneratedMatch(codeInsertByMail, email)) {
+				System.out.println("---------------------------------------- REGISTER SUCCESSFUL-----------------------------------");
 
-					case "E":
-
-						loop = false;
-						System.out.println();
-						System.out.println("----- REGISTER CANCELLED -----");
-						System.out.println();
-						break;
-
-					default:
-						System.out.println("Please, type a valid option");
-						option = scannerInput.nextLine().toUpperCase();
-
-				}
-
+			} else {
+				System.out.println("------------------------------ REGISTER CANCELLED -------------------------");
+				System.out.println("----- The numeric verification code that you provided is not correct. -----");
 			}
 
-
+		} catch(MessagingException | IOException e){
+			Logger log = Logger.getAnonymousLogger();
+			this.loop = false;
+			log.info(e.getMessage() + "Message could not be sent. Please, your check internet connection and try again." );
 		}
 	}
 }

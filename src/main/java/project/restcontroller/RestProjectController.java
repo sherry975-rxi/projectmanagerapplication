@@ -1,5 +1,8 @@
 package project.restcontroller;
 
+import org.springframework.hateoas.ResourceSupport;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +14,7 @@ import project.services.UserService;
 
 @RestController
 @RequestMapping("projects/")
-public class RestProjectController {
+public class RestProjectController extends ResourceSupport {
 
     private final ProjectService projectService;
     private final UserService userService;

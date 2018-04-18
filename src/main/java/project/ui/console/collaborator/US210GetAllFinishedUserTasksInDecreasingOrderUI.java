@@ -21,9 +21,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 	}
 
 	public void getAllFinishedUserTasksInDecreasingOrderUI() {
-		boolean loop = true;
-		while (loop) {
-			loop = false;
+		while (true) {
 		Scanner scannerInput = new Scanner(System.in);
 
 		userTasks.setUser(this.currentUser);
@@ -43,12 +41,11 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderUI {
 		
 
 		String choice = scannerInput.nextLine().toUpperCase();
-		switch (choice) {
-		case "B":
+		if(choice != "B") {
 			break;
-		default:
+		}
+		else{
 			System.out.println("Invalid input. Please retry:");
-			loop = true;
 
 		}
 		}

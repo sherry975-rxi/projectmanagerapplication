@@ -23,7 +23,6 @@ public class US206CreateRemovalTaskRequestUI {
 	User user;
 	String taskID;
 	Integer projID;
-	private Boolean isPreviousUIFromTasks;
 
 	public US206CreateRemovalTaskRequestUI() {
 		//Empty constructor for JPA purposes
