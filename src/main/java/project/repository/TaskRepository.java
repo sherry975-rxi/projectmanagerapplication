@@ -10,8 +10,8 @@ import java.util.Optional;
 
 @Component
 public interface TaskRepository extends JpaRepository<Task, Integer>{
-	
-	Optional<Task> findById(Long id);
+
+	Optional<Task> findByDbTaskId(Long id);
 
 	Optional<Task> findByTaskID(String id);
 

@@ -77,7 +77,7 @@ public class US372GetStartedNotFinishedProjectTasksRestTest {
         //Created task1
         this.task1 = new Task("Desenvolver Listas", project);
         task1.setProject(project);
-        task1.setId(1L);
+        task1.setDbTaskId(1L);
         task1.setTaskID("1");
 
         //Planned task1

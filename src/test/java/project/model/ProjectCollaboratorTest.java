@@ -116,9 +116,9 @@ public class ProjectCollaboratorTest {
     @Test
     public void testSetId() {
 
-        testMoar.setId(11L);
+        testMoar.setProjCollabId(11L);
 
-        assertEquals(11L, testMoar.getId(), 0);
+        assertEquals(11L, testMoar.getProjCollabId(), 0);
     }
 
     @Test

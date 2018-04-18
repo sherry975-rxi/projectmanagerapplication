@@ -3,8 +3,9 @@ package project.model;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import org.springframework.hateoas.ResourceSupport;
 
-public class SendSMS {
+public class SendSMS extends ResourceSupport {
 
 
 

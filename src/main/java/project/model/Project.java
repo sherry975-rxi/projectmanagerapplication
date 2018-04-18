@@ -1,10 +1,14 @@
 package project.model;
 
 import com.google.common.base.Joiner;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -19,11 +23,11 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "Project")
-public class Project implements Serializable{
+public class Project extends ResourceSupport implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private int projectId;
 
 	private int status;
 	@OneToOne
@@ -90,12 +94,12 @@ public class Project implements Serializable{
 
 	}
 
-	public int getId() {
-		return id;
+	public int getProjectId() {
+		return projectId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
 	public int getStatus() {
@@ -316,7 +320,7 @@ public class Project implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 3;
-		result = prime * result + (Integer) id;
+        result = prime * result + projectId;
 		return result;
 	}
 
@@ -334,7 +338,7 @@ public class Project implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Project other = (Project) obj;
-		return id == other.id;
+		return projectId == other.projectId;
 	}
 
 	/**
@@ -343,7 +347,7 @@ public class Project implements Serializable{
 	 * @return idCode of Project
 	 */
 	public int getIdCode() {
-		return this.id;
+		return this.projectId;
 	}
 
 	/**
@@ -399,7 +403,7 @@ public class Project implements Serializable{
 
     public List<Integer> getAvailableCalculationMethods() {
         return Arrays.asList(availableCalculationMethods.split(",")).stream().
-				map(method -> Integer.parseInt(method)).collect(Collectors.toList());
+                map(Integer::parseInt).collect(Collectors.toList());
     }
 	public void setAvailableCalculationMethods(List<Integer> availableCalculationMethods) {
 

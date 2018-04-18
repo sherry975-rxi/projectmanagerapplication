@@ -95,7 +95,7 @@ public class PrintTaskInfoControllerTest {
 		task2.addProjectCollaboratorToTask(collab1);
 		task2.addProjectCollaboratorToTask(collab2);
 
-		projectID = project.getId();
+		projectID = project.getProjectId();
 
 		// Instantiates the controllers
 		controller.setTask(task1);

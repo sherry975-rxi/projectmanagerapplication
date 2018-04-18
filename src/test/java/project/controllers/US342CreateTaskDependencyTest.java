@@ -124,7 +124,7 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public final void testGetTaskByID() {
 
-		Integer projectID = proj.getId();
+		Integer projectID = proj.getProjectId();
 
 		assertEquals(taskB, controller.getTaskByID((projectID + ".2")));
 		assertEquals(taskC, controller.getTaskByID((projectID + ".3")));
@@ -134,7 +134,7 @@ public class US342CreateTaskDependencyTest {
 	@Test
 	public final void projectContainsSelectedTask() {
 
-		Integer projectID = proj.getId();
+		Integer projectID = proj.getProjectId();
 
 		assertTrue(controller.projectContainsSelectedTask(projectID + ".2"));
 		assertFalse(controller.projectContainsSelectedTask(projectID + ".4"));
