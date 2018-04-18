@@ -8,7 +8,6 @@ import project.services.TaskService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -73,8 +72,7 @@ public class ProjectTest {
 	 */
 	@Test
 	public void testProject() {
-		
-		List<ProjectCollaborator> projectTeam = new ArrayList<ProjectCollaborator>();
+
 		p1.setEffortUnit(EffortUnit.HOURS);
 		p1.setProjectBudget(100);
 		assertEquals(EffortUnit.HOURS, p1.getEffortUnit());
@@ -93,7 +91,8 @@ public class ProjectTest {
 	public void testCreateProjectCollaborator() {
 
 		ProjectCollaborator testingUser2Collab = p1.createProjectCollaborator(user2, 1200);
-		assertEquals(projectCollaborator2, testingUser2Collab);
+		assertTrue(testingUser2Collab.isUser(user2));
+		assertEquals(p1, testingUser2Collab.getProject());
 
 	}
 
@@ -250,6 +249,7 @@ public class ProjectTest {
 	 */
 	@Test
 	public void testHashcode() {
+		p1.setProjectId(1);
 		assertTrue(p1.hashCode() == p1.hashCode());
 		assertTrue (p1.hashCode() == 31*3 + p1.getIdCode());
 
@@ -375,17 +375,14 @@ public class ProjectTest {
 	public void testSetAndGetPermittedCalculationMethods() {
 		// given a new project, the list of allowed methods should contain four entries, matching 1,2,3,4
 		assertEquals(3, p1.getAvailableCalculationMethods().size());
-		assertEquals((new ArrayList<>(Arrays.asList(new Integer[]{1,2,3}))), p1.getAvailableCalculationMethods());
+		assertEquals((new ArrayList<>(Arrays.asList(1, 2, 3))), p1.getAvailableCalculationMethods());
 		assertTrue(p1.isCalculationMethodAllowed(2));
 		// when the list of permitted methods is reset as 1,3,4
-		p1.setAvailableCalculationMethods((new ArrayList<>(Arrays.asList(new Integer[]{1,3}))));
+		p1.setAvailableCalculationMethods((new ArrayList<>(Arrays.asList(1, 3))));
 		// then the list must contain 3 entries, and 2 must not be allowed
 		assertFalse(p1.isCalculationMethodAllowed(2));
 		assertEquals(2, p1.getAvailableCalculationMethods().size());
 	}
-
-
-
 
 
 }

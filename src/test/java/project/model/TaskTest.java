@@ -855,6 +855,9 @@ public class TaskTest {
 
 		assertEquals(3.0, taskReadyToFinishTest.getReports().get(0).getReportedTime(), 0.1);
 
+		assertFalse(taskReadyToFinishTest.updateReportedTime(5.0, taskCollaborator, -7));
+
+		assertFalse(taskReadyToFinishTest.updateReportedTime(5.0, taskCollaborator, 100));
 	}
 
 	/**
@@ -1099,6 +1102,8 @@ public class TaskTest {
 		assertTrue(taskTest.createTaskDependence(taskReadyToFinishTest, 1));
 
 		assertTrue(taskTest.hasDependencies());
+
+		assertFalse(taskTest.createTaskDependence(taskReadyToFinishTest, -5));
 	}
 
 	/**
