@@ -48,7 +48,7 @@ public class TaskService {
 
 		Task newTask = selectedProject.createTask(description);
 
-		int projectID = selectedProject.getId();
+		int projectID = selectedProject.getProjectId();
 		int taskNumber = getProjectTasks(selectedProject).size()+1;
 		String taskID = projectID  + "." + taskNumber;
 
@@ -640,7 +640,7 @@ public class TaskService {
 
 			String message = "Task not found! id: ";
 
-			Optional<Task> result = this.taskRepository.findById(id);
+			Optional<Task> result = this.taskRepository.findByDbTaskId(id);
 
 			assignStateAccordingToEnum(result.orElseThrow(() -> new ObjectNotFoundException(message + id)));
 

@@ -1,6 +1,7 @@
 package project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.io.Serializable;
  *
  */
 @Entity
-public class Address implements Serializable {
+public class Address extends ResourceSupport implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -185,11 +186,8 @@ public class Address implements Serializable {
 			return false;
 		Address other = (Address) obj;
 		if (street == null) {
-			if (other.street != null)
-				return false;
-		} else if (!street.equals(other.street))
-			return false;
-		return true;
+			return other.street == null;
+		} else return street.equals(other.street);
 	}
 
 	public User getUser() {

@@ -99,7 +99,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 		controller.setUser(user);
 		controller.setProject(proj);
 		controller.setTaskID(taskA.getTaskID());
-		controller.setProjectID(proj.getId());
+		controller.setProjectID(proj.getProjectId());
 		
 		Integer projID = proj.getIdCode();	
 		controller.setProjectID(projID);

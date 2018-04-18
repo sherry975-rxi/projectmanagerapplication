@@ -191,7 +191,7 @@ public class UserService {
 	 *            parameter used to fetch users from the DataBase
 	 * @return all users that possess a certain email address
 	 */
-	public User getUserByID(int id) { return this.userRepository.findById(id); }
+	public User getUserByID(int id) { return this.userRepository.findByUserID(id); }
 
 
 	/**

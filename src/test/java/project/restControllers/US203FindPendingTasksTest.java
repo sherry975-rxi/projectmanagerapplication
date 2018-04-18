@@ -150,7 +150,7 @@ public class US203FindPendingTasksTest {
         restController = new US203FindPendingTaskRestRequest(userService, taskService);
 
         // creates mock returns to find Owner and Mike's data by ID number, as well as the task list
-        Mockito.when(userRepository.findById(mike.getId())).thenReturn(mike);
+        Mockito.when(userRepository.findByUserID(mike.getUserID())).thenReturn(mike);
 
         Mockito.when(taskRepository.findAll()).thenReturn(taskList);
 
@@ -191,7 +191,7 @@ public class US203FindPendingTasksTest {
         expected.add(ongoingTaskString);
         expected.add(n2OngoingTaskString);
 
-        String mikeID = String.valueOf(mike.getId());
+        String mikeID = String.valueOf(mike.getUserID());
 
         // then the getPendingTasks method must return those two tasks when called to search for mike's ID
         assertEquals(ResponseEntity.ok().body(expected), restController.getPendingTasks(mikeID));
@@ -224,8 +224,8 @@ public class US203FindPendingTasksTest {
 
 
         // when Owner's ID is converted into string and fed to get Pending Tasks
-        String ownerID = String.valueOf(owner.getId());
-        Mockito.when(userRepository.findById(owner.getId())).thenReturn(owner);
+        String ownerID = String.valueOf(owner.getUserID());
+        Mockito.when(userRepository.findByUserID(owner.getUserID())).thenReturn(owner);
 
         // then it must return a list with the "no tasks" message
         assertEquals(ResponseEntity.ok().body(noTasks), restController.getPendingTasks(ownerID));

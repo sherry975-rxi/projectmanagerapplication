@@ -223,7 +223,7 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 								User userOfProjectCollab = userService.getUserByEmail(eElementnNodeTaskCollaborator
 										.getElementsByTagName(COLABORATOR_ID).item(0).getTextContent());
 
-								Project project1 = projectService.getProjectById(task.getProject().getId());
+								Project project1 = projectService.getProjectById(task.getProject().getProjectId());
 
 
 								ProjectCollaborator projCollaborator = projectService

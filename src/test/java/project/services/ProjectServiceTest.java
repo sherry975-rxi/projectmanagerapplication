@@ -287,10 +287,10 @@ public class ProjectServiceTest {
 		/*
 		 * Sets the ID of the projects
 		 */
-		project1.setId(0);
-		project2.setId(1);
-		project3.setId(2);
-		project4.setId(3);
+		project1.setProjectId(0);
+		project2.setProjectId(1);
+		project3.setProjectId(2);
+		project4.setProjectId(3);
 
 		/*
 		 * adds the 4 projects to the list
@@ -552,10 +552,10 @@ public class ProjectServiceTest {
 		 * ProjectRepository when the method "getProjectById" is used
 		 */
 
-		Mockito.when(projectRep.findById(project1.getId())).thenReturn(Optional.of(project1));
-		assertEquals(project1, projectService.getProjectById(project1.getId()));
+		Mockito.when(projectRep.findById(project1.getProjectId())).thenReturn(Optional.of(project1));
+		assertEquals(project1, projectService.getProjectById(project1.getProjectId()));
 
-		Mockito.verify(projectRep, Mockito.times(1)).findById(project1.getId());
+		Mockito.verify(projectRep, Mockito.times(1)).findById(project1.getProjectId());
 
 	}
 

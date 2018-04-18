@@ -325,11 +325,11 @@ public class ProjectTest {
 
 	@Test
 	public void testGettersAndSetters(){
-		p1.setId(123);
-		assertEquals(123, p1.getId());
+		p1.setProjectId(123);
+		assertEquals(123, p1.getProjectId());
 		
-		p1.setId(1);
-		assertEquals(1, p1.getId());
+		p1.setProjectId(1);
+		assertEquals(1, p1.getProjectId());
 		
 		Calendar newDate = Calendar.getInstance(); 
 		p1.setStartdate(newDate);

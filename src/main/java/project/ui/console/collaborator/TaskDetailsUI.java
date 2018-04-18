@@ -186,6 +186,6 @@ public class TaskDetailsUI {
 	public void setTaskID(String taskID) {
 		this.taskID = taskID;
 		this.task = taskService.getTaskByTaskID(taskID);
-		this.projectID = task.getProject().getId();
+		this.projectID = task.getProject().getProjectId();
 	}
 }

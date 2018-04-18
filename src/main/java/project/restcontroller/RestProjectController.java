@@ -8,6 +8,8 @@ import project.model.Project;
 import project.model.User;
 import project.services.ProjectService;
 import project.services.UserService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("projects")

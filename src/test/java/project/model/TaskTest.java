@@ -95,7 +95,7 @@ public class TaskTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 
 		userTest = null;
 		projectTest = null;
@@ -263,30 +263,30 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#getId()}.
+	 * Test method for {@link project.model.Task#getDbTaskId()}.
 	 */
 	@Test
 	public void testGetId() {
 
 		Long expected = 1L;
 
-		taskTest.setId(expected);
+		taskTest.setDbTaskId(expected);
 
-		assertEquals(expected, taskTest.getId());
+		assertEquals(expected, taskTest.getDbTaskId());
 
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#setId(java.lang.Long)}.
+	 * Test method for {@link project.model.Task#setDbTaskId(java.lang.Long)}.
 	 */
 	@Test
 	public void testSetId() {
 
 		Long expected = 1L;
 
-		taskTest.setId(expected);
+		taskTest.setDbTaskId(expected);
 
-		assertEquals(expected, taskTest.getId());
+		assertEquals(expected, taskTest.getDbTaskId());
 	}
 
 	/**
@@ -849,7 +849,7 @@ public class TaskTest {
 
 		assertEquals(2.0, taskReadyToFinishTest.getReports().get(0).getReportedTime(), 0.1);
 
-		int reportToChange = taskReadyToFinishTest.getReports().get(0).getId();
+		int reportToChange = taskReadyToFinishTest.getReports().get(0).getDbId();
 
 		taskReadyToFinishTest.updateReportedTime(3.0, taskCollaborator, reportToChange);
 
@@ -953,7 +953,7 @@ public class TaskTest {
 		assertEquals(1.0, taskReadyToFinishTest.getTimeSpentOnTask(), 0.1);
 
 		taskReadyToFinishTest.updateReportedTime(2.0, taskCollaborator,
-				taskReadyToFinishTest.getReports().get(0).getId());
+				taskReadyToFinishTest.getReports().get(0).getDbId());
 
 		assertEquals(2.0, taskReadyToFinishTest.getTimeSpentOnTask(), 0.1);
 

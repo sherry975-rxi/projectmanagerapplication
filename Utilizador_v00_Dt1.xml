@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<lista_utilizadores id="TestSet01" description="Lista de utilizadores do TestSet01">
+<lista_utilizadores dbTaskId="TestSet01" description="Lista de utilizadores do TestSet01">
 	<utilizador>
 		<nome_utilizador>João Silva</nome_utilizador> 		<!-- US201-->
 		<email_utilizador>js@mymail.com</email_utilizador>

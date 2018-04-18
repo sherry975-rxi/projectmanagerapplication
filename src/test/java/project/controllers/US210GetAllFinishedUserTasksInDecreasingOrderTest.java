@@ -217,7 +217,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 		task3.setFinishDate(finishOverwrite3);
 		taskService.saveTask(task3);
 
-		Integer projectID = project1.getId();
+		Integer projectID = project1.getProjectId();
 
 		// Create Strings representing the info shown of each task
 		String one = "[" + projectID + ".1] 16/01/2018 - Do this";
