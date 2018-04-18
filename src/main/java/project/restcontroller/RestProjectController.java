@@ -32,20 +32,19 @@ public class RestProjectController {
      * @param projectId
      * @return
      */
-    @RequestMapping(value = "/{projectId}/" , method = RequestMethod.PUT)
-    public ResponseEntity<String> changeProjectManager(@RequestBody Project project, @PathVariable int projectId){
+    @RequestMapping(value = "/{projectId}/" , method = RequestMethod.PATCH)
+    public ResponseEntity<?> changeProjectManager(@RequestBody Project project, @PathVariable int projectId){
 
         Project projectToUpdate = projectService.getProjectById(projectId);
 
         User user = userService.getUserByEmail(project.getProjectManager().getEmail());
 
+
         if(user != null) {
 
-            projectToUpdate.setProjectManager(user);
+            projectService.changeProjectManager(user, projectToUpdate);
 
-            projectService.updateProject(projectToUpdate);
-
-            return new ResponseEntity<>("Project manager successfully changed!",HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         }
 
