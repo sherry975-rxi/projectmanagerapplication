@@ -29,6 +29,11 @@ public class RestUserController {
     }
 
 
+
+
+
+
+
     /**
      * This method allows the administrator to search users by a part of the email.
      *
