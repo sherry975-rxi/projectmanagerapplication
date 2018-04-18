@@ -23,7 +23,7 @@ public class UserTest {
 
         u1.setUserID(1);
 
-        assertEquals(1, u1.getDBid());
+        assertEquals(1, u1.getUserID());
     }
 
     @Test
