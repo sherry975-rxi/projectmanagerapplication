@@ -2,6 +2,7 @@ package project.restcontroller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
@@ -9,6 +10,7 @@ import project.model.User;
 import project.services.ProjectService;
 import project.services.UserService;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 
 @RestController
@@ -53,6 +55,9 @@ public class RestProjectController  {
         }
 
         this.projectService.addProjectToProjectContainer(proj);
+
+        Link selfRef = linkTo(RestProjectController.class).slash(proj.getProjectId()).withSelfRel();
+        proj.add(selfRef);
 
         return ResponseEntity.ok().body(proj);
     }
