@@ -28,21 +28,16 @@ public class RestProjectController {
     /**
      * This method change the project manager of a given project
      *
-     * @param project
+     * @param projectInfoToUpdate
      * @param projectId
      * @return
      */
     @RequestMapping(value = "/{projectId}/" , method = RequestMethod.PATCH)
-    public ResponseEntity<?> changeProjectManager(@RequestBody Project project, @PathVariable int projectId){
+    public ResponseEntity<?> updateProject(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
 
-        Project projectToUpdate = projectService.getProjectById(projectId);
+        if(projectService.isProjectInProjectContainer(projectId)) {
 
-        User user = userService.getUserByEmail(project.getProjectManager().getEmail());
-
-
-        if(user != null) {
-
-            projectService.changeProjectManager(user, projectToUpdate);
+            projectService.updateProject(projectInfoToUpdate, projectId);
 
             return new ResponseEntity<>(HttpStatus.OK);
 
