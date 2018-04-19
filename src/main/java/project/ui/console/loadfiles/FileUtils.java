@@ -18,15 +18,18 @@ import java.io.IOException;
  */
 public class FileUtils {
 
+	private FileUtils() {
+		// empty constructor, do not use
+	}
+
 	public static Document readFromXmlFile(String pathFile)
 			throws ParserConfigurationException, SAXException, IOException {
 
 		File file = new File(pathFile);
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		Document document = documentBuilder.parse(file);
 
-		return document;
+		return documentBuilder.parse(file);
 	}
 
 }
