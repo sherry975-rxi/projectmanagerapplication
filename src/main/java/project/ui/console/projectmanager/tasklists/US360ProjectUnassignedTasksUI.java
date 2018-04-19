@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.controllers.PrintProjectInfoController;
 import project.controllers.US360GetProjectTasksWithoutCollaboratorsAssignedController;
 import project.model.Project;
-import project.model.User;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class US360ProjectUnassignedTasksUI {
 	@Autowired
 	private PmTaskFunctionalitiesUI taskFuntionatities;
 
-	public void projectUnassignedTasksUI(Project project, User user) {
+	public void projectUnassignedTasksUI(Project project) {
 		
 
 		Scanner scannerInput = new Scanner(System.in);

@@ -67,7 +67,7 @@ public class US203FindPendingTaskRestRequest {
         } else {
 
             List<String> taskListString = taskService.getStartedNotFinishedUserTaskList(user)
-                    .stream().map(Task -> taskDataToString(Task)).collect(Collectors.toList());
+                    .stream().map(task -> taskDataToString(task)).collect(Collectors.toList());
 
             if(taskListString.isEmpty()) {
                 taskListString.add("You have no ongoing tasks!");
