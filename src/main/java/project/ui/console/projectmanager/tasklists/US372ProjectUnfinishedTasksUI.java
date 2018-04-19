@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.controllers.PrintProjectInfoController;
 import project.controllers.US372GetProjectUnfinishedTaskListController;
 import project.model.Project;
-import project.model.User;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class US372ProjectUnfinishedTasksUI {
 	private PmTaskFunctionalitiesUI taskFuntionatities;
 
 
-	public void displayUnfinishedOfProject(Project project, User user) {
+	public void displayUnfinishedOfProject(Project project) {
 
 
 		String line = "___________________________________________________";
