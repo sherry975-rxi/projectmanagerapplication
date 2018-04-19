@@ -126,6 +126,10 @@ public class RestUserControllerTest {
     }
 
 
+    /**
+     * This test verifies if the controller can change the profile of a given user that is registered in the company
+     * and if it returns a NOT_FOUND when the given user is not present in the database.
+     */
     @Test
     public void testChangeUserProfile() {
         // GIVEN a users it is registered in the company.
@@ -155,6 +159,5 @@ public class RestUserControllerTest {
         // THEN the response entity must return status NOT_FOUND
         ResponseEntity<?>expectedHTTPResponseNOT = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         assertEquals(expectedHTTPResponseNOT,controller.changeUserProfile(userDTO2));
-
     }
 }
