@@ -42,13 +42,22 @@ public class RestUserController {
         return new ResponseEntity<>(foundUsers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/profiles" , method = RequestMethod.POST)
+
+    /**
+     * @param updatedProfile
+     * Given a body updatedProfile containing the profile information and user email to update in a user
+     * it searches for the user in the database and updates its profile to the new given profile in the @param
+     * @return Http.Status.Ok when done sucessfully and Http.Status.404_Not_Found when a user doesn't exist.
+     *
+     */
+    @RequestMapping(value = "/profiles" , method = RequestMethod.PATCH)
     public ResponseEntity<?> changeUserProfile (@RequestBody User updatedProfile) {
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         Profile profileChange = updatedProfile.getUserProfile();
 
         User userToChange = userService.getUserByEmail(updatedProfile.getEmail());
+
         if(userToChange != null){
             userToChange.setUserProfile(profileChange);
             userService.updateUser(userToChange);
