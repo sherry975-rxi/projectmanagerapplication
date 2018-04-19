@@ -109,7 +109,7 @@ public class US361AssignTaskToCollaboratorsController {
 	public boolean assignCollaboratorToTask() {
 		boolean assignCollaboratorToTask = false;
 		if (task.addProjectCollaboratorToTask(this.projectCollaborator)) {
-			projectService.updateProject(this.project);
+			projectService.saveProject(this.project);
 			taskService.saveTask(this.task);
 			assignCollaboratorToTask = true;
 		}

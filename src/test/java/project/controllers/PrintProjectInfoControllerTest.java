@@ -58,7 +58,7 @@ public class PrintProjectInfoControllerTest {
 		project.setProjectStatus(3);
 
 		// add project to project repository
-		projectContainer.updateProject(project);
+		projectContainer.saveProject(project);
 
 		// add start date to project
 		Calendar startDate = Calendar.getInstance();
@@ -227,7 +227,7 @@ public class PrintProjectInfoControllerTest {
 
 		project.setAvailableCalculationMethods(expected);
 		project.setCalculationMethod(Project.LAST_COLLABORATOR);
-		projectContainer.updateProject(project);
+		projectContainer.saveProject(project);
 		controller.setProject(project);
 
         first ="[1] - The user's first cost [DISABLED]\n";
@@ -333,7 +333,7 @@ public class PrintProjectInfoControllerTest {
 		joaoPMcolab.setFinishDate(Calendar.getInstance());
 		assertFalse(joaoPMcolab.isProjectCollaboratorActive());
 
-		projectContainer.updateProject(project1);
+		projectContainer.saveProject(project1);
 		projectContainer.updateProjectCollaborator(joaoPMcolab);
 
 		assertEquals(controller.printProjectTeamInfo(), "Daniel [ACTIVE], João [INACTIVE]");

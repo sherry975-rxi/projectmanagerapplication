@@ -21,8 +21,6 @@ import project.restcontroller.US390and392ChooseCalculationMethodAndCalculateRepo
 import project.services.ProjectService;
 import project.services.TaskService;
 
-import javax.print.attribute.standard.Media;
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
@@ -63,7 +61,7 @@ public class US390and392ChooseCalculationMethodAndCalculateReportedProjectCostRe
     public void testUpdateCalculationMethod() throws Exception{
         //given the project is running
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(new Project("Project", "description", userRui));
-        Mockito.doNothing().when(projectServiceMock).updateProject(any(Project.class));
+        Mockito.doNothing().when(projectServiceMock).saveProject(any(Project.class));
 
         //when
         MockHttpServletResponse response = mvc.perform(put("/projects/" + projectId)

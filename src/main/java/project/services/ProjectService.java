@@ -23,6 +23,9 @@ public class ProjectService {
 	private ProjectsRepository projectsRepository;
 
 	@Autowired
+	private UserService userService;
+
+	@Autowired
 	private ProjCollabRepository projectCollaboratorRepository;
 
 	/**
@@ -188,7 +191,7 @@ public class ProjectService {
 	 * @param project
 	 *            Project to update
 	 */
-	public void updateProject(Project project) {
+	public void saveProject(Project project) {
 		this.projectsRepository.save(project);
 	}
 
@@ -358,5 +361,38 @@ public class ProjectService {
 
 	public void setProjectCollaboratorRepository(ProjCollabRepository projectCollaboratorRepository) {
 		this.projectCollaboratorRepository = projectCollaboratorRepository;
+	}
+
+	/**
+	 * This method change the project manager and update project in DB
+	 *
+	 * @param user
+	 * @param project
+	 */
+	public void changeProjectManager(User user, Project project) {
+
+		project.setProjectManager(user);
+
+		saveProject(project);
+
+	}
+
+	/**
+	 *This method upDate project from a given info.
+	 *
+	 * @param projectInfoToUpdate
+	 */
+	public void updateProject(Project projectInfoToUpdate, int projectId){
+
+		Project projectToBeUpdated = getProjectById(projectId);
+
+		if((projectToBeUpdated.getProjectManager() != null)
+				&& (userService.isUserEmailInUserContainer(projectInfoToUpdate.getProjectManager().getEmail()))) {
+
+			User user = userService.getUserByEmail(projectInfoToUpdate.getProjectManager().getEmail());
+
+			changeProjectManager(user, projectToBeUpdated);
+		}
+
 	}
 }

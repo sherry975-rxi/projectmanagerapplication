@@ -30,7 +30,7 @@ public class US390and392ChooseCalculationMethodAndCalculateReportedProjectCostRe
     public ResponseEntity<Project> updateCalculationMethod(@RequestBody Project project, @PathVariable int projectId) {
         Project myProject = this.projectService.getProjectById(projectId);
         myProject.setCalculationMethod(project.getCalculationMethod());
-        this.projectService.updateProject(project);
+        this.projectService.saveProject(project);
         return ResponseEntity.ok().body(myProject);
     }
     /**

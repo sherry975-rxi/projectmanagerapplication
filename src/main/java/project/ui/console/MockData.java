@@ -73,7 +73,7 @@ public class MockData {
     Project project = projectService.createProject("Projecto Sprint 2", "Demo para a sprint", projectManager);
     ProjectCollaborator projectCollaborator = project.createProjectCollaborator(userATirapicos, 10);
 		projectService.addProjectCollaborator(projectCollaborator);
-		projectService.updateProject(project);
+		projectService.saveProject(project);
 
 
 		userDirector.setUserProfile(Profile.DIRECTOR);

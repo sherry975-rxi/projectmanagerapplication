@@ -75,7 +75,7 @@ public class US390CalculateReportedProjectCostController {
 	public void selectReportCostCalculation(Project project, int chosenMethod) {
         project.setCalculationMethod(chosenMethod);
 
-        projectService.updateProject(project);
+        projectService.saveProject(project);
         taskService.calculateReportEffortCost(project);
 	}
 
