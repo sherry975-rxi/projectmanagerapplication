@@ -16,7 +16,11 @@ import java.io.IOException;
  * @author Group3
  *
  */
-public class FileUtils {
+public final class FileUtils {
+
+	private FileUtils() {
+		// empty constructor, do not use
+	}
 
 	public static Document readFromXmlFile(String pathFile)
 			throws ParserConfigurationException, SAXException, IOException {
@@ -24,9 +28,8 @@ public class FileUtils {
 		File file = new File(pathFile);
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		Document document = documentBuilder.parse(file);
 
-		return document;
+		return documentBuilder.parse(file);
 	}
 
 }

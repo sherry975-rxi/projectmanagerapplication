@@ -186,7 +186,7 @@ public class PmTaskFunctionalitiesUI {
 	 *
 	 * @return Returns the date created
 	 */
-	private Date parseDate(String value) {
+	private static Date parseDate(String value) {
 		Calendar date = Calendar.getInstance();
 		Date tempdate = null;
 		try {

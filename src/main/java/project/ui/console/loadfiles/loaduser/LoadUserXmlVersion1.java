@@ -64,7 +64,9 @@ public class LoadUserXmlVersion1 implements LoadUserXmlVersion {
 				// feeds DB with user state
 				boolean systemUserStateActive = false;
 				String active = eElementUtilizador.getElementsByTagName("estado_utilizador").item(0).getTextContent();
-				if (active.equals("Ativo")){ systemUserStateActive = true;}
+				if ("Ativo".equals(active)){
+					systemUserStateActive = true;
+				}
 				eachUser.setSystemUserStateActive(systemUserStateActive);
 
 				NodeList nList = (NodeList) eElementUtilizador.getElementsByTagName("lista_enderecos").item(0);

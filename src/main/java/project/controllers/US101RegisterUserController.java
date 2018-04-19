@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.dto.UserDTO;
 import project.model.CodeGenerator;
 import project.model.EmailMessage;
-import project.model.User;
 import project.model.sendcode.SendCodeFactory;
 import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
@@ -18,7 +17,7 @@ public class US101RegisterUserController {
 	@Autowired
 	private UserService userService;
 
-	private CodeGenerator codeGenerator;
+    private String correctCode;
 
 	public US101RegisterUserController() {
 		//Empty constructor created for JPA integration tests
@@ -76,10 +75,12 @@ public class US101RegisterUserController {
 		String emailSubject = "Verification Code";
 		emailMessage.setSubject(emailSubject);
 
-		codeGenerator = new CodeGenerator();
-		String generatedCode = codeGenerator.generateCode();
+        CodeGenerator codeGenerator = new CodeGenerator();
+
+        correctCode = codeGenerator.generateCode();
+
 		String message = "This is the code you should provide for register in Project Management App:  "
-				+ generatedCode;
+                + correctCode;
 
 		SendCodeFactory sendCodeFactory;
 
@@ -99,7 +100,7 @@ public class US101RegisterUserController {
 	public Boolean doesCodeGeneratedMatch (String codeToCheck, String recipientEmail){
 
 
-		Boolean doCodesMatch = this.codeGenerator.doesCodeGeneratedMatch(codeToCheck);
+        Boolean doCodesMatch = correctCode.equals(codeToCheck);
 
 		if (!doCodesMatch){
 			userService.deleteUser(recipientEmail);
