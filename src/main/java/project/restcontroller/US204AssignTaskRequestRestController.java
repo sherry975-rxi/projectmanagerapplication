@@ -5,19 +5,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import project.model.Task;
-import project.model.User;
+
+import project.model.*;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 /**
  * This rest controller allows a collaborator to create a request of assignment to a specific task
  */
 @RestController
-@RequestMapping("/users/{userId}/projects/{projectId}/tasks/{taskId}")
+@RequestMapping("/projects/{projectId}/tasks/{taskId}")
 public class US204AssignTaskRequestRestController {
 
     private UserService userService;
@@ -31,61 +34,99 @@ public class US204AssignTaskRequestRestController {
         this.userService = userService;
         this.projectService = projectService;
     }
-
+    /**
+     * This method allows the collaborator to get a
+     * list of pending requests from a specific task.
+     *
+     * @param taskId
+     *          Task id associated to the task to be made the request
+     *
+     * @return ResponseEntity
+     */
     @RequestMapping(value = "/requests" , method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllRequests (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId) {
-        ResponseEntity<Object> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    public ResponseEntity<List<TaskTeamRequest>> getAllRequests (@PathVariable String taskId) {
+
 
         Task task = taskService.getTaskByTaskID(taskId);
 
+        return new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
 
-
-        if (!task.getPendingTaskTeamRequests().isEmpty()) {
-            result = new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
-        }
-
-        return result;
     }
 
+    /**
+     * This method allows the collaborator to choose between getting a
+     * list of assignment or removal pending requests from a specific task.
+     *
+     * @param taskId
+     *          Task id associated to the task to be made the request
+     *
+     * @return ResponseEntity
+     */
     @RequestMapping(value = "/requests/{reqType}" , method = RequestMethod.GET)
-    public ResponseEntity<Object> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType , @PathVariable int projectId, @PathVariable  int userId) {
-        ResponseEntity<Object> result = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    public ResponseEntity<List<TaskTeamRequest>> getAllFilteredRequests (@PathVariable String taskId, @PathVariable String reqType) {
+
 
         Task task = taskService.getTaskByTaskID(taskId);
+
 
         if ("assignment".equals(reqType)){
 
-            result = new ResponseEntity<>(task.getPendingTaskAssignmentRequests(), HttpStatus.OK);
+            return new ResponseEntity<>(task.getPendingTaskAssignmentRequests(), HttpStatus.OK);
         }
         else if ("removal".equals(reqType)){
 
-            result = new ResponseEntity<>(task.getPendingTaskRemovalRequests(), HttpStatus.OK);
+            return ResponseEntity.ok(task.getPendingTaskRemovalRequests());
         }
 
-        return result;
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.FORBIDDEN);
     }
 
     /**
      * This method allows the collaborator to create a request of assignment to a specific task.
      *
-     * @param taskId
-     *          Task id associated to the task to be made the request
-     * @param projectId
-     *          Project id associated to the project where the task belongs
-     * @param userId
-     *          User id related to the collaborator that wants to make the request.
+     * @param taskId    Task id associated to the task to be made the request
+     * @param projectId Project id associated to the project where the task belongs
+     * @param userDTO   User related to the collaborator that wants to make the request.
      * @return ResponseEntity
      */
-    @RequestMapping(value = "/requests/assignmentRequest" , method = RequestMethod.POST)
-    public ResponseEntity<Object> createRequestAddCollabToTask (@PathVariable String taskId, @PathVariable int projectId, @PathVariable  int userId){
-        ResponseEntity<Object> result = new ResponseEntity<>("Not Authorized!", HttpStatus.FORBIDDEN);
+    @RequestMapping(value = "/requests/assignmentRequest", method = RequestMethod.POST)
+    public ResponseEntity<TaskTeamRequest> createAssignmentRequest(@PathVariable String taskId, @PathVariable int projectId, @RequestBody User userDTO) {
+
+        Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
-        User user = userService.getUserByID(userId);
-            if(task.createTaskAssignmentRequest(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))&&!task.isProjectCollaboratorInTaskTeam(this.projectService.findActiveProjectCollaborator(user, projectService.getProjectById(projectId)))){
-                this.taskService.saveTask(task);
-                result = new ResponseEntity<>(HttpStatus.OK);
+
+        String userDTOEmail = userDTO.getEmail();
+
+        User user = userService.getUserByEmail(userDTOEmail);
+
+        Optional<User> userOptional = Optional.of(user);
+
+        if (userOptional.isPresent()) {
+            //userOptional.get();
+
+
+            ProjectCollaborator projCollab = projectService.findActiveProjectCollaborator(user, project);
+
+            if (projCollab != null && !task.isProjectCollaboratorActiveInTaskTeam(projCollab) && !task.isAssignmentRequestAlreadyCreated(projCollab)) {
+
+                task.createTaskAssignmentRequest(projCollab);
+                taskService.saveTask(task);
+
+                for (TaskTeamRequest other : task.getPendingTaskTeamRequests()) {
+                    if (other.getTask().equals(task) && other.getProjCollab().equals(projCollab) && other.isAssignmentRequest()) {
+                        TaskTeamRequest requestCreated = other;
+
+                        return new ResponseEntity<>(requestCreated, HttpStatus.CREATED);
+                    }
+                }
+
             }
-        return result;
+            // user, project and task exist but user is not in this project
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+
+        // either user, project or task don't exist
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 }
