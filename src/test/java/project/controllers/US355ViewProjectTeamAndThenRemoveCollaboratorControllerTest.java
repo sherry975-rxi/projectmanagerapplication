@@ -58,7 +58,7 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 
 		teamPermanentCollaborator = projectContainer.createProjectCollaborator(teamPermanentMember, testProject, 2000);
 
-		projectContainer.updateProject(testProject);
+		projectContainer.saveProject(testProject);
 
 		viewProjectTeamAndThenRemoveCollaborator.setProj(testProject);
 	}

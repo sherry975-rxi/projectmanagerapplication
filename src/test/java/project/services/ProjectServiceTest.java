@@ -361,10 +361,10 @@ public class ProjectServiceTest {
 	public void testUpdateProject() {
 
 		/*
-		 * Verifies that the method updateProject calls the method save from the
+		 * Verifies that the method saveProject calls the method save from the
 		 * ProjectRepository when called
 		 */
-		projectService.updateProject(project1);
+		projectService.saveProject(project1);
 		Mockito.verify(projectRep, Mockito.times(1)).save(project1);
 
 	}

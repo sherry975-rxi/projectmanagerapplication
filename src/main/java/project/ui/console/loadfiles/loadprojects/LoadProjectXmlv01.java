@@ -91,7 +91,7 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 				project.setCalculationMethod(Project.FIRST_COLLABORATOR);
 				project.setAvailableCalculationMethods(new ArrayList<>(Arrays.asList(1,2,3)));
 
-				projectService.updateProject(project);
+				projectService.saveProject(project);
 
 				// Node lista_colaboradores
 				NodeList nProjectCollaboratorList = eElementProject.getElementsByTagName("colaborador_projeto");

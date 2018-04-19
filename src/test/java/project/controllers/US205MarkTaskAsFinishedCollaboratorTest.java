@@ -110,9 +110,9 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		task6 = taskService.createTask("create test for method set name in class user", project3);
 
 		// update all projects
-		projectContainer.updateProject(project1);
-		projectContainer.updateProject(project2);
-		projectContainer.updateProject(project3);
+		projectContainer.saveProject(project1);
+		projectContainer.saveProject(project2);
+		projectContainer.saveProject(project3);
 
 		// create a estimated Task Start Date
 		startDateTest = Calendar.getInstance();

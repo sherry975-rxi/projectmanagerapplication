@@ -78,7 +78,7 @@ public class PrintTaskInfoControllerTest {
 		project.setFinishdate(finishDate);
 
 		// add project to project repository
-		projContainer.updateProject(project);
+		projContainer.saveProject(project);
 
 		// create project collaborators
 		collab1 = projContainer.createProjectCollaborator(user1, project, 2);
