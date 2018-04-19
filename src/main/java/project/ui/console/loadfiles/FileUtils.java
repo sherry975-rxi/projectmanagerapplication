@@ -16,7 +16,7 @@ import java.io.IOException;
  * @author Group3
  *
  */
-public class FileUtils {
+public final class FileUtils {
 
 	private FileUtils() {
 		// empty constructor, do not use
