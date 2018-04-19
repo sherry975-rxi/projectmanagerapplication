@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<projeto dbTaskId="TestProj01">
+<projeto id="TestProj01">
 	<nome_projeto>Projeto de teste 1</nome_projeto>					<!-- US301 v02 -->
 	<descricao_projeto>Projeto de teste inicial</descricao_projeto>
 	<data_inicio_projeto>01/10/2017</data_inicio_projeto>

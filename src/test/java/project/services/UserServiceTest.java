@@ -129,6 +129,37 @@ public class UserServiceTest {
         verify(userRepositoryMock, times(2)).save(user1);
 	}
 
+	/**
+	 * Test method call delete user from Repository
+	 */
+	@Test
+	public final void testDeleteUserFromRepository() {
+
+		// GIVEN an empty database
+		Mockito.when(userRepositoryMock.existsByEmail(user1.getEmail())).thenReturn(false);
+
+
+		// WHEN "deleteUser" method is called for user 1
+		userContainer.deleteUser(user1.getEmail());
+
+		// THEN the repository method "deleteByEmail" must NOT be called
+		verify(userRepositoryMock, times(0)).deleteByEmail(user1.getEmail());
+
+		// AND WHEN user1 is added to the database
+		userContainer.addUserToUserRepositoryX(user1);
+		Mockito.when(userRepositoryMock.existsByEmail(user1.getEmail())).thenReturn(true);
+
+		// THEN the repository method "deleteByEmail" must be invoked once when calling deleteUser
+        userContainer.deleteUser(user1.getEmail());
+        verify(userRepositoryMock, times(1)).deleteByEmail(user1.getEmail());
+
+
+
+
+
+
+	}
+
 
 
 	/**

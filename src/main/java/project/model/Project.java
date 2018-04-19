@@ -320,7 +320,7 @@ public class Project extends ResourceSupport implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 3;
-		result = prime * result + (Integer) projectId;
+        result = prime * result + projectId;
 		return result;
 	}
 
@@ -403,7 +403,7 @@ public class Project extends ResourceSupport implements Serializable{
 
     public List<Integer> getAvailableCalculationMethods() {
         return Arrays.asList(availableCalculationMethods.split(",")).stream().
-				map(method -> Integer.parseInt(method)).collect(Collectors.toList());
+                map(Integer::parseInt).collect(Collectors.toList());
     }
 	public void setAvailableCalculationMethods(List<Integer> availableCalculationMethods) {
 

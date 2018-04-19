@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.controllers.PrintProjectInfoController;
 import project.controllers.US375GetProjectNotStartedTaskListController;
 import project.model.Project;
-import project.model.User;
 import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class US375ProjectNotStartedTasksUI {
 	@Autowired
 	private US375GetProjectNotStartedTaskListController controller;
 
-	public void projectNotStartedTasksUI(Project project, User user) {
+	public void projectNotStartedTasksUI(Project project) {
 		
 
 		Scanner scannerInput = new Scanner(System.in);
