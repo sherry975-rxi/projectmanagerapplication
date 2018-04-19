@@ -1,22 +1,17 @@
-
-
 package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.model.Profile;
 import project.model.User;
 import project.services.UserService;
-import org.springframework.hateoas.Link;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
+import java.util.List;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping("users")
@@ -29,12 +24,8 @@ public class RestUserController {
         this.userService=userService;
     }
 
-
-
-
-
     /**
-     * Refers US130: As an administrator, I want to list all users in the system.
+     * Refers to US130: As an administrator, I want to list all users in the system.
      * This method will return a list of all the users registered in the system.
      */
 
@@ -45,15 +36,8 @@ public class RestUserController {
 
         for(User user : allUsers) {
 
-            //Link selfLink = linkTo(RestUserController.class).slash(user.getUserID()).withSelfRel();
-            //user.add(selfLink);
-
-            //if(!allUsers.isEmpty()) {
-
             Link userLink = linkTo(RestUserController.class).withRel("allUsers");
             user.add(userLink);
-
-
 
         }
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
@@ -62,9 +46,8 @@ public class RestUserController {
     }
 
 
-
     /**
-     * This method allows the administrator to search users by a part of the email.
+     * Refers to US135: This method allows the administrator to search users by a part of the email.
      *
      * @param emailToSearch
      * @return ResponseEntity
@@ -82,6 +65,25 @@ public class RestUserController {
         return new ResponseEntity<>(foundUsers, HttpStatus.OK);
     }
 
+    /**
+     * Refers to US136: This method allows the administrator to search users by profile.
+     *
+     * @param profileNameToSearch
+     * @return ResponseEntity
+     */
+    @RequestMapping(value = "/{profileNameToSearch}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> searchUsersByProfile(@PathVariable String profileNameToSearch) {
+
+        List<User> foundUsersProfile = userService.searchUsersByProfileName(profileNameToSearch.toUpperCase());
+
+        for(User other : foundUsersProfile){
+            Link selfRef = linkTo(RestUserController.class).slash(other.getUserID()).withSelfRel();
+            other.add(selfRef);
+        }
+
+        return new ResponseEntity<>(foundUsersProfile, HttpStatus.OK);
+
+    }
 
     /**
      * @param updatedProfile
@@ -104,5 +106,8 @@ public class RestUserController {
             result = new ResponseEntity<>(userToChange ,HttpStatus.OK);
         }
         return result;
+
     }
+
+
 }
