@@ -29,12 +29,11 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 
 
 @RunWith(MockitoJUnitRunner.class)
-//@SpringBootTest
-//@AutoConfigureMockMvc
+
 public class US204AssignTaskRequestRestControllerTest {
 
     private MockMvc mockMvc;
@@ -51,17 +50,13 @@ public class US204AssignTaskRequestRestControllerTest {
     @Mock
     ProjCollabRepository projCollabRepository;
 
-    //@Mock
     @InjectMocks
     UserService userService;
-    //@Mock
     @InjectMocks
     ProjectService projectService;
-    //@Mock
     @InjectMocks
     TaskService taskService;
 
-    //@InjectMocks
     private US204AssignTaskRequestRestController controller;
 
     private User userPM;
@@ -80,7 +75,6 @@ public class US204AssignTaskRequestRestControllerTest {
 
     @Before
     public void setUp() throws Exception{
-        //initMocks(this);
 
         // create userPM
         userPM = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
@@ -127,12 +121,14 @@ public class US204AssignTaskRequestRestControllerTest {
         List<ProjectCollaborator> userTwoProjCollab = new ArrayList<>();
         userTwoProjCollab.add(projCollabTwo);
 
-        Mockito.when(userRepository.findByEmail(userTwo.getEmail())).thenReturn(Optional.of(userTwo));
+        Mockito.when(userRepository.findByEmail("joao@gmail.com")).thenReturn(Optional.of(userTwo));
         Mockito.when(userRepository.findByUserID(userTwoId)).thenReturn(userTwo);
         Mockito.when(projectsRepository.findById(projectId)).thenReturn(Optional.of(projectOne));
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
         Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
         Mockito.when(taskRepository.findByTaskID(taskIdOne)).thenReturn(Optional.of(taskOne));
+
+
     }
 
     @Test
@@ -140,29 +136,58 @@ public class US204AssignTaskRequestRestControllerTest {
         assertNotNull(controller);
     }
 
+    /**
+     * Given
+     * TaskOne in projectOne, with no collaborators, neither requests
+     *
+     * When
+     * Creating assignment request to taskOne from userTwo
+     *
+     * Then
+     * It is expected to be successfully created
+     *
+     * @throws Exception
+     */
     @Test
     public void canCreateAnAssignmentRequest() throws Exception {
 
         //Given
-        // taskOne in projectOne, with no collaborators, neither requests
+        User userDTOTwo = new User();
+        userDTOTwo.setEmail("joao@gmail.com");
+
+        TaskTeamRequest assignRequest = new TaskTeamRequest();
+        assignRequest.setType(0);
+        assignRequest.setProjCollab(projCollabTwo);
+        assignRequest.setTask(taskOne);
 
         //When
-        //creating assignment request to taskOne from userTwo
-        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoId);
+        ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
 
         //Then
-        // It is expected to be successfully created
-        ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.OK);
+        ResponseEntity<?> expected = new ResponseEntity<>(assignRequest, HttpStatus.CREATED);
         assertEquals(expected,result);
-
 
     }
 
+    /**
+     * Given
+     * Assignment Request created for userTwo
+     *
+     * When
+     * Creating again assignment request that already exists for userTwo
+     *
+     * Then
+     * Expects a METHOD_NOT_ALLOWED message
+     *
+     * @throws Exception
+     */
     @Test
     public void canNotCreateAnAssignmentRequest() throws Exception {
 
+        User userDTOTwo = new User();
+        userDTOTwo.setEmail("joao@gmail.com");
+
         //Given
-        //Assignment Request created for userTwo
         /*
         mockMvc.perform(
                 post("/projects/" + projectId + "/tasks/" + taskIdOne + "/CreateAssignmentRequest")
@@ -171,50 +196,75 @@ public class US204AssignTaskRequestRestControllerTest {
                 .andReturn().getResponse();
         */
         //or could be created calling the method of the rest controller
-        controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoId);
+        controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
 
         //When
-        // Creating again assignment request that already exists for userTwo
-        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoId);
+        ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
 
         //Then
-        //expects Forbidden message
-        ResponseEntity<?> expected = new ResponseEntity<>("Not Authorized!", HttpStatus.FORBIDDEN);
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.METHOD_NOT_ALLOWED);
         assertEquals(expected,result);
 
     }
 
+    /**
+     * Given
+     * Adding userTwo to taskOne
+     *
+     * When
+     * Creating assignment request for userTwo but already is added to taskOne
+     *
+     * Then
+     * Expects a METHOD_NOT_ALLOWED message
+     *
+     * @throws Exception
+     */
     @Test
     public void canNotCreateAnAssignmentRequestTwo() throws Exception {
 
+        User userDTOTwo = new User();
+        userDTOTwo.setEmail("joao@gmail.com");
+
         //Given
-        //Add userTwo to taskOne
         taskOne.addProjectCollaboratorToTask(projCollabTwo);
 
         //When
-        // Create assignment request for userTwo but already is added to taskOne
-        ResponseEntity<?> result = controller.createRequestAddCollabToTask(taskIdOne, projectId, userTwoId);
+        ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
 
         //Then
-        //expects Forbidden message
-        ResponseEntity<?> expected = new ResponseEntity<>("Not Authorized!", HttpStatus.FORBIDDEN);
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.METHOD_NOT_ALLOWED);
         assertEquals(expected,result);
 
     }
 
     @Test
     public  void retriveAllRequest() throws Exception {
+
+
         //Given
         //Create taskTeam requests.
 
         taskOne.createTaskAssignmentRequest(projCollabTwo);
         taskOne.createTaskRemovalRequest(projCollabThree);
 
-        ResponseEntity<?> result = controller.getAllRequests(taskIdOne, projectId, userTwoId);
+        ResponseEntity<List<TaskTeamRequest>> result = controller.getAllRequests(taskIdOne);
+
+        List expectedList = new ArrayList();
+        TaskTeamRequest assign = new TaskTeamRequest();
+        assign.setType(0);
+        assign.setProjCollab(projCollabTwo);
+        assign.setTask(taskOne);
+        TaskTeamRequest removal = new TaskTeamRequest();
+        removal.setType(1);
+        removal.setProjCollab(projCollabThree);
+        removal.setTask(taskOne);
+        expectedList.add(assign);
+        expectedList.add(removal);
+
 
         //Then
         //expects OK message
-        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getPendingTaskTeamRequests(), HttpStatus.OK);
+        ResponseEntity<List<TaskTeamRequest>> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
         assertEquals(expected,result);
 
     }
@@ -228,11 +278,21 @@ public class US204AssignTaskRequestRestControllerTest {
         taskOne.createTaskAssignmentRequest(projCollabTwo);
         taskOne.createTaskRemovalRequest(projCollabThree);
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "assignment", projectId, userTwoId);
+        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "assignment");
+
+        List expectedList = new ArrayList();
+
+        TaskTeamRequest assign = new TaskTeamRequest();
+        assign.setType(0);
+        assign.setProjCollab(projCollabTwo);
+        assign.setTask(taskOne);
+
+        expectedList.add(assign);
+
 
         //Then
         //expects OK message
-        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getPendingTaskAssignmentRequests(), HttpStatus.OK);
+        ResponseEntity<?> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
         assertEquals(expected,result);
 
     }
@@ -246,11 +306,21 @@ public class US204AssignTaskRequestRestControllerTest {
 
         taskOne.createTaskRemovalRequest(projCollabThree);
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "removal", projectId, userTwoId);
+        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "removal");
+
+        List expectedList = new ArrayList();
+
+        TaskTeamRequest removal = new TaskTeamRequest();
+        removal.setType(1);
+        removal.setProjCollab(projCollabThree);
+        removal.setTask(taskOne);
+
+        expectedList.add(removal);
+
 
         //Then
         //expects OK message
-        ResponseEntity<?> expected = new ResponseEntity<>(taskOne.getPendingTaskRemovalRequests(), HttpStatus.OK);
+        ResponseEntity<?> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
         assertEquals(expected,result);
 
     }
