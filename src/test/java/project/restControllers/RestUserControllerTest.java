@@ -9,12 +9,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
 import project.restcontroller.RestUserController;
 import project.services.UserService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -120,5 +123,41 @@ public class RestUserControllerTest {
         expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
         // THEN the response entity must contain those two Users
         assertEquals(expectedResponse, controller.searchUsersByEmail("gmail.com"));
+    }
+
+
+    /**
+     * This test verifies if the controller can change the profile of a given user that is registered in the company
+     * and if it returns a NOT_FOUND when the given user is not present in the database.
+     */
+    @Test
+    public void testChangeUserProfile() {
+        // GIVEN a users it is registered in the company.
+        when(userRepository.findByEmail("mike@gmail.com")).thenReturn(Optional.of(mike));
+        User user = userService.getUserByEmail("mike@gmail.com");
+        assertEquals(user,mike);
+        assertEquals(Profile.UNASSIGNED,mike.getUserProfile());
+
+        // WHEN a Administrator decides to change his profile with a new profile
+        User userDTO = new User();
+        userDTO.setEmail("mike@gmail.com");
+        userDTO.setUserProfile(Profile.COLLABORATOR);
+
+        // THEN the response entity must contain the user updated and status OK
+        ResponseEntity<?>expectedHTTPResponseOK = new ResponseEntity<>(mike, HttpStatus.OK);
+        assertEquals(expectedHTTPResponseOK,controller.changeUserProfile(userDTO));
+        assertEquals(userDTO.getUserProfile(),mike.getUserProfile());
+
+        // AND WHEN searching for a provided user that is not on the database
+        when(userRepository.findByEmail("lolada@gmail.com")).thenReturn(Optional.empty());
+        User user2 = userService.getUserByEmail("lolada@gmail.com");
+        User userDTO2 = new User();
+        userDTO2.setEmail("lolada@gmail.com");
+        userDTO2.setUserProfile(Profile.COLLABORATOR);
+
+        assertEquals(user2,null);
+        // THEN the response entity must return status NOT_FOUND
+        ResponseEntity<?>expectedHTTPResponseNOT = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        assertEquals(expectedHTTPResponseNOT,controller.changeUserProfile(userDTO2));
     }
 }

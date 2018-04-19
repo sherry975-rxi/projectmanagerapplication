@@ -14,8 +14,8 @@ import java.util.Properties;
 public class SendEmail extends ResourceSupport {
 
 
-    private String senderEmail = "isepswitch3@gmail.com";
-    private String senderXPMS = "Switch_Isep2018";
+    private static String senderEmail = "isepswitch3@gmail.com";
+    private static String senderXPMS = "Switch_Isep2018";
 
     /**
      * This method sends an email to the recipient with the intended message

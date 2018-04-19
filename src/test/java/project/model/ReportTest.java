@@ -11,7 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReportTest {
@@ -29,6 +29,7 @@ public class ReportTest {
     TaskCollaborator taskWorker1;
 
     private Report report;
+	private Report reportB;
 
 	private Calendar firstDateOfReport;
 	private int timeToCompare;
@@ -61,7 +62,6 @@ public class ReportTest {
 		report = null;
 		timeToCompare = 0;
 		firstDateOfReport = null;
-		report = null;
 	}
 
 	/**
@@ -145,5 +145,42 @@ public class ReportTest {
 
 		// Compares the two values
 		assertEquals(report.getTaskCollaborator(), taskWorker1);
+	}
+
+	@Test
+	public void testEquals() {
+		report = new Report();
+		report.setTaskCollaborator(taskWorker1);
+		report.setTask(task1);
+
+		assertTrue(report.equals(report));// same object
+
+		assertFalse(report.equals(task1));// different classes
+
+		reportB = new Report();
+		reportB.setTaskCollaborator(taskWorker1);
+		reportB.setTask(task1);
+
+		assertTrue(report.equals(reportB));// same attributes
+
+		reportB.setTaskCollaborator(null);
+
+		assertFalse(report.equals(reportB));// different Task Collaborator
+
+		reportB.setTaskCollaborator(taskWorker1);
+		reportB.setTask(null);
+
+		assertFalse(report.equals(reportB));// different Task
+	}
+
+	@Test
+	public void testHashCode() {
+		report = new Report();
+		report.setTaskCollaborator(taskWorker1);
+		report.setTask(task1);
+
+		int realHashCode = 992;
+
+		assertEquals(realHashCode, report.hashCode());
 	}
 }

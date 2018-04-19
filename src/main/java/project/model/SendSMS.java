@@ -42,9 +42,10 @@ public class SendSMS extends ResourceSupport {
 
 
         //HARDCODING NUMBER SO TWILIO DOESNT CRASH APPLICATION
-        numberToSend = "+351911790134";
+        //When possible, remove this variable and change all its calls to call numberToSend instead
+        String hardcodedNumberToSend = "+351911790134";
 
-        Message.creator(new PhoneNumber(numberToSend),
+        Message.creator(new PhoneNumber(hardcodedNumberToSend),
                 new PhoneNumber(numberProvidedByTwilio),
                 messageToSend).create();
 
