@@ -24,7 +24,7 @@ public class US360ProjectUnassignedTasksUI {
 	@Autowired
 	private PmTaskFunctionalitiesUI taskFuntionatities;
 
-	public void projectUnassignedTasksUI(Project project, User user) {
+	public void projectUnassignedTasksUI(Project project) {
 		
 
 		Scanner scannerInput = new Scanner(System.in);
