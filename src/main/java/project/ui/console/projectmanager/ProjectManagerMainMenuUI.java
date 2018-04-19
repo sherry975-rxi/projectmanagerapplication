@@ -123,7 +123,7 @@ public class ProjectManagerMainMenuUI {
 
 		switch (option) {
 		case "A1":
-			optionA1.displayUnfinishedOfProject(this.project, this.projectManager);
+			optionA1.displayUnfinishedOfProject(this.project);
 			break;
 		case "A2":
 			optionA2.displayUnfinishedTasksWithExpiredDeadline(this.project, this.projectManager);
