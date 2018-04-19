@@ -12,7 +12,7 @@ public class ProjectCollaborator implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long ProjCollabId;
+	private Long projCollabId;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "User_id")
 	private User collaborator;
@@ -52,11 +52,11 @@ public class ProjectCollaborator implements Serializable {
 	}
 
 	public Long getProjCollabId() {
-		return ProjCollabId;
+		return projCollabId;
 	}
 
 	public void setProjCollabId(Long projCollabId) {
-		this.ProjCollabId = projCollabId;
+		this.projCollabId = projCollabId;
 	}
 
 	public User getCollaborator() {
