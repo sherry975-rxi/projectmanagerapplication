@@ -17,9 +17,6 @@ import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
-
-
-
 @RestController
 
 
@@ -29,7 +26,6 @@ public class RestProjectController  {
     private final ProjectService projectService;
     private final UserService userService;
     private final TaskService taskService;
-
 
     @Autowired
     public RestProjectController(ProjectService projectService, UserService userService,  TaskService taskService) {
@@ -54,8 +50,7 @@ public class RestProjectController  {
     }
 
     /**
-     * This method change the project manager of a given project
-     *
+     * This method returns a ResponseEntity that contains the project details
      */
     @RequestMapping(value= "{projectId}", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
@@ -63,14 +58,14 @@ public class RestProjectController  {
         Project project = this.projectService.getProjectById(projectId);
         Link selfRef = linkTo(RestProjectController.class).slash(project.getProjectId()).withSelfRel();
         project.add(selfRef);
-        Link updateProjectLink = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("{projectId}").withRel("updateProject");
+        Link updateProjectLink = linkTo(RestProjectController.class).slash(project.getProjectId()).withRel("updateProject");
         project.add(updateProjectLink);
 
         return ResponseEntity.ok(project);
     }
 
     /**
-     * This method change the project manager of a given project
+     * This method updates the params of the project (such manager and cost calculation method)
      *
      * @param projectInfoToUpdate
      * @param projectId
@@ -87,6 +82,18 @@ public class RestProjectController  {
         projectToBeUpdated.add(reference);
 
         return ResponseEntity.ok(projectToBeUpdated);
+    }
+
+
+    /**
+     * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
+     */
+    @RequestMapping(value = "/cost", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
+        Project project = this.projectService.getProjectById(projectId);
+        Map<String, Double> projectCost = new HashMap<>();
+        projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+        return  ResponseEntity.ok().body(projectCost);
     }
 
     /**
@@ -114,18 +121,6 @@ public class RestProjectController  {
         proj.add(reference);
 
         return ResponseEntity.ok().body(proj);
-    }
-
-
-    /**
-     * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
-     */
-    @RequestMapping(value = "/cost", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
-        Project project = this.projectService.getProjectById(projectId);
-        Map<String, Double> projectCost = new HashMap<>();
-        projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
-        return  ResponseEntity.ok().body(projectCost);
     }
 }
 

@@ -91,21 +91,27 @@ public class RestProjectControllerTest {
         verify(projectServiceMock, times(1)).getProjectById(projectId);
     }
 
-    @Ignore
+    /**
+     * GIVEN a project ID
+     * WHEN we perform a patch request to url /projects/<projectId>
+     * THEN we we receive status OK and the project info updated
+     * @throws Exception
+     */
     @Test
-    public void testUpdateCalculationMethod() throws Exception{
-        //given the project is running
+    public void shouldUpdateCalculationMethod() throws Exception{
+        //GIVEN a project ID
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(new Project("Project", "description", userRui));
-        Mockito.doNothing().when(projectServiceMock).updateProject(any(Project.class));
+        Mockito.doNothing().when(projectServiceMock).updateProject(projectMock);
 
-        //when
-        MockHttpServletResponse response = mvc.perform(put("/projects/" + projectId)
+        //WHEN we perform a patch request to url /projects/<projectId>
+        MockHttpServletResponse response = mvc.perform(patch("/projects/" + projectId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"calculationMethod\":3}")
-                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
-        //then
+                .content(jacksonProject.write(projectMock).getJson())).andReturn().getResponse();
+
+        //THEN we receive status OK and the project info updated
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
+
     @Ignore
     @Test
     public void testGetProjectCost() throws Exception {
