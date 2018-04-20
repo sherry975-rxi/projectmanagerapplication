@@ -232,6 +232,33 @@ public class RestProjectControllerTest {
         verify(projectServiceMock, times(1)).getActiveProjects();
     }
 
+    /**
+     *  //Given
+     *  a project with only the information we want to update
+     *
+     *  //When
+     *  update une given project
+     *
+     *  //Then
+     *  the information given for update will replace the respective information in the given project.
+     */
+    @Test
+    public void updateProjectManager() {
+
+        //Given a project with only the information we want to update
+        Project project = new Project();
+        project.setProjectManager(userRui);
+
+        //When update une given project
+        when(projectServiceMock.getProjectById(anyInt())).thenReturn(projectMock);
+        victim.updateProject(project, projectMock.getProjectId());
+        Mockito.doNothing().when(projectServiceMock).updateProject(any(Project.class));
+
+        //Then the information given for update will replace the respective information in the given project.
+        verify(projectServiceMock, times(1)).updateProjectData(anyObject(), anyObject());
+
+    }
+
 }
 
 
