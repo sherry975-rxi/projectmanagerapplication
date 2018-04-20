@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import project.model.Project;
 import project.model.User;
 import project.services.ProjectService;
+import project.services.TaskService;
 import project.services.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -19,20 +23,51 @@ public class RestProjectController  {
 
     private final ProjectService projectService;
     private final UserService userService;
+    private final TaskService taskService;
+
 
     @Autowired
-    public RestProjectController(ProjectService projectService, UserService userService) {
+    public RestProjectController(ProjectService projectService, UserService userService,  TaskService taskService) {
         this.projectService = projectService;
         this.userService = userService;
+        this.taskService = taskService;
     }
-
 
     @RequestMapping(value= "{projectId}", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
+
         Project project = this.projectService.getProjectById(projectId);
+        Link selfRef = linkTo(RestProjectController.class).slash(project.getProjectId()).withSelfRel();
+        project.add(selfRef);
+        //Link toPMUpdate = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("pm").withRel("toPm");
+        // project.add(toPMUpdate);
+        //Link toCalculationMethodUpdate = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("calculationMethod")
+               // .withRel("changeCalculationMethod");
+        //project.add(toCalculationMethodUpdate);
+        this.projectService.getProjectTeam(project);
+
         return ResponseEntity.ok(project);
     }
 
+    /**
+     * This method change the project manager of a given project
+     *
+     * @param projectInfoToUpdate
+     * @param projectId
+     * @return
+     */
+    @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
+    public ResponseEntity<Project> getProjectDetails(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
+
+        Project projectToBeUpdated = projectService.getProjectById(projectId);
+
+        projectService.updateProject(projectInfoToUpdate, projectToBeUpdated);
+
+        Link reference = linkTo(RestProjectController.class).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
+        projectToBeUpdated.add(reference);
+
+        return ResponseEntity.ok(projectToBeUpdated);
+    }
 
     /**
      * Creates a Project with the parameters Name, Description and Project Manager if the response body only has this
@@ -41,7 +76,6 @@ public class RestProjectController  {
      */
     @RequestMapping(value = "" , method = RequestMethod.POST)
     public ResponseEntity<Project> createProject(@RequestBody Project projectDTO) {
-
         User projectManager = userService.getUserByEmail(projectDTO.getProjectManager().getEmail());
 
         Project proj = projectService.createProject(projectDTO.getName(), projectDTO.getDescription(), projectManager);
@@ -61,8 +95,22 @@ public class RestProjectController  {
 
         return ResponseEntity.ok().body(proj);
     }
+<<<<<<< HEAD
 
 
     }
 
+=======
+>>>>>>> 2e3c89027c939c091146ab38e29706d9db2857b9
 
+    /**
+     * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
+     */
+    @RequestMapping(value = "/cost", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
+        Project project = this.projectService.getProjectById(projectId);
+        Map<String, Double> projectCost = new HashMap<>();
+        projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+        return  ResponseEntity.ok().body(projectCost);
+    }
+}

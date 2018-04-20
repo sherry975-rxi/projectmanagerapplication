@@ -38,9 +38,15 @@ public class EmailMessage extends ResourceSupport {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EmailMessage)) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof EmailMessage)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         EmailMessage that = (EmailMessage) o;
         return Objects.equals(emailAddress, that.emailAddress) &&
                 Objects.equals(subject, that.subject) &&

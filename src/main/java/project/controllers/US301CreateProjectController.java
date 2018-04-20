@@ -126,7 +126,7 @@ public class US301CreateProjectController {
 	public void changeBudget(int budget) {
 
 		createdProject.setProjectBudget(budget);
-        projectService.updateProject(createdProject);
+        projectService.saveProject(createdProject);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class US301CreateProjectController {
 	public void selectCalculationMethods(List<Integer> allowedMethods) {
 	    createdProject.setAvailableCalculationMethods(allowedMethods);
 	    createdProject.setCalculationMethod(allowedMethods.get(0));
-	    projectService.updateProject(createdProject);
+	    projectService.saveProject(createdProject);
 
     }
 
