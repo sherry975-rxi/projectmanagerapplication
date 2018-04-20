@@ -30,6 +30,7 @@ import project.services.UserService;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -128,6 +129,7 @@ public class US204AssignTaskRequestRestControllerTest {
         userTwoProjCollab.add(projCollabTwo);
 
         Mockito.when(userRepository.findByEmail("joao@gmail.com")).thenReturn(Optional.of(userTwo));
+        Mockito.when(userRepository.findByEmail(userThreeEmail)).thenReturn(Optional.of(userThree));
         Mockito.when(userRepository.findByUserID(userTwoId)).thenReturn(userTwo);
         Mockito.when(projectsRepository.findById(projectId)).thenReturn(Optional.of(projectOne));
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
@@ -184,13 +186,13 @@ public class US204AssignTaskRequestRestControllerTest {
 
 
         //When
-        //ResponseEntity<TaskTeamRequest> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
+        ResponseEntity<TaskTeamRequest> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
 
-        MvcResult resultTwo = mockMvc.perform(
+/*        MvcResult resultTwo = mockMvc.perform(
                                                         post("/projects/" + projectId + "/tasks/" + taskIdOne + "/requests/assignmentRequest")
                                                                 .contentType(MediaType.APPLICATION_JSON)
                                                                 .content(userDTOjson))
-                .andReturn();
+                .andReturn();*/
 
 //        MockHttpServletResponse test = mockMvc.perform(post("/projects/" + projectId + "/tasks/" + taskIdOne + "/requests/assignmentRequest")
 //                .contentType(MediaType.APPLICATION_JSON)
@@ -207,9 +209,9 @@ public class US204AssignTaskRequestRestControllerTest {
         ResponseEntity<TaskTeamRequest> expected = new ResponseEntity<>(assignRequest, HttpStatus.CREATED);
 
         //assertEquals(expected,result);
-        /*assertEquals(HttpStatus.CREATED, result.getStatusCode());
-        assertEquals(assignRequest, result.getBody());*/
-        assertEquals(HttpStatus.CREATED.value(), resultTwo.getResponse().getStatus());
+        assertEquals(HttpStatus.CREATED, result.getStatusCode());
+        assertEquals(assignRequest, result.getBody());
+        //assertEquals(HttpStatus.CREATED.value(), resultTwo.getResponse().getStatus());
 
     }
 
@@ -411,7 +413,9 @@ public class US204AssignTaskRequestRestControllerTest {
 
         ResponseEntity<?> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
 
+        //assertEquals(expected.getStatusCode(),result.getStatusCode());
         assertEquals(expected.getStatusCode(),result.getStatusCode());
+
 
     }
 
@@ -463,6 +467,86 @@ public class US204AssignTaskRequestRestControllerTest {
         ResponseEntity<TaskTeamRequest> expectedRemoval = new ResponseEntity<>(removalRequest, HttpStatus.OK);
 
         assertEquals(expectedAssign,resultRemoval);
+
+    }
+
+    /**
+     * Given
+     * Adding userThree to taskOne
+     * Assignment Request created for userTwo in taskOne
+     * Removal Request created for userThree in taskOne
+     *
+     * When
+     * Asking for an invalid request in taskOne
+     *
+     * Then
+     * Expects a NOT_FOUND message
+     *
+     * @throws Exception
+     */
+    @Test
+    public  void retrieveOneRequestTwo() throws Exception {
+
+
+        // Given
+        taskOne.addProjectCollaboratorToTask(projCollabThree);
+        taskOne.createTaskAssignmentRequest(projCollabTwo);
+        taskOne.createTaskRemovalRequest(projCollabThree);
+
+        int assignID = taskOne.getPendingTaskAssignmentRequests().get(0).getDbId();
+        int removalID = taskOne.getPendingTaskRemovalRequests().get(0).getDbId();
+        int invalidID = 1000000000;
+
+        // When
+        ResponseEntity<TaskTeamRequest> resultInvalid = controller.getRequestDetails(invalidID, taskIdOne, projectId);
+
+        // Then
+        ResponseEntity<TaskTeamRequest> expectedInvalid = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        assertEquals(expectedInvalid ,resultInvalid);
+
+
+
+    }
+
+    /**
+     * Given
+     * TaskOne in projectOne
+     * Cancel task
+     *
+     * When
+     * Creating assignment request to taskOne from user
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     *
+     * @throws Exception
+     */
+    @Test
+    public void canNotCreateAnAssignmentRequestInvalidTask() throws Exception {
+
+        //Given
+        User userDTOTwo = new User();
+        userDTOTwo.setEmail("joao@gmail.com");
+
+        taskOne.setEstimatedTaskStartDate(Calendar.getInstance());
+        taskOne.setTaskDeadline(Calendar.getInstance());
+        taskOne.addProjectCollaboratorToTask(projCollabThree);
+        taskOne.setTaskBudget(2.0);
+        taskOne.setEstimatedTaskEffort(30.1);
+        taskOne.setStartDate(Calendar.getInstance());
+        taskOne.cancelTask();
+        //System.out.println(taskOne.getTaskState());
+
+        //When
+        ResponseEntity<TaskTeamRequest> resultInvalid = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
+
+
+        //Then
+        ResponseEntity<TaskTeamRequest> expectedInvalid = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        assertEquals(expectedInvalid ,resultInvalid);
+
 
     }
 
