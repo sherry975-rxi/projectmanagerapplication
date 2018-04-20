@@ -60,6 +60,8 @@ public class RestProjectController  {
         project.add(selfRef);
         Link updateProjectLink = linkTo(RestProjectController.class).slash(project.getProjectId()).withRel("updateProject");
         project.add(updateProjectLink);
+        Link calculateCostLink = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("cost").withRel("calculateCost");
+        project.add(calculateCostLink);
 
         return ResponseEntity.ok(project);
     }
@@ -88,11 +90,14 @@ public class RestProjectController  {
     /**
      * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
      */
-    @RequestMapping(value = "/cost", method = RequestMethod.GET)
+    @RequestMapping(value = "/{projectId}/cost", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
         Project project = this.projectService.getProjectById(projectId);
         Map<String, Double> projectCost = new HashMap<>();
         projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+        Link seeProjectDetailsLink = linkTo(RestProjectController.class).slash(project.getProjectId()).withRel("seeProjectDetails");
+        project.add(seeProjectDetailsLink);
+
         return  ResponseEntity.ok().body(projectCost);
     }
 

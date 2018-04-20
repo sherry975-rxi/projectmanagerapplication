@@ -112,17 +112,23 @@ public class RestProjectControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
-    @Ignore
+    /**
+     * GIVEN a project ID
+     * WHEN we perform a get request to url /projects/<projectId>/cost
+     * THEN we we receive status OK the cost of the project
+     * @throws Exception
+     */
     @Test
-    public void testGetProjectCost() throws Exception {
-        //given the project is running
+    public void shouldReturnTheProjectCost() throws Exception {
+        //given the project ID
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectMock);
         when(taskServiceMock.getTotalCostReportedToProjectUntilNow(projectMock)).thenReturn(7.0);
 
         //when we perform a get request to url /projects/<projectId>/cost
-        MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId + "/cost").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId + "/cost")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
-        //then we receive a valid message
+        //then we receive a status OK and the cost of the project
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("{\"projectCost\":7.0}", response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);
