@@ -638,7 +638,7 @@ public class ProjectServiceTest {
 
 		//When update une given project
 		when(userService.getUserByEmail(any())).thenReturn(user1);
-		projectService.updateProject(project, project1);
+		projectService.updateProjectData(project, project1);
 
 		//Then the information given for update will replace the respective information in the given project.
 		assertEquals(user1 ,project1.getProjectManager());
