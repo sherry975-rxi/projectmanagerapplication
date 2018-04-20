@@ -23,6 +23,9 @@ public class ProjectService {
 	private ProjectsRepository projectsRepository;
 
 	@Autowired
+	private UserService userService;
+
+	@Autowired
 	private ProjCollabRepository projectCollaboratorRepository;
 
 	/**
@@ -337,9 +340,7 @@ public class ProjectService {
 				return toSearch;
 			}
 		}
-
 		return null;
-
 	}
 
 
@@ -358,5 +359,23 @@ public class ProjectService {
 
 	public void setProjectCollaboratorRepository(ProjCollabRepository projectCollaboratorRepository) {
 		this.projectCollaboratorRepository = projectCollaboratorRepository;
+	}
+
+	/**
+	 *This method upDate project from a given info.
+	 *
+	 * @param projectInfoToUpdate
+	 */
+	public void updateProjectData(Project projectInfoToUpdate, Project projectToBeUpdated){
+
+		if((projectInfoToUpdate.getProjectManager() != null)) {
+
+			User user = userService.getUserByEmail(projectInfoToUpdate.getProjectManager().getEmail());
+
+			projectToBeUpdated.setProjectManager(user);
+
+			updateProject(projectToBeUpdated);
+		}
+
 	}
 }
