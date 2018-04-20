@@ -24,7 +24,7 @@ public class RestUserController {
         this.userService=userService;
     }
 
-    @RequestMapping(value = "/{userId}")
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public ResponseEntity<?> seeUserDetails(@PathVariable int userId){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         User userToReturn;
@@ -42,7 +42,7 @@ public class RestUserController {
      * This method will return a list of all the users registered in the system.
      */
 
-    @RequestMapping(value = "/allUsers")
+    @RequestMapping(value = "/allUsers", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(){
 
         List<User> allUsers = userService.getAllUsersFromUserContainer();
