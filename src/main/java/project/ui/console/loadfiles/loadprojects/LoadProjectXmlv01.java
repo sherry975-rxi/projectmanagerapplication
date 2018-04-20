@@ -60,19 +60,6 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 
 				scanProject(eElementProject);
 
-                // Node Lista de Tarefas
-                NodeList nTaskList = eElementProject.getElementsByTagName("tarefa");
-
-                for (int indexTask = 0; indexTask < nTaskList.getLength(); indexTask++) {
-                    Node nNodeTask = nTaskList.item(indexTask);
-
-                    if (nNodeTask.getNodeType() == Node.ELEMENT_NODE) {
-                        Element eElementTask = (Element) nNodeTask;
-
-                        scanTask(eElementTask);
-
-                    }
-                }
 			}
 		}
 	}
@@ -140,6 +127,20 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
                 Element eElementProjectCollaborator = (Element) nNodeProjectCollaborator;
 
                 scanProjectCollaborator(eElementProjectCollaborator);
+
+            }
+        }
+
+        // Node Lista de Tarefas
+        NodeList nTaskList = eElementProject.getElementsByTagName("tarefa");
+
+        for (int indexTask = 0; indexTask < nTaskList.getLength(); indexTask++) {
+            Node nNodeTask = nTaskList.item(indexTask);
+
+            if (nNodeTask.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElementTask = (Element) nNodeTask;
+
+                scanTask(eElementTask);
 
             }
         }
