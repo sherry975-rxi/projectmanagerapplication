@@ -12,12 +12,17 @@ import project.services.TaskService;
 import project.services.UserService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 
+
+
 @RestController
+
+
 @RequestMapping("/projects/")
 public class RestProjectController  {
 
@@ -34,6 +39,21 @@ public class RestProjectController  {
     }
 
     /**
+     * This method returns a ResponseEntity that contains all the active projects from the project service with a link to open each project
+     * @return ResponseEntity with all the active projects
+     */
+    @RequestMapping(value = "/active", method = RequestMethod.GET)
+    public ResponseEntity<List<Project>> getActiveProjects() {
+
+        List<Project> activeProjects = this.projectService.getActiveProjects();
+        for (Project project : activeProjects) {
+            Link selfLink = linkTo(project.restcontroller.RestProjectController.class).slash(project.getProjectId()).withSelfRel();
+            project.add(selfLink);
+        }
+        return ResponseEntity.ok().body(activeProjects);
+    }
+
+    /**
      * This method change the project manager of a given project
      *
      */
@@ -47,6 +67,26 @@ public class RestProjectController  {
         project.add(updateProjectLink);
 
         return ResponseEntity.ok(project);
+    }
+
+    /**
+     * This method change the project manager of a given project
+     *
+     * @param projectInfoToUpdate
+     * @param projectId
+     * @return
+     */
+    @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
+    public ResponseEntity<Project> updateProject(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
+
+        Project projectToBeUpdated = projectService.getProjectById(projectId);
+
+        projectService.updateProjectData(projectInfoToUpdate, projectToBeUpdated);
+
+        Link reference = linkTo(RestProjectController.class).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
+        projectToBeUpdated.add(reference);
+
+        return ResponseEntity.ok(projectToBeUpdated);
     }
 
     /**
@@ -76,6 +116,7 @@ public class RestProjectController  {
         return ResponseEntity.ok().body(proj);
     }
 
+
     /**
      * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
      */
@@ -87,3 +128,7 @@ public class RestProjectController  {
         return  ResponseEntity.ok().body(projectCost);
     }
 }
+
+
+
+

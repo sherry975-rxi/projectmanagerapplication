@@ -1,9 +1,9 @@
 package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import project.controllers.US101RegisterUserController;
+import project.dto.UserDTO;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -174,8 +174,11 @@ public class US101UserRegisterUI {
 		String confirm = scannerInput.nextLine();
 
 		if ("y".equalsIgnoreCase(confirm)) {
-			us101RegisterUserController.addNewUser(name, email, idNumber, function, phone, password, street, zipCode, city,
-                    district, country, question, questionAnswer);
+			UserDTO newUser = us101RegisterUserController.createUserDTO(name, email, idNumber, function, phone, password);
+			newUser = us101RegisterUserController.setAddress(newUser, street, zipCode, city,
+					district, country);
+			newUser = us101RegisterUserController.setQuestionAnswer(newUser, question, questionAnswer);
+			us101RegisterUserController.addNewUserToDbFromDTO(newUser);
 			System.out.println();
 			System.out.println("-------- A numeric verification code will be sent to the email address or the phone number that you provided. -------");
 			System.out.println();

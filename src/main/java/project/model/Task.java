@@ -1034,7 +1034,7 @@ public class Task extends ResourceSupport implements Serializable {
 		if (this.isCreatingTaskDependencyValid(taskToEstablishDependenceUpon)) {
 
 			this.estimatedTaskStartDate = (Calendar) taskToEstablishDependenceUpon.taskDeadline.clone();
-			if (daysToPostpone >= 0) {
+            if (daysToPostpone >= 1) {
 				this.estimatedTaskStartDate.add(Calendar.DATE, daysToPostpone);
 			}
 			this.taskDependency.add(taskToEstablishDependenceUpon);
