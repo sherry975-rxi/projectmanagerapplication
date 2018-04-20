@@ -103,7 +103,7 @@ public class RestProjectController  {
                 proj.setEffortUnit(projectDTO.getEffortUnit());
             }
 
-        if (projectDTO.getBudget() != 0) {
+        if (projectDTO.getBudget() > 0) {
             proj.setProjectBudget(projectDTO.getBudget());
         }
 

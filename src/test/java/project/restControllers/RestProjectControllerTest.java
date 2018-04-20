@@ -181,6 +181,8 @@ public class RestProjectControllerTest {
         //One creates a project
         Project projectDto = new Project(projName, projDescrip, userRui);
         when(projectServiceMock.createProject(any(String.class),any(String.class), any(User.class))).thenReturn(projectDto);
+        projectDto.setProjectBudget(budget);
+        projectDto.setEffortUnit(effortUnit);
         projectServiceMock.addProjectToProjectContainer(projectDto);
         verify(projectServiceMock, times(1)).addProjectToProjectContainer(projectDto);
         MockHttpServletResponse response = mvc.perform(post("/projects/").contentType(MediaType.APPLICATION_JSON)

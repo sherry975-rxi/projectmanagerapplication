@@ -25,6 +25,8 @@ public class US135andUS136ListUsersUI {
 		List<String> searchList;
 		String command;
 
+		User selected = user;
+
 		System.out.println("To find Users, press...");
 		System.out.println(options);
 
@@ -58,7 +60,7 @@ public class US135andUS136ListUsersUI {
 					"Please choose a user's number (If a valid number isn't provided, no user will be selected.):");
 			if (input.hasNextInt()) {
 				int index = Integer.parseInt(input.nextLine());
-				user = controller.selectUser(index);// check later
+				selected = controller.selectUser(index);// check later
 			} else {
 				System.out.println("Not a number!");
 				System.out.println("");
@@ -67,7 +69,7 @@ public class US135andUS136ListUsersUI {
 
 		System.out.println("Returning to admin menu...");
 		System.out.println("");
-		return user;
+		return selected;
 	}
 
 }
