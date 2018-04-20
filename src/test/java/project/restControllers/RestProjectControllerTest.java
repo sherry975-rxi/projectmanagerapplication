@@ -2,7 +2,6 @@ package project.restControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,31 +20,31 @@ import project.model.ProjectCollaborator;
 import project.model.User;
 import project.restcontroller.RestProjectController;
 import project.services.ProjectService;
-<<<<<<< HEAD
-import project.services.UserService;
-=======
 import project.services.TaskService;
->>>>>>> 2e3c89027c939c091146ab38e29706d9db2857b9
+import project.services.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-<<<<<<< HEAD
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-=======
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
->>>>>>> 2e3c89027c939c091146ab38e29706d9db2857b9
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestProjectControllerTest {
     @Mock
     private TaskService taskServiceMock;
-
     @Mock
     private ProjectService projectServiceMock;
     @Mock
     private Project projectMock;
+    @Mock
+    private Project projectMock2;
+    @Mock
+    private Project projectMock3;
     @Mock
     private UserService userServiceMock;
 
@@ -55,6 +54,7 @@ public class RestProjectControllerTest {
     private MockMvc mvc;
     private Integer projectId;
     private JacksonTester<Project> jacksonProject;
+    private JacksonTester<List<Project>> jacksonProjectList;
     private User userRui;
     private ProjectCollaborator projectCollaborator;
 
@@ -193,4 +193,45 @@ public class RestProjectControllerTest {
 
     }
 
+    @Test
+    public void getActiveProjectsRestTest() throws Exception{
+
+        //GIVEN
+        /*
+        Given 3 projects that will be added to a list of Projects
+         */
+        List<Project> activeProjects = new ArrayList<>();
+
+        Project projectTestActive1 = new Project("Project", "description", userRui);
+        Project projectTestActive2 = new Project("Project2", "description 2", userRui);
+        Project projectTestActive3 = new Project("Project3", "description 3", userRui);
+
+        activeProjects.add(projectTestActive1);
+        activeProjects.add(projectTestActive2);
+        activeProjects.add(projectTestActive3);
+
+
+
+        //WHEN
+        /*
+        When the method getActiveProjects from the projectService is called, the activeProjects list will be returned and it will return a MockHttpServ
+         */
+        Mockito.when(projectServiceMock.getActiveProjects()).thenReturn(activeProjects);
+        MockHttpServletResponse response = mvc.perform(get("/projects/active").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+
+        //THEN
+        /*
+        The response status will return ok, and verifies that the method getActiveProjects from the projectService is called once
+         */
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(jacksonProjectList.write(activeProjects).getJson(), response.getContentAsString());
+        verify(projectServiceMock, times(1)).getActiveProjects();
+    }
+
 }
+
+
+
+
+

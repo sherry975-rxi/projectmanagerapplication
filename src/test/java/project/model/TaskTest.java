@@ -853,11 +853,13 @@ public class TaskTest {
 
 		taskReadyToFinishTest.updateReportedTime(3.0, taskCollaborator, reportToChange);
 
+        assertEquals(3.0, taskReadyToFinishTest.getReports().get(0).getReportedTime(), 0.1);
+
 		assertFalse(taskReadyToFinishTest.updateReportedTime(5.0, taskCollaborator, -7));
 
-		assertFalse(taskReadyToFinishTest.updateReportedTime(5.0, taskCollaborator, 100));
+        assertFalse(taskReadyToFinishTest.updateReportedTime(5.0, taskCollaborator, taskReadyToFinishTest.getReports().size()));
 
-        assertEquals(3.0, taskReadyToFinishTest.getReports().get(0).getReportedTime(), 0.1);
+        assertTrue(taskReadyToFinishTest.updateReportedTime(5.0, taskCollaborator, 0));
 	}
 
 	/**
@@ -1096,12 +1098,20 @@ public class TaskTest {
 	public void testCreateTaskDependence() {
 
 		taskTest.setTaskID("3");
+        Calendar date = Calendar.getInstance();
+        date.set(2018, 3, 5);
+        taskReadyToFinishTest.setEstimatedTaskStartDate(date);
 
 		assertFalse(taskTest.hasDependencies());
 
 		assertTrue(taskTest.createTaskDependence(taskReadyToFinishTest, 1));
 
 		assertTrue(taskTest.hasDependencies());
+
+        Calendar newDate = taskReadyToFinishTest.getTaskDeadline();
+        newDate.add(Calendar.DATE, 1);
+
+        assertEquals(newDate, taskTest.getEstimatedTaskStartDate());
 
 		assertFalse(taskTest.createTaskDependence(taskReadyToFinishTest, -5));
 	}
