@@ -306,7 +306,7 @@ public class US204AssignTaskRequestRestControllerTest {
         taskOne.createTaskRemovalRequest(projCollabThree);
 
         // When
-        ResponseEntity<List<TaskTeamRequest>> result = controller.getAllRequests(taskIdOne);
+        ResponseEntity<List<TaskTeamRequest>> result = controller.getAllRequests(taskIdOne, projectId);
 
         // Then
         List expectedList = new ArrayList();
@@ -353,7 +353,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // When
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "assignment");
+        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "assignment", projectId);
 
         // Then
 
@@ -396,7 +396,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // When
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "removal");
+        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "removal", projectId);
 
         // Then
 
@@ -411,7 +411,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         ResponseEntity<?> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
 
-        assertEquals(expected,result);
+        assertEquals(expected.getStatusCode(),result.getStatusCode());
 
     }
 

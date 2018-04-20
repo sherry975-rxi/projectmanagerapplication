@@ -55,13 +55,20 @@ public class US204AssignTaskRequestRestController {
      * @return ResponseEntity
      */
     @RequestMapping(value = "/requests", method = RequestMethod.GET)
-    public ResponseEntity<List<TaskTeamRequest>> getAllRequests(@PathVariable String taskId/*, @PathVariable int projectId*/) {
+    public ResponseEntity<List<TaskTeamRequest>> getAllRequests(@PathVariable String taskId, @PathVariable int projectId) {
 
-//        Project project = projectService.getProjectById(projectId);
+        Project project = projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        return new ResponseEntity<>(task.getPendingTaskTeamRequests(), HttpStatus.OK);
+        List<TaskTeamRequest> requestsList = task.getPendingTaskTeamRequests();
+        for(TaskTeamRequest request : requestsList){
+
+            Link order = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+            request.add(order);
+        }
+
+        return new ResponseEntity<>(requestsList, HttpStatus.OK);
 
     }
 
@@ -73,19 +80,34 @@ public class US204AssignTaskRequestRestController {
      * @return ResponseEntity
      */
     @RequestMapping(value = "/requests/list/{reqType}", method = RequestMethod.GET)
-    public ResponseEntity<List<TaskTeamRequest>> getAllFilteredRequests(@PathVariable String taskId, @PathVariable String reqType) {
+    public ResponseEntity<List<TaskTeamRequest>> getAllFilteredRequests(@PathVariable String taskId, @PathVariable String reqType, @PathVariable int projectId) {
 
-
+        Project project = projectService.getProjectById(projectId);
         Task task = taskService.getTaskByTaskID(taskId);
 
 
         if ("assignment".equals(reqType)) {
 
-            return new ResponseEntity<>(task.getPendingTaskAssignmentRequests(), HttpStatus.OK);
+            List<TaskTeamRequest> assignRequestList = task.getPendingTaskAssignmentRequests();
+            for(TaskTeamRequest request : assignRequestList){
+
+                Link order = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+                request.add(order);
+            }
+
+            return new ResponseEntity<>(assignRequestList, HttpStatus.OK);
+
 
         } else if ("removal".equals(reqType)) {
 
-            return ResponseEntity.ok(task.getPendingTaskRemovalRequests());
+            List<TaskTeamRequest> removalRequestList = task.getPendingTaskAssignmentRequests();
+            for(TaskTeamRequest request : removalRequestList){
+
+                Link order = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+                request.add(order);
+            }
+
+            return new ResponseEntity<>(removalRequestList, HttpStatus.OK);
         }
 
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.FORBIDDEN);
@@ -108,7 +130,7 @@ public class US204AssignTaskRequestRestController {
         for (TaskTeamRequest other : task.getPendingTaskTeamRequests()) {
             if (other.getDbId() == requestId) {
 
-                Link selfLink = linkTo(methodOn(US204AssignTaskRequestRestController.class).getAllRequests(taskId)).slash(other.getDbId()).withSelfRel();
+                Link selfLink = linkTo(methodOn(US204AssignTaskRequestRestController.class).getAllRequests(taskId, projectId)).slash(other.getDbId()).withSelfRel();
                 other.add(selfLink);
 
                 return new ResponseEntity<>(other, HttpStatus.OK);
