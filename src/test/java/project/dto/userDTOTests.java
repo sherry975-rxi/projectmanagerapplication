@@ -17,7 +17,7 @@ public class userDTOTests {
 	@Before
 	public void setUp() {
 
-		user = new UserDTO("name", "email", "idNumber", "function", "phone", "password", "1", "a");
+		user = new UserDTO("name", "email", "idNumber", "function", "phone", "password");
 		user.setUserAddress( "street", "zipCode", "city",
 				"district", "country");
 	}
