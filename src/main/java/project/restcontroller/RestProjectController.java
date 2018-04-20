@@ -30,7 +30,9 @@ public class RestProjectController  {
 
     @RequestMapping(value= "{projectId}", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
+
         Project project = this.projectService.getProjectById(projectId);
+
         return ResponseEntity.ok(project);
     }
 
@@ -42,17 +44,16 @@ public class RestProjectController  {
      * @return
      */
     @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
-    public ResponseEntity<?> updateProject(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
+    public ResponseEntity<Project> updateProject(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
 
-        if(projectService.isProjectInProjectContainer(projectId)) {
+        Project projectToBeUpdated = projectService.getProjectById(projectId);
 
-            projectService.updateProject(projectInfoToUpdate, projectId);
+        projectService.updateProject(projectInfoToUpdate, projectToBeUpdated);
 
-            return new ResponseEntity<>(HttpStatus.OK);
+        Link reference = linkTo(RestProjectController.class).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
+        projectToBeUpdated.add(reference);
 
-        }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.ok(projectToBeUpdated);
     }
 
     /**
