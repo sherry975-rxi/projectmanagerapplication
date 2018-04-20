@@ -84,7 +84,7 @@ public class RestUserController {
      * @param profileNameToSearch
      * @return ResponseEntity
      */
-    @RequestMapping(value = "/{profileNameToSearch}", method = RequestMethod.GET)
+    @RequestMapping(value = "/profiles/{profileNameToSearch}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> searchUsersByProfile(@PathVariable String profileNameToSearch) {
 
         List<User> foundUsersProfile = userService.searchUsersByProfileName(profileNameToSearch.toUpperCase());
