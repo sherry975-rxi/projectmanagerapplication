@@ -22,12 +22,6 @@ public class US390and392ChooseCalculationMethodAndCalculateReportedProjectCostRe
         this.projectService = projectsService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Project> getProjectbyId(@PathVariable int projectId) {
-        Project project = this.projectService.getProjectById(projectId);
-        return ResponseEntity.ok(project);
-    }
-
     /**
      * This controller's method uses PUT to set the calculation method of project's cost. The method of calculation is defined by a int (FIRST_COLLABORATOR = 1;
      * LAST_COLLABORATOR = 2; FIRST_LAST_COLLABORATOR = 3; AVERAGE_COLLABORATOR = 4).
