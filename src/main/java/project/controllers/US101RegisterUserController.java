@@ -40,24 +40,13 @@ public class US101RegisterUserController {
 	 *            phone of the User
 	 * @param password
 	 *            password of the User
-	 * @param street
-	 *            street of the User
-	 * @param zipCode
-	 *            zipCode of the User
-	 * @param city
-	 *            cityof the User
-	 * @param district
-	 *            district of the User
-	 * @param country
-	 *            country of the User
 	 */
-	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
-			String street, String zipCode, String city, String district, String country, String question, String answer) {
 
-		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password, question, answer);
-		newUser.setUserAddress(street, zipCode, city, district, country);
+    public UserDTO createUserDTO(String name, String email, String idNumber, String function, String phone, String password) {
 
-		userService.createUserWithDTO(newUser);
+        UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password);
+
+        return newUser;
 
 	}
 
@@ -92,7 +81,9 @@ public class US101RegisterUserController {
 
 		String userQuestion = userService.getUserByEmail(email).getQuestion();
 
-		validationMethod.performValidationMethod(userPhone, email, userQuestion, message);
+        if (validationMethod != null) {
+            validationMethod.performValidationMethod(userPhone, email, userQuestion, message);
+        }
 
 
 	}
@@ -134,6 +125,30 @@ public class US101RegisterUserController {
 		return this.userService.isEmailAddressValid(email);
 	}
 
+    public UserDTO setQuestionAnswer(UserDTO userDTO, String question, String answer) {
+        userDTO.setQuestion(question);
+        userDTO.setAnswer(answer);
+        return userDTO;
+    }
 
+    /**
+     * Adds an address to the userDTO
+     *
+     * @param street   street of the User
+     * @param zipCode  zipCode of the User
+     * @param city     cityof the User
+     * @param district district of the User
+     * @param country  country of the User
+     * @return
+     */
+    public UserDTO setAddress(UserDTO userDTO, String street, String zipCode, String city, String district, String country) {
+
+        userDTO.setUserAddress(street, zipCode, city, district, country);
+        return userDTO;
+    }
+
+    public void addNewUserToDbFromDTO(UserDTO userDTO) {
+        userService.createUserWithDTO(userDTO);
+    }
 
 }

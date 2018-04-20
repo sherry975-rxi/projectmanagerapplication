@@ -191,7 +191,7 @@ public class ProjectService {
 	 * @param project
 	 *            Project to update
 	 */
-	public void saveProject(Project project) {
+	public void updateProject(Project project) {
 		this.projectsRepository.save(project);
 	}
 
@@ -340,9 +340,7 @@ public class ProjectService {
 				return toSearch;
 			}
 		}
-
 		return null;
-
 	}
 
 
@@ -368,7 +366,7 @@ public class ProjectService {
 	 *
 	 * @param projectInfoToUpdate
 	 */
-	public void updateProject(Project projectInfoToUpdate, Project projectToBeUpdated){
+	public void updateProjectData(Project projectInfoToUpdate, Project projectToBeUpdated){
 
 		if((projectInfoToUpdate.getProjectManager() != null)) {
 
@@ -376,7 +374,7 @@ public class ProjectService {
 
 			projectToBeUpdated.setProjectManager(user);
 
-			saveProject(projectToBeUpdated);
+			updateProject(projectToBeUpdated);
 		}
 
 	}

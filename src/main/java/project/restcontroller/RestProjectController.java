@@ -7,29 +7,63 @@ import org.springframework.web.bind.annotation.*;
 import project.model.Project;
 import project.model.User;
 import project.services.ProjectService;
+import project.services.TaskService;
 import project.services.UserService;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 
+
+
 @RestController
+
+
 @RequestMapping("/projects/")
 public class RestProjectController  {
 
     private final ProjectService projectService;
     private final UserService userService;
+    private final TaskService taskService;
+
 
     @Autowired
-    public RestProjectController(ProjectService projectService, UserService userService) {
+    public RestProjectController(ProjectService projectService, UserService userService,  TaskService taskService) {
         this.projectService = projectService;
         this.userService = userService;
+        this.taskService = taskService;
     }
 
+    /**
+     * This method returns a ResponseEntity that contains all the active projects from the project service with a link to open each project
+     * @return ResponseEntity with all the active projects
+     */
+    @RequestMapping(value = "/active", method = RequestMethod.GET)
+    public ResponseEntity<List<Project>> getActiveProjects() {
+
+        List<Project> activeProjects = this.projectService.getActiveProjects();
+        for (Project project : activeProjects) {
+            Link selfLink = linkTo(project.restcontroller.RestProjectController.class).slash(project.getProjectId()).withSelfRel();
+            project.add(selfLink);
+        }
+        return ResponseEntity.ok().body(activeProjects);
+    }
 
     @RequestMapping(value= "{projectId}", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
 
         Project project = this.projectService.getProjectById(projectId);
+        Link selfRef = linkTo(RestProjectController.class).slash(project.getProjectId()).withSelfRel();
+        project.add(selfRef);
+        //Link toPMUpdate = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("pm").withRel("toPm");
+        // project.add(toPMUpdate);
+        //Link toCalculationMethodUpdate = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("calculationMethod")
+               // .withRel("changeCalculationMethod");
+        //project.add(toCalculationMethodUpdate);
+        this.projectService.getProjectTeam(project);
 
         return ResponseEntity.ok(project);
     }
@@ -46,7 +80,7 @@ public class RestProjectController  {
 
         Project projectToBeUpdated = projectService.getProjectById(projectId);
 
-        projectService.updateProject(projectInfoToUpdate, projectToBeUpdated);
+        projectService.updateProjectData(projectInfoToUpdate, projectToBeUpdated);
 
         Link reference = linkTo(RestProjectController.class).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
         projectToBeUpdated.add(reference);
@@ -61,7 +95,6 @@ public class RestProjectController  {
      */
     @RequestMapping(value = "" , method = RequestMethod.POST)
     public ResponseEntity<Project> createProject(@RequestBody Project projectDTO) {
-
         User projectManager = userService.getUserByEmail(projectDTO.getProjectManager().getEmail());
 
         Project proj = projectService.createProject(projectDTO.getName(), projectDTO.getDescription(), projectManager);
@@ -81,6 +114,20 @@ public class RestProjectController  {
 
         return ResponseEntity.ok().body(proj);
     }
+
+
+    /**
+     * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
+     */
+    @RequestMapping(value = "/cost", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
+        Project project = this.projectService.getProjectById(projectId);
+        Map<String, Double> projectCost = new HashMap<>();
+        projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+        return  ResponseEntity.ok().body(projectCost);
     }
+}
+
+
 
 
