@@ -68,8 +68,8 @@ public class RestProjectController  {
 
         this.projectService.addProjectToProjectContainer(proj);
 
-        Link selfRef = linkTo(RestProjectController.class).slash(proj.getProjectId()).withSelfRel();
-        proj.add(selfRef);
+        Link reference = linkTo(RestProjectController.class).slash(proj.getProjectId()).withRel("Project details");
+        proj.add(reference);
 
         return ResponseEntity.ok().body(proj);
     }
