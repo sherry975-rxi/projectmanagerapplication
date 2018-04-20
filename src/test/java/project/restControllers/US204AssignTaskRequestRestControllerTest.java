@@ -1,5 +1,6 @@
 package project.restControllers;
 
+import com.google.gson.Gson;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,8 +10,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.model.*;
 import project.repository.ProjCollabRepository;
@@ -30,7 +35,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -173,10 +178,25 @@ public class US204AssignTaskRequestRestControllerTest {
         User userDTOTwo = new User();
         userDTOTwo.setEmail("joao@gmail.com");
 
+        Gson gson = new Gson();
+        String userDTOjson = gson.toJson(userDTOTwo);
+
 
 
         //When
-        ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
+        //ResponseEntity<TaskTeamRequest> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
+
+        MvcResult resultTwo = mockMvc.perform(
+                                                        post("/projects/" + projectId + "/tasks/" + taskIdOne + "/requests/assignmentRequest")
+                                                                .contentType(MediaType.APPLICATION_JSON)
+                                                                .content(userDTOjson))
+                .andReturn();
+
+//        MockHttpServletResponse test = mockMvc.perform(post("/projects/" + projectId + "/tasks/" + taskIdOne + "/requests/assignmentRequest")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(userDTOjson))
+//                .andReturn().getResponse();
+
 
         //Then
         TaskTeamRequest assignRequest = new TaskTeamRequest();
@@ -184,9 +204,12 @@ public class US204AssignTaskRequestRestControllerTest {
         assignRequest.setProjCollab(projCollabTwo);
         assignRequest.setTask(taskOne);
 
-        ResponseEntity<?> expected = new ResponseEntity<>(assignRequest, HttpStatus.CREATED);
+        ResponseEntity<TaskTeamRequest> expected = new ResponseEntity<>(assignRequest, HttpStatus.CREATED);
 
-        assertEquals(expected,result);
+        //assertEquals(expected,result);
+        /*assertEquals(HttpStatus.CREATED, result.getStatusCode());
+        assertEquals(assignRequest, result.getBody());*/
+        assertEquals(HttpStatus.CREATED.value(), resultTwo.getResponse().getStatus());
 
     }
 
@@ -269,12 +292,12 @@ public class US204AssignTaskRequestRestControllerTest {
      * Asking for all existing requests in taskOne
      *
      * Then
-     * Expects an ON message and a list of existing requests
+     * Expects an OK message and a list of existing requests
      *
      * @throws Exception
      */
     @Test
-    public  void retriveAllRequest() throws Exception {
+    public  void retrieveAllRequest() throws Exception {
 
 
         // Given
@@ -315,12 +338,12 @@ public class US204AssignTaskRequestRestControllerTest {
      * Asking for all existing ASSIGNMENT requests in taskOne
      *
      * Then
-     * Expects an ON message and a list of existing ASSIGNMENT requests
+     * Expects an OK message and a list of existing ASSIGNMENT requests
      *
      * @throws Exception
      */
     @Test
-    public  void retriveAllAssignementRequest() throws Exception {
+    public  void retrieveAllAssignementRequest() throws Exception {
 
         // Given
 
@@ -359,12 +382,12 @@ public class US204AssignTaskRequestRestControllerTest {
      * Asking for all existing REMOVAL requests in taskOne
      *
      * Then
-     * Expects an ON message and a list of existing REMOVAL requests
+     * Expects an OK message and a list of existing REMOVAL requests
      *
      * @throws Exception
      */
     @Test
-    public  void retriveAllRemovalRequest() throws Exception {
+    public  void retrieveAllRemovalRequest() throws Exception {
 
         // Given
         taskOne.addProjectCollaboratorToTask(projCollabTwo);
@@ -389,6 +412,57 @@ public class US204AssignTaskRequestRestControllerTest {
         ResponseEntity<?> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
 
         assertEquals(expected,result);
+
+    }
+
+    /**
+     * Given
+     * Adding userThree to taskOne
+     * Assignment Request created for userTwo in taskOne
+     * Removal Request created for userThree in taskOne
+     *
+     * When
+     * Asking for an existing request in taskOne
+     *
+     * Then
+     * Expects an OK message and the specific request
+     *
+     * @throws Exception
+     */
+    @Test
+    public  void retrieveOneRequest() throws Exception {
+
+
+        // Given
+        taskOne.addProjectCollaboratorToTask(projCollabThree);
+        taskOne.createTaskAssignmentRequest(projCollabTwo);
+        taskOne.createTaskRemovalRequest(projCollabThree);
+
+        int assignID = taskOne.getPendingTaskAssignmentRequests().get(0).getDbId();
+        int removalID = taskOne.getPendingTaskRemovalRequests().get(0).getDbId();
+
+        // When
+        ResponseEntity<TaskTeamRequest> resultAssign = controller.getRequestDetails(assignID, taskIdOne, projectId);
+        ResponseEntity<TaskTeamRequest> resultRemoval = controller.getRequestDetails(removalID, taskIdOne, projectId);
+
+        // Then
+        TaskTeamRequest assignRequest = new TaskTeamRequest();
+        assignRequest.setType(0);
+        assignRequest.setProjCollab(projCollabTwo);
+        assignRequest.setTask(taskOne);
+        TaskTeamRequest removalRequest = new TaskTeamRequest();
+        removalRequest.setType(1);
+        removalRequest.setProjCollab(projCollabThree);
+        removalRequest.setTask(taskOne);
+
+
+        ResponseEntity<TaskTeamRequest> expectedAssign = new ResponseEntity<>(assignRequest, HttpStatus.OK);
+
+        assertEquals(expectedAssign,resultAssign);
+
+        ResponseEntity<TaskTeamRequest> expectedRemoval = new ResponseEntity<>(removalRequest, HttpStatus.OK);
+
+        assertEquals(expectedAssign,resultRemoval);
 
     }
 
