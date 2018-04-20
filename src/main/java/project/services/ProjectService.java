@@ -340,9 +340,7 @@ public class ProjectService {
 				return toSearch;
 			}
 		}
-
 		return null;
-
 	}
 
 
@@ -382,17 +380,8 @@ public class ProjectService {
 	 *
 	 * @param projectInfoToUpdate
 	 */
-	public void updateProject(Project projectInfoToUpdate, int projectId){
-
-		Project projectToBeUpdated = getProjectById(projectId);
-
-		if((projectToBeUpdated.getProjectManager() != null)
-				&& (userService.isUserEmailInUserContainer(projectInfoToUpdate.getProjectManager().getEmail()))) {
-
-			User user = userService.getUserByEmail(projectInfoToUpdate.getProjectManager().getEmail());
-
-			changeProjectManager(user, projectToBeUpdated);
-		}
-
+	public void updateProject(Project projectInfoToUpdate){
+       this.projectsRepository.save(projectInfoToUpdate);
 	}
+
 }
