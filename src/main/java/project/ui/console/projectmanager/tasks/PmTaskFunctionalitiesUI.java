@@ -57,7 +57,7 @@ public class PmTaskFunctionalitiesUI {
      */
     private static Date parseDate(String value) {
         Calendar date = Calendar.getInstance();
-        Date tempdate = null;
+        Date tempdate;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/yyyy");
             tempdate = sdf.parse(value);
