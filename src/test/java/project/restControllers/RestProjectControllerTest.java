@@ -2,10 +2,12 @@ package project.restControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import project.model.ProjectCollaborator;
 import project.model.User;
 import project.restcontroller.RestProjectController;
 import project.services.ProjectService;
+import project.services.TaskService;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -25,9 +28,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestProjectControllerTest {
+    @Mock
+    private TaskService taskServiceMock;
+
     @Mock
     private ProjectService projectServiceMock;
     @Mock
@@ -66,4 +73,35 @@ public class RestProjectControllerTest {
         assertEquals(jacksonProject.write(projectTest).getJson(), response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);
     }
+
+    @Test
+    public void testUpdateCalculationMethod() throws Exception{
+        //given the project is running
+        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(new Project("Project", "description", userRui));
+        Mockito.doNothing().when(projectServiceMock).saveProject(any(Project.class));
+
+        //when
+        MockHttpServletResponse response = mvc.perform(put("/projects/" + projectId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"calculationMethod\":3}")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        //then
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
+    @Test
+    public void testGetProjectCost() throws Exception {
+        //given the project is running
+        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectMock);
+        when(taskServiceMock.getTotalCostReportedToProjectUntilNow(projectMock)).thenReturn(7.0);
+
+        //when we perform a get request to url /projects/<projectId>/cost
+        MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId + "/cost").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //then we receive a valid message
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("{\"projectCost\":7.0}", response.getContentAsString());
+        verify(projectServiceMock, times(1)).getProjectById(projectId);
+    }
+
 }
