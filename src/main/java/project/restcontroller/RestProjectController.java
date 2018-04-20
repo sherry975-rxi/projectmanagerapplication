@@ -3,8 +3,6 @@ package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
@@ -17,8 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
+
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/projects/")
 public class RestProjectController  {
 
     private final ProjectService projectService;
@@ -33,8 +33,9 @@ public class RestProjectController  {
         this.taskService = taskService;
     }
 
-    @RequestMapping(value = "/{projectId}", method = RequestMethod.GET)
+    @RequestMapping(value= "{projectId}", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
+
         Project project = this.projectService.getProjectById(projectId);
         Link selfRef = linkTo(RestProjectController.class).slash(project.getProjectId()).withSelfRel();
         project.add(selfRef);
@@ -44,7 +45,28 @@ public class RestProjectController  {
                // .withRel("changeCalculationMethod");
         //project.add(toCalculationMethodUpdate);
         this.projectService.getProjectTeam(project);
+
         return ResponseEntity.ok(project);
+    }
+
+    /**
+     * This method change the project manager of a given project
+     *
+     * @param projectInfoToUpdate
+     * @param projectId
+     * @return
+     */
+    @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
+    public ResponseEntity<Project> getProjectDetails(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
+
+        Project projectToBeUpdated = projectService.getProjectById(projectId);
+
+        projectService.updateProject(projectInfoToUpdate, projectToBeUpdated);
+
+        Link reference = linkTo(RestProjectController.class).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
+        projectToBeUpdated.add(reference);
+
+        return ResponseEntity.ok(projectToBeUpdated);
     }
 
     /**
@@ -72,26 +94,6 @@ public class RestProjectController  {
         proj.add(reference);
 
         return ResponseEntity.ok().body(proj);
-    }
-
-    /**
-     * This method change the project manager of a given project
-     *
-     * @param projectInfoToUpdate
-     * @param projectId
-     * @return
-     */
-    @RequestMapping(value = "/{projectId}" , method = RequestMethod.PATCH)
-    @PatchMapping
-    public ResponseEntity<Project> updateProject(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
-
-        if(projectService.isProjectInProjectContainer(projectId)) {
-            projectInfoToUpdate.setProjectId(projectId);
-            projectService.updateProject(projectInfoToUpdate);
-            return ResponseEntity.ok().body(this.projectService.getProjectById(projectId));
-        }
-
-        return ResponseEntity.notFound().build();
     }
 
     /**

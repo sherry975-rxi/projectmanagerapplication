@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.hateoas.Link;
 
 import java.util.Calendar;
 
@@ -161,6 +162,30 @@ public class ReportTest {
 		reportB.setTaskCollaborator(taskWorker1);
 		reportB.setTask(task1);
 
+        //GIVEN
+        Link link = new Link("THIS/IS/A/LINK/");
+        Link linkB = new Link("THIS/IS/ALSO/A/LINK");
+        report.add(link);
+        reportB.add(link);
+
+        //WHEN
+        boolean areEqual = report.equals(reportB);
+
+        //THEN
+        assertTrue(areEqual);
+
+        //GIVEN
+        reportB.removeLinks();
+        reportB.add(linkB);
+
+        //WHEN
+        areEqual = report.equals(reportB);
+
+        //THEN
+        assertFalse(areEqual);
+
+        reportB.removeLinks();
+        reportB.add(link);
 		assertTrue(report.equals(reportB));// same attributes
 
 		reportB.setTaskCollaborator(null);

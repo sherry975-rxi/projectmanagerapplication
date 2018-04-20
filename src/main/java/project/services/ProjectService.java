@@ -362,26 +362,20 @@ public class ProjectService {
 	}
 
 	/**
-	 * This method change the project manager and update project in DB
-	 *
-	 * @param user
-	 * @param project
-	 */
-	public void changeProjectManager(User user, Project project) {
-
-		project.setProjectManager(user);
-
-		saveProject(project);
-
-	}
-
-	/**
 	 *This method upDate project from a given info.
 	 *
 	 * @param projectInfoToUpdate
 	 */
-	public void updateProject(Project projectInfoToUpdate){
-       this.projectsRepository.save(projectInfoToUpdate);
-	}
+	public void updateProject(Project projectInfoToUpdate, Project projectToBeUpdated){
 
+		if((projectInfoToUpdate.getProjectManager() != null)) {
+
+			User user = userService.getUserByEmail(projectInfoToUpdate.getProjectManager().getEmail());
+
+			projectToBeUpdated.setProjectManager(user);
+
+			saveProject(projectToBeUpdated);
+		}
+
+	}
 }
