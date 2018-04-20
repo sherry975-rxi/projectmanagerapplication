@@ -377,5 +377,10 @@ public class ProjectService {
 			updateProject(projectToBeUpdated);
 		}
 
+		if(projectInfoToUpdate.getCalculationMethod() < 4 || projectInfoToUpdate.getCalculationMethod() > 0){
+			projectToBeUpdated.setCalculationMethod(projectInfoToUpdate.getCalculationMethod());
+			updateProject(projectToBeUpdated);
+		}
+
 	}
 }

@@ -43,7 +43,7 @@ public class RestProjectController  {
 
         List<Project> activeProjects = this.projectService.getActiveProjects();
         for (Project project : activeProjects) {
-            Link selfLink = linkTo(project.restcontroller.RestProjectController.class).slash(project.getProjectId()).withSelfRel();
+            Link selfLink = linkTo(getClass()).slash(project.getProjectId()).withSelfRel();
             project.add(selfLink);
         }
         return ResponseEntity.ok().body(activeProjects);
@@ -56,11 +56,11 @@ public class RestProjectController  {
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
 
         Project project = this.projectService.getProjectById(projectId);
-        Link selfRef = linkTo(RestProjectController.class).slash(project.getProjectId()).withSelfRel();
+        Link selfRef = linkTo(getClass()).slash(project.getProjectId()).withSelfRel();
         project.add(selfRef);
-        Link updateProjectLink = linkTo(RestProjectController.class).slash(project.getProjectId()).withRel("updateProject");
+        Link updateProjectLink = linkTo(getClass()).slash(project.getProjectId()).withRel("updateProject");
         project.add(updateProjectLink);
-        Link calculateCostLink = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("cost").withRel("calculateCost");
+        Link calculateCostLink = linkTo(getClass()).slash(project.getProjectId()).slash("cost").withRel("calculateCost");
         project.add(calculateCostLink);
 
         return ResponseEntity.ok(project);
@@ -75,12 +75,10 @@ public class RestProjectController  {
      */
     @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
     public ResponseEntity<Project> updateProject(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
-
         Project projectToBeUpdated = projectService.getProjectById(projectId);
-
         projectService.updateProjectData(projectInfoToUpdate, projectToBeUpdated);
 
-        Link reference = linkTo(RestProjectController.class).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
+        Link reference = linkTo(getClass()).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
         projectToBeUpdated.add(reference);
 
         return ResponseEntity.ok(projectToBeUpdated);
@@ -95,7 +93,7 @@ public class RestProjectController  {
         Project project = this.projectService.getProjectById(projectId);
         Map<String, Double> projectCost = new HashMap<>();
         projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
-        Link seeProjectDetailsLink = linkTo(RestProjectController.class).slash(project.getProjectId()).withRel("seeProjectDetails");
+        Link seeProjectDetailsLink = linkTo(getClass()).slash(project.getProjectId()).withRel("seeProjectDetails");
         project.add(seeProjectDetailsLink);
 
         return  ResponseEntity.ok().body(projectCost);
