@@ -109,10 +109,9 @@ public class CostCalculationTests {
         // GIVEN 3 collaborators active during the period of one report
 
         List<ProjectCollaborator> collaborators = new ArrayList<>();
-        collaborators.add(projectCollaborator3);
         collaborators.add(projectCollaborator2);
+        collaborators.add(projectCollaborator3);
         collaborators.add(projectCollaborator);
-
 
         //verify if projectCollaborator and projectCollaborator2 are identified as belonging to user
         assertEquals(user, projectCollaborator.getUserFromProjectCollaborator());
