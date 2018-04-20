@@ -69,47 +69,66 @@ public class RestProjectControllerTest {
         projectCollaborator.setProject(projectMock);
     }
 
-    @Test
-    public void getProjectDetailsTest() throws Exception {
-        Project projectTest = new Project("Project", "description", userRui);
-        //GIVEN
 
-        //WHEN
+    /**
+     * GIVEN a project ID
+     * WHEN we perform a get request to url /projects/<projectId>
+     * THEN we receive a valid message and the project info
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnTheProjectDetails() throws Exception {
+        //GIVEN a project ID
+        Project projectTest = new Project("Project", "description", userRui);
+
+        //WHEN we perform a get request to url /projects/<projectId>
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectTest);
         MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
-        //THEN
+        //THEN we receive status OK and the project info
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals(jacksonProject.write(projectTest).getJson(), response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);
     }
 
-    @Ignore
+    /**
+     * GIVEN a project ID
+     * WHEN we perform a patch request to url /projects/<projectId>
+     * THEN we we receive status OK and the project info updated
+     * @throws Exception
+     */
     @Test
-    public void testUpdateCalculationMethod() throws Exception{
-        //given the project is running
+    public void shouldUpdateCalculationMethod() throws Exception{
+        //GIVEN a project ID
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(new Project("Project", "description", userRui));
-        Mockito.doNothing().when(projectServiceMock).updateProject(any(Project.class));
+        Mockito.doNothing().when(projectServiceMock).updateProject(projectMock);
 
-        //when
-        MockHttpServletResponse response = mvc.perform(put("/projects/" + projectId)
+        //WHEN we perform a patch request to url /projects/<projectId>
+        MockHttpServletResponse response = mvc.perform(patch("/projects/" + projectId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"calculationMethod\":3}")
-                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
-        //then
+                .content(jacksonProject.write(projectMock).getJson())).andReturn().getResponse();
+
+        //THEN we receive status OK and the project info updated
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
-    @Ignore
+
+    /**
+     * GIVEN a project ID
+     * WHEN we perform a get request to url /projects/<projectId>/cost
+     * THEN we we receive status OK the cost of the project
+     * @throws Exception
+     */
     @Test
-    public void testGetProjectCost() throws Exception {
-        //given the project is running
+    public void shouldReturnTheProjectCost() throws Exception {
+        //given the project ID
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectMock);
         when(taskServiceMock.getTotalCostReportedToProjectUntilNow(projectMock)).thenReturn(7.0);
 
         //when we perform a get request to url /projects/<projectId>/cost
-        MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId + "/cost").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId + "/cost")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
-        //then we receive a valid message
+        //then we receive a status OK and the cost of the project
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("{\"projectCost\":7.0}", response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);
