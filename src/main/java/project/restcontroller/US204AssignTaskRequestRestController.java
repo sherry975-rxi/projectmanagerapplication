@@ -76,7 +76,7 @@ public class US204AssignTaskRequestRestController {
      * @param taskId Task id associated to the task to be made the request
      * @return ResponseEntity
      */
-    @RequestMapping(value = "/requests/list/{reqType}", method = RequestMethod.GET)
+    @RequestMapping(value = "/requests/filter/{reqType}", method = RequestMethod.GET)
     public ResponseEntity<List<TaskTeamRequest>> getAllFilteredRequests(@PathVariable String taskId, @PathVariable String reqType, @PathVariable int projectId) {
 
         projectService.getProjectById(projectId);
@@ -174,7 +174,12 @@ public class US204AssignTaskRequestRestController {
                         if (request.getTask().equals(task) && request.getProjCollab().equals(projCollab) && request.isAssignmentRequest()) {
 
                             Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+
+                            String requestType = "assignment";
+                            Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(taskId, requestType, projectId)).withRel("List of Assignment Requests");
+
                             request.add(reference);
+                            request.add(referenceTwo);
 
                             UriComponents ucb =linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).toUriComponentsBuilder().build();
 
