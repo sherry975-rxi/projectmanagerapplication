@@ -1,5 +1,7 @@
 package project.ui.console.administrator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
@@ -88,12 +90,7 @@ public class AdminMenuUI {
 			case "5":
 				System.out.println("Please insert file to load");
 				String file = input.nextLine();
-				try {
-					userReader.readFile(file);
-					System.out.println("Users loaded successfully!");
-                   } catch (ParserConfigurationException | SAXException | IOException e) {
-					System.out.println("Something went wrong. Please review your input and try again.");
-				}
+                loadUsers(file);
 				break;
 
 			case "b":
@@ -125,4 +122,14 @@ public class AdminMenuUI {
 		this.adminLoggedIn = adminLoggedIn;
 	}
 
+    private void loadUsers(String file) {
+        try {
+            userReader.readFile(file);
+            System.out.println("Users loaded successfully!");
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            Logger log = LoggerFactory.getLogger(UserReader.class);
+            log.error("Error!", e);
+            System.out.println("Something went wrong. Please review your input and try again.");
+        }
+    }
 }
