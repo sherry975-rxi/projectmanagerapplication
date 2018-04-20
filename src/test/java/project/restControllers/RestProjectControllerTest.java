@@ -59,16 +59,23 @@ public class RestProjectControllerTest {
         projectCollaborator.setProject(projectMock);
     }
 
-    @Test
-    public void getProjectDetailsTest() throws Exception {
-        Project projectTest = new Project("Project", "description", userRui);
-        //GIVEN
 
-        //WHEN
+    /**
+     * GIVEN a project ID
+     * WHEN we perform a get request to url /projects/<projectId>
+     * THEN we receive a valid message and the project info
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnTheProjectDetails() throws Exception {
+        //GIVEN a project ID
+        Project projectTest = new Project("Project", "description", userRui);
+
+        //WHEN we perform a get request to url /projects/<projectId>
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectTest);
         MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
-        //THEN
+        //THEN we receive status OK and the project info
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals(jacksonProject.write(projectTest).getJson(), response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);

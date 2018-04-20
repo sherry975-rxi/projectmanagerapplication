@@ -33,40 +33,20 @@ public class RestProjectController  {
         this.taskService = taskService;
     }
 
+    /**
+     * This method change the project manager of a given project
+     *
+     */
     @RequestMapping(value= "{projectId}", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
 
         Project project = this.projectService.getProjectById(projectId);
         Link selfRef = linkTo(RestProjectController.class).slash(project.getProjectId()).withSelfRel();
         project.add(selfRef);
-        //Link toPMUpdate = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("pm").withRel("toPm");
-        // project.add(toPMUpdate);
-        //Link toCalculationMethodUpdate = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("calculationMethod")
-               // .withRel("changeCalculationMethod");
-        //project.add(toCalculationMethodUpdate);
-        this.projectService.getProjectTeam(project);
+        Link updateProjectLink = linkTo(RestProjectController.class).slash(project.getProjectId()).slash("{projectId}").withRel("updateProject");
+        project.add(updateProjectLink);
 
         return ResponseEntity.ok(project);
-    }
-
-    /**
-     * This method change the project manager of a given project
-     *
-     * @param projectInfoToUpdate
-     * @param projectId
-     * @return
-     */
-    @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
-    public ResponseEntity<Project> getProjectDetails(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
-
-        Project projectToBeUpdated = projectService.getProjectById(projectId);
-
-        projectService.updateProject(projectInfoToUpdate, projectToBeUpdated);
-
-        Link reference = linkTo(RestProjectController.class).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
-        projectToBeUpdated.add(reference);
-
-        return ResponseEntity.ok(projectToBeUpdated);
     }
 
     /**
