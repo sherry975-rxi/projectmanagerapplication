@@ -238,7 +238,7 @@ public class US301CreateProjectUI {
         System.out.println("[3] - The average of all the collaborator's costs");
 
         System.out.println("");
-        Integer number;
+        Integer number=0;
 
         boolean loop=true;
         while(loop) {
