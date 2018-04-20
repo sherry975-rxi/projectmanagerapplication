@@ -163,7 +163,7 @@ public class US204AssignTaskRequestRestController {
 
             Optional<User> userOptional = Optional.of(user);
 
-            if (userOptional.isPresent()) {
+            if (userOptional.isPresent() && task.getCurrentState()!=StateEnum.CANCELLED) {
                 //userOptional.get();
 
 
@@ -227,5 +227,6 @@ public class US204AssignTaskRequestRestController {
             // either user, project or task don't exist
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+
     }
 
