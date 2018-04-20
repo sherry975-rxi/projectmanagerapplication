@@ -74,30 +74,27 @@ public class AdminMenuUI {
 				break;
 
 			case "3":
-				if (selectedUser != null)
-					System.out.println("No user selected!");
-				else {
+                if (isUserSelected()) {
 					changeUserProfileUI.changeUserProfile(selectedUser);
-				} break;
+				}
+				break;
 
 			case "4":
-				if (selectedUser == null)
-					System.out.println("No user selected!");
-				else {
+				if (isUserSelected()) {
 					changeUserStateUI.changeUserState(selectedUser);
-				} break;
+				}
+				break;
 
-				case "5":
-
-					System.out.println("Please insert file to load");
-					String file = input.nextLine();
-					try {
-						userReader.readFile(file);
-						System.out.println("Users loaded successfully!");
-                    } catch (ParserConfigurationException | SAXException | IOException e) {
-						System.out.println("Something went wrong. Please review your input and try again.");
-					}
-					break;
+			case "5":
+				System.out.println("Please insert file to load");
+				String file = input.nextLine();
+				try {
+					userReader.readFile(file);
+					System.out.println("Users loaded successfully!");
+                   } catch (ParserConfigurationException | SAXException | IOException e) {
+					System.out.println("Something went wrong. Please review your input and try again.");
+				}
+				break;
 
 			case "b":
 				System.out.println("Returning to main menu...");
@@ -116,6 +113,13 @@ public class AdminMenuUI {
 
 	}
 
+	private boolean isUserSelected() {
+	    if(selectedUser== null) {
+            System.out.println("No user selected!");
+	        return false;
+        }
+        return true;
+    }
 
 	public void setAdminLoggedIn(User adminLoggedIn) {
 		this.adminLoggedIn = adminLoggedIn;

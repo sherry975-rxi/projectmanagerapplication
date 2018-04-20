@@ -67,25 +67,15 @@ public class US203FindPendingTaskRestRequest {
         } else {
 
             List<String> taskListString = taskService.getStartedNotFinishedUserTaskList(user)
-                    .stream().map(this::taskDataToString).collect(Collectors.toList());
+                    .stream().map(task -> task.getTaskID()+ " - " + task.getDescription()).collect(Collectors.toList());
 
             if(taskListString.isEmpty()) {
                 taskListString.add("You have no ongoing tasks!");
             }
 
-
-
             return ResponseEntity.ok().body(taskListString);
 
         }
-
-    }
-
-
-
-    private String taskDataToString(Task toConvert){
-
-       return toConvert.getTaskID() + " - " + toConvert.getDescription();
     }
 }
 
