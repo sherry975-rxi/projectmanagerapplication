@@ -8,17 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 import project.model.*;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
-import javax.persistence.criteria.Order;
-import javax.servlet.http.HttpServletRequest;
+
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,15 +54,15 @@ public class US204AssignTaskRequestRestController {
     @RequestMapping(value = "/requests", method = RequestMethod.GET)
     public ResponseEntity<List<TaskTeamRequest>> getAllRequests(@PathVariable String taskId, @PathVariable int projectId) {
 
-        Project project = projectService.getProjectById(projectId);
+        projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
         List<TaskTeamRequest> requestsList = task.getPendingTaskTeamRequests();
         for(TaskTeamRequest request : requestsList){
 
-            Link order = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
-            request.add(order);
+            Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+            request.add(reference);
         }
 
         return new ResponseEntity<>(requestsList, HttpStatus.OK);
@@ -82,7 +79,7 @@ public class US204AssignTaskRequestRestController {
     @RequestMapping(value = "/requests/list/{reqType}", method = RequestMethod.GET)
     public ResponseEntity<List<TaskTeamRequest>> getAllFilteredRequests(@PathVariable String taskId, @PathVariable String reqType, @PathVariable int projectId) {
 
-        Project project = projectService.getProjectById(projectId);
+        projectService.getProjectById(projectId);
         Task task = taskService.getTaskByTaskID(taskId);
 
 
@@ -91,8 +88,8 @@ public class US204AssignTaskRequestRestController {
             List<TaskTeamRequest> assignRequestList = task.getPendingTaskAssignmentRequests();
             for(TaskTeamRequest request : assignRequestList){
 
-                Link order = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
-                request.add(order);
+                Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+                request.add(reference);
             }
 
             return new ResponseEntity<>(assignRequestList, HttpStatus.OK);
@@ -103,8 +100,8 @@ public class US204AssignTaskRequestRestController {
             List<TaskTeamRequest> removalRequestList = task.getPendingTaskAssignmentRequests();
             for(TaskTeamRequest request : removalRequestList){
 
-                Link order = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
-                request.add(order);
+                Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+                request.add(reference);
             }
 
             return new ResponseEntity<>(removalRequestList, HttpStatus.OK);
@@ -123,17 +120,17 @@ public class US204AssignTaskRequestRestController {
     @RequestMapping(value = "/requests/{requestId}", method = RequestMethod.GET)
     public ResponseEntity<TaskTeamRequest> getRequestDetails(@PathVariable int requestId, @PathVariable String taskId, @PathVariable int projectId) {
 
-        Project project = projectService.getProjectById(projectId);
+        projectService.getProjectById(projectId);
 
         Task task = taskService.getTaskByTaskID(taskId);
 
-        for (TaskTeamRequest other : task.getPendingTaskTeamRequests()) {
-            if (other.getDbId() == requestId) {
+        for (TaskTeamRequest request : task.getPendingTaskTeamRequests()) {
+            if (request.getDbId() == requestId) {
 
-                Link selfLink = linkTo(methodOn(US204AssignTaskRequestRestController.class).getAllRequests(taskId, projectId)).slash(other.getDbId()).withSelfRel();
-                other.add(selfLink);
+                Link selfLink = linkTo(methodOn(US204AssignTaskRequestRestController.class).getAllRequests(taskId, projectId)).slash(request.getDbId()).withSelfRel();
+                request.add(selfLink);
 
-                return new ResponseEntity<>(other, HttpStatus.OK);
+                return new ResponseEntity<>(request, HttpStatus.OK);
             }
 
         }
@@ -164,7 +161,6 @@ public class US204AssignTaskRequestRestController {
             Optional<User> userOptional = Optional.of(user);
 
             if (userOptional.isPresent() && task.getCurrentState()!=StateEnum.CANCELLED) {
-                //userOptional.get();
 
 
                 ProjectCollaborator projCollab = projectService.findActiveProjectCollaborator(user, project);
@@ -177,42 +173,15 @@ public class US204AssignTaskRequestRestController {
                     for (TaskTeamRequest request : task.getPendingTaskTeamRequests()) {
                         if (request.getTask().equals(task) && request.getProjCollab().equals(projCollab) && request.isAssignmentRequest()) {
 
-                            Link order = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
-                            request.add(order);
-                            //Link ordersLink = linkTo(getRequestDetails(request.getDbId(), taskId)).withRel("Request Details");
-//                            Link methodLinkBuilder =
-//                                    methodOn(US204AssignTaskRequestRestController.class).getAllRequests(taskId);
-//                            Link ordersLink = linkTo(methodLinkBuilder).withRel("allOrders");
+                            Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+                            request.add(reference);
 
-                            //Link reference = linkTo(getRequestDetails(request.getDbId(), taskId)).withRel("Request Details");
-//                            Link reference = linkTo(US204AssignTaskRequestRestController.class).slash(request.getDbId()).withRel("Request Details");
-//
-////
-//                            request.add(reference);
-                            //Link referenceTwo = linkTo(methodOn( getRequestDetails(request.getDbId(), taskId)).toUri();
-                            //URI result = MvcUriComponentsBuilder.fromController(getClass()).path("/requests/{requestId}").buildAndExpand(request.getDbId()).toUri();
-                            //URI result = MvcUriComponentsBuilder.fromMethodCall(getRequestDetails(request.getDbId(), taskId, projectId)).build().toUri();
-//                                    fromMethod(getClass(), getRequestDetails(request.getDbId(),taskId)).buildAndExpand()
-//                                    fromController(getClass()).path("/requests/{requestId}").buildAndExpand(request.getDbId()).toUri();
+                            UriComponents ucb =linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).toUriComponentsBuilder().build();
 
-                            UriComponents ucbT =linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).toUriComponentsBuilder().build();
+                            URI location = ucb.toUri();
 
-                            //UriComponents ucb = ServletUriComponentsBuilder.fromHttpUrl(order.toString()).build();
-                            URI teste = ucbT.toUri();
-
-
-                            /*URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/requests/{id}").buildAndExpand(request.getDbId()).toUri();
-                            URI zzzz = ServletUriComponentsBuilder.fromRequest(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId);*/
-
-
-                            //URI locationZ = MvcUriComponentsBuilder.fromMethodName(getClass(), "getRequestDetails", request.getDbId(), taskId, projectId).path("/{id}").buildAndExpand(request.getDbId()).toUri();
-
-                            //URI locationTwo = linkTo(getRequestDetails(request.getDbId(), taskId)).toUri();
                             HttpHeaders headers = new HttpHeaders();
-                            headers.setLocation(teste);
-
-
-                            //URI location = ServletUriComponentsBuilder.fromRequestUri(getAllRequests(taskId))
+                            headers.setLocation(location);
 
                             return new ResponseEntity<>(request, headers, HttpStatus.CREATED);
                             //return ResponseEntity.created(locationZ).body(request);
