@@ -10,12 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.model.*;
 import project.repository.ProjCollabRepository;
@@ -36,33 +31,30 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 
 @RunWith(MockitoJUnitRunner.class)
 
 public class US204AssignTaskRequestRestControllerTest {
 
-    private MockMvc mockMvc;
+    @Mock
+    private TaskRepository taskRepository;
 
     @Mock
-    TaskRepository taskRepository;
+    private UserRepository userRepository;
 
     @Mock
-    UserRepository userRepository;
+    private ProjectsRepository projectsRepository;
 
     @Mock
-    ProjectsRepository projectsRepository;
-
-    @Mock
-    ProjCollabRepository projCollabRepository;
+    private ProjCollabRepository projCollabRepository;
 
     @InjectMocks
-    UserService userService;
+    private UserService userService;
     @InjectMocks
-    ProjectService projectService;
+    private ProjectService projectService;
     @InjectMocks
-    TaskService taskService;
+    private TaskService taskService;
 
     private US204AssignTaskRequestRestController controller;
 
@@ -117,7 +109,7 @@ public class US204AssignTaskRequestRestControllerTest {
         controller = new US204AssignTaskRequestRestController(userService, taskService, projectService);
 
         // building mockMVC
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        //mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         //creating an expected list of project collaborators from projectOne
         List<ProjectCollaborator> projCollabsList = new ArrayList<>();
@@ -171,10 +163,10 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * It is expected to be successfully created
      *
-     * @throws Exception
+
      */
     @Test
-    public void canCreateAnAssignmentRequest() throws Exception {
+    public void canCreateAnAssignmentRequest() {
 
         //Given
         User userDTOTwo = new User();
@@ -225,10 +217,9 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * Expects a METHOD_NOT_ALLOWED message
      *
-     * @throws Exception
      */
     @Test
-    public void canNotCreateAnAssignmentRequest() throws Exception {
+    public void canNotCreateAnAssignmentRequest() {
 
         User userDTOTwo = new User();
         userDTOTwo.setEmail("joao@gmail.com");
@@ -264,10 +255,9 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * Expects a METHOD_NOT_ALLOWED message
      *
-     * @throws Exception
      */
     @Test
-    public void canNotCreateAnAssignmentRequestTwo() throws Exception {
+    public void canNotCreateAnAssignmentRequestTwo() {
 
         User userDTOTwo = new User();
         userDTOTwo.setEmail("joao@gmail.com");
@@ -296,10 +286,9 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * Expects an OK message and a list of existing requests
      *
-     * @throws Exception
      */
     @Test
-    public  void retrieveAllRequest() throws Exception {
+    public  void retrieveAllRequest() {
 
 
         // Given
@@ -342,10 +331,9 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * Expects an OK message and a list of existing ASSIGNMENT requests
      *
-     * @throws Exception
      */
     @Test
-    public  void retrieveAllAssignementRequest() throws Exception {
+    public  void retrieveAllAssignementRequest() {
 
         // Given
 
@@ -386,10 +374,9 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * Expects an OK message and a list of existing REMOVAL requests
      *
-     * @throws Exception
      */
     @Test
-    public  void retrieveAllRemovalRequest() throws Exception {
+    public  void retrieveAllRemovalRequest() {
 
         // Given
         taskOne.addProjectCollaboratorToTask(projCollabTwo);
@@ -431,10 +418,9 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * Expects an OK message and the specific request
      *
-     * @throws Exception
      */
     @Test
-    public  void retrieveOneRequest() throws Exception {
+    public  void retrieveOneRequest() {
 
 
         // Given
@@ -482,10 +468,9 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * Expects a NOT_FOUND message
      *
-     * @throws Exception
      */
     @Test
-    public  void retrieveOneRequestTwo() throws Exception {
+    public  void retrieveOneRequestTwo() {
 
 
         // Given
@@ -520,10 +505,9 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * Expects a FORBIDDEN message
      *
-     * @throws Exception
      */
     @Test
-    public void canNotCreateAnAssignmentRequestInvalidTask() throws Exception {
+    public void canNotCreateAnAssignmentRequestInvalidTask() {
 
         //Given
         User userDTOTwo = new User();
