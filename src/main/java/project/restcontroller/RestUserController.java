@@ -24,6 +24,19 @@ public class RestUserController {
         this.userService=userService;
     }
 
+    @RequestMapping(value = "/{userId}")
+    public ResponseEntity<?> seeUserDetails(@PathVariable int userId){
+        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        User userToReturn;
+        userToReturn = userService.getUserByID(userId);
+        if(userToReturn != null){
+            result = new ResponseEntity<>(userToReturn , HttpStatus.OK);
+            Link selfLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).withSelfRel();
+        }
+        return result;
+    }
+
+
     /**
      * Refers to US130: As an administrator, I want to list all users in the system.
      * This method will return a list of all the users registered in the system.
