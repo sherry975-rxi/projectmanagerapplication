@@ -44,8 +44,8 @@ public class US320ViewProjectsControllerTest {
 		inactiveProject = projectService.createProject("Inactive Project", "this Project is inactive", inactiveManager);
 		activeProject.setProjectStatus(Project.EXECUTION);
 		inactiveProject.setProjectStatus(Project.CLOSE);
-		projectService.saveProject(activeProject);
-		projectService.saveProject(inactiveProject);
+		projectService.updateProject(activeProject);
+		projectService.updateProject(inactiveProject);
 		// creates expected headers for the project's name
 		// first creates a title header
 		String activeProjNameHeader = "===== " + activeProject.getProjectId() + " - Active Project =====";

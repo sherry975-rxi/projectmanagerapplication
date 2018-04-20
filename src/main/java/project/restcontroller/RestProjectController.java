@@ -3,26 +3,18 @@ package project.restcontroller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import project.model.Project;
-import project.services.ProjectService;
-
-import java.util.List;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-
-
 import org.springframework.web.bind.annotation.*;
-
+import project.model.Project;
 import project.model.User;
-
+import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 
 
@@ -88,7 +80,7 @@ public class RestProjectController  {
 
         Project projectToBeUpdated = projectService.getProjectById(projectId);
 
-        projectService.updateProject(projectInfoToUpdate, projectToBeUpdated);
+        projectService.updateProjectData(projectInfoToUpdate, projectToBeUpdated);
 
         Link reference = linkTo(RestProjectController.class).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
         projectToBeUpdated.add(reference);
