@@ -395,4 +395,17 @@ public class ProjectService {
 		}
 
 	}
+
+	/**
+	 * Gets a project Collaborator by its id
+	 *
+	 * @param id Id to search
+	 *
+	 * @return ProjectCollaborator if found. Throws ObjectNotFoundException if not found
+	 */
+	public ProjectCollaborator getProjectCollaboratorById(long id) {
+
+		Optional<ProjectCollaborator> collaborator = this.projectCollaboratorRepository.findByProjCollabId(id);
+		return collaborator.orElseThrow(() -> new ObjectNotFoundException("Project Collaborator not found! Id: " + id));
+	}
 }
