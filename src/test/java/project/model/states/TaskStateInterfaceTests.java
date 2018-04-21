@@ -3,10 +3,8 @@ package project.model.states;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
+import project.model.taskstateinterface.Created;
 
 import java.util.Calendar;
 
@@ -133,4 +131,47 @@ public class TaskStateInterfaceTests {
 		//Asserts that the taskState changed to Cancelled
 		assertEquals("Cancelled", task.viewTaskStateName());		
 	}
+
+	/**
+	 * Tests the state interface, by calling all the actions that may provoce a state change from created to planned.
+	 */
+	@Test
+	public final void plannedStateValidation() {
+
+	    //GIVEN A NEW TASK
+        //Asserts that the task state is created
+        assertEquals("Created", task.viewTaskStateName());
+
+        // WHEN adding someone to the task team
+        ProjectCollaborator collaborator = project.createProjectCollaborator(user, 10);
+        task.addProjectCollaboratorToTask(collaborator);
+
+        //THEN the state changes to Planned
+        assertEquals("Planned", task.viewTaskStateName());
+
+        //AND WHEN all collaborators are removed from the team and the task reset to created
+        task.removeAllCollaboratorsFromTaskTeam();
+        task.setTaskState(new Created());
+        task.setCurrentState(StateEnum.CREATED);
+        assertEquals("Created", task.viewTaskStateName());
+
+        //THEN adding an expected start or finish date must move the task to planned as well
+        task.setEstimatedTaskStartDate(estimatedTaskStartDate);
+        assertEquals("Planned", task.viewTaskStateName());
+
+        //AND WHEN the expected start date is removed and the task reset to created (again)
+        task.setEstimatedTaskStartDate(null);
+        task.setTaskState(new Created());
+        task.setCurrentState(StateEnum.CREATED);
+        assertEquals("Created", task.viewTaskStateName());
+
+        // THEN adding an expected finish date must move the task to planned once again
+        task.setTaskDeadline(taskDeadline);
+        assertEquals("Planned", task.viewTaskStateName());
+
+
+
+    }
+
+
 }

@@ -31,11 +31,11 @@ public class SendCodeFactoryTest {
 	@Test
 	public void getCodeSenderTypeTest() {
 
-		assertEquals(sendCodeFactory.getCodeSenderType("1").getClass(), Optional.of(smsSender).getClass());
+		assertEquals(sendCodeFactory.getCodeSenderType("1").get().getClass(), Optional.of(smsSender).get().getClass());
 
-		assertEquals(sendCodeFactory.getCodeSenderType("2").getClass(), Optional.of(emailSender).getClass());
+		assertEquals(sendCodeFactory.getCodeSenderType("2").get().getClass(), Optional.of(emailSender).get().getClass());
 
-		assertEquals(sendCodeFactory.getCodeSenderType("3").getClass(), Optional.of(answerValidation).getClass());
+		assertEquals(sendCodeFactory.getCodeSenderType("3").get().getClass(), Optional.of(answerValidation).get().getClass());
 
 		assertFalse(sendCodeFactory.getCodeSenderType("0").isPresent());
 

@@ -209,9 +209,15 @@ public class Report extends ResourceSupport {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Report)) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Report)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         Report report = (Report) o;
         return Objects.equals(taskCollaborator, report.taskCollaborator) &&
                 Objects.equals(task, report.task);

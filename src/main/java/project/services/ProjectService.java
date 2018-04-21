@@ -19,13 +19,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProjectService {
 
-	@Autowired
+
 	private ProjectsRepository projectsRepository;
-
-	@Autowired
 	private UserService userService;
-
-	@Autowired
 	private ProjCollabRepository projectCollaboratorRepository;
 
 	/**
@@ -38,9 +34,11 @@ public class ProjectService {
 	/**
 	 * Constructor created for JPA purposes. It is not to be used in model context.
 	 */
-	public ProjectService(ProjectsRepository projectsRepository, ProjCollabRepository projectCollabRepository) {
+	@Autowired
+	public ProjectService(ProjectsRepository projectsRepository, ProjCollabRepository projectCollabRepository, UserService userService) {
 		this.projectsRepository = projectsRepository;
 		this.projectCollaboratorRepository = projectCollabRepository;
+		this.userService = userService;
 	}
 
 	/**
@@ -191,7 +189,7 @@ public class ProjectService {
 	 * @param project
 	 *            Project to update
 	 */
-	public void saveProject(Project project) {
+	public void updateProject(Project project) {
 		this.projectsRepository.save(project);
 	}
 
@@ -340,9 +338,7 @@ public class ProjectService {
 				return toSearch;
 			}
 		}
-
 		return null;
-
 	}
 
 
@@ -364,36 +360,22 @@ public class ProjectService {
 	}
 
 	/**
-	 * This method change the project manager and update project in DB
-	 *
-	 * @param user
-	 * @param project
-	 */
-	public void changeProjectManager(User user, Project project) {
-
-		project.setProjectManager(user);
-
-		saveProject(project);
-
-	}
-
-	/**
 	 *This method upDate project from a given info.
 	 *
-	 * @param projectInfoToUpdate
+	 * @param projectUpdates
 	 */
-	public void updateProject(Project projectInfoToUpdate, int projectId){
+	public void updateProjectData(Project projectUpdates, Project project){
 
-		Project projectToBeUpdated = getProjectById(projectId);
-
-		if((projectToBeUpdated.getProjectManager() != null)
-				&& (userService.isUserEmailInUserContainer(projectInfoToUpdate.getProjectManager().getEmail()))) {
-
-			User user = userService.getUserByEmail(projectInfoToUpdate.getProjectManager().getEmail());
-
-			changeProjectManager(user, projectToBeUpdated);
+		if((projectUpdates.getProjectManager() != null)) {
+			User user = userService.getUserByEmail(projectUpdates.getProjectManager().getEmail());
+			project.setProjectManager(user);
+			updateProject(project);
 		}
 
+		if(projectUpdates.getCalculationMethod() < 4 && projectUpdates.getCalculationMethod() > 0){
+			project.setCalculationMethod(projectUpdates.getCalculationMethod());
+			updateProject(project);
+		}
 	}
 
 	/**

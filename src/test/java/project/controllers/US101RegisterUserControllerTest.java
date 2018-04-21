@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
+import project.dto.UserDTO;
 import project.model.User;
 import project.services.UserService;
 
@@ -35,9 +36,12 @@ public class US101RegisterUserControllerTest {
 		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000", "Testy Street",
 				"2401-343", "Testburg", "Testo", "Testistan");
 
-		testUserRegistrationController.addNewUser("João", "joão.gmail.com", "034", "Testes", "919876787", "Street",
-				"2401-343", "Testburg", "Testo", "Testistan", "Portugal", "1", "a");
+		UserDTO newUserDTO = testUserRegistrationController.createUserDTO("João", "joão.gmail.com", "034", "Testes", "919876787", "Password");
 
+		newUserDTO = testUserRegistrationController.setAddress(newUserDTO, "Street",
+				"2401-343", "Testburg", "Testo", "Testistan");
+		newUserDTO = testUserRegistrationController.setQuestionAnswer(newUserDTO, "1", "a");
+		testUserRegistrationController.addNewUserToDbFromDTO(newUserDTO);
 	}
 
 	@After
@@ -62,25 +66,33 @@ public class US101RegisterUserControllerTest {
 		assertEquals(testUserRegistrationController.isUserInUserRepository("daniel@gmail.com"), true);
 
 		// uses the controllers to both create and add the user
-		testUserRegistrationController.addNewUser("Fabio", "fabio@gmail.com", "003", "worker", "919997775", "Password",
-				"Tasty streets", "4450-150", "Hellcity", "HellsBurg", "HellMam", "1", "a");
+		UserDTO anotherDTO = testUserRegistrationController.createUserDTO("Fabio", "fabio@gmail.com", "003", "worker", "919997775", "Password");
+		anotherDTO = testUserRegistrationController.setAddress(anotherDTO, "Tasty streets", "4450-150", "Hellcity", "HellsBurg", "HellMam");
+		anotherDTO = testUserRegistrationController.setQuestionAnswer(anotherDTO, "1", "a");
+		testUserRegistrationController.addNewUserToDbFromDTO(anotherDTO);
 		assertEquals(3, userService.getAllUsersFromUserContainer().size());
 		assertTrue(userService.getAllUsersFromUserContainer().get(0).equals(user1));
 
-		// verifies if the addNewUser method returns null when user email already exists
-		testUserRegistrationController.addNewUser("Daniel", "danielq@gmail.com", "001", "Porteiro", "920000000",
-				"Password", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan", "1", "a");
-		testUserRegistrationController.addNewUser("Daniel", "danicom", "001", "Porteiro", "920000000", "Password",
-				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan", "1", "a");
+		// verifies if the createUserDTO method returns null when user email already exists
+		UserDTO dtoingAgain = testUserRegistrationController.createUserDTO("Daniel", "danielq@gmail.com", "001", "Porteiro", "920000000",
+				"Password");
+		dtoingAgain = testUserRegistrationController.setAddress(dtoingAgain, "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		dtoingAgain = testUserRegistrationController.setQuestionAnswer(dtoingAgain, "1", "a");
+		testUserRegistrationController.addNewUserToDbFromDTO(dtoingAgain);
+
+		UserDTO sweetDTO = testUserRegistrationController.createUserDTO("Daniel", "danicom", "001", "Porteiro", "920000000", "Password");
+		sweetDTO = testUserRegistrationController.setAddress(sweetDTO, "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		sweetDTO = testUserRegistrationController.setQuestionAnswer(sweetDTO, "1", "a");
+		testUserRegistrationController.addNewUserToDbFromDTO(sweetDTO);
 		user2 = userService.getAllUsersFromUserContainer().get(0);
 		user3 = userService.getAllUsersFromUserContainer().get(1);
 
-		// verifies if the addNewUser method returns true when the user email already
+		// verifies if the createUserDTO method returns true when the user email already
 		// exists in the repository
 		assertEquals(testUserRegistrationController.isUserInUserRepository(user1.getEmail()), true);
-		// verifies if the addNewUser method returns false when user email is invalid
+		// verifies if the createUserDTO method returns false when user email is invalid
 		assertEquals(testUserRegistrationController.isUserEmailValid(user3.getEmail()), false);
-		// verifies if the addNewUser method returns false when user email is valid
+		// verifies if the createUserDTO method returns false when user email is valid
 		assertEquals(testUserRegistrationController.isUserEmailValid(user1.getEmail()), true);
 
 		assertFalse(user1.hasPassword());
@@ -90,15 +102,19 @@ public class US101RegisterUserControllerTest {
 	@Test
 	public void wasUserAddedTest() {
 
-		testUserRegistrationController.addNewUser("Daniel", "danicom", "001", "Porteiro", "920000000", "Password",
-				"Testy Street", "2401-343", "Testburg", "Testo", "Testistan", "1", "a");
+		UserDTO keepDTOing = testUserRegistrationController.createUserDTO("Daniel", "danicom", "001", "Porteiro", "920000000", "Password");
+		keepDTOing = testUserRegistrationController.setAddress(keepDTOing, "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
+		keepDTOing = testUserRegistrationController.setQuestionAnswer(keepDTOing, "1", "a");
+		testUserRegistrationController.addNewUserToDbFromDTO(keepDTOing);
 
 		assertTrue(testUserRegistrationController.wasUserAdded(true));
 
 		// user 3 was created, added and email was set as invalid
 
-		testUserRegistrationController.addNewUser("João", "joão@gmail.com", "034", "Testes", "919876787", "Password",
-				"Street", "2401-343", "Testburg", "Testo", "Testistan", "1", "a");
+		UserDTO sickOfTheseDTOs = testUserRegistrationController.createUserDTO("João", "joão@gmail.com", "034", "Testes", "919876787", "Password");
+		sickOfTheseDTOs = testUserRegistrationController.setAddress(sickOfTheseDTOs, "Street", "2401-343", "Testburg", "Testo", "Testistan");
+		sickOfTheseDTOs = testUserRegistrationController.setQuestionAnswer(sickOfTheseDTOs, "1", "a");
+		testUserRegistrationController.addNewUserToDbFromDTO(sickOfTheseDTOs);
 
 		assertTrue(testUserRegistrationController.wasUserAdded(true));
 

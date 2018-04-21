@@ -1,7 +1,8 @@
 package project.model.sendcode;
 
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class SendCodeFactory {
     /**
      * This method creates business objects depending on the argument
      */
-    public void initMessageSenderType(){
+    private void initMessageSenderType() {
 
         ValidationMethod smsSender = new SMSSender();
         ValidationMethod emailSender = new EmailSender();
@@ -34,18 +35,22 @@ public class SendCodeFactory {
      */
     public Optional<ValidationMethod> getCodeSenderType(String codeSender) {
 
+        Optional<ValidationMethod> opt = Optional.empty();
+
         this.initMessageSenderType();
-        int num = -1;
+        int num;
         try {
             num = Integer.parseInt(codeSender);
+
+            if (num > 0 && num <= codeSenderType.size()) {
+                opt = Optional.of(codeSenderType.get(codeSender));
+            }
+
         } catch (NumberFormatException nfe) {
-            return Optional.empty();
+            Logger log = LoggerFactory.getLogger(SendCodeFactory.class);
+            log.error("Not a valid number.", nfe);
         }
-        if (num > 0 && num <= codeSenderType.size()) {
-            return Optional.of(codeSenderType.get(codeSender));
-        } else {
-            return Optional.empty();
-        }
+        return opt;
     }
 
 

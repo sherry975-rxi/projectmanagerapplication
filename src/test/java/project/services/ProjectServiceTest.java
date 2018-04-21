@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -21,10 +22,17 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProjectServiceTest {
+
+	@Mock
+	private UserService userService;
 
 	@Mock
 	private ProjectsRepository projectRep;
@@ -33,13 +41,13 @@ public class ProjectServiceTest {
 	private ProjCollabRepository projectCollaboratorRepository;
 
 	@Mock
-	private User mockedUser, mockedUser2, mockedUser3;
+	private User user, mockedUser, mockedUser2, mockedUser3;
 
 	@Mock
 	private Task mockedTask;
 
 	@Mock
-	private Project mockedProject1, mockedProject2, mockedProject3, mockedProject4;
+	private Project project, projectUpdates, mockedProject1, mockedProject2, mockedProject3, mockedProject4;
 
 	@Mock
 	private ProjectCollaborator projCollabMockedUser, projCollabMockedUser2, projCollabMockedUser3;
@@ -58,9 +66,12 @@ public class ProjectServiceTest {
 
 	private ProjectCollaborator projCollab1, projCollab2, projCollab3;
 
+
+
 	@Before
 	public void setup() {
-		initMocks(this);
+
+		MockitoAnnotations.initMocks(this);
 
 		projectManager = new User("Joao", "mail@gmail.com", "01", "Project Manager", "22182939");
 
@@ -79,7 +90,7 @@ public class ProjectServiceTest {
 
 		mockedTask = new Task();
 
-		projectService = new ProjectService(projectRep, projectCollaboratorRepository);
+		projectService = new ProjectService(projectRep, projectCollaboratorRepository, userService);
 		project1 = new Project("Project1", "Descricao", projectManager);
 		project2 = new Project("Project2", "Descricao", projectManager);
 		project3 = new Project("Project3", "Descricao", projectManager);
@@ -129,7 +140,7 @@ public class ProjectServiceTest {
 		 * 
 		 */
 
-		Mockito.when(projectService.createProject("Project 1", "Descricao", projectManager)).thenReturn(project1);
+		when(projectService.createProject("Project 1", "Descricao", projectManager)).thenReturn(project1);
 		projectService.createProject("Project 1", "Descricao", projectManager);
 		Mockito.verify(projectRep, Mockito.times(1)).save(project1);
 
@@ -165,7 +176,7 @@ public class ProjectServiceTest {
 		 * ProjectRepository will return a list wit the 4 projects
 		 */
 
-		Mockito.when(projectRep.findAll()).thenReturn(allProjects);
+		when(projectRep.findAll()).thenReturn(allProjects);
 		assertEquals(projectService.getAllProjectsfromProjectsContainer(), allProjects);
 
 		/*
@@ -210,7 +221,7 @@ public class ProjectServiceTest {
 		 * when the method getActiveProjects is called, it will call the method
 		 * getAllProjectsFromProjectsContainer
 		 */
-		Mockito.when(projectService.getAllProjectsfromProjectsContainer()).thenReturn(allProjects);
+		when(projectService.getAllProjectsfromProjectsContainer()).thenReturn(allProjects);
 
 		assertEquals(projectService.getActiveProjects(), allActiveProjects);
 
@@ -227,8 +238,8 @@ public class ProjectServiceTest {
 
 		Integer projectNotExist = 14;
 
-		Mockito.when(projectRep.existsById(project1.getIdCode())).thenReturn(Boolean.TRUE);
-		Mockito.when(projectRep.existsById(projectNotExist)).thenReturn(Boolean.FALSE);
+		when(projectRep.existsById(project1.getIdCode())).thenReturn(Boolean.TRUE);
+		when(projectRep.existsById(projectNotExist)).thenReturn(Boolean.FALSE);
 
 		assertEquals(projectService.isProjectInProjectContainer(project1.getIdCode()), Boolean.TRUE);
 		assertEquals(projectService.isProjectInProjectContainer(projectNotExist), Boolean.FALSE);
@@ -260,7 +271,7 @@ public class ProjectServiceTest {
 		 * When the method findallByCollaborator is called, it will return the previous
 		 * list of projectCollaborator
 		 */
-		Mockito.when(projectCollaboratorRepository.findAllByCollaborator(mockedUser))
+		when(projectCollaboratorRepository.findAllByCollaborator(mockedUser))
 				.thenReturn(projectCollaboratorFromUser);
 
 		/*
@@ -305,7 +316,7 @@ public class ProjectServiceTest {
 		 * the previous list of projects created
 		 */
 
-		Mockito.when(projectService.getAllProjectsfromProjectsContainer()).thenReturn(projectsList);
+		when(projectService.getAllProjectsfromProjectsContainer()).thenReturn(projectsList);
 
 		/*
 		 * Creates a list of projects that is supposed to be returned by the method
@@ -351,20 +362,20 @@ public class ProjectServiceTest {
 		 */
 		List<Project> projectsOfPM = new ArrayList<>();
 
-		Mockito.when(projectRep.findAllByProjectManager(user1)).thenReturn(projectsFromProjectManager);
+		when(projectRep.findAllByProjectManager(user1)).thenReturn(projectsFromProjectManager);
 		assertEquals(projectService.getProjectsFromProjectManager(user1), projectsFromProjectManager);
 		Mockito.verify(projectRep, Mockito.times(1)).findAllByProjectManager(user1);
 
 	}
 
 	@Test
-	public void testUpdateProject() {
+	public void testSaveProject() {
 
 		/*
-		 * Verifies that the method saveProject calls the method save from the
+		 * Verifies that the method updateProject calls the method save from the
 		 * ProjectRepository when called
 		 */
-		projectService.saveProject(project1);
+		projectService.updateProject(project1);
 		Mockito.verify(projectRep, Mockito.times(1)).save(project1);
 
 	}
@@ -391,7 +402,7 @@ public class ProjectServiceTest {
 		projectService.createProjectCollaborator(user1, project1, 10);
 		Mockito.verify(projectCollaboratorRepository, Mockito.times(1)).save(projCollab1);
 
-		Mockito.when(projectService.createProjectCollaborator(user1, project1, 10)).thenReturn(projCollab1);
+		when(projectService.createProjectCollaborator(user1, project1, 10)).thenReturn(projCollab1);
 		assertEquals(projectService.createProjectCollaborator(user1, project1, 10), projCollab1);
 	}
 
@@ -410,7 +421,7 @@ public class ProjectServiceTest {
 		 * Verifies that the method findAllByProject is called once when the method
 		 * getActiveProjectTeam is used
 		 */
-		Mockito.when(projectService.getActiveProjectTeam(project1)).thenReturn(activeTeam);
+		when(projectService.getActiveProjectTeam(project1)).thenReturn(activeTeam);
 
 		assertEquals(projectService.getActiveProjectTeam(project1), activeTeam);
 		Mockito.verify(projectCollaboratorRepository, Mockito.times(1)).findAllByProject(project1);
@@ -428,7 +439,7 @@ public class ProjectServiceTest {
 		projectTeam.add(testProjCollab1);
 		projectTeam.add(testProjCollab2);
 
-		Mockito.when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
+		when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
 		assertEquals(projectService.getProjectTeam(project1), projectTeam);
 
 		/*
@@ -464,7 +475,7 @@ public class ProjectServiceTest {
 		projectTeam.add(projCollabMockedUser);
 		projectTeam.add(projCollabMockedUser2);
 
-		Mockito.when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
+		when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
 
 		/*
 		 * Verifies that the mockedUser belongs to the projectTeam of Project1
@@ -494,7 +505,7 @@ public class ProjectServiceTest {
 		 * when the method .findAllByProject is called, returns a list wit the
 		 * projectTean
 		 */
-		Mockito.when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
+		when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
 		/*
 		 * Checks if the user is Active in the Project
 		 */
@@ -533,7 +544,7 @@ public class ProjectServiceTest {
 		 * when the method .findAllByProject is called, returns a list wit the
 		 * projectTean
 		 */
-		Mockito.when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
+		when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
 
 		assertEquals(projCollab1, (projectService.findProjectCollaborator(user1, project1).get()));
 
@@ -552,7 +563,7 @@ public class ProjectServiceTest {
 		 * ProjectRepository when the method "getProjectById" is used
 		 */
 
-		Mockito.when(projectRep.findById(project1.getProjectId())).thenReturn(Optional.of(project1));
+		when(projectRep.findById(project1.getProjectId())).thenReturn(Optional.of(project1));
 		assertEquals(project1, projectService.getProjectById(project1.getProjectId()));
 
 		Mockito.verify(projectRep, Mockito.times(1)).findById(project1.getProjectId());
@@ -573,7 +584,7 @@ public class ProjectServiceTest {
 		/*
 		 * Returns a list with all users from Project1
 		 */
-		Mockito.when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
+		when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectTeam);
 
 		/*
 		 * Checks that the projCollab1 is active and belongs to user1
@@ -608,5 +619,53 @@ public class ProjectServiceTest {
 		Mockito.verify(projectCollaboratorRepository, Mockito.times(1)).save(projCollabMockedUser);
 
 	}
+
+	/**
+	 * Given
+	 * a project with only the information we want to update
+	 *
+	 * When
+	 * update une given project
+	 *
+	 * Then
+	 * the information given for update will replace the respective information in the given project.
+	 *
+	 * @throws Exception
+	 */
+	@Test
+	public void testUpdateProjectData() {
+		//GIVEN a project to update
+		when(projectUpdates.getProjectManager()).thenReturn(user);
+		when(user.getEmail()).thenReturn("moked@mail.pt");
+		when(userService.getUserByEmail(anyString())).thenReturn(user);
+
+		//WHEN updateProjectData is called with an update for project manager
+		projectService.updateProjectData(projectUpdates, project);
+
+		//THEN the project is updated and saved
+		verify(project, times(1)).setProjectManager(user);
+		verify(projectRep, times(1)).save(project);
+
+
+		//GIVEN a project to update
+		when(projectUpdates.getProjectManager()).thenReturn(null);
+		when(projectUpdates.getCalculationMethod()).thenReturn(3);
+
+		//WHEN updateProjectData is called with an update for calculation method
+		projectService.updateProjectData(projectUpdates, project);
+
+		//THEN the project is updated and saved
+		verify(project, times(1)).setCalculationMethod(3);
+		verify(projectRep, times(2)).save(project);
+
+
+		//GIVEN a project to update
+		//WHEN updateProjectData is called with no updates
+		when(projectUpdates.getCalculationMethod()).thenReturn(0);
+		//THEN the project is not update
+		verify(projectRep, times(2)).save(project);
+
+	}
+
 
 }

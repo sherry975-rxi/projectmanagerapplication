@@ -1,5 +1,7 @@
 package project.ui.console.projectmanager.tasklists;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controllers.PrintProjectInfoController;
@@ -41,10 +43,9 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 
 		String line = "___________________________________________________";
 		Scanner scannerInput = new Scanner(System.in);
-		boolean loop = true;
-		while (loop) {
-			loop = false;
-		System.out.println("");
+
+        while (true) {
+            System.out.println();
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
@@ -67,7 +68,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 		}
 
 		System.out.println("To roll back a task from Finish back to Ongoing, choose the task ID number.");
-		System.out.println("");
+            System.out.println();
 		System.out.println("[B] Back \n");
 
 		String choice = scannerInput.nextLine().toUpperCase();
@@ -81,12 +82,11 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 			}
 
 			catch (NullPointerException npe) {
+                Logger log = LoggerFactory.getLogger(US367MarkFinishedTaskAsUnfinishedController.class);
+                log.error("There is no task with the number provided.", npe);
 				System.out.println("Please choose a valid option: ");
-				System.out.println("");
-				loop = true;
+                System.out.println();
 			}
-
-			break;
 		}
 	}
 	}
