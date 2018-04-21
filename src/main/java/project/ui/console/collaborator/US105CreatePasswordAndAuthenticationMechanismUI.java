@@ -1,12 +1,13 @@
 package project.ui.console.collaborator;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controllers.US105CreatePasswordAndAuthenticationMechanismController;
 import project.model.User;
 
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 @Component
 public class US105CreatePasswordAndAuthenticationMechanismUI {
@@ -23,9 +24,8 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
     /**
      * this method is so that in the first login it is mandatory to change the password.
      *
-     * @param user
      */
-    public void changePassword(User user) {
+    public void changePassword() {
         Scanner input = new Scanner(System.in);
         boolean loopPasswordReenter = true;
         String newPass = "";
@@ -90,23 +90,30 @@ public class US105CreatePasswordAndAuthenticationMechanismUI {
                 if (controller.getValidation() != null) {
                     userInput = input.nextLine();
 
-                    if (controller.isCodeValid(userInput, user)) {
-                        controller.setUserPassword(user, newPass);
-                        System.out.println("The password changed successfully!");
-                        loop = false;
+                    loop = isCodeProvidedValid(userInput, newPass, input);
 
-                    } else {
-                        System.out.println("The password wasn't changed. Try again? Y/N");
-                        String answer = input.nextLine();
-                        if (!("Y".equalsIgnoreCase(answer)))
-                            loop = false;
-
-                    }
                 }
             } catch (Exception e) {
-                Logger log = Logger.getAnonymousLogger();
-                log.info(e.getMessage() + "\nSomething went wrong. Please try again.\n");
+                Logger log = LoggerFactory.getLogger(US105CreatePasswordAndAuthenticationMechanismController.class);
+                log.error(e.getMessage() + "\nSomething went wrong. Please try again.\n", e);
             }
        }
+    }
+
+    private boolean isCodeProvidedValid(String userInput, String newPass, Scanner input) {
+        boolean loop = true;
+        if (controller.isCodeValid(userInput, user)) {
+            controller.setUserPassword(user, newPass);
+            System.out.println("The password changed successfully!");
+            loop = false;
+
+        } else {
+            System.out.println("The password wasn't changed. Try again? Y/N");
+            String answer = input.nextLine();
+            if (!("Y".equalsIgnoreCase(answer)))
+                loop = false;
+
+        }
+        return loop;
     }
 }

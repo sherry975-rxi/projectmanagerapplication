@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.dto.UserDTO;
 import project.model.CodeGenerator;
 import project.model.EmailMessage;
-import project.model.User;
 import project.model.sendcode.SendCodeFactory;
 import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
@@ -18,7 +17,7 @@ public class US101RegisterUserController {
 	@Autowired
 	private UserService userService;
 
-	private CodeGenerator codeGenerator;
+    private String correctCode;
 
 	public US101RegisterUserController() {
 		//Empty constructor created for JPA integration tests
@@ -41,24 +40,11 @@ public class US101RegisterUserController {
 	 *            phone of the User
 	 * @param password
 	 *            password of the User
-	 * @param street
-	 *            street of the User
-	 * @param zipCode
-	 *            zipCode of the User
-	 * @param city
-	 *            cityof the User
-	 * @param district
-	 *            district of the User
-	 * @param country
-	 *            country of the User
 	 */
-	public void addNewUser(String name, String email, String idNumber, String function, String phone, String password,
-			String street, String zipCode, String city, String district, String country, String question, String answer) {
 
-		UserDTO newUser = new UserDTO(name, email, idNumber, function, phone, password, question, answer);
-		newUser.setUserAddress(street, zipCode, city, district, country);
+    public UserDTO createUserDTO(String name, String email, String idNumber, String function, String phone, String password) {
 
-		userService.createUserWithDTO(newUser);
+        return new UserDTO(name, email, idNumber, function, phone, password);
 
 	}
 
@@ -76,10 +62,12 @@ public class US101RegisterUserController {
 		String emailSubject = "Verification Code";
 		emailMessage.setSubject(emailSubject);
 
-		codeGenerator = new CodeGenerator();
-		String generatedCode = codeGenerator.generateCode();
+        CodeGenerator codeGenerator = new CodeGenerator();
+
+        correctCode = codeGenerator.generateCode();
+
 		String message = "This is the code you should provide for register in Project Management App:  "
-				+ generatedCode;
+                + correctCode;
 
 		SendCodeFactory sendCodeFactory;
 
@@ -91,7 +79,9 @@ public class US101RegisterUserController {
 
 		String userQuestion = userService.getUserByEmail(email).getQuestion();
 
-		validationMethod.performValidationMethod(userPhone, email, userQuestion, message);
+        if (validationMethod != null) {
+            validationMethod.performValidationMethod(userPhone, email, userQuestion, message);
+        }
 
 
 	}
@@ -99,7 +89,7 @@ public class US101RegisterUserController {
 	public Boolean doesCodeGeneratedMatch (String codeToCheck, String recipientEmail){
 
 
-		Boolean doCodesMatch = this.codeGenerator.doesCodeGeneratedMatch(codeToCheck);
+        Boolean doCodesMatch = correctCode.equals(codeToCheck);
 
 		if (!doCodesMatch){
 			userService.deleteUser(recipientEmail);
@@ -133,6 +123,30 @@ public class US101RegisterUserController {
 		return this.userService.isEmailAddressValid(email);
 	}
 
+    public UserDTO setQuestionAnswer(UserDTO userDTO, String question, String answer) {
+        userDTO.setQuestion(question);
+        userDTO.setAnswer(answer);
+        return userDTO;
+    }
 
+    /**
+     * Adds an address to the userDTO
+     *
+     * @param street   street of the User
+     * @param zipCode  zipCode of the User
+     * @param city     cityof the User
+     * @param district district of the User
+     * @param country  country of the User
+     * @return
+     */
+    public UserDTO setAddress(UserDTO userDTO, String street, String zipCode, String city, String district, String country) {
+
+        userDTO.setUserAddress(street, zipCode, city, district, country);
+        return userDTO;
+    }
+
+    public void addNewUserToDbFromDTO(UserDTO userDTO) {
+        userService.createUserWithDTO(userDTO);
+    }
 
 }

@@ -19,10 +19,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProjectService {
 
-	@Autowired
-	private ProjectsRepository projectsRepository;
 
-	@Autowired
+	private ProjectsRepository projectsRepository;
+	private UserService userService;
 	private ProjCollabRepository projectCollaboratorRepository;
 
 	/**
@@ -35,9 +34,11 @@ public class ProjectService {
 	/**
 	 * Constructor created for JPA purposes. It is not to be used in model context.
 	 */
-	public ProjectService(ProjectsRepository projectsRepository, ProjCollabRepository projectCollabRepository) {
+	@Autowired
+	public ProjectService(ProjectsRepository projectsRepository, ProjCollabRepository projectCollabRepository, UserService userService) {
 		this.projectsRepository = projectsRepository;
 		this.projectCollaboratorRepository = projectCollabRepository;
+		this.userService = userService;
 	}
 
 	/**
@@ -337,9 +338,7 @@ public class ProjectService {
 				return toSearch;
 			}
 		}
-
 		return null;
-
 	}
 
 
@@ -358,5 +357,24 @@ public class ProjectService {
 
 	public void setProjectCollaboratorRepository(ProjCollabRepository projectCollaboratorRepository) {
 		this.projectCollaboratorRepository = projectCollaboratorRepository;
+	}
+
+	/**
+	 *This method upDate project from a given info.
+	 *
+	 * @param projectUpdates
+	 */
+	public void updateProjectData(Project projectUpdates, Project project){
+
+		if((projectUpdates.getProjectManager() != null)) {
+			User user = userService.getUserByEmail(projectUpdates.getProjectManager().getEmail());
+			project.setProjectManager(user);
+			updateProject(project);
+		}
+
+		if(projectUpdates.getCalculationMethod() < 4 && projectUpdates.getCalculationMethod() > 0){
+			project.setCalculationMethod(projectUpdates.getCalculationMethod());
+			updateProject(project);
+		}
 	}
 }

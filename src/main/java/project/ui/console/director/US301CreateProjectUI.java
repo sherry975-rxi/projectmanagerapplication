@@ -7,7 +7,6 @@ import project.model.EffortUnit;
 import project.model.User;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 
 @Component
@@ -230,15 +229,13 @@ public class US301CreateProjectUI {
 
 	private Scanner caseSix(Scanner dataIn) {
 
-		Logger log = Logger.getAnonymousLogger();
-
 		System.out.println("In case the same collaborator works on the same report with different costs, the Project Manager can calculate with:");
 		System.out.println("[1] - The collaborator's earliest cost, when the report was created");
         System.out.println("[2] - The collaborator's latest cost");
         System.out.println("[3] - The average of all the collaborator's costs");
 
         System.out.println("");
-        Integer number;
+        Integer number=0;
 
         boolean loop=true;
         while(loop) {
@@ -248,19 +245,18 @@ public class US301CreateProjectUI {
             System.out.println("[any key exit]");
             System.out.println("(You must have at least 1 calculation method!)");
             System.out.println("");
+
+            String input = dataIn.nextLine();
             try  {
-
-                number = dataIn.nextInt();
-
+                number = Integer.parseInt(input);
                 if(number>0 && number <4) {
                     availableCalculationMethods=controller.allowDisableCalculationMethods(availableCalculationMethods, number);
                 } else {
                     loop=false;
                 }
 
-            } catch (InputMismatchException i) {
+            } catch (NumberFormatException i) {
                 loop=false;
-                log.info(i.getMessage());
             }
         }
 

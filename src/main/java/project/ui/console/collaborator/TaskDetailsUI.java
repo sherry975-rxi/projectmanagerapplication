@@ -51,9 +51,9 @@ public class TaskDetailsUI {
 	}
 
 	private void printMenuOption(){
-		System.out.println("");
+		System.out.println();
 		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
-		System.out.println("");
+		System.out.println();
 		System.out.println("                     TASK                    ");
 		System.out.println("*** " + taskInfo.printTaskNameInfo().toUpperCase() + " ***");
 		System.out.println("______________________________________________");
@@ -65,7 +65,7 @@ public class TaskDetailsUI {
 		System.out.println("FINISH DATE: " + taskInfo.printTaskFinishDateInfo());
 		System.out.println("TASK TEAM: " + taskInfo.printTaskTeamInfo());
 		System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
-		System.out.println("");
+		System.out.println();
 
 		System.out.println("[1] Mark task as completed");
 		System.out.println("[2] Request assignment to task team");
@@ -126,15 +126,11 @@ public class TaskDetailsUI {
 			case "3":
 				projCollaborator = new ProjectCollaborator(this.user, this.projectID);
 
-				controllerMember.setTaskID(this.taskID);
-				controllerMember.setUser(this.user);
 				task = controllerMember.getTaskByTaskID(this.taskID);
 				checkAndAddRemovalRequest(projCollaborator, cantDoIt);
 
 				break;
 			case "4":
-				controllerMember.setTaskID(this.taskID);
-				controllerMember.setUser(this.user);
 				System.out.println("Test the report creation");
 				ProjectCollaborator projCollaborator2 = new ProjectCollaborator(this.user, this.projectID);
 				checkAndCreateReportRequest(projCollaborator2, cantDoIt);
@@ -143,7 +139,7 @@ public class TaskDetailsUI {
 				break;
 			default:
 				System.out.println("Please choose a valid option.");
-				System.out.println("");
+				System.out.println();
 				condition = true;
 				break;
 			}

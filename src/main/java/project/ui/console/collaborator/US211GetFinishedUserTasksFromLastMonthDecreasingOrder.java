@@ -22,9 +22,7 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 	}
 
 	public void viewLastMonthFinishedTasks() {
-		boolean loop = true;
-		while (loop) {
-			loop = false;
+		while (true) {
 		Scanner scannerInput = new Scanner(System.in);
 		List<String> lastMonthFinishedTasks = viewTasksFinishedLastMonth
 				.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
@@ -41,20 +39,17 @@ public class US211GetFinishedUserTasksFromLastMonthDecreasingOrder {
 
 		System.out.println("[B] Back \n");
 
-		System.out.println("");
+			System.out.println();
 
 
 			String choice = scannerInput.nextLine().toUpperCase();
-			switch (choice) {
-			case "B":
-				break;
-			default:
+			if (!"B".equalsIgnoreCase(choice)) {
 				System.out.println("Invalid input. Please retry:");
-				loop = true;
+			} else {
 				break;
 			}
 
-	}
+		}
 	}
 
 	public void setUser(User user) {

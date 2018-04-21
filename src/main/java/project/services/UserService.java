@@ -1,5 +1,7 @@
 package project.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.UserDTO;
@@ -15,7 +17,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 
 /**
@@ -178,12 +179,13 @@ public class UserService {
 	 */
 	public User getUserByEmail(String email) {
 
+
 		String message = "User not found! Email: ";
-		
+
 		Optional<User> user = this.userRepository.findByEmail(email);
 
 		return user.orElseThrow(() -> new ObjectNotFoundException(message + email));
-		
+
 		//return user.orElse(null);
 	}
 
@@ -281,7 +283,7 @@ public class UserService {
 	 */
 	public boolean isEmailAddressValid(String email) {
 
-		Logger log = Logger.getAnonymousLogger();
+        Logger log = LoggerFactory.getLogger(UserService.class);
 		boolean result = true;
 
 		try {
@@ -289,7 +291,7 @@ public class UserService {
 			emailAddr.validate();
 		} catch (AddressException ex) {
 			result = false;
-			log.info(ex.getMessage());
+            log.error("Invalid Email!", ex);
 		}
 		return result;
 	}

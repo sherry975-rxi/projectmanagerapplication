@@ -7,7 +7,6 @@ import project.controllers.US390CalculateReportedProjectCostController;
 import project.model.Project;
 
 import java.text.DecimalFormat;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @Component
@@ -84,6 +83,13 @@ public class US390GetProjectReportedCostUI {
 		return project;
 	}
 
+    /**
+     * This method allows the project manager to change the project's calculation method before executing the calculation.
+     * Invalid inputs or calculation methods disabled by the director will not change the current calculation method
+     *
+     * @param project
+     * @return
+     */
 	private String selectReportCostCalculation(Project project) {
 		System.out.println("");
 		System.out.println("Should a single user have different costs throughout the same report, calculate using:");
@@ -92,29 +98,27 @@ public class US390GetProjectReportedCostUI {
         System.out.println("");
         scannerInput = new Scanner(System.in);
 
-		String invalid = "Invalid Input, using current selection.";
-		String valid = "Selected ";
-		String result;
+		String invalid = ": Invalid Input, using current selection.";
+		String valid = ": Method Selected.";
 
 		Integer selectedMethod;
 
+		String result = scannerInput.nextLine();
+
 		try{
-			selectedMethod = scannerInput.nextInt();
+			selectedMethod = Integer.parseInt(result);
 			if(project.isCalculationMethodAllowed(selectedMethod)) {
 			    controller.selectReportCostCalculation(project, selectedMethod);
-				result = valid + selectedMethod;
+				result += valid;
 			} else {
-				result = selectedMethod + ": " + invalid;
+				result += invalid;
 			}
-			scannerInput.nextLine();
 
-		} catch (InputMismatchException i) {
-			result = scannerInput.nextLine() + ": " + invalid;
+		} catch (NumberFormatException i) {
+			result += invalid;
 		}
 
-
         return result;
-
 
 	}
 

@@ -78,14 +78,14 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 	@Test
 	public final void testSetProjectIDFromTaskID() {
 		controller.setProjectIDFromTaskID("1.1");
-		int projID = (int) controller.getProjectID();
+		int projID = controller.getProjectID();
 		assertEquals(1, projID);
 	}
 
 	@Test
 	public final void testSetProjectID() {
 		controller.setProjectID(5);
-		int projID = (int) controller.getProjectID();
+		int projID = controller.getProjectID();
 		assertEquals(5, projID);
 	}
 
@@ -96,9 +96,7 @@ public class US204v2createRequestAddCollaboratorToTaskTeamControllerTest {
 	
 	@Test
 	public final void testGetters_Setters() {
-		controller.setUser(user);
 		controller.setProject(proj);
-		controller.setTaskID(taskA.getTaskID());
 		controller.setProjectID(proj.getProjectId());
 		
 		Integer projID = proj.getIdCode();	

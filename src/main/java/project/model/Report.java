@@ -5,6 +5,7 @@ import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * 
@@ -200,4 +201,25 @@ public class Report extends ResourceSupport {
 	}
 
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Report)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Report report = (Report) o;
+        return Objects.equals(taskCollaborator, report.taskCollaborator) &&
+                Objects.equals(task, report.task);
+    }
 }

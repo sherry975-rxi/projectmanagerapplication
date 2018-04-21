@@ -68,12 +68,6 @@ public class ProjectManagerMainMenuUI {
 	private User projectManager;
 	private Project project;
 
-	/**
-	 * Creates the UI
-	 */
-	public ProjectManagerMainMenuUI() {
-	}
-
 	public void displayOptions() {
 
 		projectInfo.setProject(project);
@@ -87,14 +81,14 @@ public class ProjectManagerMainMenuUI {
 				"———————————————————————————————————————————MENU PROJECT MANAGER——————————————————————————————————————————————————");
 		System.out.println("                               Project " + projectInfo.printProjectNameInfo().toUpperCase()
 				+ " - " + "Project Manager " + projectInfo.printProjectManagerInfo()); // OU projectManager.getName()
-		System.out.println("");
+            System.out.println();
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo() + "        " + "STATUS: "
 				+ projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
 		System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo() + "        " + "FINISH DATE: "
 				+ projectInfo.printProjectFinishDateInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-		System.out.println("");
+            System.out.println();
 		System.out.println("TASKS LIST:                                                                TEAM:");
 
 		System.out.println(
@@ -106,7 +100,7 @@ public class ProjectManagerMainMenuUI {
 		System.out.println("    [A4] - Not Started");
 		System.out.println("    [A5] - Not Assigned");
 		System.out.println("    [A6] - Cancelled");
-		System.out.println("");
+            System.out.println();
 		System.out.println("REQUESTS:                                                                  OTHERS:");
 		System.out.println(
 				"    [C1] - View Assignment Requests                                           [D1] - View Project Cost");
@@ -114,7 +108,7 @@ public class ProjectManagerMainMenuUI {
 				"    [C2] - View Removal Requests                                              [D2] - Create Task");
 		System.out.println(
 				"                                                                              [D3] - Create Dependency");
-		System.out.println("");
+            System.out.println();
 		System.out.println(
 				"_________________________________________________________________________________________________________________");
 		System.out.println("[B] Back\n");
@@ -123,7 +117,7 @@ public class ProjectManagerMainMenuUI {
 
 		switch (option) {
 		case "A1":
-			optionA1.displayUnfinishedOfProject(this.project, this.projectManager);
+			optionA1.displayUnfinishedOfProject(this.project);
 			break;
 		case "A2":
 			optionA2.displayUnfinishedTasksWithExpiredDeadline(this.project, this.projectManager);
@@ -133,13 +127,13 @@ public class ProjectManagerMainMenuUI {
 			optionA3.projectDataDisplay();
 			break;
 		case "A4":
-			optionA4.projectNotStartedTasksUI(this.project, this.projectManager);
+			optionA4.projectNotStartedTasksUI(this.project);
 			break;
 		case "A5":
-			optionA5.projectUnassignedTasksUI(this.project, this.projectManager);
+			optionA5.projectUnassignedTasksUI(this.project);
 			break;
 		case "A6":
-			optionA6.displayCancelledTasksOfProject(this.project, this.projectManager);
+			optionA6.displayCancelledTasksOfProject(this.project);
 			break;
 		case "B1":
 			optionB1.viewProjectTeamAndThenRemoveCollaboratorUI(this.project);
