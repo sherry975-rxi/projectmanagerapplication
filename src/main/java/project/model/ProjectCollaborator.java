@@ -1,5 +1,9 @@
 package project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.hateoas.ResourceSupport;
+
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
@@ -8,21 +12,23 @@ import java.util.Calendar;
 @Entity
 @Table(name = "ProjectCollaborator")
 @Transactional
-public class ProjectCollaborator implements Serializable {
+public class ProjectCollaborator extends ResourceSupport implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long projCollabId;
+	private long projectCollaboratorId;
+
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "User_id")
 	private User collaborator;
+
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Project_id")
 	private Project project;
 	private boolean status;
 	private double costPerEffort;
-
-
 
     private Calendar startDate;
 	private Calendar finishDate;
@@ -39,24 +45,24 @@ public class ProjectCollaborator implements Serializable {
 	 * Collaborator's user data, their status on the project, and their cost per
 	 * effort.
 	 * 
-	 * @param collab
+	 * @param collaborator
 	 *            the Project Collaborator's user data
 	 * @param costPerEffort
 	 *            how much the Project Collaborator costs per unit of effort
 	 */
-	public ProjectCollaborator(User collab, double costPerEffort) {
-		this.collaborator = collab;
+	public ProjectCollaborator(User collaborator, double costPerEffort) {
+		this.collaborator = collaborator;
 		this.status = true;
 		this.startDate = Calendar.getInstance();
 		this.costPerEffort = costPerEffort;
 	}
 
-	public Long getProjCollabId() {
-		return projCollabId;
+	public long getProjectCollaboratorId() {
+		return projectCollaboratorId;
 	}
 
-	public void setProjCollabId(Long projCollabId) {
-		this.projCollabId = projCollabId;
+	public void setProjectCollaboratorId(long projectCollaboratorId) {
+		this.projectCollaboratorId = projectCollaboratorId;
 	}
 
 	public User getCollaborator() {
@@ -67,7 +73,7 @@ public class ProjectCollaborator implements Serializable {
 		this.collaborator = collaborator;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
@@ -127,6 +133,7 @@ public class ProjectCollaborator implements Serializable {
 	 * 
 	 * @return Returns the User Data
 	 */
+	@JsonIgnore
 	@Transactional
 	public User getUserFromProjectCollaborator() {
 		return this.collaborator;
