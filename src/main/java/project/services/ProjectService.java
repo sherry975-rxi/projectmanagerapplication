@@ -334,7 +334,7 @@ public class ProjectService {
                 .collect(Collectors.toList()));
 
 		for (ProjectCollaborator toSearch : projectTeam) {
-			if(toSearch.isStatus()) {
+			if(toSearch.getStatus()) {
 				return toSearch;
 			}
 		}
@@ -387,7 +387,30 @@ public class ProjectService {
 	 */
 	public ProjectCollaborator getProjectCollaboratorById(long id) {
 
-		Optional<ProjectCollaborator> collaborator = this.projectCollaboratorRepository.findByProjCollabId(id);
+		Optional<ProjectCollaborator> collaborator = this.projectCollaboratorRepository.findByProjectCollaboratorId(id);
 		return collaborator.orElseThrow(() -> new ObjectNotFoundException("Project Collaborator not found! Id: " + id));
+	}
+
+	/**
+	 * Creates an instance of ProjectCollaborator set the id of the project and
+	 * saves projectCollaborator in the database
+	 *
+	 * @param email
+	 *            user to associate with projectCollaborator
+	 * @param projectId
+	 *            to set project id in projectCollaborator
+	 * @param costPerEffort
+	 *
+	 * @return the projectCollaborator created
+	 */
+	public ProjectCollaborator createProjectCollaboratorWithEmail(String email, int projectId, double costPerEffort) {
+
+		User user = this.userService.getUserByEmail(email);
+		Project project = this.getProjectById(projectId);
+		ProjectCollaborator newProjectCollaborator = new ProjectCollaborator(user, costPerEffort);
+		newProjectCollaborator.setProject(project);
+		this.projectCollaboratorRepository.save(newProjectCollaborator);
+		return newProjectCollaborator;
+
 	}
 }
