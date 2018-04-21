@@ -95,10 +95,10 @@ public class RestProjCollabController {
         response = new ResponseEntity<>(projectCollaborator, HttpStatus.CREATED);
 
         Link selfRel = linkTo(RestProjectController.class).slash(projectId).slash("team").slash(projectCollaborator.getProjectCollaboratorId()).withSelfRel();
-        collaborator.add(selfRel);
+        projectCollaborator.add(selfRel);
 
         Link reference1 = linkTo(RestProjectController.class).slash(projectId).slash("team").withRel("Project Collaborator List");
-        collaborator.add(reference1);
+        projectCollaborator.add(reference1);
 
         }
          return response;
