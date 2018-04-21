@@ -49,6 +49,7 @@ public class US204AssignTaskRequestRestController {
      * list of pending requests from a specific task.
      *
      * @param taskId Task id associated to the task to be made the request
+     * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
     @RequestMapping(value = "/requests", method = RequestMethod.GET)
@@ -73,11 +74,13 @@ public class US204AssignTaskRequestRestController {
      * This method allows the collaborator to choose between getting a
      * list of assignment or removal pending requests from a specific task.
      *
+     * @param reqType Type of request: assignment or removal
      * @param taskId Task id associated to the task to be made the request
+     * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
     @RequestMapping(value = "/requests/filter/{reqType}", method = RequestMethod.GET)
-    public ResponseEntity<List<TaskTeamRequest>> getAllFilteredRequests(@PathVariable String taskId, @PathVariable String reqType, @PathVariable int projectId) {
+    public ResponseEntity<List<TaskTeamRequest>> getAllFilteredRequests( @PathVariable String reqType, @PathVariable String taskId, @PathVariable int projectId) {
 
         projectService.getProjectById(projectId);
         Task task = taskService.getTaskByTaskID(taskId);
@@ -115,6 +118,7 @@ public class US204AssignTaskRequestRestController {
      *
      * @param requestId Request id associated to the request
      * @param taskId    Task id associated to the task to be made the request
+     * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
     @RequestMapping(value = "/requests/{requestId}", method = RequestMethod.GET)
@@ -176,7 +180,7 @@ public class US204AssignTaskRequestRestController {
                             Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
 
                             String requestType = "assignment";
-                            Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(taskId, requestType, projectId)).withRel("List of Assignment Requests");
+                            Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel("List of Assignment Requests");
 
                             request.add(reference);
                             request.add(referenceTwo);
@@ -194,7 +198,7 @@ public class US204AssignTaskRequestRestController {
                     }
 
                 }
-                // user, project and task exist but user is not in this project
+                // user, project and task exist but task is cancelled in this project
                 return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
             }
 
