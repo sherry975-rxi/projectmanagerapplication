@@ -114,4 +114,29 @@ public class RestProjCollabControllerTest {
 
     }
 
+    /**
+     * GIVEN a project collaborator id
+     * WHEN we perform a get request to url /projects/<projectId>/team/<projectCollaboratorId>
+     * THEN we receive a valid message and the details of the projectCollaborator
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnTheProjectCollaboratorDetails() throws Exception {
+
+
+        //GIVEN a project collaborator id
+        int projectCollaboratorId = 1;
+
+        //When we we perform a get request to url /projects/<projectId>/team/1
+        when(projectServiceMock.getProjectCollaboratorById(projectCollaboratorId)).thenReturn(pcDaniel);
+        MockHttpServletResponse response = mvc.perform(get("/projects/1/team/1").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN we receive a valid message and a list of project collaborators
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(jacksonProjectCollaborator.write(pcDaniel).getJson(), response.getContentAsString());
+        verify(projectServiceMock, times(1)).getProjectCollaboratorById(projectCollaboratorId);
+
+    }
+    
+
 }
