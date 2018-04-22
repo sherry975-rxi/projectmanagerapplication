@@ -406,6 +406,31 @@ public class ProjectServiceTest {
 		assertEquals(projectService.createProjectCollaborator(user1, project1, 10), projCollab1);
 	}
 
+
+	/**
+	 * Given: a project and a user that to be added to that project
+	 * When: the user is added to the project team
+	 * Then: a new projectCollaborator is created and the project team has one more projectCollaborator
+	 */
+	@Test
+	public void testCreateProjectCollaboratorWithEmail() {
+
+		//Given: a project and a user that to be added to that project
+		int projectId = 1;
+		String userEmail = "joao@gmail.com";
+
+		//When:: the user is added to the project team, using its email and the project id
+		when(projectRep.findById(projectId)).thenReturn(Optional.of(project1));
+		when(userService.getUserByEmail(user1.getEmail())).thenReturn(user1);
+
+		projectService.createProjectCollaboratorWithEmail(userEmail, projectId, 10);
+		Mockito.verify(projectCollaboratorRepository, Mockito.times(1)).save(projCollab1);
+
+		//Then: a new projectCollaborator is created and the project team has one more projectCollaborator
+		when(projectService.createProjectCollaboratorWithEmail(userEmail, projectId, 10)).thenReturn(projCollab1);
+		assertEquals(projectService.createProjectCollaboratorWithEmail(userEmail, projectId, 10), projCollab1);
+	}
+
 	// TODO
 	@Test
 	public void testGetActiveProjectTeam() {
