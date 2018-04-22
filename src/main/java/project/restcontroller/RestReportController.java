@@ -30,6 +30,15 @@ public class RestReportController {
         this.userService = userService;
     }
 
+    /**
+     * Creates a Report associated with a Task, if the TaskCollaborator exists
+     *
+     * @param reportDto
+     * @param taskID
+     * @param projectID
+     * @param email
+     * @return The Report that was created
+     */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Report> createReport(@RequestBody Report reportDto, @PathVariable String taskID, @PathVariable int projectID, @PathVariable String email ){
 
