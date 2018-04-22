@@ -1,31 +1,29 @@
 package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.model.Project;
 import project.model.Report;
 import project.model.Task;
 import project.model.TaskCollaborator;
-import project.services.ProjectService;
 import project.services.TaskService;
-import project.services.UserService;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping("/projects/{projid}/tasks/{taskid}/reports/")
 public class RestReportController {
 
 
-    private final ProjectService projectService;
+
     private final TaskService taskService;
-    private final UserService userService;
+
 
     @Autowired
-    public RestReportController(ProjectService projectService, TaskService taskService, UserService userService) {
-        this.projectService = projectService;
+    public RestReportController(TaskService taskService) {
         this.taskService = taskService;
-        this.userService = userService;
     }
 
     /**
@@ -34,23 +32,32 @@ public class RestReportController {
      * @param reportDto
      * @param taskID
      * @param projectID
-     * @param email
      * @return The Report that was created
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Report> createReport(@RequestBody Report reportDto, @PathVariable String taskID, @PathVariable int projectID, @PathVariable String email ){
+    public ResponseEntity<Report> createReport(@RequestBody Report reportDto, @PathVariable String taskID, @PathVariable int projectID) {
 
-        Project project = projectService.getProjectById(projectID);
+
+        ResponseEntity<Report> responseEntity;
         Task task = taskService.getTaskByTaskID(taskID);
+        String email = reportDto.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail();
         TaskCollaborator taskCollaborator = task.getTaskCollaboratorByEmail(email);
 
 
-        if (taskCollaborator == null){
-            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        //if taskCollaborator doesn't exist
+        if (taskCollaborator == null) {
+            responseEntity = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         } else {
+
             task.createReport(reportDto.getTaskCollaborator(), reportDto.getFirstDateOfReport(), reportDto.getCost());
             taskService.saveTask(task);
-            return ResponseEntity.ok().body(reportDto);
+            responseEntity = ResponseEntity.ok().body(reportDto);
+
+            Link reference = linkTo(RestReportController.class).slash(task.getReports()).slash("Reports").withRel("Task");
+            task.add(reference);
         }
+        return responseEntity;
     }
 }
+
+
