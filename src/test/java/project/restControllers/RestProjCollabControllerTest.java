@@ -19,9 +19,7 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
 import project.restcontroller.RestProjCollabController;
-import project.restcontroller.RestProjectController;
 import project.services.ProjectService;
-import project.services.TaskService;
 import project.services.UserService;
 
 import java.util.ArrayList;
@@ -33,7 +31,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -71,6 +68,9 @@ public class RestProjCollabControllerTest {
         projectMock = new Project("Project teste", "Teste ao controller", uDaniel);
         pcDaniel = new ProjectCollaborator(uDaniel, 10);
         pcInes = new ProjectCollaborator(uInes, 20);
+        pcDaniel.setProject(projectMock);
+        pcInes.setProject(projectMock);
+        projectMock.setProjectId(1);
         projectTeam = new ArrayList<>();
         projectTeam.add(pcDaniel);
         projectTeam.add(pcInes);
@@ -137,6 +137,30 @@ public class RestProjCollabControllerTest {
         verify(projectServiceMock, times(1)).getProjectCollaboratorById(projectCollaboratorId);
 
     }
-    
 
+    /**
+     * GIVEN a project ID
+     * WHEN we perform a post request to url /projects/<projectId>/team
+     * THEN we we receive status OK and the new Project Collaborator created
+     * @throws Exception
+     */
+    @Test
+    public void shouldCreateProjectCollaborator() throws Exception{
+
+        //GIVEN a project ID
+        int projectId = 1;
+
+        //WHEN we perform a post request to url /projects/<projectId>/team
+        when(projectServiceMock.getProjectById(projectId)).thenReturn(projectMock);
+        when(userServiceMock.getUserByEmail(uDaniel.getEmail())).thenReturn(uDaniel);
+        when(projectServiceMock.createProjectCollaboratorWithEmail(any(String.class),any(Integer.class), any(Double.class))).thenReturn(pcDaniel);
+
+        MockHttpServletResponse response = mvc.perform(post("/projects/" + projectId + "/team")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonProjectCollaborator.write(pcDaniel).getJson())).andReturn().getResponse();
+
+
+        //THEN we receive status OK and the project info updated
+        assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+    }
 }
