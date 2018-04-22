@@ -12,10 +12,8 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
-import java.util.Calendar;
-
 @RestController
-@RequestMapping("projects/{projid}/tasks/{taskid}/reports/")
+@RequestMapping("/projects/{projid}/tasks/{taskid}/reports/")
 public class RestReportController {
 
 
@@ -46,9 +44,6 @@ public class RestReportController {
         Task task = taskService.getTaskByTaskID(taskID);
         TaskCollaborator taskCollaborator = task.getTaskCollaboratorByEmail(email);
 
-        double reportedTime;
-        Calendar firstDateOfReport;
-        firstDateOfReport = Calendar.getInstance();
 
         if (taskCollaborator == null){
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
