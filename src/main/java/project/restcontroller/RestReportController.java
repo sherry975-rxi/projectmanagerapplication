@@ -35,7 +35,6 @@ public class RestReportController {
 
         Project project = projectService.getProjectById(projectID);
         Task task = taskService.getTaskByTaskID(taskID);
-        //User user = userService.getUserByEmail(email);
         TaskCollaborator taskCollaborator = task.getTaskCollaboratorByEmail(email);
 
         double reportedTime;
@@ -49,6 +48,5 @@ public class RestReportController {
             taskService.saveTask(task);
             return ResponseEntity.ok().body(reportDto);
         }
-
     }
 }
