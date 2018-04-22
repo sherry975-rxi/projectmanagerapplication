@@ -692,5 +692,25 @@ public class ProjectServiceTest {
 
 	}
 
+	/**
+	 * Given: a projectCollaborator created and saved to the database with the id 1
+	 * When: the method getProjectCollaboratorById is called
+	 * Then: the projectCollaborator found has to be equal to the same created
+	 *
+	 */
+	@Test
+	public void testGetProjectCollaboratorById() {
+
+		//Given: a Project Collaborator called collaborator is created and saved to the database
+		ProjectCollaborator collaborator = projectService.createProjectCollaborator(user1, project1, 10);
+
+		//When: the method getProjectCollaboratorById is called and the result is attributed to the variable collaborator1
+		when(projectCollaboratorRepository.findByProjectCollaboratorId((1))).thenReturn(Optional.of(collaborator));
+		ProjectCollaborator collaborator1 = projectService.getProjectCollaboratorById(1);
+		Mockito.verify(projectCollaboratorRepository, Mockito.times(1)).findByProjectCollaboratorId(1);
+
+		//Then: asserts that the Project Collaborator found is equal to the Project collaborator created
+		assertTrue(collaborator.equals(collaborator1));
+	}
 
 }
