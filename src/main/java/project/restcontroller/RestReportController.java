@@ -9,6 +9,7 @@ import project.model.Report;
 import project.model.Task;
 import project.model.TaskCollaborator;
 import project.services.TaskService;
+import project.services.UserService;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -16,32 +17,33 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 @RequestMapping("/projects/{projid}/tasks/{taskid}/reports/")
 public class RestReportController {
 
-
-
     private final TaskService taskService;
+    private final UserService userService;
 
 
     @Autowired
-    public RestReportController(TaskService taskService) {
+    public RestReportController(TaskService taskService, UserService userService) {
         this.taskService = taskService;
+        this.userService = userService;
     }
 
     /**
      * Creates a Report associated with a Task, if the TaskCollaborator exists
      *
      * @param reportDto
-     * @param taskID
-     * @param projectID
+     * @param taskid
      * @return The Report that was created
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Report> createReport(@RequestBody Report reportDto, @PathVariable String taskID, @PathVariable int projectID) {
+    public ResponseEntity<Report> createReport(@RequestBody Report reportDto, @PathVariable String taskid, @PathVariable int projid ) {
 
 
         ResponseEntity<Report> responseEntity;
-        Task task = taskService.getTaskByTaskID(taskID);
+        Task task = taskService.getTaskByTaskID(taskid);
         String email = reportDto.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail();
         TaskCollaborator taskCollaborator = task.getTaskCollaboratorByEmail(email);
+        int userId = userService.getUserByEmail(email).getUserID();
+
 
 
         //if taskCollaborator doesn't exist
@@ -53,11 +55,14 @@ public class RestReportController {
             taskService.saveTask(task);
             responseEntity = ResponseEntity.ok().body(reportDto);
 
-            Link reference = linkTo(RestReportController.class).slash(task.getReports()).slash("Reports").withRel("Task");
-            task.add(reference);
+            Link reference = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").withRel("Show all Reports from Task");
+            reportDto.add(reference);
+            Link reference1 = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").slash("users").slash(userId).withRel("Show Reports from User");
+            reportDto.add(reference1);
         }
         return responseEntity;
     }
+
 }
 
 
