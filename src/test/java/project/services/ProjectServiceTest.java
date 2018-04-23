@@ -9,10 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 
@@ -663,6 +660,8 @@ public class ProjectServiceTest {
 		when(projectUpdates.getProjectManager()).thenReturn(user);
 		when(user.getEmail()).thenReturn("moked@mail.pt");
 		when(userService.getUserByEmail(anyString())).thenReturn(user);
+        when(project.getCalculationMethod()).thenReturn(CalculationMethod.CI);
+        when(project.isCalculationMethodAllowed(CalculationMethod.CI.getCode())).thenReturn(true);
 
 		//WHEN updateProjectData is called with an update for project manager
 		projectService.updateProjectData(projectUpdates, project);
@@ -674,21 +673,25 @@ public class ProjectServiceTest {
 
 		//GIVEN a project to update
 		when(projectUpdates.getProjectManager()).thenReturn(null);
-		when(projectUpdates.getCalculationMethod()).thenReturn(3);
+		when(projectUpdates.getAvailableCalculationMethods()).thenReturn("CF,CM");
+		when(projectUpdates.getCalculationMethod()).thenReturn(CalculationMethod.CM);
+		when(project.getCalculationMethod()).thenReturn(CalculationMethod.CM);
+		when(project.isCalculationMethodAllowed(CalculationMethod.CM.getCode())).thenReturn(true);
 
 		//WHEN updateProjectData is called with an update for calculation method
 		projectService.updateProjectData(projectUpdates, project);
 
 		//THEN the project is updated and saved
-		verify(project, times(1)).setCalculationMethod(3);
-		verify(projectRep, times(2)).save(project);
+		verify(project, times(1)).setAvailableCalculationMethods("CF,CM");
+		verify(project, times(1)).setCalculationMethod(CalculationMethod.CM);
+		verify(projectRep, times(3)).save(project);
 
 
 		//GIVEN a project to update
 		//WHEN updateProjectData is called with no updates
-		when(projectUpdates.getCalculationMethod()).thenReturn(0);
+		when(projectUpdates.getCalculationMethod()).thenReturn(null);
 		//THEN the project is not update
-		verify(projectRep, times(2)).save(project);
+		verify(projectRep, times(3)).save(project);
 
 	}
 

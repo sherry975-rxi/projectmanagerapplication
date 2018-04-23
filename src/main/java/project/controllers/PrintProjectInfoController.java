@@ -200,7 +200,7 @@ public class PrintProjectInfoController {
 
         }
         output=bldr.toString();
-        output+="(Currently: " + project.getCalculationMethod() + ")";
+        output+="(Currently: " + project.getCalculationMethod().getCode() + ")";
 
         return output;
 	}
