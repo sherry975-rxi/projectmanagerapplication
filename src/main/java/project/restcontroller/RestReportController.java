@@ -71,19 +71,35 @@ public class RestReportController {
                     return ResponseEntity.ok().body(reportCreated);
                 }
             }
-
-
         }
         return responseEntity;
     }
 
 
-   
+    /**
+     * This method returns all Reports from a Task
+     *
+     * @param taskid Identifier (String) of Task to retrieve Reports from
+     * @return All Reports from Task
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<Report>> getTaskReports(@PathVariable String taskid, @PathVariable int projid) {
+
+        projectService.getProjectById(projid);
+        ResponseEntity<List<Report>> responseEntity;
+
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        //In case task doesn't have reports created,
+        if (task.getReports() == null) {
+            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            responseEntity = ResponseEntity.ok().body(task.getReports());
+        }
+
+        return responseEntity;
+    }
 }
-
-
-
-
 
 
 
