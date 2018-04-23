@@ -652,11 +652,13 @@ public class TaskService {
 		 * This method deletes a task from the task the repository if the state if the
 		 * task hasnâ€™t started
 		 * 
-		 * @param taskToDelete
-		 *            the task that will be removed from the task repository
+		 * @param taskId
+		 *            the taskId of the task that will be removed from the task repository
 		 * 
 		 */
-		public boolean deleteTask(Task taskToDelete) {
+		public boolean deleteTask(String taskId) {
+
+			Task taskToDelete = getTaskByTaskID(taskId);
 
 			boolean wasTaskDeleted = false;
 
