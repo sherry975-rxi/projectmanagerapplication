@@ -37,8 +37,11 @@ public class RestReportController {
     /**
      * Creates a Report associated with a Task, if the TaskCollaborator exists
      *
+     * Contains Links to "Show all Reports from Task" and to "Show Reports from User"
+     *
      * @param reportDto
      * @param taskid
+     * @param projid
      * @return The Report that was created
      */
     @RequestMapping(method = RequestMethod.POST)
@@ -80,6 +83,7 @@ public class RestReportController {
     /**
      * This method returns all Reports from a Task
      *
+     * @param projid
      * @param taskid Identifier (String) of Task to retrieve Reports from
      * @return All Reports from Task
      */
@@ -102,9 +106,13 @@ public class RestReportController {
     }
 
     /**
-     * This method returns all Reports from a Task
+     * This method returns all Task Reports with a certain user
+     *
+     * Contains Link to "Show Reports from User"
      *
      * @param taskid Identifier (String) of Task to retrieve Reports from
+     * @param projid
+     * @param userid
      * @return All Reports from Task
      */
     @RequestMapping(value = "users/{userid}", method = RequestMethod.GET)
