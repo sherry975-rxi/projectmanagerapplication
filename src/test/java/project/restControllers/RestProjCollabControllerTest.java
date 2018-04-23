@@ -66,11 +66,11 @@ public class RestProjCollabControllerTest {
         uDaniel = new User("Daniel", "daniel@gmail.com", "01", "Arquitecto", "967387654");
         uInes = new User("Ines", "ines@gmail.com", "02", "Veterinaria", "917897458");
         projectMock = new Project("Project teste", "Teste ao controller", uDaniel);
+        projectMock.setProjectId(1);
         pcDaniel = new ProjectCollaborator(uDaniel, 10);
         pcInes = new ProjectCollaborator(uInes, 20);
         pcDaniel.setProject(projectMock);
         pcInes.setProject(projectMock);
-        projectMock.setProjectId(1);
         projectTeam = new ArrayList<>();
         projectTeam.add(pcDaniel);
         projectTeam.add(pcInes);
