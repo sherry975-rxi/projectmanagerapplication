@@ -25,6 +25,12 @@ public class UserDTO {
 	private String district;
 	private String country;
 
+    /**
+     * Empty constructor
+     *
+     */
+	public UserDTO(){}
+
 	/**
 	 * Instantiates a userDTO from another user
 	 * 
