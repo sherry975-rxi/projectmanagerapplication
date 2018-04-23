@@ -77,78 +77,15 @@ public class US201and202UpdateUserInfoUI {
 			confirmInfoToUpdatePhone(input, phone, updateSuccessful);
 			break;
 		case "4":
-			// Shows all addresses
-			System.out.println("Please select the number of the address to update:");
-			int i = 0;
 
-			for (Address address : getInfo.getAllAddresses(user)) {
-				System.out.println();
-
-				System.out.println("[" + (i + 1) + "].");
-				System.out.println();
-
-				System.out.println("Street:    " + getInfo.getStreet(address));
-				System.out.println("ZipCode:   " + getInfo.getZipCode(address));
-				System.out.println("City:      " + getInfo.getCity(address));
-				System.out.println("District:  " + getInfo.getDistrict(address));
-				System.out.println("Country:   " + getInfo.getCountry(address));
-				System.out.println();
-				i++;
-
-			}
-			System.out.println("___________________________________________________");
-			System.out.println("If you select an invalid number the menu returns back");
-
-			if (input.hasNextInt()) {
-				int nrAddress = input.nextInt();
-
-				if (nrAddress > getInfo.getAllAddresses(user).size() || nrAddress < 0) {
-					System.out.println();
-					System.out.println(processCancelled);
-					System.out.println();
-
-				} else {
-					chooseAddressFieldAndUpdateIt(getInfo, input, nrAddress);
-				}
-			} else {
-				System.out.println();
-				System.out.println(processCancelled);
-				System.out.println();
-			}
+            selectAddress(input, processCancelled);
 
 			break;
 
 		case "5":
-			// Adds new street
-			System.out.println("Street: ");
-			String newStreet = input.nextLine();
-			System.out.println("ZipCode: ");
 
-			String newZipCode = input.nextLine();
+            addNewAddress(input);
 
-			System.out.println("City: ");
-			String newCity = input.nextLine();
-			System.out.println("District: ");
-
-			String newDistrict = input.nextLine();
-			System.out.println("Country: ");
-
-			String newCountry = input.nextLine();
-
-			Address newAddress = this.getInfo.createNewAddress(newStreet, newZipCode, newCity, newDistrict, newCountry);
-			System.out.println();
-
-			System.out.println("Verify if new adress is correct:");
-			System.out.println();
-
-			System.out.println("Street:     " + newStreet);
-			System.out.println("ZipCode:    " + newZipCode);
-			System.out.println("City:       " + newCity);
-			System.out.println("District:   " + newDistrict);
-			System.out.println("Country:    " + newCountry);
-			System.out.println();
-
-			confirmOrCancelAddNewAddress(input, newAddress, this.getInfo);
 			break;
 		default:
 			System.out.println("The user cancelled the process");
@@ -411,9 +348,9 @@ public class US201and202UpdateUserInfoUI {
 			confirmInfoToUpdateCountry(input, currentStreet, newCountry, updateSuccessful);
 			break;
 		default:
-			System.out.println("");
+            System.out.println();
 			System.out.println("Process Cancelled");
-			System.out.println("");
+            System.out.println();
 			break;
 		}
 	}
@@ -421,4 +358,78 @@ public class US201and202UpdateUserInfoUI {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+    private void selectAddress(Scanner input, String processCancelled) {
+        // Shows all addresses
+        System.out.println("Please select the number of the address to update:");
+        int i = 0;
+
+        for (Address address : getInfo.getAllAddresses(user)) {
+            System.out.println();
+
+            System.out.println("[" + (i + 1) + "].");
+            System.out.println();
+
+            System.out.println("Street:    " + getInfo.getStreet(address));
+            System.out.println("ZipCode:   " + getInfo.getZipCode(address));
+            System.out.println("City:      " + getInfo.getCity(address));
+            System.out.println("District:  " + getInfo.getDistrict(address));
+            System.out.println("Country:   " + getInfo.getCountry(address));
+            System.out.println();
+            i++;
+
+        }
+        System.out.println("___________________________________________________");
+        System.out.println("If you select an invalid number the menu returns back");
+
+        if (input.hasNextInt()) {
+            int nrAddress = input.nextInt();
+
+            if (nrAddress > getInfo.getAllAddresses(user).size() || nrAddress < 0) {
+                System.out.println();
+                System.out.println(processCancelled);
+                System.out.println();
+
+            } else {
+                chooseAddressFieldAndUpdateIt(getInfo, input, nrAddress);
+            }
+        } else {
+            System.out.println();
+            System.out.println(processCancelled);
+            System.out.println();
+        }
+    }
+
+    private void addNewAddress(Scanner input) {
+        // Adds new street
+        System.out.println("Street: ");
+        String newStreet = input.nextLine();
+        System.out.println("ZipCode: ");
+
+        String newZipCode = input.nextLine();
+
+        System.out.println("City: ");
+        String newCity = input.nextLine();
+        System.out.println("District: ");
+
+        String newDistrict = input.nextLine();
+        System.out.println("Country: ");
+
+        String newCountry = input.nextLine();
+
+        Address newAddress = this.getInfo.createNewAddress(newStreet, newZipCode, newCity, newDistrict, newCountry);
+        System.out.println();
+
+        System.out.println("Verify if new adress is correct:");
+        System.out.println();
+
+        System.out.println("Street:     " + newStreet);
+        System.out.println("ZipCode:    " + newZipCode);
+        System.out.println("City:       " + newCity);
+        System.out.println("District:   " + newDistrict);
+        System.out.println("Country:    " + newCountry);
+        System.out.println();
+
+        confirmOrCancelAddNewAddress(input, newAddress, this.getInfo);
+    }
 }

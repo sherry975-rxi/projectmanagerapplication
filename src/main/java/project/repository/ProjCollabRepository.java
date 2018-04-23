@@ -7,6 +7,7 @@ import project.model.ProjectCollaborator;
 import project.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProjCollabRepository extends JpaRepository<ProjectCollaborator, Integer>{
@@ -40,5 +41,14 @@ public interface ProjCollabRepository extends JpaRepository<ProjectCollaborator,
 	 * @return List of Project Collaborators from a certain project and user
 	 */
 	List<ProjectCollaborator> findAllByProjectAndCollaborator(Project project, User user);
+
+	/**
+	 * Finds a collaborator by its ProjCollabId
+	 *
+	 * @param id Id to search for
+	 *
+	 * @return ProjectCollaborator
+	 */
+	Optional<ProjectCollaborator> findByProjectCollaboratorId(long id);
 	
 }
