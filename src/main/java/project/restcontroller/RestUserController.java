@@ -12,6 +12,7 @@ import project.services.UserService;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("users")
@@ -24,6 +25,12 @@ public class RestUserController {
         this.userService=userService;
     }
 
+    /**
+     * This method returns the complete user details when given the
+     * @param userId
+     * it also generates the links to change the details or go to the users tasks and projects
+     * @return
+     */
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public ResponseEntity<?> seeUserDetails(@PathVariable int userId){
         ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -32,6 +39,14 @@ public class RestUserController {
         if(userToReturn != null){
             result = new ResponseEntity<>(userToReturn , HttpStatus.OK);
             Link selfLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).withSelfRel();
+            userToReturn.add(selfLink);
+            Link editInfoLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("details").withRel("Edit User Information");
+            userToReturn.add(editInfoLink);
+            //TODO
+            //Link seeProjectsLink = linkTo(RestUserProjectsController.class).slash(userToReturn.getUserID()).slash("myProjects").withRel("See My Projects");
+            //userToReturn.add(seeProjectsLink);
+            //Link seeTasksLink = linkTo(RestUserTasksController.class).slash("myTasks").withRel("See My Tasks");
+            //userToReturn.add(seeTasksLink);
         }
         return result;
     }
@@ -106,8 +121,8 @@ public class RestUserController {
      *
      */
     @RequestMapping(value = "/profiles" , method = RequestMethod.PATCH)
-    public ResponseEntity<?> changeUserProfile (@RequestBody User updatedProfile) {
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<User> changeUserProfile (@RequestBody User updatedProfile) {
+        ResponseEntity<User> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         Profile profileChange = updatedProfile.getUserProfile();
 
@@ -116,6 +131,8 @@ public class RestUserController {
         if(userToChange != null){
             userToChange.setUserProfile(profileChange);
             userService.updateUser(userToChange);
+            Link selfLink = linkTo(RestUserController.class).slash(userToChange.getUserID()).withRel("See User Info");
+            userToChange.add(selfLink);
             result = new ResponseEntity<>(userToChange ,HttpStatus.OK);
         }
         return result;
