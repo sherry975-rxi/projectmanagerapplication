@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.model.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
@@ -21,8 +20,6 @@ import project.restcontroller.US204AssignTaskRequestRestController;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
-
-
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -198,7 +195,7 @@ public class US204AssignTaskRequestRestControllerTest {
         assignRequest.setProjCollab(projCollabTwo);
         assignRequest.setTask(taskOne);
 
-        ResponseEntity<TaskTeamRequest> expected = new ResponseEntity<>(assignRequest, HttpStatus.CREATED);
+        //ResponseEntity<TaskTeamRequest> expected = new ResponseEntity<>(assignRequest, HttpStatus.CREATED);
 
         //assertEquals(expected,result);
         assertEquals(HttpStatus.CREATED, result.getStatusCode());
@@ -300,7 +297,7 @@ public class US204AssignTaskRequestRestControllerTest {
         ResponseEntity<List<TaskTeamRequest>> result = controller.getAllRequests(taskIdOne, projectId);
 
         // Then
-        List expectedList = new ArrayList();
+        List <TaskTeamRequest> expectedList = new ArrayList<>();
         TaskTeamRequest assign = new TaskTeamRequest();
         assign.setType(0);
         assign.setProjCollab(projCollabTwo);
@@ -347,7 +344,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // Then
 
-        List expectedList = new ArrayList();
+        List <TaskTeamRequest> expectedList = new ArrayList<>();
 
         TaskTeamRequest assign = new TaskTeamRequest();
         assign.setType(0);
@@ -389,7 +386,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // Then
 
-        List expectedList = new ArrayList();
+        List <TaskTeamRequest> expectedList = new ArrayList<>();
 
         TaskTeamRequest removal = new TaskTeamRequest();
         removal.setType(1);
@@ -435,8 +432,7 @@ public class US204AssignTaskRequestRestControllerTest {
         int assignID = taskOne.getPendingTaskTeamRequests().get(0).getDbId();
         int removalID = taskOne.getPendingTaskTeamRequests().get(1).getDbId();
 
-        List expectedList = new ArrayList();
-        expectedList = taskOne.getPendingTaskTeamRequests();
+        List <TaskTeamRequest>expectedList = taskOne.getPendingTaskTeamRequests();
         System.out.println(expectedList);
 
 
