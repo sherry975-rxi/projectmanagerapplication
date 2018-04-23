@@ -1,7 +1,6 @@
 package project.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -27,7 +26,7 @@ public class Report extends ResourceSupport {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "TaskCollaborator_id")
-	@JsonIgnore
+
 	private TaskCollaborator taskCollaborator;
 
 	private double cost;

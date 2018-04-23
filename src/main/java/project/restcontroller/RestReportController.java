@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import project.model.Report;
 import project.model.Task;
 import project.model.TaskCollaborator;
+import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
+import java.util.Calendar;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -21,12 +23,14 @@ public class RestReportController {
 
     private final TaskService taskService;
     private final UserService userService;
+    private final ProjectService projectService;
 
 
     @Autowired
-    public RestReportController(TaskService taskService, UserService userService) {
+    public RestReportController(TaskService taskService, UserService userService, ProjectService projectService) {
         this.taskService = taskService;
         this.userService = userService;
+        this.projectService = projectService;
     }
 
     /**
@@ -40,49 +44,65 @@ public class RestReportController {
     public ResponseEntity<Report> createReport(@RequestBody Report reportDto, @PathVariable String taskid, @PathVariable int projid) {
 
 
-        ResponseEntity<Report> responseEntity;
+        projectService.getProjectById(projid);
+        ResponseEntity<Report> responseEntity = new ResponseEntity<>(HttpStatus.FORBIDDEN);
         Task task = taskService.getTaskByTaskID(taskid);
         String email = reportDto.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail();
         TaskCollaborator taskCollaborator = task.getTaskCollaboratorByEmail(email);
         int userId = userService.getUserByEmail(email).getUserID();
+        Calendar firstDateOfReport = Calendar.getInstance();
 
 
         //if taskCollaborator doesn't exist
         if (taskCollaborator == null) {
-            responseEntity = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         } else {
-
-            task.createReport(reportDto.getTaskCollaborator(), reportDto.getFirstDateOfReport(), reportDto.getCost());
+            task.createReport(taskCollaborator, firstDateOfReport, reportDto.getReportedTime());
             taskService.saveTask(task);
-            responseEntity = ResponseEntity.ok().body(reportDto);
 
-            Link reference = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").withRel("Show all Reports from Task");
-            reportDto.add(reference);
-            Link reference1 = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").slash("users").slash(userId).withRel("Show Reports from User");
-            reportDto.add(reference1);
+            for (Report reportCreated : task.getReports()) {
+                if (reportCreated.getTaskCollaborator().equals(taskCollaborator) && reportCreated.getReportedTime() == reportDto.getReportedTime()) {
+
+                    Link reference = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").withRel("Show all Reports from Task");
+                    reportCreated.add(reference);
+                    Link reference1 = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").slash("users").slash(userId).withRel("Show Reports from User");
+                    reportCreated.add(reference1);
+
+                    return ResponseEntity.ok().body(reportCreated);
+                }
+            }
+
+
         }
         return responseEntity;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Report>> getTaskReports(@PathVariable String taskid) {
 
-        ResponseEntity<List<Report>> responseEntity;
-
-        Task task = taskService.getTaskByTaskID(taskid);
-
-        //In case task doesn't have reports created,
-        if (task.getReports() == null) {
-            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        else {
-            responseEntity = ResponseEntity.ok().body(task.getReports());
-            return responseEntity;
-        }
-
-        return responseEntity;
-    }
+   
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
