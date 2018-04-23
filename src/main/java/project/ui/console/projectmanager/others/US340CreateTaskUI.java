@@ -133,7 +133,8 @@ public class US340CreateTaskUI {
 
 		if ("R".equals(option)) {
 			loop = true;
-		} }
+        }
+        }
 	}
 
 	private static int estimatedTaskEffortUI(Scanner estimatedTaskEffort) {
