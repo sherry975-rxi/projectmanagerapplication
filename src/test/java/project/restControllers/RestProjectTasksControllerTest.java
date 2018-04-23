@@ -82,7 +82,7 @@ public class RestProjectTasksControllerTest {
         when(taskService.getTaskByTaskID(taskId)).thenReturn(task);
 
         //WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
-        when(taskService.deleteTask(task)).thenReturn(true);
+        when(taskService.deleteTask(taskId)).thenReturn(true);
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.delete("/projects/1/tasks/" + taskId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //THEN: we receive a valid message with 202 Accepted and the task list has to display one less task
@@ -104,7 +104,7 @@ public class RestProjectTasksControllerTest {
         when(taskService.getTaskByTaskID(taskId)).thenReturn(task2);
 
         //WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
-        when(taskService.deleteTask(task)).thenReturn(false);
+        when(taskService.deleteTask(taskId)).thenReturn(false);
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.delete("/projects/1/tasks/" + taskId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //THEN: we receive a valid message with 202 Accepted and the task list has to display one less task
