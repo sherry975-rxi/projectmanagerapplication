@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.controllers.PrintProjectInfoController;
 import project.controllers.US380GetProjectExpiredTaskListController;
 import project.model.Project;
-import project.model.User;
 
 import java.util.Scanner;
 
@@ -18,7 +17,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 	@Autowired
 	private US380GetProjectExpiredTaskListController controller;
 
-	public void displayUnfinishedTasksWithExpiredDeadline(Project project, User user) {
+	public void displayUnfinishedTasksWithExpiredDeadline(Project project) {
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
 
@@ -27,7 +26,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		System.out.println("");
+			System.out.println();
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
@@ -38,7 +37,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-		System.out.println("");
+			System.out.println();
 		System.out.println(line);
 		System.out.println("     UNFINISHED TASKS WITH EXPIRED DEADLINE");
 		System.out.println(line);
@@ -53,17 +52,12 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		switch (option) {
-
-		case ("B"):
-			break;
-
-		default:
+			if (!"B".equalsIgnoreCase(option)) {
 			System.out.println("Please choose a valid option: ");
 			loop = true;
-			break;
 		}
 
-	}}
+		}
+	}
 
 }

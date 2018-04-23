@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controllers.PrintProjectInfoController;
 import project.model.Project;
-import project.model.User;
 import project.ui.console.projectmanager.others.US340CreateTaskUI;
 import project.ui.console.projectmanager.others.US342DefineDependenciesBetweenTasksUI;
 import project.ui.console.projectmanager.others.US390GetProjectReportedCostUI;
@@ -64,8 +63,6 @@ public class ProjectManagerMainMenuUI {
 
 	@Autowired
 	private	US342DefineDependenciesBetweenTasksUI optionD3;
-
-	private User projectManager;
 	private Project project;
 
 	public void displayOptions() {
@@ -120,7 +117,7 @@ public class ProjectManagerMainMenuUI {
 			optionA1.displayUnfinishedOfProject(this.project);
 			break;
 		case "A2":
-			optionA2.displayUnfinishedTasksWithExpiredDeadline(this.project, this.projectManager);
+            optionA2.displayUnfinishedTasksWithExpiredDeadline(this.project);
 			break;
 		case "A3":
 			optionA3.setProj(project);
@@ -176,10 +173,6 @@ public class ProjectManagerMainMenuUI {
 	}
 
 }
-
-	public void setProjectManager(User projectManager) {
-		this.projectManager = projectManager;
-	}
 
 	public void setProject(Project project) {
 		this.project = project;

@@ -197,8 +197,8 @@ public class TaskCollaboratorTest {
 		assertTrue(springTaskCollab.getStartDate().equals(springTaskCollab.getFinishDate()));
 
 
-		// when the isStatus method is called, it should return what setStatus declared
-		// isStatus cannot be called without previously assigning a boolean
+		// when the getStatus method is called, it should return what setStatus declared
+		// getStatus cannot be called without previously assigning a boolean
 		springTaskCollab.setStatus(true);
 		assertTrue(springTaskCollab.isStatus());
 

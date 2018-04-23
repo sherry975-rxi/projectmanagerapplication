@@ -9,7 +9,6 @@ import project.model.Address;
 import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
-import project.services.exceptions.ObjectNotFoundException;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -184,9 +183,9 @@ public class UserService {
 
 		Optional<User> user = this.userRepository.findByEmail(email);
 
-		return user.orElseThrow(() -> new ObjectNotFoundException(message + email));
+		//return user.orElseThrow(() -> new ObjectNotFoundException(message + email));
 
-		//return user.orElse(null);
+		return user.orElse(null);
 	}
 
 	/**

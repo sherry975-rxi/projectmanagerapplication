@@ -78,7 +78,6 @@ public class CollectProjectsFromUserUI {
                 if (option.equals(projectIDCodeToString)) {
                     if(this.user.equals(project.getProjectManager())) {
                         System.out.print("TEST: " + listOfProjectsFromUser.size());
-                        pmMenu.setProjectManager(user);
                         pmMenu.setProject(project);
                         pmMenu.displayOptions();
                         break;
