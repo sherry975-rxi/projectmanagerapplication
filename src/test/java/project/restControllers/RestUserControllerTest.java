@@ -267,4 +267,21 @@ public class RestUserControllerTest {
         assertEquals(expectedHTTPResponseNOT,controller.changeUserProfile(userDTO2));
     }
 
+    @Test
+    public void testSeeUserDetails() {
+        // GIVEN a users it is registered in the company.
+        when(userRepository.findByUserID(876)).thenReturn(mike);
+        // WHEN the decides to see his information
+        controller.seeUserDetails(876);
+        // THEN the response entity must contain the user updated and status OK
+        ResponseEntity<?>expectedHTTPResponseOK = new ResponseEntity<>(mike, HttpStatus.OK);
+        assertEquals(expectedHTTPResponseOK,controller.seeUserDetails(876));
+
+        // AND WHEN searching for a provided user that is not on the database
+        controller.seeUserDetails(999);
+        // THEN the response entity must return status NOT_FOUND
+        ResponseEntity<?>expectedHTTPResponseNotFound = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        assertEquals(expectedHTTPResponseNotFound,controller.seeUserDetails(999));
+    }
+
 }
