@@ -42,11 +42,10 @@ public class RestUserController {
             userToReturn.add(selfLink);
             Link editInfoLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("details").withRel("Edit User Information");
             userToReturn.add(editInfoLink);
-            //TODO
-            //Link seeProjectsLink = linkTo(RestUserProjectsController.class).slash(userToReturn.getUserID()).slash("myProjects").withRel("See My Projects");
-            //userToReturn.add(seeProjectsLink);
-            //Link seeTasksLink = linkTo(RestUserTasksController.class).slash("myTasks").withRel("See My Tasks");
-            //userToReturn.add(seeTasksLink);
+            Link seeProjectsLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("projects").withRel("See My Projects");
+            userToReturn.add(seeProjectsLink);
+            Link seeTasksLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("tasks").withRel("See My Tasks");
+            userToReturn.add(seeTasksLink);
         }
         return result;
     }
