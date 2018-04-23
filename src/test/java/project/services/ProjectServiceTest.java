@@ -24,8 +24,9 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProjectServiceTest {
@@ -40,13 +41,13 @@ public class ProjectServiceTest {
 	private ProjCollabRepository projectCollaboratorRepository;
 
 	@Mock
-	private User mockedUser, mockedUser2, mockedUser3;
+	private User user, mockedUser, mockedUser2, mockedUser3;
 
 	@Mock
 	private Task mockedTask;
 
 	@Mock
-	private Project mockedProject1, mockedProject2, mockedProject3, mockedProject4;
+	private Project project, projectUpdates, mockedProject1, mockedProject2, mockedProject3, mockedProject4;
 
 	@Mock
 	private ProjectCollaborator projCollabMockedUser, projCollabMockedUser2, projCollabMockedUser3;
@@ -64,6 +65,8 @@ public class ProjectServiceTest {
 	private User projectManager, user1, user2, otherUser;
 
 	private ProjectCollaborator projCollab1, projCollab2, projCollab3;
+
+
 
 	@Before
 	public void setup() {
@@ -87,7 +90,7 @@ public class ProjectServiceTest {
 
 		mockedTask = new Task();
 
-		projectService = new ProjectService(projectRep, projectCollaboratorRepository);
+		projectService = new ProjectService(projectRep, projectCollaboratorRepository, userService);
 		project1 = new Project("Project1", "Descricao", projectManager);
 		project2 = new Project("Project2", "Descricao", projectManager);
 		project3 = new Project("Project3", "Descricao", projectManager);
@@ -105,7 +108,6 @@ public class ProjectServiceTest {
 	@After
 	public void tearDown() {
 
-		userService = null;
 		projectService = null;
 		project1 = null;
 		project2 = null;
@@ -404,6 +406,31 @@ public class ProjectServiceTest {
 		assertEquals(projectService.createProjectCollaborator(user1, project1, 10), projCollab1);
 	}
 
+
+	/**
+	 * Given: a project and a user that to be added to that project
+	 * When: the user is added to the project team
+	 * Then: a new projectCollaborator is created and the project team has one more projectCollaborator
+	 */
+	@Test
+	public void testCreateProjectCollaboratorWithEmail() {
+
+		//Given: a project and a user that to be added to that project
+		int projectId = 1;
+		String userEmail = "joao@gmail.com";
+
+		//When:: the user is added to the project team, using its email and the project id
+		when(projectRep.findById(projectId)).thenReturn(Optional.of(project1));
+		when(userService.getUserByEmail(user1.getEmail())).thenReturn(user1);
+
+		projectService.createProjectCollaboratorWithEmail(userEmail, projectId, 10);
+		Mockito.verify(projectCollaboratorRepository, Mockito.times(1)).save(projCollab1);
+
+		//Then: a new projectCollaborator is created and the project team has one more projectCollaborator
+		when(projectService.createProjectCollaboratorWithEmail(userEmail, projectId, 10)).thenReturn(projCollab1);
+		assertEquals(projectService.createProjectCollaboratorWithEmail(userEmail, projectId, 10), projCollab1);
+	}
+
 	// TODO
 	@Test
 	public void testGetActiveProjectTeam() {
@@ -631,19 +658,59 @@ public class ProjectServiceTest {
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore
-	public void testUpdateProject() {
+	public void testUpdateProjectData() {
+		//GIVEN a project to update
+		when(projectUpdates.getProjectManager()).thenReturn(user);
+		when(user.getEmail()).thenReturn("moked@mail.pt");
+		when(userService.getUserByEmail(anyString())).thenReturn(user);
 
-		//Given a project with only the information we want to update
-		Project project = new Project();
-		project.setProjectManager(mockedUser);
+		//WHEN updateProjectData is called with an update for project manager
+		projectService.updateProjectData(projectUpdates, project);
 
-		//When update une given project
-		when(userService.getUserByEmail(any())).thenReturn(mockedUser);
-		projectService.updateProjectData(project, project1);
+		//THEN the project is updated and saved
+		verify(project, times(1)).setProjectManager(user);
+		verify(projectRep, times(1)).save(project);
 
-		//Then the information given for update will replace the respective information in the given project.
-		assertEquals(mockedUser ,project1.getProjectManager());
+
+		//GIVEN a project to update
+		when(projectUpdates.getProjectManager()).thenReturn(null);
+		when(projectUpdates.getCalculationMethod()).thenReturn(3);
+
+		//WHEN updateProjectData is called with an update for calculation method
+		projectService.updateProjectData(projectUpdates, project);
+
+		//THEN the project is updated and saved
+		verify(project, times(1)).setCalculationMethod(3);
+		verify(projectRep, times(2)).save(project);
+
+
+		//GIVEN a project to update
+		//WHEN updateProjectData is called with no updates
+		when(projectUpdates.getCalculationMethod()).thenReturn(0);
+		//THEN the project is not update
+		verify(projectRep, times(2)).save(project);
+
+	}
+
+	/**
+	 * Given: a projectCollaborator created and saved to the database with the id 1
+	 * When: the method getProjectCollaboratorById is called
+	 * Then: the projectCollaborator found has to be equal to the same created
+	 *
+	 */
+	@Test
+	public void testGetProjectCollaboratorById() {
+
+		//Given: a Project Collaborator called collaborator is created and saved to the database
+		ProjectCollaborator collaborator = projectService.createProjectCollaborator(user1, project1, 10);
+
+		//When: the method getProjectCollaboratorById is called and the result is attributed to the variable collaborator1
+		when(projectCollaboratorRepository.findByProjectCollaboratorId((1))).thenReturn(Optional.of(collaborator));
+		ProjectCollaborator collaborator1 = projectService.getProjectCollaboratorById(1);
+		Mockito.verify(projectCollaboratorRepository, Mockito.times(1)).findByProjectCollaboratorId(1);
+
+		//Then: asserts that the Project Collaborator found is equal to the Project collaborator created
+		assertTrue(collaborator.equals(collaborator1));
 	}
 
 }

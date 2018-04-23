@@ -116,9 +116,9 @@ public class ProjectCollaboratorTest {
     @Test
     public void testSetId() {
 
-        testMoar.setProjCollabId(11L);
+        testMoar.setProjectCollaboratorId(11L);
 
-        assertEquals(11L, testMoar.getProjCollabId(), 0);
+        assertEquals(11L, testMoar.getProjectCollaboratorId(), 0);
     }
 
     @Test
@@ -137,7 +137,7 @@ public class ProjectCollaboratorTest {
     @Test
     public void testIsStatus() {
 
-        assertTrue(testMoar.isStatus());
+        assertTrue(testMoar.getStatus());
     }
 
     @Test
@@ -145,7 +145,7 @@ public class ProjectCollaboratorTest {
 
         testMoar.setStatus(false);
 
-        assertFalse(testMoar.isStatus());
+        assertFalse(testMoar.getStatus());
     }
 
     @Test

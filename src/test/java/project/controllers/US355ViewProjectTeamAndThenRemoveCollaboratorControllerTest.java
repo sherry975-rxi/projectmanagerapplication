@@ -69,13 +69,13 @@ public class US355ViewProjectTeamAndThenRemoveCollaboratorControllerTest {
 	public final void testRemoveCollaboratorFromProjectTeam() {
 		//given a project with one team member
 		assertEquals(1, projectContainer.getActiveProjectTeam(testProject).size());
-		assertTrue(teamPermanentCollaborator.isStatus());
+		assertTrue(teamPermanentCollaborator.getStatus());
 		assertNull(teamPermanentCollaborator.getFinishDate());
 
 
 		//when the team member is removed via the controllers
 		assertTrue(viewProjectTeamAndThenRemoveCollaborator.removeCollaboratorFromProjectTeam(teamPermanentMember));
-        assertFalse(teamPermanentCollaborator.isStatus());
+        assertFalse(teamPermanentCollaborator.getStatus());
 		assertNotNull(teamPermanentCollaborator.getFinishDate());
 
 		// then the active team must be empty

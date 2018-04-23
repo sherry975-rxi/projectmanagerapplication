@@ -69,19 +69,19 @@ public class RestProjectController  {
     /**
      * This method updates the params of the project (such manager and cost calculation method)
      *
-     * @param projectInfoToUpdate
+     * @param projectUpdates
      * @param projectId
      * @return
      */
     @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
-    public ResponseEntity<Project> updateProject(@RequestBody Project projectInfoToUpdate, @PathVariable int projectId){
-        Project projectToBeUpdated = projectService.getProjectById(projectId);
-        projectService.updateProjectData(projectInfoToUpdate, projectToBeUpdated);
+    public ResponseEntity<Project> updateProject(@RequestBody Project projectUpdates, @PathVariable int projectId){
+        Project project = projectService.getProjectById(projectId);
+        projectService.updateProjectData(projectUpdates, project);
 
-        Link reference = linkTo(getClass()).slash(projectToBeUpdated.getProjectId()).withRel("Project details");
-        projectToBeUpdated.add(reference);
+        Link reference = linkTo(getClass()).slash(project.getProjectId()).withRel("Project details");
+        project.add(reference);
 
-        return ResponseEntity.ok(projectToBeUpdated);
+        return ResponseEntity.ok(project);
     }
 
 
