@@ -11,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import project.model.*;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 import project.repository.TaskRepository;
@@ -21,15 +24,12 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -79,7 +79,7 @@ public class US204AssignTaskRequestRestControllerTest {
     private ProjectCollaborator projCollabThree;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() {
         //initMocks(this);
 
         // create userPM
@@ -141,7 +141,7 @@ public class US204AssignTaskRequestRestControllerTest {
     }
 
     @Test
-    public void canCreateAnAssignmentRequest() throws Exception {
+    public void canCreateAnAssignmentRequest() {
 
         //Given
         // taskOne in projectOne, with no collaborators, neither requests
@@ -159,7 +159,7 @@ public class US204AssignTaskRequestRestControllerTest {
     }
 
     @Test
-    public void canNotCreateAnAssignmentRequest() throws Exception {
+    public void canNotCreateAnAssignmentRequest() {
 
         //Given
         //Assignment Request created for userTwo
@@ -185,7 +185,7 @@ public class US204AssignTaskRequestRestControllerTest {
     }
 
     @Test
-    public void canNotCreateAnAssignmentRequestTwo() throws Exception {
+    public void canNotCreateAnAssignmentRequestTwo() {
 
         //Given
         //Add userTwo to taskOne
@@ -203,7 +203,7 @@ public class US204AssignTaskRequestRestControllerTest {
     }
 
     @Test
-    public  void retriveAllRequest() throws Exception {
+    public void retriveAllRequest() {
         //Given
         //Create taskTeam requests.
 
@@ -220,7 +220,7 @@ public class US204AssignTaskRequestRestControllerTest {
     }
 
     @Test
-    public  void retriveAllAssignementRequest() throws Exception {
+    public void retriveAllAssignementRequest() {
         //Given
         //Create taskTeam requests.
 
@@ -238,7 +238,7 @@ public class US204AssignTaskRequestRestControllerTest {
     }
 
     @Test
-    public  void retriveAllRemovalRequest() throws Exception {
+    public void retriveAllRemovalRequest() {
         //Given
         //Create taskTeam requests.
         taskOne.addProjectCollaboratorToTask(projCollabTwo);
