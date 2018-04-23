@@ -35,6 +35,7 @@ public class US204AssignTaskRequestRestController {
     private UserService userService;
     private TaskService taskService;
     private ProjectService projectService;
+    private String requestDetail = "Request details";
 
 
     @Autowired
@@ -62,7 +63,7 @@ public class US204AssignTaskRequestRestController {
         List<TaskTeamRequest> requestsList = task.getPendingTaskTeamRequests();
         for(TaskTeamRequest request : requestsList){
 
-            Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+            Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel(requestDetail);
             request.add(reference);
         }
 
@@ -91,7 +92,7 @@ public class US204AssignTaskRequestRestController {
             List<TaskTeamRequest> assignRequestList = task.getPendingTaskAssignmentRequests();
             for(TaskTeamRequest request : assignRequestList){
 
-                Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+                Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel(requestDetail);
                 request.add(reference);
             }
 
@@ -103,14 +104,14 @@ public class US204AssignTaskRequestRestController {
             List<TaskTeamRequest> removalRequestList = task.getPendingTaskRemovalRequests();
             for(TaskTeamRequest request : removalRequestList){
 
-                Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+                Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel(requestDetail);
                 request.add(reference);
             }
 
             return new ResponseEntity<>(removalRequestList, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
     /**
@@ -162,14 +163,14 @@ public class US204AssignTaskRequestRestController {
 
             User user = userService.getUserByEmail(userDTOEmail);
 
-            Optional<User> userOptional = Optional.of(user);
+            ProjectCollaborator projCollab = projectService.findActiveProjectCollaborator(user, project);
 
-            if (userOptional.isPresent() && task.getCurrentState()!=StateEnum.CANCELLED) {
+            if (task.getCurrentState()==StateEnum.CANCELLED) {
 
+                // user, project and task exist but task is cancelled in this project
+                return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 
-                ProjectCollaborator projCollab = projectService.findActiveProjectCollaborator(user, project);
-
-                if (projCollab != null && !task.isProjectCollaboratorActiveInTaskTeam(projCollab) && !task.isAssignmentRequestAlreadyCreated(projCollab)) {
+            } else if (projCollab != null && !task.isProjectCollaboratorActiveInTaskTeam(projCollab) && !task.isAssignmentRequestAlreadyCreated(projCollab)) {
 
                     task.createTaskAssignmentRequest(projCollab);
                     taskService.saveTask(task);
@@ -177,10 +178,11 @@ public class US204AssignTaskRequestRestController {
                     for (TaskTeamRequest request : task.getPendingTaskTeamRequests()) {
                         if (request.getTask().equals(task) && request.getProjCollab().equals(projCollab) && request.isAssignmentRequest()) {
 
-                            Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+                            Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel(requestDetail);
 
                             String requestType = "assignment";
-                            Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel("List of Assignment Requests");
+                            String assignList = "List of Removal Requests";
+                            Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(assignList);
 
                             request.add(reference);
                             request.add(referenceTwo);
@@ -193,16 +195,13 @@ public class US204AssignTaskRequestRestController {
                             headers.setLocation(location);
 
                             return new ResponseEntity<>(request, headers, HttpStatus.CREATED);
-                            //return ResponseEntity.created(locationZ).body(request);
                         }
                     }
 
                 }
-                // user, project and task exist but task is cancelled in this project
-                return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-            }
 
-            // either user, project or task don't exist
+
+            // user is not in this project, or is active in task, or request already exists
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
@@ -227,14 +226,14 @@ public class US204AssignTaskRequestRestController {
 
         User user = userService.getUserByEmail(userDTOEmail);
 
-        Optional<User> userOptional = Optional.of(user);
+        ProjectCollaborator projCollab = projectService.findActiveProjectCollaborator(user, project);
 
-        if (userOptional.isPresent() && task.getCurrentState()!=StateEnum.CANCELLED) {
+        if (task.getCurrentState()==StateEnum.CANCELLED) {
 
+            // user, project and task exist but task is cancelled in this project
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 
-            ProjectCollaborator projCollab = projectService.findActiveProjectCollaborator(user, project);
-
-            if (projCollab != null && task.isProjectCollaboratorActiveInTaskTeam(projCollab) && !task.isRemovalRequestAlreadyCreated(projCollab)) {
+        } else if (projCollab != null && task.isProjectCollaboratorActiveInTaskTeam(projCollab) && !task.isRemovalRequestAlreadyCreated(projCollab)) {
 
                 task.createTaskRemovalRequest(projCollab);
                 taskService.saveTask(task);
@@ -242,10 +241,11 @@ public class US204AssignTaskRequestRestController {
                 for (TaskTeamRequest request : task.getPendingTaskTeamRequests()) {
                     if (request.getTask().equals(task) && request.getProjCollab().equals(projCollab) && request.isRemovalRequest()) {
 
-                        Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+                        Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel(requestDetail);
 
                         String requestType = "removal";
-                        Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel("List of Removal Requests");
+                        String removalList = "List of Removal Requests";
+                        Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(removalList);
 
                         request.add(reference);
                         request.add(referenceTwo);
@@ -258,18 +258,18 @@ public class US204AssignTaskRequestRestController {
                         headers.setLocation(location);
 
                         return new ResponseEntity<>(request, headers, HttpStatus.CREATED);
-                        //return ResponseEntity.created(locationZ).body(request);
                     }
                 }
 
             }
-            // user, project and task exist but task is cancelled in this project
-            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        // user is not in this project, or is not active in task, or request already exists
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
         }
 
-        // either user, project or task don't exist
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
 
     }
+
+
 
