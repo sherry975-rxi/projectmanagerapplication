@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import project.model.Report;
 import project.model.Task;
 import project.model.TaskCollaborator;
+import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -96,6 +97,38 @@ public class RestReportController {
         } else {
             responseEntity = ResponseEntity.ok().body(task.getReports());
         }
+
+        return responseEntity;
+    }
+
+    /**
+     * This method returns all Reports from a Task
+     *
+     * @param taskid Identifier (String) of Task to retrieve Reports from
+     * @return All Reports from Task
+     */
+    @RequestMapping(value = "users/{userid}", method = RequestMethod.GET)
+    public ResponseEntity<List<Report>> getTaskReportsFromUser(@PathVariable int userid, @PathVariable String taskid, @PathVariable int projid) {
+
+        projectService.getProjectById(projid);
+        User userDto = userService.getUserByID(userid);
+        ResponseEntity<List<Report>> responseEntity;
+
+        Task task = taskService.getTaskByTaskID(taskid);
+        List<Report> reports = task.getReportsFromGivenUser(userDto.getEmail());
+
+        //In case task doesn't have reports from a given user
+        if (task.getReportsFromGivenUser(userDto.getEmail())== null) {
+            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            responseEntity = ResponseEntity.ok().body(task.getReportsFromGivenUser(userDto.getEmail()));
+
+            for (Report reportCreated : reports) {
+                Link reference = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").slash("users").slash(userid).slash("update").withRel("Update Report from User");
+                reportCreated.add(reference);
+                }
+            return ResponseEntity.ok().body(reports);
+            }
 
         return responseEntity;
     }
