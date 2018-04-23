@@ -89,5 +89,27 @@ public class RestProjectTasksControllerTest {
         assertEquals(HttpStatus.ACCEPTED.value(), response.getStatus());
 
     }
-    
+
+    /**
+     * GIVEN: a certain task in a state that does not allow its deletion
+     * WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
+     * THEN: we receive a valid message with 409 Conflict
+     * @throws Exception
+     */
+    @Test
+    public void shouldNotDeleteTask() throws Exception {
+
+        //GIVEN: a certain task
+        String taskId = "T0.2";
+        when(taskService.getTaskByTaskID(taskId)).thenReturn(task2);
+
+        //WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
+        when(taskService.deleteTask(task)).thenReturn(false);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.delete("/projects/1/tasks/" + taskId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN: we receive a valid message with 202 Accepted and the task list has to display one less task
+        assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
+
+    }
+
 }
