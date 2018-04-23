@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.model.EffortUnit;
-import project.model.Profile;
-import project.model.Project;
-import project.model.User;
+import project.model.*;
 import project.services.ProjectService;
 import project.services.UserService;
 
@@ -204,9 +201,13 @@ public class US301CreateProjectControllerTest {
 		 allowedMethods.add(1);
 		 allowedMethods.add(2);
 
-		 newProject.setAvailableCalculationMethods(allowedMethods);
+		 newProject.createAvailableCalculationMethodsString(allowedMethods);
 
-		 assertEquals(allowedMethods, newProject.getAvailableCalculationMethods());
+		List<CalculationMethod> allowedMethodNames = new ArrayList<>();
+		allowedMethodNames.add(CalculationMethod.CI);
+		allowedMethodNames.add(CalculationMethod.CF);
+
+		 assertEquals(allowedMethodNames, newProject.listAvaliableCalculationMethods());
 
 	}
 
@@ -227,9 +228,9 @@ public class US301CreateProjectControllerTest {
 
 		us301CreateProjectController.selectCalculationMethods(allowedMethods);
 
-		assertEquals(Project.LAST_COLLABORATOR, newProject.getCalculationMethod());
+		assertEquals(CalculationMethod.CF, newProject.getCalculationMethod());
 
-		assertFalse(newProject.isCalculationMethodAllowed(Project.FIRST_COLLABORATOR));
+		assertFalse(newProject.isCalculationMethodAllowed(CalculationMethod.CI.getCode()));
 
 	}
 
