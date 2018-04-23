@@ -343,7 +343,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // When
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "assignment", projectId);
+        ResponseEntity<?> result = controller.getAllFilteredRequests("assignment", taskIdOne, projectId);
 
         // Then
 
@@ -385,7 +385,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // When
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests(taskIdOne, "removal", projectId);
+        ResponseEntity<?> result = controller.getAllFilteredRequests("removal", taskIdOne,  projectId);
 
         // Then
 
