@@ -58,7 +58,7 @@ public class RestUserController {
         List<User> foundUsers = userService.searchUsersByPartsOfEmail(emailToSearch);
 
         for(User other : foundUsers) {
-            Link selfRef = linkTo(RestUserController.class).slash(other.getUserID()).withSelfRel();
+            Link selfRef = linkTo(RestUserController.class).slash("email").slash(other.getEmail()).withSelfRel();
             other.add(selfRef);
         }
 
@@ -108,6 +108,5 @@ public class RestUserController {
         return result;
 
     }
-
 
 }
