@@ -11,6 +11,8 @@ import project.model.TaskCollaborator;
 import project.services.TaskService;
 import project.services.UserService;
 
+import java.util.List;
+
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
@@ -35,7 +37,7 @@ public class RestReportController {
      * @return The Report that was created
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Report> createReport(@RequestBody Report reportDto, @PathVariable String taskid, @PathVariable int projid ) {
+    public ResponseEntity<Report> createReport(@RequestBody Report reportDto, @PathVariable String taskid, @PathVariable int projid) {
 
 
         ResponseEntity<Report> responseEntity;
@@ -43,7 +45,6 @@ public class RestReportController {
         String email = reportDto.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail();
         TaskCollaborator taskCollaborator = task.getTaskCollaboratorByEmail(email);
         int userId = userService.getUserByEmail(email).getUserID();
-
 
 
         //if taskCollaborator doesn't exist
@@ -63,6 +64,25 @@ public class RestReportController {
         return responseEntity;
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<Report>> getTaskReports(@PathVariable String taskid) {
+
+        ResponseEntity<List<Report>> responseEntity;
+
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        //In case task doesn't have reports created,
+        if (task.getReports() == null) {
+            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        else {
+            responseEntity = ResponseEntity.ok().body(task.getReports());
+            return responseEntity;
+        }
+
+        return responseEntity;
+    }
 }
 
 
