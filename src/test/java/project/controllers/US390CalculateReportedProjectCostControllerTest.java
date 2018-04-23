@@ -293,27 +293,27 @@ public class US390CalculateReportedProjectCostControllerTest {
         assertEquals(50, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
         // since the first calculation method (first collaborator instance) is the default one
-        controllerCost.selectReportCostCalculation(project, Project.FIRST_COLLABORATOR);
+        controllerCost.selectReportCostCalculation(project, CalculationMethod.CI.getCode());
 
         // when chose, the cost must remain unchanged
         assertEquals(50, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
 
         // when cost is set to last collaborator instance
-        controllerCost.selectReportCostCalculation(project, Project.LAST_COLLABORATOR);
+        controllerCost.selectReportCostCalculation(project, CalculationMethod.CF.getCode());
 
         // then the cost must be Daniel's last cost (100) x 5
         assertEquals(500, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
 
         // when cost is set  to first/last average collaborator cost
-        controllerCost.selectReportCostCalculation(project, Project.FIRST_LAST_COLLABORATOR);
+        controllerCost.selectReportCostCalculation(project, CalculationMethod.CIFM.getCode());
 
         // then the cost must be the average of Daniel's fist and last cost, times hours: ((100+10) /2 ) x 5
         assertEquals(275, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
         // when cost is set is to 4, then the result must be the average of all costs from the user x hours
-        controllerCost.selectReportCostCalculation(project, Project.AVERAGE_COLLABORATOR);
+        controllerCost.selectReportCostCalculation(project, CalculationMethod.CM.getCode());
 
         // then the total cost must be 225: ((10+25+100)/3)*5
         double average = 225;

@@ -73,7 +73,7 @@ public class US203FindPendingTasksTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         initMocks(this);
 
