@@ -660,6 +660,8 @@ public class ProjectServiceTest {
 		when(projectUpdates.getProjectManager()).thenReturn(user);
 		when(user.getEmail()).thenReturn("moked@mail.pt");
 		when(userService.getUserByEmail(anyString())).thenReturn(user);
+        when(project.getCalculationMethod()).thenReturn(CalculationMethod.CI);
+        when(project.isCalculationMethodAllowed(CalculationMethod.CI.getCode())).thenReturn(true);
 
 		//WHEN updateProjectData is called with an update for project manager
 		projectService.updateProjectData(projectUpdates, project);
@@ -673,6 +675,7 @@ public class ProjectServiceTest {
 		when(projectUpdates.getProjectManager()).thenReturn(null);
 		when(projectUpdates.getAvailableCalculationMethods()).thenReturn("CF,CM");
 		when(projectUpdates.getCalculationMethod()).thenReturn(CalculationMethod.CM);
+		when(project.getCalculationMethod()).thenReturn(CalculationMethod.CM);
 		when(project.isCalculationMethodAllowed(CalculationMethod.CM.getCode())).thenReturn(true);
 
 		//WHEN updateProjectData is called with an update for calculation method
