@@ -361,6 +361,8 @@ public class ProjectService {
 
 	/**
 	 *This method upDate project from a given info.
+     *
+     * If the project's calculation cost is set to
 	 *
 	 * @param projectUpdates
 	 */
@@ -381,6 +383,12 @@ public class ProjectService {
 			project.setCalculationMethod(projectUpdates.getCalculationMethod());
 			updateProject(project);
 		}
+
+        if(!project.isCalculationMethodAllowed(project.getCalculationMethod().getCode())) {
+		    project.setCalculationMethod(project.listAvaliableCalculationMethods().get(0));
+		    updateProject(project);
+        }
+
 	}
 
 	/**
