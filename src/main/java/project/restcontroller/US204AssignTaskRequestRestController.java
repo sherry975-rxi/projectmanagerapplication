@@ -100,7 +100,7 @@ public class US204AssignTaskRequestRestController {
 
         } else if ("removal".equals(reqType)) {
 
-            List<TaskTeamRequest> removalRequestList = task.getPendingTaskAssignmentRequests();
+            List<TaskTeamRequest> removalRequestList = task.getPendingTaskRemovalRequests();
             for(TaskTeamRequest request : removalRequestList){
 
                 Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
@@ -205,6 +205,71 @@ public class US204AssignTaskRequestRestController {
             // either user, project or task don't exist
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+
+
+    /**
+     * This method allows the collaborator to create a request of removal from a specific task.
+     *
+     * @param taskId    Task id associated to the task to be made the request
+     * @param projectId Project id associated to the project where the task belongs
+     * @param userDTO   User related to the collaborator that wants to make the request.
+     * @return ResponseEntity
+     */
+    @RequestMapping(value = "/requests/removalRequest", method = RequestMethod.POST)
+    public ResponseEntity<TaskTeamRequest> createRemovalRequest (@PathVariable String taskId,
+                                                                    @PathVariable int projectId, @RequestBody User userDTO){
+
+        Project project = projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        String userDTOEmail = userDTO.getEmail();
+
+        User user = userService.getUserByEmail(userDTOEmail);
+
+        Optional<User> userOptional = Optional.of(user);
+
+        if (userOptional.isPresent() && task.getCurrentState()!=StateEnum.CANCELLED) {
+
+
+            ProjectCollaborator projCollab = projectService.findActiveProjectCollaborator(user, project);
+
+            if (projCollab != null && task.isProjectCollaboratorActiveInTaskTeam(projCollab) && !task.isRemovalRequestAlreadyCreated(projCollab)) {
+
+                task.createTaskRemovalRequest(projCollab);
+                taskService.saveTask(task);
+
+                for (TaskTeamRequest request : task.getPendingTaskTeamRequests()) {
+                    if (request.getTask().equals(task) && request.getProjCollab().equals(projCollab) && request.isRemovalRequest()) {
+
+                        Link reference = linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).withRel("Request details");
+
+                        String requestType = "removal";
+                        Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel("List of Removal Requests");
+
+                        request.add(reference);
+                        request.add(referenceTwo);
+
+                        UriComponents ucb =linkTo(methodOn(getClass()).getRequestDetails(request.getDbId(), taskId, projectId)).toUriComponentsBuilder().build();
+
+                        URI location = ucb.toUri();
+
+                        HttpHeaders headers = new HttpHeaders();
+                        headers.setLocation(location);
+
+                        return new ResponseEntity<>(request, headers, HttpStatus.CREATED);
+                        //return ResponseEntity.created(locationZ).body(request);
+                    }
+                }
+
+            }
+            // user, project and task exist but task is cancelled in this project
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+
+        // either user, project or task don't exist
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
 
     }
 
