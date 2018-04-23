@@ -32,6 +32,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestProjCollabControllerTest {
@@ -163,4 +164,34 @@ public class RestProjCollabControllerTest {
         //THEN we receive status OK and the project info updated
         assertEquals(HttpStatus.CREATED.value(), response.getStatus());
     }
+
+
+    /**
+     * GIVEN a project ID and a projectCollabId
+     * WHEN we perform a put request to url /projects/<projectId>/team/<projectCollabId>
+     * THEN we we receive status OK and the Project Collaborator is deactivated
+     * @throws Exception
+     */
+    @Test
+    public void shouldDeactivateProjectCollaborator() throws Exception{
+
+        //GIVEN a project ID and a projectCollaboratorID
+        int projectId = 1;
+
+        //WHEN we perform a put request to url /projects/<projectId>/team
+        when(projectServiceMock.getProjectById(projectId)).thenReturn(projectMock);
+        when(userServiceMock.getUserByEmail(uDaniel.getEmail())).thenReturn(uDaniel);
+        when(projectServiceMock.getProjectCollaboratorById(pcDaniel.getProjectCollaboratorId())).thenReturn(pcDaniel);
+        when(projectServiceMock.createProjectCollaboratorWithEmail(any(String.class),any(Integer.class), any(Double.class))).thenReturn(pcDaniel);
+
+
+        MockHttpServletResponse response = mvc.perform(put("/projects/" + projectId + "/team"+"/"+pcDaniel.getProjectCollaboratorId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonProjectCollaborator.write(pcDaniel).getJson())).andReturn().getResponse();
+
+
+        //THEN we receive status OK and the project info updated
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
 }
