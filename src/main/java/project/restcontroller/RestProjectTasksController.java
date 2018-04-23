@@ -34,7 +34,7 @@ public class RestProjectTasksController {
         boolean deleted = taskService.deleteTask(taskId);
         ResponseEntity<Boolean> response = new ResponseEntity<>(deleted, HttpStatus.ACCEPTED);
 
-        if(deleted == false) {
+        if(!deleted) {
 
             response = new ResponseEntity<>(deleted, HttpStatus.CONFLICT);
 
