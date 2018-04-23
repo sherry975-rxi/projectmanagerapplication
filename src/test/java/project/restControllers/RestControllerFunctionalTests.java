@@ -221,7 +221,7 @@ public class RestControllerFunctionalTests {
         userService.updateUser(mike);
 
         //When
-        mockMvc.perform(get("/users/COLLABORATOR")).andExpect(jsonPath("$[0].name", is("Mike")));
+        mockMvc.perform(get("/users/profiles/COLLABORATOR")).andExpect(jsonPath("$[0].name", is("Mike")));
 
         //Tests if the controller finds the directors correctly
         //Given
@@ -229,14 +229,14 @@ public class RestControllerFunctionalTests {
         userService.updateUser(mike);
 
         //When
-        mockMvc.perform(get("/users/DIRECTOR")).andExpect(jsonPath("$[0].name", is("Mike")));
+        mockMvc.perform(get("/users/profiles/DIRECTOR")).andExpect(jsonPath("$[0].name", is("Mike")));
 
         //Tests if the controller finds the unassigned users correctly
         //Given
         userService.updateUser(owner);
 
         //When
-        mockMvc.perform(get("/users/UNASSIGNED")).andExpect(jsonPath("$[0].name", is("Owner boi")));
+        mockMvc.perform(get("/users/profiles/UNASSIGNED")).andExpect(jsonPath("$[0].name", is("Owner boi")));
 
 
     }
