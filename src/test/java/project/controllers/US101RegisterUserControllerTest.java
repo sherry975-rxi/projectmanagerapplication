@@ -33,14 +33,15 @@ public class US101RegisterUserControllerTest {
 	public void setUp() {
 
 		// create user
-		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro", "920000000", "Testy Street",
-				"2401-343", "Testburg", "Testo", "Testistan");
+		user1 = userService.createUser("Daniel", "daniel@gmail.com", "001", "Porteiro",
+				"920000000", "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
 
-		UserDTO newUserDTO = testUserRegistrationController.createUserDTO("João", "joão.gmail.com", "034", "Testes", "919876787", "Password");
+		UserDTO newUserDTO = testUserRegistrationController.createUserDTO("João", "joão.gmail.com",
+				"034", "Testes", "919876787", "Password","1", "a");
 
 		newUserDTO = testUserRegistrationController.setAddress(newUserDTO, "Street",
 				"2401-343", "Testburg", "Testo", "Testistan");
-		newUserDTO = testUserRegistrationController.setQuestionAnswer(newUserDTO, "1", "a");
+
 		testUserRegistrationController.addNewUserToDbFromDTO(newUserDTO);
 	}
 
@@ -66,23 +67,26 @@ public class US101RegisterUserControllerTest {
 		assertEquals(testUserRegistrationController.isUserInUserRepository("daniel@gmail.com"), true);
 
 		// uses the controllers to both create and add the user
-		UserDTO anotherDTO = testUserRegistrationController.createUserDTO("Fabio", "fabio@gmail.com", "003", "worker", "919997775", "Password");
-		anotherDTO = testUserRegistrationController.setAddress(anotherDTO, "Tasty streets", "4450-150", "Hellcity", "HellsBurg", "HellMam");
-		anotherDTO = testUserRegistrationController.setQuestionAnswer(anotherDTO, "1", "a");
+		UserDTO anotherDTO = testUserRegistrationController.createUserDTO("Fabio", "fabio@gmail.com",
+				"003", "worker", "919997775", "Password", "1", "a");
+		anotherDTO = testUserRegistrationController.setAddress(anotherDTO, "Tasty streets", "4450-150",
+				"Hellcity", "HellsBurg", "HellMam");
 		testUserRegistrationController.addNewUserToDbFromDTO(anotherDTO);
 		assertEquals(3, userService.getAllUsersFromUserContainer().size());
 		assertTrue(userService.getAllUsersFromUserContainer().get(0).equals(user1));
 
 		// verifies if the createUserDTO method returns null when user email already exists
-		UserDTO dtoingAgain = testUserRegistrationController.createUserDTO("Daniel", "danielq@gmail.com", "001", "Porteiro", "920000000",
-				"Password");
-		dtoingAgain = testUserRegistrationController.setAddress(dtoingAgain, "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		dtoingAgain = testUserRegistrationController.setQuestionAnswer(dtoingAgain, "1", "a");
+		UserDTO dtoingAgain = testUserRegistrationController.createUserDTO("Daniel", "danielq@gmail.com",
+				"001", "Porteiro", "920000000",
+				"Password", "1", "a");
+		dtoingAgain = testUserRegistrationController.setAddress(dtoingAgain, "Testy Street", "2401-343",
+				"Testburg", "Testo", "Testistan");
 		testUserRegistrationController.addNewUserToDbFromDTO(dtoingAgain);
 
-		UserDTO sweetDTO = testUserRegistrationController.createUserDTO("Daniel", "danicom", "001", "Porteiro", "920000000", "Password");
-		sweetDTO = testUserRegistrationController.setAddress(sweetDTO, "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		sweetDTO = testUserRegistrationController.setQuestionAnswer(sweetDTO, "1", "a");
+		UserDTO sweetDTO = testUserRegistrationController.createUserDTO("Daniel", "danicom", "001",
+				"Porteiro", "920000000", "Password", "1", "a");
+		sweetDTO = testUserRegistrationController.setAddress(sweetDTO, "Testy Street", "2401-343",
+				"Testburg", "Testo", "Testistan");
 		testUserRegistrationController.addNewUserToDbFromDTO(sweetDTO);
 		user2 = userService.getAllUsersFromUserContainer().get(0);
 		user3 = userService.getAllUsersFromUserContainer().get(1);
@@ -102,18 +106,20 @@ public class US101RegisterUserControllerTest {
 	@Test
 	public void wasUserAddedTest() {
 
-		UserDTO keepDTOing = testUserRegistrationController.createUserDTO("Daniel", "danicom", "001", "Porteiro", "920000000", "Password");
-		keepDTOing = testUserRegistrationController.setAddress(keepDTOing, "Testy Street", "2401-343", "Testburg", "Testo", "Testistan");
-		keepDTOing = testUserRegistrationController.setQuestionAnswer(keepDTOing, "1", "a");
+		UserDTO keepDTOing = testUserRegistrationController.createUserDTO("Daniel", "danicom", "001",
+				"Porteiro", "920000000", "Password", "1", "a");
+		keepDTOing = testUserRegistrationController.setAddress(keepDTOing, "Testy Street", "2401-343",
+				"Testburg", "Testo", "Testistan");
 		testUserRegistrationController.addNewUserToDbFromDTO(keepDTOing);
 
 		assertTrue(testUserRegistrationController.wasUserAdded(true));
 
 		// user 3 was created, added and email was set as invalid
 
-		UserDTO sickOfTheseDTOs = testUserRegistrationController.createUserDTO("João", "joão@gmail.com", "034", "Testes", "919876787", "Password");
-		sickOfTheseDTOs = testUserRegistrationController.setAddress(sickOfTheseDTOs, "Street", "2401-343", "Testburg", "Testo", "Testistan");
-		sickOfTheseDTOs = testUserRegistrationController.setQuestionAnswer(sickOfTheseDTOs, "1", "a");
+		UserDTO sickOfTheseDTOs = testUserRegistrationController.createUserDTO("João", "joão@gmail.com",
+				"034", "Testes", "919876787", "Password", "1", "a");
+		sickOfTheseDTOs = testUserRegistrationController.setAddress(sickOfTheseDTOs, "Street", "2401-343",
+				"Testburg", "Testo", "Testistan");
 		testUserRegistrationController.addNewUserToDbFromDTO(sickOfTheseDTOs);
 
 		assertTrue(testUserRegistrationController.wasUserAdded(true));

@@ -57,14 +57,19 @@ public class UserDTO {
 	 * @param function function of the User
 	 * @param phone phone of the User
 	 * @param password password of the User
+     * @param answer answer of the User
+     * @param question question of the User
 	 */
-    public UserDTO(String name, String email, String idNumber, String function, String phone, String password) {
+    public UserDTO(String name, String email, String idNumber, String function, String phone, String password,
+                   String question, String answer) {
 		this.name = name;
 		this.email = email;
 		this.idNumber = idNumber;
 		this.function = function;
 		this.phone = phone;
 		this.password = password;
+		this.answer = answer;
+		this.question = question;
 	}
 
 	/**
@@ -219,12 +224,4 @@ public class UserDTO {
 		return answer;
 	}
 
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
 }
