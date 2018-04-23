@@ -2,6 +2,7 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import project.model.CalculationMethod;
 import project.model.EffortUnit;
 import project.model.Project;
 import project.model.User;
@@ -134,8 +135,8 @@ public class US301CreateProjectController {
 	 * to make available for the project
 	 */
 	public void selectCalculationMethods(List<Integer> allowedMethods) {
-	    createdProject.setAvailableCalculationMethods(allowedMethods);
-	    createdProject.setCalculationMethod(allowedMethods.get(0));
+	    createdProject.createAvailableCalculationMethodsString(allowedMethods);
+	    createdProject.setCalculationMethod(CalculationMethod.toEnum(allowedMethods.get(0)));
 	    projectService.updateProject(createdProject);
 
     }

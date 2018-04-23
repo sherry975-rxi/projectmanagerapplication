@@ -92,6 +92,12 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
                 .valueOf(eElementProject.getElementsByTagName("unidade_esforco").item(0).getTextContent());
         project.setEffortUnit(effortUnit);
 
+        CalculationMethod calculationMethod = CalculationMethod.valueOf(eElementProject.getElementsByTagName("calculo_custo").item(0).getTextContent());
+
+		project.setCalculationMethod(calculationMethod);
+
+		project.createAvailableCalculationMethodsString(new ArrayList<>(Arrays.asList(1,2,3)));
+
         // Converts string to integer
         Double budget = Double
                 .valueOf(eElementProject.getElementsByTagName("orcamento_projeto").item(0).getTextContent());
@@ -109,9 +115,6 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
         User user = userService.getUserByEmail(
                 eElementProject.getElementsByTagName("gestor_projeto").item(0).getTextContent());
         project.setProjectManager(user);
-
-        project.setCalculationMethod(Project.FIRST_COLLABORATOR);
-        project.setAvailableCalculationMethods(new ArrayList<>(Arrays.asList(1,2,3)));
 
         projectService.updateProject(project);
 

@@ -1,4 +1,5 @@
 package project.restControllers;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,13 +15,13 @@ import project.model.User;
 import project.repository.UserRepository;
 import project.restcontroller.RestUserController;
 import project.services.UserService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -48,7 +49,7 @@ public class RestUserControllerTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         initMocks(this);
 
         // creates three users and adds a self ref link for each
@@ -184,7 +185,7 @@ public class RestUserControllerTest {
     }
 
     @Test
-    public void searchUsersByProfileWhenExistsTest() throws Exception {
+    public void searchUsersByProfileWhenExistsTest() {
 
 
         //GIVEN 1 user in the the mock database with profile set as collaborator
@@ -265,6 +266,23 @@ public class RestUserControllerTest {
         // THEN the response entity must return status NOT_FOUND
         ResponseEntity<?>expectedHTTPResponseNOT = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         assertEquals(expectedHTTPResponseNOT,controller.changeUserProfile(userDTO2));
+    }
+
+    @Test
+    public void testSeeUserDetails() {
+        // GIVEN a users it is registered in the company.
+        when(userRepository.findByUserID(876)).thenReturn(mike);
+        // WHEN the decides to see his information
+        controller.seeUserDetails(876);
+        // THEN the response entity must contain the user updated and status OK
+        ResponseEntity<?>expectedHTTPResponseOK = new ResponseEntity<>(mike, HttpStatus.OK);
+        assertEquals(expectedHTTPResponseOK,controller.seeUserDetails(876));
+
+        // AND WHEN searching for a provided user that is not on the database
+        controller.seeUserDetails(999);
+        // THEN the response entity must return status NOT_FOUND
+        ResponseEntity<?>expectedHTTPResponseNotFound = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        assertEquals(expectedHTTPResponseNotFound,controller.seeUserDetails(999));
     }
 
 }

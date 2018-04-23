@@ -12,6 +12,7 @@ import project.services.UserService;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("users")
@@ -25,11 +26,37 @@ public class RestUserController {
     }
 
     /**
+     * This method returns the complete user details when given the
+     * @param userId
+     * it also generates the links to change the details or go to the users tasks and projects
+     * @return
+     */
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<?> seeUserDetails(@PathVariable int userId){
+        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        User userToReturn;
+        userToReturn = userService.getUserByID(userId);
+        if(userToReturn != null){
+            result = new ResponseEntity<>(userToReturn , HttpStatus.OK);
+            Link selfLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).withSelfRel();
+            userToReturn.add(selfLink);
+            Link editInfoLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("details").withRel("Edit User Information");
+            userToReturn.add(editInfoLink);
+            Link seeProjectsLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("projects").withRel("See My Projects");
+            userToReturn.add(seeProjectsLink);
+            Link seeTasksLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("tasks").withRel("See My Tasks");
+            userToReturn.add(seeTasksLink);
+        }
+        return result;
+    }
+
+
+    /**
      * Refers to US130: As an administrator, I want to list all users in the system.
      * This method will return a list of all the users registered in the system.
      */
 
-    @RequestMapping(value = "/allUsers")
+    @RequestMapping(value = "/allUsers", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(){
 
         List<User> allUsers = userService.getAllUsersFromUserContainer();
@@ -71,7 +98,7 @@ public class RestUserController {
      * @param profileNameToSearch
      * @return ResponseEntity
      */
-    @RequestMapping(value = "/{profileNameToSearch}", method = RequestMethod.GET)
+    @RequestMapping(value = "/profiles/{profileNameToSearch}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> searchUsersByProfile(@PathVariable String profileNameToSearch) {
 
         List<User> foundUsersProfile = userService.searchUsersByProfileName(profileNameToSearch.toUpperCase());
@@ -93,7 +120,8 @@ public class RestUserController {
      *
      */
     @RequestMapping(value = "/profiles" , method = RequestMethod.PATCH)
-    public ResponseEntity<User> changeUserProfile(@RequestBody User updatedProfile) {
+    public ResponseEntity<User> changeUserProfile (@RequestBody User updatedProfile) {
+
         ResponseEntity<User> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         Profile profileChange = updatedProfile.getUserProfile();
@@ -103,6 +131,8 @@ public class RestUserController {
         if(userToChange != null){
             userToChange.setUserProfile(profileChange);
             userService.updateUser(userToChange);
+            Link selfLink = linkTo(RestUserController.class).slash(userToChange.getUserID()).withRel("See User Info");
+            userToChange.add(selfLink);
             result = new ResponseEntity<>(userToChange ,HttpStatus.OK);
         }
         return result;
