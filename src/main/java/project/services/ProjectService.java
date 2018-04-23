@@ -19,10 +19,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProjectService {
 
-	@Autowired
-	private ProjectsRepository projectsRepository;
 
-	@Autowired
+	private ProjectsRepository projectsRepository;
+	private UserService userService;
 	private ProjCollabRepository projectCollaboratorRepository;
 
 	/**
@@ -35,9 +34,11 @@ public class ProjectService {
 	/**
 	 * Constructor created for JPA purposes. It is not to be used in model context.
 	 */
-	public ProjectService(ProjectsRepository projectsRepository, ProjCollabRepository projectCollabRepository) {
+	@Autowired
+	public ProjectService(ProjectsRepository projectsRepository, ProjCollabRepository projectCollabRepository, UserService userService) {
 		this.projectsRepository = projectsRepository;
 		this.projectCollaboratorRepository = projectCollabRepository;
+		this.userService = userService;
 	}
 
 	/**
@@ -333,13 +334,11 @@ public class ProjectService {
                 .collect(Collectors.toList()));
 
 		for (ProjectCollaborator toSearch : projectTeam) {
-			if(toSearch.isStatus()) {
+			if(toSearch.getStatus()) {
 				return toSearch;
 			}
 		}
-
 		return null;
-
 	}
 
 
@@ -358,5 +357,60 @@ public class ProjectService {
 
 	public void setProjectCollaboratorRepository(ProjCollabRepository projectCollaboratorRepository) {
 		this.projectCollaboratorRepository = projectCollaboratorRepository;
+	}
+
+	/**
+	 *This method upDate project from a given info.
+	 *
+	 * @param projectUpdates
+	 */
+	public void updateProjectData(Project projectUpdates, Project project){
+
+		if((projectUpdates.getProjectManager() != null)) {
+			User user = userService.getUserByEmail(projectUpdates.getProjectManager().getEmail());
+			project.setProjectManager(user);
+			updateProject(project);
+		}
+
+		if(projectUpdates.getCalculationMethod() < 4 && projectUpdates.getCalculationMethod() > 0){
+			project.setCalculationMethod(projectUpdates.getCalculationMethod());
+			updateProject(project);
+		}
+	}
+
+	/**
+	 * Gets a project Collaborator by its id
+	 *
+	 * @param id Id to search
+	 *
+	 * @return ProjectCollaborator if found. Throws ObjectNotFoundException if not found
+	 */
+	public ProjectCollaborator getProjectCollaboratorById(long id) {
+
+		Optional<ProjectCollaborator> collaborator = this.projectCollaboratorRepository.findByProjectCollaboratorId(id);
+		return collaborator.orElseThrow(() -> new ObjectNotFoundException("Project Collaborator not found! Id: " + id));
+	}
+
+	/**
+	 * Creates an instance of ProjectCollaborator set the id of the project and
+	 * saves projectCollaborator in the database
+	 *
+	 * @param email
+	 *            user to associate with projectCollaborator
+	 * @param projectId
+	 *            to set project id in projectCollaborator
+	 * @param costPerEffort
+	 *
+	 * @return the projectCollaborator created
+	 */
+	public ProjectCollaborator createProjectCollaboratorWithEmail(String email, int projectId, double costPerEffort) {
+
+		User user = this.userService.getUserByEmail(email);
+		Project project = this.getProjectById(projectId);
+		ProjectCollaborator newProjectCollaborator = new ProjectCollaborator(user, costPerEffort);
+		newProjectCollaborator.setProject(project);
+		this.projectCollaboratorRepository.save(newProjectCollaborator);
+		return newProjectCollaborator;
+
 	}
 }

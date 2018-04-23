@@ -20,8 +20,8 @@ public class CostCalculationTests {
     Task task;
     Project project;
     ProjectCollaborator projectCollaborator, projectCollaborator2, projectCollaborator3;
-    TaskCollaborator taskCollaborator, taskCollaborator2, taskCollaborator3;
-    Report report, report2;
+    TaskCollaborator taskCollaborator;
+    Report report;
     CostCalculationInterface calculationFirst, calculationLast, calculationFirstAndLAst, calculationAverage;
 
 
@@ -53,6 +53,11 @@ public class CostCalculationTests {
         calendar3.set(Calendar.DAY_OF_MONTH, 30);
 
 
+        Calendar calendarExtra = Calendar.getInstance();
+        calendarExtra.set(Calendar.YEAR, 2017);
+        calendarExtra.set(Calendar.MONTH, Calendar.NOVEMBER);
+        calendarExtra.set(Calendar.DAY_OF_MONTH, 24);
+
 
         projectCollaborator = project.createProjectCollaborator(user, 10);
         projectCollaborator.setStartDate(calendar1);
@@ -64,24 +69,14 @@ public class CostCalculationTests {
         projectCollaborator2.setFinishDate(calendar3);
         task.addProjectCollaboratorToTask(projectCollaborator2);
 
-
-        Calendar calendarExtra = Calendar.getInstance();
-        calendarExtra.set(Calendar.YEAR, 2017);
-        calendarExtra.set(Calendar.MONTH, Calendar.MAY);
-        calendarExtra.set(Calendar.DAY_OF_MONTH, 24);
-
         projectCollaborator3 = project.createProjectCollaborator(user, 15);
         projectCollaborator3.setStartDate(calendarExtra);
         projectCollaborator3.setFinishDate(calendarExtra);
         task.addProjectCollaboratorToTask(projectCollaborator3);
 
-        taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
-        taskCollaborator2 = new TaskCollaborator(new ProjectCollaborator(user, 12));
-        taskCollaborator3 = new TaskCollaborator(new ProjectCollaborator(user2, 20));
-
-        report = new Report(taskCollaborator, calendar1);
-        report.setDateOfUpdate(calendar3);
-
+        taskCollaborator= new TaskCollaborator(projectCollaborator);
+        report = new Report(taskCollaborator, Calendar.getInstance());
+        report.setFirstDateOfReport(calendar1);
 
 
     }
@@ -95,10 +90,9 @@ public class CostCalculationTests {
         projectCollaborator = null;
         projectCollaborator2 = null;
         projectCollaborator3 = null;
-        taskCollaborator = null;
-        taskCollaborator2 = null;
-        taskCollaborator3 = null;
         collaborators = null;
+        taskCollaborator=null;
+        report=null;
 
     }
 
@@ -112,60 +106,29 @@ public class CostCalculationTests {
     @Test
     public void testFindEarliestAndLatestCollaborators(){
 
+        // GIVEN 3 collaborators active during the period of one report
+
         List<ProjectCollaborator> collaborators = new ArrayList<>();
         collaborators.add(projectCollaborator2);
-        collaborators.add(projectCollaborator);
         collaborators.add(projectCollaborator3);
-
-        task.addProjectCollaboratorToTask(projectCollaborator);
-        task.addProjectCollaboratorToTask(projectCollaborator2);
-
-        taskCollaborator = new TaskCollaborator(projectCollaborator);
-        taskCollaborator2 = new TaskCollaborator(projectCollaborator2);
-
-        assertTrue(task.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
-        assertTrue(task.isProjectCollaboratorActiveInTaskTeam(projectCollaborator2));
-
+        collaborators.add(projectCollaborator);
 
         //verify if projectCollaborator and projectCollaborator2 are identified as belonging to user
         assertEquals(user, projectCollaborator.getUserFromProjectCollaborator());
         assertEquals(user, projectCollaborator2.getUserFromProjectCollaborator());
 
-        Calendar reportA = Calendar.getInstance();
-        reportA.set(Calendar.YEAR, 2017);
-        reportA.set(Calendar.MONTH, Calendar.MARCH);
-        reportA.set(Calendar.DAY_OF_MONTH, 10);
-
-        projectCollaborator.setStartDate(reportA);
-
-        Calendar reportB = Calendar.getInstance();
-        reportB.add(Calendar.DAY_OF_YEAR, +30); //Adds 30 days to the reportA
-        projectCollaborator2.setStartDate(reportB);
-
-        //verifies that the start date in report A is earlier that the start date in report B,
-        //therefore projectCollaborator is the earliest collaborator
-        assertTrue(reportA.before(reportB));
-
-        //verifies that the start dates for both projectCollaborators are different
-        //collaborator
-
-        task.createReport(taskCollaborator, Calendar.getInstance(), 5);
-        task.createReport(taskCollaborator2, Calendar.getInstance(), 7);
-
-
-        assertFalse(projectCollaborator.getStartDate().equals(reportB));
 
         /**
          * tests if the method in interface FirstCollaboratorCost() correctly calculates the project cost
          * based on the first instance of the user
          */
 
-        double costFirstUserInstance = taskCollaborator.getProjectCollaboratorFromTaskCollaborator().getCostPerEffort();
-
-
+        // WHEN the report cost is calculated according to the first active collaborator
         calculationFirst = new FirstCollaboratorCost();
         calculationFirst.updateCalculationMethod(report, collaborators);
 
+        // THEN the report's cost must be updated to that value
+        double costFirstUserInstance = projectCollaborator.getCostPerEffort();
         assertEquals(costFirstUserInstance, report.getCost(), 0.01);
 
         /**
@@ -174,11 +137,12 @@ public class CostCalculationTests {
          */
 
 
-        double costLastUserInstance = taskCollaborator2.getProjectCollaboratorFromTaskCollaborator().getCostPerEffort();
-
+        // AND WHEN the report's cost is calculated according to the last collaborator instance
         calculationLast = new LastCollaboratorCost();
         calculationLast.updateCalculationMethod(report, collaborators);
 
+        // THEN it must match collaborator 3's cost per effort
+        double costLastUserInstance = projectCollaborator3.getCostPerEffort();
         assertEquals(costLastUserInstance, report.getCost(), 0.01);
 
         /**
@@ -186,24 +150,39 @@ public class CostCalculationTests {
          * based on the first and last instance of the user (sum of costs, divided by the number of instances)
          */
 
-        double costFirstAndLastInstance = (costFirstUserInstance + costLastUserInstance)/2;
-
+        // AND WHEN the cost is calculated according to the average between teh first and last collaborator
         calculationFirstAndLAst = new FirstAndLastCollaboratorCost();
         calculationFirstAndLAst.updateCalculationMethod(report, collaborators);
 
+        // THEN the report's cost must be updated to that value
+        double costFirstAndLastInstance = (costFirstUserInstance + costLastUserInstance)/2;
         assertEquals(costFirstAndLastInstance, report.getCost(), 0.01);
+
+
 
         /**
          * tests if the method in interface AverageCollaboratorCost() correctly calculates the project cost
          * based on the average of first and last instance of the user
          */
 
-        double costAverage = (costFirstUserInstance + costLastUserInstance + projectCollaborator3.getCostPerEffort())/3;
+        double costAverage = (costFirstUserInstance + costLastUserInstance + projectCollaborator2.getCostPerEffort())/3;
 
+        // AND WHEN the cost is calculated according to the average
         calculationAverage = new AverageCollaboratorCost();
         calculationAverage.updateCalculationMethod(report, collaborators);
 
+        // THEN the report's cost must equal the average between all collaborator instances
         assertEquals(costAverage, report.getCost(), 0.01);
+
+
+
+        // AND WHEN the cost is reset to the first collaborator's cost
+        calculationFirst = new FirstCollaboratorCost();
+        calculationFirst.updateCalculationMethod(report, collaborators);
+
+        // THEN the report's cost must return to its initial value
+        assertEquals(costFirstUserInstance, report.getCost(), 0.01);
+
 
     }
 

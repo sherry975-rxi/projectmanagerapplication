@@ -121,6 +121,7 @@ public class RestUserController {
      */
     @RequestMapping(value = "/profiles" , method = RequestMethod.PATCH)
     public ResponseEntity<User> changeUserProfile (@RequestBody User updatedProfile) {
+
         ResponseEntity<User> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         Profile profileChange = updatedProfile.getUserProfile();

@@ -21,7 +21,6 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan({ "project.services", "project.model", "project.controllers" })
-
 public class US340CreateTaskControllerTest {
 
 	@Autowired
@@ -53,7 +52,6 @@ public class US340CreateTaskControllerTest {
 		userAdmin.setUserProfile(Profile.COLLABORATOR);
 		// create project
 		project = projectService.createProject("name3", "description4", userAdmin);// !!!
-		testControl.setChosenProject(project);
 	}
 
 	@After
@@ -82,7 +80,6 @@ public class US340CreateTaskControllerTest {
 		// asserts the added task matches the added task
 		assertTrue(taskService.getProjectUnstartedTasks(project).get(0).getDescription().equals("Test dis agen pls"));
 
-		assertEquals(this.taskService, testControl.getTaskService());
 
 	}
 

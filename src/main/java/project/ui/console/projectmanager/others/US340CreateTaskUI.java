@@ -59,7 +59,6 @@ public class US340CreateTaskUI {
 		System.out.println("[N] to cancel \n");
 
 		String yerOrNo = input.nextLine();
-		createTaskController.setChosenProject(project);
 
 		while (!("n".equalsIgnoreCase(yerOrNo)) && !("y".equalsIgnoreCase(yerOrNo))) {
 			System.out.println("\nInvalid answer. Please try again (\"y\" or \"n\")");

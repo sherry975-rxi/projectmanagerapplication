@@ -23,6 +23,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class TaskServiceTest {
 
     @Mock
+    private UserService userService;
+
+    @Mock
     private Task taskMock;
 
     @Mock
@@ -89,7 +92,7 @@ public class TaskServiceTest {
     public void setUp() {
         initMocks(this);
 
-        this.projectService = new ProjectService(projectsRepository, projectCollaboratorRepository);
+        this.projectService = new ProjectService(projectsRepository, projectCollaboratorRepository, userService);
 
         this.startDate = Calendar.getInstance();
         this.startDate.set(Calendar.YEAR, 2017);
