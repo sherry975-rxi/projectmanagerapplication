@@ -333,7 +333,7 @@ public class US204AssignTaskRequestRestControllerTest {
      *
      */
     @Test
-    public  void retrieveAllAssignementRequest() {
+    public  void retrieveAllAssignmentRequest() {
 
         // Given
 
@@ -343,7 +343,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // When
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests("assignment", taskIdOne, projectId);
+        ResponseEntity<List<TaskTeamRequest>> result = controller.getAllFilteredRequests("assignment", taskIdOne, projectId);
 
         // Then
 
@@ -356,7 +356,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         expectedList.add(assign);
 
-        ResponseEntity<?> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
+        ResponseEntity<List<TaskTeamRequest>> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
 
         assertEquals(expected,result);
 
@@ -385,7 +385,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // When
 
-        ResponseEntity<?> result = controller.getAllFilteredRequests("removal", taskIdOne,  projectId);
+        ResponseEntity<List<TaskTeamRequest>> result = controller.getAllFilteredRequests("removal", taskIdOne,  projectId);
 
         // Then
 
@@ -398,10 +398,10 @@ public class US204AssignTaskRequestRestControllerTest {
 
         expectedList.add(removal);
 
-        ResponseEntity<?> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
+        ResponseEntity<List<TaskTeamRequest>> expected = new ResponseEntity<>(expectedList, HttpStatus.OK);
 
         //assertEquals(expected.getStatusCode(),result.getStatusCode());
-        assertEquals(expected.getStatusCode(),result.getStatusCode());
+        assertEquals(expected,result);
 
 
     }
@@ -428,8 +428,20 @@ public class US204AssignTaskRequestRestControllerTest {
         taskOne.createTaskAssignmentRequest(projCollabTwo);
         taskOne.createTaskRemovalRequest(projCollabThree);
 
-        int assignID = taskOne.getPendingTaskAssignmentRequests().get(0).getDbId();
-        int removalID = taskOne.getPendingTaskRemovalRequests().get(0).getDbId();
+        taskOne.getPendingTaskTeamRequests().get(0).setId(1);
+        taskOne.getPendingTaskTeamRequests().get(1).setId(2);
+        //int removalID = taskOne.getPendingTaskRemovalRequests().get(0).getDbId();
+
+        int assignID = taskOne.getPendingTaskTeamRequests().get(0).getDbId();
+        int removalID = taskOne.getPendingTaskTeamRequests().get(1).getDbId();
+
+        List expectedList = new ArrayList();
+        expectedList = taskOne.getPendingTaskTeamRequests();
+        System.out.println(expectedList);
+
+
+        //System.out.println(assignID);
+        //System.out.println(removalID);
 
         // When
         ResponseEntity<TaskTeamRequest> resultAssign = controller.getRequestDetails(assignID, taskIdOne, projectId);
@@ -440,6 +452,7 @@ public class US204AssignTaskRequestRestControllerTest {
         assignRequest.setType(0);
         assignRequest.setProjCollab(projCollabTwo);
         assignRequest.setTask(taskOne);
+
         TaskTeamRequest removalRequest = new TaskTeamRequest();
         removalRequest.setType(1);
         removalRequest.setProjCollab(projCollabThree);
@@ -452,7 +465,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         ResponseEntity<TaskTeamRequest> expectedRemoval = new ResponseEntity<>(removalRequest, HttpStatus.OK);
 
-        assertEquals(expectedAssign,resultRemoval);
+        assertEquals(expectedRemoval,resultRemoval);
 
     }
 
@@ -524,6 +537,145 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //When
         ResponseEntity<TaskTeamRequest> resultInvalid = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
+
+
+        //Then
+        ResponseEntity<TaskTeamRequest> expectedInvalid = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        assertEquals(expectedInvalid ,resultInvalid);
+
+
+    }
+
+    /**
+     * Given
+     * Adding userTwo to taskOne
+     *
+     * When
+     * Creating removal request for userTwo but already is added to taskOne
+     *
+     * Then
+     * It is expected to be successfully created
+     *
+     */
+    @Test
+    public void canCreateARemovalRequestTwo() {
+
+        User userDTOTwo = new User();
+        userDTOTwo.setEmail("joao@gmail.com");
+
+        //Given
+        taskOne.addProjectCollaboratorToTask(projCollabTwo);
+
+        //When
+        ResponseEntity<?> result = controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
+
+        //Then
+        TaskTeamRequest removalRequest = new TaskTeamRequest();
+        removalRequest.setType(1);
+        removalRequest.setProjCollab(projCollabTwo);
+        removalRequest.setTask(taskOne);
+
+
+        assertEquals(HttpStatus.CREATED, result.getStatusCode());
+        assertEquals(removalRequest, result.getBody());
+
+    }
+
+    /**
+     * Given
+     * Adding userTwo to taskOne
+     * Removal Request created for userTwo
+     *
+     * When
+     * Creating again removal request that already exists for userTwo
+     *
+     * Then
+     * Expects a METHOD_NOT_ALLOWED message
+     *
+     */
+    @Test
+    public void canNotCreateARemovalRequest() {
+
+        User userDTOTwo = new User();
+        userDTOTwo.setEmail("joao@gmail.com");
+
+        //Given
+        taskOne.addProjectCollaboratorToTask(projCollabTwo);
+        controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
+
+        //When
+        ResponseEntity<?> result = controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
+
+        //Then
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.METHOD_NOT_ALLOWED);
+
+        assertEquals(expected,result);
+
+    }
+
+    /**
+     * Given
+     * TaskOne in projectOne, with no collaborators, neither requests
+     *
+     * When
+     * Creating removal request for userTwo that is not assigned in taskOne
+     *
+     * Then
+     * Expects a METHOD_NOT_ALLOWED message
+     *
+     */
+    @Test
+    public void canNotCreateARemovalRequestTwo() {
+
+        User userDTOTwo = new User();
+        userDTOTwo.setEmail("joao@gmail.com");
+
+        //Given
+        controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
+
+        //When
+        ResponseEntity<?> result = controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
+
+        //Then
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.METHOD_NOT_ALLOWED);
+
+        assertEquals(expected,result);
+
+    }
+
+    /**
+     * Given
+     * TaskOne in projectOne
+     * Adding userTwo to taskOne
+     * Cancel task
+     *
+     * When
+     * Creating assignment request to taskOne from user
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     *
+     */
+    @Test
+    public void canNotCreateARemovalRequestInvalidTask() {
+
+        //Given
+        taskOne.addProjectCollaboratorToTask(projCollabTwo);
+        User userDTOTwo = new User();
+        userDTOTwo.setEmail("joao@gmail.com");
+
+        taskOne.setEstimatedTaskStartDate(Calendar.getInstance());
+        taskOne.setTaskDeadline(Calendar.getInstance());
+        taskOne.addProjectCollaboratorToTask(projCollabThree);
+        taskOne.setTaskBudget(2.0);
+        taskOne.setEstimatedTaskEffort(30.1);
+        taskOne.setStartDate(Calendar.getInstance());
+        taskOne.cancelTask();
+        //System.out.println(taskOne.getTaskState());
+
+        //When
+        ResponseEntity<TaskTeamRequest> resultInvalid = controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
 
 
         //Then
