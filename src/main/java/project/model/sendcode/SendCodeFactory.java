@@ -17,7 +17,7 @@ public class SendCodeFactory {
     /**
      * This method creates business objects depending on the argument
      */
-    private void initMessageSenderType() {
+    private static void initMessageSenderType() {
 
         ValidationMethod smsSender = new SMSSender();
         ValidationMethod emailSender = new EmailSender();
@@ -37,7 +37,7 @@ public class SendCodeFactory {
 
         Optional<ValidationMethod> opt = Optional.empty();
 
-        this.initMessageSenderType();
+        SendCodeFactory.initMessageSenderType();
         int num;
         try {
             num = Integer.parseInt(codeSender);
