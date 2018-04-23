@@ -1,4 +1,5 @@
 package project.restControllers;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,13 +15,13 @@ import project.model.User;
 import project.repository.UserRepository;
 import project.restcontroller.RestUserController;
 import project.services.UserService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -48,7 +49,7 @@ public class RestUserControllerTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         initMocks(this);
 
         // creates three users and adds a self ref link for each
@@ -184,7 +185,7 @@ public class RestUserControllerTest {
     }
 
     @Test
-    public void searchUsersByProfileWhenExistsTest() throws Exception {
+    public void searchUsersByProfileWhenExistsTest() {
 
 
         //GIVEN 1 user in the the mock database with profile set as collaborator
