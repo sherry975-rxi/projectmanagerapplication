@@ -399,7 +399,7 @@ public class Project extends ResourceSupport implements Serializable{
 
     public List<CalculationMethod> listAvaliableCalculationMethods() {
         return Arrays.asList(availableCalculationMethods.split(",")).stream().
-                map(CalculationMethod::nameToEnum).collect(Collectors.toList());
+                map(CalculationMethod::valueOf).collect(Collectors.toList());
     }
 	public void createAvailableCalculationMethodsString(List<Integer> availableCalculationMethodList) {
 

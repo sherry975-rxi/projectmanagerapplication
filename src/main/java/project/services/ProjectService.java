@@ -372,7 +372,12 @@ public class ProjectService {
 			updateProject(project);
 		}
 
-		if(projectUpdates.getCalculationMethod() < 4 && projectUpdates.getCalculationMethod() > 0){
+		if((projectUpdates.getAvailableCalculationMethods()!=null)) {
+		    project.setAvailableCalculationMethods(projectUpdates.getAvailableCalculationMethods());
+		    updateProject(project);
+        }
+
+		if(projectUpdates.getCalculationMethod()!= null && project.isCalculationMethodAllowed(projectUpdates.getCalculationMethod().getCode())){
 			project.setCalculationMethod(projectUpdates.getCalculationMethod());
 			updateProject(project);
 		}

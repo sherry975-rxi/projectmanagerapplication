@@ -46,30 +46,6 @@ public enum CalculationMethod {
     }
 
 
-    /**
-     * This method returns the enumerated Effort Unit corresponding to a code
-     *
-     * @param name String corresponding to an enum Effort Unit
-     * @return The EffortUnit if it exists, null, if name provided is null or throws an exception if the code provided
-     * doesn't corresponds to an existent EffortUnit
-     */
-    public static CalculationMethod nameToEnum(String name) {
-
-        if (name == null) {
-            return null;
-        }
-        for (CalculationMethod x : CalculationMethod.values()) {
-
-            if (name.equals(x.name())) {
-                return x;
-            }
-        }
-
-        throw new IllegalArgumentException("Nome inválido " + name);
-    }
-
-
-
 
     public int getCode() {
         return code;
