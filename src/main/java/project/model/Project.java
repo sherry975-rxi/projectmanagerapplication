@@ -40,7 +40,8 @@ public class Project extends ResourceSupport implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-    private int calculationMethod;
+    @Enumerated(EnumType.STRING)
+    private CalculationMethod calculationMethod;
 
     private String availableCalculationMethods;
 
@@ -50,11 +51,6 @@ public class Project extends ResourceSupport implements Serializable{
 	public static final int DELIVERY = 3; // entrega
 	public static final int REVIEW = 4; // garantia
 	public static final int CLOSE = 5; // fecho
-
-	public static final int FIRST_COLLABORATOR = 1;
-	public static final int LAST_COLLABORATOR = 2;
-	public static final int AVERAGE_COLLABORATOR = 3;
-	public static final int FIRST_LAST_COLLABORATOR = 4;
 
 	static final long serialVersionUID = 43L;
 
@@ -87,10 +83,10 @@ public class Project extends ResourceSupport implements Serializable{
 		this.effortUnit = EffortUnit.HOURS;
 		this.budget = 0;
 		this.status = PLANNING;
-		this.calculationMethod = FIRST_COLLABORATOR;
+		this.calculationMethod = CalculationMethod.CI;
 		this.startdate = null;
 		this.finishdate = null;
-		this.availableCalculationMethods = "1,2,3";
+		this.availableCalculationMethods = "CI,CF,CM";
 
 	}
 
@@ -110,11 +106,11 @@ public class Project extends ResourceSupport implements Serializable{
 		this.status = status;
 	}
 
-    public int getCalculationMethod() {
+    public CalculationMethod getCalculationMethod() {
         return calculationMethod;
     }
 
-    public void setCalculationMethod(int calculationMethod) {
+    public void setCalculationMethod(CalculationMethod calculationMethod) {
         this.calculationMethod = calculationMethod;
     }
 
@@ -401,15 +397,24 @@ public class Project extends ResourceSupport implements Serializable{
 		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION || this.getProjectStatus() ==  EXECUTION  || this.getProjectStatus() == DELIVERY;
 	}
 
-    public List<Integer> getAvailableCalculationMethods() {
+    public List<CalculationMethod> listAvaliableCalculationMethods() {
         return Arrays.asList(availableCalculationMethods.split(",")).stream().
-                map(Integer::parseInt).collect(Collectors.toList());
+                map(CalculationMethod::nameToEnum).collect(Collectors.toList());
     }
-	public void setAvailableCalculationMethods(List<Integer> availableCalculationMethods) {
+	public void createAvailableCalculationMethodsString(List<Integer> availableCalculationMethodList) {
 
-		this.availableCalculationMethods = Joiner.on(",").join(availableCalculationMethods);
+		this.availableCalculationMethods = Joiner.on(",").join(
+                availableCalculationMethodList.stream().map(CalculationMethod::toEnum).map(CalculationMethod::name).collect(Collectors.toList()));
 	}
 
+
+	public String getAvailableCalculationMethods() {
+		return this.availableCalculationMethods;
+	}
+
+	public void setAvailableCalculationMethods(String methods) {
+		this.availableCalculationMethods=methods;
+	}
 
 	/**
 	 * This method recieves an integer corresponding to one of the cost calculation methods,
@@ -419,8 +424,7 @@ public class Project extends ResourceSupport implements Serializable{
 	 * @return
 	 */
 	public boolean isCalculationMethodAllowed(Integer method) {
-		return getAvailableCalculationMethods().contains(method);
+		return listAvaliableCalculationMethods().contains(CalculationMethod.toEnum(method));
 	}
-
 
 }
