@@ -113,8 +113,9 @@ public class TaskStateInterfaceTests {
 		assertEquals("OnGoing", task.viewTaskStateName());
 				
 		//Mark task as finished 
-		task.markTaskAsFinished(); 
-		
+		task.markTaskAsFinished();
+		task.setFinishDate(taskDeadline);
+
 		//Asserts that the task state changed to finished 
 		assertEquals("Finished", task.viewTaskStateName());
 		
@@ -129,7 +130,14 @@ public class TaskStateInterfaceTests {
 		task.cancelTask();
 				
 		//Asserts that the taskState changed to Cancelled
-		assertEquals("Cancelled", task.viewTaskStateName());		
+		assertEquals("Cancelled", task.viewTaskStateName());
+
+		//Removes all collaborators from task team
+		task.setFinishDate(taskDeadline);
+		task.removeAllCollaboratorsFromTaskTeam();
+
+		//Assert that the taskState changed to Finished
+		assertEquals("Finished", task.viewTaskStateName());
 	}
 
 	/**
