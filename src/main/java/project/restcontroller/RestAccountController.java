@@ -14,7 +14,7 @@ import project.services.UserService;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping("account/")
+@RequestMapping("/account/")
 public class RestAccountController {
 
     private final UserService userService;
@@ -51,6 +51,6 @@ public class RestAccountController {
                 .withRel("User details");
         createdUser.add(reference);
 
-        return ResponseEntity.ok().body(createdUser);
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 }
