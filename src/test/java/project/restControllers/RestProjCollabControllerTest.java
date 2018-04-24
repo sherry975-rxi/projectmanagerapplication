@@ -77,11 +77,7 @@ public class RestProjCollabControllerTest {
 
     @After
     public void tearDown() {
-        projectServiceMock = null;
-        userServiceMock = null;
-        projectMock = null;
         victim = null;
-        mvc = null;
         pcInes = null;
         jacksonProjectCollaborator = null;
         jacksonProjectCollaboratorList = null;

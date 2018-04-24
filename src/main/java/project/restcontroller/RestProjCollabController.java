@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
 import project.model.ProjectCollaborator;
-import project.model.User;
 import project.services.ProjectService;
 import project.services.UserService;
 

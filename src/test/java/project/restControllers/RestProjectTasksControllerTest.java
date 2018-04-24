@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,18 +17,28 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import project.model.Project;
+import project.model.*;
+
 import static org.junit.Assert.assertEquals;
-import project.model.Task;
-import project.model.User;
+
+import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
 import project.model.taskstateinterface.Planned;
 import project.restcontroller.RestProjectTasksController;
 
+import project.services.ProjectService;
 import project.services.TaskService;
+
+import java.time.Year;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import static org.mockito.Matchers.any;
 
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,33 +47,74 @@ public class RestProjectTasksControllerTest {
     @Mock
     private TaskService taskService;
 
+    @Mock
+    private ProjectService projectService;
+
     @InjectMocks
     private RestProjectTasksController victim;
 
+    private JacksonTester<List<Task>> jacksonProjectTeamList;
     private MockMvc mockMvc;
     private User uDaniel;
+    private User uInes;
     private Project project;
     private Task task;
     private Task task2;
+    private List<Task> projectTasks;
+    private Calendar startDate;
+    private Calendar finishDate;
+    private Calendar estimatedStart;
+    private Calendar estimatedDeadline;
 
     @Before
     public void setup() {
         JacksonTester.initFields(this, new ObjectMapper());
         mockMvc = MockMvcBuilders.standaloneSetup(victim).build();
         uDaniel = new User("Daniel", "daniel@gmail.com", "01", "Arquitecto", "967387654");
+        uInes = new User("Ines", "ines@gmail.com", "02", "Veterinaria", "9633333333");
         project = new Project("Project A", "Project de teste", uDaniel);
+
+        ProjectCollaborator pcDaniel = new ProjectCollaborator(uDaniel, 20);
+        ProjectCollaborator pcInes = new ProjectCollaborator(uInes, 20);
+
+        startDate = Calendar.getInstance();
+        finishDate = Calendar.getInstance();
+        finishDate.set(Calendar.YEAR, 2020);
+        estimatedStart = Calendar.getInstance();
+        estimatedStart.set(Calendar.YEAR, 2017);
+        estimatedDeadline = Calendar.getInstance();
+        estimatedDeadline.set(Calendar.YEAR, 2020);
+
         task = new Task("Task", project);
-        task.setTaskState(new OnGoing());
+        task.setEstimatedTaskStartDate(estimatedStart);
+        task.setTaskDeadline(estimatedDeadline);
+        task.addProjectCollaboratorToTask(pcDaniel);
+        task.setEstimatedTaskEffort(20);
+        task.setTaskBudget(2000);
+
         task2 = new Task("Task2", project);
-        task2.setTaskState(new Planned());
+        task2.setEstimatedTaskStartDate(estimatedStart);
+        task2.setTaskDeadline(estimatedDeadline);
+        task2.addProjectCollaboratorToTask(pcInes);
+        task2.setEstimatedTaskEffort(20);
+        task2.setTaskBudget(2000);
+        projectTasks = new ArrayList<>();
 
     }
 
     @After
-    public void tearDown() {
+    public void tearDown(){
         mockMvc = null;
         task = null;
         task2 = null;
+        projectTasks = null;
+        jacksonProjectTeamList = null;
+        project = null;
+        uDaniel = null;
+        estimatedStart = null;
+        estimatedDeadline = null;
+        startDate = null;
+        finishDate = null;
     }
 
     /**
@@ -106,5 +159,36 @@ public class RestProjectTasksControllerTest {
         assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
 
     }
+
+
+    /**
+     * GIVEN a project id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/finished
+     * THEN we receive a valid message with a 200 Ok and a list of the project finished tasks
+     */
+    @Test
+    public void shouldReturnFinishedTasks() throws Exception {
+
+        task.setStartDate(startDate);
+        task2.setStartDate(startDate);
+        task.markTaskAsFinished();
+        task2.markTaskAsFinished();
+
+        projectTasks.add(task);
+        projectTasks.add(task2);
+
+        //GIVEN: a project id
+        int projectId = 01;
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        //WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>/finished
+        when(taskService.getProjectFinishedTasksInDecreasingOrder(project)).thenReturn(projectTasks);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/finished").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN: we receive a valid message with a 200 Ok and a list of the project finished tasks
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getProjectFinishedTasksInDecreasingOrder(project);
+    }
+
 
 }
