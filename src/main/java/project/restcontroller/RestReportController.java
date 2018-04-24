@@ -121,18 +121,19 @@ public class RestReportController {
         Task task = taskService.getTaskByTaskID(taskid);
         List<Report> reports = task.getReportsFromGivenUser(userDto.getEmail());
 
+
         //In case task doesn't have reports from a given user
-        if (task.getReportsFromGivenUser(userDto.getEmail())== null) {
-            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!taskService.isCollaboratorActiveOnAnyTask(task.getTaskCollaboratorByEmail(userDto.getEmail()).getProjectCollaboratorFromTaskCollaborator())) {
+            responseEntity = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         } else {
-            responseEntity = ResponseEntity.ok().body(task.getReportsFromGivenUser(userDto.getEmail()));
 
             for (Report reportCreated : reports) {
                 Link reference = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").slash("users").slash(userid).slash("update").withRel("Update Report from User");
                 reportCreated.add(reference);
                 }
-            return ResponseEntity.ok().body(reports);
-            }
+            responseEntity = ResponseEntity.ok().body(reports);
+
+        }
 
         return responseEntity;
     }
