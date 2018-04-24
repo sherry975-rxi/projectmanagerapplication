@@ -13,7 +13,6 @@ import project.model.Task;
 import project.services.ProjectService;
 import project.services.TaskService;
 
-import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +22,40 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 @RequestMapping("projects/{projid}/tasks/")
 public class RestProjectTasksController {
 
-    TaskService taskService;
-
-    ProjectService projectService;
+    private ProjectService projectService;
+    private TaskService taskService;
 
     @Autowired
-    public RestProjectTasksController(TaskService taskService, ProjectService projectService) {
-        this.taskService = taskService;
+    public RestProjectTasksController(ProjectService projectService, TaskService taskService){
+
         this.projectService = projectService;
+        this.taskService = taskService;
+    }
+
+    /**
+     * Refers to US 360: Como Gestor de projeto, quero obter a lista de tarefas do projeto sem
+     * colaboradores ativos atribuídos.
+     *
+     * @param projid
+     * @return
+     */
+
+    @RequestMapping(value="withoutCollaborators", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getTasksWithoutCollaborators(@PathVariable int projid){
+
+        Project project = projectService.getProjectById(projid);
+
+        List<Task> tasksWithoutCollabs = new ArrayList<>();
+
+        tasksWithoutCollabs.addAll(taskService.getProjectTasksWithoutCollaboratorsAssigned(project));
+
+        for(Task task: tasksWithoutCollabs){
+
+            Link taskLink = linkTo(RestProjectController.class).slash(projid).slash("tasks").withSelfRel();
+            task.add(taskLink);
+        }
+
+        return new ResponseEntity<>(tasksWithoutCollabs, HttpStatus.OK);
     }
 
     /**
@@ -50,8 +75,8 @@ public class RestProjectTasksController {
 
             response = new ResponseEntity<>(deleted, HttpStatus.CONFLICT);
 
-                  }
-       return response;
+        }
+        return response;
     }
 
     /**
