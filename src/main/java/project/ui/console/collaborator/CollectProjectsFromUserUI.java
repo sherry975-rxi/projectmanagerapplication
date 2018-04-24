@@ -75,20 +75,20 @@ public class CollectProjectsFromUserUI {
                 String projectIDCodeToString = String.valueOf(projectIDCode);
                 listOfOptionsToCompare.add(projectIDCodeToString);
 
-                if (option.equals(projectIDCodeToString)) {
-                    if(this.user.equals(project.getProjectManager())) {
-                        System.out.print("TEST: " + listOfProjectsFromUser.size());
-                        pmMenu.setProject(project);
-                        pmMenu.displayOptions();
-                        break;
-                    }
-                    else {
+                if (option.equals(projectIDCodeToString) && this.user.equals(project.getProjectManager())) {
+                	System.out.print("TEST: " + listOfProjectsFromUser.size());
+                	pmMenu.setProject(project);
+                	pmMenu.displayOptions();
+
+                }
+
+                else {
                     projectViewMenuUI.setProjectID(project.getIdCode());
                     projectViewMenuUI.setUser(user);
                     projectViewMenuUI.projectDataDisplay();
-                    break;
-                    }
                 }
+
+                break;
             }
 
             // In case the user input is an invalid option, the console shows a message and
