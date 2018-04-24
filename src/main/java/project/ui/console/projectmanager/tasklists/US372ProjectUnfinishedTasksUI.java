@@ -10,7 +10,7 @@ import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-@SuppressWarnings("all")
+
 @Component
 public class US372ProjectUnfinishedTasksUI {
 
