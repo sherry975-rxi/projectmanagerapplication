@@ -291,7 +291,7 @@ public class TaskServiceTest {
         when(taskMock.getFinishDate()).thenReturn(calendar1);
 
         Calendar calendar2 = Calendar.getInstance();
-        calendar1.set(Calendar.DAY_OF_MONTH, 24);
+        calendar2.set(Calendar.DAY_OF_MONTH, 24);
         calendar2.add(Calendar.MONTH, -1);
 
         when(task2Mock.getFinishDate()).thenReturn(calendar2);
