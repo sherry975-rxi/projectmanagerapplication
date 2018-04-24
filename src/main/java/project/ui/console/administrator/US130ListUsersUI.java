@@ -13,7 +13,7 @@ public class US130ListUsersUI {
 	@Autowired
 	private US130ListUsersController controller;
 
-	public User displayUsersList() {
+	public User displayUsersList(User userToReturn) {
 		Scanner input = new Scanner(System.in);
 		User userReturned = null;
 		List<String> usersList = controller.listUsersController();
