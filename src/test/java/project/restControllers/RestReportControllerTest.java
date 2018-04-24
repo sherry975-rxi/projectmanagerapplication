@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
@@ -21,13 +20,15 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestReportControllerTest {
@@ -43,6 +44,7 @@ public class RestReportControllerTest {
     private User userDto;
     private Task taskDto;
     private ProjectCollaborator projectCollaboratorDto;
+    private ProjectCollaborator projectCollaboratorDto1;
 
     @InjectMocks
     private RestReportController victim;
@@ -59,7 +61,9 @@ public class RestReportControllerTest {
         projectDto = new Project("Projeto para pintura", "Pintura de interiores", userDto);
         taskDto = new Task("Criar tarefa", projectDto);
         projectCollaboratorDto = new ProjectCollaborator(userDto, 3);
+        projectCollaboratorDto1 = new ProjectCollaborator(userDto, 5);
         projectCollaboratorDto.setProject(projectDto);
+        projectCollaboratorDto1.setProject(projectDto);
     }
 
     @After
@@ -68,6 +72,7 @@ public class RestReportControllerTest {
        userDto = null;
        taskDto = null;
        projectCollaboratorDto = null;
+        projectCollaboratorDto1 = null;
        victim = null;
        mvc = null;
        jacksonReport = null;
@@ -162,8 +167,35 @@ public class RestReportControllerTest {
 
         //THEN the report is created
         assertEquals(HttpStatus.METHOD_NOT_ALLOWED.value(), response.getStatus());
-
     }
 
 
-}
+
+    /**
+     * GIVEN a taskID and a ProjectID
+     *
+     * WHEN  a task has reports
+     *
+     * THEN all reports from a Task are retrieved
+     *
+     * @throws Exception
+     */
+    @Test
+    public void getTaskReports () throws Exception {
+
+        //GIVEN
+        int projid = 1;
+        String taskid = "1";
+        when(projectServiceMock.getProjectById(projid)).thenReturn(projectDto);
+        when(taskServiceMock.getTaskByTaskID(any(String.class))).thenReturn(taskDto);
+
+        //WHEN
+        List<Report> reports = taskDto.getReports();
+
+        MockHttpServletResponse response = mvc.perform(get("/projects/" + projid + "/tasks/" + taskid + "/reports/")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
+    }
