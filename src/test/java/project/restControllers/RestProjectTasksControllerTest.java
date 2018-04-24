@@ -14,13 +14,12 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.model.*;
-
-import static org.junit.Assert.assertEquals;
 
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
@@ -35,13 +34,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.Year;
 import java.util.*;
 
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestProjectTasksControllerTest {
@@ -55,23 +54,26 @@ public class RestProjectTasksControllerTest {
     @Mock
     private HttpServletRequest req;
 
-
     @InjectMocks
     private RestProjectTasksController victim;
 
     private JacksonTester<List<Task>> jacksonProjectTeamList;
-    private JacksonTester<Task> jacksonTask;
     private MockMvc mockMvc;
     private User uDaniel;
     private User uInes;
     private Project project;
     private Task task;
     private Task task2;
+    private Task task3;
+
     private List<Task> projectTasks;
     private Calendar startDate;
     private Calendar finishDate;
     private Calendar estimatedStart;
     private Calendar estimatedDeadline;
+
+    private List<Task> expected;
+    private ResponseEntity<List<Task>> expectedResponse;
 
     @Before
     public void setup() {
@@ -105,8 +107,15 @@ public class RestProjectTasksControllerTest {
         task2.addProjectCollaboratorToTask(pcInes);
         task2.setEstimatedTaskEffort(20);
         task2.setTaskBudget(2000);
+
+        task3 = new Task("Task3", project);
+        task3.setEstimatedTaskStartDate(estimatedStart);
+        task3.setTaskDeadline(estimatedDeadline);
+        task3.setTaskBudget(2000);
         projectTasks = new ArrayList<>();
 
+        // and finally an empty test list to be filled and compared for each assertion
+        expected = new ArrayList<>();
     }
 
     @After
@@ -114,6 +123,8 @@ public class RestProjectTasksControllerTest {
         mockMvc = null;
         task = null;
         task2 = null;
+        task3 = null;
+
         projectTasks = null;
         jacksonProjectTeamList = null;
         project = null;
@@ -124,6 +135,7 @@ public class RestProjectTasksControllerTest {
         finishDate = null;
     }
 
+        //GIVEN a project with a certain Id
     /**
      * GIVEN: a certain task in a state that allows its deletion
      * WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
@@ -145,6 +157,7 @@ public class RestProjectTasksControllerTest {
         assertEquals(HttpStatus.ACCEPTED.value(), response.getStatus());
     }
 
+        //GIVEN a project with a certain Id
     /**
      * GIVEN: a certain task in a state that does not allow its deletion
      * WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
@@ -164,6 +177,55 @@ public class RestProjectTasksControllerTest {
 
         //THEN: we receive a valid message with 202 Accepted and the task list has to display one less task
         assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
+
+        projectTasks = new ArrayList<>();
+    }
+
+
+    /**
+     * This test verifies the correct initialization of the REST use controller
+     */
+
+    @Test
+    public void controllerInitializedCorrectly() {
+        assertNotNull(victim);
+    }
+
+
+    @Test
+    public void testGetTasksWithoutCollaborators() throws Exception  {
+
+        //GIVEN a project with a certain Id
+
+        int projectId = 123;
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        //confirmation that task3 does not have assigned collaborators
+
+        assertTrue(task3.getTaskTeam().isEmpty());
+        assertFalse(task3.doesTaskTeamHaveActiveUsers());
+
+        //WHEN a list of tasks without assigned collaborators is requested
+        expected.add(task3);
+        when(taskService.getProjectTasksWithoutCollaboratorsAssigned(any(Project.class))).thenReturn(expected);
+
+        expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/withoutCollaborators")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN the response entity must contain the list of tasks and status OK
+
+        assertEquals(expectedResponse,victim.getTasksWithoutCollaborators(123));
+
+        task3 = new Task("Task3", project);
+        task3.setEstimatedTaskStartDate(estimatedStart);
+        task3.setTaskDeadline(estimatedDeadline);
+        task3.setTaskBudget(2000);
+        projectTasks = new ArrayList<>();
+
+        // and finally an empty test list to be filled and compared for each assertion
+        expected = new ArrayList<>();
 
     }
 
@@ -253,6 +315,7 @@ public class RestProjectTasksControllerTest {
         //THEN: the method returns the id of the proect
         assertEquals(victim.getProjectIdByURI(), projID);
 
+        projectTasks = new ArrayList<>();
     }
 
     /**
@@ -279,6 +342,7 @@ public class RestProjectTasksControllerTest {
         //THEN: the method returns the id of the proect
         assertEquals(victim.getProjectIdByURI(), nullProj);
 
+        projectTasks = new ArrayList<>();
     }
 
 
