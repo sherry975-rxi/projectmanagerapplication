@@ -1,6 +1,7 @@
 package project.restControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,6 @@ import project.services.UserService;
 import java.util.Calendar;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -38,14 +38,11 @@ public class RestReportControllerTest {
     private ProjectService projectServiceMock;
     @Mock
     private UserService userServiceMock;
-    @Mock
-    private Report reportMock;
-@Mock
-    private Task taskDto;
-    private User userDto;
+
     private Project projectDto;
+    private User userDto;
+    private Task taskDto;
     private ProjectCollaborator projectCollaboratorDto;
-    private TaskCollaborator taskCollaboratorDto;
 
     @InjectMocks
     private RestReportController victim;
@@ -61,9 +58,23 @@ public class RestReportControllerTest {
         userDto = new User("Rui", "rp@gmail.com", "02", "Simples colaborador", "638192945");
         projectDto = new Project("Projeto para pintura", "Pintura de interiores", userDto);
         taskDto = new Task("Criar tarefa", projectDto);
-        this.projectCollaboratorDto = new ProjectCollaborator(userDto, 3);
+        projectCollaboratorDto = new ProjectCollaborator(userDto, 3);
         projectCollaboratorDto.setProject(projectDto);
     }
+
+    @After
+    public void tearDown() {
+        projectDto = null;
+       userDto = null;
+       taskDto = null;
+       projectCollaboratorDto = null;
+       victim = null;
+       mvc = null;
+       jacksonReport = null;
+    }
+
+
+
     /**
      * GIVEN a set of parameters to create a report and a taskID and a ProjectID and a UserID
      *
@@ -74,30 +85,85 @@ public class RestReportControllerTest {
      * @throws Exception
      */
     @Test
-    public void createReportTest () throws Exception {
+    public void createReportTestHappyPath () throws Exception {
 
         //GIVEN
         //A set of parameters to create a report and a taskID and a ProjectID and a UserID
-        taskCollaboratorDto = new TaskCollaborator(projectCollaboratorDto);
+        int projid = 1;
+        String taskid = "1";
+        int userId = 1;
+        when(projectServiceMock.getProjectById(projid)).thenReturn(projectDto);
+        when(taskServiceMock.getTaskByTaskID(any(String.class))).thenReturn(taskDto);
+        when(userServiceMock.getUserByEmail(any(String.class))).thenReturn(userDto);
+
+        //WHEN the Report is created
+        //one performs a post request to url /projects/{id}/tasks/{id}⁄reports/
+        TaskCollaborator taskCollaboratorDto = new TaskCollaborator(projectCollaboratorDto);
+        taskDto.addProjectCollaboratorToTask(projectCollaboratorDto);
         double reportedTime = 3.0;
         Calendar firstDateOfReport;
         firstDateOfReport = Calendar.getInstance();
-        String email = "rp@gmail.com";
-        String taskID = "1";
-        int projectID = 1;
 
-        //WHEN one performs a post request to url /projects/{id}/tasks/{id}⁄reports/
-        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectDto);
-        when(taskServiceMock.getTaskByTaskID(any(String.class))).thenReturn(taskDto);
-        //when(taskDto.getTaskCollaboratorByEmail(any(String.class))).thenReturn(taskCollaboratorDto);
+        Report reportDto = new Report(taskCollaboratorDto, firstDateOfReport);
+        reportDto.setReportedTime(reportedTime);
         taskDto.createReport(taskCollaboratorDto, firstDateOfReport, reportedTime);
-        //Mockito.verify(taskDto,Mockito.times(1)).createReport(taskCollaboratorDto, firstDateOfReport, reportedTime);
+        when(taskServiceMock.saveTask(any(Task.class))).thenReturn(taskDto);
 
-        MockHttpServletResponse response = mvc.perform(post("/projects/" + projectID + "/tasks/" + taskID + "/reports/")
+        MockHttpServletResponse response = mvc.perform(post("/projects/" + projid + "/tasks/" + taskid + "/reports/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jacksonReport.write(reportMock).getJson()))
+                .content(jacksonReport.write(reportDto).getJson()))
                 .andReturn().getResponse();
 
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
+
+        //THEN the report is created
+        assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+
     }
+
+    /**
+     * GIVEN a set of parameters to create a report and a taskID and a ProjectID and a UserID
+     *
+     * WHEN one creates a Report associated with the Task that matches a taskID
+     * without the taskCollaborator that creates the report existing in TaskTeam
+     *
+     * THEN the creation of the Report is Not Allowed
+     *
+     * @throws Exception
+     */
+    @Test
+    public void createReportTestUNHappyPath () throws Exception {
+
+        //GIVEN
+        //A set of parameters to create a report and a taskID and a ProjectID and a UserID
+        int projid = 1;
+        String taskid = "1";
+        int userId = 1;
+        when(projectServiceMock.getProjectById(projid)).thenReturn(projectDto);
+        when(taskServiceMock.getTaskByTaskID(any(String.class))).thenReturn(taskDto);
+        when(userServiceMock.getUserByEmail(any(String.class))).thenReturn(userDto);
+
+        //WHEN the Report is created
+        //one performs a post request to url /projects/{id}/tasks/{id}⁄reports/
+        TaskCollaborator taskCollaboratorDto = new TaskCollaborator(projectCollaboratorDto);
+        double reportedTime = 3.0;
+        Calendar firstDateOfReport;
+        firstDateOfReport = Calendar.getInstance();
+
+        Report reportDto = new Report(taskCollaboratorDto, firstDateOfReport);
+        reportDto.setReportedTime(reportedTime);
+        taskDto.createReport(taskCollaboratorDto, firstDateOfReport, reportedTime);
+        when(taskServiceMock.saveTask(any(Task.class))).thenReturn(taskDto);
+
+        MockHttpServletResponse response = mvc.perform(post("/projects/" + projid + "/tasks/" + taskid + "/reports/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonReport.write(reportDto).getJson()))
+                .andReturn().getResponse();
+
+
+        //THEN the report is created
+        assertEquals(HttpStatus.METHOD_NOT_ALLOWED.value(), response.getStatus());
+
+    }
+
+
 }
