@@ -10,7 +10,7 @@ import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-@SuppressWarnings("all")
+
 @Component
 public class US372ProjectUnfinishedTasksUI {
 
@@ -36,19 +36,19 @@ public class US372ProjectUnfinishedTasksUI {
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		System.out.println("");
-		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
-		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
-		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
-		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
-		System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo());
-		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
-		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
-		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-		System.out.println("");
+		System.out.println(".PROJECT: " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
-		System.out.println("     UNFINISHED TASKS");
+		System.out.println(".ID: " + projectInfo.printProjectIDCodeInfo());
+		System.out.println(".STATUS: " + projectInfo.printProjectStatusInfo());
+		System.out.println(".DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
+		System.out.println(".START DATE: " + projectInfo.printProjectStartDateInfo());
+		System.out.println(".PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
+		System.out.println(".PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
+		System.out.println(".PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
+		System.out.println("");
+
+		System.out.println("     .UNFINISHED TASKS");
 		System.out.println(line);
 
 		List<String> listOfOnGoingTasks = new ArrayList<>();
@@ -72,9 +72,9 @@ public class US372ProjectUnfinishedTasksUI {
 		for (String ii : listOfOnGoingTasks) {
 
 			if (option.equals(ii)) {
+				taskFuntionatities.taskDataDisplay();
 				taskFuntionatities.setTaskID(ii);
 				taskFuntionatities.setProject(project);
-				taskFuntionatities.taskDataDisplay();
 			} 
 			listOfOptionsToCompare.add(ii);
 		}

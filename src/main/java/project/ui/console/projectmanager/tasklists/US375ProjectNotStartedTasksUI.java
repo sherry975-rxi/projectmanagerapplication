@@ -10,7 +10,7 @@ import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-@SuppressWarnings("all")
+
 @Component
 public class US375ProjectNotStartedTasksUI {
 
@@ -36,7 +36,7 @@ public class US375ProjectNotStartedTasksUI {
 			loop = false;
 		System.out.println("");
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
-		System.out.println(line);
+
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
 		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
 		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
@@ -45,7 +45,7 @@ public class US375ProjectNotStartedTasksUI {
 		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-		System.out.println("");
+
 		System.out.println(line);
 		System.out.println("                NOT STARTED TASKS");
 		System.out.println(line);

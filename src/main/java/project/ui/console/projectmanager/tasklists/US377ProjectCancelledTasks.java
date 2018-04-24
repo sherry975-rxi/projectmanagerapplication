@@ -10,7 +10,7 @@ import project.ui.console.projectmanager.tasks.PmTaskFunctionalitiesUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-@SuppressWarnings("all")
+
 @Component
 public class US377ProjectCancelledTasks {
 
@@ -34,7 +34,7 @@ public class US377ProjectCancelledTasks {
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-		System.out.println("");
+
 		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
 		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
@@ -44,10 +44,10 @@ public class US377ProjectCancelledTasks {
 		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-		System.out.println("");
-		System.out.println(line);
+
+
 		System.out.println("     CANCELLED TASKS");
-		System.out.println(line);
+
 
 		controller.setProject(project);
 
@@ -70,8 +70,8 @@ public class US377ProjectCancelledTasks {
 		for (String ii : listOfCancelledTasks) {
 
 			if (option.equals(ii)) {
-				taskFuntionatities.setTaskID(ii);
 				taskFuntionatities.setProject(project);
+				taskFuntionatities.setTaskID(ii);
 				taskFuntionatities.taskDataDisplay();
 			} 
 			listOfOptionsToCompare.add(ii);
