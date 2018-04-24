@@ -60,6 +60,8 @@ public class US204AssignTaskRequestRestControllerTest {
     private int userTwoId;
     private User userThree;
     private String userThreeEmail;
+    private User userFour;
+    private String userFourEmail;
     private Project projectOne;
     private Integer projectId;
     private Task taskOne;
@@ -70,7 +72,7 @@ public class US204AssignTaskRequestRestControllerTest {
     private ProjectCollaborator projCollabThree;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp(){
 
         // create userPM
         userPM = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
@@ -85,6 +87,11 @@ public class US204AssignTaskRequestRestControllerTest {
         userThree = userService.createUser("Rui", "rui@gmail.com", "03", "collaborator", "221378449", "Rua Porto",
                 "4480", "Porto", "Porto", "Portugal");
         userThreeEmail = "rui@gmail.com";
+
+        // create userThree
+        userFour = userService.createUser("Rita", "rita@gmail.com", "04", "collaborator", "221378448", "Rua Porto",
+                "6480", "Porto", "Porto", "Portugal");
+        userFourEmail = "rita@gmail.com";
 
         // create a project with userPM as manager
         projectOne = projectService.createProject("Restful", "Implement API Rest", userPM);
@@ -119,6 +126,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         Mockito.when(userRepository.findByEmail("joao@gmail.com")).thenReturn(Optional.of(userTwo));
         Mockito.when(userRepository.findByEmail(userThreeEmail)).thenReturn(Optional.of(userThree));
+        Mockito.when(userRepository.findByEmail(userFourEmail)).thenReturn(Optional.of(userFour));
         Mockito.when(userRepository.findByUserID(userTwoId)).thenReturn(userTwo);
         Mockito.when(projectsRepository.findById(projectId)).thenReturn(Optional.of(projectOne));
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
@@ -160,7 +168,6 @@ public class US204AssignTaskRequestRestControllerTest {
      * Then
      * It is expected to be successfully created
      *
-
      */
     @Test
     public void canCreateAnAssignmentRequest() {
@@ -212,7 +219,7 @@ public class US204AssignTaskRequestRestControllerTest {
      * Creating again assignment request that already exists for userTwo
      *
      * Then
-     * Expects a METHOD_NOT_ALLOWED message
+     * Expects a FORBIDDEN message
      *
      */
     @Test
@@ -236,7 +243,7 @@ public class US204AssignTaskRequestRestControllerTest {
         ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
 
         //Then
-        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.METHOD_NOT_ALLOWED);
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.FORBIDDEN);
 
         assertEquals(expected,result);
 
@@ -250,7 +257,7 @@ public class US204AssignTaskRequestRestControllerTest {
      * Creating assignment request for userTwo but already is added to taskOne
      *
      * Then
-     * Expects a METHOD_NOT_ALLOWED message
+     * Expects a FORBIDDEN message
      *
      */
     @Test
@@ -266,7 +273,7 @@ public class US204AssignTaskRequestRestControllerTest {
         ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
 
         //Then
-        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.METHOD_NOT_ALLOWED);
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.FORBIDDEN);
 
         assertEquals(expected,result);
 
@@ -512,7 +519,7 @@ public class US204AssignTaskRequestRestControllerTest {
      * Creating assignment request to taskOne from user
      *
      * Then
-     * Expects a FORBIDDEN message
+     * Expects a METHOD_NOT_ALLOWED message
      *
      */
     @Test
@@ -529,14 +536,14 @@ public class US204AssignTaskRequestRestControllerTest {
         taskOne.setEstimatedTaskEffort(30.1);
         taskOne.setStartDate(Calendar.getInstance());
         taskOne.cancelTask();
-        //System.out.println(taskOne.getTaskState());
+        System.out.println(taskOne.getTaskState());
 
         //When
         ResponseEntity<TaskTeamRequest> resultInvalid = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
 
 
         //Then
-        ResponseEntity<TaskTeamRequest> expectedInvalid = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        ResponseEntity<TaskTeamRequest> expectedInvalid = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 
         assertEquals(expectedInvalid ,resultInvalid);
 
@@ -587,7 +594,7 @@ public class US204AssignTaskRequestRestControllerTest {
      * Creating again removal request that already exists for userTwo
      *
      * Then
-     * Expects a METHOD_NOT_ALLOWED message
+     * Expects a FORBIDDEN message
      *
      */
     @Test
@@ -604,7 +611,7 @@ public class US204AssignTaskRequestRestControllerTest {
         ResponseEntity<?> result = controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
 
         //Then
-        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.METHOD_NOT_ALLOWED);
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.FORBIDDEN);
 
         assertEquals(expected,result);
 
@@ -618,7 +625,7 @@ public class US204AssignTaskRequestRestControllerTest {
      * Creating removal request for userTwo that is not assigned in taskOne
      *
      * Then
-     * Expects a METHOD_NOT_ALLOWED message
+     * Expects a FORBIDDEN message
      *
      */
     @Test
@@ -634,7 +641,7 @@ public class US204AssignTaskRequestRestControllerTest {
         ResponseEntity<?> result = controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
 
         //Then
-        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.METHOD_NOT_ALLOWED);
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.FORBIDDEN);
 
         assertEquals(expected,result);
 
@@ -650,7 +657,7 @@ public class US204AssignTaskRequestRestControllerTest {
      * Creating assignment request to taskOne from user
      *
      * Then
-     * Expects a FORBIDDEN message
+     * Expects a METHOD_NOT_ALLOWED message
      *
      */
     @Test
@@ -675,10 +682,102 @@ public class US204AssignTaskRequestRestControllerTest {
 
 
         //Then
-        ResponseEntity<TaskTeamRequest> expectedInvalid = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        ResponseEntity<TaskTeamRequest> expectedInvalid = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 
         assertEquals(expectedInvalid ,resultInvalid);
 
+
+    }
+
+
+    /**
+     * Given
+     * Adding userThree to taskOne
+     * Assignment Request created for userTwo in taskOne
+     * Removal Request created for userThree in taskOne
+     *
+     * When
+     * Asking for not exiting request type in taskOne
+     *
+     * Then
+     * Expects an OK message and a list of existing ASSIGNMENT requests
+     *
+     */
+    @Test
+    public  void retrieveInvalidFilteredRequest() {
+
+        // Given
+
+        taskOne.addProjectCollaboratorToTask(projCollabThree);
+        taskOne.createTaskAssignmentRequest(projCollabTwo);
+        taskOne.createTaskRemovalRequest(projCollabThree);
+
+        // When
+
+        ResponseEntity<List<TaskTeamRequest>> result = controller.getAllFilteredRequests("invalid", taskIdOne, projectId);
+
+        // Then
+
+
+        ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        assertEquals(expected,result);
+
+    }
+
+    /**
+     * Given
+     * UserFour not in project
+     *
+     * When
+     * Creating assignment request for userFour
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     *
+     */
+    @Test
+    public void canNotCreateAnAssignmentRequestNoProjectCollaborator() {
+
+        //Given
+        User userDTOFour = new User();
+        userDTOFour.setEmail("rita@gmail.com");
+
+        //When
+        ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOFour);
+
+        //Then
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.FORBIDDEN);
+
+        assertEquals(expected,result);
+
+    }
+
+    /**
+     * Given
+     * UserFour not in project
+     *
+     * When
+     * Creating removal request for userFour
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     *
+     */
+    @Test
+    public void canNotCreateARemovalRequestNoProjectCollaborator() {
+
+        //Given
+        User userDTOFour = new User();
+        userDTOFour.setEmail("rita@gmail.com");
+
+        //When
+        ResponseEntity<?> result = controller.createRemovalRequest(taskIdOne, projectId, userDTOFour);
+
+        //Then
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.FORBIDDEN);
+
+        assertEquals(expected,result);
 
     }
 
