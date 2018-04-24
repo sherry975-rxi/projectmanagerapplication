@@ -53,18 +53,29 @@ public class RestControllerNewIntergrationTests {
 
     }
 
+    /**
+     * This tests the basic set up of the functional test using a simple "get User details by ID" method
+     *
+     * First, it asserts the chosen users are in the database
+     * Then attempts to generate a response entity based on the given URL, asserting it contains mike after searching for his ID
+     *
+     * @throws Exception
+     */
+
     @Test
     public void basicUserTest() throws Exception {
 
+        // GIVEN two users in the test Database
         assertEquals(2, userService.getAllUsersFromUserContainer().size());
         assertEquals(mike, userService.getUserByID(mike.getUserID()));
 
+        // WHEN the response entity is fetched from the find User by ID URL
         ResponseEntity<User> actual = this.restTemplate.getForEntity("http://localhost:" + port + "/users/" + mike.getUserID(),
                 User.class);
 
 
+        // THEN the response entity must contain Mike
         ResponseEntity<User> expected = new ResponseEntity<>(mike, HttpStatus.OK);
-
         assertEquals(expected.getBody().getName(), actual.getBody().getName());
 
     }
