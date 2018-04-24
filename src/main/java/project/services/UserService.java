@@ -178,12 +178,7 @@ public class UserService {
 	 */
 	public User getUserByEmail(String email) {
 
-
-		String message = "User not found! Email: ";
-
 		Optional<User> user = this.userRepository.findByEmail(email);
-
-		//return user.orElseThrow(() -> new ObjectNotFoundException(message + email));
 
 		return user.orElse(null);
 	}
