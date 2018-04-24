@@ -59,7 +59,7 @@ public class RestReportController {
 
         //if taskCollaborator doesn't exist
         if (taskCollaborator == null) {
-            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+            responseEntity = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         } else {
             task.createReport(taskCollaborator, firstDateOfReport, reportDto.getReportedTime());
             taskService.saveTask(task);
@@ -72,7 +72,7 @@ public class RestReportController {
                     Link reference1 = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").slash("users").slash(userId).withRel("Show Reports from User");
                     reportCreated.add(reference1);
 
-                    return ResponseEntity.ok().body(reportCreated);
+                    responseEntity = new ResponseEntity<>(reportCreated, HttpStatus.CREATED);
                 }
             }
         }
