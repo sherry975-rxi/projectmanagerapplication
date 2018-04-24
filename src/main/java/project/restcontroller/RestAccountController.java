@@ -1,8 +1,11 @@
 package project.restcontroller;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,9 +22,37 @@ public class RestAccountController {
 
     private final UserService userService;
 
-    public RestAccountController(UserService userService) {
 
+    @Autowired
+    public RestAccountController(UserService userService) {
         this.userService = userService;
+    }
+
+
+    @RequestMapping(value="logIn", method= RequestMethod.POST)
+    public ResponseEntity<User> doLogin(@RequestBody UserDTO logInDTO) {
+
+        ResponseEntity<User> response = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        User toLogIn = userService.getUserByEmail(logInDTO.getEmail());
+
+        if (toLogIn == null) {
+            return response;
+        } else if (!toLogIn.hasPassword()) {
+            //TODO Implement user validation
+            response = new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+            return response;
+        } else if (!toLogIn.checkLogin(logInDTO.getPassword())) {
+            return response;
+        }
+
+        Link userDetails = linkTo(RestUserController.class).slash("users").slash(toLogIn.getUserID()).withSelfRel();
+        toLogIn.add(userDetails);
+
+        response = new ResponseEntity<>(toLogIn, HttpStatus.OK);
+
+        return response;
+
     }
 
     /**
@@ -52,5 +83,6 @@ public class RestAccountController {
         createdUser.add(reference);
 
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+
     }
 }

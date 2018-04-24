@@ -198,6 +198,37 @@ public class RestProjectTasksControllerTest {
     }
 
 
+
+    /**
+     * GIVEN a project id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/unfinished
+     * THEN we receive a valid message with a 200 Ok and a list of the project unfinished tasks
+     */
+
+    @Test
+    public void shouldReturnUnfinishedTasks() throws Exception{
+
+        task.setStartDate(startDate);
+        task2.setStartDate(startDate);
+
+        projectTasks.add(task);
+        projectTasks.add(task2);
+
+        //GIVEN: a project id
+        int projectId = 01;
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        //WHEN: we perform a get request to url /projects/<projectId>/tasks/unfinished
+        when(taskService.getProjectUnFinishedTasks(project)).thenReturn(projectTasks);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/unfinished").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN: we receive a valid message with a 200 Ok and a list of the project finished tasks
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getProjectUnFinishedTasks(project);
+    }
+
+
+
     /**
      * GIVEN a project id
      * WHEN we perform a getAttribute to url /projects/<projectId>/tasks/
