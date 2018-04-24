@@ -42,9 +42,9 @@ public class US101RegisterUserController {
 	 *            password of the User
 	 */
 
-    public UserDTO createUserDTO(String name, String email, String idNumber, String function, String phone, String password) {
+    public UserDTO createUserDTO(String name, String email, String idNumber, String function, String phone, String password, String question, String answer) {
 
-        return new UserDTO(name, email, idNumber, function, phone, password);
+        return new UserDTO(name, email, idNumber, function, phone, password, question , answer);
 
 	}
 
@@ -122,12 +122,6 @@ public class US101RegisterUserController {
 	public boolean isEmailValidController(String email) {
 		return this.userService.isEmailAddressValid(email);
 	}
-
-    public UserDTO setQuestionAnswer(UserDTO userDTO, String question, String answer) {
-        userDTO.setQuestion(question);
-        userDTO.setAnswer(answer);
-        return userDTO;
-    }
 
     /**
      * Adds an address to the userDTO

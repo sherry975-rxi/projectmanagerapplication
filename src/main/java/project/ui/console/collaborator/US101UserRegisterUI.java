@@ -174,10 +174,9 @@ public class US101UserRegisterUI {
 		String confirm = scannerInput.nextLine();
 
 		if ("y".equalsIgnoreCase(confirm)) {
-			UserDTO newUser = us101RegisterUserController.createUserDTO(name, email, idNumber, function, phone, password);
+			UserDTO newUser = us101RegisterUserController.createUserDTO(name, email, idNumber, function, phone, password, question, questionAnswer);
 			newUser = us101RegisterUserController.setAddress(newUser, street, zipCode, city,
 					district, country);
-			newUser = us101RegisterUserController.setQuestionAnswer(newUser, question, questionAnswer);
 			us101RegisterUserController.addNewUserToDbFromDTO(newUser);
 			System.out.println();
 			System.out.println("-------- A numeric verification code will be sent to the email address or the phone number that you provided. -------");
