@@ -10,7 +10,7 @@ public class SendSMS extends ResourceSupport {
 
 
 
-    public void sendMessage(String messageToSend){
+    public void sendMessage(String messageToSend, String numberToSend){
 
         /*
          Settings taken from twilio.com/user/account
