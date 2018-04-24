@@ -328,23 +328,6 @@ public class User extends ResourceSupport implements Serializable {
 		return found;
 	}
 
-	/**
-	 * this method verifies if the given password from a user DTO matches an existing user's password
-	 *
-	 * @param userDTO
-	 * @return true or false if the password match
-	 */
-	public boolean checkLogin(User userDTO) {
-		boolean found;
-		found = false;
-		if (this.password.equals(userDTO.password)) {
-			found = true;
-		}
-		return found;
-	}
-
-
-
 	/*
 	 * (non-Javadoc)
 	 *
