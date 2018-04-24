@@ -141,7 +141,7 @@ public class RestProjectTasksController {
     }
 
     /**
-     * Tis methods gets the list of finished tasks from a project
+     * This methods gets the list of finished tasks from a project
      *
      * @param projid Id of the project to search for finished tasks
      *
@@ -161,6 +161,32 @@ public class RestProjectTasksController {
         }
 
         return new ResponseEntity<>(finishedTasks, HttpStatus.OK);
+
+    }
+
+
+    /**
+     * This methods gets the list of unfinished tasks from a project
+     *
+     * @param projid Id of the project to search for finished tasks
+     *
+     * @return List of finished tasks from the project
+     */
+    @RequestMapping(value = "unfinished", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getUnfinishedTasks (@PathVariable int projid) {
+
+
+        Project project = this.projectService.getProjectById(projid);
+        List<Task> unfinishedTasks = new ArrayList<>();
+
+        unfinishedTasks.addAll(taskService.getProjectUnFinishedTasks(project));
+
+        for(Task task : unfinishedTasks) {
+            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(task.getTaskID()).withSelfRel();
+            task.add(selfRel);
+        }
+
+        return new ResponseEntity<>(unfinishedTasks, HttpStatus.OK);
 
     }
 
