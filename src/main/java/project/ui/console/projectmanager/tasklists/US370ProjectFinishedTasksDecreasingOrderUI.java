@@ -45,20 +45,20 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 		Scanner scannerInput = new Scanner(System.in);
 
         while (true) {
-            System.out.println();
-		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
+
+		System.out.println(":PROJECT: " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
-		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
-		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
-		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
-		System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo());
-		System.out.println("FINISH DATE: " + projectInfo.printProjectFinishDateInfo());
-		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
-		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
-		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
+		System.out.println(":ID: " + projectInfo.printProjectIDCodeInfo());
+		System.out.println(":STATUS: " + projectInfo.printProjectStatusInfo());
+		System.out.println(":DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
+		System.out.println(":START DATE: " + projectInfo.printProjectStartDateInfo());
+		System.out.println(":FINISH DATE: " + projectInfo.printProjectFinishDateInfo());
+		System.out.println(":PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
+		System.out.println(":PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
+		System.out.println(":PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
 		System.out.println(line);
-		System.out.println("               FINISHED TASKS                 ");
-		System.out.println(line);
+		System.out.println("              :FINISHED TASKS:                 ");
+
 
 		List<Task> finishedTasksDecreasingOrder = projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj);
 

@@ -328,8 +328,6 @@ public class User extends ResourceSupport implements Serializable {
 		return found;
 	}
 
-
-
 	/*
 	 * (non-Javadoc)
 	 *
