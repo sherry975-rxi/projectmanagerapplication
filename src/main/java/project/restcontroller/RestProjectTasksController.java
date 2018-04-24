@@ -1,6 +1,7 @@
 package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,8 @@ import project.services.TaskService;
 import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping("projects/{projid}/tasks/")
@@ -65,6 +68,11 @@ public class RestProjectTasksController {
         List<Task> finishedTasks = new ArrayList<>();
 
         finishedTasks.addAll(taskService.getProjectFinishedTasksInDecreasingOrder(project));
+
+        for(Task task : finishedTasks) {
+            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(task.getTaskID()).withSelfRel();
+            task.add(selfRel);
+        }
 
         return new ResponseEntity<>(finishedTasks, HttpStatus.OK);
 
