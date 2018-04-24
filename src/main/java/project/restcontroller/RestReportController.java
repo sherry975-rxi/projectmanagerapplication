@@ -65,7 +65,7 @@ public class RestReportController {
             taskService.saveTask(task);
 
             for (Report reportCreated : task.getReports()) {
-                if (reportCreated.getTaskCollaborator().equals(taskCollaborator) && reportCreated.getReportedTime() == reportDto.getReportedTime()) {
+                if (reportCreated.getTaskCollaborator().equals(taskCollaborator) && Math.abs(reportCreated.getReportedTime() - reportDto.getReportedTime())<0.0000000001) {
 
                     Link reference = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").withRel("Show all Reports from Task");
                     reportCreated.add(reference);
