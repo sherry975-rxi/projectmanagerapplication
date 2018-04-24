@@ -72,9 +72,9 @@ public class US372ProjectUnfinishedTasksUI {
 		for (String ii : listOfOnGoingTasks) {
 
 			if (option.equals(ii)) {
+				taskFuntionatities.taskDataDisplay();
 				taskFuntionatities.setTaskID(ii);
 				taskFuntionatities.setProject(project);
-				taskFuntionatities.taskDataDisplay();
 			} 
 			listOfOptionsToCompare.add(ii);
 		}
