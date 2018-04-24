@@ -95,12 +95,8 @@ public class RestReportController {
 
         Task task = taskService.getTaskByTaskID(taskid);
 
-        //In case task doesn't have reports created,
-        if (task.getReports() == null) {
-            responseEntity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
             responseEntity = ResponseEntity.ok().body(task.getReports());
-        }
+
 
         return responseEntity;
     }
