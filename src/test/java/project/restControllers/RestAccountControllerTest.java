@@ -172,4 +172,76 @@ public class RestAccountControllerTest {
 
         assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
     }
+
+    @Test
+    public void shouldLogin() throws Exception {
+        //GIVEN a user with a valid password
+        userDaniel.setPassword("exists");
+        when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
+
+        //WHEN performing a logIn post request using a UserDTO
+        UserDTO userDTO = new UserDTO("", "test@gmail.com", "", "", "",
+                "exists", "", "");
+
+        MockHttpServletResponse response = mvc.perform(post("/account/logIn")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonUserDto.write(userDTO).getJson()))
+                .andReturn().getResponse();
+
+        //THEN the response entity must contain OK
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+
+    }
+
+    @Test
+    public void shouldNotLogin() throws Exception {
+        // GIVEN a single user in the database
+        when(userService.getUserByEmail(any(String.class))).thenReturn(null);
+
+        // WHEN the email in the DTO doesn't match daniel's email
+        UserDTO userDTO = new UserDTO("", "wrong@mail.mail", "", "", "",
+                "exists", "", "");
+
+        //THEN the response entity must contain FORBIDDEN
+        MockHttpServletResponse response = mvc.perform(post("/account/logIn")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonUserDto.write(userDTO).getJson()))
+                .andReturn().getResponse();
+
+        assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+
+        // AND WHEN the user exists, but has no password
+        when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
+
+        userDTO = new UserDTO("", "wrong@mail.mail", "", "", "",
+                "exists", "", "");
+
+
+        // THEN the response must contain "Not implemented"
+        response = mvc.perform(post("/account/logIn")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonUserDto.write(userDTO).getJson()))
+                .andReturn().getResponse();
+
+        assertEquals(HttpStatus.NOT_IMPLEMENTED.value(), response.getStatus());
+
+        // AND WHEN the user has a password, but the DTO's password doesn't match
+
+        userDaniel.setPassword("exists");
+        when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
+
+        userDTO = new UserDTO("", "test@gmail.com", "", "", "",
+                "wrong password", "", "");
+
+
+        //THEN the response entity must contain FORBIDDEN
+        response = mvc.perform(post("/account/logIn")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonUserDto.write(userDTO).getJson()))
+                .andReturn().getResponse();
+
+        assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+    }
+
+
 }

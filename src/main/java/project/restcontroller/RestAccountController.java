@@ -29,20 +29,20 @@ public class RestAccountController {
     }
 
 
-    @RequestMapping(value="login", method= RequestMethod.GET)
-    public ResponseEntity<User> doLogin(@RequestBody User logInDTO) {
+    @RequestMapping(value="logIn", method= RequestMethod.POST)
+    public ResponseEntity<User> doLogin(@RequestBody UserDTO logInDTO) {
 
         ResponseEntity<User> response = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         User toLogIn = userService.getUserByEmail(logInDTO.getEmail());
 
-        if (toLogIn == null || !toLogIn.hasPassword()) {
+        if (toLogIn == null) {
             return response;
         } else if (!toLogIn.hasPassword()) {
             //TODO Implement user validation
             response = new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
             return response;
-        } else if (!toLogIn.checkLogin(logInDTO)) {
+        } else if (!toLogIn.checkLogin(logInDTO.getPassword())) {
             return response;
         }
 
