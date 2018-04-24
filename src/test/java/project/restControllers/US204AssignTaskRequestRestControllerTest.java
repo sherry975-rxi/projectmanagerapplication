@@ -60,6 +60,8 @@ public class US204AssignTaskRequestRestControllerTest {
     private int userTwoId;
     private User userThree;
     private String userThreeEmail;
+    private User userFour;
+    private String userFourEmail;
     private Project projectOne;
     private Integer projectId;
     private Task taskOne;
@@ -70,7 +72,7 @@ public class US204AssignTaskRequestRestControllerTest {
     private ProjectCollaborator projCollabThree;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp(){
 
         // create userPM
         userPM = userService.createUser("Ana", "ana@gmail.com", "01", "collaborator", "221238442", "Rua Porto",
@@ -85,6 +87,11 @@ public class US204AssignTaskRequestRestControllerTest {
         userThree = userService.createUser("Rui", "rui@gmail.com", "03", "collaborator", "221378449", "Rua Porto",
                 "4480", "Porto", "Porto", "Portugal");
         userThreeEmail = "rui@gmail.com";
+
+        // create userThree
+        userFour = userService.createUser("Rita", "rita@gmail.com", "04", "collaborator", "221378448", "Rua Porto",
+                "6480", "Porto", "Porto", "Portugal");
+        userFourEmail = "rita@gmail.com";
 
         // create a project with userPM as manager
         projectOne = projectService.createProject("Restful", "Implement API Rest", userPM);
@@ -119,6 +126,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         Mockito.when(userRepository.findByEmail("joao@gmail.com")).thenReturn(Optional.of(userTwo));
         Mockito.when(userRepository.findByEmail(userThreeEmail)).thenReturn(Optional.of(userThree));
+        Mockito.when(userRepository.findByEmail(userFourEmail)).thenReturn(Optional.of(userFour));
         Mockito.when(userRepository.findByUserID(userTwoId)).thenReturn(userTwo);
         Mockito.when(projectsRepository.findById(projectId)).thenReturn(Optional.of(projectOne));
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
@@ -712,6 +720,62 @@ public class US204AssignTaskRequestRestControllerTest {
 
 
         ResponseEntity<?> expected = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        assertEquals(expected,result);
+
+    }
+
+    /**
+     * Given
+     * UserFour not in project
+     *
+     * When
+     * Creating assignment request for userFour
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     *
+     */
+    @Test
+    public void canNotCreateAnAssignmentRequestNoProjectCollaborator() {
+
+        //Given
+        User userDTOFour = new User();
+        userDTOFour.setEmail("rita@gmail.com");
+
+        //When
+        ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOFour);
+
+        //Then
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.FORBIDDEN);
+
+        assertEquals(expected,result);
+
+    }
+
+    /**
+     * Given
+     * UserFour not in project
+     *
+     * When
+     * Creating removal request for userFour
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     *
+     */
+    @Test
+    public void canNotCreateARemovalRequestNoProjectCollaborator() {
+
+        //Given
+        User userDTOFour = new User();
+        userDTOFour.setEmail("rita@gmail.com");
+
+        //When
+        ResponseEntity<?> result = controller.createRemovalRequest(taskIdOne, projectId, userDTOFour);
+
+        //Then
+        ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.FORBIDDEN);
 
         assertEquals(expected,result);
 

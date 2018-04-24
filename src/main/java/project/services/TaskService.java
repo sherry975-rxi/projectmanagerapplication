@@ -652,11 +652,13 @@ public class TaskService {
 		 * This method deletes a task from the task the repository if the state if the
 		 * task hasnâ€™t started
 		 * 
-		 * @param taskToDelete
-		 *            the task that will be removed from the task repository
+		 * @param taskId
+		 *            the taskId of the task that will be removed from the task repository
 		 * 
 		 */
-		public boolean deleteTask(Task taskToDelete) {
+		public boolean deleteTask(String taskId) {
+
+			Task taskToDelete = getTaskByTaskID(taskId);
 
 			boolean wasTaskDeleted = false;
 
@@ -843,11 +845,11 @@ public class TaskService {
      */
 	public CostCalculationInterface chooseCalculationMethod(Project project) {
         switch(project.getCalculationMethod()) {
-            case Project.FIRST_COLLABORATOR:
+			case CI:
                 return new FirstCollaboratorCost();
-            case Project.LAST_COLLABORATOR:
+			case CF:
                 return new LastCollaboratorCost();
-            case Project.FIRST_LAST_COLLABORATOR:
+            case CIFM:
                 return new FirstAndLastCollaboratorCost();
             default:
                 return new AverageCollaboratorCost();

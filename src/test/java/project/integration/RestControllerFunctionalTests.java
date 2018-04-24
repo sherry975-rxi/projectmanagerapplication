@@ -212,7 +212,7 @@ public class RestControllerFunctionalTests {
     public void US136TestBrowserOutput() throws Exception {
 
         //Tests if there is really nothing when a non-valid profile is inserted
-            mockMvc.perform(get("/users/dadadadad")).andExpect(status().isNotFound());
+            mockMvc.perform(get("users/dadadadad")).andExpect(status().isNotFound());
 
 
         //Tests if the controller finds collaborators correctly
