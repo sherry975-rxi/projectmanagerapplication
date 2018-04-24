@@ -70,8 +70,8 @@ public class US360ProjectUnassignedTasksUI {
 
 			if (option.equals(ii)) {
 				taskFuntionatities.setTaskID(ii);
-				taskFuntionatities.setProject(project);
 				taskFuntionatities.taskDataDisplay();
+				taskFuntionatities.setProject(project);
 			} 
 			listOfOptionsToCompare.add(ii);
 		}
