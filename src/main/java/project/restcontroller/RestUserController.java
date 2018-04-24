@@ -32,8 +32,8 @@ public class RestUserController {
      * @return
      */
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<?> seeUserDetails(@PathVariable int userId){
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<User> seeUserDetails(@PathVariable int userId){
+        ResponseEntity<User> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         User userToReturn;
         userToReturn = userService.getUserByID(userId);
         if(userToReturn != null){

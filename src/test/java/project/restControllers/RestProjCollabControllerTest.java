@@ -29,6 +29,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestProjCollabControllerTest {
@@ -76,11 +77,7 @@ public class RestProjCollabControllerTest {
 
     @After
     public void tearDown() {
-        projectServiceMock = null;
-        userServiceMock = null;
-        projectMock = null;
         victim = null;
-        mvc = null;
         pcInes = null;
         jacksonProjectCollaborator = null;
         jacksonProjectCollaboratorList = null;
@@ -160,4 +157,60 @@ public class RestProjCollabControllerTest {
         //THEN we receive status OK and the project info updated
         assertEquals(HttpStatus.CREATED.value(), response.getStatus());
     }
+
+
+    /**
+     * GIVEN a project Id
+     * WHEN we perform a post request to url /projects/<projectId>/team with an invalid request body
+     * THEN we we receive status BAD-REQUEST and no projectCollaborator will be created
+     * @throws Exception
+     */
+    @Test
+    public void shouldNotCreateProjectCollaborator() throws Exception{
+
+        //GIVEN a project ID
+        int projectId = 2;
+
+        //WHEN we perform a post request to url /projects/<projectId>/team with a incomplete request body
+        when(projectServiceMock.getProjectById(projectId)).thenReturn(projectMock);
+        when(userServiceMock.getUserByEmail(uDaniel.getEmail())).thenReturn(null);
+        MockHttpServletResponse response = mvc.perform(post("/projects/" + projectId + "/team")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonProjectCollaborator.write(pcDaniel).getJson())).andReturn().getResponse();
+
+
+        //THEN we receive status OK and the project info updated
+        assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+        verify(projectServiceMock, times(0)).createProjectCollaboratorWithEmail(uDaniel.getEmail(), projectId, 10);
+    }
+
+
+    /**
+     * GIVEN a project ID and a projectCollabId
+     * WHEN we perform a put request to url /projects/<projectId>/team/<projectCollabId>
+     * THEN we we receive status OK and the Project Collaborator is deactivated
+     * @throws Exception
+     */
+    @Test
+    public void shouldDeactivateProjectCollaborator() throws Exception{
+
+        //GIVEN a project ID and a projectCollaboratorID
+        int projectId = 1;
+
+        //WHEN we perform a put request to url /projects/<projectId>/team
+        when(projectServiceMock.getProjectById(projectId)).thenReturn(projectMock);
+        when(userServiceMock.getUserByEmail(uDaniel.getEmail())).thenReturn(uDaniel);
+        when(projectServiceMock.getProjectCollaboratorById(pcDaniel.getProjectCollaboratorId())).thenReturn(pcDaniel);
+        when(projectServiceMock.createProjectCollaboratorWithEmail(any(String.class),any(Integer.class), any(Double.class))).thenReturn(pcDaniel);
+
+
+        MockHttpServletResponse response = mvc.perform(put("/projects/" + projectId + "/team"+"/"+pcDaniel.getProjectCollaboratorId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonProjectCollaborator.write(pcDaniel).getJson())).andReturn().getResponse();
+
+
+        //THEN we receive status OK and the project info updated
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
 }

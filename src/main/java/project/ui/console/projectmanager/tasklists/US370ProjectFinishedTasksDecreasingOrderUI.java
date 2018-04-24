@@ -12,7 +12,7 @@ import project.model.Task;
 
 import java.util.List;
 import java.util.Scanner;
-
+@SuppressWarnings("all")
 @Component
 public class US370ProjectFinishedTasksDecreasingOrderUI {
 

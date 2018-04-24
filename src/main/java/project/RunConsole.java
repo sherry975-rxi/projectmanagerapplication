@@ -2,6 +2,7 @@ package project;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import project.ui.console.MainMenuUI;
@@ -11,6 +12,7 @@ import project.ui.console.loadfiles.loaduser.UserReader;
 import project.ui.console.MockData;
 
 @Component
+@Profile("!test")
 public class RunConsole implements CommandLineRunner {
 
 	@Autowired

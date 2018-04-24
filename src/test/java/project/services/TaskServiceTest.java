@@ -10,6 +10,7 @@ import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 import project.repository.TaskRepository;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -290,7 +291,7 @@ public class TaskServiceTest {
         when(taskMock.getFinishDate()).thenReturn(calendar1);
 
         Calendar calendar2 = Calendar.getInstance();
-        calendar1.set(Calendar.DAY_OF_MONTH, 24);
+        calendar2.set(Calendar.DAY_OF_MONTH, 24);
         calendar2.add(Calendar.MONTH, -1);
 
         when(task2Mock.getFinishDate()).thenReturn(calendar2);
@@ -690,20 +691,24 @@ public class TaskServiceTest {
      */
     @Test
     public void testDeleteTask() {
+        String taskId = "T0.1";
+        taskMock.setTaskID(taskId);
+        when(taskRepository.findByTaskID(taskId)).thenReturn(Optional.of(taskMock));
+
         when(taskMock.viewTaskStateName()).thenReturn("Planned");
-        assertTrue(victim.deleteTask(taskMock));
+        assertTrue(victim.deleteTask(taskId));
 
         when(taskMock.viewTaskStateName()).thenReturn("Created");
-        assertTrue(victim.deleteTask(taskMock));
+        assertTrue(victim.deleteTask(taskId));
 
         when(taskMock.viewTaskStateName()).thenReturn("Ready");
-        assertTrue(victim.deleteTask(taskMock));
+        assertTrue(victim.deleteTask(taskId));
 
         when(taskMock.viewTaskStateName()).thenReturn("Assigned");
-        assertTrue(victim.deleteTask(taskMock));
+        assertTrue(victim.deleteTask(taskId));
 
         when(taskMock.viewTaskStateName()).thenReturn("Finished");
-        assertFalse(victim.deleteTask(taskMock));
+        assertFalse(victim.deleteTask(taskId));
     }
 
     /**
