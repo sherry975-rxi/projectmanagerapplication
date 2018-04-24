@@ -160,6 +160,32 @@ public class RestProjCollabControllerTest {
 
 
     /**
+     * GIVEN a project Id
+     * WHEN we perform a post request to url /projects/<projectId>/team with an invalid request body
+     * THEN we we receive status BAD-REQUEST and no projectCollaborator will be created
+     * @throws Exception
+     */
+    @Test
+    public void shouldNotCreateProjectCollaborator() throws Exception{
+
+        //GIVEN a project ID
+        int projectId = 2;
+
+        //WHEN we perform a post request to url /projects/<projectId>/team with a incomplete request body
+        when(projectServiceMock.getProjectById(projectId)).thenReturn(projectMock);
+        when(userServiceMock.getUserByEmail(uDaniel.getEmail())).thenReturn(null);
+        MockHttpServletResponse response = mvc.perform(post("/projects/" + projectId + "/team")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonProjectCollaborator.write(pcDaniel).getJson())).andReturn().getResponse();
+
+
+        //THEN we receive status OK and the project info updated
+        assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+        verify(projectServiceMock, times(0)).createProjectCollaboratorWithEmail(uDaniel.getEmail(), projectId, 10);
+    }
+
+
+    /**
      * GIVEN a project ID and a projectCollabId
      * WHEN we perform a put request to url /projects/<projectId>/team/<projectCollabId>
      * THEN we we receive status OK and the Project Collaborator is deactivated
