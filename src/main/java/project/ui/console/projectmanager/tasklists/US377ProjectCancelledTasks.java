@@ -70,8 +70,8 @@ public class US377ProjectCancelledTasks {
 		for (String ii : listOfCancelledTasks) {
 
 			if (option.equals(ii)) {
-				taskFuntionatities.setTaskID(ii);
 				taskFuntionatities.setProject(project);
+				taskFuntionatities.setTaskID(ii);
 				taskFuntionatities.taskDataDisplay();
 			} 
 			listOfOptionsToCompare.add(ii);
