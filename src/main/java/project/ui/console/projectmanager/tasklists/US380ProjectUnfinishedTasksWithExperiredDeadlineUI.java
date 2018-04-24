@@ -7,7 +7,7 @@ import project.controllers.US380GetProjectExpiredTaskListController;
 import project.model.Project;
 
 import java.util.Scanner;
-
+@SuppressWarnings("all")
 @Component
 public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 
