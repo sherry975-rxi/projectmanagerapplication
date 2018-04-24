@@ -78,7 +78,7 @@ public class RestAccountController {
 
         User createdUser = userService.getUserByEmail(userDTO.getEmail());
 
-        Link reference = linkTo(RestUserController.class)
+        Link reference = linkTo(RestUserController.class).slash(createdUser.getUserID())
                 .withRel("User details");
         createdUser.add(reference);
 

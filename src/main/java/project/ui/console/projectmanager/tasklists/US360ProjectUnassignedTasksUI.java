@@ -33,7 +33,7 @@ public class US360ProjectUnassignedTasksUI {
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-            System.out.println();
+            System.out.println(line);
 		System.out.println("-PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
 		System.out.println("-ID: " + projectInfo.printProjectIDCodeInfo());
@@ -44,7 +44,7 @@ public class US360ProjectUnassignedTasksUI {
 		System.out.println("-PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
 		System.out.println("-PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("-PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-            System.out.println();
+            System.out.println(line);
 		System.out.println(line);
 		System.out.println("                -UNASSIGNED TASKS");
 		System.out.println(line);
@@ -70,8 +70,8 @@ public class US360ProjectUnassignedTasksUI {
 
 			if (option.equals(ii)) {
 				taskFuntionatities.setTaskID(ii);
-				taskFuntionatities.setProject(project);
 				taskFuntionatities.taskDataDisplay();
+				taskFuntionatities.setProject(project);
 			} 
 			listOfOptionsToCompare.add(ii);
 		}

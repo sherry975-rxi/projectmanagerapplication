@@ -260,6 +260,7 @@ public class US101UserRegisterUI {
 			Logger log = Logger.getAnonymousLogger();
 			this.loop = false;
 			log.info(e.getMessage() + "Message could not be sent. Please, your check internet connection and try again." );
+			throw new RuntimeException(e);
 		}
 	}
 }
