@@ -239,6 +239,48 @@ public class RestReportControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
+    /**
+     * GIVEN a userId, a taskID and a ProjectID
+     *
+     * WHEN  a task has reports from a given user
+     *
+     * THEN all reports from a given User are retrieved
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldNotGetTaskReportsFromUser () throws Exception {
+
+        //GIVEN a userID, a taskID and a ProjectID
+        int projid = 1;
+        String taskid = "1";
+        int userId = 1;
+
+
+        //WHEN  one wants to retrieve the reports from a given user
+        when(projectServiceMock.getProjectById(projid)).thenReturn(projectDto);
+        when(taskServiceMock.getTaskByTaskID(any(String.class))).thenReturn(taskDto);
+        when(userServiceMock.getUserByID(userId)).thenReturn(userDto);
+        when(taskServiceMock.isCollaboratorActiveOnAnyTask(any(ProjectCollaborator.class))).thenReturn(false);
+
+        TaskCollaborator taskCollaboratorDto = new TaskCollaborator(projectCollaboratorDto);
+        taskDto.addProjectCollaboratorToTask(projectCollaboratorDto);
+        double reportedTime = 3.0;
+        Calendar firstDateOfReport;
+        firstDateOfReport = Calendar.getInstance();
+
+        Report reportDto = new Report(taskCollaboratorDto, firstDateOfReport);
+        reportDto.setReportedTime(reportedTime);
+        taskDto.createReport(taskCollaboratorDto, firstDateOfReport, reportedTime);
+        List<Report> reports = taskDto.getReportsFromGivenUser(userDto.getEmail());
+
+        MockHttpServletResponse response = mvc.perform(get("/projects/" + projid + "/tasks/" + taskid + "/reports/" + "users/" + userId)
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN all reports from a given User are retrieved
+        assertEquals(HttpStatus.METHOD_NOT_ALLOWED.value(), response.getStatus());
+    }
+
 
 
     }
