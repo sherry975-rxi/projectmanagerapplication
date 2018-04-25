@@ -23,9 +23,8 @@ import project.services.UserService;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,6 +40,7 @@ public class RestAccountControllerTest {
 
     private JacksonTester<UserDTO> jacksonUserDto;
     private MockMvc mvc;
+    private JacksonTester<String> jacksonString;
 
     @Before
     public void setup() {
@@ -241,6 +241,20 @@ public class RestAccountControllerTest {
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+    }
+
+    @Test
+    public void conditionsTest() throws Exception {
+        //GIVEN these conditions
+        String conditions = "TERMS AND CONDITIONS: \r\n" + "\r\n"
+                + "By using this application, you agree to be bound by, and to comply with these Terms and Conditions.\r\n"
+                + "If you do not agree to these Terms and Conditions, please do not use this application.\r\n"
+                + "To proceed with registration you must accept access conditions (y to confirm; n to deny).";
+        //WHEN the conditions link is accessed
+        MockHttpServletResponse response = mvc.perform(get("/account/conditions").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        //THEN the conditions are returned and the status is OK
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(conditions, response.getContentAsString());
     }
 
 

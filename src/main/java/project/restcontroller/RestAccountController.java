@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -85,4 +84,22 @@ public class RestAccountController {
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
 
     }
+
+    /**
+     * This method returns a response entity with the conditions
+     *
+     * @return the conditions
+     */
+    @RequestMapping(value = "conditions", method = RequestMethod.GET)
+    public ResponseEntity<String> termsAndConditions() {
+
+        String conditions = "TERMS AND CONDITIONS: \r\n" + "\r\n"
+                + "By using this application, you agree to be bound by, and to comply with these Terms and Conditions.\r\n"
+                + "If you do not agree to these Terms and Conditions, please do not use this application.\r\n"
+                + "To proceed with registration you must accept access conditions (y to confirm; n to deny).";
+
+        return new ResponseEntity<>(conditions, HttpStatus.OK);
+
+    }
+
 }
