@@ -417,7 +417,7 @@ public class ProjectServiceTest {
 		String userEmail = "joao@gmail.com";
 
 		//When:: the user is added to the project team, using its email and the project id
-		when(projectRep.findById(projectId)).thenReturn(Optional.of(project1));
+		when(projectRep.findByProjectId(projectId)).thenReturn(Optional.of(project1));
 		when(userService.getUserByEmail(user1.getEmail())).thenReturn(user1);
 
 		projectService.createProjectCollaboratorWithEmail(userEmail, projectId, 10);
@@ -581,14 +581,14 @@ public class ProjectServiceTest {
 		Project project1 = projectService.createProject("Project 1", "Descricao", projectManager);
 
 		/*
-		 * Verifies that the method getProjectById calls the method findById of the
+		 * Verifies that the method getProjectById calls the method findByProjectId of the
 		 * ProjectRepository when the method "getProjectById" is used
 		 */
 
-		when(projectRep.findById(project1.getProjectId())).thenReturn(Optional.of(project1));
+		when(projectRep.findByProjectId(project1.getProjectId())).thenReturn(Optional.of(project1));
 		assertEquals(project1, projectService.getProjectById(project1.getProjectId()));
 
-		Mockito.verify(projectRep, Mockito.times(1)).findById(project1.getProjectId());
+		Mockito.verify(projectRep, Mockito.times(1)).findByProjectId(project1.getProjectId());
 
 	}
 
