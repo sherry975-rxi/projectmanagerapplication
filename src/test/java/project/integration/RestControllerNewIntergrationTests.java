@@ -16,8 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import project.dto.UserDTO;
-import project.model.Project;
-import project.model.User;
+import project.model.*;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -45,19 +44,34 @@ public class RestControllerNewIntergrationTests {
     @Autowired
     UserService userService;
 
-    User owner, mike;
+    User owner, mike, userPM, userRui ;
 
-    Project testThis;
+    Project projectOne;
+
+    Task taskOne;
+
+    ProjectCollaborator projCollabRui;
 
     ResponseEntity<User> actual, expected;
 
     @Before
     public void setUp() {
 
+        // create users
         owner = userService.createUser("Owner boi", "hue@hue.com", "001", "Owns projects", "0000000", "here", "there", "where", "dunno", "mars");
         mike = userService.createUser("Mike", "mike@mike.com", "002", "Tests tasks", "1111111", "here", "there", "where", "dunno", "mars");
+        userPM = userService.createUser("Ana", "ana@gmail.com", "003", "manager", "221238442", "Rua Porto","4480", "Porto", "Porto", "Portugal");
+        userRui = userService.createUser("Rui", "rui@gmail.com", "004", "collaborator", "221378449", "Rua Porto","4480", "Porto", "Porto", "Portugal");
 
-        testThis = projectService.createProject("Test this", "TESTING INTENSIFIES", owner);
+        // create projects
+        projectOne = projectService.createProject("Restful Web Service", "Implement API Rest", userPM);
+
+        // add users to projects
+        projCollabRui = projectService.createProjectCollaborator(userRui, projectOne, 20);
+
+        // create tasks in projects
+        taskOne = taskService.createTask("Create Rest Controller", projectOne);
+
 
 
     }
@@ -66,8 +80,12 @@ public class RestControllerNewIntergrationTests {
     public void tearDown() {
         actual = null;
         expected = null;
+        taskService.getTaskRepository().deleteAllInBatch();
+        projectService.getProjectCollaboratorRepository().deleteAllInBatch();
         projectService.getProjectsRepository().deleteAllInBatch();
         userService.getUserRepository().deleteAllInBatch();
+
+
     }
 
     /**
@@ -84,7 +102,7 @@ public class RestControllerNewIntergrationTests {
         mike = userService.getUserByEmail("mike@mike.com");
 
         // GIVEN two users in the test Database
-        assertEquals(2, userService.getAllUsersFromUserContainer().size());
+        assertEquals(4, userService.getAllUsersFromUserContainer().size());
         assertEquals(mike, userService.getUserByID(mike.getUserID()));
 
         // WHEN the response entity is fetched from the find User by ID URL
@@ -140,13 +158,14 @@ public class RestControllerNewIntergrationTests {
     @Test
     public void basicProjectTest() throws Exception {
         assertEquals(1, projectService.getAllProjectsfromProjectsContainer().size());
-        assertEquals(testThis.getIdCode(), projectService.getProjectById(testThis.getIdCode()).getProjectId());
+        assertEquals(projectOne.getIdCode(), projectService.getProjectById(projectOne.getIdCode()).getProjectId());
     }
 
 
     @Test
     public void basicTaskTest() throws Exception {
-        assertTrue(true);
+        assertEquals(1, taskService.getAllTasksFromTaskRepository().size());
+        assertEquals(taskOne.getTaskID(), taskService.getProjectTasks(projectOne).get(0).getTaskID());
     }
 
 
