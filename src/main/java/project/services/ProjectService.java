@@ -70,7 +70,7 @@ public class ProjectService {
 	 * @return project found
 	 */
 	public Project getProjectById(Integer id) {
-		Optional<Project> project = this.projectsRepository.findById(id);
+		Optional<Project> project = this.projectsRepository.findByProjectId(id);
 
 		//it returns an optional object and if not, it throws the exception ObjectNotFoundException
 		return project.orElseThrow(() -> new ObjectNotFoundException("Project not found! Id: " + id));
@@ -425,5 +425,13 @@ public class ProjectService {
 		this.projectCollaboratorRepository.save(newProjectCollaborator);
 		return newProjectCollaborator;
 
+	}
+
+	public ProjectsRepository getProjectsRepository() {
+		return this.projectsRepository;
+	}
+
+	public ProjCollabRepository getProjectCollaboratorRepository() {
+		return projectCollaboratorRepository;
 	}
 }

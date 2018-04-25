@@ -128,7 +128,7 @@ public class US204AssignTaskRequestRestControllerTest {
         Mockito.when(userRepository.findByEmail(userThreeEmail)).thenReturn(Optional.of(userThree));
         Mockito.when(userRepository.findByEmail(userFourEmail)).thenReturn(Optional.of(userFour));
         Mockito.when(userRepository.findByUserID(userTwoId)).thenReturn(userTwo);
-        Mockito.when(projectsRepository.findById(projectId)).thenReturn(Optional.of(projectOne));
+        Mockito.when(projectsRepository.findByProjectId(projectId)).thenReturn(Optional.of(projectOne));
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
         Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
         Mockito.when(taskRepository.findByTaskID(taskIdOne)).thenReturn(Optional.of(taskOne));
