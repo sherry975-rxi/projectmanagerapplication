@@ -27,47 +27,47 @@ public class TaskAction {
 
         //CREATE Task State
         CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel("Add estimated dates"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel(ADD_COLLABORATOR));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
+        CORRESPONDING_LINKS.put("2", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel(ADD_COLLABORATOR));
+        CORRESPONDING_LINKS.put("3", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
 
         //PLANNED task state
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel("Add Budget and Estimated Cost"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash("team").withRel(ADD_COLLABORATOR));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_ASSIGNMENT).withRel(CREATE_ASSIGNMENT_REQ));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_REMOVAL).withRel(CREATE_REMOVAL_REQ));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
+        CORRESPONDING_LINKS.put("4", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel("Add Budget and Estimated Cost"));
+        CORRESPONDING_LINKS.put("2", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash("team").withRel(ADD_COLLABORATOR));
+        CORRESPONDING_LINKS.put("5", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_ASSIGNMENT).withRel(CREATE_ASSIGNMENT_REQ));
+        CORRESPONDING_LINKS.put("6", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_REMOVAL).withRel(CREATE_REMOVAL_REQ));
+        CORRESPONDING_LINKS.put("3", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
 
         //READY Task State
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel("Add Start Date"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel(ADD_COLLABORATOR));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel("Remove all collaborators"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel("Remove collaborator from Task"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_ASSIGNMENT).withRel(CREATE_ASSIGNMENT_REQ));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_REMOVAL).withRel(CREATE_REMOVAL_REQ));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
+        CORRESPONDING_LINKS.put("7", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel("Add Start Date"));
+        CORRESPONDING_LINKS.put("2", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel(ADD_COLLABORATOR));
+        CORRESPONDING_LINKS.put("8", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel("Remove all collaborators"));
+        CORRESPONDING_LINKS.put("9", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel("Remove collaborator from Task"));
+        CORRESPONDING_LINKS.put("5", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_ASSIGNMENT).withRel(CREATE_ASSIGNMENT_REQ));
+        CORRESPONDING_LINKS.put("6", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_REMOVAL).withRel(CREATE_REMOVAL_REQ));
+        CORRESPONDING_LINKS.put("3", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
 
         //ONGOING task state
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel(ADD_COLLABORATOR));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel("Remove collaborator from Task"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_ASSIGNMENT).withRel(CREATE_ASSIGNMENT_REQ));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_REMOVAL).withRel(CREATE_REMOVAL_REQ));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("standBy").withRel("Set StandBy"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("cancel").withRel("Set Cancelled"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("finish").withRel("Set Finished"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
+        CORRESPONDING_LINKS.put("2", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel(ADD_COLLABORATOR));
+        CORRESPONDING_LINKS.put("9", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel("Remove collaborator from Task"));
+        CORRESPONDING_LINKS.put("5", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_ASSIGNMENT).withRel(CREATE_ASSIGNMENT_REQ));
+        CORRESPONDING_LINKS.put("6", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash(REQUESTS_REMOVAL).withRel(CREATE_REMOVAL_REQ));
+        CORRESPONDING_LINKS.put("10", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("standBy").withRel("Set StandBy"));
+        CORRESPONDING_LINKS.put("11", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("cancel").withRel("Set Cancelled"));
+        CORRESPONDING_LINKS.put("12", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("finish").withRel("Set Finished"));
+        CORRESPONDING_LINKS.put("3", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
 
         //STANDBY task state
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel(ADD_COLLABORATOR));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("cancel").withRel("Set Cancelled"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("finish").withRel("Set Finished"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
+        CORRESPONDING_LINKS.put("2", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("team").withRel(ADD_COLLABORATOR));
+        CORRESPONDING_LINKS.put("11", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("cancel").withRel("Set Cancelled"));
+        CORRESPONDING_LINKS.put("12", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("finish").withRel("Set Finished"));
+        CORRESPONDING_LINKS.put("3", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
 
         //CANCELLED task state
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
+        CORRESPONDING_LINKS.put("3", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
 
         //FINISHED task state
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("ongoing").withRel("Set Ongoing"));
-        CORRESPONDING_LINKS.put("1", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
+        CORRESPONDING_LINKS.put("13", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("ongoing").withRel("Set Ongoing"));
+        CORRESPONDING_LINKS.put("3", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).withRel(TASK_DETAILS));
 
 
         return CORRESPONDING_LINKS;
