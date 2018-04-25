@@ -26,6 +26,7 @@ public class Report extends ResourceSupport {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "TaskCollaborator_id")
+
 	private TaskCollaborator taskCollaborator;
 
 	private double cost;
