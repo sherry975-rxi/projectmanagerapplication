@@ -1,5 +1,6 @@
 package project.dto;
 
+import org.springframework.hateoas.ResourceSupport;
 import project.model.*;
 import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.TaskStateInterface;
@@ -7,8 +8,9 @@ import project.model.taskstateinterface.TaskStateInterface;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
-public class TaskDTO {
+public class TaskDTO extends ResourceSupport {
 
 
     private String taskID;
@@ -36,7 +38,7 @@ public class TaskDTO {
     /**
      * Empty Constructor
      */
-    public TaskDTO() {
+    private TaskDTO() {
 
     }
 
@@ -209,4 +211,28 @@ public class TaskDTO {
         return actions;
     }
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        TaskDTO taskDTO = (TaskDTO) o;
+        return Objects.equals(taskID, taskDTO.taskID);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), taskID);
+    }
 }
