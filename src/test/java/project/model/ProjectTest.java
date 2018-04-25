@@ -189,7 +189,7 @@ public class ProjectTest {
 //		// t1.getTaskCost();
 //
 //		// Task 4 will be added to Project 1 and associated to a new created
-//		p1.getTaskRepository().addTaskToProject(task4);
+//		p1.getAllTasksFromTaskRepository().addTaskToProject(task4);
 //		// t4.createTaskWorker(projectCollaborator1);
 //		// task4.addUserToTask(task4.createTaskWorker(projectCollaborator2));
 //		task4.addProjectCollaboratorToTask(projectCollaborator2);
