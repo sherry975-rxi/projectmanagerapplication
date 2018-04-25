@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import org.springframework.web.util.UriComponents;
+import project.dto.UserDTO;
 import project.model.*;
 import project.services.ProjectService;
 import project.services.TaskService;
@@ -152,7 +153,7 @@ public class US204AssignTaskRequestRestController {
      * @return ResponseEntity
      */
     @RequestMapping(value = "/requests/assignmentRequest", method = RequestMethod.POST)
-    public ResponseEntity<TaskTeamRequest> createAssignmentRequest (@PathVariable String taskId, @PathVariable int projectId, @RequestBody User userDTO){
+    public ResponseEntity<TaskTeamRequest> createAssignmentRequest (@PathVariable String taskId, @PathVariable int projectId, @RequestBody UserDTO userDTO){
 
         Project project = projectService.getProjectById(projectId);
 
@@ -218,7 +219,7 @@ public class US204AssignTaskRequestRestController {
      */
     @RequestMapping(value = "/requests/removalRequest", method = RequestMethod.POST)
     public ResponseEntity<TaskTeamRequest> createRemovalRequest (@PathVariable String taskId,
-                                                                 @PathVariable int projectId, @RequestBody User userDTO){
+                                                                 @PathVariable int projectId, @RequestBody UserDTO userDTO){
 
         Project project = projectService.getProjectById(projectId);
 
