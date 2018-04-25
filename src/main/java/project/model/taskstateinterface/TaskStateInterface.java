@@ -1,6 +1,8 @@
 package project.model.taskstateinterface;
 import project.model.Task;
 
+import java.util.List;
+
 public interface TaskStateInterface {
 	
 	/**
@@ -11,13 +13,10 @@ public interface TaskStateInterface {
 	void doAction(Task task);
 
 	/**
-	 * Method that will add the links available to the task depending of its state
-	 *
-	 * @param task Task to get links from
-	 * @param projectId Id of the project to create the links
-	 *
-	 * @return List of Links
+	 * Method that will get the actions available to the task depending of its state
+
+	 * @return List of Actions
 	 */
-	void addRels(Task task, int projectId);
+	List<String> getActions();
 
 }
