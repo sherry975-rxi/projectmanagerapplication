@@ -5,6 +5,9 @@ import project.model.StateEnum;
 import project.model.Task;
 import project.restcontroller.RestProjectController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 public class Ready implements TaskStateInterface {
@@ -58,30 +61,14 @@ public class Ready implements TaskStateInterface {
 	}
 
 	/**
-	 * Method that creates the rels available to this state and adds the links to the task
+	 * Method that will get the actions available to the task depending of its state
 	 *
-	 * @param task Task to get links from
-	 * @param projectId Id of the project to create the links
+	 * @return List of Actions
 	 */
 	@Override
-	public void addRels(Task task, int projectId){
-
-        //Not implemented yet - PATCH
-		Link reference1 = linkTo(RestProjectController.class).slash(projectId).slash("tasks").slash(task.getTaskID()).withRel("Add Start Date");
-		task.add(reference1);
-
-		//Not implemented yet - POST
-		Link reference2 = linkTo(RestProjectController.class).slash(projectId).slash("tasks").slash(task.getTaskID()).slash("team").withRel("Add Project Collaborator");
-		task.add(reference2);
-
-		//Not implemented yet - DELETE
-		Link reference3 = linkTo(RestProjectController.class).slash(projectId).slash("tasks").slash(task.getTaskID()).slash("team").withRel("Remove all collaborators");
-		task.add(reference3);
-
-		Link reference4 = linkTo(RestProjectController.class).slash(projectId).slash("tasks").slash(task.getTaskID()).slash("requests/assignmentRequest").withRel("Create Assignment Request");
-		task.add(reference4);
-
-		Link reference5 = linkTo(RestProjectController.class).slash(projectId).slash("tasks").slash(task.getTaskID()).slash("requests/removalRequest").withRel("Create Removal Request");
-		task.add(reference5);
+	public List<String> getActions(){
+		List<String> actions = new ArrayList<>();
+		//Add actions
+		return actions;
 	}
 }
