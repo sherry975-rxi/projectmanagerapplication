@@ -16,12 +16,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import project.dto.UserDTO;
+import project.model.Project;
 import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -45,6 +47,8 @@ public class RestControllerNewIntergrationTests {
 
     User owner, mike;
 
+    Project testThis;
+
     ResponseEntity<User> actual, expected;
 
     @Before
@@ -53,12 +57,16 @@ public class RestControllerNewIntergrationTests {
         owner = userService.createUser("Owner boi", "hue@hue.com", "001", "Owns projects", "0000000", "here", "there", "where", "dunno", "mars");
         mike = userService.createUser("Mike", "mike@mike.com", "002", "Tests tasks", "1111111", "here", "there", "where", "dunno", "mars");
 
+        testThis = projectService.createProject("Test this", "TESTING INTENSIFIES", owner);
+
+
     }
 
     @After
     public void tearDown() {
         actual = null;
         expected = null;
+        projectService.getProjectsRepository().deleteAllInBatch();
         userService.getUserRepository().deleteAllInBatch();
     }
 
@@ -126,6 +134,19 @@ public class RestControllerNewIntergrationTests {
 
 
 
+    }
+
+
+    @Test
+    public void basicProjectTest() throws Exception {
+        assertEquals(1, projectService.getAllProjectsfromProjectsContainer().size());
+        assertEquals(testThis.getIdCode(), projectService.getProjectById(testThis.getIdCode()).getProjectId());
+    }
+
+
+    @Test
+    public void basicTaskTest() throws Exception {
+        assertTrue(true);
     }
 
 
