@@ -996,7 +996,8 @@ public class TaskService {
 
 		for(Task other : finishedTaskListDecreasingOrder) {
 			TaskDTO taskDTO = new TaskDTO(other);
-			finishedDecreasing.add(taskDTO); }
+			finishedDecreasing.add(taskDTO);
+		}
 
 		return finishedDecreasing;
 	}
