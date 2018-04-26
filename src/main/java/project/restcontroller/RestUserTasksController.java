@@ -54,8 +54,8 @@ public class RestUserTasksController {
      *
      *  All of these cases return a List containing only "401 Unauthorized" to ensure database privacy
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<String>> getPendingTasks(@PathVariable String userID) {
+    @RequestMapping(value = "pending",method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getPendingTasks(@PathVariable String userId) {
 
         Integer id;
 
@@ -64,7 +64,7 @@ public class RestUserTasksController {
         List<String> userListString = new ArrayList<>();
 
         try {
-            id = Integer.parseInt(userID);
+            id = Integer.parseInt(userId);
             user = userService.getUserByID(id);
         } catch (NumberFormatException e) {
             userListString.add("401 Unauthorized");
