@@ -1,6 +1,7 @@
 package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping("/users/{userId}/tasks/")
@@ -28,66 +30,30 @@ public class RestUserTasksController {
         this.userService = userService;
     }
 
-    /**
-     * This method returns a ResponseEntity that contains all the user's finished tasks by decreasing order
-     *
-     * @return
-     */
     @RequestMapping(value = "finished", method = RequestMethod.GET)
-    public List<Task> getUserFinishedTasks(@PathVariable int userId) {
-
-        return taskService.getAllFinishedUserTasksInDecreasingOrder(this.userService.getUserByID(userId));
+    public List<Task> getUserFinishedTasks(@PathVariable Integer userId) {
+        List<Task> taskList = taskService.getAllFinishedUserTasksInDecreasingOrder(this.userService.getUserByID(userId));
+        for(Task task: taskList) {
+            Link reference = linkTo(getClass(), userId).slash("task").slash(task.getDbTaskId()).withSelfRel();
+            task.add(reference);
+        }
+        return taskList;
     }
 
-
-    /**
-     *
-     * This method converts the string of a User's ID from the URI into an integer,
-     * Locates the User's data, and then finds all Ongoing tasks associated with that user.
-     * Tasks are returned as a list of Strings
-     *
-     * It performs several checks to ensure consistency:
-     *  - ensuring the User's ID is an integer
-     *  - ensuring the User's ID actually exists
-     *  - ensuring the User's ID matches the logged in user (TO BE IMPLEMENTED)
-     *
-     *  All of these cases return a List containing only "401 Unauthorized" to ensure database privacy
-     */
-    @RequestMapping(value = "pending",method = RequestMethod.GET)
-
-    public ResponseEntity<List<String>> getPendingTasks(@PathVariable String userId) {
-
-        Integer id;
-
-        User user;
-
-        List<String> userListString = new ArrayList<>();
-
-        try {
-            id = Integer.parseInt(userId);
-            user = userService.getUserByID(id);
-        } catch (NumberFormatException e) {
-            userListString.add("401 Unauthorized");
-            return ResponseEntity.ok().body(userListString);
+    @RequestMapping(value = "pending", method = RequestMethod.GET)
+    public List<Task> getPendingTasks(@PathVariable Integer userId) {
+        List<Task> taskList = taskService.getStartedNotFinishedUserTaskList(userService.getUserByID(userId));
+        for(Task task: taskList) {
+            Link reference = linkTo(getClass(), userId).slash("task").slash(task.getDbTaskId()).withSelfRel();
+            task.add(reference);
         }
-        if (user == null) {
 
-            userListString.add("401 Unauthorized");
+        return taskList;
+    }
 
-            return ResponseEntity.ok().body(userListString);
-
-        } else {
-
-            List<String> taskListString = taskService.getStartedNotFinishedUserTaskList(user)
-                    .stream().map(task -> task.getTaskID()+ " - " + task.getDescription()).collect(Collectors.toList());
-
-            if(taskListString.isEmpty()) {
-                taskListString.add("You have no ongoing tasks!");
-            }
-
-            return ResponseEntity.ok().body(taskListString);
-
-        }
+    @RequestMapping(value = "task/{taskId}", method = RequestMethod.GET)
+    public Task getTaskById(@PathVariable String taskId) {
+        return taskService.getTaskByID(Long.parseLong(taskId));
     }
 
 }

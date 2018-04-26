@@ -321,7 +321,7 @@ public class TaskService {
 	public List<Task> getAllFinishedUserTasksInDecreasingOrder(User user) {
 
 		List<Task> finishedTasksDecOrder = new ArrayList<>();
-		finishedTasksDecOrder.addAll(getUserTasks(user));
+		finishedTasksDecOrder.addAll(getAllFinishedTasksFromUser(user));
 
 		return this.sortFinishTaskListDecreasingOrder(finishedTasksDecOrder);
 	}

@@ -247,28 +247,11 @@ public class RestControllerFunctionalTests {
      */
     @Test
     public void US203testBrowserOutput() throws Exception {
-
-        String onGoingTaskString = ongoingTask.getTaskID() + " - " + ongoingTask.getDescription();
-
-        // this confirms mike's ID returns a "501 not yet implemented"
-        mockMvc.perform(get("/users/" + String.valueOf(mike.getUserID()) + "/tasks/pending")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(2))).andExpect(jsonPath("$[0]", is(onGoingTaskString)));
-
-        // this confirms an Invalid (non INT) ID returns a "401 unauthorized"
-        mockMvc.perform(get("/users/" + "INVALID" + "/tasks/pending")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("401 Unauthorized")));
-
-        // this confirms an Invalid (negative) ID returns a "401 unauthorized"
-        mockMvc.perform(get("/users/" + String.valueOf(-2) + "/tasks/pending")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("401 Unauthorized")));
-    }
-
-
-    protected String json(Object o) throws IOException {
-        MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-        this.mappingJackson2HttpMessageConverter.write(
-                o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
-        return mockHttpOutputMessage.getBodyAsString();
+        mockMvc.perform(get("/users/" + String.valueOf(mike.getUserID()) + "/tasks/pending"))
+                .andExpect(status().isOk()).andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].description", is(ongoingTask.getDescription())))
+                .andExpect(jsonPath("$[1].description", is(secondOngoingTask.getDescription())));
     }
 
 }
