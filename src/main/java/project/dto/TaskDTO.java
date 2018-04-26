@@ -49,6 +49,7 @@ public class TaskDTO extends ResourceSupport {
      */
     public TaskDTO(Task task) {
 
+        this.taskID = task.getTaskID();
         this.description = task.getDescription();
         this.creationDate = task.getCreationDate();
         this.startDate = task.getStartDate();
@@ -64,7 +65,7 @@ public class TaskDTO extends ResourceSupport {
         this.taskState = task.getTaskState();
         this.startDateInterval = task.getStartDateInterval();
         this.deadlineInterval = task.getDeadlineInterval();
-        this.currentState = StateEnum.CREATED;
+        this.currentState = task.getCurrentState();
         this.project = task.getProject();
         this.pendingTaskTeamRequests = task.getPendingTaskTeamRequests();
         this.actions = new ArrayList<>();

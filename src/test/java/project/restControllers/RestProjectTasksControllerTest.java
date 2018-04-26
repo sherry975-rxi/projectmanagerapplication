@@ -19,6 +19,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import project.dto.TaskDTO;
 import project.model.*;
 
 import project.model.taskstateinterface.Finished;
@@ -76,6 +77,7 @@ public class RestProjectTasksControllerTest {
     private Calendar estimatedDeadline;
 
     private List<Task> expected;
+    private List<TaskDTO> projectTaskdtos;
     private ResponseEntity<List<Task>> expectedResponse;
 
     @Before
@@ -119,6 +121,7 @@ public class RestProjectTasksControllerTest {
 
         // and finally an empty test list to be filled and compared for each assertion
         expected = new ArrayList<>();
+        projectTaskdtos = new ArrayList<>();
     }
 
     @After
@@ -181,7 +184,6 @@ public class RestProjectTasksControllerTest {
         //THEN: we receive a valid message with 202 Accepted and the task list has to display one less task
         assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
 
-        projectTasks = new ArrayList<>();
     }
 
 
@@ -241,25 +243,23 @@ public class RestProjectTasksControllerTest {
     @Test
     public void shouldReturnFinishedTasks() throws Exception {
 
-        task.setStartDate(startDate);
-        task2.setStartDate(startDate);
-        task.markTaskAsFinished();
-        task2.markTaskAsFinished();
+        TaskDTO taskDTO = new TaskDTO(task);
+        TaskDTO taskDTO1 = new TaskDTO(task2);
 
-        projectTasks.add(task);
-        projectTasks.add(task2);
+        projectTaskdtos.add(taskDTO);
+        projectTaskdtos.add(taskDTO1);
 
         //GIVEN: a project id
         int projectId = 01;
         when(projectService.getProjectById(projectId)).thenReturn(project);
 
         //WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>/finished
-        when(taskService.getProjectFinishedTasksInDecreasingOrder(project)).thenReturn(projectTasks);
+        when(taskService.getProjectFinishedTasksDecOrder(projectId)).thenReturn(projectTaskdtos);
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/finished").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //THEN: we receive a valid message with a 200 Ok and a list of the project finished tasks
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        verify(taskService, times(1)).getProjectFinishedTasksInDecreasingOrder(project);
+        verify(taskService, times(1)).getProjectFinishedTasksDecOrder(projectId);
     }
 
 
