@@ -23,7 +23,6 @@ public class US203GetUnfinishedTaskUI {
 	public void displayOptions(User user1) {
 		boolean loop = true;
 		while (loop) {
-			loop = false;
 
 		User user = user1;
 		int t;
@@ -56,7 +55,7 @@ public class US203GetUnfinishedTaskUI {
 		String option = scannerInput.nextLine().toUpperCase();
 
 		if (option =="B") {
-				break;
+				loop=false;
 		}
 
 		else{
@@ -74,10 +73,8 @@ public class US203GetUnfinishedTaskUI {
 			catch (NullPointerException npe) {
 				System.out.println("Please choose a valid option: ");
 				System.out.println("");
-				loop = true;
 			}
 
-			break;
 		}
 	}
 }
