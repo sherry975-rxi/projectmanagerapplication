@@ -208,6 +208,7 @@ public class RestControllerFunctionalTests {
     /**
      * This test confirms the rest Controller for US136 works correctly
      */
+
     @Test
     public void US136TestBrowserOutput() throws Exception {
 
@@ -250,15 +251,15 @@ public class RestControllerFunctionalTests {
         String onGoingTaskString = ongoingTask.getTaskID() + " - " + ongoingTask.getDescription();
 
         // this confirms mike's ID returns a "501 not yet implemented"
-        mockMvc.perform(get("/users/" + String.valueOf(mike.getUserID()) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+        mockMvc.perform(get("/users/" + String.valueOf(mike.getUserID()) + "/tasks/pending")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(2))).andExpect(jsonPath("$[0]", is(onGoingTaskString)));
 
         // this confirms an Invalid (non INT) ID returns a "401 unauthorized"
-        mockMvc.perform(get("/users/" + "INVALID" + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+        mockMvc.perform(get("/users/" + "INVALID" + "/tasks/pending")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("401 Unauthorized")));
 
         // this confirms an Invalid (negative) ID returns a "401 unauthorized"
-        mockMvc.perform(get("/users/" + String.valueOf(-2) + "/viewPendingTasks")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
+        mockMvc.perform(get("/users/" + String.valueOf(-2) + "/tasks/pending")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("401 Unauthorized")));
     }
 

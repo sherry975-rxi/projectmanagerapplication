@@ -4,11 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import project.dto.TaskDTO;
 import project.model.*;
 import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 import project.repository.TaskRepository;
+import project.repository.UserRepository;
 
 import javax.swing.text.html.Option;
 import java.util.ArrayList;
@@ -47,6 +49,9 @@ public class TaskServiceTest {
     @Mock
     private TaskCollaborator taskCollaboratorMock;
 
+    @Mock
+    private ProjectService projectService;
+
     private Calendar startDate;
     private Project project;
     private User user;
@@ -56,7 +61,6 @@ public class TaskServiceTest {
     private ProjectCollaborator projectCollaborator2;
     private ProjectCollaborator projectCollaborator3;
     private TaskCollaborator taskCollaborator;
-    private ProjectService projectService;
 
     @InjectMocks
     private TaskService victim = new TaskService(taskRepository);
@@ -203,7 +207,7 @@ public class TaskServiceTest {
         orderedListToCompare.add(taskMock);
         orderedListToCompare.add(task2Mock);
 
-        assertEquals(orderedListToCompare, victim.sortTaskListDecreasingOrder(result));
+        assertEquals(orderedListToCompare, victim.sortFinishTaskListDecreasingOrder(result));
     }
 
     @Test
@@ -312,6 +316,7 @@ public class TaskServiceTest {
         List<Task> orderedListToCompare = new ArrayList<>();
         orderedListToCompare.add(taskMock);
         orderedListToCompare.add(task2Mock);
+
 
         List<Task> trueList = victim.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
 
@@ -1120,6 +1125,47 @@ public class TaskServiceTest {
     public void testGetTaskByTaskID() {
         when(taskRepository.findByTaskID("12")).thenReturn(Optional.of(taskMock));
         assertEquals(taskMock, victim.getTaskByTaskID("12"));
+    }
+
+    /**
+     * GIVEN a project id
+     * WHEN the method getProjectFinishedTasksInDecOrder is called
+     * THEN a list of taskDTOs must be returned in decreasing order
+     */
+    @Test
+    public void testGetProjectFinishedTasksInDecOrder() {
+
+        Calendar calendar = Calendar.getInstance();
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.add(Calendar.MONTH, -1);
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(taskMock);
+        taskList.add(task2Mock);
+
+        when(taskMock.isTaskFinished()).thenReturn(true);
+        when(task2Mock.isTaskFinished()).thenReturn(true);
+        when(taskMock.getFinishDate()).thenReturn(calendar);
+        when(task2Mock.getFinishDate()).thenReturn(calendar2);
+
+        List<TaskDTO> taskListDTO = new ArrayList<>();
+        taskListDTO.add(new TaskDTO(taskMock));
+        taskListDTO.add(new TaskDTO(task2Mock));
+
+
+
+        //GIVEN a project id
+        int projId = 1;
+        when(projectsRepository.findByProjectId(projId)).thenReturn(Optional.of(project));
+
+        //WHEN the method getProjectFinishedTasksInDecOrder is called
+        when(taskRepository.findAllByProject(any(Project.class))).thenReturn(taskList);
+        List<TaskDTO> finishedTasksDTO =  victim.getProjectFinishedTasksDecOrder(projId);
+
+        //THEN a list of taskDTOs must be returned in decreasing order
+        assertEquals(taskListDTO, finishedTasksDTO);
+
+
     }
 
 }

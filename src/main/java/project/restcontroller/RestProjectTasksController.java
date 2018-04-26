@@ -5,7 +5,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.HandlerMapping;
+import project.dto.TaskAction;
+import project.dto.TaskDTO;
 import project.model.Project;
 import project.model.Task;
 import project.services.ProjectService;
@@ -13,9 +14,7 @@ import project.services.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -29,6 +28,8 @@ public class RestProjectTasksController {
 
     HttpServletRequest req;
 
+    String tasks = "tasks";
+
 
     @Autowired
     public RestProjectTasksController(TaskService taskService, ProjectService projectService, HttpServletRequest req) {
@@ -38,57 +39,42 @@ public class RestProjectTasksController {
     }
 
 
-    /**
-     * This method extracts the number of the project from the RequestMapping URI
-     *         In case the ID in the URI is not an Integer, it will return null;
-     *
-     * @return Integer
-     * Returns an Integer in case the id of the project is valid and exists ELSE returns
-     */
-    @SuppressWarnings("unchecked")
-    public Integer getProjectIdByURI(){
 
-        Map<String, String> variables = new HashMap<>();
-        variables = (Map<String, String>) req.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-
-
-
-        String projIDString = variables.get("projid");
-
-        Integer projID;
-
-        try {
-            projID = Integer.parseInt(projIDString);
-        } catch(NumberFormatException e){
-            projID = null;
-        }
-
-        return projID;
-
-
-    }
 
 
     /**
      * Creates a Task with a description, associated to a project thats in the URI of the controller.
      * If the project doesn't exist or it's an invalid ID, it will return HttpStatus.NOT_FOUND
+     *
+     * It can also create a Task using another Task constructor, that includes the parameters:
+     *
+     * estimatedTaskEffort
+     * taskBudget
+     * estimatedStartDate
+     * taskDeadLine
      */
     @RequestMapping(value = "" , method = RequestMethod.POST)
-    public ResponseEntity<Task> createTask(@RequestBody Task taskDTO) {
+    public ResponseEntity<Task> createTask(@RequestBody Task taskDTO, @PathVariable int projid) {
 
-        ResponseEntity<Task> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        Integer projID = getProjectIdByURI();
 
-        if(projID != null) {
-
-            Project projectTask = projectService.getProjectById(projID);
+            Project projectTask = projectService.getProjectById(projid);
             Task task = taskService.createTask(taskDTO.getDescription(), projectTask);
-            result =  ResponseEntity.ok().body(task);
 
-        }
+        if (taskDTO.getEstimatedTaskEffort() <= 0.00000001 && taskDTO.getTaskBudget() <= 0.00000001
+             && taskDTO.getEstimatedTaskStartDate() != null && taskDTO.getTaskDeadline() != null) {
 
-        return result;
+                task.setEstimatedTaskEffort(taskDTO.getEstimatedTaskEffort());
+                task.setTaskBudget(taskDTO.getTaskBudget());
+                task.setEstimatedTaskStartDate(taskDTO.getEstimatedTaskStartDate());
+                task.setTaskDeadline(taskDTO.getTaskDeadline());
+
+
+            }
+
+
+
+        return ResponseEntity.ok().body(task);
 
     }
 
@@ -112,7 +98,7 @@ public class RestProjectTasksController {
 
         for(Task task: tasksWithoutCollabs){
 
-            Link taskLink = linkTo(RestProjectController.class).slash(projid).slash("tasks").withSelfRel();
+            Link taskLink = linkTo(RestProjectController.class).slash(projid).slash(tasks).withSelfRel();
             task.add(taskLink);
         }
 
@@ -148,16 +134,18 @@ public class RestProjectTasksController {
      * @return List of finished tasks from the project
      */
     @RequestMapping(value = "finished", method = RequestMethod.GET)
-    public ResponseEntity<List<Task>> getFinishedTasks (@PathVariable int projid) {
+    public ResponseEntity<List<TaskDTO>> getFinishedTasks (@PathVariable int projid) {
 
-        Project project = this.projectService.getProjectById(projid);
-        List<Task> finishedTasks = new ArrayList<>();
+        List<TaskDTO> finishedTasks = new ArrayList<>();
 
-        finishedTasks.addAll(taskService.getProjectFinishedTasksInDecreasingOrder(project));
+        finishedTasks.addAll(taskService.getProjectFinishedTasksDecOrder(projid));
 
-        for(Task task : finishedTasks) {
-            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(task.getTaskID()).withSelfRel();
-            task.add(selfRel);
+        for(TaskDTO taskDto : finishedTasks) {
+            for(String action : taskDto.getTaskState().getActions()) {
+            Link actionLink = TaskAction.getLinks(projid, taskDto.getTaskID()).get(action);
+            taskDto.add(actionLink);
+
+             }
         }
 
         return new ResponseEntity<>(finishedTasks, HttpStatus.OK);
@@ -182,7 +170,7 @@ public class RestProjectTasksController {
         unfinishedTasks.addAll(taskService.getProjectUnFinishedTasks(project));
 
         for(Task task : unfinishedTasks) {
-            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(task.getTaskID()).withSelfRel();
+            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash(tasks).slash(task.getTaskID()).withSelfRel();
             task.add(selfRel);
         }
 

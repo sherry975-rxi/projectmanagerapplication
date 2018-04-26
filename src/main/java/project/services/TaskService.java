@@ -2,6 +2,7 @@ package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.dto.TaskDTO;
 import project.model.*;
 import project.model.costcalculationinterface.*;
 import project.model.taskstateinterface.*;
@@ -23,6 +24,9 @@ public class TaskService {
 
 	@Autowired
 	private ProjCollabRepository projectCollaboratorRepository;
+
+	@Autowired
+	private ProjectService projectService;
 
 	public TaskService() { }
 
@@ -211,7 +215,7 @@ public class TaskService {
 		return lastMonthFinishedTasks;
 	}
 
-	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {		
+	public List<Task> sortFinishTaskListDecreasingOrder(List<Task> toSort) {
 	
 		Collections.sort(toSort, new Comparator<Task>() {
             @Override
@@ -302,7 +306,7 @@ public class TaskService {
 		List<Task> lastMonthTasksDecOrder = new ArrayList<>();
 		lastMonthTasksDecOrder.addAll(getLastMonthFinishedUserTaskList(user));
 
-		return this.sortTaskListDecreasingOrder(lastMonthTasksDecOrder);
+		return this.sortFinishTaskListDecreasingOrder(lastMonthTasksDecOrder);
 	}
 
 	/**
@@ -319,7 +323,7 @@ public class TaskService {
 		List<Task> finishedTasksDecOrder = new ArrayList<>();
 		finishedTasksDecOrder.addAll(getUserTasks(user));
 
-		return this.sortTaskListDecreasingOrder(finishedTasksDecOrder);
+		return this.sortFinishTaskListDecreasingOrder(finishedTasksDecOrder);
 	}
 
 	/**
@@ -540,7 +544,7 @@ public class TaskService {
 
 			finishedTaskListDecreasingOrder.addAll(this.getProjectFinishedTasks(project));
 
-			return sortTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
+			return sortFinishTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
 		}
 		
 		/**
@@ -973,6 +977,28 @@ public class TaskService {
 	public TaskRepository getTaskRepository() {
 		return this.taskRepository;
 
+	}
+
+	/**
+	 * This method create a list of all tasks finished from project in decreasing
+	 * order.
+	 *
+	 * @return a list of tasks finished by decreasing order
+	 */
+	public List<TaskDTO> getProjectFinishedTasksDecOrder(int projectId) {
+
+		Project project = projectService.getProjectById(projectId);
+
+		List<Task> finishedTaskListDecreasingOrder = new ArrayList<>();
+		finishedTaskListDecreasingOrder.addAll(this.getProjectFinishedTasks(project));
+		finishedTaskListDecreasingOrder = sortFinishTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
+		List<TaskDTO> finishedDecreasing = new ArrayList<>();
+
+		for(Task other : finishedTaskListDecreasingOrder) {
+			TaskDTO taskDTO = new TaskDTO(other);
+			finishedDecreasing.add(taskDTO); }
+
+		return finishedDecreasing;
 	}
 
 }

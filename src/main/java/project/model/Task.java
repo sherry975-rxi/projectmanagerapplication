@@ -77,7 +77,7 @@ public class Task extends ResourceSupport implements Serializable {
 	private Integer deadlineInterval;
 	private Calendar cancelDate;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "Project_id")
 	private Project project;
 
@@ -1140,6 +1140,10 @@ public class Task extends ResourceSupport implements Serializable {
 	 */
 	public TaskStateInterface getTaskState() {
 		return this.taskState;
+	}
+
+	public Calendar getCreationDate(){
+		return this.creationDate;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package project.restControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,6 +67,13 @@ public class RestProjectControllerTest {
         projectId = 1;
         this.projectCollaborator = new ProjectCollaborator(userRui, 2);
         projectCollaborator.setProject(projectMock);
+    }
+
+    @After
+    public void tearDown(){
+        userRui = null;
+        projectId = null;
+        projectCollaborator = null;
     }
 
 
