@@ -54,57 +54,11 @@ public class US207And208CreateOrUpdateTaskReportUI {
             System.out.println();
             switch (choice) {
                 case "1":
-                    System.out.println("");
-                    System.out.println("Select a Task index to update it's report:");
-                    System.out.println("");
-
-                    if (input.hasNextInt()) {
-                        int taskReportIndex = input.nextInt();
-                        if (this.createUpdateReportController.getReportsIndexByGivenUser().contains(taskReportIndex)) {
-                            System.out.println("Type a new report time");
-                            if (input.hasNextDouble()) {
-                                double updatedReportTime = input.nextDouble();
-                                this.createUpdateReportController.updateTaskReport(updatedReportTime, taskCollaborator, taskReportIndex);
-
-
-                            } else {
-                                System.out.println("Not a valid number");
-
-                            }
-
-
-                        } else {
-                            System.out.println("The Report index typed doesn't belong to the user");
-
-                        }
-
-                    } else {
-                        System.out.println("Not a valid number!");
-
-                    }
+                    input = caseOne(input);
                     break;
                 case "2":
-                    System.out.println("Create a new Task Report");
-                    System.out.println();
-                    System.out.println("Type a report time:");
-
-                    if (input.hasNextDouble()) {
-                        Double taskReportTime = input.nextDouble();
-
-                        if (this.createUpdateReportController.createReportController(taskReportTime, Calendar.getInstance())) {
-                            System.out.println("The Report was successfully created");
-                        } else {
-                            System.out.println("The Report couldn't be created");
-
-                        }
-
-                    } else {
-                        System.out.println("Not a valid number!");
-
-                    }
-
+                    input = caseTwo(input);
                     break;
-
                 default:
                     System.out.println("Choose a valid option:");
                     loop = true;
@@ -113,6 +67,66 @@ public class US207And208CreateOrUpdateTaskReportUI {
             }
         }
 
+    }
+
+    /**
+     * Case one allows the user to select a task Report and update teh reported time
+     *
+     * @param input
+     * @return
+     */
+    public Scanner caseOne(Scanner input) {
+        System.out.println("");
+        System.out.println("Select a Task index to update it's report:");
+        System.out.println("");
+
+        if (input.hasNextInt()) {
+            int taskReportIndex = input.nextInt();
+            if (this.createUpdateReportController.getReportsIndexByGivenUser().contains(taskReportIndex)) {
+                System.out.println("Type a new report time");
+                if (input.hasNextDouble()) {
+                    double updatedReportTime = input.nextDouble();
+                    this.createUpdateReportController.updateTaskReport(updatedReportTime, taskCollaborator, taskReportIndex);
+                } else {
+                    System.out.println("Not a valid number");
+                }
+
+            } else {
+                System.out.println("The Report index typed doesn't belong to the user");
+            }
+
+        } else {
+            System.out.println("Not a valid number!");
+        }
+
+        return input;
+    }
+
+    /**
+     * Case two allows a user to create a new Task report
+     *
+     * @param input
+     * @return
+     */
+    public Scanner caseTwo(Scanner input) {
+        System.out.println("Create a new Task Report");
+        System.out.println();
+        System.out.println("Type a report time:");
+
+        if (input.hasNextDouble()) {
+            Double taskReportTime = input.nextDouble();
+
+            if (this.createUpdateReportController.createReportController(taskReportTime, Calendar.getInstance())) {
+                System.out.println("The Report was successfully created");
+            } else {
+                System.out.println("The Report couldn't be created");
+            }
+
+        } else {
+            System.out.println("Not a valid number!");
+        }
+
+        return input;
     }
 
     public void setTaskCollaboratorThroughEmail(String email) {

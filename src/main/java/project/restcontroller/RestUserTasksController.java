@@ -35,9 +35,8 @@ public class RestUserTasksController {
      */
     @RequestMapping(value = "finished", method = RequestMethod.GET)
     public List<Task> getUserFinishedTasks(@PathVariable int userId) {
-        List<Task> finishedTaskList = taskService.getAllFinishedUserTasksInDecreasingOrder(this.userService.getUserByID(userId));
 
-        return finishedTaskList;
+        return taskService.getAllFinishedUserTasksInDecreasingOrder(this.userService.getUserByID(userId));
     }
 
 
@@ -55,6 +54,7 @@ public class RestUserTasksController {
      *  All of these cases return a List containing only "401 Unauthorized" to ensure database privacy
      */
     @RequestMapping(value = "pending",method = RequestMethod.GET)
+
     public ResponseEntity<List<String>> getPendingTasks(@PathVariable String userId) {
 
         Integer id;
