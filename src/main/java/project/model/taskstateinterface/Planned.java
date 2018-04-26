@@ -1,14 +1,12 @@
 package project.model.taskstateinterface;
 
-import org.springframework.hateoas.Link;
 import project.model.StateEnum;
 import project.model.Task;
-import project.restcontroller.RestProjectController;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 public class Planned implements TaskStateInterface {
 
@@ -55,7 +53,11 @@ public class Planned implements TaskStateInterface {
 	@Override
 	public List<String> getActions(){
 		List<String> actions = new ArrayList<>();
-		//Add actions
+		actions.add("1");
+		actions.add("2");
+		actions.add("5");
+		actions.add("6");
+		actions.add("3");
 		return actions;
 	}
 }

@@ -32,7 +32,10 @@ public class Created implements TaskStateInterface {
 	@Override
 	public List<String> getActions(){
 		List<String> actions = new ArrayList<>();
-		//Add action
+		actions.add("1");
+		actions.add("2");
+		actions.add("3");
+
 		return actions;
 	}
 }
