@@ -255,34 +255,19 @@ public class RestUserControllerTest {
         assertEquals(expectedHTTPResponseOK,controller.changeUserProfile(userDTO));
         assertEquals(userDTO.getUserProfile(),mike.getUserProfile());
 
-        // AND WHEN searching for a provided user that is not on the database
-        when(userRepository.findByEmail("lolada@gmail.com")).thenReturn(Optional.empty());
-        User user2 = userService.getUserByEmail("lolada@gmail.com");
-        User userDTO2 = new User();
-        userDTO2.setEmail("lolada@gmail.com");
-        userDTO2.setUserProfile(Profile.COLLABORATOR);
-
-        assertEquals(user2,null);
-        // THEN the response entity must return status NOT_FOUND
-        ResponseEntity<?>expectedHTTPResponseNOT = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        assertEquals(expectedHTTPResponseNOT,controller.changeUserProfile(userDTO2));
     }
 
     @Test
     public void testSeeUserDetails() {
         // GIVEN a users it is registered in the company.
-        when(userRepository.findByUserID(876)).thenReturn(mike);
+        when(userRepository.findByUserID(876)).thenReturn(Optional.of(mike));
         // WHEN the decides to see his information
         controller.seeUserDetails(876);
         // THEN the response entity must contain the user updated and status OK
         ResponseEntity<?>expectedHTTPResponseOK = new ResponseEntity<>(mike, HttpStatus.OK);
         assertEquals(expectedHTTPResponseOK,controller.seeUserDetails(876));
 
-        // AND WHEN searching for a provided user that is not on the database
-        controller.seeUserDetails(999);
-        // THEN the response entity must return status NOT_FOUND
-        ResponseEntity<?>expectedHTTPResponseNotFound = new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        assertEquals(expectedHTTPResponseNotFound,controller.seeUserDetails(999));
+
     }
 
 }

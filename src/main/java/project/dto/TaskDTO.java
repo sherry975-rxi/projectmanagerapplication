@@ -7,6 +7,7 @@ import project.model.taskstateinterface.TaskStateInterface;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class TaskDTO extends ResourceSupport {
 
@@ -149,4 +150,21 @@ public class TaskDTO extends ResourceSupport {
         return creationDate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof TaskDTO))
+            return false;
+        if (!super.equals(o))
+            return false;
+        TaskDTO taskDTO = (TaskDTO) o;
+        return Objects.equals(getTaskID(), taskDTO.getTaskID());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), getTaskID());
+    }
 }
