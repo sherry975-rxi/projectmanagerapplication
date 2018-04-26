@@ -254,7 +254,7 @@ public class US356ManageAssignmentRequestControllerTest {
 		assertTrue(assignmentRequestsController.getSelectedTask().equals(taskWithNoTeam));
 		
 		TaskTeamRequest newReq = new TaskTeamRequest(teamPermanentCollaborator, taskWithNoTeam);
-		newReq.setType(TaskTeamRequest.ASSIGNMENT);
+		newReq.setType(RequestType.ASSIGNMENT);
 		assignmentRequestsController.setSelectedAdditionRequest(newReq);
 		assertTrue(assignmentRequestsController.getSelectedAdditionRequest().equals(newReq));		
 

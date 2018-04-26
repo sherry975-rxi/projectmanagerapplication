@@ -203,7 +203,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //Then
         TaskTeamRequest assignRequest = new TaskTeamRequest();
-        assignRequest.setType(0);
+        assignRequest.setType(RequestType.ASSIGNMENT);
         assignRequest.setProjCollab(projCollabTwo);
         assignRequest.setTask(taskOne);
 
@@ -309,11 +309,11 @@ public class US204AssignTaskRequestRestControllerTest {
         // Then
         List <TaskTeamRequest> expectedList = new ArrayList<>();
         TaskTeamRequest assign = new TaskTeamRequest();
-        assign.setType(0);
+        assign.setType(RequestType.ASSIGNMENT);
         assign.setProjCollab(projCollabTwo);
         assign.setTask(taskOne);
         TaskTeamRequest removal = new TaskTeamRequest();
-        removal.setType(1);
+        removal.setType(RequestType.REMOVAL);
         removal.setProjCollab(projCollabThree);
         removal.setTask(taskOne);
 
@@ -357,7 +357,7 @@ public class US204AssignTaskRequestRestControllerTest {
         List <TaskTeamRequest> expectedList = new ArrayList<>();
 
         TaskTeamRequest assign = new TaskTeamRequest();
-        assign.setType(0);
+        assign.setType(RequestType.ASSIGNMENT);
         assign.setProjCollab(projCollabTwo);
         assign.setTask(taskOne);
 
@@ -399,7 +399,7 @@ public class US204AssignTaskRequestRestControllerTest {
         List <TaskTeamRequest> expectedList = new ArrayList<>();
 
         TaskTeamRequest removal = new TaskTeamRequest();
-        removal.setType(1);
+        removal.setType(RequestType.REMOVAL);
         removal.setProjCollab(projCollabThree);
         removal.setTask(taskOne);
 
@@ -455,12 +455,12 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // Then
         TaskTeamRequest assignRequest = new TaskTeamRequest();
-        assignRequest.setType(0);
+        assignRequest.setType(RequestType.ASSIGNMENT);
         assignRequest.setProjCollab(projCollabTwo);
         assignRequest.setTask(taskOne);
 
         TaskTeamRequest removalRequest = new TaskTeamRequest();
-        removalRequest.setType(1);
+        removalRequest.setType(RequestType.REMOVAL);
         removalRequest.setProjCollab(projCollabThree);
         removalRequest.setTask(taskOne);
 
@@ -575,7 +575,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //Then
         TaskTeamRequest removalRequest = new TaskTeamRequest();
-        removalRequest.setType(1);
+        removalRequest.setType(RequestType.REMOVAL);
         removalRequest.setProjCollab(projCollabTwo);
         removalRequest.setTask(taskOne);
 
