@@ -156,7 +156,7 @@ public class RestAccountController {
 
             Link attemptValidation = linkTo(RestAccountController.class).slash(toValidate.getUserID()+"/validate/inputCode").withRel(output);
 
-            return new ResponseEntity<Link>(attemptValidation, HttpStatus.OK);
+            return new ResponseEntity<>(attemptValidation, HttpStatus.OK);
 
         } catch (MessagingException| IOException e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -164,26 +164,25 @@ public class RestAccountController {
 
     }
 
-    @RequestMapping(value="{userId}/validate/inputCode", method = RequestMethod.DELETE)
+    @RequestMapping(value="{userId}/validate/inputCode", method = RequestMethod.POST)
     public ResponseEntity<Link> checkValidation(@RequestBody String code, @PathVariable Integer userId) {
 
         User toValidate = userService.getUserByID(userId);
 
         Link output;
 
-        if(pendingValidation.get(toValidate).equals(code)) {
+        if(pendingValidation.get(toValidate).equals(code) || toValidate.getAnswer().equals(code)) {
             output = linkTo(RestUserController.class).slash("users").slash(userId).slash("details").withRel("createPassword");
             pendingValidation.remove(toValidate);
-            return new ResponseEntity<Link>(output, HttpStatus.OK);
+            return new ResponseEntity<>(output, HttpStatus.OK);
         } else {
-            output = linkTo(RestAccountController.class).slash(userId).slash("validate/inputCode").withSelfRel();
-            return new ResponseEntity<Link>(output, HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
     }
 
 
-    private String generateValidationQuestion(String method, String question) {
+    private static String generateValidationQuestion(String method, String question) {
         switch(method) {
             case"1":
                 return "Check your phone and input the validation code:";
