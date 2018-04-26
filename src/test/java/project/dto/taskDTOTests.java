@@ -17,6 +17,7 @@ public class taskDTOTests {
     Project project;
     TaskDTO taskDTO;
     TaskDTO taskDTO1;
+    TaskDTO taskDTO2;
     Task task;
     Task dependentTask;
     User user;
@@ -47,6 +48,7 @@ public class taskDTOTests {
         taskTeamRequests.add(request);
         actions = new ArrayList<>();
         taskDTO1 = new TaskDTO();
+
 
     }
 
@@ -95,7 +97,7 @@ public class taskDTOTests {
 
 
 
-        //THEN All parameters' values can be retrived in the TaskDto and correspond to the respective parameter values
+        //THEN All parameters' values can be retrieved in the TaskDto and correspond to the respective parameter values
         // in the Task
         assertEquals(task.getDescription(), taskDTO.getDescription());
         assertEquals(task.getTaskID(), taskDTO.getTaskID());
