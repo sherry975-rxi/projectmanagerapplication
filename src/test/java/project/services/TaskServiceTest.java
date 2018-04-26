@@ -202,7 +202,7 @@ public class TaskServiceTest {
         orderedListToCompare.add(taskMock);
         orderedListToCompare.add(task2Mock);
 
-        assertEquals(orderedListToCompare, victim.sortTaskListDecreasingOrder(result));
+        assertEquals(orderedListToCompare, victim.sortFinishTaskListDecreasingOrder(result));
     }
 
     @Test
@@ -309,8 +309,8 @@ public class TaskServiceTest {
         when(task2Mock.getTaskTeam()).thenReturn(listTaskCollaborator);
 
         List<Task> orderedListToCompare = new ArrayList<>();
-        orderedListToCompare.add(taskMock);
         orderedListToCompare.add(task2Mock);
+        orderedListToCompare.add(taskMock);
 
         List<Task> trueList = victim.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
 

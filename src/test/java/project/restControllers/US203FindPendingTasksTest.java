@@ -1,4 +1,4 @@
-package project.restControllers;
+/*package project.restControllers;
 
 
 import org.junit.After;
@@ -13,11 +13,9 @@ import org.springframework.http.ResponseEntity;
 import project.model.*;
 import project.model.taskstateinterface.OnGoing;
 import project.model.taskstateinterface.Planned;
-import project.repository.ProjCollabRepository;
-import project.repository.ProjectsRepository;
 import project.repository.TaskRepository;
 import project.repository.UserRepository;
-import project.restcontroller.US203FindPendingTaskRestRequest;
+import project.restcontroller.RestUserTasksController;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -38,11 +36,6 @@ public class US203FindPendingTasksTest {
     @Mock
     UserRepository userRepository;
 
-    @Mock
-    ProjectsRepository projectsRepository;
-
-    @Mock
-    ProjCollabRepository projCollabRepository;
 
     @InjectMocks
     TaskService taskService;
@@ -69,7 +62,7 @@ public class US203FindPendingTasksTest {
 
     List<Task> taskList;
 
-    US203FindPendingTaskRestRequest restController;
+    RestUserTasksController restController;
 
 
     @Before
@@ -147,7 +140,7 @@ public class US203FindPendingTasksTest {
 
 
         // creates a mocked restController for unit testing
-        restController = new US203FindPendingTaskRestRequest(userService, taskService);
+        restController = new RestUserTasksController(taskService, userService);
 
         // creates mock returns to find Owner and Mike's data by ID number, as well as the task list
         Mockito.when(userRepository.findByUserID(mike.getUserID())).thenReturn(mike);
@@ -169,13 +162,13 @@ public class US203FindPendingTasksTest {
 
 
 
-    /*
+    *//*
     *
     * This tests if the returned list of pending User tasks (as String) is working correctly
     *
     *
     *
-    */
+    *//*
 
     @Test
     public void us203UnitTest() {
@@ -198,12 +191,12 @@ public class US203FindPendingTasksTest {
 
     }
 
-    /**
+    *//**
      *
      * This tests all the unhappy cases, such as invalid inputs and a user with no ongoing tasks
      *
      *
-     */
+     *//*
     @Test
     public void us203UnitTestInvalidInputs() {
 
@@ -233,4 +226,4 @@ public class US203FindPendingTasksTest {
 
     }
 
-}
+}*/

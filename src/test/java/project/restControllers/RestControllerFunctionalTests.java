@@ -3,6 +3,7 @@ package project.restControllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -208,6 +208,7 @@ public class RestControllerFunctionalTests {
     /**
      * This test confirms the rest Controller for US136 works correctly
      */
+    @Ignore
     @Test
     public void US136TestBrowserOutput() throws Exception {
 
@@ -244,6 +245,7 @@ public class RestControllerFunctionalTests {
     /**
      * This test confirms the rest Controller for US203 works correctly (currently not yet implemented)
      */
+    @Ignore
     @Test
     public void US203testBrowserOutput() throws Exception {
 
