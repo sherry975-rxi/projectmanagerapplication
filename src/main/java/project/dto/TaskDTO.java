@@ -162,4 +162,9 @@ public class TaskDTO extends ResourceSupport {
         return Objects.equals(getTaskID(), taskDTO.getTaskID());
     }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), getTaskID());
+    }
 }
