@@ -27,10 +27,15 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 	@JsonBackReference
 	private Task task;
 
-	private Integer type;
-	public static final int ASSIGNMENT = 0;
-	public static final int REMOVAL = 1;
+	@Enumerated(EnumType.STRING)
+	private RequestType type;
 
+	/*
+	 * 	Empty Constructor for TaskTeamRequest
+	 */
+	public TaskTeamRequest() {
+
+	}
 
 	/*
 	 * 	Constructor of TaskTeamRequest
@@ -39,15 +44,11 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 	public TaskTeamRequest(ProjectCollaborator projCollab, Task task) {
 		this.projCollab = projCollab;
 		this.task = task;
+		this.type=RequestType.NOT_AVAILABLE;
 
 	}
 
-	/*
-	 * 	Empty Constructor for TaskTeamRequest
-	 */
-	public TaskTeamRequest() {
 
-	}
 
 	/*
 	 * Returns the id of the task
@@ -85,7 +86,7 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 	 * 	 The Project Collaborator associated to the TaskTeamRequest
 	 */
 	public ProjectCollaborator getProjCollab() {
-		return projCollab;
+		return this.projCollab;
 	}
 
 	/*
@@ -95,33 +96,26 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 	 * 	 The Task associated to the TaskTeamRequest
 	 */
 	public Task getTask() {
-		return task;
+		return this.task;
 	}
 
 
-	public String getType() {
-	    String typeString ="N/A";
-	    Integer assignement = 0;
-	    Integer removal = 1;
-	    if (assignement.equals(type)) {
-            typeString = "Assignment";
-        } else if (removal.equals(type)) {
-            typeString = "Removal";
-        }
-	    return typeString;
-    }
+	public RequestType getType() {
 
-    public boolean isAssignmentRequest() {
-	    return type==TaskTeamRequest.ASSIGNMENT;
-    }
+		return this.type;
+	}
 
-    public boolean isRemovalRequest() {
-        return type==TaskTeamRequest.REMOVAL;
-    }
+	public boolean isAssignmentRequest() {
+		return this.type==RequestType.ASSIGNMENT;
+	}
 
-    public void setType(int typ) {
-	    this.type=typ;
-    }
+	public boolean isRemovalRequest() {
+		return this.type==RequestType.REMOVAL;
+	}
+
+	public void setType(RequestType newType) {
+		this.type= newType;
+	}
 
 
 	@Override
@@ -173,7 +167,7 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 	 *
 	 * @return The string representation
 	 */
-	public String viewStringRepresentation() { 
+	public String viewStringRepresentation() {
 
 		return this.projCollab.getUserFromProjectCollaborator().getName() + "\n"
 				+ this.projCollab.getUserFromProjectCollaborator().getEmail() + "\n"
@@ -182,3 +176,4 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 	}
 
 }
+

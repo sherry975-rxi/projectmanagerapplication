@@ -21,6 +21,7 @@ import project.restcontroller.RestAccountController;
 import project.services.UserService;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
@@ -213,17 +214,18 @@ public class RestAccountControllerTest {
         // AND WHEN the user exists, but has no password
         when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
 
-        userDTO = new UserDTO("", "wrong@mail.mail", "", "", "",
+        userDTO = new UserDTO("", "test@gmail.com", "", "", "",
                 "exists", "", "");
 
 
-        // THEN the response must contain "Not implemented"
+        // THEN the response must contain "OK", and contain three links to choose a validation method
         response = mvc.perform(post("/account/logIn")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonUserDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
-        assertEquals(HttpStatus.NOT_IMPLEMENTED.value(), response.getStatus());
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+
 
         // AND WHEN the user has a password, but the DTO's password doesn't match
 

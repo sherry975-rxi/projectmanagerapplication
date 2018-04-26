@@ -112,7 +112,7 @@ public class RestProjCollabController {
      *
      * @return List of project collaborators with the new user added with a link to open each collaborator
      */
-    @RequestMapping(value = "/{collaboratorId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{collaboratorId}", method = RequestMethod.DELETE)
     public ResponseEntity<ProjectCollaborator> removeCollaborator(@PathVariable long collaboratorId, @PathVariable int projectId) {
 
         ResponseEntity<ProjectCollaborator> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -44,8 +44,10 @@ public class RestUserController {
             userToReturn.add(editInfoLink);
             Link seeProjectsLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("projects").withRel("See My Projects");
             userToReturn.add(seeProjectsLink);
-            Link seeTasksLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("tasks").withRel("See My Tasks");
-            userToReturn.add(seeTasksLink);
+            Link seePendingTasksLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("tasks").slash("pending").withRel("See My Pending Tasks");
+            userToReturn.add(seePendingTasksLink);
+            Link seeFinishedTasksLink = linkTo(RestUserController.class).slash(userToReturn.getUserID()).slash("tasks").slash("finished").withRel("See My Pending Tasks");
+            userToReturn.add(seeFinishedTasksLink);
         }
         return result;
     }
@@ -65,6 +67,8 @@ public class RestUserController {
 
             Link userLink = linkTo(RestUserController.class).withRel("allUsers");
             user.add(userLink);
+            Link detailsLinks = linkTo(RestUserController.class).slash(user.getUserID()).withRel("User Details");
+            user.add(detailsLinks);
 
         }
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
@@ -87,6 +91,8 @@ public class RestUserController {
         for(User other : foundUsers) {
             Link selfRef = linkTo(RestUserController.class).slash("email").slash(other.getEmail()).withSelfRel();
             other.add(selfRef);
+            Link detailsLinks = linkTo(RestUserController.class).slash(other.getUserID()).withRel("User Details");
+            other.add(detailsLinks);
         }
 
         return new ResponseEntity<>(foundUsers, HttpStatus.OK);

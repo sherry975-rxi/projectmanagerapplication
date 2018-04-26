@@ -5,6 +5,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.dto.TaskAction;
+import project.dto.TaskDTO;
 import project.model.Project;
 import project.model.Task;
 import project.services.ProjectService;
@@ -132,16 +134,18 @@ public class RestProjectTasksController {
      * @return List of finished tasks from the project
      */
     @RequestMapping(value = "finished", method = RequestMethod.GET)
-    public ResponseEntity<List<Task>> getFinishedTasks (@PathVariable int projid) {
+    public ResponseEntity<List<TaskDTO>> getFinishedTasks (@PathVariable int projid) {
 
-        Project project = this.projectService.getProjectById(projid);
-        List<Task> finishedTasks = new ArrayList<>();
+        List<TaskDTO> finishedTasks = new ArrayList<>();
 
-        finishedTasks.addAll(taskService.getProjectFinishedTasksInDecreasingOrder(project));
+        finishedTasks.addAll(taskService.getProjectFinishedTasksDecOrder(projid));
 
-        for(Task task : finishedTasks) {
-            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash(tasks).slash(task.getTaskID()).withSelfRel();
-            task.add(selfRel);
+        for(TaskDTO taskDto : finishedTasks) {
+            for(String action : taskDto.getTaskState().getActions()) {
+            Link actionLink = TaskAction.getLinks(projid, taskDto.getTaskID()).get(action);
+            taskDto.add(actionLink);
+
+             }
         }
 
         return new ResponseEntity<>(finishedTasks, HttpStatus.OK);

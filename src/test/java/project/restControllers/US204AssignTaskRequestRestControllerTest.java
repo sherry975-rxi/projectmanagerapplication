@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import project.dto.UserDTO;
 import project.model.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
@@ -70,6 +71,9 @@ public class US204AssignTaskRequestRestControllerTest {
     private String taskIdTwo;
     private ProjectCollaborator projCollabTwo;
     private ProjectCollaborator projCollabThree;
+
+    private UserDTO userDTOTwo;
+
 
     @Before
     public void setUp(){
@@ -133,6 +137,9 @@ public class US204AssignTaskRequestRestControllerTest {
         Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
         Mockito.when(taskRepository.findByTaskID(taskIdOne)).thenReturn(Optional.of(taskOne));
 
+        userDTOTwo = new UserDTO(userTwo);
+
+
 
     }
     @After
@@ -173,8 +180,6 @@ public class US204AssignTaskRequestRestControllerTest {
     public void canCreateAnAssignmentRequest() {
 
         //Given
-        User userDTOTwo = new User();
-        userDTOTwo.setEmail("joao@gmail.com");
 
         Gson gson = new Gson();
         String userDTOjson = gson.toJson(userDTOTwo);
@@ -198,7 +203,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //Then
         TaskTeamRequest assignRequest = new TaskTeamRequest();
-        assignRequest.setType(0);
+        assignRequest.setType(RequestType.ASSIGNMENT);
         assignRequest.setProjCollab(projCollabTwo);
         assignRequest.setTask(taskOne);
 
@@ -225,8 +230,7 @@ public class US204AssignTaskRequestRestControllerTest {
     @Test
     public void canNotCreateAnAssignmentRequest() {
 
-        User userDTOTwo = new User();
-        userDTOTwo.setEmail("joao@gmail.com");
+
 
         //Given
         /*
@@ -263,8 +267,7 @@ public class US204AssignTaskRequestRestControllerTest {
     @Test
     public void canNotCreateAnAssignmentRequestTwo() {
 
-        User userDTOTwo = new User();
-        userDTOTwo.setEmail("joao@gmail.com");
+
 
         //Given
         taskOne.addProjectCollaboratorToTask(projCollabTwo);
@@ -306,11 +309,11 @@ public class US204AssignTaskRequestRestControllerTest {
         // Then
         List <TaskTeamRequest> expectedList = new ArrayList<>();
         TaskTeamRequest assign = new TaskTeamRequest();
-        assign.setType(0);
+        assign.setType(RequestType.ASSIGNMENT);
         assign.setProjCollab(projCollabTwo);
         assign.setTask(taskOne);
         TaskTeamRequest removal = new TaskTeamRequest();
-        removal.setType(1);
+        removal.setType(RequestType.REMOVAL);
         removal.setProjCollab(projCollabThree);
         removal.setTask(taskOne);
 
@@ -354,7 +357,7 @@ public class US204AssignTaskRequestRestControllerTest {
         List <TaskTeamRequest> expectedList = new ArrayList<>();
 
         TaskTeamRequest assign = new TaskTeamRequest();
-        assign.setType(0);
+        assign.setType(RequestType.ASSIGNMENT);
         assign.setProjCollab(projCollabTwo);
         assign.setTask(taskOne);
 
@@ -396,7 +399,7 @@ public class US204AssignTaskRequestRestControllerTest {
         List <TaskTeamRequest> expectedList = new ArrayList<>();
 
         TaskTeamRequest removal = new TaskTeamRequest();
-        removal.setType(1);
+        removal.setType(RequestType.REMOVAL);
         removal.setProjCollab(projCollabThree);
         removal.setTask(taskOne);
 
@@ -452,12 +455,12 @@ public class US204AssignTaskRequestRestControllerTest {
 
         // Then
         TaskTeamRequest assignRequest = new TaskTeamRequest();
-        assignRequest.setType(0);
+        assignRequest.setType(RequestType.ASSIGNMENT);
         assignRequest.setProjCollab(projCollabTwo);
         assignRequest.setTask(taskOne);
 
         TaskTeamRequest removalRequest = new TaskTeamRequest();
-        removalRequest.setType(1);
+        removalRequest.setType(RequestType.REMOVAL);
         removalRequest.setProjCollab(projCollabThree);
         removalRequest.setTask(taskOne);
 
@@ -526,8 +529,7 @@ public class US204AssignTaskRequestRestControllerTest {
     public void canNotCreateAnAssignmentRequestInvalidTask() {
 
         //Given
-        User userDTOTwo = new User();
-        userDTOTwo.setEmail("joao@gmail.com");
+
 
         taskOne.setEstimatedTaskStartDate(Calendar.getInstance());
         taskOne.setTaskDeadline(Calendar.getInstance());
@@ -564,8 +566,6 @@ public class US204AssignTaskRequestRestControllerTest {
     @Test
     public void canCreateARemovalRequestTwo() {
 
-        User userDTOTwo = new User();
-        userDTOTwo.setEmail("joao@gmail.com");
 
         //Given
         taskOne.addProjectCollaboratorToTask(projCollabTwo);
@@ -575,7 +575,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //Then
         TaskTeamRequest removalRequest = new TaskTeamRequest();
-        removalRequest.setType(1);
+        removalRequest.setType(RequestType.REMOVAL);
         removalRequest.setProjCollab(projCollabTwo);
         removalRequest.setTask(taskOne);
 
@@ -600,8 +600,7 @@ public class US204AssignTaskRequestRestControllerTest {
     @Test
     public void canNotCreateARemovalRequest() {
 
-        User userDTOTwo = new User();
-        userDTOTwo.setEmail("joao@gmail.com");
+
 
         //Given
         taskOne.addProjectCollaboratorToTask(projCollabTwo);
@@ -631,8 +630,6 @@ public class US204AssignTaskRequestRestControllerTest {
     @Test
     public void canNotCreateARemovalRequestTwo() {
 
-        User userDTOTwo = new User();
-        userDTOTwo.setEmail("joao@gmail.com");
 
         //Given
         controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
@@ -665,8 +662,7 @@ public class US204AssignTaskRequestRestControllerTest {
 
         //Given
         taskOne.addProjectCollaboratorToTask(projCollabTwo);
-        User userDTOTwo = new User();
-        userDTOTwo.setEmail("joao@gmail.com");
+
 
         taskOne.setEstimatedTaskStartDate(Calendar.getInstance());
         taskOne.setTaskDeadline(Calendar.getInstance());
@@ -740,8 +736,7 @@ public class US204AssignTaskRequestRestControllerTest {
     public void canNotCreateAnAssignmentRequestNoProjectCollaborator() {
 
         //Given
-        User userDTOFour = new User();
-        userDTOFour.setEmail("rita@gmail.com");
+        UserDTO userDTOFour = new UserDTO("Rita", "rita@gmail.com", "04", "collaborator", "221378448", "123456", "", "");
 
         //When
         ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOFour);
@@ -750,6 +745,7 @@ public class US204AssignTaskRequestRestControllerTest {
         ResponseEntity<?> expected = new ResponseEntity<>( HttpStatus.FORBIDDEN);
 
         assertEquals(expected,result);
+
 
     }
 
@@ -768,8 +764,8 @@ public class US204AssignTaskRequestRestControllerTest {
     public void canNotCreateARemovalRequestNoProjectCollaborator() {
 
         //Given
-        User userDTOFour = new User();
-        userDTOFour.setEmail("rita@gmail.com");
+        UserDTO userDTOFour = new UserDTO("Rita", "rita@gmail.com", "04", "collaborator", "221378448", "123456", "", "");
+
 
         //When
         ResponseEntity<?> result = controller.createRemovalRequest(taskIdOne, projectId, userDTOFour);

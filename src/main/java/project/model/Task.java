@@ -1282,7 +1282,7 @@ public class Task extends ResourceSupport implements Serializable {
 	 */
 	public boolean createTaskAssignmentRequest(ProjectCollaborator projCollab) {// uso de if incorreto?
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, this);
-		newReq.setType(TaskTeamRequest.ASSIGNMENT);
+		newReq.setType(RequestType.ASSIGNMENT);
 		if (!this.isAssignmentRequestAlreadyCreated(projCollab)) {
 			this.pendingTaskTeamRequests.add(newReq);
 			return true;
@@ -1301,7 +1301,7 @@ public class Task extends ResourceSupport implements Serializable {
 	 */
 	public boolean createTaskRemovalRequest(ProjectCollaborator projCollab) {
 		TaskTeamRequest newReq = new TaskTeamRequest(projCollab, this);
-		newReq.setType(TaskTeamRequest.REMOVAL);
+		newReq.setType(RequestType.REMOVAL);
 		if (!this.isRemovalRequestAlreadyCreated(projCollab)) {
 			this.pendingTaskTeamRequests.add(newReq);
 			return true;
@@ -1322,7 +1322,7 @@ public class Task extends ResourceSupport implements Serializable {
 
 		TaskTeamRequest request = this.getAssignmentTaskTeamRequest(projCollaborator);
 
-		request.setType(TaskTeamRequest.ASSIGNMENT);
+		request.setType(RequestType.ASSIGNMENT);
 
 		return this.pendingTaskTeamRequests.remove(request);
 	}
@@ -1338,7 +1338,7 @@ public class Task extends ResourceSupport implements Serializable {
 
 	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab) {
 		TaskTeamRequest request = this.getRemovalTaskTeamRequest(projCollab);
-		request.setType(TaskTeamRequest.REMOVAL);
+		request.setType(RequestType.REMOVAL);
 		return this.pendingTaskTeamRequests.remove(request);
 	}
 
@@ -1389,7 +1389,7 @@ public class Task extends ResourceSupport implements Serializable {
 	public TaskTeamRequest getRemovalTaskTeamRequest(ProjectCollaborator projCollaborator) {
 
 		TaskTeamRequest removalRequestToFind = new TaskTeamRequest(projCollaborator, this);
-		removalRequestToFind.setType(TaskTeamRequest.REMOVAL);
+		removalRequestToFind.setType(RequestType.REMOVAL);
 		for (TaskTeamRequest other : this.pendingTaskTeamRequests) {
 			if (removalRequestToFind.equals(other)) {
 				return other;
@@ -1445,12 +1445,12 @@ public class Task extends ResourceSupport implements Serializable {
 	 *
 	 * @param projectCollaborator
 	 *            Projector collaborator that wants to create the request
-	 * 
+	 *
 	 * @return True if request already exists, false if not
 	 */
 	public boolean isAssignmentRequestAlreadyCreated(ProjectCollaborator projectCollaborator) {
 		TaskTeamRequest request = new TaskTeamRequest(projectCollaborator, this);
-		request.setType(TaskTeamRequest.ASSIGNMENT);
+		request.setType(RequestType.ASSIGNMENT);
 		return this.pendingTaskTeamRequests.contains(request);
 	}
 
@@ -1463,7 +1463,7 @@ public class Task extends ResourceSupport implements Serializable {
 	 */
 	public boolean isRemovalRequestAlreadyCreated(ProjectCollaborator projCollab) {
 		TaskTeamRequest request = new TaskTeamRequest(projCollab, this);
-		request.setType(TaskTeamRequest.REMOVAL);
+		request.setType(RequestType.REMOVAL);
 		return this.pendingTaskTeamRequests.contains(request);
 	}
 
@@ -1478,7 +1478,7 @@ public class Task extends ResourceSupport implements Serializable {
 	public TaskTeamRequest getAssignmentTaskTeamRequest(ProjectCollaborator projCollaborator) {
 		TaskTeamRequest result = null;
 		TaskTeamRequest assignmentRequestToFind = new TaskTeamRequest(projCollaborator, this);
-		assignmentRequestToFind.setType(TaskTeamRequest.ASSIGNMENT);
+		assignmentRequestToFind.setType(RequestType.ASSIGNMENT);
 		for (TaskTeamRequest other : this.pendingTaskTeamRequests) {
 			if (assignmentRequestToFind.equals(other)) {
 				result = other;

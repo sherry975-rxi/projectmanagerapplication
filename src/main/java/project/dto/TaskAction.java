@@ -37,7 +37,7 @@ public final class TaskAction {
         CORRESPONDING_LINKS.put("10", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("standBy").withRel("Set StandBy"));
         CORRESPONDING_LINKS.put("11", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("cancel").withRel("Set Cancelled"));
         CORRESPONDING_LINKS.put("12", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("finish").withRel("Set Finished"));
-        
+        CORRESPONDING_LINKS.put("13", linkTo(RestProjectController.class).slash(projectId).slash(TASKS).slash(taskId).slash("ongoing").withRel("Set Ongoing"));
 
         return CORRESPONDING_LINKS;
     }

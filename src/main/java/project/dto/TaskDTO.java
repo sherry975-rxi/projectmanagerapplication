@@ -62,7 +62,7 @@ public class TaskDTO extends ResourceSupport {
         this.taskState = task.getTaskState();
         this.startDateInterval = task.getStartDateInterval();
         this.deadlineInterval = task.getDeadlineInterval();
-        this.currentState = getCurrentState();
+        this.currentState = task.getCurrentState();
         this.project = task.getProject();
         this.pendingTaskTeamRequests = task.getPendingTaskTeamRequests();
         this.actions = new ArrayList<>();
