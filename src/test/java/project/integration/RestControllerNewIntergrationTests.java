@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.*;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,6 +22,9 @@ import project.model.*;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -54,6 +59,8 @@ public class RestControllerNewIntergrationTests {
 
     ResponseEntity<User> actual, expected;
 
+    ResponseEntity<List<User>> actualList, expectedList;
+
     @Before
     public void setUp() {
 
@@ -78,8 +85,7 @@ public class RestControllerNewIntergrationTests {
 
     @After
     public void tearDown() {
-        actual = null;
-        expected = null;
+
         taskService.getTaskRepository().deleteAllInBatch();
         projectService.getProjectCollaboratorRepository().deleteAllInBatch();
         projectService.getProjectsRepository().deleteAllInBatch();
@@ -99,9 +105,8 @@ public class RestControllerNewIntergrationTests {
 
     @Test
     public void basicUserTest() throws Exception {
-        mike = userService.getUserByEmail("mike@mike.com");
 
-        // GIVEN two users in the test Database
+        // GIVEN four users in the test Database
         assertEquals(4, userService.getAllUsersFromUserContainer().size());
         assertEquals(mike, userService.getUserByID(mike.getUserID()));
 
@@ -115,6 +120,44 @@ public class RestControllerNewIntergrationTests {
         assertEquals(expected.getBody().getName(), actual.getBody().getName());
 
     }
+
+    /**
+     * This tests the various URI's that fetch lists of users
+     *
+     * @throws Exception
+     */
+    @Test
+    public void userListTests() throws Exception {
+
+        // GIVEN four users in the test Database
+        assertEquals(4, userService.getAllUsersFromUserContainer().size());
+        assertEquals(mike, userService.getUserByID(mike.getUserID()));
+
+        ParameterizedTypeReference<List<User>> listOfUsers = new ParameterizedTypeReference<List<User>>() {};
+
+        // AND WHEN searching for all users
+        actualList = this.restTemplate.exchange("http://localhost:" + port + "/users/allUsers", HttpMethod.GET, null, listOfUsers);
+
+        // THEN the expected response entity must contain all users in the container
+        expectedList = new ResponseEntity<>(userService.getAllUsersFromUserContainer(), HttpStatus.OK);
+
+        assertEquals(expectedList.getBody().size(), actualList.getBody().size());
+
+        assertEquals("Owner boi", actualList.getBody().get(0).getName());
+        assertEquals("Mike", actualList.getBody().get(1).getName());
+
+        // AND WHEN searching for a user email "mike@mike"
+        actualList = this.restTemplate.exchange("http://localhost:" + port + "/users/email/mike@mike", HttpMethod.GET, null, listOfUsers);
+
+        // THEN the expected response entity must contain all users in the container
+        expectedList = new ResponseEntity<>(userService.searchUsersByPartsOfEmail("mike@mike"), HttpStatus.OK);
+
+        assertEquals(expectedList.getBody().size(), actualList.getBody().size());
+        assertEquals(1, actualList.getBody().size());
+        assertEquals("Mike", actualList.getBody().get(0).getName());
+    }
+
+
 
     /**
      * Integration test for log in Rest API.
