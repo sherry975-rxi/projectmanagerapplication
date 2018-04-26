@@ -3,6 +3,9 @@ package project.model.taskstateinterface;
 import project.model.StateEnum;
 import project.model.Task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Finished implements TaskStateInterface {
 
 	/**
@@ -47,6 +50,19 @@ public class Finished implements TaskStateInterface {
 	 */
 	private static boolean hasRequiredDates(Task task) {
 		return (task.getStartDate() != null) && (task.getFinishDate() != null);
+	}
+
+	/**
+	 * Method that will get the actions available to the task depending of its state
+	 *
+	 * @return List of Actions
+	 */
+	@Override
+	public List<String> getActions(){
+		List<String> actions = new ArrayList<>();
+		actions.add("3");
+		actions.add("13");
+		return actions;
 	}
 
 }

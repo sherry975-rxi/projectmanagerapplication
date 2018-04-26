@@ -1142,6 +1142,10 @@ public class Task extends ResourceSupport implements Serializable {
 		return this.taskState;
 	}
 
+	public Calendar getCreationDate(){
+		return this.creationDate;
+	}
+
 	/**
 	 * This method returns the name of the task's current state.
 	 * 

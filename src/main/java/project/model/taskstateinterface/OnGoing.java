@@ -2,6 +2,10 @@ package project.model.taskstateinterface;
 
 import project.model.StateEnum;
 import project.model.Task;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class OnGoing implements TaskStateInterface {
 
 	/**
@@ -62,6 +66,26 @@ public class OnGoing implements TaskStateInterface {
 	 */
 	private static boolean hasRequiredDates(Task task) {
 		return (task.getStartDate() != null) && (task.getFinishDate() == null) && (task.getCancelDate() == null);
+	}
+
+	/**
+	 * Method that will get the actions available to the task depending of its state
+	 *
+	 * @return List of Actions
+	 */
+	@Override
+	public List<String> getActions(){
+		List<String> actions = new ArrayList<>();
+		actions.add("2");
+		actions.add("3");
+		actions.add("5");
+		actions.add("6");
+		actions.add("9");
+		actions.add("10");
+		actions.add("11");
+		actions.add("12");
+		return actions;
+
 	}
 
 }
