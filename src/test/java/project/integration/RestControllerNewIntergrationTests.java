@@ -81,8 +81,8 @@ public class RestControllerNewIntergrationTests {
     public void tearDown() {
         actual = null;
         expected = null;
-        taskOne.getPendingTaskTeamRequests().clear();
-        taskService.saveTask(taskOne);
+        //taskOne.getPendingTaskTeamRequests().clear();
+        //taskService.saveTask(taskOne);
         taskService.getTaskRepository().deleteAll();
         projectService.getProjectCollaboratorRepository().deleteAll();
         projectService.getProjectsRepository().deleteAll();
@@ -190,19 +190,59 @@ public class RestControllerNewIntergrationTests {
     @Test
     public void canCreateAnAssignmentRequest() {
 
-        //Given
+        // Given
         assertEquals(0, taskOne.getTaskTeam().size());
         assertEquals(0, taskOne.getPendingTaskTeamRequests().size());
 
-        //When
+        // When
         UserDTO requestBodyRui = new UserDTO("JO", "rui@gmail.com", "", "", "", "wrong", "", "");
         taskRequestResponse = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/assignmentRequest", requestBodyRui , TaskTeamRequest.class);
 
-        //Then
+        // Then
         assertEquals(HttpStatus.CREATED, taskRequestResponse.getStatusCode());
 
         // And When
         ResponseEntity<TaskTeamRequest> result2 = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/assignmentRequest", requestBodyRui , TaskTeamRequest.class);
+
+        // Then
+        assertEquals(HttpStatus.FORBIDDEN, result2.getStatusCode());
+
+    }
+
+    /**
+     * Given
+     * Adding userRui to taskOne
+     *
+     * When
+     * Creating removal request for userRui but already is added to taskOne
+     *
+     * Then
+     * It is expected to be successfully created
+     *
+     * And When
+     * Creating again removal request that already exists for userRui
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     */
+    @Test
+    public void canCreateARemovalRequest() {
+
+
+        // Given
+        taskOne.addProjectCollaboratorToTask(projCollabRui);
+        taskService.saveTask(taskOne);
+
+
+        // When
+        UserDTO requestBodyRui = new UserDTO("JO", "rui@gmail.com", "", "", "", "wrong", "", "");
+        taskRequestResponse = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/removalRequest", requestBodyRui , TaskTeamRequest.class);
+
+        // Then
+        assertEquals(HttpStatus.CREATED, taskRequestResponse.getStatusCode());
+
+        // And When
+        ResponseEntity<TaskTeamRequest> result2 = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/removalRequest", requestBodyRui , TaskTeamRequest.class);
 
         // Then
         assertEquals(HttpStatus.FORBIDDEN, result2.getStatusCode());
