@@ -70,67 +70,6 @@ public class TaskDTO extends ResourceSupport {
         this.actions = new ArrayList<>();
     }
 
-
-
-    /**
-     * Creates a taskDTO with the same parameters used to create a Task
-     *
-     * @param description
-     *            Description of the task set by the user
-     * @param selectedProject
-     *            Id of the project to which the task belongs to
-     *
-     */
-    public TaskDTO(String description, Project selectedProject) {
-        this.description = description;
-        this.creationDate = Calendar.getInstance();
-        this.startDate = null;
-        this.finishDate = null;
-        this.taskTeam = new ArrayList<>();
-        this.reports = new ArrayList<>();
-        this.estimatedTaskEffort = 0;
-        this.estimatedTaskStartDate = null;
-        this.taskDeadline = null;
-        this.taskBudget = 0;
-        this.startDateInterval = null;
-        this.deadlineInterval = null;
-        this.taskDependency = new ArrayList<>();
-        this.taskState = new Created();
-        this.cancelDate = null;
-        this.currentState = StateEnum.CREATED;
-        this.project = selectedProject;
-        this.pendingTaskTeamRequests = new ArrayList<>();
-        this.actions = new ArrayList<>();
-    }
-
-
-    /**
-     * Creates a taskDTO with the same parameters used to create a Task
-     *
-     */
-    public TaskDTO(String description, int estimatedTaskEffort, Calendar estimatedTaskStartDate, Calendar taskDeadline,
-                int estimatedBudgetCostTask) {
-
-        this.description = description;
-        this.creationDate = Calendar.getInstance();
-        this.startDate = null;
-        this.finishDate = null;
-        this.taskTeam = new ArrayList<>();
-        this.reports = new ArrayList<>();
-        this.estimatedTaskEffort = estimatedTaskEffort;
-        this.estimatedTaskStartDate = estimatedTaskStartDate;
-        this.taskDeadline = taskDeadline;
-        this.taskBudget = estimatedBudgetCostTask;
-        this.startDateInterval = null;
-        this.deadlineInterval = null;
-        this.taskDependency = new ArrayList<>();
-        this.taskState = new Created();
-        this.currentState = StateEnum.CREATED;
-        this.pendingTaskTeamRequests = new ArrayList<>();
-        this.actions = new ArrayList<>();
-    }
-
-
     public String getTaskID() {
         return taskID;
     }
@@ -218,9 +157,12 @@ public class TaskDTO extends ResourceSupport {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
         TaskDTO taskDTO = (TaskDTO) o;
         return Objects.equals(taskID, taskDTO.taskID);
     }

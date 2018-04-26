@@ -1,4 +1,4 @@
-package project.model;
+package project.dto;
 
 import org.springframework.hateoas.Link;
 import project.restcontroller.RestProjectController;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
-public class TaskAction {
+public final class TaskAction {
     
     private static final String TASKS = "tasks"; 
     private static final String TASK_DETAILS = "Task Details"; 
