@@ -3,6 +3,11 @@ package project.model.taskstateinterface;
 import project.model.StateEnum;
 import project.model.Task;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Planned implements TaskStateInterface {
 
 	/**
@@ -38,5 +43,21 @@ public class Planned implements TaskStateInterface {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Method that will get the actions available to the task depending of its state
+	 *
+	 * @return List of Actions
+	 */
+	@Override
+	public List<String> getActions(){
+		List<String> actions = new ArrayList<>();
+		actions.add("1");
+		actions.add("2");
+		actions.add("5");
+		actions.add("6");
+		actions.add("3");
+		return actions;
 	}
 }
