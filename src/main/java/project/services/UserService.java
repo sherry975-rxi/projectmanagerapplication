@@ -319,4 +319,18 @@ public class UserService {
 		return doesContainerHasEmail;
 	}
 
+	/**
+	 * This method create a User Dto with a user id
+	 *
+	 * @param userId
+	 *
+	 * @return userDTO
+	 */
+	public UserDTO createUserDtoWithUserId(Integer userId) {
+
+		UserDTO userDTO = new UserDTO(getUserByID(userId));
+
+		return userDTO;
+	}
+
 }
