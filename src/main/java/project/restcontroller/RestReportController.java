@@ -25,6 +25,8 @@ public class RestReportController {
     private final TaskService taskService;
     private final UserService userService;
     private final ProjectService projectService;
+    private final String TASKS = "tasks";
+    private final String REPORTS = "reports";
 
 
     @Autowired
@@ -67,9 +69,9 @@ public class RestReportController {
             for (Report reportCreated : task.getReports()) {
                 if (reportCreated.getTaskCollaborator().equals(taskCollaborator) && Math.abs(reportCreated.getReportedTime() - reportDto.getReportedTime())<0.0000000001) {
 
-                    Link reference = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").withRel("Show all Reports from Task");
+                    Link reference = linkTo(RestProjectController.class).slash(projid).slash(TASKS).slash(taskid).slash(REPORTS).withRel("Show all Reports from Task");
                     reportCreated.add(reference);
-                    Link reference1 = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").slash("users").slash(userId).withRel("Show Reports from User");
+                    Link reference1 = linkTo(RestProjectController.class).slash(projid).slash(TASKS).slash(taskid).slash(REPORTS).slash("users").slash(userId).withRel("Show Reports from User");
                     reportCreated.add(reference1);
 
                     responseEntity = new ResponseEntity<>(reportCreated, HttpStatus.CREATED);
@@ -128,7 +130,7 @@ public class RestReportController {
         } else {
 
             for (Report reportCreated : reports) {
-                Link reference = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(taskid).slash("reports").slash("users").slash(userid).slash("update").withRel("Update Report from User");
+                Link reference = linkTo(RestProjectController.class).slash(projid).slash(TASKS).slash(taskid).slash(REPORTS).slash("users").slash(userid).slash("update").withRel("Update Report from User");
                 reportCreated.add(reference);
                 }
             responseEntity = ResponseEntity.ok().body(reports);
