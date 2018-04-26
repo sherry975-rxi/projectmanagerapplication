@@ -53,7 +53,8 @@ public class RestUserTasksController {
      *
      *  All of these cases return a List containing only "401 Unauthorized" to ensure database privacy
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "pending",method = RequestMethod.GET)
+
     public ResponseEntity<List<String>> getPendingTasks(@PathVariable String userId) {
 
         Integer id;
