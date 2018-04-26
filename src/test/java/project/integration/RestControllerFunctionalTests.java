@@ -3,6 +3,7 @@ package project.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -209,7 +210,7 @@ public class RestControllerFunctionalTests {
     /**
      * This test confirms the rest Controller for US136 works correctly
      */
-    @Ignore
+
     @Test
     public void US136TestBrowserOutput() throws Exception {
 

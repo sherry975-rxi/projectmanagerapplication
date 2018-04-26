@@ -310,8 +310,9 @@ public class TaskServiceTest {
         when(task2Mock.getTaskTeam()).thenReturn(listTaskCollaborator);
 
         List<Task> orderedListToCompare = new ArrayList<>();
-        orderedListToCompare.add(task2Mock);
         orderedListToCompare.add(taskMock);
+        orderedListToCompare.add(task2Mock);
+
 
         List<Task> trueList = victim.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
 
