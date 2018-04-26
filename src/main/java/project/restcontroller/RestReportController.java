@@ -25,8 +25,8 @@ public class RestReportController {
     private final TaskService taskService;
     private final UserService userService;
     private final ProjectService projectService;
-    private final String TASKS = "tasks";
-    private final String REPORTS = "reports";
+    private static final String TASKS = "tasks";
+    private static final String REPORTS = "reports";
 
 
     @Autowired
