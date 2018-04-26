@@ -27,9 +27,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestProjCollabControllerTest {
@@ -204,7 +202,7 @@ public class RestProjCollabControllerTest {
         when(projectServiceMock.createProjectCollaboratorWithEmail(any(String.class),any(Integer.class), any(Double.class))).thenReturn(pcDaniel);
 
 
-        MockHttpServletResponse response = mvc.perform(put("/projects/" + projectId + "/team"+"/"+pcDaniel.getProjectCollaboratorId())
+        MockHttpServletResponse response = mvc.perform(delete("/projects/" + projectId + "/team"+"/"+pcDaniel.getProjectCollaboratorId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonProjectCollaborator.write(pcDaniel).getJson())).andReturn().getResponse();
 
