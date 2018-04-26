@@ -41,6 +41,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestProjectTasksControllerTest {
@@ -58,6 +59,8 @@ public class RestProjectTasksControllerTest {
     private RestProjectTasksController victim;
 
     private JacksonTester<List<Task>> jacksonProjectTeamList;
+    private JacksonTester<Task> jacksonTask;
+
     private MockMvc mockMvc;
     private User uDaniel;
     private User uInes;
@@ -290,87 +293,24 @@ public class RestProjectTasksControllerTest {
     }
 
 
-
-    /**
-     * GIVEN a project id
-     * WHEN we perform a getAttribute to url /projects/<projectId>/tasks/
-     * THEN we receive the value of the projectID as Integer
-     */
-    @Test
-    public void shouldReturnProjectID() throws Exception{
-
-        //GIVEN: a project that has the given IDValue: 11
-
-        Map<String, String> variables = new HashMap<String, String>();
-        variables.put("projid", "11");
-
-        Integer projID = 11;
-
-
-        //WHEN we perfom the method getAttribute of the Request to get the projectID from the request
-        when(req.getAttribute(any())).thenReturn(variables);
-
-
-
-        //THEN: the method returns the id of the proect
-        assertEquals(victim.getProjectIdByURI(), projID);
-
-        projectTasks = new ArrayList<>();
-    }
-
-    /**
-     * GIVEN an project id in the url
-     * WHEN we perform a getAttribute to url /projects/<projectId>/tasks/
-     * THEN the method will return null
-     */
-    @Test
-    public void shouldReturnNULLProjectID() throws Exception{
-
-        //GIVEN: a project that has the given IDValue: 11
-
-        Map<String, String> variables = new HashMap<String, String>();
-        variables.put("projid", "11a");
-
-        Integer nullProj = null;
-
-
-        //WHEN we perfom the method getAttribute of the Request to get the projectID from the request
-        when(req.getAttribute(any())).thenReturn(variables);
-
-
-
-        //THEN: the method returns the id of the proect
-        assertEquals(victim.getProjectIdByURI(), nullProj);
-
-        projectTasks = new ArrayList<>();
-    }
-
-
     //TODO
+
     /*
-    Failure due to a Json ignore attribute in Task (TaskInterface)
+        Fix test due to failure because TaskStateInterface has a @JsonIgnore annotation and causes a nullPointer Exception
      */
 
     /*
     @Test
-    public void createtask() throws Exception{
+    public void createTask() throws Exception{
 
-             //GIVEN: a project that has the given IDValue: 11
 
-        Map<String, String> variables = new HashMap<String, String>();
-        variables.put("projid", "11");
 
         Integer projID = 11;
-
-
-        //WHEN we perfom the method getAttribute of the Request to get the projectID from the request
-        when(req.getAttribute(any())).thenReturn(variables);
 
 
         //GIVEN
         //A set of parameters to create a project
         String taskDescription = "Task Description";
-        Integer projIDs = 11;
         when(projectService.getProjectById(projID)).thenReturn(project);
 
         //WHEN
@@ -392,8 +332,8 @@ public class RestProjectTasksControllerTest {
 
     }
 
-*/
 
+*/
 
 
 }
