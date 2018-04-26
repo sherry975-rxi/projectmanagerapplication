@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest.*;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import project.services.UserService;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -153,11 +155,9 @@ public class RestControllerNewIntergrationTests {
      * This tests the URI that fetches user by email
      * @throws Exception
      */
-
-        @Test
-        public void shouldReturnUserByEmail() throws Exception{
-
-            // GIVEN four users in the test Database
+    @Test
+    public void shouldReturnUserByEmail() throws Exception{
+        // GIVEN four users in the test Database
             assertEquals(4, userService.getAllUsersFromUserContainer().size());
 
             ParameterizedTypeReference<List<User>> listOfUsers = new ParameterizedTypeReference<List<User>>() {};
@@ -206,6 +206,64 @@ public class RestControllerNewIntergrationTests {
         expectedUser = new ResponseEntity<>(mike, HttpStatus.OK);
         assertEquals(expectedUser.getBody().getName(), actualUser.getBody().getName());
         assertEquals(expectedUser.getStatusCode(), actualUser.getStatusCode());
+
+
+
+    }
+
+    /**
+     *
+     *
+     *
+     */
+    @Test
+    public void validateUserTest() {
+        //GIVEN a user with no password
+        assertFalse(mike.hasPassword());
+
+        // WHEN posting a logIn request for that user with the correct email
+        UserDTO requestBody = new UserDTO("Mike", "mike@mike.com", "", "", "", "wrong", "", "");
+
+        actualUser = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
+
+
+        // THEN the response entity must contain the user with 3 links, for account validation
+        assertEquals(HttpStatus.OK, actualUser.getStatusCode());
+        assertEquals("Mike", actualUser.getBody().getName());
+        assertEquals(3, actualUser.getBody().getLinks().size());
+
+
+        //AND WHEN mike is given a question + answer, and chooses the link to validate via question
+
+        mike.setQuestion("Are You testing?");
+        mike.setAnswer("Yes");
+        userService.updateUser(mike);
+
+        ResponseEntity<Link> toCheckValidation = this.restTemplate.getForEntity("http://localhost:" + port + "/account/"+mike.getUserID()+"/validate/3", Link.class);
+
+        // THEN the response entity must contain a single link with the question
+
+        assertEquals(HttpStatus.OK, toCheckValidation.getStatusCode());
+        assertEquals("Are You testing?", toCheckValidation.getBody().getRel());
+
+        //AND WHEN mike inputs the wrong validation answer
+
+        String inputtedCode = "Wrong answer";
+
+        toCheckValidation = this.restTemplate.postForEntity("http://localhost:" + port + "/account/"+mike.getUserID()+"/validate/inputCode", inputtedCode, Link.class);
+
+        // THEN the response entity should contain Forbidden
+        assertEquals(HttpStatus.FORBIDDEN, toCheckValidation.getStatusCode());
+
+        //AND WHEN mike inputs the correct answer
+
+        inputtedCode = "Yes";
+
+        toCheckValidation = this.restTemplate.postForEntity("http://localhost:" + port + "/account/"+mike.getUserID()+"/validate/inputCode", inputtedCode, Link.class);
+
+        // THEN the response entity should contain OK, and a link to his data
+        assertEquals(HttpStatus.OK, toCheckValidation.getStatusCode());
+        assertEquals("createPassword", toCheckValidation.getBody().getRel());
 
 
 
