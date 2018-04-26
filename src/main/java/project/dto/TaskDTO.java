@@ -2,7 +2,6 @@ package project.dto;
 
 import org.springframework.hateoas.ResourceSupport;
 import project.model.*;
-import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.TaskStateInterface;
 
 import java.util.ArrayList;
@@ -38,8 +37,7 @@ public class TaskDTO extends ResourceSupport {
     /**
      * Empty Constructor
      */
-    private TaskDTO() {
-
+    protected TaskDTO() {
     }
 
     /**
@@ -49,11 +47,11 @@ public class TaskDTO extends ResourceSupport {
      */
     public TaskDTO(Task task) {
 
+        this.taskID = task.getTaskID();
         this.description = task.getDescription();
         this.creationDate = task.getCreationDate();
         this.startDate = task.getStartDate();
         this.finishDate = task.getFinishDate();
-        this.taskState = task.getTaskState();
         this.taskTeam = task.getTaskTeam();
         this.reports = task.getReports();
         this.estimatedTaskEffort = task.getEstimatedTaskEffort();
@@ -64,10 +62,12 @@ public class TaskDTO extends ResourceSupport {
         this.taskState = task.getTaskState();
         this.startDateInterval = task.getStartDateInterval();
         this.deadlineInterval = task.getDeadlineInterval();
-        this.currentState = StateEnum.CREATED;
+        this.currentState = getCurrentState();
         this.project = task.getProject();
         this.pendingTaskTeamRequests = task.getPendingTaskTeamRequests();
         this.actions = new ArrayList<>();
+        this.cancelDate = task.getCancelDate();
+
     }
 
     public String getTaskID() {
@@ -92,10 +92,6 @@ public class TaskDTO extends ResourceSupport {
 
     public List<TaskTeamRequest> getPendingTaskTeamRequests() {
         return pendingTaskTeamRequests;
-    }
-
-    public Calendar getCreationDate() {
-        return creationDate;
     }
 
     public Calendar getStartDate() {
@@ -149,6 +145,11 @@ public class TaskDTO extends ResourceSupport {
     public List<String> getActions() {
         return actions;
     }
+
+    public Calendar getCreationDate() {
+        return creationDate;
+    }
+
 
     /*
      * (non-Javadoc)
