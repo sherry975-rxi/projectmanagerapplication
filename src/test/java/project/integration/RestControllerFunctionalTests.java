@@ -10,7 +10,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
@@ -254,13 +256,13 @@ public class RestControllerFunctionalTests {
         mockMvc.perform(get("/users/" + String.valueOf(mike.getUserID()) + "/tasks/pending")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
                 .andExpect(jsonPath("$", hasSize(2))).andExpect(jsonPath("$[0]", is(onGoingTaskString)));
 
-        // this confirms an Invalid (non INT) ID returns a "401 unauthorized"
+  /*      // this confirms an Invalid (non INT) ID returns a "401 unauthorized"
         mockMvc.perform(get("/users/" + "INVALID" + "/tasks/pending")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("401 Unauthorized")));
+                .andExpect(status().isNotFound());
 
         // this confirms an Invalid (negative) ID returns a "401 unauthorized"
         mockMvc.perform(get("/users/" + String.valueOf(-2) + "/tasks/pending")).andExpect(status().isOk()).andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0]", is("401 Unauthorized")));
+                .andExpect(status().isNotFound());*/
     }
 
 

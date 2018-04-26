@@ -131,7 +131,7 @@ public class RestRequestControllerTest {
         Mockito.when(userRepository.findByEmail("joao@gmail.com")).thenReturn(Optional.of(userTwo));
         Mockito.when(userRepository.findByEmail(userThreeEmail)).thenReturn(Optional.of(userThree));
         Mockito.when(userRepository.findByEmail(userFourEmail)).thenReturn(Optional.of(userFour));
-        Mockito.when(userRepository.findByUserID(userTwoId)).thenReturn(userTwo);
+        Mockito.when(userRepository.findByUserID(userTwoId)).thenReturn(Optional.of(userTwo));
         Mockito.when(projectsRepository.findByProjectId(projectId)).thenReturn(Optional.of(projectOne));
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
         Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
