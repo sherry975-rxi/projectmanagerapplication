@@ -23,7 +23,6 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -57,9 +56,11 @@ public class RestControllerNewIntergrationTests {
 
     ProjectCollaborator projCollabRui;
 
-    ResponseEntity<User> actual, expected;
+    ResponseEntity<User> actualUser, expectedUser;
 
-    ResponseEntity<List<User>> actualList, expectedList;
+    ResponseEntity<List<User>> actualUserList, expectedUserList;
+
+    ResponseEntity<Project> actualRealProject;
 
     @Before
     public void setUp() {
@@ -111,13 +112,13 @@ public class RestControllerNewIntergrationTests {
         assertEquals(mike, userService.getUserByID(mike.getUserID()));
 
         // WHEN the response entity is fetched from the find User by ID URL
-        actual = this.restTemplate.getForEntity("http://localhost:" + port + "/users/" + mike.getUserID(),
+        actualUser = this.restTemplate.getForEntity("http://localhost:" + port + "/users/" + mike.getUserID(),
                 User.class);
 
 
         // THEN the response entity must contain Mike
-        expected = new ResponseEntity<>(mike, HttpStatus.OK);
-        assertEquals(expected.getBody().getName(), actual.getBody().getName());
+        expectedUser = new ResponseEntity<>(mike, HttpStatus.OK);
+        assertEquals(expectedUser.getBody().getName(), actualUser.getBody().getName());
 
     }
 
@@ -136,25 +137,25 @@ public class RestControllerNewIntergrationTests {
         ParameterizedTypeReference<List<User>> listOfUsers = new ParameterizedTypeReference<List<User>>() {};
 
         // AND WHEN searching for all users
-        actualList = this.restTemplate.exchange("http://localhost:" + port + "/users/allUsers", HttpMethod.GET, null, listOfUsers);
+        actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/allUsers", HttpMethod.GET, null, listOfUsers);
 
-        // THEN the expected response entity must contain all users in the container
-        expectedList = new ResponseEntity<>(userService.getAllUsersFromUserContainer(), HttpStatus.OK);
+        // THEN the expectedUser response entity must contain all users in the container
+        expectedUserList = new ResponseEntity<>(userService.getAllUsersFromUserContainer(), HttpStatus.OK);
 
-        assertEquals(expectedList.getBody().size(), actualList.getBody().size());
+        assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
 
-        assertEquals("Owner boi", actualList.getBody().get(0).getName());
-        assertEquals("Mike", actualList.getBody().get(1).getName());
+        assertEquals("Owner boi", actualUserList.getBody().get(0).getName());
+        assertEquals("Mike", actualUserList.getBody().get(1).getName());
 
         // AND WHEN searching for a user email "mike@mike"
-        actualList = this.restTemplate.exchange("http://localhost:" + port + "/users/email/mike@mike", HttpMethod.GET, null, listOfUsers);
+        actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/email/mike@mike", HttpMethod.GET, null, listOfUsers);
 
-        // THEN the expected response entity must contain all users in the container
-        expectedList = new ResponseEntity<>(userService.searchUsersByPartsOfEmail("mike@mike"), HttpStatus.OK);
+        // THEN the expectedUser response entity must contain all users in the container
+        expectedUserList = new ResponseEntity<>(userService.searchUsersByPartsOfEmail("mike@mike"), HttpStatus.OK);
 
-        assertEquals(expectedList.getBody().size(), actualList.getBody().size());
-        assertEquals(1, actualList.getBody().size());
-        assertEquals("Mike", actualList.getBody().get(0).getName());
+        assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
+        assertEquals(1, actualUserList.getBody().size());
+        assertEquals("Mike", actualUserList.getBody().get(0).getName());
     }
 
 
@@ -177,31 +178,47 @@ public class RestControllerNewIntergrationTests {
         // WHEN posting a logIn request using an incorrect password
         UserDTO requestBody = new UserDTO("Mike", "mike@mike.com", "", "", "", "wrong", "", "");
 
-        actual = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
+        actualUser = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
 
-        // THEN the expected status should be Forbidden
-        expected = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        assertEquals(expected.getStatusCode(), actual.getStatusCode());
+        // THEN the expectedUser status should be Forbidden
+        expectedUser = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        assertEquals(expectedUser.getStatusCode(), actualUser.getStatusCode());
 
-        // AND WHEN the request contains the actual password
+        // AND WHEN the request contains the actualUser password
         requestBody = new UserDTO("Mike", "mike@mike.com", "", "", "", "123456", "", "");
 
-        actual = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
+        actualUser = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
 
-        // THEN the expected response entity should contain Mike
-        expected = new ResponseEntity<>(mike, HttpStatus.OK);
-        assertEquals(expected.getBody().getName(), actual.getBody().getName());
-        assertEquals(expected.getStatusCode(), actual.getStatusCode());
+        // THEN the expectedUser response entity should contain Mike
+        expectedUser = new ResponseEntity<>(mike, HttpStatus.OK);
+        assertEquals(expectedUser.getBody().getName(), actualUser.getBody().getName());
+        assertEquals(expectedUser.getStatusCode(), actualUser.getStatusCode());
 
 
 
     }
 
 
+    /**
+     * This tests if the basic setup for project creation integration testing works correctly
+     *
+     * @throws Exception
+     */
     @Test
     public void basicProjectTest() throws Exception {
+        // GIVEN a single project in the database
         assertEquals(1, projectService.getAllProjectsfromProjectsContainer().size());
         assertEquals(projectOne.getIdCode(), projectService.getProjectById(projectOne.getIdCode()).getProjectId());
+
+        // WHEN a new project is created via HTTP post request
+        Project toCreate = new Project("Create with REST", "Create it good", mike);
+        actualRealProject = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/", toCreate, Project.class);
+
+        // THEN the response entity must contain the created project, with mike as the project manager. The database must also contain 2 projects
+        assertEquals("Create with REST", actualRealProject.getBody().getName());
+        assertEquals(mike, actualRealProject.getBody().getProjectManager());
+
+        assertEquals(2, projectService.getAllProjectsfromProjectsContainer().size());
     }
 
 
