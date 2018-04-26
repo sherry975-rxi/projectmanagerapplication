@@ -169,6 +169,10 @@ public class RestAccountController {
 
         User toValidate = userService.getUserByID(userId);
 
+        if(toValidate==null || !pendingValidation.containsKey(toValidate)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         Link output;
 
         if(pendingValidation.get(toValidate).equals(code) || toValidate.getAnswer().equals(code)) {
