@@ -69,10 +69,12 @@ public class TaskTeamRequestTest {
 		request.setType(RequestType.ASSIGNMENT);
 
 		assertEquals("Assignment", request.getType().getDescription());
+		assertEquals(0, request.getType().getType());
 
 		request.setType(RequestType.REMOVAL);
 
 		assertEquals("Removal", request.getType().getDescription());
+		assertEquals(1, request.getType().getType());
 	}
 
 	@Test
