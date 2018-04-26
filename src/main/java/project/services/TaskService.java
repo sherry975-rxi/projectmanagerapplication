@@ -210,7 +210,7 @@ public class TaskService {
 		return lastMonthFinishedTasks;
 	}
 
-	public List<Task> sortTaskListDecreasingOrder(List<Task> toSort) {		
+	public List<Task> sortFinishTaskListDecreasingOrder(List<Task> toSort) {
 	
 		Collections.sort(toSort, new Comparator<Task>() {
             @Override
@@ -301,7 +301,7 @@ public class TaskService {
 		List<Task> lastMonthTasksDecOrder = new ArrayList<>();
 		lastMonthTasksDecOrder.addAll(getLastMonthFinishedUserTaskList(user));
 
-		return this.sortTaskListDecreasingOrder(lastMonthTasksDecOrder);
+		return this.sortFinishTaskListDecreasingOrder(lastMonthTasksDecOrder);
 	}
 
 	/**
@@ -318,7 +318,7 @@ public class TaskService {
 		List<Task> finishedTasksDecOrder = new ArrayList<>();
 		finishedTasksDecOrder.addAll(getUserTasks(user));
 
-		return this.sortTaskListDecreasingOrder(finishedTasksDecOrder);
+		return this.sortFinishTaskListDecreasingOrder(finishedTasksDecOrder);
 	}
 
 	/**
@@ -539,7 +539,7 @@ public class TaskService {
 
 			finishedTaskListDecreasingOrder.addAll(this.getProjectFinishedTasks(project));
 
-			return sortTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
+			return sortFinishTaskListDecreasingOrder(finishedTaskListDecreasingOrder);
 		}
 		
 		/**
