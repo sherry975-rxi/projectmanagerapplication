@@ -132,33 +132,44 @@ public class RestControllerNewIntergrationTests {
 
         // GIVEN four users in the test Database
         assertEquals(4, userService.getAllUsersFromUserContainer().size());
-        assertEquals(mike, userService.getUserByID(mike.getUserID()));
 
         ParameterizedTypeReference<List<User>> listOfUsers = new ParameterizedTypeReference<List<User>>() {};
 
-        // AND WHEN searching for all users
+        // WHEN searching for all users
         actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/allUsers", HttpMethod.GET, null, listOfUsers);
 
         // THEN the expectedUser response entity must contain all users in the container
         expectedUserList = new ResponseEntity<>(userService.getAllUsersFromUserContainer(), HttpStatus.OK);
 
         assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
-
         assertEquals("Owner boi", actualUserList.getBody().get(0).getName());
         assertEquals("Mike", actualUserList.getBody().get(1).getName());
 
-        // AND WHEN searching for a user email "mike@mike"
+    }
+
+    /**
+     * This tests the URI that fetches user by email
+     * @throws Exception
+     */
+
+        @Test
+        public void shouldReturnUserByEmail() throws Exception{
+
+            // GIVEN four users in the test Database
+            assertEquals(4, userService.getAllUsersFromUserContainer().size());
+
+            ParameterizedTypeReference<List<User>> listOfUsers = new ParameterizedTypeReference<List<User>>() {};
+
+        // WHEN searching for a user email "mike@mike"
         actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/email/mike@mike", HttpMethod.GET, null, listOfUsers);
 
-        // THEN the expectedUser response entity must contain all users in the container
+        // THEN the expectedUser response entity must contain the user
         expectedUserList = new ResponseEntity<>(userService.searchUsersByPartsOfEmail("mike@mike"), HttpStatus.OK);
 
         assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
         assertEquals(1, actualUserList.getBody().size());
         assertEquals("Mike", actualUserList.getBody().get(0).getName());
     }
-
-
 
     /**
      * Integration test for log in Rest API.
