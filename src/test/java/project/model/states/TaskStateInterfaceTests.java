@@ -4,9 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import project.model.*;
-import project.model.taskstateinterface.Created;
+import project.model.taskstateinterface.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,6 +19,7 @@ public class TaskStateInterfaceTests {
 	Project project;
 	Task task;
 	Calendar estimatedTaskStartDate, taskDeadline;
+	Task task2;
 
 	@Before
 	public void setUp() {
@@ -30,7 +33,8 @@ public class TaskStateInterfaceTests {
 		project = new Project("Teste", "teste", user); 
 		
 		//Creates the Task
-		task = project.createTask("Task de teste"); 
+		task = project.createTask("Task de teste");
+		task2 = project.createTask("actions");
 
 		// create a estimated task date
 		estimatedTaskStartDate = Calendar.getInstance();
@@ -180,6 +184,173 @@ public class TaskStateInterfaceTests {
 
 
     }
+
+
+
+	/**
+	 * GIVEN a task in the state created and a list of possible actions
+	 * WHEN the method getActions from the task current state is called
+	 * THEN a list of actions must be returned and must be equal to the list previously instantiated
+	 */
+	@Test
+	public void getActionsCreatedStateTeste() {
+
+		//GIVEN a task in the state created and a list of possible actions
+		task2.setTaskState(new Created());
+		List<String> actions = new ArrayList<>();
+		actions.add("1");
+		actions.add("2");
+		actions.add("3");
+
+		//WHEN the method getActions from its state is called
+		task2.getTaskState().getActions();
+
+		//THEN a list of actions must be returned
+		assertEquals(actions, task2.getTaskState().getActions());
+	}
+
+	/**
+	 * GIVEN a task in the state created and a list of possible actions
+	 * WHEN the method getActions from the task current state is called
+	 * THEN a list of actions must be returned and must be equal to the list previously instantiated
+	 */
+	@Test
+	public void getActionsPlannedStateTeste() {
+
+		//GIVEN a task in the state Planned and a list of possible actions
+		task2.setTaskState(new Planned());
+		List<String> actions = new ArrayList<>();
+		actions.add("1");
+		actions.add("2");
+		actions.add("5");
+		actions.add("6");
+		actions.add("3");
+
+		//WHEN the method getActions from its state is called
+		task2.getTaskState().getActions();
+
+		//THEN a list of actions must be returned
+		assertEquals(actions, task2.getTaskState().getActions());
+	}
+
+	/**
+	 * GIVEN a task in the state created and a list of possible actions
+	 * WHEN the method getActions from the task current state is called
+	 * THEN a list of actions must be returned and must be equal to the list previously instantiated
+	 */
+	@Test
+	public void getActionsReadyStateTeste() {
+
+		//GIVEN a task in the state Ready and a list of possible actions
+		task2.setTaskState(new Ready());
+		List<String> actions = new ArrayList<>();
+		actions.add("7");
+		actions.add("2");
+		actions.add("8");
+		actions.add("9");
+		actions.add("5");
+		actions.add("6");
+		actions.add("3");
+
+		//WHEN the method getActions from its state is called
+		task2.getTaskState().getActions();
+
+		//THEN a list of actions must be returned
+		assertEquals(actions, task2.getTaskState().getActions());
+	}
+
+	/**
+	 * GIVEN a task in the state created and a list of possible actions
+	 * WHEN the method getActions from the task current state is called
+	 * THEN a list of actions must be returned and must be equal to the list previously instantiated
+	 */
+	@Test
+	public void getActionsOngoingStateTeste() {
+
+		//GIVEN a task in the state OnGoing and a list of possible actions
+		task2.setTaskState(new OnGoing());
+		List<String> actions = new ArrayList<>();
+		actions.add("2");
+		actions.add("3");
+		actions.add("5");
+		actions.add("6");
+		actions.add("9");
+		actions.add("10");
+		actions.add("11");
+		actions.add("12");
+
+		//WHEN the method getActions from its state is called
+		task2.getTaskState().getActions();
+
+		//THEN a list of actions must be returned
+		assertEquals(actions, task2.getTaskState().getActions());
+	}
+
+	/**
+	 * GIVEN a task in the state created and a list of possible actions
+	 * WHEN the method getActions from the task current state is called
+	 * THEN a list of actions must be returned and must be equal to the list previously instantiated
+	 */
+	@Test
+	public void getActionsStandBYStateTeste() {
+
+		//GIVEN a task in the state StandBy and a list of possible actions
+		task2.setTaskState(new StandBy());
+		List<String> actions = new ArrayList<>();
+		actions.add("2");
+		actions.add("3");
+		actions.add("11");
+		actions.add("12");
+
+		//WHEN the method getActions from its state is called
+		task2.getTaskState().getActions();
+
+		//THEN a list of actions must be returned
+		assertEquals(actions, task2.getTaskState().getActions());
+	}
+
+
+	/**
+	 * GIVEN a task in the state Finished and a list of possible actions
+	 * WHEN the method getActions from the task current state is called
+	 * THEN a list of actions must be returned and must be equal to the list previously instantiated
+	 */
+	@Test
+	public void getActionsFinishedStateTeste() {
+
+		//GIVEN a task in the state created and a list of possible actions
+		task2.setTaskState(new Finished());
+		List<String> actions = new ArrayList<>();
+		actions.add("3");
+		actions.add("13");
+
+		//WHEN the method getActions from its state is called
+		task2.getTaskState().getActions();
+
+		//THEN a list of actions must be returned
+		assertEquals(actions, task2.getTaskState().getActions());
+	}
+
+	/**
+	 * GIVEN a task in the state created and a list of possible actions
+	 * WHEN the method getActions from the task current state is called
+	 * THEN a list of actions must be returned and must be equal to the list previously instantiated
+	 */
+	@Test
+	public void getActionsCancelledStateTeste() {
+
+		//GIVEN a task in the state Cancelled and a list of possible actions
+		task2.setTaskState(new Cancelled());
+		List<String> actions = new ArrayList<>();
+		actions.add("3");
+
+		//WHEN the method getActions from its state is called
+		task2.getTaskState().getActions();
+
+		//THEN a list of actions must be returned
+		assertEquals(actions, task2.getTaskState().getActions());
+	}
+
 
 
 }
