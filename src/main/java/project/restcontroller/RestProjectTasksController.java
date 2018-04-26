@@ -26,6 +26,8 @@ public class RestProjectTasksController {
 
     HttpServletRequest req;
 
+    String tasks = "tasks";
+
 
     @Autowired
     public RestProjectTasksController(TaskService taskService, ProjectService projectService, HttpServletRequest req) {
@@ -57,7 +59,7 @@ public class RestProjectTasksController {
             Project projectTask = projectService.getProjectById(projid);
             Task task = taskService.createTask(taskDTO.getDescription(), projectTask);
 
-            if(taskDTO.getEstimatedTaskEffort() != 0 && taskDTO.getTaskBudget() != 0
+        if (taskDTO.getEstimatedTaskEffort() <= 0.00000001 && taskDTO.getTaskBudget() <= 0.00000001
              && taskDTO.getEstimatedTaskStartDate() != null && taskDTO.getTaskDeadline() != null) {
 
                 task.setEstimatedTaskEffort(taskDTO.getEstimatedTaskEffort());
@@ -94,7 +96,7 @@ public class RestProjectTasksController {
 
         for(Task task: tasksWithoutCollabs){
 
-            Link taskLink = linkTo(RestProjectController.class).slash(projid).slash("tasks").withSelfRel();
+            Link taskLink = linkTo(RestProjectController.class).slash(projid).slash(tasks).withSelfRel();
             task.add(taskLink);
         }
 
@@ -138,7 +140,7 @@ public class RestProjectTasksController {
         finishedTasks.addAll(taskService.getProjectFinishedTasksInDecreasingOrder(project));
 
         for(Task task : finishedTasks) {
-            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(task.getTaskID()).withSelfRel();
+            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash(tasks).slash(task.getTaskID()).withSelfRel();
             task.add(selfRel);
         }
 
@@ -164,7 +166,7 @@ public class RestProjectTasksController {
         unfinishedTasks.addAll(taskService.getProjectUnFinishedTasks(project));
 
         for(Task task : unfinishedTasks) {
-            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash("tasks").slash(task.getTaskID()).withSelfRel();
+            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash(tasks).slash(task.getTaskID()).withSelfRel();
             task.add(selfRel);
         }
 
