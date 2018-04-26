@@ -53,6 +53,7 @@ public class RestControllerNewIntergrationTests {
     ProjectCollaborator projCollabRui;
 
     ResponseEntity<User> actual, expected;
+    ResponseEntity<TaskTeamRequest> taskRequestResponse;
 
     @Before
     public void setUp() {
@@ -80,10 +81,12 @@ public class RestControllerNewIntergrationTests {
     public void tearDown() {
         actual = null;
         expected = null;
-        taskService.getTaskRepository().deleteAllInBatch();
-        projectService.getProjectCollaboratorRepository().deleteAllInBatch();
-        projectService.getProjectsRepository().deleteAllInBatch();
-        userService.getUserRepository().deleteAllInBatch();
+        taskOne.getPendingTaskTeamRequests().clear();
+        taskService.saveTask(taskOne);
+        taskService.getTaskRepository().deleteAll();
+        projectService.getProjectCollaboratorRepository().deleteAll();
+        projectService.getProjectsRepository().deleteAll();
+        userService.getUserRepository().deleteAll();
 
 
     }
@@ -168,6 +171,43 @@ public class RestControllerNewIntergrationTests {
         assertEquals(taskOne.getTaskID(), taskService.getProjectTasks(projectOne).get(0).getTaskID());
     }
 
+    /**
+     * Given
+     * TaskOne in projectOne, with no collaborators, neither requests
+     *
+     * When
+     * Creating assignment request to taskOne from userRui
+     *
+     * Then
+     * It is expected to be successfully created
+     *
+     * And When
+     * Creating again assignment request that already exists for userRui
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     */
+    @Test
+    public void canCreateAnAssignmentRequest() {
+
+        //Given
+        assertEquals(0, taskOne.getTaskTeam().size());
+        assertEquals(0, taskOne.getPendingTaskTeamRequests().size());
+
+        //When
+        UserDTO requestBodyRui = new UserDTO("JO", "rui@gmail.com", "", "", "", "wrong", "", "");
+        taskRequestResponse = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/assignmentRequest", requestBodyRui , TaskTeamRequest.class);
+
+        //Then
+        assertEquals(HttpStatus.CREATED, taskRequestResponse.getStatusCode());
+
+        // And When
+        ResponseEntity<TaskTeamRequest> result2 = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/assignmentRequest", requestBodyRui , TaskTeamRequest.class);
+
+        // Then
+        assertEquals(HttpStatus.FORBIDDEN, result2.getStatusCode());
+
+    }
 
 
 }
