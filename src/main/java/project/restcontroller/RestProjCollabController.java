@@ -103,5 +103,35 @@ public class RestProjCollabController {
         }
          return response;
     }
+
+    /**
+     * This method deactivates a collaborator of a specific project
+     *
+     * @param collaboratorId Collaborator to deactivate
+     * @param projectId Id of the project
+     *
+     * @return List of project collaborators with the new user added with a link to open each collaborator
+     */
+    @RequestMapping(value = "/{collaboratorId}", method = RequestMethod.PUT)
+    public ResponseEntity<ProjectCollaborator> removeCollaborator(@PathVariable long collaboratorId, @PathVariable int projectId) {
+
+        ResponseEntity<ProjectCollaborator> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        ProjectCollaborator projectCollaborator = projectService.getProjectCollaboratorById(collaboratorId);
+
+        if(projectCollaborator != null){
+            projectCollaborator.setStatus(false);
+            projectService.updateProjectCollaborator(projectCollaborator);
+
+            response = new ResponseEntity<>(projectCollaborator, HttpStatus.OK);
+
+            Link selfRel = linkTo(RestProjectController.class).slash(projectId).slash("team").slash(projectCollaborator.getProjectCollaboratorId()).withSelfRel();
+            projectCollaborator.add(selfRel);
+
+            Link reference1 = linkTo(RestProjectController.class).slash(projectId).slash("team").withRel("Project Collaborator List");
+            projectCollaborator.add(reference1);
+        }
+
+        return response;
+    }
 }
 

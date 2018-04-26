@@ -132,7 +132,7 @@ public class US207CreateTaskReportRestControllerTest {
 
         Mockito.when(userRepository.findByEmail(userTwoEmail)).thenReturn(Optional.of(userTwo));
         Mockito.when(userRepository.findByUserID(userTwoId)).thenReturn(userTwo);
-        Mockito.when(projectsRepository.findById(projectId)).thenReturn(Optional.of(projectOne));
+        Mockito.when(projectsRepository.findByProjectId(projectId)).thenReturn(Optional.of(projectOne));
         Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
         Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
         Mockito.when(taskRepository.findByTaskID(taskIdOne)).thenReturn(Optional.of(taskOne));

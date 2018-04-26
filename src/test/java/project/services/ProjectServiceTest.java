@@ -9,10 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 
@@ -420,7 +417,7 @@ public class ProjectServiceTest {
 		String userEmail = "joao@gmail.com";
 
 		//When:: the user is added to the project team, using its email and the project id
-		when(projectRep.findById(projectId)).thenReturn(Optional.of(project1));
+		when(projectRep.findByProjectId(projectId)).thenReturn(Optional.of(project1));
 		when(userService.getUserByEmail(user1.getEmail())).thenReturn(user1);
 
 		projectService.createProjectCollaboratorWithEmail(userEmail, projectId, 10);
@@ -584,14 +581,14 @@ public class ProjectServiceTest {
 		Project project1 = projectService.createProject("Project 1", "Descricao", projectManager);
 
 		/*
-		 * Verifies that the method getProjectById calls the method findById of the
+		 * Verifies that the method getProjectById calls the method findByProjectId of the
 		 * ProjectRepository when the method "getProjectById" is used
 		 */
 
-		when(projectRep.findById(project1.getProjectId())).thenReturn(Optional.of(project1));
+		when(projectRep.findByProjectId(project1.getProjectId())).thenReturn(Optional.of(project1));
 		assertEquals(project1, projectService.getProjectById(project1.getProjectId()));
 
-		Mockito.verify(projectRep, Mockito.times(1)).findById(project1.getProjectId());
+		Mockito.verify(projectRep, Mockito.times(1)).findByProjectId(project1.getProjectId());
 
 	}
 
@@ -663,6 +660,8 @@ public class ProjectServiceTest {
 		when(projectUpdates.getProjectManager()).thenReturn(user);
 		when(user.getEmail()).thenReturn("moked@mail.pt");
 		when(userService.getUserByEmail(anyString())).thenReturn(user);
+        when(project.getCalculationMethod()).thenReturn(CalculationMethod.CI);
+        when(project.isCalculationMethodAllowed(CalculationMethod.CI.getCode())).thenReturn(true);
 
 		//WHEN updateProjectData is called with an update for project manager
 		projectService.updateProjectData(projectUpdates, project);
@@ -674,21 +673,25 @@ public class ProjectServiceTest {
 
 		//GIVEN a project to update
 		when(projectUpdates.getProjectManager()).thenReturn(null);
-		when(projectUpdates.getCalculationMethod()).thenReturn(3);
+		when(projectUpdates.getAvailableCalculationMethods()).thenReturn("CF,CM");
+		when(projectUpdates.getCalculationMethod()).thenReturn(CalculationMethod.CM);
+		when(project.getCalculationMethod()).thenReturn(CalculationMethod.CM);
+		when(project.isCalculationMethodAllowed(CalculationMethod.CM.getCode())).thenReturn(true);
 
 		//WHEN updateProjectData is called with an update for calculation method
 		projectService.updateProjectData(projectUpdates, project);
 
 		//THEN the project is updated and saved
-		verify(project, times(1)).setCalculationMethod(3);
-		verify(projectRep, times(2)).save(project);
+		verify(project, times(1)).setAvailableCalculationMethods("CF,CM");
+		verify(project, times(1)).setCalculationMethod(CalculationMethod.CM);
+		verify(projectRep, times(3)).save(project);
 
 
 		//GIVEN a project to update
 		//WHEN updateProjectData is called with no updates
-		when(projectUpdates.getCalculationMethod()).thenReturn(0);
+		when(projectUpdates.getCalculationMethod()).thenReturn(null);
 		//THEN the project is not update
-		verify(projectRep, times(2)).save(project);
+		verify(projectRep, times(3)).save(project);
 
 	}
 

@@ -111,21 +111,21 @@ public class US360GetProjectTasksWithoutCollaboratorsAssignedTest {
 		task3.setTaskDeadline(taskExpiredDeadlineDateTest);
 		task3.setTaskBudget(10);
 		
-		//task4 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest3, 10);
+		//task4 = project1.getAllTasksFromTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest3, 10);
 		task4 = taskContainer.createTask("Do this", project1);
 		task4.setEstimatedTaskEffort(10);
 		task4.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task4.setTaskDeadline(taskDeadlineDateTest3);
 		task4.setTaskBudget(10);
 		
-		//task5 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest4, 10);
+		//task5 = project1.getAllTasksFromTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskDeadlineDateTest4, 10);
 		task5 = taskContainer.createTask("Do this", project1);
 		task5.setEstimatedTaskEffort(10);
 		task5.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
 		task5.setTaskDeadline(taskDeadlineDateTest4);
 		task5.setTaskBudget(10);
 		
-		//task6 = project1.getTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskExpiredDeadlineDateTest, 10);
+		//task6 = project1.getAllTasksFromTaskRepository().createTask("Do this", 10, estimatedTaskStartDateTest, taskExpiredDeadlineDateTest, 10);
 		task6 = taskContainer.createTask("Do this", project1);
 		task6.setEstimatedTaskEffort(10);
 		task6.setEstimatedTaskStartDate(estimatedTaskStartDateTest);

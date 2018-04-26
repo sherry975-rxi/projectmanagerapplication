@@ -77,6 +77,9 @@ public class RestProjectController  {
     public ResponseEntity<Project> updateProject(@RequestBody Project projectUpdates, @PathVariable int projectId){
         Project project = projectService.getProjectById(projectId);
         projectService.updateProjectData(projectUpdates, project);
+        if(projectUpdates.getAvailableCalculationMethods()!=null || projectUpdates.getCalculationMethod()!=null) {
+            taskService.calculateReportEffortCost(project);
+        }
 
         Link reference = linkTo(getClass()).slash(project.getProjectId()).withRel("Project details");
         project.add(reference);
@@ -126,6 +129,8 @@ public class RestProjectController  {
         return ResponseEntity.ok().body(proj);
     }
 }
+
+
 
 
 

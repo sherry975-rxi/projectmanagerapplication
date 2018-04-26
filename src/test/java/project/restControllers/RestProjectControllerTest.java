@@ -3,7 +3,6 @@ package project.restControllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -119,6 +118,41 @@ public class RestProjectControllerTest {
         //THEN we receive status OK and the project info updated
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
+
+    /**
+     * GIVEN a project ID
+     * WHEN we perform a patch request to url /projects/<projectId>
+     * THEN we we receive status OK and the project info updated
+     * @throws Exception
+     */
+    @Test
+    public void shouldUpdateAllowedCalculationMethods() throws Exception{
+        //GIVEN a project ID linked to an existing project
+        Project actualRealProject = new Project("Project", "description", userRui);
+        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(actualRealProject);
+
+        Mockito.doNothing().when(projectServiceMock).updateProject(actualRealProject);
+        Mockito.doNothing().when(taskServiceMock).calculateReportEffortCost(actualRealProject);
+
+        //WHEN we perform a patch request to url /projects/<projectId>, using a project Mock DTO
+
+        when(projectMock.getAvailableCalculationMethods()).thenReturn("CI,CF");
+        MockHttpServletResponse response = mvc.perform(patch("/projects/" + projectId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonProject.write(projectMock).getJson())).andReturn().getResponse();
+
+        //THEN we receive status OK and the project info updated
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+
+
+        // And since the mock DTO had available calculation methods inputted
+        // THEN the task service method to recalculate report effort cost must have been called automatically
+        // after detecting changes to calculation methods
+        verify(taskServiceMock, times(1)).calculateReportEffortCost(actualRealProject);
+
+    }
+
 
     /**
      * GIVEN a project ID

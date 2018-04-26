@@ -70,7 +70,7 @@ public class ProjectService {
 	 * @return project found
 	 */
 	public Project getProjectById(Integer id) {
-		Optional<Project> project = this.projectsRepository.findById(id);
+		Optional<Project> project = this.projectsRepository.findByProjectId(id);
 
 		//it returns an optional object and if not, it throws the exception ObjectNotFoundException
 		return project.orElseThrow(() -> new ObjectNotFoundException("Project not found! Id: " + id));
@@ -361,6 +361,8 @@ public class ProjectService {
 
 	/**
 	 *This method upDate project from a given info.
+     *
+     * If the project's calculation cost is set to
 	 *
 	 * @param projectUpdates
 	 */
@@ -372,10 +374,21 @@ public class ProjectService {
 			updateProject(project);
 		}
 
-		if(projectUpdates.getCalculationMethod() < 4 && projectUpdates.getCalculationMethod() > 0){
+		if((projectUpdates.getAvailableCalculationMethods()!=null)) {
+		    project.setAvailableCalculationMethods(projectUpdates.getAvailableCalculationMethods());
+		    updateProject(project);
+        }
+
+		if(projectUpdates.getCalculationMethod()!= null && project.isCalculationMethodAllowed(projectUpdates.getCalculationMethod().getCode())){
 			project.setCalculationMethod(projectUpdates.getCalculationMethod());
 			updateProject(project);
 		}
+
+        if(!project.isCalculationMethodAllowed(project.getCalculationMethod().getCode())) {
+		    project.setCalculationMethod(project.listAvaliableCalculationMethods().get(0));
+		    updateProject(project);
+        }
+
 	}
 
 	/**
@@ -412,5 +425,13 @@ public class ProjectService {
 		this.projectCollaboratorRepository.save(newProjectCollaborator);
 		return newProjectCollaborator;
 
+	}
+
+	public ProjectsRepository getProjectsRepository() {
+		return this.projectsRepository;
+	}
+
+	public ProjCollabRepository getProjectCollaboratorRepository() {
+		return projectCollaboratorRepository;
 	}
 }

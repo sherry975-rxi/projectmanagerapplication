@@ -55,12 +55,11 @@ public class US203GetUnfinishedTaskUI {
 
 		String option = scannerInput.nextLine().toUpperCase();
 
-		switch (option) {
+		if (option =="B") {
+				break;
+		}
 
-		case "B":
-			break;
-
-		default:
+		else{
 
 
 			try {

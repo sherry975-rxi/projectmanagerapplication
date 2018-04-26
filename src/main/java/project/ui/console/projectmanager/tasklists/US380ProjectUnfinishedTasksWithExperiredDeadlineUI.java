@@ -37,7 +37,7 @@ public class US380ProjectUnfinishedTasksWithExperiredDeadlineUI {
 		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
 		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
 		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-			System.out.println();
+			System.out.println(line);
 		System.out.println(line);
 		System.out.println("     UNFINISHED TASKS WITH EXPIRED DEADLINE");
 		System.out.println(line);

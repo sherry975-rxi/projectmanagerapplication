@@ -32,8 +32,8 @@ public class RestUserController {
      * @return
      */
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<?> seeUserDetails(@PathVariable int userId){
-        ResponseEntity<?> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<User> seeUserDetails(@PathVariable int userId){
+        ResponseEntity<User> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         User userToReturn;
         userToReturn = userService.getUserByID(userId);
         if(userToReturn != null){
@@ -85,7 +85,7 @@ public class RestUserController {
         List<User> foundUsers = userService.searchUsersByPartsOfEmail(emailToSearch);
 
         for(User other : foundUsers) {
-            Link selfRef = linkTo(RestUserController.class).slash(other.getUserID()).withSelfRel();
+            Link selfRef = linkTo(RestUserController.class).slash("email").slash(other.getEmail()).withSelfRel();
             other.add(selfRef);
         }
 
@@ -138,6 +138,5 @@ public class RestUserController {
         return result;
 
     }
-
 
 }

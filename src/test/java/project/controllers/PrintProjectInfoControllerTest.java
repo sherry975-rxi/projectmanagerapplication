@@ -10,6 +10,7 @@ import project.model.*;
 import project.services.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -222,11 +223,13 @@ public class PrintProjectInfoControllerTest {
 
 		assertEquals(expectedOptions, controller.printCostCalculationMethods());
 
-		List<Integer> expected = project.getAvailableCalculationMethods();
-		expected.remove((Integer) Project.FIRST_COLLABORATOR);
+		List<CalculationMethod> expected = project.listAvaliableCalculationMethods();
+		expected.remove(CalculationMethod.CI);
 
-		project.setAvailableCalculationMethods(expected);
-		project.setCalculationMethod(Project.LAST_COLLABORATOR);
+		List<Integer> expectedCodes = expected.stream().map(CalculationMethod::getCode).collect(Collectors.toList());
+
+		project.createAvailableCalculationMethodsString(expectedCodes);
+		project.setCalculationMethod(CalculationMethod.CF);
 		projectContainer.updateProject(project);
 		controller.setProject(project);
 
@@ -238,7 +241,7 @@ public class PrintProjectInfoControllerTest {
         // when First Collaborator Cost option has been disabled
         // then the controller should print that option as [Disabled], and current cost as 2
         assertEquals(2, expected.size());
-        assertFalse(project.isCalculationMethodAllowed(Project.FIRST_COLLABORATOR));
+        assertFalse(project.isCalculationMethodAllowed(CalculationMethod.CI.getCode()));
         assertEquals(expectedOptions, controller.printCostCalculationMethods());
 
 

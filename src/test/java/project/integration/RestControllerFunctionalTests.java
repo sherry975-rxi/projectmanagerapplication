@@ -1,9 +1,8 @@
-package project.restControllers;
+package project.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +10,19 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.ComponentScan;
-
 import org.springframework.http.MediaType;
-
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
 import org.springframework.web.context.WebApplicationContext;
 import project.model.*;
-import project.model.taskstateinterface.*;
-import project.services.*;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.Planned;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -31,10 +30,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
@@ -213,7 +214,7 @@ public class RestControllerFunctionalTests {
     public void US136TestBrowserOutput() throws Exception {
 
         //Tests if there is really nothing when a non-valid profile is inserted
-            mockMvc.perform(get("/users/dadadadad")).andExpect(status().isNotFound());
+            mockMvc.perform(get("users/dadadadad")).andExpect(status().isNotFound());
 
 
         //Tests if the controller finds collaborators correctly
@@ -222,7 +223,7 @@ public class RestControllerFunctionalTests {
         userService.updateUser(mike);
 
         //When
-        mockMvc.perform(get("/users/COLLABORATOR")).andExpect(jsonPath("$[0].name", is("Mike")));
+        mockMvc.perform(get("/users/profiles/COLLABORATOR")).andExpect(jsonPath("$[0].name", is("Mike")));
 
         //Tests if the controller finds the directors correctly
         //Given
@@ -230,14 +231,14 @@ public class RestControllerFunctionalTests {
         userService.updateUser(mike);
 
         //When
-        mockMvc.perform(get("/users/DIRECTOR")).andExpect(jsonPath("$[0].name", is("Mike")));
+        mockMvc.perform(get("/users/profiles/DIRECTOR")).andExpect(jsonPath("$[0].name", is("Mike")));
 
         //Tests if the controller finds the unassigned users correctly
         //Given
         userService.updateUser(owner);
 
         //When
-        mockMvc.perform(get("/users/UNASSIGNED")).andExpect(jsonPath("$[0].name", is("Owner boi")));
+        mockMvc.perform(get("/users/profiles/UNASSIGNED")).andExpect(jsonPath("$[0].name", is("Owner boi")));
 
 
     }

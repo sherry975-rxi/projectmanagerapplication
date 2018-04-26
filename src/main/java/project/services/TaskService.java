@@ -54,6 +54,7 @@ public class TaskService {
 
 		newTask.setTaskID(taskID);
 
+
 		this.taskRepository.save(newTask);
 		return newTask;
 	}
@@ -63,7 +64,7 @@ public class TaskService {
 	 * 
 	 * @return Project Task List
 	 */
-	public List<Task> getTaskRepository() {
+	public List<Task> getAllTasksFromTaskRepository() {
 		List<Task> allTasks = this.taskRepository.findAll();
 
 		for (Task other : allTasks){
@@ -103,7 +104,7 @@ public class TaskService {
 		List<Task> userTasks = new ArrayList<>();
 
 		// Iterates through the taskRepository
-		for (Task task : this.getTaskRepository()) {
+		for (Task task : this.getAllTasksFromTaskRepository()) {
 			// Iterates through the task team of every task in taskRepository
 			for (TaskCollaborator taskCollab : task.getTaskTeam()) {
 				User toCompare = taskCollab.getProjectCollaboratorFromTaskCollaborator().getCollaborator();
@@ -400,7 +401,7 @@ public class TaskService {
 
 			List<Task> finishedTaskList = new ArrayList<>();
 			
-			for (Task other : this.getTaskRepository()) {
+			for (Task other : this.getAllTasksFromTaskRepository()) {
 				if (other.isTaskFinished() && other.isProjectCollaboratorInTaskTeam(collab)) {
 					finishedTaskList.add(other);
 				}
@@ -445,7 +446,7 @@ public class TaskService {
 		 *         the task list
 		 */
 		public boolean isTaskInTaskRepository(Task task) {
-			for (Task other : this.getTaskRepository()) {
+			for (Task other : this.getAllTasksFromTaskRepository()) {
 				if (task.equals(other)) {
 					return true;
 				}
@@ -482,7 +483,7 @@ public class TaskService {
 		 *         task
 		 */
 		public boolean isCollaboratorActiveOnAnyTask(ProjectCollaborator collab) {
-			for (Task otherTask : this.getTaskRepository()) {
+			for (Task otherTask : this.getAllTasksFromTaskRepository()) {
 				if (otherTask.isProjectCollaboratorActiveInTaskTeam(collab))
 					return true;
 			}
@@ -652,11 +653,13 @@ public class TaskService {
 		 * This method deletes a task from the task the repository if the state if the
 		 * task hasnâ€™t started
 		 * 
-		 * @param taskToDelete
-		 *            the task that will be removed from the task repository
+		 * @param taskId
+		 *            the taskId of the task that will be removed from the task repository
 		 * 
 		 */
-		public boolean deleteTask(Task taskToDelete) {
+		public boolean deleteTask(String taskId) {
+
+			Task taskToDelete = getTaskByTaskID(taskId);
 
 			boolean wasTaskDeleted = false;
 
@@ -701,7 +704,7 @@ public class TaskService {
 		public List<Task> getTaskListOfWhichDependenciesCanBeCreated(Project chosenProj) {
 			List<Task> validTasks = new ArrayList<>();
 			validTasks.addAll(getProjectTasks(chosenProj));
-			for (Task other : this.getTaskRepository()) {
+			for (Task other : this.getAllTasksFromTaskRepository()) {
 				if (other.getTaskState() instanceof Finished || other.getTaskState() instanceof Cancelled) {
 					validTasks.remove(other);
 				}
@@ -843,11 +846,11 @@ public class TaskService {
      */
 	public CostCalculationInterface chooseCalculationMethod(Project project) {
         switch(project.getCalculationMethod()) {
-            case Project.FIRST_COLLABORATOR:
+			case CI:
                 return new FirstCollaboratorCost();
-            case Project.LAST_COLLABORATOR:
+			case CF:
                 return new LastCollaboratorCost();
-            case Project.FIRST_LAST_COLLABORATOR:
+            case CIFM:
                 return new FirstAndLastCollaboratorCost();
             default:
                 return new AverageCollaboratorCost();
@@ -965,6 +968,11 @@ public class TaskService {
 			task.setTaskState(created);
 		}
 		return task;
+	}
+
+	public TaskRepository getTaskRepository() {
+		return this.taskRepository;
+
 	}
 
 }
