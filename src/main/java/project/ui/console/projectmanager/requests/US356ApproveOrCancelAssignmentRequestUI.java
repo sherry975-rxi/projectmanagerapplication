@@ -27,18 +27,18 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 			System.out.println("___________________________________________________");
 
 			assignmentRequest.setSelectedProject(project);
-			int number = 1;
+			int index = 1;
 
-			for (String other : assignmentRequest.showAllAssignmentRequests(project)) {
-				System.out.println("[" + number + "]" + "Request: " + other);
+			for (String assignRequest : assignmentRequest.showAllAssignmentRequests(project)) {
+				System.out.println("[" + index + "]" + "Request: " + assignRequest);
 				System.out.println("==========================================\n");
-				number++;
+				index++;
 			}
 
 			System.out.println("[C] Choose a Request");
 			System.out.println("[B] Back \n");
 
-			condition = chooseOption();
+			condition = selectOption();
 		}
 	}
 
@@ -46,21 +46,25 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 	 * Switch case that allows the user to choose a functionality
 	 *
 	 */
-	private boolean chooseOption() {
+	private boolean selectOption() {
 
-		boolean loop = false;
+
 		
 		Scanner input = new Scanner(System.in);
 
-		String choice = input.nextLine().toUpperCase();
+		String selection = input.nextLine().toUpperCase();
+		boolean loop = false;
 
-		switch (choice) {
+		switch (selection) {
 
 		case "C":
-			chooseRequest();
+			selectRequest();
 			break;
+
 		case "B":
+
 			break;
+
 		default:
 			System.out.println("Choose a valid option");
 			loop = true;
@@ -72,7 +76,7 @@ public class US356ApproveOrCancelAssignmentRequestUI {
 	 * Method that allows the user to choose a request
 	 *
 	 */
-	private void chooseRequest() {
+	private void selectRequest() {
 
 		System.out.println("\n                 CHOOSE A REQUEST:                  ");
 
