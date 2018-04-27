@@ -17,10 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.dto.TaskDTO;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
+import project.model.taskstateinterface.OnGoing;
 import project.restcontroller.RestProjectTasksController;
 import project.services.ProjectService;
 import project.services.TaskService;
@@ -309,7 +307,15 @@ public class RestProjectTasksControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         verify(taskService, times(1)).getTaskDtoByTaskId(any(String.class));
 
+        //AND WHEN an ongoing task is marked as finished
+        task.setStartDate(Calendar.getInstance());
+        task.setTaskState(new OnGoing());
+        task.setCurrentState(StateEnum.ONGOING);
+        MockHttpServletResponse newResponse = mockMvc.perform(MockMvcRequestBuilders.patch("/projects/1/tasks/" + taskId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
+        //THEN Http status should be 200 and returned Task should be finished
+        assertEquals(HttpStatus.OK.value(), newResponse.getStatus());
+        assertTrue(task.isTaskFinished());
     }
 
 

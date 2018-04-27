@@ -96,19 +96,6 @@ public class RestUserTasksControllerTest {
         verify(userServiceMock, times(1)).getUserByID(userId);
     }
 
-    @Test
-    public void shouldReturnUserTask () {
-        //GIVEN a taskId
-        when(taskServiceMock.getTaskByID(any(Long.class))).thenReturn(taskMock);
-
-        //WHEN we call getTaskById with a valid taskId
-        Task response = victim.getTaskById(taskId);
-
-        //THEN we receive a valid task
-        assertEquals(taskMock, response);
-        verify(taskServiceMock, times(1)).getTaskByID(Long.parseLong(taskId));
-    }
-
 
 
 }

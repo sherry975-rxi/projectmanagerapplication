@@ -14,12 +14,12 @@ import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
 
 import javax.mail.MessagingException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -30,6 +30,22 @@ public class RestAccountController {
     private final UserService userService;
 
     Map<User,String> pendingValidation = new HashMap<>();
+
+    /*
+This map stores temporarily the userEmail as Key and the generatedCode that will be sent to the provided phone/email
+When the user verificates the code correctly, the pair Key/Value is deleted from the HashMap
+ */
+    Map<String, String> codeDTOMap = new HashMap<>();
+
+
+    /*
+    This map stores temporarily the userEmail as Key and the userDTO that will be saved when the user puts the verification code correctly.
+    When the user verificates the code, the pair Key/Value is deleted from the HashMap
+     */
+    Map<String, UserDTO> userDTOPMap = new HashMap<>();
+
+    Logger logs = Logger.getAnonymousLogger();
+
 
     @Autowired
     public RestAccountController(UserService userService) {
@@ -49,7 +65,7 @@ public class RestAccountController {
         String conditions = "TERMS AND CONDITIONS: \r\n" + "\r\n"
                 + "By using this application, you agree to be bound by, and to comply with these Terms and Conditions.\r\n"
                 + "If you do not agree to these Terms and Conditions, please do not use this application.\r\n"
-                + "To proceed with registration you must accept access conditions (y to confirm; n to deny).";
+                + "To proceed with registration you must accept access conditions.";
 
         return new ResponseEntity<>(conditions, HttpStatus.OK);
 
@@ -161,6 +177,7 @@ public class RestAccountController {
             return new ResponseEntity<>(attemptValidation, HttpStatus.OK);
 
         } catch (MessagingException| IOException e) {
+            logs.info("Error sending message!");
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
@@ -202,25 +219,6 @@ public class RestAccountController {
     }
 
 
-
-
-
-
-
-    /*
-    This map stores temporarily the userEmail as Key and the generatedCode that will be sent to the provided phone/email
-    When the user verificates the code correctly, the pair Key/Value is deleted from the HashMap
-     */
-    Map<String, String> codeDTOMap = new HashMap<>();
-
-
-    /*
-    This map stores temporarily the userEmail as Key and the userDTO that will be saved when the user puts the verification code correctly.
-    When the user verificates the code, the pair Key/Value is deleted from the HashMap
-     */
-    Map<String, UserDTO> userDTOPMap = new HashMap<>();
-
-
     /**
      *
      * @param validation
@@ -228,12 +226,10 @@ public class RestAccountController {
      * @param userEmail
      * @param userPhone
      * @return
-     * @throws Exception
      */
     @RequestMapping(value = "performValidation/{validation}/{userEmail}/{userPhone}", method = RequestMethod.GET)
     public ResponseEntity<Link> performUserValidation(@PathVariable String validation,
-                                                      @PathVariable String userEmail, @PathVariable String userPhone)
-            throws Exception{
+                                                      @PathVariable String userEmail, @PathVariable String userPhone) {
 
         SendCodeFactory codeFactoryValidation = new SendCodeFactory();
 
@@ -258,6 +254,7 @@ public class RestAccountController {
                 return new ResponseEntity<>(attemptValidation, HttpStatus.OK);
 
             } catch (MessagingException| IOException e) {
+                logs.info("Error sending message!");
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
 
