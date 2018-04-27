@@ -37,6 +37,7 @@ public class RestRequestController {
     private TaskService taskService;
     private ProjectService projectService;
     private String requestDetail = "Request details";
+    private String allRequests = "List of All Requests";
 
 
     @Autowired
@@ -273,6 +274,79 @@ public class RestRequestController {
 
         // user is not in this project, or is not active in task, or request already exists
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+    }
+
+
+    /**
+     * This method returns a specific request.
+     *
+     * @param requestId Request id associated to the request
+     * @param taskId    Task id associated to the task to be made the request
+     * @param projectId Project id associated to the project where the task belongs
+     * @return ResponseEntity
+     */
+    @RequestMapping(value = "/requests/{requestId}/approval", method = RequestMethod.PUT)
+    public ResponseEntity<TaskTeamRequest> approveRequest(@PathVariable int requestId, @PathVariable String taskId, @PathVariable int projectId) {
+
+        projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        Optional<TaskTeamRequest> requestFound = task.getPendingTaskTeamRequests().stream()
+                .filter(request -> request.getDbId()==requestId)
+                .findFirst();
+
+        if(requestFound.isPresent()) {
+
+            TaskTeamRequest requestToApprove = requestFound.get();
+
+            String requestType;
+
+
+            if (requestToApprove.isAssignmentRequest()) {
+
+                ProjectCollaborator projectCollaboratorToAdd = requestToApprove.getProjCollab();
+                task.addProjectCollaboratorToTask(projectCollaboratorToAdd);
+                task.deleteTaskAssignmentRequest(projectCollaboratorToAdd);
+                taskService.saveTask(task);
+
+                Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
+
+                String assignList = "List of Assignment Requests";
+                requestType = "assignment";
+                Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(assignList);
+
+                requestToApprove.add(reference);
+                requestToApprove.add(referenceTwo);
+
+                return new ResponseEntity<>(requestToApprove, HttpStatus.OK);
+            } else if (requestToApprove.isRemovalRequest()) {
+
+                ProjectCollaborator projectCollaboratorToRemove = requestToApprove.getProjCollab();
+                task.removeProjectCollaboratorFromTask(projectCollaboratorToRemove);
+                task.deleteTaskRemovalRequest(projectCollaboratorToRemove);
+                taskService.saveTask(task);
+
+                Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
+
+                String removalList = "List of Removal Requests";
+                requestType = "removal";
+                Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(removalList);
+
+                requestToApprove.add(reference);
+                requestToApprove.add(referenceTwo);
+
+
+                return new ResponseEntity<>(requestToApprove, HttpStatus.OK);
+
+            }
+        }
+
+
+
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
 
