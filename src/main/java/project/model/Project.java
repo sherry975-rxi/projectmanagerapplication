@@ -1,5 +1,9 @@
 package project.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.common.base.Joiner;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -23,10 +27,13 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "Project")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "projectId", scope = Project.class)
 public class Project extends ResourceSupport implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIdentityReference(alwaysAsId = true)
 	private int projectId;
 
 	private int status;
@@ -94,6 +101,7 @@ public class Project extends ResourceSupport implements Serializable{
 		return projectId;
 	}
 
+	@JsonProperty("projectId")
 	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}

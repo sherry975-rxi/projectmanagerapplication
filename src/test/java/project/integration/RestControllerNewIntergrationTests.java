@@ -102,11 +102,10 @@ public class RestControllerNewIntergrationTests {
      * First, it asserts the chosen users are in the database
      * Then attempts to generate a response entity based on the given URL, asserting it contains mike after searching for his ID
      *
-     * @throws Exception
      */
 
     @Test
-    public void basicUserTest() throws Exception {
+    public void basicUserTest() {
 
         // GIVEN four users in the test Database
         assertEquals(4, userService.getAllUsersFromUserContainer().size());
@@ -126,10 +125,9 @@ public class RestControllerNewIntergrationTests {
     /**
      * This tests the various URI's that fetch lists of users
      *
-     * @throws Exception
      */
     @Test
-    public void userListTests() throws Exception {
+    public void userListTests() {
 
         // GIVEN four users in the test Database
         assertEquals(4, userService.getAllUsersFromUserContainer().size());
@@ -150,10 +148,9 @@ public class RestControllerNewIntergrationTests {
 
     /**
      * This tests the URI that fetches user by email
-     * @throws Exception
      */
     @Test
-    public void shouldReturnUserByEmail() throws Exception{
+    public void shouldReturnUserByEmail() {
         // GIVEN four users in the test Database
             assertEquals(4, userService.getAllUsersFromUserContainer().size());
 
@@ -177,10 +174,9 @@ public class RestControllerNewIntergrationTests {
      * Then, it tests if using a correct password returns the logged in user and Status OK
      *
      *
-     * @throws Exception
      */
     @Test
-    public void logInUserTest() throws Exception {
+    public void logInUserTest() {
         // GIVEN a user with a password 123456
         mike.setPassword("123456");
         userService.updateUser(mike);
@@ -270,10 +266,9 @@ public class RestControllerNewIntergrationTests {
     /**
      * This tests if the basic setup for project creation integration testing works correctly
      *
-     * @throws Exception
      */
     @Test
-    public void basicProjectTest() throws Exception {
+    public void basicProjectTest() {
         // GIVEN a single project in the database
         assertEquals(1, projectService.getAllProjectsfromProjectsContainer().size());
         assertEquals(projectOne.getIdCode(), projectService.getProjectById(projectOne.getIdCode()).getProjectId());
@@ -291,7 +286,7 @@ public class RestControllerNewIntergrationTests {
 
 
     @Test
-    public void basicTaskTest() throws Exception {
+    public void basicTaskTest() {
         assertEquals(1, taskService.getAllTasksFromTaskRepository().size());
         assertEquals(taskOne.getTaskID(), taskService.getProjectTasks(projectOne).get(0).getTaskID());
     }
@@ -382,7 +377,7 @@ public class RestControllerNewIntergrationTests {
         taskService.saveTask(taskOne);
 
         Report reportDto = new Report();
-        reportDto.setId(1);
+        reportDto.setReportDbId(1);
         reportDto.setReportedTime(30.0);
         reportDto.setTaskCollaborator(taskOne.getTaskCollaboratorByEmail(userRui.getEmail()));
 

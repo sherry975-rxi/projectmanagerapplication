@@ -1,8 +1,8 @@
 GET http://localhost:8080/users/collaborator
-(procurar id de Xavier Franco) - id=17 neste caso
+(procurar taskCollabDbId de Xavier Franco) - taskCollabDbId=17 neste caso
 
 
-GET http://localhost:8080/users/{id}/viewPendingTasks
+GET http://localhost:8080/users/{taskCollabDbId}/viewPendingTasks
 
 no caso de Xavier Franco = http://localhost:8080/users/17/viewPendingTasks
 

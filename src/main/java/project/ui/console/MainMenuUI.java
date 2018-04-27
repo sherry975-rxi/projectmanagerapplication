@@ -67,7 +67,6 @@ public class MainMenuUI {
 	}
 
 	public void displayOptions() {
-
 		printImage();
 
 		Scanner input = new Scanner(System.in);

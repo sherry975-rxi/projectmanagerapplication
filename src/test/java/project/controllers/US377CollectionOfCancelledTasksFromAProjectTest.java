@@ -126,20 +126,20 @@ public class US377CollectionOfCancelledTasksFromAProjectTest {
 
 		// set active user
 		testTask.addProjectCollaboratorToTask(collab1);
-		testTask.setStartDate(Calendar.getInstance());
-		testTask.setCancelDate();
+		testTask.setStartDateAndState(Calendar.getInstance());
+		testTask.assignCancelDateAsNow();
 		testTask.setTaskState(new Cancelled());
 		testTask.setCurrentState(StateEnum.CANCELLED);
 
 		testTask2.addProjectCollaboratorToTask(collab1);
-		testTask2.setStartDate(Calendar.getInstance());
-		testTask2.setCancelDate();
+		testTask2.setStartDateAndState(Calendar.getInstance());
+		testTask2.assignCancelDateAsNow();
 		testTask2.setTaskState(new Cancelled());
 		testTask2.setCurrentState(StateEnum.CANCELLED);
 
 
 		testTask3.addProjectCollaboratorToTask(collab1);
-		testTask3.setStartDate(Calendar.getInstance());
+		testTask3.setStartDateAndState(Calendar.getInstance());
 		testTask3.setTaskState(new OnGoing());
 		testTask3.setCurrentState(StateEnum.ONGOING);
 

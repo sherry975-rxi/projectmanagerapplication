@@ -121,7 +121,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
-		task1.setStartDate(startDateTask1);
+        task1.setStartDateAndState(startDateTask1);
 		task1.markTaskAsFinished();
 		task1.setTaskState(new Finished());
 		task1.setCurrentState(StateEnum.FINISHED);
@@ -135,7 +135,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 
 		Calendar startDateTask2 = estimatedTaskStartDateTest;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
-		task2.setStartDate(startDateTask1);
+        task2.setStartDateAndState(startDateTask1);
 		task2.markTaskAsFinished();
 		task2.setTaskState(new Finished());
 		task2.setCurrentState(StateEnum.FINISHED);
@@ -149,7 +149,7 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderTest {
 
 		Calendar startDateTask3 = estimatedTaskStartDateTest;
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
-		task3.setStartDate(startDateTask1);
+        task3.setStartDateAndState(startDateTask1);
 		task3.markTaskAsFinished();
 		task3.setTaskState(new Finished());
 		task3.setCurrentState(StateEnum.FINISHED);

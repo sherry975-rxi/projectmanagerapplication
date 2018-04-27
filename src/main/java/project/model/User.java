@@ -1,6 +1,9 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.hateoas.ResourceSupport;
@@ -19,6 +22,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "User")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "email", scope = User.class)
 public class User extends ResourceSupport implements Serializable {
 
 	@Id
@@ -26,13 +31,12 @@ public class User extends ResourceSupport implements Serializable {
 	@Column(name = "User_ID")
 	private int userID;
 	private String name;
+	@JsonIdentityReference(alwaysAsId = true)
 	private String email;
 	private String idNumber;
 	private String function;
 	static final long serialVersionUID = 44L;
 
-
-	@JsonManagedReference
     @LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 	private List<Address> addressList;
@@ -152,6 +156,7 @@ public class User extends ResourceSupport implements Serializable {
 	 *
 	 * @param email
 	 */
+	@JsonProperty("email")
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -282,11 +287,7 @@ public class User extends ResourceSupport implements Serializable {
 	 * Sets the state of the user state.
 	 */
 	public void changeUserState() {
-		if (this.systemUserStateActive) {
-			this.systemUserStateActive = false;
-		} else {
-			this.systemUserStateActive = true;
-		}
+		this.systemUserStateActive = !this.systemUserStateActive;
 	}
 
 	/**
@@ -321,10 +322,7 @@ public class User extends ResourceSupport implements Serializable {
 	 */
 	public boolean checkLogin(String password) {
 		boolean found;
-		found = false;
-		if (this.password.equals(password)) {
-			found = true;
-		}
+		found = this.password.equals(password);
 		return found;
 	}
 

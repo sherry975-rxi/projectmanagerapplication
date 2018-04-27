@@ -94,7 +94,7 @@ public class ReportTest {
 		assertEquals(report.getDateOfUpdate(), firstDateOfReport);
 
 		//Sets an Id to the report
-		report.setId(2);
+        report.setReportDbId(2);
 		assertEquals(report.getDbId(), 2);
 
 		//Sets a Cost to the report

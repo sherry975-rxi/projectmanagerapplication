@@ -1,6 +1,9 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.hateoas.ResourceSupport;
@@ -11,13 +14,15 @@ import java.util.Calendar;
 
 @Entity
 @Table(name = "TaskTeamRequest")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "taskRequestDbId", scope = TaskTeamRequest.class)
 public class TaskTeamRequest extends ResourceSupport implements Serializable {
 
 	static final long serialVersionUID = 61L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+    @JsonIdentityReference(alwaysAsId = true)
+    private int taskRequestDbId;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollab;
@@ -25,7 +30,6 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne
 	@JoinColumn(name = "Task_id")
-	@JsonBackReference
 	private Task task;
 
 	@Enumerated(EnumType.STRING)
@@ -54,20 +58,27 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 
 	}
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
-
-	/*
-	 * Returns the id of the task
-	 */
-	public int getDbId() {
-		return id;
+    public int getTaskRequestDbId() {
+        return taskRequestDbId;
 	}
 
 	/*
 	 * Sets a task D
 	 */
-	public void setId(int id) {
-		this.id = id;
+    @JsonProperty("taskRequestDbId")
+    public void setTaskRequestDbId(int taskRequestDbId) {
+        this.taskRequestDbId = taskRequestDbId;
+    }
+
+    /*
+     * Returns the taskRequestDbId of the task
+     */
+    public int getDbId() {
+        return taskRequestDbId;
 	}
 
 	/*
@@ -169,7 +180,7 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 
 	/**
 	 * Takes the attributes of the request and converts the name and email of the
-	 * collaborator and the id and description of the task into a string
+     * collaborator and the taskRequestDbId and description of the task into a string
 	 *
 	 * @return The string representation
 	 */

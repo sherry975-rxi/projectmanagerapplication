@@ -133,7 +133,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 
 		// necessary to pass from "Ready" to "OnGoing"
 		Calendar projStartDate = (Calendar) estimatedTaskStartDate.clone();
-		task1.setStartDate(projStartDate);
+        task1.setStartDateAndState(projStartDate);
 
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate4 = Calendar.getInstance();
@@ -165,7 +165,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 		task6.addProjectCollaboratorToTask(projCollab2);
 
 		// necessary to pass from "Ready" to "OnGoing"
-		task6.setStartDate(projStartDate);
+        task6.setStartDateAndState(projStartDate);
 
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate3 = Calendar.getInstance();
@@ -197,7 +197,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 		task5.addProjectCollaboratorToTask(projCollab2);
 
 		// necessary to pass from "Ready" to "OnGoing"
-		task5.setStartDate(projStartDate);
+        task5.setStartDateAndState(projStartDate);
 
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate2 = Calendar.getInstance();
@@ -229,7 +229,7 @@ public class US370V2GetProjectFinishedTaskListTest {
 		task4.addProjectCollaboratorToTask(projCollab2);
 
 		// necessary to pass from "Ready" to "OnGoing"
-		task4.setStartDate(projStartDate);
+        task4.setStartDateAndState(projStartDate);
 
 		// pass from "OnGoing" to "Finished"
 		Calendar testDate = Calendar.getInstance();

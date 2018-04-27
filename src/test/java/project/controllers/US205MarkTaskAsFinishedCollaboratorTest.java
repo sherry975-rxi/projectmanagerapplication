@@ -181,12 +181,12 @@ public class US205MarkTaskAsFinishedCollaboratorTest {
 		task5.addProjectCollaboratorToTask(projCollab23);
 		task6.addProjectCollaboratorToTask(projCollab13);
 
-		task1.setStartDate(estimatedTaskStartDateTest);
-		task2.setStartDate(estimatedTaskStartDateTest);
-		task3.setStartDate(estimatedTaskStartDateTest);
-		task4.setStartDate(estimatedTaskStartDateTest);
-		task5.setStartDate(estimatedTaskStartDateTest);
-		task6.setStartDate(estimatedTaskStartDateTest);
+        task1.setStartDateAndState(estimatedTaskStartDateTest);
+        task2.setStartDateAndState(estimatedTaskStartDateTest);
+        task3.setStartDateAndState(estimatedTaskStartDateTest);
+        task4.setStartDateAndState(estimatedTaskStartDateTest);
+        task5.setStartDateAndState(estimatedTaskStartDateTest);
+        task6.setStartDateAndState(estimatedTaskStartDateTest);
 
 		// force the task states, ensuring they're all ONGOING
 		task1.setTaskState(new OnGoing());

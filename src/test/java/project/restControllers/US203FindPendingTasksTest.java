@@ -112,27 +112,27 @@ public class US203FindPendingTasksTest {
         //adds necessary information for ongoing task and second ongoing task to enter the Ongoing
         ongoingTask.setTaskBudget(10);
         ongoingTask.setEstimatedTaskEffort(10);
-        ongoingTask.setStartDate(expectedStartDate);
+        ongoingTask.setStartDateAndState(expectedStartDate);
         ongoingTask.setTaskDeadline(expectedDeadline);
         ongoingTask.setTaskState(new Planned());
         ongoingTask.addProjectCollaboratorToTask(collabMike);
-        ongoingTask.setStartDate(Calendar.getInstance());
+        ongoingTask.setStartDateAndState(Calendar.getInstance());
         ongoingTask.setTaskState(new OnGoing());
         ongoingTask.setCurrentState(StateEnum.ONGOING);
 
         secondOngoingTask.setTaskBudget(10);
         secondOngoingTask.setEstimatedTaskEffort(10);
-        secondOngoingTask.setStartDate(expectedStartDate);
+        secondOngoingTask.setStartDateAndState(expectedStartDate);
         secondOngoingTask.setTaskDeadline(expectedDeadline);
         secondOngoingTask.addProjectCollaboratorToTask(collabMike);
-        secondOngoingTask.setStartDate(Calendar.getInstance());
+        secondOngoingTask.setStartDateAndState(Calendar.getInstance());
         secondOngoingTask.setTaskState(new OnGoing());
         secondOngoingTask.setCurrentState(StateEnum.ONGOING);
 
         // adds info for unstarted task to become Planning state
         unstartedTask.setTaskBudget(10);
         unstartedTask.setEstimatedTaskEffort(10);
-        unstartedTask.setStartDate(expectedStartDate);
+        unstartedTask.setStartDateAndState(expectedStartDate);
         unstartedTask.setTaskDeadline(expectedDeadline);
         unstartedTask.setTaskState(new Planned());
         unstartedTask.setCurrentState(StateEnum.PLANNED);

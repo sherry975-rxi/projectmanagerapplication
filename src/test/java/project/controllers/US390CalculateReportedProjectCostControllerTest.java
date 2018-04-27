@@ -119,8 +119,8 @@ public class US390CalculateReportedProjectCostControllerTest {
 
 		testTask = taskContainer.createTask("Testin once", project);
 		testTask2 = taskContainer.createTask("Test dis agen pls", project);
-		testTask.setStartDate(estimatedTaskStartDateTest);
-		testTask2.setStartDate(estimatedTaskStartDateTest);
+		testTask.setStartDateAndState(estimatedTaskStartDateTest);
+		testTask2.setStartDateAndState(estimatedTaskStartDateTest);
 		testTask.setTaskDeadline(taskDeadlineDateTest);
 		testTask2.setTaskDeadline(taskDeadlineDateTest);
 

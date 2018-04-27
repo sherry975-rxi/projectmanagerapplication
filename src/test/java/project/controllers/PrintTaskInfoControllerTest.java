@@ -187,7 +187,7 @@ public class PrintTaskInfoControllerTest {
 		// create a calendar date to set task's start date
 		Calendar startDate = Calendar.getInstance();
 		startDate.set(2017, Calendar.JANUARY, 2, 12, 31, 0);
-		task1.setStartDate(startDate);
+        task1.setStartDateAndState(startDate);
 		// asserts that the task1 have the start date that are previous set
 		assertEquals(controller.printTaskStartDateInfo(), "Mon, 2 Jan 2017 12:31:00");
 	}

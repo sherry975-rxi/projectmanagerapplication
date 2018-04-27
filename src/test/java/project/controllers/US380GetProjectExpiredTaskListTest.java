@@ -133,7 +133,7 @@ public class US380GetProjectExpiredTaskListTest {
 		task1.setTaskState(new Ready());
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
-		task1.setStartDate(startDateTask1);
+        task1.setStartDateAndState(startDateTask1);
 		task1.setTaskState(new OnGoing());
 		task1.markTaskAsFinished();
 

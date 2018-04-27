@@ -1,6 +1,9 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -10,11 +13,13 @@ import java.util.Calendar;
 
 @Entity
 @Table(name = "TaskCollaborator")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "taskCollabDbId", scope = TaskCollaborator.class)
 public class TaskCollaborator extends ResourceSupport implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+    @JsonIdentityReference(alwaysAsId = true)
+    private long taskCollabDbId;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
 	private ProjectCollaborator projCollaborator;
@@ -25,7 +30,6 @@ public class TaskCollaborator extends ResourceSupport implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
-	@JsonBackReference
 	private Task task;
 
 	/**
@@ -50,8 +54,8 @@ public class TaskCollaborator extends ResourceSupport implements Serializable {
 		this.status = true;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+    public Long getDbId() {
+        return taskCollabDbId;
 	}
 
 	public ProjectCollaborator getProjCollaborator() {
@@ -78,13 +82,12 @@ public class TaskCollaborator extends ResourceSupport implements Serializable {
 		this.status = status;
 	}
 
-
-	public Long getDbId() {
-		return id;
-	}
-
 	public void setId(Long id) {
-		this.id = id;
+        this.taskCollabDbId = id;
+    }
+
+    public long getTaskCollabDbId() {
+        return taskCollabDbId;
 	}
 
 	/**
@@ -199,6 +202,11 @@ public class TaskCollaborator extends ResourceSupport implements Serializable {
     
     public double getCost() {
     	return this.getProjectCollaboratorFromTaskCollaborator().getCostPerEffort();
+    }
+
+    @JsonProperty("taskCollabDbId")
+    public void setTaskCollabDbId(long taskCollabDbId) {
+        this.taskCollabDbId = taskCollabDbId;
     }
 }
 

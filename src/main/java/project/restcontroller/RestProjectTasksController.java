@@ -61,7 +61,7 @@ public class RestProjectTasksController {
             Project projectTask = projectService.getProjectById(projid);
             Task task = taskService.createTask(taskDTO.getDescription(), projectTask);
 
-        if (taskDTO.getEstimatedTaskEffort() <= 0.00000001 && taskDTO.getTaskBudget() <= 0.00000001
+        if (taskDTO.getEstimatedTaskEffort() > 0.00000001 && taskDTO.getTaskBudget() > 0.00000001
              && taskDTO.getEstimatedTaskStartDate() != null && taskDTO.getTaskDeadline() != null) {
 
                 task.setEstimatedTaskEffort(taskDTO.getEstimatedTaskEffort());

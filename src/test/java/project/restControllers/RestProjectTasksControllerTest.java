@@ -1,6 +1,5 @@
 package project.restControllers;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
@@ -9,8 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,29 +17,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.dto.TaskDTO;
-import project.model.*;
-
-import project.model.taskstateinterface.Finished;
-import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.Planned;
-import project.model.taskstateinterface.TaskStateInterface;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 import project.restcontroller.RestProjectTasksController;
-
 import project.services.ProjectService;
 import project.services.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.Year;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestProjectTasksControllerTest {
@@ -273,8 +263,8 @@ public class RestProjectTasksControllerTest {
     @Test
     public void shouldReturnUnfinishedTasks() throws Exception{
 
-        task.setStartDate(startDate);
-        task2.setStartDate(startDate);
+        task.setStartDateAndState(startDate);
+        task2.setStartDateAndState(startDate);
 
         projectTasks.add(task);
         projectTasks.add(task2);

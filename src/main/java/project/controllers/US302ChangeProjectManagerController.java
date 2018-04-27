@@ -84,9 +84,8 @@ public class US302ChangeProjectManagerController {
 	/**
 	 * This is a utility method that converts a User object into a String of data,
 	 * to be displayed in the UI
-	 * 
-	 * @param User
-	 *            to be converted
+     *
+     * @param User to be converted
 	 * @return String of the user's data
 	 */
 	public String collaboratorInfoToString(User toConvert) {

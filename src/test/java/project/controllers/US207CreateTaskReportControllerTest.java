@@ -112,7 +112,7 @@ public class US207CreateTaskReportControllerTest {
         task1.addProjectCollaboratorToTask(projCollab1);
         Calendar startDateTask1 = estimatedTaskStartDateTest;
         startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
-        task1.setStartDate(startDateTask1);
+        task1.setStartDateAndState(startDateTask1);
         task1.setTaskState(new OnGoing());
         task1.setCurrentState(StateEnum.ONGOING);
 
@@ -122,7 +122,7 @@ public class US207CreateTaskReportControllerTest {
         task2.addProjectCollaboratorToTask(projCollab1);
         Calendar startDateTask2 = estimatedTaskStartDateTest;
         startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
-        task2.setStartDate(startDateTask1);
+        task2.setStartDateAndState(startDateTask1);
         task2.setTaskState(new OnGoing());
         task2.setCurrentState(StateEnum.ONGOING);
 

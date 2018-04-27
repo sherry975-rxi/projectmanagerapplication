@@ -73,7 +73,7 @@ public class TaskTest {
 
 		taskReadyToFinishTest.setTaskBudget(1);
 
-		taskReadyToFinishTest.setStartDate(Calendar.getInstance());
+		taskReadyToFinishTest.setStartDateAndState(Calendar.getInstance());
 
 		// OnGoing task taskReadyToFinish
 
@@ -91,7 +91,7 @@ public class TaskTest {
 
 		taskTestSecond.setTaskBudget(1);
 
-		taskTestSecond.setStartDate(Calendar.getInstance());
+		taskTestSecond.setStartDateAndState(Calendar.getInstance());
 	}
 
 	@After
@@ -225,8 +225,8 @@ public class TaskTest {
 	@Test
 	public void testTaskTaskWithStartDateIntervalAndDeadlineInterval() {
 
-		taskReadyToFinishTest.setStartDateInterval(1);
-		taskReadyToFinishTest.setDeadlineInterval(2);
+		taskReadyToFinishTest.updateStartDateIntervalAndState(1);
+		taskReadyToFinishTest.updateDeadlineIntervalAndState(2);
 
 		Task taskCopy = new Task(taskReadyToFinishTest);
 
@@ -337,7 +337,7 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#setStartDateInterval(int)}.
+	 * Test method for {@link project.model.Task#updateStartDateIntervalAndState(int)}.
 	 */
 	@Test
 	public void testSetStartDateInterval() {
@@ -364,7 +364,7 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#setDeadlineInterval(int)}.
+	 * Test method for {@link project.model.Task#updateDeadlineIntervalAndState(int)}.
 	 */
 	@Test
 	public void testSetDeadlineInterval() {
@@ -499,20 +499,20 @@ public class TaskTest {
 
 		Calendar expected = Calendar.getInstance();
 
-		taskTest.setStartDate(expected);
+		taskTest.setStartDateAndState(expected);
 
 		assertEquals(expected, taskTest.getStartDate());
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#setStartDate(java.util.Calendar)}.
+	 * Test method for {@link project.model.Task#setStartDateAndState(java.util.Calendar)}.
 	 */
 	@Test
 	public void testSetStartDate() {
 
 		Calendar expected = Calendar.getInstance();
 
-		taskTest.setStartDate(expected);
+		taskTest.setStartDateAndState(expected);
 
 		assertEquals(expected, taskTest.getStartDate());
 	}
@@ -1275,14 +1275,14 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#setCancelDate()}.
+	 * Test method for {@link project.model.Task#assignCancelDateAsNow()}.
 	 */
 	@Test
 	public void testSetCancelDate() {
 
 		assertEquals(null, taskReadyToFinishTest.getCancelDate());
 
-		taskReadyToFinishTest.setCancelDate();
+		taskReadyToFinishTest.assignCancelDateAsNow();
 
 		assertFalse(taskReadyToFinishTest.getCancelDate() == null);
 
@@ -1296,7 +1296,7 @@ public class TaskTest {
 
 		assertEquals(null, taskReadyToFinishTest.getCancelDate());
 
-		taskReadyToFinishTest.setCancelDate();
+		taskReadyToFinishTest.assignCancelDateAsNow();
 
 		assertFalse(taskReadyToFinishTest.getCancelDate() == null);
 

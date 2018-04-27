@@ -2,7 +2,7 @@ title US370 Get Project Finished Tasks
 
 Actor->Browser: Show me project finished tasks
 Browser->RestController: GET getFinishedTasks()
-RestController->ProjectService: getProjectById(id)
+RestController->ProjectService: getProjectById(taskCollabDbId)
 ProjectService-->RestController: return(Project)
 RestController->TaskService: getProjectFinishedTask(projectID)
 TaskService-->RestController:return(projectFinishedTasks)
