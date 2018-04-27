@@ -13,9 +13,9 @@ public class US130ListUsersUI {
 	@Autowired
 	private US130ListUsersController controller;
 
-	public User displayUsersList(User userToReturn) {
+	public User displayUsersList() {
 		Scanner input = new Scanner(System.in);
-		User userReturned = null;
+		User selectedUser = null;
 		List<String> usersList = controller.listUsersController();
 		
 		for (int i = 0; i < usersList.size(); i++) {
@@ -24,17 +24,17 @@ public class US130ListUsersUI {
 		}
 
 		System.out
-				.println("Please choose user's number (If a valid number isn't provided, no user will be selected.):");
+				.println("Please select a user's number (If a valid number isn't provided, no user will be selected):");
 		if (input.hasNextInt()) {
-			int index = Integer.parseInt(input.nextLine());
-			userReturned = controller.selectUser(index);// check later
+			int userNumber = Integer.parseInt(input.nextLine());
+			selectedUser = controller.selectUser(userNumber);// check later
+
 		} else {
-			System.out.println("Not a number!");
-			System.out.println("");
+
+			System.out.println("Not a number!\n");
 		}
-		System.out.println("Returning to admin menu...");
-		System.out.println("");
-		return userReturned;
+		System.out.println("Returning to admin menu...\n");
+		return selectedUser;
 	}
 
 }
