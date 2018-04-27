@@ -391,5 +391,38 @@ public class ProjectTest {
         assertEquals(1, p1.listAvaliableCalculationMethods().size());
 	}
 
+    /**
+     * Tests the various returns of CalculationMethod.toEnum
+     */
+	@Test
+	public void testCalculationMethodsEnum() {
+	    // GIVEN valid enum values
+        // WHEN calling toEnum method
+        //THEN the result must be the chosen enum
+		assertEquals(CalculationMethod.toEnum(1), CalculationMethod.CI);
+		assertEquals(CalculationMethod.toEnum(2), CalculationMethod.CF);
+		assertEquals(CalculationMethod.toEnum(3), CalculationMethod.CM);
+        assertEquals(CalculationMethod.toEnum(4), CalculationMethod.CIFM);
+
+        // AND WHEN calling the to enum method with a null input
+        // THEN the output must be null
+        assertNull(CalculationMethod.toEnum(null));
+
+        // AND WHEN calling the get description method
+        // Then it must return the calculation method's desricption
+		assertEquals("First Collaborator Cost", CalculationMethod.CI.getDescription());
+
+	}
+
+    /**
+     * AND WHEN searching for a non existent enum value
+     */
+    @Test(expected= IllegalArgumentException.class)
+    public void testCalculationMethodsEnumException() {
+        // THEN it must throw an exception
+        assertEquals(CalculationMethod.toEnum(96), CalculationMethod.CI);
+
+    }
+
 
 }
