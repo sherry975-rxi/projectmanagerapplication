@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class TaskDetailsUI {
 
 	@Autowired
-	private PrintTaskInfoController taskInfo;
+	private PrintTaskInfoController taskDetails;
 
 	@Autowired
 	private PrintProjectInfoController projectInfo;
@@ -54,25 +54,21 @@ public class TaskDetailsUI {
 	}
 
 	private void printMenuOption(){
-		System.out.println();
-		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
-		System.out.println();
+		System.out.println("\n" + "PROJECT - " + projectInfo.printProjectNameInfo() + "\n");
 		System.out.println("                     TASK                    ");
-		System.out.println("*** " + taskInfo.printTaskNameInfo().toUpperCase() + " ***");
+		System.out.println("*** " + taskDetails.printTaskNameInfo().toUpperCase() + " ***");
 		System.out.println("______________________________________________");
-		System.out.println("ID: " + taskInfo.printTaskIDCodeInfo());
-		System.out.println("STATUS: " + taskInfo.printTaskStateInfo());
-		System.out.println("ESTIMATED START DATE: " + taskInfo.printTaskEstimatedStartDateInfo());
-		System.out.println("START DATE: " + taskInfo.printTaskStartDateInfo());
-		System.out.println("DEADLINE: " + taskInfo.printTaskDeadlineInfo());
-		System.out.println("FINISH DATE: " + taskInfo.printTaskFinishDateInfo());
-		System.out.println("TASK TEAM: " + taskInfo.printTaskTeamInfo());
-		System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
-		System.out.println();
-
+		System.out.println("ID: " + taskDetails.printTaskIDCodeInfo());
+		System.out.println("STATUS: " + taskDetails.printTaskStateInfo());
+		System.out.println("ESTIMATED START DATE: " + taskDetails.printTaskEstimatedStartDateInfo());
+		System.out.println("START DATE: " + taskDetails.printTaskStartDateInfo());
+		System.out.println("DEADLINE: " + taskDetails.printTaskDeadlineInfo());
+		System.out.println("FINISH DATE: " + taskDetails.printTaskFinishDateInfo());
+		System.out.println("TASK TEAM: " + taskDetails.printTaskTeamInfo());
+		System.out.println("TASK BUDGET: " + taskDetails.printTaskBudgetInfo() + "\n");
 		System.out.println("[1] Mark task as completed");
 		System.out.println("[2] Request assignment to task team");
-		System.out.println("[3] Request task team unassignment");
+		System.out.println("[3] Request task team removal");
 		System.out.println("[4] Create/Update task report");
 		System.out.println("______________________________________________");
 		System.out.println("[B] Back \n");
@@ -84,9 +80,9 @@ public class TaskDetailsUI {
 	 * the user's input
 	 */
 	public void taskDataDisplay() {
-		taskInfo.setProjeID(this.projectID);
-		taskInfo.setTaskID(this.taskID);
-		taskInfo.setProjectAndTask();
+		taskDetails.setProjeID(this.projectID);
+		taskDetails.setTaskID(this.taskID);
+		taskDetails.setProjectAndTask();
 		projectInfo.setProjID(this.projectID);
 		projectInfo.setProject();
 
