@@ -47,9 +47,5 @@ public class RestUserTasksController {
         return taskList;
     }
 
-    @RequestMapping(value = "task/{taskId}", method = RequestMethod.GET)
-    public Task getTaskById(@PathVariable String taskId) {
-        return taskService.getTaskByID(Long.parseLong(taskId));
-    }
 
 }
