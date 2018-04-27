@@ -32,13 +32,13 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "{{Server}}/projects/21",
+					"raw": "{{Server}}/projects/24",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21"
+						"24"
 					]
 				},
 				"description": "Get a specific project"
@@ -52,13 +52,13 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "{{Server}}/projects/21/cost",
+					"raw": "{{Server}}/projects/24/cost",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"cost"
 					]
 				},
@@ -81,13 +81,13 @@
 					"raw": "{\n\t\"calculationMethod\" : \"CF\"\n}"
 				},
 				"url": {
-					"raw": "{{Server}}/projects/21",
+					"raw": "{{Server}}/projects/24",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21"
+						"24"
 					]
 				},
 				"description": "Update a project calculation method"
@@ -137,12 +137,12 @@
 					"raw": "{\n\t\"projectManager\": \n\t{\n       \"email\": \"dsomonteiro@gmail.com\"\n\t}\n}"
 				},
 				"url": {
-					"raw": "{{server}}projects/21/",
+					"raw": "{{Server}}projects/24/",
 					"host": [
-						"{{server}}projects"
+						"{{Server}}projects"
 					],
 					"path": [
-						"21",
+						"24",
 						""
 					]
 				}
