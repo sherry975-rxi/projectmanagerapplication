@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Pending Tasks From User",
+			"name": "Finished Tasks From User",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -46,6 +46,31 @@
 					]
 				},
 				"description": "Get pending tasks from user"
+			},
+			"response": []
+		},
+		{
+			"name": "Total Time Spent Completed Last Month",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{server}}users/7/tasks/totaltimespent/completed/lastmonth",
+					"host": [
+						"{{server}}users"
+					],
+					"path": [
+						"7",
+						"tasks",
+						"totaltimespent",
+						"completed",
+						"lastmonth"
+					]
+				}
 			},
 			"response": []
 		}

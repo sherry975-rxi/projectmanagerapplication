@@ -121,6 +121,33 @@
 				"description": "Creating a project"
 			},
 			"response": []
+		},
+		{
+			"name": "changeProjectManager ",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"projectManager\": \n\t{\n       \"email\": \"dsomonteiro@gmail.com\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{server}}projects/21/",
+					"host": [
+						"{{server}}projects"
+					],
+					"path": [
+						"21",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
