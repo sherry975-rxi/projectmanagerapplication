@@ -68,6 +68,9 @@ public class RestAccountControllerTest {
      * THEN
      * then a user is created in the database with the information provided
      */
+
+    /*
+
     @Test
     public void shouldCreateUser() throws Exception {
         //GIVEN
@@ -98,6 +101,8 @@ public class RestAccountControllerTest {
 
     }
 
+    */
+
     /**
      * GIVEN
      * given a set of user information with a email in wrong format
@@ -108,6 +113,13 @@ public class RestAccountControllerTest {
      * THEN
      * then a user isn't created in the database
      */
+
+
+    /*
+
+
+
+
     @Test
     public void shouldNotCreateUserBecauseInvalidEmail() throws Exception {
 
@@ -135,6 +147,9 @@ public class RestAccountControllerTest {
 
         assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
     }
+     */
+
+
 
     /**
      * GIVEN
@@ -146,6 +161,11 @@ public class RestAccountControllerTest {
      * THEN
      * then a user isn't created in the database
      */
+
+    /*
+
+
+
     @Test
     public void shouldNotCreateUserBecauseEmailExists() throws Exception {
 
@@ -173,6 +193,8 @@ public class RestAccountControllerTest {
 
         assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
     }
+
+    */
 
     @Test
     public void shouldLogin() throws Exception {
