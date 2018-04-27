@@ -72,6 +72,15 @@ public class RestControllerNewIntergrationTests {
         userPM = userService.createUser("Ana", "ana@gmail.com", "003", "manager", "221238442", "Rua Porto","4480", "Porto", "Porto", "Portugal");
         userRui = userService.createUser("Rui", "rui@gmail.com", "004", "collaborator", "221378449", "Rua Porto","4480", "Porto", "Porto", "Portugal");
 
+        mike.setUserProfile(Profile.COLLABORATOR);
+        owner.setUserProfile(Profile.DIRECTOR);
+        userPM.setUserProfile(Profile.COLLABORATOR);
+        userRui.setUserProfile(Profile.UNASSIGNED);
+
+        userService.updateUser(mike);
+        userService.updateUser(owner);
+        userService.updateUser(userPM);
+
         // create projects
         projectOne = projectService.createProject("Restful Web Service", "Implement API Rest", userPM);
 
@@ -80,7 +89,6 @@ public class RestControllerNewIntergrationTests {
 
         // create tasks in projects
         taskOne = taskService.createTask("Create Rest Controller", projectOne);
-
 
 
     }
@@ -125,9 +133,10 @@ public class RestControllerNewIntergrationTests {
     /**
      * This tests the various URI's that fetch lists of users
      *
+     * @throws Exception
      */
     @Test
-    public void userListTests() {
+    public void shouldReturnUserList() throws Exception {
 
         // GIVEN four users in the test Database
         assertEquals(4, userService.getAllUsersFromUserContainer().size());
@@ -148,13 +157,16 @@ public class RestControllerNewIntergrationTests {
 
     /**
      * This tests the URI that fetches user by email
+     * @throws Exception
      */
-    @Test
-    public void shouldReturnUserByEmail() {
-        // GIVEN four users in the test Database
-            assertEquals(4, userService.getAllUsersFromUserContainer().size());
 
-            ParameterizedTypeReference<List<User>> listOfUsers = new ParameterizedTypeReference<List<User>>() {};
+    @Test
+    public void shouldReturnUserByEmail() throws Exception{
+
+        // GIVEN four users in the test Database
+        assertEquals(4, userService.getAllUsersFromUserContainer().size());
+
+        ParameterizedTypeReference<List<User>> listOfUsers = new ParameterizedTypeReference<List<User>>() {};
 
         // WHEN searching for a user email "mike@mike"
         actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/email/mike@mike", HttpMethod.GET, null, listOfUsers);
@@ -165,6 +177,89 @@ public class RestControllerNewIntergrationTests {
         assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
         assertEquals(1, actualUserList.getBody().size());
         assertEquals("Mike", actualUserList.getBody().get(0).getName());
+    }
+
+    /**
+     * This test the URI that fetches users by profile set as Director
+     * @throws Exception
+     */
+
+    @Test
+    public void shouldReturnDirectorWhenSearchByProfile() throws Exception{
+
+        //GIVEN four users in the test database
+        assertEquals(4, userService.getAllUsersFromUserContainer().size());
+
+        //WHEN searching for Profile set as DIRECTOR
+
+        ParameterizedTypeReference<List<User>> listOfDirectors = new ParameterizedTypeReference<List<User>>() {};
+
+        actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/profiles/DIRECTOR", HttpMethod.GET, null, listOfDirectors);
+
+        //THEN the expectedUserList must contain the users
+
+        expectedUserList = new ResponseEntity<>(userService.searchUsersByProfileName("DIRECTOR"), HttpStatus.OK);
+
+        assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
+        assertEquals(1, actualUserList.getBody().size());
+        assertEquals("Owner boi", expectedUserList.getBody().get(0).getName());
+
+    }
+
+    /**
+     * This test the URI that fetches users by profile set as Unassigned
+     * @throws Exception
+     */
+
+
+    @Test
+    public void shouldReturnUnassignedWhenSearchByProfile() throws Exception{
+
+        //GIVEN four users in the test database
+        assertEquals(4, userService.getAllUsersFromUserContainer().size());
+
+        //WHEN searching for profile set as UNASSIGNED
+
+        ParameterizedTypeReference<List<User>> listOfUnassigned = new ParameterizedTypeReference<List<User>>() {};
+
+        actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/profiles/UNASSIGNED", HttpMethod.GET, null, listOfUnassigned);
+
+        //THEN the expectedUserList must contain the users
+
+        expectedUserList = new ResponseEntity<>(userService.searchUsersByProfileName("UNASSIGNED"), HttpStatus.OK);
+
+        assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
+        assertEquals(1, actualUserList.getBody().size());
+        assertEquals("Rui", expectedUserList.getBody().get(0).getName());
+
+    }
+
+    /**
+     * This test the URI that fetches users by profile set as Collaborator
+     * @throws Exception
+     */
+
+    @Test
+    public void shouldReturnCollaboratorWhenSearchByProfile() throws Exception{
+
+        //GIVEN four users in the test database
+        assertEquals(4, userService.getAllUsersFromUserContainer().size());
+
+        //WHEN searching for profile set as UNASSIGNED
+
+        ParameterizedTypeReference<List<User>> listOfCollaborators = new ParameterizedTypeReference<List<User>>() {};
+
+        actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/profiles/COLLABORATOR", HttpMethod.GET, null, listOfCollaborators);
+
+        //THEN the expectedUserList must contain the users
+
+        expectedUserList = new ResponseEntity<>(userService.searchUsersByProfileName("COLLABORATOR"), HttpStatus.OK);
+
+        assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
+        assertEquals(2, actualUserList.getBody().size());
+        assertEquals("Mike", expectedUserList.getBody().get(0).getName());
+        assertEquals("Ana", expectedUserList.getBody().get(1).getName());
+
     }
 
     /**
@@ -200,13 +295,10 @@ public class RestControllerNewIntergrationTests {
         assertEquals(expectedUser.getBody().getName(), actualUser.getBody().getName());
         assertEquals(expectedUser.getStatusCode(), actualUser.getStatusCode());
 
-
-
     }
 
     /**
-     *
-     *
+     * This test proper user validation
      *
      */
     @Test
@@ -257,8 +349,6 @@ public class RestControllerNewIntergrationTests {
         // THEN the response entity should contain OK, and a link to his data
         assertEquals(HttpStatus.OK, toCheckValidation.getStatusCode());
         assertEquals("createPassword", toCheckValidation.getBody().getRel());
-
-
 
     }
 
