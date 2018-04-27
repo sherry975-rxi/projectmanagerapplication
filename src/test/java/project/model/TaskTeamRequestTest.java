@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Calendar;
+
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -190,6 +192,20 @@ public class TaskTeamRequestTest {
 		TaskTeamRequest requestOther = new TaskTeamRequest(anotherProjCollab, anotherTask);
 		String result = "Daniel" + "\n" + "daniel@gmail.com" + "\n" + task.getTaskID() + "\n" + "best task";
 		assertTrue(result.equals(requestOther.viewStringRepresentation()));
+	}
+
+	@Test
+	public void testSetAndGetDates() {
+		assertNull(request.getApprovalDate());
+		assertNull(request.getRejectDate());
+
+		request.setApprovalDate(Calendar.getInstance());
+		assertNotNull(request.getApprovalDate());
+
+		request.setRejectDate(Calendar.getInstance());
+		assertNotNull(request.getRejectDate());
+
+
 	}
 
 }
