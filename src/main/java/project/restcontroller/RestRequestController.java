@@ -354,6 +354,79 @@ public class RestRequestController {
 
     }
 
+    /**
+     * This method returns a specific request.
+     *
+     * @param requestId Request id associated to the request
+     * @param taskId    Task id associated to the task to be made the request
+     * @param projectId Project id associated to the project where the task belongs
+     * @return ResponseEntity
+     */
+    @RequestMapping(value = "/requests/{requestId}/reject", method = RequestMethod.PUT)
+    public ResponseEntity<TaskTeamRequest> rejectRequest(@PathVariable int requestId, @PathVariable String taskId, @PathVariable int projectId) {
+
+        projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        Optional<TaskTeamRequest> requestFound = task.getPendingTaskTeamRequests().stream()
+                .filter(request -> request.getDbId()==requestId)
+                .findFirst();
+
+        if(requestFound.isPresent()) {
+
+            TaskTeamRequest requestToReject = requestFound.get();
+
+            String requestType;
+
+
+            if (requestToReject.isAssignmentRequest()) {
+
+                ProjectCollaborator projectCollaboratorToAdd = requestToReject.getProjCollab();
+                requestToReject.setRejectDate(Calendar.getInstance());
+                task.deleteTaskAssignmentRequest(projectCollaboratorToAdd);
+
+                taskService.saveTask(task);
+
+                Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
+
+                String assignList = "List of Assignment Requests";
+                requestType = "assignment";
+                Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(assignList);
+
+                requestToReject.add(reference);
+                requestToReject.add(referenceTwo);
+
+                return new ResponseEntity<>(requestToReject, HttpStatus.OK);
+            } else if (requestToReject.isRemovalRequest()) {
+
+                ProjectCollaborator projectCollaboratorToRemove = requestToReject.getProjCollab();
+                requestToReject.setRejectDate(Calendar.getInstance());
+                task.deleteTaskRemovalRequest(projectCollaboratorToRemove);
+                taskService.saveTask(task);
+
+                Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
+
+                String removalList = "List of Removal Requests";
+                requestType = "removal";
+                Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(removalList);
+
+                requestToReject.add(reference);
+                requestToReject.add(referenceTwo);
+
+
+                return new ResponseEntity<>(requestToReject, HttpStatus.OK);
+
+            }
+        }
+
+
+
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    }
+
 
 }
 
