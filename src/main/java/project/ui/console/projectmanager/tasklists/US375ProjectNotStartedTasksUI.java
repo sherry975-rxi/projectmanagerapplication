@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class US375ProjectNotStartedTasksUI {
 
 	@Autowired
-	private PrintProjectInfoController projectInfo;
+	private PrintProjectInfoController projectDetailsInfo;
 
 	@Autowired
 	private PmTaskFunctionalitiesUI taskFuntionatities;
@@ -29,22 +29,22 @@ public class US375ProjectNotStartedTasksUI {
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
 
-		projectInfo.setProject(project);
+		projectDetailsInfo.setProject(project);
 
 		boolean loop = true;
 		while (loop) {
 			loop = false;
 		System.out.println("");
-		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
+		System.out.println("PROJECT " + projectDetailsInfo.printProjectNameInfo().toUpperCase());
 
-		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
-		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
-		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
-		System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo());
-		System.out.println("FINISH DATE: " + projectInfo.printProjectFinishDateInfo());
-		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
-		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
-		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
+		System.out.println("ID: " + projectDetailsInfo.printProjectIDCodeInfo());
+		System.out.println("STATUS: " + projectDetailsInfo.printProjectStatusInfo());
+		System.out.println("DESCRIPTION: " + projectDetailsInfo.printProjectDescriptionInfo());
+		System.out.println("START DATE: " + projectDetailsInfo.printProjectStartDateInfo());
+		System.out.println("FINISH DATE: " + projectDetailsInfo.printProjectFinishDateInfo());
+		System.out.println("PROJECT MANAGER: " + projectDetailsInfo.printProjectManagerInfo());
+		System.out.println("PROJECT TEAM: " + projectDetailsInfo.printProjectTeamInfo());
+		System.out.println("PROJECT BUDGET: " + projectDetailsInfo.printProjectBudgetInfo());
 
 		System.out.println(line);
 		System.out.println("                NOT STARTED TASKS");
