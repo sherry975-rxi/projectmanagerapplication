@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class Project extends ResourceSupport implements Serializable{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonIdentityReference(alwaysAsId = true)
 	private int projectId;
 
