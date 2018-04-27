@@ -1,5 +1,6 @@
 package project.services;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.TaskDTO;
@@ -1002,4 +1003,18 @@ public class TaskService {
 		return finishedDecreasing;
 	}
 
+	/**
+	 * This method gets a task from the database by searching for its Id and then creates a new TaskDTO
+	 *
+	 * @param taskId TaskId to search
+	 *
+	 * @return  Returns a TaskDTO of the found task
+	 */
+	public TaskDTO getTaskDtoByTaskId(String taskId) {
+		Task task = this.getTaskByTaskID(taskId);
+		TaskDTO taskDTO = new TaskDTO(task);
+
+		return taskDTO;
+
+	}
 }

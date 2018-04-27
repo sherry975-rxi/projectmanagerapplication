@@ -2,12 +2,15 @@ package project.ui.console;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import project.model.Profile;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.User;
+import project.model.*;
+import project.model.taskstateinterface.Finished;
+import project.model.taskstateinterface.OnGoing;
+import project.model.taskstateinterface.TaskStateInterface;
 import project.services.ProjectService;
+import project.services.TaskService;
 import project.services.UserService;
+
+import java.util.Calendar;
 
 @Component
 public class MockData {
@@ -16,15 +19,17 @@ public class MockData {
 
     private UserService userService;
     private ProjectService projectService;
+    private TaskService taskService;
 
     private MockData() {
 
     }
 
     @Autowired
-    public MockData(UserService userService, ProjectService projectService) {
+    public MockData(UserService userService, ProjectService projectService, TaskService taskService) {
         this.userService = userService;
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
 
@@ -70,6 +75,9 @@ public class MockData {
 		userAdmin.setQuestion("2");
         userAdmin.setAnswer("South Lake, Utah");
 
+
+
+
     Project project = projectService.createProject("Projecto Sprint 2", "Demo para a sprint", projectManager);
     ProjectCollaborator projectCollaborator = project.createProjectCollaborator(userATirapicos, 10);
 		projectService.addProjectCollaborator(projectCollaborator);
@@ -87,6 +95,32 @@ public class MockData {
 		userService.addUserToUserRepositoryX(userJMatos);
 		userService.addUserToUserRepositoryX(userATirapicos);
 		userService.addUserToUserRepositoryX(projectManager);
+
+        // Create and add tasks to Task repository
+        Task taskFinished = taskService.createTask("Remove code smells", project);
+
+        // Add User to tasks, and forces states as Ongoing
+        taskFinished.addProjectCollaboratorToTask(projectCollaborator);
+
+        taskFinished.setTaskState(new OnGoing());
+        taskFinished.setCurrentState(StateEnum.ONGOING);
+
+        // Create reports in the tasks
+        taskFinished.createReport(taskFinished.getTaskCollaboratorByEmail("atirapicos@gmail.com"), Calendar.getInstance(), 0);
+
+        // Set task state as finished last month, forces state as finished
+        Calendar finishDate = Calendar.getInstance();
+        finishDate.add(Calendar.MONTH, -1);
+
+        taskFinished.setFinishDate(finishDate);
+
+        taskFinished.setTaskState(new Finished());
+        taskFinished.setCurrentState(StateEnum.FINISHED);
+
+        Report reportA = taskFinished.getReports().get(0);
+        reportA.setReportedTime(10);
+
+        taskService.saveTask(taskFinished);
 
     }
 }
