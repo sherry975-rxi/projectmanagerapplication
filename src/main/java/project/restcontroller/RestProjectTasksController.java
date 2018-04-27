@@ -192,7 +192,7 @@ public class RestProjectTasksController {
     @RequestMapping(value = "{taskId}", method = RequestMethod.GET)
     public ResponseEntity<TaskDTO> getTask (@PathVariable String taskId) {
 
-        TaskDTO taskDTO = new TaskDTO(taskService.getTaskByTaskID(taskId));
+        TaskDTO taskDTO = taskService.getTaskDtoByTaskId(taskId);
 
         for(String action : taskDTO.getTaskState().getActions()) {
             Link reference = TaskAction.getLinks(taskDTO.getProject().getProjectId(), taskId).get(action);

@@ -1173,4 +1173,25 @@ public class TaskServiceTest {
 
     }
 
+    /**
+     * GIVEN a task id
+     * WHEN the method getTaskDTOByTaskId is called
+     * THEN a taskDTO from the found task must be returned
+     */
+    @Test
+    public void getTaskDTOByTaskIDTest() {
+
+        //GIVEN a task id
+        String taskId= "01";
+
+        //WHEN the method getTaskDTOByTaskId is called
+        when(taskRepository.findByTaskID(taskId)).thenReturn(Optional.of(taskMock));
+
+        //THEN a taskDTO from the found task must be returned
+        TaskDTO taskDTO = new TaskDTO(taskMock);
+        assertEquals(taskDTO, victim.getTaskDtoByTaskId(taskId));
+
+    }
+
+
 }
