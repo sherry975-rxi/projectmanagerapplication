@@ -39,6 +39,9 @@ public class RestRequestController {
     private ProjectService projectService;
     private String requestDetail = "Request details";
     private String allRequests = "List of All Requests";
+    private String requestType;
+    private String removalList = "List of Removal Requests";
+    private String assignList = "List of Assignment Requests";
 
 
     @Autowired
@@ -188,8 +191,7 @@ public class RestRequestController {
 
             Link reference = linkTo(methodOn(getClass()).getRequestDetails(assignRequestCreated.getDbId(), taskId, projectId)).withRel(requestDetail);
 
-            String requestType = "assignment";
-            String assignList = "List of Assignment Requests";
+            requestType = "assignment";
             Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(assignList);
 
             assignRequestCreated.add(reference);
@@ -254,8 +256,7 @@ public class RestRequestController {
 
             Link reference = linkTo(methodOn(getClass()).getRequestDetails(removalRequestCreated.getDbId(), taskId, projectId)).withRel(requestDetail);
 
-            String requestType = "removal";
-            String removalList = "List of Removal Requests";
+            requestType = "removal";
             Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(removalList);
 
             removalRequestCreated.add(reference);
@@ -302,9 +303,6 @@ public class RestRequestController {
 
             TaskTeamRequest requestToApprove = requestFound.get();
 
-            String requestType;
-
-
             if (requestToApprove.isAssignmentRequest()) {
 
                 ProjectCollaborator projectCollaboratorToAdd = requestToApprove.getProjCollab();
@@ -316,7 +314,6 @@ public class RestRequestController {
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
 
-                String assignList = "List of Assignment Requests";
                 requestType = "assignment";
                 Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(assignList);
 
@@ -334,7 +331,6 @@ public class RestRequestController {
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
 
-                String removalList = "List of Removal Requests";
                 requestType = "removal";
                 Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(removalList);
 
@@ -377,9 +373,6 @@ public class RestRequestController {
 
             TaskTeamRequest requestToReject = requestFound.get();
 
-            String requestType;
-
-
             if (requestToReject.isAssignmentRequest()) {
 
                 ProjectCollaborator projectCollaboratorToAdd = requestToReject.getProjCollab();
@@ -390,7 +383,6 @@ public class RestRequestController {
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
 
-                String assignList = "List of Assignment Requests";
                 requestType = "assignment";
                 Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(assignList);
 
@@ -407,7 +399,6 @@ public class RestRequestController {
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
 
-                String removalList = "List of Removal Requests";
                 requestType = "removal";
                 Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(removalList);
 
