@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/projects/{projid}/tasks/{taskid}/reports/")
@@ -69,7 +70,9 @@ public class RestReportController {
             for (Report reportCreated : task.getReports()) {
                 if (reportCreated.getTaskCollaborator().equals(taskCollaborator) && Math.abs(reportCreated.getReportedTime() - reportDto.getReportedTime())<0.0000000001) {
 
-                    Link reference = linkTo(RestProjectController.class).slash(projid).slash(TASKS).slash(taskid).slash(REPORTS).withRel("Show all Reports from Task");
+                    //Link reference = linkTo(RestProjectController.class).slash(projid).slash(TASKS).slash(taskid).slash(REPORTS + "/").withRel("Show all Reports from Task");
+                    Link reference = linkTo(methodOn(getClass()).getTaskReports(taskid, projid)).withRel("Show all Reports from Task");
+
                     reportCreated.add(reference);
                     Link reference1 = linkTo(RestProjectController.class).slash(projid).slash(TASKS).slash(taskid).slash(REPORTS).slash("users").slash(userId).withRel("Show Reports from User");
                     reportCreated.add(reference1);
@@ -130,7 +133,8 @@ public class RestReportController {
         } else {
 
             for (Report reportCreated : reports) {
-                Link reference = linkTo(RestProjectController.class).slash(projid).slash(TASKS).slash(taskid).slash(REPORTS).slash("users").slash(userid).slash("update").withRel("Update Report from User");
+                int reportid = reportCreated.getDbId();
+                Link reference = linkTo(RestProjectController.class).slash(projid).slash(TASKS).slash(taskid).slash(REPORTS).slash(reportid).slash("update").withRel("Update Report from User");
                 reportCreated.add(reference);
                 }
             responseEntity = ResponseEntity.ok().body(reports);
@@ -138,6 +142,40 @@ public class RestReportController {
         }
 
         return responseEntity;
+    }
+
+    @RequestMapping(value = "{reportid}/update", method = RequestMethod.PUT)
+    public ResponseEntity<Report> updateTaskReport(@RequestBody Report reportDto, @PathVariable String taskid, @PathVariable int projid, @PathVariable int reportid){
+
+
+        projectService.getProjectById(projid);
+        ResponseEntity<Report> responseEntity = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        double newTimeReported = reportDto.getReportedTime();
+
+        String email = reportDto.getTaskCollaborator().getProjectCollaboratorFromTaskCollaborator().getUserFromProjectCollaborator().getEmail();
+        TaskCollaborator taskCollaborator = task.getTaskCollaboratorByEmail(email);
+
+
+
+        List<Report> taskReportsList = task.getReports();
+
+        for (int reportIndex = 0; reportIndex < taskReportsList.size(); reportIndex++) {
+            if (taskReportsList.get(reportIndex).getDbId() == reportid) {
+
+                task.updateReportedTime(newTimeReported, taskCollaborator, reportIndex);
+                Calendar dateOfUpdateReport = Calendar.getInstance();
+                Report reportUpdated = taskReportsList.get(reportIndex);
+                reportUpdated.setDateOfUpdate(dateOfUpdateReport);
+                this.taskService.saveTask(task);
+
+                responseEntity = new ResponseEntity<>(reportUpdated, HttpStatus.OK);
+            }
+        }
+
+        return responseEntity;
+
     }
 }
 
