@@ -36,10 +36,6 @@ public class RestProjectTasksController {
         this.req = req;
     }
 
-
-
-
-
     /**
      * Creates a Task with a description, associated to a project thats in the URI of the controller.
      * If the project doesn't exist or it's an invalid ID, it will return HttpStatus.NOT_FOUND
@@ -183,7 +179,28 @@ public class RestProjectTasksController {
         }
 
         return new ResponseEntity<>(unfinishedTasks, HttpStatus.OK);
-
     }
 
+
+    /**
+     * This method gets a task by its id
+     *
+     * @param taskId Task id
+     *
+     * @return The task found by the id
+     */
+    @RequestMapping(value = "{taskId}", method = RequestMethod.GET)
+    public ResponseEntity<TaskDTO> getTask (@PathVariable String taskId) {
+
+        TaskDTO taskDTO = new TaskDTO(taskService.getTaskByTaskID(taskId));
+
+        for(String action : taskDTO.getTaskState().getActions()) {
+            Link reference = TaskAction.getLinks(taskDTO.getProject().getProjectId(), taskId).get(action);
+            taskDTO.add(reference);
+    }
+
+    return new ResponseEntity<>(taskDTO, HttpStatus.OK);
+
+    }
 }
+
