@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class US390GetProjectReportedCostUI {
 
 	@Autowired
-	private PrintProjectInfoController projectInfo;
+	private PrintProjectInfoController projectDetails;
 
 	@Autowired
 	private US390CalculateReportedProjectCostController controller;
@@ -23,7 +23,7 @@ public class US390GetProjectReportedCostUI {
 	public Project displayProjectCost(Project project) {
 		String line = "___________________________________________________";
 
-		projectInfo.setProject(project);
+		projectDetails.setProject(project);
 		DecimalFormat numberFormat = new DecimalFormat("#.00");
 
 		boolean loop = true;
@@ -31,17 +31,16 @@ public class US390GetProjectReportedCostUI {
 			scannerInput = new Scanner(System.in);
 			loop = false;
 		System.out.println("");
-		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
+		System.out.println("PROJECT " + projectDetails.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
-		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
-		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
-		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
-		System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo());
-		System.out.println("FINISH DATE: " + projectInfo.printProjectFinishDateInfo());
-		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
-		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
-		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
-		System.out.println("");
+		System.out.println("ID: " + projectDetails.printProjectIDCodeInfo());
+		System.out.println("STATUS: " + projectDetails.printProjectStatusInfo());
+		System.out.println("DESCRIPTION: " + projectDetails.printProjectDescriptionInfo());
+		System.out.println("START DATE: " + projectDetails.printProjectStartDateInfo());
+		System.out.println("FINISH DATE: " + projectDetails.printProjectFinishDateInfo());
+		System.out.println("PROJECT MANAGER: " + projectDetails.printProjectManagerInfo());
+		System.out.println("PROJECT TEAM: " + projectDetails.printProjectTeamInfo());
+		System.out.println("PROJECT BUDGET: " + projectDetails.printProjectBudgetInfo() + "\n");
 		System.out.println(line);
 
         System.out.print(selectReportCostCalculation(project));
@@ -93,7 +92,7 @@ public class US390GetProjectReportedCostUI {
 	private String selectReportCostCalculation(Project project) {
 		System.out.println("");
 		System.out.println("Should a single user have different costs throughout the same report, calculate using:");
-        System.out.println(projectInfo.printCostCalculationMethods());
+        System.out.println(projectDetails.printCostCalculationMethods());
         System.out.println("[Any Key] - Keep Current Selection");
         System.out.println("");
         scannerInput = new Scanner(System.in);
