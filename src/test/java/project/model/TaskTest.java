@@ -171,20 +171,6 @@ public class TaskTest {
 
 	}
 
-	/**
-	 * Test method for
-	 * {@link project.model.Task#Task(java.lang.String, int, java.util.Calendar, java.util.Calendar, int)}.
-	 * 
-	 * Constructor to delete _____
-	 */
-	@Test
-	public void testTaskStringIntCalendarCalendarInt() {
-
-		Task task = new Task("task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
-
-		assertTrue(task instanceof Task);
-
-	}
 
 	/**
 	 * Test method for
@@ -195,45 +181,11 @@ public class TaskTest {
 	@Test
 	public void testTaskIntIntStringIntCalendarCalendarInt() {
 
-		Task task = new Task(1, 1, "task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
+		Task task = new Task();
 
 		assertTrue(task instanceof Task);
 
 	}
-
-	/**
-	 * Test method for {@link project.model.Task#Task(project.model.Task)}.
-	 * 
-	 * Constructor ______
-	 */
-	@Test
-	public void testTaskTask() {
-
-		Task task = new Task(1, 1, "task test", 1, Calendar.getInstance(), Calendar.getInstance(), 1);
-
-		Task taskCopy = new Task(task);
-
-		assertTrue(taskCopy instanceof Task);
-
-	}
-
-	/**
-	 * Test method for {@link project.model.Task#Task(project.model.Task)}.
-	 * 
-	 * Constructor ______
-	 */
-	@Test
-	public void testTaskTaskWithStartDateIntervalAndDeadlineInterval() {
-
-		taskReadyToFinishTest.updateStartDateIntervalAndState(1);
-		taskReadyToFinishTest.updateDeadlineIntervalAndState(2);
-
-		Task taskCopy = new Task(taskReadyToFinishTest);
-
-		assertTrue(taskCopy instanceof Task);
-
-	}
-
 	/**
 	 * Test method for {@link project.model.Task#getCurrentState()}.
 	 */
