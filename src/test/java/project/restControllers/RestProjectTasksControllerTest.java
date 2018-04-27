@@ -60,6 +60,7 @@ public class RestProjectTasksControllerTest {
     private Task task;
     private Task task2;
     private Task task3;
+    private TaskDTO taskDTO;
 
     private List<Task> projectTasks;
     private Calendar startDate;
@@ -96,6 +97,8 @@ public class RestProjectTasksControllerTest {
         task.addProjectCollaboratorToTask(pcDaniel);
         task.setEstimatedTaskEffort(20);
         task.setTaskBudget(2000);
+
+        taskDTO = new TaskDTO(task);
 
         task2 = new Task("Task2", project);
         task2.setEstimatedTaskStartDate(estimatedStart);
@@ -298,12 +301,13 @@ public class RestProjectTasksControllerTest {
 
         //WHEN
         when(taskService.getTaskByTaskID(taskId)).thenReturn(task);
+        when(taskService.getTaskDtoByTaskId(taskId)).thenReturn(taskDTO);
 
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/" + taskId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //THEN
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+        verify(taskService, times(1)).getTaskDtoByTaskId(any(String.class));
 
 
     }
