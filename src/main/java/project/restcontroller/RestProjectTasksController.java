@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-
 @RestController
 @RequestMapping("projects/{projid}/tasks/")
 public class RestProjectTasksController {
@@ -37,10 +35,6 @@ public class RestProjectTasksController {
         this.projectService = projectService;
         this.req = req;
     }
-
-
-
-
 
     /**
      * Creates a Task with a description, associated to a project thats in the URI of the controller.
@@ -72,7 +66,12 @@ public class RestProjectTasksController {
 
             }
 
+        for(String action : task.getTaskState().getActions()) {
 
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
+
+            }
 
         return ResponseEntity.ok().body(task);
 
@@ -97,9 +96,12 @@ public class RestProjectTasksController {
         tasksWithoutCollabs.addAll(taskService.getProjectTasksWithoutCollaboratorsAssigned(project));
 
         for(Task task: tasksWithoutCollabs){
+            for(String action : task.getTaskState().getActions()) {
 
-            Link taskLink = linkTo(RestProjectController.class).slash(projid).slash(tasks).withSelfRel();
-            task.add(taskLink);
+            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+            task.add(reference);
+
+            }
         }
 
         return new ResponseEntity<>(tasksWithoutCollabs, HttpStatus.OK);
@@ -170,12 +172,35 @@ public class RestProjectTasksController {
         unfinishedTasks.addAll(taskService.getProjectUnFinishedTasks(project));
 
         for(Task task : unfinishedTasks) {
-            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash(tasks).slash(task.getTaskID()).withSelfRel();
-            task.add(selfRel);
+            for(String action : task.getTaskState().getActions()) {
+            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+            task.add(reference);
+            }
         }
 
         return new ResponseEntity<>(unfinishedTasks, HttpStatus.OK);
-
     }
 
+
+    /**
+     * This method gets a task by its id
+     *
+     * @param taskId Task id
+     *
+     * @return The task found by the id
+     */
+    @RequestMapping(value = "{taskId}", method = RequestMethod.GET)
+    public ResponseEntity<TaskDTO> getTask (@PathVariable String taskId) {
+
+        TaskDTO taskDTO = new TaskDTO(taskService.getTaskByTaskID(taskId));
+
+        for(String action : taskDTO.getTaskState().getActions()) {
+            Link reference = TaskAction.getLinks(taskDTO.getProject().getProjectId(), taskId).get(action);
+            taskDTO.add(reference);
+    }
+
+    return new ResponseEntity<>(taskDTO, HttpStatus.OK);
+
+    }
 }
+
