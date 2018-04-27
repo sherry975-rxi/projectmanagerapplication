@@ -29,14 +29,25 @@ public class RestAccountController {
 
     private final UserService userService;
 
-    Map<User,String> pendingValidation = new HashMap<>();
+    private Map<User,String> pendingValidation = new HashMap<>();
+
+    /*
+    This map stores temporarily the userEmail as Key and the generatedCode that will be sent to the provided phone/email
+    When the user verificates the code correctly, the pair Key/Value is deleted from the HashMap
+     */
+    private Map<String, String> codeDTOMap = new HashMap<>();
+
+
+    /*
+    This map stores temporarily the userEmail as Key and the userDTO that will be saved when the user puts the verification code correctly.
+    When the user verificates the code, the pair Key/Value is deleted from the HashMap
+     */
+    private Map<String, UserDTO> userDTOPMap = new HashMap<>();
 
     @Autowired
     public RestAccountController(UserService userService) {
         this.userService = userService;
     }
-
-
 
     /**
      * This method returns a response entity with the conditions
@@ -55,9 +66,6 @@ public class RestAccountController {
 
     }
 
-
-
-
     /**
      * This method receives the information of the user to be created in a dto, verifies if there is a user in the
      * database with the same email, also verifies if the email is valid. and only if these two verifications are
@@ -67,7 +75,7 @@ public class RestAccountController {
      * @return response entity
      */
     @RequestMapping(value = "register" , method = RequestMethod.POST)
-    public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<List<Link>> createUser(@RequestBody UserDTO userDTO) {
 
         if(userService.isUserEmailInUserContainer(userDTO.getEmail())){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -77,19 +85,44 @@ public class RestAccountController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        userService.createUserWithDTO(userDTO);
+          /*
+            Stores the userEmail and the code will be generated in the next method
+         */
 
-        User createdUser = userService.getUserByEmail(userDTO.getEmail());
+        codeDTOMap.put(userDTO.getEmail(), "NotVerified");
 
-        Link reference = linkTo(RestUserController.class).slash(createdUser.getUserID())
-                .withRel("User details");
-        createdUser.add(reference);
+         /*
+            Stores the userEmail and userDTO in the HashMap
+         */
+        userDTOPMap.put(userDTO.getEmail(), userDTO);
 
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        /*
+            Link to send verification code by SMS
+         */
+
+        Link sendEmail = linkTo(RestAccountController.class).slash("performValidation/1/"
+                + userDTO.getEmail() + "/" + userDTO.getPhone())
+                .withRel("smsValidation");
+
+         /*
+            Link to send verification code by Email
+         */
+
+
+        Link sendSMS = linkTo(RestAccountController.class).slash("performValidation/2/"  + userDTO.getEmail() + "/" + userDTO.getPhone())
+                .withRel("emailValidation");
+
+        List<Link> linkList = new ArrayList<>();
+        linkList.add(sendEmail);
+        linkList.add(sendSMS);
+
+        /*
+            Returns a ResponseEntity with a string of links
+         */
+
+        return new ResponseEntity<>(linkList, HttpStatus.OK);
 
     }
-
-
 
     @RequestMapping(value="logIn", method= RequestMethod.POST)
     public ResponseEntity<User> doLogin(@RequestBody UserDTO logInDTO) {
@@ -129,9 +162,6 @@ public class RestAccountController {
 
     }
 
-
-
-
     @RequestMapping(value="{userId}/validate/{validationMethod}", method = RequestMethod.GET)
     public ResponseEntity<Link> performValidation(@PathVariable Integer userId, @PathVariable String validationMethod) {
 
@@ -163,7 +193,6 @@ public class RestAccountController {
         } catch (MessagingException| IOException e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
     }
 
     @RequestMapping(value="{userId}/validate/inputCode", method = RequestMethod.POST)
@@ -184,7 +213,6 @@ public class RestAccountController {
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
     }
 
 
@@ -200,26 +228,6 @@ public class RestAccountController {
                 return "Something went wrong, try again!";
         }
     }
-
-
-
-
-
-
-
-    /*
-    This map stores temporarily the userEmail as Key and the generatedCode that will be sent to the provided phone/email
-    When the user verificates the code correctly, the pair Key/Value is deleted from the HashMap
-     */
-    Map<String, String> codeDTOMap = new HashMap<>();
-
-
-    /*
-    This map stores temporarily the userEmail as Key and the userDTO that will be saved when the user puts the verification code correctly.
-    When the user verificates the code, the pair Key/Value is deleted from the HashMap
-     */
-    Map<String, UserDTO> userDTOPMap = new HashMap<>();
-
 
     /**
      *
@@ -253,19 +261,14 @@ public class RestAccountController {
 
                 validationType.performValidationMethod(userPhone, userEmail, "validateHuman", codeValidation);
 
-                Link attemptValidation = linkTo(RestAccountController.class).slash("performValidation/verificateCode/jmscrl@hotmail.com").withRel("verificateHuman");
+                Link attemptValidation = linkTo(RestAccountController.class).slash("performValidation/verificateCode/" + userEmail).withRel("verificateHuman");
 
                 return new ResponseEntity<>(attemptValidation, HttpStatus.OK);
 
             } catch (MessagingException| IOException e) {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
-
         }
-
-
-
-
     }
 
     @RequestMapping(value = "performValidation/verificateCode/{userEmail}", method = RequestMethod.POST)
@@ -286,54 +289,5 @@ public class RestAccountController {
             return new ResponseEntity<>(login, HttpStatus.OK);
         }
         else return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
-
-
     }
-
-    @RequestMapping(value = "registerv" , method = RequestMethod.POST)
-    public ResponseEntity<List<Link>> createUserv(@RequestBody UserDTO userDTO) {
-
-        /*
-            Stores the userEmail and the code will be generated in the next method
-         */
-
-        codeDTOMap.put(userDTO.getEmail(), "NotVerified");
-
-         /*
-            Stores the userEmail and userDTO in the HashMap
-         */
-        userDTOPMap.put(userDTO.getEmail(), userDTO);
-
-
-        /*
-            Link to send verification code by SMS
-         */
-
-        Link sendEmail = linkTo(RestAccountController.class).slash("performValidation/1/" + userDTO.getEmail() + "/" + userDTO.getPhone())
-                .withRel("smsValidation");
-
-
-       /*
-            Link to send verification code by Email
-         */
-
-
-        Link sendSMS = linkTo(RestAccountController.class).slash("performValidation/2/"  + userDTO.getEmail() + "/" + userDTO.getPhone())
-                .withRel("emailValidation");
-
-        List<Link> linkList = new ArrayList<>();
-        linkList.add(sendEmail);
-        linkList.add(sendSMS);
-
-        /*
-            Returns a ResponseEntity with a string of links
-         */
-
-        return new ResponseEntity<>(linkList, HttpStatus.OK);
-
-    }
-
-
-
 }
