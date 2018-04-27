@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class US360ProjectUnassignedTasksUI {
 
 	@Autowired
-	private PrintProjectInfoController projectInfo;
+	private PrintProjectInfoController projectInfoDetails;
 
 	@Autowired
 	private US360GetProjectTasksWithoutCollaboratorsAssignedController controller;
@@ -28,24 +28,24 @@ public class US360ProjectUnassignedTasksUI {
 
 		Scanner scannerInput = new Scanner(System.in);
 		String line = "___________________________________________________";
-		projectInfo.setProject(project);
+		projectInfoDetails.setProject(project);
 
 		boolean loop = true;
 		while (loop) {
 			loop = false;
-            System.out.println(line);
-		System.out.println("-PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
+            System.out.println(line + "\n");
+		System.out.println("- PROJECT " + projectInfoDetails.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
-		System.out.println("-ID: " + projectInfo.printProjectIDCodeInfo());
-		System.out.println("-STATUS: " + projectInfo.printProjectStatusInfo());
-		System.out.println("-DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
-		System.out.println("-START DATE: " + projectInfo.printProjectStartDateInfo());
-		System.out.println("-FINISH DATE: " + projectInfo.printProjectFinishDateInfo());
-		System.out.println("-PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
-		System.out.println("-PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
-		System.out.println("-PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
+		System.out.println("- ID: " + projectInfoDetails.printProjectIDCodeInfo());
+		System.out.println("- STATUS: " + projectInfoDetails.printProjectStatusInfo());
+		System.out.println("- DESCRIPTION: " + projectInfoDetails.printProjectDescriptionInfo());
+		System.out.println("- START DATE: " + projectInfoDetails.printProjectStartDateInfo());
+		System.out.println("- FINISH DATE: " + projectInfoDetails.printProjectFinishDateInfo());
+		System.out.println("- PROJECT MANAGER: " + projectInfoDetails.printProjectManagerInfo());
+		System.out.println("- PROJECT TEAM: " + projectInfoDetails.printProjectTeamInfo());
+		System.out.println("- PROJECT BUDGET: " + projectInfoDetails.printProjectBudgetInfo());
             System.out.println(line);
-		System.out.println(line);
+		System.out.println(line + "\n");
 		System.out.println("                -UNASSIGNED TASKS");
 		System.out.println(line);
 
