@@ -868,13 +868,125 @@ public class RestRequestControllerTest {
      *
      */
     @Test
-    public void canNOTApproveARequest() {
+    public void canNotApproveARequest() {
 
         //Given
         int invalidRequestID = 999;
 
         //When
         ResponseEntity<TaskTeamRequest> resultTwo = controller.approveRequest(invalidRequestID, taskIdOne, projectId);
+
+        //Then
+        assertEquals(HttpStatus.NOT_FOUND, resultTwo.getStatusCode());
+
+
+    }
+
+    /**
+     * Given
+     * TaskOne in projectOne, with no collaborators, neither requests
+     * Assignment Request created for userTwo
+     *
+     * When
+     * Rejecting assignment request to taskOne from userTwo
+     *
+     * Then
+     * Expects a OK message
+     *
+     */
+    @Test
+    public void canRejectAnAssignmentRequest() {
+
+        //Given
+        assertEquals(0, taskOne.getTaskTeam().size());
+        assertEquals(0, taskOne.getPendingTaskTeamRequests().size());
+        ResponseEntity<TaskTeamRequest> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
+
+        TaskTeamRequest assignRequest = taskOne.getPendingTaskTeamRequests().get(0);
+
+        assertEquals(HttpStatus.CREATED, result.getStatusCode());
+        assertEquals(assignRequest, result.getBody());
+        assertNull(assignRequest.getRejectDate());
+
+
+
+        //When
+        ResponseEntity<TaskTeamRequest> resultTwo = controller.rejectRequest(assignRequest.getDbId(), taskIdOne, projectId);
+
+        //Then
+        assertEquals(HttpStatus.OK, resultTwo.getStatusCode());
+        assertEquals(0, taskOne.getTaskTeam().size());
+        assertNotNull(assignRequest.getRejectDate());
+
+
+
+    }
+
+    /**
+     * Given
+     * Adding userTwo to taskOne
+     * Creating removal request for userTwo that is already in taskOne
+     *
+     * When
+     * Rejecting removal request to taskOne from userTwo
+     *
+     * Then
+     * Expects an OK message
+     *
+     */
+    @Test
+    public void canRejectARemovalRequest() {
+
+        //Given
+        taskOne.addProjectCollaboratorToTask(projCollabTwo);
+        assertEquals(1, taskOne.getTaskTeam().size());
+        TaskCollaborator existent= taskOne.getTaskCollaboratorByEmail(userTwo.getEmail());
+        assertNull(existent.getFinishDate());
+
+        assertEquals(0, taskOne.getPendingTaskTeamRequests().size());
+        ResponseEntity<TaskTeamRequest> result = controller.createRemovalRequest(taskIdOne, projectId, userDTOTwo);
+        assertEquals(1, taskOne.getPendingTaskTeamRequests().size());
+
+        TaskTeamRequest removeRequest = taskOne.getPendingTaskTeamRequests().get(0);
+
+        assertEquals(HttpStatus.CREATED, result.getStatusCode());
+        assertEquals(removeRequest, result.getBody());
+        assertNull(removeRequest.getRejectDate());
+
+
+
+        //When
+        ResponseEntity<TaskTeamRequest> resultTwo = controller.rejectRequest(removeRequest.getDbId(), taskIdOne, projectId);
+
+        //Then
+        assertEquals(HttpStatus.OK, resultTwo.getStatusCode());
+        assertEquals(1, taskOne.getTaskTeam().size());
+        assertNull(existent.getFinishDate());
+
+        assertNotNull(removeRequest.getRejectDate());
+
+
+    }
+
+    /**
+     * Given
+     * Invalid request id
+     *
+     * When
+     * Rejecting request in taskOne from userTwo
+     *
+     * Then
+     * Expects an NOT FOUND message
+     *
+     */
+    @Test
+    public void canNotRejectARequest() {
+
+        //Given
+        int invalidRequestID = 999;
+
+        //When
+        ResponseEntity<TaskTeamRequest> resultTwo = controller.rejectRequest(invalidRequestID, taskIdOne, projectId);
 
         //Then
         assertEquals(HttpStatus.NOT_FOUND, resultTwo.getStatusCode());
