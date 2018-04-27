@@ -1,8 +1,8 @@
 title US392 Change Project Cost Calculation Method
 
 Actor->Browser:Show Project Cost Calculation methods
-Browser->RestController: GET: getProject(taskCollabDbId)
-RestController->ProjectService: getProjectById(taskCollabDbId)
+Browser->RestController: GET: getProject(id)
+RestController->ProjectService: getProjectById(id)
 ProjectService-->RestController: Project
 RestController-->Browser: ResponseEntity(project)
 Actor->Browser: change cost calculation method

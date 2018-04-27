@@ -2,7 +2,7 @@ title US203 Get ToDo User Tasks
 
 Actor->Route: users/{userID}/viewPendingTasks GET
 Route->RestController: getPendingTasks(userID)
-RestController->UserService: getUserByID(taskCollabDbId)
+RestController->UserService: getUserByID(id)
 UserService->RestController: return user
 RestController->TaskService: getStartedNotFinishedUserTaskList(user)
 TaskService->RestController: return list of pending tasks

@@ -9,7 +9,7 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.e
 !ENTRY org.eclipse.ui 2 0 2017-12-05 11:28:42.101
 !MESSAGE Warnings while parsing the images from the 'org.eclipse.ui.commandImages' extension point.
 !SUBENTRY 1 org.eclipse.ui 2 0 2017-12-05 11:28:42.101
-!MESSAGE Cannot bind to an undefined command: plug-in='com.genuitec.eclipse.theming.ui', taskRequestDbId='com.genuitec.myeclipse.help.darktheme.commandid'
+!MESSAGE Cannot bind to an undefined command: plug-in='com.genuitec.eclipse.theming.ui', id='com.genuitec.myeclipse.help.darktheme.commandid'
 
 !ENTRY com.genuitec.eclipse.theming.ui 1 0 2017-12-05 11:28:43.750
 !MESSAGE A DevStyle Theme is being activated on this workspace; preparing colors and configuration
@@ -337,40 +337,40 @@ java.io.IOException: Unable to resolve plug-in "platform:/plugin/com.vp.vpsde.ec
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1499)
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.747
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.DiagramTreeView' taskRequestDbId and the 'Diagram Navigator' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.DiagramTreeView' id and the 'Diagram Navigator' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.839
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.ModelTreeView' taskRequestDbId and the 'Model Explorer' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.ModelTreeView' id and the 'Model Explorer' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.843
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.ClassRepositoryTreeView' taskRequestDbId and the 'Class Repository' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.ClassRepositoryTreeView' id and the 'Class Repository' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.844
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.PropertyPaneView' taskRequestDbId and the 'Property' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.PropertyPaneView' id and the 'Property' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.845
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.PreviewPaneView' taskRequestDbId and the 'Diagram Overview' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.PreviewPaneView' id and the 'Diagram Overview' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.854
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.DocumentationPaneView' taskRequestDbId and the 'Description' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.DocumentationPaneView' id and the 'Description' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.855
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.MessagePaneView' taskRequestDbId and the 'Message' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.MessagePaneView' id and the 'Message' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.857
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.LogicalView' taskRequestDbId and the 'Logical View' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.LogicalView' id and the 'Logical View' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.858
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.StencilPaneView' taskRequestDbId and the 'Stencil' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.StencilPaneView' id and the 'Stencil' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.859
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.ORMPaneView' taskRequestDbId and the 'ORM' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.ORMPaneView' id and the 'ORM' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.861
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.TeamworkFilesView' taskRequestDbId and the 'Teamwork Files' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.TeamworkFilesView' id and the 'Teamwork Files' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.862
-!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.DiagramBacklogView' taskRequestDbId and the 'Diagram Backlog' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.vp.vpsde.ec.views.DiagramBacklogView' id and the 'Diagram Backlog' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2018-03-19 14:17:47.864
-!MESSAGE Removing part descriptor with the 'com.genuitec.eclipse.icons.designer.ui.views.IconsDesignerView' taskRequestDbId and the 'Icon Designer' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
+!MESSAGE Removing part descriptor with the 'com.genuitec.eclipse.icons.designer.ui.views.IconsDesignerView' id and the 'Icon Designer' description. Points to the invalid 'bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView' class.
