@@ -20,12 +20,12 @@
 					"raw": "{\n\t\"email\" : \"xf@mymail.com\"\n}"
 				},
 				"url": {
-					"raw": "{{Server}}projects/21/tasks/WP1.T01/requests/assignmentRequest",
+					"raw": "{{Server}}projects/24/tasks/WP1.T01/requests/assignmentRequest",
 					"host": [
 						"{{Server}}projects"
 					],
 					"path": [
-						"21",
+						"24",
 						"tasks",
 						"WP1.T01",
 						"requests",
@@ -50,12 +50,12 @@
 					"raw": "{\n\t\"email\" : \"tc@mymail.com\"\n}"
 				},
 				"url": {
-					"raw": "{{Server}}projects/21/tasks/WP1.T01/requests/removalRequest",
+					"raw": "{{Server}}projects/24/tasks/WP1.T01/requests/removalRequest",
 					"host": [
 						"{{Server}}projects"
 					],
 					"path": [
-						"21",
+						"24",
 						"tasks",
 						"WP1.T01",
 						"requests",
@@ -75,17 +75,17 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{Server}}/projects/21/tasks/WP1.T01/requests/52/approval",
+					"raw": "{{Server}}/projects/24/tasks/WP1.T01/requests/59/approval",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"tasks",
 						"WP1.T01",
 						"requests",
-						"52",
+						"59",
 						"approval"
 					]
 				}
@@ -102,16 +102,16 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{Server}}projects/21/tasks/WP1.T01/requests/51/reject",
+					"raw": "{{Server}}projects/24/tasks/WP1.T01/requests/60/reject",
 					"host": [
 						"{{Server}}projects"
 					],
 					"path": [
-						"21",
+						"24",
 						"tasks",
 						"WP1.T01",
 						"requests",
-						"51",
+						"60",
 						"reject"
 					]
 				}
@@ -128,13 +128,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{Server}}/projects/21/tasks/WP1.T01/requests",
+					"raw": "{{Server}}/projects/24/tasks/WP1.T01/requests",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"tasks",
 						"WP1.T01",
 						"requests"
@@ -153,17 +153,17 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{Server}}/projects/21/tasks/WP1.T01/requests/51",
+					"raw": "{{Server}}/projects/24/tasks/WP1.T01/requests/59",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"tasks",
 						"WP1.T01",
 						"requests",
-						"51"
+						"59"
 					]
 				}
 			},

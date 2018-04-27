@@ -12,13 +12,13 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "{{Server}}/users/15/tasks/finished",
+					"raw": "{{Server}}/users/18/tasks/finished",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"users",
-						"15",
+						"18",
 						"tasks",
 						"finished"
 					]
@@ -34,13 +34,13 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "{{Server}}/users/15/tasks/pending",
+					"raw": "{{Server}}/users/18/tasks/pending",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"users",
-						"15",
+						"18",
 						"tasks",
 						"pending"
 					]
@@ -59,9 +59,9 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{server}}users/7/tasks/totaltimespent/completed/lastmonth",
+					"raw": "{{Server}}users/7/tasks/totaltimespent/completed/lastmonth",
 					"host": [
-						"{{server}}users"
+						"{{Server}}users"
 					],
 					"path": [
 						"7",

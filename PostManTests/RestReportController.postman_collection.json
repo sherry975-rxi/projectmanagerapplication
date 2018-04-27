@@ -12,13 +12,13 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "{{Server}}/projects/21/tasks/WP1.T01/reports/",
+					"raw": "{{Server}}/projects/24/tasks/WP1.T01/reports/",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"tasks",
 						"WP1.T01",
 						"reports",
@@ -30,32 +30,70 @@
 			"response": []
 		},
 		{
-			"name": "Get all Reports from user",
+			"name": "Get all reports from user 15 related to task WP1.T01",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "{{Server}}/projects/21/tasks/WP1.T01/reports/users/15",
+					"raw": "http://localhost:8080/projects/24/tasks/WP1.T01/reports/users/18",
+					"protocol": "http",
 					"host": [
-						"{{Server}}"
+						"localhost"
 					],
+					"port": "8080",
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"tasks",
 						"WP1.T01",
 						"reports",
 						"users",
-						"15"
+						"18"
 					]
-				},
-				"description": "Get reports from a specific user"
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Creates a report for a task in a given project fro a specific user",
+			"name": "Update Report 51 in task WP1.T01 ",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"reportedTime\" : 7.0,\n\"taskCollaborator\" : {\n\t\"projCollaborator\" : {\n\t\t\"collaborator\": {\n\t\t\t\"email\" : \"tc@mymail.com\"\n\t\t}\n\t}\n}\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/projects/24/tasks/WP1.T01/reports/31/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"projects",
+						"24",
+						"tasks",
+						"WP1.T01",
+						"reports",
+						"31",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Report in Task WP1.T01",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -66,23 +104,24 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"reportedTime\": 20,\n    \"taskCollaborator\":{\n        \"projCollaborator\":{\n            \"collaborator\":{\n                \"email\": \"tc@mymail.com\"\n            }\n        }\n    }\n}"
+					"raw": "{\"reportedTime\" : 5.0,\n\"taskCollaborator\" : {\n\t\"projCollaborator\" : {\n\t\t\"collaborator\": {\n\t\t\t\"email\" : \"tc@mymail.com\"\n\t\t}\n\t}\n}\n\t\n}"
 				},
 				"url": {
-					"raw": "{{Server}}/projects/21/tasks/WP1.T01/reports/",
+					"raw": "http://localhost:8080/projects/24/tasks/WP1.T01/reports/",
+					"protocol": "http",
 					"host": [
-						"{{Server}}"
+						"localhost"
 					],
+					"port": "8080",
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"tasks",
 						"WP1.T01",
 						"reports",
 						""
 					]
-				},
-				"description": "Creates a report for a task in a given project fro a specific user"
+				}
 			},
 			"response": []
 		}

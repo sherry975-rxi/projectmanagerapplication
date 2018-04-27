@@ -29,7 +29,7 @@ public class Task extends ResourceSupport implements Serializable {
 	static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long dbTaskId;
     @JsonIdentityReference(alwaysAsId = true)
     private String taskID;

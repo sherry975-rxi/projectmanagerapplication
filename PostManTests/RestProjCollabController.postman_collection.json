@@ -12,13 +12,13 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "{{Server}}/projects/21/team",
+					"raw": "{{Server}}/projects/24/team",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"team"
 					]
 				},
@@ -38,16 +38,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"costPerEffort\" :20,\n\"project\" : { \"projectId\" : 21},\n\"collaborator\" : { \"email\" : \"director@gmail.com\"}\n}\n}"
+					"raw": "{ \"costPerEffort\" :20,\n\"project\" : { \"projectId\" : 24},\n\"collaborator\" : { \"email\" : \"director@gmail.com\"}\n}\n}"
 				},
 				"url": {
-					"raw": "{{Server}}/projects/21/team",
+					"raw": "{{Server}}/projects/24/team",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"team"
 					]
 				},
@@ -70,15 +70,15 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{Server}}/projects/21/team/22",
+					"raw": "{{Server}}/projects/24/team/54",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"team",
-						"22"
+						"54"
 					]
 				},
 				"description": "Deactivate a Project Collab"
@@ -92,15 +92,15 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "{{Server}}/projects/21/team/22",
+					"raw": "{{Server}}/projects/24/team/54",
 					"host": [
 						"{{Server}}"
 					],
 					"path": [
 						"projects",
-						"21",
+						"24",
 						"team",
-						"22"
+						"54"
 					]
 				},
 				"description": "Get a specific projCollab"
