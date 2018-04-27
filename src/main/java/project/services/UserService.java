@@ -9,6 +9,7 @@ import project.model.Address;
 import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
+import project.services.exceptions.ObjectNotFoundException;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -178,9 +179,11 @@ public class UserService {
 	 */
 	public User getUserByEmail(String email) {
 
+		String message = "User not found! Email: ";
 		Optional<User> user = this.userRepository.findByEmail(email);
 
-		return user.orElse(null);
+		return user.orElseThrow(() -> new ObjectNotFoundException(message + email));
+
 	}
 
 	/**
@@ -192,7 +195,15 @@ public class UserService {
 	 *            parameter used to fetch users from the DataBase
 	 * @return all users that possess a certain email address
 	 */
-	public User getUserByID(int id) { return this.userRepository.findByUserID(id); }
+	public User getUserByID(int id) {
+
+		String message = "User not found! ID: ";
+
+		Optional<User> user = this.userRepository.findByUserID(id);
+
+		return user.orElseThrow(() -> new ObjectNotFoundException(message + id));
+
+	}
 
 
 	/**

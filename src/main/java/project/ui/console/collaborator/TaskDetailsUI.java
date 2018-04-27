@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class TaskDetailsUI {
 
 	@Autowired
-	private PrintTaskInfoController taskInfo;
+	private PrintTaskInfoController taskDetails;
 
 	@Autowired
 	private PrintProjectInfoController projectInfo;
@@ -44,6 +44,9 @@ public class TaskDetailsUI {
 	private Integer projectID;
 	private String taskID;
 	private Task task;
+	private ProjectCollaborator projCollaborator;
+
+	private static final String CANT_DO_IT = "You can't do it because you aren't assigned to this task.";
 
 
 	public TaskDetailsUI() {
@@ -51,25 +54,21 @@ public class TaskDetailsUI {
 	}
 
 	private void printMenuOption(){
-		System.out.println();
-		System.out.println("PROJECT - " + projectInfo.printProjectNameInfo());
-		System.out.println();
+		System.out.println("\n" + "PROJECT - " + projectInfo.printProjectNameInfo() + "\n");
 		System.out.println("                     TASK                    ");
-		System.out.println("*** " + taskInfo.printTaskNameInfo().toUpperCase() + " ***");
+		System.out.println("*** " + taskDetails.printTaskNameInfo().toUpperCase() + " ***");
 		System.out.println("______________________________________________");
-		System.out.println("ID: " + taskInfo.printTaskIDCodeInfo());
-		System.out.println("STATUS: " + taskInfo.printTaskStateInfo());
-		System.out.println("ESTIMATED START DATE: " + taskInfo.printTaskEstimatedStartDateInfo());
-		System.out.println("START DATE: " + taskInfo.printTaskStartDateInfo());
-		System.out.println("DEADLINE: " + taskInfo.printTaskDeadlineInfo());
-		System.out.println("FINISH DATE: " + taskInfo.printTaskFinishDateInfo());
-		System.out.println("TASK TEAM: " + taskInfo.printTaskTeamInfo());
-		System.out.println("TASK BUDGET: " + taskInfo.printTaskBudgetInfo());
-		System.out.println();
-
+		System.out.println("ID: " + taskDetails.printTaskIDCodeInfo());
+		System.out.println("STATUS: " + taskDetails.printTaskStateInfo());
+		System.out.println("ESTIMATED START DATE: " + taskDetails.printTaskEstimatedStartDateInfo());
+		System.out.println("START DATE: " + taskDetails.printTaskStartDateInfo());
+		System.out.println("DEADLINE: " + taskDetails.printTaskDeadlineInfo());
+		System.out.println("FINISH DATE: " + taskDetails.printTaskFinishDateInfo());
+		System.out.println("TASK TEAM: " + taskDetails.printTaskTeamInfo());
+		System.out.println("TASK BUDGET: " + taskDetails.printTaskBudgetInfo() + "\n");
 		System.out.println("[1] Mark task as completed");
 		System.out.println("[2] Request assignment to task team");
-		System.out.println("[3] Request task team unassignment");
+		System.out.println("[3] Request task team removal");
 		System.out.println("[4] Create/Update task report");
 		System.out.println("______________________________________________");
 		System.out.println("[B] Back \n");
@@ -81,13 +80,11 @@ public class TaskDetailsUI {
 	 * the user's input
 	 */
 	public void taskDataDisplay() {
-		String cantDoIt = "You can't do it because you aren't assigned to this task.";
-		taskInfo.setProjeID(this.projectID);
-		taskInfo.setTaskID(this.taskID);
-		taskInfo.setProjectAndTask();
+		taskDetails.setProjeID(this.projectID);
+		taskDetails.setTaskID(this.taskID);
+		taskDetails.setProjectAndTask();
 		projectInfo.setProjID(this.projectID);
 		projectInfo.setProject();
-		ProjectCollaborator projCollaborator;
 
 		boolean condition = true;
 		while (condition) {
@@ -99,41 +96,23 @@ public class TaskDetailsUI {
 			String choice = scannerInput.nextLine().toUpperCase();
 			switch (choice) {
 			case "1":
-                projCollaborator = new ProjectCollaborator(this.user, this.projectID);
-
-                if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator)) {
-                    System.out.println(cantDoIt);
-                } else {
-
-                taskToMark.setTaskToBeMarked(task);
-                taskToMark.markTaskAsFinished();
-                System.out.println("---- SUCCESS Task Marked As Finished ----");
-                }
+				caseOne();
                 break;
 
 			case "2":
-				projCollaborator = new ProjectCollaborator(this.user, this.projectID);
-
-				if (task.isProjectCollaboratorActiveInTaskTeam(projCollaborator) || task.isTaskFinished()) {
-					System.out.println(cantDoIt);
-				} else {
-				createAssignmentRequest.setProjID(this.projectID);
-				createAssignmentRequest.setTaskID(this.taskID);
-				createAssignmentRequest.setUser(this.user);
-				createAssignmentRequest.createTaskAssignment();
-				}
+				caseTwo();
 				break;
 			case "3":
 				projCollaborator = new ProjectCollaborator(this.user, this.projectID);
 
 				task = controllerMember.getTaskByTaskID(this.taskID);
-				checkAndAddRemovalRequest(projCollaborator, cantDoIt);
+				checkAndAddRemovalRequest(projCollaborator);
 
 				break;
 			case "4":
 				System.out.println("Test the report creation");
 				ProjectCollaborator projCollaborator2 = new ProjectCollaborator(this.user, this.projectID);
-				checkAndCreateReportRequest(projCollaborator2, cantDoIt);
+				checkAndCreateReportRequest(projCollaborator2);
 				break;
 			case "B":
 				break;
@@ -146,9 +125,36 @@ public class TaskDetailsUI {
 		}
 	}
 
-	private void checkAndAddRemovalRequest(ProjectCollaborator projCollaborator1, String cantDoIt) {
+	private void caseOne() {
+		projCollaborator = new ProjectCollaborator(this.user, this.projectID);
+
+		if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator)) {
+			System.out.println(CANT_DO_IT);
+		} else {
+
+			taskToMark.setTaskToBeMarked(task);
+			taskToMark.markTaskAsFinished();
+			System.out.println("---- SUCCESS Task Marked As Finished ----");
+		}
+	}
+
+	private void caseTwo() {
+		projCollaborator = new ProjectCollaborator(this.user, this.projectID);
+
+		if (task.isProjectCollaboratorActiveInTaskTeam(projCollaborator) || task.isTaskFinished()) {
+			System.out.println(CANT_DO_IT);
+		} else {
+			createAssignmentRequest.setProjID(this.projectID);
+			createAssignmentRequest.setTaskID(this.taskID);
+			createAssignmentRequest.setUser(this.user);
+			createAssignmentRequest.createTaskAssignment();
+		}
+	}
+
+
+	private void checkAndAddRemovalRequest(ProjectCollaborator projCollaborator1) {
 		if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator1)) {
-			System.out.println(cantDoIt);
+			System.out.println(CANT_DO_IT);
 		} else {
 			createCollabRemovalRequest.setUser(this.user);
 			createCollabRemovalRequest.setTaskID(this.taskID);
@@ -156,9 +162,9 @@ public class TaskDetailsUI {
 		}
 	}
 
-	private void checkAndCreateReportRequest(ProjectCollaborator projCollaborator2, String cantDoIt) {
+	private void checkAndCreateReportRequest(ProjectCollaborator projCollaborator2) {
 		if (!task.isProjectCollaboratorActiveInTaskTeam(projCollaborator2)) {
-			System.out.println(cantDoIt);
+			System.out.println(CANT_DO_IT);
 		} else {
 			reportUI.setTaskCollaboratorThroughEmail(this.user.getEmail());
 

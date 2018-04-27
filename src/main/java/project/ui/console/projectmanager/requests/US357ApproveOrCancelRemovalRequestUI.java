@@ -86,7 +86,7 @@ public class US357ApproveOrCancelRemovalRequestUI {
 			Integer choiceInt = Integer.parseInt(choice);
 
 			if (choiceInt > 0 && choiceInt <= listSize) {
-				chooseApproveOrDisaprove(choiceInt);
+				selectApproveOrDisaprove(choiceInt);
 			}
 
 			else {
@@ -107,23 +107,25 @@ public class US357ApproveOrCancelRemovalRequestUI {
 	 * @param request
 	 *            Index of the chosen request
 	 */
-	private void chooseApproveOrDisaprove(int request) {
+	private void selectApproveOrDisaprove(int request) {
 
 		Scanner input = new Scanner(System.in);
 
-		System.out.println("Are you sure you want to confirm this  ? \n");
+		System.out.println("Are you sure you want to confirm this  ?");
+		System.out.println("");
 		System.out.println("[Y] to remove");
 		System.out.println("[N] to cancel\n");
 
-		String yerOrNo = input.nextLine();
+		String answer = input.nextLine();
 
 		// In case user writes something different from "y" or "n"
-		while (!("n".equalsIgnoreCase(yerOrNo)) && !("y".equalsIgnoreCase(yerOrNo))) {
-			System.out.println("\nInvalid answer. Try again (\"y\" or \"n\")");
-			yerOrNo = input.nextLine();
+		while (!("n".equalsIgnoreCase(answer)) && !("y".equalsIgnoreCase(answer))) {
+			System.out.println("");
+			System.out.println("Invalid answer. Try again (\"y\" or \"n\")");
+			answer = input.nextLine();
 		}
 
-		if ("y".equalsIgnoreCase(yerOrNo)) {
+		if ("y".equalsIgnoreCase(answer)) {
 			int requestNumber = request - 1;
 			String requestInfo = cancelRequest.viewPendingRemovalRequests().get(requestNumber);
 			cancelRequest.setTaskIDandUserEmailWithRequestString(requestInfo);

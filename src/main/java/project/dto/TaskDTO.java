@@ -2,7 +2,6 @@ package project.dto;
 
 import org.springframework.hateoas.ResourceSupport;
 import project.model.*;
-import project.model.taskstateinterface.Created;
 import project.model.taskstateinterface.TaskStateInterface;
 
 import java.util.ArrayList;
@@ -38,8 +37,7 @@ public class TaskDTO extends ResourceSupport {
     /**
      * Empty Constructor
      */
-    private TaskDTO() {
-
+    protected TaskDTO() {
     }
 
     /**
@@ -54,7 +52,6 @@ public class TaskDTO extends ResourceSupport {
         this.creationDate = task.getCreationDate();
         this.startDate = task.getStartDate();
         this.finishDate = task.getFinishDate();
-        this.taskState = task.getTaskState();
         this.taskTeam = task.getTaskTeam();
         this.reports = task.getReports();
         this.estimatedTaskEffort = task.getEstimatedTaskEffort();
@@ -69,6 +66,8 @@ public class TaskDTO extends ResourceSupport {
         this.project = task.getProject();
         this.pendingTaskTeamRequests = task.getPendingTaskTeamRequests();
         this.actions = new ArrayList<>();
+        this.cancelDate = task.getCancelDate();
+
     }
 
     public String getTaskID() {
@@ -93,10 +92,6 @@ public class TaskDTO extends ResourceSupport {
 
     public List<TaskTeamRequest> getPendingTaskTeamRequests() {
         return pendingTaskTeamRequests;
-    }
-
-    public Calendar getCreationDate() {
-        return creationDate;
     }
 
     public Calendar getStartDate() {
@@ -151,31 +146,25 @@ public class TaskDTO extends ResourceSupport {
         return actions;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
+    public Calendar getCreationDate() {
+        return creationDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (!(o instanceof TaskDTO))
             return false;
         if (!super.equals(o))
             return false;
         TaskDTO taskDTO = (TaskDTO) o;
-        return Objects.equals(taskID, taskDTO.taskID);
+        return Objects.equals(getTaskID(), taskDTO.getTaskID());
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), taskID);
+        return Objects.hash(super.hashCode(), getTaskID());
     }
 }

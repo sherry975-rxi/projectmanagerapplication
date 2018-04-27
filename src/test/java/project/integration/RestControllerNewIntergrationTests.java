@@ -4,19 +4,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.*;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import project.dto.UserDTO;
 import project.model.*;
 import project.services.ProjectService;
@@ -26,7 +25,7 @@ import project.services.UserService;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -62,6 +61,8 @@ public class RestControllerNewIntergrationTests {
 
     ResponseEntity<Project> actualRealProject;
 
+    ResponseEntity<TaskTeamRequest> taskRequestResponse;
+
     @Before
     public void setUp() {
 
@@ -87,10 +88,10 @@ public class RestControllerNewIntergrationTests {
     @After
     public void tearDown() {
 
-        taskService.getTaskRepository().deleteAllInBatch();
-        projectService.getProjectCollaboratorRepository().deleteAllInBatch();
-        projectService.getProjectsRepository().deleteAllInBatch();
-        userService.getUserRepository().deleteAllInBatch();
+        taskService.getTaskRepository().deleteAll();
+        projectService.getProjectCollaboratorRepository().deleteAll();
+        projectService.getProjectsRepository().deleteAll();
+        userService.getUserRepository().deleteAll();
 
 
     }
@@ -151,11 +152,9 @@ public class RestControllerNewIntergrationTests {
      * This tests the URI that fetches user by email
      * @throws Exception
      */
-
-        @Test
-        public void shouldReturnUserByEmail() throws Exception{
-
-            // GIVEN four users in the test Database
+    @Test
+    public void shouldReturnUserByEmail() throws Exception{
+        // GIVEN four users in the test Database
             assertEquals(4, userService.getAllUsersFromUserContainer().size());
 
             ParameterizedTypeReference<List<User>> listOfUsers = new ParameterizedTypeReference<List<User>>() {};
@@ -209,6 +208,64 @@ public class RestControllerNewIntergrationTests {
 
     }
 
+    /**
+     *
+     *
+     *
+     */
+    @Test
+    public void validateUserTest() {
+        //GIVEN a user with no password
+        assertFalse(mike.hasPassword());
+
+        // WHEN posting a logIn request for that user with the correct email
+        UserDTO requestBody = new UserDTO("Mike", "mike@mike.com", "", "", "", "wrong", "", "");
+
+        actualUser = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
+
+
+        // THEN the response entity must contain the user with 3 links, for account validation
+        assertEquals(HttpStatus.OK, actualUser.getStatusCode());
+        assertEquals("Mike", actualUser.getBody().getName());
+        assertEquals(3, actualUser.getBody().getLinks().size());
+
+
+        //AND WHEN mike is given a question + answer, and chooses the link to validate via question
+
+        mike.setQuestion("Are You testing?");
+        mike.setAnswer("Yes");
+        userService.updateUser(mike);
+
+        ResponseEntity<Link> toCheckValidation = this.restTemplate.getForEntity("http://localhost:" + port + "/account/"+mike.getUserID()+"/validate/3", Link.class);
+
+        // THEN the response entity must contain a single link with the question
+
+        assertEquals(HttpStatus.OK, toCheckValidation.getStatusCode());
+        assertEquals("Are You testing?", toCheckValidation.getBody().getRel());
+
+        //AND WHEN mike inputs the wrong validation answer
+
+        String inputtedCode = "Wrong answer";
+
+        toCheckValidation = this.restTemplate.postForEntity("http://localhost:" + port + "/account/"+mike.getUserID()+"/validate/inputCode", inputtedCode, Link.class);
+
+        // THEN the response entity should contain Forbidden
+        assertEquals(HttpStatus.FORBIDDEN, toCheckValidation.getStatusCode());
+
+        //AND WHEN mike inputs the correct answer
+
+        inputtedCode = "Yes";
+
+        toCheckValidation = this.restTemplate.postForEntity("http://localhost:" + port + "/account/"+mike.getUserID()+"/validate/inputCode", inputtedCode, Link.class);
+
+        // THEN the response entity should contain OK, and a link to his data
+        assertEquals(HttpStatus.OK, toCheckValidation.getStatusCode());
+        assertEquals("createPassword", toCheckValidation.getBody().getRel());
+
+
+
+    }
+
 
     /**
      * This tests if the basic setup for project creation integration testing works correctly
@@ -239,6 +296,105 @@ public class RestControllerNewIntergrationTests {
         assertEquals(taskOne.getTaskID(), taskService.getProjectTasks(projectOne).get(0).getTaskID());
     }
 
+    /**
+     * Given
+     * TaskOne in projectOne, with no collaborators, neither requests
+     *
+     * When
+     * Creating assignment request to taskOne from userRui
+     *
+     * Then
+     * It is expected to be successfully created
+     *
+     * And When
+     * Creating again assignment request that already exists for userRui
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     */
+    @Test
+    public void canCreateAnAssignmentRequest() {
 
+        // Given
+        assertEquals(0, taskOne.getTaskTeam().size());
+        assertEquals(0, taskOne.getPendingTaskTeamRequests().size());
+
+        // When
+        UserDTO requestBodyRui = new UserDTO("JO", "rui@gmail.com", "", "", "", "wrong", "", "");
+        taskRequestResponse = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/assignmentRequest", requestBodyRui , TaskTeamRequest.class);
+
+        // Then
+        assertEquals(HttpStatus.CREATED, taskRequestResponse.getStatusCode());
+
+        // And When
+        ResponseEntity<TaskTeamRequest> result2 = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/assignmentRequest", requestBodyRui , TaskTeamRequest.class);
+
+        // Then
+        assertEquals(HttpStatus.FORBIDDEN, result2.getStatusCode());
+
+    }
+
+    /**
+     * Given
+     * Adding userRui to taskOne
+     *
+     * When
+     * Creating removal request for userRui but already is added to taskOne
+     *
+     * Then
+     * It is expected to be successfully created
+     *
+     * And When
+     * Creating again removal request that already exists for userRui
+     *
+     * Then
+     * Expects a FORBIDDEN message
+     */
+    @Test
+    public void canCreateARemovalRequest() {
+
+
+        // Given
+        taskOne.addProjectCollaboratorToTask(projCollabRui);
+        taskService.saveTask(taskOne);
+
+
+        // When
+        UserDTO requestBodyRui = new UserDTO("JO", "rui@gmail.com", "", "", "", "wrong", "", "");
+        taskRequestResponse = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/removalRequest", requestBodyRui , TaskTeamRequest.class);
+
+        // Then
+        assertEquals(HttpStatus.CREATED, taskRequestResponse.getStatusCode());
+
+        // And When
+        ResponseEntity<TaskTeamRequest> result2 = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/removalRequest", requestBodyRui , TaskTeamRequest.class);
+
+        // Then
+        assertEquals(HttpStatus.FORBIDDEN, result2.getStatusCode());
+
+    }
+
+    @Test
+    public void shouldCreateReport(){
+
+        //GIVEN a reportDto
+        taskOne.addProjectCollaboratorToTask(projCollabRui);
+        taskService.saveTask(taskOne);
+
+        Report reportDto = new Report();
+        reportDto.setId(1);
+        reportDto.setReportedTime(30.0);
+        reportDto.setTaskCollaborator(taskOne.getTaskCollaboratorByEmail(userRui.getEmail()));
+
+
+        //WHEN one makes a post request using uri {{server}}/projects/{projectId}/tasks/{taskId}/reports/
+        ResponseEntity<Report> createdReport = this.restTemplate.postForEntity("http://localhost:" + port +
+                "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/reports/" ,
+                reportDto, Report.class);
+
+        //THEN a created code response 200 is returned
+        assertEquals(HttpStatus.CREATED, createdReport.getStatusCode());
+
+    }
 
 }

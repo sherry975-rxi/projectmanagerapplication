@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class US370ProjectFinishedTasksDecreasingOrderUI {
 
 	@Autowired
-	private PrintProjectInfoController projectInfo;
+	private PrintProjectInfoController controllerForProjectInfo;
 
 	@Autowired
 	private US370GetProjectFinishedTaskListController projectFinishedTaskList;
@@ -38,26 +38,30 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	public void projectDataDisplay() {
 		
 
-		projectInfo.setProjID(proj.getIdCode());
-		projectInfo.setProject();
+		controllerForProjectInfo.setProjID(proj.getIdCode());
+		controllerForProjectInfo.setProject();
 
 		String line = "___________________________________________________";
 		Scanner scannerInput = new Scanner(System.in);
 
         while (true) {
 
-		System.out.println(":PROJECT: " + projectInfo.printProjectNameInfo().toUpperCase());
+		System.out.println(":PROJECT: " + controllerForProjectInfo.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
-		System.out.println(":ID: " + projectInfo.printProjectIDCodeInfo());
-		System.out.println(":STATUS: " + projectInfo.printProjectStatusInfo());
-		System.out.println(":DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
-		System.out.println(":START DATE: " + projectInfo.printProjectStartDateInfo());
-		System.out.println(":FINISH DATE: " + projectInfo.printProjectFinishDateInfo());
-		System.out.println(":PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
-		System.out.println(":PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
-		System.out.println(":PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
+
+		System.out.println(":ID: " + controllerForProjectInfo.printProjectIDCodeInfo());
+		System.out.println(":STATUS: " + controllerForProjectInfo.printProjectStatusInfo());
+		System.out.println(":DESCRIPTION: " + controllerForProjectInfo.printProjectDescriptionInfo());
+
+		System.out.println(":START DATE: " + controllerForProjectInfo.printProjectStartDateInfo());
+		System.out.println(":FINISH DATE: " + controllerForProjectInfo.printProjectFinishDateInfo());
+
+		System.out.println(":PROJECT MANAGER: " + controllerForProjectInfo.printProjectManagerInfo());
+
+		System.out.println(":PROJECT TEAM: " + controllerForProjectInfo.printProjectTeamInfo());
+		System.out.println(":PROJECT BUDGET: " + controllerForProjectInfo.printProjectBudgetInfo());
 		System.out.println(line);
-		System.out.println("              :FINISHED TASKS:                 ");
+		System.out.println("            -- FINISHED TASKS --               ");
 
 
 		List<Task> finishedTasksDecreasingOrder = projectFinishedTaskList.getFinishedTasksInDescreasingOrder(this.proj);
