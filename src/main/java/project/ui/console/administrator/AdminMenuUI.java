@@ -69,7 +69,7 @@ public class AdminMenuUI {
 
 			switch (command) {
 			case "1":
-				selectedUser = listUsersUI.displayUsersList(selectedUser);
+				selectedUser = listUsersUI.displayUsersList();
 				break;
 			case "2":
 				selectedUser = searchUsersUI.displayUsersList(selectedUser);
