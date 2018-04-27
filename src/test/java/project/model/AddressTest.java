@@ -80,6 +80,11 @@ public class AddressTest {
 		casa.setCountry("Portugal");
 		assertEquals("Portugal", casa.getCountry());
 
+		User user = new User();
+		user.setEmail("teste");
+		casa.setUser(user);
+		assertTrue(user.equals(casa.getUser()));
+
 	}
 
 	/**
