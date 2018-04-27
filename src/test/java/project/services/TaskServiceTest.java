@@ -329,16 +329,21 @@ public class TaskServiceTest {
      */
     @Test
     public void testGetAllFinishedUserTasksInDecreasingOrder() {
-        this.mocksGetTaskRepository();
+
+        List<Task> taskListMock = new ArrayList<>();
+        taskListMock.add(taskMock);
+        when(taskRepository.findAll()).thenReturn(taskListMock);
 
         List<TaskCollaborator> listTaskCollaborator = new ArrayList<>();
         listTaskCollaborator.add(taskCollaborator);
         when(taskMock.getTaskTeam()).thenReturn(listTaskCollaborator);
 
-        List<Task> expectedList = new ArrayList<>();
-        expectedList.add(taskMock);
+        //when the current state is finished, the task is added to list
+        when(taskMock.getCurrentState()).thenReturn(StateEnum.FINISHED);
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
 
-        assertEquals(expectedList, victim.getAllFinishedUserTasksInDecreasingOrder(user));
+        assertEquals(expectedTaskList, victim.getAllFinishedUserTasksInDecreasingOrder(user));
     }
 
     @Test

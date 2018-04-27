@@ -4,10 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.*;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
@@ -17,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import project.dto.UserDTO;
 import project.model.*;
 import project.services.ProjectService;
@@ -28,7 +26,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
@@ -377,5 +374,27 @@ public class RestControllerNewIntergrationTests {
 
     }
 
+    @Test
+    public void shouldCreateReport(){
+
+        //GIVEN a reportDto
+        taskOne.addProjectCollaboratorToTask(projCollabRui);
+        taskService.saveTask(taskOne);
+
+        Report reportDto = new Report();
+        reportDto.setId(1);
+        reportDto.setReportedTime(30.0);
+        reportDto.setTaskCollaborator(taskOne.getTaskCollaboratorByEmail(userRui.getEmail()));
+
+
+        //WHEN one makes a post request using uri {{server}}/projects/{projectId}/tasks/{taskId}/reports/
+        ResponseEntity<Report> createdReport = this.restTemplate.postForEntity("http://localhost:" + port +
+                "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/reports/" ,
+                reportDto, Report.class);
+
+        //THEN a created code response 200 is returned
+        assertEquals(HttpStatus.CREATED, createdReport.getStatusCode());
+
+    }
 
 }

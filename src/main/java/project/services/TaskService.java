@@ -321,7 +321,7 @@ public class TaskService {
 	public List<Task> getAllFinishedUserTasksInDecreasingOrder(User user) {
 
 		List<Task> finishedTasksDecOrder = new ArrayList<>();
-		finishedTasksDecOrder.addAll(getUserTasks(user));
+		finishedTasksDecOrder.addAll(getAllFinishedTasksFromUser(user));
 
 		return this.sortFinishTaskListDecreasingOrder(finishedTasksDecOrder);
 	}
@@ -996,7 +996,8 @@ public class TaskService {
 
 		for(Task other : finishedTaskListDecreasingOrder) {
 			TaskDTO taskDTO = new TaskDTO(other);
-			finishedDecreasing.add(taskDTO); }
+			finishedDecreasing.add(taskDTO);
+		}
 
 		return finishedDecreasing;
 	}
