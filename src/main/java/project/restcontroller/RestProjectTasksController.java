@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-
 @RestController
 @RequestMapping("projects/{projid}/tasks/")
 public class RestProjectTasksController {
@@ -72,7 +70,12 @@ public class RestProjectTasksController {
 
             }
 
+        //TODO implement using TaskDTO class
+        for(String action : task.getTaskState().getActions()) {
 
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+
+            }
 
         return ResponseEntity.ok().body(task);
 
@@ -96,10 +99,14 @@ public class RestProjectTasksController {
 
         tasksWithoutCollabs.addAll(taskService.getProjectTasksWithoutCollaboratorsAssigned(project));
 
+        //TODO implement using TaskDTO class
         for(Task task: tasksWithoutCollabs){
+            for(String action : task.getTaskState().getActions()) {
 
-            Link taskLink = linkTo(RestProjectController.class).slash(projid).slash(tasks).withSelfRel();
-            task.add(taskLink);
+            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+            task.add(reference);
+
+            }
         }
 
         return new ResponseEntity<>(tasksWithoutCollabs, HttpStatus.OK);
@@ -169,9 +176,12 @@ public class RestProjectTasksController {
 
         unfinishedTasks.addAll(taskService.getProjectUnFinishedTasks(project));
 
+        //TODO implement using TaskDTO class
         for(Task task : unfinishedTasks) {
-            Link selfRel = linkTo(RestProjectController.class).slash(projid).slash(tasks).slash(task.getTaskID()).withSelfRel();
-            task.add(selfRel);
+            for(String action : task.getTaskState().getActions()) {
+            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+            task.add(reference);
+            }
         }
 
         return new ResponseEntity<>(unfinishedTasks, HttpStatus.OK);
