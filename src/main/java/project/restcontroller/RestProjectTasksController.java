@@ -197,9 +197,28 @@ public class RestProjectTasksController {
         for(String action : taskDTO.getTaskState().getActions()) {
             Link reference = TaskAction.getLinks(taskDTO.getProject().getProjectId(), taskId).get(action);
             taskDTO.add(reference);
+        }
+
+        return new ResponseEntity<>(taskDTO, HttpStatus.OK);
+
     }
 
-    return new ResponseEntity<>(taskDTO, HttpStatus.OK);
+
+    @RequestMapping(value = "{taskId}", method = RequestMethod.PATCH)
+    public ResponseEntity<TaskDTO> markTaskAsFinished(@PathVariable String taskId) {
+
+        Task toFinish = taskService.getTaskByTaskID(taskId);
+
+        toFinish.markTaskAsFinished();
+
+        TaskDTO taskDTO = new TaskDTO(toFinish);
+
+        for (String action : taskDTO.getTaskState().getActions()) {
+            Link reference = TaskAction.getLinks(taskDTO.getProject().getProjectId(), taskId).get(action);
+            taskDTO.add(reference);
+        }
+
+        return new ResponseEntity<>(taskDTO, HttpStatus.OK);
 
     }
 }

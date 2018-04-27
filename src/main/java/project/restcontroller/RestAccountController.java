@@ -14,7 +14,6 @@ import project.model.sendcode.ValidationMethod;
 import project.services.UserService;
 
 import javax.mail.MessagingException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,7 +65,7 @@ When the user verificates the code correctly, the pair Key/Value is deleted from
         String conditions = "TERMS AND CONDITIONS: \r\n" + "\r\n"
                 + "By using this application, you agree to be bound by, and to comply with these Terms and Conditions.\r\n"
                 + "If you do not agree to these Terms and Conditions, please do not use this application.\r\n"
-                + "To proceed with registration you must accept access conditions (y to confirm; n to deny).";
+                + "To proceed with registration you must accept access conditions.";
 
         return new ResponseEntity<>(conditions, HttpStatus.OK);
 
@@ -227,12 +226,10 @@ When the user verificates the code correctly, the pair Key/Value is deleted from
      * @param userEmail
      * @param userPhone
      * @return
-     * @throws Exception
      */
     @RequestMapping(value = "performValidation/{validation}/{userEmail}/{userPhone}", method = RequestMethod.GET)
     public ResponseEntity<Link> performUserValidation(@PathVariable String validation,
-                                                      @PathVariable String userEmail, @PathVariable String userPhone)
-            throws Exception{
+                                                      @PathVariable String userEmail, @PathVariable String userPhone) {
 
         SendCodeFactory codeFactoryValidation = new SendCodeFactory();
 
