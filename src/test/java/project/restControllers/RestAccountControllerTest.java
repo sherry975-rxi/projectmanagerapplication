@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
@@ -21,10 +20,8 @@ import project.restcontroller.RestAccountController;
 import project.services.UserService;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -273,7 +270,7 @@ public class RestAccountControllerTest {
         String conditions = "TERMS AND CONDITIONS: \r\n" + "\r\n"
                 + "By using this application, you agree to be bound by, and to comply with these Terms and Conditions.\r\n"
                 + "If you do not agree to these Terms and Conditions, please do not use this application.\r\n"
-                + "To proceed with registration you must accept access conditions (y to confirm; n to deny).";
+                + "To proceed with registration you must accept access conditions.";
         //WHEN the conditions link is accessed
         MockHttpServletResponse response = mvc.perform(get("/account/conditions").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
         //THEN the conditions are returned and the status is OK
