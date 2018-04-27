@@ -18,6 +18,7 @@ import project.services.UserService;
 
 
 import java.net.URI;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -308,7 +309,9 @@ public class RestRequestController {
 
                 ProjectCollaborator projectCollaboratorToAdd = requestToApprove.getProjCollab();
                 task.addProjectCollaboratorToTask(projectCollaboratorToAdd);
+                requestToApprove.setApprovalDate(Calendar.getInstance());
                 task.deleteTaskAssignmentRequest(projectCollaboratorToAdd);
+
                 taskService.saveTask(task);
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
@@ -325,6 +328,7 @@ public class RestRequestController {
 
                 ProjectCollaborator projectCollaboratorToRemove = requestToApprove.getProjCollab();
                 task.removeProjectCollaboratorFromTask(projectCollaboratorToRemove);
+                requestToApprove.setApprovalDate(Calendar.getInstance());
                 task.deleteTaskRemovalRequest(projectCollaboratorToRemove);
                 taskService.saveTask(task);
 
