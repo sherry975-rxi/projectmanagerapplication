@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class US377ProjectCancelledTasks {
 
 	@Autowired
-	private PrintProjectInfoController projectInfo;
+	private PrintProjectInfoController projectInformationController;
 
 	@Autowired
 	private US377CollectionOfCancelledTasksFromAProjectController controller;
@@ -29,21 +29,21 @@ public class US377ProjectCancelledTasks {
 
 		Scanner scannerInput = new Scanner(System.in);
 
-		projectInfo.setProject(project);
+		projectInformationController.setProject(project);
 
 		boolean loop = true;
 		while (loop) {
 			loop = false;
 
-		System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
+		System.out.println("PROJECT " + projectInformationController.printProjectNameInfo().toUpperCase());
 		System.out.println(line);
-		System.out.println("ID: " + projectInfo.printProjectIDCodeInfo());
-		System.out.println("STATUS: " + projectInfo.printProjectStatusInfo());
-		System.out.println("DESCRIPTION: " + projectInfo.printProjectDescriptionInfo());
-		System.out.println("START DATE: " + projectInfo.printProjectStartDateInfo());
-		System.out.println("PROJECT MANAGER: " + projectInfo.printProjectManagerInfo());
-		System.out.println("PROJECT TEAM: " + projectInfo.printProjectTeamInfo());
-		System.out.println("PROJECT BUDGET: " + projectInfo.printProjectBudgetInfo());
+		System.out.println("ID: " + projectInformationController.printProjectIDCodeInfo());
+		System.out.println("STATUS: " + projectInformationController.printProjectStatusInfo());
+		System.out.println("DESCRIPTION: " + projectInformationController.printProjectDescriptionInfo());
+		System.out.println("START DATE: " + projectInformationController.printProjectStartDateInfo());
+		System.out.println("PROJECT MANAGER: " + projectInformationController.printProjectManagerInfo());
+		System.out.println("PROJECT TEAM: " + projectInformationController.printProjectTeamInfo());
+		System.out.println("PROJECT BUDGET: " + projectInformationController.printProjectBudgetInfo());
 
 
 		System.out.println("     CANCELLED TASKS");
