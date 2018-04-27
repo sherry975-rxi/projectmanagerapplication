@@ -1,22 +1,21 @@
 package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.HandlerMapping;
-import project.dto.UserDTO;
+import project.dto.TaskAction;
 import project.model.Task;
 import project.model.User;
 import project.services.TaskService;
 import project.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -40,52 +39,53 @@ public class RestUserTasksController {
     }
 
     /**
-     * This method extracts the number of the user from the RequestMapping URI
-     * In case the ID in the URI is not an Integer, it will return null;
+     * This method returns all the tasks of a given user. for each task found a specific link is
+     * added with the possible actions and the details of the task itself
      *
-     * @return Integer
-     * Returns an Integer in case the id of the project is valid and exists ELSE returns
+     * @param userId
+     * @return
      */
-    @SuppressWarnings("unchecked")
-    public Integer getUserIdByURI() {
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getAllTasks(@PathVariable String userId) {
 
-        Map<String, String> variables = new HashMap<>();
-        variables = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+        Integer id = Integer.parseInt(userId);
 
+        User user = userService.getUserByID(id);
 
-        String userIDString = variables.get("userid");
-
-        Integer userID;
-
-        try {
-            userID = Integer.parseInt(userIDString);
-        } catch (NumberFormatException e) {
-            userID = null;
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return userID;
-    }
-
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Task>> getAllTasks(@PathVariable String userid) {
-
-        Integer userId = getUserIdByURI();
-
-        User user = userService.getUserByID(userId);
-
         List<Task> taskFromUser = taskService.getUserTasks(user);
+
+        for(Task task: taskFromUser){
+            for(String action: task.getTaskState().getActions()){
+
+                Link taskLinkn = TaskAction.getLinks(task.getProject().getProjectId(), task.getTaskID()).get(action);
+                task.add(taskLinkn);
+            }
+        }
 
         return ResponseEntity.ok().body(taskFromUser);
     }
 
+    /**
+     * This method returns the result obtained from the sum of the working times of a
+     * given user in his tasks finished in the last month
+     *
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "totaltimespent/completed/lastmonth", method = RequestMethod.GET)
-    public ResponseEntity<Double> getTotalTimeSpentOnTasksCompletedLastMonth(@PathVariable String userid) {
+    public ResponseEntity<Double> getTotalTimeSpentOnTasksCompletedLastMonth(@PathVariable String userId) {
 
-        Integer userId = getUserIdByURI();
+        Integer id = Integer.parseInt(userId);
 
-        User user = userService.getUserByID(userId);
+        User user = userService.getUserByID(id);
 
-        List<Task> taskFromUser = taskService.getAllFinishedTasksFromUser(user);
+        if(user == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
         Double totalTime = taskService.getTotalTimeOfFinishedTasksFromUserLastMonth(user);
 
