@@ -61,6 +61,7 @@ public class RestProjectTasksControllerTest {
 
     private JacksonTester<List<Task>> jacksonProjectTeamList;
     private JacksonTester<Task> jacksonTask;
+    private JacksonTester<TaskDTO> jacksonTaskDto;
 
     private MockMvc mockMvc;
     private User uDaniel;
@@ -293,7 +294,31 @@ public class RestProjectTasksControllerTest {
     }
 
 
-    //TODO
+    /**
+     * GIVEN a task id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/<taskId>
+     * THEN we receive a valid message with a 200 Ok and a list of the project unfinished tasks
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnTask() throws Exception {
+
+        //GIVEN: a project id
+        String  taskId = "01";
+
+        //WHEN
+        when(taskService.getTaskByTaskID(taskId)).thenReturn(task);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/" + taskId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+
+
+    }
+
+
 
     /*
         Fix test due to failure because TaskStateInterface has a @JsonIgnore annotation and causes a nullPointer Exception
