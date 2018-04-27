@@ -42,6 +42,8 @@ public class RestRequestController {
     private String requestType;
     private String removalList = "List of Removal Requests";
     private String assignList = "List of Assignment Requests";
+    private static final String ASSIGNMENT = "assignment";
+    private static final String REMOVAL = "removal";
 
 
     @Autowired
@@ -93,7 +95,7 @@ public class RestRequestController {
         Task task = taskService.getTaskByTaskID(taskId);
 
 
-        if ("assignment".equals(reqType)) {
+        if (ASSIGNMENT.equals(reqType)) {
 
             List<TaskTeamRequest> assignRequestList = task.getPendingTaskAssignmentRequests();
             for(TaskTeamRequest request : task.getPendingTaskAssignmentRequests()){
@@ -105,7 +107,7 @@ public class RestRequestController {
             return new ResponseEntity<>(assignRequestList, HttpStatus.OK);
 
 
-        } else if ("removal".equals(reqType)) {
+        } else if (REMOVAL.equals(reqType)) {
 
             List<TaskTeamRequest> removalRequestList = task.getPendingTaskRemovalRequests();
             for(TaskTeamRequest request : removalRequestList){
@@ -191,7 +193,7 @@ public class RestRequestController {
 
             Link reference = linkTo(methodOn(getClass()).getRequestDetails(assignRequestCreated.getDbId(), taskId, projectId)).withRel(requestDetail);
 
-            requestType = "assignment";
+            requestType = ASSIGNMENT;
             Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(assignList);
 
             assignRequestCreated.add(reference);
@@ -256,7 +258,7 @@ public class RestRequestController {
 
             Link reference = linkTo(methodOn(getClass()).getRequestDetails(removalRequestCreated.getDbId(), taskId, projectId)).withRel(requestDetail);
 
-            requestType = "removal";
+            requestType = REMOVAL;
             Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(removalList);
 
             removalRequestCreated.add(reference);
@@ -314,7 +316,7 @@ public class RestRequestController {
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
 
-                requestType = "assignment";
+                requestType = ASSIGNMENT;
                 Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(assignList);
 
                 requestToApprove.add(reference);
@@ -331,7 +333,7 @@ public class RestRequestController {
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
 
-                requestType = "removal";
+                requestType = REMOVAL;
                 Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(removalList);
 
                 requestToApprove.add(reference);
@@ -383,7 +385,7 @@ public class RestRequestController {
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
 
-                requestType = "assignment";
+                requestType = ASSIGNMENT;
                 Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(assignList);
 
                 requestToReject.add(reference);
@@ -399,7 +401,7 @@ public class RestRequestController {
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
 
-                requestType = "removal";
+                requestType = REMOVAL;
                 Link referenceTwo = linkTo(methodOn(getClass()).getAllFilteredRequests(requestType, taskId, projectId)).withRel(removalList);
 
                 requestToReject.add(reference);
