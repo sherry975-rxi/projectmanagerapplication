@@ -1,6 +1,5 @@
 package project.restControllers;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
@@ -9,8 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.skyscreamer.jsonassert.JSONAssert;
-import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,28 +18,19 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.dto.TaskDTO;
 import project.model.*;
-
-import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.Planned;
-import project.model.taskstateinterface.TaskStateInterface;
 import project.restcontroller.RestProjectTasksController;
-
 import project.services.ProjectService;
 import project.services.TaskService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.Year;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
-
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestProjectTasksControllerTest {
@@ -61,6 +49,7 @@ public class RestProjectTasksControllerTest {
 
     private JacksonTester<List<Task>> jacksonProjectTeamList;
     private JacksonTester<Task> jacksonTask;
+    private JacksonTester<TaskDTO> jacksonTaskDto;
 
     private MockMvc mockMvc;
     private User uDaniel;
@@ -69,6 +58,7 @@ public class RestProjectTasksControllerTest {
     private Task task;
     private Task task2;
     private Task task3;
+    private TaskDTO taskDTO;
 
     private List<Task> projectTasks;
     private Calendar startDate;
@@ -105,6 +95,8 @@ public class RestProjectTasksControllerTest {
         task.addProjectCollaboratorToTask(pcDaniel);
         task.setEstimatedTaskEffort(20);
         task.setTaskBudget(2000);
+
+        taskDTO = new TaskDTO(task);
 
         task2 = new Task("Task2", project);
         task2.setEstimatedTaskStartDate(estimatedStart);
@@ -273,8 +265,8 @@ public class RestProjectTasksControllerTest {
     @Test
     public void shouldReturnUnfinishedTasks() throws Exception{
 
-        task.setStartDate(startDate);
-        task2.setStartDate(startDate);
+        task.setStartDateAndState(startDate);
+        task2.setStartDateAndState(startDate);
 
         projectTasks.add(task);
         projectTasks.add(task2);
@@ -293,7 +285,40 @@ public class RestProjectTasksControllerTest {
     }
 
 
-    //TODO
+    /**
+     * GIVEN a task id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/<taskId>
+     * THEN we receive a valid message with a 200 Ok and a list of the project unfinished tasks
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnTask() throws Exception {
+
+        //GIVEN: a project id
+        String  taskId = "01";
+
+        //WHEN
+        when(taskService.getTaskByTaskID(taskId)).thenReturn(task);
+        when(taskService.getTaskDtoByTaskId(taskId)).thenReturn(taskDTO);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/" + taskId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskDtoByTaskId(any(String.class));
+
+        //AND WHEN an ongoing task is marked as finished
+        task.setStartDate(Calendar.getInstance());
+        task.setTaskState(new OnGoing());
+        task.setCurrentState(StateEnum.ONGOING);
+        MockHttpServletResponse newResponse = mockMvc.perform(MockMvcRequestBuilders.patch("/projects/1/tasks/" + taskId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN Http status should be 200 and returned Task should be finished
+        assertEquals(HttpStatus.OK.value(), newResponse.getStatus());
+        assertTrue(task.isTaskFinished());
+    }
+
+
 
     /*
         Fix test due to failure because TaskStateInterface has a @JsonIgnore annotation and causes a nullPointer Exception

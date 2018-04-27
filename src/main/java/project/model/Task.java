@@ -1,8 +1,7 @@
 package project.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.hateoas.ResourceSupport;
@@ -16,8 +15,6 @@ import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
 
-//
-
 /**
  * Class that allows building and accessing Task attributes.
  * 
@@ -26,6 +23,7 @@ import static javax.persistence.CascadeType.ALL;
  */
 @Entity
 @Table(name = "Task")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "taskID", scope = Task.class)
 public class Task extends ResourceSupport implements Serializable {
 
 	static final long serialVersionUID = 1L;
@@ -33,28 +31,25 @@ public class Task extends ResourceSupport implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long dbTaskId;
-	private String taskID;
+    @JsonIdentityReference(alwaysAsId = true)
+    private String taskID;
 	private String description;
 
     @LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
-	@JsonManagedReference
 	private List<TaskCollaborator> taskTeam;
 
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
-	@JsonManagedReference
 	private List<Report> reports;
 
 	@Enumerated(EnumType.STRING)
 	private StateEnum currentState;
 
-	@JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(cascade = ALL, mappedBy = "task")
-	@JsonManagedReference
 	private List<TaskTeamRequest> pendingTaskTeamRequests;
 
 	private Calendar creationDate;
@@ -69,7 +64,6 @@ public class Task extends ResourceSupport implements Serializable {
 	private Calendar taskDeadline;
 	private double taskBudget;
 
-	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Task> taskDependency;
 
@@ -82,6 +76,7 @@ public class Task extends ResourceSupport implements Serializable {
 	private Project project;
 
 	public Task() {
+        this.taskState = new Created();
 	}
 
 	/**
@@ -300,9 +295,10 @@ public class Task extends ResourceSupport implements Serializable {
 		this.dbTaskId = dbTaskId;
 	}
 
-	public void setTaskID(String taskId) {
-		this.taskID = taskId;
-	}
+    @JsonProperty("taskID")
+    public void setTaskID(String taskId) {
+        this.taskID = taskId;
+    }
 
 	public void setProject(Project project) {
 		this.project = project;
@@ -330,7 +326,7 @@ public class Task extends ResourceSupport implements Serializable {
 	 *            the amount of days between the start of the mother task and this
 	 *            task
 	 */
-	public void setStartDateInterval(int newStartDateInterval) {
+    public void updateStartDateIntervalAndState(int newStartDateInterval) {
 		this.startDateInterval = newStartDateInterval;
 		this.taskState.doAction(this);
 	}
@@ -353,7 +349,7 @@ public class Task extends ResourceSupport implements Serializable {
 	 *            the amount of days between the end of the mother task and this
 	 *            task
 	 */
-	public void setDeadlineInterval(int newFinishDateInterval) {
+    public void updateDeadlineIntervalAndState(int newFinishDateInterval) {
 		this.deadlineInterval = newFinishDateInterval;
 		this.taskState.doAction(this);
 	}
@@ -490,10 +486,14 @@ public class Task extends ResourceSupport implements Serializable {
 	 * @param c
 	 *            Calendar date to input in start date
 	 */
-	public void setStartDate(Calendar c) {
+    public void setStartDateAndState(Calendar c) {
 		this.startDate = c;
 		this.taskState.doAction(this);
 	}
+
+    public void setStartDate(Calendar c) {
+        this.startDate = c;
+    }
 
 	/**
 	 * This method returns the task description
@@ -1199,7 +1199,7 @@ public class Task extends ResourceSupport implements Serializable {
 	 */
 	public boolean cancelTask() {
 		Boolean cancelled = true;
-		this.setCancelDate();
+        this.assignCancelDateAsNow();
 		this.taskState.doAction(this);
 		if (!(this.getTaskState() instanceof Cancelled)) {
 			cancelled = false;
@@ -1213,7 +1213,7 @@ public class Task extends ResourceSupport implements Serializable {
 	 * This method sets the cancel date for the task
 	 * 
 	 */
-	public void setCancelDate() {
+    public void assignCancelDateAsNow() {
 		this.cancelDate = Calendar.getInstance();
 	}
 
@@ -1513,4 +1513,24 @@ public class Task extends ResourceSupport implements Serializable {
 		return reportsOfGivenUser;
 
 	}
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCreationDate(Calendar creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setStartDateInterval(Integer startDateInterval) {
+        this.startDateInterval = startDateInterval;
+    }
+
+    public void setDeadlineInterval(Integer deadlineInterval) {
+        this.deadlineInterval = deadlineInterval;
+    }
+
+    public void setCancelDate(Calendar cancelDate) {
+        this.cancelDate = cancelDate;
+    }
 }

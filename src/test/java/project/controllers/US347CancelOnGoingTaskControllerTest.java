@@ -139,7 +139,7 @@ public class US347CancelOnGoingTaskControllerTest {
 		task2.addTaskCollaboratorToTask(taskCollab2);
 		task3.addTaskCollaboratorToTask(taskCollab1);
 
-		task1.setStartDate(startDateTest);
+		task1.setStartDateAndState(startDateTest);
 
 
 		// create controllers

@@ -1,6 +1,6 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -11,10 +11,13 @@ import java.util.Calendar;
 @Entity
 @Table(name = "ProjectCollaborator")
 @Transactional
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "projectCollaboratorId", scope = ProjectCollaborator.class)
 public class ProjectCollaborator extends ResourceSupport implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIdentityReference(alwaysAsId = true)
 	private long projectCollaboratorId;
 
 
@@ -60,9 +63,10 @@ public class ProjectCollaborator extends ResourceSupport implements Serializable
 		return projectCollaboratorId;
 	}
 
-	public void setProjectCollaboratorId(long projectCollaboratorId) {
-		this.projectCollaboratorId = projectCollaboratorId;
-	}
+    @JsonProperty("projectCollaboratorId")
+    public void setProjectCollaboratorId(long projectCollaboratorId) {
+        this.projectCollaboratorId = projectCollaboratorId;
+    }
 
 	public User getCollaborator() {
 		return collaborator;

@@ -185,12 +185,12 @@ public class TaskCollaboratorTest {
 
 		// given a fixed ID number, when setID is called, then getID must return the same value
 		long thisID = 70;
-		springTaskCollab.setId(thisID);
+        springTaskCollab.setTaskCollabDbId(thisID);
 		assertTrue(springTaskCollab.getDbId().equals(thisID));
 
 		// given a single test date
 		Calendar testDate = Calendar.getInstance();
-		// when both setStartDate and setFinishDate are called with testDate as argument
+        // when both setStartDateAndState and setFinishDate are called with testDate as argument
 		springTaskCollab.setStartDate(testDate);
 		springTaskCollab.setFinishDate(testDate);
 		// then those fields must be equal

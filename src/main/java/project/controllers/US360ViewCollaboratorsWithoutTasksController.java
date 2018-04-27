@@ -57,9 +57,8 @@ public class US360ViewCollaboratorsWithoutTasksController {
 	/**
 	 * This is a utility method that converts a Project Collaborator object into a
 	 * string of data to be displayed in the UI.
-	 * 
-	 * @param The
-	 *            chosen ProjectCollaborator
+     *
+     * @param The chosen ProjectCollaborator
 	 * @return A string containing the User's ID number, Name, Email, Phone,
 	 *         Function and Cost Per effort in project
 	 */

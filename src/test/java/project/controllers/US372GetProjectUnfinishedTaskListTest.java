@@ -120,7 +120,7 @@ public class US372GetProjectUnfinishedTaskListTest {
 
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
-		task1.setStartDate(startDateTask1);
+        task1.setStartDateAndState(startDateTask1);
 
 		task1.setTaskState(new OnGoing());
 		task1.markTaskAsFinished();
@@ -136,7 +136,7 @@ public class US372GetProjectUnfinishedTaskListTest {
 
 		Calendar startDateTask2 = estimatedTaskStartDateTest;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
-		task2.setStartDate(startDateTask2);
+        task2.setStartDateAndState(startDateTask2);
 		task2.setTaskState(new OnGoing());
 		task2.markTaskAsFinished();
 		task2.setTaskState(new Finished());
@@ -144,25 +144,25 @@ public class US372GetProjectUnfinishedTaskListTest {
 
 		task3.setTaskBudget(taskEffortAndBudget);
 		task3.setEstimatedTaskEffort(taskEffortAndBudget);
-		task3.setStartDate(Calendar.getInstance());
+        task3.setStartDateAndState(Calendar.getInstance());
 		task3.setTaskState(new OnGoing());
 		task3.setCurrentState(StateEnum.ONGOING);
 
 		task4.setTaskBudget(taskEffortAndBudget);
 		task4.setEstimatedTaskEffort(taskEffortAndBudget);
-		task4.setStartDate(Calendar.getInstance());
+        task4.setStartDateAndState(Calendar.getInstance());
 		task4.setTaskState(new OnGoing());
 		task4.setCurrentState(StateEnum.ONGOING);
 
 		task5.setTaskBudget(taskEffortAndBudget);
 		task5.setEstimatedTaskEffort(taskEffortAndBudget);
-		task5.setStartDate(Calendar.getInstance());
+        task5.setStartDateAndState(Calendar.getInstance());
 		task5.setTaskState(new OnGoing());
 		task5.setCurrentState(StateEnum.ONGOING);
 
 		task6.setTaskBudget(taskEffortAndBudget);
 		task6.setEstimatedTaskEffort(taskEffortAndBudget);
-		task6.setStartDate(Calendar.getInstance());
+        task6.setStartDateAndState(Calendar.getInstance());
 		task6.setTaskState(new OnGoing());
 		task6.setCurrentState(StateEnum.ONGOING);
 

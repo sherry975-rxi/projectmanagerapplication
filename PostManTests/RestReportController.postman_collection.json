@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "e778b8ae-4390-4144-bc0c-9eb67736e167",
+		"name": "RestReportController",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Report From Task",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{Server}}/projects/21/tasks/WP1.T01/reports/",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"projects",
+						"21",
+						"tasks",
+						"WP1.T01",
+						"reports",
+						""
+					]
+				},
+				"description": "Get all reports from task"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Reports from user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{Server}}/projects/21/tasks/WP1.T01/reports/users/15",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"projects",
+						"21",
+						"tasks",
+						"WP1.T01",
+						"reports",
+						"users",
+						"15"
+					]
+				},
+				"description": "Get reports from a specific user"
+			},
+			"response": []
+		},
+		{
+			"name": "Creates a report for a task in a given project fro a specific user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reportedTime\": 20,\n    \"taskCollaborator\":{\n        \"projCollaborator\":{\n            \"collaborator\":{\n                \"email\": \"tc@mymail.com\"\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{Server}}/projects/21/tasks/WP1.T01/reports/",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"projects",
+						"21",
+						"tasks",
+						"WP1.T01",
+						"reports",
+						""
+					]
+				},
+				"description": "Creates a report for a task in a given project fro a specific user"
+			},
+			"response": []
+		}
+	]
+}

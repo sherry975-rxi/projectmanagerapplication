@@ -1,6 +1,5 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -21,7 +20,7 @@ public class Address extends ResourceSupport implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private long addressId;
 	
 	private String street;
 	private String zipCode;
@@ -30,7 +29,6 @@ public class Address extends ResourceSupport implements Serializable {
 	private String country;
 	static final long serialVersionUID = 42L;
 
-	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "User_id")
 	private User user;
@@ -198,7 +196,10 @@ public class Address extends ResourceSupport implements Serializable {
 		this.user = user;
 	}
 
+	public long getAddressId() {
+		return addressId;
 	}
+}
 
 
 

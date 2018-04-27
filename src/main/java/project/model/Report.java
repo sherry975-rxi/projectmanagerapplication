@@ -1,6 +1,9 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -8,32 +11,31 @@ import java.util.Calendar;
 import java.util.Objects;
 
 /**
- * 
+ *
  * This Class Stores Reported Information associated with a Task Collaborator
- * 
+ *
  * @author Group3
  *
  */
 @Entity
 @Table(name = "Report")
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "reportDbId", scope = Report.class)
 public class Report extends ResourceSupport {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+    @JsonIdentityReference(alwaysAsId = true)
+    private int reportDbId;
 	private double reportedTime;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "TaskCollaborator_id")
-
 	private TaskCollaborator taskCollaborator;
 
 	private double cost;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
-	@JsonBackReference
 	private Task task;
 	private Calendar firstDateOfReport;
 	private Calendar dateOfUpdate;
@@ -44,14 +46,14 @@ public class Report extends ResourceSupport {
 
 	/**
 	 * This method creates a report
-	 * 
+     *
 	 * @param taskCollaborator
 	 *            Task Collaborator
 	 */
 
 
 	public Report(TaskCollaborator taskCollaborator, Calendar reportDate) {
-		
+
 		this.reportedTime = 0;
 		this.taskCollaborator = taskCollaborator;
 		this.cost = taskCollaborator.getCost();
@@ -60,21 +62,21 @@ public class Report extends ResourceSupport {
 	}
 
 	/**
-	 * This method returns the id of the Report
-	 *
-	 * @return id
+     * This method returns the reportDbId of the Report
+     *
+     * @return reportDbId
 	 */
 	public int getDbId() {
-		return id;
+        return reportDbId;
 	}
 
 	/**
-	 * This method sets an ID to the Report
-	 *
-	 * @return void
+     * This method returns the cost of a taskCollaborator during a certain period
+     *
+     * @return cost
 	 */
-	public void setId(int id) {
-		this.id = id;
+    public double getCost() {
+        return cost;
 	}
 
 	/**
@@ -95,25 +97,23 @@ public class Report extends ResourceSupport {
 		this.task = task;
 	}
 
-	/**
-	 * This method returns the cost of a taskCollaborator during a certain period
-	 * 
-	 * @return cost
-	 */
-	public double getCost() {
-		return cost;
-	}
+    /**
+     * Returns the Task Collaborator associated to this Report
+     *
+     * @return Task Collaborator
+     */
+    public TaskCollaborator getTaskCollaborator() {
+        return this.taskCollaborator;
+    }
 
 	/**
-	 * Sets the time that a a Task Collaborator spent on a task
-	 * 
-	 * @param time
-	 *            Time spent on task
+     * This method returns the time that a Task Collaborator spent on a task
+     *
+     * @return Time spent on task by a Task Collaborator
 	 */
-	public void setReportedTime(double time) {
-		this.reportedTime = time;
-
-	}
+    public double getReportedTime() {
+        return this.reportedTime;
+    }
 
 	/**
 	 * Sets the time that a a Task Collaborator spent on a task
@@ -127,22 +127,21 @@ public class Report extends ResourceSupport {
 	}
 
 	/**
-	 * This method returns the time that a Task Collaborator spent on a task
-	 *
-	 * @return Time spent on task by a Task Collaborator
+     * Sets the time that a a Task Collaborator spent on a task
+     *
+     * @param time
+     *            Time spent on task
 	 */
-	public double getReportedTime() {
-		return this.reportedTime;
-	}
+    public void setReportedTime(double time) {
+        this.reportedTime = time;
 
-	/**
-	 * Returns the Task Collaborator associated to this Report
-	 * 
-	 * @return Task Collaborator
-	 */
-	public TaskCollaborator getTaskCollaborator() {
-		return this.taskCollaborator;
-	}
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), reportDbId);
+    }
 
 	/**
 	 * Sets the Task Collaborator to the report
@@ -199,13 +198,10 @@ public class Report extends ResourceSupport {
 	 */
 	public void setDateOfUpdate(Calendar dateOfUpdate) {
 		this.dateOfUpdate = dateOfUpdate;
-	}
+    }
 
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(super.hashCode(), id);
+    public int getReportDbId() {
+        return reportDbId;
     }
 
     @Override
@@ -222,5 +218,16 @@ public class Report extends ResourceSupport {
         Report report = (Report) o;
         return Objects.equals(taskCollaborator, report.taskCollaborator) &&
                 Objects.equals(task, report.task);
+    }
+
+    /**
+     * This method sets an ID to the Report
+     *
+     * @return void
+     */
+
+    @JsonProperty("reportDbId")
+    public void setReportDbId(int reportDbId) {
+        this.reportDbId = reportDbId;
     }
 }

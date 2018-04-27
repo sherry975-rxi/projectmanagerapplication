@@ -77,7 +77,7 @@ public class taskDTOTests {
         //GIVEN a task and all its parameters are set
         task = new Task("deded", project);
         task.setTaskID("1");
-        task.setStartDate(date);
+        task.setStartDateAndState(date);
         task.setFinishDate(date);
         task.addProjectCollaboratorToTask(projectCollaborator);
         report.setTask(task);
@@ -85,9 +85,9 @@ public class taskDTOTests {
         task.setTaskBudget(1);
         task.setTaskDeadline(date);
         task.setTaskDependency(expected);
-        task.setStartDateInterval(1);
-        task.setDeadlineInterval(2);
-        task.setDeadlineInterval(10);
+        task.updateStartDateIntervalAndState(1);
+        task.updateDeadlineIntervalAndState(2);
+        task.updateDeadlineIntervalAndState(10);
         task.setPendingTaskTeamRequests(taskTeamRequests);
 
 

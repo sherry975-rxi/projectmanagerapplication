@@ -1002,4 +1002,16 @@ public class TaskService {
 		return finishedDecreasing;
 	}
 
+	/**
+	 * This method gets a task from the database by searching for its Id and then creates a new TaskDTO
+	 *
+	 * @param taskId TaskId to search
+	 *
+	 * @return  Returns a TaskDTO of the found task
+	 */
+	public TaskDTO getTaskDtoByTaskId(String taskId) {
+
+		return new TaskDTO(this.getTaskByTaskID(taskId));
+
+	}
 }

@@ -88,34 +88,34 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 		// create tasks in project 1
 		// tasks 1 and 2 have the earliest, non expired deadlines
 		task1 = taskService.createTask("Do this", project1);
-		task1.setStartDate(estimatedTaskStartDateTest);
+        task1.setStartDateAndState(estimatedTaskStartDateTest);
 		task1.setTaskDeadline(taskDeadlineDateTest1);
 		task1.setTaskBudget(taskEffortAndBudget);
 		task1.setEstimatedTaskEffort(taskEffortAndBudget);
 
 		task2 = taskService.createTask("Do that", project1);
-		task2.setStartDate(estimatedTaskStartDateTest);
+        task2.setStartDateAndState(estimatedTaskStartDateTest);
 		task2.setTaskDeadline(taskDeadlineDateTest2);
 		task2.setTaskBudget(taskEffortAndBudget);
 		task2.setEstimatedTaskEffort(taskEffortAndBudget);
 
 		// task 3 is expired
 		task3 = taskService.createTask("[Expired] Merge everything", project1);
-		task3.setStartDate(estimatedTaskStartDateTest);
+        task3.setStartDateAndState(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskExpiredDeadlineDateTest);
 		task3.setTaskBudget(taskEffortAndBudget);
 		task3.setEstimatedTaskEffort(taskEffortAndBudget);
 
 		// task 4 expires after task 2
 		task4 = taskService.createTask("Do this", project1);
-		task4.setStartDate(estimatedTaskStartDateTest);
+        task4.setStartDateAndState(estimatedTaskStartDateTest);
 		task4.setTaskDeadline(taskDeadlineDateTest3);
 		task4.setTaskBudget(taskEffortAndBudget);
 		task4.setEstimatedTaskEffort(taskEffortAndBudget);
 
 		// task 5 is expired
 		task5 = taskService.createTask("Do this", project1);
-		task5.setStartDate(estimatedTaskStartDateTest);
+        task5.setStartDateAndState(estimatedTaskStartDateTest);
 		task5.setTaskDeadline(taskExpiredDeadlineDateTest);
 		task5.setTaskBudget(taskEffortAndBudget);
 		task5.setEstimatedTaskEffort(taskEffortAndBudget);
@@ -134,18 +134,18 @@ public class US203GetUserStartedNotFinishedTaskListInIncreasingOrderTest {
 
 		// task 2 and 3 are ongoing, 3 is expired
 		task2.addProjectCollaboratorToTask(projCollab1);
-		task2.setStartDate(Calendar.getInstance());
+        task2.setStartDateAndState(Calendar.getInstance());
 
 		task3.addProjectCollaboratorToTask(projCollab1);
-		task3.setStartDate(Calendar.getInstance());
+        task3.setStartDateAndState(Calendar.getInstance());
 
 		// task 4 is ongoing
 		task4.addProjectCollaboratorToTask(projCollab1);
-		task4.setStartDate(Calendar.getInstance());
+        task4.setStartDateAndState(Calendar.getInstance());
 
 		// task 5 is finished
 		task5.addProjectCollaboratorToTask(projCollab1);
-		task5.setStartDate(Calendar.getInstance());
+        task5.setStartDateAndState(Calendar.getInstance());
 		task5.markTaskAsFinished();
 
 		// task 6 is planned due to no deadline

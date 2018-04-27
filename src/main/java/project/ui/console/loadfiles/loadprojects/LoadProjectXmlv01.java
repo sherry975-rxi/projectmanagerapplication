@@ -2,7 +2,10 @@ package project.ui.console.loadfiles.loadprojects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import project.model.*;
 import project.model.taskstateinterface.Finished;
@@ -16,7 +19,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 
 @Service
 public class LoadProjectXmlv01 implements LoadProjectXml{
@@ -235,7 +240,7 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 				eElementTask.getElementsByTagName("data_conclusao_efetiva").item(0).getTextContent());
 
 		if(Calendar.getInstance().after(estimatedStartDate)) {
-			task.setStartDate(estimatedStartDate);
+			task.setStartDateAndState(estimatedStartDate);
 			task.setTaskState(new OnGoing());
 			task.setCurrentState(StateEnum.ONGOING);
 		}
@@ -280,7 +285,7 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
 		}
 
 		if(finishDate!=null) {
-			task.setStartDate(estimatedStartDate);
+			task.setStartDateAndState(estimatedStartDate);
 			task.setFinishDate(finishDate);
 			task.removeAllCollaboratorsFromTaskTeam();
 			task.setTaskState(new Finished());

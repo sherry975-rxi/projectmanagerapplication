@@ -99,7 +99,7 @@ public class TaskStateInterfaceTests {
 		assertEquals("Ready", task.viewTaskStateName()); 
 		
 		//Sets start date 
-		task.setStartDate(Calendar.getInstance());
+		task.setStartDateAndState(Calendar.getInstance());
 		
 		//Asserts that the state changed to OnGoing
 		assertEquals("OnGoing", task.viewTaskStateName()); 

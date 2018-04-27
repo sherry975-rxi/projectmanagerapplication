@@ -27,9 +27,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -436,8 +434,8 @@ public class RestRequestControllerTest {
         taskOne.createTaskAssignmentRequest(projCollabTwo);
         taskOne.createTaskRemovalRequest(projCollabThree);
 
-        taskOne.getPendingTaskTeamRequests().get(0).setId(1);
-        taskOne.getPendingTaskTeamRequests().get(1).setId(2);
+        taskOne.getPendingTaskTeamRequests().get(0).setTaskRequestDbId(1);
+        taskOne.getPendingTaskTeamRequests().get(1).setTaskRequestDbId(2);
         //int removalID = taskOne.getPendingTaskRemovalRequests().get(0).getDbId();
 
         int assignID = taskOne.getPendingTaskTeamRequests().get(0).getDbId();
@@ -537,7 +535,7 @@ public class RestRequestControllerTest {
         taskOne.addProjectCollaboratorToTask(projCollabThree);
         taskOne.setTaskBudget(2.0);
         taskOne.setEstimatedTaskEffort(30.1);
-        taskOne.setStartDate(Calendar.getInstance());
+        taskOne.setStartDateAndState(Calendar.getInstance());
         taskOne.cancelTask();
         System.out.println(taskOne.getTaskState());
 
@@ -670,7 +668,7 @@ public class RestRequestControllerTest {
         taskOne.addProjectCollaboratorToTask(projCollabThree);
         taskOne.setTaskBudget(2.0);
         taskOne.setEstimatedTaskEffort(30.1);
-        taskOne.setStartDate(Calendar.getInstance());
+        taskOne.setStartDateAndState(Calendar.getInstance());
         taskOne.cancelTask();
         //System.out.println(taskOne.getTaskState());
 

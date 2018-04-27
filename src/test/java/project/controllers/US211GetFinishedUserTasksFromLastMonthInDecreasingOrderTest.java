@@ -97,7 +97,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		task1.setEstimatedTaskEffort(45);
 		Calendar startDateTask1 = estimatedTaskStartDateTest;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
-		task1.setStartDate(startDateTask1);
+        task1.setStartDateAndState(startDateTask1);
 		task1.markTaskAsFinished();
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
@@ -105,7 +105,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		task2.addProjectCollaboratorToTask(projCollab1);
 		Calendar startDateTask2 = estimatedTaskStartDateTest;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
-		task2.setStartDate(startDateTask1);
+        task2.setStartDateAndState(startDateTask1);
 		task2.markTaskAsFinished();
 
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
@@ -115,7 +115,7 @@ public class US211GetFinishedUserTasksFromLastMonthInDecreasingOrderTest {
 		task3.setEstimatedTaskEffort(45);
 		Calendar startDateTask3 = estimatedTaskStartDateTest;
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
-		task3.setStartDate(startDateTask1);
+        task3.setStartDateAndState(startDateTask1);
 		task3.markTaskAsFinished();
 	}
 

@@ -1,0 +1,78 @@
+{
+	"info": {
+		"_postman_id": "59afd3de-87fd-43ac-8b6c-cabb7c3e039e",
+		"name": "RestUserTasksController",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Finished Tasks From User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{Server}}/users/15/tasks/finished",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"users",
+						"15",
+						"tasks",
+						"finished"
+					]
+				},
+				"description": "Get all finished Tasks from user"
+			},
+			"response": []
+		},
+		{
+			"name": "Pending Tasks From User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{Server}}/users/15/tasks/pending",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"users",
+						"15",
+						"tasks",
+						"pending"
+					]
+				},
+				"description": "Get pending tasks from user"
+			},
+			"response": []
+		},
+		{
+			"name": "Total Time Spent Completed Last Month",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{server}}users/7/tasks/totaltimespent/completed/lastmonth",
+					"host": [
+						"{{server}}users"
+					],
+					"path": [
+						"7",
+						"tasks",
+						"totaltimespent",
+						"completed",
+						"lastmonth"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

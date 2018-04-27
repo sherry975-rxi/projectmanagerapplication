@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "099306ce-7be0-40ff-8785-c5f1daad5be8",
+		"name": "RestProjectController",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all active projects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{Server}}/projects/active",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"projects",
+						"active"
+					]
+				},
+				"description": "get all active projects"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a specific project",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{Server}}/projects/21",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"projects",
+						"21"
+					]
+				},
+				"description": "Get a specific project"
+			},
+			"response": []
+		},
+		{
+			"name": "Calculate the cost of a project",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{Server}}/projects/21/cost",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"projects",
+						"21",
+						"cost"
+					]
+				},
+				"description": "Calculate the cost of a project"
+			},
+			"response": []
+		},
+		{
+			"name": "Update a project calculation method",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"calculationMethod\" : \"CF\"\n}"
+				},
+				"url": {
+					"raw": "{{Server}}/projects/21",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"projects",
+						"21"
+					]
+				},
+				"description": "Update a project calculation method"
+			},
+			"response": []
+		},
+		{
+			"name": "Creating a project",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Controller Post\",\n\t\"description\": \"Creating project with controller\",\n\t\"projectManager\": {\n\t\t\"email\": \"tc@mymail.com\"\n\t}\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{Server}}/projects/",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"projects",
+						""
+					]
+				},
+				"description": "Creating a project"
+			},
+			"response": []
+		},
+		{
+			"name": "changeProjectManager ",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"projectManager\": \n\t{\n       \"email\": \"dsomonteiro@gmail.com\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{server}}projects/21/",
+					"host": [
+						"{{server}}projects"
+					],
+					"path": [
+						"21",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

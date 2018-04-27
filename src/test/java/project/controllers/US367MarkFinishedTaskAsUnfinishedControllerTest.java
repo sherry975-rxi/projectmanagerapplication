@@ -132,27 +132,27 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		task1.setTaskDeadline(taskDeadlineDateTest);
 
 		task2.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task2.setStartDate(estimatedTaskStartDateTest);
+        task2.setStartDateAndState(estimatedTaskStartDateTest);
 		task2.setTaskDeadline(taskDeadlineDateTest);
 
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task3.setStartDate(estimatedTaskStartDateTest);
+        task3.setStartDateAndState(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskDeadlineDateTest);
 
 		task3.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task3.setStartDate(estimatedTaskStartDateTest);
+        task3.setStartDateAndState(estimatedTaskStartDateTest);
 		task3.setTaskDeadline(taskDeadlineDateTest);
 
 		task4.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task4.setStartDate(estimatedTaskStartDateTest);
+        task4.setStartDateAndState(estimatedTaskStartDateTest);
 		task4.setTaskDeadline(taskDeadlineDateTest);
 
 		task5.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task5.setStartDate(estimatedTaskStartDateTest);
+        task5.setStartDateAndState(estimatedTaskStartDateTest);
 		task5.setTaskDeadline(taskDeadlineDateTest);
 
 		task6.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-		task6.setStartDate(estimatedTaskStartDateTest);
+        task6.setStartDateAndState(estimatedTaskStartDateTest);
 		task6.setTaskDeadline(taskDeadlineDateTest);
 
 		// add project collaborator to task
@@ -167,7 +167,7 @@ public class US367MarkFinishedTaskAsUnfinishedControllerTest {
 		startDateTest = Calendar.getInstance();
 		task1.setEstimatedTaskEffort(10);
 		task1.setTaskBudget(10);
-		task1.setStartDate(startDateTest);
+        task1.setStartDateAndState(startDateTest);
 
 
 		// Sets the tasks to "Finished"

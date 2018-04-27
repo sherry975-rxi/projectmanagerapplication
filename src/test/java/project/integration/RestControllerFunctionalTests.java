@@ -10,12 +10,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
@@ -26,7 +23,6 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -139,27 +135,27 @@ public class RestControllerFunctionalTests {
         //adds necessary information for ongoing task and second ongoing task to enter the Ongoing state
         ongoingTask.setTaskBudget(10);
         ongoingTask.setEstimatedTaskEffort(10);
-        ongoingTask.setStartDate(expectedStartDate);
+        ongoingTask.setStartDateAndState(expectedStartDate);
         ongoingTask.setTaskDeadline(expectedDeadline);
         ongoingTask.setTaskState(new Planned());
         ongoingTask.addProjectCollaboratorToTask(collabMike);
-        ongoingTask.setStartDate(Calendar.getInstance());
+        ongoingTask.setStartDateAndState(Calendar.getInstance());
         ongoingTask.setTaskState(new OnGoing());
         ongoingTask.setCurrentState(StateEnum.ONGOING);
 
         secondOngoingTask.setTaskBudget(10);
         secondOngoingTask.setEstimatedTaskEffort(10);
-        secondOngoingTask.setStartDate(expectedStartDate);
+        secondOngoingTask.setStartDateAndState(expectedStartDate);
         secondOngoingTask.setTaskDeadline(expectedDeadline);
         secondOngoingTask.addProjectCollaboratorToTask(collabMike);
-        secondOngoingTask.setStartDate(Calendar.getInstance());
+        secondOngoingTask.setStartDateAndState(Calendar.getInstance());
         secondOngoingTask.setTaskState(new OnGoing());
         secondOngoingTask.setCurrentState(StateEnum.ONGOING);
 
         // adds info for unstartedtask to enter Planning state
         unstartedTask.setTaskBudget(10);
         unstartedTask.setEstimatedTaskEffort(10);
-        unstartedTask.setStartDate(expectedStartDate);
+        unstartedTask.setStartDateAndState(expectedStartDate);
         unstartedTask.setTaskDeadline(expectedDeadline);
         unstartedTask.setTaskState(new Planned());
         unstartedTask.setCurrentState(StateEnum.PLANNED);

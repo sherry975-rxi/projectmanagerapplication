@@ -136,26 +136,26 @@ public class US365MarkTaskAsFInishedControllerTest {
 
         // set estimated task start date and task dead line to tasks
         task1OnGoing.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task1OnGoing.setStartDate(estimatedTaskStartDateTest);
+        task1OnGoing.setStartDateAndState(estimatedTaskStartDateTest);
         task1OnGoing.setTaskDeadline(taskDeadlineDateTest);
         task1OnGoing.setTaskState(new OnGoing());
         task1OnGoing.setCurrentState(StateEnum.ONGOING);
 
         task2OnGoing.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task2OnGoing.setStartDate(estimatedTaskStartDateTest);
+        task2OnGoing.setStartDateAndState(estimatedTaskStartDateTest);
         task2OnGoing.setTaskDeadline(taskDeadlineDateTest);
 
 
         task4.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task4.setStartDate(estimatedTaskStartDateTest);
+        task4.setStartDateAndState(estimatedTaskStartDateTest);
         task4.setTaskDeadline(taskDeadlineDateTest);
 
         task5.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task5.setStartDate(estimatedTaskStartDateTest);
+        task5.setStartDateAndState(estimatedTaskStartDateTest);
         task5.setTaskDeadline(taskDeadlineDateTest);
 
         task6.setEstimatedTaskStartDate(estimatedTaskStartDateTest);
-        task6.setStartDate(estimatedTaskStartDateTest);
+        task6.setStartDateAndState(estimatedTaskStartDateTest);
         task6.setTaskDeadline(taskDeadlineDateTest);
 
         // create task workers

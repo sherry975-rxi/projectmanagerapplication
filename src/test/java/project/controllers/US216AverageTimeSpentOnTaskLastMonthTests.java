@@ -103,7 +103,7 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		task1.addProjectCollaboratorToTask(projectCollaborator1);
 		Calendar startDateTask1 = startDate;
 		startDateTask1.add(Calendar.DAY_OF_MONTH, 60);
-		task1.setStartDate(startDateTask1);
+		task1.setStartDateAndState(startDateTask1);
 		task1.setFinishDate(finishDate);
 		taskService.saveTask(task1);
 
@@ -112,7 +112,7 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		task2.addProjectCollaboratorToTask(projectCollaborator1);
 		Calendar startDateTask2 = startDate;
 		startDateTask2.add(Calendar.DAY_OF_MONTH, 60);
-		task2.setStartDate(startDateTask1);
+		task2.setStartDateAndState(startDateTask1);
 		task2.setFinishDate(otherFinishDate);
 		task2.setCurrentState(StateEnum.ONGOING);
 		task2.setTaskState(new OnGoing());
@@ -127,7 +127,7 @@ public class US216AverageTimeSpentOnTaskLastMonthTests {
 		task3.addProjectCollaboratorToTask(projectCollaborator1);
 		Calendar startDateTask3 = startDate;
 		startDateTask3.add(Calendar.DAY_OF_MONTH, 60);
-		task3.setStartDate(startDateTask1);
+		task3.setStartDateAndState(startDateTask1);
 		task3.setFinishDate(otherFinishDate);
 		task3.setCurrentState(StateEnum.ONGOING);
 		task3.setTaskState(new OnGoing());
