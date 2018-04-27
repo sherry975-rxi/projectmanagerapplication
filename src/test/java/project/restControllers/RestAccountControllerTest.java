@@ -303,8 +303,7 @@ public class RestAccountControllerTest {
         validationType = "2";
 
 
-
-        Link linkToReturn = linkTo(RestAccountController.class).slash("performValidation/verificateCode/jmscrl@hotmail.com").withRel("verificateHuman");
+        Link linkToReturn = linkTo(RestAccountController.class).slash("performValidation/verificateCode/jmscrl@gmail.com").withRel("verificateHuman");
 
         ResponseEntity<Link> expectedResponse = new ResponseEntity<>(linkToReturn, HttpStatus.OK);
 
