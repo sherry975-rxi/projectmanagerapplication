@@ -108,13 +108,10 @@ public class TaskStateInterfaceTests {
 		task.removeAllCollaboratorsFromTaskTeam();
 		
 		//Asserts that the state changed to StandBy
-		assertEquals("StandBy", task.viewTaskStateName()); 
-		
-		//Adds someone to the task team 
-		task.addProjectCollaboratorToTask(collaborator); 
-		
-		//Asserts that the state changed to OnGoing
-		assertEquals("OnGoing", task.viewTaskStateName());
+		assertEquals("StandBy", task.viewTaskStateName());
+
+		task.markTaskAsFinished();
+		assertEquals("Finished", task.viewTaskStateName());
 				
 		//Mark task as finished 
 		task.markTaskAsFinished();
@@ -137,11 +134,24 @@ public class TaskStateInterfaceTests {
 		assertEquals("Cancelled", task.viewTaskStateName());
 
 		//Removes all collaborators from task team
-		task.setFinishDate(taskDeadline);
-		task.removeAllCollaboratorsFromTaskTeam();
+		task.markTaskAsFinished();
 
 		//Assert that the taskState changed to Finished
 		assertEquals("Finished", task.viewTaskStateName());
+
+		//Adds collaborator to task and marks the task as unfinished
+		task.addProjectCollaboratorToTask(collaborator);
+		task.setCancelDate(null);
+		task.isUnfinishedTask();
+		assertEquals("OnGoing", task.viewTaskStateName());
+
+		//Removes all collaborators and changes the state to StandBY
+		task.removeAllCollaboratorsFromTaskTeam();
+		assertEquals("StandBy", task.viewTaskStateName());
+
+		//Cancels the task
+		task.cancelTask();
+		assertEquals("Cancelled", task.viewTaskStateName());
 	}
 
 	/**

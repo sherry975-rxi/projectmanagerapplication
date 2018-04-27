@@ -58,10 +58,6 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 
 	}
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public int getTaskRequestDbId() {
         return taskRequestDbId;
 	}
