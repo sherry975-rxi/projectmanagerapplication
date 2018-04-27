@@ -70,10 +70,10 @@ public class RestProjectTasksController {
 
             }
 
-        //TODO implement using TaskDTO class
         for(String action : task.getTaskState().getActions()) {
 
                 Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
 
             }
 
@@ -99,7 +99,6 @@ public class RestProjectTasksController {
 
         tasksWithoutCollabs.addAll(taskService.getProjectTasksWithoutCollaboratorsAssigned(project));
 
-        //TODO implement using TaskDTO class
         for(Task task: tasksWithoutCollabs){
             for(String action : task.getTaskState().getActions()) {
 
@@ -176,7 +175,6 @@ public class RestProjectTasksController {
 
         unfinishedTasks.addAll(taskService.getProjectUnFinishedTasks(project));
 
-        //TODO implement using TaskDTO class
         for(Task task : unfinishedTasks) {
             for(String action : task.getTaskState().getActions()) {
             Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
