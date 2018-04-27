@@ -339,9 +339,7 @@ public class UserService {
 	 */
 	public UserDTO createUserDtoWithUserId(Integer userId) {
 
-		UserDTO userDTO = new UserDTO(getUserByID(userId));
-
-		return userDTO;
+		return new UserDTO(getUserByID(userId));
 	}
 
 }

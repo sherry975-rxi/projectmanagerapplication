@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import project.model.*;
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
-import project.model.taskstateinterface.TaskStateInterface;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
