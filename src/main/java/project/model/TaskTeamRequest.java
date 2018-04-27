@@ -7,6 +7,7 @@ import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "TaskTeamRequest")
@@ -30,6 +31,9 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private RequestType type;
 
+	private Calendar approvalDate;
+	private Calendar rejectDate;
+
 	/*
 	 * 	Empty Constructor for TaskTeamRequest
 	 */
@@ -45,6 +49,8 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 		this.projCollab = projCollab;
 		this.task = task;
 		this.type=RequestType.NOT_AVAILABLE;
+		this.approvalDate=null;
+		this.rejectDate=null;
 
 	}
 
@@ -175,5 +181,20 @@ public class TaskTeamRequest extends ResourceSupport implements Serializable {
 
 	}
 
+	public Calendar getApprovalDate() {
+		return approvalDate;
+	}
+
+	public Calendar getRejectDate() {
+		return rejectDate;
+	}
+
+	public void setApprovalDate(Calendar approvalDate) {
+		this.approvalDate = approvalDate;
+	}
+
+	public void setRejectDate(Calendar rejectDate) {
+		this.rejectDate = rejectDate;
+	}
 }
 
