@@ -1,8 +1,8 @@
 title US390 Get Project Reported Cost
 
 Actor->Browser: Show me cost of project 
-Browser->RestController: GET: projects/{taskCollabDbId}/cost
-RestController->ProjectService: getProjectById(taskCollabDbId)
+Browser->RestController: GET: projects/{id}/cost
+RestController->ProjectService: getProjectById(id)
 ProjectService-->RestController: Project
 RestController->TaskService: getProjectReportedCost(project)
 TaskService-->RestController:Cost
