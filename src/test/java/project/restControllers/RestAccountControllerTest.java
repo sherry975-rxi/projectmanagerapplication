@@ -9,19 +9,24 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.dto.UserDTO;
 import project.model.User;
+import project.model.sendcode.ValidationMethod;
 import project.restcontroller.RestAccountController;
 import project.services.UserService;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -33,6 +38,9 @@ public class RestAccountControllerTest {
 
     @Mock
     UserService userService;
+
+    @Mock
+    ValidationMethod validate;
 
     User userDaniel;
 
@@ -277,6 +285,74 @@ public class RestAccountControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals(conditions, response.getContentAsString());
     }
+
+
+
+
+    @Test
+    public void performUserValidationAfterRegistryTest() throws Exception{
+
+        String userEmail;
+        String validationType;
+        String userPhone;
+
+        //GIVEN
+        // an userEmail, userPhone, and a validationType type 2 (ByEmail)
+        userEmail = "jmscrl@gmail.com";
+        userPhone = "911111";
+        validationType = "2";
+
+
+
+        Link linkToReturn = linkTo(RestAccountController.class).slash("performValidation/verificateCode/jmscrl@hotmail.com").withRel("verificateHuman");
+
+        ResponseEntity<Link> expectedResponse = new ResponseEntity<>(linkToReturn, HttpStatus.OK);
+
+        //WHEN
+        //The method performValidationMethod, It's a mocked method, so it actually doesn't send the messages
+        when(validate.performValidationMethod(anyString(),anyString(),anyString(), anyString())).thenReturn("test");
+
+        //THEN the restAccountController performs the UserValidation and returns a string , because the validationType is not valid
+        ResponseEntity<Link> actualResponse = restAccountController.performUserValidation(validationType, userEmail, userPhone);
+
+
+        assertEquals(actualResponse, expectedResponse);
+
+
+    }
+
+    @Test
+    public void performUserValidationAfterRegistryTestUnsuccess() throws Exception{
+
+        String userEmail;
+        String validationType;
+        String userPhone;
+
+        //GIVEN
+        // an userEmail, userPhone, and a validationType type 2 (ByEmail)
+        userEmail = "jmscrl@gmail.com";
+        userPhone = "911111";
+        validationType = "4";
+
+
+
+        Link linkToReturn = linkTo(RestAccountController.class).slash("performValidation/verificateCode/jmscrl@hotmail.com").withRel("verificateHuman");
+
+        ResponseEntity<Link> expectedResponse = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        //WHEN
+        //The method performValidationMethod, It's a mocked method, so it actually doesn't send the messages
+        when(validate.performValidationMethod(anyString(),anyString(),anyString(), anyString())).thenReturn("test");
+
+        //THEN the restAccountController performs the UserValidation and returns a forbidden message, because the validationType is not valid
+        ResponseEntity<Link> actualResponse = restAccountController.performUserValidation(validationType, userEmail, userPhone);
+
+
+        //Verifies that the result matches
+        assertEquals(actualResponse, expectedResponse);
+
+    }
+
 
 
 }
