@@ -1,4 +1,4 @@
-package project.restcontroller.exceptions;
+package project.restControllers.exceptions;
 
 
 import org.junit.Test;
@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 
+import project.restcontroller.exceptions.ResourceExceptionHandler;
+import project.restcontroller.exceptions.StandardError;
 import project.services.exceptions.ObjectNotFoundException;
 
 import static org.junit.Assert.*;
