@@ -861,16 +861,6 @@ public class Task extends ResourceSupport implements Serializable {
 		return false;
 	}
 
-	// What does copyListOfUsersInTask do that getUserList doesn't?
-	// Why does it need to receive an empty list input?
-	/**
-	 * @return Returns a list of users copied from another task.
-	 */
-	private ArrayList<TaskCollaborator> copyListOfTaskCollaboratorsInTask() {
-
-		return new ArrayList<>(this.getTaskTeam());
-	}
-
 	/**
 	 * @return TRUE if task team is empty, FALSE if not.
 	 */
