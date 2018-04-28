@@ -327,4 +327,50 @@ public class RestReportControllerTest {
         //THEN the report is created
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
+
+    /**
+     * GIVEN a set of parameters to update in the Report, a taskID, a projectID and the ID of the report to update
+     *
+     * WHEN one tries to update a specific Report associated with the Task that matches a taskID but the reportID
+     * doesn't match the id of a report in task
+     *
+     * THEN that specific Report is not updated
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldNotUpdateReportIfReportToUpdateIsNotInTask () throws Exception {
+
+        //GIVEN
+        //a set of parameters to update in the Report, a taskID, a projectID and the ID of the report to update
+        int projid = 1;
+        String taskid = "1";
+        when(projectServiceMock.getProjectById(projid)).thenReturn(projectDto);
+        when(taskServiceMock.getTaskByTaskID(any(String.class))).thenReturn(taskDto);
+        when(userServiceMock.getUserByEmail(any(String.class))).thenReturn(userDto);
+
+        //WHEN one updates a specific Report associated with the Task that matches a taskID
+        //one performs a put request to url /projects/{id}/tasks/{id}⁄reports/{id}/update
+        TaskCollaborator taskCollaboratorDto = new TaskCollaborator(projectCollaboratorDto);
+        taskDto.addProjectCollaboratorToTask(projectCollaboratorDto);
+        double reportedTime = 3.0;
+        Calendar firstDateOfReport;
+        firstDateOfReport = Calendar.getInstance();
+
+        Report reportDto = new Report(taskCollaboratorDto, firstDateOfReport);
+        reportDto.setReportedTime(reportedTime);
+        taskDto.createReport(taskCollaboratorDto, firstDateOfReport, reportedTime);
+        when(taskServiceMock.saveTask(any(Task.class))).thenReturn(taskDto);
+
+        int reportid = 4;
+
+        MockHttpServletResponse response = mvc.perform(put("/projects/" + projid + "/tasks/" + taskid + "/reports/" + reportid + "/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonReport.write(reportDto).getJson()))
+                .andReturn().getResponse();
+
+
+        //THEN the report is not updated
+        assertEquals(HttpStatus.METHOD_NOT_ALLOWED.value(), response.getStatus());
+    }
     }
