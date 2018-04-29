@@ -910,7 +910,6 @@ public class Task extends ResourceSupport implements Serializable {
 			wasDependencyCreated = true;
 
 		}
-		this.getTaskState().doAction(this);
 		return wasDependencyCreated;
 
 	}
