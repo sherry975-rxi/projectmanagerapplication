@@ -29,7 +29,7 @@ public class Task extends ResourceSupport implements Serializable {
 	static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long dbTaskId;
     @JsonIdentityReference(alwaysAsId = true)
     private String taskID;
@@ -144,127 +144,6 @@ public class Task extends ResourceSupport implements Serializable {
 		this.taskState = this.getTaskState();
 		this.cancelDate = null;
 		this.currentState = StateEnum.CREATED;
-		this.pendingTaskTeamRequests = new ArrayList<>();
-	}
-
-	/**
-	 * This constructor is going to be deleted soon.
-	 * 
-	 * This Constructor creates a Task object with the mandatory parameters taskID
-	 * and description and non mandatory parameters creation date, start date,
-	 * finish date, task state (finished or unfinished) and task team
-	 * 
-	 * @param description
-	 *            Description of Task.
-	 * @param estimatedTaskEffort
-	 *            Value that corresponds to the effort associated with this Task.
-	 * @param estimatedTaskStartDate
-	 *            This value may have dependences if this Task has dependences.
-	 * @param taskDeadline
-	 *            Estimated finish Task date.
-	 * @param estimatedBudgetCostTask
-	 *            Value for the estimated cost of the Task.
-	 */
-	public Task(String description, int estimatedTaskEffort, Calendar estimatedTaskStartDate, Calendar taskDeadline,
-			int estimatedBudgetCostTask) {
-		this.description = description;
-		this.creationDate = Calendar.getInstance();
-		this.startDate = null;
-		this.finishDate = null;
-		this.taskTeam = new ArrayList<>();
-		this.reports = new ArrayList<>();
-		this.estimatedTaskEffort = estimatedTaskEffort;
-		this.estimatedTaskStartDate = estimatedTaskStartDate;
-		this.taskDeadline = taskDeadline;
-		this.taskBudget = estimatedBudgetCostTask;
-		this.startDateInterval = null;
-		this.deadlineInterval = null;
-		this.taskDependency = new ArrayList<>();
-		this.taskState = new Created();
-		this.currentState = StateEnum.CREATED;
-		this.pendingTaskTeamRequests = new ArrayList<>();
-	}
-
-	/**
-	 * This constructor is going to be deleted soon.
-	 * 
-	 * This Constructor creates a Task object with the mandatory parameters taskID
-	 * and description and non mandatory parameters creation date, start date,
-	 * finish date, task state (finished or unfinished) and task team
-	 * 
-	 * @param taskCounter
-	 *            The Task counter in the Project in which it is included. This
-	 *            value is generated in the Creator of Task.
-	 * @param projId
-	 *            This is the Project ID to which this Task belongs to.
-	 * @param description
-	 *            Description of Task.
-	 * @param estimatedTaskEffort
-	 *            Value that corresponds to the effort associated with this Task.
-	 * @param estimatedTaskStartDate
-	 *            This value may have dependences if this Task has dependences.
-	 * @param taskDeadline
-	 *            Estimated finish Task date.
-	 * @param estimatedBudgetCostTask
-	 *            Value for the estimated cost of the Task.
-	 */
-	public Task(int taskCounter, int projId, String description, int estimatedTaskEffort,
-			Calendar estimatedTaskStartDate, Calendar taskDeadline, int estimatedBudgetCostTask) {
-		Integer taskNumber = taskCounter;
-		Integer projCode = projId;
-		this.taskID = projCode.toString() + "." + taskNumber.toString();
-		this.description = description;
-		this.creationDate = Calendar.getInstance();
-		this.startDate = null;
-		this.finishDate = null;
-		this.taskTeam = new ArrayList<>();
-		this.reports = new ArrayList<>();
-		this.estimatedTaskEffort = estimatedTaskEffort;
-		this.estimatedTaskStartDate = estimatedTaskStartDate;
-		this.taskDeadline = taskDeadline;
-		this.taskBudget = estimatedBudgetCostTask;
-		this.startDateInterval = null;
-		this.deadlineInterval = null;
-		this.taskDependency = new ArrayList<>();
-		this.taskState = this.getTaskState();
-		this.currentState = StateEnum.CREATED;
-		this.pendingTaskTeamRequests = new ArrayList<>();
-	}
-
-	/**
-	 * This constructor creates a Task from another Task, guaranteeing that the task
-	 * created has the same field values as the original Task. Allows copying a
-	 * task.
-	 * 
-	 * @param task
-	 *            Task that will be used to create a new one.
-	 */
-	public Task(Task task) {
-		this.description = task.description;
-		this.creationDate = task.creationDate;
-		this.startDate = task.getStartDate();
-		this.finishDate = task.getFinishDate();
-		this.taskState = task.getTaskState();
-		this.taskTeam = task.copyListOfTaskCollaboratorsInTask();
-		this.reports = task.getReports();
-		this.estimatedTaskEffort = task.getEstimatedTaskEffort();
-		this.estimatedTaskStartDate = task.getEstimatedTaskStartDate();
-		this.taskDeadline = task.getTaskDeadline();
-		this.taskBudget = task.getTaskBudget();
-		this.taskDependency = task.taskDependency;
-		this.taskState = task.getTaskState();
-		if (task.startDateInterval != null) {
-			this.startDateInterval = task.getStartDateInterval();
-		} else {
-			this.startDateInterval = null;
-		}
-		if (task.deadlineInterval != null) {
-			this.deadlineInterval = task.getDeadlineInterval();
-		} else {
-			this.deadlineInterval = null;
-		}
-		this.currentState = StateEnum.CREATED;
-		this.project = task.getProject();
 		this.pendingTaskTeamRequests = new ArrayList<>();
 	}
 
@@ -980,16 +859,6 @@ public class Task extends ResourceSupport implements Serializable {
 			}
 		}
 		return false;
-	}
-
-	// What does copyListOfUsersInTask do that getUserList doesn't?
-	// Why does it need to receive an empty list input?
-	/**
-	 * @return Returns a list of users copied from another task.
-	 */
-	private ArrayList<TaskCollaborator> copyListOfTaskCollaboratorsInTask() {
-
-		return new ArrayList<>(this.getTaskTeam());
 	}
 
 	/**

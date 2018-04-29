@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class TaskCollaborator extends ResourceSupport implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIdentityReference(alwaysAsId = true)
     private long taskCollabDbId;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

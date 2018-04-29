@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class Address extends ResourceSupport implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long addressId;
 	
 	private String street;

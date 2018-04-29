@@ -11,137 +11,353 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class TaskStateInterfaceTests {
 
-	User user; 
-	User userPm; 
+
+	User user;
+	User userPm;
 	Project project;
-	Task task;
 	Calendar estimatedTaskStartDate, taskDeadline;
-	Task task2;
+	Task taskGetActions;
+	Task taskCreated;
+	Task taskPlanned;
+	Task taskReady;
+	Task taskOnGoing;
+	Task taskStandBy;
+	Task taskFinished;
+	Task taskCancelled;
+	ProjectCollaborator collaborator;
 
 	@Before
 	public void setUp() {
-		
+
 		//Creates the users
 		user = new User("Joao", "joao@gmail.com", "001", "Junior Programmer",
 				"930000000");
 		userPm = new User("Daniel", "daniel@gmail.com", "001", "Junior Programmer",
-				"930000000");		
+				"930000000");
 		//Creates the project
-		project = new Project("Teste", "teste", user); 
-		
+		project = new Project("Teste", "teste", user);
 		//Creates the Task
-		task = project.createTask("Task de teste");
-		task2 = project.createTask("actions");
-
+		taskCreated = project.createTask("Task de teste");
+		taskPlanned = project.createTask("Task de teste");
+		taskReady = project.createTask("Task de teste");
+		taskOnGoing = project.createTask("Task de teste");
+		taskStandBy = project.createTask("Task de teste");
+		taskFinished = project.createTask("Task de teste");
+		taskCancelled = project.createTask("Task de teste");
+		taskGetActions = project.createTask("actions");
 		// create a estimated task date
 		estimatedTaskStartDate = Calendar.getInstance();
-
 		// create a dead line date
 		taskDeadline = Calendar.getInstance();
+		collaborator = project.createProjectCollaborator(user, 10);
+
+		taskPlanned.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskPlanned.setTaskDeadline(taskDeadline);
+		taskPlanned.addProjectCollaboratorToTask(collaborator);
+
+		taskReady.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskReady.setTaskDeadline(taskDeadline);
+		taskReady.addProjectCollaboratorToTask(collaborator);
+		taskReady.setEstimatedTaskEffort(1000);
+		taskReady.setTaskBudget(1999);
+
+		taskOnGoing.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskOnGoing.setTaskDeadline(taskDeadline);
+		taskOnGoing.addProjectCollaboratorToTask(collaborator);
+		taskOnGoing.setEstimatedTaskEffort(1000);
+		taskOnGoing.setTaskBudget(1999);
+		taskOnGoing.setStartDateAndState(Calendar.getInstance());
+
+		taskStandBy.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskStandBy.setTaskDeadline(taskDeadline);
+		taskStandBy.addProjectCollaboratorToTask(collaborator);
+		taskStandBy.setEstimatedTaskEffort(1000);
+		taskStandBy.setTaskBudget(1999);
+		taskStandBy.setStartDateAndState(Calendar.getInstance());
+		taskStandBy.removeAllCollaboratorsFromTaskTeam();
+
+		taskFinished.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskFinished.setTaskDeadline(taskDeadline);
+		taskFinished.addProjectCollaboratorToTask(collaborator);
+		taskFinished.setEstimatedTaskEffort(1000);
+		taskFinished.setTaskBudget(1999);
+		taskFinished.setStartDateAndState(Calendar.getInstance());
+		taskFinished.markTaskAsFinished();
+
+		taskCancelled.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskCancelled.setTaskDeadline(taskDeadline);
+		taskCancelled.addProjectCollaboratorToTask(collaborator);
+		taskCancelled.setEstimatedTaskEffort(1000);
+		taskCancelled.setTaskBudget(1999);
+		taskCancelled.setStartDateAndState(Calendar.getInstance());
+		taskCancelled.cancelTask();
 
 	}
 
 	@After
 	public void tearDown() {
-		task = null;
+		taskCreated = null;
+		taskPlanned = null;
+		taskReady = null;
+		taskCancelled = null;
+		taskFinished = null;
+		taskStandBy = null;
 		user = null;
 		userPm = null;
 		project = null;
 		estimatedTaskStartDate = null;
 		taskDeadline = null;
 
+
 	}
 
 
 	/**
-	 * Tests the state interface, by calling all the actions that may provoce a state change. 
+	 * GIVEN a task in the created state
+	 * WHEN we set the estimated start and finish date and add a collaborator to the team
+	 * THEN the task as to change to Planned
 	 */
 	@Test
-	public final void doActionAndIsValid() {
-		
-		//Asserts that the task state is created 
-		assertEquals("Created", task.viewTaskStateName()); 		
-		
-		//Adds the estimated start and deadline dates to the task 
-		task.setEstimatedTaskStartDate(estimatedTaskStartDate);
-		task.setTaskDeadline(taskDeadline);
+	public final void doActionCreated() {
 
-		//Asserts that the state changed to Planned
-		assertEquals("Planned", task.viewTaskStateName());
+		//GIVEN a task in the created state
+		assertEquals("Created", taskCreated.viewTaskStateName());
 
-		//Adds someone to the task team
-		ProjectCollaborator collaborator = project.createProjectCollaborator(user, 10);
-		task.addProjectCollaboratorToTask(collaborator);
-		
-		//Asserts that the state is still planned
-		assertEquals("Planned", task.viewTaskStateName()); 		
-	
-		//Adds the estimated task effort and budget
-		task.setTaskBudget(10);
-		task.setEstimatedTaskEffort(10);
-		
-		//Asserts that the state changed to Ready
-		assertEquals("Ready", task.viewTaskStateName()); 	
-		
-		//Removes the users from the task 
-		task.removeAllCollaboratorsFromTaskTeam();
-		
-		//Asserts that the state changed again to Planned
-		assertEquals("Planned", task.viewTaskStateName());
-		
-		//Adds someone to the task team again 
-		task.addProjectCollaboratorToTask(collaborator); 
-		
-		//Asserts that the state changed to ready
-		assertEquals("Ready", task.viewTaskStateName()); 
-		
-		//Sets start date 
-		task.setStartDateAndState(Calendar.getInstance());
-		
-		//Asserts that the state changed to OnGoing
-		assertEquals("OnGoing", task.viewTaskStateName()); 
-		
-		//Removes all collaborators from task
-		task.removeAllCollaboratorsFromTaskTeam();
-		
-		//Asserts that the state changed to StandBy
-		assertEquals("StandBy", task.viewTaskStateName()); 
-		
-		//Adds someone to the task team 
-		task.addProjectCollaboratorToTask(collaborator); 
-		
-		//Asserts that the state changed to OnGoing
-		assertEquals("OnGoing", task.viewTaskStateName());
-				
-		//Mark task as finished 
-		task.markTaskAsFinished();
-		task.setFinishDate(taskDeadline);
+		//WHEN we set the estimated start and finish date and add a collaborator to the team
+		taskCreated.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		taskCreated.setTaskDeadline(taskDeadline);
+		taskCreated.addProjectCollaboratorToTask(collaborator);
 
-		//Asserts that the task state changed to finished 
-		assertEquals("Finished", task.viewTaskStateName());
-		
-		//Marks the task as Unfinished
-		task.addProjectCollaboratorToTask(collaborator);
-		task.isUnfinishedTask();
-		
-		//Asserts that the taskState changed to Ongoing again
-		assertEquals("OnGoing", task.viewTaskStateName()); 
-				
-		//Cancels the task
-		task.cancelTask();
-				
-		//Asserts that the taskState changed to Cancelled
-		assertEquals("Cancelled", task.viewTaskStateName());
+		//THEN the task as to change to Planned
+		assertEquals("Planned", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.PLANNED, taskCreated.getCurrentState());
 
-		//Removes all collaborators from task team
-		task.setFinishDate(taskDeadline);
-		task.removeAllCollaboratorsFromTaskTeam();
+	}
 
-		//Assert that the taskState changed to Finished
-		assertEquals("Finished", task.viewTaskStateName());
+	/**
+	 * GIVEN a task in the Planned state
+	 * WHEN we set the budget and effort
+	 * THEN the task as to change to Ready
+	 */
+	@Test
+	public final void doActionPlannedToReady() {
+
+		//GIVEN a task in the Planned state
+		assertEquals("Planned", taskPlanned.viewTaskStateName());
+
+		//WHEN we set the budget and effort
+		taskPlanned.setTaskBudget(10);
+		taskPlanned.setEstimatedTaskEffort(10);
+
+		//THEN the task as to change to Ready
+		assertEquals("Ready", taskPlanned.viewTaskStateName());
+		assertEquals(StateEnum.READY, taskPlanned.getCurrentState());
+
+	}
+
+	/**
+	 * GIVEN a task in the Ready state
+	 * WHEN we remove all collaborators
+	 * THEN the task as to change to Planned
+	 */
+	@Test
+	public final void doActionReadyToPlanned() {
+
+		//GIVEN a task in the Ready stateGIVEN a task in the Planned state
+		assertEquals("Ready", taskReady.viewTaskStateName());
+
+		//WHEN we remove all collaborators
+		taskReady.removeAllCollaboratorsFromTaskTeam();
+
+		//THEN the task as to change to Planned
+		assertEquals("Planned", taskReady.viewTaskStateName());
+		assertEquals(StateEnum.PLANNED, taskReady.getCurrentState());
+
+	}
+
+	/**
+	 * GIVEN a task in the Ready state
+	 * WHEN we set a start date
+	 * THEN the task as to change to OnGoing
+	 */
+	@Test
+	public final void doActionReadyToOnGoing() {
+
+		//GIVEN a task in the Ready state
+		assertEquals("Ready", taskReady.viewTaskStateName());
+
+		//WHEN we set a start date
+		taskReady.setStartDateAndState(Calendar.getInstance());
+
+		// THEN the task as to change to OnGoing
+		assertEquals("OnGoing", taskReady.viewTaskStateName());
+		assertEquals(StateEnum.ONGOING, taskReady.getCurrentState());
+
+	}
+
+	/**
+	 * GIVEN a task in the onGoing state
+	 * WHEN we remove all collaborators
+	 * THEN the task as to change to StandBy
+	 */
+	@Test
+	public final void doActionOngoingToStandby() {
+
+		//GIVEN a task in the onGoing state
+		assertEquals("OnGoing", taskOnGoing.viewTaskStateName());
+
+		//WHEN we remove all collaborators
+		taskOnGoing.removeAllCollaboratorsFromTaskTeam();
+
+		//THEN the task as to change to StandBy
+		assertEquals("StandBy", taskOnGoing.viewTaskStateName());
+		assertEquals(StateEnum.STANDBY, taskOnGoing.getCurrentState());
+
+	}
+
+	/**
+	 * GIVEN a task in the OnGoing state
+	 * WHEN we mark as finished
+	 * THEN the task as to change to finished
+	 */
+	@Test
+	public final void doActionOnGoingToFinished() {
+
+		//GIVEN a task in the onGoing state
+		assertEquals("OnGoing", taskOnGoing.viewTaskStateName());
+
+		//WHEN we mark task as finished
+		taskStandBy.markTaskAsFinished();
+
+		//THEN the task as to change to StandBy
+		assertEquals("Finished", taskStandBy.viewTaskStateName());
+		assertEquals(StateEnum.FINISHED, taskStandBy.getCurrentState());
+	}
+
+
+	/**
+	 * GIVEN a task in the OnGoing state
+	 * WHEN we mark as cancelled
+	 * THEN the task as to change to cancelled
+	 */
+	@Test
+	public final void doActionOnGoingToCancelled() {
+
+		//GIVEN a task in the onGoing state
+		assertEquals("OnGoing", taskOnGoing.viewTaskStateName());
+
+		//WHEN we mark task as cancelled
+		taskStandBy.cancelTask();
+
+		//THEN the task as to change to StandBy
+		assertEquals("Cancelled", taskStandBy.viewTaskStateName());
+		assertEquals(StateEnum.CANCELLED, taskStandBy.getCurrentState());
+	}
+
+	/**
+	 * GIVEN a task in the StandBy state
+	 * WHEN we mark as finished
+	 * THEN the task as to change to finished
+	 */
+	@Test
+	public final void doActionStandByToFinished() {
+
+		//GIVEN a task in the onGoing state
+		assertEquals("StandBy", taskStandBy.viewTaskStateName());
+
+		//WHEN we mark task as finished
+		taskStandBy.markTaskAsFinished();
+
+		//THEN the task as to change to StandBy
+		assertEquals("Finished", taskStandBy.viewTaskStateName());
+		assertEquals(StateEnum.FINISHED, taskStandBy.getCurrentState());
+	}
+
+	/**
+	 * GIVEN a task in the StandBy state
+	 * WHEN we mark as Cancelled
+	 * THEN the task as to change to Cancelled
+	 */
+	@Test
+	public final void doActionStandByToCancelled() {
+
+		//GIVEN a task in the StandBy state
+		assertEquals("StandBy", taskStandBy.viewTaskStateName());
+
+		//WHEN we mark task as Cancelled
+		taskStandBy.cancelTask();
+
+		//THEN the task as to change to Cancelled
+		assertEquals("Cancelled", taskStandBy.viewTaskStateName());
+		assertEquals(StateEnum.CANCELLED, taskStandBy.getCurrentState());
+	}
+
+	/**
+	 * GIVEN a task in the StandBy state
+	 * WHEN we add collaborators to task
+	 * THEN the task as to change to OnGoing
+	 */
+	@Test
+	public final void doActionStandByToOnGoing() {
+
+		//GIVEN a task in the StandBy state
+		assertEquals("StandBy", taskStandBy.viewTaskStateName());
+
+		//WHEN we mark task as Cancelled
+		taskStandBy.addProjectCollaboratorToTask(collaborator);
+
+		//THEN the task as to change to Cancelled
+		assertEquals("OnGoing", taskStandBy.viewTaskStateName());
+		assertEquals(StateEnum.ONGOING, taskStandBy.getCurrentState());
+	}
+
+	/**
+	 * GIVEN a task in the Finished state
+	 * WHEN we mark the task as unfinished
+	 * THEN the task as to change to OnGoing
+	 */
+	@Test
+	public final void doActionFinishedToOnGoing() {
+
+		//GIVEN a task in the StandBy state
+		assertEquals("Finished", taskFinished.viewTaskStateName());
+
+		//WHEN we mark task as Cancelled
+		taskFinished.addProjectCollaboratorToTask(collaborator);
+		taskFinished.isUnfinishedTask();
+
+		//THEN the task as to change to Cancelled
+		assertEquals("OnGoing", taskFinished.viewTaskStateName());
+		assertEquals(StateEnum.ONGOING, taskFinished.getCurrentState());
+	}
+
+	/**
+	 * GIVEN a task in the Finished state
+	 * WHEN we mark the task as finished
+	 * THEN the task as to change to Finished state
+	 */
+	@Test
+	public final void doActionCancelledToFinished() {
+
+		//GIVEN a task in the StandBy state
+		assertEquals("Cancelled", taskCancelled.viewTaskStateName());
+		assertTrue(taskCancelled.isProjectCollaboratorActiveInTaskTeam(collaborator));
+		assertTrue(taskCancelled.getFinishDate() == null);
+
+		//WHEN we mark task as Cancelled
+		taskCancelled.markTaskAsFinished();
+
+
+		//THEN the task as to change to Cancelled
+		assertEquals("Finished", taskCancelled.viewTaskStateName());
+		assertEquals(StateEnum.FINISHED, taskCancelled.getCurrentState());
+		assertFalse(taskCancelled.isProjectCollaboratorActiveInTaskTeam(collaborator));
+		assertTrue(taskCancelled.getFinishDate() != null);
 	}
 
 	/**
@@ -150,40 +366,40 @@ public class TaskStateInterfaceTests {
 	@Test
 	public final void plannedStateValidation() {
 
-	    //GIVEN A NEW TASK
-        //Asserts that the task state is created
-        assertEquals("Created", task.viewTaskStateName());
+		//GIVEN A NEW TASK
+		//Asserts that the task state is created
+		assertEquals("Created", taskCreated.viewTaskStateName());
 
-        // WHEN adding someone to the task team
-        ProjectCollaborator collaborator = project.createProjectCollaborator(user, 10);
-        task.addProjectCollaboratorToTask(collaborator);
+		// WHEN adding someone to the task team
+		ProjectCollaborator collaborator = project.createProjectCollaborator(user, 10);
+		taskCreated.addProjectCollaboratorToTask(collaborator);
 
-        //THEN the state changes to Planned
-        assertEquals("Planned", task.viewTaskStateName());
+		//THEN the state changes to Planned
+		assertEquals("Planned", taskCreated.viewTaskStateName());
 
-        //AND WHEN all collaborators are removed from the team and the task reset to created
-        task.removeAllCollaboratorsFromTaskTeam();
-        task.setTaskState(new Created());
-        task.setCurrentState(StateEnum.CREATED);
-        assertEquals("Created", task.viewTaskStateName());
+		//AND WHEN all collaborators are removed from the team and the task reset to created
+		taskCreated.removeAllCollaboratorsFromTaskTeam();
+		taskCreated.setTaskState(new project.model.taskstateinterface.Created());
+		taskCreated.setCurrentState(StateEnum.CREATED);
+		assertEquals("Created", taskCreated.viewTaskStateName());
 
-        //THEN adding an expected start or finish date must move the task to planned as well
-        task.setEstimatedTaskStartDate(estimatedTaskStartDate);
-        assertEquals("Planned", task.viewTaskStateName());
+		//THEN adding an expected start or finish date must move the task to planned as well
+		taskCreated.setEstimatedTaskStartDate(estimatedTaskStartDate);
+		assertEquals("Planned", taskCreated.viewTaskStateName());
 
-        //AND WHEN the expected start date is removed and the task reset to created (again)
-        task.setEstimatedTaskStartDate(null);
-        task.setTaskState(new Created());
-        task.setCurrentState(StateEnum.CREATED);
-        assertEquals("Created", task.viewTaskStateName());
+		//AND WHEN the expected start date is removed and the task reset to created (again)
+		taskCreated.setEstimatedTaskStartDate(null);
+		taskCreated.setTaskState(new project.model.taskstateinterface.Created());
+		taskCreated.setCurrentState(StateEnum.CREATED);
+		assertEquals("Created", taskCreated.viewTaskStateName());
 
-        // THEN adding an expected finish date must move the task to planned once again
-        task.setTaskDeadline(taskDeadline);
-        assertEquals("Planned", task.viewTaskStateName());
+		// THEN adding an expected finish date must move the task to planned once again
+		taskCreated.setTaskDeadline(taskDeadline);
+		assertEquals("Planned", taskCreated.viewTaskStateName());
 
 
 
-    }
+	}
 
 
 
@@ -196,17 +412,17 @@ public class TaskStateInterfaceTests {
 	public void getActionsCreatedStateTeste() {
 
 		//GIVEN a task in the state created and a list of possible actions
-		task2.setTaskState(new Created());
+		taskGetActions.setTaskState(new project.model.taskstateinterface.Created());
 		List<String> actions = new ArrayList<>();
 		actions.add("1");
 		actions.add("2");
 		actions.add("3");
 
 		//WHEN the method getActions from its state is called
-		task2.getTaskState().getActions();
+		taskGetActions.getTaskState().getActions();
 
 		//THEN a list of actions must be returned
-		assertEquals(actions, task2.getTaskState().getActions());
+		assertEquals(actions, taskGetActions.getTaskState().getActions());
 	}
 
 	/**
@@ -218,7 +434,7 @@ public class TaskStateInterfaceTests {
 	public void getActionsPlannedStateTeste() {
 
 		//GIVEN a task in the state Planned and a list of possible actions
-		task2.setTaskState(new Planned());
+		taskGetActions.setTaskState(new Planned());
 		List<String> actions = new ArrayList<>();
 		actions.add("1");
 		actions.add("2");
@@ -227,10 +443,10 @@ public class TaskStateInterfaceTests {
 		actions.add("3");
 
 		//WHEN the method getActions from its state is called
-		task2.getTaskState().getActions();
+		taskGetActions.getTaskState().getActions();
 
 		//THEN a list of actions must be returned
-		assertEquals(actions, task2.getTaskState().getActions());
+		assertEquals(actions, taskGetActions.getTaskState().getActions());
 	}
 
 	/**
@@ -242,7 +458,7 @@ public class TaskStateInterfaceTests {
 	public void getActionsReadyStateTeste() {
 
 		//GIVEN a task in the state Ready and a list of possible actions
-		task2.setTaskState(new Ready());
+		taskGetActions.setTaskState(new Ready());
 		List<String> actions = new ArrayList<>();
 		actions.add("7");
 		actions.add("2");
@@ -253,10 +469,10 @@ public class TaskStateInterfaceTests {
 		actions.add("3");
 
 		//WHEN the method getActions from its state is called
-		task2.getTaskState().getActions();
+		taskGetActions.getTaskState().getActions();
 
 		//THEN a list of actions must be returned
-		assertEquals(actions, task2.getTaskState().getActions());
+		assertEquals(actions, taskGetActions.getTaskState().getActions());
 	}
 
 	/**
@@ -268,7 +484,7 @@ public class TaskStateInterfaceTests {
 	public void getActionsOngoingStateTeste() {
 
 		//GIVEN a task in the state OnGoing and a list of possible actions
-		task2.setTaskState(new OnGoing());
+		taskGetActions.setTaskState(new OnGoing());
 		List<String> actions = new ArrayList<>();
 		actions.add("2");
 		actions.add("3");
@@ -280,10 +496,10 @@ public class TaskStateInterfaceTests {
 		actions.add("12");
 
 		//WHEN the method getActions from its state is called
-		task2.getTaskState().getActions();
+		taskGetActions.getTaskState().getActions();
 
 		//THEN a list of actions must be returned
-		assertEquals(actions, task2.getTaskState().getActions());
+		assertEquals(actions, taskGetActions.getTaskState().getActions());
 	}
 
 	/**
@@ -295,7 +511,7 @@ public class TaskStateInterfaceTests {
 	public void getActionsStandBYStateTeste() {
 
 		//GIVEN a task in the state StandBy and a list of possible actions
-		task2.setTaskState(new StandBy());
+		taskGetActions.setTaskState(new StandBy());
 		List<String> actions = new ArrayList<>();
 		actions.add("2");
 		actions.add("3");
@@ -303,10 +519,10 @@ public class TaskStateInterfaceTests {
 		actions.add("12");
 
 		//WHEN the method getActions from its state is called
-		task2.getTaskState().getActions();
+		taskGetActions.getTaskState().getActions();
 
 		//THEN a list of actions must be returned
-		assertEquals(actions, task2.getTaskState().getActions());
+		assertEquals(actions, taskGetActions.getTaskState().getActions());
 	}
 
 
@@ -319,16 +535,16 @@ public class TaskStateInterfaceTests {
 	public void getActionsFinishedStateTeste() {
 
 		//GIVEN a task in the state created and a list of possible actions
-		task2.setTaskState(new Finished());
+		taskGetActions.setTaskState(new Finished());
 		List<String> actions = new ArrayList<>();
 		actions.add("3");
 		actions.add("13");
 
 		//WHEN the method getActions from its state is called
-		task2.getTaskState().getActions();
+		taskGetActions.getTaskState().getActions();
 
 		//THEN a list of actions must be returned
-		assertEquals(actions, task2.getTaskState().getActions());
+		assertEquals(actions, taskGetActions.getTaskState().getActions());
 	}
 
 	/**
@@ -340,15 +556,15 @@ public class TaskStateInterfaceTests {
 	public void getActionsCancelledStateTeste() {
 
 		//GIVEN a task in the state Cancelled and a list of possible actions
-		task2.setTaskState(new Cancelled());
+		taskGetActions.setTaskState(new Cancelled());
 		List<String> actions = new ArrayList<>();
 		actions.add("3");
 
 		//WHEN the method getActions from its state is called
-		task2.getTaskState().getActions();
+		taskGetActions.getTaskState().getActions();
 
 		//THEN a list of actions must be returned
-		assertEquals(actions, task2.getTaskState().getActions());
+		assertEquals(actions, taskGetActions.getTaskState().getActions());
 	}
 
 

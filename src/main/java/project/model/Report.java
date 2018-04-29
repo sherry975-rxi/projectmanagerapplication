@@ -23,7 +23,7 @@ import java.util.Objects;
 public class Report extends ResourceSupport {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIdentityReference(alwaysAsId = true)
     private int reportDbId;
 	private double reportedTime;

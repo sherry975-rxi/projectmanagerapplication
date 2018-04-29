@@ -37,7 +37,11 @@ public class TaskCollaboratorTest {
 		estimatedStartDate.set(2017, Calendar.JANUARY, 14);
 		taskDeadline = Calendar.getInstance();
 		taskDeadline.set(2017, Calendar.NOVEMBER, 17);
-		task1 = new Task(111, 222, "Task 1", 50, estimatedStartDate, taskDeadline, 2000);
+		task1 = new Task("Task1", new Project());
+		task1.setEstimatedTaskStartDate(estimatedStartDate);
+		task1.setTaskDeadline(taskDeadline);
+		task1.setEstimatedTaskEffort(50);
+		task1.setEstimatedTaskEffort(2000);
 
 	}
 
@@ -231,9 +235,9 @@ public class TaskCollaboratorTest {
 		assertFalse(workerTester.equals(userTester));// using an object of a different class
 		// sets the finishDate for workerTester3 with the same as workerTester2. They
 		// are also the same user
-		workerTester3.addFinishDateForTaskCollaborator();
-		workerTester3.getFinishDate().add(Calendar.DAY_OF_MONTH, -5);
-		// assertTrue(workerTester3.equals(workerTester2));
+		workerTester3.setFinishDate(null);
+		workerTester2.getFinishDate().add(Calendar.DAY_OF_MONTH, -5);
+		assertFalse(workerTester3.equals(workerTester2));
 	}
 
 	/**

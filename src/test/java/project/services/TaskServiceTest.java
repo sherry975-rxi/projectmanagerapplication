@@ -10,9 +10,7 @@ import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 import project.repository.TaskRepository;
-import project.repository.UserRepository;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -87,7 +85,7 @@ public class TaskServiceTest {
         listTaskCollaborator.add(taskCollaborator);
         when(taskMock.getTaskTeam()).thenReturn(listTaskCollaborator);
 
-        //when the current state is finished, the task is added to list
+        // when the current state is finished, the task is added to list
         when(taskMock.getCurrentState()).thenReturn(StateEnum.FINISHED);
         List<Task> expectedTaskList = new ArrayList<>();
         expectedTaskList.add(taskMock);
@@ -106,7 +104,7 @@ public class TaskServiceTest {
         this.startDate.set(Calendar.HOUR_OF_DAY, 14);
 
         this.user = new User("name", "email", "idNumber", "function", "phone");
-        this.user2 = new User ("Nuno", "nuno@emai.com", "1012", "tester", "987-23");
+        this.user2 = new User("Nuno", "nuno@emai.com", "1012", "tester", "987-23");
         this.project = projectService.createProject("testing", "Test", user);
         this.projectCollaborator = new ProjectCollaborator(user, 10);
         this.projectCollaborator2 = new ProjectCollaborator(user, 10);
@@ -126,11 +124,14 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the getFinishedTasksFromUser() method to verify if the tasks from a certain user, marked as finished,
-     * are returned.
+     * Tests the getFinishedTasksFromUser() method to verify if the tasks from a
+     * certain user, marked as finished, are returned.
      */
     @Test
     public void testGetAllFinishedTasksFromUser() {
+
+        // GIVEN
+        // a list of tasks from a user
         List<Task> taskListMock = new ArrayList<>();
         taskListMock.add(taskMock);
         when(taskRepository.findAll()).thenReturn(taskListMock);
@@ -139,21 +140,47 @@ public class TaskServiceTest {
         listTaskCollaborator.add(taskCollaborator);
         when(taskMock.getTaskTeam()).thenReturn(listTaskCollaborator);
 
-        //when the current state is finished, the task is added to list
+        // WHEN
+        // the current state is finished
         when(taskMock.getCurrentState()).thenReturn(StateEnum.FINISHED);
         List<Task> expectedTaskList = new ArrayList<>();
         expectedTaskList.add(taskMock);
-        assertEquals(expectedTaskList, victim.getAllFinishedTasksFromUser(user));
 
-        //when the current state isn't finished, the task isn't added to list
-        when(taskMock.getCurrentState()).thenReturn(StateEnum.CREATED);
-        expectedTaskList.remove(taskMock);
+        // THEN
+        // the task is added to list
         assertEquals(expectedTaskList, victim.getAllFinishedTasksFromUser(user));
     }
 
     /**
-     * Tests the getUnfinishedUserTaskList() method to verify if the tasks from a certain user, marked as unfinished,
-     * are returned.
+     * Tests the getFinishedTasksFromUser() method to verify if the tasks from a
+     * certain user, not marked as finished, is not returned.
+     */
+    @Test
+    public void shouldNotGetAllFinishedTasksFromUserWhenCurrentStateIsNotFInished() {
+        // GIVEN
+        // a list of tasks from a user
+        List<Task> taskListMock = new ArrayList<>();
+        taskListMock.add(taskMock);
+        when(taskRepository.findAll()).thenReturn(taskListMock);
+
+        List<TaskCollaborator> listTaskCollaborator = new ArrayList<>();
+        listTaskCollaborator.add(taskCollaborator);
+        when(taskMock.getTaskTeam()).thenReturn(listTaskCollaborator);
+
+        // WHEN
+        // the current state isn't finished
+        List<Task> expectedTaskList = new ArrayList<>();
+        when(taskMock.getCurrentState()).thenReturn(StateEnum.CREATED);
+        expectedTaskList.remove(taskMock);
+
+        // THEN
+        // the task isn't added to list
+        assertEquals(expectedTaskList, victim.getAllFinishedTasksFromUser(user));
+    }
+
+    /**
+     * Tests the getUnfinishedUserTaskList() method to verify if the tasks from a
+     * certain user, marked as unfinished, are returned.
      */
     @Test
     public void testGetUnfinishedUserTaskList() {
@@ -172,8 +199,9 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the getStartedNotFinishedUserTaskList() method to verify if the tasks from a certain user, marked as Started but
-     * the state "unfinished" are returned.
+     * Tests the getStartedNotFinishedUserTaskList() method to verify if the tasks
+     * from a certain user, marked as Started but the state "unfinished" are
+     * returned.
      */
     @Test
     public void testGetStartedNotFinishedUserTaskList() {
@@ -268,7 +296,7 @@ public class TaskServiceTest {
         when(taskMock.getTaskTeam()).thenReturn(taskCollaboratorsList);
         when(task2Mock.getTaskTeam()).thenReturn(taskCollaboratorsList);
         when(taskCollaboratorMock.getProjectCollaboratorFromTaskCollaborator()).thenReturn(projectCollaborator);
-       // when(projectCollaboratorMock.getCollaborator()).thenReturn(user);
+        // when(projectCollaboratorMock.getCollaborator()).thenReturn(user);
         when(task2Mock.getCurrentState()).thenReturn(StateEnum.FINISHED);
         when(taskMock.getCurrentState()).thenReturn(StateEnum.FINISHED);
 
@@ -317,15 +345,15 @@ public class TaskServiceTest {
         orderedListToCompare.add(taskMock);
         orderedListToCompare.add(task2Mock);
 
-
         List<Task> trueList = victim.getFinishedUserTasksFromLastMonthInDecreasingOrder(user);
 
         assertEquals(orderedListToCompare, trueList);
     }
 
     /**
-     * Tests the getAllFinishedUserTasksInDecreasingOrder() method, to verify f a list with the finished tasks of a
-     * certain user by decreasing order of date is returned.
+     * Tests the getAllFinishedUserTasksInDecreasingOrder() method, to verify f a
+     * list with the finished tasks of a certain user by decreasing order of date is
+     * returned.
      */
     @Test
     public void testGetAllFinishedUserTasksInDecreasingOrder() {
@@ -338,7 +366,7 @@ public class TaskServiceTest {
         listTaskCollaborator.add(taskCollaborator);
         when(taskMock.getTaskTeam()).thenReturn(listTaskCollaborator);
 
-        //when the current state is finished, the task is added to list
+        // when the current state is finished, the task is added to list
         when(taskMock.getCurrentState()).thenReturn(StateEnum.FINISHED);
         List<Task> expectedTaskList = new ArrayList<>();
         expectedTaskList.add(taskMock);
@@ -381,8 +409,8 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the getUnfinishedTasksFromProjectCollaborator() method to verify if a list of all unfinished tasks
-     * of a certain project is returned.
+     * Tests the getUnfinishedTasksFromProjectCollaborator() method to verify if a
+     * list of all unfinished tasks of a certain project is returned.
      */
     @Test
     public void testGetUnFinishedTasksFromProjectCollaborator() {
@@ -397,49 +425,116 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the getStartedNotFinishedTasksFromProjectCollaborator() method to verify if a list of started, but not yes finished tasks,
-     * assigned to a certain project collaborator, is returned.
+     * Tests the getStartedNotFinishedTasksFromProjectCollaborator() method to
+     * verify if a list of started, but not yes finished tasks, assigned to a
+     * certain project collaborator, is returned.
      */
     @Test
-    public void testGetStartedNotFinishedTasksFromProjectCollaborator() {
+    public void shouldGetStartedNotFinishedTasksFromProjectCollaborator() {
+
+        // GIVEN
+        // a list of tasks from a user
         List<Task> taskListMock = new ArrayList<>();
         taskListMock.add(taskMock);
         when(victim.getAllTasksFromProjectCollaborator(projectCollaborator)).thenReturn(taskListMock);
 
-        //test that when condition is other.isTaskFinished() is false, the task is removed from list
+        // WHEN
+        // condition is other.isTaskFinished() is false
         when(taskMock.isTaskFinished()).thenReturn(false);
         when(taskMock.viewTaskStateName()).thenReturn("Cancelled");
         when(taskMock.getStartDate()).thenReturn(startDate);
         when(taskMock.isProjectCollaboratorInTaskTeam(projectCollaborator)).thenReturn(true);
         List<Task> expectedTaskList = new ArrayList<>();
-        assertEquals(expectedTaskList, victim.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
 
-        //test that when condition is "Cancelled".equals(other.viewTaskStateName()) is false, the task is removed from list
+        // THEN
+        // the task is removed from list
+        assertEquals(expectedTaskList, victim.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
+    }
+
+    /**
+     * Tests the getStartedNotFinishedTasksFromProjectCollaborator() method to
+     * verify if a list of started, but not yes finished tasks, assigned to a
+     * certain project collaborator, is returned.
+     */
+    @Test
+    public void shouldGetStartedNotFinishedTasksFromProjectCollaboratorWhenTaskIsCancelled() {
+
+        // GIVEN
+        // a list of tasks from a user
+        List<Task> taskListMock = new ArrayList<>();
+        taskListMock.add(taskMock);
+        when(victim.getAllTasksFromProjectCollaborator(projectCollaborator)).thenReturn(taskListMock);
+
+        // WHEN condition is "Cancelled".equals(other.viewTaskStateName()) is false
+        List<Task> expectedTaskList = new ArrayList<>();
         when(taskMock.isTaskFinished()).thenReturn(true);
         when(taskMock.viewTaskStateName()).thenReturn("Finished");
         when(taskMock.getStartDate()).thenReturn(startDate);
         when(taskMock.isProjectCollaboratorInTaskTeam(projectCollaborator)).thenReturn(true);
-        assertEquals(expectedTaskList, victim.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
 
-        //test that when condition is other.getStartDate() == null is false, the task is removed from list
+        // THEN
+        // the task is removed from list
+        assertEquals(expectedTaskList, victim.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
+    }
+
+    /**
+     * Tests the getStartedNotFinishedTasksFromProjectCollaborator() method to
+     * verify if a list of started, but not yes finished tasks, assigned to a
+     * certain project collaborator, is returned.
+     */
+    @Test
+    public void shouldGetStartedNotFinishedTasksFromProjectCollaboratorWhenTaskIsNotStarted() {
+
+        // GIVEN
+        // a list of tasks from a user
+        List<Task> taskListMock = new ArrayList<>();
+        taskListMock.add(taskMock);
+        when(victim.getAllTasksFromProjectCollaborator(projectCollaborator)).thenReturn(taskListMock);
+
+        // WHEN
+        // condition is other.getStartDate() == null is false
+        List<Task> expectedTaskList = new ArrayList<>();
         when(taskMock.isTaskFinished()).thenReturn(true);
         when(taskMock.viewTaskStateName()).thenReturn("Cancelled");
         when(taskMock.getStartDate()).thenReturn(null);
         when(taskMock.isProjectCollaboratorInTaskTeam(projectCollaborator)).thenReturn(true);
-        assertEquals(expectedTaskList, victim.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
 
-        //test that when all conditions are false, the task is not removed from list
+        // THEN
+        // the task is removed from list
+        assertEquals(expectedTaskList, victim.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
+    }
+
+    /**
+     * Tests the getStartedNotFinishedTasksFromProjectCollaborator() method to
+     * verify if a list of started, but not yes finished tasks, assigned to a
+     * certain project collaborator, is returned.
+     */
+    @Test
+    public void shouldNotGetStartedNotFinishedTasksFromProjectCollaborator() {
+
+        // GIVEN
+        // a list of tasks from a user
+        List<Task> taskListMock = new ArrayList<>();
+        taskListMock.add(taskMock);
+        when(victim.getAllTasksFromProjectCollaborator(projectCollaborator)).thenReturn(taskListMock);
+
+        // WHEN
+        // all conditions are false
+        List<Task> expectedTaskList = new ArrayList<>();
         expectedTaskList.add(taskMock);
         when(taskMock.isTaskFinished()).thenReturn(false);
         when(taskMock.viewTaskStateName()).thenReturn("Finished");
         when(taskMock.getStartDate()).thenReturn(startDate);
         when(taskMock.isProjectCollaboratorInTaskTeam(projectCollaborator)).thenReturn(true);
+
+        // THEN
+        // the task is NOT removed from list
         assertEquals(expectedTaskList, victim.getStartedNotFinishedTasksFromProjectCollaborator(projectCollaborator));
     }
 
     /**
-     * Tests the getFinishedTaskListofUserInProject() method to verify if a list of only the finished tasks of a
-     * certain user in a project is returned.
+     * Tests the getFinishedTaskListofUserInProject() method to verify if a list of
+     * only the finished tasks of a certain user in a project is returned.
      */
     @Test
     public void testFinishedTaskListOfUserInProject() {
@@ -453,16 +548,48 @@ public class TaskServiceTest {
         assertEquals(expectedTaskList, victim.getFinishedTaskListOfUserInProject(projectCollaborator));
     }
 
-
     /**
-     * Tests the getFinishedTasksFromProjectCollaboratorInGivenMonth() method to verify if a list of all tasks
-     * finished x months ago by a certain project collaborator is returned.
+     * Tests the getFinishedTasksFromProjectCollaboratorInGivenMonth() method to
+     * verify if a list of all tasks finished x months ago (this month) by a certain
+     * project collaborator is returned.
      */
     @Test
-    public void testGetFinishedTasksFromProjectCollaboratorInGivenMonth() {
+    public void shouldGetFinishedTasksFromProjectCollaboratorInGivenMonthThis() {
+
+        // GIVEN
+        // a list of tasks from ProjectCollab
         Calendar calendar = Calendar.getInstance();
         this.mocksGetTaskRepository();
 
+        // WHEN
+        // ProjectCollab is in task
+        when(taskMock.isTaskFinished()).thenReturn(true);
+        when(taskMock.getFinishDate()).thenReturn(calendar);
+        when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
+        // THEN
+        // one can GetFinishedTasksFromProjectCollaboratorInGivenMonthThis
+        assertEquals(expectedTaskList,
+                victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
+    }
+
+    /**
+     * Tests the getFinishedTasksFromProjectCollaboratorInGivenMonth() method to
+     * verify if a list of all tasks finished x months ago (the last) by a certain
+     * project collaborator is returned.
+     */
+    @Test
+    public void shouldGetFinishedTasksFromProjectCollaboratorInGivenMonthTheLast() {
+
+        // GIVEN
+        // a list of tasks from ProjectCollab
+        Calendar calendar = Calendar.getInstance();
+        this.mocksGetTaskRepository();
+
+        // WHEN
+        // ProjectCollab is in task
         when(taskMock.isTaskFinished()).thenReturn(true);
         when(taskMock.getFinishDate()).thenReturn(calendar);
         when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
@@ -470,61 +597,164 @@ public class TaskServiceTest {
         List<Task> expectedTaskList = new ArrayList<>();
         expectedTaskList.add(taskMock);
 
-        assertEquals(expectedTaskList, victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
-        assertEquals(expectedTaskList, victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, -1));
+        // THEN
+        // one can GetFinishedTasksFromProjectCollaboratorInGivenMonthTheLast
+        assertEquals(expectedTaskList,
+                victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, -1));
+    }
 
+    /**
+     * Tests the getFinishedTasksFromProjectCollaboratorInGivenMonth() method to
+     * verify if a list of all tasks finished x months ago by a certain project
+     * collaborator is returned.
+     */
+    @Test
+    public void shouldNotGetFinishedTasksFromProjectCollaborator() {
 
-        calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
+        // GIVEN
+        // a list of tasks from ProjectCollab
+        Calendar calendar = Calendar.getInstance();
+        this.mocksGetTaskRepository();
+
+        // WHEN
+        // ProjectCollab is in task
+        when(taskMock.isTaskFinished()).thenReturn(true);
         when(taskMock.getFinishDate()).thenReturn(calendar);
-
-        assertEquals(new ArrayList<>(), victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
-    }
-
-    /**
-     * Tests the isTaskinTaskRepository() method to verify if a certain task exists in the task list.
-     */
-    @Test
-    public void testIsTaskInTaskContainer() {
-        this.mocksGetTaskRepository();
-
-        assertTrue(victim.isTaskInTaskRepository(taskMock));
-        assertFalse(victim.isTaskInTaskRepository(new Task()));
-    }
-
-    /**
-     * Tests the getAllTasksFromProjectCollaborator() method to verify if a list of all the tasks of a certain
-     * user, which is a project collaborator, is returned.
-     */
-    @Test
-    public void testGetAllTasksFromProjectCollaborator() {
-        this.mocksGetTaskRepository();
-
         when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
 
         List<Task> expectedTaskList = new ArrayList<>();
         expectedTaskList.add(taskMock);
 
+        calendar.set(Calendar.MONTH, Calendar.FEBRUARY);
+        when(taskMock.getFinishDate()).thenReturn(calendar);
+
+        // THEN
+        // one shouldNotGetFinishedTasksFromProjectCollaborator
+        assertEquals(new ArrayList<>(),
+                victim.getFinishedTasksFromProjectCollaboratorInGivenMonth(projectCollaborator, 0));
+    }
+
+    /**
+     * Tests the isTaskinTaskRepository() method to verify if a certain task exists
+     * in the task list.
+     */
+    @Test
+    public void isTaskInTaskContainer() {
+        // GIVEN
+        // a task Repository
+        this.mocksGetTaskRepository();
+
+        // WHEN a task is in task Repository
+        // Then the method returns true
+        assertTrue(victim.isTaskInTaskRepository(taskMock));
+    }
+
+    /**
+     * Tests the isTaskinTaskRepository() method to verify if a certain task exists
+     * in the task list.
+     */
+    @Test
+    public void isNotTaskInTaskContainer() {
+
+        // GIVEN
+        // a task Repository
+        this.mocksGetTaskRepository();
+
+        // WHEN a task is not in task Repository
+        // Then the method returns false
+        assertFalse(victim.isTaskInTaskRepository(new Task()));
+    }
+
+    /**
+     * Tests the getAllTasksFromProjectCollaborator() method to verify if a list of
+     * all the tasks of a certain user, which is a project collaborator, is
+     * returned.
+     */
+    @Test
+    public void testGetAllTasksFromProjectCollaborator() {
+
+        // GIVEN
+        // a task Repository
+        this.mocksGetTaskRepository();
+
+        // WHEN asked to return all tasks from a ProjCollab
+        when(taskMock.isProjectCollaboratorInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
+
+        // THEN the method returns the list of all tasks from ProjCollab
         assertEquals(expectedTaskList, victim.getAllTasksFromProjectCollaborator(projectCollaborator));
     }
 
     /**
-     * Tests the isCollaboratorActiveOnAnyTask() method to verify if a given user had any task assigned to him.
+     * Tests the isCollaboratorActiveOnAnyTask() method to verify if a given user
+     * had any task assigned to him.
      */
     @Test
-    public void testIsCollaboratorActiveOnAnyTask() {
+    public void isCollaboratorActiveOnAnyTask() {
+        // GIVEN
+        // a task Repository
         this.mocksGetTaskRepository();
 
+        // WHEN a Collaborator is active on a task
         when(taskMock.isProjectCollaboratorActiveInTaskTeam(any(ProjectCollaborator.class))).thenReturn(true);
+
+        // THEN the method returns true
         assertTrue(victim.isCollaboratorActiveOnAnyTask(projectCollaborator));
+    }
 
+    /**
+     * Tests the isCollaboratorActiveOnAnyTask() method to verify if a given user
+     * had any task assigned to him.
+     */
+    @Test
+    public void isNotCollaboratorActiveOnAnyTask() {
 
+        // GIVEN
+        // a task Repository
+        this.mocksGetTaskRepository();
+        // WHEN a Collaborator is NOT active on a task
         when(taskMock.isProjectCollaboratorActiveInTaskTeam(any(ProjectCollaborator.class))).thenReturn(false);
+
+        // THEN the method returns false
         assertFalse(victim.isCollaboratorActiveOnAnyTask(projectCollaborator));
     }
 
     /**
-     * Tests the getProjectTasksWithoutCollaboratorAssigned() method to verify if a list with all the tasks without
-     * collaborators assigned is returned.
+     * Tests the getProjectTasksWithoutCollaboratorAssigned() method to verify if a
+     * list with all the tasks without collaborators assigned is returned.
+     */
+    @Test
+    public void shouldGetAllTasksWithoutCollaboratorsAssigned() {
+        this.mocksGetProjectTasks();
+
+        when(taskMock.isTaskTeamEmpty()).thenReturn(true);
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
+        assertEquals(expectedTaskList, victim.getProjectTasksWithoutCollaboratorsAssigned(project));
+    }
+
+    /**
+     * Tests the getProjectTasksWithoutCollaboratorAssigned() method to verify if a
+     * list with all the tasks without collaborators assigned is returned.
+     */
+    @Test
+    public void shouldNotGetAllTasksWithoutCollaboratorsAssigned() {
+        this.mocksGetProjectTasks();
+
+        when(taskMock.isTaskTeamEmpty()).thenReturn(true);
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
+
+        when(taskMock.isTaskTeamEmpty()).thenReturn(false);
+        when(taskMock.doesTaskTeamHaveActiveUsers()).thenReturn(false);
+        assertEquals(expectedTaskList, victim.getProjectTasksWithoutCollaboratorsAssigned(project));
+    }
+
+    /**
+     * Tests the getProjectTasksWithoutCollaboratorAssigned() method to verify if a
+     * list with all the tasks without collaborators assigned is returned.
      */
     @Test
     public void testGetAllTasksWithoutCollaboratorsAssigned() {
@@ -533,11 +763,6 @@ public class TaskServiceTest {
         when(taskMock.isTaskTeamEmpty()).thenReturn(true);
         List<Task> expectedTaskList = new ArrayList<>();
         expectedTaskList.add(taskMock);
-        assertEquals(expectedTaskList, victim.getProjectTasksWithoutCollaboratorsAssigned(project));
-
-        when(taskMock.isTaskTeamEmpty()).thenReturn(false);
-        when(taskMock.doesTaskTeamHaveActiveUsers()).thenReturn(false);
-        assertEquals(expectedTaskList, victim.getProjectTasksWithoutCollaboratorsAssigned(project));
 
         when(taskMock.isTaskTeamEmpty()).thenReturn(false);
         when(taskMock.doesTaskTeamHaveActiveUsers()).thenReturn(true);
@@ -546,8 +771,8 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the getProjectFinishedTasks() method to verify is a list with all finished tasks
-     * from a certain project is returned.
+     * Tests the getProjectFinishedTasks() method to verify is a list with all
+     * finished tasks from a certain project is returned.
      */
     @Test
     public void testGetProjectFinishedTasks() {
@@ -561,8 +786,8 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the getFinishedTasksInDecreasingOrder() method, to verify if a list of all tasks finished from
-     * a certain project in decreasing order is returned.
+     * Tests the getFinishedTasksInDecreasingOrder() method, to verify if a list of
+     * all tasks finished from a certain project in decreasing order is returned.
      */
     @Test
     public void testGetProjectFinishedTasksInDecreasingOrder() {
@@ -588,8 +813,8 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the get ProjectUnfinishedTasks() method to verify if a list with all unfinished tasks
-     * in a certain project is returned.
+     * Tests the get ProjectUnfinishedTasks() method to verify if a list with all
+     * unfinished tasks in a certain project is returned.
      */
     @Test
     public void testGetUnFinishedTasks() {
@@ -608,8 +833,8 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the getProjectOnGoingTasks() method to verify if a list with
-     * all the OnGoing tasks is returned.
+     * Tests the getProjectOnGoingTasks() method to verify if a list with all the
+     * OnGoing tasks is returned.
      */
     @Test
     public void testGetProjectOnGoingTasks() {
@@ -626,11 +851,12 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the getProjectUnstartedTasks() method to verify if a list with all unstarted tasks
-     * (with the stated "Created", "Planned" and/or "Ready") of a certain project is returned.
+     * Tests the getProjectUnstartedTasks() method to verify if a list with all not
+     * started tasks (with the stated "Created", "Planned" and/or "Ready") of a
+     * certain project is returned.
      */
     @Test
-    public void testGetProjectUnstartedTasks() {
+    public void shouldGetProjectUnstartedTasksIfTaskCreated() {
         this.mocksGetProjectTasks();
 
         TaskStateInterface created = new Created();
@@ -638,23 +864,52 @@ public class TaskServiceTest {
         List<Task> expectedTaskList = new ArrayList<>();
         expectedTaskList.add(taskMock);
         assertEquals(expectedTaskList, victim.getProjectUnstartedTasks(project));
+    }
+
+    /**
+     * Tests the getProjectUnstartedTasks() method to verify if a list with all not
+     * started tasks (with the stated "Created", "Planned" and/or "Ready") of a
+     * certain project is returned.
+     */
+    @Test
+    public void shouldGetProjectUnstartedTasksIfTaskPlanned() {
+        this.mocksGetProjectTasks();
+
+        TaskStateInterface created = new Created();
+        when(taskMock.getTaskState()).thenReturn(created);
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
 
         TaskStateInterface planned = new Planned();
         when(taskMock.getTaskState()).thenReturn(planned);
         assertEquals(expectedTaskList, victim.getProjectUnstartedTasks(project));
+    }
 
+    /**
+     * Tests the getProjectUnstartedTasks() method to verify if a list with all not
+     * started tasks (with the stated "Created", "Planned" and/or "Ready") of a
+     * certain project is returned.
+     */
+    @Test
+    public void shouldNotGetProjectUnstartedTasksIfTaskReady() {
+        this.mocksGetProjectTasks();
+
+        TaskStateInterface created = new Created();
+        when(taskMock.getTaskState()).thenReturn(created);
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
+        assertEquals(expectedTaskList, victim.getProjectUnstartedTasks(project));
         TaskStateInterface ready = new Ready();
         when(taskMock.getTaskState()).thenReturn(ready);
         assertEquals(expectedTaskList, victim.getProjectUnstartedTasks(project));
     }
 
-
     /**
-     * Tests the getProjectExpiredTasks() method to verify if a list of all the tasks marked as unfinished
-     * but which deadline already passed, is returned.
+     * Tests the getProjectExpiredTasks() method to verify if a list of all the
+     * tasks marked as unfinished but which deadline already passed, is returned.
      */
     @Test
-    public void testGetExpiredTasks() {
+    public void shouldGetExpiredTasks() {
         Calendar calendar2 = Calendar.getInstance();
         calendar2.add(Calendar.MONTH, -1);
 
@@ -662,7 +917,7 @@ public class TaskServiceTest {
         taskList.add(taskMock);
         when(taskRepository.findAllByProject(project)).thenReturn(taskList);
 
-        //all conditions on if are true
+        // all conditions on if are true
         when(taskMock.isTaskFinished()).thenReturn(false);
         when(taskMock.getTaskDeadline()).thenReturn(calendar2);
 
@@ -670,7 +925,27 @@ public class TaskServiceTest {
         expectedTaskList.add(taskMock);
         assertEquals(expectedTaskList, victim.getProjectExpiredTasks(project));
 
-        //the condition other.getTaskDeadline().before(today) is false
+    }
+
+    /**
+     * Tests the getProjectExpiredTasks() method to verify if a list of all the
+     * tasks marked as unfinished but which deadline already passed, is returned.
+     */
+    @Test
+    public void shouldGetExpiredTasksWithConditions() {
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.add(Calendar.MONTH, -1);
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(taskMock);
+        when(taskRepository.findAllByProject(project)).thenReturn(taskList);
+
+
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
+
+
+        // the condition other.getTaskDeadline().before(today) is false
         when(taskMock.isTaskFinished()).thenReturn(false);
         Calendar calendar = Calendar.getInstance();
         when(taskMock.getTaskDeadline()).thenReturn(calendar);
@@ -678,12 +953,60 @@ public class TaskServiceTest {
         taskList.remove(taskMock);
         assertEquals(expectedTaskList, victim.getProjectExpiredTasks(project));
 
-        //the condition other.getTaskDeadline() != null is false
+    }
+
+    /**
+     * Tests the getProjectExpiredTasks() method to verify if a list of all the
+     * tasks marked as unfinished but which deadline already passed, is returned.
+     */
+    @Test
+    public void shouldNottGetExpiredTasksWithConditionNoDeadLine() {
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.add(Calendar.MONTH, -1);
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(taskMock);
+        when(taskRepository.findAllByProject(project)).thenReturn(taskList);
+
+
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
+
+        expectedTaskList.remove(taskMock);
+        taskList.remove(taskMock);
+
+
+        // the condition other.getTaskDeadline() != null is false
         when(taskMock.isTaskFinished()).thenReturn(false);
         when(taskMock.getTaskDeadline()).thenReturn(null);
         assertEquals(expectedTaskList, victim.getProjectExpiredTasks(project));
 
-        //the condition !other.isTaskFinished() is false
+    }
+
+    /**
+     * Tests the getProjectExpiredTasks() method to verify if a list of all the
+     * tasks marked as unfinished but which deadline already passed, is returned.
+     */
+    @Test
+    public void shouldNotGetExpiredTasks() {
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.add(Calendar.MONTH, -1);
+
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(taskMock);
+        when(taskRepository.findAllByProject(project)).thenReturn(taskList);
+
+
+        List<Task> expectedTaskList = new ArrayList<>();
+        expectedTaskList.add(taskMock);
+
+
+        // the condition other.getTaskDeadline().before(today) is false
+        expectedTaskList.remove(taskMock);
+        taskList.remove(taskMock);
+
+
+        // the condition !other.isTaskFinished() is false
         when(taskMock.isTaskFinished()).thenReturn(true);
         when(taskMock.getTaskDeadline()).thenReturn(calendar2);
         assertEquals(expectedTaskList, victim.getProjectExpiredTasks(project));
@@ -696,43 +1019,99 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the deleteTask() method to verify if a task is deleted from the Task repository, if
-     * it hasn't started.
+     * Tests the deleteTask() method to verify if a task is deleted from the Task
+     * repository, if it hasn't started.
      */
     @Test
-    public void testDeleteTask() {
+    public void shouldDeleteTaskPlanned() {
         String taskId = "T0.1";
         taskMock.setTaskID(taskId);
         when(taskRepository.findByTaskID(taskId)).thenReturn(Optional.of(taskMock));
 
         when(taskMock.viewTaskStateName()).thenReturn("Planned");
         assertTrue(victim.deleteTask(taskId));
+    }
+
+    /**
+     * Tests the deleteTask() method to verify if a task is deleted from the Task
+     * repository, if it hasn't started.
+     */
+    @Test
+    public void shouldDeleteTaskCreated() {
+        String taskId = "T0.1";
+        taskMock.setTaskID(taskId);
+        when(taskRepository.findByTaskID(taskId)).thenReturn(Optional.of(taskMock));
+
 
         when(taskMock.viewTaskStateName()).thenReturn("Created");
         assertTrue(victim.deleteTask(taskId));
 
+    }
+
+    /**
+     * Tests the deleteTask() method to verify if a task is deleted from the Task
+     * repository, if it hasn't started.
+     */
+    @Test
+    public void shouldDeleteTaskPReady() {
+        String taskId = "T0.1";
+        taskMock.setTaskID(taskId);
+        when(taskRepository.findByTaskID(taskId)).thenReturn(Optional.of(taskMock));
+
         when(taskMock.viewTaskStateName()).thenReturn("Ready");
         assertTrue(victim.deleteTask(taskId));
 
+    }
+
+    /**
+     * Tests the deleteTask() method to verify if a task is deleted from the Task
+     * repository, if it hasn't started.
+     */
+    @Test
+    public void shouldDeleteTaskAssigned() {
+        String taskId = "T0.1";
+        taskMock.setTaskID(taskId);
+        when(taskRepository.findByTaskID(taskId)).thenReturn(Optional.of(taskMock));
         when(taskMock.viewTaskStateName()).thenReturn("Assigned");
         assertTrue(victim.deleteTask(taskId));
+    }
 
+    /**
+     * Tests the deleteTask() method to verify if a task is deleted from the Task
+     * repository, if it hasn't started.
+     */
+    @Test
+    public void shouldDeleteTaskFinished() {
+        String taskId = "T0.1";
+        taskMock.setTaskID(taskId);
+        when(taskRepository.findByTaskID(taskId)).thenReturn(Optional.of(taskMock));
         when(taskMock.viewTaskStateName()).thenReturn("Finished");
         assertFalse(victim.deleteTask(taskId));
     }
 
     /**
-     * Tests the getProjectCancelledTasks() method to verify if a list of all cancelled tasks
-     * in a certain project is returned.
+     * Tests the getProjectCancelledTasks() method to verify if a list of all
+     * cancelled tasks in a certain project is returned.
      */
     @Test
-    public void testGetProjectCancelledTasks() {
+    public void shouldNotGetProjectCancelledTasksIfTasksAreFinished() {
         this.mocksGetProjectTasks();
 
         TaskStateInterface finished = new Finished();
         when(taskMock.getTaskState()).thenReturn(finished);
         List<Task> expectedTaskList = new ArrayList<>();
         assertEquals(expectedTaskList, victim.getProjectCancelledTasks(project));
+    }
+
+    /**
+     * Tests the getProjectCancelledTasks() method to verify if a list of all
+     * cancelled tasks in a certain project is returned.
+     */
+    @Test
+    public void shouldGetProjectCancelledTasksIfTasksAreCancelled() {
+        this.mocksGetProjectTasks();
+
+        List<Task> expectedTaskList = new ArrayList<>();
 
         TaskStateInterface cancelled = new Cancelled();
         when(taskMock.getTaskState()).thenReturn(cancelled);
@@ -741,8 +1120,8 @@ public class TaskServiceTest {
     }
 
     /**
-     * Tests the getReportedCostOfEachTask() method to verify is the cost reported to each task
-     * is returned.
+     * Tests the getReportedCostOfEachTask() method to verify is the cost reported
+     * to each task is returned.
      */
     @Test
     public void testGetReportedCostOfEachTask() {
@@ -759,12 +1138,12 @@ public class TaskServiceTest {
         assertEquals(expectedList.toString().trim(), victim.getReportedCostOfEachTask(project).toString().trim());
     }
 
-
     /**
-     * Tests the various boolean condition checks to validate if a single collaborator was active during the period of a report
+     * Tests the various boolean condition checks to validate if a single
+     * collaborator was active during the period of a report
      */
     @Test
-    public void testWasCollaboratorActiveDuringReport() {
+    public void wasNotCollaboratorActiveDuringReport() {
 
         Calendar oneMonthAgo = Calendar.getInstance();
         oneMonthAgo.add(Calendar.MONTH, -1);
@@ -775,62 +1154,217 @@ public class TaskServiceTest {
         Calendar fourMonthsAgo = Calendar.getInstance();
         fourMonthsAgo.add(Calendar.MONTH, -4);
 
-        //given a task report created started 3 months, and finished two months ago,
+        // given a task report created started 3 months, and finished two months ago,
         Report testing = new Report();
         testing.setTask(taskMock);
         testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
         testing.setFirstDateOfReport(threeMonthsAgo);
         testing.setDateOfUpdate(twoMonthsAgo);
 
-
-        // when a project collaborator has its start date set to one month ago, after the report
+        // when a project collaborator has its start date set to one month ago, after
+        // the report
         projectCollaborator2.setStartDate(oneMonthAgo);
 
-        // then their date intervals Don't intersect, and "wasCollaboratorActiveDuringReport" must return false
+        // then their date intervals Don't intersect, and
+        // "wasCollaboratorActiveDuringReport" must return false
         assertFalse(victim.wasCollaboratorActiveDuringReport(projectCollaborator2, testing));
+
+    }
+
+    /**
+     * Tests the various boolean condition checks to validate if a single
+     * collaborator was active during the period of a report
+     */
+    @Test
+    public void wasCollaboratorActiveDuringReport() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        // given a task report created started 3 months, and finished two months ago,
+        Report testing = new Report();
+        testing.setTask(taskMock);
+        testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(twoMonthsAgo);
+
+        // when a project collaborator has its start date set to one month ago, after
+        // the report
+        projectCollaborator2.setStartDate(oneMonthAgo);
 
 
         // when the report is updated and its date set to Today...
         testing.setDateOfUpdate(Calendar.getInstance());
 
-        // then their date intervals now interset, and "wasCollaboratorActiveDuringReport" must return true
+        // then their date intervals now intersect, and
+        // "wasCollaboratorActiveDuringReport" must return true
         assertTrue(victim.wasCollaboratorActiveDuringReport(projectCollaborator2, testing));
 
+    }
 
-        //given then a different instance of projectCollaborator
 
-        // when he's started and finished on the same date, before the report, their start dates don't intersect
+
+    /**
+     * Tests the various boolean condition checks to validate if a single
+     * collaborator was active during the period of a report
+     */
+    @Test
+    public void WasNOTCollaboratorActiveDuringReportTrue() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        // given a task report created started 3 months, and finished two months ago,
+        Report testing = new Report();
+        testing.setTask(taskMock);
+        testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(twoMonthsAgo);
+
+        // when a project collaborator has its start date set to one month ago, after
+        // the report
+        projectCollaborator2.setStartDate(oneMonthAgo);
+
+
+        // when the report is updated and its date set to Today...
+        testing.setDateOfUpdate(Calendar.getInstance());
+
+
+        // given then a different instance of projectCollaborator
+
+        // when he's started and finished on the same date, before the report, their
+        // start dates don't intersect
         projectCollaborator.setStartDate(fourMonthsAgo);
         projectCollaborator.setFinishDate(fourMonthsAgo);
 
-        //then the tested method must return false
+
+        // then the tested method must return false
         assertFalse(victim.wasCollaboratorActiveDuringReport(projectCollaborator, testing));
+
+    }
+
+    /**
+     * Tests the various boolean condition checks to validate if a single
+     * collaborator was active during the period of a report
+     */
+    @Test
+    public void WasCollaboratorActiveDuringReportTrue() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        // given a task report created started 3 months, and finished two months ago,
+        Report testing = new Report();
+        testing.setTask(taskMock);
+        testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(twoMonthsAgo);
+
+        // when a project collaborator has its start date set to one month ago, after
+        // the report
+        projectCollaborator2.setStartDate(oneMonthAgo);
+
+
+        // when the report is updated and its date set to Today...
+        testing.setDateOfUpdate(Calendar.getInstance());
+
+
+        // given then a different instance of projectCollaborator
+
+        // when he's started and finished on the same date, before the report, their
+        // start dates don't intersect
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(fourMonthsAgo);
 
 
         // when projectCollaborator is given a finish date of two months ago
         projectCollaborator.setFinishDate(twoMonthsAgo);
 
-        //then heir date intervals must now interset
-        assertTrue(victim.wasCollaboratorActiveDuringReport(projectCollaborator, testing));
 
-        // when the projectCollaborator is given a start date of two months ago, and the report set to three months ago
+        // then heir date intervals must now interset
+        assertTrue(victim.wasCollaboratorActiveDuringReport(projectCollaborator, testing));
+    }
+
+    /**
+     * Tests the various boolean condition checks to validate if a single
+     * collaborator was active during the period of a report
+     */
+    @Test
+    public void WasNOTCollaboratorActiveDuringReportWithoutDatesIntersecting() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        // given a task report created started 3 months, and finished two months ago,
+        Report testing = new Report();
+        testing.setTask(taskMock);
+        testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(twoMonthsAgo);
+
+        // when a project collaborator has its start date set to one month ago, after
+        // the report
+        projectCollaborator2.setStartDate(oneMonthAgo);
+
+
+        // when the report is updated and its date set to Today...
+        testing.setDateOfUpdate(Calendar.getInstance());
+
+
+        // given then a different instance of projectCollaborator
+
+        // when he's started and finished on the same date, before the report, their
+        // start dates don't intersect
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(fourMonthsAgo);
+
+        // when projectCollaborator is given a finish date of two months ago
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+
+
+        // when the projectCollaborator is given a start date of two months ago, and the
+        // report set to three months ago
         projectCollaborator.setStartDate(twoMonthsAgo);
         projectCollaborator.setFinishDate(twoMonthsAgo);
 
         testing.setFirstDateOfReport(threeMonthsAgo);
         testing.setDateOfUpdate(threeMonthsAgo);
 
-        //then heir date intervals no longer intersect, as the collaborator started after the report
+        // then heir date intervals no longer intersect, as the collaborator started
+        // after the report
         assertFalse(victim.wasCollaboratorActiveDuringReport(projectCollaborator, testing));
-
     }
 
-
     /**
-     * This method tests the ability to find all collaborators from the same user in the project during the period of a single report
+     * This method tests the ability to find all collaborators from the same user in
+     * the project during the period of a single report
      */
     @Test
-    public void testFindCollaboratorActiveDuringReport() {
+    public void shouldFindOneCollaboratorActiveDuringReport() {
 
         Calendar oneMonthAgo = Calendar.getInstance();
         oneMonthAgo.add(Calendar.MONTH, -1);
@@ -855,7 +1389,8 @@ public class TaskServiceTest {
 
         when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(allCollabs);
 
-        // when the report was started and finished three months ago, meaning only one instance of project collaborator was active
+        // when the report was started and finished three months ago, meaning only one
+        // instance of project collaborator was active
         Report testing = new Report();
         testing.setTask(taskMock);
         testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
@@ -865,7 +1400,45 @@ public class TaskServiceTest {
         // then only projectCollaborator 1 was active during that period
         assertEquals(1, victim.getAllCollaboratorInstancesFromReport(testing).size());
         assertEquals(projectCollaborator, victim.getAllCollaboratorInstancesFromReport(testing).get(0));
+    }
 
+    /**
+     * This method tests the ability to find all collaborators from the same user in
+     * the project during the period of a single report
+     */
+    @Test
+    public void shouldFindTwoCollaboratorsActiveDuringReport() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        // given the same collaborator started four months and ended two months ago
+        // then the same collaborator started two months ago and still active
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+        projectCollaborator2.setStartDate(twoMonthsAgo);
+
+        List<ProjectCollaborator> allCollabs = new ArrayList<>();
+        allCollabs.add(projectCollaborator);
+        allCollabs.add(projectCollaborator2);
+
+        when(taskMock.getProject()).thenReturn(project);
+
+        when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(allCollabs);
+
+        // when the report was started and finished three months ago, meaning only one
+        // instance of project collaborator was active
+        Report testing = new Report();
+        testing.setTask(taskMock);
+        testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(threeMonthsAgo);
 
         // when the report's last update is set to one month ago
         testing.setDateOfUpdate(oneMonthAgo);
@@ -874,16 +1447,114 @@ public class TaskServiceTest {
         assertEquals(2, victim.getAllCollaboratorInstancesFromReport(testing).size());
         assertEquals(projectCollaborator2, victim.getAllCollaboratorInstancesFromReport(testing).get(1));
 
-        // when the report is set as a hypothetical future date (only to test the method's boolean checks)
+    }
+
+    /**
+     * This method tests the ability to find all collaborators from the same user in
+     * the project during the period of a single report
+     */
+    @Test
+    public void shouldFindCollaboratorStillActiveDuringReport() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        // given the same collaborator started four months and ended two months ago
+        // then the same collaborator started two months ago and still active
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+        projectCollaborator2.setStartDate(twoMonthsAgo);
+
+        List<ProjectCollaborator> allCollabs = new ArrayList<>();
+        allCollabs.add(projectCollaborator);
+        allCollabs.add(projectCollaborator2);
+
+        when(taskMock.getProject()).thenReturn(project);
+
+        when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(allCollabs);
+
+        // when the report was started and finished three months ago, meaning only one
+        // instance of project collaborator was active
+        Report testing = new Report();
+        testing.setTask(taskMock);
+        testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(threeMonthsAgo);
+
+
+        // when the report's last update is set to one month ago
+        testing.setDateOfUpdate(oneMonthAgo);
+
+
+        // when the report is set as a hypothetical future date (only to test the
+        // method's boolean checks)
         Calendar futureDate = Calendar.getInstance();
         futureDate.add(Calendar.MONTH, 2);
         testing.setFirstDateOfReport(futureDate);
         testing.setDateOfUpdate(futureDate);
 
-
-        // then the list must contain only collaborators who are still active (ie, no finish date)
+        // then the list must contain only collaborators who are still active (ie, no
+        // finish date)
         assertEquals(1, victim.getAllCollaboratorInstancesFromReport(testing).size());
         assertEquals(projectCollaborator2, victim.getAllCollaboratorInstancesFromReport(testing).get(0));
+
+    }
+
+
+    /**
+     * This method tests the ability to find all collaborators from the same user in
+     * the project during the period of a single report
+     */
+    @Test
+    public void shouldNOTFindCollaboratorActiveDuringReport() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        // given the same collaborator started four months and ended two months ago
+        // then the same collaborator started two months ago and still active
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+        projectCollaborator2.setStartDate(twoMonthsAgo);
+
+        List<ProjectCollaborator> allCollabs = new ArrayList<>();
+        allCollabs.add(projectCollaborator);
+        allCollabs.add(projectCollaborator2);
+
+        when(taskMock.getProject()).thenReturn(project);
+
+        when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(allCollabs);
+
+        // when the report was started and finished three months ago, meaning only one
+        // instance of project collaborator was active
+        Report testing = new Report();
+        testing.setTask(taskMock);
+        testing.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        testing.setFirstDateOfReport(threeMonthsAgo);
+        testing.setDateOfUpdate(threeMonthsAgo);
+
+
+        // when the report's last update is set to one month ago
+        testing.setDateOfUpdate(oneMonthAgo);
+
+        // when the report is set as a hypothetical future date (only to test the
+        // method's boolean checks)
+        Calendar futureDate = Calendar.getInstance();
+        futureDate.add(Calendar.MONTH, 2);
+        testing.setFirstDateOfReport(futureDate);
+        testing.setDateOfUpdate(futureDate);
 
 
         // when their finish date is set to present day
@@ -892,17 +1563,14 @@ public class TaskServiceTest {
         // then no collaborators are active during that future report.
         assertEquals(0, victim.getAllCollaboratorInstancesFromReport(testing).size());
 
-
     }
 
-
-
-
     /**
-     * This test validates if the methods to calculate report costs are all working correctly
+     * This test validates if the methods to calculate report costs are all working
+     * correctly
      */
     @Test
-    public void testCalculateReportsCost() {
+    public void shouldCalculateReportsCostUsingDefaultCalculationMethod() {
 
         Calendar oneMonthAgo = Calendar.getInstance();
         oneMonthAgo.add(Calendar.MONTH, -1);
@@ -915,17 +1583,18 @@ public class TaskServiceTest {
 
         notAmock = project.createTask("This is not a mock");
 
-
-        // given a project collaborator with start date set to four months ago and ended 2 months ago
+        // given a project collaborator with start date set to four months ago and ended
+        // 2 months ago
         projectCollaborator.setStartDate(fourMonthsAgo);
         projectCollaborator.setFinishDate(twoMonthsAgo);
 
-        // when the project collaborator is removed from the project and added again with cost 20,
+        // when the project collaborator is removed from the project and added again
+        // with cost 20,
         projectCollaborator2.setStartDate(twoMonthsAgo);
         projectCollaborator2.setCostPerEffort(20);
 
-
-        //the initial report created three months and ended one month ago has a cost 10, but the collaborator also had a cost 20 during that period
+        // the initial report created three months and ended one month ago has a cost
+        // 10, but the collaborator also had a cost 20 during that period
         Report firstReport = new Report();
         firstReport.setTask(notAmock);
         firstReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
@@ -933,8 +1602,8 @@ public class TaskServiceTest {
         firstReport.setDateOfUpdate(oneMonthAgo);
         firstReport.setCost(10);
 
-
-        // he only creates a second report during his second instance, giving it an initial cost of 20
+        // he only creates a second report during his second instance, giving it an
+        // initial cost of 20
         Report secondReport = new Report();
         secondReport.setTask(notAmock);
         secondReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
@@ -942,6 +1611,233 @@ public class TaskServiceTest {
         secondReport.setFirstDateOfReport(oneMonthAgo);
         secondReport.setDateOfUpdate(Calendar.getInstance());
 
+        List<ProjectCollaborator> collabsFromUser = new ArrayList<>();
+        collabsFromUser.add(projectCollaborator);
+        collabsFromUser.add(projectCollaborator2);
+
+        List<Report> taskReports = new ArrayList<>();
+        taskReports.add(firstReport);
+        taskReports.add(secondReport);
+
+        List<Task> projectTasks = new ArrayList<>();
+        projectTasks.add(notAmock);
+
+        notAmock.setProject(project);
+        notAmock.setReports(taskReports);
+
+        when(taskRepository.findAllByProject(project)).thenReturn(projectTasks);
+
+        when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(collabsFromUser);
+
+        // given the project has a default calculation method of "first collaborator"
+        assertEquals(10, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+        // when the report cost is calculated and updated
+        victim.calculateReportEffortCost(project);
+
+        // then it shoulde remain unchanged
+        assertEquals(10, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+    }
+
+
+    /**
+     * This test validates if the methods to calculate report costs are all working
+     * correctly
+     */
+    @Test
+    public void shoulCalculateReportsCostUpdatedToLastCollaborator() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        notAmock = project.createTask("This is not a mock");
+
+        // given a project collaborator with start date set to four months ago and ended
+        // 2 months ago
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+
+        // when the project collaborator is removed from the project and added again
+        // with cost 20,
+        projectCollaborator2.setStartDate(twoMonthsAgo);
+        projectCollaborator2.setCostPerEffort(20);
+
+        // the initial report created three months and ended one month ago has a cost
+        // 10, but the collaborator also had a cost 20 during that period
+        Report firstReport = new Report();
+        firstReport.setTask(notAmock);
+        firstReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        firstReport.setFirstDateOfReport(threeMonthsAgo);
+        firstReport.setDateOfUpdate(oneMonthAgo);
+        firstReport.setCost(10);
+
+        // he only creates a second report during his second instance, giving it an
+        // initial cost of 20
+        Report secondReport = new Report();
+        secondReport.setTask(notAmock);
+        secondReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
+        secondReport.setCost(20);
+        secondReport.setFirstDateOfReport(oneMonthAgo);
+        secondReport.setDateOfUpdate(Calendar.getInstance());
+
+        List<ProjectCollaborator> collabsFromUser = new ArrayList<>();
+        collabsFromUser.add(projectCollaborator);
+        collabsFromUser.add(projectCollaborator2);
+
+        List<Report> taskReports = new ArrayList<>();
+        taskReports.add(firstReport);
+        taskReports.add(secondReport);
+
+        List<Task> projectTasks = new ArrayList<>();
+        projectTasks.add(notAmock);
+
+        notAmock.setProject(project);
+        notAmock.setReports(taskReports);
+
+        when(taskRepository.findAllByProject(project)).thenReturn(projectTasks);
+
+        when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(collabsFromUser);
+
+        // when the project is set to Last Collaborator for each report, and the cost
+        // calculated
+        project.setCalculationMethod(CalculationMethod.CF);
+        victim.calculateReportEffortCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 20
+        assertEquals(20, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+    }
+
+
+
+    /**
+     * This test validates if the methods to calculate report costs are all working
+     * correctly
+     */
+    @Test
+    public void shouldCalculateReportsCostUsingAverageCostFirstAndLastCollab() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        notAmock = project.createTask("This is not a mock");
+
+        // given a project collaborator with start date set to four months ago and ended
+        // 2 months ago
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+
+        // when the project collaborator is removed from the project and added again
+        // with cost 20,
+        projectCollaborator2.setStartDate(twoMonthsAgo);
+        projectCollaborator2.setCostPerEffort(20);
+
+        // the initial report created three months and ended one month ago has a cost
+        // 10, but the collaborator also had a cost 20 during that period
+        Report firstReport = new Report();
+        firstReport.setTask(notAmock);
+        firstReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        firstReport.setFirstDateOfReport(threeMonthsAgo);
+        firstReport.setDateOfUpdate(oneMonthAgo);
+        firstReport.setCost(10);
+
+        // he only creates a second report during his second instance, giving it an
+        // initial cost of 20
+        Report secondReport = new Report();
+        secondReport.setTask(notAmock);
+        secondReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
+        secondReport.setCost(20);
+        secondReport.setFirstDateOfReport(oneMonthAgo);
+        secondReport.setDateOfUpdate(Calendar.getInstance());
+
+        List<ProjectCollaborator> collabsFromUser = new ArrayList<>();
+        collabsFromUser.add(projectCollaborator);
+        collabsFromUser.add(projectCollaborator2);
+
+        List<Report> taskReports = new ArrayList<>();
+        taskReports.add(firstReport);
+        taskReports.add(secondReport);
+
+        List<Task> projectTasks = new ArrayList<>();
+        projectTasks.add(notAmock);
+
+        notAmock.setProject(project);
+        notAmock.setReports(taskReports);
+
+        when(taskRepository.findAllByProject(project)).thenReturn(projectTasks);
+
+        when(projectCollaboratorRepository.findAllByProjectAndCollaborator(project, user)).thenReturn(collabsFromUser);
+
+        // when the project is set to First/Last Collaborator average for each report,
+        // and the cost calculated
+        project.setCalculationMethod(CalculationMethod.CIFM);
+        victim.calculateReportEffortCost(project);
+
+        // then the second report remains unchanged, and the first report becomes 15
+        assertEquals(15, firstReport.getCost(), 0.01);
+        assertEquals(20, secondReport.getCost(), 0.01);
+
+    }
+
+    /**
+     * This test validates if the methods to calculate report costs are all working
+     * correctly
+     */
+    @Test
+    public void shouldCalculateReportsCostAltenatingBetweenMechanismUsing3Collabs() {
+
+        Calendar oneMonthAgo = Calendar.getInstance();
+        oneMonthAgo.add(Calendar.MONTH, -1);
+        Calendar twoMonthsAgo = Calendar.getInstance();
+        twoMonthsAgo.add(Calendar.MONTH, -2);
+        Calendar threeMonthsAgo = Calendar.getInstance();
+        threeMonthsAgo.add(Calendar.MONTH, -3);
+        Calendar fourMonthsAgo = Calendar.getInstance();
+        fourMonthsAgo.add(Calendar.MONTH, -4);
+
+        notAmock = project.createTask("This is not a mock");
+
+        // given a project collaborator with start date set to four months ago and ended
+        // 2 months ago
+        projectCollaborator.setStartDate(fourMonthsAgo);
+        projectCollaborator.setFinishDate(twoMonthsAgo);
+
+        // when the project collaborator is removed from the project and added again
+        // with cost 20,
+        projectCollaborator2.setStartDate(twoMonthsAgo);
+        projectCollaborator2.setCostPerEffort(20);
+
+        // the initial report created three months and ended one month ago has a cost
+        // 10, but the collaborator also had a cost 20 during that period
+        Report firstReport = new Report();
+        firstReport.setTask(notAmock);
+        firstReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator));
+        firstReport.setFirstDateOfReport(threeMonthsAgo);
+        firstReport.setDateOfUpdate(oneMonthAgo);
+        firstReport.setCost(10);
+
+        // he only creates a second report during his second instance, giving it an
+        // initial cost of 20
+        Report secondReport = new Report();
+        secondReport.setTask(notAmock);
+        secondReport.setTaskCollaborator(new TaskCollaborator(projectCollaborator2));
+        secondReport.setCost(20);
+        secondReport.setFirstDateOfReport(oneMonthAgo);
+        secondReport.setDateOfUpdate(Calendar.getInstance());
 
         List<ProjectCollaborator> collabsFromUser = new ArrayList<>();
         collabsFromUser.add(projectCollaborator);
@@ -972,7 +1868,8 @@ public class TaskServiceTest {
         assertEquals(10, firstReport.getCost(), 0.01);
         assertEquals(20, secondReport.getCost(), 0.01);
 
-        // when the project is set to Last Collaborator for each report, and the cost calculated
+        // when the project is set to Last Collaborator for each report, and the cost
+        // calculated
         project.setCalculationMethod(CalculationMethod.CF);
         victim.calculateReportEffortCost(project);
 
@@ -980,7 +1877,8 @@ public class TaskServiceTest {
         assertEquals(20, firstReport.getCost(), 0.01);
         assertEquals(20, secondReport.getCost(), 0.01);
 
-        // when the project is set to First/Last Collaborator average for each report, and the cost calculated
+        // when the project is set to First/Last Collaborator average for each report,
+        // and the cost calculated
         project.setCalculationMethod(CalculationMethod.CIFM);
         victim.calculateReportEffortCost(project);
 
@@ -988,7 +1886,8 @@ public class TaskServiceTest {
         assertEquals(15, firstReport.getCost(), 0.01);
         assertEquals(20, secondReport.getCost(), 0.01);
 
-        // when the project is set to Collaborator cost average for each report, and the cost calculated
+        // when the project is set to Collaborator cost average for each report, and the
+        // cost calculated
         project.setCalculationMethod(CalculationMethod.CM);
         victim.calculateReportEffortCost(project);
 
@@ -996,8 +1895,8 @@ public class TaskServiceTest {
         assertEquals(15, firstReport.getCost(), 0.01);
         assertEquals(20, secondReport.getCost(), 0.01);
 
-
-        // creating a new, testing project Collaborator 3 with a cost 70, should alter the value of the average collaborator cost, but not first/last
+        // creating a new, testing project Collaborator 3 with a cost 70, should alter
+        // the value of the average collaborator cost, but not first/last
 
         projectCollaborator3 = new ProjectCollaborator(user, 70);
         projectCollaborator3.setProject(project);
@@ -1006,8 +1905,8 @@ public class TaskServiceTest {
 
         collabsFromUser.add(projectCollaborator3);
 
-
-        // when the project is set to First/Last Collaborator average for each report, and the cost calculated
+        // when the project is set to First/Last Collaborator average for each report,
+        // and the cost calculated
         project.setCalculationMethod(CalculationMethod.CIFM);
         victim.calculateReportEffortCost(project);
 
@@ -1015,35 +1914,60 @@ public class TaskServiceTest {
         assertEquals(15, firstReport.getCost(), 0.01);
         assertEquals(20, secondReport.getCost(), 0.01);
 
-        // when the project is set to Collaborator cost average for each report, and the cost calculated
+        // when the project is set to Collaborator cost average for each report, and the
+        // cost calculated
         project.setCalculationMethod(CalculationMethod.CM);
         victim.calculateReportEffortCost(project);
 
-        // then the second report remains unchanged, and the first report becomes 33.33 (10+20+70)/3
+        // then the second report remains unchanged, and the first report becomes 33.33
+        // (10+20+70)/3
         assertEquals(33.33, firstReport.getCost(), 0.01);
         assertEquals(20, secondReport.getCost(), 0.01);
 
     }
 
-
-
     @Test
-    public void testGetTaskListOfWhichDependenciesCanBeCreated() {
+    public void shouldNotGetTaskListOfWhichDependenciesCanBeCreatedIfTaskIsFinished() {
         this.mocksGetProjectTasks();
         this.mocksGetTaskRepository();
 
-        //test case taskState is finished
+        // test case taskState is finished
         TaskStateInterface finished = new Finished();
         when(taskMock.getTaskState()).thenReturn(finished);
         List<Task> expectedTaskList = new ArrayList<>();
         assertEquals(expectedTaskList, victim.getTaskListOfWhichDependenciesCanBeCreated(project));
 
-        //test case taskState is cancelled
+    }
+
+
+    @Test
+    public void shouldNotGetTaskListOfWhichDependenciesCanBeCreatedIfTaskIsCancelled() {
+        this.mocksGetProjectTasks();
+        this.mocksGetTaskRepository();
+
+        List<Task> expectedTaskList = new ArrayList<>();
+
+        // test case taskState is cancelled
         TaskStateInterface cancelled = new Cancelled();
         when(taskMock.getTaskState()).thenReturn(cancelled);
         assertEquals(expectedTaskList, victim.getTaskListOfWhichDependenciesCanBeCreated(project));
 
-        //test case taskState isn't finished neither cancelled
+        // test case taskState isn't finished neither cancelled
+        this.mocksGetTaskRepository();
+        TaskStateInterface onGoing = new OnGoing();
+        when(taskMock.getTaskState()).thenReturn(onGoing);
+        expectedTaskList.add(taskMock);
+        assertEquals(expectedTaskList, victim.getTaskListOfWhichDependenciesCanBeCreated(project));
+    }
+
+    @Test
+    public void shouldGetTaskListOfWhichDependenciesCanBeCreatedIfTaskIsNeitherFinishedOrCancelled() {
+        this.mocksGetProjectTasks();
+        this.mocksGetTaskRepository();
+
+        List<Task> expectedTaskList = new ArrayList<>();
+
+        // test case taskState isn't finished neither cancelled
         this.mocksGetTaskRepository();
         TaskStateInterface onGoing = new OnGoing();
         when(taskMock.getTaskState()).thenReturn(onGoing);
@@ -1052,7 +1976,8 @@ public class TaskServiceTest {
     }
 
     /**
-     * This test confirms all the methods to get and view the lists of requests are working correctly
+     * This test confirms all the methods to get and view the lists of requests are
+     * working correctly
      */
 
     @Test
@@ -1076,11 +2001,10 @@ public class TaskServiceTest {
         assertEquals(victim.getAllProjectTaskRemovalRequests(project).size(), 0);
         assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 0);
 
-
         assertFalse(notAmock.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
 
-
-        // when the task assignment requests is created, asserts the lists of assignment requests contain 1 entry
+        // when the task assignment requests is created, asserts the lists of assignment
+        // requests contain 1 entry
         notAmock.createTaskAssignmentRequest(projectCollaborator);
 
         assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 1);
@@ -1088,8 +2012,8 @@ public class TaskServiceTest {
         assertEquals(victim.getAllProjectTaskRemovalRequests(project).size(), 0);
         assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 0);
 
-
-        // then, deletes the request and adds the collaborator to the task, asseting all lists become empty
+        // then, deletes the request and adds the collaborator to the task, asserting all
+        // lists become empty
         // and that the task team contains the project collaborator
         assertTrue(notAmock.deleteTaskAssignmentRequest(projectCollaborator));
         notAmock.addProjectCollaboratorToTask(projectCollaborator);
@@ -1111,8 +2035,8 @@ public class TaskServiceTest {
         assertEquals(victim.getAllProjectTaskRemovalRequests(project).size(), 1);
         assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 1);
 
-
-        // then, approves the request and deletes it, asserting the list of requests all contain 0 entries
+        // then, approves the request and deletes it, asserting the list of requests all
+        // contain 0 entries
         // and that projectCollaborator is no longer active on task
         assertTrue(notAmock.deleteTaskRemovalRequest(projectCollaborator));
         notAmock.removeProjectCollaboratorFromTask(projectCollaborator);
@@ -1133,9 +2057,8 @@ public class TaskServiceTest {
     }
 
     /**
-     * GIVEN a project id
-     * WHEN the method getProjectFinishedTasksInDecOrder is called
-     * THEN a list of taskDTOs must be returned in decreasing order
+     * GIVEN a project id WHEN the method getProjectFinishedTasksInDecOrder is
+     * called THEN a list of taskDTOs must be returned in decreasing order
      */
     @Test
     public void testGetProjectFinishedTasksInDecOrder() {
@@ -1157,41 +2080,36 @@ public class TaskServiceTest {
         taskListDTO.add(new TaskDTO(taskMock));
         taskListDTO.add(new TaskDTO(task2Mock));
 
-
-
-        //GIVEN a project id
+        // GIVEN a project id
         int projId = 1;
         when(projectsRepository.findByProjectId(projId)).thenReturn(Optional.of(project));
 
-        //WHEN the method getProjectFinishedTasksInDecOrder is called
+        // WHEN the method getProjectFinishedTasksInDecOrder is called
         when(taskRepository.findAllByProject(any(Project.class))).thenReturn(taskList);
-        List<TaskDTO> finishedTasksDTO =  victim.getProjectFinishedTasksDecOrder(projId);
+        List<TaskDTO> finishedTasksDTO = victim.getProjectFinishedTasksDecOrder(projId);
 
-        //THEN a list of taskDTOs must be returned in decreasing order
+        // THEN a list of taskDTOs must be returned in decreasing order
         assertEquals(taskListDTO, finishedTasksDTO);
-
 
     }
 
     /**
-     * GIVEN a task id
-     * WHEN the method getTaskDTOByTaskId is called
-     * THEN a taskDTO from the found task must be returned
+     * GIVEN a task id WHEN the method getTaskDTOByTaskId is called THEN a taskDTO
+     * from the found task must be returned
      */
     @Test
     public void getTaskDTOByTaskIDTest() {
 
-        //GIVEN a task id
-        String taskId= "01";
+        // GIVEN a task id
+        String taskId = "01";
 
-        //WHEN the method getTaskDTOByTaskId is called
+        // WHEN the method getTaskDTOByTaskId is called
         when(taskRepository.findByTaskID(taskId)).thenReturn(Optional.of(taskMock));
 
-        //THEN a taskDTO from the found task must be returned
+        // THEN a taskDTO from the found task must be returned
         TaskDTO taskDTO = new TaskDTO(taskMock);
         assertEquals(taskDTO, victim.getTaskDtoByTaskId(taskId));
 
     }
-
 
 }

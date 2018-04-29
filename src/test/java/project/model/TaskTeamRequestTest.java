@@ -133,6 +133,7 @@ public class TaskTeamRequestTest {
 		projCollab = null;
 		assertFalse(firstRequest.equals(fourthRequest));
 
+		projCollab2 = null;
 		// tests with two nulls project collaborators
 		assertTrue(thirdRequest.equals(sixthRequest));
 

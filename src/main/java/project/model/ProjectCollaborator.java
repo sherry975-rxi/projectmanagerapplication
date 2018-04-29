@@ -16,7 +16,7 @@ import java.util.Calendar;
 public class ProjectCollaborator extends ResourceSupport implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIdentityReference(alwaysAsId = true)
 	private long projectCollaboratorId;
 
