@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class TaskStateInterfaceTests {
 
@@ -344,6 +346,8 @@ public class TaskStateInterfaceTests {
 
 		//GIVEN a task in the StandBy state
 		assertEquals("Cancelled", taskCancelled.viewTaskStateName());
+		assertTrue(taskCancelled.isProjectCollaboratorActiveInTaskTeam(collaborator));
+		assertTrue(taskCancelled.getFinishDate() == null);
 
 		//WHEN we mark task as Cancelled
 		taskCancelled.markTaskAsFinished();
@@ -352,6 +356,8 @@ public class TaskStateInterfaceTests {
 		//THEN the task as to change to Cancelled
 		assertEquals("Finished", taskCancelled.viewTaskStateName());
 		assertEquals(StateEnum.FINISHED, taskCancelled.getCurrentState());
+		assertFalse(taskCancelled.isProjectCollaboratorActiveInTaskTeam(collaborator));
+		assertTrue(taskCancelled.getFinishDate() != null);
 	}
 
 	/**
