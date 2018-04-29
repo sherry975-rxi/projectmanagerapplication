@@ -3,6 +3,7 @@ package project.integration;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.model.*;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -103,6 +107,7 @@ public class RestProjectControllerIntegrationTest {
      *
      *
      */
+    @Ignore
     @Test
     public void createProjectTest() {
         // GIVEN
@@ -130,6 +135,7 @@ public class RestProjectControllerIntegrationTest {
      *
      */
 
+    @Ignore
     @Test
     public void testGetActiveProjects()  {
 
