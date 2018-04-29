@@ -30,7 +30,7 @@ import static org.junit.Assert.assertFalse;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class RestControllerNewIntergrationTests {
+public class RestUserControllerIntegrationTests {
 
     @LocalServerPort
     private int port;
@@ -68,7 +68,7 @@ public class RestControllerNewIntergrationTests {
 
         // create users
         owner = userService.createUser("Owner boi", "hue@hue.com", "001", "Owns projects", "0000000", "here", "there", "where", "dunno", "mars");
-        mike = userService.createUser("Mike", "mike@mike.com", "002", "Tests tasks", "1111111", "here", "there", "where", "dunno", "mars");
+        mike = userService.createUser("Mike", "michael@michael.com", "002", "Tests tasks", "1111111", "here", "there", "where", "dunno", "mars");
         userPM = userService.createUser("Ana", "ana@gmail.com", "003", "manager", "221238442", "Rua Porto","4480", "Porto", "Porto", "Portugal");
         userRui = userService.createUser("Rui", "rui@gmail.com", "004", "collaborator", "221378449", "Rua Porto","4480", "Porto", "Porto", "Portugal");
 
@@ -108,7 +108,7 @@ public class RestControllerNewIntergrationTests {
      * This tests the basic set up of the functional test using a simple "get User details by ID" method
      *
      * First, it asserts the chosen users are in the database
-     * Then attempts to generate a response entity based on the given URL, asserting it contains mike after searching for his ID
+     * Then attempts to generate a response entity based on the given URL, asserting it contains michael after searching for his ID
      *
      */
 
@@ -168,11 +168,11 @@ public class RestControllerNewIntergrationTests {
 
         ParameterizedTypeReference<List<User>> listOfUsers = new ParameterizedTypeReference<List<User>>() {};
 
-        // WHEN searching for a user email "mike@mike"
-        actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/email/mike@mike", HttpMethod.GET, null, listOfUsers);
+        // WHEN searching for a user email "michael@michael"
+        actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/email/michael@michael", HttpMethod.GET, null, listOfUsers);
 
         // THEN the expectedUser response entity must contain the user
-        expectedUserList = new ResponseEntity<>(userService.searchUsersByPartsOfEmail("mike@mike"), HttpStatus.OK);
+        expectedUserList = new ResponseEntity<>(userService.searchUsersByPartsOfEmail("michael@michael"), HttpStatus.OK);
 
         assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
         assertEquals(1, actualUserList.getBody().size());
@@ -262,40 +262,7 @@ public class RestControllerNewIntergrationTests {
 
     }
 
-    /**
-     * Integration test for log in Rest API.
-     * First, it tests if an incorrect password returns Status Code FORBIDDEN
-     *
-     * Then, it tests if using a correct password returns the logged in user and Status OK
-     *
-     *
-     */
-    @Test
-    public void logInUserTest() {
-        // GIVEN a user with a password 123456
-        mike.setPassword("123456");
-        userService.updateUser(mike);
 
-        // WHEN posting a logIn request using an incorrect password
-        UserDTO requestBody = new UserDTO("Mike", "mike@mike.com", "", "", "", "wrong", "", "");
-
-        actualUser = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
-
-        // THEN the expectedUser status should be Forbidden
-        expectedUser = new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        assertEquals(expectedUser.getStatusCode(), actualUser.getStatusCode());
-
-        // AND WHEN the request contains the actualUser password
-        requestBody = new UserDTO("Mike", "mike@mike.com", "", "", "", "123456", "", "");
-
-        actualUser = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
-
-        // THEN the expectedUser response entity should contain Mike
-        expectedUser = new ResponseEntity<>(mike, HttpStatus.OK);
-        assertEquals(expectedUser.getBody().getName(), actualUser.getBody().getName());
-        assertEquals(expectedUser.getStatusCode(), actualUser.getStatusCode());
-
-    }
 
     /**
      * This test proper user validation
@@ -307,7 +274,7 @@ public class RestControllerNewIntergrationTests {
         assertFalse(mike.hasPassword());
 
         // WHEN posting a logIn request for that user with the correct email
-        UserDTO requestBody = new UserDTO("Mike", "mike@mike.com", "", "", "", "wrong", "", "");
+        UserDTO requestBody = new UserDTO("Mike", "michael@michael.com", "", "", "", "wrong", "", "");
 
         actualUser = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
 
@@ -318,7 +285,7 @@ public class RestControllerNewIntergrationTests {
         assertEquals(3, actualUser.getBody().getLinks().size());
 
 
-        //AND WHEN mike is given a question + answer, and chooses the link to validate via question
+        //AND WHEN michael is given a question + answer, and chooses the link to validate via question
 
         mike.setQuestion("Are You testing?");
         mike.setAnswer("Yes");
@@ -331,7 +298,7 @@ public class RestControllerNewIntergrationTests {
         assertEquals(HttpStatus.OK, toCheckValidation.getStatusCode());
         assertEquals("Are You testing?", toCheckValidation.getBody().getRel());
 
-        //AND WHEN mike inputs the wrong validation answer
+        //AND WHEN michael inputs the wrong validation answer
 
         String inputtedCode = "Wrong answer";
 
@@ -340,7 +307,7 @@ public class RestControllerNewIntergrationTests {
         // THEN the response entity should contain Forbidden
         assertEquals(HttpStatus.FORBIDDEN, toCheckValidation.getStatusCode());
 
-        //AND WHEN mike inputs the correct answer
+        //AND WHEN michael inputs the correct answer
 
         inputtedCode = "Yes";
 
@@ -350,28 +317,6 @@ public class RestControllerNewIntergrationTests {
         assertEquals(HttpStatus.OK, toCheckValidation.getStatusCode());
         assertEquals("createPassword", toCheckValidation.getBody().getRel());
 
-    }
-
-
-    /**
-     * This tests if the basic setup for project creation integration testing works correctly
-     *
-     */
-    @Test
-    public void basicProjectTest() {
-        // GIVEN a single project in the database
-        assertEquals(1, projectService.getAllProjectsfromProjectsContainer().size());
-        assertEquals(projectOne.getIdCode(), projectService.getProjectById(projectOne.getIdCode()).getProjectId());
-
-        // WHEN a new project is created via HTTP post request
-        Project toCreate = new Project("Create with REST", "Create it good", mike);
-        actualRealProject = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/", toCreate, Project.class);
-
-        // THEN the response entity must contain the created project, with mike as the project manager. The database must also contain 2 projects
-        assertEquals("Create with REST", actualRealProject.getBody().getName());
-        assertEquals(mike, actualRealProject.getBody().getProjectManager());
-
-        assertEquals(2, projectService.getAllProjectsfromProjectsContainer().size());
     }
 
 
