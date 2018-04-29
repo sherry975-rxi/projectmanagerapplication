@@ -127,24 +127,24 @@ public class Task extends ResourceSupport implements Serializable {
 	public Task(int taskCounter, int projId, String description) {
 		Integer taskNumber = taskCounter;
 		Integer projCode = projId;
+		this.creationDate = Calendar.getInstance();
 		this.taskID = projCode.toString() + "." + taskNumber.toString();
 		this.description = description;
-		this.creationDate = Calendar.getInstance();
-		this.startDate = null;
-		this.finishDate = null;
 		this.taskTeam = new ArrayList<>();
-		this.reports = new ArrayList<>();
 		this.estimatedTaskEffort = 0;
-		this.estimatedTaskStartDate = null;
-		this.taskDeadline = null;
 		this.taskBudget = 0;
+		this.estimatedTaskStartDate = null;
 		this.startDateInterval = null;
+		this.startDate = null;
+		this.taskDeadline = null;
 		this.deadlineInterval = null;
+		this.finishDate = null;
+		this.reports = new ArrayList<>();
 		this.taskDependency = new ArrayList<>();
-		this.taskState = this.getTaskState();
 		this.cancelDate = null;
-		this.currentState = StateEnum.CREATED;
 		this.pendingTaskTeamRequests = new ArrayList<>();
+		this.taskState = this.getTaskState();
+		this.currentState = StateEnum.CREATED;
 	}
 
 	/**
@@ -910,7 +910,6 @@ public class Task extends ResourceSupport implements Serializable {
 			wasDependencyCreated = true;
 
 		}
-		this.getTaskState().doAction(this);
 		return wasDependencyCreated;
 
 	}

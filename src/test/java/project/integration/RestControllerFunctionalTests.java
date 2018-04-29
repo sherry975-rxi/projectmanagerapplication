@@ -109,7 +109,7 @@ public class RestControllerFunctionalTests {
 
         // creates two users
         owner = userService.createUser("Owner boi", "hue@hue.com", "001", "Owns projects", "0000000", "here", "there", "where", "dunno", "mars");
-        mike = userService.createUser("Mike", "mike@mike.com", "002", "Tests tasks", "1111111", "here", "there", "where", "dunno", "mars");
+        mike = userService.createUser("Mike", "michael@michael.com", "002", "Tests tasks", "1111111", "here", "there", "where", "dunno", "mars");
 
 
         // creates a project with user owner as manager
@@ -184,9 +184,9 @@ public class RestControllerFunctionalTests {
 
     @Test
     public void databaseContainsDataTest() {
-        // asserts that owner and mike's email returns his object, while a non existing email returns null
+        // asserts that owner and michael's email returns his object, while a non existing email returns null
         assertEquals(owner, userService.getUserByEmail("hue@hue.com"));
-        assertEquals(mike, userService.getUserByEmail("mike@mike.com"));
+        assertEquals(michael, userService.getUserByEmail("michael@michael.com"));
         assertEquals(null, userService.getUserByEmail("huehue@hue.com"));
 
         // asserts all the tasks have the correct state
