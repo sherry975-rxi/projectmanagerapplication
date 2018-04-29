@@ -328,11 +328,19 @@ public class TaskTest {
 	@Test
 	public void shouldSetEstimatedTaskEffort() {
 
-		int expected = 10;
+		taskTest.setEstimatedTaskStartDate(Calendar.getInstance());
+		taskTest.setTaskDeadline(Calendar.getInstance());
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+		taskTest.setTaskBudget(10);
+
+		double expected = 10.0;
 
 		taskTest.setEstimatedTaskEffort(expected);
 
+
 		assertEquals(expected, taskTest.getEstimatedTaskEffort(), 0.01);
+		assertEquals("Ready", taskTest.viewTaskStateName());
+
 	}
 
 	/**
@@ -353,13 +361,14 @@ public class TaskTest {
 	 * {@link project.model.Task#setEstimatedTaskStartDate(java.util.Calendar)}.
 	 */
 	@Test
-	public void shloudSetEstimatedTaskStartDate() {
+	public void shouldSetEstimatedTaskStartDate() {
 
 		Calendar expected = Calendar.getInstance();
 
 		taskTest.setEstimatedTaskStartDate(expected);
 
 		assertEquals(expected, taskTest.getEstimatedTaskStartDate());
+		assertEquals("Planned", taskTest.viewTaskStateName());
 	}
 
 	/**
@@ -387,6 +396,7 @@ public class TaskTest {
 		taskTest.setTaskDeadline(expected);
 
 		assertEquals(expected, taskTest.getTaskDeadline());
+		assertEquals("Planned", taskTest.viewTaskStateName());
 	}
 
 	/**
@@ -408,11 +418,17 @@ public class TaskTest {
 	@Test
 	public void shouldSetTaskBudget() {
 
+		taskTest.setEstimatedTaskStartDate(Calendar.getInstance());
+		taskTest.setTaskDeadline(Calendar.getInstance());
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+		taskTest.setEstimatedTaskEffort(10);
+
 		double expected = 100.0;
 
 		taskTest.setTaskBudget(expected);
 
 		assertEquals(expected, taskTest.getTaskBudget(), 0.01);
+		assertEquals("Ready", taskTest.viewTaskStateName());
 	}
 
 	/**
@@ -443,11 +459,18 @@ public class TaskTest {
 	@Test
 	public void shouldSetStartDate() {
 
+		taskTest.setEstimatedTaskStartDate(Calendar.getInstance());
+		taskTest.setTaskDeadline(Calendar.getInstance());
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+		taskTest.setEstimatedTaskEffort(10);
+		taskTest.setTaskBudget(10);
+
 		Calendar expected = Calendar.getInstance();
 
 		taskTest.setStartDateAndState(expected);
 
 		assertEquals(expected, taskTest.getStartDate());
+		assertEquals("OnGoing", taskTest.viewTaskStateName());
 	}
 
 	/**
@@ -477,6 +500,8 @@ public class TaskTest {
 	 */
 	@Test
 	public void shouldSetFinishDate() {
+
+
 
 		taskTest.setFinishDate(Calendar.getInstance());
 
@@ -623,10 +648,12 @@ public class TaskTest {
 	public void shouldAddProjectCollaboratorToTask() {
 
 		assertTrue(taskTest.getTaskTeam().isEmpty());
+		assertEquals("Created", taskTest.viewTaskStateName());
 
 		taskTest.addProjectCollaboratorToTask(projectCollaborator);
 
 		assertFalse(taskTest.getTaskTeam().isEmpty());
+		assertEquals("Planned", taskTest.viewTaskStateName());
 	}
 
 	/**
@@ -634,13 +661,15 @@ public class TaskTest {
 	 * {@link project.model.Task#addTaskCollaboratorToTask(project.model.TaskCollaborator)}.
 	 */
 	@Test
-	public void shouldddTaskCollaboratorToTask() {
+	public void shouldTaskCollaboratorToTask() {
 
 		assertTrue(taskTest.getTaskTeam().isEmpty());
+		assertEquals("Created", taskTest.viewTaskStateName());
 
 		taskTest.addTaskCollaboratorToTask(taskCollaborator);
 
 		assertFalse(taskTest.getTaskTeam().isEmpty());
+		assertEquals("Planned", taskTest.viewTaskStateName());
 	}
 
 	/**
@@ -927,11 +956,20 @@ public class TaskTest {
 	@Test
 	public void shouldRemoveProjectCollaboratorFromTask() {
 
-		assertTrue(taskReadyToFinishTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
+		taskTest.setEstimatedTaskStartDate(Calendar.getInstance());
+		taskTest.setTaskDeadline(Calendar.getInstance());
+		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+		taskTest.setEstimatedTaskEffort(10);
+		taskTest.setTaskBudget(10);
+        assertEquals("Ready", taskTest.viewTaskStateName());
 
-		taskReadyToFinishTest.removeProjectCollaboratorFromTask(projectCollaborator);
+		assertTrue(taskTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
 
-		assertFalse(taskReadyToFinishTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
+		taskTest.removeProjectCollaboratorFromTask(projectCollaborator);
+		assertEquals("Planned", taskTest.viewTaskStateName());
+
+		assertFalse(taskTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
+
 
 	}
 
@@ -1145,6 +1183,7 @@ public class TaskTest {
 	public void shouldCreateTaskDependence() {
 
 		taskTest.setTaskID("3");
+
         Calendar date = Calendar.getInstance();
         date.set(2018, 3, 5);
         taskReadyToFinishTest.setEstimatedTaskStartDate(date);
