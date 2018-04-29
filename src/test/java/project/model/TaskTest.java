@@ -1335,13 +1335,17 @@ public class TaskTest {
 	@Test
 	public void shouldRemoveFinishDate() {
 
+		taskReadyToFinishTest.markTaskAsFinished();
 		taskReadyToFinishTest.setFinishDate(Calendar.getInstance());
+		assertEquals("Finished", taskReadyToFinishTest.viewTaskStateName());
 
 		assertFalse(taskReadyToFinishTest.getFinishDate() == null);
 
 		taskReadyToFinishTest.removeFinishDate();
+		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
 
 		assertEquals(null, taskReadyToFinishTest.getFinishDate());
+		assertEquals("OnGoing", taskReadyToFinishTest.viewTaskStateName());
 
 	}
 
@@ -1354,10 +1358,13 @@ public class TaskTest {
 		assertFalse(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
 
 		assertEquals(null, taskReadyToFinishTest.getCancelDate());
+		assertEquals("OnGoing", taskReadyToFinishTest.viewTaskStateName());
 
 		taskReadyToFinishTest.cancelTask();
 
 		assertTrue(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
+		assertEquals("Cancelled", taskReadyToFinishTest.viewTaskStateName());
+		assertTrue(taskReadyToFinishTest.getCancelDate() != null);
 
 
 	}
@@ -1514,6 +1521,7 @@ public class TaskTest {
 
 		assertEquals(projectCollaborator,
 				taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getProjCollab());
+		assertEquals(RequestType.REMOVAL, taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getType());
 
 		taskReadyToFinishTest.deleteTaskRemovalRequest(projectCollaborator);
 
@@ -1531,6 +1539,7 @@ public class TaskTest {
 		assertTrue(taskReadyToFinishTest.viewPendingTaskAssignmentRequests().isEmpty());
 
 		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
+		assertEquals(RequestType.ASSIGNMENT, taskReadyToFinishTest.getAssignmentTaskTeamRequest(projectCollaborator).getType());
 
 		assertFalse(taskReadyToFinishTest.viewPendingTaskAssignmentRequests().isEmpty());
 
@@ -1545,6 +1554,7 @@ public class TaskTest {
 		assertTrue(taskReadyToFinishTest.viewPendingTaskRemovalRequests().isEmpty());
 
 		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+		assertEquals(RequestType.REMOVAL, taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getType());
 
 		assertFalse(taskReadyToFinishTest.viewPendingTaskRemovalRequests().isEmpty());
 
@@ -1560,6 +1570,7 @@ public class TaskTest {
 		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
 		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
+		assertEquals(RequestType.ASSIGNMENT, taskReadyToFinishTest.getAssignmentTaskTeamRequest(projectCollaborator).getType());
 
 		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
