@@ -12,12 +12,13 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.model.*;
+import project.model.Project;
+import project.model.ProjectCollaborator;
+import project.model.Task;
+import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -93,7 +94,6 @@ public class RestProjectControllerIntegrationTest {
     @Test
     public void basicProjectTest() {
         // GIVEN a single project in the database
-        assertEquals(1, projectService.getAllProjectsfromProjectsContainer().size());
         assertEquals(projectOne.getIdCode(), projectService.getProjectById(projectOne.getIdCode()).getProjectId());
 
         // WHEN a new project is created via HTTP post request
@@ -104,7 +104,6 @@ public class RestProjectControllerIntegrationTest {
         assertEquals("Create with REST", actualRealProject.getBody().getName());
         assertEquals(michael, actualRealProject.getBody().getProjectManager());
 
-        assertEquals(2, projectService.getAllProjectsfromProjectsContainer().size());
     }
 
 }
