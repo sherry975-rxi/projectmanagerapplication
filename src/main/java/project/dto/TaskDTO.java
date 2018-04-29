@@ -12,7 +12,7 @@ import java.util.Objects;
 public class TaskDTO extends ResourceSupport {
 
 
-    private String taskID;
+    private String taskDtoID;
     private String description;
     private List<TaskCollaborator> taskTeam;
     private List<Report> reports;
@@ -47,7 +47,7 @@ public class TaskDTO extends ResourceSupport {
      */
     public TaskDTO(Task task) {
 
-        this.taskID = task.getTaskID();
+        this.taskDtoID = task.getTaskID();
         this.description = task.getDescription();
         this.creationDate = task.getCreationDate();
         this.startDate = task.getStartDate();
@@ -71,7 +71,7 @@ public class TaskDTO extends ResourceSupport {
     }
 
     public String getTaskID() {
-        return taskID;
+        return taskDtoID;
     }
 
     public String getDescription() {
