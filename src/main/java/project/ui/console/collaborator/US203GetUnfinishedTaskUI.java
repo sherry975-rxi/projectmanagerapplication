@@ -9,6 +9,7 @@ import project.model.User;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 @Component
 public class US203GetUnfinishedTaskUI {
@@ -19,6 +20,8 @@ public class US203GetUnfinishedTaskUI {
 	private TaskDetailsUI taskSelected;
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+
+	private Logger logger = Logger.getLogger(US203GetUnfinishedTaskUI.class.getName());
 
 	public void displayOptions(User user1) {
 		boolean loop = true;
@@ -71,8 +74,9 @@ public class US203GetUnfinishedTaskUI {
 			}
 
 			catch (NullPointerException npe) {
-				System.out.println("Please choose a valid option: ");
-				System.out.println("");
+				String message = "Please choose a valid option: ";
+				logger.log(java.util.logging.Level.INFO, message, npe);
+
 			}
 
 		}

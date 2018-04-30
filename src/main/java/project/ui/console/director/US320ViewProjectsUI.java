@@ -10,10 +10,13 @@ import java.util.Scanner;
 
 @Component
 public class US320ViewProjectsUI {
+
 	@Autowired
 	private	US320ViewProjectsController controller;
 
 	public Project viewProjectsUI(Project selectedProject) {
+
+		Project project = selectedProject;
 		Scanner input = new Scanner(System.in);
 		List<String> projectsList;
 
@@ -39,7 +42,7 @@ public class US320ViewProjectsUI {
 					"Please choose a project index (If a valid number isn't provided, no project will be selected.):");
 			if (input.hasNextInt()) {
 				int index = Integer.parseInt(input.nextLine());
-				selectedProject = controller.selectProject(index);
+				project = controller.selectProject(index);
 			} else {
 				System.out.println("Not a number!");
 			}
@@ -48,7 +51,7 @@ public class US320ViewProjectsUI {
 		System.out.println("Returning to Director Menu...");
 		System.out.println("");
 
-		return selectedProject;
+		return project;
 	}
 
 }

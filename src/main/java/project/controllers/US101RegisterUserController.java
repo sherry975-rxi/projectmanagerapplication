@@ -46,9 +46,8 @@ public class US101RegisterUserController {
 
     public UserDTO createUserDTO(String name, String email, String idNumber, String function, String phone, String question, String answer) {
 
-       UserDTO userDTO= new UserDTO(name, email, idNumber, function, phone, question , answer);
+      return new UserDTO(name, email, idNumber, function, phone, question , answer);
 
-       return userDTO;
 	}
 
 	/**

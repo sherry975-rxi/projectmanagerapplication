@@ -6,6 +6,7 @@ import project.controllers.PrintProjectInfoController;
 import project.model.User;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 @Component
 public class ProjectViewMenuUI {
@@ -15,6 +16,8 @@ public class ProjectViewMenuUI {
 
 	private Integer projectID;
 	private User user;
+
+	private Logger logger = Logger.getLogger(ProjectViewMenuUI.class.getName());
 
 	public ProjectViewMenuUI() {
 		//empty constructor
@@ -70,8 +73,9 @@ public class ProjectViewMenuUI {
 			return false;
 		}
 		catch (NullPointerException npe) {
-			System.out.println("Please choose a valid option: ");
-			System.out.println("");
+
+			String message = "Please choose a valid option: ";
+			logger.log(java.util.logging.Level.INFO, message, npe);
 
 			return true;
 		}
