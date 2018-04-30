@@ -114,6 +114,8 @@ public class PrintTaskInfoControllerTest {
 		startDate = null;
 		finishDate = null;
 		task1 = null;
+        task2 = null;
+        task3 = null;
 		projectID = null;
 	}
 

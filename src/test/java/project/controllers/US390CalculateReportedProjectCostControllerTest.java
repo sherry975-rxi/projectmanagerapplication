@@ -192,6 +192,14 @@ public class US390CalculateReportedProjectCostControllerTest {
 		totalCost = danielCost + jonnyCost + mikeCost + anaCost;
 
 		// Compares the 2 values
+		System.out.println("#########################################################################################");
+		System.out.println("#########################################################################################");
+		System.out.println("#########################################################################################");
+		System.out.println(testTask.getProject().getName());
+		System.out.println(testTask2.getProject().getName());
+		System.out.println("#########################################################################################");
+		System.out.println("#########################################################################################");
+		System.out.println("#########################################################################################");
 		assertEquals(totalCost, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
 	}
