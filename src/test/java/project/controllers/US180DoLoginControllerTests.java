@@ -1,29 +1,21 @@
 package project.controllers;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.model.Profile;
 import project.model.User;
 import project.services.UserService;
 
-import static com.sun.javaws.JnlpxArgs.verify;
-import static com.sun.tools.doclint.Entity.times;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -38,16 +30,6 @@ public class US180DoLoginControllerTests {
 
 	@InjectMocks
 	private US180DoLoginController doLoginController;
-
-	@Before
-	public void setUp() {
-
-
-	}
-
-	@After
-	public void clear() {
-	}
 
 	/**
 	 *GIVEN a valid email and password
