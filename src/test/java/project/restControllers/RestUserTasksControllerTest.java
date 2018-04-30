@@ -133,7 +133,7 @@ public class RestUserTasksControllerTest {
      * then a list of all your tasks is returned
      */
     @Test
-    public void shouldReturnUserTasks () throws Exception {
+    public void shouldReturnUserTasks() throws Exception {
 
         //GIVEN
         //given a certain user
@@ -153,18 +153,48 @@ public class RestUserTasksControllerTest {
         Mockito.when(userServiceMock.getUserByID(anyInt())).thenReturn(userRui);
         Mockito.when(taskServiceMock.getUserTasks(anyObject())).thenReturn(allTasks);
 
-        MockHttpServletResponse response = mvc.perform(get("/users/" + userRui.getUserID() + "/tasks/")
-                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
-
-
         //WHEN
         //when you ask for all the tasks of this particular user
+        MockHttpServletResponse response = mvc.perform(get("/users/" + userRui.getUserID() + "/tasks/")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
         victim.getAllTasks(userId);
 
         //THEN
         //then a list of all your tasks is returned
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         verify(taskServiceMock, times(2)).getUserTasks(userRui);
+    }
+
+    /**
+     *GIVEN
+     *given a certain user
+     *
+     * WHEN
+     * when you are asked to return the tasks of a user that is not present in the database
+     *
+     * THEN
+     * then an error message will be sent informing you that the user was not found
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldntReturnUserTasks() throws Exception {
+
+        //GIVEN
+        //given a certain user
+        Mockito.when(userServiceMock.getUserByID(anyInt())).thenReturn(null);
+
+        //WHEN
+        //when you are asked to return the tasks of a user that is not present in the database
+        MockHttpServletResponse response = mvc.perform(get("/users/" + 1 + "/tasks/")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        victim.getAllTasks(1);
+
+        //THEN
+        //then an error message will be sent informing you that the user was not found
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+        verify(taskServiceMock, times(0)).getUserTasks(null);
+
     }
 
     /**
@@ -178,7 +208,6 @@ public class RestUserTasksControllerTest {
      * then the sum of the hours spent on this task is returned
      *
      */
-
     @Test
     public void shouldReturnTotalTimeSpentOnTasksCompletedLastMonth() throws Exception {
 
@@ -210,7 +239,36 @@ public class RestUserTasksControllerTest {
         //then the sum of the hours spent on this task is returned
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         verify(taskServiceMock, times(2)).getTotalTimeOfFinishedTasksFromUserLastMonth(userRui);
+    }
 
+    /**
+     * GIVEN
+     * given a user that does not exist in the database
+     *
+     * WHEN
+     * when asking the time spent by this particular user on the tasks finished in the last month
+     *
+     * THEN
+     * then an error message will be sent informing you that the user was not found
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldntReturnTotalTimeSpentOnTasksCompletedLastMonth() throws Exception {
 
+        //GIVEN
+        //given a user that does not exist in the database
+        Mockito.when(userServiceMock.getUserByID(any(int.class))).thenReturn(null);
+
+        //WHEN
+        //when asking the time spent by this particular user on the tasks finished in the last month
+        victim.getTotalTimeSpentOnTasksCompletedLastMonth(1);
+        MockHttpServletResponse response = mvc.perform(get("/users/" + 1 + "/tasks/totaltimespent/completed/lastmonth")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        //then an error message will be sent informing you that the user was not found
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+        verify(taskServiceMock, times(0)).getTotalTimeOfFinishedTasksFromUserLastMonth(null);
     }
 }
