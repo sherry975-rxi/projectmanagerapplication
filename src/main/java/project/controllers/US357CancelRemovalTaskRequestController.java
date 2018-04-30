@@ -109,8 +109,6 @@ public class US357CancelRemovalTaskRequestController {
 				.findActiveProjectCollaborator(this.userToRemove, this.project);
 
 		// Removes the project Collaborator correspondent to the user from task.
-		//this.task.removeProjectCollaboratorFromTask(projectCollaboratorFromUser);
-		// Deletes the request from the pendingRemovalRequestList
 		if (task.approveTaskRemovalRequest(projectCollaboratorFromUser)) {
 			taskService.saveTask(task);
 			acceptRemovalRequestFromTask = true;
