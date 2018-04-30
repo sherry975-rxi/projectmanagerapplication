@@ -59,6 +59,7 @@ public class TaskStateInterfaceTests {
 		taskPlanned.setEstimatedTaskStartDate(estimatedTaskStartDate);
 		taskPlanned.setTaskDeadline(taskDeadline);
 		taskPlanned.addProjectCollaboratorToTask(collaborator);
+		taskPlanned.setEstimatedTaskEffort(10);
 
 		taskReady.setEstimatedTaskStartDate(estimatedTaskStartDate);
 		taskReady.setTaskDeadline(taskDeadline);
@@ -140,7 +141,7 @@ public class TaskStateInterfaceTests {
 
 	/**
 	 * GIVEN a task in the Planned state
-	 * WHEN we set the budget and effort
+	 * WHEN we set the budget
 	 * THEN the task as to change to Ready
 	 */
 	@Test
@@ -149,9 +150,8 @@ public class TaskStateInterfaceTests {
 		//GIVEN a task in the Planned state
 		assertEquals("Planned", taskPlanned.viewTaskStateName());
 
-		//WHEN we set the budget and effort
+		//WHEN we set the budget that state is still planned
 		taskPlanned.setTaskBudget(10);
-		taskPlanned.setEstimatedTaskEffort(10);
 
 		//THEN the task as to change to Ready
 		assertEquals("Ready", taskPlanned.viewTaskStateName());
@@ -252,11 +252,11 @@ public class TaskStateInterfaceTests {
 		assertEquals("OnGoing", taskOnGoing.viewTaskStateName());
 
 		//WHEN we mark task as cancelled
-		taskStandBy.cancelTask();
+		taskOnGoing.cancelTask();
 
 		//THEN the task as to change to StandBy
-		assertEquals("Cancelled", taskStandBy.viewTaskStateName());
-		assertEquals(StateEnum.CANCELLED, taskStandBy.getCurrentState());
+		assertEquals("Cancelled", taskOnGoing.viewTaskStateName());
+		assertEquals(StateEnum.CANCELLED, taskOnGoing.getCurrentState());
 	}
 
 	/**
