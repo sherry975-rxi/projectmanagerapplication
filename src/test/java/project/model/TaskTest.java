@@ -1391,6 +1391,20 @@ public class TaskTest {
 
 	}
 
+	/**
+	 * Test method for {@link project.model.Task#cancelTask()}.
+	 */
+	@Test
+	public void shouldNotCancelTask() {
+
+
+		assertFalse(taskTest.cancelTask());
+
+		assertTrue(taskTest.getCancelDate() == null);
+		assertFalse(taskTest.getTaskState() instanceof  Cancelled);
+
+	}
+
 
 
 	/**
@@ -1473,7 +1487,7 @@ public class TaskTest {
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isUnfinishedTask()}.
+	 * Test method for {@link project.model.Task#markAsOnGoing()}.
 	 */
 	@Test
 	public void isUnfinishedTask() {
@@ -1484,21 +1498,21 @@ public class TaskTest {
 
 		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
 
-		assertTrue(taskReadyToFinishTest.isUnfinishedTask());
+		assertTrue(taskReadyToFinishTest.markAsOnGoing());
 
 		assertFalse(taskReadyToFinishTest.isTaskFinished());
 
 	}
 
 	/**
-	 * Test method for {@link project.model.Task#isUnfinishedTask()}.
+	 * Test method for {@link project.model.Task#markAsOnGoing()}.
 	 */
 	@Test
 	public void shouldGetUnfinishedTaskWithTaskStateSetToOnGoing() {
 
 		taskReadyToFinishTest.cancelTask();
 
-		assertFalse(taskReadyToFinishTest.isUnfinishedTask());
+		assertFalse(taskReadyToFinishTest.markAsOnGoing());
 
 	}
 
