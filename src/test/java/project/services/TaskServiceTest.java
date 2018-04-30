@@ -1,5 +1,6 @@
 package project.services;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -111,6 +112,28 @@ public class TaskServiceTest {
         this.projectCollaborator3 = new ProjectCollaborator(user2, 20);
         this.taskCollaborator = new TaskCollaborator(new ProjectCollaborator(user, 10));
 
+    }
+
+    @After
+    public void tearDown() {
+        userService = null;
+        taskMock = null;
+        task2Mock = null;
+        taskRepository = null;
+        projectsRepository = null;
+        projectCollaboratorRepository = null;
+        projectCollaboratorMock = null;
+        taskCollaboratorMock = null;
+        projectService = null;
+        startDate = null;
+        project = null;
+        user = null;
+        user2 = null;
+        notAmock = null;
+        projectCollaborator = null;
+        projectCollaborator2 = null;
+        projectCollaborator3 = null;
+        taskCollaborator = null;
     }
 
     /**

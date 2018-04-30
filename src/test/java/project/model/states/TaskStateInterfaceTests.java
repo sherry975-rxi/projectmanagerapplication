@@ -329,7 +329,7 @@ public class TaskStateInterfaceTests {
 
 		//WHEN we mark task as Cancelled
 		taskFinished.addProjectCollaboratorToTask(collaborator);
-		taskFinished.isUnfinishedTask();
+		taskFinished.markAsOnGoing();
 
 		//THEN the task as to change to Cancelled
 		assertEquals("OnGoing", taskFinished.viewTaskStateName());

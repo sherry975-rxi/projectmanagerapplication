@@ -1117,24 +1117,14 @@ public class Task extends ResourceSupport implements Serializable {
 	 * state machine does not let the task change its state, the finish date is set
 	 * to its previous value.
 	 */
-	public boolean isUnfinishedTask() {
-		boolean unfinishedTask = true;
-		Calendar finishDateCopy = Calendar.getInstance();
+	public boolean markAsOnGoing() {
+		boolean unfinishedTask = false;
 
-		if (finishDate != null) {
-			int year = finishDate.get(Calendar.YEAR);
-			int month = finishDate.get(Calendar.MONTH);
-			int date = finishDate.get(Calendar.DAY_OF_MONTH);
+		if (this.getTaskState() instanceof Finished) {
+			this.finishDate = null;
+			this.getTaskState().doAction(this);
+			unfinishedTask = true;
 
-			finishDateCopy.set(year, month, date);
-		}
-
-		this.finishDate = null;
-		this.taskState.doAction(this);
-
-		if (!(this.taskState instanceof OnGoing)) {
-			this.finishDate = finishDateCopy;
-			unfinishedTask = false;
 		}
 
 		return unfinishedTask;

@@ -71,10 +71,8 @@ public class RestAccountControllerTest {
      * when you are prompted to create a system user
      *
      * THEN
-     * then a user is created in the database with the information provided
+     * then sends the link to the user verification via email or sms
      */
-
-    /*
 
     @Test
     public void shouldCreateUser() throws Exception {
@@ -88,25 +86,19 @@ public class RestAccountControllerTest {
         //when you are prompted to create a system user
         when(userService.isUserEmailInUserContainer(anyString())).thenReturn(false);
         when(userService.isEmailAddressValid(anyString())).thenReturn(true);
-        Mockito.doNothing().when(userService).addUserToUserRepositoryX(any(User.class));
-        when(userService.getUserByEmail(anyString())).thenReturn(userDaniel);
 
         restAccountController.createUser(userDTO);
 
-        MockHttpServletResponse response = mvc.perform(post("/account/")
+        MockHttpServletResponse response = mvc.perform(post("/account/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonUserDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         //THEN
-        //then a user is created in the database with the information provided
-        verify(userService,times(1)).createUserWithDTO(userDTO);
-
-        assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+        //then sends the link to the user verification via email or sms
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
 
     }
-
-    */
 
     /**
      * GIVEN
@@ -116,14 +108,8 @@ public class RestAccountControllerTest {
      * when you are prompted to create a system user
      *
      * THEN
-     * then a user isn't created in the database
+     * then sends an information to inform that it is impossible to create the user
      */
-
-
-    /*
-
-
-
 
     @Test
     public void shouldNotCreateUserBecauseInvalidEmail() throws Exception {
@@ -141,20 +127,15 @@ public class RestAccountControllerTest {
 
         restAccountController.createUser(userDTO);
 
-        MockHttpServletResponse response = mvc.perform(post("/account/")
+        MockHttpServletResponse response = mvc.perform(post("/account/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonUserDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         //THEN
-        //then a user isn't created in the database
-        verify(userService,times(0)).createUserWithDTO(userDTO);
-
+        //then sends an information to inform that it is impossible to create the user
         assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
     }
-     */
-
-
 
     /**
      * GIVEN
@@ -164,13 +145,8 @@ public class RestAccountControllerTest {
      * when you are prompted to create a system user
      *
      * THEN
-     * then a user isn't created in the database
+     * then sends an information to inform that it is impossible to create the user
      */
-
-    /*
-
-
-
     @Test
     public void shouldNotCreateUserBecauseEmailExists() throws Exception {
 
@@ -187,19 +163,15 @@ public class RestAccountControllerTest {
 
         restAccountController.createUser(userDTO);
 
-        MockHttpServletResponse response = mvc.perform(post("/account/")
+        MockHttpServletResponse response = mvc.perform(post("/account/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonUserDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         //THEN
-        //then a user isn't created in the database
-        verify(userService,times(0)).createUserWithDTO(userDTO);
-
+        //then sends an information to inform that it is impossible to create the user
         assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
     }
-
-    */
 
     @Test
     public void shouldLogin() throws Exception {

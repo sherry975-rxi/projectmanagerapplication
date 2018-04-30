@@ -36,6 +36,7 @@ public class ProjectCollaboratorTest {
         testEvenMoar = null;
         testCollaboratorNull = null;
         testCollaboratorNull2 = null;
+        project = null;
     }
 
     /**

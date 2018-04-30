@@ -38,11 +38,9 @@ public class RestUserTasksController {
      * @return
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<Task>> getAllTasks(@PathVariable String userId) {
+    public ResponseEntity<List<Task>> getAllTasks(@PathVariable Integer userId) {
 
-        Integer id = Integer.parseInt(userId);
-
-        User user = userService.getUserByID(id);
+        User user = userService.getUserByID(userId);
 
         if(user == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -69,11 +67,9 @@ public class RestUserTasksController {
      * @return
      */
     @RequestMapping(value = "totaltimespent/completed/lastmonth", method = RequestMethod.GET)
-    public ResponseEntity<Double> getTotalTimeSpentOnTasksCompletedLastMonth(@PathVariable String userId) {
+    public ResponseEntity<Double> getTotalTimeSpentOnTasksCompletedLastMonth(@PathVariable Integer userId) {
 
-        Integer id = Integer.parseInt(userId);
-
-        User user = userService.getUserByID(id);
+        User user = userService.getUserByID(userId);
 
         if(user == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
