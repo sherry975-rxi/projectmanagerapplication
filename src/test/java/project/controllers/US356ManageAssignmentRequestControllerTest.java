@@ -142,22 +142,28 @@ public class US356ManageAssignmentRequestControllerTest {
 		
 		// Sets the controllers request
 		assignmentRequestsController.setSelectedAdditionRequest(0, testProject);
+		assertTrue(taskContainer.getAllProjectTaskAssignmentRequests(testProject).get(0).getApprovalDate()==null);
 
 		// accepts the requests
 		assignmentRequestsController.approveAssignmentRequest();
 
-		// first, confirms that the list is now empty
-		assertEquals(1, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
+		// first, confirms that the list still the same
+		assertEquals(2, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
+		assertTrue(taskContainer.getAllProjectTaskAssignmentRequests(testProject).get(0).getApprovalDate()!=null);
+
 
 		// Now we test the same for a StandBy Task
 		// Sets the controllers request
-		assignmentRequestsController.setSelectedAdditionRequest(0, testProject);
+		assignmentRequestsController.setSelectedAdditionRequest(1, testProject);
+		assertTrue(taskContainer.getAllProjectTaskAssignmentRequests(testProject).get(1).getApprovalDate()==null);
 
 		// accepts the requests
 		assignmentRequestsController.approveAssignmentRequest();
 
-		// first, confirms that the list is now empty
-		assertEquals(0, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
+		// first, confirms that the list still the same
+		assertEquals(2, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
+		assertTrue(taskContainer.getAllProjectTaskAssignmentRequests(testProject).get(1).getApprovalDate()!=null);
+
 
 	}
 	
@@ -172,14 +178,16 @@ public class US356ManageAssignmentRequestControllerTest {
 		assertEquals(2, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
 		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
 		assignmentRequestsController.setSelectedAdditionRequest(0, testProject);
+		assertTrue(taskContainer.getAllProjectTaskAssignmentRequests(testProject).get(0).getRejectDate()==null);
 		;
 
 		// given the rejection method, confirms that the collaborator wasn't added to
 		// the
 		// team, and the request was deleted from the list
 		assertTrue(assignmentRequestsController.rejectAssignmentRequest());
+		assertTrue(taskContainer.getAllProjectTaskAssignmentRequests(testProject).get(0).getRejectDate()!=null);
 		assertFalse(taskWithNoTeam.isProjectCollaboratorActiveInTaskTeam(teamTesterCollaborator));
-		assertEquals(1, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
+		assertEquals(2, taskContainer.getAllProjectTaskAssignmentRequests(testProject).size());
 
 
 	}

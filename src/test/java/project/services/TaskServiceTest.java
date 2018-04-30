@@ -2036,13 +2036,12 @@ public class TaskServiceTest {
         assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 0);
 
         // then, deletes the request and adds the collaborator to the task, asserting all
-        // lists become empty
         // and that the task team contains the project collaborator
-        assertTrue(notAmock.deleteTaskAssignmentRequest(projectCollaborator));
-        notAmock.addProjectCollaboratorToTask(projectCollaborator);
+        assertTrue(notAmock.approveTaskAssignmentRequest(projectCollaborator));
+        //notAmock.addProjectCollaboratorToTask(projectCollaborator);
 
-        assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 0);
-        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project).size(), 0);
+        assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 1);
+        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project).size(), 1);
         assertEquals(victim.getAllProjectTaskRemovalRequests(project).size(), 0);
         assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 0);
 
@@ -2053,23 +2052,23 @@ public class TaskServiceTest {
 
         notAmock.createTaskRemovalRequest(projectCollaborator);
 
-        assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 0);
-        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project).size(), 0);
+        assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 1);
+        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project).size(), 1);
         assertEquals(victim.getAllProjectTaskRemovalRequests(project).size(), 1);
         assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 1);
 
         // then, approves the request and deletes it, asserting the list of requests all
         // contain 0 entries
         // and that projectCollaborator is no longer active on task
-        assertTrue(notAmock.deleteTaskRemovalRequest(projectCollaborator));
-        notAmock.removeProjectCollaboratorFromTask(projectCollaborator);
+        assertTrue(notAmock.approveTaskRemovalRequest(projectCollaborator));
+        //notAmock.removeProjectCollaboratorFromTask(projectCollaborator);
 
         assertFalse(notAmock.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
 
-        assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 0);
-        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project).size(), 0);
-        assertEquals(victim.getAllProjectTaskRemovalRequests(project).size(), 0);
-        assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 0);
+        assertEquals(victim.getAllProjectTaskAssignmentRequests(project).size(), 1);
+        assertEquals(victim.viewAllProjectTaskAssignmentRequests(project).size(), 1);
+        assertEquals(victim.getAllProjectTaskRemovalRequests(project).size(), 1);
+        assertEquals(victim.viewAllProjectTaskRemovalRequests(project).size(), 1);
 
     }
 

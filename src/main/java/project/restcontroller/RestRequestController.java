@@ -18,7 +18,6 @@ import project.services.UserService;
 
 
 import java.net.URI;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -308,9 +307,8 @@ public class RestRequestController {
             if (requestToApprove.isAssignmentRequest()) {
 
                 ProjectCollaborator projectCollaboratorToAdd = requestToApprove.getProjCollab();
-                task.addProjectCollaboratorToTask(projectCollaboratorToAdd);
-                requestToApprove.setApprovalDate(Calendar.getInstance());
-                task.deleteTaskAssignmentRequest(projectCollaboratorToAdd);
+
+                task.approveTaskAssignmentRequest(projectCollaboratorToAdd);
 
                 taskService.saveTask(task);
 
@@ -326,9 +324,8 @@ public class RestRequestController {
             } else if (requestToApprove.isRemovalRequest()) {
 
                 ProjectCollaborator projectCollaboratorToRemove = requestToApprove.getProjCollab();
-                task.removeProjectCollaboratorFromTask(projectCollaboratorToRemove);
-                requestToApprove.setApprovalDate(Calendar.getInstance());
-                task.deleteTaskRemovalRequest(projectCollaboratorToRemove);
+
+                task.approveTaskRemovalRequest(projectCollaboratorToRemove);
                 taskService.saveTask(task);
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);
@@ -378,8 +375,8 @@ public class RestRequestController {
             if (requestToReject.isAssignmentRequest()) {
 
                 ProjectCollaborator projectCollaboratorToAdd = requestToReject.getProjCollab();
-                requestToReject.setRejectDate(Calendar.getInstance());
-                task.deleteTaskAssignmentRequest(projectCollaboratorToAdd);
+
+                task.rejectTaskAssignmentRequest(projectCollaboratorToAdd);
 
                 taskService.saveTask(task);
 
@@ -395,8 +392,8 @@ public class RestRequestController {
             } else if (requestToReject.isRemovalRequest()) {
 
                 ProjectCollaborator projectCollaboratorToRemove = requestToReject.getProjCollab();
-                requestToReject.setRejectDate(Calendar.getInstance());
-                task.deleteTaskRemovalRequest(projectCollaboratorToRemove);
+                
+                task.rejectTaskRemovalRequest(projectCollaboratorToRemove);
                 taskService.saveTask(task);
 
                 Link reference = linkTo(methodOn(getClass()).getAllRequests(taskId, projectId)).withRel(allRequests);

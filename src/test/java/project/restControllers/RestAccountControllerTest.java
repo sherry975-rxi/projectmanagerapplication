@@ -79,7 +79,8 @@ public class RestAccountControllerTest {
         //GIVEN
         //given a set of user information
         UserDTO userDTO = new UserDTO("Alberto", "test@gmail.com", "70", "dev", "91000000",
-                "qwerty", "1", "test");
+                 "1", "test");
+        userDTO.setPassword("qwerty");
         userDTO.setUserAddress("Rua", "4500-000", "Porto", "Porto", "Portugal");
 
         //WHEN
@@ -117,7 +118,8 @@ public class RestAccountControllerTest {
         //GIVEN
         //given a set of user information with a email in wrong format
         UserDTO userDTO = new UserDTO("Pedro", "testgmail.com", "70", "dev", "91000000",
-                "qwerty", "1", "test");
+                 "1", "test");
+        userDTO.setPassword("qwerty");
         userDTO.setUserAddress("Rua", "4500-000", "Porto", "Porto", "Portugal");
 
         //WHEN
@@ -153,7 +155,8 @@ public class RestAccountControllerTest {
         //GIVEN
         //given a set of user information with email that already exists
         UserDTO userDTO = new UserDTO("Daniel", "testgmail.com", "70", "dev", "91000000",
-                "qwerty", "1", "test");
+                 "1", "test");
+        userDTO.setPassword("qwerty");
         userDTO.setUserAddress("Rua", "4500-000", "Porto", "Porto", "Portugal");
 
         //WHEN
@@ -181,7 +184,8 @@ public class RestAccountControllerTest {
 
         //WHEN performing a logIn post request using a UserDTO
         UserDTO userDTO = new UserDTO("", "test@gmail.com", "", "", "",
-                "exists", "", "");
+                "", "");
+        userDTO.setPassword("exists");
 
         MockHttpServletResponse response = mvc.perform(post("/account/logIn")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -200,7 +204,8 @@ public class RestAccountControllerTest {
 
         // WHEN the email in the DTO doesn't match daniel's email
         UserDTO userDTO = new UserDTO("", "wrong@mail.mail", "", "", "",
-                "exists", "", "");
+                 "", "");
+        userDTO.setPassword("exists");
 
         //THEN the response entity must contain FORBIDDEN
         MockHttpServletResponse response = mvc.perform(post("/account/logIn")
@@ -214,7 +219,8 @@ public class RestAccountControllerTest {
         when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
 
         userDTO = new UserDTO("", "test@gmail.com", "", "", "",
-                "exists", "", "");
+                 "", "");
+        userDTO.setPassword("exists");
 
 
         // THEN the response must contain "OK", and contain three links to choose a validation method
@@ -232,7 +238,8 @@ public class RestAccountControllerTest {
         when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
 
         userDTO = new UserDTO("", "test@gmail.com", "", "", "",
-                "wrong password", "", "");
+                 "", "");
+        userDTO.setPassword("wrong password");
 
 
         //THEN the response entity must contain FORBIDDEN

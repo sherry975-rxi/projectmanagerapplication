@@ -735,7 +735,8 @@ public class RestRequestControllerTest {
     public void canNotCreateAnAssignmentRequestNoProjectCollaborator() {
 
         //Given
-        UserDTO userDTOFour = new UserDTO("Rita", "rita@gmail.com", "04", "collaborator", "221378448", "123456", "", "");
+        UserDTO userDTOFour = new UserDTO("Rita", "rita@gmail.com", "04", "collaborator", "221378448",  "", "");
+        userDTOFour.setPassword("123456");
 
         //When
         ResponseEntity<?> result = controller.createAssignmentRequest(taskIdOne, projectId, userDTOFour);
@@ -763,7 +764,8 @@ public class RestRequestControllerTest {
     public void canNotCreateARemovalRequestNoProjectCollaborator() {
 
         //Given
-        UserDTO userDTOFour = new UserDTO("Rita", "rita@gmail.com", "04", "collaborator", "221378448", "123456", "", "");
+        UserDTO userDTOFour = new UserDTO("Rita", "rita@gmail.com", "04", "collaborator", "221378448",  "", "");
+        userDTOFour.setPassword("123456");
 
 
         //When
