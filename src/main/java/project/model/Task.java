@@ -1186,13 +1186,17 @@ public class Task extends ResourceSupport implements Serializable {
 	 *            Request to remove from the list
 	 */
 
-	public boolean deleteTaskAssignmentRequest(ProjectCollaborator projCollaborator) {
+	public boolean rejectTaskAssignmentRequest(ProjectCollaborator projCollaborator) {
+
+		boolean result = false;
 
 		TaskTeamRequest request = this.getAssignmentTaskTeamRequest(projCollaborator);
 
-		request.setType(RequestType.ASSIGNMENT);
+		request.setRejectDate(Calendar.getInstance());
 
-		return this.pendingTaskTeamRequests.remove(request);
+		result = true;
+
+		return result;
 	}
 
 	/**
@@ -1204,10 +1208,18 @@ public class Task extends ResourceSupport implements Serializable {
 	 * @return TRUE if deleted FALSE if not
 	 */
 
-	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab) {
+	public boolean rejectTaskRemovalRequest(ProjectCollaborator projCollab) {
+
+		boolean result = false;
+
 		TaskTeamRequest request = this.getRemovalTaskTeamRequest(projCollab);
-		request.setType(RequestType.REMOVAL);
-		return this.pendingTaskTeamRequests.remove(request);
+
+		request.setRejectDate(Calendar.getInstance());
+
+		result = true;
+
+
+		return result;
 	}
 
 	/**
@@ -1401,4 +1413,49 @@ public class Task extends ResourceSupport implements Serializable {
     public void setCancelDate(Calendar cancelDate) {
         this.cancelDate = cancelDate;
     }
+
+
+	/**
+	 * Approves request to add a certain project collaborator to a specific task
+	 * team.
+	 *
+	 * @param projCollaborator
+	 *            Request to approve from the list
+	 */
+	public boolean approveTaskAssignmentRequest(ProjectCollaborator projCollaborator) {
+
+		boolean result = false;
+
+		TaskTeamRequest request = this.getAssignmentTaskTeamRequest(projCollaborator);
+
+		this.addProjectCollaboratorToTask(projCollaborator);
+
+		request.setApprovalDate(Calendar.getInstance());
+
+		result = true;
+
+		return result;
+	}
+
+	/**
+	 * Approves request to remove a certain project collaborator from a specific task
+	 * team.
+	 *
+	 * @param projCollaborator
+	 *            Request to approve from the list
+	 */
+	public boolean approveTaskRemovalRequest(ProjectCollaborator projCollaborator) {
+
+		boolean result = false;
+
+		TaskTeamRequest request = this.getRemovalTaskTeamRequest(projCollaborator);
+
+		this.removeProjectCollaboratorFromTask(projCollaborator);
+
+		request.setApprovalDate(Calendar.getInstance());
+
+		result = true;
+
+		return result;
+	}
 }
