@@ -666,12 +666,10 @@ public class TaskTest {
 	public void shouldTaskCollaboratorToTask() {
 
 		assertTrue(taskTest.getTaskTeam().isEmpty());
-		assertEquals("Created", taskTest.viewTaskStateName());
 
 		assertTrue(taskTest.addTaskCollaboratorToTask(taskCollaborator));
 
 		assertFalse(taskTest.getTaskTeam().isEmpty());
-		assertEquals("Planned", taskTest.viewTaskStateName());
 	}
 
 	/**

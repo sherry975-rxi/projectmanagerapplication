@@ -493,6 +493,7 @@ public class Task extends ResourceSupport implements Serializable {
 	}
 
 	/**
+	 * DO NOT USE this method. This method should be private. Use addProjectCollaboratorToTask instead
 	 * This method checks if the user is missing from the task team (List of users
 	 * in Task), and if it is missing from the list, the user is added to the team.
 	 * If it is already already added to the the list it is reactivated, and its
@@ -515,7 +516,6 @@ public class Task extends ResourceSupport implements Serializable {
 
 		}
 
-		this.taskState.doAction(this);
 		return wasTheTaskAddedToCollaborator;
 	}
 
