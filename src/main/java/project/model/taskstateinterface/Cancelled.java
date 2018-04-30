@@ -4,7 +4,6 @@ import project.model.StateEnum;
 import project.model.Task;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class Cancelled implements TaskStateInterface {
