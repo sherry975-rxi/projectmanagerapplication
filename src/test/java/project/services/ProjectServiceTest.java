@@ -1,6 +1,9 @@
 package project.services;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,11 +22,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProjectServiceTest {
@@ -106,6 +106,7 @@ public class ProjectServiceTest {
 	public void tearDown() {
 
 		projectService = null;
+		project = null;
 		project1 = null;
 		project2 = null;
 		project3 = null;

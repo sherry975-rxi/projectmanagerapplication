@@ -3,7 +3,6 @@ package project.integration;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,11 +106,11 @@ public class RestProjectControllerIntegrationTest {
      *
      *
      */
-    @Ignore
     @Test
-    public void createProjectTest() {
+    public void createProjectTest() throws Exception {
         // GIVEN
         assertEquals(2, projectService.getAllProjectsfromProjectsContainer().size());
+
         assertEquals(projectOne.getIdCode(), projectService.getProjectById(projectOne.getIdCode()).getProjectId());
         assertEquals(projectTwo.getIdCode(), projectService.getProjectById(projectTwo.getIdCode()).getProjectId());
 
@@ -135,9 +134,8 @@ public class RestProjectControllerIntegrationTest {
      *
      */
 
-    @Ignore
     @Test
-    public void testGetActiveProjects()  {
+    public void testGetActiveProjects() {
 
         //GIVEN
         assertEquals(2, projectService.getAllProjectsfromProjectsContainer().size());
@@ -148,16 +146,49 @@ public class RestProjectControllerIntegrationTest {
         projectService.updateProject(projectOne);
         projectService.updateProject(projectTwo);
 
-        ParameterizedTypeReference<List<Project>> listOfActiveProjects = new ParameterizedTypeReference<List<Project>>() {};
+        ParameterizedTypeReference<List<Project>> listOfActiveProjects = new ParameterizedTypeReference<List<Project>>() {
+        };
 
-        actualProjectList = this.restTemplate.exchange("http://localhost:" + port+ "/projects/active",
-                 HttpMethod.GET, null, listOfActiveProjects);
+        //WHEN
+
+        actualProjectList = this.restTemplate.exchange("http://localhost:" + port + "/projects/active",
+                HttpMethod.GET, null, listOfActiveProjects);
 
         expectedProjectList = new ResponseEntity<>(projectService.getActiveProjects(), HttpStatus.OK);
+
+        //THEN
 
         assertEquals(expectedProjectList.getBody().size(), actualProjectList.getBody().size());
         assertEquals("Restful Web Service", actualProjectList.getBody().get(0).getName());
 
     }
 
+    /**
+     * This test verifies if the setup for returning project details is working properly
+     *
+     * GIVEN a database with 2 projects
+     * WHEN sending a HTTP request to get project details by project ID
+     * THEN the response entity must contain information regarding the project and status OK     *
+     */
+
+
+
+    @Test
+    public void testGetProjectDetails(){
+
+        //GIVEN
+        assertEquals(2, projectService.getAllProjectsfromProjectsContainer().size());
+
+
+        assertEquals(projectOne, projectService.getProjectById(projectOne.getProjectId()));
+
+        //WHEN
+
+        actualRealProject = this.restTemplate.getForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId(), Project.class);
+
+        // THEN the response entity must contain Mike
+        expectedProject = new ResponseEntity<>(projectOne, HttpStatus.OK);
+        assertEquals(expectedProject.getBody().getName(), expectedProject.getBody().getName());
+
+    }
 }
