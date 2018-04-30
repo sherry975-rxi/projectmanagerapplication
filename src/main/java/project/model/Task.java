@@ -506,14 +506,14 @@ public class Task extends ResourceSupport implements Serializable {
 	 */
 	public boolean addTaskCollaboratorToTask(TaskCollaborator taskCollaborator) {
 		boolean wasTheTaskAddedToCollaborator = false;
-		if (!isProjectCollaboratorInTaskTeam(taskCollaborator.getProjectCollaboratorFromTaskCollaborator())) {
+		ProjectCollaborator collaborator = taskCollaborator.getProjectCollaboratorFromTaskCollaborator();
+		if (isProjectCollaboratorInTaskTeam(collaborator) && !isProjectCollaboratorActiveInTaskTeam(collaborator)) {
 			this.taskTeam.add(taskCollaborator);
 			wasTheTaskAddedToCollaborator = true;
-		} else if (!isProjectCollaboratorActiveInTaskTeam(
-				taskCollaborator.getProjectCollaboratorFromTaskCollaborator())) {
+		}
+		else if(!isProjectCollaboratorInTaskTeam(collaborator)) {
 			this.taskTeam.add(taskCollaborator);
 			wasTheTaskAddedToCollaborator = true;
-
 		}
 
 		return wasTheTaskAddedToCollaborator;
