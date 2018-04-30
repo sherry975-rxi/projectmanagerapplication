@@ -2004,7 +2004,7 @@ public class TaskTest {
 		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
 		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getApprovalDate()==null);
 
-		taskReadyToFinishTest.approveTaskRemovalRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.approveTaskRemovalRequest(projectCollaborator));
 		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getApprovalDate()!=null);
 
 		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
@@ -2025,7 +2025,7 @@ public class TaskTest {
 		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getApprovalDate()==null);
 
-		taskReadyToFinishTest.approveTaskAssignmentRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.approveTaskAssignmentRequest(projectCollaborator));
 
 		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getApprovalDate()!=null);
 

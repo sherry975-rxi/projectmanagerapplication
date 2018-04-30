@@ -87,7 +87,6 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public boolean approveAssignmentRequest() {
 		if (selectedAdditionRequest != null) {
-			//selectedTask.addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
 			selectedTask.approveTaskAssignmentRequest(selectedAdditionRequest.getProjCollab());
 			taskService.saveTask(selectedTask);
 

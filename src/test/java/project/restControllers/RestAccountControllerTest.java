@@ -331,6 +331,69 @@ public class RestAccountControllerTest {
 
     }
 
+    @Test
+    public void performValidationVerificationCode(){
 
+        //GIVEN
+        // An an userEmail that it's still not registered in the system
+
+        String userEmail = "test@mymail.com";
+        String code = "code";
+
+
+        ResponseEntity<Link> expectedResponse = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        //WHEN
+        // When we perform the verificateCode method in the restAccountController
+        ResponseEntity<Link> actualResponse =      restAccountController.verificateCode(code,userEmail);
+
+
+        //THEN
+        //The method will return a HTTPStatus.FORBIDDEN, because there isn't any record in the HASHMAP with the given email
+        assertEquals(actualResponse, expectedResponse);
+
+
+        //WHEN
+        //We create a user, there will be a value that will be stored in the hashMap codeDTO MAP with a code
+
+        UserDTO userDTO = new UserDTO("Alberto", userEmail, "70", "dev", "91000000",
+                "1", "test");
+
+        when(userService.isEmailAddressValid(anyString())).thenReturn(true);
+        restAccountController.createUser(userDTO);
+
+
+
+        //WHEN
+        //We provided a wrong code
+        code = "wrongCode";
+        actualResponse =      restAccountController.verificateCode(code,userEmail);
+
+
+        //THEN
+        //The method will return a HTTPStatus.FORBIDDEN, because the passwords do not match
+        assertEquals(actualResponse, expectedResponse);
+
+
+        //WHEN
+        //We provide a right code (The string "NotVerified" is stored in the hashmap
+        // before the user selects a method to receive the code
+
+        code = "NotVerified";
+        actualResponse =      restAccountController.verificateCode(code,userEmail);
+
+
+        //THEN
+        //it returns a link a ResponseEntity with the link to the login and HttpSatus.OK
+        Link okLink = linkTo(RestAccountController.class).slash("logIn").withRel("loginUser");
+
+        expectedResponse = new ResponseEntity<>(okLink, HttpStatus.OK);
+
+        assertEquals(actualResponse, expectedResponse);
+
+
+
+
+    }
 
 }
