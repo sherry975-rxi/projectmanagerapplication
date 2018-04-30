@@ -87,8 +87,10 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public boolean approveAssignmentRequest() {
 		if (selectedAdditionRequest != null) {
-			selectedTask.addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
-			deleteRequest();
+			//selectedTask.addProjectCollaboratorToTask(selectedAdditionRequest.getProjCollab());
+			selectedTask.approveTaskAssignmentRequest(selectedAdditionRequest.getProjCollab());
+			taskService.saveTask(selectedTask);
+
 
 			return true;
 		} else
@@ -119,7 +121,7 @@ public class US356ManageAssigmentRequestController {
 	 */
 	public void deleteRequest() {
 
-		selectedTask.deleteTaskAssignmentRequest(selectedAdditionRequest.getProjCollab());
+		selectedTask.rejectTaskAssignmentRequest(selectedAdditionRequest.getProjCollab());
 		taskService.saveTask(selectedTask);
 	}
 }

@@ -136,6 +136,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
 		assertEquals(1, pendingRemovalListSizeBefore);
+		assertTrue(taskA.getPendingTaskRemovalRequests().get(0).getApprovalDate()==null);
 
 		// AcceptRemovalRequestFromTask method call.
 		us357Controller.acceptRemovalRequestFromTask();
@@ -144,7 +145,9 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		// date and the pendinfRemovalListSize is 1
 		int pendingRemovalListSizeAfter = taskA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() != null));
-		assertEquals(0, pendingRemovalListSizeAfter);
+		assertEquals(1, pendingRemovalListSizeAfter);
+		assertTrue(taskA.getPendingTaskRemovalRequests().get(0).getApprovalDate()!=null);
+
 
 	}
 
@@ -163,6 +166,7 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		int pendingRemovalListSizeBefore = taskA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
 		assertEquals(1, pendingRemovalListSizeBefore);
+		assertTrue(taskA.getPendingTaskRemovalRequests().get(0).getRejectDate()==null);
 
 		// CancelRemvalRequestFromTask method call.
 		us357Controller.cancelRemovalRequestFromTask();
@@ -171,7 +175,9 @@ public class US357CancelRemovalTaskRequestControllerTest {
 		// pendingRemovalList has one less request
 		int pendingRemovalListSizeAfter = taskA.getPendingTaskRemovalRequests().size();
 		assertTrue((userRuiTaskCollaborator.getFinishDate() == null));
-		assertEquals(0, pendingRemovalListSizeAfter);
+		assertEquals(1, pendingRemovalListSizeAfter);
+		assertTrue(taskA.getPendingTaskRemovalRequests().get(0).getRejectDate()!=null);
+
 
 	}
 	

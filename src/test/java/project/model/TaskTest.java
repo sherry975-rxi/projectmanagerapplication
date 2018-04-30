@@ -1541,9 +1541,9 @@ public class TaskTest {
 				taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getProjCollab());
 		assertEquals(RequestType.REMOVAL, taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getType());
 
-		taskReadyToFinishTest.deleteTaskRemovalRequest(projectCollaborator);
+		taskReadyToFinishTest.rejectTaskRemovalRequest(projectCollaborator);
 
-		assertEquals(null, taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator));
+		assertEquals(RequestType.REMOVAL, taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getType());
 
 	}
 
@@ -1704,7 +1704,7 @@ public class TaskTest {
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#deleteTaskRemovalRequest(ProjectCollaborator)}.
+	 * {@link project.model.Task#rejectTaskRemovalRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void shouldDeleteTaskRemovalRequest() {
@@ -1712,16 +1712,18 @@ public class TaskTest {
 		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
 
 		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getRejectDate()==null);
 
-		assertTrue(taskReadyToFinishTest.deleteTaskRemovalRequest(projectCollaborator));
+		taskReadyToFinishTest.rejectTaskRemovalRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getRejectDate()!=null);
 
-		assertFalse(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
 
 	}
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#deleteTaskAssignmentRequest(ProjectCollaborator)}.
+	 * {@link project.model.Task#rejectTaskAssignmentRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void shouldDeleteTaskAssignmentRequest() {
@@ -1731,10 +1733,14 @@ public class TaskTest {
 		assertTrue(taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator));
 
 		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getRejectDate()==null);
 
-		assertTrue(taskReadyToFinishTest.deleteTaskAssignmentRequest(projectCollaborator));
+		taskReadyToFinishTest.rejectTaskAssignmentRequest(projectCollaborator);
 
-		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getRejectDate()!=null);
+
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
 	}
 
@@ -1982,6 +1988,48 @@ public class TaskTest {
 
 		assertFalse(taskReadyToFinishTest
 				.getReportsFromGivenUser(taskCollaborator.getTaskCollaborator().getEmail()).isEmpty());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#rejectTaskRemovalRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void shouldApproveTaskRemovalRequest() {
+
+		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getApprovalDate()==null);
+
+		taskReadyToFinishTest.approveTaskRemovalRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getApprovalDate()!=null);
+
+		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#rejectTaskAssignmentRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void shouldApproveTaskAssignmentRequest() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
+
+		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getApprovalDate()==null);
+
+		taskReadyToFinishTest.approveTaskAssignmentRequest(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getApprovalDate()!=null);
+
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
 	}
 }
