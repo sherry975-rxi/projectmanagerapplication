@@ -71,42 +71,35 @@ public class RestAccountControllerTest {
      * when you are prompted to create a system user
      *
      * THEN
-     * then a user is created in the database with the information provided
+     * then sends the link to the user verification via email or sms
      */
-
-    /*
 
     @Test
     public void shouldCreateUser() throws Exception {
         //GIVEN
         //given a set of user information
         UserDTO userDTO = new UserDTO("Alberto", "test@gmail.com", "70", "dev", "91000000",
-                "qwerty", "1", "test");
+                 "1", "test");
+        userDTO.setPassword("qwerty");
         userDTO.setUserAddress("Rua", "4500-000", "Porto", "Porto", "Portugal");
 
         //WHEN
         //when you are prompted to create a system user
         when(userService.isUserEmailInUserContainer(anyString())).thenReturn(false);
         when(userService.isEmailAddressValid(anyString())).thenReturn(true);
-        Mockito.doNothing().when(userService).addUserToUserRepositoryX(any(User.class));
-        when(userService.getUserByEmail(anyString())).thenReturn(userDaniel);
 
         restAccountController.createUser(userDTO);
 
-        MockHttpServletResponse response = mvc.perform(post("/account/")
+        MockHttpServletResponse response = mvc.perform(post("/account/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonUserDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         //THEN
-        //then a user is created in the database with the information provided
-        verify(userService,times(1)).createUserWithDTO(userDTO);
-
-        assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+        //then sends the link to the user verification via email or sms
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
 
     }
-
-    */
 
     /**
      * GIVEN
@@ -116,14 +109,8 @@ public class RestAccountControllerTest {
      * when you are prompted to create a system user
      *
      * THEN
-     * then a user isn't created in the database
+     * then sends an information to inform that it is impossible to create the user
      */
-
-
-    /*
-
-
-
 
     @Test
     public void shouldNotCreateUserBecauseInvalidEmail() throws Exception {
@@ -131,7 +118,8 @@ public class RestAccountControllerTest {
         //GIVEN
         //given a set of user information with a email in wrong format
         UserDTO userDTO = new UserDTO("Pedro", "testgmail.com", "70", "dev", "91000000",
-                "qwerty", "1", "test");
+                 "1", "test");
+        userDTO.setPassword("qwerty");
         userDTO.setUserAddress("Rua", "4500-000", "Porto", "Porto", "Portugal");
 
         //WHEN
@@ -141,20 +129,15 @@ public class RestAccountControllerTest {
 
         restAccountController.createUser(userDTO);
 
-        MockHttpServletResponse response = mvc.perform(post("/account/")
+        MockHttpServletResponse response = mvc.perform(post("/account/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonUserDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         //THEN
-        //then a user isn't created in the database
-        verify(userService,times(0)).createUserWithDTO(userDTO);
-
+        //then sends an information to inform that it is impossible to create the user
         assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
     }
-     */
-
-
 
     /**
      * GIVEN
@@ -164,20 +147,16 @@ public class RestAccountControllerTest {
      * when you are prompted to create a system user
      *
      * THEN
-     * then a user isn't created in the database
+     * then sends an information to inform that it is impossible to create the user
      */
-
-    /*
-
-
-
     @Test
     public void shouldNotCreateUserBecauseEmailExists() throws Exception {
 
         //GIVEN
         //given a set of user information with email that already exists
         UserDTO userDTO = new UserDTO("Daniel", "testgmail.com", "70", "dev", "91000000",
-                "qwerty", "1", "test");
+                 "1", "test");
+        userDTO.setPassword("qwerty");
         userDTO.setUserAddress("Rua", "4500-000", "Porto", "Porto", "Portugal");
 
         //WHEN
@@ -187,19 +166,15 @@ public class RestAccountControllerTest {
 
         restAccountController.createUser(userDTO);
 
-        MockHttpServletResponse response = mvc.perform(post("/account/")
+        MockHttpServletResponse response = mvc.perform(post("/account/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonUserDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         //THEN
-        //then a user isn't created in the database
-        verify(userService,times(0)).createUserWithDTO(userDTO);
-
+        //then sends an information to inform that it is impossible to create the user
         assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
     }
-
-    */
 
     @Test
     public void shouldLogin() throws Exception {
@@ -209,7 +184,8 @@ public class RestAccountControllerTest {
 
         //WHEN performing a logIn post request using a UserDTO
         UserDTO userDTO = new UserDTO("", "test@gmail.com", "", "", "",
-                "exists", "", "");
+                "", "");
+        userDTO.setPassword("exists");
 
         MockHttpServletResponse response = mvc.perform(post("/account/logIn")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -228,7 +204,8 @@ public class RestAccountControllerTest {
 
         // WHEN the email in the DTO doesn't match daniel's email
         UserDTO userDTO = new UserDTO("", "wrong@mail.mail", "", "", "",
-                "exists", "", "");
+                 "", "");
+        userDTO.setPassword("exists");
 
         //THEN the response entity must contain FORBIDDEN
         MockHttpServletResponse response = mvc.perform(post("/account/logIn")
@@ -242,7 +219,8 @@ public class RestAccountControllerTest {
         when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
 
         userDTO = new UserDTO("", "test@gmail.com", "", "", "",
-                "exists", "", "");
+                 "", "");
+        userDTO.setPassword("exists");
 
 
         // THEN the response must contain "OK", and contain three links to choose a validation method
@@ -260,7 +238,8 @@ public class RestAccountControllerTest {
         when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
 
         userDTO = new UserDTO("", "test@gmail.com", "", "", "",
-                "wrong password", "", "");
+                 "", "");
+        userDTO.setPassword("wrong password");
 
 
         //THEN the response entity must contain FORBIDDEN
@@ -352,6 +331,69 @@ public class RestAccountControllerTest {
 
     }
 
+    @Test
+    public void performValidationVerificationCode(){
 
+        //GIVEN
+        // An an userEmail that it's still not registered in the system
+
+        String userEmail = "test@mymail.com";
+        String code = "code";
+
+
+        ResponseEntity<Link> expectedResponse = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        //WHEN
+        // When we perform the verificateCode method in the restAccountController
+        ResponseEntity<Link> actualResponse =      restAccountController.verificateCode(code,userEmail);
+
+
+        //THEN
+        //The method will return a HTTPStatus.FORBIDDEN, because there isn't any record in the HASHMAP with the given email
+        assertEquals(actualResponse, expectedResponse);
+
+
+        //WHEN
+        //We create a user, there will be a value that will be stored in the hashMap codeDTO MAP with a code
+
+        UserDTO userDTO = new UserDTO("Alberto", userEmail, "70", "dev", "91000000",
+                "1", "test");
+
+        when(userService.isEmailAddressValid(anyString())).thenReturn(true);
+        restAccountController.createUser(userDTO);
+
+
+
+        //WHEN
+        //We provided a wrong code
+        code = "wrongCode";
+        actualResponse =      restAccountController.verificateCode(code,userEmail);
+
+
+        //THEN
+        //The method will return a HTTPStatus.FORBIDDEN, because the passwords do not match
+        assertEquals(actualResponse, expectedResponse);
+
+
+        //WHEN
+        //We provide a right code (The string "NotVerified" is stored in the hashmap
+        // before the user selects a method to receive the code
+
+        code = "NotVerified";
+        actualResponse =      restAccountController.verificateCode(code,userEmail);
+
+
+        //THEN
+        //it returns a link a ResponseEntity with the link to the login and HttpSatus.OK
+        Link okLink = linkTo(RestAccountController.class).slash("logIn").withRel("loginUser");
+
+        expectedResponse = new ResponseEntity<>(okLink, HttpStatus.OK);
+
+        assertEquals(actualResponse, expectedResponse);
+
+
+
+
+    }
 
 }

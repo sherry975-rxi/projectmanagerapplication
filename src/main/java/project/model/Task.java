@@ -493,6 +493,7 @@ public class Task extends ResourceSupport implements Serializable {
 	}
 
 	/**
+	 * DO NOT USE this method. This method should be private. Use addProjectCollaboratorToTask instead
 	 * This method checks if the user is missing from the task team (List of users
 	 * in Task), and if it is missing from the list, the user is added to the team.
 	 * If it is already already added to the the list it is reactivated, and its
@@ -505,17 +506,16 @@ public class Task extends ResourceSupport implements Serializable {
 	 */
 	public boolean addTaskCollaboratorToTask(TaskCollaborator taskCollaborator) {
 		boolean wasTheTaskAddedToCollaborator = false;
-		if (!isProjectCollaboratorInTaskTeam(taskCollaborator.getProjectCollaboratorFromTaskCollaborator())) {
+		ProjectCollaborator collaborator = taskCollaborator.getProjectCollaboratorFromTaskCollaborator();
+		if (isProjectCollaboratorInTaskTeam(collaborator) && !isProjectCollaboratorActiveInTaskTeam(collaborator)) {
 			this.taskTeam.add(taskCollaborator);
 			wasTheTaskAddedToCollaborator = true;
-		} else if (!isProjectCollaboratorActiveInTaskTeam(
-				taskCollaborator.getProjectCollaboratorFromTaskCollaborator())) {
+		}
+		else if(!isProjectCollaboratorInTaskTeam(collaborator)) {
 			this.taskTeam.add(taskCollaborator);
 			wasTheTaskAddedToCollaborator = true;
-
 		}
 
-		this.taskState.doAction(this);
 		return wasTheTaskAddedToCollaborator;
 	}
 
@@ -1176,13 +1176,17 @@ public class Task extends ResourceSupport implements Serializable {
 	 *            Request to remove from the list
 	 */
 
-	public boolean deleteTaskAssignmentRequest(ProjectCollaborator projCollaborator) {
+	public boolean rejectTaskAssignmentRequest(ProjectCollaborator projCollaborator) {
+
+		boolean result = false;
 
 		TaskTeamRequest request = this.getAssignmentTaskTeamRequest(projCollaborator);
 
-		request.setType(RequestType.ASSIGNMENT);
+		request.setRejectDate(Calendar.getInstance());
 
-		return this.pendingTaskTeamRequests.remove(request);
+		result = true;
+
+		return result;
 	}
 
 	/**
@@ -1194,10 +1198,18 @@ public class Task extends ResourceSupport implements Serializable {
 	 * @return TRUE if deleted FALSE if not
 	 */
 
-	public boolean deleteTaskRemovalRequest(ProjectCollaborator projCollab) {
+	public boolean rejectTaskRemovalRequest(ProjectCollaborator projCollab) {
+
+		boolean result = false;
+
 		TaskTeamRequest request = this.getRemovalTaskTeamRequest(projCollab);
-		request.setType(RequestType.REMOVAL);
-		return this.pendingTaskTeamRequests.remove(request);
+
+		request.setRejectDate(Calendar.getInstance());
+
+		result = true;
+
+
+		return result;
 	}
 
 	/**
@@ -1391,4 +1403,49 @@ public class Task extends ResourceSupport implements Serializable {
     public void setCancelDate(Calendar cancelDate) {
         this.cancelDate = cancelDate;
     }
+
+
+	/**
+	 * Approves request to add a certain project collaborator to a specific task
+	 * team.
+	 *
+	 * @param projCollaborator
+	 *            Request to approve from the list
+	 */
+	public boolean approveTaskAssignmentRequest(ProjectCollaborator projCollaborator) {
+
+		boolean result = false;
+
+		TaskTeamRequest request = this.getAssignmentTaskTeamRequest(projCollaborator);
+
+		this.addProjectCollaboratorToTask(projCollaborator);
+
+		request.setApprovalDate(Calendar.getInstance());
+
+		result = true;
+
+		return result;
+	}
+
+	/**
+	 * Approves request to remove a certain project collaborator from a specific task
+	 * team.
+	 *
+	 * @param projCollaborator
+	 *            Request to approve from the list
+	 */
+	public boolean approveTaskRemovalRequest(ProjectCollaborator projCollaborator) {
+
+		boolean result = false;
+
+		TaskTeamRequest request = this.getRemovalTaskTeamRequest(projCollaborator);
+
+		this.removeProjectCollaboratorFromTask(projCollaborator);
+
+		request.setApprovalDate(Calendar.getInstance());
+
+		result = true;
+
+		return result;
+	}
 }

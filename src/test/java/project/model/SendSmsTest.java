@@ -1,5 +1,6 @@
 package project.model;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -15,32 +16,47 @@ import static org.mockito.Mockito.verify;
 public class SendSmsTest {
 
 
+    SendSMS sendSMS;
+
+    @Before
+    public void setup(){
+
+        sendSMS = new SendSMS();
+    }
+
+    @After
+    public void tearDown(){
+        sendSMS = null;
+    }
+
+
+
 
     @Test
     public void sendSmsTest(){
 
 
+
         //GIVEN
         /*
-            The account credentials to send a TEST SMS
+         * The account credentials to send a TEST SMS
          */
+
         String accountSid = "AC309860890fe87733a1a320dd545a593b";
         String authToken = "33c052727999e08a93ef17eec3c4c69b";
         Twilio.init(accountSid, authToken);
 
-        String messageToSend = "Teste";
-        String numberProvidedByTwilio = "+15005550006";
-        String hardcodedNumberToSend = "+351937429087";
-
+        sendSMS.setAccountSid(accountSid);
+        sendSMS.setAuthToken(authToken);
+        sendSMS.setHardCodeNumberToSend("+15005550006");
+        sendSMS.setNumberProvidedByTwilio("+15005550006");
 
         //THEN
         /*
-            Returns a QUEUED.status, as its a trial account
+         * Returns a QUEUED.status, as its a trial account
          */
 
-        assertEquals(Message.Status.QUEUED, Message
-                .creator(new PhoneNumber("+15005550006"), new PhoneNumber("+15005550006"), "Teste")
-                .create().getStatus());
+        assertEquals(Message.Status.QUEUED, sendSMS.sendMessage("ola", "teste"));
 
 
 

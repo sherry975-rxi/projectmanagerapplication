@@ -4,7 +4,6 @@ import project.model.StateEnum;
 import project.model.Task;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class Cancelled implements TaskStateInterface {
@@ -21,7 +20,6 @@ public class Cancelled implements TaskStateInterface {
 		if(finishedState.isValid(task)) {
 			task.setTaskState(finishedState);
 			task.setCurrentState(StateEnum.FINISHED);
-			task.setFinishDate(Calendar.getInstance());
 			task.removeAllCollaboratorsFromTaskTeam();
 			
 	}

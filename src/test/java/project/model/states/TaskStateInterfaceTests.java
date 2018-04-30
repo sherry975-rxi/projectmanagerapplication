@@ -30,6 +30,7 @@ public class TaskStateInterfaceTests {
 	Task taskFinished;
 	Task taskCancelled;
 	ProjectCollaborator collaborator;
+	ProjectCollaborator collaborator2;
 
 	@Before
 	public void setUp() {
@@ -55,10 +56,12 @@ public class TaskStateInterfaceTests {
 		// create a dead line date
 		taskDeadline = Calendar.getInstance();
 		collaborator = project.createProjectCollaborator(user, 10);
+		collaborator2 = project.createProjectCollaborator(userPm, 20);
 
 		taskPlanned.setEstimatedTaskStartDate(estimatedTaskStartDate);
 		taskPlanned.setTaskDeadline(taskDeadline);
 		taskPlanned.addProjectCollaboratorToTask(collaborator);
+		taskPlanned.addProjectCollaboratorToTask(collaborator2);
 
 		taskReady.setEstimatedTaskStartDate(estimatedTaskStartDate);
 		taskReady.setTaskDeadline(taskDeadline);
@@ -130,8 +133,6 @@ public class TaskStateInterfaceTests {
 
 		//WHEN we set the estimated start and finish date and add a collaborator to the team
 		taskCreated.setEstimatedTaskStartDate(estimatedTaskStartDate);
-		taskCreated.setTaskDeadline(taskDeadline);
-		taskCreated.addProjectCollaboratorToTask(collaborator);
 
 		//THEN the task as to change to Planned
 		assertEquals("Planned", taskCreated.viewTaskStateName());
@@ -141,7 +142,7 @@ public class TaskStateInterfaceTests {
 
 	/**
 	 * GIVEN a task in the Planned state
-	 * WHEN we set the budget and effort
+	 * WHEN we set the budget
 	 * THEN the task as to change to Ready
 	 */
 	@Test
@@ -150,7 +151,7 @@ public class TaskStateInterfaceTests {
 		//GIVEN a task in the Planned state
 		assertEquals("Planned", taskPlanned.viewTaskStateName());
 
-		//WHEN we set the budget and effort
+		//WHEN we set the budget that state
 		taskPlanned.setTaskBudget(10);
 		taskPlanned.setEstimatedTaskEffort(10);
 
@@ -162,8 +163,10 @@ public class TaskStateInterfaceTests {
 
 	/**
 	 * GIVEN a task in the Ready state
-	 * WHEN we remove all collaborators
-	 * THEN the task as to change to Planned
+	 * WHEN we remove one collaborator
+	 * THEN the task is still in the Ready state
+	 * AND WHEN we remove all collaborators
+	 * THEN the task state changes to Planned
 	 */
 	@Test
 	public final void doActionReadyToPlanned() {
@@ -172,7 +175,11 @@ public class TaskStateInterfaceTests {
 		assertEquals("Ready", taskReady.viewTaskStateName());
 
 		//WHEN we remove all collaborators
-		taskReady.removeAllCollaboratorsFromTaskTeam();
+		taskReady.removeProjectCollaboratorFromTask(collaborator2);
+		assertEquals("Ready", taskReady.viewTaskStateName());
+
+
+		taskReady.removeProjectCollaboratorFromTask(collaborator);
 
 		//THEN the task as to change to Planned
 		assertEquals("Planned", taskReady.viewTaskStateName());
@@ -237,6 +244,7 @@ public class TaskStateInterfaceTests {
 		//THEN the task as to change to StandBy
 		assertEquals("Finished", taskStandBy.viewTaskStateName());
 		assertEquals(StateEnum.FINISHED, taskStandBy.getCurrentState());
+		assertTrue(taskStandBy.getFinishDate() != null);
 	}
 
 
@@ -252,11 +260,11 @@ public class TaskStateInterfaceTests {
 		assertEquals("OnGoing", taskOnGoing.viewTaskStateName());
 
 		//WHEN we mark task as cancelled
-		taskStandBy.cancelTask();
+		taskOnGoing.cancelTask();
 
 		//THEN the task as to change to StandBy
-		assertEquals("Cancelled", taskStandBy.viewTaskStateName());
-		assertEquals(StateEnum.CANCELLED, taskStandBy.getCurrentState());
+		assertEquals("Cancelled", taskOnGoing.viewTaskStateName());
+		assertEquals(StateEnum.CANCELLED, taskOnGoing.getCurrentState());
 	}
 
 	/**
@@ -276,6 +284,7 @@ public class TaskStateInterfaceTests {
 		//THEN the task as to change to StandBy
 		assertEquals("Finished", taskStandBy.viewTaskStateName());
 		assertEquals(StateEnum.FINISHED, taskStandBy.getCurrentState());
+		assertTrue(taskStandBy.getFinishDate() != null);
 	}
 
 	/**
@@ -369,6 +378,7 @@ public class TaskStateInterfaceTests {
 		//GIVEN A NEW TASK
 		//Asserts that the task state is created
 		assertEquals("Created", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.CREATED,  taskCreated.getCurrentState());
 
 		// WHEN adding someone to the task team
 		ProjectCollaborator collaborator = project.createProjectCollaborator(user, 10);
@@ -376,26 +386,31 @@ public class TaskStateInterfaceTests {
 
 		//THEN the state changes to Planned
 		assertEquals("Planned", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.PLANNED,  taskCreated.getCurrentState());
 
 		//AND WHEN all collaborators are removed from the team and the task reset to created
 		taskCreated.removeAllCollaboratorsFromTaskTeam();
 		taskCreated.setTaskState(new project.model.taskstateinterface.Created());
 		taskCreated.setCurrentState(StateEnum.CREATED);
 		assertEquals("Created", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.CREATED, taskCreated.getCurrentState());
 
 		//THEN adding an expected start or finish date must move the task to planned as well
 		taskCreated.setEstimatedTaskStartDate(estimatedTaskStartDate);
 		assertEquals("Planned", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.PLANNED,  taskCreated.getCurrentState());
 
 		//AND WHEN the expected start date is removed and the task reset to created (again)
 		taskCreated.setEstimatedTaskStartDate(null);
 		taskCreated.setTaskState(new project.model.taskstateinterface.Created());
 		taskCreated.setCurrentState(StateEnum.CREATED);
 		assertEquals("Created", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.CREATED,  taskCreated.getCurrentState());
 
 		// THEN adding an expected finish date must move the task to planned once again
 		taskCreated.setTaskDeadline(taskDeadline);
 		assertEquals("Planned", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.PLANNED,  taskCreated.getCurrentState());
 
 
 

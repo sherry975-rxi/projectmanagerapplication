@@ -135,9 +135,9 @@ public class US347CancelOnGoingTaskControllerTest {
 		taskCollab2 = new TaskCollaborator(projCollab2);
 
 		// set active user
-		task1.addTaskCollaboratorToTask(taskCollab1);
-		task2.addTaskCollaboratorToTask(taskCollab2);
-		task3.addTaskCollaboratorToTask(taskCollab1);
+		task1.addProjectCollaboratorToTask(projCollab1);
+		task2.addProjectCollaboratorToTask(projCollab2);
+		task3.addProjectCollaboratorToTask(projCollab1);
 
 		task1.setStartDateAndState(startDateTest);
 
@@ -208,6 +208,7 @@ public class US347CancelOnGoingTaskControllerTest {
 
 		// Sets a finish date for the task1
 		task1.setFinishDate(Calendar.getInstance());
+		task1.markTaskAsFinished();
 
 		// use of control to set task1 to state cancelled
 		controllerCancel.cancelOnGoingTask();

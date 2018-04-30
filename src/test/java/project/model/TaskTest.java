@@ -666,12 +666,10 @@ public class TaskTest {
 	public void shouldTaskCollaboratorToTask() {
 
 		assertTrue(taskTest.getTaskTeam().isEmpty());
-		assertEquals("Created", taskTest.viewTaskStateName());
 
 		assertTrue(taskTest.addTaskCollaboratorToTask(taskCollaborator));
 
 		assertFalse(taskTest.getTaskTeam().isEmpty());
-		assertEquals("Planned", taskTest.viewTaskStateName());
 	}
 
 	/**
@@ -1347,8 +1345,9 @@ public class TaskTest {
 
 		assertFalse(taskReadyToFinishTest.getFinishDate() == null);
 
-		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
+		taskReadyToFinishTest.addProjectCollaboratorToTask(new ProjectCollaborator());
 		taskReadyToFinishTest.removeFinishDate();
+
 
 		assertEquals(null, taskReadyToFinishTest.getFinishDate());
 		assertEquals("OnGoing", taskReadyToFinishTest.viewTaskStateName());
@@ -1490,13 +1489,13 @@ public class TaskTest {
 	 * Test method for {@link project.model.Task#markAsOnGoing()}.
 	 */
 	@Test
-	public void isUnfinishedTask() {
+	public void markAsOnGoing() {
 
 		taskReadyToFinishTest.markTaskAsFinished();
 
 		assertTrue(taskReadyToFinishTest.isTaskFinished());
 
-		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
+		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator2);
 
 		assertTrue(taskReadyToFinishTest.markAsOnGoing());
 
@@ -1537,15 +1536,15 @@ public class TaskTest {
 	@Test
 	public void shouldGetRemovalTaskTeamRequest() {
 
-		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
 
 		assertEquals(projectCollaborator,
 				taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getProjCollab());
 		assertEquals(RequestType.REMOVAL, taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getType());
 
-		taskReadyToFinishTest.deleteTaskRemovalRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.rejectTaskRemovalRequest(projectCollaborator));
 
-		assertEquals(null, taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator));
+		assertEquals(RequestType.REMOVAL, taskReadyToFinishTest.getRemovalTaskTeamRequest(projectCollaborator).getType());
 
 	}
 
@@ -1706,24 +1705,26 @@ public class TaskTest {
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#deleteTaskRemovalRequest(ProjectCollaborator)}.
+	 * {@link project.model.Task#rejectTaskRemovalRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void shouldDeleteTaskRemovalRequest() {
 
-		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
 
 		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getRejectDate()==null);
 
-		assertTrue(taskReadyToFinishTest.deleteTaskRemovalRequest(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.rejectTaskRemovalRequest(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getRejectDate()!=null);
 
-		assertFalse(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
 
 	}
 
 	/**
 	 * Test method for
-	 * {@link project.model.Task#deleteTaskAssignmentRequest(ProjectCollaborator)}.
+	 * {@link project.model.Task#rejectTaskAssignmentRequest(ProjectCollaborator)}.
 	 */
 	@Test
 	public void shouldDeleteTaskAssignmentRequest() {
@@ -1733,10 +1734,14 @@ public class TaskTest {
 		assertTrue(taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator));
 
 		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getRejectDate()==null);
 
-		assertTrue(taskReadyToFinishTest.deleteTaskAssignmentRequest(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.rejectTaskAssignmentRequest(projectCollaborator));
 
-		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getRejectDate()!=null);
+
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
 	}
 
@@ -1984,6 +1989,48 @@ public class TaskTest {
 
 		assertFalse(taskReadyToFinishTest
 				.getReportsFromGivenUser(taskCollaborator.getTaskCollaborator().getEmail()).isEmpty());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#rejectTaskRemovalRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void shouldApproveTaskRemovalRequest() {
+
+		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+
+		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getApprovalDate()==null);
+
+		assertTrue(taskReadyToFinishTest.approveTaskRemovalRequest(projectCollaborator));
+		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().get(0).getApprovalDate()!=null);
+
+		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link project.model.Task#rejectTaskAssignmentRequest(ProjectCollaborator)}.
+	 */
+	@Test
+	public void shouldApproveTaskAssignmentRequest() {
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
+
+		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getApprovalDate()==null);
+
+		assertTrue(taskReadyToFinishTest.approveTaskAssignmentRequest(projectCollaborator));
+
+		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().get(0).getApprovalDate()!=null);
+
+
+		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
 	}
 }
