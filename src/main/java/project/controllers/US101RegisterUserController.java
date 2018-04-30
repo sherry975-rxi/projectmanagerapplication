@@ -38,14 +38,17 @@ public class US101RegisterUserController {
 	 *            function of the User
 	 * @param phone
 	 *            phone of the User
-	 * @param password
-	 *            password of the User
+	 * @param question
+	 *            security question
+	 * @param answer
+	 * 			  answer for the question
 	 */
 
-    public UserDTO createUserDTO(String name, String email, String idNumber, String function, String phone, String password, String question, String answer) {
+    public UserDTO createUserDTO(String name, String email, String idNumber, String function, String phone, String question, String answer) {
 
-        return new UserDTO(name, email, idNumber, function, phone, password, question , answer);
+       UserDTO userDTO= new UserDTO(name, email, idNumber, function, phone, question , answer);
 
+       return userDTO;
 	}
 
 	/**

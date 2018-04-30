@@ -17,7 +17,7 @@ public class userDTOTests {
 	@Before
 	public void setUp() {
 
-		user = new UserDTO("name", "email", "idNumber", "function", "phone", "password", "1", "test");
+		user = new UserDTO("name", "email", "idNumber", "function", "phone",  "1", "test");
 		user.setUserAddress( "street", "zipCode", "city",
 				"district", "country");
 	}
@@ -35,6 +35,7 @@ public class userDTOTests {
 	@Test
 	public void testGetters() {
 
+		user.setPassword("password");
 		assertEquals("name", user.getName());
 		assertEquals("email", user.getEmail());
 		assertEquals("idNumber", user.getIdNumber());

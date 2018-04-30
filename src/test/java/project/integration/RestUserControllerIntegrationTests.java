@@ -274,7 +274,8 @@ public class RestUserControllerIntegrationTests {
         assertFalse(mike.hasPassword());
 
         // WHEN posting a logIn request for that user with the correct email
-        UserDTO requestBody = new UserDTO("Mike", "michael@michael.com", "", "", "", "wrong", "", "");
+        UserDTO requestBody = new UserDTO("Mike", "michael@michael.com", "", "", "", "", "");
+        requestBody.setPassword("wrong");
 
         actualUser = this.restTemplate.postForEntity("http://localhost:" + port + "/account/logIn", requestBody, User.class);
 
@@ -350,7 +351,8 @@ public class RestUserControllerIntegrationTests {
         assertEquals(0, taskOne.getPendingTaskTeamRequests().size());
 
         // When
-        UserDTO requestBodyRui = new UserDTO("JO", "rui@gmail.com", "", "", "", "wrong", "", "");
+        UserDTO requestBodyRui = new UserDTO("JO", "rui@gmail.com", "", "", "",  "", "");
+        requestBodyRui.setPassword("wrong");
         taskRequestResponse = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/assignmentRequest", requestBodyRui , TaskTeamRequest.class);
 
         // Then
@@ -390,7 +392,8 @@ public class RestUserControllerIntegrationTests {
 
 
         // When
-        UserDTO requestBodyRui = new UserDTO("JO", "rui@gmail.com", "", "", "", "wrong", "", "");
+        UserDTO requestBodyRui = new UserDTO("JO", "rui@gmail.com", "", "", "", "", "");
+        requestBodyRui.setPassword("wrong");
         taskRequestResponse = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId() + "/tasks/" + taskOne.getTaskID() + "/requests/removalRequest", requestBodyRui , TaskTeamRequest.class);
 
         // Then
