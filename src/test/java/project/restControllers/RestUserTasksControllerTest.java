@@ -55,6 +55,7 @@ public class RestUserTasksControllerTest {
     private Task taskCreated;
     private User userRui;
     private ProjectCollaborator projectCollaborator;
+    private Project project;
 
     @Before
     public void setup(){
@@ -74,11 +75,12 @@ public class RestUserTasksControllerTest {
 
     @After
     public void tearDown(){
+
+        project = null;
         userRui = null;
         projectCollaborator = null;
         taskId = null;
         mvc = null;
-
     }
 
     /**
@@ -130,17 +132,19 @@ public class RestUserTasksControllerTest {
      * THEN
      * then a list of all your tasks is returned
      */
-   /*
     @Test
     public void shouldReturnUserTasks () throws Exception {
 
         //GIVEN
         //given a certain user
+        project = new Project("test", "test", userRui);
+
+
         List<Task> allTasks = new ArrayList<>();
 
-        Task task1 = new Task("taskTest1", projectMock);
-        Task task2 = new Task("taskTest2", projectMock);
-        Task task3 = new Task("taskTest3", projectMock);
+        Task task1 = new Task("taskTest1", project);
+        Task task2 = new Task("taskTest2", project);
+        Task task3 = new Task("taskTest3", project);
 
         allTasks.add(task1);
         allTasks.add(task2);
@@ -149,9 +153,8 @@ public class RestUserTasksControllerTest {
         Mockito.when(userServiceMock.getUserByID(anyInt())).thenReturn(userRui);
         Mockito.when(taskServiceMock.getUserTasks(anyObject())).thenReturn(allTasks);
 
-
-
-        MockHttpServletResponse response = mvc.perform(get("/users/" + userRui.getUserID() + "/tasks/").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        MockHttpServletResponse response = mvc.perform(get("/users/" + userRui.getUserID() + "/tasks/")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
 
         //WHEN
@@ -161,10 +164,8 @@ public class RestUserTasksControllerTest {
         //THEN
         //then a list of all your tasks is returned
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        verify(taskServiceMock, times(1)).getUserTasks(userRui);
-
+        verify(taskServiceMock, times(2)).getUserTasks(userRui);
     }
-    */
 
     /**
      * GIVEN
@@ -177,40 +178,39 @@ public class RestUserTasksControllerTest {
      * then the sum of the hours spent on this task is returned
      *
      */
-    /*
+
     @Test
-    public void shouldReturnTotalTimeSpentOnTasksCompletedLastMonth() {
+    public void shouldReturnTotalTimeSpentOnTasksCompletedLastMonth() throws Exception {
 
         //GIVEN
         //given a certain user
+        project = new Project("test", "test", userRui);
+
         List<Task> allTasks = new ArrayList<>();
 
-        Task task1 = new Task("taskTest1", projectMock);
-        Task task2 = new Task("taskTest2", projectMock);
-        Task task3 = new Task("taskTest3", projectMock);
+        Task task1 = new Task("taskTest1", project);
+        Task task2 = new Task("taskTest2", project);
+        Task task3 = new Task("taskTest3", project);
 
         allTasks.add(task1);
         allTasks.add(task2);
         allTasks.add(task3);
 
-        Mockito.when(userServiceMock.getUserByID(any(int.class))).thenReturn(userMock);
-        Mockito.when(taskServiceMock.getUserTasks(userMock)).thenReturn(allTasks);
-        Mockito.when(userMock.getUserID()).thenReturn(1);
-
-        Integer userIdURL = 1;
-
-
+        Mockito.when(userServiceMock.getUserByID(any(int.class))).thenReturn(userRui);
+        Mockito.when(taskServiceMock.getUserTasks(userRui)).thenReturn(allTasks);
 
 
         //WHEN
         //when asking the time spent by this particular user on the tasks finished in the last month
-
+        victim.getTotalTimeSpentOnTasksCompletedLastMonth(userRui.getUserID());
+        MockHttpServletResponse response = mvc.perform(get("/users/" + userRui.getUserID() + "/tasks/totaltimespent/completed/lastmonth")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //THEN
         //then the sum of the hours spent on this task is returned
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskServiceMock, times(2)).getTotalTimeOfFinishedTasksFromUserLastMonth(userRui);
 
 
     }
-    */
-
 }
