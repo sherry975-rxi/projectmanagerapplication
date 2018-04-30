@@ -130,8 +130,7 @@ public class TaskStateInterfaceTests {
 
 		//WHEN we set the estimated start and finish date and add a collaborator to the team
 		taskCreated.setEstimatedTaskStartDate(estimatedTaskStartDate);
-		taskCreated.setTaskDeadline(taskDeadline);
-		taskCreated.addProjectCollaboratorToTask(collaborator);
+
 
 		//THEN the task as to change to Planned
 		assertEquals("Planned", taskCreated.viewTaskStateName());
@@ -237,6 +236,7 @@ public class TaskStateInterfaceTests {
 		//THEN the task as to change to StandBy
 		assertEquals("Finished", taskStandBy.viewTaskStateName());
 		assertEquals(StateEnum.FINISHED, taskStandBy.getCurrentState());
+		assertTrue(taskStandBy.getFinishDate() != null);
 	}
 
 
@@ -276,6 +276,7 @@ public class TaskStateInterfaceTests {
 		//THEN the task as to change to StandBy
 		assertEquals("Finished", taskStandBy.viewTaskStateName());
 		assertEquals(StateEnum.FINISHED, taskStandBy.getCurrentState());
+		assertTrue(taskStandBy.getFinishDate() != null);
 	}
 
 	/**
@@ -369,6 +370,7 @@ public class TaskStateInterfaceTests {
 		//GIVEN A NEW TASK
 		//Asserts that the task state is created
 		assertEquals("Created", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.CREATED,  taskCreated.getCurrentState());
 
 		// WHEN adding someone to the task team
 		ProjectCollaborator collaborator = project.createProjectCollaborator(user, 10);
@@ -376,26 +378,31 @@ public class TaskStateInterfaceTests {
 
 		//THEN the state changes to Planned
 		assertEquals("Planned", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.PLANNED,  taskCreated.getCurrentState());
 
 		//AND WHEN all collaborators are removed from the team and the task reset to created
 		taskCreated.removeAllCollaboratorsFromTaskTeam();
 		taskCreated.setTaskState(new project.model.taskstateinterface.Created());
 		taskCreated.setCurrentState(StateEnum.CREATED);
 		assertEquals("Created", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.CREATED, taskCreated.getCurrentState());
 
 		//THEN adding an expected start or finish date must move the task to planned as well
 		taskCreated.setEstimatedTaskStartDate(estimatedTaskStartDate);
 		assertEquals("Planned", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.PLANNED,  taskCreated.getCurrentState());
 
 		//AND WHEN the expected start date is removed and the task reset to created (again)
 		taskCreated.setEstimatedTaskStartDate(null);
 		taskCreated.setTaskState(new project.model.taskstateinterface.Created());
 		taskCreated.setCurrentState(StateEnum.CREATED);
 		assertEquals("Created", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.CREATED,  taskCreated.getCurrentState());
 
 		// THEN adding an expected finish date must move the task to planned once again
 		taskCreated.setTaskDeadline(taskDeadline);
 		assertEquals("Planned", taskCreated.viewTaskStateName());
+		assertEquals(StateEnum.PLANNED,  taskCreated.getCurrentState());
 
 
 
