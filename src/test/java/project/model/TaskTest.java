@@ -422,6 +422,7 @@ public class TaskTest {
 		taskTest.setTaskDeadline(Calendar.getInstance());
 		taskTest.addProjectCollaboratorToTask(projectCollaborator);
 		taskTest.setEstimatedTaskEffort(10);
+		assertEquals("Planned", taskTest.viewTaskStateName());
 
 		double expected = 100.0;
 
@@ -650,7 +651,8 @@ public class TaskTest {
 		assertTrue(taskTest.getTaskTeam().isEmpty());
 		assertEquals("Created", taskTest.viewTaskStateName());
 
-		taskTest.addProjectCollaboratorToTask(projectCollaborator);
+		assertTrue(taskTest.addProjectCollaboratorToTask(projectCollaborator));
+
 
 		assertFalse(taskTest.getTaskTeam().isEmpty());
 		assertEquals("Planned", taskTest.viewTaskStateName());
@@ -666,7 +668,7 @@ public class TaskTest {
 		assertTrue(taskTest.getTaskTeam().isEmpty());
 		assertEquals("Created", taskTest.viewTaskStateName());
 
-		taskTest.addTaskCollaboratorToTask(taskCollaborator);
+		assertTrue(taskTest.addTaskCollaboratorToTask(taskCollaborator));
 
 		assertFalse(taskTest.getTaskTeam().isEmpty());
 		assertEquals("Planned", taskTest.viewTaskStateName());
@@ -681,9 +683,10 @@ public class TaskTest {
 
 		assertTrue(taskTest.getTaskTeam().isEmpty());
 
-		taskTest.createTaskCollaborator(projectCollaborator);
+		TaskCollaborator collaborator = taskTest.createTaskCollaborator(projectCollaborator);
 
 		assertTrue(taskTest.getTaskTeam().isEmpty());
+		assertTrue(taskTest.equals(collaborator.getTask()));
 
 	}
 
@@ -699,6 +702,8 @@ public class TaskTest {
 		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2);
 
 		assertFalse(taskReadyToFinishTest.getReports().isEmpty());
+		Report report = taskReadyToFinishTest.getReports().get(0);
+		assertTrue(taskReadyToFinishTest.equals(report.getTask()));
 	}
 
 	/**
@@ -731,6 +736,7 @@ public class TaskTest {
 		assertFalse(taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 1.2));
 
 		assertTrue(taskReadyToFinishTest.getReports().isEmpty());
+
 	}
 
 	/**
@@ -965,7 +971,7 @@ public class TaskTest {
 
 		assertTrue(taskTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
 
-		taskTest.removeProjectCollaboratorFromTask(projectCollaborator);
+		assertTrue(taskTest.removeProjectCollaboratorFromTask(projectCollaborator));
 		assertEquals("Planned", taskTest.viewTaskStateName());
 
 		assertFalse(taskTest.isProjectCollaboratorActiveInTaskTeam(projectCollaborator));
@@ -1341,8 +1347,8 @@ public class TaskTest {
 
 		assertFalse(taskReadyToFinishTest.getFinishDate() == null);
 
-		taskReadyToFinishTest.removeFinishDate();
 		taskReadyToFinishTest.addProjectCollaboratorToTask(projectCollaborator);
+		taskReadyToFinishTest.removeFinishDate();
 
 		assertEquals(null, taskReadyToFinishTest.getFinishDate());
 		assertEquals("OnGoing", taskReadyToFinishTest.viewTaskStateName());
@@ -1360,7 +1366,7 @@ public class TaskTest {
 		assertEquals(null, taskReadyToFinishTest.getCancelDate());
 		assertEquals("OnGoing", taskReadyToFinishTest.viewTaskStateName());
 
-		taskReadyToFinishTest.cancelTask();
+		assertTrue(taskReadyToFinishTest.cancelTask());
 
 		assertTrue(taskReadyToFinishTest.getTaskState() instanceof Cancelled);
 		assertEquals("Cancelled", taskReadyToFinishTest.viewTaskStateName());
@@ -1379,7 +1385,7 @@ public class TaskTest {
 
 		assertEquals(null, taskReadyToFinishTest.getCancelDate());
 
-		taskReadyToFinishTest.cancelTask();
+		assertTrue(taskReadyToFinishTest.cancelTask());
 
 		assertFalse(taskReadyToFinishTest.getCancelDate() == null);
 
@@ -1631,7 +1637,7 @@ public class TaskTest {
 
 		assertTrue(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
 
-		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
 
 		assertFalse(taskReadyToFinishTest.getPendingTaskRemovalRequests().isEmpty());
 
@@ -1663,7 +1669,7 @@ public class TaskTest {
 
 		assertFalse(taskReadyToFinishTest.isAssignmentRequestAlreadyCreated(projectCollaborator));
 
-		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator));
 
 		assertTrue(taskReadyToFinishTest.isAssignmentRequestAlreadyCreated(projectCollaborator));
 
@@ -1678,7 +1684,7 @@ public class TaskTest {
 
 		assertFalse(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
 
-		taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.createTaskRemovalRequest(projectCollaborator));
 
 		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
 
@@ -1695,7 +1701,7 @@ public class TaskTest {
 
 		assertTrue(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
 
-		taskReadyToFinishTest.deleteTaskRemovalRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.deleteTaskRemovalRequest(projectCollaborator));
 
 		assertFalse(taskReadyToFinishTest.isRemovalRequestAlreadyCreated(projectCollaborator));
 
@@ -1710,11 +1716,11 @@ public class TaskTest {
 
 		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
-		taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.createTaskAssignmentRequest(projectCollaborator));
 
 		assertFalse(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
-		taskReadyToFinishTest.deleteTaskAssignmentRequest(projectCollaborator);
+		assertTrue(taskReadyToFinishTest.deleteTaskAssignmentRequest(projectCollaborator));
 
 		assertTrue(taskReadyToFinishTest.getPendingTaskAssignmentRequests().isEmpty());
 
