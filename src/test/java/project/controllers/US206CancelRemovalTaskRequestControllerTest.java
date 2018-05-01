@@ -136,4 +136,21 @@ public class US206CancelRemovalTaskRequestControllerTest {
 
 	}
 
+	/**
+	 * Tests the getUser method that has to return a user
+	 * string
+	 */
+	@Test
+	public void testGetUser() {
+
+		assertEquals(userRui, us206v2Controller.getUser());
+
+		us206v2Controller.setUser(userDaniel);
+
+		assertEquals(userDaniel, us206v2Controller.getUser());
+
+
+
+	}
+
 }
