@@ -45,7 +45,8 @@ public class DirectorMenuUI {
 				System.out.println("> Project selected!!");
 				System.out.println("");
 
-				PrintProjectInfoController projectInfo = new PrintProjectInfoController(selectedProject);
+				PrintProjectInfoController projectInfo = new PrintProjectInfoController();
+				projectInfo.setProject(selectedProject);
 
 				System.out.println("PROJECT " + projectInfo.printProjectNameInfo().toUpperCase());
 				System.out.println("___________________________________________________");
