@@ -106,7 +106,6 @@ public class PrintProjectInfoControllerTest {
 
 
 
-
 	}
 
 	@After
@@ -343,4 +342,42 @@ public class PrintProjectInfoControllerTest {
 
 	}
 
-}
+	@Test
+	public void testConstructorAndSetter(){
+
+
+		// Creates one Project
+		Project project2 = projectContainer.createProject("Projeto de teste",
+				"Este projeto está focado em solidariedade.", user1);
+
+		System.out.println(project2.getProjectId());
+		System.out.println(project2.getIdCode());
+
+
+
+		controller.setProjectByProjID(project2.getProjectId());
+
+
+		assertEquals(controller.printProjectNameInfo(), "Projeto de teste");
+
+		String projectName = "" + "\n" + "PROJECT " + "PROJETO DE TESTE" + "\n";
+		String line = "__________________________________________\n";
+		String idAndStatus = "ID: " + project2.getProjectId() + "\n" + "STATUS: " + controller.printProjectStatusInfo() + "\n";
+		String description = "DESCRIPTION: " + controller.printProjectDescriptionInfo() + "\n";
+		String dates = "START DATE: " + controller.printProjectStartDateInfo() + "\n " + "FINISH DATE: " + controller.printProjectFinishDateInfo() + "\n";
+		String projectManager = "PROJECT MANAGER: " + controller.printProjectManagerInfo() + "\n";
+		String projectTeam = "PROJECT TEAM: " + controller.printProjectTeamInfo() + "\n";
+		String budget = "PROJECT BUDGET: " + controller.printProjectBudgetInfo() + "\n";
+		String tasks = "TASKS OF " + controller.printProjectNameInfo().toUpperCase() + ":" + "\n";
+
+		String expected = projectName + line + idAndStatus + description + dates + projectManager + projectTeam + budget + tasks;
+
+		assertEquals(expected, controller.getAllProjectInfo());
+
+
+
+	}
+
+	}
+
+
