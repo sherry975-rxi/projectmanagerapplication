@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/account/")
@@ -60,13 +61,6 @@ public class RestAccountController {
     @RequestMapping(value = "conditions", method = RequestMethod.GET)
     public ResponseEntity<JsonAsString> termsAndConditions() {
 
-
-
-        Link register = linkTo(RestAccountController.class).slash("register")
-                .withRel("register");
-
-
-
         String conditions = "TERMS AND CONDITIONS:"
                 + "By using this application, you agree to be bound by, and to comply with these Terms and Conditions."
                 + "If you do not agree to these Terms and Conditions, please do not use this application."
@@ -74,7 +68,12 @@ public class RestAccountController {
 
         JsonAsString jsonConditions = new JsonAsString(conditions);
 
+        Link register = linkTo(RestAccountController.class).slash("register")
+                .withRel("Register user");
+        Link termsAndConditions = linkTo(methodOn(RestAccountController.class).termsAndConditions()).withSelfRel();
+
         jsonConditions.add(register);
+        jsonConditions.add(termsAndConditions);
 
         return new ResponseEntity<>(jsonConditions, HttpStatus.OK);
 
