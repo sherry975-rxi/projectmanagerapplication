@@ -2,6 +2,8 @@ package project.model;
 
 import org.springframework.hateoas.ResourceSupport;
 
+import java.util.Objects;
+
 public class JsonAsString  extends ResourceSupport {
 
     String textToReturn;
@@ -28,6 +30,24 @@ public class JsonAsString  extends ResourceSupport {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof JsonAsString)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        JsonAsString that = (JsonAsString) o;
+        return Objects.equals(textToReturn, that.textToReturn);
+    }
 
+    @Override
+    public int hashCode() {
 
+        return Objects.hash(super.hashCode(), textToReturn);
+    }
 }
