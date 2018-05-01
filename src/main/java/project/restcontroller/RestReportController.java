@@ -26,8 +26,6 @@ public class RestReportController {
     private final TaskService taskService;
     private final UserService userService;
     private final ProjectService projectService;
-    private static final String TASKS = "tasks";
-    private static final String REPORTS = "reports";
 
 
     @Autowired
@@ -74,6 +72,8 @@ public class RestReportController {
                     reportCreated.add(reference);
                     Link reference1 = linkTo(methodOn(RestReportController.class).getTaskReportsFromUser(userid, taskid, projid)).withRel("Show Reports from User").withType(RequestMethod.GET.name());
                     reportCreated.add(reference1);
+                    Link updateReport = linkTo(methodOn(RestReportController.class).updateTaskReport(reportCreated, taskid, projid, reportCreated.getDbId())).withRel("Update Report from User").withType(RequestMethod.PUT.name());
+                    reportCreated.add(updateReport);
 
                     responseEntity = new ResponseEntity<>(reportCreated, HttpStatus.CREATED);
                 }
@@ -133,10 +133,10 @@ public class RestReportController {
         } else {
 
             for (Report reportCreated : reports) {
-                int reportid = reportCreated.getDbId();
 
-                Link reference = linkTo(RestProjectController.class).slash(projid).slash(TASKS).slash(taskid).slash(REPORTS).slash(reportid).slash("update").withRel("Update Report from User").withType(RequestMethod.PUT.name());
-                reportCreated.add(reference);
+                Link updateReport = linkTo(methodOn(RestReportController.class).updateTaskReport(reportCreated, taskid, projid, reportCreated.getDbId())).withRel("Update Report from User").withType(RequestMethod.PUT.name());
+                reportCreated.add(updateReport);
+
             }
             responseEntity = ResponseEntity.ok().body(reports);
 
