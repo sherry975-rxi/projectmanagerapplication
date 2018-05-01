@@ -24,30 +24,12 @@ public class PrintProjectInfoController {
 
 	private Project project;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-	int projID;
 
 	public PrintProjectInfoController() {
 		//Empty constructor created for JPA integration tests
 
 	}
 
-
-
-	public PrintProjectInfoController(Project project) {
-
-		this.project = project;
-		
-
-	}
-
-	public PrintProjectInfoController(int projID) {
-
-		this.projID = projID;
-	}
-
-	public void setProject() {
-		this.project = projService.getProjectById(this.projID);
-	}
 
 	/**
 	 * This method get the project's name and return it as a String
@@ -265,12 +247,8 @@ public class PrintProjectInfoController {
 		this.project = project;
 	}
 
-	public void setDateFormat(SimpleDateFormat dateFormat) {
-		this.dateFormat = dateFormat;
-	}
-
-	public void setProjID(int projID) {
-		this.projID = projID;
+	public void setProjectByProjID(int projID) {
+		this.project = projService.getProjectById(projID);
 	}
 
 	public String getAllProjectInfo() {
