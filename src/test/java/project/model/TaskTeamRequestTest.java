@@ -28,7 +28,10 @@ public class TaskTeamRequestTest {
 	
 	@Mock
 	Task task2;
-	
+
+	@Mock
+	User user2;
+
 	TaskTeamRequest request;
 	
 	ProjectCollaborator nullProjCollab = null;
@@ -205,6 +208,58 @@ public class TaskTeamRequestTest {
 
 		request.setRejectDate(Calendar.getInstance());
 		assertNotNull(request.getRejectDate());
+
+
+	}
+
+	/**
+	 * Given
+	 * projCollab2 from user 2, different from projCollab
+	 *
+	 * When
+	 * creating a request from projCollab2
+	 *
+	 * Then
+	 * Comparing request projCollab with request from projCollab2, they are different
+	 */
+	@Test
+	public void testCheckNotEqualsRequests() {
+
+
+		//Given
+		projCollab2 = new ProjectCollaborator(user2, 30);
+		//When
+		TaskTeamRequest requestOne = new TaskTeamRequest(projCollab2, task);
+		//Then
+		assertNotNull(request.getProjCollab());
+		assertNotNull(requestOne.getProjCollab());
+		assertFalse(request.equals(requestOne));
+
+
+	}
+
+	/**
+	 * Given
+	 * request from projCollab
+	 *
+	 * When
+	 * creating an empty request
+	 *
+	 * Then
+	 * Comparing request from projCollab with teh empty request, they are different
+	 */
+	@Test
+	public void testCheckNotEqualsRequestsTwo() {
+
+		//Given
+		assertTrue(projCollab.equals(request.getProjCollab()));
+		//When
+		TaskTeamRequest requestTwo = new TaskTeamRequest();
+		//Then
+		assertNotNull(request.getType());
+		assertNull(requestTwo.getType());
+		assertFalse(request.equals(requestTwo));
+
 
 
 	}
