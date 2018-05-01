@@ -12,12 +12,12 @@ import java.util.Optional;
 public class SendCodeFactory {
 
 
-    private static final Map<String, ValidationMethod> codeSenderType = new HashMap<>();
+    private Map<String, ValidationMethod> codeSenderType = new HashMap<>();
 
     /**
      * This method creates business objects depending on the argument
      */
-    private static void initMessageSenderType() {
+    private void initMessageSenderType() {
 
         ValidationMethod smsSender = new SMSSender();
         ValidationMethod emailSender = new EmailSender();
@@ -37,7 +37,7 @@ public class SendCodeFactory {
 
         Optional<ValidationMethod> opt = Optional.empty();
 
-        SendCodeFactory.initMessageSenderType();
+        this.initMessageSenderType();
         int num;
         try {
             num = Integer.parseInt(codeSender);
