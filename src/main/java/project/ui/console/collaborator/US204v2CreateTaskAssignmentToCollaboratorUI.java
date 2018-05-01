@@ -48,7 +48,7 @@ public class US204v2CreateTaskAssignmentToCollaboratorUI {
 
 	public void createTaskAssignment() {
 
-		printProjectInfoController.setProjID(this.projID);
+		printProjectInfoController.setProjectByProjID(this.projID);
 		String projectName = printProjectInfoController.printProjectNameInfo();
 		printTaskInfoController.setProjeID(this.projID);
 		printTaskInfoController.setTaskID(this.taskID);

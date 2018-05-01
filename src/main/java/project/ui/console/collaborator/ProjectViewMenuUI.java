@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.controllers.PrintProjectInfoController;
 import project.model.User;
+import project.services.ProjectService;
 
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -13,6 +14,9 @@ public class ProjectViewMenuUI {
 
 	@Autowired
 	private TaskDetailsUI userTasks;
+
+	@Autowired
+	private ProjectService projService;
 
 	private Integer projectID;
 	private User user;
@@ -32,8 +36,9 @@ public class ProjectViewMenuUI {
 		boolean loop = true;
 		while (loop) {
 
-		PrintProjectInfoController projectInfo = new PrintProjectInfoController(this.projectID);
-		projectInfo.setProject();
+
+		PrintProjectInfoController projectInfo = new PrintProjectInfoController();
+		projectInfo.setProjectByProjID(this.projectID);
 
 		Scanner scannerInput = new Scanner(System.in);
 

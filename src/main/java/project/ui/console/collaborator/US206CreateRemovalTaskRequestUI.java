@@ -35,7 +35,7 @@ public class US206CreateRemovalTaskRequestUI {
 		controller.setTaskID(taskID);
 		projID = controller.getProjectID();
 
-		projectInfo.setProjID(this.projID);
+		projectInfo.setProjectByProjID(this.projID);
 		String projectName = projectInfo.printProjectNameInfo();
 		taskInfo.setTaskID(this.taskID);
 		taskInfo.setProjeID(this.projID);

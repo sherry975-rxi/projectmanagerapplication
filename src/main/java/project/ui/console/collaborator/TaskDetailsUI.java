@@ -9,6 +9,7 @@ import project.controllers.US205MarkTaskAsFinishedCollaboratorController;
 import project.model.ProjectCollaborator;
 import project.model.Task;
 import project.model.User;
+import project.services.ProjectService;
 import project.services.TaskService;
 
 import java.util.Scanner;
@@ -36,6 +37,9 @@ public class TaskDetailsUI {
 
 	@Autowired
 	private US207And208CreateOrUpdateTaskReportUI reportUI;
+
+	@Autowired
+	private ProjectService projService;
 
 	@Autowired
 	private TaskService taskService;
@@ -83,8 +87,7 @@ public class TaskDetailsUI {
 		taskDetails.setProjeID(this.projectID);
 		taskDetails.setTaskID(this.taskID);
 		taskDetails.setProjectAndTask();
-		projectInfo.setProjID(this.projectID);
-		projectInfo.setProject();
+		projectInfo.setProject(projService.getProjectById(this.projectID));
 
 		boolean condition = true;
 		while (condition) {
