@@ -13,6 +13,9 @@ import project.model.User;
 import project.services.ProjectService;
 import project.services.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -71,7 +74,6 @@ public class US320ViewProjectsControllerTest {
 		inactiveProject = null;
 		activeManager = null;
 		inactiveManager = null;
-
 		activeProjectData = null;
 
 	}
@@ -139,5 +141,44 @@ public class US320ViewProjectsControllerTest {
 		projectListsController.viewAllProjects();
 		assertEquals(projectListsController.selectProject(2), inactiveProject);
 		assertEquals(projectListsController.selectProject(0), null);
+	}
+
+	/**
+	 * This test the setter of controller from a Project List
+	 *
+	 */
+	@Test
+	public void testSetterProjectsList() {
+
+		Project activeProject2 = projectService.createProject("Active Project", "this Project is active", activeManager);
+
+		activeProject2.setProjectStatus(Project.EXECUTION);
+
+		List<Project> selectedProjectList = new ArrayList<>();
+		selectedProjectList.add(activeProject2);
+		projectListsController.setChosenList(selectedProjectList);
+
+		assertEquals(selectedProjectList, projectListsController.getChosenList());
+
+
+	}
+
+	/**
+	 * This test the setter of controller from a Specific Project
+	 *
+	 */
+	@Test
+	public void testSetterProject() {
+
+		Project activeProject3 = projectService.createProject("Active Project", "this Project is active", activeManager);
+
+		activeProject3.setProjectStatus(Project.EXECUTION);
+
+
+		projectListsController.setSelectedProject(activeProject3);
+
+		assertEquals(activeProject3, projectListsController.getSelectedProject());
+
+
 	}
 }

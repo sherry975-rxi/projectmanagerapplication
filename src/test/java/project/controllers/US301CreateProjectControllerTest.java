@@ -269,4 +269,36 @@ public class US301CreateProjectControllerTest {
 
 	}
 
+	/**
+	 * 	 This tests confirms if the method selectCalculationMethod() is working properly,
+	 * 	 by setting the defined cost calculation methods for the given project
+	 */
+
+	@Test
+	public void testSelectProjectAndUser(){
+
+		// User creation
+		User u2 = userContainer.createUser("Tiago", "tiago@gmail.com", "002", "Empregado", "930000000", "Rua Maria",
+				"4444-444", "221234567", "Porto", "Portugal");
+		u2.setUserProfile(Profile.COLLABORATOR);
+
+		//creation of the project (new Project, u1 is the project manager
+		newProject = us301CreateProjectController.createProject("Teste", "Testando", u1);
+		us301CreateProjectController.setCreatedProject(newProject);
+
+		us301CreateProjectController.setSelectedUser(u2);
+		// creates a string matching u2's data and asserts as true
+		String user2String = "002: Tiago (tiago@gmail.com; 930000000) - Empregado";
+		assertTrue(user2String.equals(us301CreateProjectController.userDataToString(u2)));
+
+		List<User> activeCollaboratorList = new ArrayList<>();
+		activeCollaboratorList.add(u2);
+		us301CreateProjectController.setActiveCollaboratorList(activeCollaboratorList);
+		// then, asserts the index 0 of the actual list matches the first collaborator
+		assertTrue(us301CreateProjectController.listActiveCollaborators().get(0).equals("[1] \n" + user2String));
+
+
+
+	}
+
 }

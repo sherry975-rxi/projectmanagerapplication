@@ -33,7 +33,7 @@ public class US320ViewProjectsController {
 	}
 
 	public Project getSelectedProject() {
-		return selectedProject;
+		return this.selectedProject;
 	}
 
 	public void setSelectedProject(Project selectedProject) {
@@ -82,7 +82,7 @@ public class US320ViewProjectsController {
 	 * This method is called when the user selects a project from the visible index
 	 * listed in the UI
 	 *
-     * @param integer of the visible index
+     * @param visibleIndex of the visible index
 	 *
 	 * @return the selected Project, to be stored by the UI and handled by other
 	 *         controllers
@@ -100,7 +100,7 @@ public class US320ViewProjectsController {
 	 * This is a simple utility method that converts a project's basic data into a
 	 * string to be displayed in the UI
      *
-     * @param the project to view data in the UI
+     * @param toView project to view data in the UI
 	 *
 	 * @return a String with the Project's data
 	 */
