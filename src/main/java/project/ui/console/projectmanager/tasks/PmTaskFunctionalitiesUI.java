@@ -132,8 +132,7 @@ public class PmTaskFunctionalitiesUI {
 		taskInfo.setTaskID(taskID);
 		taskInfo.setProjeID(project.getIdCode());
 		taskInfo.setProjectAndTask();
-		projectInfo.setProjID(project.getIdCode());
-		projectInfo.setProject();
+		projectInfo.setProject(project);
 
 		boolean condition = true;
 		while (condition) {

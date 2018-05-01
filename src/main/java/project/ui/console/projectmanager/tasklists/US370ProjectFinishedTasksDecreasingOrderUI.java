@@ -38,8 +38,7 @@ public class US370ProjectFinishedTasksDecreasingOrderUI {
 	public void projectDataDisplay() {
 		
 
-		controllerForProjectInfo.setProjID(proj.getIdCode());
-		controllerForProjectInfo.setProject();
+		controllerForProjectInfo.setProject(proj);
 
 		String line = "___________________________________________________";
 		Scanner scannerInput = new Scanner(System.in);
