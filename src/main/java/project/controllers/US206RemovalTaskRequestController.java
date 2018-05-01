@@ -32,24 +32,13 @@ public class US206RemovalTaskRequestController {
 	@Autowired
 	private TaskService taskService;
 
-	/**
-	 * Constructor to instantiate a new CollaboratorRemovalrequest
-	 *
-	 * @param user User that asks for the removal
-	 */
-	public US206RemovalTaskRequestController(User user) {
-		this.user = user;
-		this.projectID = null;
-		this.taskID = null;
-
-	}
 
 	public US206RemovalTaskRequestController() {
 		//Default constructor
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	public void setUser(User user) {
