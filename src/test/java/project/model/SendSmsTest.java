@@ -55,7 +55,7 @@ public class SendSmsTest {
          * Returns a QUEUED.status, as its a trial account
          */
 
-        assertEquals(Message.Status.QUEUED, sendSMS.sendMessage("ola", "teste", true, true));
+        assertEquals(Message.Status.QUEUED, sendSMS.sendMessage("ola", "teste", true));
 
 
 
@@ -79,17 +79,4 @@ public class SendSmsTest {
 
 
 
-    @Test
-    public void sendSmsHashcodeTest(){
-
-        //GIVEN two objects that belong to the class sendSMS,
-        // THEN the Hashcodes will be the same
-
-        assertEquals(sendSMS.hashCode(), sendSMSComparison.hashCode());
-
-        //GIVEN two objects of different classes
-        // THEN the Hashcodes will be different
-        assertNotEquals(sendSMS.hashCode(), otherObject.hashCode());
-
-        }
 }

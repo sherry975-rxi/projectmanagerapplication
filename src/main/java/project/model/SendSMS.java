@@ -30,7 +30,7 @@ public class SendSMS extends ResourceSupport {
         Set overrideNumber to TRUE or overrideAuth to TRUE only for JUnit tests
      */
 
-    public Message.Status sendMessage(String messageToSend, String numberToSend, Boolean overrideNumber, Boolean overrideAccountAuth){
+    public Message.Status sendMessage(String messageToSend, String numberToSend, Boolean overrideAccountAuth){
 
         /*
          Settings taken from twilio.com/user/account
@@ -65,13 +65,10 @@ public class SendSMS extends ResourceSupport {
          */
 
 
-        //HARDCODING NUMBER SO TWILIO DOESNT CRASH APPLICATION
-        //When possible, remove this variable and change all its calls to call numberToSend instead
-        if(!overrideNumber){
-            numberToSend = "+351911790134";
-        }
+        String overrideNumber = "+351911790134";
 
-        return Message.creator(new PhoneNumber(numberToSend),
+
+        return Message.creator(new PhoneNumber(overrideNumber),
                 new PhoneNumber(numberProvidedByTwilio),
                 messageToSend).create().getStatus();
 

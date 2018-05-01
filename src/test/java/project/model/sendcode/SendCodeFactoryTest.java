@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class SendCodeFactoryTest {
+public class SendCodeFactoryTest  {
 
 	private SMSSender smsSender;
 	private EmailSender emailSender;
@@ -34,7 +34,7 @@ public class SendCodeFactoryTest {
 	}
 
 	@Test
-	public void getCodeSenderTypeTest() {
+	public void getCodeSenderTypeTest() throws NumberFormatException  {
 
 		assertEquals(sendCodeFactory.getCodeSenderType("1").get().getClass(), Optional.of(smsSender).get().getClass());
 
@@ -42,12 +42,12 @@ public class SendCodeFactoryTest {
 
 		assertEquals(sendCodeFactory.getCodeSenderType("3").get().getClass(), Optional.of(answerValidation).get().getClass());
 
-
-
 		assertFalse(sendCodeFactory.getCodeSenderType("0").isPresent());
 
-		exception.expect(NoSuchElementException.class);
-		sendCodeFactory.getCodeSenderType("4").get().getClass();
+
+		sendCodeFactory.getCodeSenderType("a");
+
+
 
 
 	}
