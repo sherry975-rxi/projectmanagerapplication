@@ -338,7 +338,7 @@ public class RestProjectTasksControllerTest {
         when(projectService.getProjectById(projID)).thenReturn(project);
 
         //WHEN
-        //One creates a project
+        //One creates a task
         Task taskDto = new Task(taskDescription, project);
         when(taskService.createTask(any(String.class),any(Project.class))).thenReturn(taskDto);
 
@@ -347,6 +347,27 @@ public class RestProjectTasksControllerTest {
         MockHttpServletResponse response = mockMvc.perform(post("/projects/" + projID + "/tasks/").contentType(MediaType.APPLICATION_JSON)
                 .content(jacksonTask.write(taskDto).getJson()))
                 .andReturn().getResponse();
+
+        //THEN
+        //It is expected to be successfully created
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+
+
+        //WHEN we create taskDTO with values for the estimatedTaskEffort, TaskBudgetm estimatedTaskStartDate and taskDeadline
+        Calendar startDate = Calendar.getInstance();
+        Calendar deadline = Calendar.getInstance();
+        Task taskDto2 = new Task(taskDescription, project);
+        taskDto2.setEstimatedTaskEffort(20.0);
+        taskDto2.setTaskBudget(20.0);
+        taskDto2.setEstimatedTaskStartDate(startDate);
+        taskDto2.setTaskDeadline(deadline);
+        when(taskService.createTask(any(String.class),any(Project.class))).thenReturn(taskDto2);
+
+
+        MockHttpServletResponse response2 = mockMvc.perform(post("/projects/" + projID + "/tasks/").contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonTask.write(taskDto2).getJson()))
+                .andReturn().getResponse();
+
 
         //THEN
         //It is expected to be successfully created
