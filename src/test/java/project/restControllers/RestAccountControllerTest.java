@@ -333,6 +333,18 @@ public class RestAccountControllerTest {
         //Verifies that the result matches
         assertEquals(actualResponse, expectedResponse);
 
+
+        //WHEN
+        //We change the validationType to 3, although the factory returns a questions with this input type, it is not necessary on the Validation process
+
+        validationType = "3";
+
+        //THEN
+        //The performUserValidation method will still return a HTTPStatus.FORBIDDEN
+        actualResponse = restAccountController.performUserValidation(validationType, userEmail, userPhone);
+        assertEquals(actualResponse, expectedResponse);
+
+
     }
 
     @Test
@@ -399,5 +411,49 @@ public class RestAccountControllerTest {
 
 
     }
+
+    @Test
+    public void checkValidationTest(){
+
+        Integer userID;
+        String code;
+
+        //GIVEN
+        // An userID that doesn't exist in the Service
+        userID = 1;
+        code = "1234";
+
+
+
+        //WHEN
+        //The userService tries to get the user by ID, it will return null
+        when(userService.getUserByID(userID)).thenReturn(null);
+
+        //THEN
+        // the restAccountController performs the checkValidation
+        //method and will return a HttpStatus.FORDBIDDEN, because the user doesn't exist
+
+        ResponseEntity<Link> expectedResponse = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        ResponseEntity<Link> actualResponse = restAccountController.checkValidation(code, userID);
+
+        assertEquals(actualResponse, expectedResponse);
+
+
+        //WHEN
+        //The userService tries to get the user by ID, it will returnt userDaniel
+        when(userService.getUserByID(userID)).thenReturn(userDaniel);
+
+        //THEN
+        // the restAccountController performs the checkValidation
+        //method and will return a HttpStatus.FORDBIDDEN, because the user exists but its not in the hashmap
+        expectedResponse = new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        actualResponse = restAccountController.checkValidation(code, userID);
+        assertEquals(actualResponse, expectedResponse);
+
+
+    }
+
+
 
 }
