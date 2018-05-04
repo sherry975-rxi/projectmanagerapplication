@@ -357,8 +357,8 @@ public class RestProjectTasksControllerTest {
         Calendar startDate = Calendar.getInstance();
         Calendar deadline = Calendar.getInstance();
         Task taskDto2 = new Task(taskDescription, project);
-        taskDto2.setEstimatedTaskEffort(20.0);
-        taskDto2.setTaskBudget(20.0);
+        taskDto2.setEstimatedTaskEffort(0);
+        taskDto2.setTaskBudget(0);
         taskDto2.setEstimatedTaskStartDate(startDate);
         taskDto2.setTaskDeadline(deadline);
         when(taskService.createTask(any(String.class),any(Project.class))).thenReturn(taskDto2);
@@ -371,7 +371,7 @@ public class RestProjectTasksControllerTest {
 
         //THEN
         //It is expected to be successfully created
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(HttpStatus.OK.value(), response2.getStatus());
 
 
     }
