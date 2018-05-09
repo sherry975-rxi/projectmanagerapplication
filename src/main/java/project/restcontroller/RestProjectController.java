@@ -27,6 +27,9 @@ public class RestProjectController  {
     private final ProjectService projectService;
     private final UserService userService;
     private final TaskService taskService;
+    private static final String PROJECTDETAILS = "See Project Details";
+    private static final String UPDATEPROJECT = "Update Project";
+    private static final String CALCULATECOST = "Calculate Cost";
 
     @Autowired
     public RestProjectController(ProjectService projectService, UserService userService,  TaskService taskService) {
@@ -59,9 +62,9 @@ public class RestProjectController  {
         Project project = this.projectService.getProjectById(projectId);
         Link selfRef = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withSelfRel().withType(RequestMethod.GET.name());
         project.add(selfRef);
-        Link updateProjectLink = linkTo(methodOn(RestProjectController.class).updateProject(project, projectId)).withRel("updateProject").withType(RequestMethod.PATCH.name());
+        Link updateProjectLink = linkTo(methodOn(RestProjectController.class).updateProject(project, projectId)).withRel(UPDATEPROJECT).withType(RequestMethod.PATCH.name());
         project.add(updateProjectLink);
-        Link calculateCostLink = linkTo(methodOn(RestProjectController.class).getProjectCost(project.getProjectId())).withRel("calculateCost").withType(RequestMethod.GET.name());
+        Link calculateCostLink = linkTo(methodOn(RestProjectController.class).getProjectCost(project.getProjectId())).withRel(CALCULATECOST).withType(RequestMethod.GET.name());
         project.add(calculateCostLink);
 
 
@@ -83,7 +86,7 @@ public class RestProjectController  {
             taskService.calculateReportEffortCost(project);
         }
 
-        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel("seeProjectDetails").withType(RequestMethod.GET.name());
+        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECTDETAILS).withType(RequestMethod.GET.name());
         project.add(reference);
 
         return ResponseEntity.ok().body(project);
@@ -99,7 +102,7 @@ public class RestProjectController  {
         Map<String, Double> projectCost = new HashMap<>();
         projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
 
-        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel("seeProjectDetails").withType(RequestMethod.GET.name());
+        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECTDETAILS).withType(RequestMethod.GET.name());
         project.add(reference);
 
         return  ResponseEntity.ok().body(projectCost);
@@ -126,11 +129,11 @@ public class RestProjectController  {
 
         this.projectService.addProjectToProjectContainer(proj);
 
-        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(proj.getProjectId())).withRel("seeProjectDetails").withType(RequestMethod.GET.name());
+        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(proj.getProjectId())).withRel(PROJECTDETAILS).withType(RequestMethod.GET.name());
         proj.add(reference);
-        Link updateProjectLink = linkTo(methodOn(RestProjectController.class).updateProject(proj, proj.getProjectId())).withRel("updateProject").withType(RequestMethod.PATCH.name());
+        Link updateProjectLink = linkTo(methodOn(RestProjectController.class).updateProject(proj, proj.getProjectId())).withRel(UPDATEPROJECT).withType(RequestMethod.PATCH.name());
         proj.add(updateProjectLink);
-        Link calculateCostLink = linkTo(methodOn(RestProjectController.class).getProjectCost(proj.getProjectId())).withRel("calculateCost").withType(RequestMethod.GET.name());
+        Link calculateCostLink = linkTo(methodOn(RestProjectController.class).getProjectCost(proj.getProjectId())).withRel(CALCULATECOST).withType(RequestMethod.GET.name());
         proj.add(calculateCostLink);
 
         return ResponseEntity.ok().body(proj);
