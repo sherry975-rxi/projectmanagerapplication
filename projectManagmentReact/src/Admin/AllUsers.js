@@ -19,9 +19,9 @@ class AllUsers extends Component {
       loadUsersFromServer() {
           fetch('users/allUsers',{ method: 'get'}) 
           .then((response) => response.json()) 
-          .then((batatas) => { 
+          .then((responseData) => { 
               this.setState({ 
-                  users: batatas, 
+                  users: responseData, 
               }); 
           });     
       }
