@@ -12,7 +12,6 @@ import project.model.Task;
 import project.services.ProjectService;
 import project.services.TaskService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,16 +23,15 @@ public class RestProjectTasksController {
 
     ProjectService projectService;
 
-    HttpServletRequest req;
 
     String tasks = "tasks";
 
 
     @Autowired
-    public RestProjectTasksController(TaskService taskService, ProjectService projectService, HttpServletRequest req) {
+    public RestProjectTasksController(TaskService taskService, ProjectService projectService) {
         this.taskService = taskService;
         this.projectService = projectService;
-        this.req = req;
+
     }
 
     /**
