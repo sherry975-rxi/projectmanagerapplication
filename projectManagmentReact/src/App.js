@@ -3,6 +3,7 @@ import Navbar from './components/navbar/navbar';
 import Main from './components/main/main';
 import ActiveProjects from './components/activeProjects/ActiveProjects';
 import AllUsers from './components/Admin/AllUsers';
+import UsersList from './components/Admin/UsersList';
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
           <Navbar/>
           <ActiveProjects />
           <AllUsers />
+          <UsersList />
 
       </div>
     );
