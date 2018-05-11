@@ -11,9 +11,12 @@ import project.model.JsonAsString;
 import project.model.User;
 import project.model.sendcode.SendCodeFactory;
 import project.model.sendcode.ValidationMethod;
+import project.security.JWTUtil;
+import project.security.UserSecurity;
 import project.services.UserService;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +30,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/account/")
 public class RestAccountController {
+
+    private final JWTUtil jwtUtil;
 
     private final UserService userService;
 
@@ -49,8 +54,9 @@ public class RestAccountController {
 
 
     @Autowired
-    public RestAccountController(UserService userService) {
+    public RestAccountController(UserService userService, JWTUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     /**
@@ -301,5 +307,13 @@ public class RestAccountController {
             return new ResponseEntity<>(login, HttpStatus.OK);
         }
         else return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
+    public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
+        UserSecurity userSec = UserService.authenticated();
+        String token = jwtUtil.generateToken(userSec.getUsername());
+        response.addHeader("Authorization", "Bearer " + token);
+        return ResponseEntity.noContent().build();
     }
 }

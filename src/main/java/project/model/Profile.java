@@ -9,7 +9,13 @@ package project.model;
 
 public enum Profile {
 
-	UNASSIGNED, COLLABORATOR, DIRECTOR;
+    UNASSIGNED("ROLE_UNASSIGNED"), COLLABORATOR("ROLE_COLLABORATOR"), DIRECTOR("ROLE_DIRECTOR"), ADMIN("ROLE_ADMIN");
+
+    private String description;
+
+    Profile(String description) {
+        this.description = description;
+    }
 	
 	public static boolean contains(String test){
 		for (Profile other: Profile.values()) {
@@ -20,5 +26,9 @@ public enum Profile {
 		}
 		return false;
 	}
+
+    public String getDescription() {
+        return this.description;
+    }
 
 }

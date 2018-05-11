@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.model.Profile;
 import project.model.User;
@@ -12,7 +13,6 @@ import project.services.UserService;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("users")
@@ -58,6 +58,7 @@ public class RestUserController {
      * This method will return a list of all the users registered in the system.
      */
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/allUsers", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(){
 
