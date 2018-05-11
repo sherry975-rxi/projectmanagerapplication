@@ -216,6 +216,8 @@ public class RestProjectTasksController {
             taskDTO.add(reference);
         }
 
+        taskService.saveTask(toFinish);
+
         return new ResponseEntity<>(taskDTO, HttpStatus.OK);
 
     }

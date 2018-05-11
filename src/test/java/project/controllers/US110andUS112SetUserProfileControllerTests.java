@@ -50,7 +50,7 @@ public class US110andUS112SetUserProfileControllerTests {
 	public void testSetUserAsDirectorController() {
 		// given a User - newUser2 - asserts they start as Visitor when created
 		// and then creates the controllers
-		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
+		assertEquals(newUser2.getUserProfile(), Profile.VISITANT);
 
 		// sets newUser2 as Director and asserts its profile
 		us110andUS112SetUserProfileController.setUserAsDirector(newUser2);
@@ -60,14 +60,14 @@ public class US110andUS112SetUserProfileControllerTests {
 		// and that user repository contains the new director
 		assertTrue(us110andUS112SetUserProfileController.getUserContainer().searchUsersByProfile(Profile.DIRECTOR)
 				.contains(newUser2));
-		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
+		assertEquals(newUser3.getUserProfile(), Profile.VISITANT);
 	}
 
 	@Test
 	public void testSetUserAsCollaboratorController() {
 		// given a User - newUser2 - asserts they start as Visitor when created
 		// and then creates the controllers
-		assertEquals(newUser2.getUserProfile(), Profile.UNASSIGNED);
+		assertEquals(newUser2.getUserProfile(), Profile.VISITANT);
 
 		// sets newUser2 as Collaborator and asserts its profile
 		us110andUS112SetUserProfileController.setUserAsCollaborator(newUser2);
@@ -77,7 +77,7 @@ public class US110andUS112SetUserProfileControllerTests {
 		// and that user repository contains the new director
 		assertTrue(us110andUS112SetUserProfileController.getUserContainer().searchUsersByProfile(Profile.COLLABORATOR)
 				.contains(newUser2));
-		assertEquals(newUser3.getUserProfile(), Profile.UNASSIGNED);
+		assertEquals(newUser3.getUserProfile(), Profile.VISITANT);
 	}
 
 	@Test

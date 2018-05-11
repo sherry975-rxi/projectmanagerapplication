@@ -34,7 +34,7 @@ public class US135andUS136ListUsersUI {
 
 		switch (command) {
 		case "0":
-			searchList = controller.searchUsersByProfileController(Profile.UNASSIGNED);
+			searchList = controller.searchUsersByProfileController(Profile.VISITANT);
 			break;
 		case "1":
 			searchList = controller.searchUsersByProfileController(Profile.DIRECTOR);

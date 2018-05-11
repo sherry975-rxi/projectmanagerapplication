@@ -9,7 +9,7 @@ package project.model;
 
 public enum Profile {
 
-	UNASSIGNED, COLLABORATOR, DIRECTOR;
+	VISITANT, COLLABORATOR, DIRECTOR;
 	
 	public static boolean contains(String test){
 		for (Profile other: Profile.values()) {

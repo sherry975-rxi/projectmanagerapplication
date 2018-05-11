@@ -46,7 +46,7 @@ public class US360ProjectUnassignedTasksUI {
 		System.out.println("- PROJECT BUDGET: " + projectInfoDetails.printProjectBudgetInfo());
             System.out.println(line);
 		System.out.println(line + "\n");
-		System.out.println("                -UNASSIGNED TASKS");
+		System.out.println("                -VISITANT TASKS");
 		System.out.println(line);
 
 		List<String> listOfExpiredTaskID = new ArrayList<>();
