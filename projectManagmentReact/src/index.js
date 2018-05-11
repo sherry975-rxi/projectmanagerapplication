@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import ActiveProjects from './ActiveProjects';
-
+import $ from 'jquery';
+import 'materialize-css';
+import 'materialize-css/dist/css/materialize.min.css';
+import 'materialize-css/dist/js/materialize.js'; 
+import 'materialize-css/dist/js/materialize.min.js'; 
 import registerServiceWorker from './registerServiceWorker';
-import MarkTaskAsFinished from "./MarkTaskAsFinished";
+import App from './App';
 
-ReactDOM.render(<ActiveProjects />, document.getElementById('root'));
-ReactDOM.render(<MarkTaskAsFinished />, document.getElementById('markTaskAsFinished'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 registerServiceWorker();
