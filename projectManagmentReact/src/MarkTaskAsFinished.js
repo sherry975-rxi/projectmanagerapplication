@@ -1,66 +1,43 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './ActiveProjects.css';
 
+import axios from 'axios';
 
 
 class MarkTaskAsFinished extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            task: []
+        this.state = {  
+                id: ''           
         }
     }
 
+    handleChange = event => {
+        this.setState({ id: event.target.value });
+      }
 
-    componentDidMount() {
-        this.loadStudentsFromServer();
-    }
-
-    // Load students from database
-    loadStudentsFromServer() {
-        fetch('projects/2/tasks/WP1.T01',{
-            method: 'patch',
-        })
-            .then((response) => response.json())
-            .then((batatas) => {
-                this.setState({
-                    task: batatas,
-                });
-            });
-    }
-
-    renderTask(){
-        return this.state.task.map((taskItem) =>{
-            return(
-                <div>
-                <p>{taskItem.description}</p>
-                <p>{taskItem.currentState}</p>
-                    <p>{taskItem.creationDate}</p>
-                    <p>{taskItem.startDate}</p>
-                    <p>{taskItem.finishDate}</p>
-                    <hr/>
-                </div>
-            )
-        })
-    }
+    handleSubmit = async event => {
+        event.preventDefault();
+      
+        // Value of id is inside of the response const.
+        const response = await axios.patch(`projects/2/tasks/${this.state.id}`);
+        console.log(response);
+        console.log(response.data);
+    };
 
     render() {
         return (
-            <div className="App">
-                <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h2>Welcome to React</h2>
-                </div>
-                <p className="App-intro">
-                    To get started, edit <code>src/App.js</code> and save to reload!
-                </p>
-                <h3>Task that was marked as finished</h3>
-                {this.renderTask()}
-                
-                size: {this.state.task.length}
-                
+            <div className="App">                  
+                <h3>Mark task as finished</h3>
+               
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Please type task ID:
+                        <input type="text" name="id" onChange={this.handleChange} />
+                    </label>
+                    <button type="submit">Finish</button>
+                </form>
             </div>
         );
     }
