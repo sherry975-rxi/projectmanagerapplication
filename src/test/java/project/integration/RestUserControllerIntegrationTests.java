@@ -75,7 +75,7 @@ public class RestUserControllerIntegrationTests {
         mike.setUserProfile(Profile.COLLABORATOR);
         owner.setUserProfile(Profile.DIRECTOR);
         userPM.setUserProfile(Profile.COLLABORATOR);
-        userRui.setUserProfile(Profile.UNASSIGNED);
+        userRui.setUserProfile(Profile.VISITANT);
 
         userService.updateUser(mike);
         userService.updateUser(owner);
@@ -218,15 +218,15 @@ public class RestUserControllerIntegrationTests {
         //GIVEN four users in the test database
         assertEquals(4, userService.getAllUsersFromUserContainer().size());
 
-        //WHEN searching for profile set as UNASSIGNED
+        //WHEN searching for profile set as VISITANT
 
         ParameterizedTypeReference<List<User>> listOfUnassigned = new ParameterizedTypeReference<List<User>>() {};
 
-        actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/profiles/UNASSIGNED", HttpMethod.GET, null, listOfUnassigned);
+        actualUserList = this.restTemplate.exchange("http://localhost:" + port + "/users/profiles/VISITANT", HttpMethod.GET, null, listOfUnassigned);
 
         //THEN the expectedUserList must contain the users
 
-        expectedUserList = new ResponseEntity<>(userService.searchUsersByProfileName("UNASSIGNED"), HttpStatus.OK);
+        expectedUserList = new ResponseEntity<>(userService.searchUsersByProfileName("VISITANT"), HttpStatus.OK);
 
         assertEquals(expectedUserList.getBody().size(), actualUserList.getBody().size());
         assertEquals(1, actualUserList.getBody().size());
@@ -245,7 +245,7 @@ public class RestUserControllerIntegrationTests {
         //GIVEN four users in the test database
         assertEquals(4, userService.getAllUsersFromUserContainer().size());
 
-        //WHEN searching for profile set as UNASSIGNED
+        //WHEN searching for profile set as VISITANT
 
         ParameterizedTypeReference<List<User>> listOfCollaborators = new ParameterizedTypeReference<List<User>>() {};
 

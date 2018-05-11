@@ -16,7 +16,7 @@ public class ProfileTest {
     @Test
     public void shouldContain() {
 
-        String unassigned = "UNASSIGNED";
+        String unassigned = "VISITANT";
 
         assertTrue(Profile.contains(unassigned));
     }
