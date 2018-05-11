@@ -4,6 +4,7 @@ import Main from './components/main/main';
 import ActiveProjects from './components/activeProjects/ActiveProjects';
 import AllUsers from './components/Admin/AllUsers';
 import UsersList from './components/Admin/UsersList';
+import MarkTaskAsFinished from './MarkTaskAsFinished';
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <ActiveProjects />
           <AllUsers />
           <UsersList />
+          <MarkTaskAsFinished />
 
       </div>
     );
