@@ -193,7 +193,7 @@ public class UserTest {
 
         User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
-        Profile visitor = Profile.UNASSIGNED;
+        Profile visitor = Profile.VISITANT;
 
         assertEquals(visitor, u1.getUserProfile());
     }
@@ -288,9 +288,9 @@ public class UserTest {
 
         User u1 = new User("Daniel", "daniel@gmail.com", "01", "Porteiro", "910000000");
 
-        u1.setUserProfile(Profile.UNASSIGNED);
+        u1.setUserProfile(Profile.VISITANT);
 
-        assertEquals(Profile.UNASSIGNED, u1.getUserProfile());
+        assertEquals(Profile.VISITANT, u1.getUserProfile());
 
     }
 
