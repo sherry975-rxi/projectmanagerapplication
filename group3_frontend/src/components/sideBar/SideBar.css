@@ -12,8 +12,9 @@
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
+    background-color: #161c20;
     border-right: 1px solid #eee;
+    transition: 500ms;
   }
 }
 
@@ -22,14 +23,30 @@
   margin-right: -21px; /* 20px padding + 1px border */
   margin-bottom: 20px;
   margin-left: -20px;
+  height: 300px;
 }
 .nav-sidebar > li > a {
   padding-right: 20px;
   padding-left: 20px;
+  color: rgb(226, 226, 226); 
 }
+
+.nav-sidebar li a:hover {
+  text-decoration: none;
+
+  background: #707174;
+}
+
 .nav-sidebar > li > a.active,
-.nav-sidebar > li > a.active:hover,
 .nav-sidebar > li > a.active:focus {
-  color: #fff;
-  background-color: #428bca;
+  color: rgb(172, 172, 172);
+  font-weight: bold;
+  background-color: #303335;
 }
+
+
+.nav {
+  font-family: Helvetica; 
+  font-size: 14px; 
+}
+
