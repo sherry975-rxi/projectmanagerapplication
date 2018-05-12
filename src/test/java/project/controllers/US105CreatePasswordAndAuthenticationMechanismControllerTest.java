@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.model.CodeGenerator;
@@ -47,8 +48,13 @@ public class US105CreatePasswordAndAuthenticationMechanismControllerTest {
     @Mock
     User user1;
 
+    @Mock
+    BCryptPasswordEncoder passwordEncoder;
+
     @Test
     public void setUserPassword() {
+
+        when(passwordEncoder.encode(anyString())).thenReturn("testPass");
 
         controller.setUserPassword(user1, "testPass");
 
