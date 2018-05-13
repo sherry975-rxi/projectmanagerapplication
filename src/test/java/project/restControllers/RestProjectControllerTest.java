@@ -162,9 +162,13 @@ public class RestProjectControllerTest {
      */
     @Test
     public void shouldReturnTheProjectCost() throws Exception {
-        //given the project ID
-        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectMock);
-        when(taskServiceMock.getTotalCostReportedToProjectUntilNow(projectMock)).thenReturn(7.0);
+        //given the project
+
+        Project projectTest = new Project("Project", "description", userRui);
+
+        when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectTest);
+        when(taskServiceMock.getTotalCostReportedToProjectUntilNow(projectTest)).thenReturn(7.0);
+
 
         //when we perform a get request to url /projects/<projectId>/cost
         MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId + "/cost")
@@ -172,7 +176,8 @@ public class RestProjectControllerTest {
 
         //then we receive a status OK and the cost of the project
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("{\"projectCost\":7.0}", response.getContentAsString());
+
+        assertEquals(jacksonProject.write(projectTest).getJson(), response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);
     }
 
