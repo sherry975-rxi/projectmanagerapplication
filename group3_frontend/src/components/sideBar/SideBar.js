@@ -48,6 +48,16 @@ class SideBar extends Component {
                             Users
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/projectcost" activeClassName="active">
+                            Project Cost
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/selectprojectcostcalculation" activeClassName="active">
+                            Select Calculation Method<br/>for Project Cost 
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
         );
