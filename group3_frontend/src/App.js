@@ -10,13 +10,13 @@ import UsersPage from './pages/users/UsersPage';
 import LoginPage from './pages/loginPage/LoginPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import firstPage from './pages/firstPage/firstPage';
-
+import Footer from './components/footer/footer'; 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: true
+      isVisible: false
     };
   }
 
@@ -54,8 +54,8 @@ class App extends Component {
             <Route exact path="/signup" component={SignUpPage} />
             <Route component={this.pages} />
           </Switch>
-
         </div>
+        <Footer/>
       </div>
     );
   }
