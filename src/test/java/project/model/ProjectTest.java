@@ -424,5 +424,28 @@ public class ProjectTest {
 
     }
 
+	/**
+	 * Given
+	 * project p1
+	 *
+	 * When
+	 * Defining a project cost
+	 *
+	 * Then
+	 * It should return the new cost
+	 */
+    @Test
+	public void testProjectCost(){
+    	// Given
+		assertNotNull(p1);
+
+		// When
+		p1.setProjectCost(30.0);
+
+		// Then
+		assertEquals(30.0, p1.getProjectCost(), 0.01);
+
+	}
+
 
 }
