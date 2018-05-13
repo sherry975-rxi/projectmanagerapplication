@@ -11,6 +11,8 @@ import LoginPage from './pages/loginPage/LoginPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import firstPage from './pages/firstPage/firstPage';
 import Footer from './components/footer/footer'; 
+import ProjectCostCalculation from './pages/Cost/ProjectCostCalculation';
+import ProjectCost from './pages/Cost/ProjectCost';
 
 class App extends Component {
   constructor(props) {
@@ -36,6 +38,8 @@ class App extends Component {
           <Route path="/projects" component={ProjectsPage} />
           <Route path="/tasks" component={TasksPage} />
           <Route path="/users" component={UsersPage} />
+          <Route path="/selectprojectcostcalculation" component={ProjectCostCalculation} />
+          <Route path="/projectcost" component={ProjectCost} />
         </Switch>
       </div>
     </div>
