@@ -97,15 +97,16 @@ public class RestProjectController  {
      * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
      */
     @RequestMapping(value = "/{projectId}/cost", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
+    public ResponseEntity<Project> getProjectCost(@PathVariable int projectId) {
         Project project = this.projectService.getProjectById(projectId);
-        Map<String, Double> projectCost = new HashMap<>();
-        projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+        //Map<String, Double> projectCost = new HashMap<>();
+        //projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+        project.setProjectCost(taskService.getTotalCostReportedToProjectUntilNow(project));
 
         Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECTDETAILS).withType(RequestMethod.GET.name());
         project.add(reference);
 
-        return  ResponseEntity.ok().body(projectCost);
+        return  ResponseEntity.ok().body(project);
     }
 
     /**
