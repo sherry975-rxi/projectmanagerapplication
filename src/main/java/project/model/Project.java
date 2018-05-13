@@ -50,6 +50,8 @@ public class Project extends ResourceSupport implements Serializable{
     @Enumerated(EnumType.STRING)
     private CalculationMethod calculationMethod;
 
+    private Double projectCost;
+
     private String availableCalculationMethods;
 
     public static final int PLANNING = 0; // planeado
@@ -435,4 +437,11 @@ public class Project extends ResourceSupport implements Serializable{
 		return listAvaliableCalculationMethods().contains(CalculationMethod.toEnum(method));
 	}
 
+	public void setProjectCost(Double projectCost) {
+		this.projectCost = projectCost;
+	}
+
+	public Double getProjectCost() {
+		return projectCost;
+	}
 }
