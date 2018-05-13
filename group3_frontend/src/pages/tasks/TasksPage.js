@@ -1,13 +1,61 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import './TasksPage.css';
 
 class TasksPage extends Component {
-    state = {}
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            tasks: []
+        }
+    }
+
+    async componentDidMount() {
+        fetch('users/7/tasks/pending', { method: 'get' })
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({
+                    tasks: responseData,
+                });
+            });
+
+    }
+
+    renderOngoingTasks() {
+        return this.state.tasks.map((taskItem) => {
+            return (
+                <tr className="line">
+                    <td>{taskItem.taskID}</td>
+                    <td>{taskItem.description}</td>
+                    <td>{taskItem.startDate}</td>
+                    <td>{taskItem.taskDeadline}</td>
+                    <td><a href="#"><i class="glyphicon glyphicon-plus"></i></a></td>
+                </tr>
+            )
+        })
+    }
+
     render() {
         return (
-            <div>
-                <h1 className="page-header">Tasks</h1>
+
+            <div className=" table-striped">
+                <h3><b>Ongoing</b></h3>
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Task ID</th>
+                            <th>Description</th>
+                            <th>Start Date</th>
+                            <th>Estimated Finish Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.renderOngoingTasks()}
+                    </tbody>
+                </table>
             </div>
-        )
+
+        );
     }
 }
 

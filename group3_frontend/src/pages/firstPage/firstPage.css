@@ -1,0 +1,40 @@
+.Bar {
+    background: #4EC491; 
+    width: 100%;
+    height: 550px;
+    padding: 0px; 
+    overflow: hidden;
+}
+
+.Logo {
+  text-align: center;
+  color: white;
+  margin-top: 70px;
+}
+
+@font-face {
+    font-family: 'Dense';
+    src: local('../fonts/dense/Dense-Regular.woff2') format('woff2'),
+        local('../fonts/dense/Dense-Regular.woff') format('woff'),
+        local('../fonts/dense/Dense-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  .switch {
+    font-family: 'Dense';
+    font-size: 100px;
+  }
+
+  .subTitle {
+      font-size: 20px;
+      margin-top: -10px;
+  }
+
+  .Login { 
+      text-align: center;
+      margin-top: 10%;
+  }
+
+ 
+

@@ -9,13 +9,14 @@ import TasksPage from './pages/tasks/TasksPage';
 import UsersPage from './pages/users/UsersPage';
 import LoginPage from './pages/loginPage/LoginPage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
-
+import firstPage from './pages/firstPage/firstPage';
+import Footer from './components/footer/footer'; 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isVisible: true
+      isVisible: false
     };
   }
 
@@ -29,9 +30,9 @@ class App extends Component {
   pages = () => (
     <div className="row">
       <SideBar isVisible={this.state.isVisible} />
+      <Route exact path="/" component={firstPage} />
       <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <Switch>
-          <Route exact path="/" component={ProjectsPage} />
           <Route path="/projects" component={ProjectsPage} />
           <Route path="/tasks" component={TasksPage} />
           <Route path="/users" component={UsersPage} />
@@ -39,8 +40,6 @@ class App extends Component {
       </div>
     </div>
   );
-
-
 
 
   render() {
@@ -53,8 +52,8 @@ class App extends Component {
             <Route exact path="/signup" component={SignUpPage} />
             <Route component={this.pages} />
           </Switch>
-
         </div>
+        <Footer/>
       </div>
     );
   }
