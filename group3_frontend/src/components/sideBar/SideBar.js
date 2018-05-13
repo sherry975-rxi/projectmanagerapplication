@@ -25,13 +25,11 @@ class SideBar extends Component {
         };
     }
 
-    state = {};
     render() {
         return (
             <div
                 className={"col-sm-3 col-md-2 sidebar " + this.state.visibility}
             >
-                {this.state.visibility}
                 <ul className="nav nav-sidebar">
                     <li>
                         <NavLink to="/projects" activeClassName="active">

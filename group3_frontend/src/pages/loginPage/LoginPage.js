@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './LoginPage.css';
+import React, { Component } from "react";
+import "./LoginPage.css";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 class LoginPage extends Component {
@@ -16,14 +16,15 @@ class LoginPage extends Component {
     }
 
     handleChange = event => {
+        console.log(event.target);
         this.setState({
             [event.target.id]: event.target.value
         });
-    }
+    };
 
     handleSubmit = event => {
         event.preventDefault();
-    }
+    };
 
     render() {
         return (
@@ -53,12 +54,11 @@ class LoginPage extends Component {
                         type="submit"
                     >
                         Login
-              </Button>
+                    </Button>
                 </form>
             </div>
         );
     }
-
 }
 
 export default LoginPage;
