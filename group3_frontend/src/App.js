@@ -8,7 +8,7 @@ import ProjectsPage from "./pages/projects/ProjectsPage";
 import TasksPage from "./pages/tasks/TasksPage";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/signUpPage/signUpPage";
+import SignUpPage from "./pages/signUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
@@ -53,7 +53,7 @@ class App extends Component {
                 <NavBar toogleMenu={this.toogleMenu} />
                 <div className="container-fluid">
                     <Switch>
-                        <Route exact path="/" component={firstPage} />
+                    <Route exact path="/" component={firstPage} />
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/signup" component={SignUpPage} />
                         <Route component={this.pages} />
