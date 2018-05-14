@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
 import project.model.ProjectCollaborator;
@@ -36,7 +37,10 @@ public class RestProjCollabController {
      *
      * @return List of project collaborators with the new user added with a link to open each collaborator
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projectId).projectManager.userID " +
+            "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(method = RequestMethod.GET)
+
     public ResponseEntity<List<ProjectCollaborator>> getProjectTeam(@PathVariable int projectId) {
 
         List<ProjectCollaborator> collaborators = new ArrayList<>();
@@ -60,6 +64,9 @@ public class RestProjCollabController {
      *
      * @return List of project collaborators with the new user added with a link to open each collaborator
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projectId).projectManager.userID " +
+            "or hasRole('ROLE_DIRECTOR') " +
+            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectCollaboratorById(collaboratorId).collaborator.userID")
     @RequestMapping(value = "/{collaboratorId}", method = RequestMethod.GET)
     public ResponseEntity<ProjectCollaborator> getProjectCollaborator(@PathVariable int projectId, @PathVariable long collaboratorId) {
 
@@ -79,6 +86,8 @@ public class RestProjCollabController {
      *
      * @return List of project collaborators with the new user added with a link to open each collaborator
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projectId).projectManager.userID " +
+            "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ProjectCollaborator> addCollaborator(@RequestBody ProjectCollaborator collaborator, @PathVariable int projectId) {
 
@@ -112,6 +121,8 @@ public class RestProjCollabController {
      *
      * @return List of project collaborators with the new user added with a link to open each collaborator
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projectId).projectManager.userID " +
+            "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/{collaboratorId}", method = RequestMethod.DELETE)
     public ResponseEntity<ProjectCollaborator> removeCollaborator(@PathVariable long collaboratorId, @PathVariable int projectId) {
 
