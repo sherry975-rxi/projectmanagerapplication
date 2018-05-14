@@ -66,14 +66,12 @@ class CreateReport extends Component {
 
     render() {
         return (
-            <div>
-                <h1 className="page-header">Report</h1>
 
-                <h3>Insert info to create Report:</h3>
+            <div className="CreateReport"> 
+                <h3 className="page-header"><b>Insert info to create Report:</b></h3> 
+                <form onSubmit={this.handleSubmit}>
 
-                    <form onSubmit={this.handleSubmit}>
-
-                        <FormGroup controlId="projectId">
+                        <FormGroup controlId="projectId" bsSize="large">
                         <ControlLabel>Type Project ID</ControlLabel>
                         <FormControl
                             autoFocus
@@ -83,7 +81,7 @@ class CreateReport extends Component {
                         />
                         </FormGroup>
 
-                        <FormGroup controlId="taskID">
+                        <FormGroup controlId="taskID" bsSize="large">
                         <ControlLabel>Type Task ID</ControlLabel>
                         <FormControl
                             autoFocus
@@ -93,7 +91,7 @@ class CreateReport extends Component {
                         />
                         </FormGroup>
 
-                        <FormGroup controlId="reportedTime">
+                        <FormGroup controlId="reportedTime" bsSize="large">
                         <ControlLabel>Type reported time</ControlLabel>
                         <FormControl
                             autoFocus
@@ -103,7 +101,7 @@ class CreateReport extends Component {
                         />
                         </FormGroup>
 
-                        <FormGroup controlId="taskCollabEmail">
+                        <FormGroup controlId="taskCollabEmail" bsSize="large">
                         <ControlLabel>Type task collaborator email address</ControlLabel>
                         <FormControl
                             autoFocus
@@ -113,16 +111,8 @@ class CreateReport extends Component {
                         />
                         </FormGroup>
 
-                        <Button
-                            block
-
-                            //disabled={!this.validateForm()}
-                            type="submit"
-                            >
-                            create report
-                        </Button>
-                        {/* {this.props.myJson.projectCost} */}
-                    </form>
+                        <button className="btn btn-primary" /*onClick={this.userDetail}*/>Create Report</button>
+                </form>
             </div>
         )
     }
