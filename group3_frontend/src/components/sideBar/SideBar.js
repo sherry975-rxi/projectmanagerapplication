@@ -47,8 +47,13 @@ class SideBar extends Component {
                         </NavLink>
                     </li>
                     <li>
+                        <NavLink to="/tasks" activeClassName="active">
+                            Finished Tasks
+                        </NavLink>
+                    </li>
+                    <li>
                         <NavLink to="/marktaskfinished" activeClassName="active">
-                            Mark task finished
+                            Mark task as finished
                         </NavLink>
                     </li>
                     <li>
