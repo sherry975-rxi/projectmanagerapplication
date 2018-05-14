@@ -32,15 +32,15 @@ class ProjectCost extends Component {
             var projectItem = this.state.project
             return(
                 <div>
-                <p>Project ID: &nbsp;
+                <p><b>Project ID:</b> &nbsp;
                 {projectItem.projectId}</p>
-                <p> Project Name: &nbsp;
+                <p><b>Project Name:</b> &nbsp;
                 {projectItem.name}</p>
-                <p> Available Cost Calculation Methods: &nbsp;
+                <p><b>Available Cost Calculation Methods:</b> &nbsp;
                 {projectItem.availableCalculationMethods}</p>
-                <p> Selected Cost Calculation Method: &nbsp;
+                <p><b>Selected Cost Calculation Method:</b> &nbsp;
                 {projectItem.calculationMethod}</p>
-                <p> Project Cost: &nbsp;
+                <p><b>Project Cost:</b> &nbsp;
                 {projectItem.projectCost}</p>
                 <hr/>
                 </div>

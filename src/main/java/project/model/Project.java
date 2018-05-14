@@ -9,6 +9,8 @@ import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -50,7 +52,7 @@ public class Project extends ResourceSupport implements Serializable{
     @Enumerated(EnumType.STRING)
     private CalculationMethod calculationMethod;
 
-    private Double projectCost;
+    private double projectCost;
 
     private String availableCalculationMethods;
 
@@ -437,11 +439,17 @@ public class Project extends ResourceSupport implements Serializable{
 		return listAvaliableCalculationMethods().contains(CalculationMethod.toEnum(method));
 	}
 
-	public void setProjectCost(Double projectCost) {
-		this.projectCost = projectCost;
+	public void setProjectCost(double projectCost) {
+
+		Double totalCost = BigDecimal.valueOf(projectCost)
+				.setScale(2, RoundingMode.HALF_UP)
+				.doubleValue();
+
+
+		this.projectCost = totalCost;
 	}
 
-	public Double getProjectCost() {
+	public double getProjectCost() {
 		return projectCost;
 	}
 }

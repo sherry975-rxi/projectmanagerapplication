@@ -79,7 +79,7 @@ public class User extends ResourceSupport implements Serializable {
 		this.function = function;
 		this.addressList = new ArrayList<>();
 		this.phone = phone;
-		this.userProfile = Profile.VISITANT;
+		this.userProfile = Profile.UNASSIGNED;
 		this.systemUserStateActive = true;
 	}
 

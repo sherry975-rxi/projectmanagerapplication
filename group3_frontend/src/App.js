@@ -8,9 +8,11 @@ import { Route, Switch } from "react-router-dom";
 import ProjectsPage from "./pages/projects/ProjectsPage";
 import ActiveProjects from "./pages/projects/ActiveProjects";
 import TasksPage from "./pages/tasks/TasksPage";
+import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
@@ -42,6 +44,7 @@ class App extends Component {
                     <Route path="/projects" component={ProjectsPage} />
                     <Route path="/activeprojects" component={ActiveProjects} />
                     <Route path="/tasks" component={TasksPage} />
+                    <Route path="/finishedtasks" component={FinishedTasks} />
                     <Route path="/marktaskfinished" component={MarkTaskAsFinished} />
                     <Route path="/users" component={UsersPage} />
                     <Route path="/selectprojectcostcalculation" component={ProjectCostCalculation}/>
@@ -62,7 +65,7 @@ class App extends Component {
                     <Switch>
                     <Route exact path="/" component={firstPage} />
                         <Route exact path="/login" component={LoginPage} />
-                        <Route exact path="/signup" component={signUpPage} />
+                        <Route exact path="/signup" component={SignUpPage} />
                         <Route exact path="/users/{this.userID}" component={Profile} />
                         <Route component={this.pages} />
                     </Switch>

@@ -25,19 +25,6 @@ class TasksPage extends Component {
 
     }
 
-
-    async componentDiMount(){
-        fetch('users/7/tasks/finished', { method: 'get'})
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({
-                    tasks: responseData,
-                });
-            });
-
-        
-    }
-
     renderOngoingTasks() {
         return this.state.tasks.map((taskItem) => {
             return (
@@ -65,22 +52,6 @@ class TasksPage extends Component {
         console.log(response.data);
     };
 
-    renderFinishedTasks(){
-        return this.state.tasks.map((taskItem) => {
-            return (
-                <tr className="line">
-                <td>{taskItem.taskID}</td>
-                <td>{taskItem.description}</td>
-                <td>{taskItem.startDate}</td>
-                <td>{taskItem.taskDeadline}</td>
-                <td><a href="#"><i class="glyphicon glyphicon-plus"></i></a></td>
-                </tr>
-            )
-
-        })
-
-   }
-
     render() {
         return (
 
@@ -107,22 +78,7 @@ class TasksPage extends Component {
                         
                         </FormGroup> 
                         </form>
-                
-                <h3><b>Finished Tasks</b></h3>
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Task ID</th>
-                            <th>Description</th>
-                            <th>Start Date</th>
-                            <th>Estimated Finish Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderFinishedTasks()}
-                    </tbody>
-                </table>
-            </div>
+                    </div>
 
         );
     }
