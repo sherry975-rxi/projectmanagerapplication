@@ -34,7 +34,6 @@ class App extends Component {
 
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
-                    <Route exact path="/" component={firstPage} />
                     <Route path="/projects" component={ProjectsPage} />
                     <Route path="/tasks" component={TasksPage} />
                     <Route path="/users" component={UsersPage} />
@@ -54,6 +53,7 @@ class App extends Component {
                 <NavBar toogleMenu={this.toogleMenu} />
                 <div className="container-fluid">
                     <Switch>
+                        <Route exact path="/" component={firstPage} />
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/signup" component={SignUpPage} />
                         <Route component={this.pages} />

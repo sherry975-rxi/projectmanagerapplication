@@ -1,9 +1,11 @@
 .Bar {
     background: #4EC491; 
-    width: 100%;
+    width: 110%;
     height: 550px;
     padding: 0px; 
     overflow: hidden;
+    position: relative;
+    margin-left: -50px;; 
 }
 
 .Logo {
