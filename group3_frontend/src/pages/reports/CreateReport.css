@@ -1,8 +1,8 @@
-.Login {
+.CreateReport {
     padding: 60px 0;
   }
 
-  .Login form {
-    margin: 0 auto;
+  .CreateReport form {
+    margin: 30 auto;
     max-width: 320px;
   }
