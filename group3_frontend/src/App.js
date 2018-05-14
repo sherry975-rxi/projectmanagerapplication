@@ -12,7 +12,6 @@ import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
@@ -38,16 +37,21 @@ class App extends Component {
     pages = () => (
         <div className="row">
             <SideBar isVisible={this.state.isVisible} />
-
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
                     <Route path="/projects" component={ProjectsPage} />
                     <Route path="/activeprojects" component={ActiveProjects} />
                     <Route path="/tasks" component={TasksPage} />
                     <Route path="/finishedtasks" component={FinishedTasks} />
-                    <Route path="/marktaskfinished" component={MarkTaskAsFinished} />
+                    <Route
+                        path="/marktaskfinished"
+                        component={MarkTaskAsFinished}
+                    />
                     <Route path="/users" component={UsersPage} />
-                    <Route path="/selectprojectcostcalculation" component={ProjectCostCalculation}/>
+                    <Route
+                        path="/selectprojectcostcalculation"
+                        component={ProjectCostCalculation}
+                    />
                     <Route path="/projectcost" component={ProjectCost} />
                     <Route path="/createreport" component={CreateReport} />
                     <Route path="/updatereport" component={UpdateReport} />
@@ -63,10 +67,14 @@ class App extends Component {
                 <NavBar toogleMenu={this.toogleMenu} />
                 <div className="container-fluid">
                     <Switch>
-                    <Route exact path="/" component={firstPage} />
+                        <Route exact path="/" component={firstPage} />
                         <Route exact path="/login" component={LoginPage} />
-                        <Route exact path="/signup" component={signUpPage} />
-                        <Route exact path="/users/{this.userID}" component={Profile} />
+                        <Route exact path="/signup" component={SignUpPage} />
+                        <Route
+                            exact
+                            path="/users/{this.userID}"
+                            component={Profile}
+                        />
                         <Route component={this.pages} />
                     </Switch>
                 </div>
