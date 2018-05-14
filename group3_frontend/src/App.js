@@ -8,7 +8,7 @@ import ProjectsPage from "./pages/projects/ProjectsPage";
 import TasksPage from "./pages/tasks/TasksPage";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/signUpPage/SignUpPage";
+import SignUpPage from "./pages/signUpPage/signUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
