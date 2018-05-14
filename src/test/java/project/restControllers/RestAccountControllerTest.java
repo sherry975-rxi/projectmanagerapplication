@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import project.dto.CredentialsDTO;
 import project.dto.UserDTO;
 import project.model.User;
 import project.model.sendcode.ValidationMethod;
@@ -48,6 +49,7 @@ public class RestAccountControllerTest {
     User userDaniel;
 
     private JacksonTester<UserDTO> jacksonUserDto;
+    private JacksonTester<CredentialsDTO> jacksonCredentialsDto;
     private MockMvc mvc;
     private JacksonTester<String> jacksonString;
 
@@ -186,13 +188,13 @@ public class RestAccountControllerTest {
         when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
 
         //WHEN performing a logIn post request using a UserDTO
-        UserDTO userDTO = new UserDTO("", "test@gmail.com", "", "", "",
-                "", "");
+        CredentialsDTO userDTO = new CredentialsDTO();
+        userDTO.setEmail("test@gmail.com");
         userDTO.setPassword("exists");
 
         MockHttpServletResponse response = mvc.perform(post("/account/logIn")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jacksonUserDto.write(userDTO).getJson()))
+                .content(jacksonCredentialsDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         //THEN the response entity must contain OK
@@ -206,14 +208,14 @@ public class RestAccountControllerTest {
         when(userService.getUserByEmail(any(String.class))).thenReturn(null);
 
         // WHEN the email in the DTO doesn't match daniel's email
-        UserDTO userDTO = new UserDTO("", "wrong@mail.mail", "", "", "",
-                 "", "");
+        CredentialsDTO userDTO = new CredentialsDTO();
+        userDTO.setEmail("wrong@mail.mail");
         userDTO.setPassword("exists");
 
         //THEN the response entity must contain FORBIDDEN
         MockHttpServletResponse response = mvc.perform(post("/account/logIn")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jacksonUserDto.write(userDTO).getJson()))
+                .content(jacksonCredentialsDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
@@ -221,15 +223,14 @@ public class RestAccountControllerTest {
         // AND WHEN the user exists, but has no password
         when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
 
-        userDTO = new UserDTO("", "test@gmail.com", "", "", "",
-                 "", "");
+        userDTO.setEmail("test@gmail.com");
         userDTO.setPassword("exists");
 
 
         // THEN the response must contain "OK", and contain three links to choose a validation method
         response = mvc.perform(post("/account/logIn")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jacksonUserDto.write(userDTO).getJson()))
+                .content(jacksonCredentialsDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
@@ -240,15 +241,14 @@ public class RestAccountControllerTest {
         userDaniel.setPassword("exists");
         when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
 
-        userDTO = new UserDTO("", "test@gmail.com", "", "", "",
-                 "", "");
+        userDTO.setEmail("test@gmail.com");
         userDTO.setPassword("wrong password");
 
 
         //THEN the response entity must contain FORBIDDEN
         response = mvc.perform(post("/account/logIn")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jacksonUserDto.write(userDTO).getJson()))
+                .content(jacksonCredentialsDto.write(userDTO).getJson()))
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());

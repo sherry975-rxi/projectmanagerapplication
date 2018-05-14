@@ -27,6 +27,7 @@ public class RestProjectController  {
     private final ProjectService projectService;
     private final UserService userService;
     private final TaskService taskService;
+    private static final String PROJECT_DETAILS_REL = "seeProjectDetails";
 
     @Autowired
     public RestProjectController(ProjectService projectService, UserService userService,  TaskService taskService) {
@@ -83,7 +84,7 @@ public class RestProjectController  {
             taskService.calculateReportEffortCost(project);
         }
 
-        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel("seeProjectDetails").withType(RequestMethod.GET.name());
+        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECT_DETAILS_REL).withType(RequestMethod.GET.name());
         project.add(reference);
 
         return ResponseEntity.ok().body(project);
@@ -99,7 +100,7 @@ public class RestProjectController  {
         Map<String, Double> projectCost = new HashMap<>();
         projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
 
-        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel("seeProjectDetails").withType(RequestMethod.GET.name());
+        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECT_DETAILS_REL).withType(RequestMethod.GET.name());
         project.add(reference);
 
         return  ResponseEntity.ok().body(projectCost);
@@ -126,7 +127,7 @@ public class RestProjectController  {
 
         this.projectService.addProjectToProjectContainer(proj);
 
-        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(proj.getProjectId())).withRel("seeProjectDetails").withType(RequestMethod.GET.name());
+        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(proj.getProjectId())).withRel(PROJECT_DETAILS_REL).withType(RequestMethod.GET.name());
         proj.add(reference);
         Link updateProjectLink = linkTo(methodOn(RestProjectController.class).updateProject(proj, proj.getProjectId())).withRel("updateProject").withType(RequestMethod.PATCH.name());
         proj.add(updateProjectLink);

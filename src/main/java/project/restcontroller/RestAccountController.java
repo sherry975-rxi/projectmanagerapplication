@@ -5,6 +5,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.dto.CredentialsDTO;
 import project.dto.UserDTO;
 import project.model.CodeGenerator;
 import project.model.JsonAsString;
@@ -144,7 +145,7 @@ public class RestAccountController {
     }
 
     @RequestMapping(value="logIn", method= RequestMethod.POST)
-    public ResponseEntity<User> doLogin(@RequestBody UserDTO logInDTO) {
+    public ResponseEntity<User> doLogin(@RequestBody CredentialsDTO logInDTO) {
 
         ResponseEntity<User> response = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
