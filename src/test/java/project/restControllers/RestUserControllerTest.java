@@ -218,18 +218,18 @@ public class RestUserControllerTest {
 
         assertEquals(expectedResponse, controller.searchUsersByProfile("DIRECTOR"));
 
-        //AND WHEN searching for users with the profile set as VISITANT
+        //AND WHEN searching for users with the profile set as UNASSIGNED
 
         expected = new ArrayList<>();
         expected.add(joao);
 
-        when(userService.searchUsersByProfileName("VISITANT")).thenReturn(expected);
+        when(userService.searchUsersByProfileName("UNASSIGNED")).thenReturn(expected);
 
         expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
 
         //THEN the response entity must contain a list with the corresponding profile and status OK
 
-        assertEquals(expectedResponse, controller.searchUsersByProfile("VISITANT"));
+        assertEquals(expectedResponse, controller.searchUsersByProfile("UNASSIGNED"));
     }
 
 
@@ -243,7 +243,7 @@ public class RestUserControllerTest {
         when(userRepository.findByEmail("mike@gmail.com")).thenReturn(Optional.of(mike));
         User user = userService.getUserByEmail("mike@gmail.com");
         assertEquals(user,mike);
-        assertEquals(Profile.VISITANT,mike.getUserProfile());
+        assertEquals(Profile.UNASSIGNED,mike.getUserProfile());
 
         // WHEN a Administrator decides to change his profile with a new profile
         User userDTO = new User();
