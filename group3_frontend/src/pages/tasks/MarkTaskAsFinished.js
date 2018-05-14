@@ -41,9 +41,7 @@ class MarkTaskAsFinished extends Component {
                             value={this.state.id}
                             onChange={this.handleChange} />
                 </FormGroup> 
-                <Button type="submit">
-                Finish
-                        </Button> 
+                <button className="btn btn-primary" /*onClick={this.userDetail}*/>Finish</button>
                 </form>
             </div>
         );
