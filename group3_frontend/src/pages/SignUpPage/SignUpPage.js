@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./signUpPage.css";
+import "./SignUpPage.css";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 class signUpPage extends Component {
