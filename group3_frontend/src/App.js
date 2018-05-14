@@ -16,6 +16,7 @@ import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
+import CreateReport from "./pages/reports/CreateReport";
 
 class App extends Component {
     constructor(props) {
