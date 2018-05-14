@@ -18,6 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import project.security.JWTAuthentication;
 import project.security.JWTAuthorization;
 import project.security.JWTUtil;
+import project.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/account/**"
     };
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
     @Autowired
     private JWTUtil jwtUtil;
 

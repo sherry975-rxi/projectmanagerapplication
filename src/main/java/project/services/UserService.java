@@ -51,8 +51,9 @@ public class UserService {
 	 * @param userRepository
 	 */
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
+		this.passwordEncoder=passwordEncoder;
 	}
 
 	public static UserSecurity authenticated() {

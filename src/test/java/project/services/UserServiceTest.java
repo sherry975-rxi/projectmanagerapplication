@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import project.dto.UserDTO;
 import project.model.Profile;
 import project.model.User;
@@ -37,8 +38,11 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepositoryMock;
 
+    @Mock
+    private BCryptPasswordEncoder passwordEncoder;
+
     @InjectMocks
-    private UserService userContainer = new UserService();
+    private UserService userContainer;
 
     User user1;
     User user2;
@@ -51,13 +55,15 @@ public class UserServiceTest {
 
         initMocks(this);
 
+
+        Mockito.when(userRepositoryMock.save(Mockito.any(User.class))).thenReturn(user1);
+
+
         // instantiate users
         user1 = userContainer.createUser("Daniel", "daniel@gmail.com", "001", "collaborator", "910000000", "Rua",
                 "2401-00", "Porto", "Porto", "Portugal");
         user2 = userContainer.createUser("João", "joaogmail.com", "001", "Admin", "920000000", "Rua", "2401-00",
                 "Porto", "Porto", "Portugal");
-
-        Mockito.when(userRepositoryMock.save(Mockito.any(User.class))).thenReturn(user1);
 
     }
 
@@ -79,11 +85,14 @@ public class UserServiceTest {
     public final void shouldCreateUserWithDTO() {
         // given a user DTO for user1
         UserDTO userDto = new UserDTO(user1);
+        userDto.setPassword("123");
 
         // when the .save method is mocked
         Mockito.when(userRepositoryMock.save(Mockito.any(User.class))).thenReturn(user1);
 
         // then the create User with DTO method must call the save method once for user1
+
+        Mockito.when(passwordEncoder.encode(anyString())).thenReturn("321");
 
         userContainer.createUserWithDTO(userDto);
         Mockito.verify(userRepositoryMock, Mockito.times(2)).save(user1);
