@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import "./SignUpPage.css";
+import "./signUpPage.css";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-class SignUpPage extends Component {
+class signUpPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -240,4 +240,4 @@ class SignUpPage extends Component {
     }
 }
 
-export default SignUpPage;
+export default signUpPage;
