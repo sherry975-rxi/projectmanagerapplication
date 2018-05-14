@@ -16,8 +16,8 @@ class SideBar extends Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         const visibility = nextProps.isVisible ? "" : "hide";
-
-        if (visibility === prevState.visibility) {
+        const prevVisibility = prevState ? prevState.visibility : undefined;
+        if (visibility === prevVisibility) {
             return null;
         }
         return {
@@ -52,8 +52,11 @@ class SideBar extends Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/selectprojectcostcalculation" activeClassName="active">
-                            Select Calculation Method<br/>for Project Cost 
+                        <NavLink
+                            to="/selectprojectcostcalculation"
+                            activeClassName="active"
+                        >
+                            Select Calculation Method<br />for Project Cost
                         </NavLink>
                     </li>
                 </ul>
