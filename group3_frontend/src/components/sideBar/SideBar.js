@@ -73,6 +73,12 @@ class SideBar extends Component {
                         >
                             Select Calculation Method<br />for Project Cost
                         </NavLink>
+                        </li>
+                        <li>   
+                        <NavLink to="/createreport" activeClassName="active">
+                            Create Report
+                        </NavLink>
+                    
                     </li>
                 </ul>
             </div>
