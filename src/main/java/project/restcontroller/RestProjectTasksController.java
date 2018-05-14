@@ -139,7 +139,8 @@ public class RestProjectTasksController {
      *
      * @return List of finished tasks from the project
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid)")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid) " +
+            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
     @RequestMapping(value = "finished", method = RequestMethod.GET)
     public ResponseEntity<List<TaskDTO>> getFinishedTasks (@PathVariable int projid) {
 
@@ -167,7 +168,8 @@ public class RestProjectTasksController {
      *
      * @return List of finished tasks from the project
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid)")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid) " +
+            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
     @RequestMapping(value = "unfinished", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getUnfinishedTasks (@PathVariable int projid) {
 
@@ -195,7 +197,8 @@ public class RestProjectTasksController {
      *
      * @return The task found by the id
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid)")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid) " +
+            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
     @RequestMapping(value = "{taskId}", method = RequestMethod.GET)
     public ResponseEntity<TaskDTO> getTask (@PathVariable String taskId) {
 
