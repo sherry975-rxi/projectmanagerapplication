@@ -5,6 +5,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -60,6 +61,7 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/requests", method = RequestMethod.GET)
     public ResponseEntity<List<TaskTeamRequest>> getAllRequests(@PathVariable String taskId, @PathVariable int projectId) {
 
@@ -87,6 +89,7 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/requests/filter/{reqType}", method = RequestMethod.GET)
     public ResponseEntity<List<TaskTeamRequest>> getAllFilteredRequests( @PathVariable String reqType, @PathVariable String taskId, @PathVariable int projectId) {
 
@@ -129,6 +132,7 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/requests/{requestId}", method = RequestMethod.GET)
     public ResponseEntity<TaskTeamRequest> getRequestDetails(@PathVariable int requestId, @PathVariable String taskId, @PathVariable int projectId) {
 
@@ -158,6 +162,7 @@ public class RestRequestController {
      * @param userDTO   User related to the collaborator that wants to make the request.
      * @return ResponseEntity
      */
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/requests/assignmentRequest", method = RequestMethod.POST)
     public ResponseEntity<TaskTeamRequest> createAssignmentRequest (@PathVariable String taskId, @PathVariable int projectId, @RequestBody UserDTO userDTO){
 
@@ -222,6 +227,7 @@ public class RestRequestController {
      * @param userDTO   User related to the collaborator that wants to make the request.
      * @return ResponseEntity
      */
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/requests/removalRequest", method = RequestMethod.POST)
     public ResponseEntity<TaskTeamRequest> createRemovalRequest (@PathVariable String taskId,
                                                                  @PathVariable int projectId, @RequestBody UserDTO userDTO){
@@ -289,6 +295,7 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/requests/{requestId}/approval", method = RequestMethod.PUT)
     public ResponseEntity<TaskTeamRequest> approveRequest(@PathVariable int requestId, @PathVariable String taskId, @PathVariable int projectId) {
 
@@ -357,6 +364,7 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/requests/{requestId}/reject", method = RequestMethod.PUT)
     public ResponseEntity<TaskTeamRequest> rejectRequest(@PathVariable int requestId, @PathVariable String taskId, @PathVariable int projectId) {
 
