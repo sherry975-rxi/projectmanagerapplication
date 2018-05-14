@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './TasksPage.css';
+import axios from 'axios';
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 class TasksPage extends Component {
 
@@ -9,6 +11,8 @@ class TasksPage extends Component {
             tasks: []
         }
     }
+
+    //TODO: Add sort by ascending or descending order to these tables
 
     async componentDidMount() {
         fetch('users/7/tasks/pending', { method: 'get' })
@@ -48,6 +52,19 @@ class TasksPage extends Component {
         })
     }
 
+    handleChange = event => {
+        this.setState({ id: event.target.value });
+      }
+
+    handleSubmit = async event => {
+        event.preventDefault();
+      
+        // Value of id is inside of the response const.
+        const response = await axios.patch(`projects/2/tasks/${this.state.id}`);
+        console.log(response);
+        console.log(response.data);
+    };
+
     renderFinishedTasks(){
         return this.state.tasks.map((taskItem) => {
             return (
@@ -68,8 +85,9 @@ class TasksPage extends Component {
         return (
 
             <div className=" table-striped">
-                <h3><b>Ongoing</b></h3>
+                <h3><b>Ongoing Tasks</b></h3>
                 <table className="table table-hover">
+             
                     <thead>
                         <tr>
                             <th>Task ID</th>
@@ -81,7 +99,15 @@ class TasksPage extends Component {
                     <tbody>
                         {this.renderOngoingTasks()}
                     </tbody>
-                </table>
+                    </table>
+                    <form onSubmit={this.handleSubmit}>
+                        <button className="btn btn-primary">Add Task</button>
+
+                    <FormGroup controlId="id" bsSize="large">
+                        
+                        </FormGroup> 
+                        </form>
+                
                 <h3><b>Finished Tasks</b></h3>
                 <table className="table table-hover">
                     <thead>

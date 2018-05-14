@@ -48,8 +48,8 @@ class ActiveProjects extends Component {
                             <th>Project ID</th>
                             <th>Name</th>
                             <th>Description Date</th>
-                            <th>Project Maganer email</th>
-                            <th>Project Maganer name</th>
+                            <th>Project Manager email</th>
+                            <th>Project Manager name</th>
                         </tr>
                     </thead>
                     <tbody>
