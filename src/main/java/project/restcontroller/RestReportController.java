@@ -46,8 +46,8 @@ public class RestReportController {
      * @param projid
      * @return The Report that was created
      */
-    @PreAuthorize("hasRole('ROLE_USER') and projectService.isUserActiveInProject(#user,projid) " +
-            "or hasRole('ROLE_USER') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid) " +
+            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Report> createReport(@RequestBody Report reportDto, @PathVariable String taskid, @PathVariable int projid) {
 
@@ -93,8 +93,8 @@ public class RestReportController {
      * @param taskid Identifier (String) of Task to retrieve Reports from
      * @return All Reports from Task
      */
-    @PreAuthorize("hasRole('ROLE_USER') and projectService.isUserActiveInProject(#user,projid) " +
-            "or hasRole('ROLE_USER') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid) " +
+            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Report>> getTaskReports(@PathVariable String taskid, @PathVariable int projid) {
 
@@ -121,8 +121,8 @@ public class RestReportController {
      * @param userid
      * @return All Reports from Task
      */
-    @PreAuthorize("hasRole('ROLE_USER') and projectService.isUserActiveInProject(#user,projid) " +
-            "or hasRole('ROLE_USER') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid) " +
+            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
     @RequestMapping(value = "users/{userid}", method = RequestMethod.GET)
     public ResponseEntity<List<Report>> getTaskReportsFromUser(@PathVariable int userid, @PathVariable String taskid, @PathVariable int projid) {
 
@@ -151,8 +151,8 @@ public class RestReportController {
 
         return responseEntity;
     }
-    @PreAuthorize("hasRole('ROLE_USER') and projectService.isUserActiveInProject(#user,projid) " +
-            "or hasRole('ROLE_USER') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid) " +
+            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
     @RequestMapping(value = "{reportid}/update", method = RequestMethod.PUT)
     public ResponseEntity<Report> updateTaskReport(@RequestBody Report reportDto, @PathVariable String taskid, @PathVariable int projid, @PathVariable int reportid) {
 
