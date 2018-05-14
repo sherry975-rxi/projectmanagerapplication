@@ -11,12 +11,12 @@ import TasksPage from "./pages/tasks/TasksPage";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
 import CreateReport from "./pages/reports/CreateReport";
+import signUpPage from "./pages/signUpPage/SignUpPage";
 
 class App extends Component {
     constructor(props) {
@@ -45,6 +45,7 @@ class App extends Component {
                     <Route path="/users" component={UsersPage} />
                     <Route path="/selectprojectcostcalculation" component={ProjectCostCalculation}/>
                     <Route path="/projectcost" component={ProjectCost} />
+                    <Route path="/createreport" component={CreateReport} />
                     <Route path="/profile" component={Profile} />
                 </Switch>
             </div>
@@ -59,7 +60,7 @@ class App extends Component {
                     <Switch>
                     <Route exact path="/" component={firstPage} />
                         <Route exact path="/login" component={LoginPage} />
-                        <Route exact path="/signup" component={SignUpPage} />
+                        <Route exact path="/signup" component={signUpPage} />
                         <Route exact path="/users/{this.userID}" component={Profile} />
                         <Route component={this.pages} />
                     </Switch>
