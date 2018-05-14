@@ -11,7 +11,7 @@ import TasksPage from "./pages/tasks/TasksPage";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import SignUpPage from "./pages/signUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";

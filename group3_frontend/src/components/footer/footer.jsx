@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
-import './footer.css'
+import './footer.css';
+import logo_isep from './logo_isep.png';
+import porto_techHub from './porto_techHub.svg';
+import switch_icon from './switch_icon.svg';
 
 class Footer extends Component {
 
   render() {
     return (
       <div className="footer">
-       <img className="isep" src="https://i.imgur.com/gJMHhT9.jpg" alt="isep"width="150"/>
-       <img className="pth" src="https://i.imgur.com/XDrJBgj.jpg[/img" alt="ptg"width="100"/>
-       <img className="switcg" src="https://i.imgur.com/o7zeY6N.png" alt="switcg"width="120"/>
+        
+        <a href="https://www.isep.ipp.pt">
+          <img className="logo_isep" src={logo_isep} alt="logo_isep"width="150" onMouseOver=".aa"/>
+        </a>
+        
+        <a href="https://portotechhub.com">
+          <img className="porto_techHub" src={porto_techHub} alt="porto_techHub"width="100"/>
+        </a>
+        
+        <a href="http://www.portotechhub.com/switch/">
+          <img className="switch_icon" src={switch_icon} alt="switch"width="120"/>
+        </a>
       </div>
+      
     );
   }
 }
