@@ -68,7 +68,7 @@ class CreateReport extends Component {
         return (
 
             <div className="CreateReport"> 
-                <h3 className="page-header"><b>Insert info to create Report:</b></h3> 
+                <h3 className="page-header"><b>Create Report:</b></h3> 
                 <form onSubmit={this.handleSubmit}>
 
                         <FormGroup controlId="projectId" bsSize="large">
