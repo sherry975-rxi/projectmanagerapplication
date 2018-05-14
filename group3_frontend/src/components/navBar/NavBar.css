@@ -1,0 +1,43 @@
+
+ .navbar {
+    background-color: #4EC491;  
+    border: 0px;
+}
+
+
+.navbar-fixed-top {
+    border: 0;
+}
+
+
+  @font-face {
+    font-family: 'Dense';
+    src: local('../fonts/dense/Dense-Regular.woff2') format('woff2'),
+        local('../fonts/dense/Dense-Regular.woff') format('woff'),
+        local('../fonts/dense/Dense-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+.navbar-brand { 
+    font-family: 'Dense'; 
+    color: white; 
+    font-size: 35px;
+}
+
+
+.menu-icon{
+    color: rgb(253, 253, 253);
+    float: left;
+    height: 50px;
+    font-size: 20px;
+    line-height: 50px;
+    margin: 0 10px 0 5px;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.navbar .navbar-nav > li > a {
+    font-family: Helvetica; 
+    color: white; /*Change active text color here*/
+}
