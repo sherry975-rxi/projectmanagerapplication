@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import NavBar from "./components/navBar/NavBar";
+import Profile from "./components/navBar/Profile.js";
 import SideBar from "./components/sideBar/SideBar";
 import { Grid, Jumbotron, Button } from "react-bootstrap";
 import { Route, Switch } from "react-router-dom";
@@ -10,7 +11,7 @@ import TasksPage from "./pages/tasks/TasksPage";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/signUpPage/SignUpPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
@@ -43,6 +44,7 @@ class App extends Component {
                     <Route path="/users" component={UsersPage} />
                     <Route path="/selectprojectcostcalculation" component={ProjectCostCalculation}/>
                     <Route path="/projectcost" component={ProjectCost} />
+                    <Route path="/profile" component={Profile} />
                 </Switch>
             </div>
         </div>
@@ -57,6 +59,7 @@ class App extends Component {
                     <Route exact path="/" component={firstPage} />
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/signup" component={SignUpPage} />
+                        <Route exact path="/users/{this.userID}" component={Profile} />
                         <Route component={this.pages} />
                     </Switch>
                 </div>
