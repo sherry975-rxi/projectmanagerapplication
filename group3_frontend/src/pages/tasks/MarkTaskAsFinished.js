@@ -29,15 +29,21 @@ class MarkTaskAsFinished extends Component {
 
     render() {
         return (
-            <div className="App"> 
-                <h1 className="page-header">Mark task as finished</h1>                 
-               
+            <div className="MarkTaskAsFinished"> 
+                <h3 className="page-header"><b>Mark task as finished</b></h3>                 
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Please type task ID:
-                        <input type="text" name="id" onChange={this.handleChange} />
-                    </label>
-                    <button type="submit">Finish</button>
+
+                <FormGroup controlId="id" bsSize="large">
+                        <ControlLabel>Type Task ID</ControlLabel>
+                        <FormControl
+                            autoFocus
+                            type="text"
+                            value={this.state.id}
+                            onChange={this.handleChange} />
+                </FormGroup> 
+                <Button type="submit">
+                Finish
+                        </Button> 
                 </form>
             </div>
         );
