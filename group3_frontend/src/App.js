@@ -6,6 +6,7 @@ import { Grid, Jumbotron, Button } from "react-bootstrap";
 import { Route, Switch } from "react-router-dom";
 import ProjectsPage from "./pages/projects/ProjectsPage";
 import TasksPage from "./pages/tasks/TasksPage";
+import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
 import SignUpPage from "./pages/signUpPage/SignUpPage";
@@ -37,11 +38,9 @@ class App extends Component {
                     <Route exact path="/" component={firstPage} />
                     <Route path="/projects" component={ProjectsPage} />
                     <Route path="/tasks" component={TasksPage} />
+                    <Route path="/marktaskfinished" component={MarkTaskAsFinished} />
                     <Route path="/users" component={UsersPage} />
-                    <Route
-                        path="/selectprojectcostcalculation"
-                        component={ProjectCostCalculation}
-                    />
+                    <Route path="/selectprojectcostcalculation" component={ProjectCostCalculation}/>
                     <Route path="/projectcost" component={ProjectCost} />
                 </Switch>
             </div>
