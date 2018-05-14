@@ -15,6 +15,7 @@ import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
+import CreateReport from "./pages/reports/CreateReport";
 
 class App extends Component {
     constructor(props) {
@@ -43,6 +44,7 @@ class App extends Component {
                     <Route path="/users" component={UsersPage} />
                     <Route path="/selectprojectcostcalculation" component={ProjectCostCalculation}/>
                     <Route path="/projectcost" component={ProjectCost} />
+                    <Route path="/createreport" component={CreateReport} />
                 </Switch>
             </div>
         </div>
