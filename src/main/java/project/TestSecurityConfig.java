@@ -8,16 +8,28 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import project.security.JWTAuthentication;
+import project.security.JWTAuthorization;
+import project.security.JWTUtil;
 
 @Configuration
 @EnableWebSecurity
-@Profile("test")
+@Profile("!test")
 public class TestSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] PUBLIC_MATCHERS = {
+            "/account/**"
+    };
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private JWTUtil jwtUtil;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
@@ -26,12 +38,27 @@ public class TestSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+        http.cors().and().csrf().disable();
+
+        http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
+
+        http.formLogin();
+
+        http.addFilter(new JWTAuthentication(authenticationManager(), jwtUtil));
+
+        http.addFilter(new JWTAuthorization(authenticationManager(), jwtUtil, userDetailsService));
+
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        return source;
+    }
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
