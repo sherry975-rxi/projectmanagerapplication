@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './TasksPage.css';
 import axios from 'axios';
-import { AddTask } from './AddTask.js';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 class TasksPage extends Component {
@@ -86,7 +85,7 @@ class TasksPage extends Component {
         return (
 
             <div className=" table-striped">
-                <h3><b>Ongoing</b></h3>
+                <h3><b>Ongoing Tasks</b></h3>
                 <table className="table table-hover">
              
                     <thead>
