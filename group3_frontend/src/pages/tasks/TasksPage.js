@@ -68,7 +68,7 @@ class TasksPage extends Component {
         return (
 
             <div className=" table-striped">
-                <h3><b>Ongoing</b></h3>
+                <h3><b>Ongoing Tasks</b></h3>
                 <table className="table table-hover">
                     <thead>
                         <tr>
