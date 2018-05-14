@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Glyphicon, Button } from 'react-bootstrap';
 import './NavBar.css'
+import './Profile.js'
+import { NavLink } from "react-router-dom";
 
 class NavBar extends Component {
   state = {};
@@ -19,7 +21,7 @@ class NavBar extends Component {
             <ul className="nav navbar-nav navbar-right">
               <li><a href="/">Home</a></li>
               <li><a href="#">About</a></li>
-              <li><a href="">Profile</a></li>
+              <li><a href="/profile">Profile</a></li>                       
             </ul>
           </div>
         </div>
@@ -28,3 +30,4 @@ class NavBar extends Component {
   }
 }
 export default NavBar;
+

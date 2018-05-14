@@ -37,8 +37,23 @@ class SideBar extends Component {
                         </NavLink>
                     </li>
                     <li>
+                        <NavLink to="/activeprojects" activeClassName="active">
+                            Active Projects
+                        </NavLink>
+                    </li>
+                    <li>
                         <NavLink to="/tasks" activeClassName="active">
-                            Tasks
+                            Ongoing Tasks
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/finishedtasks" activeClassName="active">
+                            Finished Tasks
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/marktaskfinished" activeClassName="active">
+                            Mark task as finished
                         </NavLink>
                     </li>
                     <li>
@@ -58,6 +73,18 @@ class SideBar extends Component {
                         >
                             Select Calculation Method<br />for Project Cost
                         </NavLink>
+                        </li>
+                        <li>   
+                        <NavLink to="/createreport" activeClassName="active">
+                            Create Report
+                        </NavLink>
+                    
+                    </li>
+                    <li>   
+                        <NavLink to="/updatereport" activeClassName="active">
+                            Update Report
+                        </NavLink>
+                    
                     </li>
                 </ul>
             </div>

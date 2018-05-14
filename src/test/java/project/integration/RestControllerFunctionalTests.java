@@ -235,7 +235,7 @@ public class RestControllerFunctionalTests {
         userService.updateUser(owner);
 
         //When
-        mockMvc.perform(get("/users/profiles/VISITANT")).andExpect(jsonPath("$[0].name", is("Owner boi")));
+        mockMvc.perform(get("/users/profiles/UNASSIGNED")).andExpect(jsonPath("$[0].name", is("Owner boi")));
 
 
     }

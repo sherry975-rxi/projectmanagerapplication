@@ -4,6 +4,8 @@
     height: 550px;
     padding: 0px;
     overflow: hidden;
+    position: relative;
+    margin-left: -50px;
 }
 
 .Logo {

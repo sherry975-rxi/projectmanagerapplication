@@ -1,0 +1,8 @@
+.MarkTaskAsFinished {
+    padding: 60px 0;
+  }
+
+  .MarkTaskAsFinished form {
+    margin: 30 auto;
+    max-width: 320px;
+  }

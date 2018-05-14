@@ -1,18 +1,25 @@
 import React, { Component } from "react";
 import "./App.css";
 import NavBar from "./components/navBar/NavBar";
+import Profile from "./components/navBar/Profile.js";
 import SideBar from "./components/sideBar/SideBar";
 import { Grid, Jumbotron, Button } from "react-bootstrap";
 import { Route, Switch } from "react-router-dom";
 import ProjectsPage from "./pages/projects/ProjectsPage";
+import ActiveProjects from "./pages/projects/ActiveProjects";
 import TasksPage from "./pages/tasks/TasksPage";
+import FinishedTasks from "./pages/tasks/FinishedTasks";
+import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/signUpPage/SignUpPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
+import CreateReport from "./pages/reports/CreateReport";
+import signUpPage from "./pages/signUpPage/SignUpPage";
+import UpdateReport from "./pages/reports/UpdateReport";
 
 class App extends Component {
     constructor(props) {
@@ -34,13 +41,22 @@ class App extends Component {
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
                     <Route path="/projects" component={ProjectsPage} />
+                    <Route path="/activeprojects" component={ActiveProjects} />
                     <Route path="/tasks" component={TasksPage} />
+                    <Route path="/finishedtasks" component={FinishedTasks} />
+                    <Route
+                        path="/marktaskfinished"
+                        component={MarkTaskAsFinished}
+                    />
                     <Route path="/users" component={UsersPage} />
                     <Route
                         path="/selectprojectcostcalculation"
                         component={ProjectCostCalculation}
                     />
                     <Route path="/projectcost" component={ProjectCost} />
+                    <Route path="/createreport" component={CreateReport} />
+                    <Route path="/updatereport" component={UpdateReport} />
+                    <Route path="/profile" component={Profile} />
                 </Switch>
             </div>
         </div>
@@ -55,6 +71,11 @@ class App extends Component {
                         <Route exact path="/" component={firstPage} />
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/signup" component={SignUpPage} />
+                        <Route
+                            exact
+                            path="/users/{this.userID}"
+                            component={Profile}
+                        />
                         <Route component={this.pages} />
                     </Switch>
                 </div>
