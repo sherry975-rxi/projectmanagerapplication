@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +23,7 @@ import org.springframework.test.web.client.RequestMatcher;
 import project.dto.CredentialsDTO;
 import project.model.Profile;
 import project.model.User;
+import project.security.JWTUtil;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -50,16 +53,20 @@ public class RestAccountSecurityTests {
     @Autowired
     UserService userService;
 
-    User owner, mike, userPM, userRui;
-
-    ResponseEntity<Object> responseEntity;
-
-    ResponseEntity<User> userResponse;
-
-    HttpHeaders findToken;
 
     @Autowired
     BCryptPasswordEncoder passCoder;
+
+    @Autowired
+    JWTUtil jwtUtil;
+
+    User owner, mike, userPM, userRui;
+
+    ResponseEntity<User> userResponse;
+
+    HttpHeaders auth;
+
+    String mikeToken;
 
 
     @Before
@@ -101,7 +108,11 @@ public class RestAccountSecurityTests {
     }
 
 
-
+    /**
+     * This test attempts to access private information after validating the user via the security laywer
+     *
+     *
+     */
     @Test
     public void basicSetUpTest() {
         assertEquals(4, userService.getAllUsersFromUserContainer().size());
@@ -110,21 +121,18 @@ public class RestAccountSecurityTests {
         logIn.setEmail("michael@michael.com");
         logIn.setPassword("12");
 
-        findToken = restTemplate.headForHeaders("http://localhost:" + port + "/login", logIn);
+        mikeToken = jwtUtil.generateToken(mike.getEmail());
+        auth = new HttpHeaders();
+        auth.add("Authorization", "Bearer " + mikeToken);
 
-
-        userResponse = restTemplate.withBasicAuth("michael@michael.com", "12").getForEntity("http://localhost:" + port + "/users/" + mike.getUserID(), User.class);
+        userResponse = restTemplate.withBasicAuth("michael@michael.com", "12")
+                .exchange("http://localhost:" + port + "/users/" + mike.getUserID(), HttpMethod.GET,
+                        new HttpEntity<String>(null, auth), User.class);
 
 
         assertEquals(mike.getUserID(), userResponse.getBody().getUserID());
         assertEquals(200, userResponse.getStatusCodeValue());
 
-        assertTrue(userResponse.getHeaders().containsKey("Authorization"));
-
-
-        //assertEquals(200, responseEntity.getStatusCodeValue());
-
-        //assertTrue(findToken.containsKey("Authorization"));
     }
 
 }

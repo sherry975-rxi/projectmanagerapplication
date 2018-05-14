@@ -10,15 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
+import project.security.JWTUtil;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -47,6 +44,13 @@ public class RestProjectControllerIntegrationTest {
     @Autowired
     UserService userService;
 
+    @Autowired
+    BCryptPasswordEncoder passCoder;
+
+    @Autowired
+    JWTUtil jwtUtil;
+
+
     User owner, michael, userPM, userRui;
 
     Project projectOne, projectTwo;
@@ -59,6 +63,9 @@ public class RestProjectControllerIntegrationTest {
 
     ResponseEntity<List<Project>> actualProjectList, expectedProjectList;
 
+    HttpHeaders auth;
+
+    String ownerToken;
 
     @Before
     public void setUp() {
@@ -68,6 +75,17 @@ public class RestProjectControllerIntegrationTest {
         michael = userService.createUser("Mike", "michael@michael.com", "002", "Tests tasks", "1111111", "here", "there", "where", "dunno", "mars");
         userPM = userService.createUser("Ana", "ana@gmail.com", "003", "manager", "221238442", "Rua Porto","4480", "Porto", "Porto", "Portugal");
         userRui = userService.createUser("Rui", "rui@gmail.com", "004", "collaborator", "221378449", "Rua Porto","4480", "Porto", "Porto", "Portugal");
+
+        owner.setPassword(passCoder.encode("123"));
+        michael.setPassword(passCoder.encode("123"));
+        userPM.setPassword(passCoder.encode("123"));
+        userRui.setPassword(passCoder.encode("123"));
+
+        owner.setUserProfile(Profile.DIRECTOR);
+        michael.setUserProfile(Profile.COLLABORATOR);
+        userPM.setUserProfile(Profile.COLLABORATOR);
+        userRui.setUserProfile(Profile.COLLABORATOR);
+
 
         userService.updateUser(michael);
         userService.updateUser(owner);
@@ -114,9 +132,14 @@ public class RestProjectControllerIntegrationTest {
         assertEquals(projectOne.getIdCode(), projectService.getProjectById(projectOne.getIdCode()).getProjectId());
         assertEquals(projectTwo.getIdCode(), projectService.getProjectById(projectTwo.getIdCode()).getProjectId());
 
-        // WHEN
+        // WHEN logged in as director
+        ownerToken = jwtUtil.generateToken(owner.getEmail());
+        auth = new HttpHeaders();
+        auth.add("Authorization", "Bearer " + ownerToken);
+
         Project toCreate = new Project("Create with REST", "Create it good", michael);
-        actualRealProject = this.restTemplate.postForEntity("http://localhost:" + port + "/projects/", toCreate, Project.class);
+        actualRealProject = this.restTemplate.withBasicAuth(owner.getEmail(), "123").postForEntity("http://localhost:" + port + "/projects/",
+                new HttpEntity<Project>(toCreate, auth), Project.class);
 
         // THEN
         assertEquals("Create with REST", actualRealProject.getBody().getName());
@@ -149,10 +172,13 @@ public class RestProjectControllerIntegrationTest {
         ParameterizedTypeReference<List<Project>> listOfActiveProjects = new ParameterizedTypeReference<List<Project>>() {
         };
 
-        //WHEN
+        //WHEN logged in as Director
+        ownerToken = jwtUtil.generateToken(owner.getEmail());
+        auth = new HttpHeaders();
+        auth.add("Authorization", "Bearer " + ownerToken);
 
         actualProjectList = this.restTemplate.exchange("http://localhost:" + port + "/projects/active",
-                HttpMethod.GET, null, listOfActiveProjects);
+                HttpMethod.GET, new HttpEntity<String>(null, auth), listOfActiveProjects);
 
         expectedProjectList = new ResponseEntity<>(projectService.getActiveProjects(), HttpStatus.OK);
 
@@ -182,9 +208,13 @@ public class RestProjectControllerIntegrationTest {
 
         assertEquals(projectOne, projectService.getProjectById(projectOne.getProjectId()));
 
-        //WHEN
+        //WHEN logged in as Director
+        ownerToken = jwtUtil.generateToken(owner.getEmail());
+        auth = new HttpHeaders();
+        auth.add("Authorization", "Bearer " + ownerToken);
 
-        actualRealProject = this.restTemplate.getForEntity("http://localhost:" + port + "/projects/" + projectOne.getProjectId(), Project.class);
+        actualRealProject = this.restTemplate.exchange("http://localhost:" + port + "/projects/" + projectOne.getProjectId(), HttpMethod.GET,
+                new HttpEntity<String>(null, auth), Project.class);
 
         // THEN the response entity must contain Mike
         expectedProject = new ResponseEntity<>(projectOne, HttpStatus.OK);

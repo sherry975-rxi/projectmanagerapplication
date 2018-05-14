@@ -117,12 +117,10 @@ public class RestUserControllerIntegrationTests {
     @After
     public void tearDown() {
 
-
         taskService.getTaskRepository().deleteAll();
         projectService.getProjectCollaboratorRepository().deleteAll();
         projectService.getProjectsRepository().deleteAll();
         userService.getUserRepository().deleteAll();
-
 
     }
 
