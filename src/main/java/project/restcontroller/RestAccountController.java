@@ -5,6 +5,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.dto.CodeCheckDTO;
 import project.dto.UserDTO;
 import project.model.CodeGenerator;
 import project.model.JsonAsString;
@@ -284,12 +285,17 @@ public class RestAccountController {
     }
 
     @RequestMapping(value = "performValidation/verificateCode/{userEmail}", method = RequestMethod.POST)
-    public ResponseEntity<Link> verificateCode(@RequestBody String codeToCheck, @PathVariable String userEmail){
+    public ResponseEntity<Link> verificateCode(@RequestBody CodeCheckDTO codeToCheck, @PathVariable String userEmail){
+
+        System.out.println(codeToCheck.getCodeToCheck());
 
         Boolean doesCodeMatch = false;
         if(codeDTOMap.containsKey(userEmail)){
-            doesCodeMatch = codeDTOMap.get(userEmail).equals(codeToCheck);
+            System.out.println(userEmail);
+            doesCodeMatch = codeDTOMap.get(userEmail).equals(codeToCheck.getCodeToCheck());
         }
+
+        System.out.println(doesCodeMatch);
 
         Link login = linkTo(RestAccountController.class).slash("logIn").withRel("loginUser");
 
