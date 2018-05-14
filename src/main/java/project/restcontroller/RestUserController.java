@@ -31,7 +31,7 @@ public class RestUserController {
      * it also generates the links to change the details or go to the users tasks and projects
      * @return
      */
-    @PreAuthorize("hasRole('ROLE_USER') and #user.id == userId")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.id == userId")
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public ResponseEntity<User> seeUserDetails(@PathVariable int userId){
         ResponseEntity<User> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,7 +59,7 @@ public class RestUserController {
      * This method will return a list of all the users registered in the system.
      */
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @RequestMapping(value = "/allUsers", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(){
 
@@ -85,7 +85,7 @@ public class RestUserController {
      * @param emailToSearch
      * @return ResponseEntity
      */
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @RequestMapping(value = "/email/{emailToSearch}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> searchUsersByEmail(@PathVariable String emailToSearch) {
 
@@ -107,7 +107,7 @@ public class RestUserController {
      * @param profileNameToSearch
      * @return ResponseEntity
      */
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @RequestMapping(value = "/profiles/{profileNameToSearch}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> searchUsersByProfile(@PathVariable String profileNameToSearch) {
 
@@ -129,7 +129,7 @@ public class RestUserController {
      * @return Http.Status.Ok when done sucessfully and Http.Status.404_Not_Found when a user doesn't exist.
      *
      */
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @RequestMapping(value = "/profiles" , method = RequestMethod.PATCH)
     public ResponseEntity<User> changeUserProfile (@RequestBody User updatedProfile) {
 
