@@ -31,7 +31,11 @@ class ActiveProjects extends Component {
                 <td>{projectItem.description}</td>
                 <td>{projectItem.projectManager.name}</td>
                 <td>{projectItem.projectManager.email}</td>
-                <button className="btn btn-primary" /*onClick={this.userDetail}*/>Details</button>
+                <button className="btn btn-primary" >Details</button> &nbsp;
+                  <a href="/projectcost" > 
+                  <button className="btn btn-info" >Cost</button></a> &nbsp;
+                  <a href="/selectprojectcostcalculation" className="btn btn-warning" role="button">Cost Method</a>
+
                 </tr>
                 
             )
