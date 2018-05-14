@@ -5,6 +5,7 @@ import SideBar from "./components/sideBar/SideBar";
 import { Grid, Jumbotron, Button } from "react-bootstrap";
 import { Route, Switch } from "react-router-dom";
 import ProjectsPage from "./pages/projects/ProjectsPage";
+import ActiveProjects from "./pages/projects/ActiveProjects";
 import TasksPage from "./pages/tasks/TasksPage";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
@@ -36,6 +37,7 @@ class App extends Component {
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
                     <Route path="/projects" component={ProjectsPage} />
+                    <Route path="/activeprojects" component={ActiveProjects} />
                     <Route path="/tasks" component={TasksPage} />
                     <Route path="/marktaskfinished" component={MarkTaskAsFinished} />
                     <Route path="/users" component={UsersPage} />
