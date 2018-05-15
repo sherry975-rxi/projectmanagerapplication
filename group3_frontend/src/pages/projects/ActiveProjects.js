@@ -40,8 +40,12 @@ class ActiveProjects extends Component {
                 <Link to={'/projectcost/'+ projectItem.projectId} activeClassName="active"> 
                   <button className="btn btn-info" >Cost</button>
                 </Link> &nbsp;
+
+                <Link to={'/selectprojectcostcalculation/'+ projectItem.projectId} activeClassName="active"> 
+                  <button className="btn btn-warning" >Cost Method</button>
+                </Link> &nbsp;
                   
-                <a href="/selectprojectcostcalculation" className="btn btn-warning" role="button">Cost Method</a>
+                {/* <a href="/selectprojectcostcalculation" className="btn btn-warning" role="button">Cost Method</a> */}
 
                 {/* <a href="/projectcost" > 
                 <button className="btn btn-info" >Cost</button></a> &nbsp; */}
