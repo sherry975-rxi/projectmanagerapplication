@@ -2,19 +2,23 @@ package project.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import project.dto.CredentialsDTO;
+import project.restcontroller.RestAccountController;
 import project.restcontroller.RestUserController;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
@@ -57,18 +61,30 @@ public class JWTAuthentication extends UsernamePasswordAuthenticationFilter {
         String token = jwtUtil.generateToken(email);
         res.addHeader("Authorization", "Bearer " + token);
 
-        Link userDetails = linkTo(RestUserController.class).slash("users").slash(userID).withSelfRel();
+        Link userDetails = linkTo(RestUserController.class).slash("users").slash(userID).withRel("myAccount").withType(HttpMethod.GET.name());
 
-        OutputStreamWriter out = new OutputStreamWriter(
-                res.getOutputStream());
-        out.write(userDetails.toString());
-        out.close();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        objectMapper.writeValue(res.getOutputStream(), userDetails);
+
 
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request,
-                                              HttpServletResponse response, AuthenticationException failed){
+                                              HttpServletResponse response, AuthenticationException failed) throws IOException{
+
+        CredentialsDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredentialsDTO.class);
+
+
+        ObjectOutputStream oos = new ObjectOutputStream(response.getOutputStream());
+        oos.writeObject(creds);
+        oos.close();
+
+        Link userDetails = linkTo(RestAccountController.class).slash("logIn").withRel("checkValid");
+
+        //response.sendRedirect(userDetails.getHref());
+
 
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
