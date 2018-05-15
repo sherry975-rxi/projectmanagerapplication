@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './ProjectCost.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import {Prompt} from 'react-router-dom';
 
 
 class ProjectCostCalculation extends Component {
@@ -10,6 +11,7 @@ class ProjectCostCalculation extends Component {
         this.state = {  
                 projectId: "",
                 calculationMethod: "",
+                submission : false
                 //projectCost : ""           
         };
     }
@@ -55,6 +57,8 @@ class ProjectCostCalculation extends Component {
             .then(function (myJson) {
               console.log(myJson);
             });
+
+            this.setState({submission:true})
       
         }
 
@@ -100,12 +104,18 @@ class ProjectCostCalculation extends Component {
                         <Button
                             block
 
-                            //disabled={!this.validateForm()}
+                            disabled={!this.validateForm()}
                             type="submit"
                             >
                             Apply Calculation Method
                         </Button>
                         {/* {this.props.myJson.projectCost} */}
+                        <Prompt
+                        when={this.state.submission}
+                        message="Calculation Method Successfully Updated"
+                        />
+
+
                     </form>
             </div>
         )
