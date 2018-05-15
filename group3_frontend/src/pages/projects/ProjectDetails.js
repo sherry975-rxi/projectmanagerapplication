@@ -1,24 +1,19 @@
-import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
+import React, { Component } from "react";
 
 class ProjectDetails extends Component {
-    
-
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.match
         this.state = {
             project: {}
-                }
+        };
     }
 
-
-    async componentDidMount(){
-
-        fetch(`/projects/${this.props.match.params.projectID}`, {method: 'get'})
-        .then((response) => response.json())
-            .then((responseData) => {
+    async componentDidMount() {
+        fetch(`/projects/${this.props.match.params.projectID}`, {
+            method: "get"
+        })
+            .then(response => response.json())
+            .then(responseData => {
                 this.setState({
                     project: responseData,
                     projectManager: responseData.projectManager.name
@@ -26,35 +21,35 @@ class ProjectDetails extends Component {
             });
     }
 
-    renderProject(){
+    renderProject() {
         var projectWithDetails = this.state.project;
         var projectManagerX = this.state.projectManager;
-            return (
-                <tr className="line"> 
-                    <td><th>{projectWithDetails.projectId}</th></td>
-                    <td>{projectWithDetails.projectStatusName}</td>
-                    <td>{projectWithDetails.name}</td>
-                    <td>{projectWithDetails.description}</td>
-                    <td>{projectManagerX}</td>
-                    <td>{projectWithDetails.effortUnit}</td>
-                    <td>{projectWithDetails.budget}</td>
-                    <td>{projectWithDetails.startdate}</td>
-                    <td>{projectWithDetails.finishdate}</td>
-                    <td>{projectWithDetails.calculationMethod}</td>
-                    <td>{projectWithDetails.availableCalculationMethods}</td>
-                    </tr>
-            )
-        }
-    
-
+        return (
+            <tr className="line">
+                <td>
+                    <th>{projectWithDetails.projectId}</th>
+                </td>
+                <td>{projectWithDetails.projectStatusName}</td>
+                <td>{projectWithDetails.name}</td>
+                <td>{projectWithDetails.description}</td>
+                <td>{projectManagerX}</td>
+                <td>{projectWithDetails.effortUnit}</td>
+                <td>{projectWithDetails.budget}</td>
+                <td>{projectWithDetails.startdate}</td>
+                <td>{projectWithDetails.finishdate}</td>
+                <td>{projectWithDetails.calculationMethod}</td>
+                <td>{projectWithDetails.availableCalculationMethods}</td>
+            </tr>
+        );
+    }
 
     render() {
         return (
-
             <div className=" table-striped">
-                <h3><b>Project Details</b></h3>
+                <h3>
+                    <b>Project Details</b>
+                </h3>
                 <table className="table table-hover">
-             
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -69,19 +64,12 @@ class ProjectDetails extends Component {
                             <th>Calculation Method</th>
                             <th>Available Calculation Methods</th>
                         </tr>
-
                     </thead>
-                    <tbody>
-                        {this.renderProject()}
-                    </tbody>
-                    </table>
-                    
-                    </div>
-
+                    <tbody>{this.renderProject()}</tbody>
+                </table>
+            </div>
         );
     }
-
 }
-
 
 export default ProjectDetails;

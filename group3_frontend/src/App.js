@@ -3,7 +3,6 @@ import "./App.css";
 import NavBar from "./components/navBar/NavBar";
 import Profile from "./components/navBar/Profile.js";
 import SideBar from "./components/sideBar/SideBar";
-import { Grid, Jumbotron, Button } from "react-bootstrap";
 import { Route, Switch } from "react-router-dom";
 import ProjectsPage from "./pages/projects/ProjectsPage";
 import ActiveProjects from "./pages/projects/ActiveProjects";

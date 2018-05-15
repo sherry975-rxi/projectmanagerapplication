@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
-import './TasksPage.css';
-import './AddTask';
-import axios from 'axios';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import "./TasksPage.css";
+import "./AddTask";
 
 class TasksPage extends Component {
-
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             tasks: []
-        }
+        };
     }
 
     //TODO: Add sort by ascending or descending order to these tables
@@ -21,37 +16,43 @@ class TasksPage extends Component {
         this.loadTasks();
     }
 
-    loadTasks(){
-        fetch(`/users/${this.props.match.params.userID}/tasks/pending`, { method: 'get' })
-        .then((response) => response.json())
-        .then((responseData) => {
-            this.setState({
-                tasks: responseData,
+    loadTasks() {
+        fetch(`/users/${this.props.match.params.userID}/tasks/pending`, {
+            method: "get"
+        })
+            .then(response => response.json())
+            .then(responseData => {
+                this.setState({
+                    tasks: responseData
+                });
             });
-        });
     }
 
     renderOngoingTasks() {
-        return this.state.tasks.map((taskItem) => {
+        return this.state.tasks.map(taskItem => {
             return (
                 <tr className="line">
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.description}</td>
                     <td>{taskItem.startDate}</td>
                     <td>{taskItem.taskDeadline}</td>
-                    <td><a href="#"><i class="glyphicon glyphicon-plus"></i></a></td>
+                    <td>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-plus" />
+                        </a>
+                    </td>
                 </tr>
-            )
-        })
+            );
+        });
     }
 
     render() {
         return (
-
             <div className=" table-striped">
-                <h3><b>Ongoing Tasks</b></h3>
+                <h3>
+                    <b>Ongoing Tasks</b>
+                </h3>
                 <table className="table table-hover">
-             
                     <thead>
                         <tr>
                             <th>Task ID</th>
@@ -60,17 +61,14 @@ class TasksPage extends Component {
                             <th>Estimated Finish Date</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {this.renderOngoingTasks()}
-                    </tbody>
-                    </table>
-                    <a href="/addTask" className="btn btn-primary" role="button">Add task</a>
-                                  
-                    </div>
-
+                    <tbody>{this.renderOngoingTasks()}</tbody>
+                </table>
+                <a href="/addTask" className="btn btn-primary" role="button">
+                    Add task
+                </a>
+            </div>
         );
     }
 }
 
 export default TasksPage;
-

@@ -5,8 +5,6 @@ import {
     FormGroup,
     FormControl,
     ControlLabel,
-    SplitButton,
-    MenuItem,
     Checkbox,
     Alert
 } from "react-bootstrap";
@@ -34,7 +32,8 @@ class signUpPage extends Component {
             idNumber: "",
             verificationCode: "",
             hideWrongCode: "hide-code",
-            signupStep: 1
+            signupStep: 1,
+            aceptTerms: false
         };
     }
 
@@ -52,13 +51,20 @@ class signUpPage extends Component {
             this.state.city.length > 0 &&
             this.state.district.length > 0 &&
             this.state.country.length > 0 &&
-            this.state.idNumber.length > 0
+            this.state.idNumber.length > 0 &&
+            this.state.aceptTerms
         );
     }
 
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
+        });
+    };
+
+    handleChangeCheckboxTerms = event => {
+        this.setState({
+            aceptTerms: event.target.checked
         });
     };
 
@@ -232,6 +238,9 @@ class signUpPage extends Component {
                         componentClass="select"
                         placeholder="select"
                     >
+                        <option value="" disabled selected>
+                            Select your option
+                        </option>
                         <option value="pet">
                             What is the name of your first pet?
                         </option>
@@ -239,7 +248,7 @@ class signUpPage extends Component {
                             What elementary school did you attend?
                         </option>
                         <option value="honeymoon">
-                            Where did you go for your honeymoon?{" "}
+                            Where did you go for your honeymoon?
                         </option>
                     </FormControl>
                 </FormGroup>
@@ -265,17 +274,23 @@ class signUpPage extends Component {
                 </FormGroup>
 
                 <div className="termsAndConditions">
-                    {" "}
                     By using this application, you agree to be bound by, and to
                     comply with these Terms and Conditions. To proceed with
                     registration you must accept access conditions.
                 </div>
 
-                <Checkbox className="termsCheckbox">
+                <Checkbox
+                    className="termsCheckbox"
+                    onChange={this.handleChangeCheckboxTerms}
+                >
                     I agree to the Terms and Conditions.
                 </Checkbox>
 
-                <Button block disabled={!this.validateForm()} type="submit">
+                <Button
+                    block
+                    disabled={!this.validateForm() || this.codeCheckbox}
+                    type="submit"
+                >
                     Sign Up
                 </Button>
             </form>

@@ -5,13 +5,11 @@ import { NavLink } from "react-router-dom";
 class SideBar extends Component {
     constructor(props) {
         super(props);
-    }
 
-    componentWillMount() {
         const visibility = this.props.isVisible ? "" : "hide";
-        this.setState({
+        this.state = {
             visibility
-        });
+        };
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -57,7 +55,10 @@ class SideBar extends Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/marktaskfinished" activeClassName="active">
+                        <NavLink
+                            to="/marktaskfinished"
+                            activeClassName="active"
+                        >
                             Mark task as finished
                         </NavLink>
                     </li>
@@ -78,25 +79,22 @@ class SideBar extends Component {
                         >
                             Select Calculation Method<br />for Project Cost
                         </NavLink>
-                        </li>
-                        <li>   
+                    </li>
+                    <li>
                         <NavLink to="/createreport" activeClassName="active">
                             Create Report
                         </NavLink>
-                    
                     </li>
-                    <li>   
+                    <li>
                         <NavLink to="/updatereport" activeClassName="active">
                             Update Report
                         </NavLink>
-                    
                     </li>
                     <li>
                         <NavLink to="/projectdetails" activeClassName="active">
                             Project Details
                         </NavLink>
                     </li>
-
                 </ul>
             </div>
         );

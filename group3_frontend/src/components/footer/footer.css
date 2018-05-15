@@ -1,43 +1,33 @@
 .footer {
-    position: fixed;
-    left: 0;
-    bottom: 20px;
     width: 100%;
     color: white;
-    text-align: center; 
+    text-align: center;
 }
 img {
-    width:100px;
+    width: 100px;
     margin: 20px;
 }
 
-  .logo_isep {
+.logo_isep {
     filter: grayscale();
- 
 }
 
 .logo_isep:hover {
     filter: none;
-    
 }
 
 .porto_techHub {
     filter: grayscale();
-
 }
 
 .porto_techHub:hover {
     filter: none;
-    
 }
 
 .switch_icon {
     filter: grayscale();
-
 }
 
 .switch_icon:hover {
     filter: none;
-    
 }
-

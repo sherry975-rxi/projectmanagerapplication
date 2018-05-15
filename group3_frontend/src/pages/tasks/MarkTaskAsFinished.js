@@ -1,26 +1,23 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import './MarkTaskAsFinished.css';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
-
+import React, { Component } from "react";
+import axios from "axios";
+import "./MarkTaskAsFinished.css";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 class MarkTaskAsFinished extends Component {
-
     constructor(props) {
         super(props);
-        this.state = {  
-                id: ''           
-        }
+        this.state = {
+            id: ""
+        };
     }
 
     handleChange = event => {
         this.setState({ id: event.target.value });
-      }
+    };
 
     handleSubmit = async event => {
         event.preventDefault();
-      
+
         // Value of id is inside of the response const.
         const response = await axios.patch(`projects/2/tasks/${this.state.id}`);
         console.log(response);
@@ -29,19 +26,25 @@ class MarkTaskAsFinished extends Component {
 
     render() {
         return (
-            <div className="MarkTaskAsFinished"> 
-                <h3 className="page-header"><b>Mark task as finished</b></h3>                 
+            <div className="MarkTaskAsFinished">
+                <h3 className="page-header">
+                    <b>Mark task as finished</b>
+                </h3>
                 <form onSubmit={this.handleSubmit}>
-
-                <FormGroup controlId="id" bsSize="large">
+                    <FormGroup controlId="id" bsSize="large">
                         <ControlLabel>Type Task ID</ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
                             value={this.state.id}
-                            onChange={this.handleChange} />
-                </FormGroup> 
-                <button className="btn btn-primary" /*onClick={this.userDetail}*/>Finish</button>
+                            onChange={this.handleChange}
+                        />
+                    </FormGroup>
+                    <button
+                        className="btn btn-primary" /*onClick={this.userDetail}*/
+                    >
+                        Finish
+                    </button>
                 </form>
             </div>
         );
