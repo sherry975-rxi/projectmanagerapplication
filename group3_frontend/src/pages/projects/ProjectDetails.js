@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 
 
 class ProjectDetails extends Component {
@@ -43,6 +45,7 @@ class ProjectDetails extends Component {
                     <td>{projectWithDetails.calculationMethod}</td>
                     <td>{projectWithDetails.availableCalculationMethods}</td>
                     </tr>
+                    
             )
         }
     
@@ -75,6 +78,14 @@ class ProjectDetails extends Component {
                         {this.renderProject()}
                     </tbody>
                     </table>
+                    <p/>
+
+                    <Link to={'/projectcost/'+ this.state.project.projectId} activeClassName="active"> 
+                        <button className="btn btn-info" >Get Current Project Cost</button>
+                    </Link> &nbsp;
+                    <Link to={'/selectprojectcostcalculation/'+ this.state.project.projectId} activeClassName="active"> 
+                        <button className="btn btn-warning" >Change Calculation Method</button>
+                    </Link> &nbsp;
                     
                     </div>
 
