@@ -20,6 +20,7 @@ import CreateReport from "./pages/reports/CreateReport";
 import UpdateReport from "./pages/reports/UpdateReport";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import AddTask from "./pages/tasks/AddTask";
+import ProjectDetails from "./pages/projects/ProjectDetails";
 
 class App extends Component {
     constructor(props) {
@@ -58,6 +59,8 @@ class App extends Component {
                     <Route path="/updatereport" component={UpdateReport} />
                     <Route path="/profile" component={Profile} />
                     <Route path="/addtask" component={AddTask} />
+                    <Route path="/projectdetails" component={ProjectDetails} />
+
                 </Switch>
             </div>
         </div>

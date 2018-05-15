@@ -91,6 +91,12 @@ class SideBar extends Component {
                         </NavLink>
                     
                     </li>
+                    <li>
+                        <NavLink to="/projectdetails" activeClassName="active">
+                            Project Details
+                        </NavLink>
+                    </li>
+
                 </ul>
             </div>
         );
