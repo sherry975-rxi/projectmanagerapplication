@@ -1,6 +1,7 @@
 package project.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,12 +9,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import project.dto.CredentialsDTO;
+import project.restcontroller.RestUserController;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 public class JWTAuthentication extends UsernamePasswordAuthenticationFilter {
 
@@ -45,11 +50,20 @@ public class JWTAuthentication extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest req,
                                             HttpServletResponse res,
                                             FilterChain chain,
-                                            Authentication auth) {
+                                            Authentication auth) throws IOException {
 
+        Integer userID = ((UserSecurity) auth.getPrincipal()).getId();
         String email = ((UserSecurity) auth.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(email);
         res.addHeader("Authorization", "Bearer " + token);
+
+        Link userDetails = linkTo(RestUserController.class).slash("users").slash(userID).withSelfRel();
+
+        OutputStreamWriter out = new OutputStreamWriter(
+                res.getOutputStream());
+        out.write(userDetails.toString());
+        out.close();
+
     }
 
     @Override
