@@ -9,7 +9,7 @@ class AddTask extends React.Component {
         super(props);
         this.state = {
                 description: "",
-                project: "" 
+                projectId: "" 
                                     
         };
     }
@@ -24,11 +24,11 @@ class AddTask extends React.Component {
     event.preventDefault();
     const { 
         description,
-        project} = this.state;
+        projectId} = this.state;
 
     const taskDetails = {
         description,
-        project
+        projectId
         };
 
     console.log(taskDetails);
@@ -64,17 +64,17 @@ render() {
                 />
                 </FormGroup>
                 
-                <FormGroup controlId="project" bsSize="large">
-                <ControlLabel>Add Task to Project</ControlLabel>
+                <FormGroup controlId="projectId" bsSize="large">
+                <ControlLabel>Project ID</ControlLabel>
                 <FormControl    
                     autoFocus
                     type="text"
-                    value={this.state.project}
+                    value={this.state.projectId}
                     onChange={this.handleChange}
                 />
                 </FormGroup>
                
-               <button className="btn btn-primary" /*onClick={this.userDetail}*/>Add task</button>
+               <button className="btn btn-primary" /*onClick={this.userDetail}*/>Create</button>
                 </form>
             </div>
         )
