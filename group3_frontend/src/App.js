@@ -43,7 +43,7 @@ class App extends Component {
                 <Switch>
                     <Route path="/projects" component={ProjectsPage} />
                     <Route path="/activeprojects" component={ActiveProjects} />
-                    <Route path="/tasks" component={TasksPage} />
+                    <Route path="/tasks/:userID" component={TasksPage} />
                     <Route path="/finishedtasks" component={FinishedTasks} />
                     <Route
                         path="/marktaskfinished"

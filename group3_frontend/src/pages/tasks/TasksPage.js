@@ -9,6 +9,7 @@ class TasksPage extends Component {
 
     constructor(props) {
         super(props);
+        this.match;
         this.state = {
             tasks: []
         }
@@ -16,15 +17,18 @@ class TasksPage extends Component {
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    async componentDidMount() {
-        fetch('users/7/tasks/pending', { method: 'get' })
-            .then((response) => response.json())
-            .then((responseData) => {
-                this.setState({
-                    tasks: responseData,
-                });
-            });
+    componentDidMount() {
+        this.loadTasks();
+    }
 
+    loadTasks(){
+        fetch(`/users/${this.props.match.params.userID}/tasks/pending`, { method: 'get' })
+        .then((response) => response.json())
+        .then((responseData) => {
+            this.setState({
+                tasks: responseData,
+            });
+        });
     }
 
     renderOngoingTasks() {
