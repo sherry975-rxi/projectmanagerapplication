@@ -12,24 +12,24 @@ class ProjectCost extends Component {
         }
     }
 
-      componentDidMount() {
+     componentDidMount() {
         this.loadProjectWithCostFromServer();
-      }
+    }
       
       // Load users from database
-      loadProjectWithCostFromServer() {
-          fetch('/projects/'+ this.props.match.params.projectID+ '/cost',{ method: 'get'}) 
+    loadProjectWithCostFromServer() {
+          fetch(`/projects/${this.props.match.params.projectID}/cost`,{ method: 'get'}) 
           .then((response) => response.json()) 
           .then((responseData) => { 
               this.setState({ 
                 project: responseData, 
               }); 
           });     
-      }
+    }
 
 
     renderProjectWithCost(){
-            var projectItem = this.state.project
+            var projectItem = this.state.project;
             return(
                 <div>
                 <p><b>Project ID:</b> &nbsp;
@@ -45,7 +45,7 @@ class ProjectCost extends Component {
                 <hr/>
                 </div>
             )
-        //})
+        
     }
 
     render() {
