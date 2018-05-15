@@ -1,9 +1,11 @@
 package project.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import project.dto.CredentialsDTO;
 
@@ -48,5 +50,13 @@ public class JWTAuthentication extends UsernamePasswordAuthenticationFilter {
         String email = ((UserSecurity) auth.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(email);
         res.addHeader("Authorization", "Bearer " + token);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request,
+                                              HttpServletResponse response, AuthenticationException failed){
+
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
     }
 }
