@@ -58,9 +58,9 @@ class UserTable extends React.Component {
               <td>{userData.email}</td>
               <td>{userData.function}</td>
               <td>{userData.userProfile}</td>
-              <td>{userData.systemUserStateActive.toString()}</td>
+              <td>{userData.systemUserStateActive ? 'Active' : 'Disabled'}</td>
               <td>
-                  <button className="btn btn-danger" /*onClick={this.userDetail}*/>Details</button>
+                  <button className="btn btn-primary" /*onClick={this.userDetail}*/>Details</button>
               </td>
             </tr>
           )}
@@ -86,7 +86,7 @@ class UserTable extends React.Component {
                 <th>Email</th>
                 <th>Function</th>
                 <th>Profile</th>
-                <th>Status Active</th>
+                <th>Status</th>
                 <th> </th>
             </tr>
             </thead>

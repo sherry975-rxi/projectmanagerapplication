@@ -6,18 +6,19 @@ class ProjectCost extends Component {
 
     constructor(props) {
         super(props);
+        this.match
         this.state = {
             project: {}
         }
     }
 
       componentDidMount() {
-        this.loadUsersFromServer();
+        this.loadProjectWithCostFromServer();
       }
       
       // Load users from database
-      loadUsersFromServer() {
-          fetch('/projects/2/cost',{ method: 'get'}) 
+      loadProjectWithCostFromServer() {
+          fetch('/projects/'+ this.props.match.params.projectID+ '/cost',{ method: 'get'}) 
           .then((response) => response.json()) 
           .then((responseData) => { 
               this.setState({ 
@@ -27,20 +28,19 @@ class ProjectCost extends Component {
       }
 
 
-    renderUsers(){
-        //return this.state.project.map((projectItem) =>{
+    renderProjectWithCost(){
             var projectItem = this.state.project
             return(
                 <div>
-                <p>Project ID: &nbsp;
+                <p><b>Project ID:</b> &nbsp;
                 {projectItem.projectId}</p>
-                <p> Project Name: &nbsp;
+                <p><b>Project Name:</b> &nbsp;
                 {projectItem.name}</p>
-                <p> Available Cost Calculation Methods: &nbsp;
+                <p><b>Available Cost Calculation Methods:</b> &nbsp;
                 {projectItem.availableCalculationMethods}</p>
-                <p> Selected Cost Calculation Method: &nbsp;
+                <p><b>Selected Cost Calculation Method:</b> &nbsp;
                 {projectItem.calculationMethod}</p>
-                <p> Project Cost: &nbsp;
+                <p><b>Project Cost:</b> &nbsp;
                 {projectItem.projectCost}</p>
                 <hr/>
                 </div>
@@ -53,7 +53,7 @@ class ProjectCost extends Component {
             <div>
                 <h1 className="page-header">Project Cost</h1>              
                 <h3>Info</h3>   
-                {this.renderUsers()}                        
+                {this.renderProjectWithCost()}                        
             </div>
         );
     }

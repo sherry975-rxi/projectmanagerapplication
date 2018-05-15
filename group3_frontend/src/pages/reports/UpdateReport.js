@@ -3,13 +3,14 @@ import React, {Component} from 'react';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 
-class CreateReport extends Component {
+class UpdateReport extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
                 projectId: "",
-                taskID: "",  
+                taskID: "",
+                reportId: "",  
                 reportedTime: "",
                 taskCollabEmail: "",       
         };
@@ -31,6 +32,7 @@ class CreateReport extends Component {
         const { 
             projectId,
             taskID,
+            reportId,
             reportedTime,
             taskCollabEmail} = this.state;
 
@@ -48,12 +50,12 @@ class CreateReport extends Component {
 
         console.log(reportDTOData);
 
-        fetch('/projects/' + this.state.projectId + '/tasks/' + this.state.taskID + '/reports/', {
+        fetch('/projects/' + this.state.projectId + '/tasks/' + this.state.taskID + '/reports/' + this.state.reportId + '/update', {
             body: JSON.stringify(reportDTOData),
             headers: {
               'content-type': 'application/json'
             },
-            method: 'POST'
+            method: 'PUT'
           }).then(function (response) {
             return response.json();
           })
@@ -68,8 +70,18 @@ class CreateReport extends Component {
         return (
 
             <div className="CreateReport"> 
-                <h3 className="page-header"><b>Create Report:</b></h3> 
+                <h3 className="page-header"><b>Update Report:</b></h3> 
                 <form onSubmit={this.handleSubmit}>
+
+                        <FormGroup controlId="reportId" bsSize="large">
+                        <ControlLabel>Type Report ID</ControlLabel>
+                        <FormControl
+                            autoFocus
+                            type="text"
+                            value={this.state.reportId}
+                            onChange={this.handleChange}
+                        />
+                        </FormGroup>
 
                         <FormGroup controlId="projectId" bsSize="large">
                         <ControlLabel>Type Project ID</ControlLabel>
@@ -111,12 +123,12 @@ class CreateReport extends Component {
                         />
                         </FormGroup>
 
-                        <button className="btn btn-primary" /*onClick={this.userDetail}*/>Create Report</button>
+                        <button className="btn btn-primary" /*onClick={this.userDetail}*/>Update Report</button>
                 </form>
             </div>
         )
     }
 }
 
-export default CreateReport;
+export default UpdateReport;
 
