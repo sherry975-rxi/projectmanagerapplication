@@ -18,7 +18,8 @@ import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
 import CreateReport from "./pages/reports/CreateReport";
 import UpdateReport from "./pages/reports/UpdateReport";
-import signUpPage from "./pages/signUpPage/SignUpPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import AddTask from "./pages/tasks/AddTask";
 
 class App extends Component {
     constructor(props) {
@@ -56,6 +57,7 @@ class App extends Component {
                     <Route path="/createreport" component={CreateReport} />
                     <Route path="/updatereport" component={UpdateReport} />
                     <Route path="/profile" component={Profile} />
+                    <Route path="/addtask" component={AddTask} />
                 </Switch>
             </div>
         </div>
@@ -69,7 +71,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" component={firstPage} />
                         <Route exact path="/login" component={LoginPage} />
-                        <Route exact path="/signup" component={signUpPage} />
+                        <Route exact path="/signup" component={SignUpPage} />
                         <Route
                             exact
                             path="/users/{this.userID}"
