@@ -59,7 +59,7 @@ class App extends Component {
                     <Route path="/updatereport" component={UpdateReport} />
                     <Route path="/profile" component={Profile} />
                     <Route path="/addtask" component={AddTask} />
-                    <Route path="/projectdetails" component={ProjectDetails} />
+                    <Route path="/projectdetails/:projectID" component={ProjectDetails} />
 
                 </Switch>
             </div>

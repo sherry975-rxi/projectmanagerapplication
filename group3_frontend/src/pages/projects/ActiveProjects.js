@@ -32,7 +32,10 @@ class ActiveProjects extends Component {
                 <td>{projectItem.description}</td>
                 <td>{projectItem.projectManager.name}</td>
                 <td>{projectItem.projectManager.email}</td>
-                <button className="btn btn-primary" >Details</button> &nbsp;
+
+                <Link to={'/projectdetails/'+ projectItem.projectId} activeClassName="active"> 
+                  <button className="btn btn-primary" >Details</button>
+                </Link> &nbsp;
 
                 <Link to={'/projectcost/'+ projectItem.projectId} activeClassName="active"> 
                   <button className="btn btn-info" >Cost</button>

@@ -3,16 +3,20 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 
 class ProjectDetails extends Component {
+    
 
     constructor(props){
         super(props);
+        this.match
         this.state = {
-            project: {}        }
+            project: {}
+                }
     }
 
 
     async componentDidMount(){
-        fetch('projects/2', {method: 'get'})
+
+        fetch(`/projects/${this.props.match.params.projectID}`, {method: 'get'})
         .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
@@ -24,14 +28,14 @@ class ProjectDetails extends Component {
 
     renderProject(){
         var projectWithDetails = this.state.project;
-        var projectManager = this.state.projectManager;
+        var projectManagerX = this.state.projectManager;
             return (
                 <tr className="line"> 
                     <td><th>{projectWithDetails.projectId}</th></td>
                     <td>{projectWithDetails.projectStatusName}</td>
                     <td>{projectWithDetails.name}</td>
                     <td>{projectWithDetails.description}</td>
-                    <td>{projectManager}</td>
+                    <td>{projectManagerX}</td>
                     <td>{projectWithDetails.effortUnit}</td>
                     <td>{projectWithDetails.budget}</td>
                     <td>{projectWithDetails.startdate}</td>
@@ -53,16 +57,15 @@ class ProjectDetails extends Component {
              
                     <thead>
                         <tr>
-                            <th>Project ID</th>
+                            <th>ID</th>
                             <th>Status</th>
-                            <th>Project Name</th>
+                            <th>Name</th>
                             <th>Description</th>
                             <th>Project Manager</th>
-
                             <th>Effort Unit</th>
                             <th>Budget</th>
                             <th>Start Date</th>
-                             <th>Finish Date</th>
+                            <th>Finish Date</th>
                             <th>Calculation Method</th>
                             <th>Available Calculation Methods</th>
                         </tr>
