@@ -5,13 +5,27 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 class ProjectCost extends Component {
     constructor(props) {
         super(props);
+        this.match;
         this.state = {
             project: {}
         };
     }
 
     componentDidMount() {
-        this.loadUsersFromServer();
+        this.loadProjectWithCostFromServer();
+    }
+
+    // Load users from database
+    loadProjectWithCostFromServer() {
+        fetch(`/projects/${this.props.match.params.projectID}/cost`, {
+            method: "get"
+        })
+            .then(response => response.json())
+            .then(responseData => {
+                this.setState({
+                    project: responseData
+                });
+            });
     }
 
     // Load users from database
@@ -25,8 +39,7 @@ class ProjectCost extends Component {
             });
     }
 
-    renderUsers() {
-        //return this.state.project.map((projectItem) =>{
+    renderProjectWithCost() {
         var projectItem = this.state.project;
         return (
             <div>
@@ -53,7 +66,6 @@ class ProjectCost extends Component {
                 <hr />
             </div>
         );
-        //})
     }
 
     render() {
@@ -61,7 +73,7 @@ class ProjectCost extends Component {
             <div>
                 <h1 className="page-header">Project Cost</h1>
                 <h3>Info</h3>
-                {this.renderUsers()}
+                {this.renderProjectWithCost()}
             </div>
         );
     }

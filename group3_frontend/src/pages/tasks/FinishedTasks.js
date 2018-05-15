@@ -12,7 +12,7 @@ class FinishedTasks extends Component {
     }
 
     
-    async componentDiMount(){
+    async componentDidMount(){
         fetch('users/7/tasks/finished', { method: 'get'})
             .then((response) => response.json())
             .then((responseData) => {

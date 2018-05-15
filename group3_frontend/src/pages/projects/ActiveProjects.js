@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './ActiveProjects.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 
 
 class ActiveProjects extends Component {
@@ -18,20 +20,32 @@ class ActiveProjects extends Component {
         const request = await axios.get('projects/active');
         const teste = request.data;
         this.setState({ projects : teste });
-                   
+              
     }
 
     renderProjects(){
         return this.state.projects.map((projectItem) =>{
             return(
-                
                 <tr className="line">
                 <td>{projectItem.projectId}</td>
                 <td>{projectItem.name}</td>
                 <td>{projectItem.description}</td>
                 <td>{projectItem.projectManager.name}</td>
                 <td>{projectItem.projectManager.email}</td>
-                <button className="btn btn-primary" /*onClick={this.userDetail}*/>Details</button>
+
+                <Link to={'/projectdetails/'+ projectItem.projectId} activeClassName="active"> 
+                  <button className="btn btn-primary" >Details</button>
+                </Link> &nbsp;
+
+                <Link to={'/projectcost/'+ projectItem.projectId} activeClassName="active"> 
+                  <button className="btn btn-info" >Cost</button>
+                </Link> &nbsp;
+                  
+                <a href="/selectprojectcostcalculation" className="btn btn-warning" role="button">Cost Method</a>
+
+                {/* <a href="/projectcost" > 
+                <button className="btn btn-info" >Cost</button></a> &nbsp; */}
+
                 </tr>
                 
             )

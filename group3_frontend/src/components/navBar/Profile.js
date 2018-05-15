@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './NavBar.css'
+import './NavBar.css';
+import axios from 'axios';
 
 export class Profile extends React.Component {
 
@@ -12,8 +13,8 @@ export class Profile extends React.Component {
     }
 
     componentDidMount() {
-             fetch('/users/allUsers',{ method: 'get'}) 
-            .then((response) => response.json()) 
+            fetch('/users/2',{ method: 'get'}) 
+            .then((response) => response.json())
             .then((responseData) => { 
                 this.setState({ 
                   user: responseData, 
@@ -23,20 +24,20 @@ export class Profile extends React.Component {
 
        
     renderUsersList(){
-        //return this.state.user.map((userItem) =>{
+        
             var userItem = this.state.user
             return(
                 <div>
-                <p>User ID: &nbsp;
-                {userItem.userId}</p>
-                <p> User Name: &nbsp;
+                <p> Name: &nbsp;
                 {userItem.name}</p>
-                <p> Profile: &nbsp;
-                {userItem.Profile}</p>
+                <p> Email: &nbsp;
+                {userItem.email}</p>
+                <p> Function: &nbsp;
+                {userItem.function}</p>           
                 <hr/>
                 </div>
             )
-        //})
+        
     }
 
     render() {

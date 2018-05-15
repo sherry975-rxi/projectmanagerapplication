@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './TasksPage.css';
+import './AddTask';
 import axios from 'axios';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class TasksPage extends Component {
 
@@ -39,19 +41,6 @@ class TasksPage extends Component {
         })
     }
 
-    handleChange = event => {
-        this.setState({ id: event.target.value });
-      }
-
-    handleSubmit = async event => {
-        event.preventDefault();
-      
-        // Value of id is inside of the response const.
-        const response = await axios.patch(`projects/2/tasks/${this.state.id}`);
-        console.log(response);
-        console.log(response.data);
-    };
-
     render() {
         return (
 
@@ -71,13 +60,8 @@ class TasksPage extends Component {
                         {this.renderOngoingTasks()}
                     </tbody>
                     </table>
-                    <form onSubmit={this.handleSubmit}>
-                        <button className="btn btn-primary">Add Task</button>
-
-                    <FormGroup controlId="id" bsSize="large">
-                        
-                        </FormGroup> 
-                        </form>
+                    <a href="/addTask" className="btn btn-primary" role="button">Add task</a>
+                                  
                     </div>
 
         );
@@ -85,3 +69,4 @@ class TasksPage extends Component {
 }
 
 export default TasksPage;
+
