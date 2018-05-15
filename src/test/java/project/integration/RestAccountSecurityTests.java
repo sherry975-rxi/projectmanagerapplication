@@ -68,6 +68,10 @@ public class RestAccountSecurityTests {
 
     String mikeToken;
 
+    String ruiToken;
+
+    String adminToken;
+
 
     @Before
     public void setUp() {
@@ -86,10 +90,13 @@ public class RestAccountSecurityTests {
         owner.setUserProfile(Profile.ADMIN);
         mike.setUserProfile(Profile.COLLABORATOR);
         userPM.setUserProfile(Profile.COLLABORATOR);
+        userRui.setUserProfile(Profile.COLLABORATOR);
 
         userService.updateUser(mike);
         userService.updateUser(owner);
         userService.updateUser(userPM);
+
+        userService.updateUser(userRui);
 
 
     }
@@ -111,16 +118,18 @@ public class RestAccountSecurityTests {
     /**
      * This test attempts to access private information after validating the user via the security laywer
      *
+     * 1 - Mike should be able to view his own personal data post authentication
+     * 2 - Rui should be unable to view Mike's personal information due to his collaborator permissions
+     * 3 - Owner should view Mike's personal information, using his admin credentials
      *
      */
     @Test
     public void basicSetUpTest() {
+        // GIVEN four users in the database
         assertEquals(4, userService.getAllUsersFromUserContainer().size());
 
-        CredentialsDTO logIn = new CredentialsDTO();
-        logIn.setEmail("michael@michael.com");
-        logIn.setPassword("12");
 
+        // WHEN Mike has logged in and attempts to view his data
         mikeToken = jwtUtil.generateToken(mike.getEmail());
         auth = new HttpHeaders();
         auth.add("Authorization", "Bearer " + mikeToken);
@@ -130,6 +139,38 @@ public class RestAccountSecurityTests {
                         new HttpEntity<String>(null, auth), User.class);
 
 
+
+        // THEN the response entity must contain his personal information
+        assertEquals(mike.getUserID(), userResponse.getBody().getUserID());
+        assertEquals(200, userResponse.getStatusCodeValue());
+
+
+        // AND WHEN Rui has logged in and attempts to view Mike's data
+        ruiToken = jwtUtil.generateToken(userRui.getEmail());
+        auth = new HttpHeaders();
+        auth.add("Authorization", "Bearer " + ruiToken);
+
+        userResponse = restTemplate.withBasicAuth("rui@gmail.com", "1234")
+                .exchange("http://localhost:" + port + "/users/" + mike.getUserID(), HttpMethod.GET,
+                        new HttpEntity<String>(null, auth), User.class);
+
+
+        //THEN he cannot view Mike's information
+        assertEquals(403, userResponse.getStatusCodeValue());
+
+
+        // AND WHEN an Admin has logged in and attempts to view Mike's data
+        adminToken = jwtUtil.generateToken(owner.getEmail());
+        auth = new HttpHeaders();
+        auth.add("Authorization", "Bearer " + adminToken);
+
+        userResponse = restTemplate.withBasicAuth("hue@hue.com", "1")
+                .exchange("http://localhost:" + port + "/users/" + mike.getUserID(), HttpMethod.GET,
+                        new HttpEntity<String>(null, auth), User.class);
+
+
+
+        // THEN the response entity must contain Mike's personal information
         assertEquals(mike.getUserID(), userResponse.getBody().getUserID());
         assertEquals(200, userResponse.getStatusCodeValue());
 
