@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class ProjectDetails extends Component {
     constructor(props) {
@@ -67,6 +68,28 @@ class ProjectDetails extends Component {
                     </thead>
                     <tbody>{this.renderProject()}</tbody>
                 </table>
+                <p />
+                <Link
+                    to={"/projectcost/" + this.state.project.projectId}
+                    activeClassName="active"
+                >
+                    <button className="btn btn-info">
+                        Get Current Project Cost
+                    </button>
+                </Link>{" "}
+                &nbsp;
+                <Link
+                    to={
+                        "/selectprojectcostcalculation/" +
+                        this.state.project.projectId
+                    }
+                    activeClassName="active"
+                >
+                    <button className="btn btn-warning">
+                        Change Calculation Method
+                    </button>
+                </Link>{" "}
+                &nbsp;
             </div>
         );
     }

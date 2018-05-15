@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './ProjectCost.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import {Prompt} from 'react-router-dom';
+import {Prompt, Link} from 'react-router-dom';
 
 
 class ProjectCostCalculation extends Component {
@@ -116,6 +116,17 @@ class ProjectCostCalculation extends Component {
                         when={this.state.submission}
                         message="Calculation Method Successfully Updated"
                         />
+                         <p/>
+                         <p/>
+
+                        <Link to={'/projectcost/'+ this.props.match.params.projectID} activeClassName="active"> 
+                            <button className="btn btn-info" >Calculate Project Cost</button>
+                        </Link> &nbsp;
+                        <p/>
+                        <p/>
+                        <Link to={'/projectdetails/'+ this.props.match.params.projectID} activeClassName="active"> 
+                            <button className="btn btn-primary" >Back to Project Details</button>
+                        </Link> &nbsp;
 
 
                     </form>

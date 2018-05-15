@@ -68,19 +68,6 @@ class SideBar extends Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/projectcost" activeClassName="active">
-                            Project Cost
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink
-                            to="/selectprojectcostcalculation"
-                            activeClassName="active"
-                        >
-                            Select Calculation Method<br />for Project Cost
-                        </NavLink>
-                    </li>
-                    <li>
                         <NavLink to="/createreport" activeClassName="active">
                             Create Report
                         </NavLink>

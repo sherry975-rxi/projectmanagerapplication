@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./ProjectCost.css";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 
 class ProjectCost extends Component {
     constructor(props) {
@@ -64,6 +66,18 @@ class ProjectCost extends Component {
                     {projectItem.projectCost}
                 </p>
                 <hr />
+                <p/>
+
+                <Link to={'/selectprojectcostcalculation/'+ projectItem.projectId} activeClassName="active"> 
+                  <button className="btn btn-warning" >Change Cost Method</button>
+                </Link> &nbsp;
+
+                <p/>
+                <p/>
+                <Link to={'/projectdetails/'+ projectItem.projectId} activeClassName="active"> 
+                    <button className="btn btn-primary" >Back to Project Details</button>
+                </Link> &nbsp;
+
             </div>
         );
     }
