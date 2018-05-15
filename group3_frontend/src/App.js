@@ -12,13 +12,13 @@ import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
+import SignUpPage from "./pages/signUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
 import CreateReport from "./pages/reports/CreateReport";
 import UpdateReport from "./pages/reports/UpdateReport";
-import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
 
@@ -54,13 +54,18 @@ class App extends Component {
                         path="/selectprojectcostcalculation/:projectID"
                         component={ProjectCostCalculation}
                     />
-                    <Route path="/projectcost/:projectID" component={ProjectCost} />
+                    <Route
+                        path="/projectcost/:projectID"
+                        component={ProjectCost}
+                    />
                     <Route path="/createreport" component={CreateReport} />
                     <Route path="/updatereport" component={UpdateReport} />
                     <Route path="/profile" component={Profile} />
                     <Route path="/addtask" component={AddTask} />
-                    <Route path="/projectdetails/:projectID" component={ProjectDetails} />
-
+                    <Route
+                        path="/projectdetails/:projectID"
+                        component={ProjectDetails}
+                    />
                 </Switch>
             </div>
         </div>
