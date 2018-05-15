@@ -19,7 +19,6 @@ import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
 import CreateReport from "./pages/reports/CreateReport";
 import UpdateReport from "./pages/reports/UpdateReport";
-import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
 
