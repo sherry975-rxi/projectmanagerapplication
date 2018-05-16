@@ -60,7 +60,7 @@ public class MainMenuUI {
 		noPasswordUser.setQuestion("1");
 		noPasswordUser.setAnswer("1");
 		userService.addUserToUserRepositoryX(noPasswordUser);
-		User myUser = userService.createUser("Daniel", "dspereira93@hotmail.com", "id", "func", "+351937429087", "street", "zip", "city", "dist", "coun");
+		User myUser = userService.createUser("Daniel", "dspereira@hotmail.com", "id", "func", "+351937429087", "street", "zip", "city", "dist", "coun");
 		userService.addUserToUserRepositoryX(myUser);
 
 		displayOptions();

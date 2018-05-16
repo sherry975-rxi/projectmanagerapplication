@@ -3,6 +3,14 @@
     background-color: #222f3e;  
     padding:10px;
 }
+.Logo-navbar {
+    margin: 0 0 0 0 ;
+    max-width:100%;
+    position: fixed;
+    left: 60px;
+    top: 21px;
+    
+}
 
 .navbar-fixed-top {
     border: 0;

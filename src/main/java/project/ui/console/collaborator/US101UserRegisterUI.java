@@ -1,6 +1,7 @@
 package project.ui.console.collaborator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import project.controllers.US101RegisterUserController;
 import project.dto.UserDTO;
@@ -17,6 +18,9 @@ import java.util.logging.Logger;
 
 @Controller
 public class US101UserRegisterUI {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
 	private US101RegisterUserController us101RegisterUserController;
@@ -175,7 +179,7 @@ public class US101UserRegisterUI {
 
 		if ("y".equalsIgnoreCase(confirm)) {
 			UserDTO newUser = us101RegisterUserController.createUserDTO(name, email, idNumber, function, phone, question, questionAnswer);
-			newUser.setPassword(password);
+            newUser.setPassword(passwordEncoder.encode(password));
 			newUser = us101RegisterUserController.setAddress(newUser, street, zipCode, city,
 					district, country);
 			us101RegisterUserController.addNewUserToDbFromDTO(newUser);

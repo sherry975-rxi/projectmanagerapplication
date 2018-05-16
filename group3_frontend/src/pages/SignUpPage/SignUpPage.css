@@ -1,5 +1,6 @@
 .SignUp {
     padding: 60px 0;
+    margin-bottom: 30px;
 }
 
 .SignUp form {
@@ -9,4 +10,38 @@
 
 .hide-code {
     display: none;
+}
+
+.hide-email {
+    display: none;
+}
+
+.formField {
+    text-align: left;
+}
+
+.stepTwoValidation {
+    margin: 100px 600px auto 300px;
+}
+
+.validationCodeForm {
+    margin: 100px 600px auto 600px;
+}
+
+.buttonValidationToolbar {
+    margin: 10px auto auto auto;
+}
+
+.stepFourConfirmation {
+    margin: 100px 300px auto 300px;
+}
+
+.sucessRegistrationText {
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+
+.chooseValidationMethodText {
+    font-size: 20px;
+    margin-bottom: 5px;
 }

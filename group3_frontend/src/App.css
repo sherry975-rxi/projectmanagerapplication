@@ -1,5 +1,6 @@
 #body {
-  padding:10px;
+  
+  padding:100px;
   padding-bottom:60px;
 }
 
@@ -38,4 +39,8 @@
 }
 .main .page-header {
   margin-top: 0;
+}
+.container-fluid {
+  
+  padding: 0;
 }

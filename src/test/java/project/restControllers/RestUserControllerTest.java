@@ -22,6 +22,8 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -30,16 +32,14 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 public class RestUserControllerTest {
 
     @Mock
-    UserRepository userRepository;
-
-    @InjectMocks
     UserService userService;
+
+    RestUserController controller;
 
     private User mike, justin, joao, daniel, ana;
     private Link mikeLink, justinLink,joaoLink, danielLink, anaLink;
     private ResponseEntity<List<User>> expectedResponse;
     private List<User> expected;
-    RestUserController controller;
     private List<User> allUsers;
 
     private List<User> collaborators = new ArrayList<>();
@@ -53,23 +53,23 @@ public class RestUserControllerTest {
         initMocks(this);
 
         // creates three users and adds a self ref link for each
-        mike = userService.createUser("Mike", "mike@gmail.com", "876", "function", "987", "here", "there", "porto", "porto", "portugal");
+        mike = new User("Mike", "mike@gmail.com", "876", "function", "987");
         mikeLink = linkTo(RestUserController.class).slash(mike.getUserID()).withSelfRel();
         mike.add(mikeLink);
 
-        justin = userService.createUser("Justin", "justin@gmail.com", "878", "function", "9877", "here", "there", "porto", "porto", "portugal");
+        justin = new User("Justin", "justin@gmail.com", "878", "function", "9877");
         justinLink = linkTo(RestUserController.class).slash(justin.getUserID()).withSelfRel();
         justin.add(justinLink);
 
-        joao = userService.createUser("Joao", "joao@gmail.com", "001", "tester", "919191919", "test", "test", "test", "test", "test");
+        joao = new User ("Joao", "joao@gmail.com", "001", "tester", "919191919");
         joaoLink = linkTo(RestUserController.class).slash(joao.getUserID()).withSelfRel();
         joao.add(joaoLink);
 
-        daniel = userService.createUser("Daniel", "daniel@hotmail.com", "002", "tester", "919191919", "test", "test", "test", "test", "test");
+        daniel = new User("Daniel", "daniel@hotmail.com", "002", "tester", "919191919");
         danielLink= linkTo(RestUserController.class).slash(daniel.getUserID()).withSelfRel();
         daniel.add(danielLink);
 
-        ana = userService.createUser("Ana", "ana@gmail.com", "003", "tester", "919191919", "test", "test", "test", "test", "test");
+        ana = new User ("Ana", "ana@gmail.com", "003", "tester", "919191919");
         anaLink=linkTo(RestUserController.class).slash(ana.getUserID()).withSelfRel();
         ana.add(anaLink);
 
@@ -87,8 +87,9 @@ public class RestUserControllerTest {
         // and finally an empty test list to be filled and compared for each assertion
         expected = new ArrayList<>();
 
-        // initiates the controller using the mocked Database/Service
-        controller = new RestUserController(userService);
+        // then instantiates the controller using the mocked service
+        controller=new RestUserController(userService);
+
     }
     @After
     public void tearDown(){
@@ -130,7 +131,7 @@ public class RestUserControllerTest {
 
         //GIVEN an empty user list in a mocked database
 
-        when(userRepository.findAll()).thenReturn(expected);
+        when(userService.getAllUsersFromUserContainer()).thenReturn(expected);
 
         //WHEN 2 users are added to the user list
         expected.add(mike);
@@ -156,7 +157,7 @@ public class RestUserControllerTest {
     public void testSearchUserByEmail() {
 
         // GIVEN 3 users in the mock database with email accounts from hotmail and gmail
-        when(userRepository.findAll()).thenReturn(allUsers);
+        when(userService.getAllUsersFromUserContainer()).thenReturn(allUsers);
 
         // WHEN searching for nonExistent email provider "sapo.pt"
         expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
@@ -190,7 +191,7 @@ public class RestUserControllerTest {
 
         //GIVEN 1 user in the the mock database with profile set as collaborator
 
-        when(userRepository.findAll()).thenReturn(allUsers);
+        when(userService.getAllUsersFromUserContainer()).thenReturn(allUsers);
 
         //WHEN searching for users with the profile set as COLLABORATOR
 
@@ -240,7 +241,7 @@ public class RestUserControllerTest {
     @Test
     public void testChangeUserProfile() {
         // GIVEN a users it is registered in the company.
-        when(userRepository.findByEmail("mike@gmail.com")).thenReturn(Optional.of(mike));
+        when(userService.getUserByEmail("mike@gmail.com")).thenReturn(mike);
         User user = userService.getUserByEmail("mike@gmail.com");
         assertEquals(user,mike);
         assertEquals(Profile.UNASSIGNED,mike.getUserProfile());
@@ -252,6 +253,8 @@ public class RestUserControllerTest {
 
         // THEN the response entity must contain the user updated and status OK
         ResponseEntity<?>expectedHTTPResponseOK = new ResponseEntity<>(mike, HttpStatus.OK);
+
+        doNothing().when(userService).updateUser(any(User.class));
         assertEquals(expectedHTTPResponseOK,controller.changeUserProfile(userDTO));
         assertEquals(userDTO.getUserProfile(),mike.getUserProfile());
 
@@ -260,7 +263,7 @@ public class RestUserControllerTest {
     @Test
     public void testSeeUserDetails() {
         // GIVEN a users it is registered in the company.
-        when(userRepository.findByUserID(876)).thenReturn(Optional.of(mike));
+        when(userService.getUserByID(876)).thenReturn(mike);
         // WHEN the decides to see his information
         controller.seeUserDetails(876);
         // THEN the response entity must contain the user updated and status OK

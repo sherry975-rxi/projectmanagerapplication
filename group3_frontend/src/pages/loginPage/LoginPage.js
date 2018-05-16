@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./LoginPage.css";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import axios from 'axios';
+import decode from 'jwt-decode';
+import AuthService from './AuthService';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -9,6 +12,7 @@ class LoginPage extends Component {
             email: "",
             password: ""
         };
+        this.Auth = new AuthService();
     }
 
     validateForm() {
@@ -22,9 +26,21 @@ class LoginPage extends Component {
         });
     };
 
+    //On submit this method calls the login method from the Auth Service
     handleSubmit = event => {
         event.preventDefault();
+        this.Auth.login(this.state.email, this.state.password)
+            .then(res => {
+                //If the loggin is sucessfull the user gets redirected to its home page
+                if (res.status == 200)
+                    this.props.history.replace('/');
+                console.log(res.token)
+            })
+            .catch(err => {
+                alert(err);
+            })
     };
+
 
     render() {
         return (

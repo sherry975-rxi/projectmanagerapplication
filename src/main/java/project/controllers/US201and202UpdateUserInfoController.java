@@ -1,6 +1,7 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import project.model.Address;
 import project.model.User;
@@ -21,6 +22,9 @@ public class US201and202UpdateUserInfoController {
 
 	@Autowired
 	private UserService userContainer;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 
 	public US201and202UpdateUserInfoController() {
@@ -65,7 +69,7 @@ public class US201and202UpdateUserInfoController {
 	 */
 	public void updateUserPassword(User user, String password) {
 
-		user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
 	}
 
 	/**

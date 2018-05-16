@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Glyphicon } from "react-bootstrap";
 import "./NavBar.css";
 import "./Profile.js";
+import logo from "./appManager-logo.svg"
 
 class NavBar extends Component {
     state = {};
@@ -16,9 +17,8 @@ class NavBar extends Component {
                             glyph="menu-hamburger"
                             onClick={this.props.toogleMenu}
                         />
-                        <a className="navbar-brand" href="/">
-                            appManager
-                        </a>
+                        <img src={logo} alt="logo" className="Logo-navbar" href="/"/>
+                        
                     </div>
 
                     <div id="navbar" className="navbar-collapse collapse">

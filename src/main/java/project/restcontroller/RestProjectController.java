@@ -4,6 +4,7 @@ package project.restcontroller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
 import project.model.User;
@@ -27,9 +28,7 @@ public class RestProjectController  {
     private final ProjectService projectService;
     private final UserService userService;
     private final TaskService taskService;
-    private static final String PROJECTDETAILS = "See Project Details";
-    private static final String UPDATEPROJECT = "Update Project";
-    private static final String CALCULATECOST = "Calculate Cost";
+    private static final String PROJECT_DETAILS_REL = "seeProjectDetails";
 
     @Autowired
     public RestProjectController(ProjectService projectService, UserService userService,  TaskService taskService) {
@@ -42,6 +41,7 @@ public class RestProjectController  {
      * This method returns a ResponseEntity that contains all the active projects from the project service with a link to open each project
      * @return ResponseEntity with all the active projects
      */
+    @PreAuthorize("hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/active", method = RequestMethod.GET)
     public ResponseEntity<List<Project>> getActiveProjects() {
 
@@ -56,15 +56,18 @@ public class RestProjectController  {
     /**
      * This method returns a ResponseEntity that contains the project details
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByID(principal.id),@projectService.getProjectById(#projectId)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
+            "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value= "{projectId}", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
 
         Project project = this.projectService.getProjectById(projectId);
         Link selfRef = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withSelfRel().withType(RequestMethod.GET.name());
         project.add(selfRef);
-        Link updateProjectLink = linkTo(methodOn(RestProjectController.class).updateProject(project, projectId)).withRel(UPDATEPROJECT).withType(RequestMethod.PATCH.name());
+        Link updateProjectLink = linkTo(methodOn(RestProjectController.class).updateProject(project, projectId)).withRel("updateProject").withType(RequestMethod.PATCH.name());
         project.add(updateProjectLink);
-        Link calculateCostLink = linkTo(methodOn(RestProjectController.class).getProjectCost(project.getProjectId())).withRel(CALCULATECOST).withType(RequestMethod.GET.name());
+        Link calculateCostLink = linkTo(methodOn(RestProjectController.class).getProjectCost(project.getProjectId())).withRel("calculateCost").withType(RequestMethod.GET.name());
         project.add(calculateCostLink);
 
 
@@ -78,6 +81,8 @@ public class RestProjectController  {
      * @param projectId
      * @return
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
+            "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
     public ResponseEntity<Project> updateProject(@RequestBody Project projectUpdates, @PathVariable int projectId){
         Project project = projectService.getProjectById(projectId);
@@ -86,7 +91,7 @@ public class RestProjectController  {
             taskService.calculateReportEffortCost(project);
         }
 
-        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECTDETAILS).withType(RequestMethod.GET.name());
+        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECT_DETAILS_REL).withType(RequestMethod.GET.name());
         project.add(reference);
 
         return ResponseEntity.ok().body(project);
@@ -96,17 +101,18 @@ public class RestProjectController  {
     /**
      * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
+            "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/{projectId}/cost", method = RequestMethod.GET)
-    public ResponseEntity<Project> getProjectCost(@PathVariable int projectId) {
+    public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
         Project project = this.projectService.getProjectById(projectId);
-        //Map<String, Double> projectCost = new HashMap<>();
-        //projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
-        project.setProjectCost(taskService.getTotalCostReportedToProjectUntilNow(project));
+        Map<String, Double> projectCost = new HashMap<>();
+        projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
 
-        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECTDETAILS).withType(RequestMethod.GET.name());
+        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECT_DETAILS_REL).withType(RequestMethod.GET.name());
         project.add(reference);
 
-        return  ResponseEntity.ok().body(project);
+        return  ResponseEntity.ok().body(projectCost);
     }
 
     /**
@@ -114,6 +120,7 @@ public class RestProjectController  {
      * info. In case the Response Body has an EffortUnit and/or a Budget, the project will be created with the all the
      * Response body information.
      */
+    @PreAuthorize("hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "" , method = RequestMethod.POST)
     public ResponseEntity<Project> createProject(@RequestBody Project projectDTO) {
         User projectManager = userService.getUserByEmail(projectDTO.getProjectManager().getEmail());
@@ -130,11 +137,11 @@ public class RestProjectController  {
 
         this.projectService.addProjectToProjectContainer(proj);
 
-        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(proj.getProjectId())).withRel(PROJECTDETAILS).withType(RequestMethod.GET.name());
+        Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(proj.getProjectId())).withRel(PROJECT_DETAILS_REL).withType(RequestMethod.GET.name());
         proj.add(reference);
-        Link updateProjectLink = linkTo(methodOn(RestProjectController.class).updateProject(proj, proj.getProjectId())).withRel(UPDATEPROJECT).withType(RequestMethod.PATCH.name());
+        Link updateProjectLink = linkTo(methodOn(RestProjectController.class).updateProject(proj, proj.getProjectId())).withRel("updateProject").withType(RequestMethod.PATCH.name());
         proj.add(updateProjectLink);
-        Link calculateCostLink = linkTo(methodOn(RestProjectController.class).getProjectCost(proj.getProjectId())).withRel(CALCULATECOST).withType(RequestMethod.GET.name());
+        Link calculateCostLink = linkTo(methodOn(RestProjectController.class).getProjectCost(proj.getProjectId())).withRel("calculateCost").withType(RequestMethod.GET.name());
         proj.add(calculateCostLink);
 
         return ResponseEntity.ok().body(proj);
