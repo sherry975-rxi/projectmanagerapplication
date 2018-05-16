@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './ProjectCost.css';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel , Alert} from "react-bootstrap";
 import { Prompt, Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 
@@ -10,14 +10,15 @@ class ProjectCostCalculation extends Component {
     constructor(props) {
         super(props);
         this.match
-        this.state = {
-            //projectId: "",
-            project: {},
-            availableMethods: [],
-            calculationMethod: "",
-            submission: false,
-            //res : []
-            //projectCost : ""
+        this.state = {  
+                //projectId: "",
+                project: {} ,
+                availableMethods : [],
+                calculationMethod: "",
+                submission : false,
+                hideSuccessInfo: "hide-code",
+                //res : []
+                //projectCost : ""           
         };
         this.AuthService = new AuthService();
     }
@@ -80,7 +81,7 @@ class ProjectCostCalculation extends Component {
         event.preventDefault();
         const {
             //projectId,
-            calculationMethod/*,
+            calculationMethod,/*,
         projectCost */} = this.state;
 
         const projectDTOData = {
@@ -91,7 +92,7 @@ class ProjectCostCalculation extends Component {
 
         console.log(projectDTOData);
 
-        fetch(`/projects/${this.props.match.params.projectID}`, {
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}`, {
             body: JSON.stringify(projectDTOData),
             headers: {
                 'content-type': 'application/json'
@@ -104,9 +105,12 @@ class ProjectCostCalculation extends Component {
                 console.log(myJson);
             });
 
-        this.setState({ submission: true })
-
-    }
+            this.setState({
+                //submission:true,
+                hideSuccessInfo: ""
+            })
+      
+        }
 
 
     render() {
@@ -117,9 +121,7 @@ class ProjectCostCalculation extends Component {
                 <p><b>Project ID:</b> &nbsp;
                 {this.props.match.params.projectID}</p>
 
-                <h3>To change the Project Cost Calculation Method, please write the following informations:</h3>
-
-                <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit}>
 
                     {/*  <FormGroup controlId="projectId">
                         <ControlLabel>Type Project ID</ControlLabel>
@@ -151,16 +153,18 @@ class ProjectCostCalculation extends Component {
                             onChange={this.handleChange}
                         />
                         </FormGroup> */}
-                    <FormGroup controlId="calculationMethod">
-                        <ControlLabel>Calculation Method</ControlLabel>
-                        <FormControl
-                            value={this.state.calculationMethod}
-                            onChange={this.handleChange}
-                            componentClass="select"
-                            placeholder="select"
-                        >
-                            <option value="" disabled selected>
-                                Select your option
+                        <FormGroup controlId="calculationMethod">
+                            <ControlLabel>
+                            To change the Project Cost Calculation Method, please select a method:
+                                </ControlLabel>
+                            <FormControl
+                                value={this.state.calculationMethod}
+                                onChange={this.handleChange}
+                                componentClass="select"
+                                placeholder="select"
+                            >
+                                <option value="" disabled selected>
+                                    Select your option
                                 </option>
                             {this.loadAvailableMethods()}
                         </FormControl>
@@ -175,24 +179,30 @@ class ProjectCostCalculation extends Component {
                     >
                         Apply Calculation Method
                         </Button>
-                    {/* {this.props.myJson.projectCost} */}
-                    <Prompt
-                        when={this.state.submission}
+                        {/* {this.props.myJson.projectCost} */}
+                      {/*   <Prompt
+                        className={this.state.submission}
                         message="Calculation Method Successfully Updated"
-                    />
-                    <p />
-                    <p />
+                        /> */}
+                        <Alert 
+                            bsStyle="success" 
+                            className={this.state.hideSuccessInfo}>
+                            <strong>Calculation Method Successfully Updated! <br/></strong>
+                            Check project cost
+                        </Alert>
+                         <p/>
+                         <p/>
 
-                    <Link to={'/projectcost/' + this.props.match.params.projectID} activeClassName="active">
-                        <button className="btn btn-info" >Calculate Project Cost</button>
-                    </Link> &nbsp;
-                        <p />
-                    <p />
-                    <Link to={'/projectdetails/' + this.props.match.params.projectID} activeClassName="active">
-                        <button className="btn btn-primary" >Back to Project Details</button>
-                    </Link> &nbsp;
+                        <Link to={'/projectcost/'+ this.props.match.params.projectID} activeClassName="active"> 
+                            <button className="btn btn-info" >Calculate Project Cost</button>
+                        </Link> &nbsp;
+                        <p/>
+                        <p/>
+                        <Link to={'/projectdetails/'+ this.props.match.params.projectID} activeClassName="active"> 
+                            <button className="btn btn-primary" >Back to Project Details</button>
+                        </Link> &nbsp;
 
-
+                     
 
 
                     </form>
