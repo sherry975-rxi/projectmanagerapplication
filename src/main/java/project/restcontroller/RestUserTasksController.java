@@ -38,7 +38,7 @@ public class RestUserTasksController {
      * @param userId
      * @return
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID == userId")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id== #userId or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getAllTasks(@PathVariable Integer userId) {
 
@@ -68,7 +68,7 @@ public class RestUserTasksController {
      * @param userId
      * @return
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') or hasRole('ROLE_DIRECTOR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "totaltimespent/completed/lastmonth", method = RequestMethod.GET)
     public ResponseEntity<Double> getTotalTimeSpentOnTasksCompletedLastMonth(@PathVariable Integer userId) {
 
@@ -84,7 +84,7 @@ public class RestUserTasksController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') or hasRole('ROLE_DIRECTOR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "finished", method = RequestMethod.GET)
     public List<Task> getUserFinishedTasks(@PathVariable Integer userId) {
         List<Task> taskList = taskService.getAllFinishedUserTasksInDecreasingOrder(this.userService.getUserByID(userId));
@@ -95,7 +95,7 @@ public class RestUserTasksController {
         return taskList;
     }
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "pending", method = RequestMethod.GET)
     public List<Task> getPendingTasks(@PathVariable Integer userId) {
         List<Task> taskList = taskService.getStartedNotFinishedUserTaskList(userService.getUserByID(userId));
