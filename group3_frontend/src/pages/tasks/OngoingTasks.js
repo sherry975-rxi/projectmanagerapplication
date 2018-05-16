@@ -13,7 +13,9 @@ class OngoingTasks extends Component {
         super(props);
         this.match;
         this.state = {
-            tasks: []
+            tasks: [],
+            empty: ""
+
         };
         this.AuthService = new AuthService()
     }
@@ -26,34 +28,39 @@ class OngoingTasks extends Component {
                 this.setState({
                     tasks: responseData,
                 });
-            });
+            })
     }
 
     renderOngoingTasks() {
-        return this.state.tasks.map(taskItem => {
-            return (
-                <tr className="line">
-                    <td>{taskItem.taskID}</td>
-                    <td>{taskItem.description}</td>
-                    <td><Moment format="YYYY/MM/DD">
-                        {taskItem.startDate}
-                    </Moment></td>
-                    <td><Moment format="YYYY/MM/DD">
-                        {taskItem.taskDeadline}
-                    </Moment></td>
-                    <td>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-plus" />
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/marktaskfinished" className="btn btn-primary" role="button">
-                            Mark finish
+        if (this.state.tasks == []) {
+            return this.state.tasks.map(taskItem => {
+                return (
+                    <tr className="line">
+                        <td>{taskItem.taskID}</td>
+                        <td>{taskItem.description}</td>
+                        <td><Moment format="YYYY/MM/DD">
+                            {taskItem.startDate}
+                        </Moment></td>
+                        <td><Moment format="YYYY/MM/DD">
+                            {taskItem.taskDeadline}
+                        </Moment></td>
+                        <td>
+                            <a href="#">
+                                <i class="glyphicon glyphicon-plus" />
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/marktaskfinished" className="btn btn-primary" role="button">
+                                Mark finish
                     </a>
-                    </td>
-                </tr>
-            );
-        });
+                        </td>
+                    </tr>
+                );
+            });
+        }
+        else {
+            return <div><h3>NOT AUTHORIZED</h3></div>
+        }
     }
 
     render() {
