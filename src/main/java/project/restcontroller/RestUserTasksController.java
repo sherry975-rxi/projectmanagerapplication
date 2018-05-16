@@ -95,7 +95,7 @@ public class RestUserTasksController {
         return taskList;
     }
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID == userId")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId")
     @RequestMapping(value = "pending", method = RequestMethod.GET)
     public List<Task> getPendingTasks(@PathVariable Integer userId) {
         List<Task> taskList = taskService.getStartedNotFinishedUserTaskList(userService.getUserByID(userId));
