@@ -9,7 +9,7 @@ import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import SignUpPage from "./pages/signUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
@@ -20,7 +20,6 @@ import UpdateReport from "./pages/reports/UpdateReport";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
 import OngoingTasks from "./pages/tasks/OngoingTasks";
-import TasksPage from "./pages/tasks/TasksPage";
 
 
 class App extends Component {
@@ -45,7 +44,6 @@ class App extends Component {
                     <Route path="/activeprojects" component={ActiveProjects} />
                     <Route path="/tasks/:userID" component={OngoingTasks} />
                     <Route path="/finishedtasks" component={FinishedTasks} />
-                    <Route path="/tasks" component={TasksPage} />
                     <Route
                         path="/marktaskfinished/"
                         component={MarkTaskAsFinished}
