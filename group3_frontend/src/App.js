@@ -16,6 +16,8 @@ import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
 import CreateReport from "./pages/reports/CreateReport";
+import signUpPage from "./pages/signUpPage/SignUpPage";
+import AllRequests from "./pages/requests/AllRequests";
 import UpdateReport from "./pages/reports/UpdateReport";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
@@ -60,6 +62,7 @@ class App extends Component {
                     <Route path="/createreport" component={CreateReport} />
                     <Route path="/updatereport" component={UpdateReport} />
                     <Route path="/profile" component={Profile} />
+                    <Route path="/requests" component={AllRequests} />
                     <Route path="/addtask" component={AddTask} />
                     <Route
                         path="/projectdetails/:projectID"
