@@ -3,22 +3,24 @@ import "./App.css";
 import NavBar from "./components/navBar/NavBar";
 import Profile from "./components/navBar/Profile.js";
 import SideBar from "./components/sideBar/SideBar";
-import { Grid, Jumbotron, Button } from "react-bootstrap";
 import { Route, Switch } from "react-router-dom";
-import ProjectsPage from "./pages/projects/ProjectsPage";
 import ActiveProjects from "./pages/projects/ActiveProjects";
-import TasksPage from "./pages/tasks/TasksPage";
 import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
+import SignUpPage from "./pages/signUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
 import CreateReport from "./pages/reports/CreateReport";
-import UpdateReport from "./pages/reports/UpdateReport";
 import signUpPage from "./pages/signUpPage/SignUpPage";
+import AllRequests from "./pages/requests/AllRequests";
+import UpdateReport from "./pages/reports/UpdateReport";
+import AddTask from "./pages/tasks/AddTask";
+import ProjectDetails from "./pages/projects/ProjectDetails";
+import OngoingTasks from "./pages/tasks/OngoingTasks";
 
 class App extends Component {
     constructor(props) {
@@ -39,23 +41,31 @@ class App extends Component {
             <SideBar isVisible={this.state.isVisible} />
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
-                    <Route path="/projects" component={ProjectsPage} />
                     <Route path="/activeprojects" component={ActiveProjects} />
-                    <Route path="/tasks" component={TasksPage} />
+                    <Route path="/tasks/:userID" component={OngoingTasks} />
                     <Route path="/finishedtasks" component={FinishedTasks} />
                     <Route
-                        path="/marktaskfinished"
+                        path="/marktaskfinished/"
                         component={MarkTaskAsFinished}
                     />
                     <Route path="/users" component={UsersPage} />
                     <Route
-                        path="/selectprojectcostcalculation"
+                        path="/selectprojectcostcalculation/:projectID"
                         component={ProjectCostCalculation}
                     />
-                    <Route path="/projectcost/:projectID" component={ProjectCost} />
+                    <Route
+                        path="/projectcost/:projectID"
+                        component={ProjectCost}
+                    />
                     <Route path="/createreport" component={CreateReport} />
                     <Route path="/updatereport" component={UpdateReport} />
                     <Route path="/profile" component={Profile} />
+                    <Route path="/requests" component={AllRequests} />
+                    <Route path="/addtask" component={AddTask} />
+                    <Route
+                        path="/projectdetails/:projectID"
+                        component={ProjectDetails}
+                    />
                 </Switch>
             </div>
         </div>
@@ -63,13 +73,13 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div className="body">
                 <NavBar toogleMenu={this.toogleMenu} />
                 <div className="container-fluid">
                     <Switch>
                         <Route exact path="/" component={firstPage} />
                         <Route exact path="/login" component={LoginPage} />
-                        <Route exact path="/signup" component={signUpPage} />
+                        <Route exact path="/signup" component={SignUpPage} />
                         <Route
                             exact
                             path="/users/{this.userID}"

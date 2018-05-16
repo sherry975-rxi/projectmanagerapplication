@@ -5,9 +5,10 @@ import {
     FormGroup,
     FormControl,
     ControlLabel,
-    SplitButton,
-    MenuItem
+    Checkbox,
+    Alert
 } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 const SMSVALIDATION = "smsValidation";
 const EMAILVALIDATION = "emailValidation";
@@ -30,7 +31,9 @@ class signUpPage extends Component {
             country: "",
             idNumber: "",
             verificationCode: "",
-            signupStep: 1
+            hideWrongCode: "hide-code",
+            signupStep: 1,
+            aceptTerms: false
         };
     }
 
@@ -48,13 +51,20 @@ class signUpPage extends Component {
             this.state.city.length > 0 &&
             this.state.district.length > 0 &&
             this.state.country.length > 0 &&
-            this.state.idNumber.length > 0
+            this.state.idNumber.length > 0 &&
+            this.state.aceptTerms
         );
     }
 
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
+        });
+    };
+
+    handleChangeCheckboxTerms = event => {
+        this.setState({
+            aceptTerms: event.target.checked
         });
     };
 
@@ -117,61 +127,6 @@ class signUpPage extends Component {
                 });
             });
     };
-
-    handleSignUpValidation = event => {
-        const validationType = event.target.id;
-
-        if (
-            validationType === SMSVALIDATION ||
-            validationType === EMAILVALIDATION
-        ) {
-            fetch(this.state[validationType])
-                .then(response => {
-                    return response.json();
-                })
-                .then(jsonResponse => {
-                    this.setState({
-                        signupStep: 3,
-                        verificationUrl: jsonResponse.href
-                    });
-                });
-        }
-    };
-
-    handleCodeSubmit = event => {
-        event.preventDefault();
-        const verificationCode = this.state.verificationCode;
-
-        fetch(this.state.verificationUrl, {
-            body: JSON.stringify({ codeToCheck: verificationCode }),
-            headers: {
-                "content-type": "application/json"
-            },
-            method: "POST"
-        })
-            .then(response => response.json())
-            .then(jsonResponse => {
-                console.log(jsonResponse);
-            });
-    };
-
-    stepThreeForm = () => (
-        <div className="validationCodeForm">
-            <form onSubmit={this.handleCodeSubmit}>
-                <FormGroup controlId="verificationCode">
-                    <ControlLabel>Verification code</ControlLabel>
-                    <FormControl
-                        autoFocus
-                        type="text"
-                        value={this.state.verificationCode}
-                        onChange={this.handleChange}
-                    />
-                </FormGroup>
-            </form>
-        </div>
-    );
-
-    //{"rel":"verificateHuman","href":"http://localhost:3000/account/performValidation/verificateCode/inestppinto@gmail.com"}
 
     stepOneForm = () => (
         <div className="SignUp">
@@ -278,11 +233,24 @@ class signUpPage extends Component {
                 <FormGroup controlId="securityQuestion">
                     <ControlLabel>Security Question</ControlLabel>
                     <FormControl
-                        autoFocus
-                        type="text"
                         value={this.state.securityQuestion}
                         onChange={this.handleChange}
-                    />
+                        componentClass="select"
+                        placeholder="select"
+                    >
+                        <option value="" disabled selected>
+                            Select your option
+                        </option>
+                        <option value="pet">
+                            What is the name of your first pet?
+                        </option>
+                        <option value="school">
+                            What elementary school did you attend?
+                        </option>
+                        <option value="honeymoon">
+                            Where did you go for your honeymoon?
+                        </option>
+                    </FormControl>
                 </FormGroup>
 
                 <FormGroup controlId="securityAnswer">
@@ -305,15 +273,57 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <Button block disabled={!this.validateForm()} type="submit">
+                <div className="termsAndConditions">
+                    By using this application, you agree to be bound by, and to
+                    comply with these Terms and Conditions. To proceed with
+                    registration you must accept access conditions.
+                </div>
+
+                <Checkbox
+                    className="termsCheckbox"
+                    onChange={this.handleChangeCheckboxTerms}
+                >
+                    I agree to the Terms and Conditions.
+                </Checkbox>
+
+                <Button
+                    block
+                    disabled={!this.validateForm() || this.codeCheckbox}
+                    type="submit"
+                >
                     Sign Up
                 </Button>
             </form>
         </div>
     );
 
+    handleSignUpValidation = event => {
+        const validationType = event.target.id;
+
+        if (
+            validationType === SMSVALIDATION ||
+            validationType === EMAILVALIDATION
+        ) {
+            fetch(this.state[validationType])
+                .then(response => {
+                    return response.json();
+                })
+                .then(jsonResponse => {
+                    this.setState({
+                        signupStep: 3,
+                        verificationUrl: jsonResponse.href
+                    });
+                });
+        }
+    };
+
     stepTwoValidation = (title, i) => (
         <div>
+            <div className="chooseValidationMethodText">
+                {" "}
+                To continue with sign up process, you will receive a validation
+                code by SMS or email. Choose the method:
+            </div>
             <Button
                 bsStyle="primary"
                 id="smsValidation"
@@ -331,12 +341,76 @@ class signUpPage extends Component {
         </div>
     );
 
+    handleCodeSubmit = event => {
+        event.preventDefault();
+        const verificationCode = this.state.verificationCode;
+
+        fetch(this.state.verificationUrl, {
+            body: JSON.stringify({ codeToCheck: verificationCode }),
+            headers: {
+                "content-type": "application/json"
+            },
+            method: "POST"
+        })
+            .then(response => response.json())
+            .then(jsonResponse => {
+                this.setState({
+                    signupStep: 4
+                });
+            })
+            .catch(error => {
+                this.setState({
+                    hideWrongCode: ""
+                });
+                console.log("Verification code is incorrect. Try again");
+            });
+    };
+
+    validateCodeForm() {
+        return this.state.verificationCode.length > 0;
+    }
+
+    stepThreeForm = () => (
+        <div className="validationCodeForm">
+            <form onSubmit={this.handleCodeSubmit}>
+                <FormGroup controlId="verificationCode">
+                    <ControlLabel>Verification code</ControlLabel>
+                    <FormControl
+                        autoFocus
+                        type="text"
+                        value={this.state.verificationCode}
+                        onChange={this.handleChange}
+                    />
+                </FormGroup>
+                <Alert bsStyle="danger" className={this.state.hideWrongCode}>
+                    <strong>Invalid validation code!</strong> Try again.
+                </Alert>
+                <Button block disabled={!this.validateCodeForm} type="submit">
+                    Send validation code
+                </Button>
+            </form>
+        </div>
+    );
+
+    stepFourConfirmation = () => (
+        <div>
+            <div>Registration completed successfully!</div>
+            <div className="LogIn">
+                <NavLink className="btn btn-primary btn-lg" to="/login">
+                    Log In
+                </NavLink>
+            </div>
+        </div>
+    );
+
     render() {
         let formStp = this.stepOneForm();
         if (this.state.signupStep === 2) {
             formStp = this.stepTwoValidation();
         } else if (this.state.signupStep === 3) {
             formStp = this.stepThreeForm();
+        } else if (this.state.signupStep === 4) {
+            formStp = this.stepFourConfirmation();
         }
         return <div>{formStp}</div>;
     }

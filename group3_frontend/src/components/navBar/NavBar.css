@@ -1,14 +1,12 @@
 
  .navbar {
-    background-color: #4EC491;  
-    border: 0px;
+    background-color: #222f3e;  
+    padding:10px;
 }
-
 
 .navbar-fixed-top {
     border: 0;
 }
-
 
   @font-face {
     font-family: 'Dense';

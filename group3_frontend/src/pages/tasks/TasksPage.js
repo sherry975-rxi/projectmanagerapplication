@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './TasksPage.css';
 import axios from 'axios';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import AuthService from '../loginPage/AuthService';
 
 class TasksPage extends Component {
 
@@ -11,13 +10,13 @@ class TasksPage extends Component {
         this.state = {
             tasks: []
         }
-        this.Auth = new AuthService();
     }
 
     //TODO: Add sort by ascending or descending order to these tables
 
     async componentDidMount() {
-        this.Auth.fetch('http://localhost:8080/users/7/tasks/pending', { method: 'get' })
+        fetch('users/7/tasks/pending', { method: 'get' })
+            .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
                     tasks: responseData,
@@ -42,11 +41,11 @@ class TasksPage extends Component {
 
     handleChange = event => {
         this.setState({ id: event.target.value });
-    }
+      }
 
     handleSubmit = async event => {
         event.preventDefault();
-
+      
         // Value of id is inside of the response const.
         const response = await axios.patch(`projects/2/tasks/${this.state.id}`);
         console.log(response);
@@ -59,7 +58,7 @@ class TasksPage extends Component {
             <div className=" table-striped">
                 <h3><b>Ongoing Tasks</b></h3>
                 <table className="table table-hover">
-
+             
                     <thead>
                         <tr>
                             <th>Task ID</th>
@@ -71,15 +70,15 @@ class TasksPage extends Component {
                     <tbody>
                         {this.renderOngoingTasks()}
                     </tbody>
-                </table>
-                <form onSubmit={this.handleSubmit}>
-                    <button className="btn btn-primary">Add Task</button>
+                    </table>
+                    <form onSubmit={this.handleSubmit}>
+                        <button className="btn btn-primary">Add Task</button>
 
                     <FormGroup controlId="id" bsSize="large">
-
-                    </FormGroup>
-                </form>
-            </div>
+                        
+                        </FormGroup> 
+                        </form>
+                    </div>
 
         );
     }
