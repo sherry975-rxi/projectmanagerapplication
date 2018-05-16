@@ -11,10 +11,56 @@ class ProjectCostCalculation extends Component {
         this.match
         this.state = {  
                 //projectId: "",
+                project: {} ,
+                availableMethods : [],
                 calculationMethod: "",
-                submission : false
+                submission : false,
+                //res : []
                 //projectCost : ""           
         };
+    }
+
+    componentDidMount() {
+        this.loadProjectWithCostFromServer();
+    }
+
+    // Load users from database
+    loadProjectWithCostFromServer() {
+        fetch(`/projects/${this.props.match.params.projectID}`, {
+            method: "get"
+        })
+            .then(response => response.json())
+            .then(responseData => {
+                this.setState({
+                    project: responseData,
+                    availableMethods : responseData.availableCalculationMethods.split(","),
+                });
+            });
+    }
+
+    loadAvailableMethods(){
+
+        //this.state.res = this.state.availableMethodsX.split(",");
+        
+       /*  for(var i = 0; i < myArray.length; i++){
+            return(
+                <option value={myArray[i]}>
+                {myArray[i]}
+                </option>
+            );
+       
+            
+        } */
+
+
+        return this.state.availableMethods.map(option =>{
+            return(
+            <option value={option}>
+            {option}
+            </option>
+        );
+        })
+
     }
 
 
@@ -84,7 +130,7 @@ class ProjectCostCalculation extends Component {
                         />
                         </FormGroup> */}
 
-                        <FormGroup controlId="calculationMethod">
+            {/*             <FormGroup controlId="calculationMethod">
                         <ControlLabel>Type Calculation Method</ControlLabel>
                         <FormControl
                             autoFocus
@@ -92,7 +138,8 @@ class ProjectCostCalculation extends Component {
                             value={this.state.calculationMethod}
                             onChange={this.handleChange}
                         />
-                        </FormGroup>
+                        </FormGroup> */}
+                        
 
                         {/* <FormGroup controlId="projectCost">
                         <ControlLabel>Project Cost</ControlLabel>
@@ -103,6 +150,22 @@ class ProjectCostCalculation extends Component {
                             onChange={this.handleChange}
                         />
                         </FormGroup> */}
+                        <FormGroup controlId="calculationMethod">
+                            <ControlLabel>Calculation Method</ControlLabel>
+                            <FormControl
+                                value={this.state.calculationMethod}
+                                onChange={this.handleChange}
+                                componentClass="select"
+                                placeholder="select"
+                            >
+                                <option value="" disabled selected>
+                                    Select your option
+                                </option>
+                                {this.loadAvailableMethods()}
+                            </FormControl>
+                           
+                        </FormGroup>
+
                         <Button
                             block
 
@@ -127,6 +190,8 @@ class ProjectCostCalculation extends Component {
                         <Link to={'/projectdetails/'+ this.props.match.params.projectID} activeClassName="active"> 
                             <button className="btn btn-primary" >Back to Project Details</button>
                         </Link> &nbsp;
+
+                     
 
 
                     </form>
