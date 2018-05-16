@@ -18,6 +18,7 @@ import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
 import CreateReport from "./pages/reports/CreateReport";
 import signUpPage from "./pages/signUpPage/SignUpPage";
+import AllRequests from "./pages/requests/AllRequests";
 
 class App extends Component {
     constructor(props) {
@@ -48,6 +49,7 @@ class App extends Component {
                     <Route path="/projectcost" component={ProjectCost} />
                     <Route path="/createreport" component={CreateReport} />
                     <Route path="/profile" component={Profile} />
+                    <Route path="/requests" component={AllRequests} />
                 </Switch>
             </div>
         </div>
