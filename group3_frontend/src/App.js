@@ -22,6 +22,7 @@ import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
 import OngoingTasks from "./pages/tasks/OngoingTasks";
 
+
 class App extends Component {
     constructor(props) {
         super(props);

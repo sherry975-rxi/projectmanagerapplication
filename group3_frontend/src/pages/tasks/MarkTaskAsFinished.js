@@ -26,10 +26,10 @@ class MarkTaskAsFinished extends Component {
 
     render() {
         return (
-            <div className="MarkTaskAsFinished">
-                <h3 className="page-header">
-                    <b>Mark task as finished</b>
-                </h3>
+            <div className=" table-striped">
+            <h3>
+            <b>Mark task as finished</b>
+            </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="id" bsSize="large">
                         <ControlLabel>Type Task ID</ControlLabel>

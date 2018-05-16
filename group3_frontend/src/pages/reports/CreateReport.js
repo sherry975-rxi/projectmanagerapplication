@@ -65,9 +65,9 @@ class CreateReport extends Component {
 
     render() {
         return (
-            <div className="CreateReport">
-                <h3 className="page-header">
-                    <b>Create Report:</b>
+            <div className=" table-striped">
+                <h3>
+                <b>Create Report</b>
                 </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="projectId" bsSize="large">
