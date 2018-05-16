@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import AuthService from './../loginPage/AuthService';
 
 class CreateReport extends Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class CreateReport extends Component {
             reportedTime: "",
             taskCollabEmail: ""
         };
+        this.AuthService = new AuthService();
     }
 
     validateForm() {
@@ -41,24 +43,19 @@ class CreateReport extends Component {
 
         console.log(reportDTOData);
 
-        fetch(
+        this.AuthService.fetch(
             "/projects/" +
-                this.state.projectId +
-                "/tasks/" +
-                this.state.taskID +
-                "/reports/",
+            this.state.projectId +
+            "/tasks/" +
+            this.state.taskID +
+            "/reports/",
             {
                 body: JSON.stringify(reportDTOData),
-                headers: {
-                    "content-type": "application/json"
-                },
                 method: "POST"
             }
         )
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(myJson) {
+
+            .then(function (myJson) {
                 console.log(myJson);
             });
     };
@@ -67,7 +64,7 @@ class CreateReport extends Component {
         return (
             <div className=" table-striped">
                 <h3>
-                <b>Create Report</b>
+                    <b>Create Report</b>
                 </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="projectId" bsSize="large">

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import AuthService from './../loginPage/AuthService';
 
 class UpdateReport extends Component {
     constructor(props) {
@@ -12,6 +12,7 @@ class UpdateReport extends Component {
             reportedTime: "",
             taskCollabEmail: ""
         };
+        this.AuthService = new this.AuthService();
     }
 
     validateForm() {
@@ -43,26 +44,20 @@ class UpdateReport extends Component {
 
         console.log(reportDTOData);
 
-        fetch(
+        this.AuthService.fetch(
             "/projects/" +
-                this.state.projectId +
-                "/tasks/" +
-                this.state.taskID +
-                "/reports/" +
-                this.state.reportId +
-                "/update",
+            this.state.projectId +
+            "/tasks/" +
+            this.state.taskID +
+            "/reports/" +
+            this.state.reportId +
+            "/update",
             {
                 body: JSON.stringify(reportDTOData),
-                headers: {
-                    "content-type": "application/json"
-                },
                 method: "PUT"
             }
         )
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(myJson) {
+            .then(function (myJson) {
                 console.log(myJson);
             });
     };
@@ -70,9 +65,9 @@ class UpdateReport extends Component {
     render() {
         return (
             <div className=" table-striped">
-            <h3>
-            <b>Update Report</b>
-            </h3>
+                <h3>
+                    <b>Update Report</b>
+                </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="reportId" bsSize="large">
                         <ControlLabel>Type Report ID</ControlLabel>
