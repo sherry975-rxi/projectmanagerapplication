@@ -61,7 +61,7 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID")
     @RequestMapping(value = "/requests", method = RequestMethod.GET)
     public ResponseEntity<List<TaskTeamRequest>> getAllRequests(@PathVariable String taskId, @PathVariable int projectId) {
 
@@ -89,7 +89,7 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID")
     @RequestMapping(value = "/requests/filter/{reqType}", method = RequestMethod.GET)
     public ResponseEntity<List<TaskTeamRequest>> getAllFilteredRequests( @PathVariable String reqType, @PathVariable String taskId, @PathVariable int projectId) {
 
@@ -132,8 +132,8 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid) " +
-            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projectId)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID")
     @RequestMapping(value = "/requests/{requestId}", method = RequestMethod.GET)
     public ResponseEntity<TaskTeamRequest> getRequestDetails(@PathVariable int requestId, @PathVariable String taskId, @PathVariable int projectId) {
 
@@ -163,7 +163,7 @@ public class RestRequestController {
      * @param userDTO   User related to the collaborator that wants to make the request.
      * @return ResponseEntity
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid)")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projectId))")
     @RequestMapping(value = "/requests/assignmentRequest", method = RequestMethod.POST)
     public ResponseEntity<TaskTeamRequest> createAssignmentRequest (@PathVariable String taskId, @PathVariable int projectId, @RequestBody UserDTO userDTO){
 
@@ -228,7 +228,7 @@ public class RestRequestController {
      * @param userDTO   User related to the collaborator that wants to make the request.
      * @return ResponseEntity
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid)")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projectId))")
     @RequestMapping(value = "/requests/removalRequest", method = RequestMethod.POST)
     public ResponseEntity<TaskTeamRequest> createRemovalRequest (@PathVariable String taskId,
                                                                  @PathVariable int projectId, @RequestBody UserDTO userDTO){
@@ -296,7 +296,7 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID")
     @RequestMapping(value = "/requests/{requestId}/approval", method = RequestMethod.PUT)
     public ResponseEntity<TaskTeamRequest> approveRequest(@PathVariable int requestId, @PathVariable String taskId, @PathVariable int projectId) {
 
@@ -365,7 +365,7 @@ public class RestRequestController {
      * @param projectId Project id associated to the project where the task belongs
      * @return ResponseEntity
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID")
     @RequestMapping(value = "/requests/{requestId}/reject", method = RequestMethod.PUT)
     public ResponseEntity<TaskTeamRequest> rejectRequest(@PathVariable int requestId, @PathVariable String taskId, @PathVariable int projectId) {
 

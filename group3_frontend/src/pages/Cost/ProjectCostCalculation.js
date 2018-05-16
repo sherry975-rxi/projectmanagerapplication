@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import './ProjectCost.css';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import {Prompt} from 'react-router-dom';
+import {Prompt, Link} from 'react-router-dom';
 
 
 class ProjectCostCalculation extends Component {
 
     constructor(props) {
         super(props);
+        this.match
         this.state = {  
-                projectId: "",
+                //projectId: "",
                 calculationMethod: "",
                 submission : false
                 //projectCost : ""           
@@ -19,9 +20,7 @@ class ProjectCostCalculation extends Component {
 
     //state = {}
     validateForm() {
-        return this.state.projectId.length > 0
-            && this.state.calculationMethod.length > 0
-           /* && this.state.projectCost.length > 0*/;
+        return this.state.calculationMethod.length > 0
     }
 
     handleChange = event => {
@@ -33,19 +32,19 @@ class ProjectCostCalculation extends Component {
       handleSubmit = event => {
         event.preventDefault();
         const { 
-            projectId,
+            //projectId,
             calculationMethod/*,
         projectCost */} = this.state;
 
           const projectDTOData = {
-            projectId,
+            //projectId,
             calculationMethod,
             //result: projectCost
         };
 
         console.log(projectDTOData);
 
-        fetch('/projects/' + this.state.projectId, {
+        fetch(`/projects/${this.props.match.params.projectID}`, {
             body: JSON.stringify(projectDTOData),
             headers: {
               'content-type': 'application/json'
@@ -68,11 +67,14 @@ class ProjectCostCalculation extends Component {
             <div>
                 <h1 className="page-header">Project Cost</h1>
 
+                <p><b>Project ID:</b> &nbsp;
+                {this.props.match.params.projectID}</p>
+
                 <h3>To change the Project Cost Calculation Method, please write the following informations:</h3>
 
                     <form onSubmit={this.handleSubmit}>
 
-                        <FormGroup controlId="projectId">
+                       {/*  <FormGroup controlId="projectId">
                         <ControlLabel>Type Project ID</ControlLabel>
                         <FormControl
                             autoFocus
@@ -80,7 +82,7 @@ class ProjectCostCalculation extends Component {
                             value={this.state.projectId}
                             onChange={this.handleChange}
                         />
-                        </FormGroup>
+                        </FormGroup> */}
 
                         <FormGroup controlId="calculationMethod">
                         <ControlLabel>Type Calculation Method</ControlLabel>
@@ -114,6 +116,17 @@ class ProjectCostCalculation extends Component {
                         when={this.state.submission}
                         message="Calculation Method Successfully Updated"
                         />
+                         <p/>
+                         <p/>
+
+                        <Link to={'/projectcost/'+ this.props.match.params.projectID} activeClassName="active"> 
+                            <button className="btn btn-info" >Calculate Project Cost</button>
+                        </Link> &nbsp;
+                        <p/>
+                        <p/>
+                        <Link to={'/projectdetails/'+ this.props.match.params.projectID} activeClassName="active"> 
+                            <button className="btn btn-primary" >Back to Project Details</button>
+                        </Link> &nbsp;
 
 
                     </form>
