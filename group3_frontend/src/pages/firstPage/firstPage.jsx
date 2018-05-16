@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./firstPage.css";
 import { NavLink } from "react-router-dom";
+import background from "./background.jpg"
+import logo from "./appManager-logo.svg"
 
 class firstPage extends Component {
     state = {};
@@ -8,13 +10,13 @@ class firstPage extends Component {
         return (
             <div className="Bar">
                 <div className="Logo">
-                    <h1 className="switch">appManager</h1>
-                    <p className="subTitle">Project Management Application</p>
+                    <img src={logo} alt="logo-main" className="logo-main"/>
+                    
                 </div>
                 <div className="SignUp">
                     <NavLink to="/signup">
                         <button type="button" class="btn btn-primary btn-lg">
-                            Sign Up
+                            Create account
                         </button>
                     </NavLink>
                 </div>
