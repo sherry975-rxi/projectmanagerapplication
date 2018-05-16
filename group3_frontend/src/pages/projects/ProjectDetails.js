@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthService from './../loginPage/AuthService';
+import Error from './../../components/error/error';
 
 class ProjectDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            project: {}
+            project: {},
+            message: ""
         };
         this.AuthService = new AuthService()
     }
@@ -18,7 +20,8 @@ class ProjectDetails extends Component {
             .then(responseData => {
                 this.setState({
                     project: responseData,
-                    projectManager: responseData.projectManager.name
+                    projectManager: responseData.projectManager.name,
+                    message: responseData.message
                 });
             });
     }
@@ -46,53 +49,59 @@ class ProjectDetails extends Component {
     }
 
     render() {
-        return (
-            <div className=" table-striped">
-                <h3>
-                    <b>Project Details</b>
-                </h3>
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Status</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Project Manager</th>
-                            <th>Effort Unit</th>
-                            <th>Budget</th>
-                            <th>Start Date</th>
-                            <th>Finish Date</th>
-                            <th>Calculation Method</th>
-                            <th>Available Calculation Methods</th>
-                        </tr>
-                    </thead>
-                    <tbody>{this.renderProject()}</tbody>
-                </table>
-                <p />
-                <Link
-                    to={"/projectcost/" + this.state.project.projectId}
-                    activeClassName="active"
-                >
-                    <button className="btn btn-info">
-                        Get Current Project Cost
+
+        if (this.state.message == "") {
+            <Error message={this.state.message} />
+        }
+        else {
+            return (
+                <div className=" table-striped">
+                    <h3>
+                        <b>Project Details</b>
+                    </h3>
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Status</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Project Manager</th>
+                                <th>Effort Unit</th>
+                                <th>Budget</th>
+                                <th>Start Date</th>
+                                <th>Finish Date</th>
+                                <th>Calculation Method</th>
+                                <th>Available Calculation Methods</th>
+                            </tr>
+                        </thead>
+                        <tbody>{this.renderProject()}</tbody>
+                    </table>
+                    <p />
+                    <Link
+                        to={"/projectcost/" + this.state.project.projectId}
+                        activeClassName="active"
+                    >
+                        <button className="btn btn-info">
+                            Get Current Project Cost
                     </button>
-                </Link>{" "}
-                &nbsp;
+                    </Link>{" "}
+                    &nbsp;
                 <Link
-                    to={
-                        "/selectprojectcostcalculation/" +
-                        this.state.project.projectId
-                    }
-                    activeClassName="active"
-                >
-                    <button className="btn btn-warning">
-                        Change Calculation Method
+                        to={
+                            "/selectprojectcostcalculation/" +
+                            this.state.project.projectId
+                        }
+                        activeClassName="active"
+                    >
+                        <button className="btn btn-warning">
+                            Change Calculation Method
                     </button>
-                </Link>{" "}
-                &nbsp;
+                    </Link>{" "}
+                    &nbsp;
             </div>
-        );
+            );
+        }
     }
 }
 

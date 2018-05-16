@@ -3,12 +3,14 @@ import axios from "axios";
 import "./ActiveProjects.css";
 import { Link } from "react-router-dom";
 import AuthService from './../loginPage/AuthService';
+import Error from './../../components/error/error';
 
 class ActiveProjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: []
+            projects: [],
+            message: ""
         };
 
         this.AuthService = new AuthService()
@@ -21,7 +23,8 @@ class ActiveProjects extends Component {
         })
             .then(responseData => {
                 this.setState({
-                    projects: responseData
+                    projects: responseData,
+                    message: responseData.status
                 });
             });
     }
@@ -53,30 +56,30 @@ class ActiveProjects extends Component {
     }
 
     render() {
-        try {
-        return (
-            <div className="ActiveProjects">
-                <h3>
-                    <b>Active Projects</b>
-                </h3>
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Project ID</th>
-                            <th>Name</th>
-                            <th>Description Date</th>
-                            <th>Project Manager email</th>
-                            <th>Project Manager name</th>
-                        </tr>
-                    </thead>
-                    <tbody>{this.renderProjects()}</tbody>
-                </table>
-            </div>
-        );
-    } catch(error) {
-        return(<div className=" table-striped">
-        <h3><b>UNAUTHORIZED!</b></h3></div>);
-    }
+        if (this.state.message != null) {
+            return <Error message={this.state.message} />
+        }
+        else {
+            return (
+                <div className="ActiveProjects">
+                    <h3>
+                        <b>Active Projects</b>
+                    </h3>
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Project ID</th>
+                                <th>Name</th>
+                                <th>Description Date</th>
+                                <th>Project Manager email</th>
+                                <th>Project Manager name</th>
+                            </tr>
+                        </thead>
+                        <tbody>{this.renderProjects()}</tbody>
+                    </table>
+                </div>
+            );
+        }
     }
 }
 
