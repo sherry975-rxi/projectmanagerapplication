@@ -1,47 +1,52 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import './ActiveProjects.css';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
+import React, { Component } from "react";
+import axios from "axios";
+import "./ActiveProjects.css";
+import { Link } from "react-router-dom";
 
 class ActiveProjects extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             projects: []
-        }
+        };
     }
 
     async componentDidMount() {
-
-        const request = await axios.get('projects/active');
+        const request = await axios.get("projects/active");
         const teste = request.data;
-        this.setState({ projects : teste });
-                   
+        this.setState({ projects: teste });
     }
 
-    renderProjects(){
-        return this.state.projects.map((projectItem) =>{
-            return(
-                
+    renderProjects() {
+        return this.state.projects.map(projectItem => {
+            return (
                 <tr className="line">
-                <td>{projectItem.projectId}</td>
-                <td>{projectItem.name}</td>
-                <td>{projectItem.description}</td>
-                <td>{projectItem.projectManager.name}</td>
-                <td>{projectItem.projectManager.email}</td>
-                <button className="btn btn-primary" /*onClick={this.userDetail}*/>Details</button>
+                    <td>{projectItem.projectId}</td>
+                    <td>{projectItem.name}</td>
+                    <td>{projectItem.description}</td>
+                    <td>{projectItem.projectManager.name}</td>
+                    <td>{projectItem.projectManager.email}</td>
+                    <Link
+                        to={"/projectdetails/" + projectItem.projectId}
+                        activeClassName="active"
+                    >
+                        <button className="btn btn-primary">Details</button>
+                    </Link>{" "}
+                    &nbsp;
+                    {/* <a href="/selectprojectcostcalculation" className="btn btn-warning" role="button">Cost Method</a> */}
+                    {/* <a href="/projectcost" >
+                <button className="btn btn-info" >Cost</button></a> &nbsp; */}
                 </tr>
-                
-            )
-        })
+            );
+        });
     }
 
     render() {
         return (
             <div className="ActiveProjects">
-                <h3><b>List of Active Projects</b></h3>
+                <h3>
+                    <b>List of Active Projects</b>
+                </h3>
                 <table className="table table-hover">
                     <thead>
                         <tr>
@@ -52,9 +57,7 @@ class ActiveProjects extends Component {
                             <th>Project Manager name</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    {this.renderProjects()}   
-                    </tbody>
+                    <tbody>{this.renderProjects()}</tbody>
                 </table>
             </div>
         );

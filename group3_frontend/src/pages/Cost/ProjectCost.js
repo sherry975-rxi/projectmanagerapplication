@@ -1,59 +1,93 @@
-import React, {Component} from 'react';
-import './ProjectCost.css';
+import React, { Component } from "react";
+import "./ProjectCost.css";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 
 class ProjectCost extends Component {
-
     constructor(props) {
         super(props);
+        this.match;
         this.state = {
             project: {}
-        }
+        };
     }
 
-      componentDidMount() {
-        this.loadUsersFromServer();
-      }
-      
-      // Load users from database
-      loadUsersFromServer() {
-          fetch('/projects/2/cost',{ method: 'get'}) 
-          .then((response) => response.json()) 
-          .then((responseData) => { 
-              this.setState({ 
-                project: responseData, 
-              }); 
-          });     
-      }
+    componentDidMount() {
+        this.loadProjectWithCostFromServer();
+    }
 
+    // Load users from database
+    loadProjectWithCostFromServer() {
+        fetch(`/projects/${this.props.match.params.projectID}/cost`, {
+            method: "get"
+        })
+            .then(response => response.json())
+            .then(responseData => {
+                this.setState({
+                    project: responseData
+                });
+            });
+    }
 
-    renderUsers(){
-        //return this.state.project.map((projectItem) =>{
-            var projectItem = this.state.project
-            return(
-                <div>
-                <p>Project ID: &nbsp;
-                {projectItem.projectId}</p>
-                <p> Project Name: &nbsp;
-                {projectItem.name}</p>
-                <p> Available Cost Calculation Methods: &nbsp;
-                {projectItem.availableCalculationMethods}</p>
-                <p> Selected Cost Calculation Method: &nbsp;
-                {projectItem.calculationMethod}</p>
-                <p> Project Cost: &nbsp;
-                {projectItem.projectCost}</p>
-                <hr/>
-                </div>
-            )
-        //})
+    // Load users from database
+    loadUsersFromServer() {
+        fetch("/projects/2/cost", { method: "get" })
+            .then(response => response.json())
+            .then(responseData => {
+                this.setState({
+                    project: responseData
+                });
+            });
+    }
+
+    renderProjectWithCost() {
+        var projectItem = this.state.project;
+        return (
+            <div>
+                <p>
+                    <b>Project ID:</b> &nbsp;
+                    {projectItem.projectId}
+                </p>
+                <p>
+                    <b>Project Name:</b> &nbsp;
+                    {projectItem.name}
+                </p>
+                <p>
+                    <b>Available Cost Calculation Methods:</b> &nbsp;
+                    {projectItem.availableCalculationMethods}
+                </p>
+                <p>
+                    <b>Selected Cost Calculation Method:</b> &nbsp;
+                    {projectItem.calculationMethod}
+                </p>
+                <p>
+                    <b>Project Cost:</b> &nbsp;
+                    {projectItem.projectCost}
+                </p>
+                <hr />
+                <p/>
+
+                <Link to={'/selectprojectcostcalculation/'+ projectItem.projectId} activeClassName="active"> 
+                  <button className="btn btn-warning" >Change Cost Method</button>
+                </Link> &nbsp;
+
+                <p/>
+                <p/>
+                <Link to={'/projectdetails/'+ projectItem.projectId} activeClassName="active"> 
+                    <button className="btn btn-primary" >Back to Project Details</button>
+                </Link> &nbsp;
+
+            </div>
+        );
     }
 
     render() {
         return (
             <div>
-                <h1 className="page-header">Project Cost</h1>              
-                <h3>Info</h3>   
-                {this.renderUsers()}                        
+                <h1 className="page-header">Project Cost</h1>
+                <h3>Info</h3>
+                {this.renderProjectWithCost()}
             </div>
         );
     }
