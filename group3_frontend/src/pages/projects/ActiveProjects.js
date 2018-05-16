@@ -53,6 +53,7 @@ class ActiveProjects extends Component {
     }
 
     render() {
+        try {
         return (
             <div className="ActiveProjects">
                 <h3>
@@ -72,6 +73,10 @@ class ActiveProjects extends Component {
                 </table>
             </div>
         );
+    } catch(error) {
+        return(<div className=" table-striped">
+        <h3><b>UNAUTHORIZED!</b></h3></div>);
+    }
     }
 }
 

@@ -54,34 +54,39 @@ class TasksPage extends Component {
     };
 
     render() {
-        return (
+            try {
+                return (
 
-            <div className=" table-striped">
-                <h3><b>Ongoing Tasks</b></h3>
-                <table className="table table-hover">
+                    <div className=" table-striped">
+                        <h3><b>Ongoing Tasks</b></h3>
+                        <table className="table table-hover">
 
-                    <thead>
-                        <tr>
-                            <th>Task ID</th>
-                            <th>Description</th>
-                            <th>Start Date</th>
-                            <th>Estimated Finish Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderOngoingTasks()}
-                    </tbody>
-                </table>
-                <form onSubmit={this.handleSubmit}>
-                    <button className="btn btn-primary">Add Task</button>
+                            <thead>
+                                <tr>
+                                    <th>Task ID</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>Estimated Finish Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.renderOngoingTasks()}
+                            </tbody>
+                        </table>
+                        <form onSubmit={this.handleSubmit}>
+                            <button className="btn btn-primary">Add Task</button>
 
-                    <FormGroup controlId="id" bsSize="large">
+                            <FormGroup controlId="id" bsSize="large">
 
-                    </FormGroup>
-                </form>
-            </div>
+                            </FormGroup>
+                        </form>
+                    </div>
 
-        );
+                );
+        } catch (error) {
+            return(<div className=" table-striped">
+            <h3><b>ERROR!</b></h3></div>);
+        }
     }
 }
 
