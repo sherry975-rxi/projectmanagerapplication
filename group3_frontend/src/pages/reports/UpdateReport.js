@@ -12,7 +12,7 @@ class UpdateReport extends Component {
             reportedTime: "",
             taskCollabEmail: ""
         };
-        this.AuthService = new this.AuthService();
+        this.AuthService = new AuthService();
     }
 
     validateForm() {
