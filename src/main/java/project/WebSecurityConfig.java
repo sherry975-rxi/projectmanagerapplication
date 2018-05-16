@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 
-        http.authorizeRequests().anyRequest().hasRole("ROLE_ADMIN");
+        http.authorizeRequests().anyRequest().hasRole("ADMIN");
 
         http.addFilter(new JWTAuthentication(authenticationManager(), jwtUtil));
 
