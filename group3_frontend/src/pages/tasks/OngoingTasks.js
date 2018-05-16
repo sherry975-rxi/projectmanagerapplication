@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./OngoingTasks.css";
 import "./AddTask";
 import "./MarkTaskAsFinished";
+import Moment from 'react-moment';
 
 class OngoingTasks extends Component {
     constructor(props) {
@@ -36,16 +37,20 @@ class OngoingTasks extends Component {
                 <tr className="line">
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.description}</td>
-                    <td>{taskItem.startDate}</td>
-                    <td>{taskItem.taskDeadline}</td>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.startDate}
+                    </Moment></td>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.taskDeadline}
+                    </Moment></td>
                     <td>
                         <a href="#">
                             <i class="glyphicon glyphicon-plus" />
                         </a>
                     </td>
                     <td>
-                    <a href="/marktaskfinished" className="btn btn-primary" role="button">
-                        Mark finish
+                        <a href="/marktaskfinished" className="btn btn-primary" role="button">
+                            Mark finish
                     </a>
                     </td>
                 </tr>
