@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./UsersPage.css";
+import AuthService from './../loginPage/AuthService';
 
 class UsersPage extends Component {
     constructor(props) {
@@ -7,11 +8,11 @@ class UsersPage extends Component {
         this.state = {
             users: []
         };
+        this.AuthService = new AuthService();
     }
 
     componentDidMount() {
-        fetch("users/allUsers", { method: "GET" })
-            .then(response => response.json())
+        this.AuthService.fetch("users/allUsers", { method: "GET" })
             .then(responseData => {
                 this.setState({
                     users: responseData
@@ -62,9 +63,9 @@ class UserTable extends React.Component {
 
         return (
             <div className=" table-striped">
-            <h3>
-            <b>All Users</b>
-            </h3>
+                <h3>
+                    <b>All Users</b>
+                </h3>
                 <table className="table table-hover">
                     <thead>
                         <tr>
