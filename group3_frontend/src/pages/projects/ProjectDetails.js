@@ -51,7 +51,7 @@ class ProjectDetails extends Component {
     render() {
 
         if (this.state.message == "") {
-            return <Error message={this.state.message} />
+            return (<Error message={this.state.message} />)
         }
         else {
             return (

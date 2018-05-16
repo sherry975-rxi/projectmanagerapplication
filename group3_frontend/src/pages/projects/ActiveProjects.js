@@ -24,7 +24,7 @@ class ActiveProjects extends Component {
             .then(responseData => {
                 this.setState({
                     projects: responseData,
-                    message: responseData.status
+                    message: responseData.error
                 });
             });
     }
@@ -71,8 +71,8 @@ class ActiveProjects extends Component {
                                 <th>Project ID</th>
                                 <th>Name</th>
                                 <th>Description Date</th>
-                                <th>Project Manager email</th>
-                                <th>Project Manager name</th>
+                                <th>Project Manager Name</th>
+                                <th>Project Manager Email</th>
                             </tr>
                         </thead>
                         <tbody>{this.renderProjects()}</tbody>
