@@ -1,39 +1,42 @@
 import React, { Component } from "react";
 import "./UsersPage.css";
 import AuthService from './../loginPage/AuthService';
+import Error from './../../components/error/error';
+import axios from 'axios';
 
 class UsersPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: []
+            users: [],
+            message: ""
         };
         this.AuthService = new AuthService();
     }
 
-    componentDidMount() {
-        this.AuthService.fetch("users/allUsers", { method: "GET" })
+    async componentdidMount() {
+        axios.get("/users/allUsers", {
+            method: "get"
+        })
             .then(responseData => {
                 this.setState({
-                    users: responseData
+                    users: responseData,
+                    message: responseData.status
                 });
             });
     }
 
-    renderUsersList() {
-        return (
+    render() {
+        if (this.state.message == "") {
+            return (
+                <Error message={this.state.message} />)
+
+        }
+        else {
             <div>
                 <UserTable users={this.state.users} />
             </div>
-        );
-    }
-
-    render() {
-        return (
-            <div>
-                {this.renderUsersList()}
-            </div>
-        );
+        }
     }
 }
 

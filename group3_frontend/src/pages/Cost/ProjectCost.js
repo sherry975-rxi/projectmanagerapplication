@@ -3,6 +3,7 @@ import "./ProjectCost.css";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AuthService from './../loginPage/AuthService';
+import Error from './../../components/error/error';
 
 
 class ProjectCost extends Component {
@@ -10,27 +11,23 @@ class ProjectCost extends Component {
         super(props);
         this.match;
         this.state = {
-            project: {}
+            project: {},
+            message: ""
         };
         this.AuthService = new AuthService();
     }
 
-    componentDidMount() {
-        this.loadProjectWithCostFromServer();
-    }
-
-    // Load users from database
-    loadProjectWithCostFromServer() {
+    async componentDidMount() {
         this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/cost`, {
             method: "get"
-        })
-            .then(responseData => {
-                this.setState({
-                    project: responseData
-                });
+        }).then(responseData => {
+            this.setState({
+                project: responseData,
+                message: responseData.status
             });
-    }
+        });
 
+    }
 
     renderProjectWithCost() {
         var projectItem = this.state.project;
@@ -74,13 +71,19 @@ class ProjectCost extends Component {
     }
 
     render() {
-        return (
-            <div>
+
+        if (this.state.message == "" || this.state.message == "2") {
+            return (<div>
                 <h1 className="page-header">Project Cost</h1>
                 <h3>Info</h3>
                 {this.renderProjectWithCost()}
-            </div>
-        );
+            </div>)
+        }
+        else {
+            return (
+                <Error message={this.state.message + " NOT AUTHORIZED"} />
+            );
+        }
     }
 }
 
