@@ -24,7 +24,7 @@ class ActiveProjects extends Component {
             .then(responseData => {
                 this.setState({
                     projects: responseData,
-                    message: responseData.status
+                    message: responseData.error
                 });
             });
     }
