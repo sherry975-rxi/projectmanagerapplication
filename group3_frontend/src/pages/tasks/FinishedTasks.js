@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./OngoingTasks.css";
+import Moment from 'react-moment';
 
 class FinishedTasks extends Component {
     constructor(props) {
@@ -25,8 +26,12 @@ class FinishedTasks extends Component {
                 <tr className="line">
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.description}</td>
-                    <td>{taskItem.startDate}</td>
-                    <td>{taskItem.taskDeadline}</td>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.startDate}
+                        </Moment></td>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.taskDeadline}
+                    </Moment></td>
                     <td>
                         <a href="#">
                             <i class="glyphicon glyphicon-plus" />
