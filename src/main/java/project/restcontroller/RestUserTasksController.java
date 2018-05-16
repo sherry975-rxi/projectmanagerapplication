@@ -38,7 +38,7 @@ public class RestUserTasksController {
      * @param userId
      * @return
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID == userId")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getAllTasks(@PathVariable Integer userId) {
 
