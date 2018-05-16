@@ -211,7 +211,7 @@ public class RestProjectTasksController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @taskService.getTaskByID(Long.parseLong(#taskId)).isProjectCollaboratorActiveInTaskTeam(@userService.getUserByID(principal.id)) " +
             "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID")
     @RequestMapping(value = "{taskId}", method = RequestMethod.PATCH)
     public ResponseEntity<TaskDTO> markTaskAsFinished(@PathVariable String taskId) {
