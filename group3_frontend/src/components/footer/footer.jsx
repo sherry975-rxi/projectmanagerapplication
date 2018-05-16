@@ -8,6 +8,7 @@ class Footer extends Component {
     render() {
         return (
             <div className="footer">
+               <div className="sponsor">
                 <a href="https://www.isep.ipp.pt">
                     <img
                         className="logo_isep"
@@ -34,6 +35,7 @@ class Footer extends Component {
                         width="120"
                     />
                 </a>
+                </div>
             </div>
         );
     }
