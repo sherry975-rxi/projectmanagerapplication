@@ -38,13 +38,15 @@ class OngoingTasks extends Component {
                     <td>{taskItem.description}</td>
                     <td>{taskItem.startDate}</td>
                     <td>{taskItem.taskDeadline}</td>
-                    <a href="/marktaskfinished" className="btn btn-primary" role="button">
-                        Mark finish
-                    </a>
                     <td>
                         <a href="#">
                             <i class="glyphicon glyphicon-plus" />
                         </a>
+                    </td>
+                    <td>
+                    <a href="/marktaskfinished" className="btn btn-primary" role="button">
+                        Mark finish
+                    </a>
                     </td>
                 </tr>
             );
