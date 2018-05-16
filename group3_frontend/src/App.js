@@ -6,7 +6,6 @@ import SideBar from "./components/sideBar/SideBar";
 import { Route, Switch } from "react-router-dom";
 import ProjectsPage from "./pages/projects/ProjectsPage";
 import ActiveProjects from "./pages/projects/ActiveProjects";
-import TasksPage from "./pages/tasks/TasksPage";
 import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
@@ -22,6 +21,7 @@ import AllRequests from "./pages/requests/AllRequests";
 import UpdateReport from "./pages/reports/UpdateReport";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
+import OngoingTasks from "./pages/tasks/OngoingTasks";
 
 class App extends Component {
     constructor(props) {
@@ -44,10 +44,10 @@ class App extends Component {
                 <Switch>
                     <Route path="/projects" component={ProjectsPage} />
                     <Route path="/activeprojects" component={ActiveProjects} />
-                    <Route path="/tasks/:userID" component={TasksPage} />
+                    <Route path="/tasks/:userID" component={OngoingTasks} />
                     <Route path="/finishedtasks" component={FinishedTasks} />
                     <Route
-                        path="/marktaskfinished"
+                        path="/marktaskfinished/"
                         component={MarkTaskAsFinished}
                     />
                     <Route path="/users" component={UsersPage} />

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import "./TasksPage.css";
+import "./OngoingTasks.css";
 import "./AddTask";
+import "./MarkTaskAsFinished";
 
-class TasksPage extends Component {
+class OngoingTasks extends Component {
     constructor(props) {
         super(props);
+        this.match;
         this.state = {
             tasks: []
         };
@@ -36,6 +38,9 @@ class TasksPage extends Component {
                     <td>{taskItem.description}</td>
                     <td>{taskItem.startDate}</td>
                     <td>{taskItem.taskDeadline}</td>
+                    <a href="/marktaskfinished" className="btn btn-primary" role="button">
+                        Mark finish
+                    </a>
                     <td>
                         <a href="#">
                             <i class="glyphicon glyphicon-plus" />
@@ -71,4 +76,4 @@ class TasksPage extends Component {
     }
 }
 
-export default TasksPage;
+export default OngoingTasks;
