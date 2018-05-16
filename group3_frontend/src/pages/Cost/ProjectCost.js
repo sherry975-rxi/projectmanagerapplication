@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./ProjectCost.css";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import AuthService from './../loginPage/AuthService';
 
 
 class ProjectCost extends Component {
@@ -11,6 +12,7 @@ class ProjectCost extends Component {
         this.state = {
             project: {}
         };
+        this.AuthService = new AuthService();
     }
 
     componentDidMount() {
@@ -19,10 +21,9 @@ class ProjectCost extends Component {
 
     // Load users from database
     loadProjectWithCostFromServer() {
-        fetch(`/projects/${this.props.match.params.projectID}/cost`, {
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/cost`, {
             method: "get"
         })
-            .then(response => response.json())
             .then(responseData => {
                 this.setState({
                     project: responseData
@@ -56,15 +57,15 @@ class ProjectCost extends Component {
                     {projectItem.projectCost}
                 </p>
                 <hr />
-                <p/>
+                <p />
 
-                <Link to={'/selectprojectcostcalculation/'+ projectItem.projectId} activeClassName="active"> 
-                  <button className="btn btn-warning" >Change Cost Method</button>
+                <Link to={'/selectprojectcostcalculation/' + projectItem.projectId} activeClassName="active">
+                    <button className="btn btn-warning" >Change Cost Method</button>
                 </Link> &nbsp;
 
-                <p/>
-                <p/>
-                <Link to={'/projectdetails/'+ projectItem.projectId} activeClassName="active"> 
+                <p />
+                <p />
+                <Link to={'/projectdetails/' + projectItem.projectId} activeClassName="active">
                     <button className="btn btn-primary" >Back to Project Details</button>
                 </Link> &nbsp;
 

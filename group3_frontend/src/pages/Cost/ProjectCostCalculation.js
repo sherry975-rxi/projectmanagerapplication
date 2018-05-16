@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './ProjectCost.css';
-import { Button, FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
-import {Prompt, Link} from 'react-router-dom';
+import { Button, FormGroup, FormControl, ControlLabel , Alert} from "react-bootstrap";
+import { Prompt, Link } from 'react-router-dom';
+import AuthService from './../loginPage/AuthService';
 
 
 class ProjectCostCalculation extends Component {
@@ -19,6 +20,7 @@ class ProjectCostCalculation extends Component {
                 //res : []
                 //projectCost : ""           
         };
+        this.AuthService = new AuthService();
     }
 
     componentDidMount() {
@@ -27,39 +29,38 @@ class ProjectCostCalculation extends Component {
 
     // Load users from database
     loadProjectWithCostFromServer() {
-        fetch(`/projects/${this.props.match.params.projectID}`, {
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}`, {
             method: "get"
         })
-            .then(response => response.json())
             .then(responseData => {
                 this.setState({
                     project: responseData,
-                    availableMethods : responseData.availableCalculationMethods.split(","),
+                    availableMethods: responseData.availableCalculationMethods.split(","),
                 });
             });
     }
 
-    loadAvailableMethods(){
+    loadAvailableMethods() {
 
         //this.state.res = this.state.availableMethodsX.split(",");
-        
-       /*  for(var i = 0; i < myArray.length; i++){
-            return(
-                <option value={myArray[i]}>
-                {myArray[i]}
+
+        /*  for(var i = 0; i < myArray.length; i++){
+             return(
+                 <option value={myArray[i]}>
+                 {myArray[i]}
+                 </option>
+             );
+
+
+         } */
+
+
+        return this.state.availableMethods.map(option => {
+            return (
+                <option value={option}>
+                    {option}
                 </option>
             );
-       
-            
-        } */
-
-
-        return this.state.availableMethods.map(option =>{
-            return(
-            <option value={option}>
-            {option}
-            </option>
-        );
         })
 
     }
@@ -72,18 +73,18 @@ class ProjectCostCalculation extends Component {
 
     handleChange = event => {
         this.setState({
-          [event.target.id]: event.target.value
+            [event.target.id]: event.target.value
         });
-      }
+    }
 
-      handleSubmit = event => {
+    handleSubmit = event => {
         event.preventDefault();
-        const { 
+        const {
             //projectId,
             calculationMethod,/*,
         projectCost */} = this.state;
 
-          const projectDTOData = {
+        const projectDTOData = {
             //projectId,
             calculationMethod,
             //result: projectCost
@@ -91,17 +92,17 @@ class ProjectCostCalculation extends Component {
 
         console.log(projectDTOData);
 
-        fetch(`/projects/${this.props.match.params.projectID}`, {
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}`, {
             body: JSON.stringify(projectDTOData),
             headers: {
-              'content-type': 'application/json'
+                'content-type': 'application/json'
             },
             method: 'PATCH'
-          }).then(function (response) {
+        }).then(function (response) {
             return response.json();
-          })
+        })
             .then(function (myJson) {
-              console.log(myJson);
+                console.log(myJson);
             });
 
             this.setState({
@@ -122,7 +123,7 @@ class ProjectCostCalculation extends Component {
 
                     <form onSubmit={this.handleSubmit}>
 
-                       {/*  <FormGroup controlId="projectId">
+                    {/*  <FormGroup controlId="projectId">
                         <ControlLabel>Type Project ID</ControlLabel>
                         <FormControl
                             autoFocus
@@ -132,7 +133,7 @@ class ProjectCostCalculation extends Component {
                         />
                         </FormGroup> */}
 
-            {/*             <FormGroup controlId="calculationMethod">
+                    {/*             <FormGroup controlId="calculationMethod">
                         <ControlLabel>Type Calculation Method</ControlLabel>
                         <FormControl
                             autoFocus
@@ -141,9 +142,9 @@ class ProjectCostCalculation extends Component {
                             onChange={this.handleChange}
                         />
                         </FormGroup> */}
-                        
 
-                        {/* <FormGroup controlId="projectCost">
+
+                    {/* <FormGroup controlId="projectCost">
                         <ControlLabel>Project Cost</ControlLabel>
                         <FormControl
                             autoFocus
@@ -165,18 +166,18 @@ class ProjectCostCalculation extends Component {
                                 <option value="" disabled selected>
                                     Select your option
                                 </option>
-                                {this.loadAvailableMethods()}
-                            </FormControl>
-                           
-                        </FormGroup>
+                            {this.loadAvailableMethods()}
+                        </FormControl>
 
-                        <Button
-                            block
+                    </FormGroup>
 
-                            disabled={!this.validateForm()}
-                            type="submit"
-                            >
-                            Apply Calculation Method
+                    <Button
+                        block
+
+                        disabled={!this.validateForm()}
+                        type="submit"
+                    >
+                        Apply Calculation Method
                         </Button>
                         {/* {this.props.myJson.projectCost} */}
                       {/*   <Prompt

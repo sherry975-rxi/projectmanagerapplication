@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./ActiveProjects.css";
 import { Link } from "react-router-dom";
+import AuthService from './../loginPage/AuthService';
 
 class ActiveProjects extends Component {
     constructor(props) {
@@ -9,13 +10,23 @@ class ActiveProjects extends Component {
         this.state = {
             projects: []
         };
+
+        this.AuthService = new AuthService()
     }
 
+
     async componentDidMount() {
-        const request = await axios.get("projects/active");
-        const teste = request.data;
-        this.setState({ projects: teste });
+        this.AuthService.fetch("/projects/active", {
+            method: "get"
+        })
+            .then(responseData => {
+                this.setState({
+                    projects: responseData
+                });
+            });
     }
+
+
 
     renderProjects() {
         return this.state.projects.map(projectItem => {
