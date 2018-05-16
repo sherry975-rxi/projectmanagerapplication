@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 
-        http.formLogin().loginPage("/").defaultSuccessUrl("/", true).permitAll();
+        http.formLogin().loginPage("/");
 
         http.addFilter(new JWTAuthentication(authenticationManager(), jwtUtil));
 
