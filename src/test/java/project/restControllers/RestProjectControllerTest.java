@@ -171,7 +171,6 @@ public class RestProjectControllerTest {
         when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectTest);
         when(taskServiceMock.getTotalCostReportedToProjectUntilNow(projectTest)).thenReturn(7.0);
 
-
         String projectCostOutput = "{\"projectCost\":7.0}";
 
         //when we perform a get request to url /projects/<projectId>/cost
@@ -181,7 +180,7 @@ public class RestProjectControllerTest {
         //then we receive a status OK and the cost of the project
         assertEquals(HttpStatus.OK.value(), response.getStatus());
 
-        assertEquals(projectCostOutput, response.getContentAsString());
+        assertEquals(jacksonProject.write(projectTest).getJson(), response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);
     }
 
