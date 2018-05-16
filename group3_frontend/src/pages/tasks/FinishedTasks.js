@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./TasksPage.css";
+import "./OngoingTasks.css";
 
 class FinishedTasks extends Component {
     constructor(props) {
