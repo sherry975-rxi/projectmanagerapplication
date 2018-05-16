@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 const SMSVALIDATION = "smsValidation";
 const EMAILVALIDATION = "emailValidation";
 
-class signUpPage extends Component {
+class SignUpPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -439,4 +439,4 @@ class signUpPage extends Component {
     }
 }
 
-export default signUpPage;
+export default SignUpPage;

@@ -46,7 +46,7 @@ public class RestProjectTasksController {
      * estimatedStartDate
      * taskDeadLine
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR')and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR')and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "" , method = RequestMethod.POST)
     public ResponseEntity<Task> createTask(@RequestBody Task taskDTO, @PathVariable int projid) {
 
@@ -86,7 +86,7 @@ public class RestProjectTasksController {
      * @return
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value="withoutCollaborators", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getTasksWithoutCollaborators(@PathVariable int projid){
 
@@ -115,7 +115,7 @@ public class RestProjectTasksController {
      *
      * @return ResponseBody with 202-ACCEPTED if deleted or 409-CONFLICT if not
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR')and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR')and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> deleteTask(@PathVariable String taskId) {
 
@@ -138,7 +138,7 @@ public class RestProjectTasksController {
      * @return List of finished tasks from the project
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "finished", method = RequestMethod.GET)
     public ResponseEntity<List<TaskDTO>> getFinishedTasks (@PathVariable int projid) {
 
@@ -167,7 +167,7 @@ public class RestProjectTasksController {
      * @return List of finished tasks from the project
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "unfinished", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getUnfinishedTasks (@PathVariable int projid) {
 
@@ -196,7 +196,7 @@ public class RestProjectTasksController {
      * @return The task found by the id
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.GET)
     public ResponseEntity<TaskDTO> getTask (@PathVariable String taskId) {
 
@@ -212,7 +212,7 @@ public class RestProjectTasksController {
     }
 
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @taskService.getTaskByID(Long.parseLong(#taskId)).isProjectCollaboratorActiveInTaskTeam(@userService.getUserByID(principal.id)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.PATCH)
     public ResponseEntity<TaskDTO> markTaskAsFinished(@PathVariable String taskId) {
 
