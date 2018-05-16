@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './ProjectCost.css';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
 import {Prompt, Link} from 'react-router-dom';
 
 
@@ -15,6 +15,7 @@ class ProjectCostCalculation extends Component {
                 availableMethods : [],
                 calculationMethod: "",
                 submission : false,
+                hideSuccessInfo: "hide-code",
                 //res : []
                 //projectCost : ""           
         };
@@ -79,7 +80,7 @@ class ProjectCostCalculation extends Component {
         event.preventDefault();
         const { 
             //projectId,
-            calculationMethod/*,
+            calculationMethod,/*,
         projectCost */} = this.state;
 
           const projectDTOData = {
@@ -103,7 +104,10 @@ class ProjectCostCalculation extends Component {
               console.log(myJson);
             });
 
-            this.setState({submission:true})
+            this.setState({
+                //submission:true,
+                hideSuccessInfo: ""
+            })
       
         }
 
@@ -115,8 +119,6 @@ class ProjectCostCalculation extends Component {
 
                 <p><b>Project ID:</b> &nbsp;
                 {this.props.match.params.projectID}</p>
-
-                <h3>To change the Project Cost Calculation Method, please write the following informations:</h3>
 
                     <form onSubmit={this.handleSubmit}>
 
@@ -151,7 +153,9 @@ class ProjectCostCalculation extends Component {
                         />
                         </FormGroup> */}
                         <FormGroup controlId="calculationMethod">
-                            <ControlLabel>Calculation Method</ControlLabel>
+                            <ControlLabel>
+                            To change the Project Cost Calculation Method, please select a method:
+                                </ControlLabel>
                             <FormControl
                                 value={this.state.calculationMethod}
                                 onChange={this.handleChange}
@@ -175,10 +179,16 @@ class ProjectCostCalculation extends Component {
                             Apply Calculation Method
                         </Button>
                         {/* {this.props.myJson.projectCost} */}
-                        <Prompt
-                        when={this.state.submission}
+                      {/*   <Prompt
+                        className={this.state.submission}
                         message="Calculation Method Successfully Updated"
-                        />
+                        /> */}
+                        <Alert 
+                            bsStyle="success" 
+                            className={this.state.hideSuccessInfo}>
+                            <strong>Calculation Method Successfully Updated! <br/></strong>
+                            Check project cost
+                        </Alert>
                          <p/>
                          <p/>
 
