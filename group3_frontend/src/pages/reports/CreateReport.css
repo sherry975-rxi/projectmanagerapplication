@@ -1,8 +1,24 @@
 .CreateReport {
+
     padding: 60px 0;
   }
 
   .CreateReport form {
     margin: 30 auto;
     max-width: 320px;
+    
+  }
+
+  .table {
+    background-color: rgb(255, 255, 255);
+}
+
+.line {
+    color: rgb(63, 63, 63); 
+}
+
+.h2 { 
+    font-family: 'Arial Narrow';
+    font-size: 20px;
+    font-weight: bold;
   }

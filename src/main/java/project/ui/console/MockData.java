@@ -1,6 +1,7 @@
 package project.ui.console;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import project.model.*;
 import project.model.taskstateinterface.Finished;
@@ -19,16 +20,19 @@ public class MockData {
     private UserService userService;
     private ProjectService projectService;
     private TaskService taskService;
+    private BCryptPasswordEncoder passwordEncoder;
 
     private MockData() {
 
     }
 
+
     @Autowired
-    public MockData(UserService userService, ProjectService projectService, TaskService taskService) {
+    public MockData(UserService userService, ProjectService projectService, TaskService taskService, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.projectService = projectService;
         this.taskService = taskService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -45,34 +49,39 @@ public class MockData {
     // Instantiate the users, sets their passwords
     User userAdmin = userService.createUser("Teresa Ribeiro", "admin@gmail.com", "001",
             "Administrator", "917653635", street, zipCode, city, city, country);
-		userAdmin.setPassword("123456");
+        userAdmin.setPassword(passwordEncoder.encode("123456"));
+        userAdmin.setUserProfile(Profile.ADMIN);
 		userAdmin.setQuestion("1");
         userAdmin.setAnswer("Kiko");
 
     User userDirector = userService.createUser("Roberto Santos", "director@gmail.com", "002",
             "Director", "917653636", street, zipCode, city, city, country);
-		userDirector.setPassword("abcdef");
-		userAdmin.setQuestion("2");
-        userAdmin.setAnswer("School of Rock");
+        userDirector.setPassword(passwordEncoder.encode("abcdef"));
+        userDirector.setUserProfile(Profile.DIRECTOR);
+        userDirector.setQuestion("2");
+        userDirector.setAnswer("School of Rock");
 
     User userJMatos = userService.createUser("Jorge Matos", "jmatos@gmail.com", "010", "Comercial",
             "937653635", street, zipCode, city, city, country);
-		userJMatos.setPassword("switch");
-		userAdmin.setQuestion("3");
-        userAdmin.setAnswer("My Home");
+        userJMatos.setPassword(passwordEncoder.encode("switch"));
+        userJMatos.setUserProfile(Profile.COLLABORATOR);
+        userJMatos.setQuestion("3");
+        userJMatos.setAnswer("My Home");
 
     User userATirapicos = userService.createUser("Andreia Tirapicos", "atirapicos@gmail.com", "011",
             "Comercial", "955553635", street, "4455-654", "Leca da Palmeira", city, country);
-		userATirapicos.setPassword("tirapicos");
-		userAdmin.setQuestion("1");
-        userAdmin.setAnswer("Rocky, the rock");
+        userATirapicos.setPassword(passwordEncoder.encode("tirapicos"));
+        userATirapicos.setUserProfile(Profile.COLLABORATOR);
+        userATirapicos.setQuestion("1");
+        userATirapicos.setAnswer("Rocky, the rock");
 
     User projectManager = userService.createUser("Sara Pereira", "spereira@gmail.com", "012",
             "Técnica de recursos humanos", "9333333", street, "4455-666", "Leca da Palmeira", city,
             country);
-		projectManager.setPassword("manager");
-		userAdmin.setQuestion("2");
-        userAdmin.setAnswer("South Lake, Utah");
+        projectManager.setPassword(passwordEncoder.encode("manager"));
+        projectManager.setUserProfile(Profile.COLLABORATOR);
+        projectManager.setQuestion("2");
+        projectManager.setAnswer("South Lake, Utah");
 
 
 
@@ -83,17 +92,11 @@ public class MockData {
 		projectService.updateProject(project);
 
 
-		userDirector.setUserProfile(Profile.DIRECTOR);
-		userJMatos.setUserProfile(Profile.COLLABORATOR);
-		userATirapicos.setUserProfile(Profile.COLLABORATOR);
-		projectManager.setUserProfile(Profile.COLLABORATOR);
-
-
-		userService.addUserToUserRepositoryX(userAdmin);
-		userService.addUserToUserRepositoryX(userDirector);
-		userService.addUserToUserRepositoryX(userJMatos);
-		userService.addUserToUserRepositoryX(userATirapicos);
-		userService.addUserToUserRepositoryX(projectManager);
+        userService.updateUser(userAdmin);
+        userService.updateUser(userDirector);
+        userService.updateUser(userJMatos);
+        userService.updateUser(userATirapicos);
+        userService.updateUser(projectManager);
 
         // Create and add tasks to Task repository
         Task taskFinished = taskService.createTask("Remove code smells", project);

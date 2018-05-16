@@ -1,11 +1,12 @@
 package project.restcontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import project.dto.TaskAction;
@@ -13,9 +14,8 @@ import project.model.Task;
 import project.model.User;
 import project.services.TaskService;
 import project.services.UserService;
-
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @RestController
@@ -26,7 +26,7 @@ public class RestUserTasksController {
     TaskService taskService;
 
     @Autowired
-    public RestUserTasksController(TaskService taskService, UserService userService) {
+    public RestUserTasksController(TaskService taskService, HttpServletRequest request, UserService userService) {
 
         this.userService = userService;
         this.taskService = taskService;
@@ -38,6 +38,7 @@ public class RestUserTasksController {
      * @param userId
      * @return
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID == userId")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getAllTasks(@PathVariable Integer userId) {
 
@@ -67,6 +68,7 @@ public class RestUserTasksController {
      * @param userId
      * @return
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "totaltimespent/completed/lastmonth", method = RequestMethod.GET)
     public ResponseEntity<Double> getTotalTimeSpentOnTasksCompletedLastMonth(@PathVariable Integer userId) {
 
@@ -82,6 +84,7 @@ public class RestUserTasksController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "finished", method = RequestMethod.GET)
     public List<Task> getUserFinishedTasks(@PathVariable Integer userId) {
         List<Task> taskList = taskService.getAllFinishedUserTasksInDecreasingOrder(this.userService.getUserByID(userId));
@@ -92,6 +95,7 @@ public class RestUserTasksController {
         return taskList;
     }
 
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId")
     @RequestMapping(value = "pending", method = RequestMethod.GET)
     public List<Task> getPendingTasks(@PathVariable Integer userId) {
         List<Task> taskList = taskService.getStartedNotFinishedUserTaskList(userService.getUserByID(userId));

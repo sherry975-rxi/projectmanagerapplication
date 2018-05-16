@@ -45,7 +45,7 @@ class ActiveProjects extends Component {
         return (
             <div className="ActiveProjects">
                 <h3>
-                    <b>List of Active Projects</b>
+                    <b>Active Projects</b>
                 </h3>
                 <table className="table table-hover">
                     <thead>

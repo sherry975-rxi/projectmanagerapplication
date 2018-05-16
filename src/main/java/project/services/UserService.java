@@ -3,12 +3,16 @@ package project.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.dto.UserDTO;
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
+import project.security.UserSecurity;
+import project.services.exceptions.AuthorizationException;
 import project.services.exceptions.ObjectNotFoundException;
 
 import javax.mail.internet.AddressException;
@@ -29,7 +33,10 @@ import java.util.Optional;
 @Transactional
 public class UserService {
 
-    @Autowired
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
 	private UserRepository userRepository;
 
 	/**
@@ -40,12 +47,77 @@ public class UserService {
 
 	/**
 	 * Constructor created for JPA purposes.
-	 * 
+	 *
 	 * @param userRepository
 	 */
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
+		this.passwordEncoder=passwordEncoder;
+	}
+
+	public static UserSecurity authenticated() {
+		try {
+			return (UserSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		} catch (Exception e) {
+			Logger logger = LoggerFactory.getLogger(SecurityContextHolder.class);
+			logger.error("ERROR!", e);
+			return null;
+		}
+	}
+
+	private static UserSecurity isAuthenticated(int id) {
+		UserSecurity user = UserService.authenticated();
+		if (user == null || !user.hasProfile(Profile.ADMIN) && id != user.getId()) {
+			throw new AuthorizationException("Access denied!");
+		}
+		return user;
+	}
+
+	/**
+	 * If User exists in DB, it will be deleted. If it exists, nothing happens
+	 *
+	 * @param emailToDeleteUser Email of User to delete
+	 */
+	public void deleteUser(String emailToDeleteUser) {
+
+		if (this.userRepository.existsByEmail(emailToDeleteUser)) {
+			this.userRepository.deleteByEmail(emailToDeleteUser);
+		}
+	}
+
+	/**
+	 * Method that saves the user to the database
+	 *
+	 * @param user user to save
+	 */
+	public void addUserToUserRepositoryX(User user) {
+		if (!this.isUserinUserContainer(user)) {
+			this.userRepository.save(user);
+		}
+	}
+
+
+	/**
+	 * Method that saves the user to the database
+	 *
+	 * @param user user to save
+	 */
+	public void updateUser(User user) {
+		this.userRepository.save(user);
+	}
+
+
+	/**
+	 * This method returns a copy of the list of all users (usersContainer)
+	 *
+	 * @return allUsers This is the copy of the List of all Users in the
+	 * userContainer
+	 */
+	public List<User> getAllUsersFromUserContainer() {
+
+		return userRepository.findAll();
+
 	}
 
 	/**
@@ -75,7 +147,7 @@ public class UserService {
 	 * @return the user created and instantiated
 	 */
 	public User createUser(String name, String email, String idNumber, String function, String phone, String street,
-			String zipCode, String city, String district, String country) {
+						   String zipCode, String city, String district, String country) {
 
 		User newUser = new User(name, email, idNumber, function, phone);
 
@@ -91,8 +163,7 @@ public class UserService {
 	/**
 	 * Creates a user from a userDTO
 	 *
-	 * @param userDTO
-	 *            UserDTO to create a user
+	 * @param userDTO UserDTO to create a user
 	 */
 	public void createUserWithDTO(UserDTO userDTO) {
 
@@ -108,7 +179,7 @@ public class UserService {
 		newUser.addAddress(newAddress);
 
 		// Sets the user password
-		newUser.setPassword(userDTO.getPassword());
+		newUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
 		// Set the question
 		newUser.setQuestion(userDTO.getQuestion());
@@ -118,90 +189,6 @@ public class UserService {
 
 		// Adds the user to User repository
 		this.addUserToUserRepositoryX(newUser);
-
-	}
-
-	/**
-	 * If User exists in DB, it will be deleted. If it exists, nothing happens
-	 * @param emailToDeleteUser Email of User to delete
-	 */
-	public void deleteUser(String emailToDeleteUser){
-
-		if(this.userRepository.existsByEmail(emailToDeleteUser)){
-			this.userRepository.deleteByEmail(emailToDeleteUser);
-		}
-	}
-
-	/**
-	 * Method that saves the user to the database
-	 *
-	 * @param user
-	 *            user to save
-	 */
-	public void addUserToUserRepositoryX(User user) {
-		if (!this.isUserinUserContainer(user)) {
-			this.userRepository.save(user);
-		}
-	}
-
-
-	/**
-	 * Method that saves the user to the database
-	 *
-	 * @param user
-	 *            user to save
-	 */
-	public void updateUser(User user) {
-		this.userRepository.save(user);
-	}
-
-
-
-	/**
-	 * This method returns a copy of the list of all users (usersContainer)
-	 *
-	 * @return allUsers This is the copy of the List of all Users in the
-	 *         userContainer
-	 */
-	public List<User> getAllUsersFromUserContainer() {
-
-		return userRepository.findAll();
-
-	}
-
-	/**
-	 * This method returns all users that possess a certain email address. It
-	 * fetches information directly from the Database. \
-	 *
-	 * @param email
-	 *            parameter used to fetch users from the DataBase
-	 * @return all users that possess a certain email address
-	 */
-	public User getUserByEmail(String email) {
-
-		String message = "User not found! Email: ";
-		Optional<User> user = this.userRepository.findByEmail(email);
-
-		return user.orElseThrow(() -> new ObjectNotFoundException(message + email));
-
-	}
-
-	/**
-
-	 * This method returns all users that possess a certain id. It
-	 * fetches information directly from the Database. \
-	 *
-	 * @param id
-	 *            parameter used to fetch users from the DataBase
-	 * @return all users that possess a certain email address
-	 */
-	public User getUserByID(int id) {
-
-		String message = "User not found! ID: ";
-
-		Optional<User> user = this.userRepository.findByUserID(id);
-
-		return user.orElseThrow(() -> new ObjectNotFoundException(message + id));
 
 	}
 
@@ -264,6 +251,24 @@ public class UserService {
 	}
 
 	/**
+	 * This method returns all users that possess a certain email address. It
+	 * fetches information directly from the Database. \
+	 *
+	 * @param email parameter used to fetch users from the DataBase
+	 * @return all users that possess a certain email address
+	 */
+	public User getUserByEmail(String email) {
+
+
+		String message = "User not found! Email: ";
+
+		Optional<User> user = this.userRepository.findByEmail(email);
+
+		return user.orElseThrow(() -> new ObjectNotFoundException(message + email));
+
+	}
+
+	/**
 	 * This method allows the administrator to search users in the Company by
 	 * profile name. This method accesses the DB
 	 *
@@ -273,32 +278,10 @@ public class UserService {
 	 *         certain profile
 	 */
 	public List<User> searchUsersByProfileName(String searchProfileName) {
-			Profile searchProfile = Profile.valueOf(searchProfileName);
+		Profile searchProfile = Profile.valueOf(searchProfileName);
 
-			return userRepository.findAllByUserProfile(searchProfile);
+		return userRepository.findAllByUserProfile(searchProfile);
 
-	}
-
-	/**
-	 * This method checks if an e-mail inserted by the user is valid or not
-	 *
-	 * @param email
-	 *            email
-	 * @return TRUE if email is valid. FALSE if email is invalid
-	 */
-	public boolean isEmailAddressValid(String email) {
-
-        Logger log = LoggerFactory.getLogger(UserService.class);
-		boolean result = true;
-
-		try {
-			InternetAddress emailAddr = new InternetAddress(email);
-			emailAddr.validate();
-		} catch (AddressException ex) {
-			result = false;
-            log.error("Invalid Email!", ex);
-		}
-		return result;
 	}
 
 	public UserRepository getUserRepository() {
@@ -340,6 +323,46 @@ public class UserService {
 	public UserDTO createUserDtoWithUserId(Integer userId) {
 
 		return new UserDTO(getUserByID(userId));
+	}
+
+	/**
+	 * This method checks if an e-mail inserted by the user is valid or not
+	 *
+	 * @param email email
+	 * @return TRUE if email is valid. FALSE if email is invalid
+	 */
+	public boolean isEmailAddressValid(String email) {
+
+		Logger log = LoggerFactory.getLogger(UserService.class);
+		boolean result = true;
+
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			result = false;
+			log.error("Invalid Email!", ex);
+		}
+		return result;
+	}
+
+	/**
+	 * This method returns all users that possess a certain id. It
+	 * fetches information directly from the Database. \
+	 *
+	 * @param id parameter used to fetch users from the DataBase
+	 * @return all users that possess a certain email address
+	 */
+	public User getUserByID(int id) {
+
+		isAuthenticated(id);
+
+		String message = "User not found! ID: ";
+
+		Optional<User> user = this.userRepository.findByUserID(id);
+
+		return user.orElseThrow(() -> new ObjectNotFoundException(message + id));
+
 	}
 
 }

@@ -25,7 +25,9 @@ import project.services.TaskService;
 import project.services.UserService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -170,6 +172,8 @@ public class RestProjectControllerTest {
         when(taskServiceMock.getTotalCostReportedToProjectUntilNow(projectTest)).thenReturn(7.0);
 
 
+        String projectCostOutput = "{\"projectCost\":7.0}";
+
         //when we perform a get request to url /projects/<projectId>/cost
         MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId + "/cost")
                 .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
@@ -177,7 +181,7 @@ public class RestProjectControllerTest {
         //then we receive a status OK and the cost of the project
         assertEquals(HttpStatus.OK.value(), response.getStatus());
 
-        assertEquals(jacksonProject.write(projectTest).getJson(), response.getContentAsString());
+        assertEquals(projectCostOutput, response.getContentAsString());
         verify(projectServiceMock, times(1)).getProjectById(projectId);
     }
 

@@ -1,143 +1,56 @@
-import React, { Component } from 'react';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class ProjectDetails extends Component {
-    
-
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.match
         this.state = {
-            project: {},
-            projectStartDate: "",
-            projectFinishDate: "",
-            dateSplit: []
-                }
+            project: {}
+        };
     }
 
-
-    async componentDidMount(){
-
-        fetch(`/projects/${this.props.match.params.projectID}`, {method: 'get'})
-        .then((response) => response.json())
-            .then((responseData) => {
+    async componentDidMount() {
+        fetch(`/projects/${this.props.match.params.projectID}`, {
+            method: "get"
+        })
+            .then(response => response.json())
+            .then(responseData => {
                 this.setState({
                     project: responseData,
-                    projectManager: responseData.projectManager.name,
-                    projectStartDate: responseData.startdate,
-                    projectFinishDate: responseData.finishdate
-
+                    projectManager: responseData.projectManager.name
                 });
             });
     }
 
-
-    getProjectYear(dateToParse){
-        var date = JSON.stringify(dateToParse);
-        var year = date.substring(1,5);
-
-        return year
-
-    }
-
-    getProjectMonth(dateToParse){
-        var date = JSON.stringify(dateToParse);
-        var month = date.substring(6,8);
-
-        return month
-
-    }
-
-    getProjectDay(dateToParse){
-        var date = JSON.stringify(dateToParse);
-        var day = date.substring(9,11);
-
-        return day
-
-    }
-
-    getProjectHour(dateToParse){
-        var date = JSON.stringify(dateToParse);
-        var hour = date.substring(12,14);
-        
-        return hour
-
-    }
-
-    getProjectMinutes(dateToParse){
-        var date = JSON.stringify(dateToParse);
-        var minutes = date.substring(15,17);
-        
-        return minutes
-
-    }
-
-
-
-    renderProject(){
+    renderProject() {
         var projectWithDetails = this.state.project;
         var projectManagerX = this.state.projectManager;
-
-        var startDate = "";
-
-        if(this.state.projectStartDate != null){
-
-            const startYear = this.getProjectYear(this.state.projectStartDate);
-            const startMonth = this.getProjectMonth(this.state.projectStartDate);
-            const startDay = this.getProjectDay(this.state.projectStartDate);
-            const startHour = this.getProjectHour(this.state.projectStartDate);
-            const startMinute = this.getProjectMinutes(this.state.projectStartDate);
-            startDate = startYear + "-" + startMonth + "-" + startDay + "   " + startHour + ":" + startMinute;
-        }
-
-    
-        var finishDate = "";
-
-        if(this.state.projectFinishDate != null){
-
-            const finishYear = this.getProjectYear(this.state.projectFinishDate);
-            const finishMonth = this.getProjectMonth(this.state.projectFinishDate);
-            const finishDay = this.getProjectDay(this.state.projectFinishDate);
-            const finishHour = this.getProjectHour(this.state.projectFinishDate);
-            const finishMinute = this.getProjectMinutes(this.state.projectFinishDate);
-            finishDate = finishYear + "-" + finishMonth + "-" + finishDay + "   " + finishHour + ":" + finishMinute;
-
-        }
-        
-
-
-
-
-       
-
-            return (
-                <tr className="line"> 
-                    <td><th>{projectWithDetails.projectId}</th></td>
-                    <td>{projectWithDetails.projectStatusName}</td>
-                    <td>{projectWithDetails.nname}</td>
-                    <td>{projectWithDetails.description}</td>
-                    <td>{projectManagerX}</td>
-                    <td>{projectWithDetails.effortUnit}</td>
-                    <td>{projectWithDetails.budget}</td>
-                    <td>{startDate}</td>
-
-                    <td>{finishDate}</td>
-                    <td>{projectWithDetails.calculationMethod}</td>
-                    <td>{projectWithDetails.availableCalculationMethods}</td>
-                    </tr>
-            )
-        }
-    
-
+        return (
+            <tr className="line">
+                <td>
+                    <th>{projectWithDetails.projectId}</th>
+                </td>
+                <td>{projectWithDetails.projectStatusName}</td>
+                <td>{projectWithDetails.name}</td>
+                <td>{projectWithDetails.description}</td>
+                <td>{projectManagerX}</td>
+                <td>{projectWithDetails.effortUnit}</td>
+                <td>{projectWithDetails.budget}</td>
+                <td>{projectWithDetails.startdate}</td>
+                <td>{projectWithDetails.finishdate}</td>
+                <td>{projectWithDetails.calculationMethod}</td>
+                <td>{projectWithDetails.availableCalculationMethods}</td>
+            </tr>
+        );
+    }
 
     render() {
         return (
-
             <div className=" table-striped">
-                <h3><b>Project Details</b></h3>
+                <h3>
+                    <b>Project Details</b>
+                </h3>
                 <table className="table table-hover">
-             
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -152,19 +65,34 @@ class ProjectDetails extends Component {
                             <th>Calculation Method</th>
                             <th>Available Calculation Methods</th>
                         </tr>
-
                     </thead>
-                    <tbody>
-                        {this.renderProject()}
-                    </tbody>
-                    </table>
-                    
-                    </div>
-
+                    <tbody>{this.renderProject()}</tbody>
+                </table>
+                <p />
+                <Link
+                    to={"/projectcost/" + this.state.project.projectId}
+                    activeClassName="active"
+                >
+                    <button className="btn btn-info">
+                        Get Current Project Cost
+                    </button>
+                </Link>{" "}
+                &nbsp;
+                <Link
+                    to={
+                        "/selectprojectcostcalculation/" +
+                        this.state.project.projectId
+                    }
+                    activeClassName="active"
+                >
+                    <button className="btn btn-warning">
+                        Change Calculation Method
+                    </button>
+                </Link>{" "}
+                &nbsp;
+            </div>
         );
     }
-
 }
-
 
 export default ProjectDetails;

@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import "./OngoingTasks.css";
+import AuthService from '../loginPage/AuthService';
+import Moment from 'react-moment';
+
 
 class FinishedTasks extends Component {
     constructor(props) {
@@ -7,11 +10,11 @@ class FinishedTasks extends Component {
         this.state = {
             tasks: []
         };
+        this.AuthService = new AuthService();
     }
 
     async componentDidMount() {
-        fetch("users/7/tasks/finished", { method: "get" })
-            .then(response => response.json())
+        this.AuthService.fetch("users/7/tasks/finished", { method: "get" })
             .then(responseData => {
                 this.setState({
                     tasks: responseData
@@ -25,8 +28,12 @@ class FinishedTasks extends Component {
                 <tr className="line">
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.description}</td>
-                    <td>{taskItem.startDate}</td>
-                    <td>{taskItem.taskDeadline}</td>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.startDate}
+                    </Moment></td>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.taskDeadline}
+                    </Moment></td>
                     <td>
                         <a href="#">
                             <i class="glyphicon glyphicon-plus" />
