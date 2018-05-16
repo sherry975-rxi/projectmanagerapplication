@@ -10,7 +10,6 @@ class FinishedTasks extends Component {
         super(props);
         this.state = {
             tasks: [],
-            message: ""
         };
         this.AuthService = new AuthService();
     }
@@ -21,12 +20,12 @@ class FinishedTasks extends Component {
                 console.log(responseData)
                 this.setState({
                     tasks: responseData,
-                    message: responseData.error
                 });
             });
     }
 
     renderFinishedTasks() {
+
         return this.state.tasks.map(taskItem => {
             return (
                 <tr className="line">
@@ -46,14 +45,11 @@ class FinishedTasks extends Component {
                 </tr>
             );
         });
+
     }
 
     render() {
-
-        if (this.state.message != null) {
-            return (<Error message={this.state.message} />)
-        }
-        else {
+        try {
             return (
                 <div className=" table-striped">
                     <h3>
@@ -73,8 +69,11 @@ class FinishedTasks extends Component {
                 </div>
             );
         }
+        catch (error) {
+            return (<Error message="NOT AUTHORIZED!" />)
+        }
     }
-
 }
+
 
 export default FinishedTasks;
