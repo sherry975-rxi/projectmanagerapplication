@@ -4,6 +4,7 @@
 package project.ui.console.loadfiles.loaduser;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -30,12 +31,14 @@ public class LoadUserXmlVersion1 implements LoadUserXmlVersion {
 	ProjectService projectService;
 	UserService userService;
 	TaskService taskService;
+	BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
-	public LoadUserXmlVersion1(ProjectService projectService, UserService userService, TaskService taskService){
+	public LoadUserXmlVersion1(ProjectService projectService, UserService userService, TaskService taskService, BCryptPasswordEncoder passwordEncoder) {
 		this.projectService = projectService;
 		this.userService = userService;
 		this.taskService = taskService;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	public void usersReader(String pathFile) throws ParserConfigurationException, SAXException, IOException {
@@ -66,7 +69,7 @@ public class LoadUserXmlVersion1 implements LoadUserXmlVersion {
 		User eachUser = new User();
 		eachUser.setName(eElementUtilizador.getElementsByTagName("nome_utilizador").item(0).getTextContent());
 		eachUser.setEmail(eElementUtilizador.getElementsByTagName("email_utilizador").item(0).getTextContent());
-		eachUser.setPassword(eElementUtilizador.getElementsByTagName("password").item(0).getTextContent());
+		eachUser.setPassword(passwordEncoder.encode(eElementUtilizador.getElementsByTagName("password").item(0).getTextContent()));
 		eachUser.setPhone(eElementUtilizador.getElementsByTagName("telefone").item(0).getTextContent());
 
 		// sets users as Collaborators when they are created

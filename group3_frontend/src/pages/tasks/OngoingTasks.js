@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import "./OngoingTasks.css";
 import "./AddTask";
 import "./MarkTaskAsFinished";
+import axios from 'axios';
+import decode from 'jwt-decode';
+import AuthService from '../loginPage/AuthService';
+import Moment from 'react-moment';
+
 
 class OngoingTasks extends Component {
     constructor(props) {
@@ -10,22 +15,16 @@ class OngoingTasks extends Component {
         this.state = {
             tasks: []
         };
+        this.AuthService = new AuthService()
     }
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    componentDidMount() {
-        this.loadTasks();
-    }
-
-    loadTasks() {
-        fetch(`/users/${this.props.match.params.userID}/tasks/pending`, {
-            method: "get"
-        })
-            .then(response => response.json())
-            .then(responseData => {
+    async componentDidMount() {
+        this.AuthService.fetch(`/users/${this.props.match.params.userID}/tasks/pending`, { method: 'get' })
+            .then((responseData) => {
                 this.setState({
-                    tasks: responseData
+                    tasks: responseData,
                 });
             });
     }
@@ -36,15 +35,21 @@ class OngoingTasks extends Component {
                 <tr className="line">
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.description}</td>
-                    <td>{taskItem.startDate}</td>
-                    <td>{taskItem.taskDeadline}</td>
-                    <a href="/marktaskfinished" className="btn btn-primary" role="button">
-                        Mark finish
-                    </a>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.startDate}
+                    </Moment></td>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.taskDeadline}
+                    </Moment></td>
                     <td>
                         <a href="#">
                             <i class="glyphicon glyphicon-plus" />
                         </a>
+                    </td>
+                    <td>
+                        <a href="/marktaskfinished" className="btn btn-primary" role="button">
+                            Mark finish
+                    </a>
                     </td>
                 </tr>
             );

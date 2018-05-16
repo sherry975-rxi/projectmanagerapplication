@@ -5,10 +5,12 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
+    "moment": "^2.22.1",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-sidebar": "0.0.1",
     "react-dom": "^16.3.2",
+    "react-moment": "^0.7.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4"
   },
@@ -18,5 +20,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8080/"
+  "proxy": "http://localhost:8080/",
+  "devDependencies": {
+    "jest": "^22.4.3"
+  }
 }

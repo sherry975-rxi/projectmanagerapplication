@@ -1,6 +1,7 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import project.model.CodeGenerator;
 import project.model.User;
@@ -14,6 +15,9 @@ import java.io.IOException;
 
 @Controller
 public class US105CreatePasswordAndAuthenticationMechanismController {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserService userService;
@@ -39,7 +43,7 @@ public class US105CreatePasswordAndAuthenticationMechanismController {
      */
     public void setUserPassword(User user, String newPassword) {
 
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
 
         userService.updateUser(user);
     }

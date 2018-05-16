@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.model.Profile;
 import project.model.User;
@@ -12,7 +13,6 @@ import project.services.UserService;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("users")
@@ -31,6 +31,7 @@ public class RestUserController {
      * it also generates the links to change the details or go to the users tasks and projects
      * @return
      */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #userId == principal.id or hasRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public ResponseEntity<User> seeUserDetails(@PathVariable int userId){
         ResponseEntity<User> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -58,6 +59,7 @@ public class RestUserController {
      * This method will return a list of all the users registered in the system.
      */
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/allUsers", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(){
 
@@ -83,6 +85,7 @@ public class RestUserController {
      * @param emailToSearch
      * @return ResponseEntity
      */
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/email/{emailToSearch}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> searchUsersByEmail(@PathVariable String emailToSearch) {
 
@@ -104,6 +107,7 @@ public class RestUserController {
      * @param profileNameToSearch
      * @return ResponseEntity
      */
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/profiles/{profileNameToSearch}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> searchUsersByProfile(@PathVariable String profileNameToSearch) {
 
@@ -125,6 +129,7 @@ public class RestUserController {
      * @return Http.Status.Ok when done sucessfully and Http.Status.404_Not_Found when a user doesn't exist.
      *
      */
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/profiles" , method = RequestMethod.PATCH)
     public ResponseEntity<User> changeUserProfile (@RequestBody User updatedProfile) {
 

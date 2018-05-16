@@ -1,27 +1,40 @@
 package project.controllers;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.model.*;
-import project.services.*;
+import project.services.ProjectService;
+import project.services.TaskService;
+import project.services.UserService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ComponentScan(basePackages = { "project.services", "project.controllers", "project.model" })
+@ActiveProfiles("test")
+@ComponentScan(basePackages = {"project.services", "project.controllers", "project.model", "project.security", "project.dto"})
 public class PrintProjectInfoControllerTest {
 
 	User user1;
 	User joaoPM;
 	ProjectCollaborator collab1, collab2;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
 	@Autowired
 	ProjectService projectContainer;

@@ -1,9 +1,6 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.hateoas.ResourceSupport;
@@ -47,7 +44,9 @@ public class User extends ResourceSupport implements Serializable {
 	private Profile userProfile;
 
 	private boolean systemUserStateActive;
-	private String password;
+
+    @JsonIgnore
+    private String password;
 	private String question;
 	private String answer;
 
@@ -372,4 +371,8 @@ public class User extends ResourceSupport implements Serializable {
 		this.answer = answer;
 	}
 
+
+    public String getPassword() {
+        return password;
+    }
 }

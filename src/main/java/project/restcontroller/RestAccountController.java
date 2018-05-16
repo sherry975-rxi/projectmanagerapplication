@@ -4,17 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import project.dto.CodeCheckDTO;
+import project.dto.CredentialsDTO;
 import project.dto.UserDTO;
 import project.model.CodeGenerator;
 import project.model.JsonAsString;
 import project.model.User;
 import project.model.sendcode.SendCodeFactory;
 import project.model.sendcode.ValidationMethod;
+import project.security.JWTUtil;
+import project.security.UserSecurity;
 import project.services.UserService;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +32,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/account/")
 public class RestAccountController {
+
+    private final JWTUtil jwtUtil;
 
     private final UserService userService;
 
@@ -50,8 +56,9 @@ public class RestAccountController {
 
 
     @Autowired
-    public RestAccountController(UserService userService) {
+    public RestAccountController(UserService userService, JWTUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     /**
@@ -88,6 +95,7 @@ public class RestAccountController {
      * @param userDTO
      * @return response entity
      */
+    @PreAuthorize("permitAll()")
     @RequestMapping(value = "register" , method = RequestMethod.POST)
     public ResponseEntity<List<Link>> createUser(@RequestBody UserDTO userDTO) {
 
@@ -139,7 +147,7 @@ public class RestAccountController {
     }
 
     @RequestMapping(value="logIn", method= RequestMethod.POST)
-    public ResponseEntity<User> doLogin(@RequestBody UserDTO logInDTO) {
+    public ResponseEntity<User> doLogin(@RequestBody CredentialsDTO logInDTO) {
 
         ResponseEntity<User> response = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
@@ -167,7 +175,7 @@ public class RestAccountController {
         }
 
 
-        Link userDetails = linkTo(RestUserController.class).slash("users").slash(toLogIn.getUserID()).withSelfRel();
+        Link userDetails = linkTo(RestUserController.class).slash(toLogIn.getUserID()).withSelfRel();
         toLogIn.add(userDetails);
 
         response = new ResponseEntity<>(toLogIn, HttpStatus.OK);
@@ -285,13 +293,12 @@ public class RestAccountController {
     }
 
     @RequestMapping(value = "performValidation/verificateCode/{userEmail}", method = RequestMethod.POST)
-    public ResponseEntity<Link> verificateCode(@RequestBody CodeCheckDTO codeToCheck, @PathVariable String userEmail){
+    public ResponseEntity<Link> verificateCode(@RequestBody String codeToCheck, @PathVariable String userEmail){
 
         Boolean doesCodeMatch = false;
         if(codeDTOMap.containsKey(userEmail)){
-            doesCodeMatch = codeDTOMap.get(userEmail).equals(codeToCheck.getCodeToCheck());
+            doesCodeMatch = codeDTOMap.get(userEmail).equals(codeToCheck);
         }
-
 
         Link login = linkTo(RestAccountController.class).slash("logIn").withRel("loginUser");
 
@@ -303,5 +310,13 @@ public class RestAccountController {
             return new ResponseEntity<>(login, HttpStatus.OK);
         }
         else return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
+    public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
+        UserSecurity userSec = UserService.authenticated();
+        String token = jwtUtil.generateToken(userSec.getUsername());
+        response.addHeader("Authorization", "Bearer " + token);
+        return ResponseEntity.noContent().build();
     }
 }

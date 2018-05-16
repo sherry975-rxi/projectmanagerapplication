@@ -4,7 +4,6 @@ import NavBar from "./components/navBar/NavBar";
 import Profile from "./components/navBar/Profile.js";
 import SideBar from "./components/sideBar/SideBar";
 import { Route, Switch } from "react-router-dom";
-import ProjectsPage from "./pages/projects/ProjectsPage";
 import ActiveProjects from "./pages/projects/ActiveProjects";
 import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
@@ -22,6 +21,8 @@ import UpdateReport from "./pages/reports/UpdateReport";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
 import OngoingTasks from "./pages/tasks/OngoingTasks";
+import TasksPage from "./pages/tasks/TasksPage";
+
 
 class App extends Component {
     constructor(props) {
@@ -42,10 +43,10 @@ class App extends Component {
             <SideBar isVisible={this.state.isVisible} />
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
-                    <Route path="/projects" component={ProjectsPage} />
                     <Route path="/activeprojects" component={ActiveProjects} />
                     <Route path="/tasks/:userID" component={OngoingTasks} />
                     <Route path="/finishedtasks" component={FinishedTasks} />
+                    <Route path="/tasks" component={TasksPage} />
                     <Route
                         path="/marktaskfinished/"
                         component={MarkTaskAsFinished}

@@ -69,10 +69,10 @@ class UpdateReport extends Component {
 
     render() {
         return (
-            <div className="CreateReport">
-                <h3 className="page-header">
-                    <b>Update Report:</b>
-                </h3>
+            <div className=" table-striped">
+            <h3>
+            <b>Update Report</b>
+            </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="reportId" bsSize="large">
                         <ControlLabel>Type Report ID</ControlLabel>
