@@ -38,7 +38,7 @@ public class RestUserTasksController {
      * @param userId
      * @return
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID == userId")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #userId == principal.id")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getAllTasks(@PathVariable Integer userId) {
 
@@ -95,7 +95,7 @@ public class RestUserTasksController {
         return taskList;
     }
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID == userId")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #userId == principal.id")
     @RequestMapping(value = "pending", method = RequestMethod.GET)
     public List<Task> getPendingTasks(@PathVariable Integer userId) {
         List<Task> taskList = taskService.getStartedNotFinishedUserTaskList(userService.getUserByID(userId));

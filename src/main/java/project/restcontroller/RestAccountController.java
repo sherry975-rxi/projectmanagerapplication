@@ -173,7 +173,7 @@ public class RestAccountController {
         }
 
 
-        Link userDetails = linkTo(RestUserController.class).slash("users").slash(toLogIn.getUserID()).withSelfRel();
+        Link userDetails = linkTo(RestUserController.class).slash(toLogIn.getUserID()).withSelfRel();
         toLogIn.add(userDetails);
 
         response = new ResponseEntity<>(toLogIn, HttpStatus.OK);

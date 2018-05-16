@@ -56,8 +56,8 @@ public class RestProjectController  {
     /**
      * This method returns a ResponseEntity that contains the project details
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and projectService.isUserActiveInProject(#user,projid) " +
-            "or hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID " +
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByID(principal.id),@projectService.getProjectById(#projectId)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
             "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value= "{projectId}", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
@@ -81,7 +81,7 @@ public class RestProjectController  {
      * @param projectId
      * @return
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID " +
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
             "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
     public ResponseEntity<Project> updateProject(@RequestBody Project projectUpdates, @PathVariable int projectId){
@@ -101,7 +101,7 @@ public class RestProjectController  {
     /**
      * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID==projectService.getProjectById(projid).projectManager.userID " +
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
             "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/{projectId}/cost", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
