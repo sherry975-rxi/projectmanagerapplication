@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./SignUpPage.css";
 import {
     Button,
+    ButtonToolbar,
     FormGroup,
     FormControl,
     ControlLabel,
@@ -33,7 +34,8 @@ class signUpPage extends Component {
             verificationCode: "",
             hideWrongCode: "hide-code",
             signupStep: 1,
-            aceptTerms: false
+            aceptTerms: false,
+            hideExistingEmail: "hide-email"
         };
     }
 
@@ -110,7 +112,10 @@ class signUpPage extends Component {
             },
             method: "POST"
         })
-            .then(response => response.json())
+            .then(response => {
+                console.log("response--------", response);
+                return response.json();
+            })
             .then(jsonResponse => {
                 jsonResponse.forEach(element => {
                     if (
@@ -125,13 +130,22 @@ class signUpPage extends Component {
                 this.setState({
                     signupStep: 2
                 });
+            })
+            .catch(error => {
+                this.setState({
+                    hideExistingEmail: ""
+                });
+                console.log(
+                    "------------------cenass erro no email----------------\n",
+                    error
+                );
             });
     };
 
     stepOneForm = () => (
         <div className="SignUp">
             <form onSubmit={this.handleSubmit}>
-                <FormGroup controlId="name">
+                <FormGroup controlId="name" className="formField">
                     <ControlLabel>Name</ControlLabel>
                     <FormControl
                         autoFocus
@@ -141,7 +155,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="email">
+                <FormGroup controlId="email" className="formField">
                     <ControlLabel>Email</ControlLabel>
                     <FormControl
                         autoFocus
@@ -151,7 +165,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="userFunction">
+                <FormGroup controlId="userFunction" className="formField">
                     <ControlLabel>Function</ControlLabel>
                     <FormControl
                         autoFocus
@@ -161,7 +175,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="phone">
+                <FormGroup controlId="phone" className="formField">
                     <ControlLabel>Phone</ControlLabel>
                     <FormControl
                         autoFocus
@@ -171,7 +185,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="street">
+                <FormGroup controlId="street" className="formField">
                     <ControlLabel>Street</ControlLabel>
                     <FormControl
                         autoFocus
@@ -181,7 +195,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="zipCode">
+                <FormGroup controlId="zipCode" className="formField">
                     <ControlLabel>Zip Code</ControlLabel>
                     <FormControl
                         autoFocus
@@ -191,7 +205,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="city">
+                <FormGroup controlId="city" className="formField">
                     <ControlLabel>City</ControlLabel>
                     <FormControl
                         autoFocus
@@ -201,7 +215,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="district">
+                <FormGroup controlId="district" className="formField">
                     <ControlLabel>District</ControlLabel>
                     <FormControl
                         autoFocus
@@ -211,7 +225,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="country">
+                <FormGroup controlId="country" className="formField">
                     <ControlLabel>Country</ControlLabel>
                     <FormControl
                         autoFocus
@@ -221,7 +235,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="password">
+                <FormGroup controlId="password" className="formField">
                     <ControlLabel>Password</ControlLabel>
                     <FormControl
                         value={this.state.password}
@@ -230,7 +244,7 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="securityQuestion">
+                <FormGroup controlId="securityQuestion" className="formField">
                     <ControlLabel>Security Question</ControlLabel>
                     <FormControl
                         value={this.state.securityQuestion}
@@ -253,7 +267,7 @@ class signUpPage extends Component {
                     </FormControl>
                 </FormGroup>
 
-                <FormGroup controlId="securityAnswer">
+                <FormGroup controlId="securityAnswer" className="formField">
                     <ControlLabel>Security Answer</ControlLabel>
                     <FormControl
                         autoFocus
@@ -263,8 +277,8 @@ class signUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="idNumber">
-                    <ControlLabel>ID Number</ControlLabel>
+                <FormGroup controlId="idNumber" className="formField">
+                    <ControlLabel>Company collaborator ID</ControlLabel>
                     <FormControl
                         autoFocus
                         type="text"
@@ -275,8 +289,8 @@ class signUpPage extends Component {
 
                 <div className="termsAndConditions">
                     By using this application, you agree to be bound by, and to
-                    comply with these Terms and Conditions. To proceed with
-                    registration you must accept access conditions.
+                    comply with these <b>Terms and Conditions</b>. To proceed
+                    with registration you must accept access conditions.
                 </div>
 
                 <Checkbox
@@ -285,6 +299,14 @@ class signUpPage extends Component {
                 >
                     I agree to the Terms and Conditions.
                 </Checkbox>
+
+                <Alert
+                    bsStyle="danger"
+                    className={this.state.hideExistingEmail}
+                >
+                    <strong>This email address already exists!</strong> Try
+                    again.
+                </Alert>
 
                 <Button
                     block
@@ -318,26 +340,25 @@ class signUpPage extends Component {
     };
 
     stepTwoValidation = (title, i) => (
-        <div>
+        <div className="stepTwoValidation">
             <div className="chooseValidationMethodText">
-                {" "}
                 To continue with sign up process, you will receive a validation
                 code by SMS or email. Choose the method:
             </div>
-            <Button
-                bsStyle="primary"
-                id="smsValidation"
-                onClick={this.handleSignUpValidation}
-            >
-                SMS
-            </Button>
-            <Button
-                bsStyle="primary"
-                id="emailValidation"
-                onClick={this.handleSignUpValidation}
-            >
-                Email
-            </Button>
+            <ButtonToolbar className="buttonValidationToolbar">
+                <Button
+                    id="smsValidation"
+                    onClick={this.handleSignUpValidation}
+                >
+                    SMS
+                </Button>
+                <Button
+                    id="emailValidation"
+                    onClick={this.handleSignUpValidation}
+                >
+                    Email
+                </Button>
+            </ButtonToolbar>
         </div>
     );
 
@@ -374,7 +395,7 @@ class signUpPage extends Component {
         <div className="validationCodeForm">
             <form onSubmit={this.handleCodeSubmit}>
                 <FormGroup controlId="verificationCode">
-                    <ControlLabel>Verification code</ControlLabel>
+                    <ControlLabel>Validation code</ControlLabel>
                     <FormControl
                         autoFocus
                         type="text"
@@ -393,8 +414,10 @@ class signUpPage extends Component {
     );
 
     stepFourConfirmation = () => (
-        <div>
-            <div>Registration completed successfully!</div>
+        <div className="stepFourConfirmation">
+            <div className="sucessRegistrationText">
+                Registration completed successfully!
+            </div>
             <div className="LogIn">
                 <NavLink className="btn btn-primary btn-lg" to="/login">
                     Log In
