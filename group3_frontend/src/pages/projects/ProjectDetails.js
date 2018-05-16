@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import AuthService from './../loginPage/AuthService';
 
 class ProjectDetails extends Component {
     constructor(props) {
@@ -10,10 +11,9 @@ class ProjectDetails extends Component {
     }
 
     async componentDidMount() {
-        fetch(`/projects/${this.props.match.params.projectID}`, {
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}`, {
             method: "get"
         })
-            .then(response => response.json())
             .then(responseData => {
                 this.setState({
                     project: responseData,

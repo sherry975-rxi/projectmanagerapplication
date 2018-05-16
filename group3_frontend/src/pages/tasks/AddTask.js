@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import AuthService from './../loginPage/AuthService';
 
 class AddTask extends Component {
     constructor(props) {
@@ -8,6 +9,7 @@ class AddTask extends Component {
             description: "",
             projectId: ""
         };
+        this.AuthService = new AuthService()
     }
 
     handleChange = event => {
@@ -27,17 +29,11 @@ class AddTask extends Component {
 
         console.log(taskDetails);
 
-        fetch("/projects/" + this.state.projectId + "/tasks/", {
+        this.AuthService.fetch("/projects/" + this.state.projectId + "/tasks/", {
             body: JSON.stringify(taskDetails),
-            headers: {
-                "content-type": "application/json"
-            },
             method: "POST"
         })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(myJson) {
+            .then(function (myJson) {
                 console.log(myJson);
             });
     };
@@ -45,9 +41,9 @@ class AddTask extends Component {
     render() {
         return (
             <div className=" table-striped">
-            <h3>
-            <b>Add Task</b>
-            </h3>
+                <h3>
+                    <b>Add Task</b>
+                </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="description" bsSize="large">
                         <ControlLabel>Task Description</ControlLabel>

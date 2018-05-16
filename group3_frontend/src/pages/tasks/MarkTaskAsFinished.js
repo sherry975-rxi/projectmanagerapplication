@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./MarkTaskAsFinished.css";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import AuthService from '../loginPage/AuthService';
 
 class MarkTaskAsFinished extends Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class MarkTaskAsFinished extends Component {
         this.state = {
             id: ""
         };
+        this.AuthService = new AuthService();
     }
 
     handleChange = event => {
@@ -19,17 +21,16 @@ class MarkTaskAsFinished extends Component {
         event.preventDefault();
 
         // Value of id is inside of the response const.
-        const response = await axios.patch(`projects/2/tasks/${this.state.id}`);
-        console.log(response);
-        console.log(response.data);
+        this.AuthService.fetch(`projects/2/tasks/${this.state.id}`);
+
     };
 
     render() {
         return (
             <div className=" table-striped">
-            <h3>
-            <b>Mark task as finished</b>
-            </h3>
+                <h3>
+                    <b>Mark task as finished</b>
+                </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="id" bsSize="large">
                         <ControlLabel>Type Task ID</ControlLabel>
