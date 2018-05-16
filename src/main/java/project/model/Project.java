@@ -49,12 +49,12 @@ public class Project extends ResourceSupport implements Serializable{
 	private Calendar startdate;
 	private Calendar finishdate;
 
-    @Enumerated(EnumType.STRING)
-    private CalculationMethod calculationMethod;
+	@Enumerated(EnumType.STRING)
+	private CalculationMethod calculationMethod;
 
-    private double projectCost;
+	private double projectCost;
 
-    private String availableCalculationMethods;
+	private String availableCalculationMethods;
 
     public static final int PLANNING = 0; // planeado
 	public static final int INITIATION = 1; // arranque

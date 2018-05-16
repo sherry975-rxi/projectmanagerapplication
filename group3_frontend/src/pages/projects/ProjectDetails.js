@@ -8,6 +8,7 @@ class ProjectDetails extends Component {
         this.state = {
             project: {}
         };
+        this.AuthService = new AuthService()
     }
 
     async componentDidMount() {

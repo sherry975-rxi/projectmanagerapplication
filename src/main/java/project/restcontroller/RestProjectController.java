@@ -104,22 +104,24 @@ public class RestProjectController  {
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
             "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/{projectId}/cost", method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
+    public ResponseEntity<Project> getProjectCost(@PathVariable int projectId) {
         Project project = this.projectService.getProjectById(projectId);
-        Map<String, Double> projectCost = new HashMap<>();
-        projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+        //Map<String, Double> projectCost = new HashMap<>();
+        //projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+        project.setProjectCost(taskService.getTotalCostReportedToProjectUntilNow(project));
 
         Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECT_DETAILS_REL).withType(RequestMethod.GET.name());
         project.add(reference);
 
-        return  ResponseEntity.ok().body(projectCost);
+        return ResponseEntity.ok().body(project);
     }
 
-    /**
-     * Creates a Project with the parameters Name, Description and Project Manager if the response body only has this
-     * info. In case the Response Body has an EffortUnit and/or a Budget, the project will be created with the all the
-     * Response body information.
-     */
+
+        /**
+         * Creates a Project with the parameters Name, Description and Project Manager if the response body only has this
+         * info. In case the Response Body has an EffortUnit and/or a Budget, the project will be created with the all the
+         * Response body information.
+         */
     @PreAuthorize("hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "" , method = RequestMethod.POST)
     public ResponseEntity<Project> createProject(@RequestBody Project projectDTO) {
