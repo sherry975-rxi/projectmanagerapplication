@@ -31,15 +31,6 @@ class ProjectCost extends Component {
             });
     }
 
-    // Load users from database
-    loadUsersFromServer() {
-        this.AuthService.fetch("/projects/2/cost", { method: "get" })
-            .then(responseData => {
-                this.setState({
-                    project: responseData
-                });
-            });
-    }
 
     renderProjectWithCost() {
         var projectItem = this.state.project;
