@@ -21,9 +21,16 @@ class MarkTaskAsFinished extends Component {
         event.preventDefault();
 
         // Value of id is inside of the response const.
-        this.AuthService.fetch(`projects/2/tasks/${this.state.id}`);
+        this.AuthService.fetch(`projects/2/tasks/${this.state.id}`, {
+            
+            method: "PATCH"
+        })
+        .then(function (myJson) {
+            console.log(myJson);
+        });
+};
 
-    };
+    
 
     render() {
         return (
