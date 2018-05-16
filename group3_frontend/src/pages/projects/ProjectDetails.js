@@ -79,21 +79,34 @@ class ProjectDetails extends Component {
         var projectWithDetails = this.state.project;
         var projectManagerX = this.state.projectManager;
 
-        const startYear = this.getProjectYear(this.state.projectStartDate);
-        const startMonth = this.getProjectMonth(this.state.projectStartDate);
-        const startDay = this.getProjectDay(this.state.projectStartDate);
-        const startHour = this.getProjectHour(this.state.projectStartDate);
-        const startMinute = this.getProjectMinutes(this.state.projectStartDate);
+        var startDate = "";
 
-        const finishYear = this.getProjectYear(this.state.projectFinishDate);
-        const finishMonth = this.getProjectMonth(this.state.projectFinishDate);
-        const finishDay = this.getProjectDay(this.state.projectFinishDate);
-        const finishHour = this.getProjectHour(this.state.projectFinishDate);
-        const finishMinute = this.getProjectMinutes(this.state.projectFinishDate);
+        if(this.state.projectStartDate != null){
+
+            const startYear = this.getProjectYear(this.state.projectStartDate);
+            const startMonth = this.getProjectMonth(this.state.projectStartDate);
+            const startDay = this.getProjectDay(this.state.projectStartDate);
+            const startHour = this.getProjectHour(this.state.projectStartDate);
+            const startMinute = this.getProjectMinutes(this.state.projectStartDate);
+            startDate = startYear + "-" + startMonth + "-" + startDay + "   " + startHour + ":" + startMinute;
+        }
+
+    
+        var finishDate = "";
+
+        if(this.state.projectFinishDate != null){
+
+            const finishYear = this.getProjectYear(this.state.projectFinishDate);
+            const finishMonth = this.getProjectMonth(this.state.projectFinishDate);
+            const finishDay = this.getProjectDay(this.state.projectFinishDate);
+            const finishHour = this.getProjectHour(this.state.projectFinishDate);
+            const finishMinute = this.getProjectMinutes(this.state.projectFinishDate);
+            finishDate = finishYear + "-" + finishMonth + "-" + finishDay + "   " + finishHour + ":" + finishMinute;
+
+        }
+        
 
 
-        const startDate = startYear + "-" + startMonth + "-" + startDay + "   " + startHour + ":" + startMinute;
-        const finishDate = finishYear + "-" + finishMonth + "-" + finishDay + "   " + finishHour + ":" + finishMinute;
 
 
        
