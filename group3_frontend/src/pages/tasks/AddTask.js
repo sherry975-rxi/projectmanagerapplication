@@ -44,10 +44,10 @@ class AddTask extends Component {
 
     render() {
         return (
-            <div className="Add task">
-                <h3 className="page-header">
-                    <b>Add task:</b>
-                </h3>
+            <div className=" table-striped">
+            <h3>
+            <b>Add Task</b>
+            </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="description" bsSize="large">
                         <ControlLabel>Task Description</ControlLabel>

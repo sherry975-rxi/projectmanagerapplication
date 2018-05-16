@@ -23,6 +23,7 @@ import ProjectDetails from "./pages/projects/ProjectDetails";
 import OngoingTasks from "./pages/tasks/OngoingTasks";
 import TasksPage from "./pages/tasks/TasksPage";
 
+
 class App extends Component {
     constructor(props) {
         super(props);

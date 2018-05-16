@@ -5,6 +5,7 @@ import "./MarkTaskAsFinished";
 import axios from 'axios';
 import decode from 'jwt-decode';
 import AuthService from '../loginPage/AuthService';
+import Moment from 'react-moment';
 
 
 class OngoingTasks extends Component {
@@ -34,8 +35,12 @@ class OngoingTasks extends Component {
                 <tr className="line">
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.description}</td>
-                    <td>{taskItem.startDate}</td>
-                    <td>{taskItem.taskDeadline}</td>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.startDate}
+                    </Moment></td>
+                    <td><Moment format="YYYY/MM/DD">
+                        {taskItem.taskDeadline}
+                    </Moment></td>
                     <td>
                         <a href="#">
                             <i class="glyphicon glyphicon-plus" />

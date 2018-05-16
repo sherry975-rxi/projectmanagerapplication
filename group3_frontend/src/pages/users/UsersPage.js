@@ -30,7 +30,6 @@ class UsersPage extends Component {
     render() {
         return (
             <div>
-                <h1 className="page-header">Users</h1>
                 {this.renderUsersList()}
             </div>
         );
@@ -63,9 +62,9 @@ class UserTable extends React.Component {
 
         return (
             <div className=" table-striped">
-                <h3>
-                    <b>List of All Users</b>
-                </h3>
+            <h3>
+            <b>All Users</b>
+            </h3>
                 <table className="table table-hover">
                     <thead>
                         <tr>
