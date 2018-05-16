@@ -75,7 +75,7 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div className="body">
                 <NavBar toogleMenu={this.toogleMenu} />
                 <div className="container-fluid">
                     <Switch>
