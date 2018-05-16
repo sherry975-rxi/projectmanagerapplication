@@ -31,7 +31,7 @@ public class RestUserController {
      * it also generates the links to change the details or go to the users tasks and projects
      * @return
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #user.userID == userId or hasRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #userId == principal.id or hasRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public ResponseEntity<User> seeUserDetails(@PathVariable int userId){
         ResponseEntity<User> result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
