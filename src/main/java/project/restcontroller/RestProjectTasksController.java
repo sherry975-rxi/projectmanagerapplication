@@ -12,6 +12,7 @@ import project.model.Project;
 import project.model.Task;
 import project.services.ProjectService;
 import project.services.TaskService;
+import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +25,16 @@ public class RestProjectTasksController {
 
     ProjectService projectService;
 
+    UserService userService;
 
     String tasks = "tasks";
 
 
     @Autowired
-    public RestProjectTasksController(TaskService taskService, ProjectService projectService) {
+    public RestProjectTasksController(TaskService taskService, ProjectService projectService, UserService userService) {
         this.taskService = taskService;
         this.projectService = projectService;
-
+        this.userService = userService;
     }
 
     /**
@@ -211,10 +213,10 @@ public class RestProjectTasksController {
 
     }
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @taskService.getTaskByID(Long.parseLong(#taskId)).isProjectCollaboratorActiveInTaskTeam(@userService.getUserByID(principal.id)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @taskService.getTaskByTaskID(#taskId).isProjectCollaboratorActiveInTaskTeam(@projectService.findActiveProjectCollaborator(@userService.getUserByID(principal.id), @projectService.getProjectById(#projid))) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.PATCH)
-    public ResponseEntity<TaskDTO> markTaskAsFinished(@PathVariable String taskId) {
+    public ResponseEntity<TaskDTO> markTaskAsFinished(@PathVariable String taskId, @PathVariable String projid) {
 
         Task toFinish = taskService.getTaskByTaskID(taskId);
 
