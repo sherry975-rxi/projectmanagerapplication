@@ -23,6 +23,7 @@ class FinishedTasks extends Component {
     }
 
     renderFinishedTasks() {
+        if (this.state.tasks == null){
         return this.state.tasks.map(taskItem => {
             return (
                 <tr className="line">
@@ -42,6 +43,10 @@ class FinishedTasks extends Component {
                 </tr>
             );
         });
+    } else {
+        return <div><h3>NOT AUTHORIZED</h3></div>
+    } 
+        
     }
 
     render() {
