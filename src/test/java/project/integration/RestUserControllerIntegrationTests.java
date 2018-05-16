@@ -401,7 +401,7 @@ public class RestUserControllerIntegrationTests {
         assertEquals(0, taskOne.getPendingTaskTeamRequests().size());
 
         // When logged in as Rui
-        ruiToken = jwtUtil.generateToken(admin.getEmail());
+        ruiToken = jwtUtil.generateToken(userRui.getEmail());
         auth = new HttpHeaders();
         auth.add("Authorization", "Bearer " + ruiToken);
 
@@ -449,7 +449,7 @@ public class RestUserControllerIntegrationTests {
 
 
         // WHEN logged in as Rui and attempting to create a task removal request
-        ruiToken = jwtUtil.generateToken(admin.getEmail());
+        ruiToken = jwtUtil.generateToken(userRui.getEmail());
         auth = new HttpHeaders();
         auth.add("Authorization", "Bearer " + ruiToken);
 
@@ -485,7 +485,7 @@ public class RestUserControllerIntegrationTests {
 
         //WHEN one makes a post request using uri {{server}}/projects/{projectId}/tasks/{taskId}/reports/
         // while logged in as rui
-        ruiToken = jwtUtil.generateToken(admin.getEmail());
+        ruiToken = jwtUtil.generateToken(userRui.getEmail());
         auth = new HttpHeaders();
         auth.add("Authorization", "Bearer " + ruiToken);
 
