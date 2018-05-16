@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.dto.CredentialsDTO;
 import project.dto.UserDTO;
@@ -94,6 +95,7 @@ public class RestAccountController {
      * @param userDTO
      * @return response entity
      */
+    @PreAuthorize("permitAll()")
     @RequestMapping(value = "register" , method = RequestMethod.POST)
     public ResponseEntity<List<Link>> createUser(@RequestBody UserDTO userDTO) {
 
