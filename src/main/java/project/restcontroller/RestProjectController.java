@@ -41,7 +41,7 @@ public class RestProjectController  {
      * This method returns a ResponseEntity that contains all the active projects from the project service with a link to open each project
      * @return ResponseEntity with all the active projects
      */
-    @PreAuthorize("hasRole('ROLE_DIRECTOR')")
+    @PreAuthorize("hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/active", method = RequestMethod.GET)
     public ResponseEntity<List<Project>> getActiveProjects() {
 
@@ -58,7 +58,7 @@ public class RestProjectController  {
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByID(principal.id),@projectService.getProjectById(#projectId)) " +
             "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
-            "or hasRole('ROLE_DIRECTOR')")
+            "or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value= "{projectId}", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectDetails(@PathVariable int projectId) {
 
@@ -82,7 +82,7 @@ public class RestProjectController  {
      * @return
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
-            "or hasRole('ROLE_DIRECTOR')")
+            "or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "{projectId}" , method = RequestMethod.PATCH)
     public ResponseEntity<Project> updateProject(@RequestBody Project projectUpdates, @PathVariable int projectId){
         Project project = projectService.getProjectById(projectId);
@@ -102,7 +102,7 @@ public class RestProjectController  {
      * This controller's method uses GET to get the cost of the project through the calculation method defined previously.
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
-            "or hasRole('ROLE_DIRECTOR')")
+            "or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{projectId}/cost", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Double>> getProjectCost(@PathVariable int projectId) {
         Project project = this.projectService.getProjectById(projectId);
@@ -120,7 +120,7 @@ public class RestProjectController  {
      * info. In case the Response Body has an EffortUnit and/or a Budget, the project will be created with the all the
      * Response body information.
      */
-    @PreAuthorize("hasRole('ROLE_DIRECTOR')")
+    @PreAuthorize("hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "" , method = RequestMethod.POST)
     public ResponseEntity<Project> createProject(@RequestBody Project projectDTO) {
         User projectManager = userService.getUserByEmail(projectDTO.getProjectManager().getEmail());
