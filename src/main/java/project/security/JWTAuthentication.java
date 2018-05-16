@@ -42,6 +42,7 @@ public class JWTAuthentication extends UsernamePasswordAuthenticationFilter {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>());
 
             return authenticationManager.authenticate(token);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

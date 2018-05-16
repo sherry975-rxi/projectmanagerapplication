@@ -21,6 +21,7 @@ import UpdateReport from "./pages/reports/UpdateReport";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
 import OngoingTasks from "./pages/tasks/OngoingTasks";
+import TasksPage from "./pages/tasks/TasksPage";
 
 class App extends Component {
     constructor(props) {
@@ -44,6 +45,7 @@ class App extends Component {
                     <Route path="/activeprojects" component={ActiveProjects} />
                     <Route path="/tasks/:userID" component={OngoingTasks} />
                     <Route path="/finishedtasks" component={FinishedTasks} />
+                    <Route path="/tasks" component={TasksPage} />
                     <Route
                         path="/marktaskfinished/"
                         component={MarkTaskAsFinished}

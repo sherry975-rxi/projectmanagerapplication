@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./OngoingTasks.css";
+import AuthService from '../loginPage/AuthService';
 
 class FinishedTasks extends Component {
     constructor(props) {
@@ -7,11 +8,11 @@ class FinishedTasks extends Component {
         this.state = {
             tasks: []
         };
+        this.AuthService = new AuthService();
     }
 
     async componentDidMount() {
-        fetch("users/7/tasks/finished", { method: "get" })
-            .then(response => response.json())
+        this.AuthService.fetch("users/7/tasks/finished", { method: "get" })
             .then(responseData => {
                 this.setState({
                     tasks: responseData
