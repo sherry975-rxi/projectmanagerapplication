@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import AuthService from './../loginPage/AuthService';
+import "./CreateReport.css";
 
 class UpdateReport extends Component {
     constructor(props) {
@@ -122,7 +123,7 @@ class UpdateReport extends Component {
                     </FormGroup>
 
                     <button
-                        className="btn btn-primary" /*onClick={this.userDetail}*/
+                        className="buttonUpdate" /*onClick={this.userDetail}*/
                     >
                         Update Report
                     </button>
