@@ -2,22 +2,22 @@
    position:absolute;
    bottom:0;
    width:100%;
-   height:150px;   
+   height:110px;
    background:#dcdde1;
    text-align: center;
 }
 .sponsor{
 
-    padding-top:65px;
+    padding-top:45px;
 
 }
 img {
-    
+
     width: 150px;
 padding-left: 20px;
 padding-right: 20px;
 
-   
+
 }
 
 .logo_isep {
