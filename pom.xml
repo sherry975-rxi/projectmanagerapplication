@@ -167,7 +167,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>project.ui.console.Application</mainClass>
+                            <mainClass>project.ProjectManagementApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
