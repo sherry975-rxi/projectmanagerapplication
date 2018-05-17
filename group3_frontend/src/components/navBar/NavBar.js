@@ -26,9 +26,6 @@ class NavBar extends Component {
                             <li>
                                 <a href="/">Home</a>
                             </li>
-                            <li>
-                                <a href="/profile">Profile</a>
-                            </li>
                         </ul>
                     </div>
                 </div>

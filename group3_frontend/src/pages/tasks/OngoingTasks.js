@@ -15,6 +15,7 @@ class OngoingTasks extends Component {
         this.match;
         this.state = {
             tasks: [],
+            empty: ""
 
         };
         this.AuthService = new AuthService()
@@ -28,6 +29,7 @@ class OngoingTasks extends Component {
                 console.log(responseData)
                 this.setState({
                     tasks: responseData,
+                    message: responseData.error
                 });
             })
     }
@@ -63,7 +65,11 @@ class OngoingTasks extends Component {
 
     render() {
 
-        try {
+
+        if (this.state.message != null) {
+            return (<Error message={this.state.message} />)
+        }
+        else {
             return (
                 <div className=" table-striped">
                     <h3>
@@ -84,9 +90,6 @@ class OngoingTasks extends Component {
                         Add task
         </a>
                 </div>)
-        }
-        catch (error) {
-            return (<Error message="NOT AUTHORIZED!" />)
         }
     }
 }

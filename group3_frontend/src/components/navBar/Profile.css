@@ -1,0 +1,43 @@
+.page-header {
+
+    margin-top: 150px;
+    margin-left: -200px;
+    text-align: center;
+    
+    font-family: 'Dense';
+    font-size: 30px;
+    font-weight: bold;
+
+}
+
+.external-div{
+    margin-top: 200px;
+    
+}
+
+@font-face {
+    font-family: "Dense";
+    src: local("../fonts/dense/Dense-Regular.woff2") format("woff2"),
+        local("../fonts/dense/Dense-Regular.woff") format("woff"),
+        local("../fonts/dense/Dense-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+.Logo {
+    height: auto;
+    color: rgb(255, 255, 255);
+    margin-top: 85px;
+    align-content:  center;
+    display:block;
+    margin: 0 0 0 0;
+    left: 50%;
+}
+.switch {
+    font-family: "Dense";
+    font-size: 100px;
+}
+
+.subTitle {
+    font-size: 20px;
+    margin-top: -10px;
+}

@@ -33,7 +33,7 @@ class LoginPage extends Component {
             .then(res => {
                 //If the loggin is sucessfull the user gets redirected to its home page
                 if (res.status == 200)
-                    this.props.history.replace('/');
+                    this.props.history.replace('/profile');
                 console.log(res.token)
             })
             .catch(err => {

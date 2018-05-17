@@ -1,5 +1,5 @@
 import React from "react";
-import "./NavBar.css";
+import "./Profile.css";
 
 export class Profile extends React.Component {
     constructor(props) {
@@ -19,36 +19,15 @@ export class Profile extends React.Component {
             });
     }
 
-    renderUsersList() {
-        var userItem = this.state.user;
-        return (
-            <div>
-                <p>
-                    {" "}
-                    Name: &nbsp;
-                    {userItem.name}
-                </p>
-                <p>
-                    {" "}
-                    Email: &nbsp;
-                    {userItem.email}
-                </p>
-                <p>
-                    {" "}
-                    Function: &nbsp;
-                    {userItem.function}
-                </p>
-                <hr />
-            </div>
-        );
-    }
+
 
     render() {
         return (
-            <div>
-                <h1 className="page-header">My information</h1>
-                <h3>Info</h3>
-                {this.renderUsersList()}
+            <div className="external-div">
+
+                <center><h1 className="switch">appManager</h1></center>
+                <center><p className="subTitle">Project Management Application</p></center>
+
             </div>
         );
     }
