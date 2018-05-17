@@ -22,10 +22,14 @@ class firstPage extends Component {
                         <table className="tableButtom">
                             <tr className="spacer" >
                                 <th className="spacer">
-                                    <Button text="REGISTER" />
+                                    <a href="/signUp">
+                                        <Button text="REGISTER" />
+                                    </a>
                                 </th>
                                 <th className="spacer">
-                                    <Button text="LOGIN" />
+                                    <a href="/login">
+                                        <Button text="LOGIN" />
+                                    </a>
                                 </th>
                             </tr>
                         </table>
