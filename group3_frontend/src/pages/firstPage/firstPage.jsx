@@ -16,18 +16,29 @@ class firstPage extends Component {
                         <center> <p className="subTitle">Project Management Application</p> </center>
                     </div>
 
-                    <div className="SignUp">
+                    <div className="ButtonsStartPage">
+
+                    <table className="tableButtom">
+                        <tr className="spacer" >
+                        <th className="spacer">
                         <NavLink to="/signup">
                             <button type="button" class="btn btn-primary btn-lg">
                                 Create account
                         </button>
                         </NavLink>
-                    </div>
-                    <div className="LogIn">
+                    </th>
+                        <th className="spacer"> 
                         <NavLink className="btn btn-primary btn-lg" to="/login">
                             Log In
                     </NavLink>
+                </th>
+                        </tr>
+                    </table>
                     </div>
+
+
+                    
+                   
                 </div>
                 <div>
                     <img src={logo} alt="logo" className="image" href="/" />
