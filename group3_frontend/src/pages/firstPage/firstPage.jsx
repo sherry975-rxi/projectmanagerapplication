@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import background from "./background.jpg"
 import logo from "./top_banner.png";
 import brand from "./brand.svg";
+import Button from '../../components/button/button';
 
 class firstPage extends Component {
     state = {};
@@ -18,27 +19,21 @@ class firstPage extends Component {
 
                     <div className="ButtonsStartPage">
 
-                    <table className="tableButtom">
-                        <tr className="spacer" >
-                        <th className="spacer">
-                        <NavLink to="/signup">
-                            <button type="button" class="btn btn-primary btn-lg">
-                                Create account
-                        </button>
-                        </NavLink>
-                    </th>
-                        <th className="spacer"> 
-                        <NavLink className="btn btn-primary btn-lg" to="/login">
-                            Log In
-                    </NavLink>
-                </th>
-                        </tr>
-                    </table>
+                        <table className="tableButtom">
+                            <tr className="spacer" >
+                                <th className="spacer">
+                                    <Button text="REGISTER" />
+                                </th>
+                                <th className="spacer">
+                                    <Button text="LOGIN" />
+                                </th>
+                            </tr>
+                        </table>
                     </div>
 
 
-                    
-                   
+
+
                 </div>
                 <div>
                     <img src={logo} alt="logo" className="image" href="/" />
