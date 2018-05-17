@@ -3,6 +3,7 @@ package project.restControllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import project.dto.CodeCheckDTO;
 import project.dto.CredentialsDTO;
 import project.dto.UserDTO;
 import project.model.User;
@@ -354,7 +356,8 @@ public class RestAccountControllerTest {
         // An an userEmail that it's still not registered in the system
 
         String userEmail = "test@mymail.com";
-        String code = "code";
+        CodeCheckDTO code = new CodeCheckDTO();
+        code.setCodeToCheck("code");
 
 
         ResponseEntity<Link> expectedResponse = new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -382,7 +385,7 @@ public class RestAccountControllerTest {
 
         //WHEN
         //We provided a wrong code
-        code = "wrongCode";
+        code.setCodeToCheck("wrong");
         actualResponse =      restAccountController.verificateCode(code,userEmail);
 
 
@@ -395,7 +398,7 @@ public class RestAccountControllerTest {
         //We provide a right code (The string "NotVerified" is stored in the hashmap
         // before the user selects a method to receive the code
 
-        code = "NotVerified";
+        code.setCodeToCheck("NotVerified");
         actualResponse =      restAccountController.verificateCode(code,userEmail);
 
 
