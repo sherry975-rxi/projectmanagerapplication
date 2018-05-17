@@ -1,21 +1,24 @@
 .Bar {
-    padding: 120px;
-    background: url("background.jpg");
-    background-size:100% auto;
-    background-repeat: no-repeat;
-    text-align: center;
+    background: #378585;
+    width: 100%;
+    height: 550px;
+    padding: 0px;
+    overflow: hidden;
+    position: relative;
+
 }
 .logo-main {
     width: 50%;
     height: auto;
-    
+
 
 
 }
 .Logo {
     height: auto;
-    color: black;
-    margin-top: 70px;
+    color: rgb(255, 255, 255);
+    margin-top: 85px;
+    align-content:  center;
     display:block;
     margin: 0 0 0 0;
     left: 50%;
@@ -42,8 +45,16 @@
 
 .SignUp {
     text-align: center;
+    margin-top: 100px;
 }
 
 .LogIn {
     text-align: center;
 }
+
+.image {
+    width: 100%;
+    padding: 0px;
+}
+
+

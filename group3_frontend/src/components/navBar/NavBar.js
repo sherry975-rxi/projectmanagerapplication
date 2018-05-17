@@ -17,8 +17,8 @@ class NavBar extends Component {
                             glyph="menu-hamburger"
                             onClick={this.props.toogleMenu}
                         />
-                        <img src={logo} alt="logo" className="Logo-navbar" href="/"/>
-                        
+                        <div className="Logo-navbar">appManager</div>
+
                     </div>
 
                     <div id="navbar" className="navbar-collapse collapse">
