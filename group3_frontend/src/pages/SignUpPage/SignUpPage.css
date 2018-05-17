@@ -1,6 +1,6 @@
 .SignUp {
     padding: 60px 0;
-    margin-bottom: 30px;
+    margin-bottom: 150px;
 }
 
 .SignUp form {
@@ -16,8 +16,14 @@
     display: none;
 }
 
+
 .formField {
     text-align: left;
+}
+
+
+.formFieldDropDown {
+    width:330px;
 }
 
 .stepTwoValidation {

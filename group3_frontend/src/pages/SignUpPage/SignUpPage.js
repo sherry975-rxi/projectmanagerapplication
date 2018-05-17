@@ -10,6 +10,8 @@ import {
     Alert
 } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+
 
 const SMSVALIDATION = "smsValidation";
 const EMAILVALIDATION = "emailValidation";
@@ -215,25 +217,37 @@ class SignUpPage extends Component {
                     />
                 </FormGroup>
 
-                <FormGroup controlId="district" className="formField">
-                    <ControlLabel>District</ControlLabel>
-                    <FormControl
-                        autoFocus
-                        type="text"
-                        value={this.state.district}
-                        onChange={this.handleChange}
+             
+
+                <FormGroup controlId="Country" className="formField">
+                    <ControlLabel>Country</ControlLabel>
+
+                    <CountryDropdown className="formFieldDropDown"
+                        classes="formFieldDropDown"
+                        value={this.state.country}
+                        onChange={(val) => this.selectCountry(val)}
+                        componentClass="select"
+                        placeholder="select"
+
                     />
+
+
                 </FormGroup>
 
-                <FormGroup controlId="country" className="formField">
-                    <ControlLabel>Country</ControlLabel>
-                    <FormControl
-                        autoFocus
-                        type="text"
-                        value={this.state.country}
-                        onChange={this.handleChange}
+
+                <FormGroup controlId="District" className="formField">
+                    <ControlLabel>District</ControlLabel>
+
+                    <RegionDropdown className="formFieldDropdown"
+                        classes="formFieldDropDown"
+
+                        country={this.state.country}
+                        value={this.state.district}
+                        onChange={(val) => this.selectRegion(val)}
                     />
+
                 </FormGroup>
+
 
                 <FormGroup controlId="password" className="formField">
                     <ControlLabel>Password</ControlLabel>
@@ -365,8 +379,9 @@ class SignUpPage extends Component {
     handleCodeSubmit = event => {
         event.preventDefault();
         const verificationCode = this.state.verificationCode;
-
+        console.log(verificationCode);
         fetch(this.state.verificationUrl, {
+          
             body: JSON.stringify({ codeToCheck: verificationCode }),
             headers: {
                 "content-type": "application/json"
@@ -425,6 +440,14 @@ class SignUpPage extends Component {
             </div>
         </div>
     );
+
+    selectCountry(val) {
+        this.setState({ country: val });
+    }
+
+    selectRegion (val) {
+        this.setState({ district: val });
+      }
 
     render() {
         let formStp = this.stepOneForm();
