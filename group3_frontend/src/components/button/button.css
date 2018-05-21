@@ -1,5 +1,5 @@
 .button {
-    background-color: #20EAA4; /* Green */
+    background-color: rgb(35, 76, 77); /* Green */
     border: none;
     color: rgb(255, 255, 255);
     font-family: Helvetica;
@@ -11,5 +11,5 @@
 }
 
 .button:hover {
-    background-color: rgb(4, 22, 24);
+    background-color: rgb(48, 98, 99);
 }
