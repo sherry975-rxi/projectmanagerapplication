@@ -10,7 +10,9 @@ class FinishedTasks extends Component {
         super(props);
         this.state = {
             tasks: [],
+            project: {}
         };
+
         this.AuthService = new AuthService();
     }
 
@@ -29,6 +31,7 @@ class FinishedTasks extends Component {
         return this.state.tasks.map(taskItem => {
             return (
                 <tr className="line">
+                    <td>{taskItem.project}</td>
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.description}</td>
                     <td><Moment format="YYYY/MM/DD">
@@ -58,6 +61,7 @@ class FinishedTasks extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
+                                <th>Project ID</th>
                                 <th>Task ID</th>
                                 <th>Description</th>
                                 <th>Start Date</th>
