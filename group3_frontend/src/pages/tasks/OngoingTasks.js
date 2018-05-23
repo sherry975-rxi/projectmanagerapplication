@@ -7,7 +7,8 @@ import decode from 'jwt-decode';
 import AuthService from '../loginPage/AuthService';
 import Moment from 'react-moment';
 import Error from './../../components/error/error';
-import MarkTaskAsFinished from "./MarkTaskAsFinished";
+import MarkTaskAsFinished from "./MarkTaskAsFinished"; 
+import { Link } from "react-router-dom";
 
 
 class OngoingTasks extends Component {
@@ -19,7 +20,6 @@ class OngoingTasks extends Component {
             empty: ""
 
         };
-
         this.AuthService = new AuthService()
     }
 
@@ -55,11 +55,17 @@ class OngoingTasks extends Component {
                         </a>
                     </td>
                     <td>
-                        {/*<a href="/marktaskfinished" className="btn btn-primary" role="button">*/}
-                            {/*Mark finish*/}
-                    {/*</a>*/}
-                        <MarkTaskAsFinished className="btn btn-primary" id={taskItem.taskID} update={this.componentDidMount()} />
+                        <MarkTaskAsFinished className="btn btn-info" id={taskItem.taskID} update={this.componentDidMount()} />                       
                     </td>
+                    <Link
+                        to={"/createreport/" + this.state.tasks.taskID}
+                        activeClassName="active"
+                    >
+                        <button className="btn btn-warning">
+                            Create Report
+                    </button>
+                    </Link>{" "}
+                    &nbsp;
                 </tr>
             );
         });
