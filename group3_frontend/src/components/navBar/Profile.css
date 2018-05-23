@@ -11,7 +11,8 @@
 }
 
 .external-div{
-    margin-top: 200px;
+    margin-top: 140px;
+    text-align: center;
     
 }
 
@@ -40,4 +41,19 @@
 .subTitle {
     font-size: 20px;
     margin-top: -10px;
+}
+
+
+
+h1{
+    margin-bottom: 30px;
+}
+
+.userDetails{
+    font-size: 12px;
+}
+
+.divUserDetails{
+    display: inline-block;
+    text-align: left;
 }

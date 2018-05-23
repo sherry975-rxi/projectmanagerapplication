@@ -35,6 +35,8 @@ public class JWTAuthorization extends BasicAuthenticationFilter {
             UsernamePasswordAuthenticationToken authentication = getAuthentication(header.substring(7));
             if (authentication != null) {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                String email = ((UserSecurity) authentication.getPrincipal()).getUsername();
+                res.addHeader("Authorization", "Bearer " + jwtUtil.generateToken(email));
             }
         }
         chain.doFilter(req, res);

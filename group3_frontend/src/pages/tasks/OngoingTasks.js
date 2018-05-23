@@ -7,6 +7,8 @@ import decode from 'jwt-decode';
 import AuthService from '../loginPage/AuthService';
 import Moment from 'react-moment';
 import Error from './../../components/error/error';
+import MarkTaskAsFinished from "./MarkTaskAsFinished"; 
+import { Link } from "react-router-dom";
 
 
 class OngoingTasks extends Component {
@@ -15,7 +17,8 @@ class OngoingTasks extends Component {
         this.match;
         this.state = {
             tasks: [],
-            empty: ""
+            empty: "",
+            project: {}
 
         };
         this.AuthService = new AuthService()
@@ -39,6 +42,7 @@ class OngoingTasks extends Component {
         return this.state.tasks.map(taskItem => {
             return (
                 <tr className="line">
+                    <td>{taskItem.project}</td>
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.description}</td>
                     <td><Moment format="YYYY/MM/DD">
@@ -47,16 +51,19 @@ class OngoingTasks extends Component {
                     <td><Moment format="YYYY/MM/DD">
                         {taskItem.taskDeadline}
                     </Moment></td>
+                    
                     <td>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-plus" />
-                        </a>
+                        <MarkTaskAsFinished className="btn btn-info" id={taskItem.taskID} update={this.componentDidMount()} />                       
                     </td>
-                    <td>
-                        <a href="/marktaskfinished" className="btn btn-primary" role="button">
-                            Mark finish
-                    </a>
-                    </td>
+                    <Link
+                        to={"/createreport/" + this.state.tasks.taskID}
+                        activeClassName="active"
+                    >
+                        <button className="btn btn-warning">
+                            Create Report
+                    </button>
+                    </Link>{" "}
+                    &nbsp;
                 </tr>
             );
         });
@@ -78,6 +85,7 @@ class OngoingTasks extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
+                                <th>Project ID</th>
                                 <th>Task ID</th>
                                 <th>Description</th>
                                 <th>Start Date</th>
@@ -88,7 +96,7 @@ class OngoingTasks extends Component {
                     </table>
                     <a href="/addTask" className="btn btn-primary" role="button">
                         Add task
-        </a>
+                     </a>
                 </div>)
         }
     }

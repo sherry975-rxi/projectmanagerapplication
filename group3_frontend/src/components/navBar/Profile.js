@@ -1,33 +1,57 @@
 import React from "react";
 import "./Profile.css";
+import AuthService from '../../pages/loginPage/AuthService';
+import mainLogo from './profile_logo.png';
+import axios from 'axios';
+
+
 
 export class Profile extends React.Component {
     constructor(props) {
         super(props);
+        this.match
         this.state = {
-            user: {}
+            user: {},
+            message: ""
         };
+        this.AuthService = new AuthService();
+
     }
 
-    componentDidMount() {
-        fetch("/users/2", { method: "get" })
-            .then(response => response.json())
+    async componentDidMount() {
+        this.AuthService.fetch(`/users/${this.props.match.params.userID}`, {
+            method: "get" })
             .then(responseData => {
                 this.setState({
-                    user: responseData
+                    user: responseData,
+                    message: responseData.status
                 });
             });
-    }
+            
+
+    
+        }
+
+        
 
 
 
     render() {
+        var user = this.state.user;
         return (
+            
             <div className="external-div">
+                <h1>Profile</h1>
+                <div className="divUserDetails">
+                <img  src={mainLogo} alt="fireSpot"/>
 
-                <center><h1 className="switch">appManager</h1></center>
-                <center><p className="subTitle">Project Management Application</p></center>
-
+                    <h2 className="userDetails">ID:   {user.userID} </h2>
+                    <h2 className="userDetails">Name:  {user.name} </h2>
+                    <h2 className="userDetails">Phone:  {user.phone} </h2>
+                    <h2 className="userDetails">Function:  {user.function} </h2>
+                    <h2 className="userDetails">Profile:  {user.userProfile} </h2>
+                </div>
+           
             </div>
         );
     }

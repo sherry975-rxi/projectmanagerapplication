@@ -8,52 +8,50 @@ class MarkTaskAsFinished extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: ""
+            message: "Mark as Finished"
         };
         this.AuthService = new AuthService();
+        this.askConfirmation = this.askConfirmation.bind(this);
     }
 
-    handleChange = event => {
-        this.setState({ id: event.target.value });
-    };
-
-    handleSubmit = async event => {
-        event.preventDefault();
-
-        // Value of id is inside of the response const.
-        this.AuthService.fetch(`projects/2/tasks/${this.state.id}`, {
-            
-            method: "PATCH"
-        })
-        .then(function (myJson) {
-            console.log(myJson);
+    askConfirmation() {
+        this.setState({
+            message: "Click again to finish!"
         });
-};
+    }
+
+    handleClick = async event => {
+
+        if(this.state.message === "Mark as Finished") {
+            this.askConfirmation();
+        } else {
+
+            this.AuthService.fetch(`/projects/2/tasks/${this.props.id}`, {
+
+                method: "PATCH"
+            })
+            //.then(function (myJson) {
+            //   console.log(myJson);
+            //})
+                .then(res => {
+                    //If sucessfull the user gets redirected to its home page
+                    if (res.status == 200)
+                        this.props.update;
+
+                }).catch(err => {
+                alert(err);
+            });
+        }
+    };
 
     
 
     render() {
         return (
             <div className=" table-striped">
-                <h3>
-                    <b>Mark task as finished</b>
-                </h3>
-                <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="id" bsSize="large">
-                        <ControlLabel>Type Task ID</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.id}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-                    <button
-                        className="btn btn-primary" /*onClick={this.userDetail}*/
-                    >
-                        Finish
-                    </button>
-                </form>
+               <button className="btn btn-primary" onClick={this.handleClick}>
+                   {this.state.message}
+               </button>
             </div>
         );
     }

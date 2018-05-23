@@ -3,13 +3,13 @@ import "./App.css";
 import NavBar from "./components/navBar/NavBar";
 import Profile from "./components/navBar/Profile.js";
 import SideBar from "./components/sideBar/SideBar";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect, Router } from "react-router-dom";
 import ActiveProjects from "./pages/projects/ActiveProjects";
 import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/signUpPage/SignUpPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
@@ -37,29 +37,30 @@ class App extends Component {
     };
 
     pages = () => (
+
         <div className="row">
             <SideBar isVisible={this.state.isVisible} />
+
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
                     <Route path="/activeprojects" component={ActiveProjects} />
                     <Route path="/tasks/:userID" component={OngoingTasks} />
                     <Route path="/finishedtasks" component={FinishedTasks} />
-                    <Route
-                        path="/marktaskfinished/"
-                        component={MarkTaskAsFinished}
-                    />
+
                     <Route path="/users" component={UsersPage} />
                     <Route
                         path="/selectprojectcostcalculation/:projectID"
                         component={ProjectCostCalculation}
                     />
+                     
                     <Route
                         path="/projectcost/:projectID"
                         component={ProjectCost}
                     />
                     <Route path="/createreport" component={CreateReport} />
                     <Route path="/updatereport" component={UpdateReport} />
-                    <Route path="/profile" component={Profile} />
+                    
+                    <Route path="/profile/:userID" component={Profile} />
                     <Route path="/requests" component={AllRequests} />
                     <Route path="/addtask" component={AddTask} />
                     <Route
@@ -67,8 +68,11 @@ class App extends Component {
                         component={ProjectDetails}
                     />
                 </Switch>
+
             </div>
+
         </div>
+
     );
 
     render() {
