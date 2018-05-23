@@ -46,10 +46,7 @@ class App extends Component {
                     <Route path="/activeprojects" component={ActiveProjects} />
                     <Route path="/tasks/:userID" component={OngoingTasks} />
                     <Route path="/finishedtasks" component={FinishedTasks} />
-                    <Route
-                        path="/marktaskfinished/"
-                        component={MarkTaskAsFinished}
-                    />
+
                     <Route path="/users" component={UsersPage} />
                     <Route
                         path="/selectprojectcostcalculation/:projectID"
