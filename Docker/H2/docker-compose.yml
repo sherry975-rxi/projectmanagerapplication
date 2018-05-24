@@ -1,0 +1,54 @@
+version: "2"
+services:
+
+  web_app:
+    #image : 1171473/switch-2017-g003:release-17-may-2018-frontend
+    build:
+      context : .
+      dockerfile: frontend/Dockerfile
+    #environment:
+    #NODE_ENV: development
+    # networks:
+    #   - default
+    ports:
+      - 3000:3000
+
+  app:
+    #image: 1171473/switch-2017-g003:release-17-may-2018-console
+    build:
+      context : .
+      dockerfile: backend/Dockerfile
+    # networks:
+    #   - default
+    #   #- backend
+    stdin_open: true
+    tty: true
+    ports:
+      - 8080:8080
+    # command:
+    #   sleep 10000000
+    #entrypoint: sleep 10000000
+
+  # mysqlsrv:
+  #   container_name: mysqlsrv
+  #   image: mysql
+  #   restart: always
+  #   environment:
+  #     - MYSQL_USER=root
+  #     - MYSQL_ROOT_PASSWORD=switchgroup3
+  #     - MYSQL_DATABASE=project_management
+  #   networks:
+  #     - backend
+  #   ports:
+  #     - 3307:3306
+
+# networks:
+#   # frontend:
+#   #   # Use a custom driver
+#   #   driver: custom-driver-2
+#   # backend:
+#   #   # Use a custom driver which takes special options
+#   #   driver: custom-driver-1
+#     default:
+#     # backend:
+#     #   internal: true
