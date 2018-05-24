@@ -8,6 +8,5 @@ RUN apt-get update && \
 
 RUN git clone https://1171476:EMEaTGmvs8cAEQkaVTAN@bitbucket.org/lei-isep/switch-2017-g003.git && \
     cd switch-2017-g003 && \
-    git checkout master && \
-    mvn test
-
+    git checkout master && \ 
+    mvn compile
