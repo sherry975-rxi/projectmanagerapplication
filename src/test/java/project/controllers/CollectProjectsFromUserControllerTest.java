@@ -133,9 +133,4 @@ public class CollectProjectsFromUserControllerTest {
 		assertEquals(projectsToString, controller.getProjectsFromUserAndProjectManager());
 
 	}
-
-	@Test
-	public void testeDoJenkins() {
-		assertTrue(true);
-	}
 }

@@ -36,7 +36,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RestAccountSecurityTests {
+public class RestAccountSecurityIT {
 
     @LocalServerPort
     private int port;

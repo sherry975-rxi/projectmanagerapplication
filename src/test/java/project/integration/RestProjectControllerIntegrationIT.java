@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RestProjectControllerIntegrationTest {
+public class RestProjectControllerIntegrationIT {
 
     @LocalServerPort
     private int port;
