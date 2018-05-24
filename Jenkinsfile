@@ -19,7 +19,7 @@ node {
                     sh """
                         echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
                         docker push $RELEASE_IMAGE_NAME
-                        docker push "${env.BUILD_NUMBER}"
+                        docker tag releaseImage $RELEASE_IMAGE_NAME:"${env.BUILD_NUMBER}"
                     """               
                 }
         }
