@@ -6,4 +6,3 @@ ADD release.jar /release.jar
 
 # Run the application
 CMD java -jar /release.jar --spring.profiles.active=dbh2
-
