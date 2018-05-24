@@ -1,8 +1,9 @@
 node {
 
     // define a name for the release image
-    def RELEASE_IMAGE_NAME = '1171476/sprint-review'
+    def RELEASE_IMAGE_NAME = '1171476/project dependencies'
     def releaseImage
+    def package
 
     stage('Clone repository') {
 
@@ -19,6 +20,7 @@ node {
                     sh """
                         echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
                         docker push $RELEASE_IMAGE_NAME
+                        docker push ${env.BUILD_NUMBER}
                     """               
                 }
         }
@@ -39,7 +41,11 @@ node {
                 mvn package
                 cp target/project-management-1.0-SNAPSHOT.jar ./release.jar
             '''
-        }   
+        }  
+        stage() {
+
+
+        } 
     }
 
 }
