@@ -16,8 +16,9 @@ node {
     stage('Push image to dockerHub') {
         docker.withRegistry('https://registry.hub.docker.com', 'inesDockerHub') {
             
-            releaseImage.push(${env.BUILD_NUMBER})
-            
+            sh """
+                    docker push $RELEASE_IMAGE_NAME
+                """       
     }
     }
 
