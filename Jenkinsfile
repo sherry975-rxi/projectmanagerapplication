@@ -45,21 +45,20 @@ node {
                 cp target/project-management-1.0-SNAPSHOT.jar ./release.jar
             '''
         }  
-
-        stage('Create project image') {
+    }
+    stage('Create project image') {
             
-            releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile.release .")
-    
-        }
+        releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile.release .")
 
-        stage('Push image to dockerHub') {
-            withCredentials([usernamePassword(credentialsId: 'inesDockerHub', usernameVariable: 'DOCKERHUBUSERNAME', passwordVariable: 'DOCKERHUBPASS')]) {
-                sh """
-                    echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
-                    docker push $RELEASE_IMAGE_NAME
-                    docker tag ${releaseImage.id} 1171476/project-management-g3:${env.BUILD_NUMBER}
-                """               
-            }
+    }
+ 
+    stage('Push image to dockerHub') {
+        withCredentials([usernamePassword(credentialsId: 'inesDockerHub', usernameVariable: 'DOCKERHUBUSERNAME', passwordVariable: 'DOCKERHUBPASS')]) {
+            sh """
+                echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
+                docker push $RELEASE_IMAGE_NAME
+                docker tag ${releaseImage.id} 1171476/project-management-g3:${env.BUILD_NUMBER}
+            """               
         }
     }
 }
