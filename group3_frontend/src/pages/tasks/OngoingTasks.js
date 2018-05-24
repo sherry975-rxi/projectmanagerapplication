@@ -49,8 +49,8 @@ class OngoingTasks extends Component {
         return this.state.tasks.map(taskItem => {
             return (
                 <tr className="line">
-                    <td>{taskItem.project}</td>
                     <td>{taskItem.taskID}</td>
+                    <td>{taskItem.project}</td>
                     <td>{taskItem.description}</td>
                     <td><Moment format="YYYY/MM/DD">
                         {taskItem.startDate}
@@ -63,7 +63,7 @@ class OngoingTasks extends Component {
                         <MarkTaskAsFinished id={taskItem.taskID} onClick={this.refreshPage}/>
                     </td>
                     <Link
-                        to={"/createreport/" + this.state.tasks.taskID}
+                        to={"/createreport/" + taskItem.taskID}
                         activeClassName="active"
                     >
                         <button className="btn btn-warning">
@@ -92,8 +92,8 @@ class OngoingTasks extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                                <th>Project ID</th>
                                 <th>Task ID</th>
+                                <th>Project ID</th>
                                 <th>Description</th>
                                 <th>Start Date</th>
                                 <th>Estimated Finish Date</th>
