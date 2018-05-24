@@ -1,7 +1,7 @@
 node {
 
     // define a name for the release image
-    def RELEASE_IMAGE_NAME = '1171476/project dependencies'
+    def RELEASE_IMAGE_NAME = '1171476/sprint-review'
     def releaseImage
 
     stage('Clone repository') {
