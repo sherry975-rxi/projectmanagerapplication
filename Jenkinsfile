@@ -56,9 +56,10 @@ node {
         withCredentials([usernamePassword(credentialsId: 'inesDockerHub', usernameVariable: 'DOCKERHUBUSERNAME', passwordVariable: 'DOCKERHUBPASS')]) {
             sh """
                 echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
-                docker push $RELEASE_IMAGE_NAME
-                docker tag ${releaseImage.id} 1171476/project-management-g3:${env.BUILD_NUMBER}
-            """               
+                docker push $RELEASE_IMAGE_NAME[:${env.BUILD_NUMBER}]
+                
+            """  
+            //docker tag ${releaseImage.id} 1171476/project-management-g3:${env.BUILD_NUMBER}             
         }
     }
 }
