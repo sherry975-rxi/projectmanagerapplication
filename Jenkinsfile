@@ -1,37 +1,14 @@
 node {
-    //correr a build 1x/dia
-    //stage de testes unitários em H2
-    //stage de testes de integração com mySQL
+    def app
 
-    stage ('Pull code from repository') {
-            checkout scm
-        }
+    stage('Clone repository') {
 
-    stage ('Build') {
-
-        }
-
-    stage ('Backend deploy') {
-
-        }
-
-    stage ('Unit tests') {
-
-        }
-
-    stage ('Integration tests') {
-
-        }
-
-    stage ('Frontend deploy') {
-
-        }
-
-    stage ('Create project image'){
-
+        checkout scm
     }
 
-    stage ('Push to Dockerhub'){
+    stage('Build image') {
 
+        app = docker.build("test")
     }
+
 }
