@@ -7,33 +7,28 @@ import AuthService from '../loginPage/AuthService';
 class MarkTaskAsFinished extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            message: "Mark as Finished"
-        };
+
         this.AuthService = new AuthService();
-        this.askConfirmation = this.askConfirmation.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    askConfirmation() {
-        this.setState({
-            message: "Click again to finish!"
-        });
-    }
 
-    handleClick = async event => {
-
-        if(this.state.message === "Mark as Finished") {
-            this.askConfirmation();
-        } else {
+    async handleClick(event) {
 
             this.AuthService.fetch(`/projects/2/tasks/${this.props.id}`, {
 
                 method: "PATCH"
-            })
-            .then(function (myJson) {
-              console.log(myJson);
-              window.location.reload(true);
+            }).then((responseData) => {
+                console.log(responseData);
+                this.props.onClick();
             });
+
+            // .then(function (myJson) {
+            //   console.log(myJson);
+            //   //window.location.reload(true);
+            //
+            // })
+
             //     .then(res => {
             //         //If sucessfull the user gets redirected to its home page
             //         if (res.status === 200) {
@@ -43,7 +38,7 @@ class MarkTaskAsFinished extends Component {
             //     alert(err);
             // });
 
-        }
+
     };
 
     
@@ -52,7 +47,7 @@ class MarkTaskAsFinished extends Component {
         return (
             <div className=" table-striped">
                <button className="btn btn-primary" onClick={this.handleClick}>
-                   {this.state.message}
+                   Mark Finished
                </button>
             </div>
         );

@@ -21,20 +21,27 @@ class OngoingTasks extends Component {
             project: {}
 
         };
+        this.refreshPage = this.refreshPage.bind(this);
         this.AuthService = new AuthService()
     }
 
     //TODO: Add sort by ascending or descending order to these tables
 
     async componentDidMount() {
-        this.AuthService.fetch(`/users/${this.props.match.params.userID}/tasks/pending`, { method: 'get' })
-            .then((responseData) => {
-                console.log(responseData)
-                this.setState({
-                    tasks: responseData,
-                    message: responseData.error
-                });
-            })
+        this.refreshPage();
+    }
+
+    async refreshPage() {
+
+            this.AuthService.fetch(`/users/${this.props.match.params.userID}/tasks/pending`, {method: 'get'})
+                .then((responseData) => {
+                    console.log(responseData)
+                    this.setState({
+                        tasks: responseData,
+                        message: responseData.error
+                    });
+                })
+
     }
 
     renderOngoingTasks() {
@@ -53,7 +60,7 @@ class OngoingTasks extends Component {
                     </Moment></td>
                     
                     <td>
-                        <MarkTaskAsFinished id={taskItem.taskID} />
+                        <MarkTaskAsFinished id={taskItem.taskID} onClick={this.refreshPage}/>
                     </td>
                     <Link
                         to={"/createreport/" + this.state.tasks.taskID}
