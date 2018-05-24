@@ -35,8 +35,7 @@ node {
         } 
         
         stage('Integration Tests') {
-            sh 'mvn integration-test'
-            sh 'mvn verify'
+            sh 'mvn failsafe:integration-test'
         }  
 
         stage('Package') {
