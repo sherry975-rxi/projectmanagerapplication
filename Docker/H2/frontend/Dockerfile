@@ -16,8 +16,16 @@ WORKDIR /switch-2017-g003/group3_frontend
 
 # preparing react app environment
 RUN npm install && \
-    npm install react-country-region-selector --save
+    npm install react-country-region-selector --save && \
+    npm install react-skillbars --save && \
+    npm install -g json
+
+# setting proxy in package.json for backend container
+RUN cat package.json && \
+    json -I -f package.json -e 'this.proxy="http://backend:8080/"'
+
 
 # prepare image to start react application when running image
 ENTRYPOINT npm start
 
+# EXPOSE 3000
