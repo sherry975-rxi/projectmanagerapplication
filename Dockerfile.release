@@ -1,0 +1,5 @@
+# Create image from openjdk image (https://hub.docker.com/_/openjdk/)
+FROM openjdk:8
+
+# Get jar file into the container
+ADD release.jar /release.jar
