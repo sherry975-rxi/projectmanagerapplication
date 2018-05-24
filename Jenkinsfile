@@ -2,7 +2,8 @@ node {
 
     // define a name for the release image
     def RELEASE_IMAGE_NAME = '1171476/sprint-review'
-    def releaseImage
+    def releaseImage 
+    def imageid
 
     stage('Clone repository') {
 
@@ -11,6 +12,7 @@ node {
 
     stage('Create image with project dependencies') {
         releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile .")
+        imageid = ${releaseImage.id}
     }
 
     stage('Push image to dockerHub') {
@@ -19,7 +21,7 @@ node {
                     sh """
                         echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
                         docker push $RELEASE_IMAGE_NAME
-                        docker tag releaseImage "${releaseImage.id}":"${env.BUILD_NUMBER}"
+                        docker tag releaseImage $imageid:"${env.BUILD_NUMBER}"
                     """               
                 }
         }
