@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 
@@ -131,5 +132,10 @@ public class CollectProjectsFromUserControllerTest {
 		// projects
 		assertEquals(projectsToString, controller.getProjectsFromUserAndProjectManager());
 
+	}
+
+	@Test
+	public void testeDoJenkins() {
+		assertTrue(true);
 	}
 }
