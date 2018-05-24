@@ -8,6 +8,7 @@ import AuthService from './AuthService';
 class LoginPage extends Component {
     constructor(props) {
         super(props);
+        this.match;
         this.state = {
             email: "",
             password: ""
@@ -20,28 +21,42 @@ class LoginPage extends Component {
     }
 
     handleChange = event => {
-        console.log(event.target);
         this.setState({
             [event.target.id]: event.target.value
         });
+
+
     };
 
+
+
     //On submit this method calls the login method from the Auth Service
-    handleSubmit = event => {
+    handleSubmit = async event => {
+        
         event.preventDefault();
+
         this.Auth.login(this.state.email, this.state.password)
             .then(res => {
                 //If the loggin is sucessfull the user gets redirected to its home page
-                if (res.status == 200)
-                    this.props.history.replace('/profile');
-                console.log(res.token)
+                if (res.status == 200) {
+
+                    this.Auth.fetch(`/users/email/` + this.state.email, { method: 'get' })
+        .then((responseData) => {
+             this.props.history.replace('/profile/' + responseData[0]['userID'])
+             
+          })}
+                   
+
+                
+                
             })
             .catch(err => {
                 alert(err);
             })
+          
     };
-
-
+    
+    
     render() {
         return (
             <div className="Login">
@@ -52,6 +67,7 @@ class LoginPage extends Component {
                             autoFocus
                             type="email"
                             value={this.state.email}
+                            
                             onChange={this.handleChange}
                         />
                     </FormGroup>

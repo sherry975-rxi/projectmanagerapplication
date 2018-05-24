@@ -20,6 +20,7 @@ import UpdateReport from "./pages/reports/UpdateReport";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
 import OngoingTasks from "./pages/tasks/OngoingTasks";
+import OnGoingTasksGraph from "../src/components/homePage/OnGoingTasksGraph";
 
 
 class App extends Component {
@@ -59,7 +60,8 @@ class App extends Component {
                     />
                     <Route path="/createreport" component={CreateReport} />
                     <Route path="/updatereport" component={UpdateReport} />
-                    
+                    <Route path="/homepage" component={OnGoingTasksGraph} />
+
                     <Route path="/profile/:userID" component={Profile} />
                     <Route path="/requests" component={AllRequests} />
                     <Route path="/addtask" component={AddTask} />
