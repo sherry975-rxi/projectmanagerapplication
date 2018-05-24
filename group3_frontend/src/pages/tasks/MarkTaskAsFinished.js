@@ -15,7 +15,7 @@ class MarkTaskAsFinished extends Component {
 
     async handleClick(event) {
 
-            this.AuthService.fetch(`/projects/2/tasks/${this.props.id}`, {
+            this.AuthService.fetch(`/projects/${this.props.project}/tasks/${this.props.id}`, {
 
                 method: "PATCH"
             }).then((responseData) => {

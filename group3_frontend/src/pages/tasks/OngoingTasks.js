@@ -60,16 +60,16 @@ class OngoingTasks extends Component {
                     </Moment></td>
                     
                     <td>
-                        <MarkTaskAsFinished id={taskItem.taskID} onClick={this.refreshPage}/>
+                        <MarkTaskAsFinished id={taskItem.taskID} project={taskItem.project} onClick={this.refreshPage}/>
                     </td>
-                    <Link
+                    <td><Link
                         to={"/createreport/" + taskItem.taskID}
                         activeClassName="active"
                     >
                         <button className="btn btn-warning">
                             Create Report
                     </button>
-                    </Link>{" "}
+                    </Link>{" "}</td>
                     &nbsp;
                 </tr>
             );
