@@ -20,7 +20,7 @@ node {
                     sh """
                         echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
                         docker push $RELEASE_IMAGE_NAME
-                        docker tag ${releaseImage.id} 1171476/sprint-review:${env.BUILD_ID}
+                        docker tag ${releaseImage.id} $RELEASE_IMAGE_NAME:${env.BUILD_ID}
                     """               
                 }
         }
