@@ -14,13 +14,14 @@ node {
     }
 
     stage('Push image to dockerHub') {
-        docker.withRegistry('https://registry.hub.docker.com', 'inesDockerHub') {
-            
-            sh """
-                    docker push $RELEASE_IMAGE_NAME
-                """       
-    }
-    }
+
+        withCredentials([usernamePassword(credentialsId: 'inesDockerHub', usernameVariable: 'DOCKERHUBUSERNAME', passwordVariable: 'DOCKERHUBPASS')]) {
+                    sh """
+                        echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
+                        docker push $RELEASE_IMAGE_NAME
+                    """               
+                }
+        }
 
     docker.image('sprint-review:latest').inside(){
 
