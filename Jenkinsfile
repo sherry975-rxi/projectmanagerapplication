@@ -9,7 +9,6 @@ node {
         checkout scm
     }
 
-/**
     stage('Create image with project dependencies') {
         releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile .")
     
@@ -25,7 +24,7 @@ node {
                     """               
                 }
         }
-**/
+
     docker.image("$RELEASE_IMAGE_NAME:latest").inside(){
 
         stage('Unit Tests') {
@@ -43,10 +42,6 @@ node {
                 cp target/project-management-1.0-SNAPSHOT.jar ./release.jar
             '''
         }  
-        stage() {
-
-
-        } 
     }
 
 }
