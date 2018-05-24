@@ -1,0 +1,15 @@
+Para gerar novas imagens da nossa aplicação:
+
+No package.json da pasta da nossa aplicação react
+Editar:
+
+"proxy": "http://app:8080/"
+[app] é nome da imagem que foi definida no docker-compose para criar a imagem da aplicação backend
+Fazer commit disto
+
+No application.properties editar:
+spring.profiles.active=dockerh2
+Para usar base de dados H2
+
+De seguida pelo terminal ir até ao diretório onde está o docker-compose para H2 e correr o comando:
+ docker-compose up
