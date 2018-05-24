@@ -23,7 +23,7 @@ node {
                 }
         }
 
-    docker.image('sprint-review:latest').inside(){
+    docker.image("$RELEASE_IMAGE_NAME:latest").inside(){
 
         stage('Unit Tests') {
             sh 'mvn test'
