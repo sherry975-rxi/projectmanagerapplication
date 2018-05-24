@@ -1,14 +1,12 @@
 node {
-    def app
 
     stage('Clone repository') {
 
         checkout scm
     }
 
-    stage('Build image') {
+    stage('unit tests'){
 
-        app = docker.build("test")
+        docker.image('maven:3-jdk-8-slim').inside('mvn test')
     }
-
 }
