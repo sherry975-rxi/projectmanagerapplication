@@ -17,10 +17,9 @@ class OngoingTasks extends Component {
         this.match;
         this.state = {
             tasks: [],
-            empty: "",
             project: {}
-
         };
+
         this.refreshPage = this.refreshPage.bind(this);
         this.AuthService = new AuthService()
     }
@@ -35,7 +34,7 @@ class OngoingTasks extends Component {
 
             this.AuthService.fetch(`/users/${this.props.match.params.userID}/tasks/pending`, {method: 'get'})
                 .then((responseData) => {
-                    console.log(responseData)
+                    console.log(responseData);
                     this.setState({
                         tasks: responseData,
                         message: responseData.error
