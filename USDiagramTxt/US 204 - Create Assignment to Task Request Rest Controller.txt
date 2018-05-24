@@ -1,8 +1,0 @@
-title US 204: Create Assignment to Task Request Rest Controller
-
-Actor->Browser:request assignment in task
-Browser->RestController:createTaskAssignmentRequest()
-RestController->TaskService:createTaskAssignmentRequest(task, user)
-TaskService-->RestController: request created
-RestController-->Browser:ResponseEntity(request, HttpStatus.OK)
-Browser-->Actor:Task assignment request created!
