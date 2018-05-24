@@ -30,17 +30,19 @@ class MarkTaskAsFinished extends Component {
 
                 method: "PATCH"
             })
-            //.then(function (myJson) {
-            //   console.log(myJson);
-            //})
-                .then(res => {
-                    //If sucessfull the user gets redirected to its home page
-                    if (res.status == 200)
-                        this.props.update;
-
-                }).catch(err => {
-                alert(err);
+            .then(function (myJson) {
+              console.log(myJson);
+              window.location.reload(true);
             });
+            //     .then(res => {
+            //         //If sucessfull the user gets redirected to its home page
+            //         if (res.status === 200) {
+            //             console.log("TEST");
+            //         }
+            //     }).catch(err => {
+            //     alert(err);
+            // });
+
         }
     };
 

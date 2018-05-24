@@ -53,7 +53,7 @@ class OngoingTasks extends Component {
                     </Moment></td>
                     
                     <td>
-                        <MarkTaskAsFinished className="btn btn-info" id={taskItem.taskID} update={this.componentDidMount()} />                       
+                        <MarkTaskAsFinished id={taskItem.taskID} />
                     </td>
                     <Link
                         to={"/createreport/" + this.state.tasks.taskID}
