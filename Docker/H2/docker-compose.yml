@@ -1,8 +1,8 @@
 version: "2"
 services:
 
-  web_app:
-    #image : 1171473/switch-2017-g003:release-17-may-2018-frontend
+  frontend:
+    # image : frontend:latest
     build:
       context : .
       dockerfile: frontend/Dockerfile
@@ -10,17 +10,18 @@ services:
     #NODE_ENV: development
     # networks:
     #   - default
+    #   # - backend
     ports:
       - 3000:3000
 
-  app:
+  backend:
     #image: 1171473/switch-2017-g003:release-17-may-2018-console
     build:
       context : .
-      dockerfile: backend/Dockerfile
+      dockerfile: backend/Dockerfile  
     # networks:
     #   - default
-    #   #- backend
+    #   # - backend
     stdin_open: true
     tty: true
     ports:
@@ -43,12 +44,12 @@ services:
   #     - 3307:3306
 
 # networks:
-#   # frontend:
-#   #   # Use a custom driver
-#   #   driver: custom-driver-2
-#   # backend:
-#   #   # Use a custom driver which takes special options
-#   #   driver: custom-driver-1
-#     default:
-#     # backend:
-#     #   internal: true
+# #   # frontend:
+# #   #   # Use a custom driver
+# #   #   driver: custom-driver-2
+# #   # backend:
+# #   #   # Use a custom driver which takes special options
+# #   #   driver: custom-driver-1
+#     # default:
+#     backend:
+#       internal: true
