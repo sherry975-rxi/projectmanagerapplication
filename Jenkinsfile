@@ -10,17 +10,17 @@ node {
 
     stage('Create image with project dependencies') {
         def releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile .")
-
-        withCredentials([usernamePassword(credentialsId: 'inesDockerHub', usernameVariable: 'DOCKERHUBUSERNAME', passwordVariable: 'DOCKERHUBPASS')]) {
-            sh """
-                echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
-                docker push $RELEASE_IMAGE_NAME
-            """               
-        }
-
     }
 
-    docker.image('maven:3-jdk-8-slim').inside(){
+    stage('Push image to dockerHub') {
+        docker.withRegistry('https://registry.hub.docker.com', 'inesDockerHub') {
+            releaseImage.push(${env.BUILD_NUMBER})
+            releaseImage.push("latest")
+            
+    }
+    }
+
+    docker.image('sprint-review:latest').inside(){
 
         stage('Unit Tests') {
             sh 'mvn test'
