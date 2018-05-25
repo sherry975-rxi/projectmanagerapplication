@@ -5,4 +5,4 @@ FROM openjdk:8
 ADD /release.jar release.jar
 
 # prepare image to start application when running image
-ENTRYPOINT java -jar release.jar
+ENTRYPOINT java -jar release.jar --spring.profiles.active=dbh2
