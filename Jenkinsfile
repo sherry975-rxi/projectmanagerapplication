@@ -40,6 +40,7 @@ node {
                 docker push $RELEASE_IMAGE_NAME
                 docker tag ${releaseImage.id} 1171476/project-management-g3:build-${env.BUILD_NUMBER}
             """                 
-        }  
+            } 
+        } 
     }
 }
