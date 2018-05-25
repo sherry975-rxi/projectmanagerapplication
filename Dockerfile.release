@@ -3,6 +3,6 @@ FROM openjdk:8
 
 # Get jar file into the container
 ADD /release.jar release.jar
-EXPOSE 8080
+
 # prepare image to start application when running image
-ENTRYPOINT ["java", "-jar", "release.jar"]
+ENTRYPOINT java -jar release.jar
