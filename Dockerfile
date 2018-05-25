@@ -6,7 +6,8 @@ RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get install -y git
 
+# cloning git repository and build
 RUN git clone https://1171476:EMEaTGmvs8cAEQkaVTAN@bitbucket.org/lei-isep/switch-2017-g003.git && \
     cd switch-2017-g003 && \
-    git checkout devOps-pipeline && \ 
+    git checkout master && \ 
     mvn install
