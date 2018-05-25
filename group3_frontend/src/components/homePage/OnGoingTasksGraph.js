@@ -15,6 +15,7 @@ class OnGoingTasksGraph extends Component {
                 "bar": "#3498db",
                 "title": {
                   "text": "#fff",
+                  "font-family" : "Times New Roman",
                   "background": "#2980b9"
                 }
               }

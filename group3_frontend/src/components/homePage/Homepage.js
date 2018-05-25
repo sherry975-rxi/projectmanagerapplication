@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import Graph from "./OnGoingTasksGraph.js";
+import "./Homepage.css";
+
+import Weather from "./Weather"
 
 
 class Homepage extends Component{
 
     render(){
         return(
-            <Graph className="navbar-dark">
-            </Graph>
+            <div className="HomepageContainer">
+
+            <Graph className="navbar-dark"></Graph>
+            <Weather className="teste"></Weather>
+
+            </div>
         )
     }
 
