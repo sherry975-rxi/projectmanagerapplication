@@ -2,8 +2,22 @@
 .Parent {
     font-family: Helvetica;
     font-size: 20px;
-    color: rgb(172, 172, 172);
+    color: azure;
     
+}
+
+.Parent {
+    background: gray;
+    box-shadow: 0px 0px 0px transparent;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+}
+ 
+.Parent:hover {
+    background: gray;
+    box-shadow: 0px 0px 0px transparent;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
 }
 
 
