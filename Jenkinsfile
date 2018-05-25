@@ -22,11 +22,10 @@ node {
             sh """
                 echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
                 docker push $DEPENDENCIES_IMAGE_NAME
-                docker tag ${dependenciesImage.id} 1171476/project-dependencies:${env.BUILD_NUMBER}
+                docker tag ${dependenciesImage.id} 1171476/project-dependencies:build-${env.BUILD_NUMBER}
             """               
         }
     }
-    
 
     docker.image("$DEPENDENCIES_IMAGE_NAME:latest").inside(){
 
