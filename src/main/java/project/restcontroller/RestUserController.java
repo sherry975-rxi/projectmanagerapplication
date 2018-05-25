@@ -85,7 +85,7 @@ public class RestUserController {
      * @param emailToSearch
      * @return ResponseEntity
      */
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #emailToSearch == principal.username or hasRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "/email/{emailToSearch}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> searchUsersByEmail(@PathVariable String emailToSearch) {
 

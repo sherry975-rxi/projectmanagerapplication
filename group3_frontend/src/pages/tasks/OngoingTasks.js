@@ -8,6 +8,7 @@ import AuthService from '../loginPage/AuthService';
 import Moment from 'react-moment';
 import Error from './../../components/error/error';
 import MarkTaskAsFinished from "./MarkTaskAsFinished"; 
+import CreateReport from "../reports/CreateReport";
 import { Link } from "react-router-dom";
 
 
@@ -17,24 +18,30 @@ class OngoingTasks extends Component {
         this.match;
         this.state = {
             tasks: [],
-            empty: "",
             project: {}
-
         };
+
+        this.refreshPage = this.refreshPage.bind(this);
         this.AuthService = new AuthService()
     }
 
     //TODO: Add sort by ascending or descending order to these tables
 
     async componentDidMount() {
-        this.AuthService.fetch(`/users/${this.props.match.params.userID}/tasks/pending`, { method: 'get' })
-            .then((responseData) => {
-                console.log(responseData)
-                this.setState({
-                    tasks: responseData,
-                    message: responseData.error
-                });
-            })
+        this.refreshPage();
+    }
+
+    async refreshPage() {
+
+            this.AuthService.fetch(`/users/${this.props.match.params.userID}/tasks/pending`, {method: 'get'})
+                .then((responseData) => {
+                    console.log(responseData);
+                    this.setState({
+                        tasks: responseData,
+                        message: responseData.error
+                    });
+                })
+
     }
 
     renderOngoingTasks() {
@@ -42,8 +49,8 @@ class OngoingTasks extends Component {
         return this.state.tasks.map(taskItem => {
             return (
                 <tr className="line">
-                    <td>{taskItem.project}</td>
                     <td>{taskItem.taskID}</td>
+                    <td>{taskItem.project}</td>
                     <td>{taskItem.description}</td>
                     <td><Moment format="YYYY/MM/DD">
                         {taskItem.startDate}
@@ -53,16 +60,16 @@ class OngoingTasks extends Component {
                     </Moment></td>
                     
                     <td>
-                        <MarkTaskAsFinished className="btn btn-info" id={taskItem.taskID} update={this.componentDidMount()} />                       
+                        <MarkTaskAsFinished id={taskItem.taskID} project={taskItem.project} onClick={this.refreshPage}/>
                     </td>
-                    <Link
-                        to={"/createreport/" + this.state.tasks.taskID}
+                    <td><Link 
+                        to={"/projects/" + taskItem.project + "/tasks/" + taskItem.taskID + "/createreport" }
                         activeClassName="active"
                     >
                         <button className="btn btn-warning">
                             Create Report
                     </button>
-                    </Link>{" "}
+                    </Link>{" "}</td>
                     &nbsp;
                 </tr>
             );
@@ -85,8 +92,8 @@ class OngoingTasks extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                                <th>Project ID</th>
                                 <th>Task ID</th>
+                                <th>Project ID</th>
                                 <th>Description</th>
                                 <th>Start Date</th>
                                 <th>Estimated Finish Date</th>
