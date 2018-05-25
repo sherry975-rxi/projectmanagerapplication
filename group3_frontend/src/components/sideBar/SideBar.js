@@ -30,14 +30,14 @@ class SideBar extends Component {
                 className={"col-sm-3 col-md-2 sidebar " + this.state.visibility}
             >
                 <ul className="nav nav-sidebar">
-                    <List type='Project'>
+                    <List className="Project" type='Project' onClick = {this.toggleVisibility}>
                         <li>
                             <NavLink to="/activeprojects" activeClassName="active">
                                 Active Projects
                             </NavLink>
                         </li>
                     </List>
-                    <List type='Task'>
+                    <List className="Task" type='Task'>
                         <li>
                             <NavLink to="/addtask" activeClassName="active">
                                 Add task
@@ -54,7 +54,7 @@ class SideBar extends Component {
                             </NavLink>
                         </li>
                     </List>
-                    <List type='User'>
+                    <List className="User" type='User'>
                     </List>                 
                 </ul>
             </div>
