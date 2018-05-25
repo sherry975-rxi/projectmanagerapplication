@@ -31,8 +31,8 @@ class FinishedTasks extends Component {
         return this.state.tasks.map(taskItem => {
             return (
                 <tr className="line">
-                    <td>{taskItem.project}</td>
                     <td>{taskItem.taskID}</td>
+                    <td>{taskItem.project}</td>
                     <td>{taskItem.description}</td>
                     <td><Moment format="YYYY/MM/DD">
                         {taskItem.startDate}
@@ -61,8 +61,8 @@ class FinishedTasks extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                                <th>Project ID</th>
                                 <th>Task ID</th>
+                                <th>Project ID</th>
                                 <th>Description</th>
                                 <th>Start Date</th>
                                 <th>Estimated Finish Date</th>

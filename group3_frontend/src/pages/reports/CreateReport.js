@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
 import AuthService from './../loginPage/AuthService';
 
 class CreateReport extends Component {
@@ -7,10 +7,10 @@ class CreateReport extends Component {
         super(props);
         this.match
         this.state = {
-            //project:{},
-           // taskID: "",
             reportedTime: "",
-            taskCollabEmail: ""
+            taskCollabEmail: "",
+            hideSuccessInfo: "hide-code",
+            message: ""
         };
         this.AuthService = new AuthService();
     }
@@ -54,18 +54,24 @@ class CreateReport extends Component {
             .then(function (myJson) {
                 console.log(myJson);
             });
+
+            this.setState({
+                hideSuccessInfo: ""
+            })
+    
     };
 
     render() {
         return (
             <div className=" table-striped">
                 <h3>
-                    <b>Create Report</b>
-                </h3>
+                    <b>Create Report for {this.props.match.params.taskID} </b>
+                </h3>&nbsp;
+                   
                 <form onSubmit={this.handleSubmit}>
                    
                     <FormGroup controlId="reportedTime" bsSize="large">
-                        <ControlLabel>Type reported time</ControlLabel>
+                        <ControlLabel>Type time to report</ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
@@ -87,10 +93,17 @@ class CreateReport extends Component {
                     </FormGroup>
 
                     <button
-                        className="btn btn-primary" /*onClick={this.userDetail}*/
+                        className="btn btn-primary" 
                     >
-                        Create Report
-                    </button>
+                       Save Report
+                    </button>&nbsp;
+
+                     <Alert
+                            bsStyle="success"
+                            className={this.state.hideSuccessInfo}>
+                            <strong>Report successfully saved! <br /></strong>
+                        
+                      </Alert>
                 </form>
             </div>
         );

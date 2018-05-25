@@ -57,8 +57,7 @@ class OngoingTasks extends Component {
                     </Moment></td>
                     <td><Moment format="YYYY/MM/DD">
                         {taskItem.taskDeadline}
-                    </Moment></td>
-                    
+                    </Moment></td>                    
                     <td>
                         <MarkTaskAsFinished id={taskItem.taskID} project={taskItem.project} onClick={this.refreshPage}/>
                     </td>
@@ -70,7 +69,7 @@ class OngoingTasks extends Component {
                             Create Report
                     </button>
                     </Link>{" "}</td>
-                    &nbsp;
+                    
                 </tr>
             );
         });
