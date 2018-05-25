@@ -5,9 +5,10 @@ import AuthService from './../loginPage/AuthService';
 class CreateReport extends Component {
     constructor(props) {
         super(props);
+        this.match
         this.state = {
-            projectId: "",
-            taskID: "",
+            //project:{},
+           // taskID: "",
             reportedTime: "",
             taskCollabEmail: ""
         };
@@ -43,12 +44,7 @@ class CreateReport extends Component {
 
         console.log(reportDTOData);
 
-        this.AuthService.fetch(
-            "/projects/" +
-            this.state.projectId +
-            "/tasks/" +
-            this.state.taskID +
-            "/reports/",
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/`,
             {
                 body: JSON.stringify(reportDTOData),
                 method: "POST"
@@ -67,26 +63,7 @@ class CreateReport extends Component {
                     <b>Create Report</b>
                 </h3>
                 <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="projectId" bsSize="large">
-                        <ControlLabel>Type Project ID</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.projectId}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-
-                    <FormGroup controlId="taskID" bsSize="large">
-                        <ControlLabel>Type Task ID</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.taskID}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-
+                   
                     <FormGroup controlId="reportedTime" bsSize="large">
                         <ControlLabel>Type reported time</ControlLabel>
                         <FormControl

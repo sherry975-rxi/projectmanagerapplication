@@ -58,7 +58,7 @@ class App extends Component {
                         path="/projectcost/:projectID"
                         component={ProjectCost}
                     />
-                    <Route path="/createreport" component={CreateReport} />
+                    <Route path="/projects/:projectID/tasks/:taskID/createreport" component={CreateReport} />
                     <Route path="/updatereport" component={UpdateReport} />
                     <Route path="/homepage" component={OnGoingTasksGraph} />
 

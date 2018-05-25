@@ -8,6 +8,7 @@ import AuthService from '../loginPage/AuthService';
 import Moment from 'react-moment';
 import Error from './../../components/error/error';
 import MarkTaskAsFinished from "./MarkTaskAsFinished"; 
+import CreateReport from "../reports/CreateReport";
 import { Link } from "react-router-dom";
 
 
@@ -61,8 +62,8 @@ class OngoingTasks extends Component {
                     <td>
                         <MarkTaskAsFinished id={taskItem.taskID} project={taskItem.project} onClick={this.refreshPage}/>
                     </td>
-                    <td><Link
-                        to={"/createreport/" + taskItem.taskID}
+                    <td><Link 
+                        to={"/projects/" + taskItem.project + "/tasks/" + taskItem.taskID + "/createreport" }
                         activeClassName="active"
                     >
                         <button className="btn btn-warning">
