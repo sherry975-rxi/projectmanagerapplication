@@ -18,15 +18,16 @@ node {
         stage('Integration Tests') {
             sh 'mvn failsafe:integration-test'
         }  
+    }
 
-        stage('Package') {
+    stage('Package') {
            
            sh '''
-                mvn package
+                mvn clean package -DskipTests
                 cp target/project-management-1.0-SNAPSHOT.jar ./release.jar
             '''
         }  
-    }
+
     stage('Create project image') {
             
         releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile.release .")
