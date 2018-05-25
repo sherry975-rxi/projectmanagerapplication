@@ -25,14 +25,15 @@ node {
                 mvn clean package -DskipTests
                 cp target/project-management-1.0-SNAPSHOT.jar ./release.jar
             '''
-        }  
-    }
+        }
 
-    stage('Create project image') {
+        stage('Create project image') {
             
         releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile.release .")
 
+        }  
     }
+
  
     stage('Push image to dockerHub') {
         withCredentials([usernamePassword(credentialsId: 'inesDockerHub', usernameVariable: 'DOCKERHUBUSERNAME', passwordVariable: 'DOCKERHUBPASS')]) {
