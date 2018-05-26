@@ -3,6 +3,7 @@ import decode from 'jwt-decode';
 import AuthService from '../loginPage/AuthService';
 import Moment from 'react-moment';
 import Error from './../../components/error/error';
+import { Link } from "react-router-dom";
 
 class Reports extends Component {
     constructor(props){
@@ -36,10 +37,18 @@ renderReports(){
             <tr className="line">
                 <td>{reportItem.reportId}</td>
                 <td>{reportItem.cost}</td>
-                <td>{reportItem.reported_time}</td>
+                <td>{reportItem.reportedTime}</td>
                 <td><Moment format="YYYY/MM/DD">
                     {reportItem.dateUpdate}
                 </Moment></td>
+                <td><Link 
+                        to={"/projects/" + reportItem.project + "/tasks/" + reportItem.taskID + "/updatereport" }
+                        activeClassName="active"
+                    >
+                        <button className="btn btn-primary">
+                            Update report
+                    </button>
+                </Link>{" "}</td>
             </tr>
         );
     });

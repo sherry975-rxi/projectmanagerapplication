@@ -61,7 +61,7 @@ class App extends Component {
                     />
                     <Route path="/projects/:projectID/tasks/:taskID/reports" component={Reports} />
                     <Route path="/projects/:projectID/tasks/:taskID/createreport" component={CreateReport} />
-                    <Route path="/updatereport" component={UpdateReport} />
+                    <Route path="/projects/:projectID/tasks/:taskID/updatereport" component={UpdateReport} />
                     <Route path="/homepage" component={OnGoingTasksGraph} />
 
                     <Route path="/profile/:userID" component={Profile} />
