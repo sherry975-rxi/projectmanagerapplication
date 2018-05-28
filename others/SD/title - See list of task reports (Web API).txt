@@ -1,0 +1,11 @@
+title See list of task reports
+
+Actor-> Web Application: See list of reports for a task
+Web Application->RestReportController: GET {{server}}/projects/{id}/tasks/{id}/reports/
+RestReportController -> Task Service: task: getTaskByID
+Task Service-->RestReportController: return task
+RestReportController->Task: get task reports
+Task-->Task Service: return task reports
+Task Service-->RestReportController: return task reports
+RestReportController-->Web Application: ResponseEntity(HttpStatus.OK,task reports)
+Web Application-->Actor: Show task reports
