@@ -2,7 +2,7 @@ title US 207: Create Report of Time Spent on Task
 
 
 Actor->Web Application:create report
-Web Application -> RestReportController : POST {{server}}/projects/{id}/tasks/{id}
+Web Application -> RestReportController : POST {{server}}/projects/{id}/tasks/{id}/reports/
 
 note left of RestReportController
     body
