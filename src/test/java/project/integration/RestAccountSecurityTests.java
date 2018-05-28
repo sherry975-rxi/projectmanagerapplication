@@ -268,6 +268,12 @@ public class RestAccountSecurityTests {
         assertTrue(ruiSecurity.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_COLLABORATOR")));
         assertEquals(1, ruiSecurity.getAuthorities().size());
 
+        // THESE FOUR METHODS MUST ALWAYS RETURN TRUE
+        assertTrue(ruiSecurity.isAccountNonExpired());
+        assertTrue(ruiSecurity.isAccountNonLocked());
+        assertTrue(ruiSecurity.isCredentialsNonExpired());
+        assertTrue(ruiSecurity.isEnabled());
+
 
     }
 
