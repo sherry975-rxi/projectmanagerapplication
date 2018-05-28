@@ -4,6 +4,9 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import axios from 'axios';
 import decode from 'jwt-decode';
 import AuthService from './AuthService';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { submit, login } from '../../authentication/authenticationActions'
 
 class LoginPage extends Component {
     constructor(props) {
@@ -28,35 +31,28 @@ class LoginPage extends Component {
 
     };
 
-
-
     //On submit this method calls the login method from the Auth Service
     handleSubmit = async event => {
-        
         event.preventDefault();
+        const values = this.state
 
         this.Auth.login(this.state.email, this.state.password)
             .then(res => {
                 //If the loggin is sucessfull the user gets redirected to its home page
                 if (res.status == 200) {
-
+                    this.props.submit()
                     this.Auth.fetch(`/users/email/` + this.state.email, { method: 'get' })
-        .then((responseData) => {
-             this.props.history.replace('/profile/' + responseData[0]['userID'])
-             
-          })}
-                   
+                        .then((responseData) => {
+                            this.props.history.replace('/profile/' + responseData[0]['userID'])
+                        })
+                }
 
-                
-                
             })
             .catch(err => {
                 alert(err);
             })
-          
     };
-    
-    
+
     render() {
         return (
             <div className="Login">
@@ -67,7 +63,7 @@ class LoginPage extends Component {
                             autoFocus
                             type="email"
                             value={this.state.email}
-                            
+
                             onChange={this.handleChange}
                         />
                     </FormGroup>
@@ -93,4 +89,6 @@ class LoginPage extends Component {
     }
 }
 
-export default LoginPage;
+const mapStateToProps = state => ({ authenticated: state.authenthication.authenticated })
+const mapDispatchToProps = dispatch => bindActionCreators({ submit, login }, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

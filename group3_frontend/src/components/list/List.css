@@ -1,0 +1,48 @@
+
+.Parent {
+    font-family: Helvetica;
+    font-size: 20px;
+    color: azure;
+    
+}
+
+.Parent {
+    background: gray;
+    box-shadow: 0px 0px 0px transparent;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+}
+ 
+.Parent:hover {
+    background: gray;
+    box-shadow: 0px 0px 0px transparent;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+}
+
+
+
+.Children> li > a {
+    padding-right: 20px;
+    padding-left: 20px;
+    color: rgb(226, 226, 226);
+}
+
+.Children li a:hover {
+    text-decoration: none;
+
+    background: #707174;
+}
+
+.Children > li > a.active,
+.Children > li > a.active:focus {
+    color: rgb(172, 172, 172);
+    font-weight: bold;
+    background-color: #303335;
+}
+
+.Children {
+    font-family: Helvetica;
+    font-size: 14px;
+}
+

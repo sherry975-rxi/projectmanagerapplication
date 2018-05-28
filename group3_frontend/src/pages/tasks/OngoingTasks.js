@@ -57,8 +57,7 @@ class OngoingTasks extends Component {
                     </Moment></td>
                     <td><Moment format="YYYY/MM/DD">
                         {taskItem.taskDeadline}
-                    </Moment></td>
-                    
+                    </Moment></td>                    
                     <td>
                         <MarkTaskAsFinished id={taskItem.taskID} project={taskItem.project} onClick={this.refreshPage}/>
                     </td>
@@ -66,11 +65,19 @@ class OngoingTasks extends Component {
                         to={"/projects/" + taskItem.project + "/tasks/" + taskItem.taskID + "/createreport" }
                         activeClassName="active"
                     >
-                        <button className="btn btn-warning">
+                        <button className="btn btn-primary">
                             Create Report
                     </button>
+                    </Link></td>                    
+                    <td><Link 
+                        to={"/projects/" + taskItem.project + "/tasks/" + taskItem.taskID + "/reports" }
+                        activeClassName="active"
+                    >
+                        <button className="btn btn-primary">
+                            View Reports
+                    </button>
                     </Link>{" "}</td>
-                    &nbsp;
+                    
                 </tr>
             );
         });

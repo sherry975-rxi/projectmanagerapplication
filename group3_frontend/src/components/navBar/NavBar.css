@@ -60,3 +60,13 @@
     font-family: Helvetica;
     color: white; /*Change active text color here*/
 }
+
+.navbar .navbar-nav > li .logged > a {
+    font-family: Helvetica;
+    color: white; /*Change active text color here*/
+}
+
+
+.navbar .navbar-nav > li .notLogged {
+    display: none
+}

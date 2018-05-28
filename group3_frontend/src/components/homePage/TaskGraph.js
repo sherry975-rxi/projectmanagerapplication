@@ -7,7 +7,7 @@ import { Line, Circle } from 'rc-progress';
 
 
 
-class TaskData extends Component{
+class TaskGraph extends Component{
 
     constructor(props) {
         super(props);
@@ -63,4 +63,4 @@ class TaskData extends Component{
 
 }
 
-export default TaskData
+export default TaskGraph

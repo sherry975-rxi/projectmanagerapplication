@@ -6,6 +6,7 @@ import "./CreateReport.css";
 class UpdateReport extends Component {
     constructor(props) {
         super(props);
+        this.match;
         this.state = {
             projectId: "",
             taskID: "",
@@ -45,14 +46,8 @@ class UpdateReport extends Component {
 
         console.log(reportDTOData);
 
-        this.AuthService.fetch(
-            "/projects/" +
-            this.state.projectId +
-            "/tasks/" +
-            this.state.taskID +
-            "/reports/" +
-            this.state.reportId +
-            "/update",
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/
+                ${this.props.match.params.reportId}/update/`,
             {
                 body: JSON.stringify(reportDTOData),
                 method: "PUT"

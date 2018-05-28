@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthService from './AuthService';
+import AuthService from '../pages/loginPage/AuthService';
 
 export default function withAuth(AuthComponent) {
 
