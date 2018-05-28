@@ -19,11 +19,13 @@ class Homepage extends Component{
 
         return(
             <div className="HomepageContainer">
-            <UserData></UserData>
-            <Graph></Graph>
-            <Weather className="teste"></Weather>
-            <TaskGraph />
-            <h1>{UserData.getUserID}</h1>
+                <UserData></UserData>
+                 {/* <Graph></Graph> */}
+                <Weather className="teste"></Weather>
+                <div className="TaskGraphUpperContainer">
+                    <h1>Tasks Deadline</h1>
+                    <TaskGraph />
+                </div>
             </div>
         )
     }

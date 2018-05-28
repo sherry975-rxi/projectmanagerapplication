@@ -7,6 +7,7 @@ import { Line, Circle } from 'rc-progress';
 
 
 
+
 class TaskGraph extends Component{
 
     constructor(props) {
@@ -14,9 +15,14 @@ class TaskGraph extends Component{
         this.match;
         this.state = {
             tasks: [],
-            project: {}
+            project: {},
+            percent: 0,
+            color: '#3FC7FA',
+            trailWidth: 0.4,
+            actualDate: new Date()
         };
         this.AuthService = new AuthService();
+        this.increase = this.increase.bind(this);
     }
 
     async componentDidMount() {
@@ -26,7 +32,25 @@ class TaskGraph extends Component{
         }, () => {
             this.fetchUserTasksData()
         })
+
+        this.increase();
+        
     }
+
+  
+
+      increase() {
+        const percent = this.state.percent + 1;
+        const colorMap = ['#3FC7FA', '#85D262', '#FE8C6A'];
+        if (percent >= 30) {
+          clearTimeout(this.tm);
+          return;
+        }
+        this.setState(
+            { percent
+            });
+        this.tm = setTimeout(this.increase, 10);
+      }
 
     
     fetchUserTasksData(){
@@ -44,20 +68,37 @@ class TaskGraph extends Component{
 
 
     render(){
-        return this.state.tasks.map(taskItem => {
-            return (
-                <div className="GrahpReturn">
-                  <Line percent="10" strokeWidth="4" strokeColor="#D3D3D3" />
-
-                    <tr className="line">
-                        <td><Moment format="YYYY/MM/DD">
-                            {taskItem.taskDeadline}
-                        </Moment></td>
+        console.log(this.state.actualDate);
+        return (
+            
+            this.state.tasks.map(taskItem => {
+                return (
+                    <div className="GraphContainer" style={{ margin: 10, width: 300 }}>
+                     <Line percent="30" strokeWidth="4" strokeColor={this.state.color} strokeLinecap="square"  percent={this.state.percent} />
+                        <tr className="line">
+                            <td><Moment format="YYYY/MM/DD">
+                                
+                                {taskItem.taskDeadline}
+                            </Moment></td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Task: {taskItem.description}</td>
                         
-                    </tr>
-                </div>
-            );
-        });
+                        </tr>
+                        <tr>
+                            <td>Project: {taskItem.project}</td>
+                            <td><Moment diff={this.state.actualDate} unit="days">{taskItem.taskDeadline}</Moment></td>
+
+                        </tr>
+
+                    </div>
+                );
+            })
+
+        )
+        
+      
     }
 
 
