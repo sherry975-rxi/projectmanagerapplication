@@ -54,7 +54,7 @@ class App extends Component {
                         path="/selectprojectcostcalculation/:projectID"
                         component={ProjectCostCalculation}
                     />
-                     
+
                     <Route
                         path="/projectcost/:projectID"
                         component={ProjectCost}
