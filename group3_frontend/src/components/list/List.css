@@ -1,48 +1,91 @@
 
 .Parent {
-    font-family: Helvetica;
-    font-size: 20px;
-    color: azure;
-    
+    font-size: 15px;
+    margin-top: 15px;
 }
 
-.Parent {
-    background: gray;
+.ParentButton {
+    padding-right: 250px;
+    padding-top: 35px;
+    background: none;
+    font-size: 15px;
     box-shadow: 0px 0px 0px transparent;
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
+    outline: none;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.281);
 }
- 
-.Parent:hover {
-    background: gray;
+
+.title {
+    padding-left: 15px;
+}
+
+
+
+.ParentButton:hover {
+    padding-right: 250px;
+    padding-top: 35px;
+    font-size: 15px;
+    background-color: rgba(27, 43, 56, 0.479);
     box-shadow: 0px 0px 0px transparent;
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.281);
 }
 
+
+
+
+.Children {
+    color: rgb(177, 177, 177);
+    list-style-type: none;
+    font-size: 15px;
+   padding-top: 28px;
+}
 
 
 .Children> li > a {
-    padding-right: 20px;
-    padding-left: 20px;
-    color: rgb(226, 226, 226);
+    list-style-type: none;
+    margin-left: 0px;
+    color: rgb(221, 221, 221);
+    font-size: 15px;
+    margin-top: 10px;
+    line-height: 45px;
 }
 
 .Children li a:hover {
     text-decoration: none;
-
-    background: #707174;
+    font-weight: bold;
 }
 
 .Children > li > a.active,
 .Children > li > a.active:focus {
-    color: rgb(172, 172, 172);
-    font-weight: bold;
-    background-color: #303335;
+    color: rgb(185, 184, 184);
 }
 
-.Children {
-    font-family: Helvetica;
-    font-size: 14px;
+
+.Parent .icon {
+    margin-top: -30px;
+    margin-right: 20px;
+    font-size: 10px;
+    color: rgb(195, 195, 195);
 }
+
+.buttonActive {
+    padding-right: 250px;
+    padding-top: 35px;
+    background:rgba(27, 43, 56, 0.486);
+    font-size: 15px;
+    box-shadow: 0px 0px 0px transparent;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+    outline: none;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.281);
+}
+
+
+
 

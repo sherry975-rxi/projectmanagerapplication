@@ -4,37 +4,47 @@ import "./List.css";
 class List extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { visibility: 'hide' };
+    this.state = {
+      visibility: 'hide',
+      buttonActive: "ParentButton"
+    };
     this.toggleVisibility = this.toggleVisibility.bind(this);
   }
 
   toggleVisibility() {
     const newVisibility = this.state.visibility == 'hide' ? 'show' : 'hide';
-    this.setState({ visibility: newVisibility });
+    this.setState({ visibility: newVisibility, buttonActive: "buttonActive" });
   }
 
   render() {
+
+
+    let icon = <div className="icon" align="right">
+      <span className="glyphicon glyphicon-chevron-right"></span></div>;
+
     let titleText = `${this.props.type}`;
     if (this.props.children instanceof Array) {
-    	titleText += 's';
+      titleText += 's';
     }
 
-    if(this.state.visibility == 'hide'){
-      return(
+    if (this.state.visibility == 'hide') {
+      return (
         <div>
-        <h4 className= "Parent"><button className="Parent" type="button" onClick={this.toggleVisibility}>{titleText}</button></h4>
+          <div className="Parent"><button className="ParentButton" type="button" onClick={this.toggleVisibility}><div className="title">{titleText}</div></button>{icon}</div>
         </div>
       )
     }
 
-    else{
-    return (
-      <div>
-        <h4 className= "Parent"><button className="Parent" type="button" onClick={this.toggleVisibility}>{titleText}</button></h4>
-        <ul className= "Children">{this.props.children}</ul>
-      </div>
-    );
-  }
+    else {
+      return (
+        <div>
+          <div className="Parent"><button className={this.state.buttonActive} type="button" onClick={this.toggleVisibility}> <div className="title">{titleText}</div></button>{icon}</div>
+          <div className="list">
+            <ul className="Children">{this.props.children}</ul>
+          </div>
+        </div>
+      );
+    }
   }
 }
 
