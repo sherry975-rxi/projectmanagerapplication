@@ -1,0 +1,17 @@
+title US 390: Get Project Reported Cost
+
+
+Actor->Web Application:Show me cost of project 
+Web Application -> RestProjectController : GET {{server}}/projects/{id}/cost
+
+
+
+RestProjectController->ProjectService: getProjectById(id)
+ProjectService-->RestProjectController: Project
+
+RestProjectController->TaskService: getProjectReportedCost(project)
+TaskService-->RestProjectController:Cost
+
+
+RestProjectController --> Web Application: ResponseEntity(project, HttpStatus.OK)
+Web Application -> Actor : show project with cost

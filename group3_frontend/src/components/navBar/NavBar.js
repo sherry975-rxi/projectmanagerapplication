@@ -15,7 +15,6 @@ class NavBar extends Component {
 
 
     render() {
-        console.log(this.props.logoutButton)
 
         return (
             <nav className="navbar navbar-light navbar-fixed-top">
@@ -36,7 +35,7 @@ class NavBar extends Component {
                                 <a href="/">Home</a>
                             </li>
                             <li>
-                                <a className={this.props.logoutButton} onClick={this.props.logout}><Link to="/login"> Logout </Link></a>
+                                <a className={this.props.logoutButton} onClick={this.props.logout}><Link to="/login"> Logout     <span className="glyphicon glyphicon-user"></span></Link></a>
                             </li>
                         </ul>
                     </div>
