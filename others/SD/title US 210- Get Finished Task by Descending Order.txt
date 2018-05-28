@@ -1,0 +1,67 @@
+title US 210: Get Finished Task by Descending Order
+
+
+
+Actor-> UI: get all my finished tasks in decreasing order
+
+
+UI->RestUserTaskController: GET {{server}}/users/{userId}/tasks/finished
+
+
+
+end note
+
+
+
+alt userId != Logged userId
+    
+RestUserTaskController -> UI : ResponseEntity(HttpStatus.METHOD_NOT_ALLOWED)
+
+
+else userId == Logged userId
+
+
+
+User Service->User Repository:getUserByID(userId)
+
+
+
+User Repository->User Service:user
+
+
+
+User Service -> RestUserTaskController:user
+
+
+
+RestUserTaskController -> Task Service:getAllFinishedUserTasksInDecreasingOrder(user)
+
+
+
+Task Service->Task Repository:getAllTasksFromTaskRepository
+
+
+
+Task Repository ->Task Service:tasks
+
+
+
+Task Service -> Task Service:getAllFinishedTasksFromUser(user)
+
+
+
+Task Service -> Task Service:sortFinishTaskListDecreasingOrder(tasks)
+
+
+
+Task Service ->RestUserTaskController:AllFinishedUserTasksInDecreasingOrder
+
+
+
+RestUserTaskController ->UI:ResponseEntity(AllFinishedUserTasksInDecreasingOrder, HttpStatus.OK)
+
+
+
+UI ->Actor:AllFinishedUserTasksInDecreasingOrder
+
+end note
