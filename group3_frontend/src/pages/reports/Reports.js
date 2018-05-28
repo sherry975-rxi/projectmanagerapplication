@@ -29,13 +29,16 @@ async componentDidMount() {
         });
 }
 
+
+
+
 renderReports(){
 
     
     return this.state.reports.map(reportItem => {
         return (
             <tr className="line">
-                <td>{reportItem.reportId}</td>
+                <td>{reportItem.reportDbId}</td>
                 <td>{reportItem.cost}</td>
                 <td>{reportItem.reportedTime}</td>
                 <td><Moment format="YYYY/MM/DD">
@@ -54,6 +57,8 @@ renderReports(){
     });
 
 }
+
+
 
 render() {
 
