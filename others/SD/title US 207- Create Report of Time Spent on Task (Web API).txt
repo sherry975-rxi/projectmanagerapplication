@@ -1,0 +1,33 @@
+title US 207: Create Report of Time Spent on Task
+
+
+Actor->Web Application:create report
+Web Application -> RestReportController : POST {{server}}/projects/{id}/tasks/{id}/reports/
+
+note left of RestReportController
+    body
+    
+    {"reportedTime" : 5.0,
+    "taskCollaborator" : {
+	    "projCollaborator" : {
+		    "collaborator": {
+			    "email" : "tc@mymail.com"
+		    }}}}
+end note
+
+alt taskCollaborator is null
+    RestReportController -> Web Application : ResponseEntity(HttpStatus.METHOD_NOT_ALLOWED)
+else taskCollaborator is not null
+   RestReportController->Task: createReport(task, user, time)
+   Task ->RestReportController: true
+   RestReportController->TaskService: saveTask(task)
+   TaskService -> TaskRepository : saveTask(task)
+   RestReportController -> Task: getReportCreated(taskCollab, reportedTime)
+   Task -> RestReportController : report created
+   RestReportController -> Web Application: ResponseEntity(report created, HttpStatus.CREATED)
+   Web Application -> Actor : show report created
+end
+
+
+
+https://www.websequencediagrams.com/
