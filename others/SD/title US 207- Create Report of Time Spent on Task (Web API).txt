@@ -27,3 +27,7 @@ else taskCollaborator is not null
    RestReportController -> Web Application: ResponseEntity(report created, HttpStatus.CREATED)
    Web Application -> Actor : show report created
 end
+
+
+
+https://www.websequencediagrams.com/
