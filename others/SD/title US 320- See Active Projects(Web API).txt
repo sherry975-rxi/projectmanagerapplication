@@ -2,7 +2,7 @@ title US 320: See active projects
 
 
 Actor->Web Application:Active Projects
-Web Application -> RestProjectController : POST {{server}}/projects/active
+Web Application -> RestProjectController : GET {{server}}/projects/active
 
 alt Actor role is not DIRECTOR or ADMIN
     RestProjectController -> Web Application : ResponseEntity(HttpStatus.FORBIDDEN)
@@ -10,6 +10,7 @@ else Actor role is DIRECTOR or ADMIN
    RestProjectController->ProjectService: getActiveProjects()
    ProjectService ->ProjectRepository: findAll()
    ProjectRepository->ProjectService: all projects
+   ProjectService -> ProjectService: active projects: isProjectActive()
    ProjectService -> RestProjectController : active projects
    RestProjectController -> Web Application: ResponseEntity(active projects, HttpStatus.CREATED)
    Web Application -> Actor : show active projects
