@@ -1,0 +1,33 @@
+title US 205: Mark Task as Finished
+
+
+note over Actor,PM Web App: REFS Ongoing Tasks
+
+Actor -> PM Web App: Click: Finish Task nº5
+
+PM Web App -> REST Controller: PATCH: tasks/5/markAsFinished
+
+REST Controller -> Task Service: getTaskById(5)
+
+Task Service -> Task Repository: getTaskById(5)
+
+Task Repository -> Task Service: return Task nº5
+
+Task Service -> REST Controller: return Task nº5
+
+REST Controller -> Task: Mark task nº5 as Finished
+
+Task -> REST Controller: OK!
+
+REST Controller -> Task Service: Update Task (Task 5)
+
+Task Service -> Task Repository: Save Task (Task 5)
+
+REST Controller -> PM Web App: 200 OK
+
+PM Web App -> REST Controller: GET: users/{actorID}/pendingTasks
+
+note over Actor,PM Web App: REFS Ongoing Tasks
+
+
+PM Web App -> Actor: show pending tasks list (Updated)
