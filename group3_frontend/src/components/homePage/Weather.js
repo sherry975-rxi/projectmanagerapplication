@@ -7,7 +7,7 @@ import "./Homepage.css";
 class Weather extends Component{
   render(){
     return (
-        <div className="teste" style={{width:600}}>
+        <div className="WeatherDiv">
         <Forecast latitude={41.08} longitude={-8.61}  name='Porto' color='#27c5b1' font="Verdana" units='ca'/>
         </div>
       );

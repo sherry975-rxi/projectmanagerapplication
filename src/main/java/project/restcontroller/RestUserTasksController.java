@@ -108,4 +108,27 @@ public class RestUserTasksController {
     }
 
 
+
+    /**
+     * This method returns the unfinished tasks of a given user sorted by deadline
+     *
+     * @param userId The User ID to search it's tasks
+     * @return Sorted pending task list by deadline
+     */
+
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "sortedbydeadline", method = RequestMethod.GET)
+    public List<Task> getSortedTaskListByDeadline(@PathVariable Integer userId) {
+        List<Task> taskList = taskService.getStartedNotFinishedUserTaskList(userService.getUserByID(userId));
+        taskList = taskService.sortTaskListByDeadline(taskList);
+        for(Task task: taskList) {
+            Link reference = linkTo(getClass(), userId).slash("task").slash(task.getDbTaskId()).withSelfRel();
+            task.add(reference);
+        }
+
+        return taskList;
+    }
+
+
+
 }

@@ -8,6 +8,8 @@
         "create-react-class": "^15.6.3",
         "jwt-decode": "^2.2.0",
         "moment": "^2.22.1",
+        "progressbar.js": "^1.0.1",
+        "rc-progress": "^2.2.5",
         "react": "^16.3.2",
         "react-bootstrap": "^0.32.1",
         "react-bootstrap-sidebar": "0.0.1",
@@ -15,6 +17,7 @@
         "react-dom": "^16.3.2",
         "react-forecast": "0.0.7",
         "react-moment": "^0.7.0",
+        "react-progressbar.js": "^0.2.0",
         "react-router-dom": "^4.2.2",
         "react-scripts": "1.1.4"
     },
