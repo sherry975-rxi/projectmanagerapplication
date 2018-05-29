@@ -49,7 +49,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RestAccountSecurityTests {
+public class RestAccountSecurityIT {
 
     @LocalServerPort
     private int port;
