@@ -19,14 +19,12 @@
 }
 
 .sidebar .menu  {
-    margin-top: 15px;
+    margin-top: -15px;
     font-size: 15px;
     color: rgb(221, 221, 221);
     list-style:none;
     padding: 0px;
 }
-
-
 
 
 .sidebar .menu > li   {
@@ -45,7 +43,12 @@
     text-decoration: none;
 }
 
-
+.profile{
+    margin-top: -80px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(133, 133, 133, 0.301);
+    padding-top: 10px;
+}
 
 
 

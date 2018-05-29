@@ -3,17 +3,20 @@
     margin-top: 150px;
     margin-left: -200px;
     text-align: center;
-    
     font-family: 'Dense';
     font-size: 30px;
     font-weight: bold;
 
 }
 
+.profilePic {
+
+}
+
 .external-div{
     margin-top: 140px;
     text-align: center;
-    
+
 }
 
 @font-face {
@@ -43,7 +46,9 @@
     margin-top: -10px;
 }
 
-
+.profileDetails {
+    color: white;
+}
 
 h1{
     margin-bottom: 30px;
@@ -57,3 +62,27 @@ h1{
     display: inline-block;
     text-align: left;
 }
+
+.profileDetails {
+    list-style-type: none;
+    padding-right: 35px;
+    font-family: Arial;
+}
+
+.profileDetails > li {
+    line-height: 30px;
+    color: rgb(231, 231, 231);
+}
+
+.name {
+    font-size: 20px;
+    color: rgb(223, 222, 222);
+}
+
+.profileDetails .role{
+    color: rgb(135, 190, 178);
+    font-weight: bold;
+
+}
+
+

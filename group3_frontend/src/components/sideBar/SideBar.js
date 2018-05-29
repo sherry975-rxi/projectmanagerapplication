@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./SideBar.css";
 import { NavLink } from "react-router-dom";
 import List from "../list/List.js";
+import Profile from '../navBar/Profile'
 
 class SideBar extends Component {
     constructor(props) {
@@ -30,6 +31,9 @@ class SideBar extends Component {
         return (
             <div
                 className={"col-sm-3 col-md-2 sidebar " + this.state.visibility}>
+                <div className="profile">
+                    <Profile />
+                </div>
                 <div>
                     <ul className="menu">
                         <List className="Projects" type='Projects' onClick={this.toggleVisibility}>

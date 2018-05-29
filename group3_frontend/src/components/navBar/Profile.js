@@ -19,39 +19,37 @@ export class Profile extends React.Component {
     }
 
     async componentDidMount() {
-        this.AuthService.fetch(`/users/${this.props.match.params.userID}`, {
-            method: "get" })
+        this.AuthService.fetch(`/users/7`, {
+            method: "get"
+        })
             .then(responseData => {
                 this.setState({
                     user: responseData,
                     message: responseData.status
                 });
             });
-            
 
-    
-        }
 
-        
+
+    }
+
+
 
 
 
     render() {
         var user = this.state.user;
         return (
-            
-            <div className="external-div">
-                <h1>Profile</h1>
-                <div className="divUserDetails">
-                <img  src={mainLogo} alt="fireSpot"/>
 
-                    <h2 className="userDetails">ID:   {user.userID} </h2>
-                    <h2 className="userDetails">Name:  {user.name} </h2>
-                    <h2 className="userDetails">Phone:  {user.phone} </h2>
-                    <h2 className="userDetails">Function:  {user.function} </h2>
-                    <h2 className="userDetails">Profile:  {user.userProfile} </h2>
-                </div>
-           
+            <div className="external-div">
+
+                <center> <img className="profilePic" src={mainLogo} border="2" alt="fireSpot" /></center>
+                <center><ul className="profileDetails">
+                    <li className="name">{user.name}</li>
+                    <li className="role">{user.userProfile}</li>
+                </ul></center>
+
+
             </div>
         );
     }
