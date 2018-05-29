@@ -9,7 +9,7 @@ import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/signUpPage/SignUpPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
@@ -21,9 +21,9 @@ import UpdateReport from "./pages/reports/UpdateReport";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
 import OngoingTasks from "./pages/tasks/OngoingTasks";
-import OnGoingTasksGraph from "../src/components/homePage/OnGoingTasksGraph";
 import requiresAuth from './authentication/requiresAuth'
 import Messages from './components/msgs/Messages'
+import HomePage from "../src/components/homePage/Homepage";
 
 
 class App extends Component {
@@ -49,6 +49,7 @@ class App extends Component {
                     <Route path="/activeprojects" component={requiresAuth(ActiveProjects)} />
                     <Route path="/tasks/:userID" component={requiresAuth(OngoingTasks)} />
                     <Route path="/finishedtasks" component={requiresAuth(FinishedTasks)} />
+                    <Route path="/homepage" component={requiresAuth(HomePage)} />
 
                     <Route path="/users" component={requiresAuth(UsersPage)} />
                     <Route
@@ -60,10 +61,10 @@ class App extends Component {
                         path="/projectcost/:projectID"
                         component={requiresAuth(ProjectCost)}
                     />
-                    <Route path="/projects/:projectID/tasks/:taskID/reports" component={requiresAuth(Reports)} />
-                    <Route path="/projects/:projectID/tasks/:taskID/createreport" component={requiresAuth(CreateReport)} />
-                    <Route path="/projects/:projectID/tasks/:taskID/updatereport" component={requiresAuth(UpdateReport)} />
-                    <Route path="/homepage" component={requiresAuth(OnGoingTasksGraph)} />
+                   
+                    <Route path="/projects/:projectID/tasks/:taskID/reports" component={Reports} />
+                    <Route path="/projects/:projectID/tasks/:taskID/createreport" component={CreateReport} />
+                    <Route path="/projects/:projectID/tasks/:taskID/updatereport" component={UpdateReport} />
 
                     <Route path="/profile/:userID" component={requiresAuth(Profile)} />
                     <Route path="/requests" component={requiresAuth(AllRequests)} />
