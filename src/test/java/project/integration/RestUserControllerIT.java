@@ -31,7 +31,7 @@ import static org.junit.Assert.assertFalse;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class RestUserControllerIntegrationIT {
+public class RestUserControllerIT {
 
     @LocalServerPort
     private int port;

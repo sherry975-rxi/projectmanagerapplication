@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ActiveProfiles("test")
 @ComponentScan({ "project.services", "project.model", "project.controllers", "project.restcontroller"})
 @Ignore
-public class RestControllerFunctionaIT {
+public class RestControllerFunctionalIT {
 
     /**
      * This is a functional test to be used for ALL rest controllers
