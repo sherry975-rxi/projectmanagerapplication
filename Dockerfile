@@ -7,8 +7,7 @@ RUN apt-get update && \
     apt-get install -y git && \
     apt-get install -y mysql-server
 
-RUN mysql -u root -p switchgroup3 project_management
-
+RUN -u root -p switchgroup3 -e "create database project_management; GRANT ALL PRIVILEGES ON project_management.* TO root@localhost IDENTIFIED BY 'switchgroup3'"
 
 # cloning git repository and build
 RUN git clone https://1171476:EMEaTGmvs8cAEQkaVTAN@bitbucket.org/lei-isep/switch-2017-g003.git && \
