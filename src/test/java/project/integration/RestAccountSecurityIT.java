@@ -49,7 +49,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RestAccountSecurityTests {
+public class RestAccountSecurityIT {
 
     @LocalServerPort
     private int port;
@@ -201,15 +201,18 @@ public class RestAccountSecurityTests {
      * 3 - THEN "is Token valid" must return false and and "getEmail" must return null
      *
      * 4 - AND WHEN a fresh token is created using a valid collaborator Email
-     * 5 - THEN
+     * 5 - THEN it must be valid, and return the respective user's email with the getEmail method
      */
     @Test
     public void JWTokenTests() {
+        //GIVEN
+        String notAToken = "Not A Token";
+
         // WHEN
-        assertFalse(jwtUtil.isTokenValid("Not A Token"));
+        assertFalse(jwtUtil.isTokenValid(notAToken));
 
         // THEN
-        assertNull(jwtUtil.getEmail("Not A Token"));
+        assertNull(jwtUtil.getEmail(notAToken));
 
         //WHEN
         ruiToken = jwtUtil.generateToken(userRui.getEmail());
@@ -237,11 +240,6 @@ public class RestAccountSecurityTests {
         //WHEN
         assertNull(userDetailsService.loadUserByUsername(invalid));
 
-        //AND WHEN
-        UserDetails ruiSecurity = userDetailsService.loadUserByUsername("rui@gmail.com");
-
-        //THEN
-        assertEquals("rui@gmail.com", ruiSecurity.getUsername());
 
     }
 
@@ -255,7 +253,7 @@ public class RestAccountSecurityTests {
      */
     @Test
     public void UserSecurityValidTests() {
-
+        //GIVEN
         String valid = "rui@gmail.com";
 
         //AND WHEN
