@@ -95,6 +95,8 @@ public class UserDTO extends ResourceSupport {
 	public void setPassword(String password){
 		this.password = password;
 	}
+
+    public void setFunction(String function) { this.function = function; }
 	/**
 	 * Gets the ZipCode of the user
 	 * 
