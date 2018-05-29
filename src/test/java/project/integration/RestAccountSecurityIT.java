@@ -24,6 +24,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.RequestMatcher;
 import project.dto.CredentialsDTO;
+import project.dto.UserDTO;
 import project.model.Profile;
 import project.model.User;
 import project.security.JWTUtil;
@@ -250,6 +251,9 @@ public class RestAccountSecurityIT {
      * 1 - GIVEN a valid username
      * 4 - WHEN attempting to load data from that user
      * 5 - THEN the created object must have a username and password matching the original user, as well as Collaborator permissions
+     *
+     * 6 - AND WHEN creating a User DTO object from the User Security
+     * 7 - THEN that object must have the user's ID and Email but no password.
      */
     @Test
     public void UserSecurityValidTests() {
@@ -271,6 +275,15 @@ public class RestAccountSecurityIT {
         assertTrue(ruiSecurity.isAccountNonLocked());
         assertTrue(ruiSecurity.isCredentialsNonExpired());
         assertTrue(ruiSecurity.isEnabled());
+
+        // AND WHEN
+        UserDTO dto = ((UserSecurity) ruiSecurity).getPrincipalAsDTO();
+
+        //THEN
+        assertEquals("rui@gmail.com", dto.getEmail());
+        assertEquals(String.valueOf(userRui.getUserID()), dto.getIdNumber());
+        assertEquals("ROLE_COLLABORATOR", dto.getFunction());
+        assertNull(dto.getPassword());
 
 
     }

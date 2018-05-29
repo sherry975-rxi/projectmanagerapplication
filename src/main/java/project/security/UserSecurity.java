@@ -79,6 +79,7 @@ public class UserSecurity implements UserDetails {
         UserDTO output = new UserDTO();
         output.setIdNumber(this.id.toString());
         output.setEmail(this.email);
+        output.setFunction(this.authorities.toArray()[0].toString());
 
         return output;
     }
