@@ -16,7 +16,7 @@ node {
         }  
     }
     
-    docker.image("mysql").withRun('-e "MYSQL_ROOT_PASSWORD=switchgroup3" -p 3306:3306'){
+    docker.image("mysql").withRun('-e "MYSQL_ROOT_PASSWORD=switchgroup3" -e "MYSQL_DATABASE=project_management" -p 3306:3306'){
         
         stage('Integration Tests') {
             sh 'mvn failsafe:integration-test --spring.profiles.active=dbmysql'
