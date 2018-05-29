@@ -4,17 +4,22 @@ import "./Homepage.css";
 import Weather from "./Weather";
 import UserData from "./UserData";
 import TaskGraph from './TaskGraph.js';
+import AuthService from '../../pages/loginPage/AuthService.js'
+import axios from 'axios';
 
 
 class Homepage extends Component{
 
+
+
+    
+
+
+
     render()
 
     {
-
-        const userId = UserData.getUserID;
-
-
+       
 
 
         return(

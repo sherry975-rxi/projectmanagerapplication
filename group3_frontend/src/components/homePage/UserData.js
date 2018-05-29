@@ -57,9 +57,7 @@ class UserData extends Component{
 
 
     render(){
-        console.log(this.state.email);
-        console.log(this.state.username);
-        console.log(this.state.userID);
+    
 
         return(
             <div className="UserDataHomepage">

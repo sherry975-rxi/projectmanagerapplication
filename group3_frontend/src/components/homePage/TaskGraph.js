@@ -3,7 +3,6 @@ import "./Homepage.css";
 import AuthService from '../../pages/loginPage/AuthService.js'
 import axios from 'axios';
 import Moment from 'react-moment';
-import { Line, Circle } from 'rc-progress';
 import ProgBar from './ProgBar';
 import momentus from 'moment';
 
@@ -21,7 +20,8 @@ class TaskGraph extends Component{
             percent: 0,
             color: '#000000',
             trailWidth: 0.4,
-            actualDate: new Date()
+            actualDate: new Date(),
+            userID: ''
         };
         this.AuthService = new AuthService();
         this.increase = this.increase.bind(this);
@@ -29,10 +29,9 @@ class TaskGraph extends Component{
 
     async componentDidMount() {
         this.setState({
-            email: this.AuthService.getProfile().sub
-        
+            email: this.AuthService.getProfile().sub        
         }, () => {
-            this.fetchUserTasksData()
+            this.fetchUserTasksData()        
         })
 
         this.increase();
@@ -55,35 +54,53 @@ class TaskGraph extends Component{
       }
 
     
-    fetchUserTasksData(){
-        
-        this.AuthService.fetch("users/7/tasks/sortedbydeadline", { method: "get" })
-            .then(responseData => {
-                console.log(responseData)
-                this.setState({
-                    tasks: responseData,
-                });
-            });
+    async fetchUserTasksData(){
 
+        this.AuthService.fetch(`/users/email/` + this.state.email, { method: 'get' })
+        .then((responseData) => { this.setState({
+            userID:   responseData[0]['userID'],
+            
+        }, () => {
+            this.fetchTasks()        
+        })
+          
+        })
+    }
+
+    async fetchTasks(){
+
+        this.AuthService.fetch("users/" + this.state.userID + "/tasks/sortedbydeadline", { method: "get" })
+        .then(responseData => {
+            this.setState({
+                tasks: responseData,
+            });
+        });
     }
 
 
 
+   
+
+
+
     render(){
+
+        console.log(this.state.userID)
+
         return (
-            
+
             
             this.state.tasks.map(taskItem => {
                 const today = momentus(this.state.actualDate)
                 const taskDeadline = momentus(taskItem.taskDeadline)
                 var difference = taskDeadline.diff(today, 'days');
+                var deadlineIsOver = difference + " days left"
              
-                console.log(difference)
-                console.log(taskDeadline)
+                
                 if(difference < 0) {
                     difference = 100;
+                    deadlineIsOver = "Deadline is Over?!"
                 }
-                console.log(today.diff.taskDeadline)
 
                 return (
                     
@@ -102,7 +119,7 @@ class TaskGraph extends Component{
                         </tr>
                         <tr>
                             <td>Project: {taskItem.project}  </td>
-                            <td>{difference}</td>
+                            <td>{deadlineIsOver}</td>
                             
                         </tr>
                     </div>
