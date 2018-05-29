@@ -6,7 +6,6 @@ import "./CreateReport.css";
 class UpdateReport extends Component {
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             projectId: "",
             taskID: "",
@@ -14,7 +13,8 @@ class UpdateReport extends Component {
             reportedTime: "",
             taskCollabEmail: ""
         };
-        this.AuthService = new AuthService();
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.AuthService = new AuthService()
     }
 
     validateForm() {
@@ -29,16 +29,16 @@ class UpdateReport extends Component {
         });
     };
 
-    handleSubmit = event => {
+    async handleSubmit(event) {
         event.preventDefault();
-        const { reportedTime, taskCollabEmail } = this.state;
+        const reportedTime = this.state.reportedTime;
 
         const reportDTOData = {
             reportedTime,
             taskCollaborator: {
                 projCollaborator: {
                     collaborator: {
-                        email: taskCollabEmail
+                        email: this.AuthService.getProfile().sub
                     }
                 }
             }
@@ -46,57 +46,32 @@ class UpdateReport extends Component {
 
         console.log(reportDTOData);
 
-        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/
-                ${this.props.match.params.reportId}/update/`,
+        this.AuthService.fetch(`/projects/${this.props.projId}/tasks/${this.props.taskId}/reports/
+                ${this.props.reportId}/update/`,
             {
                 body: JSON.stringify(reportDTOData),
                 method: "PUT"
             }
         )
-            .then(function (myJson) {
-                console.log(myJson);
+            .then((responseData) => {
+                console.log(responseData);
+                this.props.onSubmit();
             });
+
+
     };
 
     render() {
         return (
             <div className=" table-striped">
-                <h3>
-                    <b>Update Report</b>
-                </h3>
                 <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="reportId" bsSize="large">
-                        <ControlLabel>Type Report ID</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.reportId}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-
-                    <FormGroup controlId="projectId" bsSize="large">
-                        <ControlLabel>Type Project ID</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.projectId}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-
-                    <FormGroup controlId="taskID" bsSize="large">
-                        <ControlLabel>Type Task ID</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.taskID}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-
-                    <FormGroup controlId="reportedTime" bsSize="large">
-                        <ControlLabel>Type reported time</ControlLabel>
+                    <button
+                        className="btn btn-primary" /*onClick={this.userDetail}*/
+                    >
+                        Update Reported time:
+                    </button>
+                    <FormGroup controlId="reportedTime">
+                        <ControlLabel></ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
@@ -105,23 +80,7 @@ class UpdateReport extends Component {
                         />
                     </FormGroup>
 
-                    <FormGroup controlId="taskCollabEmail" bsSize="large">
-                        <ControlLabel>
-                            Type task collaborator email address
-                        </ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.taskCollabEmail}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
 
-                    <button
-                        className="buttonUpdate" /*onClick={this.userDetail}*/
-                    >
-                        Update Report
-                    </button>
                 </form>
             </div>
         );

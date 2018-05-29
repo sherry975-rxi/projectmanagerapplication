@@ -5,6 +5,7 @@ import Moment from 'react-moment';
 import Error from './../../components/error/error';
 import { Link } from "react-router-dom";
 import CreateReport from './CreateReport';
+import UpdateReport from './UpdateReport';
 import "./ReportsStyle.css"
 
 
@@ -17,14 +18,19 @@ class Reports extends Component {
             task:{},
             taskCollab: {}
         };
-        
+
+        this.refreshPage = this.refreshPage.bind(this);
         this.AuthService = new AuthService()
         
 }
 
 
 async componentDidMount() {
-    this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/`, { 
+    this.refreshPage();
+}
+
+async refreshPage() {
+    this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/`, {
         method: "get" })
         .then(responseData => {
             console.log(responseData)
@@ -32,7 +38,7 @@ async componentDidMount() {
                 reports: responseData,
                 message: responseData.error
             });
-        }) 
+        })
 }
 
 
@@ -53,14 +59,9 @@ renderReports(){
                 <td><Moment format="YYYY/MM/DD">
                     {reportItem.dateOfUpdate}
                 </Moment></td>
-                <td><Link 
-                        to={"/projects/" + reportItem.project + "/tasks/" + reportItem.taskID + "/updatereport" }
-                        activeClassName="active"
-                    >
-                        <button className="btn btn-primary">
-                            Update report
-                    </button>
-                </Link>{" "}</td>
+
+                <td><UpdateReport taskId={this.props.match.params.taskID} projId={this.props.match.params.projectID} reportId={reportItem.reportDbId} onSubmit={this.refreshPage}/></td>
+
             </tr>
         );
     });
