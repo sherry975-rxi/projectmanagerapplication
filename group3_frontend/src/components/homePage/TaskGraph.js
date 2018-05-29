@@ -4,6 +4,8 @@ import AuthService from '../../pages/loginPage/AuthService.js'
 import axios from 'axios';
 import Moment from 'react-moment';
 import { Line, Circle } from 'rc-progress';
+import ProgBar from './ProgBar';
+import momentus from 'moment';
 
 
 
@@ -17,7 +19,7 @@ class TaskGraph extends Component{
             tasks: [],
             project: {},
             percent: 0,
-            color: '#3FC7FA',
+            color: '#000000',
             trailWidth: 0.4,
             actualDate: new Date()
         };
@@ -68,13 +70,25 @@ class TaskGraph extends Component{
 
 
     render(){
-        console.log(this.state.actualDate);
         return (
             
+            
             this.state.tasks.map(taskItem => {
+                const today = momentus(this.state.actualDate)
+                const taskDeadline = momentus(taskItem.taskDeadline)
+                var difference = taskDeadline.diff(today, 'days');
+             
+                console.log(difference)
+                console.log(taskDeadline)
+                if(difference < 0) {
+                    difference = 100;
+                }
+                console.log(today.diff.taskDeadline)
+
                 return (
+                    
                     <div className="GraphContainer" style={{ margin: 10, width: 300 }}>
-                     <Line percent="30" strokeWidth="4" strokeColor={this.state.color} strokeLinecap="square"  percent={this.state.percent} />
+                        <ProgBar strokeColor="#2db7f5" limit={difference} />
                         <tr className="line">
                             <td><Moment format="YYYY/MM/DD">
                                 
@@ -87,11 +101,10 @@ class TaskGraph extends Component{
                         
                         </tr>
                         <tr>
-                            <td>Project: {taskItem.project}</td>
-                            <td><Moment diff={this.state.actualDate} unit="days">{taskItem.taskDeadline}</Moment></td>
-
+                            <td>Project: {taskItem.project}  </td>
+                            <td>{difference}</td>
+                            
                         </tr>
-
                     </div>
                 );
             })
