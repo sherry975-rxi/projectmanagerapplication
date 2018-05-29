@@ -29,14 +29,14 @@ class CreateReport extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const { reportedTime, taskCollabEmail } = this.state;
+        const reportedTime = this.state.reportedTime;
 
         const reportDTOData = {
             reportedTime,
             taskCollaborator: {
                 projCollaborator: {
                     collaborator: {
-                        email: taskCollabEmail
+                        email: this.AuthService.getProfile().sub
                     }
                 }
             }
@@ -51,9 +51,10 @@ class CreateReport extends Component {
             }
         )
 
-            .then(function (myJson) {
-                console.log(myJson);
-            });
+            .then((responseData) => {
+            console.log(responseData);
+            window.location.href =`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/`
+        });
 
             this.setState({
                 hideSuccessInfo: ""
@@ -76,18 +77,6 @@ class CreateReport extends Component {
                             autoFocus
                             type="text"
                             value={this.state.reportedTime}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-
-                    <FormGroup controlId="taskCollabEmail" bsSize="large">
-                        <ControlLabel>
-                            Type task collaborator email address
-                        </ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.taskCollabEmail}
                             onChange={this.handleChange}
                         />
                     </FormGroup>
