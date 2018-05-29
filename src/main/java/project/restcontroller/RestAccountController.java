@@ -147,6 +147,7 @@ public class RestAccountController {
 
     }
 
+    @PreAuthorize("permitAll()")
     @RequestMapping(value="logIn", method= RequestMethod.POST)
     public ResponseEntity<User> doLogin(@RequestBody CredentialsDTO logInDTO) {
 
@@ -168,6 +169,9 @@ public class RestAccountController {
             toLogIn.add(validateQuestion);
 
             response = new ResponseEntity<>(toLogIn, HttpStatus.OK);
+
+
+            //response.getHeaders().add("Authorization", "Bearer " +jwtUtil.generateToken(logInDTO.getEmail()));
             return response;
 
 
@@ -180,13 +184,16 @@ public class RestAccountController {
         toLogIn.add(userDetails);
 
         response = new ResponseEntity<>(toLogIn, HttpStatus.OK);
-
+        //response.getHeaders().add("Authorization", "Bearer " +jwtUtil.generateToken(logInDTO.getEmail()));
         return response;
 
     }
 
+    @PreAuthorize("permitAll()")
     @RequestMapping(value="{userId}/validate/{validationMethod}", method = RequestMethod.GET)
     public ResponseEntity<Link> performValidation(@PathVariable Integer userId, @PathVariable String validationMethod) {
+
+        ResponseEntity<Link> response = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         SendCodeFactory codeFactory = new SendCodeFactory();
 
@@ -197,7 +204,7 @@ public class RestAccountController {
         ValidationMethod validation = codeFactory.getCodeSenderType(validationMethod).orElse(null);
 
         if(toValidate==null || validation == null) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return response;
         }
 
         try {
@@ -211,21 +218,28 @@ public class RestAccountController {
 
             Link attemptValidation = linkTo(RestAccountController.class).slash(toValidate.getUserID()+"/validate/inputCode").withRel(output);
 
-            return new ResponseEntity<>(attemptValidation, HttpStatus.OK);
+
+            response = new ResponseEntity<>(attemptValidation, HttpStatus.OK);
+            //response.getHeaders().add("Authorization", "Bearer " +jwtUtil.generateToken(toValidate.getEmail()));
+
+            return response;
 
         } catch (MessagingException| IOException e) {
             logs.info("Error sending message!");
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return response;
         }
     }
 
+    @PreAuthorize("permitAll()")
     @RequestMapping(value="{userId}/validate/inputCode", method = RequestMethod.POST)
     public ResponseEntity<Link> checkValidation(@RequestBody String code, @PathVariable Integer userId) {
+
+        ResponseEntity<Link> response = new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         User toValidate = userService.getUserByID(userId);
 
         if(toValidate==null || !pendingValidation.containsKey(toValidate)) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return response;
         }
 
         Link output;
@@ -233,9 +247,12 @@ public class RestAccountController {
         if(pendingValidation.get(toValidate).equals(code) || toValidate.getAnswer().equals(code)) {
             output = linkTo(RestUserController.class).slash("users").slash(userId).slash("details").withRel("createPassword");
             pendingValidation.remove(toValidate);
-            return new ResponseEntity<>(output, HttpStatus.OK);
+
+            response = new ResponseEntity<>(output, HttpStatus.OK);
+            //response.getHeaders().add("Authorization", "Bearer " +jwtUtil.generateToken(toValidate.getEmail()));
+            return response;
         } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return response;
         }
     }
 
