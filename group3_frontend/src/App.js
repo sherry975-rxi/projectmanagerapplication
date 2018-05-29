@@ -9,12 +9,13 @@ import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import SignUpPage from "./pages/signUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
 import ProjectCost from "./pages/Cost/ProjectCost";
 import CreateReport from "./pages/reports/CreateReport";
+import Reports from "./pages/reports/Reports";
 import AllRequests from "./pages/requests/AllRequests";
 import UpdateReport from "./pages/reports/UpdateReport";
 import AddTask from "./pages/tasks/AddTask";
@@ -53,13 +54,14 @@ class App extends Component {
                         path="/selectprojectcostcalculation/:projectID"
                         component={ProjectCostCalculation}
                     />
-                     
+
                     <Route
                         path="/projectcost/:projectID"
                         component={ProjectCost}
                     />
+                    <Route path="/projects/:projectID/tasks/:taskID/reports" component={Reports} />
                     <Route path="/projects/:projectID/tasks/:taskID/createreport" component={CreateReport} />
-                    <Route path="/updatereport" component={UpdateReport} />
+                    <Route path="/projects/:projectID/tasks/:taskID/updatereport" component={UpdateReport} />
                     <Route path="/homepage" component={OnGoingTasksGraph} />
 
                     <Route path="/profile/:userID" component={Profile} />

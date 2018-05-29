@@ -1,6 +1,6 @@
 
  .navbar {
-    background-color: #478d84;
+    background-color: #EDEDED;
     padding:10px;
 }
 
@@ -16,7 +16,7 @@
 .Logo-navbar {
     font-family: 'Dense';
     font-size: 40px;
-    color: white;
+    color: rgb(42, 63, 84);
     margin: 0 0 0 0 ;
     max-width:100%;
     position: fixed;
@@ -40,13 +40,13 @@
 
 .navbar-brand {
     font-family: 'Dense';
-    color: white;
+    color: rgb(42, 63, 84);
     font-size: 35px;
 }
 
 
 .menu-icon{
-    color: rgb(253, 253, 253);
+    color: rgb(42, 63, 84);
     float: left;
     height: 50px;
     font-size: 20px;
@@ -58,5 +58,14 @@
 
 .navbar .navbar-nav > li > a {
     font-family: Helvetica;
-    color: white; /*Change active text color here*/
+    color: rgb(42, 63, 84); /*Change active text color here*/
+}
+
+.navbar .navbar-nav > li .logged > a {
+    font-family: Helvetica;
+    color: rgb(42, 63, 84); /*Change active text color here*/
+}
+
+.navbar .navbar-nav > li .notLogged {
+    display: none
 }

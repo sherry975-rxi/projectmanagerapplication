@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "./SideBar.css";
 import { NavLink } from "react-router-dom";
+import List from "../list/List.js";
 
 class SideBar extends Component {
     constructor(props) {
         super(props);
-
         const visibility = this.props.isVisible ? "" : "hide";
         this.state = {
             visibility
@@ -24,43 +24,74 @@ class SideBar extends Component {
     }
 
     render() {
+
+
+
         return (
             <div
-                className={"col-sm-3 col-md-2 sidebar " + this.state.visibility}
-            >
-                <ul className="nav nav-sidebar">
-                    <li>
-                        <NavLink to="/activeprojects" activeClassName="active">
-                            Active Projects
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/addtask" activeClassName="active">
-                            Add task
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/tasks/7" activeClassName="active">
-                            Ongoing Tasks
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/finishedtasks" activeClassName="active">
-                            Finished Tasks
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/users" activeClassName="active">
-                            Users
-                        </NavLink>
-                    </li>             
-                    <li>
-                        <NavLink to="/updatereport" activeClassName="active">
-                            Update Report
-                        </NavLink>
-                    </li>
-                    
-                </ul>
+                className={"col-sm-3 col-md-2 sidebar " + this.state.visibility}>
+                <div>
+                    <ul className="menu">
+                        <List className="Projects" type='Projects' onClick={this.toggleVisibility}>
+
+                            <li>
+                                <NavLink to="/activeprojects" activeClassName="active">
+                                    Active Projects
+                            </NavLink>
+                            </li>
+                        </List>
+                        <List className="Project" type='Task' onClick={this.toggleVisibility}>
+                            <li>
+                                <NavLink to="/addtask" activeClassName="active">
+                                    Add task
+                            </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/tasks/7" activeClassName="active">
+                                    Ongoing tasks
+                            </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/finishedtasks" activeClassName="active">
+                                    Finished tasks
+                            </NavLink>
+                            </li>
+                        </List>
+
+
+                    </ul>
+                </div>
+
+
+
+                {/*<ul>
+                    <List className="Project" type='Project' onClick={this.toggleVisibility}>
+                        <li>
+                            <NavLink to="/activeprojects" activeClassName="active">
+                                Active Projects
+                            </NavLink>
+                        </li>
+                    </List>
+                    <List className="Task" type='Task'>
+                        <li>
+                            <NavLink to="/addtask" activeClassName="active">
+                                Add task
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/tasks/7" activeClassName="active">
+                                Ongoing tasks
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/finishedtasks" activeClassName="active">
+                                Finished tasks
+                            </NavLink>
+                        </li>
+                    </List>
+                    <List className="User" type='User'>
+                    </List>
+                </ul> */}
             </div>
         );
     }
