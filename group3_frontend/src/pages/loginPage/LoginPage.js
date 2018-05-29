@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import "./LoginPage.css";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import axios from 'axios';
-import decode from 'jwt-decode';
 import AuthService from './AuthService';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { submit, login } from '../../authentication/authenticationActions'
+import { submit, dispatchError } from '../../authentication/authenticationActions'
+import { toastr } from 'react-redux-toastr'
 
 class LoginPage extends Component {
+
     constructor(props) {
         super(props);
         this.match;
@@ -40,20 +40,22 @@ class LoginPage extends Component {
             .then(res => {
                 //If the loggin is sucessfull the user gets redirected to its home page
                 if (res.status == 200) {
+                    toastr.success('Welcome!', 'Login Successful')
                     this.props.submit()
                     this.Auth.fetch(`/users/email/` + this.state.email, { method: 'get' })
                         .then((responseData) => {
                             this.props.history.replace('/profile/' + responseData[0]['userID'])
                         })
                 }
-
             })
             .catch(err => {
-                alert(err);
+                console.log(err)
+                toastr.error('Wrong!', 'Invalid Credentials!')
             })
     };
 
     render() {
+
         return (
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
@@ -89,6 +91,6 @@ class LoginPage extends Component {
     }
 }
 
-const mapStateToProps = state => ({ authenticated: state.authenthication.authenticated })
-const mapDispatchToProps = dispatch => bindActionCreators({ submit, login }, dispatch)
+const mapStateToProps = state => { return ({ logoutButton: state.authenthication.logoutButton }) }
+const mapDispatchToProps = dispatch => bindActionCreators({ submit, dispatchError }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
