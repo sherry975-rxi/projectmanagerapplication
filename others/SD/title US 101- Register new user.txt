@@ -1,0 +1,70 @@
+title US 101: Register New User (Simplified without validation methods)
+
+
+
+Actor-> UI: Register new user
+
+
+UI->RestAccountController: POST {{server}}/account/register
+
+note left of RestAccountController
+    body
+    
+   {
+		"name":"pedro",
+		"email":"pedo@gmail.com",
+		"idNumber":"12",
+		"function":"Dev",
+		"phone":"915123445",
+		"password":"qwerty",
+		"question":"1",
+		"answer":"answer",
+		"street":"Rua sem nome",
+		"zipCode":"4500-123",
+		"city":"Porto",
+		"district":"Porto",
+		"country":"Portugal"
+    }
+
+
+
+end note
+
+
+
+alt userEmail already exists
+
+RestAccountController -> User Service : if(userService.isUserEmailInUserContainer(userDTO.getEmail())
+
+User Service -> User Repository : existsByEmail(String Email)
+
+User Repository -> User Service : true
+
+User Service -> RestAccountController: true
+    
+RestAccountController -> UI : ResponseEntity(HttpStatus.CONFLICT)
+
+
+else userEmail not valid
+
+RestAccountController -> User Service : if(!(userService.isEmailAddressValid(userDTO.getEmail())
+
+User Service -> Internet Adress : isEmailAddressValid(String email)
+
+Internet Adress -> User Service : false
+
+User Service -> RestAccountController: true
+    
+RestAccountController -> UI : ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
+
+
+else
+RestAccountController -> User Service: createUserWithDTO(userDTO)
+
+User Service -> User Service : user
+
+User Service -> User Repository : save(user)
+
+RestAccountController -> UI:ResponseEntity(HttpStatus.OK)
+
+end note
