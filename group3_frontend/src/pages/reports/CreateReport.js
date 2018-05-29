@@ -71,7 +71,7 @@ class CreateReport extends Component {
                 <form onSubmit={this.handleSubmit}>
                    
                     <FormGroup controlId="reportedTime" bsSize="large">
-                        <ControlLabel>Type time to report</ControlLabel>
+                        <ControlLabel>Reported time (hours)</ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
