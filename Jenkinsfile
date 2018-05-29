@@ -13,18 +13,23 @@ node {
 
         stage('Unit Tests') {
             sh 'mvn test'
-        } 
-        
-        stage('Integration Tests') {
-            sh 'mvn failsafe:integration-test'
         }  
     }
+    
+    docker.image("mysql").withRun('-e "MYSQL_ROOT_PASSWORD=switchgroup3" -p 3306:3306'){
+        
+        stage('Integration Tests') {
+            sh 'mvn failsafe:integration-test --spring.profiles.active=dbmysql'
+        }  
+
+    }
+
 
     stage('Create project image') {
             
-        releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f docker-compose .")
+        releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile.release .")
 
-        }
+    }
 
     stage('Push image to dockerHub') {
         withCredentials([usernamePassword(credentialsId: 'inesDockerHub', usernameVariable: 'DOCKERHUBUSERNAME', passwordVariable: 'DOCKERHUBPASS')]) {
