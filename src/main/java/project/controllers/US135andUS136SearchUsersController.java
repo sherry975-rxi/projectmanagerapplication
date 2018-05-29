@@ -110,14 +110,5 @@ public class US135andUS136SearchUsersController {
 		return toConvert.getIdNumber() + " - " + profile + ": " + toConvert.getName() + " (" + toConvert.getEmail()
 				+ "; " + toConvert.getPhone() + ") - " + toConvert.getFunction();
 	}
-	
-
-	public void setUserList(List<User> userList) {
-		this.userList = userList;
-	}
-
-	public void setSelectedUser(User selectedUser) {
-		this.selectedUser = selectedUser;
-	}
 
 }
