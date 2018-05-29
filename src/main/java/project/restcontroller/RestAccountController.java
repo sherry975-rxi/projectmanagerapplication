@@ -170,8 +170,6 @@ public class RestAccountController {
 
             response = new ResponseEntity<>(toLogIn, HttpStatus.OK);
 
-
-            //response.getHeaders().add("Authorization", "Bearer " +jwtUtil.generateToken(logInDTO.getEmail()));
             return response;
 
 
@@ -184,7 +182,7 @@ public class RestAccountController {
         toLogIn.add(userDetails);
 
         response = new ResponseEntity<>(toLogIn, HttpStatus.OK);
-        //response.getHeaders().add("Authorization", "Bearer " +jwtUtil.generateToken(logInDTO.getEmail()));
+
         return response;
 
     }
@@ -220,7 +218,6 @@ public class RestAccountController {
 
 
             response = new ResponseEntity<>(attemptValidation, HttpStatus.OK);
-            //response.getHeaders().add("Authorization", "Bearer " +jwtUtil.generateToken(toValidate.getEmail()));
 
             return response;
 
@@ -249,7 +246,7 @@ public class RestAccountController {
             pendingValidation.remove(toValidate);
 
             response = new ResponseEntity<>(output, HttpStatus.OK);
-            //response.getHeaders().add("Authorization", "Bearer " +jwtUtil.generateToken(toValidate.getEmail()));
+            
             return response;
         } else {
             return response;
