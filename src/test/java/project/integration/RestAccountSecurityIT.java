@@ -16,6 +16,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,19 +27,29 @@ import project.dto.CredentialsDTO;
 import project.model.Profile;
 import project.model.User;
 import project.security.JWTUtil;
+import project.security.UserSecurity;
 import project.services.ProjectService;
 import project.services.TaskService;
+import project.services.UserDetailsServiceImpl;
 import project.services.UserService;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+/***
+ *
+ * This class tests the various components of teh spring security layer, from a higher level (attempting to access private URI's),
+ * to the lower levels (Token Generation and User Security objects)
+ *
+ */
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RestAccountSecurityTests {
+public class RestAccountSecurityIT {
 
     @LocalServerPort
     private int port;
@@ -52,6 +65,9 @@ public class RestAccountSecurityTests {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
 
     @Autowired
@@ -173,6 +189,89 @@ public class RestAccountSecurityTests {
         // THEN the response entity must contain Mike's personal information
         assertEquals(mike.getUserID(), userResponse.getBody().getUserID());
         assertEquals(200, userResponse.getStatusCodeValue());
+
+    }
+
+
+    /**
+     * This test validates the various Token Validation methods are working correctly
+     *
+     * 1 - GIVEN an Invalid token
+     * 2 - WHEN validated,
+     * 3 - THEN "is Token valid" must return false and and "getEmail" must return null
+     *
+     * 4 - AND WHEN a fresh token is created using a valid collaborator Email
+     * 5 - THEN it must be valid, and return the respective user's email with the getEmail method
+     */
+    @Test
+    public void JWTokenTests() {
+        //GIVEN
+        String notAToken = "Not A Token";
+
+        // WHEN
+        assertFalse(jwtUtil.isTokenValid(notAToken));
+
+        // THEN
+        assertNull(jwtUtil.getEmail(notAToken));
+
+        //WHEN
+        ruiToken = jwtUtil.generateToken(userRui.getEmail());
+        assertTrue(jwtUtil.isTokenValid(ruiToken));
+
+        //THEN
+        assertEquals("rui@gmail.com", jwtUtil.getEmail(ruiToken));
+
+    }
+
+    /**
+     *
+     * This method validates that attempting to search for an invalid user throws an exception
+     *
+     * 1 - GIVEN an invalid email
+     * 2 - WHEN that email is loaded
+     * 3 - THEN the an exception must be thrown
+     *
+     */
+    @Test(expected= UsernameNotFoundException.class)
+    public void UserSecurityExceptionTests() {
+        //GIVEN
+        String invalid = "notAUser@fail.org";
+
+        //WHEN
+        assertNull(userDetailsService.loadUserByUsername(invalid));
+
+
+    }
+
+    /**
+     *
+     * This method tests the various components of the Security exclusive UserDetails Class
+     *
+     * 1 - GIVEN a valid username
+     * 4 - WHEN attempting to load data from that user
+     * 5 - THEN the created object must have a username and password matching the original user, as well as Collaborator permissions
+     */
+    @Test
+    public void UserSecurityValidTests() {
+        //GIVEN
+        String valid = "rui@gmail.com";
+
+        //AND WHEN
+        UserDetails ruiSecurity = userDetailsService.loadUserByUsername(valid);
+
+        //THEN
+        assertTrue(ruiSecurity instanceof UserSecurity);
+        assertEquals(valid, ruiSecurity.getUsername());
+        assertEquals(userRui.getPassword(), ruiSecurity.getPassword());
+        assertTrue(ruiSecurity.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_COLLABORATOR")));
+        assertEquals(1, ruiSecurity.getAuthorities().size());
+
+        // THESE FOUR METHODS MUST ALWAYS RETURN TRUE
+        assertTrue(ruiSecurity.isAccountNonExpired());
+        assertTrue(ruiSecurity.isAccountNonLocked());
+        assertTrue(ruiSecurity.isCredentialsNonExpired());
+        assertTrue(ruiSecurity.isEnabled());
+
 
     }
 

@@ -4,6 +4,9 @@ import AuthService from '../loginPage/AuthService';
 import Moment from 'react-moment';
 import Error from './../../components/error/error';
 import { Link } from "react-router-dom";
+import CreateReport from './CreateReport';
+import "./ReportsStyle.css"
+
 
 class Reports extends Component {
     constructor(props){
@@ -11,11 +14,14 @@ class Reports extends Component {
         this.match;
         this.state={
             reports: [],
-            task:{}
+            task:{},
+            taskCollab: {}
         };
         
         this.AuthService = new AuthService()
+        
 }
+
 
 async componentDidMount() {
     this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/`, { 
@@ -26,20 +32,26 @@ async componentDidMount() {
                 reports: responseData,
                 message: responseData.error
             });
-        });
+        }) 
 }
 
-renderReports(){
 
+
+renderReports(){
     
     return this.state.reports.map(reportItem => {
-        return (
+        
+
+        return (          
             <tr className="line">
-                <td>{reportItem.reportId}</td>
+                <td className="tdteste">{reportItem.reportDbId}</td>
                 <td>{reportItem.cost}</td>
                 <td>{reportItem.reportedTime}</td>
                 <td><Moment format="YYYY/MM/DD">
-                    {reportItem.dateUpdate}
+                    {reportItem.firstDateOfReport}
+                </Moment></td>
+                <td><Moment format="YYYY/MM/DD">
+                    {reportItem.dateOfUpdate}
                 </Moment></td>
                 <td><Link 
                         to={"/projects/" + reportItem.project + "/tasks/" + reportItem.taskID + "/updatereport" }
@@ -54,6 +66,8 @@ renderReports(){
     });
 
 }
+
+
 
 render() {
 
@@ -70,9 +84,10 @@ render() {
                     <thead>
                         <tr>
                             <th>Report ID</th>
-                            <th>Cost</th>
+                            <th>Cost per Effort</th>
                             <th>Time</th>
-                            <th>Date of update</th>
+                            <th>Date of Creation</th>
+                            <th>Date of Update</th>
                         </tr>
                     </thead>
                     <tbody>{this.renderReports()}</tbody>

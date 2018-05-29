@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import project.dto.CredentialsDTO;
+import project.dto.UserDTO;
 import project.restcontroller.RestUserController;
 
 import javax.servlet.FilterChain;
@@ -61,9 +62,12 @@ public class JWTAuthentication extends UsernamePasswordAuthenticationFilter {
 
         Link userDetails = linkTo(RestUserController.class).slash(userID).withRel("myAccount").withType(HttpMethod.GET.name());
 
+        UserDTO dto = ((UserSecurity) auth.getPrincipal()).getPrincipalAsDTO();
+        dto.add(userDetails);
+
         ObjectMapper objectMapper = new ObjectMapper();
 
-        objectMapper.writeValue(res.getOutputStream(), userDetails);
+        objectMapper.writeValue(res.getOutputStream(), dto);
 
 
     }

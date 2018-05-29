@@ -103,7 +103,9 @@ public class RestReportController {
 
         Task task = taskService.getTaskByTaskID(taskid);
 
-        responseEntity = ResponseEntity.ok().body(task.getReports());
+        List<Report> reports = task.getReports();
+
+        responseEntity = new ResponseEntity<>(reports, HttpStatus.OK);
 
         Link reference = linkTo(methodOn(RestReportController.class).getTaskReports(taskid, projid)).withSelfRel().withType(RequestMethod.GET.name());
         task.add(reference);
