@@ -1,13 +1,15 @@
 import axios from 'axios'
 
-export function login(values) {
-    return submit(values, '/login')
-}
 
 export function logout() {
-    return { type: 'FAIL' }
+    return { type: 'LOGOUT' }
 }
 
 export function submit() {
     return { type: 'SUCCESSFULL' }
+}
+
+export function dispatchError() {
+    console.log("OLA")
+    return { type: 'ERROR' }
 }
