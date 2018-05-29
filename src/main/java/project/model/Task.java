@@ -43,6 +43,7 @@ public class Task extends ResourceSupport implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
+	@JsonIgnore
 	private List<Report> reports;
 
 	@Enumerated(EnumType.STRING)
