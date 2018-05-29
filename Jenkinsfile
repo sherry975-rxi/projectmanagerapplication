@@ -18,14 +18,6 @@ node {
         stage('Integration Tests') {
             sh 'mvn failsafe:integration-test -Dspring.profiles.active=dbmysql'
         }  
-
-        stage('Package') {
-           
-           sh '''
-                mvn clean package -DskipTests
-                cp target/project-management-1.0-SNAPSHOT.jar ./release.jar
-            '''
-        }
     }
 
     stage('Create project image') {
