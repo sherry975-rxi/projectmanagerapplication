@@ -3,6 +3,7 @@ package project.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import project.dto.UserDTO;
 import project.model.Profile;
 import project.model.User;
 
@@ -72,5 +73,13 @@ public class UserSecurity implements UserDetails {
 
     public boolean hasProfile(Profile profile) {
         return getAuthorities().contains(new SimpleGrantedAuthority(profile.getDescription()));
+    }
+
+    public UserDTO getPrincipalAsDTO() {
+        UserDTO output = new UserDTO();
+        output.setIdNumber(this.id.toString());
+        output.setEmail(this.email);
+
+        return output;
     }
 }
