@@ -22,7 +22,7 @@ node {
 
     stage('Create project image') {
             
-        releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile.release .")
+        releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f docker-compose .")
 
         }
 
