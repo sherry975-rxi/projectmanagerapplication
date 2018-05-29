@@ -1,5 +1,6 @@
 package project.dto;
 
+import org.springframework.hateoas.ResourceSupport;
 import project.model.Address;
 import project.model.Profile;
 import project.model.User;
@@ -7,7 +8,7 @@ import project.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDTO {
+public class UserDTO extends ResourceSupport {
 
 	private String name;
 	private String email;
@@ -86,6 +87,10 @@ public class UserDTO {
 		this.district = district;
 		this.country = country;
 	}
+
+	public void setIdNumber(String idNumber) {this.idNumber = idNumber; }
+
+	public void setEmail(String email) {this.email = email; }
 
 	public void setPassword(String password){
 		this.password = password;
