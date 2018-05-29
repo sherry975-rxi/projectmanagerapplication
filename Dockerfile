@@ -7,6 +7,8 @@ RUN apt-get update && \
     apt-get install -y git && \
     apt-get install -y mysql-server
 
+RUN mysql -u root -p switchgroup3 project_management
+
 
 # cloning git repository and build
 RUN git clone https://1171476:EMEaTGmvs8cAEQkaVTAN@bitbucket.org/lei-isep/switch-2017-g003.git && \
