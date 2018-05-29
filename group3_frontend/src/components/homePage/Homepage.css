@@ -25,6 +25,8 @@
     text-align: center;
     left: -5px;
     margin-top:2px;
+    padding-top:10px;
+
     padding-left:20px;
     width:320px;
     -webkit-animation: bounce-in-top 1.1s both;
