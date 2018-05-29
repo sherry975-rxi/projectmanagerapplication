@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Homepage.css";
 import AuthService from '../../pages/loginPage/AuthService.js'
 import axios from 'axios';
-import logoImage from './images/logo.png';
+import logoImage from './images/logo_v2.png';
 
 
 
@@ -32,9 +32,6 @@ class UserData extends Component{
         })
     }
 
-    getUserID(){
-        return(this.state.userID);
-    }
 
     
     fetchUserData(){

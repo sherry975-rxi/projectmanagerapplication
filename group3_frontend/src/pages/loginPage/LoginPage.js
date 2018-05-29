@@ -43,7 +43,7 @@ class LoginPage extends Component {
                     this.props.submit()
                     this.Auth.fetch(`/users/email/` + this.state.email, { method: 'get' })
                         .then((responseData) => {
-                            this.props.history.replace('/profile/' + responseData[0]['userID'])
+                            this.props.history.replace('/homepage')
                         })
                 }
 

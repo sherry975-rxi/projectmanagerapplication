@@ -28,7 +28,7 @@ class Homepage extends Component{
                  {/* <Graph></Graph> */}
                 <Weather className="teste"></Weather>
                 <div className="TaskGraphUpperContainer">
-                    <h1>Tasks Deadline</h1>
+                    <h1 classname="GraphTitle">Tasks Deadline</h1>
                     <TaskGraph />
                 </div>
             </div>

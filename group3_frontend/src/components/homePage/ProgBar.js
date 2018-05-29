@@ -8,10 +8,12 @@ class ProgBar extends Component{
         this.match;
         this.state = {
             percent: 0,
-            color: '#3FC7FA',
+            color: '#2b4153',
             trailWidth: 0.4,
-            trailColor: '#222222',
-            strokeLinecap:"square"
+            trailColor: '#999',
+            strokeLinecap:"square",
+        
+
         };
         this.increase = this.increase.bind(this);
     }
@@ -24,14 +26,12 @@ class ProgBar extends Component{
 
     increase() {
         const percent = this.state.percent + 1;
-        const colorMap = ['#3FC7FA', '#85D262', '#FE8C6A'];
         if (percent >= this.props.limit) {
           clearTimeout(this.tm);
           return;
         }
         this.setState(
-            { percent,
-                color: colorMap[parseInt(Math.random() * 3, 10)],
+            { percent
             });
         this.tm = setTimeout(this.increase, 10);
       }

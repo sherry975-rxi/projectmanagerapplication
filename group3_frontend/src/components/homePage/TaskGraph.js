@@ -19,9 +19,10 @@ class TaskGraph extends Component{
             project: {},
             percent: 0,
             color: '#000000',
-            trailWidth: 0.4,
+            trailWidth: 0.2,
             actualDate: new Date(),
-            userID: ''
+            userID: '',
+
         };
         this.AuthService = new AuthService();
         this.increase = this.increase.bind(this);
@@ -94,7 +95,7 @@ class TaskGraph extends Component{
                 const today = momentus(this.state.actualDate)
                 const taskDeadline = momentus(taskItem.taskDeadline)
                 var difference = taskDeadline.diff(today, 'days');
-                var deadlineIsOver = difference + " days left"
+                var deadlineIsOver = difference + " days"
              
                 
                 if(difference < 0) {
@@ -104,22 +105,23 @@ class TaskGraph extends Component{
 
                 return (
                     
-                    <div className="GraphContainer" style={{ margin: 10, width: 300 }}>
-                        <ProgBar strokeColor="#2db7f5" limit={difference} />
+                    <div className="GraphContainer">
+                        <ProgBar limit={difference} />
+                        
                         <tr className="line">
-                            <td><Moment format="YYYY/MM/DD">
+                            <td className="tdGraphStyle">Task Deadline: <Moment format="YYYY/MM/DD">
                                 
                                 {taskItem.taskDeadline}
                             </Moment></td>
-                            
+                            <td className="tdGraphStyleEnd">Days left until deadline:  {deadlineIsOver}</td>
+
                         </tr>
                         <tr>
-                            <td>Task: {taskItem.description}</td>
+                            <td className="tdGraphStyle">Description: {taskItem.description}</td>
                         
                         </tr>
                         <tr>
-                            <td>Project: {taskItem.project}  </td>
-                            <td>{deadlineIsOver}</td>
+                            <td className="tdGraphStyle">Project ID: {taskItem.project}  </td>
                             
                         </tr>
                     </div>
