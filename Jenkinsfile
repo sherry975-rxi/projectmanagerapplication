@@ -16,7 +16,7 @@ node {
         } 
         
         stage('Integration Tests') {
-            sh 'mvn failsafe:integration-test -Dspring.profiles.active=dbmysql'
+            sh 'mvn failsafe:integration-test -Dspring.profiles.active=dbh2'
         }  
     }
 
