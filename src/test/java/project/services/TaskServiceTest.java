@@ -272,8 +272,9 @@ public class TaskServiceTest {
         when(task2Mock.getTaskDeadline()).thenReturn(calendar2);
 
         List<Task> result = new ArrayList<>();
-        result.add(task2Mock);
         result.add(taskMock);
+
+        result.add(task2Mock);
 
         List<Task> orderedListToCompare = new ArrayList<>();
         orderedListToCompare.add(task2Mock);

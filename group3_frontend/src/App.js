@@ -9,7 +9,7 @@ import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
 import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/signUpPage/SignUpPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import firstPage from "./pages/firstPage/firstPage";
 import Footer from "./components/footer/footer";
 import ProjectCostCalculation from "./pages/Cost/ProjectCostCalculation";
@@ -21,7 +21,9 @@ import UpdateReport from "./pages/reports/UpdateReport";
 import AddTask from "./pages/tasks/AddTask";
 import ProjectDetails from "./pages/projects/ProjectDetails";
 import OngoingTasks from "./pages/tasks/OngoingTasks";
-import OnGoingTasksGraph from "../src/components/homePage/OnGoingTasksGraph";
+import requiresAuth from './authentication/requiresAuth'
+import Messages from './components/msgs/Messages'
+import HomePage from "../src/components/homePage/Homepage";
 
 
 class App extends Component {
@@ -42,39 +44,37 @@ class App extends Component {
 
         <div className="row">
             <SideBar isVisible={this.state.isVisible} />
-
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
-                    <Route path="/activeprojects" component={ActiveProjects} />
-                    <Route path="/tasks/:userID" component={OngoingTasks} />
-                    <Route path="/finishedtasks" component={FinishedTasks} />
+                    <Route path="/activeprojects" component={requiresAuth(ActiveProjects)} />
+                    <Route path="/tasks/:userID" component={requiresAuth(OngoingTasks)} />
+                    <Route path="/finishedtasks" component={requiresAuth(FinishedTasks)} />
+                    <Route path="/homepage" component={requiresAuth(HomePage)} />
 
-                    <Route path="/users" component={UsersPage} />
+                    <Route path="/users" component={requiresAuth(UsersPage)} />
                     <Route
                         path="/selectprojectcostcalculation/:projectID"
-                        component={ProjectCostCalculation}
+                        component={requiresAuth(ProjectCostCalculation)}
                     />
 
                     <Route
                         path="/projectcost/:projectID"
-                        component={ProjectCost}
+                        component={requiresAuth(ProjectCost)}
                     />
+                   
                     <Route path="/projects/:projectID/tasks/:taskID/reports" component={Reports} />
                     <Route path="/projects/:projectID/tasks/:taskID/createreport" component={CreateReport} />
                     <Route path="/projects/:projectID/tasks/:taskID/updatereport" component={UpdateReport} />
-                    <Route path="/homepage" component={OnGoingTasksGraph} />
 
-                    <Route path="/profile/:userID" component={Profile} />
-                    <Route path="/requests" component={AllRequests} />
-                    <Route path="/addtask" component={AddTask} />
+                    <Route path="/profile/:userID" component={requiresAuth(Profile)} />
+                    <Route path="/requests" component={requiresAuth(AllRequests)} />
+                    <Route path="/addtask" component={requiresAuth(AddTask)} />
                     <Route
                         path="/projectdetails/:projectID"
-                        component={ProjectDetails}
+                        component={requiresAuth(ProjectDetails)}
                     />
                 </Switch>
-
             </div>
-
         </div>
 
     );
@@ -83,6 +83,7 @@ class App extends Component {
         return (
             <div className="body">
                 <NavBar toogleMenu={this.toogleMenu} />
+                <Messages />
                 <div className="container-fluid">
                     <Switch>
                         <Route exact path="/" component={firstPage} />
@@ -91,7 +92,7 @@ class App extends Component {
                         <Route
                             exact
                             path="/users/{this.userID}"
-                            component={Profile}
+                            component={requiresAuth(Profile)}
                         />
                         <Route component={this.pages} />
                     </Switch>

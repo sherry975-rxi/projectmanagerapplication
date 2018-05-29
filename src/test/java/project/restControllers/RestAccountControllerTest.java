@@ -3,7 +3,6 @@ package project.restControllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,13 +22,17 @@ import project.dto.UserDTO;
 import project.model.User;
 import project.model.sendcode.ValidationMethod;
 import project.restcontroller.RestAccountController;
+import project.security.JWTUtil;
 import project.services.UserService;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -39,16 +42,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class RestAccountControllerTest {
 
-    @InjectMocks
-    RestAccountController restAccountController;
-
     @Mock
     UserService userService;
 
     @Mock
     ValidationMethod validate;
 
-    User userDaniel;
+    @Mock
+    JWTUtil jwtUtil;
+
+    @InjectMocks
+    RestAccountController restAccountController;
+
+    User userRui;
 
     private JacksonTester<UserDTO> jacksonUserDto;
     private JacksonTester<CredentialsDTO> jacksonCredentialsDto;
@@ -59,9 +65,10 @@ public class RestAccountControllerTest {
     public void setup() {
 
         JacksonTester.initFields(this, new ObjectMapper());
-        mvc = MockMvcBuilders.standaloneSetup(restAccountController).build();
 
-        userDaniel = new User("Rui", "rui@gmail.com", "02", "Simples colaborador", "638192945");
+        userRui = new User("Rui", "rui@gmail.com", "02", "Simples colaborador", "638192945");
+
+        when(jwtUtil.generateToken(anyString())).thenReturn("test");
 
     }
 
@@ -84,6 +91,8 @@ public class RestAccountControllerTest {
     @Test
     public void shouldCreateUser() throws Exception {
         //GIVEN
+        mvc = MockMvcBuilders.standaloneSetup(restAccountController).build();
+
         //given a set of user information
         UserDTO userDTO = new UserDTO("Alberto", "test@gmail.com", "70", "dev", "91000000",
                  "1", "test");
@@ -123,6 +132,8 @@ public class RestAccountControllerTest {
     public void shouldNotCreateUserBecauseInvalidEmail() throws Exception {
 
         //GIVEN
+        mvc = MockMvcBuilders.standaloneSetup(restAccountController).build();
+
         //given a set of user information with a email in wrong format
         UserDTO userDTO = new UserDTO("Pedro", "testgmail.com", "70", "dev", "91000000",
                  "1", "test");
@@ -160,6 +171,8 @@ public class RestAccountControllerTest {
     public void shouldNotCreateUserBecauseEmailExists() throws Exception {
 
         //GIVEN
+        mvc = MockMvcBuilders.standaloneSetup(restAccountController).build();
+
         //given a set of user information with email that already exists
         UserDTO userDTO = new UserDTO("Daniel", "testgmail.com", "70", "dev", "91000000",
                  "1", "test");
@@ -185,9 +198,11 @@ public class RestAccountControllerTest {
 
     @Test
     public void shouldLogin() throws Exception {
+        mvc = MockMvcBuilders.standaloneSetup(restAccountController).build();
+
         //GIVEN a user with a valid password
-        userDaniel.setPassword("exists");
-        when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
+        userRui.setPassword("exists");
+        when(userService.getUserByEmail(any(String.class))).thenReturn(userRui);
 
         //WHEN performing a logIn post request using a UserDTO
         CredentialsDTO userDTO = new CredentialsDTO();
@@ -206,6 +221,8 @@ public class RestAccountControllerTest {
 
     @Test
     public void shouldNotLogin() throws Exception {
+        mvc = MockMvcBuilders.standaloneSetup(restAccountController).build();
+
         // GIVEN a single user in the database
         when(userService.getUserByEmail(any(String.class))).thenReturn(null);
 
@@ -223,7 +240,7 @@ public class RestAccountControllerTest {
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
 
         // AND WHEN the user exists, but has no password
-        when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
+        when(userService.getUserByEmail(any(String.class))).thenReturn(userRui);
 
         userDTO.setEmail("test@gmail.com");
         userDTO.setPassword("exists");
@@ -240,8 +257,8 @@ public class RestAccountControllerTest {
 
         // AND WHEN the user has a password, but the DTO's password doesn't match
 
-        userDaniel.setPassword("exists");
-        when(userService.getUserByEmail(any(String.class))).thenReturn(userDaniel);
+        userRui.setPassword("exists");
+        when(userService.getUserByEmail(any(String.class))).thenReturn(userRui);
 
         userDTO.setEmail("test@gmail.com");
         userDTO.setPassword("wrong password");
@@ -256,8 +273,81 @@ public class RestAccountControllerTest {
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
     }
 
+
+    /**
+     * This method tests the flow between different URI's when attempting to validate an existing user without password
+     *
+     * GIVEN a single user in the database without password
+     * WHEN attempting to logIn
+     * THEN response must contain OK Status and three links
+     *
+     * AND WHEN selecting validation method 3 (answer security question)
+     * THEN the response must contain ok as well as a link to complete validation
+     *
+     * AND WHEN answering the validation question incorrectly
+     * THEN the response must contain "Forbidden" status
+     *
+     * AND WHEN answering the validation question correctly
+     * THEN the response must contain OK and a single link
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldValidateBecauseNoPassword() throws Exception {
+
+        //GIVEN
+        assertNull(userRui.getPassword());
+        userRui.setQuestion("Are you testing?");
+        userRui.setAnswer("Yes");
+
+        Integer ruiID = 1;
+
+        when(userService.getUserByEmail(any(String.class))).thenReturn(userRui);
+
+
+        //WHEN
+        CredentialsDTO userDTO = new CredentialsDTO();
+        userDTO.setEmail("test@gmail.com");
+        userDTO.setPassword("exists");
+
+        // THEN the response must contain "OK", and contain three links to choose a validation method
+        ResponseEntity<User> actualUserResponse = restAccountController.doLogin(userDTO);
+
+        assertEquals(HttpStatus.OK.value(), actualUserResponse.getStatusCodeValue());
+        assertEquals(3, actualUserResponse.getBody().getLinks().size());
+
+        // AND WHEN posting for the chosen validation method (Answer Security Question)
+        when(userService.getUserByID(ruiID)).thenReturn(userRui);
+
+        ResponseEntity<Link> actualLinkResponse = restAccountController.performValidation(ruiID, "3");
+
+        // THEN the response must return ok, and a link to the confirm validation method.
+        assertEquals(HttpStatus.OK.value(), actualLinkResponse.getStatusCodeValue());
+        assertEquals("Are you testing?", actualLinkResponse.getBody().getRel());
+
+        //AND WHEN
+
+        actualLinkResponse = restAccountController.checkValidation("Wrong answer", ruiID);
+
+        //THEN
+        assertEquals(HttpStatus.FORBIDDEN.value(), actualLinkResponse.getStatusCodeValue());
+
+
+        //AND WHEN
+
+        actualLinkResponse = restAccountController.checkValidation("Yes", ruiID);
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), actualLinkResponse.getStatusCodeValue());
+
+
+    }
+
+
     @Test
     public void conditionsTest() throws Exception {
+        mvc = MockMvcBuilders.standaloneSetup(restAccountController).build();
+
         //GIVEN these conditions
         String conditions = "TERMS AND CONDITIONS:"
                 + "By using this application, you agree to be bound by, and to comply with these Terms and Conditions."
@@ -352,6 +442,7 @@ public class RestAccountControllerTest {
     @Test
     public void performValidationVerificationCode(){
 
+
         //GIVEN
         // An an userEmail that it's still not registered in the system
 
@@ -427,7 +518,6 @@ public class RestAccountControllerTest {
         code = "1234";
 
 
-
         //WHEN
         //The userService tries to get the user by ID, it will return null
         when(userService.getUserByID(userID)).thenReturn(null);
@@ -444,8 +534,8 @@ public class RestAccountControllerTest {
 
 
         //WHEN
-        //The userService tries to get the user by ID, it will returnt userDaniel
-        when(userService.getUserByID(userID)).thenReturn(userDaniel);
+        //The userService tries to get the user by ID, it will returnt userRui
+        when(userService.getUserByID(userID)).thenReturn(userRui);
 
         //THEN
         // the restAccountController performs the checkValidation
