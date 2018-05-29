@@ -1,0 +1,22 @@
+version: '3'
+services:
+    mysqlsrv:
+      image: mysql:5.7
+      environment:
+        - MYSQL_ROOT_PASSWORD=switchgroup3
+        # - MYSQL_USER=switchgroup3
+        # - MYSQL_PASSWORD=switchgroup3
+        - MYSQL_DATABASE=project_management
+      expose:
+        - "3306"
+      ports:
+        - "3306:3306"
+
+    backend:
+      build:
+        context : .
+        dockerfile: ./Dockerfile.release
+      ports:
+        - "8080:8080"
+      stdin_open: true
+      tty: true

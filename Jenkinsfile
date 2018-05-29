@@ -1,37 +1,39 @@
 node {
-    //correr a build 1x/dia
-    //stage de testes unitários em H2
-    //stage de testes de integração com mySQL
 
-    stage ('Pull code from repository') {
-            checkout scm
-        }
+    // define a name for the release image
+    def RELEASE_IMAGE_NAME = '1171476/project-management-g3' 
+    def releaseImage
 
-    stage ('Build') {
+    stage('Clone repository') {
 
-        }
+        checkout scm
+    }
 
-    stage ('Backend deploy') {
+    docker.image("1171476/project-dependencies:latest").inside(){
 
-        }
+        stage('Unit Tests') {
+            sh 'mvn test'
+        }  
 
-    stage ('Unit tests') {
-
-        }
-
-    stage ('Integration tests') {
-
-        }
-
-    stage ('Frontend deploy') {
-
-        }
-
-    stage ('Create project image'){
+         stage('Integration Tests') {
+            
+            sh 'mvn failsafe:integration-test'
+        }  
+    }
+    
+    stage('Create project image') {
+            
+        releaseImage = docker.build("$RELEASE_IMAGE_NAME", "-f Dockerfile.release .")
 
     }
 
-    stage ('Push to Dockerhub'){
-
-    }
+    stage('Push image to dockerHub') {
+        withCredentials([usernamePassword(credentialsId: 'inesDockerHub', usernameVariable: 'DOCKERHUBUSERNAME', passwordVariable: 'DOCKERHUBPASS')]) {
+            sh """
+                echo $DOCKERHUBPASS | docker login -u $DOCKERHUBUSERNAME --password-stdin
+                docker tag ${releaseImage.id} 1171476/project-management-g3:build-${env.BUILD_NUMBER}
+                docker push $RELEASE_IMAGE_NAME
+            """                 
+            } 
+    } 
 }
