@@ -5,7 +5,7 @@ FROM maven:3-jdk-8-slim
 RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get install -y git && \
-    apt-get install mysql-server
+    apt-get install -y mysql-server
 
 
 # cloning git repository and build
