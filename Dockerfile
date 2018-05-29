@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get install -y git && \
     apt-get install -y mysql-server
 
-RUN mysqld --initialize
+RUN mysql --initialize
 
 RUN mysql -u root -p switchgroup3 -e "create database project_management; GRANT ALL PRIVILEGES ON project_management.* TO root@localhost IDENTIFIED BY 'switchgroup3'"
 
