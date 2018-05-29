@@ -16,7 +16,7 @@ node {
         } 
         
         stage('Integration Tests') {
-            sh 'mvn failsafe:integration-test
+            sh 'mvn failsafe:integration-test'
         }  
     }
 
