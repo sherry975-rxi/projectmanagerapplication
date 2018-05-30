@@ -7,22 +7,10 @@ import Profile from '../navBar/Profile'
 class SideBar extends Component {
     constructor(props) {
         super(props);
-        const visibility = this.props.isVisible ? "" : "hide";
-        this.state = {
-            visibility
-        };
+     
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        const visibility = nextProps.isVisible ? "" : "hide";
-        const prevVisibility = prevState ? prevState.visibility : undefined;
-        if (visibility === prevVisibility) {
-            return null;
-        }
-        return {
-            visibility
-        };
-    }
+   
 
     render() {
 
@@ -30,7 +18,7 @@ class SideBar extends Component {
 
         return (
             <div
-                className={"col-sm-3 col-md-2 sidebar " + this.state.visibility}>
+                className={"col-sm-3 col-md-2 sidebar " }>
                 <div className="profile">
                     <Profile />
                 </div>

@@ -3,37 +3,46 @@
     height:100%;
     position: relative;
     top:0px;
+    padding-left:0px;
+
 
 }
 
 .WeatherDiv{
-    position: absolute;
-    right: 50px;
-    width: 63%;
-    margin-top:2px;
-    background-color: rgba(255,255,255, 1);
-    height:320px;
-
+        display: inline-block;
+        vertical-align:top;
+        width: 63%;
+        min-width: 300px;
+        background-color: rgba(255,255,255, 1);
+        height:340px;
+    left:400px;
+    margin-bottom:100px;
+    margin-top:-5px;
+    padding-top:10px;
 
 }
 
-
 .UserDataHomepage{
-    
+        display: inline-block;
+
+        vertical-align:top;
+
+        margin-top:-5px;
+        margin-bottom:20px;
+        margin-left:-10px;
+
    background-color: rgba(255,255,255, 1);
-   position: absolute;
     text-align: center;
-    left: -5px;
-    margin-top:2px;
+    left: -100px;
+    margin-right:15px;
     padding-top:10px;
 
     padding-left:20px;
-    width:320px;
+    height:340px;
+    width:350px;
     -webkit-animation: bounce-in-top 1.1s both;
     animation: bounce-in-top 1.1s both;
   
-
-
     
 }
 
@@ -46,14 +55,13 @@
 
 .GraphContainer{
         padding: 10px;
-
-        margin-bottom:20px;
+        margin-bottom:10px;
         margin-left:40px;
         padding-bottom:20px;
         padding-top:20px;
         width:90%;
         background-color: rgb(240, 240, 240);
-       
+
 
 
 
@@ -63,18 +71,20 @@
 
 
 .TaskGraphUpperContainer{
+        display: inline-block;
+        margin-top: -85px;
+
         background-color: rgba(255,255,255, 1);
         margin-right:5px;
         right: 50px;
         text-align: center;
 
-    position: absolute;
-    height:300px;
-    padding-bottom: 20px;
-    top: 340px;
+    height:400px;
+    padding-bottom: px;
     width: 63%;
     overflow-y: auto;
     overflow-x:hidden;
+
     
     }
     

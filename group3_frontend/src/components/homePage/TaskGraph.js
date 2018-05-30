@@ -19,7 +19,7 @@ class TaskGraph extends Component{
             project: {},
             percent: 0,
             color: '#000000',
-            trailWidth: 0.2,
+            trailWidth: 1,
             actualDate: new Date(),
             userID: '',
 
@@ -96,6 +96,7 @@ class TaskGraph extends Component{
                 const taskDeadline = momentus(taskItem.taskDeadline)
                 var difference = taskDeadline.diff(today, 'days');
                 var deadlineIsOver = difference + " days"
+                
              
                 
                 if(difference < 0) {
@@ -106,7 +107,7 @@ class TaskGraph extends Component{
                 return (
                     
                     <div className="GraphContainer">
-                        <ProgBar limit={difference} />
+                        <ProgBar limit={difference}/>
                         
                         <tr className="line">
                             <td className="tdGraphStyle">Task Deadline: <Moment format="YYYY/MM/DD">

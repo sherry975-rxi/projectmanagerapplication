@@ -9,9 +9,10 @@ class ProgBar extends Component{
         this.state = {
             percent: 0,
             color: '#2b4153',
-            trailWidth: 0.4,
-            trailColor: '#999',
+            trailWidth: 4,
+            trailColor: '#aaa',
             strokeLinecap:"square",
+            strokeWidth: '2'
         
 
         };
@@ -20,7 +21,11 @@ class ProgBar extends Component{
 
     componentDidMount() {
         this.increase();
-      }
+        
+        }
+
+        
+      
     
 
 
@@ -38,7 +43,7 @@ class ProgBar extends Component{
 
       render(){
           return(
-            <Line percent={this.state.percent} trailColor={this.state.trailColor} trailWidth={this.state.trailWidth} strokeLinecap={this.state.strokeLinecap} strokeWidth="4" strokeColor={this.state.color} />
+            <Line percent={this.state.percent} strokeWidth={this.state.strokeWidth} trailColor={this.state.trailColor} trailWidth={this.state.trailWidth} strokeLinecap={this.state.strokeLinecap} strokeColor={this.state.color} />
 
 
           )}

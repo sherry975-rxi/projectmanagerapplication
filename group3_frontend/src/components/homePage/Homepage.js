@@ -24,9 +24,11 @@ class Homepage extends Component{
 
         return(
             <div className="HomepageContainer">
+                
                 <UserData></UserData>
-                 {/* <Graph></Graph> */}
                 <Weather className="teste"></Weather>
+                <UserData></UserData>
+
                 <div className="TaskGraphUpperContainer">
                     <h1 classname="GraphTitle">Tasks Deadline</h1>
                     <TaskGraph />

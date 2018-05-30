@@ -8,7 +8,7 @@ class Weather extends Component{
   render(){
     return (
         <div className="WeatherDiv">
-        <Forecast latitude={41.08} longitude={-8.61}  name='Porto' color='#27c5b1' font="Verdana" units='ca'/>
+        <Forecast latitude={41.08} longitude={-8.61}  name='Porto' color='#2b4153' font="Verdana" units='ca'/>
         </div>
       );
   }
