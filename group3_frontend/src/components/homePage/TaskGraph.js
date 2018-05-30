@@ -23,7 +23,6 @@ class TaskGraph extends Component{
 
         };
         this.AuthService = new AuthService();
-        this.increase = this.increase.bind(this);
     }
 
     async componentDidMount() {
@@ -33,7 +32,7 @@ class TaskGraph extends Component{
             this.fetchUserData()        
         })
 
-        this.increase();
+    
         
     }
 
@@ -62,23 +61,6 @@ class TaskGraph extends Component{
     }
 
   
-
-      increase() {
-        const percent = this.state.percent + 1;
-        if (percent >= 30) {
-          clearTimeout(this.tm);
-          return;
-        }
-        this.setState(
-            { percent
-            });
-        this.tm = setTimeout(this.increase, 10);
-      }
-
-   
-
-
-
    
 
 
