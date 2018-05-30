@@ -16,7 +16,7 @@ class ProjectGraph extends Component{
         super(props);
         this.match;
         this.state = {
-            projects: {},
+            projects: [],
             projectId: "",
             projectStartDate: "",
             projectFinishDate: "",
@@ -53,24 +53,35 @@ class ProjectGraph extends Component{
 
      fetchUserProjects(){
 
-        this.AuthService.fetch("projects/2", { method: "get" })
-        .then(responseData => {
+        this.AuthService.fetch("/projects/"+ this.state.userID + "/myProjects", { method: "get" })
+        .then(responseData =>  {
             this.setState({
-                projectId: responseData['projectId'],
-                projectStartDate: responseData['startdate'],
-                projectFinishDate: responseData['finishdate']
-
-            });
+                projects: responseData
+                
+            },  () => {
+                this.printData()        
+            }
+        );
         });
+     
 
+
+    }
+
+    printData(){
+        console.log(this.state.projects)
     }
 
 
 
     render(){
+        return(
+
+        this.state.projects.map(projectItem => {
+
           const today = momentus(this.state.actualDate)
-          const projectStartDay = momentus(this.state.projectStartDate)
-          const projectFinishDay = momentus(this.state.projectFinishDate)
+          const projectStartDay = momentus(projectItem.startdate)
+          const projectFinishDay = momentus(projectItem.finishdate)
           const totalDays = projectFinishDay.diff(projectStartDay, 'days');
           const actualDaysLeft= projectFinishDay.diff(today, 'days');
           const difference = actualDaysLeft;
@@ -82,16 +93,13 @@ class ProjectGraph extends Component{
              
               
                     <div className="ProjectGraphContainer">
-                    <h1>Project Closest do Deadline</h1>
+                    <h1>Active Projects</h1>
                         <div className="ProgBarCircleContainer">
                              <ProgBarCircle limit={mappedPercent}/>
                         </div>
                         <table className="ProjectGraphTable">
                         <tbody>
-                            <tr>
-                                <td><h1>Project: {this.state.projectId}</h1></td>
-                            </tr>
-                            <tr>
+                        <tr>
                                 <td className="tdGraphStyleLeft">Project Start Date</td>
                                 <td className="tdGraphStyleRight">Project Finish Date</td>
                             </tr>
@@ -102,14 +110,19 @@ class ProjectGraph extends Component{
                             <tr>
                                     <td> &nbsp;</td>
                                 </tr>
-
                             <tr>
-                                <td className="tdGraphStyleLeft">Number of days left:</td>
+                                <td className="tdGraphStyleLeft"><h2>Project:</h2></td>
+                                <td className="tdGraphStyleRight"><h2>{projectItem.name}</h2></td>
                             </tr>
                             <tr>
-                            <td className="tdGraphStyleLeft">{actualDaysLeft}</td>
+                                <td className="tdGraphStyleLeft">Project ID:  {projectItem.projectId}</td>
+                                <td className="tdGraphStyleRight">Number of days left:</td>
+                                <td className="tdGraphStyleRight">{actualDaysLeft}</td>
+
 
                             </tr>
+
+                         
                             
                             </tbody>
                         </table>
@@ -121,9 +134,10 @@ class ProjectGraph extends Component{
 
         )
        
+    }))
+
+        }
     }
 
-}
 
-
-export default ProjectGraph
+export default ProjectGraph;
