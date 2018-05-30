@@ -35,7 +35,7 @@ class OngoingTasks extends Component {
 
     async refreshPage() {
 
-            this.AuthService.fetch(`/users/${this.props.match.params.userID}/tasks/pending`, {method: 'get'})
+            this.AuthService.fetch(`/users/${this.AuthService.getUserId()}/tasks/pending`, {method: 'get'})
                 .then((responseData) => {
                     console.log(responseData);
                     this.setState({
