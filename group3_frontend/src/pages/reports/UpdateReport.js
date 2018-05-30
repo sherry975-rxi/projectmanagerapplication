@@ -60,7 +60,7 @@ class UpdateReport extends Component {
                 this.props.onSubmit();
             });
 
-            this.setState({
+                this.setState({
                 hideSuccessInfo: ""
             })
           
@@ -70,9 +70,10 @@ class UpdateReport extends Component {
         return (
             <div className="table-striped">
                 <label className="title"></label>      
+               
+                <form onSubmit={this.handleSubmit}>   
                 <td className="tdSubmit">  
-
-                <form onSubmit={this.handleSubmit}>                   
+                
                     <FormGroup controlId="reportedTime">
                         <ControlLabel>Type reported time to update</ControlLabel>
                         <FormControl
@@ -82,7 +83,7 @@ class UpdateReport extends Component {
                             onChange={this.handleChange}
                         />                         
                     </FormGroup>
-                    
+                    </td>
                      <td className="tdButton">
                          <button
                          className="btn btn-primary" > Update </button>                            
@@ -94,8 +95,9 @@ class UpdateReport extends Component {
                             <strong>Report successfully updated! <br /></strong>
                         
                       </Alert>
+                      
                 </form>   
-                </td>                 
+                                
                                  
                
             </div>

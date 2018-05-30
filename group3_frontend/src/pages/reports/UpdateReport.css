@@ -16,7 +16,7 @@
 .line {
     color: rgb(63, 63, 63); 
     padding-top: 2%;
-   
+      
 }
 
 .tdSubmit {
@@ -24,6 +24,7 @@
   left: -5px;
   position: relative;
   align-content: center;
+  padding-bottom: 0%;
 }
 
 
@@ -31,6 +32,7 @@
     display: inline-block;
     max-width: 100%;
     margin-bottom: 5px;
+    padding-top: 5px;
      
 }
 
