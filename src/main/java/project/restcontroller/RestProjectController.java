@@ -12,6 +12,7 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
+import javax.websocket.server.PathParam;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,25 @@ public class RestProjectController  {
             project.add(selfLink);
         }
         return ResponseEntity.ok().body(activeProjects);
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #userId == principal.id or hasRole('ROLE_ADMIN') ")
+    @RequestMapping(value= "{userId}/myProjects", method = RequestMethod.GET)
+    public ResponseEntity<List<Project>> getUserProjects(@PathVariable int userId) {
+
+        List<Project> userProjects = this.projectService.getProjectsFromUser(userService.getUserByID(userId));
+
+        for (Project project : userProjects) {
+            Link selfLink = linkTo(methodOn(RestProjectController.class).getUserProjects(userId)).withSelfRel().withType(RequestMethod.GET.name());
+            project.add(selfLink);
+        }
+
+        for (Project project : userProjects) {
+        Link projectDetailsLink = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel("projectDetails").withType(RequestMethod.GET.name());
+        project.add(projectDetailsLink);
+    }
+        return ResponseEntity.ok().body(userProjects);
     }
 
     /**
