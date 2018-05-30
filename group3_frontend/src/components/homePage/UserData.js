@@ -62,6 +62,7 @@ class UserData extends Component{
                 <h1 className="HomepageTitle">Welcome</h1>
                 <div className="UserDataText">
                     <table className="tableUsernameText">
+                    <tbody>
                         <tr className>
                             <td className="tdUserLeft">Name:</td>
                             <td className="tdUserRight">{this.state.username}</td>
@@ -78,6 +79,7 @@ class UserData extends Component{
                             <td className="tdUserLeft">Contact:</td>
                             <td className="tdUserRight">{this.state.phone}</td>
                         </tr>
+                        </tbody>
                     </table>
 
 
