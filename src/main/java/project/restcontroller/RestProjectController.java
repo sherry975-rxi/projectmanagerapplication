@@ -56,12 +56,13 @@ public class RestProjectController  {
 
 
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #userId == principal.id or hasRole('ROLE_ADMIN') ")
-    @RequestMapping(value= "/myProjects", method = RequestMethod.GET)
-    public ResponseEntity<List<Project>> getUserProjects() {
+    @RequestMapping(value= "{userId}/myProjects", method = RequestMethod.GET)
+    public ResponseEntity<List<Project>> getUserProjects(@PathVariable int userId) {
 
-        List<Project> userProjects = this.projectService.getProjectsFromUser(userService.getUserByID(UserService.authenticated().getId()));
+        List<Project> userProjects = this.projectService.getProjectsFromUser(userService.getUserByID(userId));
+
         for (Project project : userProjects) {
-            Link selfLink = linkTo(methodOn(RestProjectController.class).getUserProjects()).withSelfRel().withType(RequestMethod.GET.name());
+            Link selfLink = linkTo(methodOn(RestProjectController.class).getUserProjects(userId)).withSelfRel().withType(RequestMethod.GET.name());
             project.add(selfLink);
         }
 

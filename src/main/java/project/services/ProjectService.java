@@ -154,7 +154,11 @@ public class ProjectService {
 		for (ProjectCollaborator collaborator : userProjCollabs) {
 			projectId = collaborator.getProject().getProjectId();
 			for (Project project : this.getAllProjectsfromProjectsContainer()) {
-				if (project.getProjectId() == projectId) {
+
+				if(project.getProjectManager() == user) {
+					projects.add(project);
+				}
+				else if (project.getProjectId() == projectId) {
 					projects.add(project);
 				}
 			}
