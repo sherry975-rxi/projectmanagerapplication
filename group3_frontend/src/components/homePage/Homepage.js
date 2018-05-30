@@ -6,6 +6,7 @@ import UserData from "./UserData";
 import TaskGraph from './TaskGraph.js';
 import AuthService from '../../pages/loginPage/AuthService.js'
 import axios from 'axios';
+import ProjGraph from './ProjectGraph';
 
 
 class Homepage extends Component{
@@ -27,12 +28,14 @@ class Homepage extends Component{
                 
                 <UserData></UserData>
                 <Weather className="teste"></Weather>
-                <UserData></UserData>
+                <ProjGraph />
+
 
                 <div className="TaskGraphUpperContainer">
                     <h1 classname="GraphTitle">Tasks Deadline</h1>
                     <TaskGraph />
                 </div>
+
             </div>
         )
     }

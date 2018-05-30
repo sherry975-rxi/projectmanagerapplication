@@ -8,7 +8,7 @@ class ProgBar extends Component{
         this.match;
         this.state = {
             percent: 0,
-            color: '#2b4153',
+            color: '#25c4a9',
             trailWidth: 4,
             trailColor: '#aaa',
             strokeLinecap:"square",

@@ -18,44 +18,26 @@ class TaskGraph extends Component{
             tasks: [],
             project: {},
             percent: 0,
-            color: '#000000',
-            trailWidth: 1,
             actualDate: new Date(),
             userID: '',
 
         };
         this.AuthService = new AuthService();
-        this.increase = this.increase.bind(this);
     }
 
     async componentDidMount() {
         this.setState({
             email: this.AuthService.getProfile().sub        
         }, () => {
-            this.fetchUserTasksData()        
+            this.fetchUserData()        
         })
 
-        this.increase();
+    
         
     }
 
-  
-
-      increase() {
-        const percent = this.state.percent + 1;
-        const colorMap = ['#3FC7FA', '#85D262', '#FE8C6A'];
-        if (percent >= 30) {
-          clearTimeout(this.tm);
-          return;
-        }
-        this.setState(
-            { percent
-            });
-        this.tm = setTimeout(this.increase, 10);
-      }
-
-    
-    async fetchUserTasksData(){
+     
+    async fetchUserData(){
 
         this.AuthService.fetch(`/users/email/` + this.state.email, { method: 'get' })
         .then((responseData) => { this.setState({
@@ -78,8 +60,7 @@ class TaskGraph extends Component{
         });
     }
 
-
-
+  
    
 
 
@@ -95,13 +76,13 @@ class TaskGraph extends Component{
                 const today = momentus(this.state.actualDate)
                 const taskDeadline = momentus(taskItem.taskDeadline)
                 var difference = taskDeadline.diff(today, 'days');
-                var deadlineIsOver = difference + " days"
+                var deadlineIsOver = difference
                 
              
                 
                 if(difference < 0) {
                     difference = 100;
-                    deadlineIsOver = "Deadline is Over?!"
+                    deadlineIsOver = "0"
                 }
 
                 return (
@@ -110,9 +91,9 @@ class TaskGraph extends Component{
                         <ProgBar limit={difference}/>
                         
                         <tr className="line">
-                            <td className="tdGraphStyle">Task Deadline: <Moment format="YYYY/MM/DD">
+                            <td className="tdGraphStyle">Task Deadline:<Moment format="YYYY/MM/DD">
                                 
-                                {taskItem.taskDeadline}
+                               {taskItem.taskDeadline} 
                             </Moment></td>
                             <td className="tdGraphStyleEnd">Days left until deadline:  {deadlineIsOver}</td>
 
