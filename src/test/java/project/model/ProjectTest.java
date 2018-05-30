@@ -31,6 +31,7 @@ public class ProjectTest {
 	TaskCollaborator taskWorker2;
 	Project p1;
 	Project p2;
+	Project p3;
 	TaskService taskContainer;
 
 	@Before
@@ -50,6 +51,7 @@ public class ProjectTest {
 		// create project
 		p1 = new Project("name3", "description4", user1);
 		p2 = new Project("name1", "description4", user2);
+		p3 = new Project();
 
 	}
 
@@ -61,6 +63,7 @@ public class ProjectTest {
 		user4 = null;
 		p1 = null;
 		p2 = null;
+		p3 = null;
 		projectCollaborator2 = null;
 		projectCollaborator1 = null;
 		projectCollaborator3 = null;
@@ -138,10 +141,10 @@ public class ProjectTest {
 	// * Tests the comparison between objects that are different and from different
 	// * types
 	// */
-	// @Test public
-	// void testEqualsDifferentObject() {
-	// assertFalse(p1.equals(user1));
-	// }
+	 @Test
+	 public void testEqualsDifferentObject() {
+	 assertFalse(p1.equals(user1));
+	 }
 
 	/**
 	 * Sets the status of a project to Execution
@@ -212,8 +215,33 @@ public class ProjectTest {
 	@Test
 	public void testSetAndGetFinishDate() {
 		p1.setFinishdate(taskDeadline);
+		p1.getCalculationMethod();
 		assertEquals(p1.getFinishdate(), taskDeadline);
+		assertEquals(p1.getCalculationMethod(), p2.getCalculationMethod());
 
+	}
+
+
+	/**
+	 * Tests calculation methods
+	 *
+	 */
+	@Test
+	public void testSetAndGetCalculationMethod() {
+		p1.setCalculationMethod(CalculationMethod.CI);
+		assertEquals(p1.getCalculationMethod(), CalculationMethod.CI);
+		p1.setCalculationMethod(CalculationMethod.CF);
+		assertEquals(p1.getCalculationMethod(), CalculationMethod.CF);
+		p1.setCalculationMethod(CalculationMethod.CM);
+		assertEquals(p1.getCalculationMethod(), CalculationMethod.CM);
+		p1.setCalculationMethod(CalculationMethod.CIFM);
+		assertEquals(p1.getCalculationMethod(), CalculationMethod.CIFM);
+
+	}
+
+	@Test
+	public void testshouldGetAvailableCalculationMethods() {
+		assertEquals(p1.getAvailableCalculationMethods(), p1.getAvailableCalculationMethods());
 	}
 
 	/**
@@ -350,8 +378,15 @@ public class ProjectTest {
 	}
 	
 	@Test 
-	public void testIsProjectActive() { 
-		assertTrue(p1.isProjectActive()); 
+	public void testIsProjectActive() {
+		p1.setProjectStatus(Project.PLANNING);
+		assertTrue(p1.isProjectActive());
+		p1.setProjectStatus(Project.INITIATION);
+		assertTrue(p1.isProjectActive());
+		p1.setProjectStatus(Project.EXECUTION);
+		assertTrue(p1.isProjectActive());
+		p1.setProjectStatus(Project.DELIVERY);
+		assertTrue(p1.isProjectActive());
 		p1.setStatus(6);
 		assertFalse(p1.isProjectActive()); 
 	}
