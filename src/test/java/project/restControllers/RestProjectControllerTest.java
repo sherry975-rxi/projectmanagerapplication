@@ -327,7 +327,6 @@ public class RestProjectControllerTest {
         verify(projectServiceMock, times(1)).updateProjectData(anyObject(), anyObject());
 
     }
-
 }
 
 

@@ -61,10 +61,27 @@ class UserData extends Component{
                 <img  src={logoImage} alt="logoImage"/>
                 <h1 className="HomepageTitle">Welcome</h1>
                 <div className="UserDataText">
-                    <p>Name: {this.state.username}</p>
-                    <p>Function: {this.state.function}</p>
-                    <p>Email: {this.state.email}</p>
-                    <p>Contact: {this.state.phone}</p>
+                    <table className="tableUsernameText">
+                    <tbody>
+                        <tr className>
+                            <td className="tdUserLeft">Name:</td>
+                            <td className="tdUserRight">{this.state.username}</td>
+                        </tr>
+                        <tr>
+                            <td className="tdUserLeft"> Function:</td>
+                            <td className="tdUserRight">{this.state.function}</td>
+                        </tr>
+                        <tr>
+                            <td className="tdUserLeft">Email:</td>
+                            <td className="tdUserRight">{this.state.email}</td>
+                        </tr>
+                        <tr>
+                            <td className="tdUserLeft">Contact:</td>
+                            <td className="tdUserRight">{this.state.phone}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
 
                 </div>
             </div>
