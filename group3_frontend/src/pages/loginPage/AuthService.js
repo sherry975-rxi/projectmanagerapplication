@@ -52,7 +52,7 @@ export default class AuthService {
 
     getUserId() {
 
-        localStorage.getItem('id_user')
+        return localStorage.getItem('id_user')
     }
 
     //Gets the user token from localStorage
