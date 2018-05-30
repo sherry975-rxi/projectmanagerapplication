@@ -17,7 +17,7 @@ class FinishedTasks extends Component {
     }
 
     async componentDidMount() {
-        this.AuthService.fetch("users/${this.AuthService.getUserId()}/tasks/finished", { method: "get" })
+        this.AuthService.fetch("users/"+this.AuthService.getUserId()+"/tasks/finished", { method: "get" })
             .then(responseData => {
                 console.log(responseData)
                 this.setState({
