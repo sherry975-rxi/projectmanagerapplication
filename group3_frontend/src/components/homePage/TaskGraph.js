@@ -67,7 +67,6 @@ class TaskGraph extends Component{
 
     render(){
 
-        console.log(this.state.userID)
 
         return (
 
@@ -89,7 +88,8 @@ class TaskGraph extends Component{
                     
                     <div className="GraphContainer">
                         <ProgBar limit={difference}/>
-                        
+                        <table>
+                        <tbody>
                         <tr className="line">
                             <td className="tdGraphStyle">Task Deadline:<Moment format="YYYY/MM/DD">
                                 
@@ -106,6 +106,8 @@ class TaskGraph extends Component{
                             <td className="tdGraphStyle">Project ID: {taskItem.project}  </td>
                             
                         </tr>
+                        </tbody>
+                        </table>
                     </div>
                 );
             })

@@ -55,7 +55,6 @@ class ProjectGraph extends Component{
 
         this.AuthService.fetch("projects/2", { method: "get" })
         .then(responseData => {
-            console.log(responseData)
             this.setState({
                 projectId: responseData['projectId'],
                 projectStartDate: responseData['startdate'],
@@ -69,7 +68,6 @@ class ProjectGraph extends Component{
 
 
     render(){
-          console.log(this.state.projects)
           const today = momentus(this.state.actualDate)
           const projectStartDay = momentus(this.state.projectStartDate)
           const projectFinishDay = momentus(this.state.projectFinishDate)
@@ -89,6 +87,7 @@ class ProjectGraph extends Component{
                              <ProgBarCircle limit={mappedPercent}/>
                         </div>
                         <table className="ProjectGraphTable">
+                        <tbody>
                             <tr>
                                 <td><h1>Project: {this.state.projectId}</h1></td>
                             </tr>
@@ -100,7 +99,9 @@ class ProjectGraph extends Component{
                                 <td className="tdGraphStyleLeft">{projectStartDay.format('YYYY/MM/D')}</td>
                                 <td className="tdGraphStyleRight">{projectFinishDay.format('YYYY/MM/D')}</td>
                             </tr>
-                            <br />
+                            <tr>
+                                    <td> &nbsp;</td>
+                                </tr>
 
                             <tr>
                                 <td className="tdGraphStyleLeft">Number of days left:</td>
@@ -110,7 +111,7 @@ class ProjectGraph extends Component{
 
                             </tr>
                             
-
+                            </tbody>
                         </table>
                         
 
