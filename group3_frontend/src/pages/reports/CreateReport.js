@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
 import AuthService from './../loginPage/AuthService';
+import { submit, dispatchError } from '../../authentication/authenticationActions'
 
 class CreateReport extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ class CreateReport extends Component {
 
     validateForm() {
         return (
-            this.state.reportedTime.length > 0 && this.state.email.length > 0
+            this.state.reportedTime.length > 0 
         );
     }
 
@@ -81,11 +82,14 @@ class CreateReport extends Component {
                         />
                     </FormGroup>
 
-                    <button
-                        className="btn btn-primary" 
+                    <Button
+                        block
+                        className="btn btn-primary"
+                        disabled={!this.validateForm()}
+                        type="submit"
                     >
                        Save Report
-                    </button>&nbsp;
+                    </Button>
 
                      <Alert
                             bsStyle="success"
