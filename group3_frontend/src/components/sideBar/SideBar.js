@@ -7,39 +7,56 @@ import Profile from '../navBar/Profile'
 class SideBar extends Component {
     constructor(props) {
         super(props);
-     
+        this.state = {
+            profile : ""
+        }
+        this.setProfile=this.setProfile.bind(this);
     }
 
-   
+    setProfile(profile){
+        if(this.state.profile !== profile){
+            this.setState({
+                profile : profile
+            });
+        }
+    }
+  
 
-    render() {
-
-
-
+    render() {   
+        var projectsLinks = ""
+        if( this.state.profile === 'COLLABORATOR'){
+             projectsLinks = (
+                <NavLink to="/myprojects" activeClassName="active">
+                    My Projects
+                </NavLink>)
+        }
+        else{ 
+             projectsLinks = (
+                <NavLink to="/activeprojects" activeClassName="active">
+                     Active Projects
+                 </NavLink>)
+                 }
         return (
             <div
                 className={"col-sm-3 col-md-2 sidebar " }>
                 <div className="profile">
-                    <Profile />
+                    <Profile setProfile={this.setProfile} />
                 </div>
                 <div>
                     <ul className="menu">
-                        <List className="Projects" type='Projects' onClick={this.toggleVisibility}>
-
+                        <List className="Project" type='Project' onClick={this.toggleVisibility}>
                             <li>
-                                <NavLink to="/activeprojects" activeClassName="active">
-                                    Active Projects
-                            </NavLink>
+                            {projectsLinks}
                             </li>
                         </List>
-                        <List className="Project" type='Task' onClick={this.toggleVisibility}>
+                        <List className="Task" type='Task' onClick={this.toggleVisibility}>
                             <li>
                                 <NavLink to="/addtask" activeClassName="active">
                                     Add task
                             </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/tasks/7" activeClassName="active">
+                                <NavLink to="/tasks" activeClassName="active">
                                     Ongoing tasks
                             </NavLink>
                             </li>

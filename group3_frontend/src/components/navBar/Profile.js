@@ -19,7 +19,7 @@ export class Profile extends React.Component {
     }
 
     async componentDidMount() {
-        this.AuthService.fetch(`/users/7`, {
+        this.AuthService.fetch(`/users/${this.AuthService.getUserId()}`, {
             method: "get"
         })
             .then(responseData => {

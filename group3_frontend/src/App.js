@@ -5,6 +5,7 @@ import Profile from "./components/navBar/Profile.js";
 import SideBar from "./components/sideBar/SideBar";
 import { Route, Switch, Redirect, Router } from "react-router-dom";
 import ActiveProjects from "./pages/projects/ActiveProjects";
+import MyProjects from "./pages/projects/MyProjects";
 import FinishedTasks from "./pages/tasks/FinishedTasks";
 import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
 import UsersPage from "./pages/users/UsersPage";
@@ -47,7 +48,8 @@ class App extends Component {
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
                     <Route path="/activeprojects" component={requiresAuth(ActiveProjects)} />
-                    <Route path="/tasks/:userID" component={requiresAuth(OngoingTasks)} />
+                    <Route path="/myprojects" component={requiresAuth(MyProjects)} />
+                    <Route path="/tasks" component={requiresAuth(OngoingTasks)} />
                     <Route path="/finishedtasks" component={requiresAuth(FinishedTasks)} />
                     <Route path="/homepage" component={requiresAuth(HomePage)} />
 
@@ -65,7 +67,7 @@ class App extends Component {
                     <Route path="/projects/:projectID/tasks/:taskID/reports" component={Reports} />
                     <Route path="/projects/:projectID/tasks/:taskID/createreport" component={CreateReport} />
 
-                    <Route path="/profile/:userID" component={requiresAuth(Profile)} />
+                    <Route path="/profile" component={requiresAuth(Profile)} />
                     <Route path="/requests" component={requiresAuth(AllRequests)} />
                     <Route path="/addtask" component={requiresAuth(AddTask)} />
                     <Route
