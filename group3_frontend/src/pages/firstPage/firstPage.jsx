@@ -37,9 +37,6 @@ class firstPage extends Component {
                         </table>
                     </div>
 
-
-
-
                 </div>
                 <div>
                     <img src={logo} alt="logo" className="image" href="/" />
