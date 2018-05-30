@@ -55,7 +55,7 @@ public class RestProjectController  {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and #userId == principal.id or hasRole('ROLE_ADMIN') ")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') or hasRole('ROLE_ADMIN') ")
     @RequestMapping(value= "/myProjects", method = RequestMethod.GET)
     public ResponseEntity<List<Project>> getUserProjects() {
 
