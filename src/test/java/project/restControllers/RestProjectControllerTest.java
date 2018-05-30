@@ -13,6 +13,10 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import project.model.EffortUnit;
@@ -20,8 +24,10 @@ import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
 import project.restcontroller.RestProjectController;
+import project.security.UserSecurity;
 import project.services.ProjectService;
 import project.services.TaskService;
+import project.services.UserDetailsServiceImpl;
 import project.services.UserService;
 
 import java.util.ArrayList;
@@ -42,6 +48,8 @@ public class RestProjectControllerTest {
     private TaskService taskServiceMock;
     @Mock
     private ProjectService projectServiceMock;
+    @Mock
+    private User userDaniel;
     @Mock
     private Project projectMock;
     @Mock
@@ -325,6 +333,26 @@ public class RestProjectControllerTest {
 
         //Then the information given for update will replace the respective information in the given project.
         verify(projectServiceMock, times(1)).updateProjectData(anyObject(), anyObject());
+
+    }
+
+    @Test
+    public void shouldReturnAllProjectsFromUser() {
+
+        //Given a user id
+        int userId = userDaniel.getUserID();
+        List<Project> projectsFromUser = new ArrayList<>();
+        projectsFromUser.add(projectMock);
+        projectsFromUser.add(projectMock2);
+
+        //When request all projects from given user
+        Mockito.when(userServiceMock.getUserByID(anyInt())).thenReturn(userDaniel);
+        Mockito.when(projectServiceMock.getProjectsFromUser(userDaniel)).thenReturn(projectsFromUser);
+        victim.getUserProjects(anyInt());
+
+        //Then return a list os all projects
+        verify(userServiceMock, times(1)).getUserByID(anyInt());
+        verify(projectServiceMock, times(1)).getProjectsFromUser(userDaniel);
 
     }
 }
