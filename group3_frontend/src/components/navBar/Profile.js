@@ -39,6 +39,7 @@ export class Profile extends React.Component {
 
     render() {
         var user = this.state.user;
+        this.props.setProfile(this.state.user.profile);
         return (
 
             <div className="external-div">
@@ -46,7 +47,7 @@ export class Profile extends React.Component {
                 <center> <img className="profilePic" src={mainLogo} border="2" alt="fireSpot" /></center>
                 <center><ul className="profileDetails">
                     <li className="name">{user.name}</li>
-                    <li className="role">{user.userProfile}</li>
+                    <li className="role">{user.profile}</li>
                 </ul></center>
 
 
