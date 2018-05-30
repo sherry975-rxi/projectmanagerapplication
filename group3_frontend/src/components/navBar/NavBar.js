@@ -32,7 +32,7 @@ class NavBar extends Component {
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
                             <li>
-                                <a className={this.props.logoutButton} onClick={this.props.logout}><Link to="/homepage"> <Glyphicon className="houseIcon" glyph="glyphicon glyphicon-home" /></Link></a>
+                                <a className={this.props.logoutButton}><Link to="/homepage"><Glyphicon className="houseIcon" glyph="glyphicon glyphicon-home" /></Link></a>
                             </li>
                             <li>
                                 <a className={this.props.logoutButton} onClick={this.props.logout}><Link to="/login"> Logout       <Glyphicon className="userIcon" glyph="glyphicon glyphicon-user" /></Link></a>
