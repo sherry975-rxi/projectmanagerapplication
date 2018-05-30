@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
 import AuthService from './../loginPage/AuthService';
-import "./CreateReport.css";
+import "./UpdateReport.css";
 
 class UpdateReport extends Component {
     constructor(props) {
@@ -11,7 +11,9 @@ class UpdateReport extends Component {
             taskID: "",
             reportId: "",
             reportedTime: "",
-            taskCollabEmail: ""
+            taskCollabEmail: "",
+            hideSuccessInfo: "hide-code",
+            message: ""
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.AuthService = new AuthService()
@@ -58,33 +60,48 @@ class UpdateReport extends Component {
                 this.props.onSubmit();
             });
 
-
+            this.setState({
+                hideSuccessInfo: ""
+            })
+          
     };
 
     render() {
         return (
-            <div className=" table-striped">
-                <form onSubmit={this.handleSubmit}>
-                    <button
-                        className="btn btn-primary" /*onClick={this.userDetail}*/
-                    >
-                        Update Reported time:
-                    </button>
+            <div className="table-striped">
+                <label className="title"></label>      
+                <td className="tdSubmit">  
+
+                <form onSubmit={this.handleSubmit}>                   
                     <FormGroup controlId="reportedTime">
-                        <ControlLabel></ControlLabel>
+                        <ControlLabel>Type reported time to update</ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
                             value={this.state.reportedTime}
                             onChange={this.handleChange}
-                        />
+                        />                         
                     </FormGroup>
-
-
-                </form>
+                    
+                     <td className="tdButton">
+                         <button
+                         className="btn btn-primary" > Update </button>                            
+                                     
+                    </td>
+                       <Alert
+                            bsStyle="success"
+                            className={this.state.hideSuccessInfo}>
+                            <strong>Report successfully updated! <br /></strong>
+                        
+                      </Alert>
+                </form>   
+                </td>                 
+                                 
+               
             </div>
         );
     }
 }
 
 export default UpdateReport;
+
