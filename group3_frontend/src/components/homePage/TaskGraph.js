@@ -91,9 +91,9 @@ class TaskGraph extends Component{
                         <ProgBar limit={difference}/>
                         
                         <tr className="line">
-                            <td className="tdGraphStyle">Task Deadline: <Moment format="YYYY/MM/DD">
+                            <td className="tdGraphStyle">Task Deadline:<Moment format="YYYY/MM/DD">
                                 
-                                {taskItem.taskDeadline}
+                               {taskItem.taskDeadline} 
                             </Moment></td>
                             <td className="tdGraphStyleEnd">Days left until deadline:  {deadlineIsOver}</td>
 

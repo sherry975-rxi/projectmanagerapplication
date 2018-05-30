@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import CreateReport from './CreateReport';
 import UpdateReport from './UpdateReport';
 import "./ReportsStyle.css"
+import "./UpdateReport.css"
 
 
 class Reports extends Component {
@@ -45,8 +46,7 @@ async refreshPage() {
 
 renderReports(){
     
-    return this.state.reports.map(reportItem => {
-        
+    return this.state.reports.map(reportItem => {        
 
         return (          
             <tr className="line">
@@ -59,7 +59,6 @@ renderReports(){
                 <td><Moment format="YYYY/MM/DD">
                     {reportItem.dateOfUpdate}
                 </Moment></td>
-
                 <td><UpdateReport taskId={this.props.match.params.taskID} projId={this.props.match.params.projectID} reportId={reportItem.reportDbId} onSubmit={this.refreshPage}/></td>
 
             </tr>
