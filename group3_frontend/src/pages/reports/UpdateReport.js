@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
 import AuthService from './../loginPage/AuthService';
 import "./UpdateReport.css";
+import { submit, dispatchError } from '../../authentication/authenticationActions';
 
 class UpdateReport extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class UpdateReport extends Component {
 
     validateForm() {
         return (
-            this.state.reportedTime.length > 0 && this.state.email.length > 0
+            this.state.reportedTime.length > 0
         );
     }
 
@@ -75,7 +76,7 @@ class UpdateReport extends Component {
                 <td className="tdSubmit">  
                 
                     <FormGroup controlId="reportedTime">
-                        <ControlLabel>Type reported time to update</ControlLabel>
+                        <ControlLabel>Reported time to update</ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
@@ -85,9 +86,15 @@ class UpdateReport extends Component {
                     </FormGroup>
                     </td>
                      <td className="tdButton">
-                         <button
-                         className="btn btn-primary" > Update </button>                            
-                                     
+                     <Button
+                        block
+                        className="btn btn-primary"
+                        disabled={!this.validateForm()}
+                        type="submit"
+                    >
+                       Update
+                    </Button>                 
+                                   
                     </td>
                        <Alert
                             bsStyle="success"
@@ -95,7 +102,7 @@ class UpdateReport extends Component {
                             <strong>Report successfully updated! <br /></strong>
                         
                       </Alert>
-                      
+
                 </form>   
                                 
                                  
