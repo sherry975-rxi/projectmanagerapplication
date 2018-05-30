@@ -12,8 +12,9 @@ export default class AuthService {
     login(email, password) {
         return axios.post('/login', { email: email, password: password }
         ).then(res => {
-            console.log(res)
             this.setToken(res) // Setting the token in localStorage
+            this.setUser(res)
+            console.log(res.data)
             return Promise.resolve(res);
         })
     }
@@ -42,7 +43,16 @@ export default class AuthService {
     setToken(res) {
         const idToken = res.headers.authorization
         localStorage.setItem('id_token', idToken)
-        console.log(this.getToken)
+    }
+
+    setUser(res) {
+
+        localStorage.setItem('id_user', res.data.idNumber)
+    }
+
+    getUserId() {
+
+        localStorage.getItem('id_user')
     }
 
     //Gets the user token from localStorage

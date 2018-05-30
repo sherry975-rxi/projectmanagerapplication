@@ -52,6 +52,7 @@ class LoginPage extends Component {
                 console.log(err)
                 toastr.error('Wrong!', 'Invalid Credentials!')
             })
+        console.log(localStorage.getItem('id_user'))
     };
 
     render() {
