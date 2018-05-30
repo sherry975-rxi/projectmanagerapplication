@@ -53,7 +53,7 @@ class ProjectGraph extends Component{
 
      fetchUserProjects(){
 
-        this.AuthService.fetch("/projects/"+ this.state.userID + "/myProjects", { method: "get" })
+        this.AuthService.fetch("/projects/"+ this.AuthService.getUserId() + "/myProjects", { method: "get" })
         .then(responseData =>  {
             this.setState({
                 projects: responseData
