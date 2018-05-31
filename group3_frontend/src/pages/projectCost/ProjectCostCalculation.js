@@ -10,7 +10,7 @@ class ProjectCostCalculation extends Component {
 
     constructor(props) {
         super(props);
-        this.match
+        this.match;
         this.state = {
             //projectId: "",
             project: {},
@@ -18,7 +18,6 @@ class ProjectCostCalculation extends Component {
             calculationMethod: "",
             submission: false,
             hideSuccessInfo: "hide-code",
-            message: ""
             //res : []
             //projectCost : ""
         };
@@ -38,6 +37,7 @@ class ProjectCostCalculation extends Component {
                 this.setState({
                     project: responseData,
                     availableMethods: responseData.availableCalculationMethods.split(","),
+                    message: responseData.error
                 });
             });
     }
@@ -100,7 +100,7 @@ class ProjectCostCalculation extends Component {
         })
             .then(responseData => {
                 this.setState({
-                    message: responseData.status
+                    message: responseData.error
                 });
             });
 
@@ -113,7 +113,7 @@ class ProjectCostCalculation extends Component {
 
 
     render() {
-        if (this.state.message != "") {
+        if (this.state.message != null) {
             return <Error message={this.state.message + " NOT AUTHORIZED"} />
         }
         else {
