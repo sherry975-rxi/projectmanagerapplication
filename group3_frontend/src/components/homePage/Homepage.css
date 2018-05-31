@@ -1,116 +1,120 @@
 .HomepageContainer{
-    width:100%;
-    height:100%;
-    position: relative;
-    top:0px;
-    padding-left:0px;
-    text-align: center;
-    margin-left: -23px;
-
-    
+        width:100%;
+        height:100%;
+        position: relative;
+        top:0px;
+        padding-left:0px;
+        text-align: center;
+        margin-left: -23px;
 
 
 }
 
 .WeatherDiv{
+
         display: inline-block;
         vertical-align:top;
         width: 63%;
         min-width: 300px;
         background-color: rgba(255,255,255, 1);
         height:340px;
-    left:400px;
-    margin-bottom:100px;
-    margin-top:-5px;
-    padding-top:10px;
+        left:400px;
+        margin-bottom:100px;
+        margin-top:-5px;
+        padding-top:10px;
 
 }
 
 .UserDataHomepage{
         display: inline-block;
-
         vertical-align:top;
-
         margin-top:-5px;
         margin-bottom:20px;
         margin-left:-10px;
-
-   background-color: rgba(255,255,255, 1);
-    text-align: center;
-    left: -100px;
-    margin-right:15px;
-    padding-top:10px;
-
-    padding-left:20px;
-    height:340px;
-    width:350px;
-    -webkit-animation: bounce-in-top 1.1s both;
-    animation: bounce-in-top 1.1s both;
-  
+        background-color: rgba(255,255,255, 1);
+        text-align: center;
+        left: -100px;
+        margin-right:15px;
+        padding-top:10px;
+        padding-left:20px;
+        height:340px;
+        width:350px;
+        -webkit-animation: bounce-in-top 1.1s both;
+        animation: bounce-in-top 1.1s both;
+        
     
 }
 
+.ProjUpperContainer{
+
+        display: inline-block;
+        margin-top: -85px;
+        background-color: rgba(255,255,255, 1);
+        margin-left:-10px;
+        margin-right:15px;
+        left: -100px;
+        text-align: center;
+        height:400px;
+        width:350px;
+        overflow-y: auto;
+        overflow-x:hidden;
+
+    }
+
 .UserDataText{
-    width:100%;
-    text-align: left;
-    padding-left:40px;
-    padding-right:40px;
+        width:100%;
+        text-align: left;
+        padding-left:40px;
+        padding-right:40px;
 }
 
 .GraphContainer{
+
         padding: 10px;
         margin-bottom:10px;
         margin-left:40px;
         padding-bottom:20px;
         padding-top:20px;
         width:90%;
-        background-color: rgb(240, 240, 240);
-
-
-
+        background-color: rgb(252, 252, 252);
 
 }
 
 .ProjectGraphContainer{
-        display: inline-block;
 
-        vertical-align:top;
-
-        margin-top: -85px;
-        margin-bottom:20px;
+        margin-top: -20px;
         margin-left:-10px;
+        text-align: center;
+        left: -100px;
+        margin-right:15px;
+        padding-left:25px;
+        padding-right:20px;
+        padding-top:8px;
+        height:350px;
+        width:350px;
+        background-color: rgb(252, 252, 252);
+        border-color:  rgb(240,240, 240);
+        border-top: 3px solid rgb(248,248, 248);;
 
-   background-color: rgba(255,255,255, 1);
-    text-align: center;
-    left: -100px;
-    margin-right:15px;
-    padding-top:10px;
-
-    padding-left:20px;
-    height:400px;
-    width:350px;
-    margin-bottom:100px;
 }
 
 
-
-
 .TaskGraphUpperContainer{
+
         display: inline-block;
         margin-top: -85px;
-
         background-color: rgba(255,255,255, 1);
         margin-right:5px;
         right: 50px;
         text-align: center;
-
-    height:400px;
-    width: 63%;
-    overflow-y: auto;
-    overflow-x:hidden;
-
+        height:400px;
+        width:63%;
+        overflow-y: auto;
+        overflow-x:hidden;
     
     }
+
+
     
 h1{
         text-align:center;
@@ -180,7 +184,7 @@ h2{
   }
 
   .ProgBarCircleContainer{
-          width:100%;
+          width:200px;
           
   }
 

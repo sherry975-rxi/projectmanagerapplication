@@ -10,18 +10,21 @@ import { logout } from '../../authentication/authenticationActions'
 import AuthService from '../../pages/loginPage/AuthService';
 import { Redirect } from 'react-router-dom';
 import Homepage from './../homePage/Homepage';
-
-
 const Auth = new AuthService();
 class NavBar extends Component {
 
-
     render() {
+
+        const navbar = Auth.loggedIn() ? "navbar" : "greenBar";
+        const navBarSpecifications = navbar + " navbar-light navbar-fixed-top"
+        const logo = "Logo-" + navbar
+
         return (
-            <nav className="navbar navbar-light navbar-fixed-top">
+            <nav className={navBarSpecifications}>
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <div className="Logo-navbar">appManager</div>
+                        <div className={logo}>appManager</div>
+                        {console.log(logo)}
                         <Glyphicon
                             className="menu-icon"
                             glyph="menu-hamburger"
@@ -29,7 +32,7 @@ class NavBar extends Component {
                         />
                     </div>
 
-                    <div id="navbar" className="navbar-collapse collapse">
+                    <div id={navbar} className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
                             <li>
                                 <a className={this.props.logoutButton}><Link to="/homepage"><Glyphicon className="houseIcon" glyph="glyphicon glyphicon-home" /></Link></a>
