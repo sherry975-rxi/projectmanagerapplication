@@ -5,6 +5,7 @@ import axios from 'axios';
 import Moment from 'react-moment';
 import ProgBarCircle from './ProgBarCircle';
 import momentus from 'moment';
+import loading from './images/loading.gif';
 
 
 
@@ -19,6 +20,8 @@ class ProjectGraph extends Component{
             projects: [],
             percent: 0,
             actualDate: new Date(),
+            hasFetched: false
+
 
         };
         this.AuthService = new AuthService();
@@ -31,7 +34,9 @@ class ProjectGraph extends Component{
             .then(responseData => {
                 this.setState({
                     projects: responseData,
-                    message: responseData.error
+                    message: responseData.error,
+                    hasFetched: true
+
                 });
             });
     }
@@ -41,7 +46,20 @@ class ProjectGraph extends Component{
 
 
     render(){
-        return(
+
+        if(this.state.hasFetched == false){
+
+            return(
+                <div className="loadings">
+                    <img  classname="loadingGifs" with="300" height="200" src={loading} alt="logoImage"/>
+
+                </div>
+            )
+        } else {
+
+            if(this.state.projects.length > 0){
+
+                return (
 
         this.state.projects.map(projectItem => {
 
@@ -108,10 +126,23 @@ class ProjectGraph extends Component{
 
         )
        
-    }))
+    })) } else{
+
+            return(
+        
+                <div className="EmptyTaskContainer">
+                <h2>You don't have any active project</h2>
+
+                </div>
+
+
+            )
+
+        }
 
         }
     }
+} 
 
 
 export default ProjectGraph;
