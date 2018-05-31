@@ -5,6 +5,8 @@ import axios from 'axios';
 import Moment from 'react-moment';
 import ProgBar from './ProgBar';
 import momentus from 'moment';
+import loading from './images/loading.gif';
+
 
 
 
@@ -20,6 +22,7 @@ class TaskGraph extends Component{
             percent: 0,
             actualDate: new Date(),
             userID: '',
+            hasFetched: false
 
         };
         this.AuthService = new AuthService();
@@ -32,67 +35,103 @@ class TaskGraph extends Component{
             .then(responseData => {
                 this.setState({
                     tasks: responseData,
-                    message: responseData.error
+                    message: responseData.error,
+                    hasFetched: true
                 });
             });
     }
 
   
 
-  
-
 
     render(){
 
+        if(this.state.hasFetched == false){
 
-        return (
+            return(
+                <div className="loadings">
+                    <img  classname="loadingGifs" with="300" height="200" src={loading} alt="logoImage"/>
 
-            
-            this.state.tasks.map(taskItem => {
-                const today = momentus(this.state.actualDate)
-                const taskDeadline = momentus(taskItem.taskDeadline)
-                var difference = taskDeadline.diff(today, 'days');
-                var deadlineIsOver = difference
-                
-             
-                
-                if(difference < 0) {
-                    difference = 100;
-                    deadlineIsOver = "0"
-                }
+                </div>
+            )
+        }
+
+        else {
+
+            if(this.state.tasks.length > 0){
 
                 return (
-                    
-                    <div className="GraphContainer">
-                        <ProgBar limit={difference}/>
-                        <table>
-                        <tbody>
-                        <tr className="line">
-                            <td className="tdGraphStyle">Task Deadline:<Moment format="YYYY/MM/DD">
-                                
-                               {taskItem.taskDeadline} 
-                            </Moment></td>
-                            <td className="tdGraphStyleEnd">Days left until deadline:  {deadlineIsOver}</td>
-
-                        </tr>
-                        <tr>
-                            <td className="tdGraphStyle">Description: {taskItem.description}</td>
+    
+                
+    
+                   
+                    this.state.tasks.map(taskItem => {
+                        const today = momentus(this.state.actualDate)
+                        const taskDeadline = momentus(taskItem.taskDeadline)
+                        var difference = taskDeadline.diff(today, 'days');
+                        var deadlineIsOver = difference
                         
-                        </tr>
-                        <tr>
-                            <td className="tdGraphStyle">Project ID: {taskItem.project}  </td>
-                            
-                        </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                );
-            })
-
-        )
+                     
+                        
+                        if(difference < 0) {
+                            difference = 100;
+                            deadlineIsOver = "0"
+                        }
         
-      
-    }
+                        return (
+                            
+                            <div className="GraphContainer">
+                                <ProgBar limit={difference}/>
+                                <table>
+                                <tbody>
+                                <tr className="line">
+                                    <td className="tdGraphStyle">Task Deadline:<Moment format="YYYY/MM/DD">
+                                        
+                                       {taskItem.taskDeadline} 
+                                    </Moment></td>
+                                    <td className="tdGraphStyleEnd">Days left until deadline:  {deadlineIsOver}</td>
+        
+                                </tr>
+                                <tr>
+                                    <td className="tdGraphStyle">Description: {taskItem.description}</td>
+                                
+                                </tr>
+                                <tr>
+                                    <td className="tdGraphStyle">Project ID: {taskItem.project}  </td>
+                                    
+                                </tr>
+                                </tbody>
+                                </table>
+                            </div>
+                        );
+                    })
+        
+                )
+    
+            }
+    
+            else{
+    
+                return(
+    
+                    <div className="EmptyTaskContainer">
+                    <h2>You don't have any active Task</h2>
+    
+                    </div>
+    
+    
+                )
+            }
+
+        }
+
+             
+
+        
+           
+    
+
+        }
 
 
 }
