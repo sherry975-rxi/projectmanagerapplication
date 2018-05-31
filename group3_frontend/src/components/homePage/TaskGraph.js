@@ -26,43 +26,20 @@ class TaskGraph extends Component{
     }
 
     async componentDidMount() {
-        this.setState({
-            email: this.AuthService.getProfile().sub        
-        }, () => {
-            this.fetchUserData()        
+        this.AuthService.fetch(`/users/${this.AuthService.getUserId()}/tasks/sortedbydeadline`, {
+            method: "get"
         })
-
-    
-        
-    }
-
-     
-    async fetchUserData(){
-
-        this.AuthService.fetch(`/users/email/` + this.state.email, { method: 'get' })
-        .then((responseData) => { this.setState({
-            userID:   responseData[0]['userID'],
-            
-        }, () => {
-            this.fetchTasks()        
-        })
-          
-        })
-    }
-
-    async fetchTasks(){
-
-        this.AuthService.fetch("users/" + this.state.userID + "/tasks/sortedbydeadline", { method: "get" })
-        .then(responseData => {
-            this.setState({
-                tasks: responseData,
+            .then(responseData => {
+                this.setState({
+                    tasks: responseData,
+                    message: responseData.error
+                });
             });
-        });
     }
 
   
-   
 
+  
 
 
     render(){

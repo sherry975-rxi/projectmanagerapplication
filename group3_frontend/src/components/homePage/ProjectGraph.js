@@ -17,54 +17,25 @@ class ProjectGraph extends Component{
         this.match;
         this.state = {
             projects: [],
-            projectId: "",
-            projectStartDate: "",
-            projectFinishDate: "",
             percent: 0,
             actualDate: new Date(),
-            userID: '',
 
         };
         this.AuthService = new AuthService();
     }
 
     async componentDidMount() {
-        this.setState({
-            email: this.AuthService.getProfile().sub        
-        }, () => {
-            this.fetchUserData()        
+        this.AuthService.fetch(`/projects/${this.AuthService.getUserId()}/myProjects`, {
+            method: "get"
         })
-
-        
+            .then(responseData => {
+                this.setState({
+                    projects: responseData,
+                    message: responseData.error
+                });
+            });
     }
 
-    async fetchUserData(){
-
-        this.AuthService.fetch(`/users/email/` + this.state.email, { method: 'get' })
-        .then((responseData) => { this.setState({
-            userID:   responseData[0]['userID'],
-            
-        }, () => {
-            this.fetchUserProjects()        
-        })
-          
-        })
-    }
-
-     fetchUserProjects(){
-
-        this.AuthService.fetch(`/projects/${this.AuthService.getUserId()}/myProjects`, { method: "get" })
-        .then(responseData =>  {
-            this.setState({
-                projects: responseData
-                
-            }
-        );
-        });
-     
-
-
-    }
 
 
 
