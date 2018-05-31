@@ -28,7 +28,10 @@ class Homepage extends Component{
                 
                 <UserData></UserData>
                 <Weather className="teste"></Weather>
-                <ProjGraph />
+                <div className="ProjUpperContainer">
+                <h1 className="GraphTitle">Active Projects</h1>
+                    <ProjGraph />
+                </div>
 
 
                 <div className="TaskGraphUpperContainer">

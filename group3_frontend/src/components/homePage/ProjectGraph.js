@@ -53,13 +53,11 @@ class ProjectGraph extends Component{
 
      fetchUserProjects(){
 
-        this.AuthService.fetch("/projects/"+ this.AuthService.getUserId() + "/myProjects", { method: "get" })
+        this.AuthService.fetch(`/projects/${this.AuthService.getUserId()}/myProjects`, { method: "get" })
         .then(responseData =>  {
             this.setState({
                 projects: responseData
                 
-            },  () => {
-                this.printData()        
             }
         );
         });
@@ -68,9 +66,6 @@ class ProjectGraph extends Component{
 
     }
 
-    printData(){
-        console.log(this.state.projects)
-    }
 
 
 
@@ -82,18 +77,26 @@ class ProjectGraph extends Component{
           const today = momentus(this.state.actualDate)
           const projectStartDay = momentus(projectItem.startdate)
           const projectFinishDay = momentus(projectItem.finishdate)
-          const totalDays = projectFinishDay.diff(projectStartDay, 'days');
-          const actualDaysLeft= projectFinishDay.diff(today, 'days');
+          var totalDays = projectFinishDay.diff(projectStartDay, 'days');
+          if(totalDays<1) {
+              totalDays = 1
+          }
+          var actualDaysLeft= projectFinishDay.diff(today, 'days');
+          if(actualDaysLeft < 0) {
+              actualDaysLeft = 0
+          }
           const difference = actualDaysLeft;
-          const mappedPercent = 100 - difference * 100 / totalDays
-
+          var mappedPercent = 100 - difference * 100 / totalDays
+          if(mappedPercent > 100) {
+              mappedPercent = 100
+          }
+   
 
         return(
 
              
               
                     <div className="ProjectGraphContainer">
-                    <h1>Active Projects</h1>
                         <div className="ProgBarCircleContainer">
                              <ProgBarCircle limit={mappedPercent}/>
                         </div>
