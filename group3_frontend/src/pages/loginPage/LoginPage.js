@@ -60,7 +60,7 @@ class LoginPage extends Component {
 
         return (
             <div className="login-page">
-                <div className="welcome"><center>Welcome back!</center>
+                <div className="welcome"><center>Welcome!</center>
                 </div>
 
                 <div className="form">
