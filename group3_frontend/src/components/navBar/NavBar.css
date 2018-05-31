@@ -4,6 +4,11 @@
     padding:10px;
 }
 
+.greenBar {
+    background-color: #478d84;
+    padding:10px;
+}
+
 
 @font-face {
     font-family: "Dense";
@@ -39,11 +44,7 @@
     font-style: normal;
   }
 
-.navbar-brand {
-    font-family: 'Dense';
-    color: rgb(42, 63, 84);
-    font-size: 35px;
-}
+
 
 .navbar .navbar-nav > li > a {
     font-family: Helvetica;
@@ -74,5 +75,21 @@
     opacity: 0;
     height: 50px;
 
+}
+
+.Logo-greenBar {
+    font-family: 'Dense';
+    font-size: 40px;
+    color: rgb(246, 246, 246);
+    max-width:100%;
+    position: fixed;
+    left: 30px;
+    top: 5px;
+    height: 50px;
+
+}
+
+.greenBar .navbar-nav > li .notLogged {
+    display: none
 }
 
