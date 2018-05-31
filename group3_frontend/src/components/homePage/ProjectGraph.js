@@ -108,11 +108,11 @@ class ProjectGraph extends Component{
                             </tr>
                             <tr>
                                 <td className="tdGraphStyleLeft">Project ID:  {projectItem.projectId}</td>
-                                <td className="tdGraphStyleRight">Number of days left:</td>
-                                <td className="tdGraphStyleRight">{actualDaysLeft}</td>
-
+                                <td className="tdGraphStyleRight">Number of days left: {actualDaysLeft} </td>
 
                             </tr>
+                    
+
 
                          
                             
