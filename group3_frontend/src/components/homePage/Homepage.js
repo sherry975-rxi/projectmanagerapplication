@@ -25,19 +25,29 @@ class Homepage extends Component{
 
         return(
             <div className="HomepageContainer">
-                
-                <UserData></UserData>
-                <Weather className="teste"></Weather>
-                <div className="ProjUpperContainer">
-                <h1 className="GraphTitle">Active Projects</h1>
-                    <ProjGraph />
-                </div>
+                <tbody className="HomeTable">
+                    <tr>
 
+                        <td><UserData></UserData></td>
+                        <td className="HomeTableTDLeft"><Weather className="teste"></Weather></td>
 
-                <div className="TaskGraphUpperContainer">
-                    <h1 className="GraphTitle">Tasks Deadline</h1>
-                    <TaskGraph />
-                </div>
+                    </tr>
+                    <tr>
+
+                        <td className="HomeTableTDBottomLeft" >
+                            <div className="ProjUpperContainer">
+                            <h1 className="GraphTitle">Active Projects</h1>
+                             <ProjGraph />
+                            </div>
+                        </td>
+                        <td className="HomeTableTDBottomLeft">
+                             <div className="TaskGraphUpperContainer">
+                                <h1 className="GraphTitle">Tasks Deadline</h1>
+                                <TaskGraph />
+                            </div>
+                        </td>
+                    </tr> 
+                </tbody>
 
             </div>
         )
