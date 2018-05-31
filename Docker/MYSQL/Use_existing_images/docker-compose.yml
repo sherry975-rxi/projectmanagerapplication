@@ -4,30 +4,18 @@ services:
       image: mysql:5.7
       environment:
         - MYSQL_ROOT_PASSWORD=switchgroup3
-        # - MYSQL_USER=switchgroup3
-        # - MYSQL_PASSWORD=switchgroup3
         - MYSQL_DATABASE=project_management
-      expose:
-        - "3306"
       ports:
         - "3306:3306"
 
     backend:
       image : 1171473/switch-2017-g003:release-1-jun-2018-backend-mysql-v1
-      # build:
-      #   context : .
-      #   dockerfile: backend/Dockerfile
       ports:
         - "8080:8080"
       stdin_open: true
       tty: true
-      # command: ["java", "-jar", "target/project-management-1.0-SNAPSHOT.jar", "--spring.profiles.active=dbmysql"]
 
     frontend:
       image : 1171473/switch-2017-g003:release-1-jun-2018-frontend-mysql-v1
-      # build:
-      #   context: .
-      #   dockerfile: frontend/Dockerfile
       ports:
         - "3000:3000"
-      # command: ["npm", "start"]
