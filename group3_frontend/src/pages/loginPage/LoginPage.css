@@ -1,8 +1,76 @@
-.Login {
-    padding: 60px 0;
-  }
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-  .Login form {
-    margin: 0 auto;
-    max-width: 320px;
-  }
+.login-page {
+  width: 100%;
+  height: 100%;
+  padding: 8% 0 0;
+  margin: auto;
+  background-color: #478d84;
+}
+
+@font-face {
+  font-family: 'Dense';
+  src: local('../fonts/dense/Dense-Regular.woff2') format('woff2'),
+      local('../fonts/dense/Dense-Regular.woff') format('woff'),
+      local('../fonts/dense/Dense-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.envelope{
+  font-size: 20px;
+  color: white;
+}
+.welcome {
+  color: white;
+  font-family: 'Roboto';
+  font-size: 20px;
+  padding-bottom: 20px;
+}
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+
+}
+
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #478d84;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+  background: #31665f;
+}
+
+.form-control {
+  min-width: 0;
+  background-color: white;
+}
+
+.form .message {
+  margin: 15px 0 0;
+  color: #363636;
+  font-size: 14px;
+}
+.form .message a {
+  color: #478d84;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+
+
+

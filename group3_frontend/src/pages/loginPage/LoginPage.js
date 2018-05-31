@@ -28,6 +28,7 @@ class LoginPage extends Component {
             [event.target.id]: event.target.value
         });
 
+        console.log(event.target.value)
 
     };
 
@@ -58,35 +59,34 @@ class LoginPage extends Component {
     render() {
 
         return (
-            <div className="Login">
-                <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="email" bsSize="large">
-                        <ControlLabel>Email</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="email"
-                            value={this.state.email}
+            <div className="login-page">
+                <div className="welcome"><center>Welcome!</center>
+                </div>
 
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-                    <FormGroup controlId="password" bsSize="large">
-                        <ControlLabel>Password</ControlLabel>
-                        <FormControl
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            type="password"
-                        />
-                    </FormGroup>
-                    <Button
-                        block
-                        bsSize="large"
-                        disabled={!this.validateForm()}
-                        type="submit"
-                    >
-                        Login
-                    </Button>
-                </form>
+                <div className="form">
+                    <form className="login-form" onSubmit={this.handleSubmit}>
+                        <FormGroup controlId="email" bsSize="large">
+                            <ControlLabel>Email</ControlLabel>
+                            <FormControl
+                                autoFocus
+                                type="email"
+                                value={this.state.email}
+
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
+                        <FormGroup controlId="password" bsSize="large">
+                            <ControlLabel>Password</ControlLabel>
+                            <FormControl
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                type="password"
+                            />
+                        </FormGroup>
+                        <button onClick={!this.validateForm}> login </button>
+                        <p className="message">Not registered? <a href="/signup">Create an account</a></p>
+                    </form>
+                </div>
             </div>
         );
     }
