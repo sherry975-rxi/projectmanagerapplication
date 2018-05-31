@@ -25,6 +25,8 @@
 
 }
 
+
+
 .UserDataHomepage{
         display: inline-block;
         vertical-align:top;
@@ -96,6 +98,11 @@
         border-color:  rgb(240,240, 240);
         border-top: 3px solid rgb(248,248, 248);;
 
+}
+
+.EmptyTaskContainer{
+
+        margin-top:100px;
 }
 
 
