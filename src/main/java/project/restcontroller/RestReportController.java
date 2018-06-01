@@ -173,18 +173,16 @@ public class RestReportController {
         List<Report> taskReportsList = task.getReports();
 
         for (int reportIndex = 0; reportIndex < taskReportsList.size(); reportIndex++) {
-            if (taskReportsList.get(reportIndex).getDbId() == reportid) {
+            if (taskReportsList.get(reportIndex).getDbId() == reportid && task.updateReportedTime(newTimeReported, taskCollaborator, reportIndex)) {
 
-                task.updateReportedTime(newTimeReported, taskCollaborator, reportIndex);
-                Calendar dateOfUpdateReport = Calendar.getInstance();
-                Report reportUpdated = taskReportsList.get(reportIndex);
-                reportUpdated.setDateOfUpdate(dateOfUpdateReport);
-                this.taskService.saveTask(task);
+                    Report reportUpdated = taskReportsList.get(reportIndex);
+                    this.taskService.saveTask(task);
 
-                Link reference1 = linkTo(methodOn(RestReportController.class).getTaskReportsFromUser(userid, taskid, projid)).withRel("Show Reports from User").withType(RequestMethod.GET.name());
-                reportUpdated.add(reference1);
+                    Link reference1 = linkTo(methodOn(RestReportController.class).getTaskReportsFromUser(userid, taskid, projid)).withRel("Show Reports from User").withType(RequestMethod.GET.name());
+                    reportUpdated.add(reference1);
 
-                responseEntity = new ResponseEntity<>(reportUpdated, HttpStatus.OK);
+                    responseEntity = new ResponseEntity<>(reportUpdated, HttpStatus.OK);
+
             }
         }
 
