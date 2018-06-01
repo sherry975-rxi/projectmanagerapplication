@@ -12,10 +12,7 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
-import javax.websocket.server.PathParam;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -126,8 +123,7 @@ public class RestProjectController  {
     @RequestMapping(value = "/{projectId}/cost", method = RequestMethod.GET)
     public ResponseEntity<Project> getProjectCost(@PathVariable int projectId) {
         Project project = this.projectService.getProjectById(projectId);
-        //Map<String, Double> projectCost = new HashMap<>();
-        //projectCost.put("projectCost", taskService.getTotalCostReportedToProjectUntilNow(project));
+
         project.setProjectCost(taskService.getTotalCostReportedToProjectUntilNow(project));
 
         Link reference = linkTo(methodOn(RestProjectController.class).getProjectDetails(project.getProjectId())).withRel(PROJECT_DETAILS_REL).withType(RequestMethod.GET.name());
