@@ -16,22 +16,54 @@ class Reports extends Component {
         this.match;
         this.state={
             reports: [],
+            project: {},
             task:{},
-            taskCollab: {}
+            taskCollab: {},
         };
 
         this.refreshPage = this.refreshPage.bind(this);
+        this.chooseWhichToRender = this.chooseWhichToRender.bind(this);
         this.AuthService = new AuthService()
         
 }
 
 
 async componentDidMount() {
-    this.refreshPage();
+    this.AuthService.fetch(`/projects/${this.props.match.params.projectID}`, {
+        method: "get"
+    }) .then(responseData => {
+        this.setState({
+            project: responseData,
+            projectManager: responseData.projectManager.name,
+            message: responseData.message
+        });
+    });
+   
+    this.chooseWhichToRender();
+}
+
+async chooseWhichToRender(){
+    if(this.state.projectManager == this.AuthService.getUserId()){
+        this.refreshPage();
+    } else{
+        this.reportsFromCollaborator();
+    }
+
 }
 
 async refreshPage() {
     this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/`, {
+        method: "get" })
+        .then(responseData => {
+            this.setState({
+                reports: responseData,
+                message: responseData.error
+            });
+        })
+}
+
+async reportsFromCollaborator(){
+    this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/users/${this.AuthService.getUserId()}`, {
         method: "get" })
         .then(responseData => {
             console.log(responseData)
@@ -40,6 +72,7 @@ async refreshPage() {
                 message: responseData.error
             });
         })
+
 }
 
 
@@ -59,7 +92,7 @@ renderReports(){
                 <td><Moment format="YYYY/MM/DD">
                     {reportItem.dateOfUpdate}
                 </Moment></td>
-                <td><UpdateReport taskId={this.props.match.params.taskID} projId={this.props.match.params.projectID} reportId={reportItem.reportDbId} onSubmit={this.refreshPage}/></td>
+                <td><UpdateReport taskId={this.props.match.params.taskID} projId={this.props.match.params.projectID} reportId={reportItem.reportDbId} onSubmit={this.chooseWhichToRender}/></td>
 
             </tr>
         );
