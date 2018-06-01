@@ -234,6 +234,13 @@ public class UserDTO extends ResourceSupport {
 	}
 
 	@Override
+	public int hashCode () {
+		int result = 17;
+		result = 31 * result + email.hashCode();
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
@@ -244,5 +251,7 @@ public class UserDTO extends ResourceSupport {
 		UserDTO userDTO = (UserDTO) o;
 		return Objects.equals(email, userDTO.email);
 	}
+
+
 
 }
