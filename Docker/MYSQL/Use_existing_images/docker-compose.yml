@@ -9,13 +9,13 @@ services:
         - "3306:3306"
 
     backend:
-      image : 1171473/switch-2017-g003:release-1-jun-2018-backend-mysql-v1
+      image : 1171473/switch-2017-g003:release-1-jun-2018-backend-mysql-v3
       ports:
         - "8080:8080"
       stdin_open: true
       tty: true
 
     frontend:
-      image : 1171473/switch-2017-g003:release-1-jun-2018-frontend-mysql-v1
+      image : 1171473/switch-2017-g003:release-1-jun-2018-frontend-mysql-v3
       ports:
         - "3000:3000"
