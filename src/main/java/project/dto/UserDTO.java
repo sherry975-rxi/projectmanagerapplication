@@ -7,6 +7,7 @@ import project.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UserDTO extends ResourceSupport {
 
@@ -230,6 +231,18 @@ public class UserDTO extends ResourceSupport {
 	 */
 	public String getAnswer() {
 		return answer;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof UserDTO))
+			return false;
+		if (!super.equals(o))
+			return false;
+		UserDTO userDTO = (UserDTO) o;
+		return Objects.equals(email, userDTO.email);
 	}
 
 }
