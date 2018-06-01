@@ -3,6 +3,7 @@ import axios from "axios";
 import "./MarkTaskAsFinished.css";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import AuthService from '../loginPage/AuthService';
+import MediumButton from './../../components/button/mediumButton';
 
 class MarkTaskAsFinished extends Component {
     constructor(props) {
@@ -15,23 +16,23 @@ class MarkTaskAsFinished extends Component {
 
     async handleClick(event) {
 
-            this.AuthService.fetch(`/projects/${this.props.project}/tasks/${this.props.id}`, {
+        this.AuthService.fetch(`/projects/${this.props.project}/tasks/${this.props.id}`, {
 
-                method: "PATCH"
-            }).then((responseData) => {
-                console.log(responseData);
-                this.props.onClick();
-            });
+            method: "PATCH"
+        }).then((responseData) => {
+            console.log(responseData);
+            this.props.onClick();
+        });
 
     };
 
-    
+
 
     render() {
         return (
             <div className=" table-striped">
-               <button className="btn btn-primary" onClick={this.handleClick}>
-                   Mark as Finished
+                <button className="buttonFinished" onClick={this.handleClick}>
+                    Mark as Finished
                </button>
             </div>
         );

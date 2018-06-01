@@ -4,6 +4,7 @@ import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
+import MediumButton from '../../components/button/mediumButton.jsx'
 
 
 class ProjectCost extends Component {
@@ -57,13 +58,13 @@ class ProjectCost extends Component {
                 <p />
 
                 <Link to={'/selectprojectcostcalculation/' + projectItem.projectId} activeClassName="active">
-                    <button className="btn btn-warning" >Change Cost Method</button>
+                    <MediumButton text="Change Cost Method" />
                 </Link> &nbsp;
 
                 <p />
                 <p />
                 <Link to={'/projectdetails/' + projectItem.projectId} activeClassName="active">
-                    <button className="btn btn-primary" >Back to Project Details</button>
+                    <MediumButton text="Back to Project Details" />
                 </Link> &nbsp;
 
             </div>
