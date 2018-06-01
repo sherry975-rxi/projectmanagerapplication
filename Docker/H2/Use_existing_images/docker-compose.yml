@@ -1,0 +1,14 @@
+version: "2"
+services:
+
+  frontend:
+    image : 1171473/switch-2017-g003:release-1-jun-2018-frontend-h2-v1
+    ports:
+      - 3000:3000
+
+  backend:
+    image: 1171473/switch-2017-g003:release-1-jun-2018-backend-h2-v1
+    stdin_open: true
+    tty: true
+    ports:
+      - 8080:8080

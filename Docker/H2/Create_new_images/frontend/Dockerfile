@@ -21,6 +21,7 @@ RUN npm install && \
     npm install react-redux --save && \
     npm install redux --save && \
     npm install redux-thunk --save && \
+    npm install progressbar.js --save && \
     npm install -g json
 
 # setting proxy in package.json for backend container
