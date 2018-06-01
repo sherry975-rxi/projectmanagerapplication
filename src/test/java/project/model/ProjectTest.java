@@ -21,18 +21,12 @@ public class ProjectTest {
 	ProjectCollaborator projectCollaborator2;
 	ProjectCollaborator projectCollaborator3;
 	ProjectCollaborator projectCollaborator4;
-	Calendar estimatedStartDate;
+
 	Calendar taskDeadline;
-	Task task1;
-	Task task2;
-	Task task3;
-	Task task4;
-	TaskCollaborator taskWorker1;
-	TaskCollaborator taskWorker2;
+
 	Project p1;
 	Project p2;
 	Project p3;
-	TaskService taskContainer;
 
 	@Before
 	public void setUp() {
@@ -417,6 +411,7 @@ public class ProjectTest {
 		// then the list must contain 3 entries, and 2 must not be allowed
 		assertFalse(p1.isCalculationMethodAllowed(2));
 		assertEquals(2, p1.listAvaliableCalculationMethods().size());
+		assertEquals("CI,CM", p1.getAvailableCalculationMethods());
 
 		// when the list of allowed methods is instead set in the database mapped String format
 		p1.setAvailableCalculationMethods("CI");
