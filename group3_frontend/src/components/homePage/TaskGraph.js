@@ -85,7 +85,7 @@ class TaskGraph extends Component{
                                 <table>
                                 <tbody>
                                 <tr className="line">
-                                    <td className="tdGraphStyle">Task Deadline:<Moment format="YYYY/MM/DD">
+                                    <td className="tdGraphStyle">Task Deadline:  <Moment format="YYYY/MM/DD">
                                         
                                        {taskItem.taskDeadline} 
                                     </Moment></td>
