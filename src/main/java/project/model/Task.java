@@ -620,6 +620,7 @@ public class Task extends ResourceSupport implements Serializable {
 			if (reportToUpdate.getTaskCollaborator().equals(taskCollaborator)
 					&& taskCollaborator.getFinishDate() == null) {
 				reportToUpdate.setReportedTime(newTime);
+				reportToUpdate.setDateOfUpdate(Calendar.getInstance());
 				wasReportUpdated = true;
 			}
 		}
