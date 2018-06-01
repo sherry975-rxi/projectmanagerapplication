@@ -8,10 +8,11 @@ import decode from 'jwt-decode';
 import AuthService from '../loginPage/AuthService';
 import Moment from 'react-moment';
 import Error from './../../components/error/error';
-import MarkTaskAsFinished from "./MarkTaskAsFinished"; 
+import MarkTaskAsFinished from "./MarkTaskAsFinished";
 import CreateReport from "../reports/CreateReport";
 import Reports from "../reports/Reports"
 import { Link } from "react-router-dom";
+import MediumButton from './../../components/button/mediumButton';
 
 
 class OngoingTasks extends Component {
@@ -35,14 +36,14 @@ class OngoingTasks extends Component {
 
     async refreshPage() {
 
-            this.AuthService.fetch(`/users/${this.AuthService.getUserId()}/tasks/pending`, {method: 'get'})
-                .then((responseData) => {
-                    console.log(responseData);
-                    this.setState({
-                        tasks: responseData,
-                        message: responseData.error
-                    });
-                })
+        this.AuthService.fetch(`/users/${this.AuthService.getUserId()}/tasks/pending`, { method: 'get' })
+            .then((responseData) => {
+                console.log(responseData);
+                this.setState({
+                    tasks: responseData,
+                    message: responseData.error
+                });
+            })
 
     }
 
@@ -59,27 +60,23 @@ class OngoingTasks extends Component {
                     </Moment></td>
                     <td><Moment format="YYYY/MM/DD">
                         {taskItem.taskDeadline}
-                    </Moment></td>                    
+                    </Moment></td>
                     <td>
-                        <MarkTaskAsFinished id={taskItem.taskID} project={taskItem.project} onClick={this.refreshPage}/>
+                        <MarkTaskAsFinished id={taskItem.taskID} project={taskItem.project} onClick={this.refreshPage} />
                     </td>
-                    <td><Link 
-                        to={"/projects/" + taskItem.project + "/tasks/" + taskItem.taskID + "/createreport" }
+                    <td><Link
+                        to={"/projects/" + taskItem.project + "/tasks/" + taskItem.taskID + "/createreport"}
                         activeClassName="active"
                     >
-                        <button className="btn btn-primary">
-                            Create Report
-                    </button>
-                    </Link></td>                    
-                    <td><Link 
-                        to={"/projects/" + taskItem.project + "/tasks/" + taskItem.taskID + "/reports" }
+                        <MediumButton text="Create Report" />
+                    </Link></td>
+                    <td><Link
+                        to={"/projects/" + taskItem.project + "/tasks/" + taskItem.taskID + "/reports"}
                         activeClassName="active"
                     >
-                        <button className="btn btn-primary">
-                            View Reports
-                    </button>
+                        <MediumButton text="View Reports" />
                     </Link>{" "}</td>
-                    
+
                 </tr>
             );
         });
@@ -110,9 +107,9 @@ class OngoingTasks extends Component {
                         </thead>
                         <tbody>{this.renderOngoingTasks()}</tbody>
                     </table>
-                    <a href="/addTask" className="btn btn-primary" role="button">
-                        Add task
-                     </a>
+                    <Link to={'/addtask/'}>
+                        <MediumButton text="Add Task" />
+                    </Link> &nbsp;
                 </div>)
         }
     }

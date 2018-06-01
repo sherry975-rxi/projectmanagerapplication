@@ -1,19 +1,4 @@
-
-.table {
-    background-color: rgb(255, 255, 255);
-}
-
-.line {
-    color: rgb(63, 63, 63);
-}
-
-.h2 {
-    font-family: 'Arial Narrow';
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .buttonAddTask {
+.mediumButton {
     background-color: rgb(37, 84, 105); /* Green */
     border: none;
     color: rgb(255, 255, 255);
@@ -23,4 +8,8 @@
     text-align: center;
     display: inline-block;
     font-size: 13px;
-  }
+}
+
+.mediumButton:hover {
+    background-color: rgb(48, 98, 99);
+}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
+import MediumButton from '../../components/button/mediumButton.jsx'
 
 class ProjectDetails extends Component {
     constructor(props) {
@@ -82,9 +83,7 @@ class ProjectDetails extends Component {
                         to={"/projectcost/" + this.state.project.projectId}
                         activeClassName="active"
                     >
-                        <button className="btn btn-info">
-                            Get Current Project Cost
-                    </button>
+                        <MediumButton text="Calculate Project Cost" />
                     </Link>{" "}
                     &nbsp;
                 <Link
@@ -94,9 +93,7 @@ class ProjectDetails extends Component {
                         }
                         activeClassName="active"
                     >
-                        <button className="btn btn-warning">
-                            Change Calculation Method
-                    </button>
+                        <MediumButton text="Change Calculation Method" />
                     </Link>{" "}
                     &nbsp;
             </div>

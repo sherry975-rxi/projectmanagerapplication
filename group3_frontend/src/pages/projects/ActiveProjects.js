@@ -4,6 +4,7 @@ import "./ActiveProjects.css";
 import { Link } from "react-router-dom";
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
+import MediumButton from '../../components/button/mediumButton.jsx'
 
 class ActiveProjects extends Component {
     constructor(props) {
@@ -44,7 +45,7 @@ class ActiveProjects extends Component {
                         to={"/projectdetails/" + projectItem.projectId}
                         activeClassName="active"
                     >
-                        <button className="btn btn-primary">Details</button>
+                         <MediumButton text="Details" />
                     </Link>{" "}
                     &nbsp;
                     {/* <a href="/selectprojectcostcalculation" className="btn btn-warning" role="button">Cost Method</a> */}
