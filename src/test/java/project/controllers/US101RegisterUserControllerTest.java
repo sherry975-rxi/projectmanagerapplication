@@ -148,8 +148,10 @@ public class US101RegisterUserControllerTest {
 
 	}
 
-
-
+	@Test(expected=NullPointerException.class)
+	public void sendVerificationCode() {
+		assertTrue(testUserRegistrationController.doesCodeGeneratedMatch(null, "daniel@gmail.com"));
+	}
 
 
 }

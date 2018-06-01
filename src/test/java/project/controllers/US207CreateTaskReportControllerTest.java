@@ -265,7 +265,8 @@ public class US207CreateTaskReportControllerTest {
 
         controller.updateTaskReport(20, task1.getActiveTaskCollaboratorByEmail(user1.getEmail()), 0);
 
-        assertEquals(controller.getReportsUpdateDateByGivenUser(task1.getActiveTaskCollaboratorByEmail(user1.getEmail())).get(0), dayOfReport);
+        assertEquals(controller.getReportsUpdateDateByGivenUser(task1.getActiveTaskCollaboratorByEmail(user1.getEmail())).get(0).get(Calendar.DAY_OF_YEAR),
+                dayOfReport.get(Calendar.DAY_OF_YEAR));
     }
 
     @Test
