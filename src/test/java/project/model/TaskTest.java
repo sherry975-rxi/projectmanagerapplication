@@ -811,11 +811,18 @@ public class TaskTest {
 	@Test
 	public void shoudUpdateReportedTime() {
 
-		taskReadyToFinishTest.createReport(taskCollaborator, Calendar.getInstance(), 2.0);
+		Calendar creationDate = Calendar.getInstance();
+		creationDate.add(Calendar.DAY_OF_YEAR, -30);
+
+		taskReadyToFinishTest.createReport(taskCollaborator, creationDate, 2.0);
 
 		assertEquals(2.0, taskReadyToFinishTest.getReports().get(0).getReportedTime(), 0.1);
 
 		int reportToChange = taskReadyToFinishTest.getReports().get(0).getDbId();
+
+        assertEquals(taskReadyToFinishTest.getReports().get(0).getDateOfUpdate().get(Calendar.DAY_OF_YEAR),
+                taskReadyToFinishTest.getReports().get(0).getFirstDateOfReport().get(Calendar.DAY_OF_YEAR));
+
 
 		taskReadyToFinishTest.updateReportedTime(3.0, taskCollaborator, reportToChange);
 
@@ -826,6 +833,11 @@ public class TaskTest {
         assertFalse(taskReadyToFinishTest.updateReportedTime(5.0, taskCollaborator, taskReadyToFinishTest.getReports().size()));
 
         assertTrue(taskReadyToFinishTest.updateReportedTime(5.0, taskCollaborator, 0));
+
+
+		assertNotEquals(taskReadyToFinishTest.getReports().get(0).getDateOfUpdate().get(Calendar.DAY_OF_YEAR),
+                taskReadyToFinishTest.getReports().get(0).getFirstDateOfReport().get(Calendar.DAY_OF_YEAR));
+
 	}
 
 	/**
