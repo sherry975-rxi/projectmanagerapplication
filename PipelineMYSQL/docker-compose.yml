@@ -1,7 +1,7 @@
 version: '3'
 services:
     mysqlsrv:
-      image: mysql
+      image: mysql:5.7
       environment:
         - MYSQL_ROOT_PASSWORD=switchgroup3
         - MYSQL_DATABASE=project_management
