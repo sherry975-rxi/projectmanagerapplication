@@ -1,0 +1,21 @@
+version: '3'
+services:
+    mysqlsrv:
+      image: mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD=switchgroup3
+        - MYSQL_DATABASE=project_management
+      ports:
+        - "3306:3306"
+
+    backend:
+      image : 1171473/switch-2017-g003-pm-backend:latest
+      ports:
+        - "8080:8080"
+      stdin_open: true
+      tty: true
+
+    frontend:
+      image : 1171473/switch-2017-g003-pm-frontend:latest
+      ports:
+        - "3000:3000"
