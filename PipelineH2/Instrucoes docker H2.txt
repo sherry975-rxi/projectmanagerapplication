@@ -1,0 +1,27 @@
+Para gerar novas imagens da nossa aplicação com base dados H2:
+
+
+
+Pelo terminal ir até ao diretório onde está o docker-compose para H2 e correr o comando:
+ docker-compose up
+
+Serão geradas 2 imagens, uma backend e outra frontend.
+
+Para preparar as imagens para enviar para publicar no DockerHub é preciso mudar os nomes das imagens (definir tag):
+
+docker images (serve para visualiser as imagens)
+
+docker tag (id_da_imagem) username_docker/repositorio_docker:tag_desejada
+Exemplo: docker tag 7c9fcb9a8089 1171473/switch-2017-g003:release-17-may-2018-frontend
+
+É preciso fazer login no docker hub:
+
+docker login --username=1171473 ( neste caso o vosso username do docker)
+
+password *****(a vossa de login no docker hub)
+
+Depois:
+docker push username_docker/repositorio_docker (publicar)
+Exemplo: docker push 1171473/switch-2017-g003
+
+DONE!
