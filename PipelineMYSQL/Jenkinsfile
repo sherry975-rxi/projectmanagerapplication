@@ -55,9 +55,8 @@ node {
         stage('Clean Up') {
         
             sh """
-                docker rmi $DEPENDENCIES_IMAGE_NAME
-                docker rmi $RELEASE_BACKEND_IMAGE_NAME
-                docker rmi $RELEASE_FRONTEND_IMAGE_NAME                
+                docker rmi ${releaseBackendImage.id}
+                docker rmi ${releaseFrontendImage.id}                
             """                 
              
     } 
