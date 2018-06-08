@@ -30,13 +30,13 @@ node {
     
     stage('Create project backend image') {
             
-        releaseBackendImage = docker.build("$RELEASE_BACKEND_IMAGE_NAME", "-f PipelineMYSQL/backend/Dockerfile .")
+        releaseBackendImage = docker.build("$RELEASE_BACKEND_IMAGE_NAME", "-f PIPELINE/PipelineMYSQL/backend/Dockerfile .")
 
     }
 
     stage('Create project frontend image') {
             
-        releaseFrontendImage = docker.build("$RELEASE_FRONTEND_IMAGE_NAME", "-f PipelineMYSQL/frontend/Dockerfile .")
+        releaseFrontendImage = docker.build("$RELEASE_FRONTEND_IMAGE_NAME", "-f PIPELINE/PipelineMYSQL/frontend/Dockerfile .")
 
     }
 
