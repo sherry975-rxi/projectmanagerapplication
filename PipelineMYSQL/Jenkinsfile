@@ -53,7 +53,12 @@ node {
     }
 
     stage('Clean Up') {
-        sh "docker images | grep "1171473" | awk -F ' ' '{print $3}' | xargs docker rmi -f"                 
+        sh """
+			docker images 
+			grep "1171473" 
+			awk -F ' ' '{print $3}'  
+			xargs docker rmi -f"
+		"""
 	} 
 
 }
