@@ -40,7 +40,8 @@ node {
     stage('Clean Up') {
         
         sh """
-            docker rmi -f ${releaseImage.id}
+            docker rmi 1171476/project-management-g3:build-${env.BUILD_NUMBER}
+            docker rmi -f 1171476/project-management-g3:latest
         """                 
              
     }  
