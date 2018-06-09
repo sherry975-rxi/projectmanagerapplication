@@ -26,7 +26,8 @@ RUN npm install && \
 
 # setting proxy in package.json for backend container
 RUN cat package.json && \
-    json -I -f package.json -e 'this.proxy="http://backend:8080/"'
+    json -I -f package.json -e 'this.proxy="http://backend:8080/"' && \
+    cat package.json
 
 
 # prepare image to start react application when running image

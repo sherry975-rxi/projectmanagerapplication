@@ -1,13 +1,14 @@
-# pull base image.
-FROM maven:3-jdk-8-slim
+# pull backend image created in project-dependencies pipeline.
+FROM 1171473/switch-2017-g003-projectmanagement-dependencies:latest
 
-# update packages and install maven
-RUN apt-get update && \
-    apt-get -y upgrade && \
-    apt-get install -y git 
+# defining current working directory
+WORKDIR /switch-2017-g003
 
-# cloning git repository and build
-RUN git clone https://1171476:EMEaTGmvs8cAEQkaVTAN@bitbucket.org/lei-isep/switch-2017-g003.git && \
-    cd switch-2017-g003 && \
-    git checkout master && \ 
-    mvn install -DskipTests
+# building application...
+RUN mvn package
+
+# prepare image to start application when running image
+ENTRYPOINT java -jar target/project-management-1.0-SNAPSHOT.jar --spring.profiles.active=dbh2
+
+# exposing backend in port...
+EXPOSE 8080

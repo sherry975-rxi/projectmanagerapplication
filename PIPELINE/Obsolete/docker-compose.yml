@@ -13,9 +13,10 @@ services:
         - "3306:3306"
 
     backend:
-      build:
-        context : .
-        dockerfile: ./Dockerfile.release
+      image: 1171476/project-management-g3:latest
+      # build:
+      #   context : .
+      #   dockerfile: ./Dockerfile.release
       ports:
         - "8080:8080"
       stdin_open: true

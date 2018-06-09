@@ -2,10 +2,10 @@ version: "2"
 services:
 
   frontend:
-    # image : frontend:latest
-    build:
-      context : .
-      dockerfile: frontend/Dockerfile
+    image : 1171473/switch-2017-g003-projectmanagement-frontend:latest
+    # build:
+    #   context : .
+    #   dockerfile: frontend/Dockerfile
     #environment:
     #NODE_ENV: development
     # networks:
@@ -15,10 +15,10 @@ services:
       - 3000:3000
 
   backend:
-    #image: 1171473/switch-2017-g003:release-17-may-2018-console
-    build:
-      context : .
-      dockerfile: backend/Dockerfile  
+    image: 1171473/switch-2017-g003-projectmanagement-backend:latest
+    # build:
+    #   context : .
+    #   dockerfile: backend/Dockerfile  
     # networks:
     #   - default
     #   # - backend
