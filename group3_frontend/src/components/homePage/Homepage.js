@@ -8,7 +8,7 @@ import ProjGraph from './ProjectGraph';
 class Homepage extends Component {
     render() {
         return (
-            <div className="HomepageContainer">
+            <table className="HomepageContainer">
                 <tbody className="HomeTable">
                     <tr>
                         <td>
@@ -33,7 +33,7 @@ class Homepage extends Component {
                         </td>
                     </tr>
                 </tbody>
-            </div>
+            </table>
         );
     }
 }

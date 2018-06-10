@@ -16,7 +16,7 @@ class MyProjects extends Component {
         this.AuthService = new AuthService();
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.AuthService.fetch(
             `/projects/${this.AuthService.getUserId()}/myProjects`,
             {
@@ -31,20 +31,19 @@ class MyProjects extends Component {
     }
 
     renderProjects() {
-        return this.state.projects.map(projectItem => {
+        return this.state.projects.map((projectItem, index) => {
             return (
-                <tr className="line">
+                <tr className="line" key={index}>
                     <td>{projectItem.projectId}</td>
                     <td>{projectItem.name}</td>
                     <td>{projectItem.description}</td>
                     <td>{projectItem.projectManager.name}</td>
                     <td>{projectItem.projectManager.email}</td>
-                    <Link
-                        to={'/projectdetails/' + projectItem.projectId}
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Details" />
-                    </Link>
+                    <td>
+                        <Link to={'/projectdetails/' + projectItem.projectId}>
+                            <MediumButton text="Details" />
+                        </Link>
+                    </td>
                 </tr>
             );
         });

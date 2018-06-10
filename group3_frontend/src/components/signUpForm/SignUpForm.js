@@ -92,7 +92,7 @@ class SignUpForm extends Component {
                 <FormGroup controlId="name" className="formField">
                     <ControlLabel>Name</ControlLabel>
                     <FormControl
-                        autofocus
+                        autoFocus
                         type="text"
                         value={this.state.name}
                         onChange={this.handleChange}

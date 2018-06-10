@@ -25,8 +25,6 @@ class LoginPage extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-
-        console.log(event.target.value);
     };
 
     //On submit this method calls the login method from the Auth Service

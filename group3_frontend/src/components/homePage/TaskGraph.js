@@ -40,7 +40,7 @@ class TaskGraph extends Component {
             return (
                 <div className="loadings">
                     <img
-                        classname="loadingGifs"
+                        className="loadingGifs"
                         with="300"
                         height="200"
                         src={loading}
@@ -50,7 +50,7 @@ class TaskGraph extends Component {
             );
         } else {
             if (this.state.tasks.length > 0) {
-                return this.state.tasks.map(taskItem => {
+                return this.state.tasks.map((taskItem, index) => {
                     const today = momentus(this.state.actualDate);
                     const taskDeadline = momentus(taskItem.taskDeadline);
                     var difference = taskDeadline.diff(today, 'days');
@@ -62,7 +62,7 @@ class TaskGraph extends Component {
                     }
 
                     return (
-                        <div className="GraphContainer">
+                        <div className="GraphContainer" key={index}>
                             <ProgBar limit={difference} />
                             <table>
                                 <tbody>

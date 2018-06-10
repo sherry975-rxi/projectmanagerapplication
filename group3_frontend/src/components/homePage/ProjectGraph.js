@@ -37,7 +37,7 @@ class ProjectGraph extends Component {
             return (
                 <div className="loadings">
                     <img
-                        classname="loadingGifs"
+                        className="loadingGifs"
                         with="300"
                         height="200"
                         src={loading}
@@ -47,7 +47,7 @@ class ProjectGraph extends Component {
             );
         } else {
             if (this.state.projects.length > 0) {
-                return this.state.projects.map(projectItem => {
+                return this.state.projects.map((projectItem, index) => {
                     const today = momentus(this.state.actualDate);
                     const projectStartDay = momentus(projectItem.startdate);
                     const projectFinishDay = momentus(projectItem.finishdate);
@@ -69,7 +69,7 @@ class ProjectGraph extends Component {
                     }
 
                     return (
-                        <div className="ProjectGraphContainer">
+                        <div className="ProjectGraphContainer" key={index}>
                             <div className="ProgBarCircleContainer">
                                 <ProgBarCircle limit={mappedPercent} />
                             </div>

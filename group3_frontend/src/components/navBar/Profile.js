@@ -11,7 +11,7 @@ export class Profile extends React.Component {
         };
         this.AuthService = new AuthService();
     }
-    async componentDidMount() {
+    componentDidMount() {
         this.AuthService.fetch(`/users/${this.AuthService.getUserId()}`, {
             method: 'get'
         }).then(responseData => {
@@ -21,9 +21,14 @@ export class Profile extends React.Component {
             });
         });
     }
+
+    componentWillMount() {
+        this.props.setProfile(this.state.user.userProfile);
+    }
+
     render() {
         var user = this.state.user;
-        this.props.setProfile(this.state.user.userProfile);
+
         return (
             <div className="external-div">
                 <center>

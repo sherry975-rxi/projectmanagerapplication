@@ -16,7 +16,7 @@ class ActiveProjects extends Component {
         this.AuthService = new AuthService();
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.AuthService.fetch('/projects/active', {
             method: 'get'
         }).then(responseData => {

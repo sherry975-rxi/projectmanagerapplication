@@ -15,14 +15,13 @@ class ProgBarCircle extends Component {
             gapDegree: '190',
             gapPosition: 'bottom'
         };
-        this.increase = this.increase.bind(this);
     }
 
     componentDidMount() {
         this.increase();
     }
 
-    increase() {
+    increase = () => {
         const percent = this.state.percent + 1;
         if (percent >= this.props.limit) {
             clearTimeout(this.tm);
@@ -32,7 +31,7 @@ class ProgBarCircle extends Component {
             percent
         });
         this.tm = setTimeout(this.increase, 10);
-    }
+    };
 
     render() {
         return (

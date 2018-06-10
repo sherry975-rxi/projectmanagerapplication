@@ -15,12 +15,11 @@ class FinishedTasks extends Component {
         this.AuthService = new AuthService();
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.AuthService.fetch(
             'users/' + this.AuthService.getUserId() + '/tasks/finished',
             { method: 'get' }
         ).then(responseData => {
-            console.log(responseData);
             this.setState({
                 tasks: responseData
             });
@@ -28,9 +27,9 @@ class FinishedTasks extends Component {
     }
 
     renderFinishedTasks() {
-        return this.state.tasks.map(taskItem => {
+        return this.state.tasks.map((taskItem, index) => {
             return (
-                <tr className="line">
+                <tr className="line" key={index}>
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.project}</td>
                     <td>{taskItem.description}</td>
@@ -46,7 +45,7 @@ class FinishedTasks extends Component {
                     </td>
                     <td>
                         <span>
-                            <i class="glyphicon glyphicon-plus" />
+                            <i className="glyphicon glyphicon-plus" />
                         </span>
                     </td>
                 </tr>

@@ -12,14 +12,13 @@ class ProgBar extends Component {
             strokeLinecap: 'square',
             strokeWidth: '2'
         };
-        this.increase = this.increase.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.increase();
-    }
+    };
 
-    increase() {
+    increase = () => {
         const percent = this.state.percent + 1;
         if (percent >= this.props.limit) {
             clearTimeout(this.tm);
@@ -29,7 +28,7 @@ class ProgBar extends Component {
             percent
         });
         this.tm = setTimeout(this.increase, 10);
-    }
+    };
 
     render() {
         return (

@@ -24,18 +24,20 @@ class firstPage extends Component {
 
                     <div className="ButtonsStartPage">
                         <table className="tableButtom">
-                            <tr className="spacer">
-                                <th className="spacer">
-                                    <a href="/signUp">
-                                        <Button text="REGISTER" />
-                                    </a>
-                                </th>
-                                <th className="spacer">
-                                    <a href="/login">
-                                        <Button text="LOGIN" />
-                                    </a>
-                                </th>
-                            </tr>
+                            <tbody>
+                                <tr className="spacer">
+                                    <th className="spacer">
+                                        <a href="/signUp">
+                                            <Button text="REGISTER" />
+                                        </a>
+                                    </th>
+                                    <th className="spacer">
+                                        <a href="/login">
+                                            <Button text="LOGIN" />
+                                        </a>
+                                    </th>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>

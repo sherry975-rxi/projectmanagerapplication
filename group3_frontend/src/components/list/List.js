@@ -8,17 +8,16 @@ class List extends React.Component {
             visibility: 'hide',
             buttonActive: 'ParentButton'
         };
-        this.toggleVisibility = this.toggleVisibility.bind(this);
     }
 
-    toggleVisibility() {
+    toggleVisibility = () => {
         const newVisibility =
             this.state.visibility === 'hide' ? 'show' : 'hide';
         this.setState({
             visibility: newVisibility,
             buttonActive: 'buttonActive'
         });
-    }
+    };
 
     render() {
         let icon = (

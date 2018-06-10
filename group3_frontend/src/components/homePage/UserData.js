@@ -51,7 +51,7 @@ class UserData extends Component {
                 <div className="UserDataText">
                     <table className="tableUsernameText">
                         <tbody>
-                            <tr className>
+                            <tr>
                                 <td className="tdUserLeft">Name:</td>
                                 <td className="tdUserRight">
                                     {this.state.username}

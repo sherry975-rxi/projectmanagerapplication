@@ -21,7 +21,6 @@ class UpdateReport extends Component {
             hideSuccessInfo: 'hide-code',
             message: ''
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.AuthService = new AuthService();
     }
 
@@ -35,7 +34,7 @@ class UpdateReport extends Component {
         });
     };
 
-    async handleSubmit(event) {
+    handleSubmit = event => {
         event.preventDefault();
         const reportedTime = this.state.reportedTime;
 
@@ -67,7 +66,7 @@ class UpdateReport extends Component {
         this.setState({
             hideSuccessInfo: ''
         });
-    }
+    };
 
     render() {
         return (

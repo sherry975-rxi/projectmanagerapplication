@@ -7,10 +7,9 @@ class MarkTaskAsFinished extends Component {
         super(props);
 
         this.AuthService = new AuthService();
-        this.handleClick = this.handleClick.bind(this);
     }
 
-    async handleClick() {
+    handleClick = () => {
         this.AuthService.fetch(
             `/projects/${this.props.project}/tasks/${this.props.id}`,
             {
@@ -20,7 +19,7 @@ class MarkTaskAsFinished extends Component {
             console.log(responseData);
             this.props.onClick();
         });
-    }
+    };
 
     render() {
         return (

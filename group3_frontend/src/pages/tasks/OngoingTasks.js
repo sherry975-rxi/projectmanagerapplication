@@ -18,17 +18,16 @@ class OngoingTasks extends Component {
             project: {}
         };
 
-        this.refreshPage = this.refreshPage.bind(this);
         this.AuthService = new AuthService();
     }
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    async componentDidMount() {
+    componentDidMount() {
         this.refreshPage();
     }
 
-    async refreshPage() {
+    refreshPage = () => {
         this.AuthService.fetch(
             `/users/${this.AuthService.getUserId()}/tasks/pending`,
             { method: 'get' }
@@ -38,7 +37,7 @@ class OngoingTasks extends Component {
                 message: responseData.error
             });
         });
-    }
+    };
 
     renderOngoingTasks() {
         return this.state.tasks.map((taskItem, index) => {

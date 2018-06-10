@@ -16,14 +16,11 @@ class ProjectCostCalculation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            //projectId: "",
             project: {},
             availableMethods: [],
             calculationMethod: '',
             submission: false,
             hideSuccessInfo: 'hide-code'
-            //res : []
-            //projectCost : ""
         };
         this.AuthService = new AuthService();
     }

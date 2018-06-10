@@ -10,16 +10,15 @@ class SideBar extends Component {
         this.state = {
             profile: ''
         };
-        this.setProfile = this.setProfile.bind(this);
     }
 
-    setProfile(profile) {
+    setProfile = profile => {
         if (this.state.profile !== profile) {
             this.setState({
                 profile: profile
             });
         }
-    }
+    };
 
     render() {
         var projectsLinks = '';

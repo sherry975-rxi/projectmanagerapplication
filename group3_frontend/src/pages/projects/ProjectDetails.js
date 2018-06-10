@@ -14,7 +14,7 @@ class ProjectDetails extends Component {
         this.AuthService = new AuthService();
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.AuthService.fetch(
             `/projects/${this.props.match.params.projectID}`,
             {

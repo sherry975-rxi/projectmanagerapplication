@@ -15,13 +15,10 @@ class Reports extends Component {
             task: {},
             taskCollab: {}
         };
-
-        this.refreshPage = this.refreshPage.bind(this);
-        this.chooseWhichToRender = this.chooseWhichToRender.bind(this);
         this.AuthService = new AuthService();
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.AuthService.fetch(
             `/projects/${this.props.match.params.projectID}`,
             {
@@ -38,15 +35,15 @@ class Reports extends Component {
         this.chooseWhichToRender();
     }
 
-    async chooseWhichToRender() {
+    chooseWhichToRender = () => {
         if (this.state.projectManager === this.AuthService.getUserId()) {
             this.refreshPage();
         } else {
             this.reportsFromCollaborator();
         }
-    }
+    };
 
-    async refreshPage() {
+    refreshPage = () => {
         this.AuthService.fetch(
             `/projects/${this.props.match.params.projectID}/tasks/${
                 this.props.match.params.taskID
@@ -60,9 +57,9 @@ class Reports extends Component {
                 message: responseData.error
             });
         });
-    }
+    };
 
-    async reportsFromCollaborator() {
+    reportsFromCollaborator() {
         this.AuthService.fetch(
             `/projects/${this.props.match.params.projectID}/tasks/${
                 this.props.match.params.taskID
