@@ -1,30 +1,32 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
-import MediumButton from '../../components/button/mediumButton.jsx'
+import MediumButton from '../../components/button/mediumButton.jsx';
 
 class ProjectDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
             project: {},
-            message: ""
+            message: ''
         };
-        this.AuthService = new AuthService()
+        this.AuthService = new AuthService();
     }
 
     async componentDidMount() {
-        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}`, {
-            method: "get"
-        })
-            .then(responseData => {
-                this.setState({
-                    project: responseData,
-                    projectManager: responseData.projectManager.name,
-                    message: responseData.message
-                });
+        this.AuthService.fetch(
+            `/projects/${this.props.match.params.projectID}`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            this.setState({
+                project: responseData,
+                projectManager: responseData.projectManager.name,
+                message: responseData.message
             });
+        });
     }
 
     renderProject() {
@@ -50,11 +52,9 @@ class ProjectDetails extends Component {
     }
 
     render() {
-
-        if (this.state.message == "") {
-            return (<Error message={this.state.message} />)
-        }
-        else {
+        if (this.state.message === '') {
+            return <Error message={this.state.message} />;
+        } else {
             return (
                 <div className=" table-striped">
                     <h3>
@@ -80,23 +80,23 @@ class ProjectDetails extends Component {
                     </table>
                     <p />
                     <Link
-                        to={"/projectcost/" + this.state.project.projectId}
+                        to={'/projectcost/' + this.state.project.projectId}
                         activeClassName="active"
                     >
                         <MediumButton text="Calculate Project Cost" />
-                    </Link>{" "}
+                    </Link>
                     &nbsp;
-                <Link
+                    <Link
                         to={
-                            "/selectprojectcostcalculation/" +
+                            '/selectprojectcostcalculation/' +
                             this.state.project.projectId
                         }
                         activeClassName="active"
                     >
                         <MediumButton text="Change Calculation Method" />
-                    </Link>{" "}
+                    </Link>
                     &nbsp;
-            </div>
+                </div>
             );
         }
     }

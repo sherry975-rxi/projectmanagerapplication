@@ -1,17 +1,13 @@
-import React, { Component } from "react";
-import "./button.css";
-
+import React, { Component } from 'react';
+import './button.css';
 
 class Button extends Component {
-
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         return (
-            <button type="button" className="button" href={this.props.href}>{this.props.text}</button>
-        )
+            <button type="button" className="button" href={this.props.href}>
+                {this.props.text}
+            </button>
+        );
     }
 }
 

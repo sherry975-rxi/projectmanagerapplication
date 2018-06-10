@@ -1,21 +1,14 @@
-import React, { Component } from "react";
-import "./Homepage.css";
-import AuthService from '../../pages/loginPage/AuthService.js'
-import axios from 'axios';
+import React, { Component } from 'react';
+import './Homepage.css';
+import AuthService from '../../pages/loginPage/AuthService.js';
 import Moment from 'react-moment';
 import ProgBar from './ProgBar';
 import momentus from 'moment';
 import loading from './images/loading.gif';
 
-
-
-
-
-class TaskGraph extends Component{
-
+class TaskGraph extends Component {
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             tasks: [],
             project: {},
@@ -23,117 +16,92 @@ class TaskGraph extends Component{
             actualDate: new Date(),
             userID: '',
             hasFetched: false
-
         };
         this.AuthService = new AuthService();
     }
 
     async componentDidMount() {
-        this.AuthService.fetch(`/users/${this.AuthService.getUserId()}/tasks/sortedbydeadline`, {
-            method: "get"
-        })
-            .then(responseData => {
-                this.setState({
-                    tasks: responseData,
-                    message: responseData.error,
-                    hasFetched: true
-                });
+        this.AuthService.fetch(
+            `/users/${this.AuthService.getUserId()}/tasks/sortedbydeadline`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            this.setState({
+                tasks: responseData,
+                message: responseData.error,
+                hasFetched: true
             });
+        });
     }
 
-  
-
-
-    render(){
-
-        if(this.state.hasFetched == false){
-
-            return(
+    render() {
+        if (this.state.hasFetched === false) {
+            return (
                 <div className="loadings">
-                    <img  classname="loadingGifs" with="300" height="200" src={loading} alt="logoImage"/>
-
+                    <img
+                        classname="loadingGifs"
+                        with="300"
+                        height="200"
+                        src={loading}
+                        alt="logoImage"
+                    />
                 </div>
-            )
-        }
+            );
+        } else {
+            if (this.state.tasks.length > 0) {
+                return this.state.tasks.map(taskItem => {
+                    const today = momentus(this.state.actualDate);
+                    const taskDeadline = momentus(taskItem.taskDeadline);
+                    var difference = taskDeadline.diff(today, 'days');
+                    var deadlineIsOver = difference;
 
-        else {
+                    if (difference < 0) {
+                        difference = 100;
+                        deadlineIsOver = '0';
+                    }
 
-            if(this.state.tasks.length > 0){
-
-                return (
-    
-                
-    
-                   
-                    this.state.tasks.map(taskItem => {
-                        const today = momentus(this.state.actualDate)
-                        const taskDeadline = momentus(taskItem.taskDeadline)
-                        var difference = taskDeadline.diff(today, 'days');
-                        var deadlineIsOver = difference
-                        
-                     
-                        
-                        if(difference < 0) {
-                            difference = 100;
-                            deadlineIsOver = "0"
-                        }
-        
-                        return (
-                            
-                            <div className="GraphContainer">
-                                <ProgBar limit={difference}/>
-                                <table>
+                    return (
+                        <div className="GraphContainer">
+                            <ProgBar limit={difference} />
+                            <table>
                                 <tbody>
-                                <tr className="line">
-                                    <td className="tdGraphStyle">Task Deadline:  <Moment format="YYYY/MM/DD">
-                                        
-                                       {taskItem.taskDeadline} 
-                                    </Moment></td>
-                                    <td className="tdGraphStyleEnd">Days left until deadline:  {deadlineIsOver}</td>
-        
-                                </tr>
-                                <tr>
-                                    <td className="tdGraphStyle">Description: {taskItem.description}</td>
-                                
-                                </tr>
-                                <tr>
-                                    <td className="tdGraphStyle">Project ID: {taskItem.project}  </td>
-                                    
-                                </tr>
+                                    <tr className="line">
+                                        <td className="tdGraphStyle">
+                                            Task Deadline:
+                                            <Moment format="YYYY/MM/DD">
+                                                {taskItem.taskDeadline}
+                                            </Moment>
+                                        </td>
+                                        <td className="tdGraphStyleEnd">
+                                            Days left until deadline:
+                                            {deadlineIsOver}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="tdGraphStyle">
+                                            Description: {taskItem.description}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="tdGraphStyle">
+                                            Project ID: {taskItem.project}
+                                        </td>
+                                    </tr>
                                 </tbody>
-                                </table>
-                            </div>
-                        );
-                    })
-        
-                )
-    
-            }
-    
-            else{
-    
-                return(
-    
+                            </table>
+                        </div>
+                    );
+                });
+            } else {
+                return (
                     <div className="EmptyTaskContainer">
-                    <h2>You don't have any active Task</h2>
-    
+                        <h2>You don't have any active Task</h2>
                     </div>
-    
-    
-                )
+                );
             }
-
         }
-
-             
-
-        
-           
-    
-
-        }
-
-
+    }
 }
 
-export default TaskGraph
+export default TaskGraph;

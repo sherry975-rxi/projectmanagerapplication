@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import "./OngoingTasks.css";
+import React, { Component } from 'react';
+import './OngoingTasks.css';
 import AuthService from '../loginPage/AuthService';
 import Moment from 'react-moment';
 import Error from './../../components/error/error';
-
 
 class FinishedTasks extends Component {
     constructor(props) {
@@ -17,38 +16,42 @@ class FinishedTasks extends Component {
     }
 
     async componentDidMount() {
-        this.AuthService.fetch("users/"+this.AuthService.getUserId()+"/tasks/finished", { method: "get" })
-            .then(responseData => {
-                console.log(responseData)
-                this.setState({
-                    tasks: responseData,
-                });
+        this.AuthService.fetch(
+            'users/' + this.AuthService.getUserId() + '/tasks/finished',
+            { method: 'get' }
+        ).then(responseData => {
+            console.log(responseData);
+            this.setState({
+                tasks: responseData
             });
+        });
     }
 
     renderFinishedTasks() {
-
         return this.state.tasks.map(taskItem => {
             return (
                 <tr className="line">
                     <td>{taskItem.taskID}</td>
                     <td>{taskItem.project}</td>
                     <td>{taskItem.description}</td>
-                    <td><Moment format="YYYY/MM/DD">
-                        {taskItem.startDate}
-                    </Moment></td>
-                    <td><Moment format="YYYY/MM/DD">
-                        {taskItem.taskDeadline}
-                    </Moment></td>
                     <td>
-                        <a href="#">
+                        <Moment format="YYYY/MM/DD">
+                            {taskItem.startDate}
+                        </Moment>
+                    </td>
+                    <td>
+                        <Moment format="YYYY/MM/DD">
+                            {taskItem.taskDeadline}
+                        </Moment>
+                    </td>
+                    <td>
+                        <span>
                             <i class="glyphicon glyphicon-plus" />
-                        </a>
+                        </span>
                     </td>
                 </tr>
             );
         });
-
     }
 
     render() {
@@ -72,12 +75,10 @@ class FinishedTasks extends Component {
                     </table>
                 </div>
             );
-        }
-        catch (error) {
-            return (<Error message="NOT AUTHORIZED!" />)
+        } catch (error) {
+            return <Error message="NOT AUTHORIZED!" />;
         }
     }
 }
-
 
 export default FinishedTasks;

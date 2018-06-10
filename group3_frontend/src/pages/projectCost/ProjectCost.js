@@ -1,33 +1,32 @@
-import React, { Component } from "react";
-import "./ProjectCost.css";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import './ProjectCost.css';
+import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
-import MediumButton from '../../components/button/mediumButton.jsx'
-
+import MediumButton from '../../components/button/mediumButton.jsx';
 
 class ProjectCost extends Component {
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             project: {},
-            message: ""
+            message: ''
         };
         this.AuthService = new AuthService();
     }
 
     async componentDidMount() {
-        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/cost`, {
-            method: "get"
-        }).then(responseData => {
+        this.AuthService.fetch(
+            `/projects/${this.props.match.params.projectID}/cost`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
             this.setState({
                 project: responseData,
                 message: responseData.status
             });
         });
-
     }
 
     renderProjectWithCost() {
@@ -56,34 +55,39 @@ class ProjectCost extends Component {
                 </p>
                 <hr />
                 <p />
-
-                <Link to={'/selectprojectcostcalculation/' + projectItem.projectId} activeClassName="active">
+                <Link
+                    to={
+                        '/selectprojectcostcalculation/' + projectItem.projectId
+                    }
+                    activeClassName="active"
+                >
                     <MediumButton text="Change Cost Method" />
-                </Link> &nbsp;
-
+                </Link>
+                &nbsp;
                 <p />
                 <p />
-                <Link to={'/projectdetails/' + projectItem.projectId} activeClassName="active">
+                <Link
+                    to={'/projectdetails/' + projectItem.projectId}
+                    activeClassName="active"
+                >
                     <MediumButton text="Back to Project Details" />
-                </Link> &nbsp;
-
+                </Link>
+                &nbsp;
             </div>
         );
     }
 
     render() {
-
-        if (this.state.message == "" || this.state.message == "2") {
-            return (<div>
-                <h1 className="page-header">Project Cost</h1>
-                <h3>Info</h3>
-                {this.renderProjectWithCost()}
-            </div>)
-        }
-        else {
+        if (this.state.message === '' || this.state.message === '2') {
             return (
-                <Error message={this.state.message + " NOT AUTHORIZED"} />
+                <div>
+                    <h1 className="page-header">Project Cost</h1>
+                    <h3>Info</h3>
+                    {this.renderProjectWithCost()}
+                </div>
             );
+        } else {
+            return <Error message={this.state.message + ' NOT AUTHORIZED'} />;
         }
     }
 }

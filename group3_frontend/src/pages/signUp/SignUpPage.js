@@ -1,22 +1,13 @@
-import React, { Component } from "react";
-import "./SignUpPage.css";
-import {
-    Button,
-    ButtonToolbar,
-    FormGroup,
-    FormControl,
-    ControlLabel,
-    Checkbox,
-    Alert
-} from "react-bootstrap";
-import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
-import SignUpForm from "../../components/signUpForm/SignUpForm";
-import SignUpStepTwo from "../../components/signUpStepTwo/SignUpStepTwo";
-import SignUpStepThree from "../../components/signUpStepThree/SignUpStepThree";
-import SignUpStepFour from "../../components/signUpStepFour/SignUpStepFour";
+import React, { Component } from 'react';
+import './SignUpPage.css';
+import SignUpForm from '../../components/signUpForm/SignUpForm';
+import SignUpStepTwo from '../../components/signUpStepTwo/SignUpStepTwo';
+import SignUpStepThree from '../../components/signUpStepThree/SignUpStepThree';
+import SignUpStepFour from '../../components/signUpStepFour/SignUpStepFour';
+import { connect } from 'react-redux';
 
-const SMSVALIDATION = "smsValidation";
-const EMAILVALIDATION = "emailValidation";
+const SMSVALIDATION = 'smsValidation';
+const EMAILVALIDATION = 'emailValidation';
 
 class SignUpPage extends Component {
     constructor(props) {
@@ -48,6 +39,8 @@ class SignUpPage extends Component {
     };
 
     render() {
+        const signUpStep = this.props.signUpStep;
+        console.log('signUpStep', signUpStep);
         let formStp = <SignUpForm incrementStep={this.setStepOneResponse} />;
 
         if (this.state.signupStep === 2) {
@@ -75,4 +68,11 @@ class SignUpPage extends Component {
     }
 }
 
-export default SignUpPage;
+export const mapStateToProps = state => {
+    const signUpStep = state.signUp.signupStep;
+    return {
+        signUpStep
+    };
+};
+
+export default connect(mapStateToProps)(SignUpPage);

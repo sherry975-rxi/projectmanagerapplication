@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./UsersPage.css";
+import React, { Component } from 'react';
+import './UsersPage.css';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
 import axios from 'axios';
@@ -9,15 +9,16 @@ class UsersPage extends Component {
         super(props);
         this.state = {
             users: [],
-            message: ""
+            message: ''
         };
         this.AuthService = new AuthService();
     }
 
     async componentdidMount() {
-        axios.get("/users/allUsers", {
-            method: "get"
-        })
+        axios
+            .get('/users/allUsers', {
+                method: 'get'
+            })
             .then(responseData => {
                 this.setState({
                     users: responseData,
@@ -27,15 +28,10 @@ class UsersPage extends Component {
     }
 
     render() {
-        if (this.state.message == "") {
-            return (
-                <Error message={this.state.message} />)
-
-        }
-        else {
-            <div>
-                <UserTable users={this.state.users} />
-            </div>
+        if (this.state.message === '') {
+            return <Error message={this.state.message} />;
+        } else {
+            return <UserTable users={this.state.users} />;
         }
     }
 }
@@ -51,7 +47,7 @@ class UserTable extends React.Component {
                     <td>{userData.function}</td>
                     <td>{userData.userProfile}</td>
                     <td>
-                        {userData.systemUserStateActive ? "Active" : "Disabled"}
+                        {userData.systemUserStateActive ? 'Active' : 'Disabled'}
                     </td>
                     <td>
                         <button

@@ -1,38 +1,33 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
     Button,
-    ButtonToolbar,
     FormGroup,
     FormControl,
     ControlLabel,
     Checkbox,
     Alert
-} from "react-bootstrap";
-import { NavLink } from "react-router-dom";
-import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
-
-const SMSVALIDATION = "smsValidation";
-const EMAILVALIDATION = "emailValidation";
+} from 'react-bootstrap';
+import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 
 class SignUpForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            email: "",
-            userFunction: "",
-            phone: "",
-            password: "",
-            securityQuestion: "",
-            securityAnswer: "",
-            street: "",
-            zipCode: "",
-            city: "",
-            district: "",
-            country: "",
-            idNumber: "",
+            name: '',
+            email: '',
+            userFunction: '',
+            phone: '',
+            password: '',
+            securityQuestion: '',
+            securityAnswer: '',
+            street: '',
+            zipCode: '',
+            city: '',
+            district: '',
+            country: '',
+            idNumber: '',
             aceptTerms: false,
-            hideExistingEmail: "hide-email"
+            hideExistingEmail: 'hide-email'
         };
     }
 
@@ -71,12 +66,12 @@ class SignUpForm extends Component {
             idNumber
         };
 
-        fetch("/account/register", {
+        fetch('/account/register', {
             body: JSON.stringify(signUpData),
             headers: {
-                "content-type": "application/json"
+                'content-type': 'application/json'
             },
-            method: "POST"
+            method: 'POST'
         })
             .then(response => {
                 return response.json();
@@ -86,7 +81,7 @@ class SignUpForm extends Component {
             })
             .catch(error => {
                 this.setState({
-                    hideExistingEmail: ""
+                    hideExistingEmail: ''
                 });
             });
     };

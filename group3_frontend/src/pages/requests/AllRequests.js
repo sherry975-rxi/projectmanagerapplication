@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Button, FormGroup, FormControl, ControlLabel, Glyphicon } from "react-bootstrap";
+import { Button, Glyphicon } from 'react-bootstrap';
 import './AllRequests.css';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
 
 class AllRequests extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             requests: [],
-            message: ""
-        }
-        this.AuthService = new AuthService()
+            message: ''
+        };
+        this.AuthService = new AuthService();
     }
 
     async componentDidMount() {
-
         this.AuthService.fetch('/projects/2/tasks/WP1.T01/requests', {
-            method: "get"
+            method: 'get'
         }).then(responseData => {
             this.setState({
                 requests: responseData,
@@ -29,9 +26,8 @@ class AllRequests extends Component {
     }
 
     renderRequests() {
-        return this.state.requests.map((requestsItem) => {
+        return this.state.requests.map(requestsItem => {
             return (
-
                 <tr className="line">
                     <td>{requestsItem.task.description}</td>
                     <td>{requestsItem.projCollab.collaborator.name}</td>
@@ -44,16 +40,17 @@ class AllRequests extends Component {
                         <Glyphicon className="remove-button" glyph="remove" />
                     </Button>
                 </tr>
-
-            )
-        })
+            );
+        });
     }
 
     render() {
-        if (this.state.message != "") {
+        if (this.state.message !== '') {
             return (
                 <div className="Requests">
-                    <h3><b>List of All Requests</b></h3>
+                    <h3>
+                        <b>List of All Requests</b>
+                    </h3>
                     <table className="table table-hover">
                         <thead>
                             <tr>
@@ -62,15 +59,12 @@ class AllRequests extends Component {
                                 <th>Request Type</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {this.renderRequests()}
-                        </tbody>
+                        <tbody>{this.renderRequests()}</tbody>
                     </table>
                 </div>
             );
-        }
-        else {
-            <Error message={this.state.message + " NOT AUTHORIZED!"} />
+        } else {
+            return <Error message={this.state.message + ' NOT AUTHORIZED!'} />;
         }
     }
 }

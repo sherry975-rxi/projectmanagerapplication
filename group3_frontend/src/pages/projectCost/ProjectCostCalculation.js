@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
 import './ProjectCost.css';
-import { Button, FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
-import { Prompt, Link } from 'react-router-dom';
+import {
+    Button,
+    FormGroup,
+    FormControl,
+    ControlLabel,
+    Alert
+} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
-import MediumButton from '../../components/button/mediumButton.jsx'
-
+import MediumButton from '../../components/button/mediumButton.jsx';
 
 class ProjectCostCalculation extends Component {
-
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             //projectId: "",
             project: {},
             availableMethods: [],
-            calculationMethod: "",
+            calculationMethod: '',
             submission: false,
-            hideSuccessInfo: "hide-code",
+            hideSuccessInfo: 'hide-code'
             //res : []
             //projectCost : ""
         };
@@ -31,20 +34,23 @@ class ProjectCostCalculation extends Component {
 
     // Load users from database
     loadProjectWithCostFromServer() {
-        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}`, {
-            method: "get"
-        })
-            .then(responseData => {
-                this.setState({
-                    project: responseData,
-                    availableMethods: responseData.availableCalculationMethods.split(","),
-                    message: responseData.error
-                });
+        this.AuthService.fetch(
+            `/projects/${this.props.match.params.projectID}`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            this.setState({
+                project: responseData,
+                availableMethods: responseData.availableCalculationMethods.split(
+                    ','
+                ),
+                message: responseData.error
             });
+        });
     }
 
     loadAvailableMethods() {
-
         //this.state.res = this.state.availableMethodsX.split(",");
 
         /*  for(var i = 0; i < myArray.length; i++){
@@ -57,76 +63,70 @@ class ProjectCostCalculation extends Component {
 
          } */
 
-
         return this.state.availableMethods.map(option => {
-            return (
-                <option value={option}>
-                    {option}
-                </option>
-            );
-        })
-
+            return <option value={option}>{option}</option>;
+        });
     }
-
 
     //state = {}
     validateForm() {
-        return this.state.calculationMethod.length > 0
+        return this.state.calculationMethod.length > 0;
     }
 
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
         });
-    }
+    };
 
     handleSubmit = event => {
         event.preventDefault();
         const {
             //projectId,
-            calculationMethod,/*,
-        projectCost */} = this.state;
+            calculationMethod /*,
+        projectCost */
+        } = this.state;
 
         const projectDTOData = {
             //projectId,
-            calculationMethod,
+            calculationMethod
             //result: projectCost
         };
 
         console.log(projectDTOData);
 
-        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}`, {
-            body: JSON.stringify(projectDTOData),
-            method: 'PATCH'
-        })
-            .then(responseData => {
-                this.setState({
-                    message: responseData.error
-                });
+        this.AuthService.fetch(
+            `/projects/${this.props.match.params.projectID}`,
+            {
+                body: JSON.stringify(projectDTOData),
+                method: 'PATCH'
+            }
+        ).then(responseData => {
+            this.setState({
+                message: responseData.error
             });
+        });
 
         this.setState({
             //submission:true,
-            hideSuccessInfo: ""
-        })
-
-    }
-
+            hideSuccessInfo: ''
+        });
+    };
 
     render() {
         if (this.state.message != null) {
-            return <Error message={this.state.message + " NOT AUTHORIZED"} />
-        }
-        else {
+            return <Error message={this.state.message + ' NOT AUTHORIZED'} />;
+        } else {
             return (
                 <div>
                     <h1 className="page-header">Project Cost</h1>
 
-                    <p><b>Project ID:</b> &nbsp;
-                {this.props.match.params.projectID}</p>
+                    <p>
+                        <b>Project ID:</b> &nbsp;
+                        {this.props.match.params.projectID}
+                    </p>
 
                     <form onSubmit={this.handleSubmit}>
-
                         {/*  <FormGroup controlId="projectId">
                         <ControlLabel>Type Project ID</ControlLabel>
                         <FormControl
@@ -136,7 +136,6 @@ class ProjectCostCalculation extends Component {
                             onChange={this.handleChange}
                         />
                         </FormGroup> */}
-
                         {/*             <FormGroup controlId="calculationMethod">
                         <ControlLabel>Type Calculation Method</ControlLabel>
                         <FormControl
@@ -146,8 +145,6 @@ class ProjectCostCalculation extends Component {
                             onChange={this.handleChange}
                         />
                         </FormGroup> */}
-
-
                         {/* <FormGroup controlId="projectCost">
                         <ControlLabel>Project Cost</ControlLabel>
                         <FormControl
@@ -159,8 +156,9 @@ class ProjectCostCalculation extends Component {
                         </FormGroup> */}
                         <FormGroup controlId="calculationMethod">
                             <ControlLabel>
-                                To change the Project Cost Calculation Method, please select a method:
-                                </ControlLabel>
+                                To change the Project Cost Calculation Method,
+                                please select a method:
+                            </ControlLabel>
                             <FormControl
                                 value={this.state.calculationMethod}
                                 onChange={this.handleChange}
@@ -172,12 +170,9 @@ class ProjectCostCalculation extends Component {
                                 </option>
                                 {this.loadAvailableMethods()}
                             </FormControl>
-
                         </FormGroup>
-
                         <Button
                             block
-
                             disabled={!this.validateForm()}
                             type="submit"
                         >
@@ -190,31 +185,42 @@ class ProjectCostCalculation extends Component {
                         /> */}
                         <Alert
                             bsStyle="success"
-                            className={this.state.hideSuccessInfo}>
-                            <strong>Calculation Method Successfully Updated! <br /></strong>
+                            className={this.state.hideSuccessInfo}
+                        >
+                            <strong>
+                                Calculation Method Successfully Updated! <br />
+                            </strong>
                             Check project cost
                         </Alert>
                         <p />
                         <p />
-
-                        <Link to={'/projectcost/' + this.props.match.params.projectID} activeClassName="active">
+                        <Link
+                            to={
+                                '/projectcost/' +
+                                this.props.match.params.projectID
+                            }
+                            activeClassName="active"
+                        >
                             <MediumButton text="Calculate Project Cost" />
-                        </Link> &nbsp;
+                        </Link>
+                        &nbsp;
                         <p />
                         <p />
-                        <Link to={'/projectdetails/' + this.props.match.params.projectID} activeClassName="active">
+                        <Link
+                            to={
+                                '/projectdetails/' +
+                                this.props.match.params.projectID
+                            }
+                            activeClassName="active"
+                        >
                             <MediumButton text="Back to Project Details" />
-                        </Link> &nbsp;
-
-
-
-
+                        </Link>
+                        &nbsp;
                     </form>
                 </div>
-            )
+            );
         }
     }
 }
 
 export default ProjectCostCalculation;
-
