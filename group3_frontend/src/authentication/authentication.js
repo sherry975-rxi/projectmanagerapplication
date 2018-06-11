@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-    authenticated: "false",
+    authenticated: false,
     logoutButton: 'notLogged',
     error: ""
 

@@ -25,6 +25,7 @@ import OngoingTasks from "./pages/tasks/OngoingTasks";
 import requiresAuth from './authentication/requiresAuth'
 import Messages from './components/msgs/Messages'
 import HomePage from "../src/components/homePage/Homepage";
+import Test from './pages/tasks/Test';
 
 
 class App extends Component {
@@ -57,6 +58,10 @@ class App extends Component {
                     <Route
                         path="/selectprojectcostcalculation/:projectID"
                         component={requiresAuth(ProjectCostCalculation)}
+                    />
+                    <Route
+                        path="/test"
+                        component={(Test)}
                     />
 
                     <Route

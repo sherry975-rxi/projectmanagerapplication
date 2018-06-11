@@ -48,6 +48,7 @@ class LoginPage extends Component {
                             this.props.history.replace('/homepage')
                         })
                 }
+                console.log(this.props.authenticated)
             })
             .catch(err => {
                 console.log(err)
@@ -57,6 +58,8 @@ class LoginPage extends Component {
     };
 
     render() {
+
+        console.log(this.props.authenticated)
 
         return (
             <div className="login-page">
@@ -92,6 +95,6 @@ class LoginPage extends Component {
     }
 }
 
-const mapStateToProps = state => { return ({ logoutButton: state.authenthication.logoutButton }) }
+const mapStateToProps = state => { return ({ logoutButton: state.authenthication.logoutButton, authenticated: state.authenthication.authenticated }) }
 const mapDispatchToProps = dispatch => bindActionCreators({ submit, dispatchError }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
