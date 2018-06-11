@@ -1,11 +1,10 @@
+
+
 export function handleTaskHeaders(list) {
-    return list.map(task => [
-        task.taskID,
-        task.project,
-        task.description,
-        task.currentState,
-        formatDate(task.startDate)
-    ]);
+    return (
+        list.map((task) => ({ 'taskID': task.taskID, 'project': task.project, 'description': task.description, 'state': task.currentState, 'startDate': formatDate(task.startDate) })
+        )
+    )
 }
 
 export function handleProjectHeaders(list) {

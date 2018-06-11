@@ -4,12 +4,16 @@ import './AccordionMenuTasks.css';
 import * as Constants from '../utils/titleConstants';
 import SmallButton from '../button/smallButton.jsx';
 import { handleTaskHeaders } from '../utils/handleList';
+import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
+import AuthService from './../../pages/loginPage/AuthService';
+
 
 class AccordionMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeKey: '1'
+            activeKey: '1',
+            type: 'Ongoing'
         };
     }
 
@@ -21,38 +25,43 @@ class AccordionMenu extends Component {
         return Constants.TASKS.map(element => <th> {element}</th>);
     }
 
-    renderList(list) {
+    static getDerivedStateFromProps(props, prevState) {
+        let newState = { type: props }
+        return newState ? props : prevState
+    }
+
+    renderList(list, type) {
+        console.log(this.state.type)
+
         let key = 1;
-        return handleTaskHeaders(list).map(element => (
-            <Panel eventKey={key}>
-                <Panel.Heading>
-                    <Panel.Title toggle>
-                        <div className="taskContent">
-                            {' '}
-                            <table className="table table-content">
-                                <thead>
-                                    <tr>
-                                        {element.map(
-                                            detail => <th> {detail} </th>,
-                                            key++
-                                        )}
-                                        <th>
-                                            <SmallButton text="Edit" />{' '}
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </Panel.Title>
-                </Panel.Heading>
-                <Panel.Body collapsible>
-                    {' '}
-                    <ul className="bodyContent">
-                        {element.map(detail => <li> {detail} </li>, key++)}
-                    </ul>
-                </Panel.Body>
-            </Panel>
-        ));
+
+        return (
+            handleTaskHeaders(list).map((element) =>
+                <Panel eventKey={key}>
+                    <Panel.Heading>
+                        <Panel.Title toggle><div className="taskContent"> <table className="table table-content">
+                            <thead>
+                                <tr>
+                                    <th> {element.taskID} </th>
+                                    <th> {element.project} </th>
+                                    <th> {element.description} </th>
+                                    <th> <b>{element.state}</b> </th>
+                                    <th> {element.startDate} </th>
+                                    <th> {this.state.type == 'Ongoing' ? <MarkTaskAsFinished
+                                        id={element.taskID}
+                                        project={element.project}
+                                    /> : ''}
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table></div></Panel.Title>
+                    </Panel.Heading>
+                    <Panel.Body collapsible> <ul className="bodyContent">
+
+                    </ul></Panel.Body>
+                </Panel>
+            )
+        )
     }
 
     render() {
