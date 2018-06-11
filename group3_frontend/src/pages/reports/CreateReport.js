@@ -21,7 +21,7 @@ class CreateReport extends Component {
     }
 
     validateForm() {
-        return this.state.reportedTime.length > 0;
+        return this.state.reportedTime > 0;
     }
 
     handleChange = event => {
@@ -78,7 +78,9 @@ class CreateReport extends Component {
                         <ControlLabel>Reported time (hours)</ControlLabel>
                         <FormControl
                             autoFocus
-                            type="text"
+                            type="number"
+                            pattern="[0-9]*"
+                            inputmode="numeric"
                             value={this.state.reportedTime}
                             onChange={this.handleChange}
                         />
