@@ -43,7 +43,17 @@
     box-shadow: none;
 }
 
-.taskContent .projectContent {
+.taskContent {
+    margin-left: -15px;
+    margin-right: -15px;
+    color: #747474;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'Oxygen', sans-serif;
+}
+
+.projectContent {
     margin-left: -15px;
     margin-right: -15px;
     color: #747474;
@@ -76,4 +86,8 @@
     font-family: 'Oxygen', sans-serif;
     text-decoration: none;
     line-height: 25px;
+}
+
+.key {
+    display: none;
 }
