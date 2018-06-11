@@ -13,7 +13,7 @@ import CreateReport from "../reports/CreateReport";
 import Reports from "../reports/Reports"
 import { Link } from "react-router-dom";
 import MediumButton from './../../components/button/mediumButton';
-import AccordionMenu from '../../components/accordianMenu/AccordionMenuTasks.jsx';
+import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 
 
 class Test extends Component {
