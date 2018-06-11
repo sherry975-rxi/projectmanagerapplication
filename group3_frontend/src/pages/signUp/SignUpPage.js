@@ -5,18 +5,13 @@ import SignUpStepTwo from '../../components/signUpStepTwo/SignUpStepTwo';
 import SignUpStepThree from '../../components/signUpStepThree/SignUpStepThree';
 import SignUpStepFour from '../../components/signUpStepFour/SignUpStepFour';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { increaseSignUpStepAction } from '../../actions/signUpActions';
 
 const SMSVALIDATION = 'smsValidation';
 const EMAILVALIDATION = 'emailValidation';
 
 class SignUpPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            signupStep: 1
-        };
-    }
-
     setStepOneResponse = jsonResponse => {
         jsonResponse.forEach(element => {
             if (
@@ -31,11 +26,14 @@ class SignUpPage extends Component {
                 });
             }
         });
-        this.setState({ signupStep: this.state.signupStep + 1 });
+        const payload = { signUpStep: this.props.signUpStep + 1 };
+        this.props.increaseSignUpStepAction(payload);
     };
 
     setStepResponse = response => {
-        this.setState(response);
+        this.setState({ verificationUrl: response.verificationUrl });
+        const payload = { signUpStep: response.signUpStep };
+        this.props.increaseSignUpStepAction(payload);
     };
 
     render() {
@@ -43,7 +41,7 @@ class SignUpPage extends Component {
         console.log('signUpStep', signUpStep);
         let formStp = <SignUpForm incrementStep={this.setStepOneResponse} />;
 
-        if (this.state.signupStep === 2) {
+        if (signUpStep === 2) {
             const urls = {
                 [SMSVALIDATION]: this.state[SMSVALIDATION],
                 [EMAILVALIDATION]: this.state[EMAILVALIDATION]
@@ -54,25 +52,37 @@ class SignUpPage extends Component {
                     setStepTwo={this.setStepResponse}
                 />
             );
-        } else if (this.state.signupStep === 3) {
+        } else if (signUpStep === 3) {
             formStp = (
                 <SignUpStepThree
                     setStepThree={this.setStepResponse}
                     validationCodeUrl={this.state.verificationUrl}
                 />
             );
-        } else if (this.state.signupStep === 4) {
+        } else if (signUpStep === 4) {
             formStp = <SignUpStepFour />;
         }
-        return <div>{formStp}</div>;
+        return (
+            <div>
+                {signUpStep}
+                {formStp}
+            </div>
+        );
     }
 }
 
 export const mapStateToProps = state => {
-    const signUpStep = state.signUp.signupStep;
+    const { signUpStep } = state.signUp;
     return {
         signUpStep
     };
 };
 
-export default connect(mapStateToProps)(SignUpPage);
+export const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ increaseSignUpStepAction }, dispatch);
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SignUpPage);
