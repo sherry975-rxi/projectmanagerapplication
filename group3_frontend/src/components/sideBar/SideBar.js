@@ -25,48 +25,37 @@ class SideBar extends Component {
 
     getCollaboratorOptions() {
         return (<ul className="menu">
-                    <List className="Project" type="Project" onClick={this.toggleVisibility} >
-                        <li><NavLink to="/myprojects" activeClassName="active">
+                    <List>
+                        <NavLink to="/myprojects" activeClassName="active">
                             My Projects
-                        </NavLink></li>
+                        </NavLink>
                     </List>
-                    <List className="Task" type="Task" onClick={this.toggleVisibility} >
-                        <li>
-                            <NavLink to="/tasks" activeClassName="active">
-                                Ongoing tasks
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/finishedtasks" activeClassName="active" >
-                                Finished tasks
-                            </NavLink>
-                        </li>
+                    <List>
+                        <NavLink to="/tasks" activeClassName="active" >
+                            My Tasks
+                        </NavLink>
                     </List>
                 </ul>);
     }
 
     getDirectorOptions() {
         return (<ul className="menu">
-                    <List className="Project" type="Project" onClick={this.toggleVisibility} >
-                        <li>
-                            <NavLink to="/activeprojects" activeClassName="active">
-                                Active Projects
-                            </NavLink>
-                        </li>
+                    <List>
+                        <NavLink to="/activeprojects" activeClassName="active">
+                             Projects
+                        </NavLink>
                     </List>
                 </ul>);
     }
 
     getAdminOptions() {
         return (<ul className="menu">
-            <List className="Users" type="Users" onClick={this.toggleVisibility} >
-                <li>
-                    <NavLink to="/users" activeClassName="active">
-                        All Users
-                    </NavLink>
-                </li>
-            </List>
-        </ul>);
+                    <List>
+                        <NavLink to="/users" activeClassName="active">
+                            Users
+                        </NavLink>
+                    </List>
+                </ul>);
     }
 
     render() {

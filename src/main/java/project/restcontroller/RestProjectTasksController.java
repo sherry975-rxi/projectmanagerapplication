@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import project.dto.TaskAction;
 import project.dto.TaskDTO;
 import project.model.Project;
+import project.model.ProjectCollaborator;
 import project.model.Task;
+import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -132,6 +134,46 @@ public class RestProjectTasksController {
         return response;
     }
 
+
+    /**
+     * This method adds a ProjectCollaborator to a Task to become a TaskCollaborator
+     *
+     * @param projid Project id of the project whose task needs a task collaborator
+     * @param taskid Task id of the task to add a project collaborator to its team
+     * @param userDTO user whose ID is going to refer the project collaborator to be added as task
+     *                collaborator of task with id taskid
+     *
+     * @return ResponseBody with 200-OK if projectCollab was added to the task team or
+     *          403-METHOD_NOT_ALLOWED the projectCollab to be added to the team is not active in Project
+     */
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "{taskid}/addCollab", method = RequestMethod.POST)
+    public ResponseEntity<Task> addCollabToTask (@RequestBody User userDTO, @PathVariable int projid, @PathVariable String taskid) {
+
+        Project project = this.projectService.getProjectById(projid);
+
+        User user = userService.getUserByEmail(userDTO.getEmail());
+
+        ResponseEntity<Task> response = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        if(this.projectService.isUserActiveInProject(user, project)) {
+
+            Task task = taskService.getTaskByTaskID(taskid);
+
+            ProjectCollaborator projectCollaborator = projectService.findActiveProjectCollaborator(user,project);
+
+            task.addProjectCollaboratorToTask(projectCollaborator);
+
+            taskService.saveTask(task);
+
+            response = new ResponseEntity<>(task, HttpStatus.OK);
+
+        }
+            return response;
+    }
+
+
+
     /**
      * This methods gets the list of finished tasks from a project
      *
@@ -234,5 +276,74 @@ public class RestProjectTasksController {
         return new ResponseEntity<>(taskDTO, HttpStatus.OK);
 
     }
+
+    /**
+     * This methods gets the list of unfinished tasks from a project
+     *
+     * @param projid Id of the project to search for finished tasks
+     *
+     * @return List of not started tasks from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "notstarted", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getNotStartedTasks (@PathVariable int projid) {
+
+
+        Project project = this.projectService.getProjectById(projid);
+        List<Task> notStartedTasks = new ArrayList<>();
+
+        notStartedTasks.addAll(taskService.getProjectUnstartedTasks(project));
+
+        for(Task task : notStartedTasks) {
+            for(String action : task.getTaskState().getActions()) {
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
+            }
+        }
+
+        return new ResponseEntity<>(notStartedTasks, HttpStatus.OK);
+    }
+
+
+    /**
+     * This methods gets the list of all tasks from a project
+     *
+     * @param projid Id of the project to search for all tasks
+     *
+     * @return List of all tasks from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "all", method = RequestMethod.GET)
+    public ResponseEntity<List<TaskDTO>> getAllTasks (@PathVariable int projid) {
+
+        Project project = projectService.getProjectById(projid);
+
+        List<Task> allTasks = new ArrayList<>();
+
+        allTasks.addAll(taskService.getProjectTasks(project));
+
+        List<TaskDTO> allProjectTasksDTO = new ArrayList<>();
+
+        for(Task other : allTasks) {
+            TaskDTO taskDTO = new TaskDTO(other);
+            allProjectTasksDTO.add(taskDTO);
+        }
+
+        for(TaskDTO taskDto : allProjectTasksDTO) {
+            for(String action : taskDto.getTaskState().getActions()) {
+                Link actionLink = TaskAction.getLinks(projid, taskDto.getTaskID()).get(action);
+                taskDto.add(actionLink);
+
+            }
+        }
+
+        return new ResponseEntity<>(allProjectTasksDTO, HttpStatus.OK);
+
+    }
+
+
+
 }
 

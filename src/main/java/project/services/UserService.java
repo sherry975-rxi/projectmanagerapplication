@@ -66,14 +66,6 @@ public class UserService {
 		}
 	}
 
-	private static UserSecurity isAuthenticated(int id) {
-		UserSecurity user = UserService.authenticated();
-		if (user == null || !user.hasProfile(Profile.ADMIN) && id != user.getId()) {
-			throw new AuthorizationException("Access denied!");
-		}
-		return user;
-	}
-
 	/**
 	 * If User exists in DB, it will be deleted. If it exists, nothing happens
 	 *
@@ -354,8 +346,6 @@ public class UserService {
 	 * @return all users that possess a certain email address
 	 */
 	public User getUserByID(int id) {
-
-		isAuthenticated(id);
 
 		String message = "User not found! ID: ";
 
