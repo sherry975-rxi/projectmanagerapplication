@@ -1,0 +1,24 @@
+.smallButton {
+    background-color: white;
+    border: 1px solid #e35b5a;
+    color: #e35b5a;
+    font-family: Helvetica;
+    font-weight:  normal;
+    text-align: center;
+    display: inline-block;
+    font-size: 13px;
+    width: 60px;
+    height: 32px;
+}
+
+.smallButton:hover {
+    background-color: #e35b5a;
+    color: white;
+
+}
+
+.pencilIcon{
+    margin-left: -7px;
+    font-size: 13px;
+    padding: 3px;
+}
