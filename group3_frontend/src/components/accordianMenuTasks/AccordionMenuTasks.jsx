@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { PanelGroup, Panel } from 'react-bootstrap';
-import './AccordionMenuTasks.css'
-import * as Constants from '../utils/titleConstants'
+import './AccordionMenuTasks.css';
+import * as Constants from '../utils/titleConstants';
 import SmallButton from '../button/smallButton.jsx';
 import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
@@ -9,7 +9,6 @@ import AuthService from './../../pages/loginPage/AuthService';
 
 
 class AccordionMenu extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -23,9 +22,7 @@ class AccordionMenu extends Component {
     }
 
     renderTitles() {
-        return (
-            Constants.TASKS.map((element) => <th> {element}</th>
-            ))
+        return Constants.TASKS.map(element => <th> {element}</th>);
     }
 
     static getDerivedStateFromProps(props, prevState) {
@@ -37,6 +34,7 @@ class AccordionMenu extends Component {
         console.log(this.state.type)
 
         let key = 1;
+
         return (
             handleTaskHeaders(list).map((element) =>
                 <Panel eventKey={key}>
@@ -67,7 +65,6 @@ class AccordionMenu extends Component {
     }
 
     render() {
-
         return (
             <PanelGroup
                 accordion
@@ -78,9 +75,7 @@ class AccordionMenu extends Component {
                 <Panel eventKey="1">
                     <table className="table table-title">
                         <thead>
-                            <tr>
-                                {this.renderTitles()}
-                            </tr>
+                            <tr>{this.renderTitles()}</tr>
                         </thead>
                     </table>
                 </Panel>
