@@ -1,29 +1,31 @@
-import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
+import React, { Component } from 'react';
+import {
+    Button,
+    FormGroup,
+    FormControl,
+    ControlLabel,
+    Alert
+} from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
-import "./UpdateReport.css";
-import { submit, dispatchError } from '../../authentication/authenticationActions';
+import './UpdateReport.css';
 
 class UpdateReport extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projectId: "",
-            taskID: "",
-            reportId: "",
-            reportedTime: "",
-            taskCollabEmail: "",
-            hideSuccessInfo: "hide-code",
-            message: ""
+            projectId: '',
+            taskID: '',
+            reportId: '',
+            reportedTime: '',
+            taskCollabEmail: '',
+            hideSuccessInfo: 'hide-code',
+            message: ''
         };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.AuthService = new AuthService()
+        this.AuthService = new AuthService();
     }
 
     validateForm() {
-        return (
-            this.state.reportedTime.length > 0
-        );
+        return this.state.reportedTime > 0;
     }
 
     handleChange = event => {
@@ -32,7 +34,7 @@ class UpdateReport extends Component {
         });
     };
 
-    async handleSubmit(event) {
+    handleSubmit = event => {
         event.preventDefault();
         const reportedTime = this.state.reportedTime;
 
@@ -49,68 +51,64 @@ class UpdateReport extends Component {
 
         console.log(reportDTOData);
 
-        this.AuthService.fetch(`/projects/${this.props.projId}/tasks/${this.props.taskId}/reports/
+        this.AuthService.fetch(
+            `/projects/${this.props.projId}/tasks/${this.props.taskId}/reports/
                 ${this.props.reportId}/update/`,
             {
                 body: JSON.stringify(reportDTOData),
-                method: "PUT"
+                method: 'PUT'
             }
-        )
-            .then((responseData) => {
-                console.log(responseData);
-                this.props.onSubmit();
-            });
+        ).then(responseData => {
+            console.log(responseData);
+            this.props.onSubmit();
+        });
 
-                this.setState({
-                hideSuccessInfo: ""
-            })
-          
+        this.setState({
+            hideSuccessInfo: ''
+        });
     };
 
     render() {
         return (
             <div className="table-striped">
-                <label className="title"></label>      
-               
-                <form onSubmit={this.handleSubmit}>   
-                <td className="tdSubmit">  
-                
-                    <FormGroup controlId="reportedTime">
-                        <ControlLabel>Reported time to update</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.reportedTime}
-                            onChange={this.handleChange}
-                        />                         
-                    </FormGroup>
-                    </td>
-                     <td className="tdButton">
-                     <Button
-                        block
-                        className="btn btn-primary"
-                        disabled={!this.validateForm()}
-                        type="submit"
-                    >
-                       Update
-                    </Button>                 
-                                   
-                    </td>
-                       <Alert
-                            bsStyle="success"
-                            className={this.state.hideSuccessInfo}>
-                            <strong>Report successfully updated! <br /></strong>
-                        
-                      </Alert>
+                <label className="title" />
 
-                </form>   
-                                
-                                 
-               
+                <form onSubmit={this.handleSubmit}>
+                    <td className="tdSubmit">
+                        <FormGroup controlId="reportedTime">
+                            <ControlLabel>Reported time to update</ControlLabel>
+                            <FormControl
+                                autoFocus
+                                type="number"
+                                pattern="[0-9]*"
+                                inputmode="numeric"
+                                value={this.state.reportedTime}
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
+                    </td>
+                    <td className="tdButton">
+                        <Button
+                            block
+                            className="btn btn-primary"
+                            disabled={!this.validateForm()}
+                            type="submit"
+                        >
+                            Update
+                        </Button>
+                    </td>
+                    <Alert
+                        bsStyle="success"
+                        className={this.state.hideSuccessInfo}
+                    >
+                        <strong>
+                            Report successfully updated! <br />
+                        </strong>
+                    </Alert>
+                </form>
             </div>
         );
     }
 }
 
 export default UpdateReport;
-

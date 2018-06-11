@@ -1,20 +1,18 @@
-import React, { Component } from "react";
-import "./LoginPage.css";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import React, { Component } from 'react';
+import './LoginPage.css';
+import { FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import AuthService from './AuthService';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { submit, dispatchError } from '../../authentication/authenticationActions'
-import { toastr } from 'react-redux-toastr'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { submit, dispatchError } from '../../actions/authenticationActions';
+import { toastr } from 'react-redux-toastr';
 
 class LoginPage extends Component {
-
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
-            email: "",
-            password: ""
+            email: '',
+            password: ''
         };
         this.Auth = new AuthService();
     }
@@ -27,43 +25,38 @@ class LoginPage extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-
-        console.log(event.target.value)
-
     };
 
     //On submit this method calls the login method from the Auth Service
     handleSubmit = async event => {
         event.preventDefault();
-        const values = this.state
 
         this.Auth.login(this.state.email, this.state.password)
             .then(res => {
                 //If the loggin is sucessfull the user gets redirected to its home page
-                if (res.status == 200) {
-                    toastr.success('Welcome!', 'Login Successful')
-                    this.props.submit()
-                    this.Auth.fetch(`/users/email/` + this.state.email, { method: 'get' })
-                        .then((responseData) => {
-                            this.props.history.replace('/homepage')
-                        })
+                if (res.status === 200) {
+                    toastr.success('Welcome!', 'Login Successful');
+                    this.props.submit();
+                    this.Auth.fetch(`/users/email/` + this.state.email, {
+                        method: 'get'
+                    }).then(responseData => {
+                        this.props.history.replace('/homepage');
+                    });
                 }
                 console.log(this.props.authenticated)
             })
             .catch(err => {
-                console.log(err)
-                toastr.error('Wrong!', 'Invalid Credentials!')
-            })
-        console.log(localStorage.getItem('id_user'))
+                console.log(err);
+                toastr.error('Wrong!', 'Invalid Credentials!');
+            });
+        console.log(localStorage.getItem('id_user'));
     };
 
     render() {
-
-        console.log(this.props.authenticated)
-
         return (
             <div className="login-page">
-                <div className="welcome"><center>Welcome!</center>
+                <div className="welcome">
+                    <center>Welcome!</center>
                 </div>
 
                 <div className="form">
@@ -74,7 +67,6 @@ class LoginPage extends Component {
                                 autoFocus
                                 type="email"
                                 value={this.state.email}
-
                                 onChange={this.handleChange}
                             />
                         </FormGroup>
@@ -87,7 +79,10 @@ class LoginPage extends Component {
                             />
                         </FormGroup>
                         <button onClick={!this.validateForm}> login </button>
-                        <p className="message">Not registered? <a href="/signup">Create an account</a></p>
+                        <p className="message">
+                            Not registered?
+                            <a href="/signup">Create an account</a>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -95,6 +90,9 @@ class LoginPage extends Component {
     }
 }
 
+
 const mapStateToProps = state => { return ({ logoutButton: state.authenthication.logoutButton, authenticated: state.authenthication.authenticated }) }
 const mapDispatchToProps = dispatch => bindActionCreators({ submit, dispatchError }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+
+

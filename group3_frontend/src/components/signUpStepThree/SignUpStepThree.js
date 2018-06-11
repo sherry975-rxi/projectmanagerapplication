@@ -1,18 +1,18 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
     Button,
     FormGroup,
     FormControl,
     Alert,
     ControlLabel
-} from "react-bootstrap";
+} from 'react-bootstrap';
 
 class SignUpStepThree extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            verificationCode: "",
-            hideWrongCode: "hide-code"
+            verificationCode: '',
+            hideWrongCode: 'hide-code'
         };
     }
 
@@ -22,21 +22,21 @@ class SignUpStepThree extends Component {
         fetch(this.props.validationCodeUrl, {
             body: JSON.stringify({ codeToCheck: verificationCode }),
             headers: {
-                "content-type": "application/json"
+                'content-type': 'application/json'
             },
-            method: "POST"
+            method: 'POST'
         })
             .then(response => response.json())
             .then(jsonResponse => {
                 this.props.setStepThree({
-                    signupStep: 4
+                    signUpStep: 4
                 });
             })
             .catch(error => {
                 this.setState({
-                    hideWrongCode: ""
+                    hideWrongCode: ''
                 });
-                console.error("Verification code is incorrect. Try again");
+                console.error('Verification code is incorrect. Try again');
             });
     };
 

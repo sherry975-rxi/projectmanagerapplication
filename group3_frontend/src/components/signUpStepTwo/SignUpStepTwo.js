@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Button, ButtonToolbar } from "react-bootstrap";
+import React, { Component } from 'react';
+import { Button, ButtonToolbar } from 'react-bootstrap';
 
-const SMSVALIDATION = "smsValidation";
-const EMAILVALIDATION = "emailValidation";
+const SMSVALIDATION = 'smsValidation';
+const EMAILVALIDATION = 'emailValidation';
 
 class SignUpStepTwo extends Component {
     render() {
@@ -45,7 +45,7 @@ class SignUpStepTwo extends Component {
                 })
                 .then(jsonResponse => {
                     this.props.setStepTwo({
-                        signupStep: 3,
+                        signUpStep: 3,
                         verificationUrl: jsonResponse.href
                     });
                 });

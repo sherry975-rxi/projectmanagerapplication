@@ -1,25 +1,27 @@
-import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
+import React, { Component } from 'react';
+import {
+    Button,
+    FormGroup,
+    FormControl,
+    ControlLabel,
+    Alert
+} from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
-import { submit, dispatchError } from '../../authentication/authenticationActions'
 
 class CreateReport extends Component {
     constructor(props) {
         super(props);
-        this.match
         this.state = {
-            reportedTime: "",
-            taskCollabEmail: "",
-            hideSuccessInfo: "hide-code",
-            message: ""
+            reportedTime: '',
+            taskCollabEmail: '',
+            hideSuccessInfo: 'hide-code',
+            message: ''
         };
         this.AuthService = new AuthService();
     }
 
     validateForm() {
-        return (
-            this.state.reportedTime.length > 0 
-        );
+        return this.state.reportedTime > 0;
     }
 
     handleChange = event => {
@@ -45,22 +47,24 @@ class CreateReport extends Component {
 
         console.log(reportDTOData);
 
-        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/`,
+        this.AuthService.fetch(
+            `/projects/${this.props.match.params.projectID}/tasks/${
+                this.props.match.params.taskID
+            }/reports/`,
             {
                 body: JSON.stringify(reportDTOData),
-                method: "POST"
+                method: 'POST'
             }
-        )
-
-            .then((responseData) => {
+        ).then(responseData => {
             console.log(responseData);
-            window.location.href =`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/reports/`
+            window.location.href = `/projects/${
+                this.props.match.params.projectID
+            }/tasks/${this.props.match.params.taskID}/reports/`;
         });
 
-            this.setState({
-                hideSuccessInfo: ""
-            })
-    
+        this.setState({
+            hideSuccessInfo: ''
+        });
     };
 
     render() {
@@ -69,14 +73,14 @@ class CreateReport extends Component {
                 <h3>
                     <b>Create Report for {this.props.match.params.taskID} </b>
                 </h3>&nbsp;
-                   
                 <form onSubmit={this.handleSubmit}>
-                   
                     <FormGroup controlId="reportedTime" bsSize="large">
                         <ControlLabel>Reported time (hours)</ControlLabel>
                         <FormControl
                             autoFocus
-                            type="text"
+                            type="number"
+                            pattern="[0-9]*"
+                            inputmode="numeric"
                             value={this.state.reportedTime}
                             onChange={this.handleChange}
                         />
@@ -88,15 +92,17 @@ class CreateReport extends Component {
                         disabled={!this.validateForm()}
                         type="submit"
                     >
-                       Save Report
+                        Save Report
                     </Button>
 
-                     <Alert
-                            bsStyle="success"
-                            className={this.state.hideSuccessInfo}>
-                            <strong>Report successfully saved! <br /></strong>
-                        
-                      </Alert>
+                    <Alert
+                        bsStyle="success"
+                        className={this.state.hideSuccessInfo}
+                    >
+                        <strong>
+                            Report successfully saved! <br />
+                        </strong>
+                    </Alert>
                 </form>
             </div>
         );

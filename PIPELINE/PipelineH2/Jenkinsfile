@@ -1,0 +1,72 @@
+node {
+
+    // define names for the release images
+    def DEPENDENCIES_IMAGE_NAME = '1171473/switch-2017-g003-projectmanagement-dependencies'
+    def dependenciesImage
+
+    def RELEASE_BACKEND_IMAGE_NAME = '1171473/switch-2017-g003-projectmanagement-backend' 
+    def releaseBackendImage
+
+    def RELEASE_FRONTEND_IMAGE_NAME = '1171473/switch-2017-g003-projectmanagement-frontend' 
+    def releaseFrontendImage
+
+    stage('Clone repository') {
+
+        checkout scm
+    }
+
+    stage('Create project dependencies image') {
+
+        dependenciesImage = docker.build("$DEPENDENCIES_IMAGE_NAME", "-f PIPELINE/PipelineDependencies/Dockerfile .")
+    
+    }
+
+    docker.image("1171473/switch-2017-g003-projectmanagement-dependencies:latest").inside(){
+
+        stage('Unit Tests') {
+            sh 'mvn test'
+        }  
+
+        stage('Integration Tests') {
+            
+            sh 'mvn failsafe:integration-test'
+        }  
+    }
+    
+    stage('Create project backend image') {
+            
+        releaseBackendImage = docker.build("$RELEASE_BACKEND_IMAGE_NAME", "-f PIPELINE/PipelineH2/backend/Dockerfile .")
+
+    }
+
+    stage('Create project frontend image') {
+            
+        releaseImage = docker.build("$RELEASE_FRONTEND_IMAGE_NAME", "-f PIPELINE/PipelineH2/frontend/Dockerfile .")
+
+    }
+
+    stage('Publish images in DockerHub') {
+        withCredentials([usernamePassword(credentialsId: 'group003-docker-hub', usernameVariable: 'DockerHubUsername', passwordVariable: 'DockerHubPassword')]) {
+            sh """
+                echo $DockerHubPassword | docker login -u $DockerHubUsername --password-stdin
+                docker tag ${dependenciesImage.id} 1171473/switch-2017-g003-projectmanagement-dependencies:version-${env.BUILD_NUMBER}
+                docker push $DEPENDENCIES_IMAGE_NAME
+                docker tag ${releaseBackendImage.id} 1171473/switch-2017-g003-projectmanagement-backend:version-${env.BUILD_NUMBER}
+                docker push $RELEASE_BACKEND_IMAGE_NAME
+                docker tag ${releaseFrontendImage.id} 1171473/switch-2017-g003-projectmanagement-frontend:version-${env.BUILD_NUMBER}
+                docker push $RELEASE_FRONTEND_IMAGE_NAME
+            """                 
+        } 
+    }
+
+    stage('Clean Up') {
+        
+        sh """
+            docker rmi -f ${dependenciesImage.id}
+            docker rmi -f ${releaseBackendImage.id}
+            docker rmi -f ${releaseFrontendImage.id}
+        """                 
+             
+    } 
+
+}

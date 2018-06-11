@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import axios from "axios";
-import "./MyProjects.css";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import './MyProjects.css';
+import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
 import MediumButton from './../../components/button/mediumButton';
@@ -11,46 +10,40 @@ class MyProjects extends Component {
         super(props);
         this.state = {
             projects: [],
-            message: ""
+            message: ''
         };
 
-        this.AuthService = new AuthService()
+        this.AuthService = new AuthService();
     }
 
-
-    async componentDidMount() {
-        this.AuthService.fetch(`/projects/${this.AuthService.getUserId()}/myProjects`, {
-            method: "get"
-        })
-            .then(responseData => {
-                this.setState({
-                    projects: responseData,
-                    message: responseData.error
-                });
+    componentDidMount() {
+        this.AuthService.fetch(
+            `/projects/${this.AuthService.getUserId()}/myProjects`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            this.setState({
+                projects: responseData,
+                message: responseData.error
             });
+        });
     }
-
-
 
     renderProjects() {
-        return this.state.projects.map(projectItem => {
+        return this.state.projects.map((projectItem, index) => {
             return (
-                <tr className="line">
+                <tr className="line" key={index}>
                     <td>{projectItem.projectId}</td>
                     <td>{projectItem.name}</td>
                     <td>{projectItem.description}</td>
                     <td>{projectItem.projectManager.name}</td>
                     <td>{projectItem.projectManager.email}</td>
-                    <Link
-                        to={"/projectdetails/" + projectItem.projectId}
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Details" />
-                    </Link>{" "}
-                    &nbsp;
-                    {/* <a href="/selectprojectcostcalculation" className="btn btn-warning" role="button">Cost Method</a> */}
-                    {/* <a href="/projectcost" >
-                <button className="btn btn-info" >Cost</button></a> &nbsp; */}
+                    <td>
+                        <Link to={'/projectdetails/' + projectItem.projectId}>
+                            <MediumButton text="Details" />
+                        </Link>
+                    </td>
                 </tr>
             );
         });
@@ -58,9 +51,8 @@ class MyProjects extends Component {
 
     render() {
         if (this.state.message != null) {
-            return <Error message={this.state.message} />
-        }
-        else {
+            return <Error message={this.state.message} />;
+        } else {
             return (
                 <div className="ActiveProjects">
                     <h3>
