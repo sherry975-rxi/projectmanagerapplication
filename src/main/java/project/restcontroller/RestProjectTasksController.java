@@ -234,5 +234,33 @@ public class RestProjectTasksController {
         return new ResponseEntity<>(taskDTO, HttpStatus.OK);
 
     }
+
+    /**
+     * This methods gets the list of unfinished tasks from a project
+     *
+     * @param projid Id of the project to search for finished tasks
+     *
+     * @return List of not started tasks from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "notstarted", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getNotStartedTasks (@PathVariable int projid) {
+
+
+        Project project = this.projectService.getProjectById(projid);
+        List<Task> notStartedTasks = new ArrayList<>();
+
+        notStartedTasks.addAll(taskService.getProjectUnstartedTasks(project));
+
+        for(Task task : notStartedTasks) {
+            for(String action : task.getTaskState().getActions()) {
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
+            }
+        }
+
+        return new ResponseEntity<>(notStartedTasks, HttpStatus.OK);
+    }
 }
 
