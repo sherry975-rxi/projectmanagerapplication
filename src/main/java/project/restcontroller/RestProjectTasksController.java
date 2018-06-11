@@ -302,5 +302,46 @@ public class RestProjectTasksController {
 
         return new ResponseEntity<>(notStartedTasks, HttpStatus.OK);
     }
+
+
+    /**
+     * This methods gets the list of all tasks from a project
+     *
+     * @param projid Id of the project to search for all tasks
+     *
+     * @return List of all tasks from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "all", method = RequestMethod.GET)
+    public ResponseEntity<List<TaskDTO>> getAllTasks (@PathVariable int projid) {
+
+        Project project = projectService.getProjectById(projid);
+
+        List<Task> allTasks = new ArrayList<>();
+
+        allTasks.addAll(taskService.getProjectTasks(project));
+
+        List<TaskDTO> allProjectTasksDTO = new ArrayList<>();
+
+        for(Task other : allTasks) {
+            TaskDTO taskDTO = new TaskDTO(other);
+            allProjectTasksDTO.add(taskDTO);
+        }
+
+        for(TaskDTO taskDto : allProjectTasksDTO) {
+            for(String action : taskDto.getTaskState().getActions()) {
+                Link actionLink = TaskAction.getLinks(projid, taskDto.getTaskID()).get(action);
+                taskDto.add(actionLink);
+
+            }
+        }
+
+        return new ResponseEntity<>(allProjectTasksDTO, HttpStatus.OK);
+
+    }
+
+
+
 }
 
