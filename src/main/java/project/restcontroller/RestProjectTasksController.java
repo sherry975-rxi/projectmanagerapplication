@@ -152,13 +152,15 @@ public class RestProjectTasksController {
 
         Project project = this.projectService.getProjectById(projid);
 
+        User user = userService.getUserByEmail(userDTO.getEmail());
+
         ResponseEntity<Task> response = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
 
-        if(this.projectService.isUserActiveInProject(userDTO, project)) {
+        if(this.projectService.isUserActiveInProject(user, project)) {
 
             Task task = taskService.getTaskByTaskID(taskid);
 
-            ProjectCollaborator projectCollaborator = projectService.findActiveProjectCollaborator(userDTO,project);
+            ProjectCollaborator projectCollaborator = projectService.findActiveProjectCollaborator(user,project);
 
             task.addProjectCollaboratorToTask(projectCollaborator);
 
