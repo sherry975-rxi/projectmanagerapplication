@@ -83,6 +83,12 @@ class App extends Component {
                         path="/projects/:projectID/tasks/:taskID/reports"
                         component={Reports}
                     />
+
+                    <Route
+                        path="/projects/:projectID/tasks/:taskID/createreport"
+                        component={CreateReport}
+                    />
+                    
                     <Route
                         path="/projects/:projectID/tasks/all"
                         component={ProjectAllTasks}
