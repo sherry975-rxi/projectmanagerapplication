@@ -102,6 +102,25 @@ public class RestUserController {
     }
 
     /**
+     *  This method allows the administrator search users by Id
+     * @param idToSearch
+     * @return ResponseEntity
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') or hasRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
+    @RequestMapping(value = "/id/{idToSearch}", method = RequestMethod.GET)
+    public ResponseEntity<User> searchUsersById(@PathVariable int idToSearch) {
+
+        User user = userService.getUserByID(idToSearch);
+
+            Link selfRef = linkTo(RestUserController.class).slash("id").slash(idToSearch).withSelfRel();
+            user.add(selfRef);
+            Link detailsLinks = linkTo(RestUserController.class).slash(user.getUserID()).withRel("User Details");
+            user.add(detailsLinks);
+
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    /**
      * Refers to US136: This method allows the administrator to search users by profile.
      *
      * @param profileNameToSearch
