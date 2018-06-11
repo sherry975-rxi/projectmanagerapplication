@@ -58,14 +58,83 @@ class AccordionMenu extends Component {
                             </thead>
                         </table></div></Panel.Title>
                     </Panel.Heading>
-                    <Panel.Body collapsible> <ul className="bodyContent">
+                    <Panel.Body collapsible>
+                        <div className="bodyContent">
 
-                    </ul></Panel.Body>
+                            <p>
+                                <b>Creation date:</b> &nbsp;
+                                    {element.creationDate}
+                            </p>
+                            <p>
+                                <b>Finish date:</b> &nbsp;
+                                {element.finishDate}
+                            </p>
+                            <p>
+                                <b>Estimated Effort:</b> &nbsp;
+                                {element.estimatedTaskEffort}
+                            </p>
+                            <p>
+                                <b>Budget:</b> &nbsp;
+                                {element.taskBudget}
+                            </p>
+                            <p>
+                                <b>Estimated start date:</b> &nbsp;
+                                    {element.estimatedTaskStartDate}
+                            </p>
+                            <p>
+                                <b>Estimated finish date:</b> &nbsp;
+                                    {element.taskDeadline}
+                            </p>
+                            <p>
+                                <b>Cancel date:</b> &nbsp;
+                                {element.cancelDate}
+                            </p>
+                            <p>
+                                <b>Team:</b> &nbsp;
+                                {/* {this.getTeam(element)} */}
+                                {/* {this.loadTaskTeamFromServer(element)} */}
+                                {console.log("Teste")}
+                                {console.log(element.taskTeam)}
+                            </p>
+                        </div>
+                    </Panel.Body>
                 </Panel>
             )
         )
 
     }
+
+    // getTeam(task){
+    //     // this.setState({
+    //     //     team: task.taskTeam
+    //     // });
+        
+    //     // return this.state.team.map((taskCollaborator) => {
+    //     //     return taskCollaborator.projCollaborator.collaborator.name;
+    //     // });
+
+    //       for(var i = 0; i < task.taskTeam.length; i++){
+    //          return(
+    //              <ul value={task.taskTeam[i]}>
+    //              {task.taskTeam[i].projCollaborator.collaborator.name}
+    //              </ul>
+    //          );
+
+
+    //      } 
+
+    // }
+   
+
+    // async loadTaskTeamFromServer(task) {
+    //     this.AuthService.fetch(
+    //         `/projects/${task.project.projectId}/tasks/${task.taskID}/activeTeam`,
+    //         {
+    //             method: 'get'
+    //         }
+    //     ).then((responseData) => { responseData });
+        
+    // }
 
     render() {
         return (

@@ -80,7 +80,7 @@
     list-style-type: none;
 }
 
-.bodyContent > li {
+.bodyContent {
     color: #747474;
     font-size: 13px;
     font-family: 'Oxygen', sans-serif;
