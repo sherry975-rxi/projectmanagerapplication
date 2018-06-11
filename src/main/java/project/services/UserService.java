@@ -355,8 +355,6 @@ public class UserService {
 	 */
 	public User getUserByID(int id) {
 
-		isAuthenticated(id);
-
 		String message = "User not found! ID: ";
 
 		Optional<User> user = this.userRepository.findByUserID(id);
