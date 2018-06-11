@@ -1,10 +1,17 @@
 
-.Parent {
+.Item {
     font-size: 15px;
     margin-top: 15px;
 }
 
-.ParentButton {
+.Item .icon {
+    margin-top: -30px;
+    margin-right: 20px;
+    font-size: 10px;
+    color: rgb(195, 195, 195);
+}
+
+.ItemButton {
     padding-right: 250px;
     padding-top: 35px;
     background: none;
@@ -15,6 +22,19 @@
     outline: none;
     padding-bottom: 15px;
     border-bottom: 1px solid rgba(150, 150, 150, 0.281);
+}
+
+.ItemButton:hover {
+    padding-right: 250px;
+    padding-top: 35px;
+    font-size: 15px;
+    background-color: rgba(27, 43, 56, 0.479);
+    box-shadow: 0px 0px 0px transparent;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(150, 150, 150, 0.281);
+
 }
 
 .title {
@@ -39,41 +59,11 @@
 }
 
 
-.ParentButton:hover {
-    padding-right: 250px;
-    padding-top: 35px;
-    font-size: 15px;
-    background-color: rgba(27, 43, 56, 0.479);
-    box-shadow: 0px 0px 0px transparent;
-    border: 0px solid transparent;
-    text-shadow: 0px 0px 0px transparent;
-    font-weight: bold;
-    border-bottom: 1px solid rgba(150, 150, 150, 0.281);
-
-}
-
-
-.Parent .icon {
-    margin-top: -30px;
-    margin-right: 20px;
-    font-size: 10px;
-    color: rgb(195, 195, 195);
-}
 
 
 
-.buttonActive {
-    padding-right: 250px;
-    padding-top: 35px;
-    background:rgba(27, 43, 56, 0.486);
-    font-size: 15px;
-    box-shadow: 0px 0px 0px transparent;
-    border: 0px solid transparent;
-    text-shadow: 0px 0px 0px transparent;
-    outline: none;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(150, 150, 150, 0.281);
-}
+
+
 
 
 

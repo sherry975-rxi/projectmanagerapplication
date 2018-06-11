@@ -14,8 +14,8 @@ class List extends React.Component {
 
         return (
             <div>
-                <div className="Parent">
-                    <button className="ParentButton" >
+                <div className="Item">
+                    <button className="ItemButton" >
                         <div className="title">{this.props.children}</div>
                     </button>
                         {icon}
