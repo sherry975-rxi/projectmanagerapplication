@@ -19,11 +19,8 @@ export class Profile extends React.Component {
                 user: responseData,
                 message: responseData.status
             });
+            this.props.setProfile(this.state.user.userProfile);
         });
-    }
-
-    componentWillMount() {
-        this.props.setProfile(this.state.user.userProfile);
     }
 
     render() {

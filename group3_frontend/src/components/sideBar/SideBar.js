@@ -10,9 +10,12 @@ class SideBar extends Component {
         this.state = {
             profile: ''
         };
+
+    this.setProfile = this.setProfile.bind(this);
+
     }
 
-    setProfile = profile => {
+    setProfile(profile) {
         if (this.state.profile !== profile) {
             this.setState({
                 profile: profile
@@ -20,60 +23,70 @@ class SideBar extends Component {
         }
     };
 
+    getCollaboratorOptions() {
+        return (<ul className="menu">
+                    <List className="Project" type="Project" onClick={this.toggleVisibility} >
+                        <li><NavLink to="/myprojects" activeClassName="active">
+                            My Projects
+                        </NavLink></li>
+                    </List>
+                    <List className="Task" type="Task" onClick={this.toggleVisibility} >
+                        <li>
+                            <NavLink to="/tasks" activeClassName="active">
+                                Ongoing tasks
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/finishedtasks" activeClassName="active" >
+                                Finished tasks
+                            </NavLink>
+                        </li>
+                    </List>
+                </ul>);
+    }
+
+    getDirectorOptions() {
+        return (<ul className="menu">
+                    <List className="Project" type="Project" onClick={this.toggleVisibility} >
+                        <li>
+                            <NavLink to="/activeprojects" activeClassName="active">
+                                Active Projects
+                            </NavLink>
+                        </li>
+                    </List>
+                </ul>);
+    }
+
+    getAdminOptions() {
+        return (<ul className="menu">
+            <List className="Users" type="Users" onClick={this.toggleVisibility} >
+                <li>
+                    <NavLink to="/users" activeClassName="active">
+                        All Users
+                    </NavLink>
+                </li>
+            </List>
+        </ul>);
+    }
+
     render() {
-        var projectsLinks = '';
+        var options = '';
+
         if (this.state.profile === 'COLLABORATOR') {
-            projectsLinks = (
-                <NavLink to="/myprojects" activeClassName="active">
-                    My Projects
-                </NavLink>
-            );
-        } else {
-            projectsLinks = (
-                <NavLink to="/activeprojects" activeClassName="active">
-                    Active Projects
-                </NavLink>
-            );
+            options = this.getCollaboratorOptions();
+        } else if (this.state.profile === 'DIRECTOR') {
+            options = this.getDirectorOptions();
+        } else if (this.state.profile === 'ADMIN') {
+            options = this.getAdminOptions();
         }
+
         return (
             <div className={'col-sm-3 col-md-2 sidebar '}>
                 <div className="profile">
                     <Profile setProfile={this.setProfile} />
                 </div>
                 <div>
-                    <ul className="menu">
-                        <List
-                            className="Project"
-                            type="Project"
-                            onClick={this.toggleVisibility}
-                        >
-                            <li>{projectsLinks}</li>
-                        </List>
-                        <List
-                            className="Task"
-                            type="Task"
-                            onClick={this.toggleVisibility}
-                        >
-                            <li>
-                                <NavLink to="/addtask" activeClassName="active">
-                                    Add task
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/tasks" activeClassName="active">
-                                    Ongoing tasks
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink
-                                    to="/finishedtasks"
-                                    activeClassName="active"
-                                >
-                                    Finished tasks
-                                </NavLink>
-                            </li>
-                        </List>
-                    </ul>
+                    {options}
                 </div>
             </div>
         );
