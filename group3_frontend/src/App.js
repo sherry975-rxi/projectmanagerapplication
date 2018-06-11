@@ -26,6 +26,8 @@ import requiresAuth from './components/authentication/requiresAuth'
 import Messages from './components/msgs/Messages'
 import HomePage from "../src/components/homePage/Homepage";
 import Test from './pages/tasks/Test';
+import ProjectAllTasks from "./pages/tasks/ProjectAllTasks";
+
 
 class App extends Component {
     constructor(props) {
@@ -87,8 +89,8 @@ class App extends Component {
                         component={Reports}
                     />
                     <Route
-                        path="/projects/:projectID/tasks/:taskID/createreport"
-                        component={CreateReport}
+                        path="/projects/:projectID/tasks/all"
+                        component={ProjectAllTasks}
                     />
 
                     <Route
