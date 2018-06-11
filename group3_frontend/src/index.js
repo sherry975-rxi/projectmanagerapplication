@@ -12,15 +12,15 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
-let devTools;
-
-const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
-if (typeof devToolsExtension === 'function') {
-    devTools = devToolsExtension;
-}
 
 ReactDOM.render(
-    <Provider store={createStoreWithMiddleware(rootReducer, devTools)}>
+    <Provider
+        store={createStoreWithMiddleware(
+            rootReducer,
+            window._REDUX_DEVTOOLS_EXTENSION_ &&
+                window._REDUX_DEVTOOLS_EXTENSION_()
+        )}
+    >
         <BrowserRouter>
             <App />
         </BrowserRouter>
