@@ -117,7 +117,7 @@ public class RestUserController {
             Link detailsLinks = linkTo(RestUserController.class).slash(user.getUserID()).withRel("User Details");
             user.add(detailsLinks);
 
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     /**

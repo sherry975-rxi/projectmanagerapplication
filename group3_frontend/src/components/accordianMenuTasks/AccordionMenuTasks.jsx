@@ -1,16 +1,19 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { PanelGroup, Panel } from 'react-bootstrap';
-import './AccordionMenuTasks.css'
-import * as Constants from '../utils/titleConstants'
+import './AccordionMenuTasks.css';
+import * as Constants from '../utils/titleConstants';
 import SmallButton from '../button/smallButton.jsx';
 import { handleTaskHeaders } from '../utils/handleList';
+import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
+import AuthService from './../../pages/loginPage/AuthService';
+
 
 class AccordionMenu extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            activeKey: '1'
+            activeKey: '1',
+            type: 'Ongoing'
         };
     }
 
@@ -19,13 +22,19 @@ class AccordionMenu extends Component {
     }
 
     renderTitles() {
-        return (
-            Constants.TASKS.map((element) => <th> {element}</th>
-            ))
+        return Constants.TASKS.map(element => <th> {element}</th>);
     }
 
-    renderList(list) {
-        let key = 1;
+    static getDerivedStateFromProps(props, prevState) {
+        let newState = { type: props }
+        return newState ? props : prevState
+    }
+
+    renderList(list, type) {
+        console.log(this.state.type)
+
+        let key = 0;
+
         return (
             handleTaskHeaders(list).map((element) =>
                 <Panel eventKey={key}>
@@ -33,22 +42,32 @@ class AccordionMenu extends Component {
                         <Panel.Title toggle><div className="taskContent"> <table className="table table-content">
                             <thead>
                                 <tr>
-                                    {element.map((detail) => <th> {detail} </th>, key++)}
-                                    <th><SmallButton text="Edit" /> </th>
+                                    <th> {element.taskID} </th>
+                                    <th> {element.project} </th>
+                                    <th> {element.description} </th>
+                                    <th> <b>{element.state}</b> </th>
+                                    <th> {element.startDate} </th>
+                                    <th> {this.state.type == 'Ongoing' ? <MarkTaskAsFinished
+                                        id={element.taskID}
+                                        project={element.project}
+                                    /> : ''}
+                                        <a className="key">{key++}</a>
+                                        {console.log(key)}
+                                    </th>
                                 </tr>
                             </thead>
                         </table></div></Panel.Title>
                     </Panel.Heading>
                     <Panel.Body collapsible> <ul className="bodyContent">
-                        {element.map((detail) => <li> {detail} </li>, key++)}
+
                     </ul></Panel.Body>
                 </Panel>
             )
         )
+
     }
 
     render() {
-
         return (
             <PanelGroup
                 accordion
@@ -59,9 +78,7 @@ class AccordionMenu extends Component {
                 <Panel eventKey="1">
                     <table className="table table-title">
                         <thead>
-                            <tr>
-                                {this.renderTitles()}
-                            </tr>
+                            <tr>{this.renderTitles()}</tr>
                         </thead>
                     </table>
                 </Panel>
