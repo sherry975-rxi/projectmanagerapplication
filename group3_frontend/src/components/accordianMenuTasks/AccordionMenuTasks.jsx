@@ -33,7 +33,7 @@ class AccordionMenu extends Component {
     renderList(list, type) {
         console.log(this.state.type)
 
-        let key = 1;
+        let key = 0;
 
         return (
             handleTaskHeaders(list).map((element) =>
@@ -51,6 +51,8 @@ class AccordionMenu extends Component {
                                         id={element.taskID}
                                         project={element.project}
                                     /> : ''}
+                                        <a className="key">{key++}</a>
+                                        {console.log(key)}
                                     </th>
                                 </tr>
                             </thead>
@@ -62,6 +64,7 @@ class AccordionMenu extends Component {
                 </Panel>
             )
         )
+
     }
 
     render() {
