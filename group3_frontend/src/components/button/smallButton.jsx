@@ -5,10 +5,6 @@ import { Glyphicon } from 'react-bootstrap';
 
 class SmallButton extends Component {
 
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         let pencil =
             <Glyphicon className="pencilIcon" glyph="glyphicon glyphicon-pencil" />

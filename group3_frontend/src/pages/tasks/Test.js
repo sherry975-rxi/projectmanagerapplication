@@ -3,23 +3,13 @@ import "./OngoingTasks.css";
 import "./AddTask";
 import "./MarkTaskAsFinished";
 import "../reports/Reports";
-import axios from 'axios';
-import decode from 'jwt-decode';
 import AuthService from '../loginPage/AuthService';
-import Moment from 'react-moment';
-import Error from './../../components/error/error';
-import MarkTaskAsFinished from "./MarkTaskAsFinished";
-import CreateReport from "../reports/CreateReport";
-import Reports from "../reports/Reports"
-import { Link } from "react-router-dom";
-import MediumButton from './../../components/button/mediumButton';
 import AccordionMenu from '../../components/accordianMenu/AccordionMenuTasks.jsx';
-
+import Error from './../../components/error/error';
 
 class Test extends Component {
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             tasks: [],
             project: {}
@@ -57,7 +47,7 @@ class Test extends Component {
         }
         else {
             return (
-                <AccordionMenu list={this.state.tasks} />
+                <AccordionMenu list={this.state.tasks} type='Finished' />
             )
         }
     }
