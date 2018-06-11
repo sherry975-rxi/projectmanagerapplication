@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import project.dto.TaskAction;
 import project.dto.TaskDTO;
 import project.model.Project;
+import project.model.ProjectCollaborator;
 import project.model.Task;
+import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -131,6 +133,46 @@ public class RestProjectTasksController {
         }
         return response;
     }
+
+
+    /**
+     * This method adds a ProjectCollaborator to a Task to become a TaskCollaborator
+     *
+     * @param projid Project id of the project whose task needs a task collaborator
+     * @param taskid Task id of the task to add a project collaborator to its team
+     * @param userDTO user whose ID is going to refer the project collaborator to be added as task
+     *                collaborator of task with id taskid
+     *
+     * @return ResponseBody with 200-OK if projectCollab was added to the task team or
+     *          403-METHOD_NOT_ALLOWED the projectCollab to be added to the team is not active in Project
+     */
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "{taskid}/addCollab", method = RequestMethod.POST)
+    public ResponseEntity<Task> addCollabToTask (@RequestBody User userDTO, @PathVariable int projid, @PathVariable String taskid) {
+
+        Project project = this.projectService.getProjectById(projid);
+
+        User user = userService.getUserByEmail(userDTO.getEmail());
+
+        ResponseEntity<Task> response = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        if(this.projectService.isUserActiveInProject(user, project)) {
+
+            Task task = taskService.getTaskByTaskID(taskid);
+
+            ProjectCollaborator projectCollaborator = projectService.findActiveProjectCollaborator(user,project);
+
+            task.addProjectCollaboratorToTask(projectCollaborator);
+
+            taskService.saveTask(task);
+
+            response = new ResponseEntity<>(task, HttpStatus.OK);
+
+        }
+            return response;
+    }
+
+
 
     /**
      * This methods gets the list of finished tasks from a project

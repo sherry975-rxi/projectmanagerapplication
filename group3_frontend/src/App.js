@@ -1,30 +1,28 @@
-import React, { Component } from "react";
-import "./App.css";
-import NavBar from "./components/navBar/NavBar";
-import Profile from "./components/navBar/Profile.js";
-import SideBar from "./components/sideBar/SideBar";
-import { Route, Switch, Redirect, Router } from "react-router-dom";
-import ActiveProjects from "./pages/projects/ActiveProjects";
-import MyProjects from "./pages/projects/MyProjects";
-import FinishedTasks from "./pages/tasks/FinishedTasks";
-import MarkTaskAsFinished from "./pages/tasks/MarkTaskAsFinished";
-import UsersPage from "./pages/users/UsersPage";
-import LoginPage from "./pages/loginPage/LoginPage";
-import SignUpPage from "./pages/signUp/SignUpPage";
-import firstPage from "./pages/firstPage/firstPage";
-import Footer from "./components/footer/footer";
-import ProjectCostCalculation from "./pages/projectCost/ProjectCostCalculation";
-import ProjectCost from "./pages/projectCost/ProjectCost";
-import CreateReport from "./pages/reports/CreateReport";
-import Reports from "./pages/reports/Reports";
-import AllRequests from "./pages/requests/AllRequests";
-import UpdateReport from "./pages/reports/UpdateReport";
-import AddTask from "./pages/tasks/AddTask";
-import ProjectDetails from "./pages/projects/ProjectDetails";
-import OngoingTasks from "./pages/tasks/OngoingTasks";
-import requiresAuth from './components/authentication/requiresAuth'
-import Messages from './components/msgs/Messages'
-import HomePage from "../src/components/homePage/Homepage";
+import React, { Component } from 'react';
+import './App.css';
+import NavBar from './components/navBar/NavBar';
+import Profile from './components/navBar/Profile.js';
+import SideBar from './components/sideBar/SideBar';
+import { Route, Switch } from 'react-router-dom';
+import ActiveProjects from './pages/projects/ActiveProjects';
+import MyProjects from './pages/projects/MyProjects';
+import FinishedTasks from './pages/tasks/FinishedTasks';
+import UsersPage from './pages/users/UsersPage';
+import LoginPage from './pages/loginPage/LoginPage';
+import SignUpPage from './pages/signUp/SignUpPage';
+import firstPage from './pages/firstPage/firstPage';
+import Footer from './components/footer/footer';
+import ProjectCostCalculation from './pages/projectCost/ProjectCostCalculation';
+import ProjectCost from './pages/projectCost/ProjectCost';
+import CreateReport from './pages/reports/CreateReport';
+import Reports from './pages/reports/Reports';
+import AllRequests from './pages/requests/AllRequests';
+import AddTask from './pages/tasks/AddTask';
+import ProjectDetails from './pages/projects/ProjectDetails';
+import OngoingTasks from './pages/tasks/OngoingTasks';
+import requiresAuth from './components/authentication/requiresAuth';
+import Messages from './components/msgs/Messages';
+import HomePage from '../src/components/homePage/Homepage';
 import Test from './pages/tasks/Test';
 import ProjectAllTasks from "./pages/tasks/ProjectAllTasks";
 
@@ -74,10 +72,7 @@ class App extends Component {
                         path="/selectprojectcostcalculation/:projectID"
                         component={requiresAuth(ProjectCostCalculation)}
                     />
-                    <Route
-                        path="/test"
-                        component={(Test)}
-                    />
+                    <Route path="/test" component={Test} />
 
                     <Route
                         path="/projectcost/:projectID"
