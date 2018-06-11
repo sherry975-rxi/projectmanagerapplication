@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { PanelGroup, Panel } from 'react-bootstrap';
 import './AccordionMenuTasks.css'
-import * as Constants from './titleConstants'
+import * as Constants from '../utils/titleConstants'
 import SmallButton from '../button/smallButton.jsx';
-import { handleTaskHeaders } from './handleList';
+import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
+import AuthService from './../../pages/loginPage/AuthService';
+
 
 class AccordionMenu extends Component {
 
