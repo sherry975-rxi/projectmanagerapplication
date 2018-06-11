@@ -19,8 +19,24 @@
 
 .title {
     padding-left: 15px;
+    white-space: nowrap;
 }
 
+.title > a {
+    color: rgb(221, 221, 221);
+    text-decoration: none;
+}
+
+.title a:hover {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.title > a.active,
+.title > a.active:focus {
+    color: rgb(185, 184, 184);
+    text-decoration: none;
+}
 
 
 .ParentButton:hover {
@@ -33,36 +49,7 @@
     text-shadow: 0px 0px 0px transparent;
     font-weight: bold;
     border-bottom: 1px solid rgba(150, 150, 150, 0.281);
-}
 
-
-
-
-.Children {
-    color: rgb(177, 177, 177);
-    list-style-type: none;
-    font-size: 15px;
-   padding-top: 28px;
-}
-
-
-.Children> li > a {
-    list-style-type: none;
-    margin-left: 0px;
-    color: rgb(221, 221, 221);
-    font-size: 15px;
-    margin-top: 10px;
-    line-height: 45px;
-}
-
-.Children li a:hover {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.Children > li > a.active,
-.Children > li > a.active:focus {
-    color: rgb(185, 184, 184);
 }
 
 
@@ -72,6 +59,8 @@
     font-size: 10px;
     color: rgb(195, 195, 195);
 }
+
+
 
 .buttonActive {
     padding-right: 250px;
