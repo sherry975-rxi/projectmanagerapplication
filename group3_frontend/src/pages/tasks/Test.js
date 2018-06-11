@@ -5,14 +5,13 @@ import './MarkTaskAsFinished';
 import '../reports/Reports';
 import AuthService from '../loginPage/AuthService';
 import Error from './../../components/error/error';
-import AccordionMenu from '../../components/accordianMenu/AccordionMenuTasks.jsx';
+import AccordionMenuProjects from './../../components/accordianMenuProjects/AccordionMenuProjects';
 
 class Test extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: [],
-            project: {}
+            projects: []
         };
 
         this.refreshPage = this.refreshPage.bind(this);
@@ -27,12 +26,12 @@ class Test extends Component {
 
     async refreshPage() {
         this.AuthService.fetch(
-            `/users/${this.AuthService.getUserId()}/tasks/pending`,
+            `/projects/${this.AuthService.getUserId()}/myProjects`,
             { method: 'get' }
         ).then(responseData => {
             console.log(responseData);
             this.setState({
-                tasks: responseData,
+                projects: responseData,
                 message: responseData.error
             });
         });
@@ -42,7 +41,7 @@ class Test extends Component {
         if (this.state.message != null) {
             return <Error message={this.state.message} />;
         } else {
-            return <AccordionMenu list={this.state.tasks} />;
+            return <AccordionMenuProjects list={this.state.projects} />;
         }
     }
 }
