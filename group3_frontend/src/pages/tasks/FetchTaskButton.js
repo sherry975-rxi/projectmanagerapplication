@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MediumButton from '../../../src/components/button/mediumButton'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {changeToFinished, changeToOnGoing, changeToStandBy, changeToNotStarted}  from '../../actions/filterActions';
+import {changeToFinished, changeToOnGoing, changeToStandBy, changeToNotStarted, changeToAllTasks}  from '../../actions/filterActions';
 
 class FetchTaskButton extends Component{
 
@@ -25,6 +25,7 @@ class FetchTaskButton extends Component{
                     <td onClick={(e) => this.props.changeToNotStarted()}><th><MediumButton text="Not Started"/> </th></td>
                     <td onClick={(e) => this.props.changeToOnGoing()}><th><MediumButton text="On Going"/> </th></td>
                     <td onClick={(e) => this.props.changeToStandBy()}><th><MediumButton text="Stand By"/> </th></td>
+                    <td onClick={(e) => this.props.changeToAllTasks()}><th><MediumButton text="All Tasks"/> </th></td>
 
 
                 </tr>
@@ -35,5 +36,5 @@ class FetchTaskButton extends Component{
 
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ changeToFinished, changeToNotStarted, changeToOnGoing, changeToStandBy}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ changeToFinished, changeToNotStarted, changeToOnGoing, changeToStandBy, changeToAllTasks}, dispatch)
 export default connect(null, mapDispatchToProps)(FetchTaskButton);

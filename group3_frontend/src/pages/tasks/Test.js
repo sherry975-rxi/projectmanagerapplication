@@ -21,7 +21,8 @@ class Test extends Component {
         this.match;
         this.state = {
             tasks: [],
-            project: {}
+            project: {},
+            externalData: null
         };
 
         this.refreshPage = this.refreshPage.bind(this);
@@ -30,9 +31,15 @@ class Test extends Component {
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    async componentDidMount() {
+    componentDidMount() {
         this.refreshPage();
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.filter !== this.props.filter) {
+          this.refreshPage();
+        }
+      }
 
     refreshPage() {
 
@@ -56,7 +63,13 @@ class Test extends Component {
         }
         else {
             return (
-                <AccordionMenu list={this.state.tasks} type='Finished' />
+                 <div>
+                   {console.log("AAAAA")}
+                    {console.log(this.props.filter)}
+                    <FetchTaskButton />
+                  <AccordionMenu list={this.state.tasks} />
+                </div>
+
             )
         }
     }

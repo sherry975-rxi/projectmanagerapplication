@@ -17,4 +17,9 @@ export function changeToNotStarted() {
     return { type: 'NOTSTARTED' };
 }
 
+export function changeToAllTasks() {
+
+    return { type: 'ALLPROJECTTASKS' };
+}
+
 
