@@ -14,7 +14,7 @@ import ReduxThunk from 'redux-thunk';
 const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
 let devTools;
 
-const devToolsExtension = window.devToolsExtension();
+const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
 if (typeof devToolsExtension === 'function') {
     devTools = devToolsExtension;
 }
