@@ -14,7 +14,9 @@ import Reports from "../reports/Reports"
 import { Link } from "react-router-dom";
 import MediumButton from './../../components/button/mediumButton';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
-
+import FetchTaskButton from '../tasks/FetchTaskButton'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class Test extends Component {
     constructor(props) {
@@ -35,9 +37,9 @@ class Test extends Component {
         this.refreshPage();
     }
 
-    async refreshPage() {
+    refreshPage() {
 
-        this.AuthService.fetch(`/users/${this.AuthService.getUserId()}/tasks/pending`, { method: 'get' })
+        this.AuthService.fetch(`/projects/2/tasks/${this.props.filter}`, { method: 'get' })
             .then((responseData) => {
                 console.log(responseData);
                 this.setState({
@@ -57,10 +59,18 @@ class Test extends Component {
         }
         else {
             return (
-                <AccordionMenu list={this.state.tasks} />
+                <div>
+                                        {console.log("AAAAA")}
+
+                    {console.log(this.props.filter)}
+                    <FetchTaskButton />
+                  <AccordionMenu list={this.state.tasks} />
+                </div>
             )
         }
     }
 }
 
-export default Test;
+const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType}) }
+export default connect(mapStateToProps, null)(Test);
+
