@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
+import project.model.ProjectCollaborator;
 import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
@@ -34,6 +35,18 @@ public class RestProjectController  {
         this.userService = userService;
         this.taskService = taskService;
     }
+
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "/{projid}/activeTeam", method = RequestMethod.GET)
+    public ResponseEntity<List<ProjectCollaborator>> getProjectTeam(@PathVariable int projid) {
+
+        Project project = projectService.getProjectById(projid);
+
+        List <ProjectCollaborator> projCollabs = projectService.getActiveProjectTeam(project);
+
+        return ResponseEntity.ok().body(projCollabs);
+    }
+
 
     /**
      * This method returns a ResponseEntity that contains all the active projects from the project service with a link to open each project
