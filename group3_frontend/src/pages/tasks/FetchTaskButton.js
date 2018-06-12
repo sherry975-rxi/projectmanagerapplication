@@ -10,8 +10,7 @@ class FetchTaskButton extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            activeKey: '1',
-            tasksToFetch: "unfinished"
+            activeKey: '1'        
         };
     }
 
@@ -21,11 +20,11 @@ class FetchTaskButton extends Component{
             <table className="table table-title">
             <thead>
                 <tr>
-                <   td onClick={(e) => this.props.changeToFinished()}><th><MediumButton text="Finished"/> </th></td>
-                    <td onClick={(e) => this.props.changeToNotStarted()}><th><MediumButton text="Not Started"/> </th></td>
-                    <td onClick={(e) => this.props.changeToOnGoing()}><th><MediumButton text="On Going"/> </th></td>
-                    <td onClick={(e) => this.props.changeToStandBy()}><th><MediumButton text="Stand By"/> </th></td>
-                    <td onClick={(e) => this.props.changeToAllTasks()}><th><MediumButton text="All Tasks"/> </th></td>
+                     <td onClick={(e) => this.props.changeToAllTasks()}><th><MediumButton text="All Tasks"/> </th></td>
+                     <td onClick={(e) => this.props.changeToOnGoing()}><th><MediumButton text="On Going"/> </th></td>
+                     <td onClick={(e) => this.props.changeToFinished()}><th><MediumButton text="Finished"/> </th></td>
+                     <td onClick={(e) => this.props.changeToNotStarted()}><th><MediumButton text="Not Started"/> </th></td>
+                     <td onClick={(e) => this.props.changeToStandBy()}><th><MediumButton text="Stand By"/> </th></td>
 
 
                 </tr>

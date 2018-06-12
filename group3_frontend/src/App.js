@@ -24,7 +24,7 @@ import requiresAuth from './components/authentication/requiresAuth';
 import Messages from './components/msgs/Messages';
 import HomePage from '../src/components/homePage/Homepage';
 import Test from './pages/tasks/Test';
-import ProjectAllTasks from "./pages/tasks/ProjectAllTasks";
+import ProjectTasks from './pages/tasks/ProjectTasks';
 
 
 class App extends Component {
@@ -90,8 +90,8 @@ class App extends Component {
                     />
                     
                     <Route
-                        path="/projects/:projectID/tasks/all"
-                        component={requiresAuth(ProjectAllTasks)}
+                        path="/projects/:projectID/tasks"
+                        component={requiresAuth(ProjectTasks)}
                     />
 
                     <Route
