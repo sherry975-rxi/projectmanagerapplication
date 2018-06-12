@@ -1,16 +1,7 @@
-import React, { Component } from "react";
-import Moment from 'react-moment';
+import React, { Component } from 'react';
 import Error from './../../components/error/error';
-import MarkTaskAsFinished from "./MarkTaskAsFinished";
-import CreateReport from "../reports/CreateReport";
-import Reports from "../reports/Reports"
-import { Link } from "react-router-dom";
-import MediumButton from './../../components/button/mediumButton';
 import AuthService from './../loginPage/AuthService';
-import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx'
-import { handleTaskHeaders } from '../../components/utils/handleList'
-
-
+import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 
 class Test extends Component {
     constructor(props) {
@@ -22,7 +13,7 @@ class Test extends Component {
         };
 
         this.refreshPage = this.refreshPage.bind(this);
-        this.AuthService = new AuthService()
+        this.AuthService = new AuthService();
     }
 
     //TODO: Add sort by ascending or descending order to these tables
@@ -32,29 +23,23 @@ class Test extends Component {
     }
 
     async refreshPage() {
-
-        this.AuthService.fetch(`/users/${this.AuthService.getUserId()}/tasks/pending`, { method: 'get' })
-            .then((responseData) => {
-                console.log(responseData);
-                this.setState({
-                    tasks: responseData,
-                    message: responseData.error
-                });
-            })
-
+        this.AuthService.fetch(
+            `/users/${this.AuthService.getUserId()}/tasks/pending`,
+            { method: 'get' }
+        ).then(responseData => {
+            console.log(responseData);
+            this.setState({
+                tasks: responseData,
+                message: responseData.error
+            });
+        });
     }
 
-
-
     render() {
-
         if (this.state.message != null) {
-            return (<Error message={this.state.message} />)
-        }
-        else {
-            return (
-                <AccordionMenu list={this.state.tasks} type='Finished' />
-            )
+            return <Error message={this.state.message} />;
+        } else {
+            return <AccordionMenu list={this.state.tasks} type="Finished" />;
         }
     }
 }
