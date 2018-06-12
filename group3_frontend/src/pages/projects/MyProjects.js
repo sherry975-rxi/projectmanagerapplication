@@ -69,7 +69,7 @@ class MyProjects extends Component {
             return (
                 <div className="ActiveProjects">
                     <h3>
-                        <b>Active Projects</b>
+                        <b>My Projects</b>
                     </h3>
                     <table className="table table-hover">
                         <thead>

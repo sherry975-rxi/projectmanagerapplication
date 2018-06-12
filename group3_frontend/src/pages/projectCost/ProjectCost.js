@@ -9,8 +9,7 @@ class ProjectCost extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            project: {},
-            message: ''
+            project: {}
         };
         this.AuthService = new AuthService();
     }
@@ -22,9 +21,10 @@ class ProjectCost extends Component {
                 method: 'get'
             }
         ).then(responseData => {
+            console.log(responseData);
             this.setState({
                 project: responseData,
-                message: responseData.status
+                message: responseData.error
             });
         });
     }
@@ -78,7 +78,9 @@ class ProjectCost extends Component {
     }
 
     render() {
-        if (this.state.message === '' || this.state.message === '2') {
+        if (this.state.message != null) {
+            return <Error message={this.state.message + ' NOT AUTHORIZED'} />;
+        } else {
             return (
                 <div>
                     <h1 className="page-header">Project Cost</h1>
@@ -86,8 +88,6 @@ class ProjectCost extends Component {
                     {this.renderProjectWithCost()}
                 </div>
             );
-        } else {
-            return <Error message={this.state.message + ' NOT AUTHORIZED'} />;
         }
     }
 }
