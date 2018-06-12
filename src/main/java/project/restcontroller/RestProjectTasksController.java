@@ -8,10 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.dto.TaskAction;
 import project.dto.TaskDTO;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -341,6 +338,37 @@ public class RestProjectTasksController {
 
         return new ResponseEntity<>(allProjectTasksDTO, HttpStatus.OK);
 
+    }
+
+    /**
+     * This methods gets the list of active task collaborators in a specific task from a project
+     *
+     * @param projid Id of the project to search for a task
+     * @param taskid Id of the task to search for active task collaborators
+     *
+     * @return List of all active task collaborators in a task from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "{taskid}/activeTeam", method = RequestMethod.GET)
+    public ResponseEntity<List<TaskCollaborator>> getActiveTaskTeam (@PathVariable int projid, @PathVariable String taskid) {
+
+        Project project = projectService.getProjectById(projid);
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        List<TaskCollaborator> team = task.getTaskTeam();
+        List<TaskCollaborator> activeTeam = new ArrayList<>();
+
+
+        for (TaskCollaborator other : team) {
+            if (other.isTaskCollaboratorActiveInTask()) {
+
+                activeTeam.add(other);
+            }
+        }
+
+
+        return new ResponseEntity<>(activeTeam, HttpStatus.OK);
     }
 
 

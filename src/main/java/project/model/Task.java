@@ -38,6 +38,7 @@ public class Task extends ResourceSupport implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
 	@Column(columnDefinition = "LONGBLOB")
+	@JsonIgnore
 	private List<TaskCollaborator> taskTeam;
 
 

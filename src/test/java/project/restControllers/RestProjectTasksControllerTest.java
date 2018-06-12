@@ -411,5 +411,35 @@ public class RestProjectTasksControllerTest {
 
 
 
+    /**
+     * GIVEN a task id and project id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/<taskId>/activeTeam
+     * THEN we receive a valid message with a 200 Ok and a list of active task team
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnActiveTaskTeam() throws Exception {
+
+        // GIVEN
+        int projectId = 01;
+        String  taskid = "01";
+
+        // WHEN
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+
+        List<TaskCollaborator> team = task.getTaskTeam();
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/" + taskid + "/activeTeam").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+
+
+    }
+
+
+
 }
 
