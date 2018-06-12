@@ -23,9 +23,20 @@
     width: 140px;
 }
 
+.table > thead > tr > th:hover {
+    border-bottom: 0px solid #ddd;
+    width: 140px;
+}
+
 .table.table-content > thead > tr > th {
     border-bottom: 0px solid #ddd;
     font-weight: normal;
+    height: 60px;
+    padding-bottom: 20px;
+}
+
+.table.table-content > thead > tr > th:hover {
+    height: 50px;
 }
 
 .table.table-content {
@@ -41,6 +52,19 @@
     background-image: none;
     background-color: white;
     box-shadow: none;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+
+.table.table-content > thead:hover {
+    font-size: 12px;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: normal;
+    background: rgb(240, 240, 240);
+    border-bottom: 0px, solid;
+    margin: 0px;
+    text-decoration: none;
 }
 
 .taskContent {
@@ -51,7 +75,9 @@
     text-decoration: none;
     font-size: 13px;
     font-family: 'Oxygen', sans-serif;
+    vertical-align: center;
 }
+
 
 .projectContent {
     margin-left: -15px;
