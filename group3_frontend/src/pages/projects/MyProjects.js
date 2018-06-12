@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './MyProjects.css';
 import { Link } from 'react-router-dom';
-import { Badge } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
 import MediumButton from './../../components/button/mediumButton';
@@ -36,7 +35,7 @@ class MyProjects extends Component {
         if(pmEmail == this.AuthService.getProfile().sub) {
             buttons = (
                 <td>
-                    <Badge className="pmBadge" >PM</Badge>
+                    <div className="pmBadge" >PM</div>
                 </td>);
         }
         return buttons;
