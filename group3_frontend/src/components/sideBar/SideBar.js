@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './SideBar.css';
 import { NavLink } from 'react-router-dom';
-import List from '../list/List.js';
+import SideButton from './SideButton.js';
 import Profile from '../navBar/Profile';
 
 class SideBar extends Component {
@@ -16,7 +16,7 @@ class SideBar extends Component {
     }
 
     setProfile(profile) {
-        if (this.state.profile !== profile) {
+        if (this.state.profile != profile) {
             this.setState({
                 profile: profile
             });
@@ -24,48 +24,32 @@ class SideBar extends Component {
     };
 
     getCollaboratorOptions() {
-        return (<ul className="menu">
-                    <List>
-                        <NavLink to="/myprojects" activeClassName="active">
-                            My Projects
-                        </NavLink>
-                    </List>
-                    <List>
-                        <NavLink to="/tasks" activeClassName="active" >
-                            My Tasks
-                        </NavLink>
-                    </List>
-                </ul>);
+        return (<div className="menu">
+                    <SideButton to="/myprojects" text="My Projects" />
+                    <SideButton to="/tasks" text="My Tasks" />
+                </div>);
     }
 
     getDirectorOptions() {
-        return (<ul className="menu">
-                    <List>
-                        <NavLink to="/activeprojects" activeClassName="active">
-                             Projects
-                        </NavLink>
-                    </List>
-                </ul>);
+        return (<div className="menu">
+                    <SideButton to="/activeprojects" text="Projects" />
+                </div>);
     }
 
     getAdminOptions() {
-        return (<ul className="menu">
-                    <List>
-                        <NavLink to="/users" activeClassName="active">
-                            Users
-                        </NavLink>
-                    </List>
-                </ul>);
+        return (<div className="menu">
+                    <SideButton to="/users" text="Users" />
+                </div>);
     }
 
     render() {
-        var options = '';
+        let options = '';
 
-        if (this.state.profile === 'COLLABORATOR') {
+        if (this.state.profile == 'COLLABORATOR') {
             options = this.getCollaboratorOptions();
-        } else if (this.state.profile === 'DIRECTOR') {
+        } else if (this.state.profile == 'DIRECTOR') {
             options = this.getDirectorOptions();
-        } else if (this.state.profile === 'ADMIN') {
+        } else if (this.state.profile == 'ADMIN') {
             options = this.getAdminOptions();
         }
 
@@ -74,9 +58,7 @@ class SideBar extends Component {
                 <div className="profile">
                     <Profile setProfile={this.setProfile} />
                 </div>
-                <div>
-                    {options}
-                </div>
+                {options}
             </div>
         );
     }
