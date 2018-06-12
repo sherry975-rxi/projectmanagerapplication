@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {changeToFinished, changeToOnGoing, changeToStandBy, changeToNotStarted, changeToAllTasks}  from '../../actions/filterActions';
 import './dist/toggle-switch.css'
+import './dist/FetchTask.css'
 
 
 class FetchTaskButton extends Component{
@@ -18,14 +19,13 @@ class FetchTaskButton extends Component{
 
     handleChange(event,key) {
         
-        console.log(key)
         switch(key){
             case("1"):
-                 return (<div>{this.props.changeToAllTasks()}</div>);
+                 return (this.props.changeToAllTasks());
             case("2"):
-                 return (<div>{this.props.changeToOnGoing()}</div>);
+                 return (this.props.changeToOnGoing());
             case("3"):
-                 return (<div>{this.props.changeToFinished()}</div>);
+                 return (this.props.changeToFinished());
             case("4"):
                  return (<div>{this.props.changeToNotStarted()}</div>);
             case("5"):
@@ -37,27 +37,28 @@ class FetchTaskButton extends Component{
 
     render(){
         return(
-             <div class="switch-toggle switch-candy">
+            <div className="buttonWrapper">
+             <div class="switch-toggle switch-ios">
                         
-                      
-                       
-                        <input id="alltasks" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "1")} />
-                        <label for="alltasks" eventKey="1" >All Tasks</label>
+                         
+                <input id="alltasks" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "1")} />
+                <label class="buttonFont" for="alltasks" eventKey="1" >All Tasks</label>
 
-                        <input id="onGoing" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "2")} />
-                        <label for="onGoing" eventKey="1" >On Going</label>
+                <input id="onGoing" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "2")} />
+                <label class="buttonFont" for="onGoing" eventKey="1" >On Going</label>
 
-                         <input id="finished" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "3")} />
-                        <label for="finished" eventKey="1" >Finished</label>
+                <input id="finished" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "3")} />
+                <label class="buttonFont" for="finished" eventKey="1" >Finished</label>
 
-                       <input id="notStarted" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "4")} />
-                        <label for="notStarted" eventKey="1" >Not Started</label>
+                <input id="notStarted" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "4")} />
+                <label class="buttonFont" for="notStarted" eventKey="1" >Not Started</label>
 
-                         <input id="standBy" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "5")} />
-                        <label for="standBy" eventKey="1" >Stand By</label>
+                <input id="standBy" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "5")} />
+                <label class="buttonFont" for="standBy" eventKey="1" >Stand By</label>
 
-                        <a></a>
-                        </div>
+                <a></a>
+            </div>
+        </div>
             
                    
      

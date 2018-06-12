@@ -14,6 +14,14 @@
     background-color: rgb(48, 98, 99);
 }
 
-.mediumButton:focus {
+.selected {
     background-color: rgb(135, 190, 178);
+    border: none;
+    color: rgb(255, 255, 255);
+    font-family: Helvetica;
+    font-weight:  normal;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 13px;
 }

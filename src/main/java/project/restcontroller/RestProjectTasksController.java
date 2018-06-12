@@ -8,10 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.dto.TaskAction;
 import project.dto.TaskDTO;
-import project.model.Project;
-import project.model.ProjectCollaborator;
-import project.model.Task;
-import project.model.User;
+import project.model.*;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -56,26 +53,26 @@ public class RestProjectTasksController {
 
 
 
-            Project projectTask = projectService.getProjectById(projid);
-            Task task = taskService.createTask(taskDTO.getDescription(), projectTask);
+        Project projectTask = projectService.getProjectById(projid);
+        Task task = taskService.createTask(taskDTO.getDescription(), projectTask);
 
         if (taskDTO.getEstimatedTaskEffort() <= 0.00000001 && taskDTO.getTaskBudget() <= 0.00000001
-             && taskDTO.getEstimatedTaskStartDate() != null && taskDTO.getTaskDeadline() != null) {
+                && taskDTO.getEstimatedTaskStartDate() != null && taskDTO.getTaskDeadline() != null) {
 
-                task.setEstimatedTaskEffort(taskDTO.getEstimatedTaskEffort());
-                task.setTaskBudget(taskDTO.getTaskBudget());
-                task.setEstimatedTaskStartDate(taskDTO.getEstimatedTaskStartDate());
-                task.setTaskDeadline(taskDTO.getTaskDeadline());
+            task.setEstimatedTaskEffort(taskDTO.getEstimatedTaskEffort());
+            task.setTaskBudget(taskDTO.getTaskBudget());
+            task.setEstimatedTaskStartDate(taskDTO.getEstimatedTaskStartDate());
+            task.setTaskDeadline(taskDTO.getTaskDeadline());
 
 
-            }
+        }
 
         for(String action : task.getTaskState().getActions()) {
 
-                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
-                task.add(reference);
+            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+            task.add(reference);
 
-            }
+        }
 
         return ResponseEntity.ok().body(task);
 
@@ -103,8 +100,8 @@ public class RestProjectTasksController {
         for(Task task: tasksWithoutCollabs){
             for(String action : task.getTaskState().getActions()) {
 
-            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
-            task.add(reference);
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
 
             }
         }
@@ -169,7 +166,7 @@ public class RestProjectTasksController {
             response = new ResponseEntity<>(task, HttpStatus.OK);
 
         }
-            return response;
+        return response;
     }
 
 
@@ -192,10 +189,10 @@ public class RestProjectTasksController {
 
         for(TaskDTO taskDto : finishedTasks) {
             for(String action : taskDto.getTaskState().getActions()) {
-            Link actionLink = TaskAction.getLinks(projid, taskDto.getTaskID()).get(action);
-            taskDto.add(actionLink);
+                Link actionLink = TaskAction.getLinks(projid, taskDto.getTaskID()).get(action);
+                taskDto.add(actionLink);
 
-             }
+            }
         }
 
         return new ResponseEntity<>(finishedTasks, HttpStatus.OK);
@@ -223,8 +220,8 @@ public class RestProjectTasksController {
 
         for(Task task : unfinishedTasks) {
             for(String action : task.getTaskState().getActions()) {
-            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
-            task.add(reference);
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
             }
         }
 
@@ -341,6 +338,37 @@ public class RestProjectTasksController {
 
         return new ResponseEntity<>(allProjectTasksDTO, HttpStatus.OK);
 
+    }
+
+    /**
+     * This methods gets the list of active task collaborators in a specific task from a project
+     *
+     * @param projid Id of the project to search for a task
+     * @param taskid Id of the task to search for active task collaborators
+     *
+     * @return List of all active task collaborators in a task from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "{taskid}/activeTeam", method = RequestMethod.GET)
+    public ResponseEntity<List<TaskCollaborator>> getActiveTaskTeam (@PathVariable int projid, @PathVariable String taskid) {
+
+        Project project = projectService.getProjectById(projid);
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        List<TaskCollaborator> team = task.getTaskTeam();
+        List<TaskCollaborator> activeTeam = new ArrayList<>();
+
+
+        for (TaskCollaborator other : team) {
+            if (other.isTaskCollaboratorActiveInTask()) {
+
+                activeTeam.add(other);
+            }
+        }
+
+
+        return new ResponseEntity<>(activeTeam, HttpStatus.OK);
     }
 
 
