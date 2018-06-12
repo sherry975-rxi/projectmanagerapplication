@@ -53,26 +53,26 @@ public class RestProjectTasksController {
 
 
 
-            Project projectTask = projectService.getProjectById(projid);
-            Task task = taskService.createTask(taskDTO.getDescription(), projectTask);
+        Project projectTask = projectService.getProjectById(projid);
+        Task task = taskService.createTask(taskDTO.getDescription(), projectTask);
 
         if (taskDTO.getEstimatedTaskEffort() <= 0.00000001 && taskDTO.getTaskBudget() <= 0.00000001
-             && taskDTO.getEstimatedTaskStartDate() != null && taskDTO.getTaskDeadline() != null) {
+                && taskDTO.getEstimatedTaskStartDate() != null && taskDTO.getTaskDeadline() != null) {
 
-                task.setEstimatedTaskEffort(taskDTO.getEstimatedTaskEffort());
-                task.setTaskBudget(taskDTO.getTaskBudget());
-                task.setEstimatedTaskStartDate(taskDTO.getEstimatedTaskStartDate());
-                task.setTaskDeadline(taskDTO.getTaskDeadline());
+            task.setEstimatedTaskEffort(taskDTO.getEstimatedTaskEffort());
+            task.setTaskBudget(taskDTO.getTaskBudget());
+            task.setEstimatedTaskStartDate(taskDTO.getEstimatedTaskStartDate());
+            task.setTaskDeadline(taskDTO.getTaskDeadline());
 
 
-            }
+        }
 
         for(String action : task.getTaskState().getActions()) {
 
-                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
-                task.add(reference);
+            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+            task.add(reference);
 
-            }
+        }
 
         return ResponseEntity.ok().body(task);
 
@@ -100,8 +100,8 @@ public class RestProjectTasksController {
         for(Task task: tasksWithoutCollabs){
             for(String action : task.getTaskState().getActions()) {
 
-            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
-            task.add(reference);
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
 
             }
         }
@@ -166,7 +166,7 @@ public class RestProjectTasksController {
             response = new ResponseEntity<>(task, HttpStatus.OK);
 
         }
-            return response;
+        return response;
     }
 
 
@@ -189,10 +189,10 @@ public class RestProjectTasksController {
 
         for(TaskDTO taskDto : finishedTasks) {
             for(String action : taskDto.getTaskState().getActions()) {
-            Link actionLink = TaskAction.getLinks(projid, taskDto.getTaskID()).get(action);
-            taskDto.add(actionLink);
+                Link actionLink = TaskAction.getLinks(projid, taskDto.getTaskID()).get(action);
+                taskDto.add(actionLink);
 
-             }
+            }
         }
 
         return new ResponseEntity<>(finishedTasks, HttpStatus.OK);
@@ -220,8 +220,8 @@ public class RestProjectTasksController {
 
         for(Task task : unfinishedTasks) {
             for(String action : task.getTaskState().getActions()) {
-            Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
-            task.add(reference);
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
             }
         }
 

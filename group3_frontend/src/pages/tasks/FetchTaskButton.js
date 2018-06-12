@@ -3,6 +3,8 @@ import MediumButton from '../../../src/components/button/mediumButton'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {changeToFinished, changeToOnGoing, changeToStandBy, changeToNotStarted, changeToAllTasks}  from '../../actions/filterActions';
+import './dist/toggle-switch.css'
+
 
 class FetchTaskButton extends Component{
 
@@ -14,22 +16,51 @@ class FetchTaskButton extends Component{
         };
     }
 
+    handleChange(event,key) {
+        
+        console.log(key)
+        switch(key){
+            case("1"):
+                 return (<div>{this.props.changeToAllTasks()}</div>);
+            case("2"):
+                 return (<div>{this.props.changeToOnGoing()}</div>);
+            case("3"):
+                 return (<div>{this.props.changeToFinished()}</div>);
+            case("4"):
+                 return (<div>{this.props.changeToNotStarted()}</div>);
+            case("5"):
+                 return (<div>{this.props.changeToStandBy()}</div>);
+
+        }
+    }
+
 
     render(){
         return(
-            <table className="table table-title">
-            <thead>
-                <tr>
-                     <td onClick={(e) => this.props.changeToAllTasks()}><th><MediumButton text="All Tasks"/> </th></td>
-                     <td onClick={(e) => this.props.changeToOnGoing()}><th><MediumButton text="On Going"/> </th></td>
-                     <td onClick={(e) => this.props.changeToFinished()}><th><MediumButton text="Finished"/> </th></td>
-                     <td onClick={(e) => this.props.changeToNotStarted()}><th><MediumButton text="Not Started"/> </th></td>
-                     <td onClick={(e) => this.props.changeToStandBy()}><th><MediumButton text="Stand By"/> </th></td>
+             <div class="switch-toggle switch-candy">
+                        
+                      
+                       
+                        <input id="alltasks" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "1")} />
+                        <label for="alltasks" eventKey="1" >All Tasks</label>
 
+                        <input id="onGoing" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "2")} />
+                        <label for="onGoing" eventKey="1" >On Going</label>
 
-                </tr>
-            </thead>
-        </table>
+                         <input id="finished" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "3")} />
+                        <label for="finished" eventKey="1" >Finished</label>
+
+                       <input id="notStarted" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "4")} />
+                        <label for="notStarted" eventKey="1" >Not Started</label>
+
+                         <input id="standBy" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "5")} />
+                        <label for="standBy" eventKey="1" >Stand By</label>
+
+                        <a></a>
+                        </div>
+            
+                   
+     
         )
     }
 

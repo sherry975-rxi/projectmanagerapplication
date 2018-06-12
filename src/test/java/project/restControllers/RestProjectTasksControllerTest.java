@@ -134,7 +134,7 @@ public class RestProjectTasksControllerTest {
         finishDate = null;
     }
 
-        //GIVEN a project with a certain Id
+    //GIVEN a project with a certain Id
     /**
      * GIVEN: a certain task in a state that allows its deletion
      * WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
@@ -156,7 +156,7 @@ public class RestProjectTasksControllerTest {
         assertEquals(HttpStatus.ACCEPTED.value(), response.getStatus());
     }
 
-        //GIVEN a project with a certain Id
+    //GIVEN a project with a certain Id
     /**
      * GIVEN: a certain task in a state that does not allow its deletion
      * WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
@@ -344,13 +344,17 @@ public class RestProjectTasksControllerTest {
 
 
 
-        MockHttpServletResponse response = mockMvc.perform(post("/projects/" + projID + "/tasks/").contentType(MediaType.APPLICATION_JSON)
-                .content(jacksonTask.write(taskDto).getJson()))
-                .andReturn().getResponse();
+//        MockHttpServletResponse response = mockMvc.perform(post("/projects/" + projID + "/tasks/").contentType(MediaType.APPLICATION_JSON)
+//                .content(jacksonTask.write(taskDto).getJson()))
+//                .andReturn().getResponse();
 
-        //THEN
+        ResponseEntity <Task> response = victim.createTask(taskDto, projID);
+
+
+
+         //THEN
         //It is expected to be successfully created
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
 
 
         //WHEN we create taskDTO with values for the estimatedTaskEffort, TaskBudgetm estimatedTaskStartDate and taskDeadline
@@ -410,7 +414,6 @@ public class RestProjectTasksControllerTest {
     }
 
 
-
     /**
      * GIVEN a task id and project id
      * WHEN we perform a get request to url /projects/<projectId>/tasks/<taskId>/activeTeam
@@ -438,6 +441,7 @@ public class RestProjectTasksControllerTest {
 
 
     }
+
 
 
 
