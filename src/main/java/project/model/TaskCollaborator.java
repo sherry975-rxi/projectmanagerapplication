@@ -1,9 +1,6 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -30,6 +27,7 @@ public class TaskCollaborator extends ResourceSupport implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "Task_id")
+	@JsonIgnore
 	private Task task;
 
 	/**
