@@ -9,16 +9,15 @@ import FetchTaskButton from '../tasks/FetchTaskButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AuthService from './../loginPage/AuthService';
-import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
+import ProjectTable from '../../components/accordianMenuProjects/ProjectsTable';
 
 class Test extends Component {
     constructor(props) {
         super(props);
         this.match;
         this.state = {
-            tasks: [],
-            project: {},
-            externalData: null
+            projects: [],
+            message: ''
         };
 
         this.refreshPage = this.refreshPage.bind(this);
@@ -27,40 +26,30 @@ class Test extends Component {
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    componentDidMount() {
+    async componentDidMount() {
         this.refreshPage();
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.filter !== this.props.filter) {
-            this.refreshPage();
-        }
-    }
-
-    refreshPage() {
-        this.AuthService.fetch(`/projects/2/tasks/${this.props.filter}`, {
-            method: 'get'
-        }).then(responseData => {
+    async refreshPage() {
+        console.log('blvbpsdjf');
+        this.AuthService.fetch(
+            `/projects/${this.AuthService.getUserId()}/myProjects`,
+            { method: 'get' }
+        ).then(responseData => {
             console.log(responseData);
             this.setState({
-                tasks: responseData,
+                projects: responseData,
                 message: responseData.error
             });
         });
     }
 
     render() {
+        console.log(this.state.projects);
         if (this.state.message != null) {
             return <Error message={this.state.message} />;
         } else {
-            return (
-                <div>
-                    {console.log('AAAAA')}
-                    {console.log(this.props.filter)}
-                    <FetchTaskButton />
-                    <AccordionMenu list={this.state.tasks} />
-                </div>
-            );
+            return <ProjectTable projects={this.state.projects} />;
         }
     }
 }
