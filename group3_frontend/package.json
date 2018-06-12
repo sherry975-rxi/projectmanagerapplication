@@ -6,6 +6,7 @@
         "axios": "^0.18.0",
         "bootstrap": "^3.3.7",
         "create-react-class": "^15.6.3",
+        "css-toggle-switch": "^4.1.0",
         "dateformat": "^3.0.3",
         "jwt-decode": "^2.2.0",
         "moment": "^2.22.1",
