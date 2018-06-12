@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Error from './../../components/error/error';
 import AuthService from './../loginPage/AuthService';
-import ProjectTable from '../../components/accordianMenuProjects/ProjectsTable';
+import ProjectTable from '../../components/projectsTable/ProjectsTable';
 
 class Test extends Component {
     constructor(props) {

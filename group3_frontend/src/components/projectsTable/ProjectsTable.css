@@ -1,0 +1,32 @@
+.project-table {
+    width: 100%;
+}
+
+.project-table .rotate {
+    transform: rotate(90deg);
+}
+.project-table .project-row td {
+    vertical-align: middle;
+}
+
+.project-table .project-row.hide {
+    max-height: 0;
+    transition: max-height 1s ease-in-out;
+}
+
+.project-table .project-row.hide {
+    max-height: 0;
+    transition: max-height 1s ease-in-out;
+}
+
+.project-table .project-row.open {
+    max-height: 500px;
+    transition: max-height 1s ease-in-out;
+}
+.project-table .status-project-icon {
+    width: 15px;
+    height: 15px;
+    background-color: #ccc;
+    display: block;
+    border-radius: 50%;
+}
