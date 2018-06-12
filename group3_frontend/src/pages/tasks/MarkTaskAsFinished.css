@@ -1,22 +1,27 @@
 .MarkTaskAsFinished {
-    padding: 60px 0;
-  }
+  padding: 60px 0;
+}
 
+.MarkTaskAsFinished form {
+  margin: 30 auto;
+  max-width: 320px;
+}
 
+.buttonFinished {
+  background-color: white;
+  border: 1px solid #e35b5a;
+  color: #e35b5a;
+  font-family: Helvetica;
+  font-weight:  normal;
+  text-align: center;
+  display: inline-block;
+  font-size: 13px;
+  width: 60px;
+  height: 32px;
+}
 
-  .MarkTaskAsFinished form {
-    margin: 30 auto;
-    max-width: 320px;
-  }
+.buttonFinished:hover {
+  background-color: #e35b5a;
+  color: white;
 
-  .buttonFinished {
-    background-color: rgb(37, 84, 105); /* Green */
-    border: none;
-    color: rgb(255, 255, 255);
-    font-family: Helvetica;
-    font-weight:  normal;
-    padding: 10px 20px;
-    text-align: center;
-    display: inline-block;
-    font-size: 13px;
-  }
+}
