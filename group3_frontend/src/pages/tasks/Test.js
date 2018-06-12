@@ -18,11 +18,11 @@ class Test extends Component {
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    async componentDidMount() {
+    componentDidMount() {
         this.refreshPage();
     }
 
-    async refreshPage() {
+    refreshPage() {
         this.AuthService.fetch(
             `/users/${this.AuthService.getUserId()}/tasks/pending`,
             { method: 'get' }
