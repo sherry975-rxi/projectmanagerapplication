@@ -25,6 +25,7 @@ import Messages from './components/msgs/Messages';
 import HomePage from '../src/components/homePage/Homepage';
 import Test from './pages/tasks/Test';
 import ProjectTasks from './pages/tasks/ProjectTasks';
+import ActiveTaskTeam from './pages/tasks/ActiveTaskTeam';
 
 
 class App extends Component {
@@ -50,29 +51,41 @@ class App extends Component {
                         path="/activeprojects"
                         component={requiresAuth(ActiveProjects)}
                     />
+
                     <Route
                         path="/myprojects"
                         component={requiresAuth(MyProjects)}
                     />
+
                     <Route
                         path="/tasks"
                         component={requiresAuth(OngoingTasks)}
                     />
+
                     <Route
                         path="/finishedtasks"
                         component={requiresAuth(FinishedTasks)}
                     />
+
                     <Route
                         path="/homepage"
                         component={requiresAuth(HomePage)}
                     />
 
-                    <Route path="/users" component={requiresAuth(UsersPage)} />
+                    <Route 
+                        path="/users" 
+                        component={requiresAuth(UsersPage)} 
+                    />
+
                     <Route
                         path="/selectprojectcostcalculation/:projectID"
                         component={requiresAuth(ProjectCostCalculation)}
                     />
-                    <Route path="/test" component={Test} />
+
+                    <Route 
+                        path="/test" 
+                        component={Test} 
+                    />
 
                     <Route
                         path="/projectcost/:projectID"
@@ -90,7 +103,7 @@ class App extends Component {
                     />
                     
                     <Route
-                        path="/projects/:projectID/tasks"
+                        exact path="/projects/:projectID/tasks"
                         component={requiresAuth(ProjectTasks)}
                     />
 
@@ -98,15 +111,27 @@ class App extends Component {
                         path="/profile/:userID"
                         component={requiresAuth(Profile)}
                     />
+                    
                     <Route
                         path="/requests"
                         component={requiresAuth(AllRequests)}
                     />
-                    <Route path="/addtask" component={requiresAuth(AddTask)} />
+
+                    <Route 
+                        path="/addtask" 
+                        component={requiresAuth(AddTask)} 
+                    />
+
                     <Route
                         path="/projectdetails/:projectID"
                         component={requiresAuth(ProjectDetails)}
                     />
+
+                     <Route
+                        path="/projects/:projectID/tasks/:taskID/activeTeam"
+                        component={requiresAuth(ActiveTaskTeam)}
+                    />
+                 
                 </Switch>
             </div>
         </div>
