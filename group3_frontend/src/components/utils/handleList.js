@@ -22,13 +22,11 @@ export function handleTaskHeaders(list) {
 }
 
 
-export function handleProjectHeaders(list) {
-    return list.map(project => [
-        project.projectId,
+export function handleProject(projects) {
+    return projects.map(project => [
+        project.project.name,
         project.projectManager.name,
-        project.description,
-        project.status,
-        formatDate(project.startdate),
+        project.projectStatusName,
         ''
     ]);
 }
