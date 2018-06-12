@@ -7,7 +7,6 @@ import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import AuthService from './../../pages/loginPage/AuthService';
 
-
 class AccordionMenu extends Component {
     constructor(props) {
         super(props);
@@ -26,89 +25,99 @@ class AccordionMenu extends Component {
     }
 
     static getDerivedStateFromProps(props, prevState) {
-        let newState = { type: props }
-        return newState ? props : prevState
+        let newState = { type: props };
+        return newState ? props : prevState;
     }
 
-    renderList(list, type) {
-        console.log(this.state.type)
+    renderList(list) {
+        console.log(this.state.type);
 
         let key = 0;
 
-        return (
-            handleTaskHeaders(list).map((element) =>
-                <Panel eventKey={key}>
-                    <Panel.Heading>
-                        <Panel.Title toggle><div className="taskContent"> <table className="table table-content">
-                            <thead>
-                                <tr>
-                                    <th> {element.taskID} </th>
-                                    <th> {element.project} </th>
-                                    <th> {element.description} </th>
-                                    <th> <b>{element.state}</b> </th>
-                                    <th> {element.startDate} </th>
-                                    <th> {this.state.type == 'Ongoing' ? <MarkTaskAsFinished
-                                        id={element.taskID}
-                                        project={element.project}
-                                    /> : ''}
-                                        <a className="key">{key++}</a>
-                                        {console.log(key)}
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table></div></Panel.Title>
-                    </Panel.Heading>
-                    <Panel.Body collapsible>
-                        <div className="bodyContent">
-
-                            <p>
-                                <b>Creation date:</b> &nbsp;
-                                    {element.creationDate}
-                            </p>
-                            <p>
-                                <b>Finish date:</b> &nbsp;
-                                {element.finishDate}
-                            </p>
-                            <p>
-                                <b>Estimated Effort:</b> &nbsp;
-                                {element.estimatedTaskEffort}
-                            </p>
-                            <p>
-                                <b>Budget:</b> &nbsp;
-                                {element.taskBudget}
-                            </p>
-                            <p>
-                                <b>Estimated start date:</b> &nbsp;
-                                    {element.estimatedTaskStartDate}
-                            </p>
-                            <p>
-                                <b>Estimated finish date:</b> &nbsp;
-                                    {element.taskDeadline}
-                            </p>
-                            <p>
-                                <b>Cancel date:</b> &nbsp;
-                                {element.cancelDate}
-                            </p>
-                            <p>
-                                <b>Team:</b> &nbsp;
-                                {/* {this.getTeam(element)} */}
-                                {/* {this.loadTaskTeamFromServer(element)} */}
-                                {console.log("Teste")}
-                                {console.log(element.taskTeam)}
-                            </p>
+        return handleTaskHeaders(list).map(element => (
+            <Panel eventKey={key}>
+                <Panel.Heading>
+                    <Panel.Title toggle>
+                        <div className="taskContent">
+                            {' '}
+                            <table className="table table-content">
+                                <thead>
+                                    <tr>
+                                        <th> {element.taskID} </th>
+                                        <th> {element.project} </th>
+                                        <th> {element.description} </th>
+                                        <th>
+                                            {' '}
+                                            <b>{element.state}</b>{' '}
+                                        </th>
+                                        <th> {element.startDate} </th>
+                                        <th>
+                                            {' '}
+                                            {this.state.type == 'Ongoing' ? (
+                                                <MarkTaskAsFinished
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                />
+                                            ) : (
+                                                ''
+                                            )}
+                                            <a className="key">{key++}</a>
+                                            {console.log(key)}
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
-                    </Panel.Body>
-                </Panel>
-            )
-        )
-
+                    </Panel.Title>
+                </Panel.Heading>
+                <Panel.Body collapsible>
+                    <div className="bodyContent">
+                        <p>
+                            <b>Creation date:</b> &nbsp;
+                            {element.creationDate}
+                        </p>
+                        <p>
+                            <b>Finish date:</b> &nbsp;
+                            {element.finishDate}
+                        </p>
+                        <p>
+                            <b>Estimated Effort:</b> &nbsp;
+                            {element.estimatedTaskEffort}
+                        </p>
+                        <p>
+                            <b>Budget:</b> &nbsp;
+                            {element.taskBudget}
+                        </p>
+                        <p>
+                            <b>Estimated start date:</b> &nbsp;
+                            {element.estimatedTaskStartDate}
+                        </p>
+                        <p>
+                            <b>Estimated finish date:</b> &nbsp;
+                            {element.taskDeadline}
+                        </p>
+                        <p>
+                            <b>Cancel date:</b> &nbsp;
+                            {element.cancelDate}
+                        </p>
+                        <p>
+                            <b>Team:</b> &nbsp;
+                            {/* {this.getTeam(element)} */}
+                            {/* {this.loadTaskTeamFromServer(element)} */}
+                            {console.log('Teste')}
+                            {console.log(element.taskTeam)}
+                        </p>
+                    </div>
+                </Panel.Body>
+            </Panel>
+        ));
     }
 
     // getTeam(task){
     //     // this.setState({
     //     //     team: task.taskTeam
     //     // });
-        
+
     //     // return this.state.team.map((taskCollaborator) => {
     //     //     return taskCollaborator.projCollaborator.collaborator.name;
     //     // });
@@ -120,11 +129,9 @@ class AccordionMenu extends Component {
     //              </ul>
     //          );
 
-
-    //      } 
+    //      }
 
     // }
-   
 
     // async loadTaskTeamFromServer(task) {
     //     this.AuthService.fetch(
@@ -133,7 +140,7 @@ class AccordionMenu extends Component {
     //             method: 'get'
     //         }
     //     ).then((responseData) => { responseData });
-        
+
     // }
 
     render() {
