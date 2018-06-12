@@ -52,7 +52,7 @@ function formatDate(date) {
             mydate.getTime() - mydate.getTimezoneOffset()
         );
 
-        return dateFormat(formatedDate, 'dd/mmm/yyyy').toString()
+        return dateFormat(Date.parse(formatedDate), 'dd/mmm/yyyy').toString()
     }
     else {
         return ('')

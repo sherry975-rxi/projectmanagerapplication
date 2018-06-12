@@ -13,3 +13,7 @@
 .mediumButton:hover {
     background-color: rgb(48, 98, 99);
 }
+
+.mediumButton:focus {
+    background-color: rgb(135, 190, 178);
+}

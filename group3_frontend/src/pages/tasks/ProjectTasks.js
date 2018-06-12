@@ -15,7 +15,7 @@ import { handleTaskHeaders } from '../../components/utils/handleList'
 
 
 
-class Test extends Component {
+class ProjectTasks extends Component {
     constructor(props) {
         super(props);
         this.match;
@@ -43,7 +43,7 @@ class Test extends Component {
 
     refreshPage() {
 
-        this.AuthService.fetch(`/projects/2/tasks/${this.props.filter}`, { method: 'get' })
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.filter}`, { method: 'get' })
             .then((responseData) => {
                 console.log(responseData);
                 this.setState({
@@ -53,7 +53,6 @@ class Test extends Component {
             })
 
     }
-
 
 
     render() {
@@ -76,5 +75,5 @@ class Test extends Component {
 }
 
 const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType}) }
-export default connect(mapStateToProps, null)(Test);
+export default connect(mapStateToProps, null)(ProjectTasks);
 
