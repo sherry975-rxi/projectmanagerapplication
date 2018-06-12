@@ -134,7 +134,7 @@ public class RestProjectTasksControllerTest {
         finishDate = null;
     }
 
-        //GIVEN a project with a certain Id
+    //GIVEN a project with a certain Id
     /**
      * GIVEN: a certain task in a state that allows its deletion
      * WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
@@ -156,7 +156,7 @@ public class RestProjectTasksControllerTest {
         assertEquals(HttpStatus.ACCEPTED.value(), response.getStatus());
     }
 
-        //GIVEN a project with a certain Id
+    //GIVEN a project with a certain Id
     /**
      * GIVEN: a certain task in a state that does not allow its deletion
      * WHEN: we perform a delete request to url /projects/<projectId>/tasks/<taskId>
@@ -344,13 +344,17 @@ public class RestProjectTasksControllerTest {
 
 
 
-        MockHttpServletResponse response = mockMvc.perform(post("/projects/" + projID + "/tasks/").contentType(MediaType.APPLICATION_JSON)
-                .content(jacksonTask.write(taskDto).getJson()))
-                .andReturn().getResponse();
+//        MockHttpServletResponse response = mockMvc.perform(post("/projects/" + projID + "/tasks/").contentType(MediaType.APPLICATION_JSON)
+//                .content(jacksonTask.write(taskDto).getJson()))
+//                .andReturn().getResponse();
 
-        //THEN
+        ResponseEntity <Task> response = victim.createTask(taskDto, projID);
+
+
+
+         //THEN
         //It is expected to be successfully created
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
 
 
         //WHEN we create taskDTO with values for the estimatedTaskEffort, TaskBudgetm estimatedTaskStartDate and taskDeadline
@@ -408,6 +412,36 @@ public class RestProjectTasksControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         verify(taskService, times(1)).getProjectTasks(project);
     }
+
+
+    /**
+     * GIVEN a task id and project id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/<taskId>/activeTeam
+     * THEN we receive a valid message with a 200 Ok and a list of active task team
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnActiveTaskTeam() throws Exception {
+
+        // GIVEN
+        int projectId = 01;
+        String  taskid = "01";
+
+        // WHEN
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+
+        List<TaskCollaborator> team = task.getTaskTeam();
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/" + taskid + "/activeTeam").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+
+
+    }
+
 
 
 
