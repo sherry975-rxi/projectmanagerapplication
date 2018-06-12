@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PROJECTS } from '../utils/titleConstants';
-import './Accordian.css';
+import './ProjectsTable.css';
 import { handleProject } from '../utils/handleList';
 import ProjectsTableRow from './ProjectsTableRow';
 
@@ -10,22 +10,16 @@ class ProjectTable extends Component {
     }
 
     renderTitles() {
-        return PROJECTS.map((element, index) => (
-            <th className="rowAccordian" key={index}>
-                {' '}
-                {element}
-            </th>
-        ));
+        return PROJECTS.map((element, index) => <th key={index}>{element}</th>);
     }
 
     render() {
         return (
-            <table>
-                <thead className="tableHeadAccordian">
-                    <tr className="">{this.renderTitles()}</tr>
+            <table className="table table-content project-table">
+                <thead>
+                    <tr>{this.renderTitles()}</tr>
                 </thead>
-                <tbody className="tableHeadAccordian">
-                    {console.log(this.props.projects)}
+                <tbody>
                     {handleProject(this.props.projects).map(
                         (project, index) => (
                             <ProjectsTableRow key={index} project={project} />

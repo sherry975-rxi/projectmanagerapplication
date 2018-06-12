@@ -1,0 +1,55 @@
+.project-table {
+    width: 100%;
+}
+
+.project-table .rotate {
+    transform: rotate(90deg);
+}
+.project-table .open-project-details-button {
+    display: inline-block;
+}
+.project-table .project-row td.action-buttons-cell {
+    padding: 0;
+}
+
+.project-table .project-row td {
+    vertical-align: middle;
+}
+
+.project-table thead th:first-child,
+.project-table .project-row td:first-child {
+    width: 30px;
+    min-width: 30px;
+    max-width: 30px;
+    word-break: break-all;
+    text-align: center;
+}
+
+.project-table thead th:last-child,
+.project-table .project-row td:last-child {
+    width: 35px;
+    min-width: 35px;
+    max-width: 35px;
+}
+
+.project-table .project-row.hide {
+    max-height: 0;
+    transition: max-height 1s ease-in-out;
+}
+
+.project-table .project-row.hide {
+    max-height: 0;
+    transition: max-height 1s ease-in-out;
+}
+
+.project-table .project-row.open {
+    max-height: 500px;
+    transition: max-height 1s ease-in-out;
+}
+.project-table .status-project-icon {
+    width: 15px;
+    height: 15px;
+    background-color: #ccc;
+    display: inline-block;
+    border-radius: 50%;
+}

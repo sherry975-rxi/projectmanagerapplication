@@ -9,7 +9,7 @@ import FetchTaskButton from '../tasks/FetchTaskButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AuthService from './../loginPage/AuthService';
-import ProjectTable from '../../components/accordianMenuProjects/ProjectsTable';
+import ProjectTable from '../../components/projectsTable/ProjectsTable';
 
 class Test extends Component {
     constructor(props) {
