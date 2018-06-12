@@ -14,16 +14,11 @@ class CreateRequest extends Component {
         });
     };
 
-    handleSubmit = event => {
-        event.preventDeafault();
-
+    handleClick = () => {
         const requestBodyDTO = {
             email: this.AuthService.getProfile().sub
-        }
-    };
+        }    
 
-    handleClick = () => {
-        console.log(requestBodyDTO)
         this.AuthService.fetch(
             `/projects/${this.props.project}/tasks/${this.props.id}/requests/assignmentRequest`,
             {
@@ -40,8 +35,7 @@ class CreateRequest extends Component {
         return (
             <div className=" table-striped">
                 <button className="buttonAssignmentRequest" onClick={this.handleClick}>
-                    Create Assignment Request
-                </button>
+                Request task assignment</button>
             </div>
         );
     }

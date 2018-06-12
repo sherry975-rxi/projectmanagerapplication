@@ -25,6 +25,7 @@ import Messages from './components/msgs/Messages';
 import HomePage from '../src/components/homePage/Homepage';
 import Test from './pages/tasks/Test';
 import ProjectTasks from './pages/tasks/ProjectTasks';
+import CreateRequest from './pages/requests/CreateRequest';
 
 
 class App extends Component {
@@ -106,6 +107,10 @@ class App extends Component {
                     <Route
                         path="/projectdetails/:projectID"
                         component={requiresAuth(ProjectDetails)}
+                    />
+                     <Route
+                        exact  path="/projects/:projectID/tasks/:taskID/requests/assignmentRequest"
+                        component={requiresAuth(CreateRequest)}
                     />
                 </Switch>
             </div>
