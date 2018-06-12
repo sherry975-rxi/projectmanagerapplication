@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './MyProjects.css';
 import { Link } from 'react-router-dom';
+import { Badge } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
 import MediumButton from './../../components/button/mediumButton';
@@ -29,14 +30,13 @@ class MyProjects extends Component {
         });
     }
 
-    getManagerButton(pmEmail, projId) {
+    // this method renders all the buttons and badges exclusive to the Project manager
+    getManagerOptions(pmEmail, projId) {
         let buttons = '';
         if(pmEmail == this.AuthService.getProfile().sub) {
             buttons = (
                 <td>
-                    <Link to={'/projectdetails/' + projId}>
-                        <MediumButton text="Edit" />
-                    </Link>
+                    <Badge className="pmBadge" >PM</Badge>
                 </td>);
         }
         return buttons;
@@ -56,7 +56,7 @@ class MyProjects extends Component {
                             <MediumButton text="Details" />
                         </Link>
                     </td>
-                    {this.getManagerButton(projectItem.projectManager.email, projectItem.projectId)}
+                    {this.getManagerOptions(projectItem.projectManager.email, projectItem.projectId)}
                 </tr>
             );
         });
