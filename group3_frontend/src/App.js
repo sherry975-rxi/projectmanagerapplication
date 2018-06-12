@@ -81,17 +81,17 @@ class App extends Component {
 
                     <Route
                         path="/projects/:projectID/tasks/:taskID/reports"
-                        component={Reports}
+                        component={requiresAuth(Reports)}
                     />
 
                     <Route
                         path="/projects/:projectID/tasks/:taskID/createreport"
-                        component={CreateReport}
+                        component={requiresAuth(CreateReport)}
                     />
                     
                     <Route
                         path="/projects/:projectID/tasks/all"
-                        component={ProjectAllTasks}
+                        component={requiresAuth(ProjectAllTasks)}
                     />
 
                     <Route
