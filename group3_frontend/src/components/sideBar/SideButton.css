@@ -11,9 +11,31 @@
     color: rgb(195, 195, 195);
 }
 
+
+
+.Item > a {
+
+    white-space: nowrap;
+    color: rgb(221, 221, 221);
+    text-decoration: none;
+}
+
+.Item a:hover {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.Item > a.active,
+.Item > a.active:focus {
+    color: rgb(185, 184, 184);
+    text-decoration: none;
+}
+
+
 .ItemButton {
     padding-right: 250px;
     padding-top: 35px;
+    padding-left: 15px;
     background: none;
     font-size: 15px;
     box-shadow: 0px 0px 0px transparent;
@@ -25,9 +47,6 @@
 }
 
 .ItemButton:hover {
-    padding-right: 250px;
-    padding-top: 35px;
-    font-size: 15px;
     background-color: rgba(27, 43, 56, 0.479);
     box-shadow: 0px 0px 0px transparent;
     border: 0px solid transparent;
@@ -36,29 +55,6 @@
     border-bottom: 1px solid rgba(150, 150, 150, 0.281);
 
 }
-
-.title {
-    padding-left: 15px;
-    white-space: nowrap;
-}
-
-.title > a {
-    color: rgb(221, 221, 221);
-    text-decoration: none;
-}
-
-.title a:hover {
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.title > a.active,
-.title > a.active:focus {
-    color: rgb(185, 184, 184);
-    text-decoration: none;
-}
-
-
 
 
 
