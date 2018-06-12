@@ -2,21 +2,21 @@
 
 export function handleTaskHeaders(list) {
     return (
-        list.map((task) => ({ 
-            'taskID': task.taskID, 
-            'project': task.project, 
-            'description': task.description, 
-            'state': task.currentState, 
-            'startDate': formatDate(task.startDate), 
+        list.map((task) => ({
+            'taskID': task.taskID,
+            'project': task.project,
+            'description': task.description,
+            'state': task.currentState,
+            'startDate': formatDate(task.startDate),
             'finishDate': formatDate(task.finishDate),
-            'creationDate': formatDate(task.creationDate), 
+            'creationDate': formatDate(task.creationDate),
             'estimatedTaskStartDate': formatDate(task.estimatedTaskStartDate),
             'taskDeadline': formatDate(task.taskDeadline),
             'cancelDate': formatDate(task.cancelDate),
             'estimatedTaskEffort': task.estimatedTaskEffort,
-            'taskBudget': task.taskBudget, 
-            'taskTeam': task.taskTeam 
-         })
+            'taskBudget': task.taskBudget,
+            'taskTeam': task.taskTeam
+        })
         )
     )
 }
@@ -45,16 +45,16 @@ export function handleUserHeaders(list) {
 }
 
 function formatDate(date) {
-    if(date != null){
+    if (date != null) {
         let mydate = new Date(date);
         var dateFormat = require('dateformat');
         let formatedDate = new Date(
-            mydate.getTime() - mydate.getTimezoneOffset() * -60000
+            mydate.getTime() - mydate.getTimezoneOffset()
         );
 
         return dateFormat(Date.parse(formatedDate), 'dd/mmm/yyyy').toString()
     }
     else {
-        return( '' )
+        return ('')
     }
 }

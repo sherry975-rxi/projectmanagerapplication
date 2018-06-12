@@ -9,8 +9,7 @@ class MyProjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: [],
-            message: ''
+            projects: []
         };
 
         this.AuthService = new AuthService();

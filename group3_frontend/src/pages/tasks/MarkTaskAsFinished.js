@@ -25,7 +25,7 @@ class MarkTaskAsFinished extends Component {
         return (
             <div className=" table-striped">
                 <button className="buttonFinished" onClick={this.handleClick}>
-                    Mark as Finished
+                    Finish
                 </button>
             </div>
         );

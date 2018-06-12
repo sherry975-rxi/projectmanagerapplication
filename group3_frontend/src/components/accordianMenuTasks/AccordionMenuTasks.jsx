@@ -47,7 +47,7 @@ class AccordionMenu extends Component {
                                     <th> {element.description} </th>
                                     <th> <b>{element.state}</b> </th>
                                     <th> {element.startDate} </th>
-                                    <th> {this.state.type == 'Ongoing' ? <MarkTaskAsFinished
+                                    <th> {element.state != 'FINISHED' ? <MarkTaskAsFinished
                                         id={element.taskID}
                                         project={element.project}
                                     /> : ''}
@@ -108,7 +108,7 @@ class AccordionMenu extends Component {
     //     // this.setState({
     //     //     team: task.taskTeam
     //     // });
-        
+
     //     // return this.state.team.map((taskCollaborator) => {
     //     //     return taskCollaborator.projCollaborator.collaborator.name;
     //     // });
@@ -121,10 +121,10 @@ class AccordionMenu extends Component {
     //          );
 
 
-    //      } 
+    //      }
 
     // }
-   
+
 
     // async loadTaskTeamFromServer(task) {
     //     this.AuthService.fetch(
@@ -133,7 +133,7 @@ class AccordionMenu extends Component {
     //             method: 'get'
     //         }
     //     ).then((responseData) => { responseData });
-        
+
     // }
 
     render() {
