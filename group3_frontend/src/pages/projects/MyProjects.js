@@ -9,8 +9,7 @@ class MyProjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: [],
-            message: ''
+            projects: []
         };
 
         this.AuthService = new AuthService();
@@ -30,6 +29,19 @@ class MyProjects extends Component {
         });
     }
 
+    getManagerButton(pmEmail, projId) {
+        let buttons = '';
+        if(pmEmail == this.AuthService.getProfile().sub) {
+            buttons = (
+                <td>
+                    <Link to={'/projectdetails/' + projId}>
+                        <MediumButton text="Edit" />
+                    </Link>
+                </td>);
+        }
+        return buttons;
+    }
+
     renderProjects() {
         return this.state.projects.map((projectItem, index) => {
             return (
@@ -44,6 +56,7 @@ class MyProjects extends Component {
                             <MediumButton text="Details" />
                         </Link>
                     </td>
+                    {this.getManagerButton(projectItem.projectManager.email, projectItem.projectId)}
                 </tr>
             );
         });
@@ -68,7 +81,9 @@ class MyProjects extends Component {
                                 <th>Project Manager Email</th>
                             </tr>
                         </thead>
-                        <tbody>{this.renderProjects()}</tbody>
+                        <tbody>
+                        {this.renderProjects()}
+                        </tbody>
                     </table>
                 </div>
             );
