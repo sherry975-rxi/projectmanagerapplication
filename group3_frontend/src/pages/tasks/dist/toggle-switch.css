@@ -147,9 +147,9 @@
       line-height: 2em; }
     .switch-toggle input:focus ~ span a,
     .switch-toggle input:focus + label {
-      outline-width: 2px;
+      /*outline-width: 2px;
       outline-style: solid;
-      outline-color: Highlight;
+      outline-color: Highlight;*/
       /* Chrome/Opera gets its native focus styles.
      */ } }
     @media only screen and (-webkit-min-device-pixel-ratio: 0) {
