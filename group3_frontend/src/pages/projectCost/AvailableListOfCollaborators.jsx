@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import './ProjectCost.css';
 import {
-    Button,
-    FormGroup,
-    FormControl,
-    ControlLabel,
-    Alert,
     MenuItem,
     DropdownButton
 } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
-import Error from './../../components/error/error';
-import MediumButton from '../../components/button/mediumButton.jsx';
-import props from '../../components/msgs/Messages';
+import { toastr } from 'react-redux-toastr';
+import { Redirect } from 'react-router-dom';
 
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
@@ -48,6 +41,7 @@ class AvailableListOfCollaborators extends Component {
         });
     }
 
+
 handleClick(event) {
     
     console.log(this.state.projTeam[event].collaborator.email)
@@ -60,11 +54,21 @@ handleClick(event) {
             `/projects/2/tasks/WP1.T01/addCollab`,
             { method: 'post',
         body: JSON.stringify(userDTO)}
-        ).then(responseData => {
-            console.log(responseData)
-               
-            });
+        ).then(res => {
+            console.log(res)
+            console.log("seeee")
+                 if (res.taskFinished === false) {
+                        toastr.success('Collaborator was added to task');
+                         return <Redirect to="/requests" />;
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    toastr.error('Already a Task Collaborator');
+                });
 }
+
+
 
     renderDropdownButton(title, i) {
         return (

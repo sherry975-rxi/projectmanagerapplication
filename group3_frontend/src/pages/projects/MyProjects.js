@@ -45,6 +45,7 @@ class MyProjects extends Component {
         return this.state.projects.map((projectItem, index) => {
             return (
                 <tr className="line" key={index}>
+                    <td>{this.getManagerOptions(projectItem.projectManager.email, projectItem.projectId)}</td>
                     <td>{projectItem.projectId}</td>
                     <td>{projectItem.name}</td>
                     <td>{projectItem.description}</td>
@@ -54,8 +55,7 @@ class MyProjects extends Component {
                         <Link to={'/projectdetails/' + projectItem.projectId}>
                             <MediumButton text="Details" />
                         </Link>
-                    </td>
-                    {this.getManagerOptions(projectItem.projectManager.email, projectItem.projectId)}
+                    </td>                    
                 </tr>
             );
         });
@@ -73,6 +73,7 @@ class MyProjects extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Project ID</th>
                                 <th>Name</th>
                                 <th>Description Date</th>
