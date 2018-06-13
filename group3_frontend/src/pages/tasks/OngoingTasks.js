@@ -9,22 +9,46 @@ import Error from './../../components/error/error';
 import MarkTaskAsFinished from './MarkTaskAsFinished';
 import { Link } from 'react-router-dom';
 import MediumButton from './../../components/button/mediumButton';
+import { updateAllTasks, updateFinishedTasks, updateOngoingTasks } from './../../actions/projectTasksActions';
+import UserTasksFilter from '../tasks/UserTasksFilter'
+import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { handleTaskHeaders } from '../../components/utils/handleList'
+
+
+
 
 class OngoingTasks extends Component {
     constructor(props) {
         super(props);
+        this.match;
         this.state = {
             tasks: [],
-            project: {}
+            project: {},
+            externalData: null
         };
-
-        this.AuthService = new AuthService();
+        this.AuthService = new AuthService()
     }
 
     //TODO: Add sort by ascending or descending order to these tables
 
     componentDidMount() {
         this.refreshPage();
+    }
+
+    renderTasks() {
+
+        switch (this.props.filter) {
+            case ("all"):
+                return (<AccordionMenu list={this.props.allTasks} />);
+            case ("unfinished"):
+                return (<AccordionMenu list={this.props.ongoingTasks} />);
+            case ("finished"):
+                return (<AccordionMenu list={this.props.finishedTasks} />);
+            case ("notstarted"):
+                return (<AccordionMenu list={this.props.notStartedTasks} />);
+        }
     }
 
     refreshPage = () => {
@@ -100,29 +124,21 @@ class OngoingTasks extends Component {
         } else {
             return (
                 <div className=" table-striped">
+                <UserTasksFilter userID={this.AuthService.getUserId()} />
                     <h3>
-                        <b>Ongoing Tasks</b>
+                        <b>My Tasks</b>
                     </h3>
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Task ID</th>
-                                <th>Project ID</th>
-                                <th>Description</th>
-                                <th>Start Date</th>
-                                <th>Estimated Finish Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>{this.renderOngoingTasks()}</tbody>
-                    </table>
-                    <Link to={'/addtask/'}>
-                        <MediumButton text="Add Task" />
-                    </Link>
+                   
+                 
                     &nbsp;
+                    {this.renderTasks()}
+
                 </div>
             );
         }
     }
 }
 
-export default OngoingTasks;
+const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType, finishedTasks: state.projectTasks.finishedTasks, ongoingTasks: state.projectTasks.ongoingTasks, notStartedTasks: state.projectTasks.notStartedTasks, allTasks: state.projectTasks.allTasks }) }
+
+export default connect(mapStateToProps, null)(OngoingTasks);

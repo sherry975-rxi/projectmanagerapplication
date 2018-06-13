@@ -5,6 +5,8 @@ import * as Constants from '../utils/titleConstants';
 import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import { connect } from 'react-redux';
+import MediumButton from './../../components/button/mediumButton';
+import { Link } from 'react-router-dom';
 
 import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
 
@@ -100,6 +102,32 @@ class AccordionMenu extends Component {
                                     <p>
                                         <b>Cancel date:</b> &nbsp;
                                         {element.cancelDate}
+                                    </p>
+                                    <p>
+                                    <Link
+                                        to={
+                                         '/projects/' +
+                                             element.project +
+                                             '/tasks/' +
+                                             element.taskID +
+                                         '/reports'
+                                        }
+                                         >
+                                     <MediumButton text="View Reports" />
+                                     </Link>
+                                    </p>
+                                    <p>
+                                    <Link
+                                        to={
+                                        '/projects/' +
+                                        element.project +
+                                        '/tasks/' +
+                                        element.taskID +
+                                        '/createreport'
+                                         }
+                                         >
+                                    <MediumButton text="Create Report" />
+                                  </Link>
                                     </p>
                                 </th>
                                 <th>

@@ -7,7 +7,7 @@ import './dist/FetchTask.css'
 import { updateAllTasks, updateFinishedTasks, updateNotStartedTasks, updateOngoingTasks } from './../../actions/userTasksActions';
 
 
-class FetchTaskButton extends Component {
+class UserTasksFilter extends Component {
 
     constructor(props) {
         super(props);
@@ -21,20 +21,17 @@ class FetchTaskButton extends Component {
 
         switch (key) {
             case ("1"):
-                return (this.props.updateAllTasks((this.props.projectID)));
+                return (this.props.updateAllTasks((this.props.userID)));
             case ("2"):
-                return (this.props.updateOngoingTasks((this.props.projectID)));
+                return (this.props.updateOngoingTasks((this.props.userID)));
             case ("3"):
-                return (this.props.updateFinishedTasks((this.props.projectID)));
-            case ("4"):
-                return (<div>{this.props.updateNotStartedTasks((this.props.projectID))}</div>);
-            case ("5"):
-                return (<div>{this.props.updateStandByTasks((this.props.projectID))}</div>);
+                return (this.props.updateFinishedTasks((this.props.userID)));
+
         }
     }
 
     async componentDidMount() {
-        this.props.updateAllTasks(this.props.projectID)
+        this.props.updateAllTasks(this.props.userID)
     }
 
 
@@ -51,8 +48,6 @@ class FetchTaskButton extends Component {
                     <input id="finished" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "3")} />
                     <label class="buttonFont" for="finished" eventKey="1" >Finished</label>
 
-                    <input id="notStarted" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "4")} />
-                    <label class="buttonFont" for="notStarted" eventKey="1" >Not Started</label>
 
                     <a></a>
                 </div>
@@ -65,5 +60,5 @@ class FetchTaskButton extends Component {
 
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ updateAllTasks, updateFinishedTasks, updateNotStartedTasks, updateOngoingTasks }, dispatch)
-export default connect(null, mapDispatchToProps)(FetchTaskButton);
+const mapDispatchToProps = dispatch => bindActionCreators({ updateAllTasks, updateFinishedTasks, updateOngoingTasks }, dispatch)
+export default connect(null, mapDispatchToProps)(UserTasksFilter);
