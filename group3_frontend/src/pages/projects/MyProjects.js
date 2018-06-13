@@ -41,6 +41,8 @@ class MyProjects extends Component {
         return buttons;
     }
 
+    //Create task button will be added to the accordion menu when implemented
+    
     renderProjects() {
         return this.state.projects.map((projectItem, index) => {
             return (
@@ -55,7 +57,12 @@ class MyProjects extends Component {
                         <Link to={'/projectdetails/' + projectItem.projectId}>
                             <MediumButton text="Details" />
                         </Link>
-                    </td>                    
+                    </td>
+                    <td>  
+                        <Link to={'/projects/' + projectItem.projectId + '/addtask'}> 
+                            <MediumButton text="Create task" />
+                        </Link>
+                    </td>
                 </tr>
             );
         });
