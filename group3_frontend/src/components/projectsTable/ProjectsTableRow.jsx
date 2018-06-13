@@ -28,7 +28,7 @@ class ProjectsTableRow extends Component {
 
     getManagerButtons() {
         if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub) {
-            return <div> 
+            return <div>
                 <Link
                     to={'/projectcost/' + this.props.project.projectId}
                      activeClassName="active"
@@ -41,13 +41,22 @@ class ProjectsTableRow extends Component {
                     activeClassName="active"
                 >
                     <MediumButton text="Change Calculation Method" />
-                </Link> 
+                </Link>
+                &nbsp;
+                <Link
+                    to={
+                        '/requests/'
+                    }
+                    activeClassName="active"
+                >
+                    <MediumButton text="See Requests" />
+                </Link>
                     &nbsp;
                 <Link
                      to={'/projects/' + this.props.project.projectId + '/addtask'}
                         >
                     <MediumButton text="Create task" />
-                </Link>   
+                </Link>
                 </div>;
         }
     }
