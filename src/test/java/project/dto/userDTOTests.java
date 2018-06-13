@@ -7,6 +7,8 @@ import project.model.Address;
 import project.model.User;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class userDTOTests {
 
@@ -68,4 +70,37 @@ public class userDTOTests {
 		assertEquals(user3.getUserProfile(), (user2.getUserProfile()));
 
 	}
+
+	/**
+	 * This method tests the .equals and .hashCode overrides for UserDTO class
+	 */
+	@Test
+	public void testEqualsHashcode(){
+		// GIVEN a user DT0
+
+		// WHEN creating a hashcode using the same formula as the one in the model
+		int expectedHashCode = 31 * 17 + "email".hashCode();
+
+		// THEN the two hashcodes must be equal
+		assertEquals(user.hashCode(), expectedHashCode);
+
+		// AND WHEN comparing a user DTO to itself, THEN they must be equals
+		assertTrue(user.equals(user));
+
+		// AND WHEN a new comparison DTO is created with a different email
+		UserDTO comparing = new UserDTO();
+		comparing.setEmail("notEquals");
+
+		// THEN it must be different from the Comparison DTO and different from any different object
+		assertFalse(user.equals(comparing));
+		assertFalse(user.equals(expectedHashCode));
+
+
+		// AND WHEN the comparison DTO has its email set to equal from "user"
+		comparing.setEmail("email");
+
+		// THEN the equals comparison must return true
+		assertTrue(user.equals(comparing));
+	}
+
 }
