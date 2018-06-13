@@ -275,9 +275,9 @@ public class RestProjectTasksController {
     }
 
     /**
-     * This methods gets the list of unfinished tasks from a project
+     * This methods gets the list of not started tasks from a project
      *
-     * @param projid Id of the project to search for finished tasks
+     * @param projid Id of the project to search for not started tasks
      *
      * @return List of not started tasks from the project
      */
@@ -353,7 +353,7 @@ public class RestProjectTasksController {
     @RequestMapping(value = "{taskid}/activeTeam", method = RequestMethod.GET)
     public ResponseEntity<List<TaskCollaborator>> getActiveTaskTeam (@PathVariable int projid, @PathVariable String taskid) {
 
-        Project project = projectService.getProjectById(projid);
+        projectService.getProjectById(projid);
         Task task = taskService.getTaskByTaskID(taskid);
 
         List<TaskCollaborator> team = task.getTaskTeam();
@@ -372,6 +372,41 @@ public class RestProjectTasksController {
     }
 
 
+    /**
+     * This method returns the list of Project collaborators that are not assigned to a certain task
+     * and is not the project Manager of that project
+     * @param projid
+     * @param taskid
+     * @return
+     */
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "{taskid}/collabsAvailableForTask", method = RequestMethod.GET)
+    public ResponseEntity<List<ProjectCollaborator>> getProjectTeamNotAddedToTask(@PathVariable int projid,  @PathVariable String taskid) {
+
+        Project project = projectService.getProjectById(projid);
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        List <ProjectCollaborator> projCollabs = projectService.getActiveProjectTeam(project);
+        List<ProjectCollaborator> activeTeam = new ArrayList<>();
+
+        ResponseEntity <List<ProjectCollaborator>> response ;
+
+        for (ProjectCollaborator other : projCollabs) {
+            if (!task.isProjectCollaboratorActiveInTaskTeam(other) && !project.isProjectManager(other.getUserFromProjectCollaborator())) {
+                activeTeam.add(other);
+            }
+        }
+
+        if(activeTeam.isEmpty()){
+
+           response  = new ResponseEntity<>(activeTeam, HttpStatus.EXPECTATION_FAILED);
+
+        }   else {
+              response  = new ResponseEntity<>(activeTeam, HttpStatus.OK);
+        }
+
+        return response;
+    }
 
 }
 
