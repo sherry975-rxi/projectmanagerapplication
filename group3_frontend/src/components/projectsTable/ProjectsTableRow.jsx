@@ -28,35 +28,43 @@ class ProjectsTableRow extends Component {
 
     getManagerButtons() {
         if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub) {
-            return <div>
-                <Link
-                    to={'/projectcost/' + this.props.project.projectId}
-                     activeClassName="active"
-                >
-                    <MediumButton text="Calculate Project Cost" />
-                 </Link>
-                    &nbsp;
-                <Link
-                    to={'/selectprojectcostcalculation/' + this.props.project.projectId}
-                    activeClassName="active"
-                >
-                    <MediumButton text="Change Calculation Method" />
-                </Link>
-                &nbsp;
-                <Link
-                    to={
-                        '/requests/'
-                    }
-                    activeClassName="active"
-                >
-                    <MediumButton text="See Requests" />
-                </Link>
-                    &nbsp;
-                <Link
-                     to={'/projects/' + this.props.project.projectId + '/addtask'}
-                        >
-                    <MediumButton text="Create task" />
-                </Link>
+
+            return <div> 
+                        <p /> 
+                        <Link
+                            to={'/projects/' + this.props.project.projectId + '/tasks'}
+                            activeClassName="active"
+                            >
+                            <MediumButton text = "View Tasks" />
+                        </Link>
+                        <p />
+                        <Link
+                            to={'/projects/' + this.props.project.projectId + '/addtask'}
+                            activeClassName="active"
+                                >
+                            <MediumButton text="Create task" />
+                        </Link> 
+                        <p /> 
+                        <Link
+                            to={'/projectcost/' + this.props.project.projectId}
+                            activeClassName="active"
+                            >
+                            <MediumButton text="Calculate Project Cost" />
+                        </Link>
+                        <p />  
+                        <Link
+                            to={'/selectprojectcostcalculation/' + this.props.project.projectId}
+                            activeClassName="active"
+                            >
+                            <MediumButton text="Change Calculation Method" />
+                        </Link> 
+                        <p /> 
+                        <Link
+                            to={'/requests/'}
+                            activeClassName="active"
+                            >
+                            <MediumButton text="View Requests" />
+                        </Link>
                 </div>;
         }
     }
@@ -127,7 +135,8 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td>{this.getManagerButtons()} </td>
+                    <td>{this.getManagerButtons()}                    
+                    </td>
                 </tr>
             </Fragment>
         );
