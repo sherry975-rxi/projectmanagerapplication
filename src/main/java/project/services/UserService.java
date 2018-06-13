@@ -12,7 +12,6 @@ import project.model.Profile;
 import project.model.User;
 import project.repository.UserRepository;
 import project.security.UserSecurity;
-import project.services.exceptions.AuthorizationException;
 import project.services.exceptions.ObjectNotFoundException;
 
 import javax.mail.internet.AddressException;

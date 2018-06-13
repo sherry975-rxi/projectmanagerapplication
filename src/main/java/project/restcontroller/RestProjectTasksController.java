@@ -353,6 +353,7 @@ public class RestProjectTasksController {
     @RequestMapping(value = "{taskid}/activeTeam", method = RequestMethod.GET)
     public ResponseEntity<List<TaskCollaborator>> getActiveTaskTeam (@PathVariable int projid, @PathVariable String taskid) {
 
+        projectService.getProjectById(projid);
         Task task = taskService.getTaskByTaskID(taskid);
 
         List<TaskCollaborator> team = task.getTaskTeam();
