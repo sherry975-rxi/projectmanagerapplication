@@ -9,6 +9,9 @@ import MediumButton from './../../components/button/mediumButton';
 import { Link } from 'react-router-dom';
 
 import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
+import CreateRequest from '../../pages/requests/CreateRequest';
+import DeleteTask from '../../pages/tasks/DeleteTask';
+import AvailableListOfCollaborators from '../../pages/tasks/AvailableListOfCollaborators';
 
 
 class AccordionMenu extends Component {
@@ -106,6 +109,36 @@ class AccordionMenu extends Component {
                                     <p />
                                     {element.state != 'FINISHED' ? (
                                         <MarkTaskAsFinished
+                                            id={element.taskID}
+                                            project={element.project}
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                    <a className="key">{key++}</a>
+                                    <p />
+                                    {element.state != 'FINISHED' ? (
+                                        <CreateRequest
+                                            id={element.taskID}
+                                            project={element.project}
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                    <a className="key">{key++}</a>
+                                    <p />
+                                    {element.state != 'FINISHED' ? (
+                                        <DeleteTask
+                                            id={element.taskID}
+                                            project={element.project}
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                    <a className="key">{key++}</a>
+                                    <p />
+                                    {element.state != 'FINISHED' ? (
+                                        <AvailableListOfCollaborators
                                             id={element.taskID}
                                             project={element.project}
                                         />
