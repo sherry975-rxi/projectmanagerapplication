@@ -42,7 +42,7 @@ class MyProjects extends Component {
     }
 
     //Create task button will be added to the accordion menu when implemented
-    
+
     renderProjects() {
         return this.state.projects.map((projectItem, index) => {
             return (
@@ -83,7 +83,7 @@ class MyProjects extends Component {
                                 <th></th>
                                 <th>Project ID</th>
                                 <th>Name</th>
-                                <th>Description Date</th>
+                                <th>Description</th>
                                 <th>Project Manager Name</th>
                                 <th>Project Manager Email</th>
                             </tr>
