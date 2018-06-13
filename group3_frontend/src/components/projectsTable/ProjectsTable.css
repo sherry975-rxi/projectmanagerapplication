@@ -12,6 +12,10 @@
     padding: 0;
 }
 
+.project-table .project-row {
+    height: 70px;
+}
+
 .project-table .project-row td {
     vertical-align: middle;
 }
@@ -31,10 +35,9 @@
     min-width: 35px;
     max-width: 35px;
 }
-
-.project-table .project-row.hide {
-    max-height: 0;
-    transition: max-height 1s ease-in-out;
+.project-table .project-details.project-row td {
+    text-align: left;
+    line-height: 2;
 }
 
 .project-table .project-row.hide {
@@ -45,7 +48,9 @@
 .project-table .project-row.open {
     max-height: 500px;
     transition: max-height 1s ease-in-out;
+    background-color: #ecf0f1;
 }
+
 .project-table .status-project-icon.active {
     background-color: #2ecc71;
 }
@@ -67,4 +72,17 @@
     border-radius: 15px;
     width: 38px;
     padding-right: 2px;
+}
+
+#project-manager-badge-cell {
+    text-align: left;
+}
+
+.project-table hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
 }

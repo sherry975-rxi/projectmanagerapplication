@@ -38,7 +38,9 @@ class ProjectsTableRow extends Component {
                         />
                     </td>
                     <td>{this.props.project.projectName}</td>
-                    <td>{this.getManagerOptions()}</td>
+                    <td id="project-manager-badge-cell">
+                        {this.getManagerOptions()}
+                    </td>
                     <td>{this.props.project.projectStatusName}</td>
                     <td className="action-buttons-cell">
                         <span
@@ -54,29 +56,34 @@ class ProjectsTableRow extends Component {
                 </tr>
                 <tr
                     className={
-                        'project-row ' + (this.state.isOpen ? 'open' : 'hide')
+                        'project-details project-row ' +
+                        (this.state.isOpen ? 'open' : 'hide')
                     }
                 >
+                    <td> </td>
                     <td colSpan="2">
                         <div>
-                            Description:
+                            <b>Description:&nbsp;</b>
+                            <hr />
                             {this.props.project.projectDescription}
-                            <br />Project Manager:
+                            <br />
+                            <b>Project Manager:&nbsp;</b>
                             {this.props.project.projectManagerName}
-                            <br />Start date:
+                            <br />
+                            <b>Start date:&nbsp;</b>
                             {this.props.project.projectStartDate}
-                            <br />Finish date:
+                            <br />
+                            <b>Finish date:&nbsp;</b>
                             {this.props.project.projectFinishDate}
                             <br />
                         </div>
                     </td>
-                    <td colSpan="2">
+                    <td colSpan="2" id="details2-div">
                         <div>
-                            Budget: {this.props.project.projectBudget}
-                            <br /> Calculation method:
+                            <b>Budget:&nbsp;</b>
+                            {this.props.project.projectBudget}
+                            <br /> <b>Calculation method:&nbsp;</b>
                             {this.props.project.projectCalculationMethod}
-                            <br /> Cost:
-                            {this.props.project.projectCost}
                             <br />
                             {this.props.project.button}
                             <br />

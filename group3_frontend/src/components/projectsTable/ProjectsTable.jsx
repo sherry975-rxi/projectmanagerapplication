@@ -10,7 +10,11 @@ class ProjectTable extends Component {
     }
 
     renderTitles() {
-        return PROJECTS.map((element, index) => <th key={index}>{element}</th>);
+        return PROJECTS.map((element, index) => (
+            <th key={index}>
+                <b>{element}</b>
+            </th>
+        ));
     }
 
     render() {
