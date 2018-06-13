@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import MediumButton from '../../components/button/mediumButton';
 import { Glyphicon } from 'react-bootstrap';
 import AuthService from '../../pages/loginPage/AuthService';
 
@@ -14,13 +16,34 @@ class ProjectsTableRow extends Component {
         this.setState({ isOpen: !this.state.isOpen });
     };
 
-    getManagerOptions() {
+    getManagerIcon() {
         if (
-            this.props.project.projectManagerEmail ==
+            this.props.project.projectManagerEmail ===
             this.AuthService.getProfile().sub
         ) {
             return <span className="project-badge">PM</span>;
         } else return <div> </div>;
+    }
+
+    getManagerButtons() {
+        if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub) {
+            return <div> <Link
+                to={'/projectcost/' + this.props.project.projectId}
+                activeClassName="active"
+            >
+                <MediumButton text="Calculate Project Cost" />
+            </Link>
+                &nbsp;
+                <Link
+                    to={
+                        '/selectprojectcostcalculation/' +
+                        this.props.project.projectId
+                    }
+                    activeClassName="active"
+                >
+                    <MediumButton text="Change Calculation Method" />
+                </Link> </div>;
+        }
     }
 
     render() {
@@ -39,7 +62,7 @@ class ProjectsTableRow extends Component {
                     </td>
                     <td>{this.props.project.projectName}</td>
                     <td id="project-manager-badge-cell">
-                        {this.getManagerOptions()}
+                        {this.getManagerIcon()}
                     </td>
                     <td>{this.props.project.projectStatusName}</td>
                     <td className="action-buttons-cell">
@@ -89,7 +112,7 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td>Buttons here!!!! </td>
+                    <td>{this.getManagerButtons()} </td>
                 </tr>
             </Fragment>
         );

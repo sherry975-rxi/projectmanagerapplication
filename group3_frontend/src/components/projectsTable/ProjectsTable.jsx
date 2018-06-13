@@ -4,7 +4,7 @@ import './ProjectsTable.css';
 import { handleProject } from '../utils/handleList';
 import ProjectsTableRow from './ProjectsTableRow';
 
-class ProjectTable extends Component {
+class ProjectsTable extends Component {
     constructor(props) {
         super(props);
     }
@@ -35,4 +35,4 @@ class ProjectTable extends Component {
     }
 }
 
-export default ProjectTable;
+export default ProjectsTable;
