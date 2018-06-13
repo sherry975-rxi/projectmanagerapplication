@@ -22,11 +22,8 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 	private TaskService taskService;
 
 
-	/**
-	 * Empty controllers created for JPA integration tests
-	 */
 	public US210GetAllFinishedUserTasksInDecreasingOrderController() {
-
+		// Empty constructor created for JPA
 	}
 
 
