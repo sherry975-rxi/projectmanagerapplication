@@ -27,6 +27,7 @@ import Test from './pages/tasks/Test';
 import ProjectTasks from './pages/tasks/ProjectTasks';
 import ActiveTaskTeam from './pages/tasks/ActiveTaskTeam';
 import CreateRequest from './pages/requests/CreateRequest';
+import CreateProject from './pages/projects/CreateProject';
 import AvailableListOfCollaborators from './pages/tasks/AvailableListOfCollaborators';
 import AddUserToProject from './pages/projects/AddUserToProject';
 
@@ -53,6 +54,11 @@ class App extends Component {
                     <Route
                         path="/activeprojects"
                         component={requiresAuth(ActiveProjects)}
+                    />
+
+                    <Route
+                        path="/createproject"
+                        component={requiresAuth(CreateProject)}
                     />
 
                     <Route
