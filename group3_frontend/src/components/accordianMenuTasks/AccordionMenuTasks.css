@@ -46,6 +46,7 @@
     color: #585858;
     border-bottom: 0px, solid;
     margin: 0px;
+
 }
 
 .panel > .panel-heading {
@@ -56,7 +57,8 @@
     padding-bottom: 0px;
 }
 
-.taskContent .table.table-content > thead:hover {
+
+.table.table-content > thead:hover {
     font-size: 12px;
     font-family: 'Oxygen', sans-serif;
     font-weight: normal;
@@ -75,7 +77,9 @@
     font-size: 13px;
     font-family: 'Oxygen', sans-serif;
     vertical-align: center;
+
 }
+
 
 .projectContent {
     margin-left: -15px;
@@ -97,6 +101,7 @@
     text-decoration: none;
     box-shadow: none;
     padding: 20px;
+    background-color: #EDEDED;
 }
 
 .bodyContent {
@@ -111,6 +116,7 @@
     line-height: 25px;
 }
 
+
 .key {
     display: none;
 }
@@ -123,6 +129,11 @@
     padding-top: 11px;
 }
 
+.table.table-details > thead {
+    background-color: #EDEDED;
+}
+
+
 .table.table-details > thead > tr > th {
     border-bottom: 0px solid #ddd;
     font-weight: normal;
@@ -132,3 +143,16 @@
     color: #585858;
     font-size: 12px;
 }
+
+.rotatedArrow{
+    transform: rotate(90deg);
+    font-size: 11px
+}
+
+.notRotated{
+    font-size: 11px;
+    color: rgb(94, 94, 94);
+}
+
+
+

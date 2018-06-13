@@ -2,10 +2,10 @@ import AuthService from './../pages/loginPage/AuthService';
 import * as filterActions from './filterActions'
 
 
-export function updateFinishedTasks(projectId) {
+export function updateFinishedTasks(userId) {
     return (dispatch) => {
         fetch(
-            `/projects/${projectId}/tasks/finished`,
+            `/users/${userId}/tasks/finished`,
             {
                 headers: { 'Authorization': localStorage.getItem('id_token') },
                 method: 'GET'
@@ -20,10 +20,10 @@ export function updateFinishedTasks(projectId) {
 }
 
 
-export function updateOngoingTasks(projectId) {
+export function updateOngoingTasks(userId) {
     return (dispatch) => {
         fetch(
-            `/projects/${projectId}/tasks/unfinished`,
+            `/users/${userId}/tasks/pending`,
             {
                 headers: { 'Authorization': localStorage.getItem('id_token') },
                 method: 'GET'
@@ -38,26 +38,10 @@ export function updateOngoingTasks(projectId) {
 }
 
 
-export function updateNotStartedTasks(projectId) {
+export function updateAllTasks(userId) {
     return (dispatch) => {
         fetch(
-            `/projects/${projectId}/tasks/notstarted`,
-            {
-                headers: { 'Authorization': localStorage.getItem('id_token') },
-                method: 'GET'
-            }
-        ).then(responseData => responseData.json())
-            .then(data => {
-                dispatch(filterActions.changeToNotStarted())
-                return data
-            });
-    }
-}
-
-export function updateAllTasks(projectId) {
-    return (dispatch) => {
-        fetch(
-            `/projects/${projectId}/tasks/all`,
+            `/users/${userId}/tasks/`,
             {
                 headers: { 'Authorization': localStorage.getItem('id_token') },
                 method: 'GET'
@@ -88,13 +72,6 @@ export function ongoingTasksFetched(ongoingTasks) {
     };
 }
 
-
-export function notStartedTasksFetched(notStartedTasks) {
-    return {
-        type: 'NOTSTARTED_FETCHED',
-        notStartedTasks
-    };
-}
 
 export function allTasksFetched(allTasks) {
     return {

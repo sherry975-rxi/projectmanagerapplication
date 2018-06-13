@@ -313,8 +313,7 @@
   }
     .switch-ios.switch-toggle a {
       background-color: rgb(230, 230, 230);
-      border: 0.125em solid #D8D9DB;
-      border-radius: 0.25em;
+      
       transition: all 0.12s ease-out; }
     .switch-ios.switch-toggle label {
       height: 2.4em;
