@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import Error from './../../components/error/error';
-import MarkTaskAsFinished from './MarkTaskAsFinished';
-import CreateReport from '../reports/CreateReport';
-import Reports from '../reports/Reports';
-import { Link } from 'react-router-dom';
-import MediumButton from './../../components/button/mediumButton';
-import FetchTaskButton from '../tasks/FetchTaskButton';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import AuthService from './../loginPage/AuthService';
 import ProjectTable from '../../components/projectsTable/ProjectsTable';
 

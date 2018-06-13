@@ -6,7 +6,6 @@ import SmallButton from '../button/smallButton.jsx';
 import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import AuthService from './../../pages/loginPage/AuthService';
-import TaskTeam1 from '../../pages/tasks/ActiveTaskTeam.1';
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -40,6 +39,7 @@ class AccordionMenu extends Component {
                 <Panel.Heading>
                     <Panel.Title toggle>
                         <div className="taskContent">
+                            {' '}
                             <table className="table table-content">
                                 <thead>
                                     <tr>
@@ -47,10 +47,12 @@ class AccordionMenu extends Component {
                                         <th> {element.project} </th>
                                         <th> {element.description} </th>
                                         <th>
-                                            <b>{element.state}</b>
+                                            {' '}
+                                            <b>{element.state}</b>{' '}
                                         </th>
                                         <th> {element.startDate} </th>
                                         <th>
+                                            {' '}
                                             {this.state.type == 'Ongoing' ? (
                                                 <MarkTaskAsFinished
                                                     id={element.taskID}
