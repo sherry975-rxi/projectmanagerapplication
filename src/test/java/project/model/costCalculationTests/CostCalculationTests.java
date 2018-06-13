@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CostCalculationTests {
 
@@ -24,6 +22,7 @@ public class CostCalculationTests {
     Report report;
     CostCalculationInterface calculationFirst, calculationLast, calculationFirstAndLAst, calculationAverage;
 
+    CostCalculationFactory costCalculationFactory;
 
     List<ProjectCollaborator> collaborators;
 
@@ -98,11 +97,35 @@ public class CostCalculationTests {
 
 
     /**
+     * This test confirms the Cost Calculation Factory is working correctly
+     *
+     */
+    @Test
+    public void testCostCalculationFactory(){
+        // GIVEN a cost calculation factory
+        costCalculationFactory = new CostCalculationFactory();
+
+        // WHEN fetching for an existing cost calculation type
+        assertNotEquals(costCalculationFactory.getCostCalculationMethod("CI").orElse(null), null);
+
+        // THEN the output must not be null, and contain the matching Cost Calculator
+        assertTrue(costCalculationFactory.getCostCalculationMethod("CI").orElse(null) instanceof FirstCollaboratorCost);
+        assertTrue(costCalculationFactory.getCostCalculationMethod("CF").orElse(null) instanceof LastCollaboratorCost);
+        assertTrue(costCalculationFactory.getCostCalculationMethod("CM").orElse(null) instanceof AverageCollaboratorCost);
+        assertTrue(costCalculationFactory.getCostCalculationMethod("CIFM").orElse(null) instanceof FirstAndLastCollaboratorCost);
+
+
+        // AND WHEN fetching an inexistent cost calculation method, it must return an empty optional
+        assertEquals(costCalculationFactory.getCostCalculationMethod("Fail").orElse(null), null);
+    }
+
+
+
+    /**
      * This test confirms that the method findEarliestCollaborator() and the method
      * findLatestCollaborator() will return, correspondingly the first and last project collaborator
      * that provided a task report
      */
-
     @Test
     public void testFindEarliestAndLatestCollaborators(){
 

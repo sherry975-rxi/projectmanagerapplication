@@ -28,15 +28,11 @@ public class US377CollectionOfCancelledTasksFromAProjectController {
 	}
 
 	/**
-	 * Constructor
+	 * Setter for project
 	 *
 	 * @param project
 	 *            Project ID of the project with which this controllers will work
 	 */
-	public US377CollectionOfCancelledTasksFromAProjectController(Project project) {
-		this.project = project;
-	}
-
 	public void setProject(Project project) {
 		this.project = project;
 	}
