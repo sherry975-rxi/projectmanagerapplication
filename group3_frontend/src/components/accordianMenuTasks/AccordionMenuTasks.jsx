@@ -11,14 +11,13 @@ import { bindActionCreators } from 'redux';
 import ProjectTasks from './../../pages/tasks/ProjectTasks';
 import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
 
-
 class AccordionMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
             activeKey: '1',
-            toggle: true,
-            updated: true
+            rotated: false,
+            arrow: 'notRotated',
         };
     }
 
@@ -30,18 +29,20 @@ class AccordionMenu extends Component {
         return Constants.TASKS.map(element => <th> {element}</th>);
     }
 
-    refreshPage() {
-        this.setState({ updated: this.props.updated })
+
+    toggle(key) {
+        this.setState({ rotated: !this.state.rotated })
+        document.getElementById(key).className = this.state.rotated ? 'notRotated' : 'rotatedArrow'
     }
 
     renderList(list) {
         let key = 0;
         return (
 
-            handleTaskHeaders(list).map((element) =>
+            handleTaskHeaders(list).map((element, index) =>
                 <Panel eventKey={key}>
                     <Panel.Heading>
-                        <Panel.Title toggle={this.state.toggle}><div className="taskContent"> <table className="table table-content">
+                        <Panel.Title toggle><div className="taskContent" onClick={() => this.toggle(index)}> <table className="table table-content">
                             <thead>
                                 <tr>
                                     <th> {element.taskID} </th>
@@ -49,14 +50,11 @@ class AccordionMenu extends Component {
                                     <th> {element.description} </th>
                                     <th> <b>{element.state}</b> </th>
                                     <th> {element.startDate} </th>
-                                    <th className='finishButton'> {element.state != 'FINISHED' ? <MarkTaskAsFinished
-                                        id={element.taskID}
-                                        project={element.project}
-                                        onClick={this.refreshPage}
-                                    /> : ''}
+                                    <th> {element.finishDate} </th>
+                                    <th> <div id={index}><span className="glyphicon glyphicon-chevron-right"
+                                    /> </div></th>
+                                    <a className="key">{key++}</a>
 
-                                        <a className="key">{key++}</a>
-                                    </th>
                                 </tr>
                             </thead>
                         </table></div></Panel.Title>
