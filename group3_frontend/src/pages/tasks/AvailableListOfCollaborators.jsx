@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './ProjectCost.css';
 import {
     MenuItem,
     DropdownButton
