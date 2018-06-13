@@ -275,9 +275,9 @@ public class RestProjectTasksController {
     }
 
     /**
-     * This methods gets the list of unfinished tasks from a project
+     * This methods gets the list of not started tasks from a project
      *
-     * @param projid Id of the project to search for finished tasks
+     * @param projid Id of the project to search for not started tasks
      *
      * @return List of not started tasks from the project
      */

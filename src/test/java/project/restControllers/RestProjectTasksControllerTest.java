@@ -484,6 +484,33 @@ public class RestProjectTasksControllerTest {
 
     }
 
+    /**
+     * GIVEN a project id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/all
+     * THEN we receive a valid message with a 200 Ok and a list of not started tasks from project
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnNotStartedTasks () throws Exception {
+
+        // expected list of not started tasks
+        projectTasks.add(task);
+        projectTasks.add(task2);
+
+
+        // GIVEN
+        int projectId = 01;
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        // WHEN
+        when(taskService.getProjectUnstartedTasks(project)).thenReturn(projectTasks);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/"+ projectId + "/tasks/notstarted").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getProjectUnstartedTasks(project);
+    }
+
 
 
 
