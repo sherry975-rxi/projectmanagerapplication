@@ -35,19 +35,7 @@ public class RestProjectController  {
         this.userService = userService;
         this.taskService = taskService;
     }
-
-    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
-    @RequestMapping(value = "/{projid}/activeTeam", method = RequestMethod.GET)
-    public ResponseEntity<List<ProjectCollaborator>> getProjectTeam(@PathVariable int projid) {
-
-        Project project = projectService.getProjectById(projid);
-
-        List <ProjectCollaborator> projCollabs = projectService.getActiveProjectTeam(project);
-
-        return ResponseEntity.ok().body(projCollabs);
-    }
-
-
+    
     /**
      * This method returns a ResponseEntity that contains all the active projects from the project service with a link to open each project
      * @return ResponseEntity with all the active projects
