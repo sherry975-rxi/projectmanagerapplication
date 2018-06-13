@@ -370,6 +370,14 @@ public class RestProjectTasksController {
         return new ResponseEntity<>(activeTeam, HttpStatus.OK);
     }
 
+
+    /**
+     * This method returns the list of Project collaborators that are not assigned to a certain task
+     * and is not the project Manager of that project
+     * @param projid
+     * @param taskid
+     * @return
+     */
     @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
     @RequestMapping(value = "{taskid}/collabsAvailableForTask", method = RequestMethod.GET)
     public ResponseEntity<List<ProjectCollaborator>> getProjectTeamNotAddedToTask(@PathVariable int projid,  @PathVariable String taskid) {
