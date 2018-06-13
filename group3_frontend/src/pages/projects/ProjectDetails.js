@@ -30,6 +30,8 @@ class ProjectDetails extends Component {
         });
     }
 
+
+    //Some of these parameters will be transfered to the accordion
     renderProject() {
         var projectWithDetails = this.state.project;
         var projectManagerX = this.state.projectManager;
@@ -60,6 +62,7 @@ class ProjectDetails extends Component {
         );
     }
 
+    
     render() {
         if (this.state.message === '') {
             return <Error message={this.state.message} />;
