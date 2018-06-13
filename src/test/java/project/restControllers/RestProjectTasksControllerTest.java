@@ -442,6 +442,48 @@ public class RestProjectTasksControllerTest {
 
     }
 
+    /**
+     * GIVEN
+     * a task id,
+     * project id
+     * and an available project collaborator not in the task
+     *
+     * WHEN
+     * we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     *
+     * THEN
+     * we receive a valid message with a 200 Ok and a list
+     * of Project collaborators that are not assigned to a certain task
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnProjectTeamNotAddedToTask() throws Exception {
+
+        // GIVEN
+        int projectId = 01;
+        String taskid = "01";
+
+        ProjectCollaborator pcInes = new ProjectCollaborator(uInes, 20);
+        List<ProjectCollaborator> team = new ArrayList<>();
+        team.add(pcInes);
+
+        // WHEN
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+        when(projectService.getActiveProjectTeam(project)).thenReturn(team);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/" + taskid + "/collabsAvailableForTask").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+        verify(projectService, times(1)).getActiveProjectTeam(project);
+        verify(projectService, times(1)).getProjectById(any(Integer.class));
+
+
+    }
+
 
 
 
