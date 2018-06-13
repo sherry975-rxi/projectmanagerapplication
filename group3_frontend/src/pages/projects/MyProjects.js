@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
 import MediumButton from './../../components/button/mediumButton';
+import ProjectsTable from '../../components/projectsTable/ProjectsTable';
 
 class MyProjects extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class MyProjects extends Component {
 
     getManagerButton(pmEmail, projId) {
         let buttons = '';
-        if (pmEmail == this.AuthService.getProfile().sub) {
+        if (pmEmail === this.AuthService.getProfile().sub) {
             buttons = (
                 <td>
                     <Link to={'/projectdetails/' + projId}>
@@ -80,25 +81,7 @@ class MyProjects extends Component {
         if (this.state.message != null) {
             return <Error message={this.state.message} />;
         } else {
-            return (
-                <div className="ActiveProjects">
-                    <h3>
-                        <b>Active Projects</b>
-                    </h3>
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Project ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Project Manager Name</th>
-                                <th>Project Manager Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>{this.renderProjects()}</tbody>
-                    </table>
-                </div>
-            );
+            return <ProjectsTable projects={this.state.projects} />;
         }
     }
 }
