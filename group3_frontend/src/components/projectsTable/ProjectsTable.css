@@ -46,10 +46,14 @@
     max-height: 500px;
     transition: max-height 1s ease-in-out;
 }
+.project-table .status-project-icon.active {
+    background-color: #2ecc71;
+}
+
 .project-table .status-project-icon {
-    width: 15px;
-    height: 15px;
-    background-color: #ccc;
+    width: 10px;
+    height: 10px;
+    background-color: #ecf0f1;
     display: inline-block;
     border-radius: 50%;
 }
@@ -58,8 +62,8 @@
     margin-top: 8px;
     background-color: white;
     font-weight: bold;
-    color: rgb(135, 190, 178);
-    border: 2px solid rgb(135, 190, 178);
+    color: #2ecc71;
+    border: 2px solid #2ecc71;
     border-radius: 15px;
     width: 38px;
     padding-right: 2px;

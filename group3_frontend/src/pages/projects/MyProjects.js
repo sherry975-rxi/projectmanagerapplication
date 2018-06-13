@@ -9,7 +9,8 @@ class MyProjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: []
+            projects: [],
+            message: ''
         };
 
         this.AuthService = new AuthService();
@@ -29,18 +30,24 @@ class MyProjects extends Component {
         });
     }
 
-    // this method renders all the buttons and badges exclusive to the Project manager
+    getManagerButton(pmEmail, projId) {
+        let buttons = '';
+        if (pmEmail == this.AuthService.getProfile().sub) {
+            buttons = (
+                <td>
+                    <Link to={'/projectdetails/' + projId}>
+                        <MediumButton text="Edit" />
+                    </Link>
+                </td>
+            );
+        }
+        return buttons;
+    }
 
     renderProjects() {
         return this.state.projects.map((projectItem, index) => {
             return (
                 <tr className="line" key={index}>
-                    <td>
-                        {this.getManagerOptions(
-                            projectItem.projectManager.email,
-                            projectItem.projectId
-                        )}
-                    </td>
                     <td>{projectItem.projectId}</td>
                     <td>{projectItem.name}</td>
                     <td>{projectItem.description}</td>
@@ -51,6 +58,10 @@ class MyProjects extends Component {
                             <MediumButton text="Details" />
                         </Link>
                     </td>
+                    {this.getManagerButton(
+                        projectItem.projectManager.email,
+                        projectItem.projectId
+                    )}
                 </tr>
             );
         });
@@ -63,12 +74,11 @@ class MyProjects extends Component {
             return (
                 <div className="ActiveProjects">
                     <h3>
-                        <b>My Projects</b>
+                        <b>Active Projects</b>
                     </h3>
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                                <th />
                                 <th>Project ID</th>
                                 <th>Name</th>
                                 <th>Description Date</th>

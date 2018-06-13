@@ -28,7 +28,14 @@ class ProjectsTableRow extends Component {
             <Fragment>
                 <tr className="project-row">
                     <td>
-                        <span className={'status-project-icon'} />
+                        <span
+                            className={
+                                'status-project-icon ' +
+                                (this.props.project.projectActive
+                                    ? 'active'
+                                    : '')
+                            }
+                        />
                     </td>
                     <td>{this.props.project.projectName}</td>
                     <td>{this.getManagerOptions()}</td>
