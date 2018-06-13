@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel, Checkbox } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel, Checkbox, Button } from "react-bootstrap";
 import AuthService from './../loginPage/AuthService';
 import ListPossibleProjectManagers from './ListPossibleProjectManagers';
 
@@ -9,7 +9,7 @@ class CreateProject extends Component {
         this.state = {
             name: "",
             description: "",
-            manager: { name: "None Selected!"},
+            projectManager: { name: "None Selected!"},
             budget: ""
         };
         this.AuthService = new AuthService();
@@ -17,10 +17,45 @@ class CreateProject extends Component {
     }
 
 
+    validateForm() {
+        return (this.state.name.length > 0 &&
+            this.state.description.length > 0 &&
+            this.state.budget > 0 &&
+            this.state.projectManager.email != null);
+    }
+
+
     selectManager(event) {
         this.setState({
-            manager: event
+            projectManager: event
         })
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+
+        const {name,
+        description,
+        projectManager,
+        budget} = this.state;
+
+        const projectDTO = {name,
+            description,
+            projectManager,
+            budget};
+
+        this.AuthService.fetch(
+            `/projects/`,
+            {
+                body: JSON.stringify(projectDTO),
+                method: 'POST'
+            }
+        ).then(responseData => {
+            console.log(responseData);
+            window.location.href = `/activeprojects`;
+        });
+
+
     }
 
     handleChange = event => {
@@ -56,7 +91,7 @@ class CreateProject extends Component {
                             onChange={this.handleChange}
                         />
                     </FormGroup>
-                    <p> Project Manager ({this.state.manager.name})  </p>
+                    <p> Project Manager ({this.state.projectManager.name})  </p>
                     <ListPossibleProjectManagers onSelect={this.selectManager}/>
 
                     <br />
@@ -73,17 +108,10 @@ class CreateProject extends Component {
                         />
                     </FormGroup>
 
-                    <FormGroup controlId="calculationMethods">
-                        <Checkbox checked inline>Initial Collaborator Cost</Checkbox>{' '}
-                        <Checkbox checked inline>Final Collaborator Cost</Checkbox>{' '}
-                        <Checkbox checked inline>Average Collaborator Cost</Checkbox>
-                    </FormGroup>
 
-                    <button
-                        className="btn btn-primary" /*onClick={this.userDetail}*/
-                    >
-                        Create
-                    </button>
+                    <Button block className="btn btn-primary" disabled={!this.validateForm()} type="submit" >
+                        Create Project
+                    </Button>
                 </form>
             </div>
         );
