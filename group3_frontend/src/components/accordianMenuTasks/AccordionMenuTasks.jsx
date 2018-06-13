@@ -6,6 +6,8 @@ import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import { connect } from 'react-redux';
 
+import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
+
 class AccordionMenu extends Component {
     constructor(props) {
         super(props);
