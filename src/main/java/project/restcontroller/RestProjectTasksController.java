@@ -283,9 +283,9 @@ public class RestProjectTasksController {
     }
 
     /**
-     * This methods gets the list of unfinished tasks from a project
+     * This methods gets the list of not started tasks from a project
      *
-     * @param projid Id of the project to search for finished tasks
+     * @param projid Id of the project to search for not started tasks
      *
      * @return List of not started tasks from the project
      */
@@ -361,6 +361,7 @@ public class RestProjectTasksController {
     @RequestMapping(value = "{taskid}/activeTeam", method = RequestMethod.GET)
     public ResponseEntity<List<TaskCollaborator>> getActiveTaskTeam (@PathVariable int projid, @PathVariable String taskid) {
 
+        projectService.getProjectById(projid);
         Task task = taskService.getTaskByTaskID(taskid);
 
         List<TaskCollaborator> team = task.getTaskTeam();

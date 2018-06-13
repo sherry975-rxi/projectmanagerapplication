@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import './dist/toggle-switch.css'
 import './dist/FetchTask.css'
-import { updateAllTasks, updateFinishedTasks, updateNotStartedTasks, updateStandByTasks, updateOngoingTasks } from './../../actions/projectTasksActions';
+import { updateAllTasks, updateFinishedTasks, updateNotStartedTasks, updateOngoingTasks } from './../../actions/userTasksActions';
 
 
 class FetchTaskButton extends Component {
@@ -54,9 +54,6 @@ class FetchTaskButton extends Component {
                     <input id="notStarted" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "4")} />
                     <label class="buttonFont" for="notStarted" eventKey="1" >Not Started</label>
 
-                    <input id="standBy" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "5")} />
-                    <label class="buttonFont" for="standBy" eventKey="1" >Stand By</label>
-
                     <a></a>
                 </div>
             </div>
@@ -68,5 +65,5 @@ class FetchTaskButton extends Component {
 
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ updateAllTasks, updateFinishedTasks, updateNotStartedTasks, updateStandByTasks, updateOngoingTasks }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ updateAllTasks, updateFinishedTasks, updateNotStartedTasks, updateOngoingTasks }, dispatch)
 export default connect(null, mapDispatchToProps)(FetchTaskButton);

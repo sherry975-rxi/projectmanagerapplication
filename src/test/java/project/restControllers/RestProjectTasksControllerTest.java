@@ -22,6 +22,7 @@ import project.model.taskstateinterface.OnGoing;
 import project.restcontroller.RestProjectTasksController;
 import project.services.ProjectService;
 import project.services.TaskService;
+import project.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ public class RestProjectTasksControllerTest {
     private ProjectService projectService;
 
     @Mock
+    private UserService userService;
+
+    @Mock
     private HttpServletRequest req;
 
     @InjectMocks
@@ -51,6 +55,7 @@ public class RestProjectTasksControllerTest {
     private JacksonTester<List<Task>> jacksonProjectTeamList;
     private JacksonTester<Task> jacksonTask;
     private JacksonTester<TaskDTO> jacksonTaskDto;
+    private JacksonTester<User> jacksonUser;
 
     private MockMvc mockMvc;
     private User uDaniel;
@@ -438,6 +443,202 @@ public class RestProjectTasksControllerTest {
         //THEN
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+
+
+    }
+
+    /**
+     * GIVEN
+     * a task id,
+     * project id
+     * and an available project collaborator not in the task
+     *
+     * WHEN
+     * we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     *
+     * THEN
+     * we receive a valid message with a 200 Ok and a list
+     * of Project collaborators that are not assigned to a certain task
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnProjectTeamNotAddedToTask() throws Exception {
+
+        // GIVEN
+        int projectId = 01;
+        String taskid = "01";
+
+        ProjectCollaborator pcInes = new ProjectCollaborator(uInes, 20);
+        List<ProjectCollaborator> team = new ArrayList<>();
+        team.add(pcInes);
+
+        // WHEN
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+        when(projectService.getActiveProjectTeam(project)).thenReturn(team);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/" + taskid + "/collabsAvailableForTask").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+        verify(projectService, times(1)).getActiveProjectTeam(project);
+        verify(projectService, times(1)).getProjectById(any(Integer.class));
+
+
+    }
+
+    /**
+     * GIVEN a project id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/all
+     * THEN we receive a valid message with a 200 Ok and a list of not started tasks from project
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnNotStartedTasks () throws Exception {
+
+        // expected list of not started tasks
+        projectTasks.add(task);
+        projectTasks.add(task2);
+
+
+        // GIVEN
+        int projectId = 01;
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        // WHEN
+        when(taskService.getProjectUnstartedTasks(project)).thenReturn(projectTasks);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/"+ projectId + "/tasks/notstarted").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getProjectUnstartedTasks(project);
+    }
+
+    /**
+     * GIVEN a project  and task id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     * THEN we receive a valid message with a 200 Ok and task updated with collab added
+     * @throws Exception
+     */
+    @Test
+    public void shouldAddCollabToTask () throws Exception {
+
+
+
+        ProjectCollaborator pcInes = new ProjectCollaborator(uInes, 20);
+        List<ProjectCollaborator> team = new ArrayList<>();
+        team.add(pcInes);
+        projectService.addProjectCollaborator(pcInes);
+
+        pcInes.setProject(project);
+
+
+        // GIVEN
+        int projectId = 01;
+        String taskid = "01";
+
+        when(userService.getUserByEmail(any(String.class))).thenReturn(uInes);
+
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(projectService.isUserActiveInProject(any(User.class), any(Project.class))).thenReturn(true);
+        when(projectService.findActiveProjectCollaborator(any(User.class), any(Project.class))).thenReturn(pcInes);
+
+
+        // WHEN
+        when(taskService.getProjectUnstartedTasks(project)).thenReturn(projectTasks);
+        when(taskService.saveTask(any(Task.class))).thenReturn(task);
+
+        MockHttpServletResponse response = mockMvc.perform(post("/projects/" + projectId + "/tasks/"+ taskid + "/addCollab").contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonUser.write(uInes).getJson()))
+                .andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
+    /**
+     * GIVEN
+     * a task id,
+     * project id
+     * and none available project collaborator to add to the task
+     *
+     * WHEN
+     * we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     *
+     * THEN
+     * we receive a message with a 417 EXPECTATION_FAILED
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldNotReturnProjectTeamNotAddedToTask() throws Exception {
+
+        // GIVEN
+        int projectId = 01;
+        String taskid = "01";
+
+        List<ProjectCollaborator> team = new ArrayList<>();
+
+        //empty team
+        //team.add(pcInes);
+
+        // WHEN
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+        when(projectService.getActiveProjectTeam(project)).thenReturn(team);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/" + taskid + "/collabsAvailableForTask").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.EXPECTATION_FAILED.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+        verify(projectService, times(1)).getActiveProjectTeam(project);
+        verify(projectService, times(1)).getProjectById(any(Integer.class));
+
+
+    }
+
+    /**
+     * GIVEN
+     * a task id,
+     * project id
+     * and the available project collaborator is the project manager
+     *
+     * WHEN
+     * we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     *
+     * THEN
+     * we receive a message with a 417 EXPECTATION_FAILED
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldNotReturnProjectTeamNotAddedToTask2() throws Exception {
+
+        // GIVEN
+        int projectId = 01;
+        String taskid = "01";
+
+        ProjectCollaborator pcDaniel = new ProjectCollaborator(uDaniel, 20);
+        List<ProjectCollaborator> team = new ArrayList<>();
+        team.add(pcDaniel);
+
+        // WHEN
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+        when(projectService.getActiveProjectTeam(project)).thenReturn(team);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/" + taskid + "/collabsAvailableForTask").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.EXPECTATION_FAILED.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+        verify(projectService, times(1)).getActiveProjectTeam(project);
+        verify(projectService, times(1)).getProjectById(any(Integer.class));
 
 
     }

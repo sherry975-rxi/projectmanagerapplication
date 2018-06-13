@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
 import AuthService from './../loginPage/AuthService';
 
 class AddTask extends Component {
@@ -7,10 +7,16 @@ class AddTask extends Component {
         super(props);
         this.state = {
             description: "",
-            projectId: ""
+            hideSuccessInfo: 'hide-code',
+            message: ''
         };
         this.AuthService = new AuthService()
     }
+
+    validateForm() {
+        return this.state.description;
+    }
+
 
     handleChange = event => {
         this.setState({
@@ -20,29 +26,34 @@ class AddTask extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const { description, projectId } = this.state;
+        const { description } = this.state;
 
         const taskDetails = {
-            description,
-            projectId
+            description
         };
 
         console.log(taskDetails);
 
-        this.AuthService.fetch("/projects/" + this.state.projectId + "/tasks/", {
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/`, {
             body: JSON.stringify(taskDetails),
             method: "POST"
-        })
-            .then(function (myJson) {
-                console.log(myJson);
-            });
-    };
+        }
+         ).then(responseData => {
+             console.log(responseData);
+            window.location.href = `/projects/${this.props.match.params.projectID}/tasks/`;
+    });
+   
+         this.setState({
+             hideSuccessInfo: ''
+         });
+};
+
 
     render() {
         return (
             <div className=" table-striped">
                 <h3>
-                    <b>Add Task</b>
+                    <b>Create task</b>
                 </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="description" bsSize="large">
@@ -55,21 +66,22 @@ class AddTask extends Component {
                         />
                     </FormGroup>
 
-                    <FormGroup controlId="projectId" bsSize="large">
-                        <ControlLabel>Project ID</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.projectId}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-
                     <button
-                        className="btn btn-primary" /*onClick={this.userDetail}*/
+                        block
+                        className="btn btn-primary" 
+                        disabled={!this.validateForm()}
+                        type="submit"
                     >
                         Create
                     </button>
+                    <Alert
+                        bsStyle="success"
+                        className={this.state.hideSuccessInfo}
+                    >
+                        <strong>
+                            Task successfully created! <br />
+                        </strong>
+                    </Alert>
                 </form>
             </div>
         );

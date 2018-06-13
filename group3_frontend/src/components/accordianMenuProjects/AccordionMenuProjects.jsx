@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PanelGroup, Panel } from 'react-bootstrap';
-import * as Constants from '../utils/titleConstants';
+import { PROJECTS } from '../utils/titleConstants';
 import SmallButton from '../button/smallButton.jsx';
 import { handleProjectHeaders } from '../utils/handleList';
 import '../accordianMenuTasks/AccordionMenuTasks.css';
@@ -10,9 +10,6 @@ class AccordionMenuProjects extends Component {
         super(props);
         this.state = {
             activeKey: '1'
-            // projectManagerId:
-            //     handleProjectHeaders.project.project_manager_user_id,
-            // projectManagerName: ''
         };
     }
 
@@ -20,58 +17,44 @@ class AccordionMenuProjects extends Component {
         this.setState({ activeKey });
     }
 
-    // fetchProjectManager() {
-    //     this.AuthService.fetch(
-    //         `/users/id/` + this.props.list.[].project_manager_user_id,
-    //         {
-    //             method: 'get'
-    //         }
-    //     ).then(responseData => {
-    //         this.setState({
-    //             projectManagerName: responseData[0]['name']
-    //         });
-    //     });
-    // }
-
     renderTitles() {
-        return Constants.PROJECTS.map((element, index) => (
+        return PROJECTS.map((element, index) => (
             <th key={index}> {element}</th>
         ));
     }
 
     renderList(list) {
-        let key = 1;
-        return handleProjectHeaders(list).map(element => (
-            <Panel eventKey={key}>
+        return handleProjectHeaders(list).map((element, index) => (
+            <Panel eventKey={index} key={index}>
                 <Panel.Heading>
                     <Panel.Title toggle>
                         <div className="projectContent">
                             <table className="table table-content">
                                 <thead>
                                     <tr>
-                                        {element.map(
-                                            detail => (
-                                                <th>
-                                                    {' '}
-                                                    {detail}{' '}
-                                                    {console.log(detail)}
-                                                </th>
-                                            ),
-                                            key++
-                                        )}
+                                        {element.map((detail, idx) => (
+                                            <th key={idx}>
+                                                {detail} {console.log(detail)}
+                                            </th>
+                                        ))}
 
                                         <th>
-                                            <SmallButton text="Edit" />{' '}
+                                            <SmallButton text="Edit" />
                                         </th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    <tr />
+                                </tbody>
                             </table>
                         </div>
                     </Panel.Title>
                 </Panel.Heading>
                 <Panel.Body collapsible>
                     <ul className="bodyContent">
-                        {element.map(detail => <li> {detail} </li>, key++)}
+                        {element.map((detail, key) => (
+                            <li key={key}> {detail} </li>
+                        ))}
                     </ul>
                 </Panel.Body>
             </Panel>
@@ -95,6 +78,8 @@ class AccordionMenuProjects extends Component {
                 </Panel>
                 {this.renderList(this.props.list)}
             </PanelGroup>
+
+            // <projectsTableRow project={this.props.projects[0]} />
         );
     }
 }
