@@ -8,10 +8,10 @@ import { connect } from 'react-redux';
 import MediumButton from './../../components/button/mediumButton';
 import { Link } from 'react-router-dom';
 
-import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
 import CreateRequest from '../../pages/requests/CreateRequest';
 import DeleteTask from '../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from '../../pages/tasks/AvailableListOfCollaborators';
+import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam.1';
 
 
 class AccordionMenu extends Component {
@@ -98,7 +98,7 @@ class AccordionMenu extends Component {
 
                                     </th>
                                     <th>
-                                        {<TaskTeam1
+                                        {<ActiveTaskTeam
                                             id={element.taskID}
                                             project={element.project}
                                         />

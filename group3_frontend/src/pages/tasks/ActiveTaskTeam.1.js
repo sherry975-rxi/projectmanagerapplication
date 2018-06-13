@@ -6,7 +6,7 @@ import Error from './../../components/error/error';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 
 
-class TaskTeam1 extends Component {
+class ActiveTaskTeam extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -65,4 +65,4 @@ class TaskTeam1 extends Component {
     }
 }
 
-export default TaskTeam1;
+export default ActiveTaskTeam;
