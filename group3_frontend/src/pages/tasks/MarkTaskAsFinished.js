@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './MarkTaskAsFinished.css';
 import AuthService from '../loginPage/AuthService';
+import { updateFinishedTasks } from './../../actions/projectTasksActions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class MarkTaskAsFinished extends Component {
     constructor(props) {
@@ -16,15 +19,16 @@ class MarkTaskAsFinished extends Component {
                 method: 'PATCH'
             }
         ).then(responseData => {
-            console.log(responseData);
-            this.props.onClick();
+            this.props.updateFinishedTasks(this.props.project, this.props.id)
+
         });
+
     };
 
     render() {
         return (
             <div className=" table-striped">
-                <button className="buttonFinished" onClick={this.handleClick}>
+                <button className="buttonFinished" onClick={this.handleClick.bind(this)}>
                     Finish
                 </button>
             </div>
@@ -32,4 +36,5 @@ class MarkTaskAsFinished extends Component {
     }
 }
 
-export default MarkTaskAsFinished;
+const mapDispatchToProps = dispatch => bindActionCreators({ updateFinishedTasks }, dispatch)
+export default connect(null, mapDispatchToProps)(MarkTaskAsFinished);
