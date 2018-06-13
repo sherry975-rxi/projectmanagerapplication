@@ -29,15 +29,6 @@ public class US210GetAllFinishedUserTasksInDecreasingOrderController {
 
 	}
 
-	/**
-	 * Creator of the controllers, receives a user
-	 * @param user
-	 */
-	public US210GetAllFinishedUserTasksInDecreasingOrderController(User user) {
-		this.user = user;
-	}
-	
-
 
 	/**
 	 * Creator of the controllers, receives a user
