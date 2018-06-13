@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
 import MediumButton from '../../components/button/mediumButton.jsx';
+import Moment from 'react-moment';
 
 class ProjectDetails extends Component {
     constructor(props) {
@@ -43,8 +44,16 @@ class ProjectDetails extends Component {
                 <td>{projectManagerX}</td>
                 <td>{projectWithDetails.effortUnit}</td>
                 <td>{projectWithDetails.budget}</td>
-                <td>{projectWithDetails.startdate}</td>
-                <td>{projectWithDetails.finishdate}</td>
+                <td>
+                <Moment format="YYYY/MM/DD">
+                            {projectWithDetails.startdate}
+                </Moment>
+                </td>
+                <td>
+                <Moment format="YYYY/MM/DD">
+                            {projectWithDetails.finishdate}
+                </Moment>
+                </td>
                 <td>{projectWithDetails.calculationMethod}</td>
                 <td>{projectWithDetails.availableCalculationMethods}</td>
             </tr>
