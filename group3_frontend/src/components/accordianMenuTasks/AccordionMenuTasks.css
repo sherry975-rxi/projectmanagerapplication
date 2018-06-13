@@ -31,13 +31,10 @@
 .table.table-content > thead > tr > th {
     border-bottom: 0px solid #ddd;
     font-weight: normal;
-    height: 60px;
+    height: 70px;
     padding-bottom: 20px;
 }
 
-.table.table-content > thead > tr > th:hover {
-    height: 50px;
-}
 
 .table.table-content {
     font-size: 12px;
@@ -46,6 +43,7 @@
     color: #585858;
     border-bottom: 0px, solid;
     margin: 0px;
+
 }
 
 .panel > .panel-heading {
@@ -76,6 +74,7 @@
     font-size: 13px;
     font-family: 'Oxygen', sans-serif;
     vertical-align: center;
+
 }
 
 
@@ -96,7 +95,6 @@
 
 .panel-body {
     background-image: none;
-    background-color: rgb(248, 248, 248);
     text-decoration: none;
     box-shadow: none;
     padding: 20px;
@@ -117,3 +115,24 @@
 .key {
     display: none;
 }
+
+.finishButton {
+    padding-top: 11px;
+}
+
+.finishButton:not():hover {
+    padding-top: 11px;
+}
+
+
+.table.table-details > thead > tr > th {
+    border-bottom: 0px solid #ddd;
+    font-weight: normal;
+    height: 70px;
+    padding-bottom: 20px;
+    text-align: left;
+    color: #585858;
+    font-size: 12px;
+}
+
+

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './MarkTaskAsFinished.css';
 import AuthService from '../loginPage/AuthService';
+import { updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateOngoingTasks } from './../../actions/projectTasksActions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class MarkTaskAsFinished extends Component {
     constructor(props) {
@@ -16,15 +19,29 @@ class MarkTaskAsFinished extends Component {
                 method: 'PATCH'
             }
         ).then(responseData => {
-            console.log(responseData);
-            this.props.onClick();
+            this.updateTasks();
         });
+
     };
+
+    updateTasks() {
+
+        if (this.props.filter === 'all')
+            this.props.updateAllTasks(this.props.project)
+        else if (this.props.filter === 'finished')
+            this.props.updateFinishedTasks(this.props.project)
+        else if (this.props.filter === 'unfinished')
+            this.props.updateOngoingTasks(this.props.project)
+        else if (this.props.filter === 'notStarted')
+            this.props.updateNotStartedTasks(this.props.project)
+        else
+            this.props.updateStandByTasks(this.props.project)
+    }
 
     render() {
         return (
             <div className=" table-striped">
-                <button className="buttonFinished" onClick={this.handleClick}>
+                <button className="buttonFinished" onClick={this.handleClick.bind(this)}>
                     Finish
                 </button>
             </div>
@@ -32,4 +49,6 @@ class MarkTaskAsFinished extends Component {
     }
 }
 
-export default MarkTaskAsFinished;
+const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
+const mapDispatchToProps = dispatch => bindActionCreators({ updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateOngoingTasks }, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(MarkTaskAsFinished);
