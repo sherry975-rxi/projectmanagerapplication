@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { PanelGroup, Panel } from 'react-bootstrap';
 import './AccordionMenuTasks.css';
 import * as Constants from '../utils/titleConstants';
-import SmallButton from '../button/smallButton.jsx';
 import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
-import AuthService from './../../pages/loginPage/AuthService';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import ProjectTasks from './../../pages/tasks/ProjectTasks';
+import MediumButton from './../../components/button/mediumButton';
+import { Link } from 'react-router-dom';
+
 import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
+
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -98,24 +98,28 @@ class AccordionMenu extends Component {
                                         {<TaskTeam1
                                             id={element.taskID}
                                             project={element.project}
-                                        />}
-                                    </th>
-                                    <th> <p />
-                                        {element.state != 'FINISHED' ? <MarkTaskAsFinished
+                                        />
+                                    }
+                                </th>
+                                <th>
+                                    {' '}
+                                    <p />
+                                    {element.state != 'FINISHED' ? (
+                                        <MarkTaskAsFinished
                                             id={element.taskID}
                                             project={element.project}
-                                        /> : ''}
-                                        <a className="key">{key++}</a>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-
-                    </Panel.Body >
-                </Panel >
-            )
-        )
-
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                    <a className="key">{key++}</a>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </Panel.Body>
+            </Panel>
+        ));
     }
 
     // getTeam(task){

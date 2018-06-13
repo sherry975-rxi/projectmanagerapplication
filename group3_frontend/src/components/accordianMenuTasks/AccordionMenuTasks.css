@@ -23,7 +23,7 @@
     width: 140px;
 }
 
-.table > thead > tr > th:hover {
+.taskContent .table > thead > tr > th:hover {
     border-bottom: 0px solid #ddd;
     width: 140px;
 }
@@ -35,6 +35,9 @@
     padding-bottom: 20px;
 }
 
+.taskContent .table.table-content > thead > tr > th:hover {
+    height: 50px;
+}
 
 .table.table-content {
     font-size: 12px;

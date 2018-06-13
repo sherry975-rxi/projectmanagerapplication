@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
 import project.model.ProjectCollaborator;
+import project.model.User;
 import project.services.ProjectService;
 import project.services.UserService;
 
@@ -140,6 +141,52 @@ public class RestProjCollabController {
 
             Link reference1 = linkTo(RestProjectController.class).slash(projectId).slash("team").withRel("Project Collaborator List");
             projectCollaborator.add(reference1);
+        }
+
+        return response;
+    }
+
+    /**
+     * This method returns a lists of users available to add to a project
+     * it excludes users with a role different from COLLABORATOR and users that are already in the project
+     * @param projectId Id of the project
+     *
+     * @return List of users which are eligible to add to a project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
+            "or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/usersAvailable", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> usersAvailableToAdd(@PathVariable int projectId) {
+
+        Project project = projectService.getProjectById(projectId);
+
+        List <ProjectCollaborator> projectTeam = projectService.getActiveProjectTeam(project);
+        List <User> projectTeamUsers = new ArrayList<>();
+        List <User> allUsers = userService.getAllActiveCollaboratorsFromRepository();
+        List <User> finalUsers= new ArrayList<>();
+        boolean added = false;
+
+        ResponseEntity<List<User>> response = new ResponseEntity<>(finalUsers,HttpStatus.NOT_ACCEPTABLE);
+
+        for ( ProjectCollaborator projCollab : projectTeam) {
+                projectTeamUsers.add(projCollab.getUserFromProjectCollaborator());
+        }
+
+        for( User other : allUsers){
+            added = false;
+            for (User collab : projectTeamUsers){
+                if(!other.getEmail().equals(collab.getEmail()) && added==false && !projectService.isUserActiveInProject(other,project)) {
+                        finalUsers.add(other);
+                        added = true;
+                    }
+            }
+
+        }
+
+
+
+        if(finalUsers.size()>0) {
+            response = new ResponseEntity<>(finalUsers,HttpStatus.OK);
         }
 
         return response;

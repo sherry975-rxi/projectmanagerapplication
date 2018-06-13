@@ -1,0 +1,101 @@
+.project-table {
+    width: 100%;
+}
+#triangle-button {
+    font-size: 20px;
+    color: #ecf0f1;
+}
+
+.project-table .rotate {
+    transform: rotate(90deg);
+}
+.project-table .open-project-details-button {
+    display: inline-block;
+}
+.project-table .project-row td.action-buttons-cell {
+    padding: 0;
+}
+
+.project-table .project-row {
+    height: 70px;
+}
+
+.project-table .project-row td {
+    vertical-align: middle;
+}
+
+.project-table thead th:first-child,
+.project-table .project-row td:first-child {
+    width: 30px;
+    min-width: 30px;
+    max-width: 30px;
+    word-break: break-all;
+    text-align: center;
+}
+
+.project-table thead th:last-child,
+.project-table .project-row td:last-child {
+    width: 35px;
+    min-width: 35px;
+    max-width: 35px;
+}
+.project-table .project-details.project-row td {
+    padding-top: 0px;
+    text-align: left;
+    line-height: 2;
+}
+#description {
+    padding-bottom: 0px;
+    border: none;
+}
+
+.project-table .project-row.hide {
+    max-height: 0;
+    transition: max-height 1s ease-in-out;
+}
+
+.project-table .project-row.open {
+    max-height: 500px;
+    transition: max-height 1s ease-in-out;
+    background-color: #ecf0f1;
+    border: none;
+}
+
+.project-table .status-project-icon.active {
+    background-color: #2ecc71;
+}
+
+.project-table .status-project-icon {
+    width: 10px;
+    height: 10px;
+    background-color: #ecf0f1;
+    display: inline-block;
+    border-radius: 50%;
+}
+.project-table #project-description {
+    font-size: 13px;
+}
+
+.project-badge {
+    font-size: 8px;
+    background-color: white;
+    font-weight: bold;
+    color: rgb(135, 190, 178);
+    border: 2px solid rgb(135, 190, 178);
+    border-radius: 5px;
+    width: 38px;
+    padding: 2px 5px 2px 5px;
+}
+
+#project-manager-badge-cell {
+    text-align: left;
+}
+
+.project-table hr {
+    display: block;
+    height: 2px;
+    border: 0;
+    padding-top: 6px;
+    border-bottom: 2px solid #ccc;
+    margin: 0;
+}
