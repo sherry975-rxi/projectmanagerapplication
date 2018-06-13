@@ -180,7 +180,7 @@ public class RestProjectTasksControllerTest {
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.delete("/projects/1/tasks/" + taskId).accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //THEN: we receive a valid message with 202 Accepted and the task list has to display one less task
-        assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
+        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
 
     }
 

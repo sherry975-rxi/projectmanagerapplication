@@ -4,10 +4,7 @@ import './ProjectsTable.css';
 import { handleProject } from '../utils/handleList';
 import ProjectsTableRow from './ProjectsTableRow';
 
-class ProjectTable extends Component {
-    constructor(props) {
-        super(props);
-    }
+class ProjectsTable extends Component {
 
     renderTitles() {
         return PROJECTS.map((element, index) => (
@@ -35,4 +32,4 @@ class ProjectTable extends Component {
     }
 }
 
-export default ProjectTable;
+export default ProjectsTable;

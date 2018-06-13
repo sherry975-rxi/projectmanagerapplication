@@ -114,19 +114,27 @@ public class RestProjectTasksController {
      *
      * @param taskId Task id of the task to be deleted
      *
-     * @return ResponseBody with 202-ACCEPTED if deleted or 409-CONFLICT if not
+     * @return ResponseBody with 202-ACCEPTED if deleted or 406-NOT_ACCEPTABLE if not
      */
+
     @PreAuthorize("hasRole('ROLE_COLLABORATOR')and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Boolean> deleteTask(@PathVariable String taskId) {
+    public ResponseEntity<Boolean> deleteTask(@PathVariable String taskId, @PathVariable int projid) {
 
         boolean deleted = taskService.deleteTask(taskId);
-        ResponseEntity<Boolean> response = new ResponseEntity<>(deleted, HttpStatus.ACCEPTED);
 
-        if(!deleted) {
+        Project project = projectService.getProjectById(projid);
 
-            response = new ResponseEntity<>(deleted, HttpStatus.CONFLICT);
+        List<Task> projectTasks = taskService.getProjectTasks(project);
 
+        ResponseEntity<Boolean> response = new ResponseEntity<>(deleted, HttpStatus.NOT_ACCEPTABLE);
+        for( Task other : projectTasks) {
+            if (other.getTaskID().equals(taskId)) {
+                deleted =  taskService.deleteTask(taskId);;
+            }
+        }
+        if(deleted){
+            response = new ResponseEntity<>(deleted, HttpStatus.ACCEPTED);
         }
         return response;
     }
