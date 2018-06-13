@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import MediumButton from '../../components/button/mediumButton';
 import { Glyphicon } from 'react-bootstrap';
 import AuthService from '../../pages/loginPage/AuthService';
+import AddUserToProject from '../../pages/projects/AddUserToProject';
 
 
 class ProjectsTableRow extends Component {
@@ -149,7 +150,10 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td>{this.getManagerButtons()}                    
+                    <td>{this.getManagerButtons()}      
+                        <div>
+                            <AddUserToProject project={this.props.project.projectId}/>
+                        </div>              
                     </td>
                 </tr>
             </Fragment>
