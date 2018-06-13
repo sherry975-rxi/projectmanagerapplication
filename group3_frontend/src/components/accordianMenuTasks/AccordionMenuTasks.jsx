@@ -6,6 +6,7 @@ import SmallButton from '../button/smallButton.jsx';
 import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import AuthService from './../../pages/loginPage/AuthService';
+import TaskTeam1 from '../../pages/tasks/ActiveTaskTeam.1';
 
 
 class AccordionMenu extends Component {
@@ -47,7 +48,54 @@ class AccordionMenu extends Component {
                                     <th> {element.description} </th>
                                     <th> <b>{element.state}</b> </th>
                                     <th> {element.startDate} </th>
-                                    <th> {element.state != 'FINISHED' ? <MarkTaskAsFinished
+                                    
+                                </tr>
+                            </thead>
+                        </table></div></Panel.Title>
+                    </Panel.Heading>
+                    <Panel.Body collapsible>
+                        <div className="bodyContent"> <table className="table table-content">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <p>
+                                            <b>Creation date:</b> &nbsp;
+                                                {element.creationDate}
+                                        </p>
+                                        <p>
+                                            <b>Finish date:</b> &nbsp;
+                                            {element.finishDate}
+                                        </p>
+                                        <p>
+                                            <b>Estimated Effort:</b> &nbsp;
+                                            {element.estimatedTaskEffort}
+                                        </p>
+                                        <p>
+                                            <b>Budget:</b> &nbsp;
+                                            {element.taskBudget}
+                                        </p>
+                                        <p>
+                                            <b>Estimated start date:</b> &nbsp;
+                                                {element.estimatedTaskStartDate}
+                                        </p>
+                                        <p>
+                                            <b>Estimated finish date:</b> &nbsp;
+                                                {element.taskDeadline}
+                                        </p>
+                                        <p>
+                                            <b>Cancel date:</b> &nbsp;
+                                            {element.cancelDate}
+                                        </p>
+                                       
+                                    </th>
+                                    <th>
+                                        {<TaskTeam1 
+                                        id={element.taskID}
+                                        project={element.project}
+                                        />}
+                                    </th>
+                                    <th> <p/>
+                                        {element.state != 'FINISHED' ? <MarkTaskAsFinished
                                         id={element.taskID}
                                         project={element.project}
                                     /> : ''}
@@ -56,47 +104,8 @@ class AccordionMenu extends Component {
                                     </th>
                                 </tr>
                             </thead>
-                        </table></div></Panel.Title>
-                    </Panel.Heading>
-                    <Panel.Body collapsible>
-                        <div className="bodyContent">
-
-                            <p>
-                                <b>Creation date:</b> &nbsp;
-                                    {element.creationDate}
-                            </p>
-                            <p>
-                                <b>Finish date:</b> &nbsp;
-                                {element.finishDate}
-                            </p>
-                            <p>
-                                <b>Estimated Effort:</b> &nbsp;
-                                {element.estimatedTaskEffort}
-                            </p>
-                            <p>
-                                <b>Budget:</b> &nbsp;
-                                {element.taskBudget}
-                            </p>
-                            <p>
-                                <b>Estimated start date:</b> &nbsp;
-                                    {element.estimatedTaskStartDate}
-                            </p>
-                            <p>
-                                <b>Estimated finish date:</b> &nbsp;
-                                    {element.taskDeadline}
-                            </p>
-                            <p>
-                                <b>Cancel date:</b> &nbsp;
-                                {element.cancelDate}
-                            </p>
-                            <p>
-                                <b>Team:</b> &nbsp;
-                                {/* {this.getTeam(element)} */}
-                                {/* {this.loadTaskTeamFromServer(element)} */}
-                                {console.log("Teste")}
-                                {console.log(element.taskTeam)}
-                            </p>
-                        </div>
+                            
+                            </table></div>
                     </Panel.Body>
                 </Panel>
             )
