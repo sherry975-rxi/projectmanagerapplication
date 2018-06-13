@@ -2,7 +2,7 @@ const INITIAL_STATE = {
     tasksUpdated: false,
     finishedTasks: [],
     ongoingTasks: [],
-    standbyTasks: [],
+    wihoutCollab: [],
     notStartedTasks: [],
     allTasks: []
 
@@ -15,12 +15,11 @@ export default (state = INITIAL_STATE, action) => {
         case 'ONGOING_FETCHED':
             return { ...state, tasksUpdated: true, ongoingTasks: action.ongoingTasks }
         case 'STANDBYTASKS_FETCHED':
-            return { ...state, tasksUpdated: true, standbyTasks: action.standbyTasks }
+            return { ...state, tasksUpdated: true, standbyTasks: action.wihoutCollab }
         case 'NOTSTARTED_FETCHED':
-            return { ...state, tasksUpdated: true, notStarted: action.standbyTasks }
+            return { ...state, tasksUpdated: true, notStartedTasks: action.notStartedTasks }
         case 'ALLTASKS_FETCHED':
             return { ...state, tasksUpdated: true, allTasks: action.allTasks }
-
         default:
             return state;
     }
