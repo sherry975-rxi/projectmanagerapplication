@@ -5,9 +5,6 @@ import { handleProject } from '../utils/handleList';
 import ProjectsTableRow from './ProjectsTableRow';
 
 class ProjectsTable extends Component {
-    constructor(props) {
-        super(props);
-    }
 
     renderTitles() {
         return PROJECTS.map((element, index) => (

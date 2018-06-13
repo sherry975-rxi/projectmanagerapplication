@@ -28,16 +28,19 @@ class ProjectsTableRow extends Component {
 
     getManagerButtons() {
         if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub) {
+
             return <div> 
                         <p /> 
                         <Link
                             to={'/projects/' + this.props.project.projectId + '/tasks'}
+                            activeClassName="active"
                             >
                             <MediumButton text = "View Tasks" />
                         </Link>
                         <p />
                         <Link
                             to={'/projects/' + this.props.project.projectId + '/addtask'}
+                            activeClassName="active"
                                 >
                             <MediumButton text="Create task" />
                         </Link> 
@@ -56,7 +59,12 @@ class ProjectsTableRow extends Component {
                             <MediumButton text="Change Calculation Method" />
                         </Link> 
                         <p /> 
-                
+                        <Link
+                            to={'/requests/'}
+                            activeClassName="active"
+                            >
+                            <MediumButton text="View Requests" />
+                        </Link>
                 </div>;
         }
     }
