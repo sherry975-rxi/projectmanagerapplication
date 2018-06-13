@@ -5,7 +5,6 @@ import { Glyphicon } from 'react-bootstrap';
 import AuthService from '../../pages/loginPage/AuthService';
 import AddUserToProject from '../../pages/projects/AddUserToProject';
 
-
 class ProjectsTableRow extends Component {
     constructor(props) {
         super(props);
@@ -27,46 +26,77 @@ class ProjectsTableRow extends Component {
         } else return <div> </div>;
     }
 
-    getManagerButtons() {
-        if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub) {
+    getProjectInfo() {
+        if (
+            this.props.project.projectManagerEmail ===
+            this.AuthService.getProfile().sub
+        ) {
+            return (
+                <div>
+                    <b>Budget:&nbsp;</b>
+                    {this.props.project.projectBudget}
+                    <br /> <b>Calculation method:&nbsp;</b>
+                    {this.props.project.projectCalculationMethod}
+                    <br />
+                    {this.props.project.button}
+                    <br />
+                </div>
+            );
+        } else return <div> </div>;
+    }
 
-            return <div> 
-                        <p /> 
-                        <Link
-                            to={'/projects/' + this.props.project.projectId + '/tasks'}
-                            activeClassName="active"
-                            >
-                            <MediumButton text = "View Tasks" />
-                        </Link>
-                        <p />
-                        <Link
-                            to={'/projects/' + this.props.project.projectId + '/addtask'}
-                            activeClassName="active"
-                                >
-                            <MediumButton text="Create task" />
-                        </Link> 
-                        <p /> 
-                        <Link
-                            to={'/projectcost/' + this.props.project.projectId}
-                            activeClassName="active"
-                            >
-                            <MediumButton text="Calculate Project Cost" />
-                        </Link>
-                        <p />  
-                        <Link
-                            to={'/selectprojectcostcalculation/' + this.props.project.projectId}
-                            activeClassName="active"
-                            >
-                            <MediumButton text="Change Calculation Method" />
-                        </Link> 
-                        <p /> 
-                        <Link
-                            to={'/requests/'}
-                            activeClassName="active"
-                            >
-                            <MediumButton text="View Requests" />
-                        </Link>
-                </div>;
+    getManagerButtons() {
+        if (
+            this.props.project.projectManagerEmail ===
+            this.AuthService.getProfile().sub
+        ) {
+            return (
+                <div>
+                    <p />
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/tasks'
+                        }
+                        activeClassName="active"
+                    >
+                        <MediumButton text="View Tasks" />
+                    </Link>
+                    <p />
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/addtask'
+                        }
+                        activeClassName="active"
+                    >
+                        <MediumButton text="Create task" />
+                    </Link>
+                    <p />
+                    <Link
+                        to={'/projectcost/' + this.props.project.projectId}
+                        activeClassName="active"
+                    >
+                        <MediumButton text="Calculate Project Cost" />
+                    </Link>
+                    <p />
+                    <Link
+                        to={
+                            '/selectprojectcostcalculation/' +
+                            this.props.project.projectId
+                        }
+                        activeClassName="active"
+                    >
+                        <MediumButton text="Change Calculation Method" />
+                    </Link>
+                    <p />
+                    <Link to={'/requests/'} activeClassName="active">
+                        <MediumButton text="View Requests" />
+                    </Link>
+                </div>
+            );
         }
     }
 
@@ -88,6 +118,7 @@ class ProjectsTableRow extends Component {
                     <td id="project-manager-badge-cell">
                         {this.getManagerIcon()}
                     </td>
+                    <td>{this.props.project.projectDescription}</td>
                     <td>{this.props.project.projectStatusName}</td>
                     <td className="action-buttons-cell">
                         <span
@@ -95,29 +126,12 @@ class ProjectsTableRow extends Component {
                             className="open-project-details-button"
                         >
                             <Glyphicon
-                                glyph="triangle-right"
+                                glyph="chevron-right"
                                 className={this.state.isOpen ? 'rotate' : ''}
                                 id="triangle-button"
                             />
                         </span>
                     </td>
-                </tr>
-                <tr
-                    className={
-                        'project-details project-row ' +
-                        (this.state.isOpen ? 'open' : 'hide')
-                    }
-                    id="description"
-                >
-                    <td> </td>
-                    <td colSpan="3">
-                        <div>
-                            <b id="project-description">Description:&nbsp;</b>
-                            {this.props.project.projectDescription}
-                            <hr />
-                        </div>
-                    </td>
-                    <td> </td>
                 </tr>
                 <tr
                     className={
@@ -150,10 +164,10 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td>{this.getManagerButtons()}      
+                    <td>{this.getManagerButtons()}
                         <div>
                             <AddUserToProject project={this.props.project.projectId}/>
-                        </div>              
+                        </div>
                     </td>
                 </tr>
             </Fragment>
