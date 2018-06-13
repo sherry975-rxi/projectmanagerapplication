@@ -27,6 +27,7 @@ import Test from './pages/tasks/Test';
 import ProjectTasks from './pages/tasks/ProjectTasks';
 import ActiveTaskTeam from './pages/tasks/ActiveTaskTeam';
 import CreateRequest from './pages/requests/CreateRequest';
+import AvailableListOfCollaborators from './pages/projectCost/AvailableListOfCollaborators';
 
 
 class App extends Component {
@@ -136,6 +137,10 @@ class App extends Component {
                      <Route
                         exact  path="/projects/:projectID/tasks/:taskID/requests/assignmentRequest"
                         component={requiresAuth(CreateRequest)}
+                    />
+                    <Route
+                        exact path="/projects/:projectID/activeTeam"
+                        component={requiresAuth(AvailableListOfCollaborators)}
                     />
 
                 </Switch>
