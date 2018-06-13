@@ -53,3 +53,14 @@
     display: inline-block;
     border-radius: 50%;
 }
+
+.project-badge {
+    margin-top: 8px;
+    background-color: white;
+    font-weight: bold;
+    color: rgb(135, 190, 178);
+    border: 2px solid rgb(135, 190, 178);
+    border-radius: 15px;
+    width: 38px;
+    padding-right: 2px;
+}

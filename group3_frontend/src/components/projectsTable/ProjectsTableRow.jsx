@@ -1,12 +1,27 @@
 import React, { Component, Fragment } from 'react';
-import { Glyphicon, Button, PanelGroup, Panel } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
+import AuthService from '../../pages/loginPage/AuthService';
 
 class ProjectsTableRow extends Component {
-    state = { isOpen: false };
+    constructor(props) {
+        super(props);
+        this.AuthService = new AuthService();
+
+        this.state = { isOpen: false };
+    }
 
     handleRotate = () => {
         this.setState({ isOpen: !this.state.isOpen });
     };
+
+    getManagerOptions() {
+        if (
+            this.props.project.projectManagerEmail ==
+            this.AuthService.getProfile().sub
+        ) {
+            return <span className="project-badge">PM</span>;
+        } else return <div> </div>;
+    }
 
     render() {
         return (
@@ -16,6 +31,7 @@ class ProjectsTableRow extends Component {
                         <span className={'status-project-icon'} />
                     </td>
                     <td>{this.props.project.projectName}</td>
+                    <td>{this.getManagerOptions()}</td>
                     <td>{this.props.project.projectStatusName}</td>
                     <td className="action-buttons-cell">
                         <span

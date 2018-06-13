@@ -28,6 +28,7 @@ export function handleProject(projects) {
         projectBudget: project.budget,
         projectCalculationMethod: project.calculationMethod,
         projectCost: project.projectCost,
+        projectManagerEmail: project.projectManager.email,
         button: ''
     }));
 }
