@@ -4,6 +4,7 @@ import MediumButton from '../../components/button/mediumButton';
 import { Glyphicon } from 'react-bootstrap';
 import AuthService from '../../pages/loginPage/AuthService';
 
+
 class ProjectsTableRow extends Component {
     constructor(props) {
         super(props);
@@ -27,22 +28,27 @@ class ProjectsTableRow extends Component {
 
     getManagerButtons() {
         if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub) {
-            return <div> <Link
-                to={'/projectcost/' + this.props.project.projectId}
-                activeClassName="active"
-            >
-                <MediumButton text="Calculate Project Cost" />
-            </Link>
-                &nbsp;
+            return <div> 
                 <Link
-                    to={
-                        '/selectprojectcostcalculation/' +
-                        this.props.project.projectId
-                    }
+                    to={'/projectcost/' + this.props.project.projectId}
+                     activeClassName="active"
+                >
+                    <MediumButton text="Calculate Project Cost" />
+                 </Link>
+                    &nbsp;
+                <Link
+                    to={'/selectprojectcostcalculation/' + this.props.project.projectId}
                     activeClassName="active"
                 >
                     <MediumButton text="Change Calculation Method" />
-                </Link> </div>;
+                </Link> 
+                    &nbsp;
+                <Link
+                     to={'/projects/' + this.props.project.projectId + '/addtask'}
+                        >
+                    <MediumButton text="Create task" />
+                </Link>   
+                </div>;
         }
     }
 

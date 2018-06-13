@@ -13,6 +13,11 @@ class AddTask extends Component {
         this.AuthService = new AuthService()
     }
 
+    validateForm() {
+        return this.state.description;
+    }
+
+
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
@@ -48,7 +53,7 @@ class AddTask extends Component {
         return (
             <div className=" table-striped">
                 <h3>
-                    <b>Add Task in Project ID {this.props.match.params.projectID}</b>
+                    <b>Create task</b>
                 </h3>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="description" bsSize="large">
@@ -62,7 +67,10 @@ class AddTask extends Component {
                     </FormGroup>
 
                     <button
-                        className="btn btn-primary" /*onClick={this.userDetail}*/
+                        block
+                        className="btn btn-primary" 
+                        disabled={!this.validateForm()}
+                        type="submit"
                     >
                         Create
                     </button>
