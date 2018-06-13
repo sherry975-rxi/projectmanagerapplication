@@ -9,4 +9,4 @@ export const TASKS = [
     ''
 ];
 
-export const PROJECTS = ['Status', 'Project', ' ', 'State', ' '];
+export const PROJECTS = ['Status', 'Project', ' ', 'Description', 'State', ' '];
