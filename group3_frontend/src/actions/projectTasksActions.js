@@ -1,7 +1,8 @@
 import AuthService from './../pages/loginPage/AuthService';
+import * as filterActions from './filterActions'
 
 
-export function updateFinishedTasks(projectId, taskId) {
+export function updateFinishedTasks(projectId) {
     return (dispatch) => {
         fetch(
             `/projects/${projectId}/tasks/finished`,
@@ -12,6 +13,7 @@ export function updateFinishedTasks(projectId, taskId) {
         ).then(responseData => responseData.json())
             .then(data => {
                 dispatch(finishTasksFetched(data))
+                dispatch(filterActions.changeToFinished())
                 return data
             });
     }
@@ -21,30 +23,34 @@ export function updateFinishedTasks(projectId, taskId) {
 export function updateOngoingTasks(projectId) {
     return (dispatch) => {
         fetch(
-            `/projects/${projectId}/tasks/withoutCollaborators`,
+            `/projects/${projectId}/tasks/unfinished`,
             {
                 headers: { 'Authorization': localStorage.getItem('id_token') },
                 method: 'GET'
             }
-        ).then(responseData => {
-            dispatch(ongoingTasksFetched(responseData))
-            return responseData
-        });
+        ).then(responseData => responseData.json())
+            .then(data => {
+                dispatch(ongoingTasksFetched(data))
+                dispatch(filterActions.changeToOnGoing())
+                return data
+            });
     }
 }
 
 export function updateStandByTasks(projectId) {
     return (dispatch) => {
         fetch(
-            `/projects/${projectId}/tasks/`,
+            `/projects/${projectId}/tasks/withoutCollaborators`,
             {
                 headers: { 'Authorization': localStorage.getItem('id_token') },
                 method: 'GET'
             }
-        ).then(responseData => {
-            dispatch(standByTasksFetched(responseData))
-            return responseData
-        });
+        ).then(responseData => responseData.json())
+            .then(data => {
+                dispatch(standByTasksFetched(data))
+                dispatch(filterActions.changeToStandBy())
+                return data
+            });
     }
 }
 
@@ -56,10 +62,12 @@ export function updateNotStartedTasks(projectId) {
                 headers: { 'Authorization': localStorage.getItem('id_token') },
                 method: 'GET'
             }
-        ).then(responseData => {
-            dispatch(standByTasksFetched(responseData))
-            return responseData
-        });
+        ).then(responseData => responseData.json())
+            .then(data => {
+                dispatch(standByTasksFetched(data))
+                dispatch(filterActions.changeToNotStarted())
+                return data
+            });
     }
 }
 
@@ -71,10 +79,12 @@ export function updateAllTasks(projectId) {
                 headers: { 'Authorization': localStorage.getItem('id_token') },
                 method: 'GET'
             }
-        ).then(responseData => {
-            dispatch(allTasksFetched(responseData))
-            return responseData
-        });
+        ).then(responseData => responseData.json())
+            .then(data => {
+                dispatch(allTasksFetched(data))
+                dispatch(filterActions.changeToAllTasks())
+                return data
+            });
     }
 }
 
@@ -90,14 +100,16 @@ export function finishTasksFetched(finishedTasks) {
 
 export function ongoingTasksFetched(ongoingTasks) {
     return {
-        type: 'FINISHTASKS_FETCHED',
+        type: 'ONGOING_FETCHED',
         ongoingTasks
     };
 }
 
 export function standByTasksFetched(standbyTasks) {
+    console.log('AAAAAAAAA')
+    console.log(standbyTasks)
     return {
-        type: 'FINISHTASKS_FETCHED',
+        type: 'STANDBYTASKS_FETCHED',
         standbyTasks
     };
 }
