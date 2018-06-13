@@ -6,6 +6,9 @@ import SmallButton from '../button/smallButton.jsx';
 import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import AuthService from './../../pages/loginPage/AuthService';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import ProjectTasks from './../../pages/tasks/ProjectTasks';
 
 
 class AccordionMenu extends Component {
@@ -13,7 +16,7 @@ class AccordionMenu extends Component {
         super(props);
         this.state = {
             activeKey: '1',
-            type: 'Ongoing'
+            toggle: true
         };
     }
 
@@ -25,21 +28,15 @@ class AccordionMenu extends Component {
         return Constants.TASKS.map(element => <th> {element}</th>);
     }
 
-    static getDerivedStateFromProps(props, prevState) {
-        let newState = { type: props }
-        return newState ? props : prevState
-    }
-
-    renderList(list, type) {
-        console.log(this.state.type)
-
+    renderList(list) {
         let key = 0;
 
         return (
+
             handleTaskHeaders(list).map((element) =>
                 <Panel eventKey={key}>
                     <Panel.Heading>
-                        <Panel.Title toggle><div className="taskContent"> <table className="table table-content">
+                        <Panel.Title toggle={this.state.toggle}><div className="taskContent"> <table className="table table-content">
                             <thead>
                                 <tr>
                                     <th> {element.taskID} </th>
@@ -47,12 +44,13 @@ class AccordionMenu extends Component {
                                     <th> {element.description} </th>
                                     <th> <b>{element.state}</b> </th>
                                     <th> {element.startDate} </th>
-                                    <th> {element.state != 'FINISHED' ? <MarkTaskAsFinished
+                                    <th className='finishButton'> {element.state != 'FINISHED' ? <MarkTaskAsFinished
                                         id={element.taskID}
                                         project={element.project}
+                                        onClick={this.refreshPage}
                                     /> : ''}
+
                                         <a className="key">{key++}</a>
-                                        {console.log(key)}
                                     </th>
                                 </tr>
                             </thead>
@@ -93,8 +91,7 @@ class AccordionMenu extends Component {
                                 <b>Team:</b> &nbsp;
                                 {/* {this.getTeam(element)} */}
                                 {/* {this.loadTaskTeamFromServer(element)} */}
-                                {console.log("Teste")}
-                                {console.log(element.taskTeam)}
+
                             </p>
                         </div>
                     </Panel.Body>
@@ -137,6 +134,7 @@ class AccordionMenu extends Component {
     // }
 
     render() {
+        console.log(this.props.finishedTasks)
         return (
             <PanelGroup
                 accordion
@@ -156,5 +154,5 @@ class AccordionMenu extends Component {
         );
     }
 }
-
-export default AccordionMenu;
+const mapStateToProps = state => { return ({ finishedTasks: state.projectTasks.finishedTasks }) }
+export default connect(mapStateToProps, null)(AccordionMenu)

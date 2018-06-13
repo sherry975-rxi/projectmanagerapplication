@@ -31,13 +31,10 @@
 .table.table-content > thead > tr > th {
     border-bottom: 0px solid #ddd;
     font-weight: normal;
-    height: 60px;
+    height: 70px;
     padding-bottom: 20px;
 }
 
-.table.table-content > thead > tr > th:hover {
-    height: 50px;
-}
 
 .table.table-content {
     font-size: 12px;
@@ -117,3 +114,13 @@
 .key {
     display: none;
 }
+
+.finishButton {
+    padding-top: 11px;
+}
+
+.finishButton:not():hover {
+    padding-top: 11px;
+}
+
+
