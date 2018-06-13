@@ -9,6 +9,7 @@ import AuthService from './../../pages/loginPage/AuthService';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ProjectTasks from './../../pages/tasks/ProjectTasks';
+import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
 
 
 class AccordionMenu extends Component {
@@ -16,7 +17,8 @@ class AccordionMenu extends Component {
         super(props);
         this.state = {
             activeKey: '1',
-            toggle: true
+            toggle: true,
+            updated: true
         };
     }
 
@@ -28,10 +30,14 @@ class AccordionMenu extends Component {
         return Constants.TASKS.map(element => <th> {element}</th>);
     }
 
+    refreshPage() {
+        this.setState({ updated: this.props.updated })
+    }
+
     renderList(list) {
         let key = 0;
-
         return (
+
             handleTaskHeaders(list).map((element) =>
                 <Panel eventKey={key}>
                     <Panel.Heading>
@@ -56,7 +62,7 @@ class AccordionMenu extends Component {
                         </table></div></Panel.Title>
                     </Panel.Heading>
                     <Panel.Body collapsible>
-                        <div className="bodyContent"> <table className="table table-content">
+                        <table className="table table-details">
                             <thead>
                                 <tr>
                                     <th>
@@ -92,24 +98,23 @@ class AccordionMenu extends Component {
                                     </th>
                                     <th>
                                         {<TaskTeam1
-                                        id={element.taskID}
-                                        project={element.project}
+                                            id={element.taskID}
+                                            project={element.project}
                                         />}
                                     </th>
-                                    <th> <p/>
+                                    <th> <p />
                                         {element.state != 'FINISHED' ? <MarkTaskAsFinished
-                                        id={element.taskID}
-                                        project={element.project}
-                                    /> : ''}
+                                            id={element.taskID}
+                                            project={element.project}
+                                        /> : ''}
                                         <a className="key">{key++}</a>
-                                        {console.log(key)}
                                     </th>
                                 </tr>
                             </thead>
+                        </table>
 
-                            </table></div>
-                    </Panel.Body>
-                </Panel>
+                    </Panel.Body >
+                </Panel >
             )
         )
 
@@ -167,5 +172,5 @@ class AccordionMenu extends Component {
         );
     }
 }
-const mapStateToProps = state => { return ({ finishedTasks: state.projectTasks.finishedTasks }) }
+const mapStateToProps = state => { return ({ updated: state.projectTasks.tasksUpdated }) }
 export default connect(mapStateToProps, null)(AccordionMenu)
