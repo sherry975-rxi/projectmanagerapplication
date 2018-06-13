@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import AuthService from './../loginPage/AuthService';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx'
 import { handleTaskHeaders } from '../../components/utils/handleList'
+import { updateAllTasks, updateFinishedTasks, updateNotStartedTasks, updateStandByTasks, updateOngoingTasks } from './../../actions/projectTasksActions';
 
 
 
@@ -24,34 +25,26 @@ class ProjectTasks extends Component {
             project: {},
             externalData: null
         };
-
-        this.refreshPage = this.refreshPage.bind(this);
         this.AuthService = new AuthService()
     }
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    componentDidMount() {
-        this.refreshPage();
-    }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.filter !== this.props.filter) {
-          this.refreshPage();
+    renderTasks() {
+
+        switch (this.props.filter) {
+            case ("all"):
+                return (<AccordionMenu list={this.props.allTasks} />);
+            case ("unfinished"):
+                return (<AccordionMenu list={this.props.ongoingTasks} />);
+            case ("finished"):
+                return (<AccordionMenu list={this.props.finishedTasks} />);
+            case ("withoutCollaborators"):
+                return (<AccordionMenu list={this.props.standByTasks} />);
+            case ("notstarted"):
+                return (<AccordionMenu list={this.props.notStartedTasks} />);
         }
-      }
-
-    refreshPage() {
-
-        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.filter}`, { method: 'get' })
-            .then((responseData) => {
-                console.log(responseData);
-                this.setState({
-                    tasks: responseData,
-                    message: responseData.error
-                });
-            })
-
     }
 
 
@@ -62,18 +55,16 @@ class ProjectTasks extends Component {
         }
         else {
             return (
-                 <div>
-                   {console.log("AAAAA")}
-                    {console.log(this.props.filter)}
-                    <FetchTaskButton />
-                  <AccordionMenu list={this.state.tasks} />
+                <div>
+                    <FetchTaskButton projectID={this.props.match.params.projectID} />
+                    {this.renderTasks()}
                 </div>
-
             )
         }
     }
 }
 
-const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType}) }
+const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType, finishedTasks: state.projectTasks.finishedTasks, ongoingTasks: state.projectTasks.ongoingTasks, standByTasks: state.projectTasks.wihoutCollab, notStartedTasks: state.projectTasks.notStartedTasks, allTasks: state.projectTasks.allTasks }) }
+
 export default connect(mapStateToProps, null)(ProjectTasks);
 

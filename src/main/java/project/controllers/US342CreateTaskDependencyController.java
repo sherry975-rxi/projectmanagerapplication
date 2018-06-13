@@ -32,15 +32,6 @@ public class US342CreateTaskDependencyController {
 
 	}
 
-	/**
-	 * Constructor
-	 *
-	 * @param project
-	 */
-	public US342CreateTaskDependencyController(Project project) {
-		this.project = project;
-	}
-
 	/*
 	 * Getters and Setters
 	 */
