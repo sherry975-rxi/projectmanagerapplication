@@ -203,14 +203,8 @@ class ProjectCostCalculation extends Component {
                         &nbsp;
                         <p />
                         <p />
-                        <Link
-                            to={
-                                '/projectdetails/' +
-                                this.props.match.params.projectID
-                            }
-                            activeClassName="active"
-                        >
-                            <MediumButton text="Back to Project Details" />
+                        <Link to={'/myprojects'} activeClassName="active" >
+                            <MediumButton text="Back to My Projects" />
                         </Link>
                         &nbsp;
                     </form>

@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import './MyProjects.css';
-import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
-import MediumButton from './../../components/button/mediumButton';
 import ProjectsTable from '../../components/projectsTable/ProjectsTable';
 
 class MyProjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: [],
-            message: ''
+            projects: []
         };
 
         this.AuthService = new AuthService();
@@ -30,7 +27,7 @@ class MyProjects extends Component {
             });
         });
     }
-    
+
     render() {
         if (this.state.message != null) {
             return <Error message={this.state.message} />;
