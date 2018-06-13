@@ -95,6 +95,9 @@ class ProjectsTableRow extends Component {
                     <Link to={'/requests/'} activeClassName="active">
                         <MediumButton text="View Requests" />
                     </Link>
+                    <p />
+                        <AddUserToProject project={this.props.project.projectId}/>
+                    
                 </div>
             );
         }
@@ -165,9 +168,6 @@ class ProjectsTableRow extends Component {
                         </div>
                     </td>
                     <td>{this.getManagerButtons()}
-                        <div>
-                            <AddUserToProject project={this.props.project.projectId}/>
-                        </div>
                     </td>
                 </tr>
             </Fragment>
