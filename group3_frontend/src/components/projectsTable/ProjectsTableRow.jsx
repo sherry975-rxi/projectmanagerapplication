@@ -78,7 +78,7 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="2" id="details2-div">
+                    <td>
                         <div>
                             <b>Budget:&nbsp;</b>
                             {this.props.project.projectBudget}
@@ -89,6 +89,7 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
+                    <td>Buttons here!!!! </td>
                 </tr>
             </Fragment>
         );
