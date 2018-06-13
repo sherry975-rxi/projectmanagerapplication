@@ -114,8 +114,9 @@ public class RestProjectTasksController {
      *
      * @param taskId Task id of the task to be deleted
      *
-     * @return ResponseBody with 202-ACCEPTED if deleted or 406-NOT_ACCEPTABLEif not
+     * @return ResponseBody with 202-ACCEPTED if deleted or 406-NOT_ACCEPTABLE if not
      */
+
     @PreAuthorize("hasRole('ROLE_COLLABORATOR')and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> deleteTask(@PathVariable String taskId, @PathVariable int projid) {
