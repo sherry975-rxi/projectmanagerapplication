@@ -371,7 +371,34 @@ public class RestProjectTasksController {
         return new ResponseEntity<>(activeTeam, HttpStatus.OK);
     }
 
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "{taskid}/collabsAvailableForTask", method = RequestMethod.GET)
+    public ResponseEntity<List<ProjectCollaborator>> getProjectTeamNotAddedToTask(@PathVariable int projid,  @PathVariable String taskid) {
 
+        Project project = projectService.getProjectById(projid);
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        List <ProjectCollaborator> projCollabs = projectService.getActiveProjectTeam(project);
+        List<ProjectCollaborator> activeTeam = new ArrayList<>();
+
+        ResponseEntity response;
+
+        for (ProjectCollaborator other : projCollabs) {
+            if (!task.isProjectCollaboratorActiveInTaskTeam(other) && !project.isProjectManager(other.getUserFromProjectCollaborator())) {
+                activeTeam.add(other);
+            }
+        }
+
+        if(activeTeam.isEmpty()){
+
+           response  = new ResponseEntity<>(activeTeam, HttpStatus.EXPECTATION_FAILED);
+
+        }   else {
+              response  = new ResponseEntity<>(activeTeam, HttpStatus.OK);
+        }
+
+        return response;
+    }
 
 }
 
