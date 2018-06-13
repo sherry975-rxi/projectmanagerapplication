@@ -50,9 +50,27 @@ class ProjectsTableRow extends Component {
                             <Glyphicon
                                 glyph="triangle-right"
                                 className={this.state.isOpen ? 'rotate' : ''}
+                                id="triangle-button"
                             />
                         </span>
                     </td>
+                </tr>
+                <tr
+                    className={
+                        'project-details project-row ' +
+                        (this.state.isOpen ? 'open' : 'hide')
+                    }
+                    id="description"
+                >
+                    <td> </td>
+                    <td colSpan="3">
+                        <div>
+                            <b id="project-description">Description:&nbsp;</b>
+                            {this.props.project.projectDescription}
+                            <hr />
+                        </div>
+                    </td>
+                    <td> </td>
                 </tr>
                 <tr
                     className={
@@ -63,10 +81,6 @@ class ProjectsTableRow extends Component {
                     <td> </td>
                     <td colSpan="2">
                         <div>
-                            <b>Description:&nbsp;</b>
-                            <hr />
-                            {this.props.project.projectDescription}
-                            <br />
                             <b>Project Manager:&nbsp;</b>
                             {this.props.project.projectManagerName}
                             <br />

@@ -1,6 +1,10 @@
 .project-table {
     width: 100%;
 }
+#triangle-button {
+    font-size: 20px;
+    color: #ecf0f1;
+}
 
 .project-table .rotate {
     transform: rotate(90deg);
@@ -36,8 +40,13 @@
     max-width: 35px;
 }
 .project-table .project-details.project-row td {
+    padding-top: 0px;
     text-align: left;
     line-height: 2;
+}
+#description {
+    padding-bottom: 0px;
+    border: none;
 }
 
 .project-table .project-row.hide {
@@ -49,6 +58,7 @@
     max-height: 500px;
     transition: max-height 1s ease-in-out;
     background-color: #ecf0f1;
+    border: none;
 }
 
 .project-table .status-project-icon.active {
@@ -61,6 +71,9 @@
     background-color: #ecf0f1;
     display: inline-block;
     border-radius: 50%;
+}
+.project-table #project-description {
+    font-size: 13px;
 }
 
 .project-badge {
@@ -80,9 +93,9 @@
 
 .project-table hr {
     display: block;
-    height: 1px;
+    height: 2px;
     border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
+    padding-top: 6px;
+    border-bottom: 2px solid #ccc;
+    margin: 0;
 }
