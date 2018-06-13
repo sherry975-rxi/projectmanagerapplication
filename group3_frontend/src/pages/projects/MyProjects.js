@@ -29,14 +29,13 @@ class MyProjects extends Component {
         });
     }
 
-    getManagerButton(pmEmail, projId) {
+    // this method renders all the buttons and badges exclusive to the Project manager
+    getManagerOptions(pmEmail, projId) {
         let buttons = '';
         if(pmEmail == this.AuthService.getProfile().sub) {
             buttons = (
                 <td>
-                    <Link to={'/projectdetails/' + projId}>
-                        <MediumButton text="Edit" />
-                    </Link>
+                    <div className="pmBadge" >PM</div>
                 </td>);
         }
         return buttons;
@@ -46,6 +45,7 @@ class MyProjects extends Component {
         return this.state.projects.map((projectItem, index) => {
             return (
                 <tr className="line" key={index}>
+                    <td>{this.getManagerOptions(projectItem.projectManager.email, projectItem.projectId)}</td>
                     <td>{projectItem.projectId}</td>
                     <td>{projectItem.name}</td>
                     <td>{projectItem.description}</td>
@@ -55,8 +55,7 @@ class MyProjects extends Component {
                         <Link to={'/projectdetails/' + projectItem.projectId}>
                             <MediumButton text="Details" />
                         </Link>
-                    </td>
-                    {this.getManagerButton(projectItem.projectManager.email, projectItem.projectId)}
+                    </td>                    
                 </tr>
             );
         });
@@ -74,6 +73,7 @@ class MyProjects extends Component {
                     <table className="table table-hover">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Project ID</th>
                                 <th>Name</th>
                                 <th>Description Date</th>
