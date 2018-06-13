@@ -517,17 +517,15 @@ public class RestProjectTasksControllerTest {
     }
 
     /**
-     * GIVEN a project id
-     * WHEN we perform a get request to url /projects/<projectId>/tasks/all
-     * THEN we receive a valid message with a 200 Ok and a list of not started tasks from project
+     * GIVEN a project  and task id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     * THEN we receive a valid message with a 200 Ok and task updated with collab added
      * @throws Exception
      */
     @Test
     public void shouldAddCollabToTask () throws Exception {
 
-        // expected list of not started tasks
-        projectTasks.add(task);
-        projectTasks.add(task2);
+
 
         ProjectCollaborator pcInes = new ProjectCollaborator(uInes, 20);
         List<ProjectCollaborator> team = new ArrayList<>();
