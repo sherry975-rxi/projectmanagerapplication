@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './MarkTaskAsFinished.css';
 import AuthService from '../loginPage/AuthService';
-import { updateFinishedTasks } from './../../actions/projectTasksActions';
+import { updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateOngoingTasks } from './../../actions/projectTasksActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -19,11 +19,24 @@ class MarkTaskAsFinished extends Component {
                 method: 'PATCH'
             }
         ).then(responseData => {
-            this.props.updateFinishedTasks(this.props.project, this.props.id)
-
+            this.updateTasks();
         });
 
     };
+
+    updateTasks() {
+
+        if (this.props.filter === 'all')
+            this.props.updateAllTasks(this.props.project)
+        else if (this.props.filter === 'finished')
+            this.props.updateFinishedTasks(this.props.project)
+        else if (this.props.filter === 'unfinished')
+            this.props.updateOngoingTasks(this.props.project)
+        else if (this.props.filter === 'notStarted')
+            this.props.updateNotStartedTasks(this.props.project)
+        else
+            this.props.updateStandByTasks(this.props.project)
+    }
 
     render() {
         return (
@@ -36,5 +49,6 @@ class MarkTaskAsFinished extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ updateFinishedTasks }, dispatch)
-export default connect(null, mapDispatchToProps)(MarkTaskAsFinished);
+const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
+const mapDispatchToProps = dispatch => bindActionCreators({ updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateOngoingTasks }, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(MarkTaskAsFinished);
