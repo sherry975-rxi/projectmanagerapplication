@@ -30,53 +30,7 @@ class MyProjects extends Component {
             });
         });
     }
-
-    getManagerButton(pmEmail, projId) {
-        let buttons = '';
-        if (pmEmail === this.AuthService.getProfile().sub) {
-            buttons = (
-                <td>
-                    <Link to={'/projectdetails/' + projId}>
-                        <MediumButton text="Edit" />
-                    </Link>
-                </td>
-            );
-        }
-        return buttons;
-    }
-
-    //Create task button will be added to the accordion menu when implemented
-
-    renderProjects() {
-        return this.state.projects.map((projectItem, index) => {
-            return (
-                <tr className="line" key={index}>
-                    <td>{projectItem.projectId}</td>
-                    <td>{projectItem.name}</td>
-                    <td>{projectItem.description}</td>
-                    <td>{projectItem.projectManager.name}</td>
-                    <td>{projectItem.projectManager.email}</td>
-                    <td>
-                        <Link to={'/projectdetails/' + projectItem.projectId}>
-                            <MediumButton text="Details" />
-                        </Link>
-                    </td>
-                    <td>
-                        <Link
-                            to={
-                                '/projects/' +
-                                projectItem.projectId +
-                                '/addtask'
-                            }
-                        >
-                            <MediumButton text="Create task" />
-                        </Link>
-                    </td>
-                </tr>
-            );
-        });
-    }
-
+    
     render() {
         if (this.state.message != null) {
             return <Error message={this.state.message} />;

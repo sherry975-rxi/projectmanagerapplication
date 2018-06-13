@@ -18,6 +18,7 @@ export function handleTaskHeaders(list) {
 
 export function handleProject(projects) {
     return projects.map(project => ({
+        projectId: project.projectId,
         projectActive: project.projectActive,
         projectName: project.name,
         projectStatusName: project.projectStatusName,
