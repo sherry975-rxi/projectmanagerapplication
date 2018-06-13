@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import CreateRequest from '../../pages/requests/CreateRequest';
 import DeleteTask from '../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from '../../pages/tasks/AvailableListOfCollaborators';
-import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam.1';
+import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
 
 
 class AccordionMenu extends Component {
