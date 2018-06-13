@@ -23,7 +23,7 @@ class DeleteTask extends Component {
     render() {
         return (
             <div className=" table-striped">
-                <button className="buttonDeleted" onClick={this.handleClick}>
+                <button className="buttonFinished" onClick={this.handleClick}>
                     Delete
                 </button>
             </div>
