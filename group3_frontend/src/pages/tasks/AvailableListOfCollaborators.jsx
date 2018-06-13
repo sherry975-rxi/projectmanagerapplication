@@ -6,7 +6,7 @@ import {
 import AuthService from './../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
 import { Redirect } from 'react-router-dom';
-import './AvailableListOfCollaborators.css';
+
 
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
