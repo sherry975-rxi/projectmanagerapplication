@@ -35,7 +35,7 @@ public class RestProjectController  {
         this.userService = userService;
         this.taskService = taskService;
     }
-    
+
     /**
      * This method returns a ResponseEntity that contains all the active projects from the project service with a link to open each project
      * @return ResponseEntity with all the active projects

@@ -353,7 +353,6 @@ public class RestProjectTasksController {
     @RequestMapping(value = "{taskid}/activeTeam", method = RequestMethod.GET)
     public ResponseEntity<List<TaskCollaborator>> getActiveTaskTeam (@PathVariable int projid, @PathVariable String taskid) {
 
-        Project project = projectService.getProjectById(projid);
         Task task = taskService.getTaskByTaskID(taskid);
 
         List<TaskCollaborator> team = task.getTaskTeam();
@@ -381,7 +380,7 @@ public class RestProjectTasksController {
         List <ProjectCollaborator> projCollabs = projectService.getActiveProjectTeam(project);
         List<ProjectCollaborator> activeTeam = new ArrayList<>();
 
-        ResponseEntity response;
+        ResponseEntity <List<ProjectCollaborator>> response ;
 
         for (ProjectCollaborator other : projCollabs) {
             if (!task.isProjectCollaboratorActiveInTaskTeam(other) && !project.isProjectManager(other.getUserFromProjectCollaborator())) {
