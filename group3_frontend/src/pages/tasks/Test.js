@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Error from './../../components/error/error';
 import { connect } from 'react-redux';
 import AuthService from './../loginPage/AuthService';
-import ProjectTable from '../../components/projectsTable/ProjectsTable';
+import ProjectsTable from '../../components/projectsTable/ProjectsTable';
 
 class Test extends Component {
     constructor(props) {
@@ -42,7 +42,7 @@ class Test extends Component {
         if (this.state.message != null) {
             return <Error message={this.state.message} />;
         } else {
-            return <ProjectTable projects={this.state.projects} />;
+            return <ProjectsTable projects={this.state.projects} />;
         }
     }
 }

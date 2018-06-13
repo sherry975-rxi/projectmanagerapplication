@@ -66,11 +66,8 @@ class ProjectCost extends Component {
                 &nbsp;
                 <p />
                 <p />
-                <Link
-                    to={'/projectdetails/' + projectItem.projectId}
-                    activeClassName="active"
-                >
-                    <MediumButton text="Back to Project Details" />
+                <Link to={'/myprojects'} activeClassName="active" >
+                    <MediumButton text="Back to My Projects" />
                 </Link>
                 &nbsp;
             </div>

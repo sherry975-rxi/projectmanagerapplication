@@ -33,6 +33,7 @@ class SideBar extends Component {
     getDirectorOptions() {
         return (<div className="menu">
                     <SideButton to="/activeprojects" text="Projects" />
+                    <SideButton to="/createproject" text="Create Project" />
                 </div>);
     }
 

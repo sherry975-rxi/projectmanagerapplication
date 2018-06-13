@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import MediumButton from '../../components/button/mediumButton';
 import { Glyphicon } from 'react-bootstrap';
 import AuthService from '../../pages/loginPage/AuthService';
+
 
 class ProjectsTableRow extends Component {
     constructor(props) {
@@ -14,13 +17,56 @@ class ProjectsTableRow extends Component {
         this.setState({ isOpen: !this.state.isOpen });
     };
 
-    getManagerOptions() {
+    getManagerIcon() {
         if (
-            this.props.project.projectManagerEmail ==
+            this.props.project.projectManagerEmail ===
             this.AuthService.getProfile().sub
         ) {
             return <span className="project-badge">PM</span>;
         } else return <div> </div>;
+    }
+
+    getManagerButtons() {
+        if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub) {
+
+            return <div> 
+                        <p /> 
+                        <Link
+                            to={'/projects/' + this.props.project.projectId + '/tasks'}
+                            activeClassName="active"
+                            >
+                            <MediumButton text = "View Tasks" />
+                        </Link>
+                        <p />
+                        <Link
+                            to={'/projects/' + this.props.project.projectId + '/addtask'}
+                            activeClassName="active"
+                                >
+                            <MediumButton text="Create task" />
+                        </Link> 
+                        <p /> 
+                        <Link
+                            to={'/projectcost/' + this.props.project.projectId}
+                            activeClassName="active"
+                            >
+                            <MediumButton text="Calculate Project Cost" />
+                        </Link>
+                        <p />  
+                        <Link
+                            to={'/selectprojectcostcalculation/' + this.props.project.projectId}
+                            activeClassName="active"
+                            >
+                            <MediumButton text="Change Calculation Method" />
+                        </Link> 
+                        <p /> 
+                        <Link
+                            to={'/requests/'}
+                            activeClassName="active"
+                            >
+                            <MediumButton text="View Requests" />
+                        </Link>
+                </div>;
+        }
     }
 
     render() {
@@ -39,7 +85,7 @@ class ProjectsTableRow extends Component {
                     </td>
                     <td>{this.props.project.projectName}</td>
                     <td id="project-manager-badge-cell">
-                        {this.getManagerOptions()}
+                        {this.getManagerIcon()}
                     </td>
                     <td>{this.props.project.projectStatusName}</td>
                     <td className="action-buttons-cell">
@@ -50,9 +96,27 @@ class ProjectsTableRow extends Component {
                             <Glyphicon
                                 glyph="triangle-right"
                                 className={this.state.isOpen ? 'rotate' : ''}
+                                id="triangle-button"
                             />
                         </span>
                     </td>
+                </tr>
+                <tr
+                    className={
+                        'project-details project-row ' +
+                        (this.state.isOpen ? 'open' : 'hide')
+                    }
+                    id="description"
+                >
+                    <td> </td>
+                    <td colSpan="3">
+                        <div>
+                            <b id="project-description">Description:&nbsp;</b>
+                            {this.props.project.projectDescription}
+                            <hr />
+                        </div>
+                    </td>
+                    <td> </td>
                 </tr>
                 <tr
                     className={
@@ -63,10 +127,6 @@ class ProjectsTableRow extends Component {
                     <td> </td>
                     <td colSpan="2">
                         <div>
-                            <b>Description:&nbsp;</b>
-                            <hr />
-                            {this.props.project.projectDescription}
-                            <br />
                             <b>Project Manager:&nbsp;</b>
                             {this.props.project.projectManagerName}
                             <br />
@@ -78,7 +138,7 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="2" id="details2-div">
+                    <td>
                         <div>
                             <b>Budget:&nbsp;</b>
                             {this.props.project.projectBudget}
@@ -88,6 +148,8 @@ class ProjectsTableRow extends Component {
                             {this.props.project.button}
                             <br />
                         </div>
+                    </td>
+                    <td>{this.getManagerButtons()}                    
                     </td>
                 </tr>
             </Fragment>
