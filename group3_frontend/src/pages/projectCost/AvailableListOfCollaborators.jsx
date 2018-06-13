@@ -28,7 +28,7 @@ class AvailableListOfCollaborators extends Component {
     // Load users from database
      getProjTeam() {
         this.AuthService.fetch(
-            `/projects/2/activeTeam`,
+            `/projects/${this.props.project}/tasks/${this.props.id}/collabsAvailableForTask`,
             { method: 'get' }
         ).then(responseData => {
             console.log(responseData)
@@ -51,7 +51,7 @@ handleClick(event) {
         email: this.state.projTeam[event].collaborator.email}
 
         this.AuthService.fetch(
-            `/projects/2/tasks/WP1.T01/addCollab`,
+            `/projects/${this.props.project}/tasks/${this.props.id}/addCollab`,
             { method: 'post',
         body: JSON.stringify(userDTO)}
         ).then(res => {
@@ -59,7 +59,8 @@ handleClick(event) {
             console.log("seeee")
                  if (res.taskFinished === false) {
                         toastr.success('Collaborator was added to task');
-                         return <Redirect to="/requests" />;
+                        this.getProjTeam();
+                         return <Redirect to="/projects/${this.props.project}/tasks/${this.props.id}/addCollab" />;                        
                     }
                 })
                 .catch(err => {
