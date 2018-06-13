@@ -560,6 +560,89 @@ public class RestProjectTasksControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
+    /**
+     * GIVEN
+     * a task id,
+     * project id
+     * and none available project collaborator to add to the task
+     *
+     * WHEN
+     * we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     *
+     * THEN
+     * we receive a message with a 417 EXPECTATION_FAILED
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldNotReturnProjectTeamNotAddedToTask() throws Exception {
+
+        // GIVEN
+        int projectId = 01;
+        String taskid = "01";
+
+        List<ProjectCollaborator> team = new ArrayList<>();
+
+        //empty team
+        //team.add(pcInes);
+
+        // WHEN
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+        when(projectService.getActiveProjectTeam(project)).thenReturn(team);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/" + taskid + "/collabsAvailableForTask").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.EXPECTATION_FAILED.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+        verify(projectService, times(1)).getActiveProjectTeam(project);
+        verify(projectService, times(1)).getProjectById(any(Integer.class));
+
+
+    }
+
+    /**
+     * GIVEN
+     * a task id,
+     * project id
+     * and the available project collaborator is the project manager
+     *
+     * WHEN
+     * we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     *
+     * THEN
+     * we receive a message with a 417 EXPECTATION_FAILED
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldNotReturnProjectTeamNotAddedToTask2() throws Exception {
+
+        // GIVEN
+        int projectId = 01;
+        String taskid = "01";
+
+        ProjectCollaborator pcDaniel = new ProjectCollaborator(uDaniel, 20);
+        List<ProjectCollaborator> team = new ArrayList<>();
+        team.add(pcDaniel);
+
+        // WHEN
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+        when(projectService.getActiveProjectTeam(project)).thenReturn(team);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/" + taskid + "/collabsAvailableForTask").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.EXPECTATION_FAILED.value(), response.getStatus());
+        verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+        verify(projectService, times(1)).getActiveProjectTeam(project);
+        verify(projectService, times(1)).getProjectById(any(Integer.class));
+
+
+    }
+
 
 
 
