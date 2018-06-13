@@ -9,7 +9,8 @@ class MyProjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projects: []
+            projects: [],
+            message: ''
         };
 
         this.AuthService = new AuthService();
@@ -29,23 +30,26 @@ class MyProjects extends Component {
         });
     }
 
-    // this method renders all the buttons and badges exclusive to the Project manager
-    getManagerOptions(pmEmail, projId) {
+    getManagerButton(pmEmail, projId) {
         let buttons = '';
-        if(pmEmail == this.AuthService.getProfile().sub) {
+        if (pmEmail == this.AuthService.getProfile().sub) {
             buttons = (
                 <td>
-                    <div className="pmBadge" >PM</div>
-                </td>);
+                    <Link to={'/projectdetails/' + projId}>
+                        <MediumButton text="Edit" />
+                    </Link>
+                </td>
+            );
         }
         return buttons;
     }
+
+    //Create task button will be added to the accordion menu when implemented
 
     renderProjects() {
         return this.state.projects.map((projectItem, index) => {
             return (
                 <tr className="line" key={index}>
-                    <td>{this.getManagerOptions(projectItem.projectManager.email, projectItem.projectId)}</td>
                     <td>{projectItem.projectId}</td>
                     <td>{projectItem.name}</td>
                     <td>{projectItem.description}</td>
@@ -55,7 +59,18 @@ class MyProjects extends Component {
                         <Link to={'/projectdetails/' + projectItem.projectId}>
                             <MediumButton text="Details" />
                         </Link>
-                    </td>                    
+                    </td>
+                    <td>
+                        <Link
+                            to={
+                                '/projects/' +
+                                projectItem.projectId +
+                                '/addtask'
+                            }
+                        >
+                            <MediumButton text="Create task" />
+                        </Link>
+                    </td>
                 </tr>
             );
         });
@@ -68,22 +83,19 @@ class MyProjects extends Component {
             return (
                 <div className="ActiveProjects">
                     <h3>
-                        <b>My Projects</b>
+                        <b>Active Projects</b>
                     </h3>
                     <table className="table table-hover">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Project ID</th>
                                 <th>Name</th>
-                                <th>Description Date</th>
+                                <th>Description</th>
                                 <th>Project Manager Name</th>
                                 <th>Project Manager Email</th>
                             </tr>
                         </thead>
-                        <tbody>
-                        {this.renderProjects()}
-                        </tbody>
+                        <tbody>{this.renderProjects()}</tbody>
                     </table>
                 </div>
             );

@@ -854,16 +854,6 @@ public class TaskService {
 
 		return factory.getCostCalculationMethod(project.getCalculationMethod().name()).orElse(new FirstCollaboratorCost());
 
-//        switch(project.getCalculationMethod()) {
-//			case CI:
-//                return new FirstCollaboratorCost();
-//			case CF:
-//                return new LastCollaboratorCost();
-//            case CIFM:
-//                return new FirstAndLastCollaboratorCost();
-//            default:
-//                return new AverageCollaboratorCost();
-//        }
     }
 
 

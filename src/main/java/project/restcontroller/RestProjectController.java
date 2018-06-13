@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
-import project.model.ProjectCollaborator;
 import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
@@ -35,7 +34,7 @@ public class RestProjectController  {
         this.userService = userService;
         this.taskService = taskService;
     }
-    
+
     /**
      * This method returns a ResponseEntity that contains all the active projects from the project service with a link to open each project
      * @return ResponseEntity with all the active projects

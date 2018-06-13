@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { PanelGroup, Panel } from 'react-bootstrap';
 import './AccordionMenuTasks.css';
 import * as Constants from '../utils/titleConstants';
-import SmallButton from '../button/smallButton.jsx';
 import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
-import AuthService from './../../pages/loginPage/AuthService';
-import TaskTeam1 from '../../pages/tasks/ActiveTaskTeam.1';
+import { connect } from 'react-redux';
 
+import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
 
 class AccordionMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
             activeKey: '1',
-            type: 'Ongoing'
+            toggle: true,
+            updated: true
         };
     }
 
@@ -26,91 +26,109 @@ class AccordionMenu extends Component {
         return Constants.TASKS.map(element => <th> {element}</th>);
     }
 
-    static getDerivedStateFromProps(props, prevState) {
-        let newState = { type: props }
-        return newState ? props : prevState
+    refreshPage() {
+        this.setState({ updated: this.props.updated });
     }
 
-    renderList(list, type) {
-        console.log(this.state.type)
-
+    renderList(list) {
         let key = 0;
-
-        return (
-            handleTaskHeaders(list).map((element) =>
-                <Panel eventKey={key}>
-                    <Panel.Heading>
-                        <Panel.Title toggle><div className="taskContent"> <table className="table table-content">
-                            <thead>
-                                <tr>
-                                    <th> {element.taskID} </th>
-                                    <th> {element.project} </th>
-                                    <th> {element.description} </th>
-                                    <th> <b>{element.state}</b> </th>
-                                    <th> {element.startDate} </th>
-                                    
-                                </tr>
-                            </thead>
-                        </table></div></Panel.Title>
-                    </Panel.Heading>
-                    <Panel.Body collapsible>
-                        <div className="bodyContent"> <table className="table table-content">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <p>
-                                            <b>Creation date:</b> &nbsp;
-                                                {element.creationDate}
-                                        </p>
-                                        <p>
-                                            <b>Finish date:</b> &nbsp;
-                                            {element.finishDate}
-                                        </p>
-                                        <p>
-                                            <b>Estimated Effort:</b> &nbsp;
-                                            {element.estimatedTaskEffort}
-                                        </p>
-                                        <p>
-                                            <b>Budget:</b> &nbsp;
-                                            {element.taskBudget}
-                                        </p>
-                                        <p>
-                                            <b>Estimated start date:</b> &nbsp;
-                                                {element.estimatedTaskStartDate}
-                                        </p>
-                                        <p>
-                                            <b>Estimated finish date:</b> &nbsp;
-                                                {element.taskDeadline}
-                                        </p>
-                                        <p>
-                                            <b>Cancel date:</b> &nbsp;
-                                            {element.cancelDate}
-                                        </p>
-                                       
-                                    </th>
-                                    <th>
-                                        {<TaskTeam1 
-                                        id={element.taskID}
-                                        project={element.project}
-                                        />}
-                                    </th>
-                                    <th> <p/>
-                                        {element.state != 'FINISHED' ? <MarkTaskAsFinished
-                                        id={element.taskID}
-                                        project={element.project}
-                                    /> : ''}
-                                        <a className="key">{key++}</a>
-                                        {console.log(key)}
-                                    </th>
-                                </tr>
-                            </thead>
-                            
-                            </table></div>
-                    </Panel.Body>
-                </Panel>
-            )
-        )
-
+        return handleTaskHeaders(list).map(element => (
+            <Panel eventKey={key}>
+                <Panel.Heading>
+                    <Panel.Title toggle={this.state.toggle}>
+                        <div className="taskContent">
+                            {' '}
+                            <table className="table table-content">
+                                <thead>
+                                    <tr>
+                                        <th> {element.taskID} </th>
+                                        <th> {element.project} </th>
+                                        <th> {element.description} </th>
+                                        <th>
+                                            {' '}
+                                            <b>{element.state}</b>{' '}
+                                        </th>
+                                        <th> {element.startDate} </th>
+                                        <th className="finishButton">
+                                            {' '}
+                                            {element.state != 'FINISHED' ? (
+                                                <MarkTaskAsFinished
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                    onClick={this.refreshPage}
+                                                />
+                                            ) : (
+                                                ''
+                                            )}
+                                            <a className="key">{key++}</a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </Panel.Title>
+                </Panel.Heading>
+                <Panel.Body collapsible>
+                    <table className="table table-details">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p>
+                                        <b>Creation date:</b> &nbsp;
+                                        {element.creationDate}
+                                    </p>
+                                    <p>
+                                        <b>Finish date:</b> &nbsp;
+                                        {element.finishDate}
+                                    </p>
+                                    <p>
+                                        <b>Estimated Effort:</b> &nbsp;
+                                        {element.estimatedTaskEffort}
+                                    </p>
+                                    <p>
+                                        <b>Budget:</b> &nbsp;
+                                        {element.taskBudget}
+                                    </p>
+                                    <p>
+                                        <b>Estimated start date:</b> &nbsp;
+                                        {element.estimatedTaskStartDate}
+                                    </p>
+                                    <p>
+                                        <b>Estimated finish date:</b> &nbsp;
+                                        {element.taskDeadline}
+                                    </p>
+                                    <p>
+                                        <b>Cancel date:</b> &nbsp;
+                                        {element.cancelDate}
+                                    </p>
+                                </th>
+                                <th>
+                                    {
+                                        <TaskTeam1
+                                            id={element.taskID}
+                                            project={element.project}
+                                        />
+                                    }
+                                </th>
+                                <th>
+                                    {' '}
+                                    <p />
+                                    {element.state != 'FINISHED' ? (
+                                        <MarkTaskAsFinished
+                                            id={element.taskID}
+                                            project={element.project}
+                                        />
+                                    ) : (
+                                        ''
+                                    )}
+                                    <a className="key">{key++}</a>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </Panel.Body>
+            </Panel>
+        ));
     }
 
     // getTeam(task){
@@ -129,11 +147,9 @@ class AccordionMenu extends Component {
     //              </ul>
     //          );
 
-
     //      }
 
     // }
-
 
     // async loadTaskTeamFromServer(task) {
     //     this.AuthService.fetch(
@@ -165,5 +181,10 @@ class AccordionMenu extends Component {
         );
     }
 }
-
-export default AccordionMenu;
+const mapStateToProps = state => {
+    return { updated: state.projectTasks.tasksUpdated };
+};
+export default connect(
+    mapStateToProps,
+    null
+)(AccordionMenu);

@@ -19,6 +19,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 public class RestUserController {
 
     private final UserService userService;
+    private String userDetails = "User Details";
 
     @Autowired
     public RestUserController(UserService userService) {
@@ -69,7 +70,7 @@ public class RestUserController {
 
             Link userLink = linkTo(RestUserController.class).withRel("allUsers");
             user.add(userLink);
-            Link detailsLinks = linkTo(RestUserController.class).slash(user.getUserID()).withRel("User Details");
+            Link detailsLinks = linkTo(RestUserController.class).slash(user.getUserID()).withRel(userDetails);
             user.add(detailsLinks);
 
         }
@@ -94,7 +95,7 @@ public class RestUserController {
         for(User other : foundUsers) {
             Link selfRef = linkTo(RestUserController.class).slash("email").slash(other.getEmail()).withSelfRel();
             other.add(selfRef);
-            Link detailsLinks = linkTo(RestUserController.class).slash(other.getUserID()).withRel("User Details");
+            Link detailsLinks = linkTo(RestUserController.class).slash(other.getUserID()).withRel(userDetails);
             other.add(detailsLinks);
         }
 
@@ -114,7 +115,7 @@ public class RestUserController {
 
             Link selfRef = linkTo(RestUserController.class).slash("id").slash(idToSearch).withSelfRel();
             user.add(selfRef);
-            Link detailsLinks = linkTo(RestUserController.class).slash(user.getUserID()).withRel("User Details");
+            Link detailsLinks = linkTo(RestUserController.class).slash(user.getUserID()).withRel(userDetails);
             user.add(detailsLinks);
 
         return new ResponseEntity<>(user, HttpStatus.OK);

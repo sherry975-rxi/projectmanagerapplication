@@ -23,12 +23,6 @@ public class CollectProjectsFromUserController {
 
 	}
 
-    public CollectProjectsFromUserController(User user) {
-
-	    this.user=user;
-
-    }
-
     public void setUser(User user) {
         this.user = user;
     }

@@ -121,7 +121,7 @@ class App extends Component {
                     />
 
                     <Route 
-                        path="/addtask" 
+                        path="/projects/:projectID/addtask" 
                         component={requiresAuth(AddTask)} 
                     />
 
