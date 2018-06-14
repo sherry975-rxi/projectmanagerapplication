@@ -1,6 +1,7 @@
 .SignUp {
-    padding: 60px 0;
+    padding: 0px 0;
     margin-bottom: 150px;
+
 }
 
 .SignUp form {
@@ -50,4 +51,18 @@
 .chooseValidationMethodText {
     font-size: 20px;
     margin-bottom: 5px;
+}
+
+
+.SignUpTable{
+ 
+    margin-left:-170px;
+}
+
+.tdSignUpForm{
+    padding-right: 50px;
+}
+
+.termsAndConditions{
+    margin-top: 30px;
 }
