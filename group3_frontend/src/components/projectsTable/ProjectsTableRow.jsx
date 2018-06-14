@@ -240,7 +240,7 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="1">
+                    <td colSpan="2">
                         <div>
                             <strong>Budget:&nbsp;</strong>
                             {this.props.project.projectBudget}
