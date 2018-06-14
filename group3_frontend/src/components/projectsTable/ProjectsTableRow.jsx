@@ -181,6 +181,10 @@ class ProjectsTableRow extends Component {
                             <ItemsButton text="View Requests" />
                         </Link>
                     </MenuItem>
+                    <MenuItem className="items-menu" onClick={this.toggle}>
+                            <ItemsButton text="Add collaborator" />
+                            <AddUserToProject />
+                    </MenuItem>
                 </DropdownButton>
             );
         }
@@ -208,11 +212,6 @@ class ProjectsTableRow extends Component {
                     </td>
                     <td>{this.props.project.projectDescription}</td>
                     <td>{this.props.project.projectStatusName}</td>
-                    <td>
-                        <div className=" table-striped">
-                            {this.renderDropdownButton('Options', 0)}
-                        </div>
-                    </td>
                     <td className="action-buttons-cell">
                         <span
                             onClick={this.handleRotate}
@@ -232,7 +231,7 @@ class ProjectsTableRow extends Component {
                         (isOpen ? 'open' : 'hide')
                     }
                 >
-                    <td colSpan="3">
+                    <td colSpan="2">
                         <div className="project-details">
                             <strong>Project Manager:&nbsp;</strong>
                             {this.props.project.projectManagerName}
