@@ -7,10 +7,10 @@ import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import { connect } from 'react-redux';
 import MediumButton from './../../components/button/mediumButton';
 import { Link } from 'react-router-dom';
-import TaskTeam1 from '../../pages/tasks/ActiveTaskTeam';
 import CreateRequest from './../../pages/requests/CreateRequest';
 import DeleteTask from './../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
+import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
 
 
 class AccordionMenu extends Component {
@@ -76,14 +76,6 @@ class AccordionMenu extends Component {
                                 <tr>
                                     <th>
                                         <p>
-                                            <b>Creation date:</b> &nbsp;
-                                                {element.creationDate}
-                                        </p>
-                                        <p>
-                                            <b>Finish date:</b> &nbsp;
-                                            {element.finishDate}
-                                        </p>
-                                        <p>
                                             <b>Estimated Effort:</b> &nbsp;
                                             {element.estimatedTaskEffort}
                                         </p>
@@ -103,10 +95,12 @@ class AccordionMenu extends Component {
                                             <b>Cancel date:</b> &nbsp;
                                             {element.cancelDate}
                                         </p>
+                                        <br/>
+                                        <br/>
 
                                     </th>
                                     <td>
-                                        {<TaskTeam1
+                                        {<ActiveTaskTeam
                                             id={element.taskID}
                                             project={element.project}
                                         />
