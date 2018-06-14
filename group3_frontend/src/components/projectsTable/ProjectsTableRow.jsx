@@ -4,17 +4,23 @@ import MediumButton from '../../components/button/mediumButton';
 import { Glyphicon } from 'react-bootstrap';
 import AuthService from '../../pages/loginPage/AuthService';
 import AddUserToProject from '../../pages/projects/AddUserToProject';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { projectTableDetailsToogle } from '../../actions/metaActions';
 
 class ProjectsTableRow extends Component {
     constructor(props) {
         super(props);
         this.AuthService = new AuthService();
-
-        this.state = { isOpen: false };
     }
 
     handleRotate = () => {
-        this.setState({ isOpen: !this.state.isOpen });
+        const index =
+            this.props.index === this.props.openIndex
+                ? undefined
+                : this.props.index;
+        const payload = { index: index };
+        this.props.projectTableDetailsToogle(payload);
     };
 
     getManagerIcon() {
@@ -33,9 +39,9 @@ class ProjectsTableRow extends Component {
         ) {
             return (
                 <div>
-                    <b>Budget:&nbsp;</b>
+                    <strong>Budget:&nbsp;</strong>
                     {this.props.project.projectBudget}
-                    <br /> <b>Calculation method:&nbsp;</b>
+                    <br /> <strong>Calculation method:&nbsp;</strong>
                     {this.props.project.projectCalculationMethod}
                     <br />
                     {this.props.project.button}
@@ -96,14 +102,15 @@ class ProjectsTableRow extends Component {
                         <MediumButton text="View Requests" />
                     </Link>
                     <p />
-                        <AddUserToProject project={this.props.project.projectId}/>
-                    
+                    <AddUserToProject project={this.props.project.projectId} />
                 </div>
             );
         }
     }
 
     render() {
+        const isOpen = this.props.openIndex === this.props.index;
+
         return (
             <Fragment>
                 <tr className="project-row">
@@ -130,7 +137,7 @@ class ProjectsTableRow extends Component {
                         >
                             <Glyphicon
                                 glyph="chevron-right"
-                                className={this.state.isOpen ? 'rotate' : ''}
+                                className={isOpen ? 'rotate' : ''}
                                 id="triangle-button"
                             />
                         </span>
@@ -139,40 +146,46 @@ class ProjectsTableRow extends Component {
                 <tr
                     className={
                         'project-details project-row ' +
-                        (this.state.isOpen ? 'open' : 'hide')
+                        (isOpen ? 'open' : 'hide')
                     }
                 >
                     <td> </td>
                     <td colSpan="2">
                         <div>
-                            <b>Project Manager:&nbsp;</b>
+                            <strong>Project Manager:&nbsp;</strong>
                             {this.props.project.projectManagerName}
                             <br />
-                            <b>Start date:&nbsp;</b>
+                            <strong>Start date:&nbsp;</strong>
                             {this.props.project.projectStartDate}
                             <br />
-                            <b>Finish date:&nbsp;</b>
+                            <strong>Finish date:&nbsp;</strong>
                             {this.props.project.projectFinishDate}
                             <br />
                         </div>
                     </td>
                     <td>
                         <div>
-                            <b>Budget:&nbsp;</b>
+                            <strong>Budget:&nbsp;</strong>
                             {this.props.project.projectBudget}
-                            <br /> <b>Calculation method:&nbsp;</b>
+                            <br /> <strong>Calculation method:&nbsp;</strong>
                             {this.props.project.projectCalculationMethod}
                             <br />
                             {this.props.project.button}
                             <br />
                         </div>
                     </td>
-                    <td>{this.getManagerButtons()}
-                    </td>
+                    <td colSpan="2">{this.getManagerButtons()}</td>
                 </tr>
             </Fragment>
         );
     }
 }
 
-export default ProjectsTableRow;
+export const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ projectTableDetailsToogle }, dispatch);
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(ProjectsTableRow);

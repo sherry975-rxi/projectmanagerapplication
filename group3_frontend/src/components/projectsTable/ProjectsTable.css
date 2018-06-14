@@ -10,7 +10,10 @@
     transform: rotate(90deg);
 }
 .project-table .open-project-details-button {
-    display: inline-block;
+    display: block;
+    height: 70px;
+    line-height: 70px;
+    cursor: pointer;
 }
 .project-table .project-row td.action-buttons-cell {
     padding: 0;

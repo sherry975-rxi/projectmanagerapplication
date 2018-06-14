@@ -3,9 +3,9 @@ import { PROJECTS } from '../utils/titleConstants';
 import './ProjectsTable.css';
 import { handleProject } from '../utils/handleList';
 import ProjectsTableRow from './ProjectsTableRow';
+import { connect } from 'react-redux';
 
 class ProjectsTable extends Component {
-
     renderTitles() {
         return PROJECTS.map((element, index) => (
             <th key={index}>
@@ -23,7 +23,12 @@ class ProjectsTable extends Component {
                 <tbody>
                     {handleProject(this.props.projects).map(
                         (project, index) => (
-                            <ProjectsTableRow key={index} project={project} />
+                            <ProjectsTableRow
+                                openIndex={this.props.openIndex}
+                                key={index}
+                                index={index}
+                                project={project}
+                            />
                         )
                     )}
                 </tbody>
@@ -32,4 +37,9 @@ class ProjectsTable extends Component {
     }
 }
 
-export default ProjectsTable;
+export const mapStateToProps = state => {
+    const openIndex = state.meta.projectsTableOpenIndex;
+    return { openIndex };
+};
+
+export default connect(mapStateToProps)(ProjectsTable);
