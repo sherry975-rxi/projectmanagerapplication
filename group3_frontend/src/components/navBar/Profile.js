@@ -1,11 +1,11 @@
 import React from 'react';
 import './Profile.css';
 import AuthService from '../../pages/loginPage/AuthService';
-import mainLogo from './profile_logo.png';
 import { authorize } from '../../actions/authenticationActions';
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import womanProfile from './profile_logo.png'
+import manProfile from './profile_logo_man.png'
 
 export class Profile extends React.Component {
     constructor(props) {
@@ -21,21 +21,36 @@ export class Profile extends React.Component {
             this.setState({
                 message: responseData.error
             });
-            if(this.state.message == null ) {
+            if (this.state.message == null) {
                 this.props.authorize(responseData);
             }
         });
     }
 
+    getImage() {
+        if (this.AuthService.getUserId() == 7 ||
+            this.AuthService.getUserId() == 6 ||
+            this.AuthService.getUserId() == 5 ||
+            this.AuthService.getUserId() == 1) {
+            return (womanProfile)
+        }
+        else {
+            return (manProfile)
+        }
+
+    }
+
     render() {
         var user = this.props.user;
+        let image = this.getImage();
+        console.log(image)
 
         return (
             <div className="external-div">
                 <center>
                     <img
                         className="profilePic"
-                        src={mainLogo}
+                        src={image}
                         border="2"
                         alt="fireSpot"
                     />
