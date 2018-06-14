@@ -175,7 +175,7 @@ public class RestProjCollabController {
         for( User other : allUsers){
             added = false;
             for (User collab : projectTeamUsers){
-                if(!other.getEmail().equals(collab.getEmail()) && added==false && !projectService.isUserActiveInProject(other,project)) {
+                if(!other.getEmail().equals(collab.getEmail()) && !added && !projectService.isUserActiveInProject(other,project)) {
                         finalUsers.add(other);
                         added = true;
                     }
@@ -185,7 +185,7 @@ public class RestProjCollabController {
 
 
 
-        if(finalUsers.size()>0) {
+        if(!(finalUsers.isEmpty())) {
             response = new ResponseEntity<>(finalUsers,HttpStatus.OK);
         }
 
