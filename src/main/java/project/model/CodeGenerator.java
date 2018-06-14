@@ -10,8 +10,8 @@ public class CodeGenerator extends ResourceSupport {
     public String generateCode() {
 
         Random rand = new Random();
-        Integer randomNumber = 100000 + rand.nextInt(900000);
-        return randomNumber.toString();
+        int randomNumber = rand.nextInt(1000000);
+        return String.format("%06d", randomNumber);
     }
 
 }
