@@ -37,7 +37,7 @@ class ProjectsTableRow extends Component {
         } else return <div> </div>;
     }
 
-    // If the user is project manager or director
+    // If the user is project manager or director, they can view the project's budget and report cost calculation method
     getProjectInfo() {
         if ((this.props.project.projectManagerEmail === this.props.email) ||
             (this.props.profile === "DIRECTOR")
@@ -46,8 +46,10 @@ class ProjectsTableRow extends Component {
                 <div>
                     <strong>Budget:&nbsp;</strong>
                     {this.props.project.projectBudget}
-                    <br /> <strong>Calculation method:&nbsp;</strong>
+                    <br /> <strong>Report Cost Calculation method:&nbsp;</strong>
                     {this.props.project.projectCalculationMethod}
+                    <br /> <strong>Avaliable Calculation methods:&nbsp;</strong>
+                    {this.props.project.projectAvaliableCalculationMethods}
                     <br />
                     {this.props.project.button}
                     <br />
@@ -55,6 +57,7 @@ class ProjectsTableRow extends Component {
             );
         } else return <div> </div>;
     }
+
 
     getActiveProjectTeam() {
         if ((this.props.project.projectManagerEmail === this.props.email) ||
@@ -65,6 +68,8 @@ class ProjectsTableRow extends Component {
         return <div> </div>;
     }
 
+
+    // if the user is project manager, they can see a button to add a collaborator to the project
     addCollabToProjectButton() {
         if (
             this.props.project.projectManagerEmail ===
@@ -74,7 +79,8 @@ class ProjectsTableRow extends Component {
         }
     }
 
-
+    // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
+    // cost calculation methods
     renderDropdownButton(title, i) {
         if (
             this.props.project.projectManagerEmail ===
