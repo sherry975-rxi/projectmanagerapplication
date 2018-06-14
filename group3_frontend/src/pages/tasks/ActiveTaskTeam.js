@@ -35,7 +35,7 @@ class ActiveTaskTeam extends Component {
             return this.state.activeTeam.map((activeTeamitem, index) => {
                 return (
                     <tr className="line" key={index}>
-                        <td> {activeTeamitem.projCollaborator.collaborator.name}</td> <th>{activeTeamitem.projCollaborator.collaborator.email}</th>
+                        <td> {activeTeamitem.projCollaborator.collaborator.name}</td>
                     </tr >
                 );
             });
@@ -50,7 +50,7 @@ class ActiveTaskTeam extends Component {
             <table className="table table-hover team">
                 <thead>
                     <tr>
-                        <th>Active Team:</th>
+                        <th>Active Team</th>
                     </tr>
                 </thead>
                 <tbody>{this.ListOfCollabs()}</tbody>

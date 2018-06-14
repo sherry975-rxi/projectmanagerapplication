@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PanelGroup, Panel } from 'react-bootstrap';
+import { PanelGroup, Panel, DropdownButton, MenuItem } from 'react-bootstrap';
 import './AccordionMenuTasks.css';
 import * as Constants from '../utils/titleConstants';
 import { handleTaskHeaders } from '../utils/handleList';
@@ -7,10 +7,11 @@ import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import { connect } from 'react-redux';
 import MediumButton from './../../components/button/mediumButton';
 import { Link } from 'react-router-dom';
-import TaskTeam1 from '../../pages/tasks/ActiveTaskTeam';
 import CreateRequest from './../../pages/requests/CreateRequest';
 import DeleteTask from './../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
+import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
+import ItemsButton from '../projectsTable/itemsButton.jsx';
 
 
 class AccordionMenu extends Component {
@@ -36,13 +37,69 @@ class AccordionMenu extends Component {
     toggle(key) {
         document.getElementById(key).className = this.state.rotated ? 'notRotated' : 'rotatedArrow'
         this.setState({ rotated: !this.state.rotated, key: key })
+
     }
 
     componentDidUpdate(prevProps, prevState) {
 
-        if (prevState.key != this.state.key) {
-            document.getElementById(prevState.key).className = 'notRotated'
-            document.getElementById(this.state.key).className = 'rotatedArrow'
+        if (prevState.key !== '' && prevState.key != this.state.key) {
+            try {
+                document.getElementById(prevState.key).className = 'notRotated'
+                document.getElementById(this.state.key).className = 'rotatedArrow'
+            }
+            catch (error) {
+                document.getElementById(this.state.key).className = this.state.rotated ? 'notRotated' : 'rotatedArrow'
+            }
+        }
+    }
+
+    renderTaskButtons(element, key) {
+        if(this.props.profile==="COLLABORATOR") {
+            return (<div align="right">
+                {' '}
+                <p />
+                {element.state != 'FINISHED' ? (
+                    <MarkTaskAsFinished
+                        id={element.taskID}
+                        project={element.project}
+                    />
+                ) : (
+                    ''
+                )}
+                <a className="key">{key++}</a>
+                <p />
+                {element.state != 'FINISHED' ? (
+                    <CreateRequest
+                        id={element.taskID}
+                        project={element.project}
+                    />
+                ) : (
+                    ''
+                )}
+                <a className="key">{key++}</a>
+                <p />
+                {element.state != 'FINISHED' ? (
+                    <DeleteTask
+                        id={element.taskID}
+                        project={element.project}
+                    />
+                ) : (
+                    ''
+                )}
+                <a className="key">{key++}</a>
+                <p />
+                {element.state != 'FINISHED' ? (
+                    <AvailableListOfCollaborators
+                        id={element.taskID}
+                        project={element.project}
+                    />
+                ) : (
+                    ''
+                )}
+                <a className="key">{key++}</a>
+            </div>);
+        } else {
+            return(<div align="right">{' '}</div>);
         }
     }
 
@@ -57,7 +114,7 @@ class AccordionMenu extends Component {
                             <thead>
                                 <tr>
                                     <th> {element.taskID} </th>
-                                    <th> {element.project} </th>
+                                    <th> {element.project.projectID} </th>
                                     <th> {element.description} </th>
                                     <th> <b>{element.state}</b> </th>
                                     <th> {element.startDate} </th>
@@ -75,14 +132,6 @@ class AccordionMenu extends Component {
                             <thead>
                                 <tr>
                                     <th>
-                                        <p>
-                                            <b>Creation date:</b> &nbsp;
-                                                {element.creationDate}
-                                        </p>
-                                        <p>
-                                            <b>Finish date:</b> &nbsp;
-                                            {element.finishDate}
-                                        </p>
                                         <p>
                                             <b>Estimated Effort:</b> &nbsp;
                                             {element.estimatedTaskEffort}
@@ -103,59 +152,19 @@ class AccordionMenu extends Component {
                                             <b>Cancel date:</b> &nbsp;
                                             {element.cancelDate}
                                         </p>
+                                        <br/>
+                                        <br/>
 
                                     </th>
                                     <td>
-                                        {<TaskTeam1
+                                        {<ActiveTaskTeam
                                             id={element.taskID}
                                             project={element.project}
                                         />
                                         }
                                     </td>
                                     <th>
-                                        <div align="right">
-                                            {' '}
-                                            <p />
-                                            {element.state != 'FINISHED' ? (
-                                                <MarkTaskAsFinished
-                                                    id={element.taskID}
-                                                    project={element.project}
-                                                />
-                                            ) : (
-                                                    ''
-                                                )}
-                                            <a className="key">{key++}</a>
-                                            <p />
-                                            {element.state != 'FINISHED' ? (
-                                                <CreateRequest
-                                                    id={element.taskID}
-                                                    project={element.project}
-                                                />
-                                            ) : (
-                                                    ''
-                                                )}
-                                            <a className="key">{key++}</a>
-                                            <p />
-                                            {element.state != 'FINISHED' ? (
-                                                <DeleteTask
-                                                    id={element.taskID}
-                                                    project={element.project}
-                                                />
-                                            ) : (
-                                                    ''
-                                                )}
-                                            <a className="key">{key++}</a>
-                                            <p />
-                                            {element.state != 'FINISHED' ? (
-                                                <AvailableListOfCollaborators
-                                                    id={element.taskID}
-                                                    project={element.project}
-                                                />
-                                            ) : (
-                                                    ''
-                                                )}
-                                            <a className="key">{key++}</a>
-                                        </div>
+                                        {this.renderTaskButtons(element, key)}
                                     </th>
                                 </tr>
                             </thead>
@@ -163,6 +172,73 @@ class AccordionMenu extends Component {
                     </Panel.Body>
                 </Panel>
             ));
+    }
+
+    renderDropdownButton(title, i) {
+
+        return (
+            <DropdownButton
+                className="option"
+                bsStyle={title.toLowerCase()}
+                title={title}
+                key={i}
+                id={`dropdown-basic-${i}`}
+            >
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/tasks'
+                        }
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="View tasks" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/addtask'
+                        }
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="Create task" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={'/projectcost/' + this.props.project.projectId}
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="Project Cost" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={
+                            '/selectprojectcostcalculation/' +
+                            this.props.project.projectId
+                        }
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="Change Calculation Method" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link to={'/requests/'}>
+                        <ItemsButton text="View Requests" />
+                    </Link>
+                </MenuItem>
+            </DropdownButton>
+        );
+
     }
 
 
@@ -186,5 +262,6 @@ class AccordionMenu extends Component {
         );
     }
 }
-const mapStateToProps = state => { return ({ updated: state.projectTasks.tasksUpdated }) }
+const mapStateToProps = state => { return ({ updated: state.projectTasks.tasksUpdated,
+                                             profile: state.authenthication.user.userProfile}) }
 export default connect(mapStateToProps, null)(AccordionMenu)

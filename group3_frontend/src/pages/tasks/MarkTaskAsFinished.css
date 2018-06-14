@@ -8,9 +8,9 @@
 }
 
 .buttonFinished {
-  background-color: transparent;
-  border: 1px solid #e35b5a;
-  color: #e35b5a;
+  background-color: rgb(135, 190, 178);
+  border: none;
+  color: rgb(255, 255, 255);
   font-family: Helvetica;
   font-weight:  normal;
   text-align: center;
@@ -22,7 +22,7 @@
 }
 
 .buttonFinished:hover {
-  background-color: #e35b5a;
+  background-color: #2A3F54;
   color: white;
 
 }
