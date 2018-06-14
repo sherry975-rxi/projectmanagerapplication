@@ -57,6 +57,14 @@ class ProjectsTableRow extends Component {
             );
         } else return <div> </div>;
     }
+    gerAddCollabToProjectButton() {
+        if (
+            this.props.project.projectManagerEmail ===
+            this.AuthService.getProfile().sub
+        ) {
+            return <AddUserToProject project={this.props.project.projectId} />;
+        }
+    }
 
     getManagerButtons() {
         if (
@@ -109,7 +117,6 @@ class ProjectsTableRow extends Component {
                         <MediumButton text="View Requests" />
                     </Link>
                     <p />
-                    <AddUserToProject project={this.props.project.projectId} />
                     {this.renderDropdownButton}
                 </div>
             );
@@ -177,11 +184,11 @@ class ProjectsTableRow extends Component {
                     </MenuItem>
 
                     <MenuItem className="items-menu" onClick={this.toggle}>
-                        <Link to={'/requests/'} >
+                        <Link to={'/requests/'}>
                             <ItemsButton text="View Requests" />
                         </Link>
                     </MenuItem>
-               </DropdownButton>
+                </DropdownButton>
             );
         }
     }
@@ -240,23 +247,12 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="1">
-                        <div>
-                            <strong>Budget:&nbsp;</strong>
-                            {this.props.project.projectBudget}
-                            <br /> <strong>Calculation method:&nbsp;</strong>
-                            {this.props.project.projectCalculationMethod}
-                        </div>
+                    <td colSpan="2">{this.getProjectInfo()}</td>
+                    <td colSpan="2" className="">
+                        {this.renderDropdownButton('Options', 0)}
+                        {this.gerAddCollabToProjectButton()}
                     </td>
-                    <td colSpan="1">
-                            {this.renderDropdownButton('Options', 0)}                        
-                    </td>
-                    <td colSpan="1">
-                            <AddUserToProject project={this.props.project.projectId} />
-                            {this.renderDropdownButton}
-                    </td>
-                    
-                    </tr>
+                </tr>
             </Fragment>
         );
     }
