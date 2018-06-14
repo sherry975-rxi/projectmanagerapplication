@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './OngoingTasks.css';
 import AuthService from '../loginPage/AuthService';
 import './activeTeam.css'
 
@@ -11,15 +10,14 @@ class ActiveTaskTeam extends Component {
             activeTeam: [],
         };
 
-        //this.refreshPage = this.refreshPage.bind(this);
         this.AuthService = new AuthService();
     }
 
     componentDidMount() {
-        this.getTaskTeam();
+        this.getActiveTaskTeam();
     }
 
-    async getTaskTeam() {
+    async getActiveTaskTeam() {
         this.AuthService.fetch(
             `/projects/${this.props.project}/tasks/${this.props.id}/activeTeam`,
 
