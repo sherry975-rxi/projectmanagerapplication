@@ -11,12 +11,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AuthService from './../loginPage/AuthService';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx'
-import { handleTaskHeaders } from '../../components/utils/handleList'
+import { handleUserHeaders } from '../../components/utils/handleList'
 import { updateAllUsers, updateEmail, updateCollaborators, updateDirector, updateAdministrator } from './../../actions/UserActions';
 
 
 
-class ProjectTasks extends Component {
+class User extends Component {
     constructor(props) {
         super(props);
         this.match;

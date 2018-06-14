@@ -6,7 +6,7 @@ import './dist/FetchTask.css'
 import { updateAllUsers, updateEmail, updateCollaborators, updateDirector, updateAdministrator } from './../../actions/UserActions';
 
 
-class UserTasksFilter extends Component {
+class UserFilter extends Component {
 
     constructor(props) {
         super(props);
