@@ -16,23 +16,28 @@ class ProjectsTable extends Component {
 
     render() {
         return (
-            <table className="table table-content project-table">
-                <thead>
-                    <tr>{this.renderTitles()}</tr>
-                </thead>
-                <tbody>
-                    {handleProject(this.props.projects).map(
-                        (project, index) => (
-                            <ProjectsTableRow
-                                openIndex={this.props.openIndex}
-                                key={index}
-                                index={index}
-                                project={project}
-                            />
-                        )
-                    )}
-                </tbody>
-            </table>
+            <div>
+                <h3>
+                    <b>My Projects</b>
+                </h3>
+                <table className="table table-content project-table">
+                    <thead>
+                        <tr>{this.renderTitles()}</tr>
+                    </thead>
+                    <tbody>
+                        {handleProject(this.props.projects).map(
+                            (project, index) => (
+                                <ProjectsTableRow
+                                    openIndex={this.props.openIndex}
+                                    key={index}
+                                    index={index}
+                                    project={project}
+                                />
+                            )
+                        )}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }
