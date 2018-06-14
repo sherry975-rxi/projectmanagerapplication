@@ -30,6 +30,7 @@ import CreateProject from './pages/projects/CreateProject';
 import AvailableListOfCollaborators from './pages/tasks/AvailableListOfCollaborators';
 import DeleteTask from './pages/tasks/DeleteTask';
 import AddUserToProject from './pages/projects/AddUserToProject';
+import User from './pages/tasks/User';
 
 
 class App extends Component {
@@ -151,6 +152,10 @@ class App extends Component {
                      <Route
                         exact path="/projects/:projectID/addColabToProject"
                         component={requiresAuth(AddUserToProject)}
+                    />
+                    <Route
+                        exact path="/usersMngr"
+                        component={requiresAuth(User)}
                     />
 
                 </Switch>

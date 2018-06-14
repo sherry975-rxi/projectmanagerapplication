@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Oxygen');
+
+*{ text-decoration: none !important}
+
+.panel {
+    border: none;
+    border-bottom: 1px solid #e7e7e7;
+    box-shadow: none;
+    padding-bottom: 0px;
+}
+
+.panel-group .panel + .panel {
+    margin-top: 0;
+}
+.table.table-title {
+    font-size: 12px;
+    font-family: 'Oxygen', sans-serif;
+    color: #585858;
+    border-bottom: 0px, solid;
+    text-decoration: none !important;
+}
+
+.table > thead > tr > th {
+    border-bottom: 0px solid #ddd;
+    width: 140px;
+    text-decoration: none !important;
+}
+
+.taskContent .table > thead > tr > th:hover {
+    border-bottom: 0px solid #ddd;
+    width: 140px;
+    text-decoration: none !important;
+}
+
+.table.table-content > thead > tr > th {
+    border-bottom: 0px solid #ddd;
+    font-weight: normal;
+    height: 70px;
+    padding-bottom: 20px;
+    text-decoration: none !important;
+}
+
+.taskContent .table.table-content > thead > tr > th:hover {
+    height: 50px;
+}
+
+.table.table-content {
+    font-size: 12px;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: normal;
+    color: #585858;
+    border-bottom: 0px, solid;
+    margin: 0px;
+    text-decoration: none !important;
+
+}
+
+.panel > .panel-heading {
+    background-image: none;
+    background-color: white;
+    box-shadow: none;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    text-decoration: none !important;
+}
+
+.table.table-content > thead:hover {
+    font-size: 12px;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: normal;
+    background: rgb(240, 240, 240);
+    border-bottom: 0px, solid;
+    margin: 0px;
+    text-decoration: none !important;
+}
+
+.taskContent {
+    margin-left: -15px;
+    margin-right: -15px;
+    color: #747474;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'Oxygen', sans-serif;
+    vertical-align: center;
+
+}
+
+
+.projectContent {
+    margin-left: -15px;
+    margin-right: -15px;
+    color: #747474;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'Oxygen', sans-serif;
+}
+
+.panel > .panel-heading .titleList > a:hover {
+    color: rgb(47, 82, 114);
+}
+
+.panel-body {
+    background-image: none;
+    text-decoration: none;
+    box-shadow: none;
+    padding: 20px;
+    background-color: #ecf0f1;
+}
+
+.bodyContent {
+    list-style-type: none;
+}
+
+.bodyContent {
+    color: #747474;
+    font-size: 13px;
+    font-family: 'Oxygen', sans-serif;
+    text-decoration: none;
+    line-height: 25px;
+
+}
+.key {
+    display: none;
+}
+
+.finishButton {
+    padding-top: 11px;
+}
+
+.finishButton:not():hover {
+    padding-top: 11px;
+}
+
+.table.table-details > thead {
+    background-color: #ecf0f1;
+}
+
+
+.table.table-details > thead > tr > th {
+    border-bottom: 0px solid #ddd;
+    font-weight: normal;
+    height: 70px;
+    padding-bottom: 20px;
+    text-align: left;
+    color: #585858;
+    font-size: 12px;
+
+}
+
+.table.table-details > thead > tr > td {
+    font-weight: normal;
+    padding-bottom: 20px;
+    text-align: left;
+    font-size: 12px;
+    width: 50px;
+    margin-top: -30px;
+    align-content: right;
+}
+
+.rotatedArrow{
+    transform: rotate(90deg);
+    font-size: 18px;
+    color: rgb(218, 218, 218);
+}
+
+.notRotated{
+    font-size: 18px;
+    color: rgb(218, 218, 218);
+}
+
+
+

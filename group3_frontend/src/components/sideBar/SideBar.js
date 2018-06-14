@@ -31,7 +31,7 @@ class SideBar extends Component {
 
     getAdminOptions() {
         return (<div className="menu">
-                    <SideButton to="/users" text="Users" />
+                    <SideButton to="/usersMngr" text="Users" />
                 </div>);
     }
 

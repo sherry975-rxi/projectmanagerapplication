@@ -10,8 +10,10 @@ export function updateAllUsers() {
                 method: 'GET'
             }
         ).then(responseData => responseData.json())
+       
             .then(data => {
-                dispatch(allUsersFetched(data))
+
+                dispatch(allUsersFetched(data ))
                 dispatch(filterUserActions.changeToALLUSERS())
                 return data
             });
@@ -73,7 +75,7 @@ export function updateDirector() {
 export function updateAdministrator() {
     return (dispatch) => {
         fetch(
-            `/users/profiles/ADMINISTRATOR`,
+            `/users/profiles/ADMIN`,
             {
                 headers: { 'Authorization': localStorage.getItem('id_token') },
                 method: 'GET'

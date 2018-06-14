@@ -43,19 +43,19 @@ class UserFilter extends Component {
             <div className="buttonWrapper">
                 <div class="switch-toggle switch-ios">
                     <input id="allUsers" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "1")} />
-                    <label class="buttonFont" for="alltasks" eventKey="1" >All Users</label>
+                    <label class="buttonFont" for="allUsers" eventKey="1" >All Users</label>
 
                     <input id="emailUsers" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "2")} />
-                    <label class="buttonFont" for="onGoing" eventKey="1" >Email</label>
+                    <label class="buttonFont" for="emailUsers" eventKey="1" >Email</label>
 
                     <input id="allCollaborators" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "3")} />
-                    <label class="buttonFont" for="finished" eventKey="1" >Collaborators</label>
+                    <label class="buttonFont" for="allCollaborators" eventKey="1" >Collaborator</label>
 
                     <input id="allDirector" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "4")} />
-                    <label class="buttonFont" for="finished" eventKey="1" >Director</label>
+                    <label class="buttonFont" for="allDirector" eventKey="1" >Director</label>
 
                     <input id="allAdministrator" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "5")} />
-                    <label class="buttonFont" for="finished" eventKey="1" >Administrator</label>
+                    <label class="buttonFont" for="allAdministrator" eventKey="1" >Admin</label>
 
 
                     <a></a>

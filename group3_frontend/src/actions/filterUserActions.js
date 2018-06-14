@@ -1,25 +1,25 @@
 export function changeToALLUSERS() {
     console.log("teste")
-    return { type: 'ALLUSERS' };
+    return { type: 'ALLUSERS_FILTER' };
     
 }
 
 export function changeToEMAIL() {
-    return { type: 'EMAIL' };
+    return { type: 'EMAILUSERS_FILTER' };
 }
 
 export function changeToCOLLABORATOR() {
-    return { type: 'COLLABORATOR' };
+    return { type: 'ALLCOLLABORATORS_FILTER' };
 }
 
 export function changeToADMINISTRATOR() {
 
-    return { type: 'ADMINISTRATOR' };
+    return { type: 'ALLADMINISTRATOR_FILTER' };
 }
 
 export function changeToDIRECTOR() {
 
-    return { type: 'DIRECTOR' };
+    return { type: 'ALLDIRECTORS_FILTER' };
 }
 
 

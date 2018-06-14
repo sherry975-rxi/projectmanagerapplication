@@ -10,10 +10,10 @@ import FetchTaskButton from '../tasks/FetchTaskButton'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AuthService from './../loginPage/AuthService';
-import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx'
+import AccordionMenuUsers from '../../components/AccordianMenuUser/AccordionMenuUsers.jsx'
 import { handleUserHeaders } from '../../components/utils/handleList'
 import { updateAllUsers, updateEmail, updateCollaborators, updateDirector, updateAdministrator } from './../../actions/UserActions';
-
+import  UserFilter from  '../tasks/UserFilter'
 
 
 class User extends Component {
@@ -55,7 +55,7 @@ class User extends Component {
         else {
             return (
                 <div>
-                    <FetchTaskButton/>
+                    <UserFilter/>
                     {this.renderUsers()}
                 </div>
             )
@@ -63,7 +63,7 @@ class User extends Component {
     }
 }
 
-const mapStateToProps = state => { return ({ filter: state.UserReducer.filterType, allAdministrator: state.user.allAdministrator, allDirector: state.user.allDirector, allCollaborators: state.user.allCollaborators, emailUsers: state.user.emailUsers, allUsers: state.user.allUsers }) }
+const mapStateToProps = state => { return ({ filter: state.usersFilter.filterType, allAdministrator: state.users.allAdministrator, allDirector: state.users.allDirector, allCollaborators: state.users.allCollaborators, emailUsers: state.users.emailUsers, allUsers: state.users.allUsers }) }
 
 export default connect(mapStateToProps, null)(User);
 
