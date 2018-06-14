@@ -6,13 +6,11 @@ import Error from './../../components/error/error';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 
 
-class TaskTeam extends Component {
+class ActiveTaskTeam extends Component {
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             activeTeam: [],
-            project: {}
         };
 
         //this.refreshPage = this.refreshPage.bind(this);
@@ -25,7 +23,8 @@ class TaskTeam extends Component {
 
     async getTaskTeam()  {
         this.AuthService.fetch(
-            `/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}/activeTeam`,
+            `/projects/${this.props.project}/tasks/${this.props.id}/activeTeam`,
+
             { method: 'GET' }
         ).then(responseData => {
             this.setState({
@@ -40,7 +39,6 @@ class TaskTeam extends Component {
         return this.state.activeTeam.map((activeTeamitem, index) => {
             return (
                 <tr className="line" key={index}>
-                    {/* <td>{activeTeamitem}</td> */}
                     <td>{activeTeamitem.projCollaborator.collaborator.name}</td>
                 </tr>
             );
@@ -54,14 +52,10 @@ class TaskTeam extends Component {
     render() {
         return (
             <div className=" table-striped">
-                <h3>
-                    <b>Active Task Team</b>
-                </h3>
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            {/* <th>Collab email</th> */}
-                            <th>Collab name</th>
+                            <th>Active Team:</th>
                         </tr>
                     </thead>
                     <tbody>{this.ListOfCollabs()}</tbody>
@@ -71,4 +65,4 @@ class TaskTeam extends Component {
     }
 }
 
-export default TaskTeam;
+export default ActiveTaskTeam;

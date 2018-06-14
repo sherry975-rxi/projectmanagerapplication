@@ -1,12 +1,19 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MediumButton from '../../components/button/mediumButton';
-import { Glyphicon } from 'react-bootstrap';
+import {
+    Glyphicon,
+    MenuItem,
+    DropdownButton,
+    Button,
+    DropdownMenu
+} from 'react-bootstrap';
 import AuthService from '../../pages/loginPage/AuthService';
 import AddUserToProject from '../../pages/projects/AddUserToProject';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { projectTableDetailsToogle } from '../../actions/metaActions';
+import ItemsButton from './itemsButton';
 
 class ProjectsTableRow extends Component {
     constructor(props) {
@@ -103,7 +110,78 @@ class ProjectsTableRow extends Component {
                     </Link>
                     <p />
                     <AddUserToProject project={this.props.project.projectId} />
+                    {this.renderDropdownButton}
                 </div>
+            );
+        }
+    }
+
+    renderDropdownButton(title, i) {
+        if (
+            this.props.project.projectManagerEmail ===
+            this.AuthService.getProfile().sub
+        ) {
+            return (
+                <DropdownButton
+                    className="option"
+                    bsStyle={title.toLowerCase()}
+                    title={title}
+                    key={i}
+                    id={`dropdown-basic-${i}`}
+                >
+                    <MenuItem className="items-menu" onClick={this.toggle}>
+                        <Link
+                            to={
+                                '/projects/' +
+                                this.props.project.projectId +
+                                '/tasks'
+                            }
+                            activeClassName="active"
+                        >
+                            <ItemsButton text="View tasks" />
+                        </Link>
+                    </MenuItem>
+
+                    <MenuItem className="items-menu" onClick={this.toggle}>
+                        <Link
+                            to={
+                                '/projects/' +
+                                this.props.project.projectId +
+                                '/addtask'
+                            }
+                            activeClassName="active"
+                        >
+                            <ItemsButton text="Create task" />
+                        </Link>
+                    </MenuItem>
+
+                    <MenuItem className="items-menu" onClick={this.toggle}>
+                        <Link
+                            to={'/projectcost/' + this.props.project.projectId}
+                            activeClassName="active"
+                        >
+                            <ItemsButton text="Project Cost" />
+                        </Link>
+                    </MenuItem>
+
+                    <MenuItem className="items-menu" onClick={this.toggle}>
+                        <Link
+                            to={
+                                '/selectprojectcostcalculation/' +
+                                this.props.project.projectId
+                            }
+                            activeClassName="active"
+                        >
+                            <ItemsButton text="Change Calculation Method" />
+                        </Link>
+                    </MenuItem>
+
+                    <MenuItem className="items-menu" onClick={this.toggle}>
+                        <Link to={'/requests/'} activeClassName="active">
+                            <ItemsButton text="View Requests" />
+                        </Link>
+                    </MenuItem>
+                </DropdownButton>
             );
         }
     }
@@ -130,6 +208,11 @@ class ProjectsTableRow extends Component {
                     </td>
                     <td>{this.props.project.projectDescription}</td>
                     <td>{this.props.project.projectStatusName}</td>
+                    <td>
+                        <div className=" table-striped">
+                            {this.renderDropdownButton('Options', 0)}
+                        </div>
+                    </td>
                     <td className="action-buttons-cell">
                         <span
                             onClick={this.handleRotate}
@@ -149,9 +232,8 @@ class ProjectsTableRow extends Component {
                         (isOpen ? 'open' : 'hide')
                     }
                 >
-                    <td> </td>
-                    <td colSpan="2">
-                        <div>
+                    <td colSpan="3">
+                        <div className="project-details">
                             <strong>Project Manager:&nbsp;</strong>
                             {this.props.project.projectManagerName}
                             <br />
@@ -163,7 +245,7 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td>
+                    <td colSpan="4">
                         <div>
                             <strong>Budget:&nbsp;</strong>
                             {this.props.project.projectBudget}
@@ -174,7 +256,6 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="2">{this.getManagerButtons()}</td>
                 </tr>
             </Fragment>
         );

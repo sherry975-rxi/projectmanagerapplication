@@ -25,7 +25,6 @@ import Messages from './components/msgs/Messages';
 import HomePage from '../src/components/homePage/Homepage';
 import Test from './pages/tasks/Test';
 import ProjectTasks from './pages/tasks/ProjectTasks';
-import ActiveTaskTeam from './pages/tasks/ActiveTaskTeam';
 import CreateRequest from './pages/requests/CreateRequest';
 import CreateProject from './pages/projects/CreateProject';
 import AvailableListOfCollaborators from './pages/tasks/AvailableListOfCollaborators';
@@ -135,11 +134,6 @@ class App extends Component {
                     <Route
                         path="/projectdetails/:projectID"
                         component={requiresAuth(ProjectDetails)}
-                    />
-
-                     <Route
-                        path="/projects/:projectID/tasks/:taskID/activeTeam"
-                        component={requiresAuth(ActiveTaskTeam)}
                     />
                  
                      <Route
