@@ -67,75 +67,41 @@ class AccordionMenuUsers extends Component {
                         <table className="table table-details">
                             <thead>
                                 <tr>
-                                    <th><p>
-                                            <b>Name:</b> &nbsp;
+                                    <th><p><b>Name:</b> &nbsp;
                                                 {element[0]}
                                         </p>
-                                        <p>
-                                            <b>E-mail:</b> &nbsp;
+                                        <p><b>E-mail:</b> &nbsp;
                                             {element[1]}
                                         </p>
-                                        <p>
-                                            <b>Profile:</b> &nbsp;
-                                            {element[2]}
-                                        </p>
-                                        <p>
-                                            <b>Function:</b> &nbsp;
+                                    </th>
+                                    <th><p><b>Function:</b> &nbsp;
                                             {element[3]}
                                         </p>
-                                        <p>
-                                            <b>Status:</b> &nbsp;
+                                        <p><b>Status:</b> &nbsp;
                                             {element[4].toString() ? 'Active' : 'Not Active'}
                                         </p>
                                     </th>
                                     <th>
-                                    <div align="right">
-                                            {' '}
-                                        <p>
-                                            <ChangeProfile  email = {element[1]} />
+                                    <p><b>Profile:</b> &nbsp;
+                                            {element[2]}
                                         </p>
-                                        </div>
-                                        </th>
-                                    </tr>  
-                                     
-                        </thead>
-                    </table>
-                </Panel.Body>
-            </Panel>
-        ));
-    }
-
-    // getTeam(task){
-    //     // this.setState({
-    //     //     team: task.taskTeam
-    //     // });
-
-    //     // return this.state.team.map((taskCollaborator) => {
-    //     //     return taskCollaborator.projCollaborator.collaborator.name;
-    //     // });
-
-    //       for(var i = 0; i < task.taskTeam.length; i++){
-    //          return(
-    //              <ul value={task.taskTeam[i]}>
-    //              {task.taskTeam[i].projCollaborator.collaborator.name}
-    //              </ul>
-    //          );
+                                    </th>
+                                    <th>
+                                    <div align="justified"> {' '}
+                                        <p><ChangeProfile  email = {element[1]} />
+                                        </p>
+                                    </div>
+                                    </th>
+                                </tr>           
+                             </thead>
+                            </table>
+                        </Panel.Body>
+                    </Panel>
+            )
+        );
+     }
 
 
-    //      }
-
-    // }
-
-
-    // async loadTaskTeamFromServer(task) {
-    //     this.AuthService.fetch(
-    //         `/projects/${task.project.projectId}/tasks/${task.taskID}/activeTeam`,
-    //         {
-    //             method: 'get'
-    //         }
-    //     ).then((responseData) => { responseData });
-
-    // }
 
     render() {
         return (

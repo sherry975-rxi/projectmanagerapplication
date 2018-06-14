@@ -5,7 +5,6 @@ import {
 } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
-import { Redirect } from 'react-router-dom';
 import './ChangeProfile.css'
 
 class ChangeProfile extends Component {
@@ -72,7 +71,7 @@ console.log(profileDTO)
     render() {
             return (
                 <div className=" table-striped">  
-                        <tbody>{this.renderDropdownButton("Profile",0)}</tbody>
+                        <tbody>{this.renderDropdownButton("Change",0)}</tbody>
                 </div>
             );
         }
