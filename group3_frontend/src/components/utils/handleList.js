@@ -1,3 +1,6 @@
+var moment = require('moment');
+
+
 export function handleTaskHeaders(list) {
     return list.map(task => ({
         taskID: task.taskID,
@@ -48,13 +51,10 @@ export function handleUserHeaders(list) {
 
 function formatDate(date) {
     if (date != null) {
-        let mydate = new Date(date);
-        var dateFormat = require('dateformat');
-        let formatedDate = new Date(
-            mydate.getTime() - mydate.getTimezoneOffset()
-        );
+        ;
+       
 
-        return dateFormat(formatedDate, 'dd/mmm/yyyy').toString();
+        return moment(date).format("DD/MMM/YYYY");
     } else {
         return '';
     }
