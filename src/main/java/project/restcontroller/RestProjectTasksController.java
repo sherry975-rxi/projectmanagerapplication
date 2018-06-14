@@ -130,7 +130,7 @@ public class RestProjectTasksController {
         ResponseEntity<Boolean> response = new ResponseEntity<>(deleted, HttpStatus.NOT_ACCEPTABLE);
         for( Task other : projectTasks) {
             if (other.getTaskID().equals(taskId)) {
-                deleted =  taskService.deleteTask(taskId);;
+                deleted =  taskService.deleteTask(taskId);
             }
         }
         if(deleted){

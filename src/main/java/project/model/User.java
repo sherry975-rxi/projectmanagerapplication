@@ -19,8 +19,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "User")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "email", scope = User.class)
 public class User extends ResourceSupport implements Serializable {
 
 	@Id
@@ -28,7 +26,7 @@ public class User extends ResourceSupport implements Serializable {
 	@Column(name = "User_ID")
 	private int userID;
 	private String name;
-	@JsonIdentityReference(alwaysAsId = true)
+
 	private String email;
 	private String idNumber;
 	private String function;
@@ -155,7 +153,6 @@ public class User extends ResourceSupport implements Serializable {
 	 *
 	 * @param email
 	 */
-	@JsonProperty("email")
 	public void setEmail(String email) {
 		this.email = email;
 	}

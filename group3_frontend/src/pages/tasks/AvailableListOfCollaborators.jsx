@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom';
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
         super(props);
-        this.match,
+        this.match
         this.state = {
             projTeam: [],
             projCollab: '',
@@ -23,6 +23,14 @@ class AvailableListOfCollaborators extends Component {
 
     componentDidMount() {
         this.getProjTeam();
+    }
+
+    showAddCollaboratorButton(){
+        if (this.state.projTeam.length==null){
+            return '';
+        } else {
+            return this.renderDropdownButton("Add Collaborator",0);
+        }
     }
 
     // Load users from database
@@ -60,7 +68,7 @@ handleClick(event) {
                  if (res.taskFinished === false) {
                         toastr.success('Collaborator was added to task');
                         this.getProjTeam();
-                         return <Redirect to="/projects/${this.props.project}/tasks/${this.props.id}/addCollab" />;                        
+                        window.location.href = `/projects/${this.props.project}/tasks`;
                     }
                 })
                 .catch(err => {
@@ -74,8 +82,7 @@ handleClick(event) {
     renderDropdownButton(title, i) {
         return (
           <DropdownButton className="buttonFinished" bsStyle={title.toLowerCase()} title={title} key={i} id={`dropdown-basic-${i}`}>
-          {this.state.projTeam.map((projTeamitem, index) => 
-          <MenuItem eventKey={index} onSelect={this.handleClick.bind(this)}> {projTeamitem.collaborator.name}</MenuItem>)}
+              {this.state.projTeam.map((projTeamitem, index) => <MenuItem eventKey={index} onSelect={this.handleClick.bind(this)}> {projTeamitem.collaborator.name}</MenuItem>)}
           </DropdownButton>
         );
       }
@@ -83,7 +90,7 @@ handleClick(event) {
     render() {
             return (
                 <div className=" table-striped">  
-                        <tbody>{this.renderDropdownButton("Add Collaborator",0)}</tbody>
+                        <tbody>{this.showAddCollaboratorButton()}</tbody>
                 </div>
             );
         }

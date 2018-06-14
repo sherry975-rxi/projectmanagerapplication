@@ -93,10 +93,10 @@ class AddUserToProject extends Component {
         return (
             <DropdownButton
                 bsStyle={title.toLowerCase()}
+                className="option"
                 title={title}
                 key={i}
                 id={`dropdown-basic-${i}`}
-                className="mediumButton"
             >
                 <MenuItem eventKey="XF9NAKamas">
                     <FormGroup controlId="costPerEffort" bsSize="small">
@@ -112,7 +112,7 @@ class AddUserToProject extends Component {
                     </FormGroup>
                 </MenuItem>
                 <MenuItem divider />
-                {/* {this.state.projTeam.map((projTeamitem, index) => (
+                {this.state.projTeam.map((projTeamitem, index) => (
                     <MenuItem
                         disabled={!this.validateForm()}
                         eventKey={index}
@@ -121,7 +121,7 @@ class AddUserToProject extends Component {
                         {' '}
                         {projTeamitem.name}
                     </MenuItem>
-                ))} */}
+                ))}
             </DropdownButton>
         );
     }

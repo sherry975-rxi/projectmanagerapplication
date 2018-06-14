@@ -3,6 +3,7 @@ import './SideBar.css';
 import { NavLink } from 'react-router-dom';
 import SideButton from './SideButton.js';
 import Profile from '../navBar/Profile';
+import { connect } from 'react-redux';
 
 class SideBar extends Component {
     constructor(props) {
@@ -11,17 +12,8 @@ class SideBar extends Component {
             profile: ''
         };
 
-    this.setProfile = this.setProfile.bind(this);
-
     }
 
-    setProfile(profile) {
-        if (this.state.profile != profile) {
-            this.setState({
-                profile: profile
-            });
-        }
-    };
 
     getCollaboratorOptions() {
         return (<div className="menu">
@@ -46,23 +38,27 @@ class SideBar extends Component {
     render() {
         let options = '';
 
-        if (this.state.profile == 'COLLABORATOR') {
+        if (this.props.profile === 'COLLABORATOR') {
             options = this.getCollaboratorOptions();
-        } else if (this.state.profile == 'DIRECTOR') {
+        } else if (this.props.profile === 'DIRECTOR') {
             options = this.getDirectorOptions();
-        } else if (this.state.profile == 'ADMIN') {
+        } else if (this.props.profile === 'ADMIN') {
             options = this.getAdminOptions();
         }
 
         return (
             <div className={'col-sm-3 col-md-2 sidebar '}>
                 <div className="profile">
-                    <Profile setProfile={this.setProfile} />
+                    <Profile />
                 </div>
                 {options}
             </div>
         );
     }
 }
-
-export default SideBar;
+const mapStateToProps = state => {
+    return { profile: state.authenthication.user.userProfile };
+};
+export default connect(
+    mapStateToProps,
+)(SideBar);

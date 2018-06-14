@@ -57,6 +57,14 @@ class ProjectsTableRow extends Component {
             );
         } else return <div> </div>;
     }
+    gerAddCollabToProjectButton() {
+        if (
+            this.props.project.projectManagerEmail ===
+            this.AuthService.getProfile().sub
+        ) {
+            return <AddUserToProject project={this.props.project.projectId} />;
+        }
+    }
 
     getManagerButtons() {
         if (
@@ -109,7 +117,6 @@ class ProjectsTableRow extends Component {
                         <MediumButton text="View Requests" />
                     </Link>
                     <p />
-                    <AddUserToProject project={this.props.project.projectId} />
                     {this.renderDropdownButton}
                 </div>
             );
@@ -177,7 +184,7 @@ class ProjectsTableRow extends Component {
                     </MenuItem>
 
                     <MenuItem className="items-menu" onClick={this.toggle}>
-                        <Link to={'/requests/'} activeClassName="active">
+                        <Link to={'/requests/'}>
                             <ItemsButton text="View Requests" />
                         </Link>
                     </MenuItem>
@@ -208,11 +215,6 @@ class ProjectsTableRow extends Component {
                     </td>
                     <td>{this.props.project.projectDescription}</td>
                     <td>{this.props.project.projectStatusName}</td>
-                    <td>
-                        <div className=" table-striped">
-                            {this.renderDropdownButton('Options', 0)}
-                        </div>
-                    </td>
                     <td className="action-buttons-cell">
                         <span
                             onClick={this.handleRotate}
@@ -232,7 +234,7 @@ class ProjectsTableRow extends Component {
                         (isOpen ? 'open' : 'hide')
                     }
                 >
-                    <td colSpan="3">
+                    <td colSpan="2">
                         <div className="project-details">
                             <strong>Project Manager:&nbsp;</strong>
                             {this.props.project.projectManagerName}
@@ -245,16 +247,10 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="4">
-                        <div>
-                            <strong>Budget:&nbsp;</strong>
-                            {this.props.project.projectBudget}
-                            <br /> <strong>Calculation method:&nbsp;</strong>
-                            {this.props.project.projectCalculationMethod}
-                            <br />
-                            {this.props.project.button}
-                            <br />
-                        </div>
+                    <td colSpan="2">{this.getProjectInfo()}</td>
+                    <td colSpan="2">
+                        {this.renderDropdownButton('Options', 0)}
+                        {this.gerAddCollabToProjectButton()}
                     </td>
                 </tr>
             </Fragment>
