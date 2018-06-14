@@ -165,7 +165,12 @@ public class RestProjectController  {
 
         return ResponseEntity.ok().body(proj);
     }
-
+    /**
+     * This method updates the params of the project (such manager and cost calculation method)
+     *
+     * @param projectId
+     * @return List of all active task collaborators in a task from the project
+     */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
             "or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/{projectId}/activeTeam", method = RequestMethod.GET)
