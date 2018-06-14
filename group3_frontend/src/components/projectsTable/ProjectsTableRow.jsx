@@ -245,17 +245,7 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="4">
-                        <div>
-                            <strong>Budget:&nbsp;</strong>
-                            {this.props.project.projectBudget}
-                            <br /> <strong>Calculation method:&nbsp;</strong>
-                            {this.props.project.projectCalculationMethod}
-                            <br />
-                            {this.props.project.button}
-                            <br />
-                        </div>
-                    </td>
+                    <td colSpan="4">{this.getProjectInfo()}</td>
                 </tr>
             </Fragment>
         );
