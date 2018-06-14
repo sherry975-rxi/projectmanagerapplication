@@ -26,12 +26,20 @@
 .project-table .project-row td {
     vertical-align: middle;
 }
+.project-table.table.table-content > thead:hover {
+    background: none;
+}
+
+.project-table.table.table-content > thead > tr > th {
+    height: auto;
+    padding: 8px;
+}
 
 .project-table thead th:first-child,
 .project-table .project-row td:first-child {
-    width: 30px;
-    min-width: 30px;
-    max-width: 30px;
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
     word-break: break-all;
     text-align: center;
 }
@@ -62,7 +70,6 @@
     transition: max-height 1s ease-in-out;
     background-color: #ecf0f1;
     border: none;
-    
 }
 
 .project-table .status-project-icon.active {
@@ -109,18 +116,17 @@
     color: white;
     border: white;
     font-size: 12px;
-    width:140px;
-
+    width: 140px;
 }
 
 .option:hover {
-    background-color: #2A3F54;
+    background-color: #2a3f54;
     color: white;
     border: white;
 }
 
 .items-menu {
-    font-size: 12px;;
+    font-size: 12px;
     border-style: none;
     border: none;
 }

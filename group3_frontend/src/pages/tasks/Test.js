@@ -7,7 +7,6 @@ import ProjectsTable from '../../components/projectsTable/ProjectsTable';
 class Test extends Component {
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             projects: [],
             message: ''

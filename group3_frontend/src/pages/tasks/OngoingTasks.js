@@ -9,15 +9,9 @@ import Error from './../../components/error/error';
 import MarkTaskAsFinished from './MarkTaskAsFinished';
 import { Link } from 'react-router-dom';
 import MediumButton from './../../components/button/mediumButton';
-import { updateAllTasks, updateFinishedTasks, updateOngoingTasks } from './../../actions/projectTasksActions';
-import UserTasksFilter from '../tasks/UserTasksFilter'
-import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx'
-import { bindActionCreators } from 'redux';
+import UserTasksFilter from '../tasks/UserTasksFilter';
+import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 import { connect } from 'react-redux';
-import { handleTaskHeaders } from '../../components/utils/handleList'
-
-
-
 
 class OngoingTasks extends Component {
     constructor(props) {
@@ -28,7 +22,7 @@ class OngoingTasks extends Component {
             project: {},
             externalData: null
         };
-        this.AuthService = new AuthService()
+        this.AuthService = new AuthService();
     }
 
     //TODO: Add sort by ascending or descending order to these tables
@@ -38,16 +32,15 @@ class OngoingTasks extends Component {
     }
 
     renderTasks() {
-
         switch (this.props.filter) {
-            case ("all"):
-                return (<AccordionMenu list={this.props.allTasks} />);
-            case ("unfinished"):
-                return (<AccordionMenu list={this.props.ongoingTasks} />);
-            case ("finished"):
-                return (<AccordionMenu list={this.props.finishedTasks} />);
-            case ("notstarted"):
-                return (<AccordionMenu list={this.props.notStartedTasks} />);
+            case 'all':
+                return <AccordionMenu list={this.props.allTasks} />;
+            case 'unfinished':
+                return <AccordionMenu list={this.props.ongoingTasks} />;
+            case 'finished':
+                return <AccordionMenu list={this.props.finishedTasks} />;
+            case 'notstarted':
+                return <AccordionMenu list={this.props.notStartedTasks} />;
         }
     }
 
@@ -124,21 +117,29 @@ class OngoingTasks extends Component {
         } else {
             return (
                 <div className=" table-striped">
-                <UserTasksFilter userID={this.AuthService.getUserId()} />
+                    <UserTasksFilter userID={this.AuthService.getUserId()} />
                     <h3>
                         <b>My Tasks</b>
                     </h3>
-                   
-                 
                     &nbsp;
                     {this.renderTasks()}
-
                 </div>
             );
         }
     }
 }
 
-const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType, finishedTasks: state.projectTasks.finishedTasks, ongoingTasks: state.projectTasks.ongoingTasks, notStartedTasks: state.projectTasks.notStartedTasks, allTasks: state.projectTasks.allTasks }) }
+const mapStateToProps = state => {
+    return {
+        filter: state.filterReducer.filterType,
+        finishedTasks: state.projectTasks.finishedTasks,
+        ongoingTasks: state.projectTasks.ongoingTasks,
+        notStartedTasks: state.projectTasks.notStartedTasks,
+        allTasks: state.projectTasks.allTasks
+    };
+};
 
-export default connect(mapStateToProps, null)(OngoingTasks);
+export default connect(
+    mapStateToProps,
+    null
+)(OngoingTasks);

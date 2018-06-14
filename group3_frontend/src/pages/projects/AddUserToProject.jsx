@@ -8,19 +8,17 @@ import {
 } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
-import { Redirect } from 'react-router-dom';
 
 class AddUserToProject extends Component {
     constructor(props) {
         super(props);
-        this.match,
-            (this.state = {
-                costPerEffort: '',
-                projTeam: [],
-                projCollab: '',
-                submission: false,
-                hideSuccessInfo: 'hide-code'
-            });
+        this.state = {
+            costPerEffort: '',
+            projTeam: [],
+            projCollab: '',
+            submission: false,
+            hideSuccessInfo: 'hide-code'
+        };
         this.AuthService = new AuthService();
     }
 
@@ -44,18 +42,14 @@ class AddUserToProject extends Component {
             `/projects/${this.props.project}/team/usersAvailable`,
             { method: 'get' }
         ).then(responseData => {
-            console.log(responseData);
             this.setState({
                 projTeam: responseData,
                 message: responseData.error
             });
-            console.log(this.state.projTeam);
-            console.log('hghghghgh');
         });
     }
 
     handleClick(event) {
-        console.log(this.state.projTeam[event].email);
         const costPerEffort = this.state.costPerEffort;
         const projectId = this.props.project;
 
@@ -74,17 +68,13 @@ class AddUserToProject extends Component {
             body: JSON.stringify(userDTO)
         })
             .then(res => {
-                console.log(res);
-                console.log('seeee');
                 if (res.costPerEffort !== 0) {
                     toastr.success('Collaborator was added to Project');
                     this.getProjTeam();
                     window.location.href = `/myprojects`;
-                    
                 }
             })
             .catch(err => {
-                console.log(err);
                 toastr.error('Already a Project Collaborator');
             });
     }
