@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PanelGroup, Panel } from 'react-bootstrap';
+import { PanelGroup, Panel, DropdownButton, MenuItem } from 'react-bootstrap';
 import './AccordionMenuTasks.css';
 import * as Constants from '../utils/titleConstants';
 import { handleTaskHeaders } from '../utils/handleList';
@@ -11,6 +11,7 @@ import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
 import CreateRequest from './../../pages/requests/CreateRequest';
 import DeleteTask from './../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
+import ItemsButton from '../projectsTable/itemsButton.jsx';
 
 
 class AccordionMenu extends Component {
@@ -36,13 +37,19 @@ class AccordionMenu extends Component {
     toggle(key) {
         document.getElementById(key).className = this.state.rotated ? 'notRotated' : 'rotatedArrow'
         this.setState({ rotated: !this.state.rotated, key: key })
+
     }
 
     componentDidUpdate(prevProps, prevState) {
 
-        if (prevState.key != this.state.key) {
-            document.getElementById(prevState.key).className = 'notRotated'
-            document.getElementById(this.state.key).className = 'rotatedArrow'
+        if (prevState.key !== '' && prevState.key != this.state.key) {
+            try {
+                document.getElementById(prevState.key).className = 'notRotated'
+                document.getElementById(this.state.key).className = 'rotatedArrow'
+            }
+            catch (error) {
+                document.getElementById(this.state.key).className = this.state.rotated ? 'notRotated' : 'rotatedArrow'
+            }
         }
     }
 
@@ -163,6 +170,73 @@ class AccordionMenu extends Component {
                     </Panel.Body>
                 </Panel>
             ));
+    }
+
+    renderDropdownButton(title, i) {
+
+        return (
+            <DropdownButton
+                className="option"
+                bsStyle={title.toLowerCase()}
+                title={title}
+                key={i}
+                id={`dropdown-basic-${i}`}
+            >
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/tasks'
+                        }
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="View tasks" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/addtask'
+                        }
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="Create task" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={'/projectcost/' + this.props.project.projectId}
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="Project Cost" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={
+                            '/selectprojectcostcalculation/' +
+                            this.props.project.projectId
+                        }
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="Change Calculation Method" />
+                    </Link>
+                </MenuItem>
+
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link to={'/requests/'}>
+                        <ItemsButton text="View Requests" />
+                    </Link>
+                </MenuItem>
+            </DropdownButton>
+        );
+
     }
 
 
