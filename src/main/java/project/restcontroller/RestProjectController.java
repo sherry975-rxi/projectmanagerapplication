@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.model.Project;
+import project.model.ProjectCollaborator;
 import project.model.User;
 import project.services.ProjectService;
 import project.services.TaskService;
@@ -164,6 +165,19 @@ public class RestProjectController  {
 
         return ResponseEntity.ok().body(proj);
     }
+
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID " +
+            "or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/{projectId}/activeTeam", method = RequestMethod.GET)
+    public ResponseEntity<List<ProjectCollaborator>> getActiveProjectTeam(@PathVariable int projectId) {
+
+        Project project = projectService.getProjectById(projectId);
+
+        List <ProjectCollaborator> activeProjectTeam = projectService.getActiveProjectTeam(project);
+
+        return ResponseEntity.ok().body(activeProjectTeam);
+    }
+
 }
 
 
