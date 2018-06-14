@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 @import url('https://fonts.googleapis.com/css?family=Oxygen');
 
+*{ text-decoration: none !important}
+
 .panel {
     border: none;
     border-bottom: 1px solid #e7e7e7;
@@ -16,16 +18,19 @@
     font-family: 'Oxygen', sans-serif;
     color: #585858;
     border-bottom: 0px, solid;
+    text-decoration: none !important;
 }
 
 .table > thead > tr > th {
     border-bottom: 0px solid #ddd;
     width: 140px;
+    text-decoration: none !important;
 }
 
 .taskContent .table > thead > tr > th:hover {
     border-bottom: 0px solid #ddd;
     width: 140px;
+    text-decoration: none !important;
 }
 
 .table.table-content > thead > tr > th {
@@ -33,6 +38,7 @@
     font-weight: normal;
     height: 70px;
     padding-bottom: 20px;
+    text-decoration: none !important;
 }
 
 .taskContent .table.table-content > thead > tr > th:hover {
@@ -46,6 +52,7 @@
     color: #585858;
     border-bottom: 0px, solid;
     margin: 0px;
+    text-decoration: none !important;
 
 }
 
@@ -55,8 +62,8 @@
     box-shadow: none;
     padding-top: 0px;
     padding-bottom: 0px;
+    text-decoration: none !important;
 }
-
 
 .table.table-content > thead:hover {
     font-size: 12px;
@@ -65,7 +72,7 @@
     background: rgb(240, 240, 240);
     border-bottom: 0px, solid;
     margin: 0px;
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .taskContent {
@@ -92,7 +99,6 @@
 }
 
 .panel > .panel-heading .titleList > a:hover {
-    text-decoration: none !important;
     color: rgb(47, 82, 114);
 }
 
@@ -101,7 +107,7 @@
     text-decoration: none;
     box-shadow: none;
     padding: 20px;
-    background-color: #EDEDED;
+    background-color: #ecf0f1;
 }
 
 .bodyContent {
@@ -114,9 +120,8 @@
     font-family: 'Oxygen', sans-serif;
     text-decoration: none;
     line-height: 25px;
+
 }
-
-
 .key {
     display: none;
 }
@@ -130,7 +135,7 @@
 }
 
 .table.table-details > thead {
-    background-color: #EDEDED;
+    background-color: #ecf0f1;
 }
 
 
@@ -142,16 +147,28 @@
     text-align: left;
     color: #585858;
     font-size: 12px;
+
+}
+
+.table.table-details > thead > tr > td {
+    font-weight: normal;
+    padding-bottom: 20px;
+    text-align: left;
+    font-size: 12px;
+    width: 50px;
+    margin-top: -30px;
+    align-content: right;
 }
 
 .rotatedArrow{
     transform: rotate(90deg);
-    font-size: 11px
+    font-size: 18px;
+    color: rgb(218, 218, 218);
 }
 
 .notRotated{
-    font-size: 11px;
-    color: rgb(94, 94, 94);
+    font-size: 18px;
+    color: rgb(218, 218, 218);
 }
 
 

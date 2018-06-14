@@ -355,6 +355,49 @@ public class RestProjectControllerTest {
         verify(projectServiceMock, times(1)).getProjectsFromUser(userDaniel);
 
     }
+
+    /**
+     * GIVEN
+     * project id
+     * and an active project collaborator in project
+     *
+     * WHEN
+     * we perform a get request to url /projects/<projectId>/activeTeam
+     *
+     * THEN
+     * we receive a valid message with a 200 Ok and a list
+     * of active Project collaborators in project
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnActiveProjectTeam() throws Exception {
+
+        // GIVEN
+        Project projectTest = new Project("Project", "description", userRui);
+            //projectCollaborator is from userRui
+        projectCollaborator.setProject(projectTest);
+            // expected list of active team
+        List<ProjectCollaborator> team = new ArrayList<>();
+        team.add(projectCollaborator);
+
+        // WHEN
+
+        Mockito.when(projectServiceMock.getProjectById(any(Integer.class))).thenReturn(projectTest);
+        Mockito.when(projectServiceMock.getActiveProjectTeam(any(Project.class))).thenReturn(team);
+
+        MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId +"/activeTeam").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(projectServiceMock, times(1)).getProjectById(any(Integer.class));
+        verify(projectServiceMock, times(1)).getActiveProjectTeam(any(Project.class));
+
+
+
+
+    }
 }
 
 

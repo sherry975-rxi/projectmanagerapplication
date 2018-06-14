@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import MediumButton from '../../components/button/mediumButton';
 import {
     Glyphicon,
     MenuItem,
@@ -8,7 +7,6 @@ import {
     Button,
     DropdownMenu
 } from 'react-bootstrap';
-import AuthService from '../../pages/loginPage/AuthService';
 import AddUserToProject from '../../pages/projects/AddUserToProject';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,7 +16,6 @@ import ItemsButton from './itemsButton';
 class ProjectsTableRow extends Component {
     constructor(props) {
         super(props);
-        this.AuthService = new AuthService();
     }
 
     handleRotate = () => {
@@ -33,23 +30,25 @@ class ProjectsTableRow extends Component {
     getManagerIcon() {
         if (
             this.props.project.projectManagerEmail ===
-            this.AuthService.getProfile().sub
+            this.props.email
         ) {
             return <span className="project-badge">PM</span>;
         } else return <div> </div>;
     }
 
+    // If the user is project manager or director, they can view the project's budget and report cost calculation method
     getProjectInfo() {
-        if (
-            this.props.project.projectManagerEmail ===
-            this.AuthService.getProfile().sub
+        if ((this.props.project.projectManagerEmail === this.props.email) ||
+            (this.props.profile === "DIRECTOR")
         ) {
             return (
                 <div>
                     <strong>Budget:&nbsp;</strong>
                     {this.props.project.projectBudget}
-                    <br /> <strong>Calculation method:&nbsp;</strong>
+                    <br /> <strong>Report Cost Calculation method:&nbsp;</strong>
                     {this.props.project.projectCalculationMethod}
+                    <br /> <strong>Avaliable Calculation methods:&nbsp;</strong>
+                    {this.props.project.projectAvaliableCalculationMethods}
                     <br />
                     {this.props.project.button}
                     <br />
@@ -58,68 +57,22 @@ class ProjectsTableRow extends Component {
         } else return <div> </div>;
     }
 
-    getManagerButtons() {
+    // if the user is project manager, they can see a button to add a collaborator to the project
+    gerAddCollabToProjectButton() {
         if (
             this.props.project.projectManagerEmail ===
-            this.AuthService.getProfile().sub
+            this.props.email
         ) {
-            return (
-                <div>
-                    <p />
-                    <Link
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/tasks'
-                        }
-                        activeClassName="active"
-                    >
-                        <MediumButton text="View Tasks" />
-                    </Link>
-                    <p />
-                    <Link
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/addtask'
-                        }
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Create task" />
-                    </Link>
-                    <p />
-                    <Link
-                        to={'/projectcost/' + this.props.project.projectId}
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Calculate Project Cost" />
-                    </Link>
-                    <p />
-                    <Link
-                        to={
-                            '/selectprojectcostcalculation/' +
-                            this.props.project.projectId
-                        }
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Change Calculation Method" />
-                    </Link>
-                    <p />
-                    <Link to={'/requests/'} activeClassName="active">
-                        <MediumButton text="View Requests" />
-                    </Link>
-                    <p />
-                    <AddUserToProject project={this.props.project.projectId} />
-                    {this.renderDropdownButton}
-                </div>
-            );
+            return <AddUserToProject project={this.props.project.projectId} />;
         }
     }
 
+    // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
+    // cost calculation methods
     renderDropdownButton(title, i) {
         if (
             this.props.project.projectManagerEmail ===
-            this.AuthService.getProfile().sub
+            this.props.email
         ) {
             return (
                 <DropdownButton
@@ -177,12 +130,34 @@ class ProjectsTableRow extends Component {
                     </MenuItem>
 
                     <MenuItem className="items-menu" onClick={this.toggle}>
-                        <Link to={'/requests/'} activeClassName="active">
+                        <Link to={'/requests/'}>
                             <ItemsButton text="View Requests" />
                         </Link>
                     </MenuItem>
                 </DropdownButton>
             );
+        } else if ((this.props.profile === "COLLABORATOR") || (this.props.profile === "DIRECTOR") ) {
+            return (
+            <DropdownButton
+                className="option"
+                bsStyle={title.toLowerCase()}
+                title={title}
+                key={i}
+                id={`dropdown-basic-${i}`}
+            >
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/tasks'
+                        }
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="View tasks" />
+                    </Link>
+                </MenuItem>
+            </DropdownButton>);
         }
     }
 
@@ -208,11 +183,6 @@ class ProjectsTableRow extends Component {
                     </td>
                     <td>{this.props.project.projectDescription}</td>
                     <td>{this.props.project.projectStatusName}</td>
-                    <td>
-                        <div className=" table-striped">
-                            {this.renderDropdownButton('Options', 0)}
-                        </div>
-                    </td>
                     <td className="action-buttons-cell">
                         <span
                             onClick={this.handleRotate}
@@ -232,7 +202,7 @@ class ProjectsTableRow extends Component {
                         (isOpen ? 'open' : 'hide')
                     }
                 >
-                    <td colSpan="3">
+                    <td colSpan="2">
                         <div className="project-details">
                             <strong>Project Manager:&nbsp;</strong>
                             {this.props.project.projectManagerName}
@@ -245,16 +215,10 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="4">
-                        <div>
-                            <strong>Budget:&nbsp;</strong>
-                            {this.props.project.projectBudget}
-                            <br /> <strong>Calculation method:&nbsp;</strong>
-                            {this.props.project.projectCalculationMethod}
-                            <br />
-                            {this.props.project.button}
-                            <br />
-                        </div>
+                    <td colSpan="2">{this.getProjectInfo()}</td>
+                    <td colSpan="2">
+                        {this.renderDropdownButton('Options', 0)}
+                        {this.gerAddCollabToProjectButton()}
                     </td>
                 </tr>
             </Fragment>
@@ -262,11 +226,16 @@ class ProjectsTableRow extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return { profile: state.authenthication.user.userProfile,
+             email: state.authenthication.user.email };
+};
+
 export const mapDispatchToProps = dispatch => {
     return bindActionCreators({ projectTableDetailsToogle }, dispatch);
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(ProjectsTableRow);

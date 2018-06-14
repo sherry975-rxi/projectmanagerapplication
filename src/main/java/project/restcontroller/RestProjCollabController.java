@@ -160,32 +160,19 @@ public class RestProjCollabController {
 
         Project project = projectService.getProjectById(projectId);
 
-        List <ProjectCollaborator> projectTeam = projectService.getActiveProjectTeam(project);
-        List <User> projectTeamUsers = new ArrayList<>();
         List <User> allUsers = userService.getAllActiveCollaboratorsFromRepository();
         List <User> finalUsers= new ArrayList<>();
-        boolean added = false;
 
         ResponseEntity<List<User>> response = new ResponseEntity<>(finalUsers,HttpStatus.NOT_ACCEPTABLE);
-
-        for ( ProjectCollaborator projCollab : projectTeam) {
-                projectTeamUsers.add(projCollab.getUserFromProjectCollaborator());
+            for (User other : allUsers) {
+                if(!projectService.isUserInProjectTeam(other, project)){
+                    finalUsers.add(other);
+                    finalUsers.remove(project.getProjectManager());
+                }
         }
 
-        for( User other : allUsers){
-            added = false;
-            for (User collab : projectTeamUsers){
-                if(!other.getEmail().equals(collab.getEmail()) && added==false && !projectService.isUserActiveInProject(other,project)) {
-                        finalUsers.add(other);
-                        added = true;
-                    }
-            }
-
-        }
-
-
-
-        if(finalUsers.size()>0) {
+        finalUsers.remove(project.getProjectManager());
+        if(!(finalUsers.isEmpty())) {
             response = new ResponseEntity<>(finalUsers,HttpStatus.OK);
         }
 

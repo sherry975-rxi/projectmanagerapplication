@@ -57,11 +57,12 @@ class AddUserToProject extends Component {
     handleClick(event) {
         console.log(this.state.projTeam[event].email);
         const costPerEffort = this.state.costPerEffort;
+        const projectId = this.props.project;
 
         const userDTO = {
             costPerEffort,
             project: {
-                projectId: 2
+                projectId: projectId
             },
             collaborator: {
                 email: this.state.projTeam[event].email
@@ -93,10 +94,10 @@ class AddUserToProject extends Component {
         return (
             <DropdownButton
                 bsStyle={title.toLowerCase()}
+                className="option"
                 title={title}
                 key={i}
                 id={`dropdown-basic-${i}`}
-                className="mediumButton"
             >
                 <MenuItem eventKey="XF9NAKamas">
                     <FormGroup controlId="costPerEffort" bsSize="small">
@@ -112,7 +113,7 @@ class AddUserToProject extends Component {
                     </FormGroup>
                 </MenuItem>
                 <MenuItem divider />
-                {/* {this.state.projTeam.map((projTeamitem, index) => (
+                {this.state.projTeam.map((projTeamitem, index) => (
                     <MenuItem
                         disabled={!this.validateForm()}
                         eventKey={index}
@@ -121,7 +122,7 @@ class AddUserToProject extends Component {
                         {' '}
                         {projTeamitem.name}
                     </MenuItem>
-                ))} */}
+                ))}
             </DropdownButton>
         );
     }

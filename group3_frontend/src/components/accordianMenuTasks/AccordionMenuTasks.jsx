@@ -7,11 +7,10 @@ import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import { connect } from 'react-redux';
 import MediumButton from './../../components/button/mediumButton';
 import { Link } from 'react-router-dom';
-
-import CreateRequest from '../../pages/requests/CreateRequest';
-import DeleteTask from '../../pages/tasks/DeleteTask';
-import AvailableListOfCollaborators from '../../pages/tasks/AvailableListOfCollaborators';
-import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
+import TaskTeam1 from '../../pages/tasks/ActiveTaskTeam';
+import CreateRequest from './../../pages/requests/CreateRequest';
+import DeleteTask from './../../pages/tasks/DeleteTask';
+import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
 
 
 class AccordionMenu extends Component {
@@ -21,6 +20,7 @@ class AccordionMenu extends Component {
             activeKey: '1',
             rotated: false,
             arrow: 'notRotated',
+            key: ''
         };
     }
 
@@ -34,8 +34,16 @@ class AccordionMenu extends Component {
 
 
     toggle(key) {
-        this.setState({ rotated: !this.state.rotated })
         document.getElementById(key).className = this.state.rotated ? 'notRotated' : 'rotatedArrow'
+        this.setState({ rotated: !this.state.rotated, key: key })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if (prevState.key != this.state.key) {
+            document.getElementById(prevState.key).className = 'notRotated'
+            document.getElementById(this.state.key).className = 'rotatedArrow'
+        }
     }
 
     renderList(list) {
@@ -54,7 +62,7 @@ class AccordionMenu extends Component {
                                     <th> <b>{element.state}</b> </th>
                                     <th> {element.startDate} </th>
                                     <th> {element.finishDate} </th>
-                                    <th> <div id={index}><span className="glyphicon glyphicon-chevron-right"
+                                    <th> <div id={index} className="notRotated"><span className="glyphicon glyphicon-chevron-right"
                                     /> </div></th>
                                     <a className="key">{key++}</a>
 
@@ -97,95 +105,66 @@ class AccordionMenu extends Component {
                                         </p>
 
                                     </th>
+                                    <td>
+                                        {<TaskTeam1
+                                            id={element.taskID}
+                                            project={element.project}
+                                        />
+                                        }
+                                    </td>
                                     <th>
-                                        {<ActiveTaskTeam
-                                            id={element.taskID}
-                                            project={element.project}
-                                        />
-                                    }
-                                </th>
-                                <th>
-                                    {' '}
-                                    <p />
-                                    {element.state != 'FINISHED' ? (
-                                        <MarkTaskAsFinished
-                                            id={element.taskID}
-                                            project={element.project}
-                                        />
-                                    ) : (
-                                        ''
-                                    )}
-                                    <a className="key">{key++}</a>
-                                    <p />
-                                    {element.state != 'FINISHED' ? (
-                                        <CreateRequest
-                                            id={element.taskID}
-                                            project={element.project}
-                                        />
-                                    ) : (
-                                        ''
-                                    )}
-                                    <a className="key">{key++}</a>
-                                    <p />
-                                    {element.state != 'FINISHED' ? (
-                                        <DeleteTask
-                                            id={element.taskID}
-                                            project={element.project}
-                                        />
-                                    ) : (
-                                        ''
-                                    )}
-                                    <a className="key">{key++}</a>
-                                    <p />
-                                    {element.state != 'FINISHED' ? (
-                                        <AvailableListOfCollaborators
-                                            id={element.taskID}
-                                            project={element.project}
-                                        />
-                                    ) : (
-                                        ''
-                                    )}
-                                    <a className="key">{key++}</a>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                </Panel.Body>
-            </Panel>
-        ));
+                                        <div align="right">
+                                            {' '}
+                                            <p />
+                                            {element.state != 'FINISHED' ? (
+                                                <MarkTaskAsFinished
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                />
+                                            ) : (
+                                                    ''
+                                                )}
+                                            <a className="key">{key++}</a>
+                                            <p />
+                                            {element.state != 'FINISHED' ? (
+                                                <CreateRequest
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                />
+                                            ) : (
+                                                    ''
+                                                )}
+                                            <a className="key">{key++}</a>
+                                            <p />
+                                            {element.state != 'FINISHED' ? (
+                                                <DeleteTask
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                />
+                                            ) : (
+                                                    ''
+                                                )}
+                                            <a className="key">{key++}</a>
+                                            <p />
+                                            {element.state != 'FINISHED' ? (
+                                                <AvailableListOfCollaborators
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                />
+                                            ) : (
+                                                    ''
+                                                )}
+                                            <a className="key">{key++}</a>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </Panel.Body>
+                </Panel>
+            ));
     }
 
-    // getTeam(task){
-    //     // this.setState({
-    //     //     team: task.taskTeam
-    //     // });
-
-    //     // return this.state.team.map((taskCollaborator) => {
-    //     //     return taskCollaborator.projCollaborator.collaborator.name;
-    //     // });
-
-    //       for(var i = 0; i < task.taskTeam.length; i++){
-    //          return(
-    //              <ul value={task.taskTeam[i]}>
-    //              {task.taskTeam[i].projCollaborator.collaborator.name}
-    //              </ul>
-    //          );
-
-
-    //      }
-
-    // }
-
-
-    // async loadTaskTeamFromServer(task) {
-    //     this.AuthService.fetch(
-    //         `/projects/${task.project.projectId}/tasks/${task.taskID}/activeTeam`,
-    //         {
-    //             method: 'get'
-    //         }
-    //     ).then((responseData) => { responseData });
-
-    // }
 
     render() {
         return (
