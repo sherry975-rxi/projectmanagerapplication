@@ -79,9 +79,8 @@ class AddUserToProject extends Component {
                 if (res.costPerEffort !== 0) {
                     toastr.success('Collaborator was added to Project');
                     this.getProjTeam();
-                    return (
-                        <Redirect to="/projects/${this.props.project}/tasks/${this.props.id}/addCollab" />
-                    );
+                    window.location.href = `/myprojects`;
+                    
                 }
             })
             .catch(err => {

@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { projectTableDetailsToogle } from '../../actions/metaActions';
 import ItemsButton from './itemsButton';
+import ActiveProjectTeam from '../../pages/projects/ActiveProjectTeam';
 
 class ProjectsTableRow extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ class ProjectsTableRow extends Component {
         } else return <div> </div>;
     }
 
-    // If the user is project manager or director
+    // If the user is project manager or director, they can view the project's budget and report cost calculation method
     getProjectInfo() {
         if ((this.props.project.projectManagerEmail === this.props.email) ||
             (this.props.profile === "DIRECTOR")
@@ -45,8 +46,10 @@ class ProjectsTableRow extends Component {
                 <div>
                     <strong>Budget:&nbsp;</strong>
                     {this.props.project.projectBudget}
-                    <br /> <strong>Calculation method:&nbsp;</strong>
+                    <br /> <strong>Report Cost Calculation method:&nbsp;</strong>
                     {this.props.project.projectCalculationMethod}
+                    <br /> <strong>Avaliable Calculation methods:&nbsp;</strong>
+                    {this.props.project.projectAvaliableCalculationMethods}
                     <br />
                     {this.props.project.button}
                     <br />
@@ -54,7 +57,20 @@ class ProjectsTableRow extends Component {
             );
         } else return <div> </div>;
     }
-    gerAddCollabToProjectButton() {
+
+
+    getActiveProjectTeam() {
+        if ((this.props.project.projectManagerEmail === this.props.email) ||
+            (this.props.profile === "DIRECTOR")
+        ) {
+            return <ActiveProjectTeam project={this.props.project.projectId} />;
+        } else 
+        return <div> </div>;
+    }
+
+
+    // if the user is project manager, they can see a button to add a collaborator to the project
+    addCollabToProjectButton() {
         if (
             this.props.project.projectManagerEmail ===
             this.props.email
@@ -63,7 +79,8 @@ class ProjectsTableRow extends Component {
         }
     }
 
-
+    // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
+    // cost calculation methods
     renderDropdownButton(title, i) {
         if (
             this.props.project.projectManagerEmail ===
@@ -210,10 +227,13 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="2">{this.getProjectInfo()}</td>
+                    <td colSpan="1">{this.getProjectInfo()}</td>
+                    <td >  
+                            {this.getActiveProjectTeam()}
+                    </td>
                     <td colSpan="2">
                         {this.renderDropdownButton('Options', 0)}
-                        {this.gerAddCollabToProjectButton()}
+                        {this.addCollabToProjectButton()}
                     </td>
                 </tr>
             </Fragment>

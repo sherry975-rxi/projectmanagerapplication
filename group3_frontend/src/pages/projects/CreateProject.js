@@ -3,6 +3,8 @@ import './CreateProject.css';
 import { FormGroup, FormControl, ControlLabel, Button, Radio } from "react-bootstrap";
 import AuthService from './../loginPage/AuthService';
 import ListPossibleProjectManagers from './ListPossibleProjectManagers';
+import {toastr} from "react-redux-toastr";
+import { Redirect } from 'react-router-dom';
 
 class CreateProject extends Component {
     constructor(props) {
@@ -12,7 +14,8 @@ class CreateProject extends Component {
             description: "",
             projectManager: { name: "None Selected!"},
             budget: "",
-            effortUnit: "HOURS"
+            effortUnit: "HOURS",
+            awaitingResponse: false
         };
         this.AuthService = new AuthService();
         this.selectManager = this.selectManager.bind(this);
@@ -23,7 +26,8 @@ class CreateProject extends Component {
         return (this.state.name.length > 0 &&
             this.state.description.length > 0 &&
             this.state.budget > 0 &&
-            this.state.projectManager.email != null);
+            this.state.projectManager.email != null &&
+            !this.state.awaitingResponse);
     }
 
     // This method handles changes for all text boxes: Name, description and budget
@@ -61,6 +65,10 @@ class CreateProject extends Component {
             budget,
             effortUnit};
 
+        this.setState({
+            awaitingResponse:true
+        });
+
         this.AuthService.fetch(
             `/projects/`,
             {
@@ -68,18 +76,26 @@ class CreateProject extends Component {
                 method: 'POST'
             }
         ).then(responseData => {
-            console.log(responseData);
-            window.location.href = `/activeprojects`;
+
+            toastr.success('Project Created Successfully!');
+            setTimeout(function() {
+                window.location.href = "/activeprojects";
+            }, 1000);
+
+
+        }).catch(err => {
+            console.log(err);
+            toastr.error('An error occurred!');
+            this.setState({
+                awaitingResponse: false
+            });
         });
 
 
     }
 
 
-
-
     render() {
-        console.log(this.state.effortUnit);
 
         return (
             <div className=" table-striped">
