@@ -228,11 +228,12 @@ class ProjectsTableRow extends Component {
                         </div>
                     </td>
                     <td colSpan="1">{this.getProjectInfo()}</td>
-                    <td >  
+                    <td >
                             {this.getActiveProjectTeam()}
                     </td>
                     <td colSpan="2">
-                        {this.renderDropdownButton('Options', 0)}
+                        <p>{this.renderDropdownButton('Options', 0)}
+                        </p>
                         {this.addCollabToProjectButton()}
                     </td>
                 </tr>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from '../loginPage/AuthService';
-import './activeTeam.css'
+import './activeProjectTeam.css'
 
 
 class ActiveProjectTeam extends Component {
@@ -35,8 +35,7 @@ class ActiveProjectTeam extends Component {
             return this.state.activeTeam.map((activeTeamitem, index) => {
                 return (
                     <tr className="line" key={index}>
-                        <td> {activeTeamitem.collaborator.name}</td>
-                        <td> {activeTeamitem.costPerEffort}</td>
+                        <th> {activeTeamitem.collaborator.name}</th>
                     </tr >
                 );
             });
@@ -48,19 +47,13 @@ class ActiveProjectTeam extends Component {
 
     render() {
         return (
-            <table className="table table-hover team">
+            <table className="table table-hover projectteam">
                 <thead>
                     <tr>
-                        <th> Active Team </th>
+                        <th> <b> Active Team </b> </th>
                     </tr>
+                {this.ListOfCollabs()}
                 </thead>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Cost per Effort:</th>
-                    </tr>
-                </thead>
-                <tbody>{this.ListOfCollabs()}</tbody>
             </table>
         );
     }
