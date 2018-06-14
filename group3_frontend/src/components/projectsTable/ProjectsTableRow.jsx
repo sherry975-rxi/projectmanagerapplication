@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import MediumButton from '../../components/button/mediumButton';
 import {
     Glyphicon,
     MenuItem,
@@ -8,7 +7,6 @@ import {
     Button,
     DropdownMenu
 } from 'react-bootstrap';
-import AuthService from '../../pages/loginPage/AuthService';
 import AddUserToProject from '../../pages/projects/AddUserToProject';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,7 +16,6 @@ import ItemsButton from './itemsButton';
 class ProjectsTableRow extends Component {
     constructor(props) {
         super(props);
-        this.AuthService = new AuthService();
     }
 
     handleRotate = () => {
@@ -33,16 +30,16 @@ class ProjectsTableRow extends Component {
     getManagerIcon() {
         if (
             this.props.project.projectManagerEmail ===
-            this.AuthService.getProfile().sub
+            this.props.email
         ) {
             return <span className="project-badge">PM</span>;
         } else return <div> </div>;
     }
 
+    // If the user is project manager or director
     getProjectInfo() {
-        if (
-            this.props.project.projectManagerEmail ===
-            this.AuthService.getProfile().sub
+        if ((this.props.project.projectManagerEmail === this.props.email) ||
+            (this.props.profile === "DIRECTOR")
         ) {
             return (
                 <div>
@@ -60,73 +57,17 @@ class ProjectsTableRow extends Component {
     gerAddCollabToProjectButton() {
         if (
             this.props.project.projectManagerEmail ===
-            this.AuthService.getProfile().sub
+            this.props.email
         ) {
             return <AddUserToProject project={this.props.project.projectId} />;
         }
     }
 
-    getManagerButtons() {
-        if (
-            this.props.project.projectManagerEmail ===
-            this.AuthService.getProfile().sub
-        ) {
-            return (
-                <div>
-                    <p />
-                    <Link
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/tasks'
-                        }
-                        activeClassName="active"
-                    >
-                        <MediumButton text="View Tasks" />
-                    </Link>
-                    <p />
-                    <Link
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/addtask'
-                        }
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Create task" />
-                    </Link>
-                    <p />
-                    <Link
-                        to={'/projectcost/' + this.props.project.projectId}
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Calculate Project Cost" />
-                    </Link>
-                    <p />
-                    <Link
-                        to={
-                            '/selectprojectcostcalculation/' +
-                            this.props.project.projectId
-                        }
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Change Calculation Method" />
-                    </Link>
-                    <p />
-                    <Link to={'/requests/'} activeClassName="active">
-                        <MediumButton text="View Requests" />
-                    </Link>
-                    <p />
-                    {this.renderDropdownButton}
-                </div>
-            );
-        }
-    }
 
     renderDropdownButton(title, i) {
         if (
             this.props.project.projectManagerEmail ===
-            this.AuthService.getProfile().sub
+            this.props.email
         ) {
             return (
                 <DropdownButton
@@ -190,6 +131,28 @@ class ProjectsTableRow extends Component {
                     </MenuItem>
                 </DropdownButton>
             );
+        } else if ((this.props.profile === "COLLABORATOR") || (this.props.profile === "DIRECTOR") ) {
+            return (
+            <DropdownButton
+                className="option"
+                bsStyle={title.toLowerCase()}
+                title={title}
+                key={i}
+                id={`dropdown-basic-${i}`}
+            >
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/tasks'
+                        }
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="View tasks" />
+                    </Link>
+                </MenuItem>
+            </DropdownButton>);
         }
     }
 
@@ -258,11 +221,16 @@ class ProjectsTableRow extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return { profile: state.authenthication.user.userProfile,
+             email: state.authenthication.user.email };
+};
+
 export const mapDispatchToProps = dispatch => {
     return bindActionCreators({ projectTableDetailsToogle }, dispatch);
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(ProjectsTableRow);
