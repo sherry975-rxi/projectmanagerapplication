@@ -8,6 +8,19 @@
     text-align: left;
     color: rgb(93, 93, 93);
     border-top: 0px solid #ddd;
+    padding: 3px;
+    font-size: 12px;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: bold;
+}
+.table.table-hover.projectteam > thead > tr > td {
+    text-align: left;
+    color: rgb(93, 93, 93);
+    border-top: 0px solid #ddd;
+    padding: 0.5px;
+    font-size: 11.5px;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: normal;
 }
 
 .table.table-hover.projectteam > tbody > tr > td {
