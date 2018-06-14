@@ -1,0 +1,27 @@
+.table.table-hover.team {
+    background-color: #ecf0f1;
+    margin-top: -10px;
+    color: rgb(93, 93, 93);
+}
+
+.table.table-hover.team > thead > tr > th {
+    text-align: left;
+    color: rgb(93, 93, 93);
+}
+
+.table.table-hover.team > tbody > tr > td {
+    text-align: left;
+    color: rgb(93, 93, 93);
+}
+
+.table.table-hover.team > tbody > tr > th{
+    text-align: right;
+    padding-right: 0px;
+    padding-left: 0px;
+    font-weight: 0px;
+    color: rgb(93, 93, 93);
+}
+
+
+
+

@@ -94,32 +94,32 @@ class AccordionMenu extends Component {
                                         </p>
 
                                     </th>
-                                    <th>
+                                    <td>
                                         {<TaskTeam1
                                             id={element.taskID}
                                             project={element.project}
                                         />
-                                    }
-                                </th>
-                                <th>
-                                    {' '}
-                                    <p />
-                                    {element.state != 'FINISHED' ? (
-                                        <MarkTaskAsFinished
-                                            id={element.taskID}
-                                            project={element.project}
-                                        />
-                                    ) : (
-                                        ''
-                                    )}
-                                    <a className="key">{key++}</a>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                </Panel.Body>
-            </Panel>
-        ));
+                                        }
+                                    </td>
+                                    <th>
+                                        {' '}
+                                        <p />
+                                        {element.state != 'FINISHED' ? (
+                                            <MarkTaskAsFinished
+                                                id={element.taskID}
+                                                project={element.project}
+                                            />
+                                        ) : (
+                                                ''
+                                            )}
+                                        <a className="key">{key++}</a>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </Panel.Body>
+                </Panel>
+            ));
     }
 
     // getTeam(task){
