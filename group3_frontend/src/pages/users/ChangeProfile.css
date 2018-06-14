@@ -1,0 +1,29 @@
+
+.ChangeProfile {
+ padding: 60px 0;
+}
+
+.ChangeProfile form {
+ margin: 30 auto;
+ max-width: 320px;
+}
+
+.buttonFinished {
+ background-color: rgb(135, 190, 178);
+ border: none;
+ color: rgb(255, 255, 255);
+ font-family: Helvetica;
+ font-weight:  normal;
+ text-align: center;
+ display: inline-block;
+ font-size: 13px;
+ width: 130px;
+ height: 32px;
+ border-radius: 0;
+}
+
+.buttonFinished:hover {
+ background-color: #2A3F54;
+ color: white;
+
+}

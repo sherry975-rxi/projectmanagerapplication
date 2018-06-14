@@ -31,6 +31,7 @@ import AvailableListOfCollaborators from './pages/tasks/AvailableListOfCollabora
 import DeleteTask from './pages/tasks/DeleteTask';
 import AddUserToProject from './pages/projects/AddUserToProject';
 import User from './pages/tasks/User';
+import ChangeProfile from './pages/users/ChangeProfile';
 
 
 class App extends Component {
@@ -156,6 +157,10 @@ class App extends Component {
                     <Route
                         exact path="/usersMngr"
                         component={requiresAuth(User)}
+                    />
+                     <Route
+                        exact path="/updateProfile"
+                        component={requiresAuth(ChangeProfile)}
                     />
 
                 </Switch>
