@@ -57,6 +57,14 @@ class ProjectsTableRow extends Component {
             );
         } else return <div> </div>;
     }
+    gerAddCollabToProjectButton() {
+        if (
+            this.props.project.projectManagerEmail ===
+            this.AuthService.getProfile().sub
+        ) {
+            return <AddUserToProject project={this.props.project.projectId} />;
+        }
+    }
 
     getManagerButtons() {
         if (
@@ -109,7 +117,6 @@ class ProjectsTableRow extends Component {
                         <MediumButton text="View Requests" />
                     </Link>
                     <p />
-                    <AddUserToProject project={this.props.project.projectId} />
                     {this.renderDropdownButton}
                 </div>
             );
@@ -177,13 +184,9 @@ class ProjectsTableRow extends Component {
                     </MenuItem>
 
                     <MenuItem className="items-menu" onClick={this.toggle}>
-                        <Link to={'/requests/'} activeClassName="active">
+                        <Link to={'/requests/'}>
                             <ItemsButton text="View Requests" />
                         </Link>
-                    </MenuItem>
-                    <MenuItem className="items-menu" onClick={this.toggle}>
-                            <ItemsButton text="Add collaborator" />
-                            <AddUserToProject />
                     </MenuItem>
                 </DropdownButton>
             );
@@ -244,7 +247,11 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="4">{this.getProjectInfo()}</td>
+                    <td colSpan="2">{this.getProjectInfo()}</td>
+                    <td colSpan="2" className="">
+                        {this.renderDropdownButton('Options', 0)}
+                        {this.gerAddCollabToProjectButton()}
+                    </td>
                 </tr>
             </Fragment>
         );

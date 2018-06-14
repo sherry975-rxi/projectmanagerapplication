@@ -2,29 +2,33 @@ import React from 'react';
 import './Profile.css';
 import AuthService from '../../pages/loginPage/AuthService';
 import mainLogo from './profile_logo.png';
+import { authorize } from '../../actions/authenticationActions';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 export class Profile extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            user: {},
-            message: ''
-        };
+
         this.AuthService = new AuthService();
     }
+
     componentDidMount() {
         this.AuthService.fetch(`/users/${this.AuthService.getUserId()}`, {
             method: 'get'
         }).then(responseData => {
             this.setState({
-                user: responseData,
-                message: responseData.status
+                message: responseData.error
             });
-            this.props.setProfile(this.state.user.userProfile);
+            if(this.state.message == null ) {
+                this.props.authorize(responseData);
+            }
         });
     }
 
     render() {
-        var user = this.state.user;
+        var user = this.props.user;
 
         return (
             <div className="external-div">
@@ -46,4 +50,11 @@ export class Profile extends React.Component {
         );
     }
 }
-export default Profile;
+const mapStateToProps = state => {
+    return { user: state.authenthication.user };
+};
+const mapDispatchToProps = dispatch => bindActionCreators({ authorize }, dispatch)
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Profile);
