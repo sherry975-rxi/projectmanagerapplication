@@ -60,7 +60,7 @@ handleClick(event) {
                  if (res.taskFinished === false) {
                         toastr.success('Collaborator was added to task');
                         this.getProjTeam();
-                         return <Redirect to="/projects/${this.props.project}/tasks/${this.props.id}/addCollab" />;                        
+                        window.location.href = `/projects/${this.props.project}/tasks`;
                     }
                 })
                 .catch(err => {
