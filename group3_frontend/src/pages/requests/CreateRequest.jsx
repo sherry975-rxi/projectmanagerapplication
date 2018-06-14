@@ -48,8 +48,8 @@ class CreateRequest extends Component {
     render() {
         return (
             <div className=" table-striped">
-                <button className="buttonAssignmentRequest" onClick={this.handleClick}>
-                Request task assignment</button>
+                <button className="buttonFinished" onClick={this.handleClick}>
+                Create Request</button>
             </div>
         );
     }

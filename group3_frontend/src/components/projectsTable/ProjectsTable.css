@@ -10,7 +10,10 @@
     transform: rotate(90deg);
 }
 .project-table .open-project-details-button {
-    display: inline-block;
+    display: block;
+    height: 70px;
+    line-height: 70px;
+    cursor: pointer;
 }
 .project-table .project-row td.action-buttons-cell {
     padding: 0;
@@ -98,4 +101,31 @@
     padding-top: 6px;
     border-bottom: 2px solid #ccc;
     margin: 0;
+}
+
+.option {
+    color: rbg(105, 105, 105);
+    border: white;
+    font-size: 12px;
+}
+
+.option:hover {
+    background-color: rgb(135, 190, 178);
+    color: white;
+    border: white;
+}
+
+.items-menu {
+    font-size: 12px;
+    background-color: white;
+    border-style: none;
+    border: white;
+}
+
+.items-menu:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+.project-table .project-details {
+    margin-left: 50px;
 }

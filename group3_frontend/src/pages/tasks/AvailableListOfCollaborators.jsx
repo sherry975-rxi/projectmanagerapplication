@@ -7,6 +7,7 @@ import AuthService from './../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
 import { Redirect } from 'react-router-dom';
 
+
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
         super(props);
@@ -72,7 +73,7 @@ handleClick(event) {
 
     renderDropdownButton(title, i) {
         return (
-          <DropdownButton bsStyle={title.toLowerCase()} title={title} key={i} id={`dropdown-basic-${i}`}>
+          <DropdownButton className="buttonFinished" bsStyle={title.toLowerCase()} title={title} key={i} id={`dropdown-basic-${i}`}>
           {this.state.projTeam.map((projTeamitem, index) => 
           <MenuItem eventKey={index} onSelect={this.handleClick.bind(this)}> {projTeamitem.collaborator.name}</MenuItem>)}
           </DropdownButton>

@@ -1,21 +1,33 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MediumButton from '../../components/button/mediumButton';
-import { Glyphicon } from 'react-bootstrap';
+import {
+    Glyphicon,
+    MenuItem,
+    DropdownButton,
+    Button,
+    DropdownMenu
+} from 'react-bootstrap';
 import AuthService from '../../pages/loginPage/AuthService';
 import AddUserToProject from '../../pages/projects/AddUserToProject';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { projectTableDetailsToogle } from '../../actions/metaActions';
+import ItemsButton from './itemsButton';
 
 class ProjectsTableRow extends Component {
     constructor(props) {
         super(props);
         this.AuthService = new AuthService();
-
-        this.state = { isOpen: false };
     }
 
     handleRotate = () => {
-        this.setState({ isOpen: !this.state.isOpen });
+        const index =
+            this.props.index === this.props.openIndex
+                ? undefined
+                : this.props.index;
+        const payload = { index: index };
+        this.props.projectTableDetailsToogle(payload);
     };
 
     getManagerIcon() {
@@ -27,50 +39,156 @@ class ProjectsTableRow extends Component {
         } else return <div> </div>;
     }
 
-    getManagerButtons() {
-        if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub) {
+    getProjectInfo() {
+        if (
+            this.props.project.projectManagerEmail ===
+            this.AuthService.getProfile().sub
+        ) {
+            return (
+                <div>
+                    <strong>Budget:&nbsp;</strong>
+                    {this.props.project.projectBudget}
+                    <br /> <strong>Calculation method:&nbsp;</strong>
+                    {this.props.project.projectCalculationMethod}
+                    <br />
+                    {this.props.project.button}
+                    <br />
+                </div>
+            );
+        } else return <div> </div>;
+    }
 
-            return <div> 
-                        <p /> 
+    getManagerButtons() {
+        if (
+            this.props.project.projectManagerEmail ===
+            this.AuthService.getProfile().sub
+        ) {
+            return (
+                <div>
+                    <p />
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/tasks'
+                        }
+                        activeClassName="active"
+                    >
+                        <MediumButton text="View Tasks" />
+                    </Link>
+                    <p />
+                    <Link
+                        to={
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/addtask'
+                        }
+                        activeClassName="active"
+                    >
+                        <MediumButton text="Create task" />
+                    </Link>
+                    <p />
+                    <Link
+                        to={'/projectcost/' + this.props.project.projectId}
+                        activeClassName="active"
+                    >
+                        <MediumButton text="Calculate Project Cost" />
+                    </Link>
+                    <p />
+                    <Link
+                        to={
+                            '/selectprojectcostcalculation/' +
+                            this.props.project.projectId
+                        }
+                        activeClassName="active"
+                    >
+                        <MediumButton text="Change Calculation Method" />
+                    </Link>
+                    <p />
+                    <Link to={'/requests/'} activeClassName="active">
+                        <MediumButton text="View Requests" />
+                    </Link>
+                    <p />
+                    <AddUserToProject project={this.props.project.projectId} />
+                    {this.renderDropdownButton}
+                </div>
+            );
+        }
+    }
+
+    renderDropdownButton(title, i) {
+        if (
+            this.props.project.projectManagerEmail ===
+            this.AuthService.getProfile().sub
+        ) {
+            return (
+                <DropdownButton
+                    className="option"
+                    bsStyle={title.toLowerCase()}
+                    title={title}
+                    key={i}
+                    id={`dropdown-basic-${i}`}
+                >
+                    <MenuItem className="items-menu" onClick={this.toggle}>
                         <Link
-                            to={'/projects/' + this.props.project.projectId + '/tasks'}
+                            to={
+                                '/projects/' +
+                                this.props.project.projectId +
+                                '/tasks'
+                            }
                             activeClassName="active"
-                            >
-                            <MediumButton text = "View Tasks" />
+                        >
+                            <ItemsButton text="View tasks" />
                         </Link>
-                        <p />
+                    </MenuItem>
+
+                    <MenuItem className="items-menu" onClick={this.toggle}>
                         <Link
-                            to={'/projects/' + this.props.project.projectId + '/addtask'}
+                            to={
+                                '/projects/' +
+                                this.props.project.projectId +
+                                '/addtask'
+                            }
                             activeClassName="active"
-                                >
-                            <MediumButton text="Create task" />
-                        </Link> 
-                        <p /> 
+                        >
+                            <ItemsButton text="Create task" />
+                        </Link>
+                    </MenuItem>
+
+                    <MenuItem className="items-menu" onClick={this.toggle}>
                         <Link
                             to={'/projectcost/' + this.props.project.projectId}
                             activeClassName="active"
-                            >
-                            <MediumButton text="Calculate Project Cost" />
+                        >
+                            <ItemsButton text="Project Cost" />
                         </Link>
-                        <p />  
+                    </MenuItem>
+
+                    <MenuItem className="items-menu" onClick={this.toggle}>
                         <Link
-                            to={'/selectprojectcostcalculation/' + this.props.project.projectId}
+                            to={
+                                '/selectprojectcostcalculation/' +
+                                this.props.project.projectId
+                            }
                             activeClassName="active"
-                            >
-                            <MediumButton text="Change Calculation Method" />
-                        </Link> 
-                        <p /> 
-                        <Link
-                            to={'/requests/'}
-                            activeClassName="active"
-                            >
-                            <MediumButton text="View Requests" />
+                        >
+                            <ItemsButton text="Change Calculation Method" />
                         </Link>
-                </div>;
+                    </MenuItem>
+
+                    <MenuItem className="items-menu" onClick={this.toggle}>
+                        <Link to={'/requests/'} activeClassName="active">
+                            <ItemsButton text="View Requests" />
+                        </Link>
+                    </MenuItem>
+                </DropdownButton>
+            );
         }
     }
 
     render() {
+        const isOpen = this.props.openIndex === this.props.index;
+
         return (
             <Fragment>
                 <tr className="project-row">
@@ -88,15 +206,21 @@ class ProjectsTableRow extends Component {
                     <td id="project-manager-badge-cell">
                         {this.getManagerIcon()}
                     </td>
+                    <td>{this.props.project.projectDescription}</td>
                     <td>{this.props.project.projectStatusName}</td>
+                    <td>
+                        <div className=" table-striped">
+                            {this.renderDropdownButton('Options', 0)}
+                        </div>
+                    </td>
                     <td className="action-buttons-cell">
                         <span
                             onClick={this.handleRotate}
                             className="open-project-details-button"
                         >
                             <Glyphicon
-                                glyph="triangle-right"
-                                className={this.state.isOpen ? 'rotate' : ''}
+                                glyph="chevron-right"
+                                className={isOpen ? 'rotate' : ''}
                                 id="triangle-button"
                             />
                         </span>
@@ -105,55 +229,32 @@ class ProjectsTableRow extends Component {
                 <tr
                     className={
                         'project-details project-row ' +
-                        (this.state.isOpen ? 'open' : 'hide')
+                        (isOpen ? 'open' : 'hide')
                     }
-                    id="description"
                 >
-                    <td> </td>
                     <td colSpan="3">
-                        <div>
-                            <b id="project-description">Description:&nbsp;</b>
-                            {this.props.project.projectDescription}
-                            <hr />
-                        </div>
-                    </td>
-                    <td> </td>
-                </tr>
-                <tr
-                    className={
-                        'project-details project-row ' +
-                        (this.state.isOpen ? 'open' : 'hide')
-                    }
-                >
-                    <td> </td>
-                    <td colSpan="2">
-                        <div>
-                            <b>Project Manager:&nbsp;</b>
+                        <div className="project-details">
+                            <strong>Project Manager:&nbsp;</strong>
                             {this.props.project.projectManagerName}
                             <br />
-                            <b>Start date:&nbsp;</b>
+                            <strong>Start date:&nbsp;</strong>
                             {this.props.project.projectStartDate}
                             <br />
-                            <b>Finish date:&nbsp;</b>
+                            <strong>Finish date:&nbsp;</strong>
                             {this.props.project.projectFinishDate}
                             <br />
                         </div>
                     </td>
-                    <td>
+                    <td colSpan="4">
                         <div>
-                            <b>Budget:&nbsp;</b>
+                            <strong>Budget:&nbsp;</strong>
                             {this.props.project.projectBudget}
-                            <br /> <b>Calculation method:&nbsp;</b>
+                            <br /> <strong>Calculation method:&nbsp;</strong>
                             {this.props.project.projectCalculationMethod}
                             <br />
                             {this.props.project.button}
                             <br />
                         </div>
-                    </td>
-                    <td>{this.getManagerButtons()}      
-                        <div>
-                            <AddUserToProject project={this.props.project.projectId}/>
-                        </div>              
                     </td>
                 </tr>
             </Fragment>
@@ -161,4 +262,11 @@ class ProjectsTableRow extends Component {
     }
 }
 
-export default ProjectsTableRow;
+export const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ projectTableDetailsToogle }, dispatch);
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(ProjectsTableRow);

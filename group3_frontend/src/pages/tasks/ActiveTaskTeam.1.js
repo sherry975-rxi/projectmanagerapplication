@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './OngoingTasks.css';
 import AuthService from '../loginPage/AuthService';
-import Moment from 'react-moment';
-import Error from './../../components/error/error';
-import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 import './activeTeam.css'
 
 

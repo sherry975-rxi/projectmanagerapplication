@@ -1,0 +1,22 @@
+.itemsButton {
+    background-color: rgb(255, 255, 255); /* Green */
+    border:1px solid rgb(255, 255, 255);
+    font-family: Helvetica;
+    font-weight:  normal;
+    padding: 1px 7px;
+    text-align: center;
+    border-style:none;
+    display: inline-block;
+    font-size: 12px;
+    margin:0px;
+    
+}
+
+.items-menu {
+    background-color: rgb(255, 255, 255);
+    margin:2px;
+    padding-top:1px;
+    border-style:none;
+    padding-bottom:1px;
+}
+

@@ -7,8 +7,10 @@ import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import { connect } from 'react-redux';
 import MediumButton from './../../components/button/mediumButton';
 import { Link } from 'react-router-dom';
-
 import TaskTeam1 from './../../pages/tasks/ActiveTaskTeam.1';
+import CreateRequest from './../../pages/requests/CreateRequest';
+import DeleteTask from './../../pages/tasks/DeleteTask';
+import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
 
 
 class AccordionMenu extends Component {
@@ -102,17 +104,49 @@ class AccordionMenu extends Component {
                                         }
                                     </td>
                                     <th>
-                                        {' '}
-                                        <p />
-                                        {element.state != 'FINISHED' ? (
-                                            <MarkTaskAsFinished
-                                                id={element.taskID}
-                                                project={element.project}
-                                            />
-                                        ) : (
-                                                ''
-                                            )}
-                                        <a className="key">{key++}</a>
+                                        <div align="right">
+                                            {' '}
+                                            <p />
+                                            {element.state != 'FINISHED' ? (
+                                                <MarkTaskAsFinished
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                />
+                                            ) : (
+                                                    ''
+                                                )}
+                                            <a className="key">{key++}</a>
+                                            <p />
+                                            {element.state != 'FINISHED' ? (
+                                                <CreateRequest
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                />
+                                            ) : (
+                                                    ''
+                                                )}
+                                            <a className="key">{key++}</a>
+                                            <p />
+                                            {element.state != 'FINISHED' ? (
+                                                <DeleteTask
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                />
+                                            ) : (
+                                                    ''
+                                                )}
+                                            <a className="key">{key++}</a>
+                                            <p />
+                                            {element.state != 'FINISHED' ? (
+                                                <AvailableListOfCollaborators
+                                                    id={element.taskID}
+                                                    project={element.project}
+                                                />
+                                            ) : (
+                                                    ''
+                                                )}
+                                            <a className="key">{key++}</a>
+                                        </div>
                                     </th>
                                 </tr>
                             </thead>
@@ -122,37 +156,6 @@ class AccordionMenu extends Component {
             ));
     }
 
-    // getTeam(task){
-    //     // this.setState({
-    //     //     team: task.taskTeam
-    //     // });
-
-    //     // return this.state.team.map((taskCollaborator) => {
-    //     //     return taskCollaborator.projCollaborator.collaborator.name;
-    //     // });
-
-    //       for(var i = 0; i < task.taskTeam.length; i++){
-    //          return(
-    //              <ul value={task.taskTeam[i]}>
-    //              {task.taskTeam[i].projCollaborator.collaborator.name}
-    //              </ul>
-    //          );
-
-
-    //      }
-
-    // }
-
-
-    // async loadTaskTeamFromServer(task) {
-    //     this.AuthService.fetch(
-    //         `/projects/${task.project.projectId}/tasks/${task.taskID}/activeTeam`,
-    //         {
-    //             method: 'get'
-    //         }
-    //     ).then((responseData) => { responseData });
-
-    // }
 
     render() {
         return (
