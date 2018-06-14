@@ -87,7 +87,7 @@ public class RestProjectTasksController {
      * @return
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value="withoutCollaborators", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getTasksWithoutCollaborators(@PathVariable int projid){
 
@@ -187,7 +187,7 @@ public class RestProjectTasksController {
      * @return List of finished tasks from the project
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "finished", method = RequestMethod.GET)
     public ResponseEntity<List<TaskDTO>> getFinishedTasks (@PathVariable int projid) {
 
@@ -216,7 +216,7 @@ public class RestProjectTasksController {
      * @return List of finished tasks from the project
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "unfinished", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getUnfinishedTasks (@PathVariable int projid) {
 
@@ -245,7 +245,7 @@ public class RestProjectTasksController {
      * @return The task found by the id
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.GET)
     public ResponseEntity<TaskDTO> getTask (@PathVariable String taskId) {
 
@@ -290,7 +290,7 @@ public class RestProjectTasksController {
      * @return List of not started tasks from the project
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "notstarted", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getNotStartedTasks (@PathVariable int projid) {
 
@@ -319,7 +319,7 @@ public class RestProjectTasksController {
      * @return List of all tasks from the project
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "all", method = RequestMethod.GET)
     public ResponseEntity<List<TaskDTO>> getAllTasks (@PathVariable int projid) {
 

@@ -57,11 +57,12 @@ class AddUserToProject extends Component {
     handleClick(event) {
         console.log(this.state.projTeam[event].email);
         const costPerEffort = this.state.costPerEffort;
+        const projectId = this.props.project;
 
         const userDTO = {
             costPerEffort,
             project: {
-                projectId: 2
+                projectId: projectId
             },
             collaborator: {
                 email: this.state.projTeam[event].email
@@ -78,9 +79,8 @@ class AddUserToProject extends Component {
                 if (res.costPerEffort !== 0) {
                     toastr.success('Collaborator was added to Project');
                     this.getProjTeam();
-                    return (
-                        <Redirect to="/projects/${this.props.project}/tasks/${this.props.id}/addCollab" />
-                    );
+                    window.location.href = `/myprojects`;
+                    
                 }
             })
             .catch(err => {

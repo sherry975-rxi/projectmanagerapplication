@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import './OngoingTasks.css';
 import AuthService from '../loginPage/AuthService';
-import Moment from 'react-moment';
-import Error from './../../components/error/error';
-import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
+import './activeTeam.css'
 
 
 class ActiveTaskTeam extends Component {
@@ -13,15 +10,14 @@ class ActiveTaskTeam extends Component {
             activeTeam: [],
         };
 
-        //this.refreshPage = this.refreshPage.bind(this);
         this.AuthService = new AuthService();
     }
 
     componentDidMount() {
-        this.getTaskTeam();
+        this.getActiveTaskTeam();
     }
 
-    async getTaskTeam()  {
+    async getActiveTaskTeam() {
         this.AuthService.fetch(
             `/projects/${this.props.project}/tasks/${this.props.id}/activeTeam`,
 
@@ -35,32 +31,30 @@ class ActiveTaskTeam extends Component {
     }
 
     ListOfCollabs() {
-       if (this.state.activeTeam.length > 0){
-        return this.state.activeTeam.map((activeTeamitem, index) => {
-            return (
-                <tr className="line" key={index}>
-                    <td>{activeTeamitem.projCollaborator.collaborator.name}</td>
-                </tr>
-            );
-        });
-    }
-    else {
-        return ('')
-    }
+        if (this.state.activeTeam.length > 0) {
+            return this.state.activeTeam.map((activeTeamitem, index) => {
+                return (
+                    <tr className="line" key={index}>
+                        <td> {activeTeamitem.projCollaborator.collaborator.name}</td> <th>{activeTeamitem.projCollaborator.collaborator.email}</th>
+                    </tr >
+                );
+            });
+        }
+        else {
+            return ('')
+        }
     }
 
     render() {
         return (
-            <div className=" table-striped">
-                <table className="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Active Team:</th>
-                        </tr>
-                    </thead>
-                    <tbody>{this.ListOfCollabs()}</tbody>
-                </table> 
-            </div>
+            <table className="table table-hover team">
+                <thead>
+                    <tr>
+                        <th>Active Team:</th>
+                    </tr>
+                </thead>
+                <tbody>{this.ListOfCollabs()}</tbody>
+            </table>
         );
     }
 }

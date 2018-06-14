@@ -28,6 +28,7 @@ export function handleProject(projects) {
         projectFinishDate: formatDate(project.finishdate),
         projectBudget: project.budget,
         projectCalculationMethod: project.calculationMethod,
+        projectAvaliableCalculationMethods: project.availableCalculationMethods,
         projectCost: project.projectCost,
         projectManagerEmail: project.projectManager.email,
         button: ''

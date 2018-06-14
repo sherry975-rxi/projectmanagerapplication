@@ -4,78 +4,39 @@ import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
 import MediumButton from '../../components/button/mediumButton.jsx';
+import ProjectsTable from '../../components/projectsTable/ProjectsTable';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {getActiveProjects, getUserProjects} from '../../actions/projectActions';
 
 class ActiveProjects extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            projects: [],
-            message: ''
-        };
-
         this.AuthService = new AuthService();
-    }
-
-    componentDidMount() {
-        this.AuthService.fetch('/projects/active', {
-            method: 'get'
-        }).then(responseData => {
-            this.setState({
-                projects: responseData,
-                message: responseData.error
-            });
-        });
-    }
-
-    renderProjects() {
-        return this.state.projects.map(projectItem => {
-            return (
-                <tr className="line">
-                    <td>{projectItem.projectId}</td>
-                    <td>{projectItem.name}</td>
-                    <td>{projectItem.description}</td>
-                    <td>{projectItem.projectManager.name}</td>
-                    <td>{projectItem.projectManager.email}</td>
-                    <Link
-                        to={'/projectdetails/' + projectItem.projectId}
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Details" />
-                    </Link>
-                    &nbsp;
-                    {/* <a href="/selectprojectcostcalculation" className="btn btn-warning" role="button">Cost Method</a> */}
-                    {/* <a href="/projectcost" >
-                <button className="btn btn-info" >Cost</button></a> &nbsp; */}
-                </tr>
-            );
-        });
+        this.props.getActiveProjects(this.AuthService.getUserId());
     }
 
     render() {
-        if (this.state.message != null) {
-            return <Error message={this.state.message} />;
+        if (this.props.errorMessage) {
+            return <Error message={this.props.errorMessage} />;
         } else {
-            return (
-                <div className="ActiveProjects">
-                    <h3>
-                        <b>Active Projects</b>
-                    </h3>
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Project ID</th>
-                                <th>Name</th>
-                                <th>Description Date</th>
-                                <th>Project Manager Name</th>
-                                <th>Project Manager Email</th>
-                            </tr>
-                        </thead>
-                        <tbody>{this.renderProjects()}</tbody>
-                    </table>
-                </div>
-            );
+            return <ProjectsTable projects={this.props.projects} />;
         }
     }
 }
 
-export default ActiveProjects;
+export const mapStateToProps = state => {
+    const projects = state.projects.activeProjects || [];
+    const errorMessage =
+        state.projects.activeProjects && state.projects.activeProjects.error;
+    return { projects, errorMessage };
+};
+
+export const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ getActiveProjects }, dispatch);
+};
+
+export default  connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ActiveProjects);

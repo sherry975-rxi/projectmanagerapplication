@@ -6,6 +6,8 @@ import filterReducer from './filterReducer';
 import projectTasksReducer from './projectTasksReducer';
 import projectsReducer from './projectsReducer';
 import metaReducer from './metaReducer';
+import UserReducers from './UserReducers';
+import usersFilterReducer from './usersFilterReducer';
 
 const rootReducer = combineReducers({
     authenthication: authenticationReducer,
@@ -14,6 +16,8 @@ const rootReducer = combineReducers({
     filterReducer: filterReducer,
     projectTasks: projectTasksReducer,
     projects: projectsReducer,
-    meta: metaReducer
+    meta: metaReducer,
+    users: UserReducers,
+    usersFilter: usersFilterReducer
 });
 export default rootReducer;

@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
-import './OngoingTasks.css';
 import AuthService from '../loginPage/AuthService';
 import './activeTeam.css'
 
 
-class TaskTeam1 extends Component {
+class ActiveProjectTeam extends Component {
     constructor(props) {
         super(props);
         this.state = {
             activeTeam: [],
         };
 
-        //this.refreshPage = this.refreshPage.bind(this);
         this.AuthService = new AuthService();
     }
 
     componentDidMount() {
-        this.getTaskTeam();
+        this.getActiveTaskTeam();
     }
 
-    async getTaskTeam() {
+    async getActiveTaskTeam() {
         this.AuthService.fetch(
-            `/projects/${this.props.project}/tasks/${this.props.id}/activeTeam`,
+            `/projects/${this.props.project}/activeTeam`,
 
             { method: 'GET' }
         ).then(responseData => {
@@ -37,7 +35,8 @@ class TaskTeam1 extends Component {
             return this.state.activeTeam.map((activeTeamitem, index) => {
                 return (
                     <tr className="line" key={index}>
-                        <td> {activeTeamitem.projCollaborator.collaborator.name}</td> <th>{activeTeamitem.projCollaborator.collaborator.email}</th>
+                        <td> {activeTeamitem.collaborator.name}</td>
+                        <td> {activeTeamitem.costPerEffort}</td>
                     </tr >
                 );
             });
@@ -52,7 +51,13 @@ class TaskTeam1 extends Component {
             <table className="table table-hover team">
                 <thead>
                     <tr>
-                        <th>Active Team:</th>
+                        <th> Active Team </th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Cost per Effort:</th>
                     </tr>
                 </thead>
                 <tbody>{this.ListOfCollabs()}</tbody>
@@ -61,4 +66,4 @@ class TaskTeam1 extends Component {
     }
 }
 
-export default TaskTeam1;
+export default ActiveProjectTeam;
