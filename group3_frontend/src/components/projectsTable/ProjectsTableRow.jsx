@@ -248,7 +248,7 @@ class ProjectsTableRow extends Component {
                         </div>
                     </td>
                     <td colSpan="2">{this.getProjectInfo()}</td>
-                    <td colSpan="2" className="">
+                    <td colSpan="2">
                         {this.renderDropdownButton('Options', 0)}
                         {this.gerAddCollabToProjectButton()}
                     </td>

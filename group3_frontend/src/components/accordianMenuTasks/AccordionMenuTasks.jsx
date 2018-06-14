@@ -20,6 +20,7 @@ class AccordionMenu extends Component {
             activeKey: '1',
             rotated: false,
             arrow: 'notRotated',
+            key: ''
         };
     }
 
@@ -33,8 +34,16 @@ class AccordionMenu extends Component {
 
 
     toggle(key) {
-        this.setState({ rotated: !this.state.rotated })
         document.getElementById(key).className = this.state.rotated ? 'notRotated' : 'rotatedArrow'
+        this.setState({ rotated: !this.state.rotated, key: key })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if (prevState.key != this.state.key) {
+            document.getElementById(prevState.key).className = 'notRotated'
+            document.getElementById(this.state.key).className = 'rotatedArrow'
+        }
     }
 
     renderList(list) {
@@ -53,7 +62,7 @@ class AccordionMenu extends Component {
                                     <th> <b>{element.state}</b> </th>
                                     <th> {element.startDate} </th>
                                     <th> {element.finishDate} </th>
-                                    <th> <div id={index}><span className="glyphicon glyphicon-chevron-right"
+                                    <th> <div id={index} className="notRotated"><span className="glyphicon glyphicon-chevron-right"
                                     /> </div></th>
                                     <a className="key">{key++}</a>
 
