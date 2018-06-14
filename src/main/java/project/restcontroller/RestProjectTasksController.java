@@ -357,7 +357,7 @@ public class RestProjectTasksController {
      * @return List of all active task collaborators in a task from the project
      */
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "{taskid}/activeTeam", method = RequestMethod.GET)
     public ResponseEntity<List<TaskCollaborator>> getActiveTaskTeam (@PathVariable int projid, @PathVariable String taskid) {
 
