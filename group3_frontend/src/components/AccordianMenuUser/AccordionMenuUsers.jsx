@@ -11,6 +11,7 @@ import CreateRequest from '../../pages/requests/CreateRequest';
 import DeleteTask from '../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from '../../pages/tasks/AvailableListOfCollaborators';
 import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
+import ChangeProfile from '../../pages/users/ChangeProfile';
 
 
 class AccordionMenuUsers extends Component {
@@ -66,8 +67,7 @@ class AccordionMenuUsers extends Component {
                         <table className="table table-details">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <p>
+                                    <th><p>
                                             <b>Name:</b> &nbsp;
                                                 {element[0]}
                                         </p>
@@ -87,11 +87,17 @@ class AccordionMenuUsers extends Component {
                                             <b>Status:</b> &nbsp;
                                             {element[4].toString() ? 'Active' : 'Not Active'}
                                         </p>
-
                                     </th>
-                                    
-                                    
-                            </tr>
+                                    <th>
+                                    <div align="right">
+                                            {' '}
+                                        <p>
+                                            <ChangeProfile  email = {element[1]} />
+                                        </p>
+                                        </div>
+                                        </th>
+                                    </tr>  
+                                     
                         </thead>
                     </table>
                 </Panel.Body>
