@@ -1,28 +1,38 @@
 .MarkTaskAsFinished {
-  padding: 60px 0;
+    padding: 60px 0;
 }
 
 .MarkTaskAsFinished form {
-  margin: 30 auto;
-  max-width: 320px;
+    margin: 30 auto;
+    max-width: 320px;
+}
+
+.open > .dropdown-toggle.btn-default.buttonFinished {
+    background-color: rgb(135, 190, 178);
+    background-image: none;
+    color: white;
+    border: white;
+    font-size: 12px;
+    width: 140px;
+    margin-bottom: 15px;
 }
 
 .buttonFinished {
-  background-color: rgb(135, 190, 178);
-  border: none;
-  color: rgb(255, 255, 255);
-  font-family: Helvetica;
-  font-weight:  normal;
-  text-align: center;
-  display: inline-block;
-  font-size: 13px;
-  width: 130px;
-  height: 32px;
-  border-radius: 0;
+    background-color: rgb(135, 190, 178);
+    background-image: none;
+    border: none;
+    color: rgb(255, 255, 255);
+    font-family: Helvetica;
+    font-weight: normal;
+    text-align: center;
+    display: inline-block;
+    font-size: 13px;
+    width: 130px;
+    height: 32px;
+    border-radius: 0;
 }
 
 .buttonFinished:hover {
-  background-color: #2A3F54;
-  color: white;
-
+    background-color: #2a3f54;
+    color: white;
 }

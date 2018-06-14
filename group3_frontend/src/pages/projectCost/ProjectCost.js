@@ -21,7 +21,6 @@ class ProjectCost extends Component {
                 method: 'get'
             }
         ).then(responseData => {
-            console.log(responseData);
             this.setState({
                 project: responseData,
                 message: responseData.error
@@ -59,14 +58,13 @@ class ProjectCost extends Component {
                     to={
                         '/selectprojectcostcalculation/' + projectItem.projectId
                     }
-                    activeClassName="active"
                 >
                     <MediumButton text="Change Cost Method" />
                 </Link>
                 &nbsp;
                 <p />
                 <p />
-                <Link to={'/myprojects'} activeClassName="active" >
+                <Link to={'/myprojects'}>
                     <MediumButton text="Back to My Projects" />
                 </Link>
                 &nbsp;

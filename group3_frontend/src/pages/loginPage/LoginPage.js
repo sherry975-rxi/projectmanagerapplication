@@ -43,13 +43,10 @@ class LoginPage extends Component {
                         this.props.history.replace('/homepage');
                     });
                 }
-                console.log(this.props.authenticated)
             })
             .catch(err => {
-                console.log(err);
                 toastr.error('Wrong!', 'Invalid Credentials!');
             });
-        console.log(localStorage.getItem('id_user'));
     };
 
     render() {
@@ -90,9 +87,15 @@ class LoginPage extends Component {
     }
 }
 
-
-const mapStateToProps = state => { return ({ logoutButton: state.authenthication.logoutButton, authenticated: state.authenthication.authenticated }) }
-const mapDispatchToProps = dispatch => bindActionCreators({ submit, dispatchError }, dispatch)
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
-
-
+const mapStateToProps = state => {
+    return {
+        logoutButton: state.authenthication.logoutButton,
+        authenticated: state.authenthication.authenticated
+    };
+};
+const mapDispatchToProps = dispatch =>
+    bindActionCreators({ submit, dispatchError }, dispatch);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginPage);

@@ -82,7 +82,6 @@ class AddUserToProject extends Component {
     renderDropdownButton(title, i) {
         return (
             <DropdownButton
-                bsStyle={title.toLowerCase()}
                 className="option"
                 title={title}
                 key={i}
@@ -95,7 +94,7 @@ class AddUserToProject extends Component {
                             autoFocus
                             type="number"
                             pattern="[0-9]*"
-                            inputmode="numeric"
+                            inputMode="numeric"
                             value={this.state.costPerEffort}
                             onChange={this.handleChange}
                         />
@@ -106,6 +105,7 @@ class AddUserToProject extends Component {
                     <MenuItem
                         disabled={!this.validateForm()}
                         eventKey={index}
+                        key={index}
                         onSelect={this.handleClick.bind(this)}
                     >
                         {' '}
@@ -117,13 +117,7 @@ class AddUserToProject extends Component {
     }
 
     render() {
-        return (
-            <div className=" table-striped">
-                <tbody>
-                    {this.renderDropdownButton('Add Collaborator', 0)}
-                </tbody>
-            </div>
-        );
+        return this.renderDropdownButton('Add Collaborator', 0);
     }
 }
 

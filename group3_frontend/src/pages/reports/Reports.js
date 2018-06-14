@@ -68,7 +68,6 @@ class Reports extends Component {
                 method: 'get'
             }
         ).then(responseData => {
-            console.log(responseData);
             this.setState({
                 reports: responseData,
                 message: responseData.error

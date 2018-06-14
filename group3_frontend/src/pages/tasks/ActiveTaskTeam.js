@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import AuthService from '../loginPage/AuthService';
-import './activeTeam.css'
-
+import './activeTeam.css';
 
 class ActiveTaskTeam extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTeam: [],
+            activeTeam: []
         };
 
         this.AuthService = new AuthService();
@@ -35,13 +34,15 @@ class ActiveTaskTeam extends Component {
             return this.state.activeTeam.map((activeTeamitem, index) => {
                 return (
                     <tr className="line" key={index}>
-                        <td> {activeTeamitem.projCollaborator.collaborator.name}</td>
-                    </tr >
+                        <td>
+                            {' '}
+                            {activeTeamitem.projCollaborator.collaborator.name}
+                        </td>
+                    </tr>
                 );
             });
-        }
-        else {
-            return ('')
+        } else {
+            return <tr />;
         }
     }
 

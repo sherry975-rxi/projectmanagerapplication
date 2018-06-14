@@ -40,6 +40,8 @@ class FetchTaskButton extends Component {
                         {this.props.updateStandByTasks(this.props.projectID)}
                     </div>
                 );
+            default:
+                return;
         }
     }
 
@@ -50,15 +52,14 @@ class FetchTaskButton extends Component {
     render() {
         return (
             <div className="buttonWrapper">
-                <div class="switch-toggle switch-ios">
+                <div className="switch-toggle switch-ios">
                     <input
                         id="alltasks"
                         name="view3"
                         type="radio"
-                        eventKey="1"
                         onChange={e => this.handleChange(e, '1')}
                     />
-                    <label class="buttonFont" for="alltasks" eventKey="1">
+                    <label className="buttonFont" htmlFor="alltasks">
                         All Tasks
                     </label>
 
@@ -66,10 +67,9 @@ class FetchTaskButton extends Component {
                         id="onGoing"
                         name="view3"
                         type="radio"
-                        eventKey="1"
                         onChange={e => this.handleChange(e, '2')}
                     />
-                    <label class="buttonFont" for="onGoing" eventKey="1">
+                    <label className="buttonFont" htmlFor="onGoing">
                         On Going
                     </label>
 
@@ -77,10 +77,9 @@ class FetchTaskButton extends Component {
                         id="finished"
                         name="view3"
                         type="radio"
-                        eventKey="1"
                         onChange={e => this.handleChange(e, '3')}
                     />
-                    <label class="buttonFont" for="finished" eventKey="1">
+                    <label className="buttonFont" htmlFor="finished">
                         Finished
                     </label>
 
@@ -88,10 +87,9 @@ class FetchTaskButton extends Component {
                         id="notStarted"
                         name="view3"
                         type="radio"
-                        eventKey="1"
                         onChange={e => this.handleChange(e, '4')}
                     />
-                    <label class="buttonFont" for="notStarted" eventKey="1">
+                    <label className="buttonFont" htmlFor="notStarted">
                         Not Started
                     </label>
 
@@ -99,14 +97,11 @@ class FetchTaskButton extends Component {
                         id="standBy"
                         name="view3"
                         type="radio"
-                        eventKey="1"
                         onChange={e => this.handleChange(e, '5')}
                     />
-                    <label class="buttonFont" for="standBy" eventKey="1">
+                    <label className="buttonFont" htmlFor="standBy">
                         Stand By
                     </label>
-
-                    <a />
                 </div>
             </div>
         );

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import AuthService from '../loginPage/AuthService';
-import './activeProjectTeam.css'
-
+import './activeProjectTeam.css';
 
 class ActiveProjectTeam extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeTeam: [],
+            activeTeam: []
         };
 
         this.AuthService = new AuthService();
@@ -36,12 +35,11 @@ class ActiveProjectTeam extends Component {
                 return (
                     <tr className="line" key={index}>
                         <td> {activeTeamitem.collaborator.name}</td>
-                    </tr >
+                    </tr>
                 );
             });
-        }
-        else {
-            return ('')
+        } else {
+            return <tr />;
         }
     }
 
@@ -50,13 +48,12 @@ class ActiveProjectTeam extends Component {
             <table className="table table-hover projectteam">
                 <thead>
                     <tr>
-                        <th> <b> Active Team </b> </th>
+                        <th>
+                            <b> Active Team </b>
+                        </th>
                     </tr>
                 </thead>
-                <thead>
-                {this.ListOfCollabs()}
-                </thead>
-
+                <tbody>{this.ListOfCollabs()}</tbody>
             </table>
         );
     }

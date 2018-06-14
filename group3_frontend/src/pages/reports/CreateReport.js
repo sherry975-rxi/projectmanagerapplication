@@ -45,8 +45,6 @@ class CreateReport extends Component {
             }
         };
 
-        console.log(reportDTOData);
-
         this.AuthService.fetch(
             `/projects/${this.props.match.params.projectID}/tasks/${
                 this.props.match.params.taskID
@@ -56,7 +54,6 @@ class CreateReport extends Component {
                 method: 'POST'
             }
         ).then(responseData => {
-            console.log(responseData);
             window.location.href = `/projects/${
                 this.props.match.params.projectID
             }/tasks/${this.props.match.params.taskID}/reports/`;

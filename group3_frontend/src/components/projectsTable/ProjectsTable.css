@@ -87,6 +87,17 @@
     font-size: 13px;
 }
 
+.project-table a.items-menu {
+    display: block;
+    width: 175px;
+    height: 35px;
+    line-height: 35px;
+}
+
+.project-table a.items-menu button {
+    padding: 0 10px;
+}
+
 .project-badge {
     font-size: 8px;
     background-color: white;
@@ -111,18 +122,29 @@
     margin: 0;
 }
 
-.option {
+.open > .dropdown-toggle.btn-default.option {
     background-color: rgb(135, 190, 178);
+    background-image: none;
     color: white;
     border: white;
     font-size: 12px;
     width: 140px;
+    margin-bottom: 15px;
 }
-
 .option:hover {
     background-color: #2a3f54;
     color: white;
     border: white;
+}
+
+.option {
+    background-color: rgb(135, 190, 178);
+    background-image: none;
+    color: white;
+    border: white;
+    font-size: 12px;
+    width: 140px;
+    margin-bottom: 15px;
 }
 
 .items-menu {

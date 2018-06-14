@@ -13,7 +13,7 @@
     font-family: 'Oxygen', sans-serif;
     font-weight: bold;
 }
-.table.table-hover.projectteam > thead > tr > td {
+.table.table-hover.projectteam > tbody > tr > td {
     text-align: left;
     color: rgb(93, 93, 93);
     border-top: 0px solid #ddd;
@@ -28,7 +28,7 @@
     color: rgb(93, 93, 93);
 }
 
-.table.table-hover.projectteam > tbody > tr > th{
+.table.table-hover.projectteam > tbody > tr > th {
     text-align: left;
     vertical-align: center;
     padding-right: 0px;
@@ -36,7 +36,3 @@
     font-weight: 0px;
     color: rgb(93, 93, 93);
 }
-
-
-
-

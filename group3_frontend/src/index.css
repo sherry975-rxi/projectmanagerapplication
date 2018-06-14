@@ -1,14 +1,12 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Helvetica;
-  padding-top: 70px;
-  background-color: rgb(247, 247, 247);
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica;
+    padding-top: 70px;
+    background-color: rgb(247, 247, 247);
 }
 
 h3 {
-  font-family: 'Helvetica';
-  color: rgb(87, 87, 87);
+    font-family: 'Helvetica';
+    color: rgb(87, 87, 87);
 }
-
-

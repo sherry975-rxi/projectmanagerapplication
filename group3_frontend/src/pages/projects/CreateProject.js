@@ -1,33 +1,39 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import './CreateProject.css';
-import { FormGroup, FormControl, ControlLabel, Button, Radio } from "react-bootstrap";
+import {
+    FormGroup,
+    FormControl,
+    ControlLabel,
+    Button,
+    Radio
+} from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
 import ListPossibleProjectManagers from './ListPossibleProjectManagers';
-import { toastr } from "react-redux-toastr";
-import { Redirect } from 'react-router-dom';
+import { toastr } from 'react-redux-toastr';
 
 class CreateProject extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            description: "",
-            projectManager: { name: "None Selected!" },
-            budget: "",
-            effortUnit: "HOURS",
+            name: '',
+            description: '',
+            projectManager: { name: 'None Selected!' },
+            budget: '',
+            effortUnit: 'HOURS',
             awaitingResponse: false
         };
         this.AuthService = new AuthService();
         this.selectManager = this.selectManager.bind(this);
     }
 
-
     validateForm() {
-        return (this.state.name.length > 0 &&
+        return (
+            this.state.name.length > 0 &&
             this.state.description.length > 0 &&
             this.state.budget > 0 &&
             this.state.projectManager.email != null &&
-            !this.state.awaitingResponse);
+            !this.state.awaitingResponse
+        );
     }
 
     // This method handles changes for all text boxes: Name, description and budget
@@ -41,23 +47,25 @@ class CreateProject extends Component {
         this.setState({
             effortUnit: event.target.value
         });
-    }
+    };
 
     // this method is passed on to the child component ListPossibleProjectManagers
     selectManager(event) {
         this.setState({
             projectManager: event
-        })
+        });
     }
 
     handleSubmit = event => {
         event.preventDefault();
 
-        const { name,
+        const {
+            name,
             description,
             projectManager,
             budget,
-            effortUnit } = this.state;
+            effortUnit
+        } = this.state;
 
         const projectDTO = {
             name,
@@ -71,31 +79,23 @@ class CreateProject extends Component {
             awaitingResponse: true
         });
 
-        this.AuthService.fetch(
-            `/projects/`,
-            {
-                body: JSON.stringify(projectDTO),
-                method: 'POST'
-            }
-        ).then(responseData => {
-
-            toastr.success('Project Created Successfully!');
-            setTimeout(function () {
-                window.location.href = "/activeprojects";
-            }, 1000);
-
-
-        }).catch(err => {
-            console.log(err);
-            toastr.error('An error occurred!');
-            this.setState({
-                awaitingResponse: false
+        this.AuthService.fetch(`/projects/`, {
+            body: JSON.stringify(projectDTO),
+            method: 'POST'
+        })
+            .then(responseData => {
+                toastr.success('Project Created Successfully!');
+                setTimeout(function() {
+                    window.location.href = '/activeprojects';
+                }, 1000);
+            })
+            .catch(err => {
+                toastr.error('An error occurred!');
+                this.setState({
+                    awaitingResponse: false
+                });
             });
-        });
-
-
-    }
-
+    };
 
     render() {
 
@@ -147,21 +147,21 @@ class CreateProject extends Component {
                                 onChange={this.handleEffortSelection}>
                                 Hours
                         </Radio>{' '}
-                            <Radio value="PM" checked={this.state.effortUnit === "PM"}
-                                onChange={this.handleEffortSelection}>
-                                Person/Month
+                        <Radio value="PM" checked={this.state.effortUnit === "PM"}
+                            onChange={this.handleEffortSelection}>
+                            Person/Month
                         </Radio>
-                        </FormGroup>
+                    </FormGroup>
 
                         <ControlLabel className="formTitle"> Project Manager ({this.state.projectManager.name})  </ControlLabel>
                         <br />
                         <ListPossibleProjectManagers onSelect={this.selectManager} />
 
-                        <br />
+                    <br />
 
 
-                        <Button block className="btn btn-primary" disabled={!this.validateForm()} type="submit" >
-                            Create Project
+                    <Button block className="btn btn-primary" disabled={!this.validateForm()} type="submit" >
+                        Create Project
                     </Button>
                     </form>
                 </div>

@@ -60,8 +60,12 @@ class ProjectCostCalculation extends Component {
 
          } */
 
-        return this.state.availableMethods.map(option => {
-            return <option value={option}>{option}</option>;
+        return this.state.availableMethods.map((option, index) => {
+            return (
+                <option key={index} value={option}>
+                    {option}
+                </option>
+            );
         });
     }
 
@@ -89,8 +93,6 @@ class ProjectCostCalculation extends Component {
             calculationMethod
             //result: projectCost
         };
-
-        console.log(projectDTOData);
 
         this.AuthService.fetch(
             `/projects/${this.props.match.params.projectID}`,
@@ -162,7 +164,7 @@ class ProjectCostCalculation extends Component {
                                 componentClass="select"
                                 placeholder="select"
                             >
-                                <option value="" disabled selected>
+                                <option value="" disabled>
                                     Select your option
                                 </option>
                                 {this.loadAvailableMethods()}
@@ -196,14 +198,13 @@ class ProjectCostCalculation extends Component {
                                 '/projectcost/' +
                                 this.props.match.params.projectID
                             }
-                            activeClassName="active"
                         >
                             <MediumButton text="Calculate Project Cost" />
                         </Link>
                         &nbsp;
                         <p />
                         <p />
-                        <Link to={'/myprojects'} activeClassName="active" >
+                        <Link to={'/myprojects'}>
                             <MediumButton text="Back to My Projects" />
                         </Link>
                         &nbsp;

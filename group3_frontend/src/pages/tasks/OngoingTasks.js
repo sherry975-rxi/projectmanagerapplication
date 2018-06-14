@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 class OngoingTasks extends Component {
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             tasks: [],
             project: {},
@@ -41,6 +40,8 @@ class OngoingTasks extends Component {
                 return <AccordionMenu list={this.props.finishedTasks} />;
             case 'notstarted':
                 return <AccordionMenu list={this.props.notStartedTasks} />;
+            default:
+                return;
         }
     }
 

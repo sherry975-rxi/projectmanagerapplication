@@ -18,9 +18,6 @@ class SignUpPage extends Component {
                 element.rel === SMSVALIDATION ||
                 element.rel === EMAILVALIDATION
             ) {
-                console.log({
-                    [element.rel]: element.href
-                });
                 this.setState({
                     [element.rel]: element.href
                 });
@@ -38,7 +35,6 @@ class SignUpPage extends Component {
 
     render() {
         const signUpStep = this.props.signUpStep;
-        console.log('signUpStep', signUpStep);
         let formStp = <SignUpForm incrementStep={this.setStepOneResponse} />;
 
         if (signUpStep === 2) {

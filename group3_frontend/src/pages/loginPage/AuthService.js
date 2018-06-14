@@ -8,7 +8,6 @@ export default class AuthService {
             .then(res => {
                 this.setToken(res); // Setting the token in localStorage
                 this.setUser(res);
-                console.log(res.data);
                 return Promise.resolve(res);
             });
     };
