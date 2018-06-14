@@ -1,33 +1,39 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import './CreateProject.css';
-import { FormGroup, FormControl, ControlLabel, Button, Radio } from "react-bootstrap";
+import {
+    FormGroup,
+    FormControl,
+    ControlLabel,
+    Button,
+    Radio
+} from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
 import ListPossibleProjectManagers from './ListPossibleProjectManagers';
-import {toastr} from "react-redux-toastr";
-import { Redirect } from 'react-router-dom';
+import { toastr } from 'react-redux-toastr';
 
 class CreateProject extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            description: "",
-            projectManager: { name: "None Selected!"},
-            budget: "",
-            effortUnit: "HOURS",
+            name: '',
+            description: '',
+            projectManager: { name: 'None Selected!' },
+            budget: '',
+            effortUnit: 'HOURS',
             awaitingResponse: false
         };
         this.AuthService = new AuthService();
         this.selectManager = this.selectManager.bind(this);
     }
 
-
     validateForm() {
-        return (this.state.name.length > 0 &&
+        return (
+            this.state.name.length > 0 &&
             this.state.description.length > 0 &&
             this.state.budget > 0 &&
             this.state.projectManager.email != null &&
-            !this.state.awaitingResponse);
+            !this.state.awaitingResponse
+        );
     }
 
     // This method handles changes for all text boxes: Name, description and budget
@@ -39,64 +45,59 @@ class CreateProject extends Component {
 
     handleEffortSelection = event => {
         this.setState({
-           effortUnit: event.target.value
+            effortUnit: event.target.value
         });
-    }
+    };
 
     // this method is passed on to the child component ListPossibleProjectManagers
     selectManager(event) {
         this.setState({
             projectManager: event
-        })
+        });
     }
 
     handleSubmit = event => {
         event.preventDefault();
 
-        const {name,
-        description,
-        projectManager,
-        budget,
-        effortUnit} = this.state;
-
-        const projectDTO = {name,
+        const {
+            name,
             description,
             projectManager,
             budget,
-            effortUnit};
+            effortUnit
+        } = this.state;
+
+        const projectDTO = {
+            name,
+            description,
+            projectManager,
+            budget,
+            effortUnit
+        };
 
         this.setState({
-            awaitingResponse:true
+            awaitingResponse: true
         });
 
-        this.AuthService.fetch(
-            `/projects/`,
-            {
-                body: JSON.stringify(projectDTO),
-                method: 'POST'
-            }
-        ).then(responseData => {
-
-            toastr.success('Project Created Successfully!');
-            setTimeout(function() {
-                window.location.href = "/activeprojects";
-            }, 1000);
-
-
-        }).catch(err => {
-            console.log(err);
-            toastr.error('An error occurred!');
-            this.setState({
-                awaitingResponse: false
+        this.AuthService.fetch(`/projects/`, {
+            body: JSON.stringify(projectDTO),
+            method: 'POST'
+        })
+            .then(responseData => {
+                toastr.success('Project Created Successfully!');
+                setTimeout(function() {
+                    window.location.href = '/activeprojects';
+                }, 1000);
+            })
+            .catch(err => {
+                toastr.error('An error occurred!');
+                this.setState({
+                    awaitingResponse: false
+                });
             });
-        });
-
-
-    }
-
+    };
 
     render() {
-
         return (
             <div className=" table-striped">
                 <h3>
@@ -140,32 +141,45 @@ class CreateProject extends Component {
 
                     <FormGroup controlId="effortUnit">
                         <ControlLabel>Effort Unit</ControlLabel>
-                        <Radio value="HOURS" checked={this.state.effortUnit === "HOURS"}
-                               onChange={this.handleEffortSelection}>
+                        <Radio
+                            value="HOURS"
+                            checked={this.state.effortUnit === 'HOURS'}
+                            onChange={this.handleEffortSelection}
+                        >
                             Hours
                         </Radio>{' '}
-                        <Radio value="PM" checked={this.state.effortUnit === "PM"}
-                            onChange={this.handleEffortSelection}>
+                        <Radio
+                            value="PM"
+                            checked={this.state.effortUnit === 'PM'}
+                            onChange={this.handleEffortSelection}
+                        >
                             Person/Month
                         </Radio>
                     </FormGroup>
 
-                    <ControlLabel> Project Manager ({this.state.projectManager.name})  </ControlLabel>
+                    <ControlLabel>
+                        {' '}
+                        Project Manager ({this.state.projectManager.name}){' '}
+                    </ControlLabel>
                     <br />
-                    <ListPossibleProjectManagers onSelect={this.selectManager}/>
+                    <ListPossibleProjectManagers
+                        onSelect={this.selectManager}
+                    />
 
                     <br />
 
-
-                    <Button block className="btn btn-primary" disabled={!this.validateForm()} type="submit" >
+                    <Button
+                        block
+                        className="btn btn-primary"
+                        disabled={!this.validateForm()}
+                        type="submit"
+                    >
                         Create Project
                     </Button>
                 </form>
             </div>
         );
     }
-
-
 }
 
 export default CreateProject;

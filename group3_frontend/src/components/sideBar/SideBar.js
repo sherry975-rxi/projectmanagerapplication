@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './SideBar.css';
-import { NavLink } from 'react-router-dom';
 import SideButton from './SideButton.js';
 import Profile from '../navBar/Profile';
 import { connect } from 'react-redux';
@@ -11,28 +10,32 @@ class SideBar extends Component {
         this.state = {
             profile: ''
         };
-
     }
 
-
     getCollaboratorOptions() {
-        return (<div className="menu">
-                    <SideButton to="/myprojects" text="My Projects" />
-                    <SideButton to="/tasks" text="My Tasks" />
-                </div>);
+        return (
+            <div className="menu">
+                <SideButton to="/myprojects" text="My Projects" />
+                <SideButton to="/tasks" text="My Tasks" />
+            </div>
+        );
     }
 
     getDirectorOptions() {
-        return (<div className="menu">
-                    <SideButton to="/activeprojects" text="Projects" />
-                    <SideButton to="/createproject" text="Create Project" />
-                </div>);
+        return (
+            <div className="menu">
+                <SideButton to="/activeprojects" text="Projects" />
+                <SideButton to="/createproject" text="Create Project" />
+            </div>
+        );
     }
 
     getAdminOptions() {
-        return (<div className="menu">
-                    <SideButton to="/usersMngr" text="Users" />
-                </div>);
+        return (
+            <div className="menu">
+                <SideButton to="/usersMngr" text="Users" />
+            </div>
+        );
     }
 
     render() {
@@ -59,6 +62,4 @@ class SideBar extends Component {
 const mapStateToProps = state => {
     return { profile: state.authenthication.user.userProfile };
 };
-export default connect(
-    mapStateToProps,
-)(SideBar);
+export default connect(mapStateToProps)(SideBar);

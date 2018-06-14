@@ -6,7 +6,6 @@ import { toastr } from 'react-redux-toastr';
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
         super(props);
-        this.match;
         this.state = {
             projTeam: [],
             projCollab: '',
@@ -22,7 +21,7 @@ class AvailableListOfCollaborators extends Component {
 
     showAddCollaboratorButton() {
         if (this.state.projTeam.length == null) {
-            return '';
+            return;
         } else {
             return this.renderDropdownButton('Add Collaborator', 0);
         }
@@ -73,7 +72,6 @@ class AvailableListOfCollaborators extends Component {
         return (
             <DropdownButton
                 className="buttonFinished"
-                bsStyle={title.toLowerCase()}
                 title={title}
                 key={i}
                 id={`dropdown-basic-${i}`}
@@ -81,9 +79,9 @@ class AvailableListOfCollaborators extends Component {
                 {this.state.projTeam.map((projTeamitem, index) => (
                     <MenuItem
                         eventKey={index}
+                        key={index}
                         onSelect={this.handleClick.bind(this)}
                     >
-                        {' '}
                         {projTeamitem.collaborator.name}
                     </MenuItem>
                 ))}
@@ -94,7 +92,7 @@ class AvailableListOfCollaborators extends Component {
     render() {
         return (
             <div className=" table-striped">
-                <tbody>{this.showAddCollaboratorButton()}</tbody>
+                {this.showAddCollaboratorButton()}
             </div>
         );
     }

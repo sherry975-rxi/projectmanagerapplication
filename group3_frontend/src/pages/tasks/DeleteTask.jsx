@@ -15,9 +15,7 @@ class DeleteTask extends Component {
             {
                 method: 'DELETE'
             }
-        ).then(responseData => {
-            console.log(responseData);
-        });
+        );
     };
 
     render() {

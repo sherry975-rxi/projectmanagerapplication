@@ -19,17 +19,14 @@ class ListPossibleProjectManagers extends Component {
         this.AuthService.fetch(`/users/profiles/COLLABORATOR`, {
             method: 'get'
         }).then(responseData => {
-            console.log(responseData);
             this.setState({
                 collaborators: responseData,
                 message: responseData.error
             });
-            console.log(this.state.collaborators);
         });
     }
 
     handleClick(event) {
-        console.log(this.state.collaborators[event].email);
         this.props.onSelect(this.state.collaborators[event]);
     }
 

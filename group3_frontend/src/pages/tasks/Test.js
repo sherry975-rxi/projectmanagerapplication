@@ -23,12 +23,10 @@ class Test extends Component {
     }
 
     async refreshPage() {
-        console.log('blvbpsdjf');
         this.AuthService.fetch(
             `/projects/${this.AuthService.getUserId()}/myProjects`,
             { method: 'get' }
         ).then(responseData => {
-            console.log(responseData);
             this.setState({
                 projects: responseData,
                 message: responseData.error
@@ -37,7 +35,6 @@ class Test extends Component {
     }
 
     render() {
-        console.log(this.state.projects);
         if (this.state.message != null) {
             return <Error message={this.state.message} />;
         } else {

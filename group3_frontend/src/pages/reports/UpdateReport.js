@@ -49,8 +49,6 @@ class UpdateReport extends Component {
             }
         };
 
-        console.log(reportDTOData);
-
         this.AuthService.fetch(
             `/projects/${this.props.projId}/tasks/${this.props.taskId}/reports/
                 ${this.props.reportId}/update/`,
@@ -59,7 +57,6 @@ class UpdateReport extends Component {
                 method: 'PUT'
             }
         ).then(responseData => {
-            console.log(responseData);
             this.props.onSubmit();
         });
 

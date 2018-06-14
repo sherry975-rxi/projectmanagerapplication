@@ -26,6 +26,8 @@ class UserTasksFilter extends Component {
                 return this.props.updateOngoingTasks(this.props.userID);
             case '3':
                 return this.props.updateFinishedTasks(this.props.userID);
+            default:
+                return;
         }
     }
 
@@ -43,7 +45,7 @@ class UserTasksFilter extends Component {
                         type="radio"
                         onChange={() => this.handleChange('1')}
                     />
-                    <label className="buttonFont" for="alltasks">
+                    <label className="buttonFont" htmlFor="alltasks">
                         All Tasks
                     </label>
 
@@ -53,7 +55,7 @@ class UserTasksFilter extends Component {
                         type="radio"
                         onChange={() => this.handleChange('2')}
                     />
-                    <label className="buttonFont" for="onGoing">
+                    <label className="buttonFont" htmlFor="onGoing">
                         On Going
                     </label>
 
@@ -63,11 +65,9 @@ class UserTasksFilter extends Component {
                         type="radio"
                         onChange={() => this.handleChange('3')}
                     />
-                    <label className="buttonFont" for="finished">
+                    <label className="buttonFont" htmlFor="finished">
                         Finished
                     </label>
-
-                    <a />
                 </div>
             </div>
         );

@@ -11,9 +11,6 @@ import DeleteTask from './../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
 import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
 import ItemsButton from '../projectsTable/itemsButton.jsx';
-import MediumButton from './../../components/button/mediumButton';
-
-
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -44,7 +41,7 @@ class AccordionMenu extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.key !== '' && prevState.key != this.state.key) {
+        if (prevState.key !== '' && prevState.key !== this.state.key) {
             try {
                 document.getElementById(prevState.key).className = 'notRotated';
                 document.getElementById(this.state.key).className =
@@ -63,9 +60,8 @@ class AccordionMenu extends Component {
             return (
                 <div align="right">
                     {' '}
-
                     <p />
-                    {element.state != 'FINISHED' ? (
+                    {element.state !== 'FINISHED' ? (
                         <Link
                             to={
                                 '/projects/' +
@@ -78,15 +74,11 @@ class AccordionMenu extends Component {
                             <button class="buttonFinished">View Reports</button>
                         </Link>
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
-
-
-
-
                     <p />
-                    {element.state != 'FINISHED' ? (
+                    {element.state !== 'FINISHED' ? (
                         <Link
                             to={
                                 '/projects/' +
@@ -96,61 +88,53 @@ class AccordionMenu extends Component {
                                 '/createreport'
                             }
                         >
-                            <button class="buttonFinished">Create Report</button>
+                            <button class="buttonFinished">
+                                Create Report
+                            </button>
                         </Link>
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
-
-
-
-
-
-
-
-
-
-
                     <p />
-                    {element.state != 'FINISHED' ? (
+                    {element.state !== 'FINISHED' ? (
                         <MarkTaskAsFinished
                             id={element.taskID}
                             project={element.project}
                         />
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
                     <p />
-                    {element.state != 'FINISHED' ? (
+                    {element.state !== 'FINISHED' ? (
                         <CreateRequest
                             id={element.taskID}
                             project={element.project}
                         />
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
                     <p />
-                    {element.state != 'FINISHED' ? (
+                    {element.state !== 'FINISHED' ? (
                         <DeleteTask
                             id={element.taskID}
                             project={element.project}
                         />
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
                     <p />
-                    {element.state != 'FINISHED' ? (
+                    {element.state !== 'FINISHED' ? (
                         <AvailableListOfCollaborators
                             id={element.taskID}
                             project={element.project}
                         />
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
                 </div>
             );
@@ -188,10 +172,10 @@ class AccordionMenu extends Component {
                                                 id={index}
                                                 className="notRotated"
                                             >
-                                                <span className="glyphicon glyphicon-chevron-right" />{' '}
+                                                <span className="glyphicon glyphicon-chevron-right" />
                                             </div>
                                         </th>
-                                        <a className="key">{key++}</a>
+                                        <th className="key">{key++}</th>
                                     </tr>
                                 </thead>
                             </table>

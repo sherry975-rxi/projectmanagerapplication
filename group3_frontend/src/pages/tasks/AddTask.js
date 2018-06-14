@@ -1,22 +1,21 @@
-import React, { Component } from "react";
-import { FormGroup, FormControl, ControlLabel, Alert } from "react-bootstrap";
+import React, { Component } from 'react';
+import { FormGroup, FormControl, ControlLabel, Alert } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
 
 class AddTask extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            description: "",
+            description: '',
             hideSuccessInfo: 'hide-code',
             message: ''
         };
-        this.AuthService = new AuthService()
+        this.AuthService = new AuthService();
     }
 
     validateForm() {
         return this.state.description;
     }
-
 
     handleChange = event => {
         this.setState({
@@ -32,22 +31,22 @@ class AddTask extends Component {
             description
         };
 
-        console.log(taskDetails);
+        this.AuthService.fetch(
+            `/projects/${this.props.match.params.projectID}/tasks/`,
+            {
+                body: JSON.stringify(taskDetails),
+                method: 'POST'
+            }
+        ).then(responseData => {
+            window.location.href = `/projects/${
+                this.props.match.params.projectID
+            }/tasks/`;
+        });
 
-        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/`, {
-            body: JSON.stringify(taskDetails),
-            method: "POST"
-        }
-         ).then(responseData => {
-             console.log(responseData);
-            window.location.href = `/projects/${this.props.match.params.projectID}/tasks/`;
-    });
-   
-         this.setState({
-             hideSuccessInfo: ''
-         });
-};
-
+        this.setState({
+            hideSuccessInfo: ''
+        });
+    };
 
     render() {
         return (
@@ -67,8 +66,7 @@ class AddTask extends Component {
                     </FormGroup>
 
                     <button
-                        block
-                        className="btn btn-primary" 
+                        className="btn btn-primary"
                         disabled={!this.validateForm()}
                         type="submit"
                     >

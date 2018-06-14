@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import './ActiveProjects.css';
-import { Link } from 'react-router-dom';
 import AuthService from './../loginPage/AuthService';
 import Error from './../../components/error/error';
-import MediumButton from '../../components/button/mediumButton.jsx';
 import ProjectsTable from '../../components/projectsTable/ProjectsTable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {getActiveProjects, getUserProjects} from '../../actions/projectActions';
+import { getActiveProjects } from '../../actions/projectActions';
 
 class ActiveProjects extends Component {
     constructor(props) {
@@ -36,7 +34,7 @@ export const mapDispatchToProps = dispatch => {
     return bindActionCreators({ getActiveProjects }, dispatch);
 };
 
-export default  connect(
+export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(ActiveProjects);
