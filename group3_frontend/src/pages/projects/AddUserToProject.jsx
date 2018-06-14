@@ -57,11 +57,12 @@ class AddUserToProject extends Component {
     handleClick(event) {
         console.log(this.state.projTeam[event].email);
         const costPerEffort = this.state.costPerEffort;
+        const projectId = this.props.project;
 
         const userDTO = {
             costPerEffort,
             project: {
-                projectId: 2
+                projectId: projectId
             },
             collaborator: {
                 email: this.state.projTeam[event].email
