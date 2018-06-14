@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { projectTableDetailsToogle } from '../../actions/metaActions';
 import ItemsButton from './itemsButton';
+import ActiveProjectTeam from '../../pages/projects/ActiveProjectTeam';
 
 class ProjectsTableRow extends Component {
     constructor(props) {
@@ -54,7 +55,17 @@ class ProjectsTableRow extends Component {
             );
         } else return <div> </div>;
     }
-    gerAddCollabToProjectButton() {
+
+    getActiveProjectTeam() {
+        if ((this.props.project.projectManagerEmail === this.props.email) ||
+            (this.props.profile === "DIRECTOR")
+        ) {
+            return <ActiveProjectTeam project={this.props.project.projectId} />;
+        } else 
+        return <div> </div>;
+    }
+
+    addCollabToProjectButton() {
         if (
             this.props.project.projectManagerEmail ===
             this.props.email
@@ -210,10 +221,13 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="2">{this.getProjectInfo()}</td>
+                    <td colSpan="1">{this.getProjectInfo()}</td>
+                    <td >  
+                            {this.getActiveProjectTeam()}
+                    </td>
                     <td colSpan="2">
                         {this.renderDropdownButton('Options', 0)}
-                        {this.gerAddCollabToProjectButton()}
+                        {this.addCollabToProjectButton()}
                     </td>
                 </tr>
             </Fragment>
