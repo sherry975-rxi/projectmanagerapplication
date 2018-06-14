@@ -45,8 +45,8 @@ class UserFilter extends Component {
                     <input id="allUsers" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "1")} />
                     <label class="buttonFont" for="allUsers" eventKey="1" >All Users</label>
 
-                    <input id="emailUsers" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "2")} />
-                    <label class="buttonFont" for="emailUsers" eventKey="1" >Email</label>
+                   {/* <input id="emailUsers" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "2")} />
+                    <label class="buttonFont" for="emailUsers" eventKey="1" >Email</label>*/}
 
                     <input id="allCollaborators" name="view3" type="radio" eventKey="1" onChange={(e) => this.handleChange(e, "3")} />
                     <label class="buttonFont" for="allCollaborators" eventKey="1" >Collaborator</label>
