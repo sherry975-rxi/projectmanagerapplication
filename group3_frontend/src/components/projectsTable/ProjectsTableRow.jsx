@@ -177,15 +177,11 @@ class ProjectsTableRow extends Component {
                     </MenuItem>
 
                     <MenuItem className="items-menu" onClick={this.toggle}>
-                        <Link to={'/requests/'} activeClassName="active">
+                        <Link to={'/requests/'} >
                             <ItemsButton text="View Requests" />
                         </Link>
                     </MenuItem>
-                    <MenuItem className="items-menu" onClick={this.toggle}>
-                            <ItemsButton text="Add collaborator" />
-                            <AddUserToProject />
-                    </MenuItem>
-                </DropdownButton>
+               </DropdownButton>
             );
         }
     }
@@ -244,7 +240,7 @@ class ProjectsTableRow extends Component {
                             <br />
                         </div>
                     </td>
-                    <td colSpan="2">
+                    <td colSpan="1">
                         <div>
                             <strong>Budget:&nbsp;</strong>
                             {this.props.project.projectBudget}
@@ -252,14 +248,15 @@ class ProjectsTableRow extends Component {
                             {this.props.project.projectCalculationMethod}
                         </div>
                     </td>
-                    <td>
-                        <div>
-                            {this.renderDropdownButton('Options', 0)}
-                        </div>
+                    <td colSpan="1">
+                            {this.renderDropdownButton('Options', 0)}                        
                     </td>
-                    <td>
+                    <td colSpan="1">
+                            <AddUserToProject project={this.props.project.projectId} />
+                            {this.renderDropdownButton}
                     </td>
-                </tr>
+                    
+                    </tr>
             </Fragment>
         );
     }

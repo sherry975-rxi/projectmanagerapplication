@@ -9,6 +9,7 @@ import {
 import AuthService from './../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
 import { Redirect } from 'react-router-dom';
+ 
 
 class AddUserToProject extends Component {
     constructor(props) {
@@ -96,7 +97,7 @@ class AddUserToProject extends Component {
                 title={title}
                 key={i}
                 id={`dropdown-basic-${i}`}
-                className="mediumButton"
+                className="option"
             >
                 <MenuItem eventKey="XF9NAKamas">
                     <FormGroup controlId="costPerEffort" bsSize="small">
