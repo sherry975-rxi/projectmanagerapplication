@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MediumButton from '../../components/button/mediumButton';
-import { Glyphicon } from 'react-bootstrap';
+import { Glyphicon, MenuItem, DropdownButton, Button, DropdownMenu } from 'react-bootstrap';
 import AuthService from '../../pages/loginPage/AuthService';
 import AddUserToProject from '../../pages/projects/AddUserToProject';
+import ProjectsTable from './ProjectsTable';
+import ItemsButton from './itemsButton';
 
 class ProjectsTableRow extends Component {
     constructor(props) {
@@ -52,56 +54,58 @@ class ProjectsTableRow extends Component {
         ) {
             return (
                 <div>
-                    <p />
-                    <Link
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/tasks'
-                        }
-                        activeClassName="active"
-                    >
-                        <MediumButton text="View Tasks" />
-                    </Link>
-                    <p />
-                    <Link
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/addtask'
-                        }
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Create task" />
-                    </Link>
-                    <p />
-                    <Link
-                        to={'/projectcost/' + this.props.project.projectId}
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Calculate Project Cost" />
-                    </Link>
-                    <p />
-                    <Link
-                        to={
-                            '/selectprojectcostcalculation/' +
-                            this.props.project.projectId
-                        }
-                        activeClassName="active"
-                    >
-                        <MediumButton text="Change Calculation Method" />
-                    </Link>
-                    <p />
-                    <Link to={'/requests/'} activeClassName="active">
-                        <MediumButton text="View Requests" />
-                    </Link>
-                    <p />
-                        <AddUserToProject project={this.props.project.projectId}/>
+                    {this.renderDropdownButton}       
+                         
+                  
+                    <AddUserToProject project={this.props.project.projectId}/>
                     
                 </div>
             );
         }
     }
+
+    
+    renderDropdownButton(title, i) {
+        return (
+          <DropdownButton className="option" bsStyle={title.toLowerCase()} title={title} key={i} id={`dropdown-basic-${i}`}>
+            
+                <MenuItem className="items-menu" onClick={this.toggle}>
+                        <Link to={'/projects/' + this.props.project.projectId + '/tasks'}
+                        activeClassName="active"> 
+                            <ItemsButton text="View tasks" />
+                        </Link>
+                </MenuItem>
+                
+                <MenuItem className="items-menu" onClick={this.toggle}>   
+                        <Link to={'/projects/' + this.props.project.projectId + '/addtask'}
+                        activeClassName="active">
+                            <ItemsButton text="Create task" />
+                        </Link>  
+                </MenuItem>
+                
+                <MenuItem className="items-menu" onClick={this.toggle}>   
+                    <Link to={'/projectcost/' + this.props.project.projectId}
+                        activeClassName="active">
+                            <ItemsButton text="Project Cost" />
+                    </Link>  
+                </MenuItem>
+                
+                <MenuItem className="items-menu" onClick={this.toggle}>   
+                    <Link to={'/selectprojectcostcalculation/' + this.props.project.projectId}
+                        activeClassName="active"
+                    >
+                        <ItemsButton text="Change Calculation Method" />
+                    </Link>
+                </MenuItem>  
+                         
+                <MenuItem className="items-menu" onClick={this.toggle}>   
+                    <Link to={'/requests/'} activeClassName="active">
+                        <ItemsButton text="View Requests" />
+                    </Link>
+                </MenuItem>                
+            </DropdownButton>
+        );
+      }
 
     render() {
         return (
@@ -123,6 +127,11 @@ class ProjectsTableRow extends Component {
                     </td>
                     <td>{this.props.project.projectDescription}</td>
                     <td>{this.props.project.projectStatusName}</td>
+                    <td>
+                        <div className=" table-striped">  
+                            <tbody>{this.renderDropdownButton("Options",0)}</tbody>
+                        </div>   
+                    </td>                                    
                     <td className="action-buttons-cell">
                         <span
                             onClick={this.handleRotate}
@@ -169,6 +178,7 @@ class ProjectsTableRow extends Component {
                     </td>
                     <td>{this.getManagerButtons()}
                     </td>
+                    <td></td>
                 </tr>
             </Fragment>
         );
