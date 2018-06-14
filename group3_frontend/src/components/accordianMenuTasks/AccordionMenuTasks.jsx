@@ -11,6 +11,9 @@ import DeleteTask from './../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
 import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
 import ItemsButton from '../projectsTable/itemsButton.jsx';
+import MediumButton from './../../components/button/mediumButton';
+
+
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -60,6 +63,55 @@ class AccordionMenu extends Component {
             return (
                 <div align="right">
                     {' '}
+
+                    <p />
+                    {element.state != 'FINISHED' ? (
+                        <Link
+                            to={
+                                '/projects/' +
+                                element.project +
+                                '/tasks/' +
+                                element.taskID +
+                                '/reports'
+                            }
+                        >
+                            <button class="buttonFinished">View Reports</button>
+                        </Link>
+                    ) : (
+                            ''
+                        )}
+                    <a className="key">{key++}</a>
+
+
+
+
+                    <p />
+                    {element.state != 'FINISHED' ? (
+                        <Link
+                            to={
+                                '/projects/' +
+                                element.project +
+                                '/tasks/' +
+                                element.taskID +
+                                '/createreport'
+                            }
+                        >
+                            <button class="buttonFinished">Create Report</button>
+                        </Link>
+                    ) : (
+                            ''
+                        )}
+                    <a className="key">{key++}</a>
+
+
+
+
+
+
+
+
+
+
                     <p />
                     {element.state != 'FINISHED' ? (
                         <MarkTaskAsFinished
@@ -67,8 +119,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
                     {element.state != 'FINISHED' ? (
@@ -77,8 +129,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
                     {element.state != 'FINISHED' ? (
@@ -87,8 +139,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
                     {element.state != 'FINISHED' ? (
@@ -97,8 +149,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                 </div>
             );
