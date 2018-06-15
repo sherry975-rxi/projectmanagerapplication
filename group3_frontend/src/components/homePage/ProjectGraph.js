@@ -29,8 +29,12 @@ class ProjectGraph extends Component {
                 message: responseData.error,
                 hasFetched: true
             });
+        }).catch(err => {
+            this.setState({
+                projects: []
+            });
         });
-    }
+        };
 
     render() {
         if (this.state.hasFetched === false) {
@@ -78,6 +82,7 @@ class ProjectGraph extends Component {
                                     <tr>
                                         <td className="tdGraphStyleLeft">
                                             Project Start Date
+                                            {this.AuthService.getProfile().sub}
                                         </td>
                                         <td className="tdGraphStyleRight">
                                             Project Finish Date

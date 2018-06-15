@@ -32,8 +32,15 @@ class TaskGraph extends Component {
                 message: responseData.error,
                 hasFetched: true
             });
+        }).catch(err => {
+            this.setState({
+                tasks: []
+            });
         });
+        
     }
+
+    
 
     render() {
         if (this.state.hasFetched === false) {

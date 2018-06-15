@@ -40,7 +40,13 @@ class UserData extends Component {
                 userprofile: responseData[0]['userProfile'],
                 phone: responseData[0]['phone']
             });
-        });
+        }).catch(err => {
+            this.setState({
+                username: "Not Verified!",
+                function: "Not Verified!",
+
+            });
+        });;
     }
 
     render() {
