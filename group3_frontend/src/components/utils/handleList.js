@@ -2,9 +2,10 @@ var moment = require('moment');
 
 
 export function handleTaskHeaders(list) {
+    console.log(list)
     return list.map(task => ({
         taskID: task.taskID,
-        project: task.project,
+        project: task.project.projectId,
         description: task.description,
         state: task.currentState,
         startDate: formatDate(task.startDate),
@@ -26,14 +27,14 @@ export function handleProject(projects) {
         projectName: project.name,
         projectStatusName: project.projectStatusName,
         projectDescription: project.description,
-        projectManagerName: project.projectManagerName,
+        projectManagerName: project.projectManager.name,
         projectStartDate: formatDate(project.startdate),
         projectFinishDate: formatDate(project.finishdate),
         projectBudget: project.budget,
         projectCalculationMethod: project.calculationMethod,
         projectAvaliableCalculationMethods: project.availableCalculationMethods,
         projectCost: project.projectCost,
-        projectManagerEmail: project.projectManagerEmail,
+        projectManagerEmail: project.projectManager.email,
         button: ''
     }));
 }

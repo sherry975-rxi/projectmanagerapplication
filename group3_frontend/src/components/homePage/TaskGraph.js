@@ -85,7 +85,7 @@ class TaskGraph extends Component {
                                     </tr>
                                     <tr>
                                         <td className="tdGraphStyle">
-                                            Project ID: {taskItem.project}
+                                            Project ID: {taskItem.project.projectId}
                                         </td>
                                     </tr>
                                 </tbody>
