@@ -41,6 +41,8 @@ public class Project extends ResourceSupport implements Serializable{
 	private int status;
 	@OneToOne
 	private User projectManager;
+	private String projectManagerName;
+	private String projectManagerEmail;
 	private String name;
 	private String description;
 	@Enumerated(EnumType.STRING)
@@ -225,7 +227,13 @@ public class Project extends ResourceSupport implements Serializable{
 	 */
 	public void setProjectManager(User newProjectManager) {
 		this.projectManager = newProjectManager;
+		this.projectManagerName = this.projectManager.getName();
+		this.projectManagerEmail = this.projectManager.getEmail();
 	}
+
+	public String getProjectManagerName(){  return this.projectManagerName; }
+
+	public String getProjectManagerEmail(){  return this.projectManagerEmail; }
 
 	/**
 	 * Get the users that is Project's Manager

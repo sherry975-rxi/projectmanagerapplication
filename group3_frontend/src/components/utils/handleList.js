@@ -26,14 +26,14 @@ export function handleProject(projects) {
         projectName: project.name,
         projectStatusName: project.projectStatusName,
         projectDescription: project.description,
-        projectManagerName: project.projectManager.name,
+        projectManagerName: project.projectManagerName,
         projectStartDate: formatDate(project.startdate),
         projectFinishDate: formatDate(project.finishdate),
         projectBudget: project.budget,
         projectCalculationMethod: project.calculationMethod,
         projectAvaliableCalculationMethods: project.availableCalculationMethods,
         projectCost: project.projectCost,
-        projectManagerEmail: project.projectManager.email,
+        projectManagerEmail: project.projectManagerEmail,
         button: ''
     }));
 }

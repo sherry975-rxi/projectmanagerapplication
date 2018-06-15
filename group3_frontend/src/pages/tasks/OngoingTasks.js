@@ -62,7 +62,7 @@ class OngoingTasks extends Component {
             return (
                 <tr className="line" key={index}>
                     <td>{taskItem.taskID}</td>
-                    <td>{taskItem.project}</td>
+                    <td>{taskItem.project['projectId']}</td>
                     <td>{taskItem.description}</td>
                     <td>
                         <Moment format="YYYY/MM/DD">
