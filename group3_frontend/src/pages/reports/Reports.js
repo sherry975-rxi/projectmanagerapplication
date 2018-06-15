@@ -107,7 +107,7 @@ class Reports extends Component {
 
     render() {
         if (this.state.message != null) {
-            return <Error message={this.state.message} />;
+            return <Error message="Unauthorized"/>;
         } else {
             return (
                 <div className=" table-striped">
