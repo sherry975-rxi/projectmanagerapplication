@@ -64,7 +64,7 @@ class AccordionMenu extends Component {
             element.currentProject.projectManager.email === this.AuthService.getProfile().sub /* ||
             this.props.profile === 'DIRECTOR' */
         ) {
-            let authrorizedTaskStates = element.state === 'PLANNED' || 'CREATED' || 'READY'
+            let authrorizedTaskStates = (element.state === 'PLANNED' || element.state === 'CREATED' || element.state === 'READY')
             
             return authrorizedTaskStates === true ? (
                 <DeleteTask
