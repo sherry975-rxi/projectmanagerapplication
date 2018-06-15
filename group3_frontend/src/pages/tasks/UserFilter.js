@@ -56,7 +56,7 @@ class UserFilter extends Component {
                         All Users
                     </label>
 
-                    <input
+                    {/*<input
                         id="emailUsers"
                         name="view3"
                         type="radio"
@@ -65,7 +65,7 @@ class UserFilter extends Component {
                     />
                     <label class="buttonFont" for="emailUsers" eventKey="1">
                         Email
-                    </label>
+                    </label>*/}
 
                     <input
                         id="allCollaborators"
