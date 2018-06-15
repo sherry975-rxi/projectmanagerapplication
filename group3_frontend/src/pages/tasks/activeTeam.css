@@ -1,27 +1,41 @@
-.table.table-hover.team {
+.table.table-hover.taskteam {
     background-color: #ecf0f1;
     margin-top: -10px;
     color: rgb(93, 93, 93);
 }
 
-.table.table-hover.team > thead > tr > th {
+.table.table-hover.taskteam > thead > tr > th {
+    text-align: left;
+    color: rgb(93, 93, 93);
+    border-top: 0px solid #ddd;
+    padding: 3px;
+    font-size: 12px;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: bolder;
+}
+.table.table-hover.taskteam > tbody > tr > td {
+    text-align: left;
+    color: rgb(93, 93, 93);
+    border-top: 0px solid #ddd;
+    padding: 0.5px;
+    font-size: 11.5px;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: normal;
+}
+
+.table.table-hover.taskteam > tbody > tr > td {
     text-align: left;
     color: rgb(93, 93, 93);
 }
 
-.table.table-hover.team > tbody > tr > td {
+.table.table-hover.taskteam > tbody > tr > th {
     text-align: left;
-    color: rgb(93, 93, 93);
-}
-
-.table.table-hover.team > tbody > tr > th{
-    text-align: right;
+    vertical-align: center;
     padding-right: 0px;
     padding-left: 0px;
     font-weight: 0px;
     color: rgb(93, 93, 93);
 }
-
 
 
 
