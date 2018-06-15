@@ -158,7 +158,7 @@ class AccordionMenu extends Component {
                                 <thead>
                                     <tr>
                                         <th> {element.taskID} </th>
-                                        <th> {element.project.projectID} </th>
+                                        <th> {element.project} </th>
                                         <th> {element.description} </th>
                                         <th>
                                             {' '}

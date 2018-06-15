@@ -73,7 +73,7 @@ public class Task extends ResourceSupport implements Serializable {
 	private Calendar cancelDate;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "Project_id")
+	@JoinColumn(name = "projectId")
 	private Project project;
 
 	public Task() {
