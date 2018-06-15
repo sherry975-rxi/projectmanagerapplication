@@ -199,13 +199,13 @@ class ProjectCostCalculation extends Component {
                                 this.props.match.params.projectID
                             }
                         >
-                            <MediumButton text="Calculate Project Cost" />
+                            <MediumButton text="Calculate " />
                         </Link>
                         &nbsp;
                         <p />
                         <p />
                         <Link to={'/myprojects'}>
-                            <MediumButton text="Back to My Projects" />
+                            <MediumButton text="Back " />
                         </Link>
                         &nbsp;
                     </form>

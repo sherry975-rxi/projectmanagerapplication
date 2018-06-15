@@ -59,13 +59,13 @@ class ProjectCost extends Component {
                         '/selectprojectcostcalculation/' + projectItem.projectId
                     }
                 >
-                    <MediumButton text="Change Cost Method" />
+                    <MediumButton text="Change Method" />
                 </Link>
                 &nbsp;
                 <p />
                 <p />
                 <Link to={'/myprojects'}>
-                    <MediumButton text="Back to My Projects" />
+                    <MediumButton text="Back" />
                 </Link>
                 &nbsp;
             </div>
