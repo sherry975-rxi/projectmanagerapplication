@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     MenuItem,
-    DropdownButton,
+    Dropdown,
     FormGroup,
     FormControl,
     ControlLabel
@@ -49,6 +49,19 @@ class AddUserToProject extends Component {
         });
     }
 
+    dropdownToggle(newValue) {
+        if (this._forceOpen) {
+            this.setState({ menuOpen: true });
+            this._forceOpen = false;
+        } else {
+            this.setState({ menuOpen: newValue });
+        }
+    }
+
+    menuItemClickedThatShouldntCloseDropdown = () => {
+        this._forceOpen = true;
+    };
+
     handleClick(event) {
         const costPerEffort = this.state.costPerEffort;
         const projectId = this.props.project;
@@ -81,38 +94,45 @@ class AddUserToProject extends Component {
 
     renderDropdownButton(title, i) {
         return (
-            <DropdownButton
-                className="option"
+            <Dropdown
                 title={title}
                 key={i}
                 id={`dropdown-basic-${i}`}
+                open={this.state.menuOpen}
+                onToggle={val => this.dropdownToggle(val)}
             >
-                <MenuItem eventKey="XF9NAKamas">
-                    <FormGroup controlId="costPerEffort" bsSize="small">
-                        <ControlLabel>Collaborator Cost</ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="number"
-                            pattern="[0-9]*"
-                            inputMode="numeric"
-                            value={this.state.costPerEffort}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
-                </MenuItem>
-                <MenuItem divider />
-                {this.state.projTeam.map((projTeamitem, index) => (
+                <Dropdown.Toggle className="option">{title}</Dropdown.Toggle>
+                <Dropdown.Menu className="super-colors">
                     <MenuItem
-                        disabled={!this.validateForm()}
-                        eventKey={index}
-                        key={index}
-                        onSelect={this.handleClick.bind(this)}
+                        eventKey="XF9NAKamas"
+                        onClick={this.menuItemClickedThatShouldntCloseDropdown}
                     >
-                        {' '}
-                        {projTeamitem.name}
+                        <FormGroup controlId="costPerEffort" bsSize="small">
+                            <ControlLabel>Collaborator Cost</ControlLabel>
+                            <FormControl
+                                autoFocus
+                                type="number"
+                                pattern="[0-9]*"
+                                inputMode="numeric"
+                                onClick={this.onClickT}
+                                value={this.state.costPerEffort}
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
                     </MenuItem>
-                ))}
-            </DropdownButton>
+                    <MenuItem divider />
+                    {this.state.projTeam.map((projTeamitem, index) => (
+                        <MenuItem
+                            disabled={!this.validateForm()}
+                            eventKey={index}
+                            key={index}
+                            onSelect={this.handleClick.bind(this)}
+                        >
+                            {projTeamitem.name}
+                        </MenuItem>
+                    ))}
+                </Dropdown.Menu>
+            </Dropdown>
         );
     }
 
