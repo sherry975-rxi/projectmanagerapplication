@@ -321,7 +321,8 @@
       line-height: 2.4em;
       vertical-align: middle; }
   .switch-ios input:checked + label {
-    color: #3e4043; }
+    background-color: rgb(220, 220, 220);
+  }
   /* Holo Theme
  */
   .switch-toggle.switch-holo,
