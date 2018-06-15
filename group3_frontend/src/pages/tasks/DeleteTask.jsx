@@ -17,6 +17,9 @@ class DeleteTask extends Component {
             }
             ).then(responseData => {
             console.log(responseData);
+            window.location.href = `/projects/${
+                this.props.project
+            }/tasks`;
     });
 };
 

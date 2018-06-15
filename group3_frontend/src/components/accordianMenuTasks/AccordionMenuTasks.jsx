@@ -11,6 +11,8 @@ import DeleteTask from './../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
 import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
 import ItemsButton from '../projectsTable/itemsButton.jsx';
+import AuthService from './../../pages/loginPage/AuthService';
+
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -19,8 +21,10 @@ class AccordionMenu extends Component {
             activeKey: '1',
             rotated: false,
             arrow: 'notRotated',
-            key: ''
+            key: '',
         };
+        this.AuthService = new AuthService();
+
     }
 
     handleSelect(activeKey) {
@@ -53,6 +57,41 @@ class AccordionMenu extends Component {
                     : 'rotatedArrow';
             }
         }
+    }
+
+    renderDeleteTaskButton(element) {
+        if (
+            element.currentProject.projectManager.email === this.AuthService.getProfile().sub /* ||
+            this.props.profile === 'DIRECTOR' */
+        ) {
+            let authrorizedTaskStates = (element.state === 'PLANNED' || element.state === 'CREATED' || element.state === 'READY')
+            
+            return authrorizedTaskStates === true ? (
+                <DeleteTask
+                    id={element.taskID}
+                    project={element.project}
+                />
+            ) : (
+                ''
+            );
+        } else return <div> </div>;
+    }
+
+    renderCreateAssignmentRequestTaskButton(element) {
+        if (
+            element.currentProject.projectManager.email !== this.AuthService.getProfile().sub /* ||
+            this.props.profile === 'DIRECTOR' */
+        ) {
+            
+            return element.state !== 'FINISHED' ? (
+                <CreateRequest
+                            id={element.taskID}
+                            project={element.project}
+                        />
+            ) : (
+                ''
+            );
+        } else return <div> </div>;
     }
 
     renderTaskButtons(element, key) {
@@ -107,24 +146,10 @@ class AccordionMenu extends Component {
                     )}
                     <a className="key">{key++}</a>
                     <p />
-                    {element.state !== 'FINISHED' ? (
-                        <CreateRequest
-                            id={element.taskID}
-                            project={element.project}
-                        />
-                    ) : (
-                        ''
-                    )}
+                    {this.renderCreateAssignmentRequestTaskButton(element)}
                     <a className="key">{key++}</a>
                     <p />
-                    {element.state !== 'FINISHED' ? (
-                        <DeleteTask
-                            id={element.taskID}
-                            project={element.project}
-                        />
-                    ) : (
-                        ''
-                    )}
+                    {this.renderDeleteTaskButton(element)}
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (

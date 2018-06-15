@@ -6,6 +6,7 @@ export function handleTaskHeaders(list) {
     return list.map(task => ({
         taskID: task.taskID,
         project: task.project.projectId,
+        currentProject: task.project,
         description: task.description,
         state: task.currentState,
         startDate: formatDate(task.startDate),
