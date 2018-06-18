@@ -5,12 +5,14 @@ export const projectsReducer = (state = {}, action = {}) => {
         case GET_USER_PROJECTS_FULLFIELD:
             return {
                 ...state,
-                userProjects: action.payload
+                userProjects: action.payload,
+                error: action.payload.error
             };
         case GET_ACTIVE_PROJECTS_FULLFIELD:
             return {
                 ...state,
-                activeProjects: action.payload
+                activeProjects: action.payload,
+                error: action.payload.error
             };
         default:
             return state;

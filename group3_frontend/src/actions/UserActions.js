@@ -1,14 +1,13 @@
 import * as filterUserActions from './filterUserActions';
+import AuthService from "../pages/loginPage/AuthService";
 
 export function updateAllUsers() {
-    return dispatch => {
-        fetch(`/users/allUsers`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
-            method: 'GET'
-        })
-            .then(responseData => responseData.json())
+    const authService = new AuthService();
 
-            .then(data => {
+    return dispatch => {
+        authService.fetch(`/users/allUsers`, {
+            method: 'GET'
+        }).then(data => {
                 dispatch(allUsersFetched(data));
                 dispatch(filterUserActions.changeToALLUSERS());
                 return data;
@@ -17,13 +16,12 @@ export function updateAllUsers() {
 }
 
 export function updateEmail(email) {
+    const authService = new AuthService();
+
     return dispatch => {
-        fetch(`/users/email/${email}`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
+        authService.fetch(`/users/email/${email}`, {
             method: 'GET'
-        })
-            .then(responseData => responseData.json())
-            .then(data => {
+        }).then(data => {
                 dispatch(emailUsersFetched(data));
                 dispatch(filterUserActions.changeToEMAIL());
                 return data;
@@ -32,13 +30,12 @@ export function updateEmail(email) {
 }
 
 export function updateCollaborators() {
+    const authService = new AuthService();
+
     return dispatch => {
-        fetch(`/users/profiles/COLLABORATOR`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
+        authService.fetch(`/users/profiles/COLLABORATOR`, {
             method: 'GET'
-        })
-            .then(responseData => responseData.json())
-            .then(data => {
+        }).then(data => {
                 dispatch(allCollaboratorsFetched(data));
                 dispatch(filterUserActions.changeToCOLLABORATOR());
                 return data;
@@ -47,13 +44,12 @@ export function updateCollaborators() {
 }
 
 export function updateDirector() {
+    const authService = new AuthService();
+
     return dispatch => {
-        fetch(`/users/profiles/DIRECTOR`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
+        authService.fetch(`/users/profiles/DIRECTOR`, {
             method: 'GET'
-        })
-            .then(responseData => responseData.json())
-            .then(data => {
+        }).then(data => {
                 dispatch(allDirectorFetched(data));
                 dispatch(filterUserActions.changeToDIRECTOR());
                 return data;
@@ -62,13 +58,12 @@ export function updateDirector() {
 }
 
 export function updateAdministrator() {
+    const authService = new AuthService();
+
     return dispatch => {
-        fetch(`/users/profiles/ADMIN`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
+        authService.fetch(`/users/profiles/ADMIN`, {
             method: 'GET'
-        })
-            .then(responseData => responseData.json())
-            .then(data => {
+        }).then(data => {
                 dispatch(allAdministratorFetched(data));
                 dispatch(filterUserActions.changeToADMINISTRATOR());
                 return data;
