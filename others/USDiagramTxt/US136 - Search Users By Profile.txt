@@ -1,0 +1,13 @@
+
+Administrator->UI: Input profileType
+
+UI->Controller: Create searchUsersController
+Controller->UserService: searchUsersByProfile()
+UserService->UserRepository: searchUsersByProfile()
+UserRepository->DataBase: findAllUsers()
+DataBase-->UserRepository: return allUsers
+UserRepository-->UserService: return allUsers
+UserService-->Controller: return usersWithProfile
+Controller-->UI: return StringList(UsersWithProfile)
+
+UI-->Administrator: return StringList(UsersWithProfile)

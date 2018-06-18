@@ -1,0 +1,32 @@
+title US 203: Get ToDo User Tasks
+
+
+
+Actor->UI: Asks for ToDo Tasks
+
+UI->Controller: create controller
+
+Controller->TaskService: getToDoUserTasks(user)
+
+TaskService->TaskRepository: getTasks()
+
+TaskRepository->DataBase: findAllTasks()
+
+DataBase-->TaskRepository: return Tasks
+
+TaskRepository-->TaskService: return Tasks
+
+TaskService->TaskService: get userTasks(user)
+
+TaskService->TaskService: get toDoUserTasks(user)
+
+TaskService-->Controller: return toDoUserTasks
+
+Controller->TaskService: asks sortedTasksByDeadline
+
+TaskService-->Controller: return sortedTasksByDeadline
+
+Controller-->UI: return sorted toDoUserTasks()
+
+UI->Actor: return String(sortedToDoUserTasks)
+

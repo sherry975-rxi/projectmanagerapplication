@@ -1,0 +1,12 @@
+title US 207: Create Task Report of time
+
+Actor->UI: add report time in task
+UI->Controller: createReportController(user, task, time)
+Controller -> TaskService: createTaskReport(task, user, time)
+TaskService-> Task: createReport(user, date, time)
+Task-->TaskService: true
+TaskService->Database: saveTask()
+Database-->TaskService: return taskSaved
+TaskService -->Controller: return true 
+Controller--> UI: return true
+UI-->Actor: Task report created!

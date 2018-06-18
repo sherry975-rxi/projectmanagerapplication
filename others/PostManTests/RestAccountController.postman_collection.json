@@ -1,0 +1,144 @@
+{
+	"info": {
+		"_postman_id": "f594501d-d5ad-47f4-a8f8-f7f9d5591664",
+		"name": "RestAccountController",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"name\":\"pedro\",\n\t\t\"email\":\"pedo@gmail.com\",\n\t\t\"idNumber\":\"12\",\n\t\t\"function\":\"Dev\",\n\t\t\"phone\":\"915123445\",\n\t\t\"password\":\"qwerty\",\n\t\t\"question\":\"1\",\n\t\t\"answer\":\"answer\",\n\t\t\"street\":\"Rua sem nome\",\n\t\t\"zipCode\":\"4500-123\",\n\t\t\"city\":\"Porto\",\n\t\t\"district\":\"Porto\",\n\t\t\"country\":\"Portugal\"\n\n}"
+				},
+				"url": {
+					"raw": "{{Server}}/account/register",
+					"host": [
+						"{{Server}}"
+					],
+					"path": [
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Validation Method",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/account/performValidation/1/pedo@gmail.com/915123445",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account",
+						"performValidation",
+						"1",
+						"pedo@gmail.com",
+						"915123445"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verificate validation method",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "150920"
+				},
+				"url": {
+					"raw": "http://localhost:8080/account/performValidation/verificateCode/pedo@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account",
+						"performValidation",
+						"verificateCode",
+						"pedo@gmail.com"
+					]
+				},
+				"description": "Answer Validation"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"pedo@gmail.com\",\n\t\"password\": \"qwerty\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/account/logIn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"account",
+						"logIn"
+					]
+				},
+				"description": "LogIn"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "04b3949b-69c1-4c9e-a27b-a88322fc1ba3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "628fe2d3-b05b-4c12-94ef-1cf60b80826e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
