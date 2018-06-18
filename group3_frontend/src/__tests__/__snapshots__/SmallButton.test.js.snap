@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SmallButton should render correctly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <SmallButton
+    name="button test"
+/>,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <Glyphicon
+          bsClass="glyphicon"
+          className="pencilIcon"
+          glyph="glyphicon glyphicon-pencil"
+/>,
+        undefined,
+      ],
+      "className": "smallButton",
+      "href": undefined,
+      "type": "button",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "bsClass": "glyphicon",
+          "className": "pencilIcon",
+          "glyph": "glyphicon glyphicon-pencil",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      undefined,
+    ],
+    "type": "button",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <Glyphicon
+            bsClass="glyphicon"
+            className="pencilIcon"
+            glyph="glyphicon glyphicon-pencil"
+/>,
+          undefined,
+        ],
+        "className": "smallButton",
+        "href": undefined,
+        "type": "button",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "bsClass": "glyphicon",
+            "className": "pencilIcon",
+            "glyph": "glyphicon glyphicon-pencil",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        undefined,
+      ],
+      "type": "button",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
