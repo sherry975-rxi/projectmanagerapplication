@@ -14,5 +14,13 @@ describe('MediumButton', () => {
         );
         expect(tree).toMatchSnapshot();
     });
+    it('should have a button value', () => {
+        const tree = shallow(
+          <MediumButton name='button test' />
+        );
+        expect(typeof(tree.find('.mediumButton').getElement().props['className'])).toBe('string');
+      });
+  
+    
 
 })

@@ -14,5 +14,13 @@ describe('SmallButton', () => {
         );
         expect(tree).toMatchSnapshot();
     });
+    it('should have a button value', () => {
+        const tree = shallow(
+          <SmallButton name='button test' />
+        );
+        expect(typeof(tree.find('.smallButton').getElement().props['className'])).toBe('string');
+      });
+  
+
 
 })

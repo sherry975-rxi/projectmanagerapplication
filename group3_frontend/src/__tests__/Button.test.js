@@ -14,5 +14,11 @@ describe('Button', () => {
         );
         expect(tree).toMatchSnapshot();
     });
+    it('should have a button value', () => {
+        const tree = shallow(
+          <Button name='button test' />
+        );
+        expect(typeof(tree.find('.button').getElement().props['className'])).toBe('string');
+      });
 
 })
