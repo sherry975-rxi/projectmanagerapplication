@@ -4,6 +4,9 @@ import NavBar from './components/navBar/NavBar';
 import Profile from './components/navBar/Profile.js';
 import SideBar from './components/sideBar/SideBar';
 import { Route, Switch } from 'react-router-dom';
+import requiresAuth from './components/authentication/requiresAuth';
+import ProtectedRoute from './components/authentication/ProtectedRoute';
+
 import ActiveProjects from './pages/projects/ActiveProjects';
 import MyProjects from './pages/projects/MyProjects';
 import FinishedTasks from './pages/tasks/FinishedTasks';
@@ -20,7 +23,7 @@ import AllRequests from './pages/requests/AllRequests';
 import AddTask from './pages/tasks/AddTask';
 import ProjectDetails from './pages/projects/ProjectDetails';
 import OngoingTasks from './pages/tasks/OngoingTasks';
-import requiresAuth from './components/authentication/requiresAuth';
+
 import Messages from './components/msgs/Messages';
 import HomePage from '../src/components/homePage/Homepage';
 import Test from './pages/tasks/Test';
@@ -53,29 +56,34 @@ class App extends Component {
             <SideBar isVisible={this.state.isVisible} />
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
-                    <Route
+                    <ProtectedRoute
                         path="/activeprojects"
                         component={requiresAuth(ActiveProjects)}
+                        permissions={['DIRECTOR']}
                     />
 
-                    <Route
+                    <ProtectedRoute
                         path="/createproject"
                         component={requiresAuth(CreateProject)}
+                        permissions={['DIRECTOR']}
                     />
 
-                    <Route
+                    <ProtectedRoute
                         path="/myprojects"
                         component={requiresAuth(MyProjects)}
+                        permissions={['COLLABORATOR']}
                     />
 
-                    <Route
+                    <ProtectedRoute
                         path="/tasks"
                         component={requiresAuth(OngoingTasks)}
+                        permissions={['COLLABORATOR']}
                     />
 
-                    <Route
+                    <ProtectedRoute
                         path="/finishedtasks"
                         component={requiresAuth(FinishedTasks)}
+                        permissions={['COLLABORATOR']}
                     />
 
                     <Route
@@ -83,14 +91,16 @@ class App extends Component {
                         component={requiresAuth(HomePage)}
                     />
 
-                    <Route 
+                    <ProtectedRoute
                         path="/users" 
-                        component={requiresAuth(UsersPage)} 
+                        component={requiresAuth(UsersPage)}
+                        permissions={['ADMIN']}
                     />
 
-                    <Route
+                    <ProtectedRoute
                         path="/selectprojectcostcalculation/:projectID"
                         component={requiresAuth(ProjectCostCalculation)}
+                        permissions={['COLLABORATOR', 'DIRECTOR']}
                     />
 
                     <Route 
@@ -98,24 +108,28 @@ class App extends Component {
                         component={Test} 
                     />
 
-                    <Route
+                    <ProtectedRoute
                         path="/projectcost/:projectID"
                         component={requiresAuth(ProjectCost)}
+                        permissions={['COLLABORATOR', 'DIRECTOR']}
                     />
 
-                    <Route
+                    <ProtectedRoute
                         path="/projects/:projectID/tasks/:taskID/reports"
                         component={requiresAuth(Reports)}
+                        permissions={['COLLABORATOR']}
                     />
 
-                    <Route
+                    <ProtectedRoute
                         path="/projects/:projectID/tasks/:taskID/createreport"
                         component={requiresAuth(CreateReport)}
+                        permissions={['COLLABORATOR']}
                     />
                     
-                    <Route
-                        exact path="/projects/:projectID/tasks"
+                    <ProtectedRoute
+                        path="/projects/:projectID/tasks"
                         component={requiresAuth(ProjectTasks)}
+                        permissions={['COLLABORATOR']}
                     />
 
                     <Route
@@ -123,44 +137,53 @@ class App extends Component {
                         component={requiresAuth(Profile)}
                     />
                     
-                    <Route
+                    <ProtectedRoute
                         path="/requests"
                         component={requiresAuth(AllRequests)}
+                        permissions={['COLLABORATOR']}
                     />
 
-                    <Route 
+                    <ProtectedRoute
                         path="/projects/:projectID/addtask" 
-                        component={requiresAuth(AddTask)} 
+                        component={requiresAuth(AddTask)}
+                        permissions={['COLLABORATOR']}
                     />
 
-                    <Route
+                    <ProtectedRoute
                         path="/projectdetails/:projectID"
                         component={requiresAuth(ProjectDetails)}
+                        permissions={['COLLABORATOR', 'DIRECTOR']}
                     />
                  
-                     <Route
-                        exact  path="/projects/:projectID/tasks/:taskID/requests/assignmentRequest"
+                     <ProtectedRoute
+                        path="/projects/:projectID/tasks/:taskID/requests/assignmentRequest"
                         component={requiresAuth(CreateRequest)}
+                        permissions={['COLLABORATOR']}
                     />
-                    <Route
-                        exact path="/projects/:projectID/activeTeam"
+                    <ProtectedRoute
+                        path="/projects/:projectID/activeTeam"
                         component={requiresAuth(AvailableListOfCollaborators)}
+                        permissions={['COLLABORATOR']}
                     />
-                    <Route
-                        exact path="/projects/:projectID/tasks/:taskID/delete"
+                    <ProtectedRoute
+                        path="/projects/:projectID/tasks/:taskID/delete"
                         component={requiresAuth(DeleteTask)}
+                        permissions={['COLLABORATOR']}
                     />
-                     <Route
+                     <ProtectedRoute
                         exact path="/projects/:projectID/addColabToProject"
                         component={requiresAuth(AddUserToProject)}
+                        permissions={['COLLABORATOR']}
                     />
-                    <Route
+                    <ProtectedRoute
                         exact path="/usersMngr"
                         component={requiresAuth(User)}
+                        permissions={['ADMIN']}
                     />
-                     <Route
+                     <ProtectedRoute
                         exact path="/updateProfile"
                         component={requiresAuth(ChangeProfile)}
+                        permissions={['ADMIN']}
                     />
 
                 </Switch>
