@@ -11,15 +11,15 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'ALLUSERS_FETCHED':
-            return { ...state, usersUpdated: true, allUsers: action.allUsers }
+            return { ...state, usersUpdated: true, allUsers: action.allUsers, error: action.allUsers.error }
         case 'EMAILUSERS_FETCHED':
-            return { ...state, usersUpdated: true, emailUsers: action.emailUsers }
+            return { ...state, usersUpdated: true, emailUsers: action.emailUsers, error: action.emailUsers.error }
         case 'ALLCOLLABORATORS_FETCHED':
-            return { ...state, usersUpdated: true, allCollaborators: action.allCollaborators }
+            return { ...state, usersUpdated: true, allCollaborators: action.allCollaborators, error: action.allCollaborators.error }
         case 'ALLDIRECTORS_FETCHED':
-            return { ...state, usersUpdated: true, allDirector: action.allDirector }
+            return { ...state, usersUpdated: true, allDirector: action.allDirector, error: action.allDirector.error }
         case 'ALLADMINISTRATOR_FETCHED':
-            return { ...state, usersUpdated: true, allAdministrator: action.allAdministrator }
+            return { ...state, usersUpdated: true, allAdministrator: action.allAdministrator, error: action.allAdministrator.error }
         default:
             return state;
     }

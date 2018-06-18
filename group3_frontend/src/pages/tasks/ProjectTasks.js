@@ -4,15 +4,12 @@ import FetchTaskButton from '../tasks/FetchTaskButton';
 import { connect } from 'react-redux';
 import AuthService from './../loginPage/AuthService';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
+import LoadingComponent from './../../components/loading/LoadingComponent';
+import { Redirect } from 'react-router-dom';
 
 class ProjectTasks extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            tasks: [],
-            project: {},
-            externalData: null
-        };
         this.AuthService = new AuthService();
         this.renderTasks = this.renderTasks.bind(this);
     }
@@ -20,6 +17,15 @@ class ProjectTasks extends Component {
     //TODO: Add sort by ascending or descending order to these tables
 
     renderTasks() {
+
+        if (this.props.tasksLoading) {
+            return (<LoadingComponent />)
+        }
+
+        else if (this.props.error) {
+            return <Redirect to="/login" />;
+        }
+
         switch (this.props.filter) {
             case 'all':
                 return <AccordionMenu list={this.props.allTasks} />;
@@ -32,26 +38,22 @@ class ProjectTasks extends Component {
             case 'notstarted':
                 return <AccordionMenu list={this.props.notStartedTasks} />;
             default: {
-                this.setState({
-                    message: 'ERROR'
-                });
+                return <LoadingComponent />;
             }
         }
     }
 
     render() {
-        if (this.state.message != null) {
-            return <Error message={this.state.message} />;
-        } else {
-            return (
-                <div>
-                    <FetchTaskButton
-                        projectID={this.props.match.params.projectID}
-                    />
-                    {this.renderTasks()}
-                </div>
-            );
-        }
+
+        return (
+            <div>
+                <FetchTaskButton
+                    projectID={this.props.match.params.projectID}
+                />
+                {this.renderTasks()}
+            </div>
+        );
+
     }
 }
 
@@ -62,7 +64,9 @@ const mapStateToProps = state => {
         ongoingTasks: state.projectTasks.ongoingTasks,
         standByTasks: state.projectTasks.wihoutCollab,
         notStartedTasks: state.projectTasks.notStartedTasks,
-        allTasks: state.projectTasks.allTasks
+        allTasks: state.projectTasks.allTasks,
+        tasksLoading: state.projectTasks.itemIsLoading,
+        error: state.projectTasks.error
     };
 };
 

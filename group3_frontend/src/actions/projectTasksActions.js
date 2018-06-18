@@ -1,7 +1,9 @@
 import * as filterActions from './filterActions';
+import { itemIsLoading } from './projectTasksActions';
 
 export function updateFinishedTasks(projectId) {
     return dispatch => {
+        tasksLoading()
         fetch(`/projects/${projectId}/tasks/finished`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'GET'
@@ -11,12 +13,16 @@ export function updateFinishedTasks(projectId) {
                 dispatch(finishTasksFetched(data));
                 dispatch(filterActions.changeToFinished());
                 return data;
+            }).catch((error) => {
+                console.log(error)
+                fetchTasksHasErrored();
             });
     };
 }
 
 export function updateOngoingTasks(projectId) {
     return dispatch => {
+        tasksLoading()
         fetch(`/projects/${projectId}/tasks/unfinished`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'GET'
@@ -26,12 +32,16 @@ export function updateOngoingTasks(projectId) {
                 dispatch(ongoingTasksFetched(data));
                 dispatch(filterActions.changeToOnGoing());
                 return data;
+            }).catch((error) => {
+                console.log(error)
+                fetchTasksHasErrored();
             });
     };
 }
 
 export function updateStandByTasks(projectId) {
     return dispatch => {
+        tasksLoading()
         fetch(`/projects/${projectId}/tasks/withoutCollaborators`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'GET'
@@ -41,12 +51,16 @@ export function updateStandByTasks(projectId) {
                 dispatch(standByTasksFetched(data));
                 dispatch(filterActions.changeToStandBy());
                 return data;
+            }).catch((error) => {
+                console.log(error)
+                fetchTasksHasErrored();
             });
     };
 }
 
 export function updateNotStartedTasks(projectId) {
     return dispatch => {
+        tasksLoading()
         fetch(`/projects/${projectId}/tasks/notstarted`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'GET'
@@ -56,12 +70,16 @@ export function updateNotStartedTasks(projectId) {
                 dispatch(standByTasksFetched(data));
                 dispatch(filterActions.changeToNotStarted());
                 return data;
+            }).catch((error) => {
+                console.log(error)
+                fetchTasksHasErrored();
             });
     };
 }
 
 export function updateAllTasks(projectId) {
     return dispatch => {
+        tasksLoading()
         fetch(`/projects/${projectId}/tasks/all`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'GET'
@@ -71,6 +89,9 @@ export function updateAllTasks(projectId) {
                 dispatch(allTasksFetched(data));
                 dispatch(filterActions.changeToAllTasks());
                 return data;
+            }).catch((error) => {
+                console.log(error)
+                fetchTasksHasErrored();
             });
     };
 }
@@ -109,3 +130,16 @@ export function allTasksFetched(allTasks) {
         allTasks
     };
 }
+
+export function tasksLoading() {
+    return {
+        type: 'ITEM_LOADING'
+    };
+}
+
+export function fetchTasksHasErrored() {
+    return {
+        type: 'FETCH_HAS_ERRORED'
+    };
+}
+

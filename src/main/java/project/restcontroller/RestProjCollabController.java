@@ -165,9 +165,9 @@ public class RestProjCollabController {
 
         ResponseEntity<List<User>> response = new ResponseEntity<>(finalUsers,HttpStatus.NOT_ACCEPTABLE);
             for (User other : allUsers) {
-                if(!projectService.isUserInProjectTeam(other, project)){
+                if(!projectService.isUserActiveInProject(other, project)){
                     finalUsers.add(other);
-                    finalUsers.remove(project.getProjectManager());
+
                 }
         }
 

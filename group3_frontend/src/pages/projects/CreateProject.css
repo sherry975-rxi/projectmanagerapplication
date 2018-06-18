@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
-* {
-    border-radius: 0 !important;
-  }
-
 .pageTitle{
     font-size: 25px;
     font-family: 'Roboto', sans-serif;
