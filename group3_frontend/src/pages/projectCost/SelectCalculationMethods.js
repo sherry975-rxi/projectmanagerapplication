@@ -24,6 +24,7 @@ class SelectCalculationMethods extends Component {
     }
 
     validateArray(calculationMethod) {
+
         return calculationMethod === "CI" || calculationMethod === "CF" || calculationMethod === "CM"
     }
 
@@ -36,6 +37,7 @@ class SelectCalculationMethods extends Component {
         } else {
             selectedMethods.push(event.target.value);
         }
+        selectedMethods.filter(this.validateArray);
         this.setState({
             selectedMethods: selectedMethods
         })
@@ -44,10 +46,8 @@ class SelectCalculationMethods extends Component {
     handleSubmit = event => {
         event.preventDefault();
 
-
         const selectedMethods = this.state.selectedMethods;
 
-        selectedMethods.filter(this.validateArray);
 
         const projectDTO = {
             availableCalculationMethods: selectedMethods.join(','),
