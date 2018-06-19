@@ -21,7 +21,7 @@ export class ProtectedRoute extends React.Component {
             );
         } else {
             return (
-                <Route path={this.props.path} component={requiresAuth(Homepage)} />
+                <Route path={this.props.path} />
             );
         }
     }
