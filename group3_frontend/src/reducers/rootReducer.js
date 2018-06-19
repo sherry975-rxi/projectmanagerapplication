@@ -8,6 +8,8 @@ import projectsReducer from './projectsReducer';
 import metaReducer from './metaReducer';
 import UserReducers from './UserReducers';
 import usersFilterReducer from './usersFilterReducer';
+import userTasksReducer from './userTasksReducer';
+import userTasksFilterReducer from './userTasksFilterReducer';
 
 const rootReducer = combineReducers({
     authenthication: authenticationReducer,
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
     projects: projectsReducer,
     meta: metaReducer,
     users: UserReducers,
-    usersFilter: usersFilterReducer
+    usersFilter: usersFilterReducer,
+    userTasks: userTasksReducer,
+    userTasksFilter: userTasksFilterReducer
 });
 export default rootReducer;
