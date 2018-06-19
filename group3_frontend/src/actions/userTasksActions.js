@@ -1,43 +1,42 @@
 import * as filterActions from './filterActions';
+import AuthService from "../pages/loginPage/AuthService";
+
 
 export function updateFinishedTasks(userId) {
+    const authService = new AuthService();
+
     return dispatch => {
-        fetch(`/users/${userId}/tasks/finished`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
+        authService.fetch(`/users/${userId}/tasks/finished`, {
             method: 'GET'
-        })
-            .then(responseData => responseData.json())
-            .then(data => {
-                dispatch(finishTasksFetched(data));
-                dispatch(filterActions.changeToFinished());
-                return data;
-            });
+        }).then(data => {
+            dispatch(finishTasksFetched(data));
+            dispatch(filterActions.changeToFinished());
+            return data;
+        });
     };
 }
 
 export function updateOngoingTasks(userId) {
+    const authService = new AuthService();
+
     return dispatch => {
-        fetch(`/users/${userId}/tasks/pending`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
+        authService.fetch(`/users/${userId}/tasks/pending`, {
             method: 'GET'
-        })
-            .then(responseData => responseData.json())
-            .then(data => {
+        }).then(data => {
                 dispatch(ongoingTasksFetched(data));
                 dispatch(filterActions.changeToOnGoing());
                 return data;
-            });
+        });
     };
 }
 
 export function updateAllTasks(userId) {
+    const authService = new AuthService();
+
     return dispatch => {
-        fetch(`/users/${userId}/tasks/`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
+        authService.fetch(`/users/${userId}/tasks/`, {
             method: 'GET'
-        })
-            .then(responseData => responseData.json())
-            .then(data => {
+        }).then(data => {
                 dispatch(allTasksFetched(data));
                 dispatch(filterActions.changeToAllTasks());
                 return data;
@@ -65,3 +64,4 @@ export function allTasksFetched(allTasks) {
         allTasks
     };
 }
+

@@ -1,0 +1,8 @@
+title US 207: Create Task Report of time RestController
+
+Actor->Browser:add report time in task
+Browser->RestController:createReport(ResponseBody Report)
+RestController->TaskService:createTaskReport(task, user, time)
+TaskService-->RestController: report created
+RestController-->Browser:ResponseEntity(report, HttpStatus.OK)
+Browser-->Actor:reported time added

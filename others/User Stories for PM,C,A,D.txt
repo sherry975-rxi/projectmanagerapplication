@@ -1,0 +1,50 @@
+
+    PRODUCT OWNER
+US G01: Como product owner quero que seja implementado uma side-bar com as opções (i) project, (ii) task, (iii) user.
+US G02: Como product owner, quero que seja implementado um design para botão com efeitos de sistematização.
+US G03: Como product owner, quero que seja implementado um design barra de pesquisa com efeitos de sistematização.
+US G04: Como product owner, quero que seja implementado um design para 3 dot icon com efeitos de sistematização.
+US G05: Como product owner, quero que seja implementado um design para drop down box com efeitos de sistematização.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    ADMINISTRATOR
+US A100: Quero que o administrador, ao clicar na opção "Users" na side bar possa consultar uma lista de todos os users (US130). 
+US A110: Quero que seja adicionada uma barra de pesquisa por email, dentro da opção "Users" (US135).
+US A120: Quero que seja adicionada um botão (dropbox down) de pesquisa por perfil, dentro da opção "Users" (US136). 
+US A130: Quero que em cada user listado pela opção "Users", seja adicionado um botão 3 dot icon button (...) com várias opções.
+US A140: Quero que no botão/dropdown em cada user listado pela opção "Users", seja adicionada a opção para mudar o perfl do respetivo user
+(US110 e US112).
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    DIRECTOR
+US D100: Quero que o director, dentro da opção "Projects" na side bar, possa consultar uma lista de todos os projectos.
+US D110: Quero que o diretor possa ver um botão para criar projeto (US301 v2).
+US D210: Quero que os projetos listados pela opção "Projects" contenham o estado do projeto (US320).
+US D220: Quero que os projetos listados pela opção "Projects", contenham um 3 dot icon button (...), com a opção para definir 
+o mecanismo de custo (US310). 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+    COLLABORATOR
+US C100: Como product owner quero que seja implementado uma side-bar com as opções (i) project, (ii) task, (iii) user, para o collaborator.
+US C110: Quero que ao clicar na opção "Projects" na side bar sejam listados todos os projectos a que pertenço.
+US C120: Quero que seja implementado um menu colapsável em cada projeto para ver detalhes do mesmo.
+US C130: Quero que no menu colapsável com detalhes sobre o projecto, apareça um botão "All Tasks", que redirecione o user para todas as tarefas do projecto.
+US C140: No menu com todas as tarefas do projeto, quero que apareça em cada tarefa, um botão "Add collaborator" para o colaborador se adicionar à tarefa.(US204v2)
+US C200: Quero que o colaborador, dentro da opção " My Tasks" na side bar, possa consultar uma lista de todas as suas tarefas. Ao clicar em cima de uma tarefa deve aparecer um
+menu colapsável com detalhes sobre essa tarefa com os respectivos botões para, marcar como finished e atualizar/criar report.(US207 & US210)
+US C210: Quero que apareça uma opção para filtrar as tarefas por estado.(US203v2)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    COLLABORATOR QUE É PROJECT MANAGER
+US PM100: Quero que ao clicar na opção "Projects" na side bar sejam listados todos os projectos em que sou manager.
+US PM110: Quero que apareça um filtro para ver projetos sem colaboradores. 
+US PM120: Quero que seja implementado um menu colapsável em cada projeto para ver detalhes do mesmo.
+US PM130: Quero que no menu colapsável com detalhes sobre o projecto, apareça um botão "All Tasks", que redirecione o user para todas as tarefas do projecto. Se for PM desse projeto,
+quero que apareça um botão "View requests".(US356)
+US PM140: Quero que no menu colapsável com detalhes sobre o projecto, apareça um botão para adicionar colaboradores ao projecto.(US340v2)
+US PM150: Quero que no menu colapsável com detalhes sobre o projecto, apareça um botão para criar tarefas para o projecto.(US350v2)
+US PM160: Quero que no menu colapsável com detalhes sobre o projecto, apareça os respectivos botões para o calculo do custo.(US390 & US392)
+US PM170: No menu com todas as tarefas do projeto, quero que apareça em cada tarefa, um botão "Add collaborator" para adicionar um colaborador à tarefa e outro botão "Delete task" para 
+eliminar a tarefa.(US345 & US361)
+US PM180: Quero que ao consultar todas as tarefas do projecto seja permitido filtra por tarefas concluidas, a decorrer e não iniciadas. (US370v2 & US375)
+

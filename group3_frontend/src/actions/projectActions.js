@@ -1,13 +1,13 @@
 import { GET_USER_PROJECTS_FULLFIELD, GET_ACTIVE_PROJECTS_FULLFIELD } from './actions';
+import AuthService from "../pages/loginPage/AuthService";
 
 export function getUserProjects(userId) {
+    const authService = new AuthService();
+
     return dispatch => {
-        fetch(`/projects/${userId}/myProjects`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
+        authService.fetch(`/projects/${userId}/myProjects`, {
             method: 'GET'
-        })
-            .then(responseData => responseData.json())
-            .then(data => {
+        }).then(data => {
                 dispatch(getUserProjectsFullfield(data));
             });
     };
@@ -22,13 +22,12 @@ export const getUserProjectsFullfield = payload => {
 
 
 export function getActiveProjects(userId) {
+    const authService = new AuthService();
+
     return dispatch => {
-        fetch(`/projects/active`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
+        authService.fetch(`/projects/active`, {
             method: 'GET'
-        })
-            .then(responseData => responseData.json())
-            .then(data => {
+        }).then(data => {
                 dispatch(getActiveProjectsFullfield(data));
             });
     };

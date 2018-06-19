@@ -30,6 +30,7 @@ export class Profile extends React.Component {
     getImage() {
         if (this.AuthService.getUserId() == 7 ||
             this.AuthService.getUserId() == 6 ||
+            this.AuthService.getUserId() == 4 ||
             this.AuthService.getUserId() == 5 ||
             this.AuthService.getUserId() == 1) {
             return (womanProfile)
@@ -43,7 +44,6 @@ export class Profile extends React.Component {
     render() {
         var user = this.props.user;
         let image = this.getImage();
-        console.log(image)
 
         return (
             <div className="external-div">

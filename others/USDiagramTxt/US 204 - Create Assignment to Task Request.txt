@@ -1,0 +1,12 @@
+title US 204: Create Assignment to Task Request Controller
+
+Actor->UI: request assignment in task
+UI->Controller: createTaskAssignmentRequestController(project, task, user)
+Controller -> TaskService: createTaskAssignmentRequest(task, user)
+TaskService-> Task: createTaskAssignmentRequest(user)
+Task-->TaskService: true
+TaskService->Database: saveTask()
+Database-->TaskService: return taskSaved
+TaskService -->Controller: true
+Controller--> UI: true
+UI-->Actor: Task assignment request created!

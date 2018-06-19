@@ -1,0 +1,14 @@
+title US350v2 As a PM I want to add a Collaborator to the project team
+
+Actor->Browser: Add Daniel to ProjectA team
+Browser->RestController: POST: addCollaborator(danielEmail, Cost)
+RestController->ProjectService: createProjectCollaborator(danielEmail, projectAId, Cost)
+ProjectService -> userRepository: findByEmail(danielEmail)
+userRepository --> ProjectService: User Daniel 
+ProjectService -> projectRepository: findById(projectId) 
+projectRepository --> ProjectService: ProjectA
+ProjectService -> ProjectService: instante new ProjectCollaborator(danielEmail, projectAId)
+ProjectService -> projCollabRepository: save(Daniel)
+ProjectService-->RestController: ProjectCollaborator Daniel
+RestController-->Browser: ResponseEntity(Daniel)
+Browser -> Actor: Display ProjectCollaborator Created

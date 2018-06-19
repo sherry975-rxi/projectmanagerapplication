@@ -48,10 +48,12 @@ class ActiveTaskTeam extends Component {
 
     render() {
         return (
-            <table className="table table-hover team">
+            <table className="table table-hover taskteam">
                 <thead>
                     <tr>
-                        <th>Active Team</th>
+                        <th>
+                            <b> Active Team </b>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>{this.ListOfCollabs()}</tbody>

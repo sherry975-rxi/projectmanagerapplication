@@ -71,12 +71,13 @@ class CreateReport extends Component {
                     <b>Create Report for {this.props.match.params.taskID} </b>
                 </h3>&nbsp;
                 <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="reportedTime" bsSize="large">
-                        <ControlLabel>Reported time (hours)</ControlLabel>
+                    <FormGroup controlId="reportedTime" bsSize="large">                        
+                        <ControlLabel></ControlLabel>
                         <FormControl
                             autoFocus
                             type="number"
                             pattern="[0-9]*"
+                            placeholder="Enter reported time (hours)"
                             inputmode="numeric"
                             value={this.state.reportedTime}
                             onChange={this.handleChange}

@@ -1,0 +1,11 @@
+Administrator->UI: Input email
+
+UI->Controller: Create searchUsersController
+Controller->UserService: searchUsersByEmail()
+UserService->UserRepository: searchUsersByEmail()
+UserRepository->DataBase: findUserByEmail()
+DataBase-->UserService: return user
+UserService-->Controller: return userWithEmail
+Controller-->UI: return userAsString
+
+UI-->Administrator: return userAsString

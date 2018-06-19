@@ -60,7 +60,6 @@ class SignUpPage extends Component {
         }
         return (
             <div>
-                {signUpStep}
                 {formStp}
             </div>
         );

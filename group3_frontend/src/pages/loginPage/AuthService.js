@@ -35,6 +35,7 @@ export default class AuthService {
         localStorage.setItem('id_token', idToken);
     }
 
+
     setUser(res) {
         localStorage.setItem('id_user', res.data.idNumber);
     }
@@ -72,9 +73,11 @@ export default class AuthService {
         return fetch(url, {
             headers,
             ...options
-        })
-            .then(this._checkStatus)
-            .then(response => response.json());
+        }).then(this._checkStatus)
+          .then(response => {
+                localStorage.setItem('id_token',response.headers.get('Authorization'));
+                return response.json();
+          });
     }
 
     //Verifies if the HTTP response is valid (within 200)
