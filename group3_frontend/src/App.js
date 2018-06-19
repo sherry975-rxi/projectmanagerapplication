@@ -32,6 +32,7 @@ import DeleteTask from './pages/tasks/DeleteTask';
 import AddUserToProject from './pages/projects/AddUserToProject';
 import User from './pages/tasks/User';
 import ChangeProfile from './pages/users/ChangeProfile';
+import ListOfProjCollabWoutTasks from './pages/projects/ListOfProjCollabWoutTasks';
 
 
 class App extends Component {
@@ -53,6 +54,10 @@ class App extends Component {
             <SideBar isVisible={this.state.isVisible} />
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
+                    <Route
+                        exact path="/projects/:projectID/tasks/:taskID/collabsAvailableForTask"
+                        component={requiresAuth(ListOfProjCollabWoutTasks)}
+                    />
                     <Route
                         path="/activeprojects"
                         component={requiresAuth(ActiveProjects)}
