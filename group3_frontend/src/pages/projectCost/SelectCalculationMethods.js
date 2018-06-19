@@ -5,6 +5,8 @@ import {
     Button,
     Checkbox
 } from 'react-bootstrap';
+import AuthService from "../loginPage/AuthService";
+import {toastr} from "react-redux-toastr";
 
 class SelectCalculationMethods extends Component {
     constructor(props) {
@@ -12,27 +14,66 @@ class SelectCalculationMethods extends Component {
         this.state = {
             selectedMethods: this.props.project.projectAvaliableCalculationMethods.split(','),
         }
+
+        this.handleChange = this.handleChange.bind(this);
+        this.AuthService = new AuthService();
     }
 
     validateForm() {
         return this.state.selectedMethods.length;
     }
 
+    validateArray(calculationMethod) {
+        return calculationMethod === "CI" || calculationMethod === "CF" || calculationMethod === "CM"
+    }
+
     handleChange(event) {
-        const selectedMethods = this.state.selectedMethods;
+        var selectedMethods = this.state.selectedMethods;
 
         if(selectedMethods.includes(event.target.value)) {
-            selectedMethods.remove(event.target.value);
+            var index = selectedMethods.indexOf(event.target.value)
+            selectedMethods.splice(index, 1);
         } else {
-            selectedMethods.add(event.target.value);
+            selectedMethods.push(event.target.value);
         }
         this.setState({
             selectedMethods: selectedMethods
         })
     }
 
+    handleSubmit = event => {
+        event.preventDefault();
+
+
+        const selectedMethods = this.state.selectedMethods;
+
+        selectedMethods.filter(this.validateArray);
+
+        const projectDTO = {
+            availableCalculationMethods: selectedMethods.join(','),
+            calculationMethod: selectedMethods[0]
+        }
+
+        console.log(projectDTO);
+
+        this.AuthService.fetch(`/projects/${this.props.project.projectId}`, {
+            body: JSON.stringify(projectDTO),
+            method: 'patch'
+        })
+            .then(responseData => {
+                toastr.success('Available Calculation Methods Changed!');
+                setTimeout(function() {
+                    window.location.href = '/activeprojects';
+                }, 1000);
+            })
+            .catch(err => {
+                toastr.error('An error occurred!');
+            });
+
+    }
+
     render() {
-        console.log(this.state.selectedMethods);
+
         return (<div>
             <p>This is a test</p>
             <p>"Project ID: " {this.props.project.projectId}</p>
@@ -51,7 +92,7 @@ class SelectCalculationMethods extends Component {
                         Cost Final
                     </Checkbox>{' '}
                     <Checkbox value="CM" checked={this.state.selectedMethods.includes("CM")} onChange={this.handleChange}>
-                        Cost Initial
+                        Cost Average
                     </Checkbox>
 
                 </FormGroup>
