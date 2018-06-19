@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { projectTableDetailsToogle } from '../../actions/metaActions';
 import ItemsButton from './itemsButton';
 import ActiveProjectTeam from '../../pages/projects/ActiveProjectTeam';
+import SelectCalculationMethods from '../../pages/projectCost/SelectCalculationMethods';
 
 class ProjectsTableRow extends Component {
     handleRotate = () => {
@@ -47,6 +48,13 @@ class ProjectsTableRow extends Component {
         } else return <div> </div>;
     }
 
+    changeCalculationMethod() {
+        if (  this.props.project.projectManagerEmail === this.props.email ||
+            this.props.profile === 'DIRECTOR') {
+            return <SelectCalculationMethods project={this.props.project.projectId} />;
+        }
+    }
+
     getActiveProjectTeam() {
         if (
             this.props.project.projectManagerEmail === this.props.email ||
@@ -56,12 +64,14 @@ class ProjectsTableRow extends Component {
         } else return <div> </div>;
     }
 
-    // if the user is project manager, they can see a button to add a collaborator to the project
+    // if the user is project manager, they can see a button to add a collaborator to the project 
     addCollabToProjectButton() {
         if (this.props.project.projectManagerEmail === this.props.email) {
             return <AddUserToProject project={this.props.project.projectId} />;
         }
     }
+
+   
 
     // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
     // cost calculation methods
@@ -205,6 +215,7 @@ class ProjectsTableRow extends Component {
                     <td colSpan="2">
                         <div>{this.renderDropdownButton('Options', 0)}</div>
                         <div>{this.addCollabToProjectButton()}</div>
+                        <div>{this.changeCalculationMethod()}</div>
                     </td>
                 </tr>
             </Fragment>
