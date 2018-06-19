@@ -59,21 +59,21 @@ export function updateMyAllTasks(userId) {
 
 export function myFinishedTasksFetched(finishedTasks) {
     return {
-        type: 'FINISHTASKS_FETCHED',
+        type: 'MYFINISHTASKS_FETCHED',
         finishedTasks
     };
 }
 
 export function myOngoingTasksFetched(ongoingTasks) {
     return {
-        type: 'ONGOING_FETCHED',
+        type: 'MYONGOING_FETCHED',
         ongoingTasks
     };
 }
 
 export function myAllTasksFetched(allTasks) {
     return {
-        type: 'ALLTASKS_FETCHED',
+        type: 'MYALLTASKS_FETCHED',
         allTasks
     };
 }

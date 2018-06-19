@@ -1,17 +1,17 @@
 const INITIAL_STATE = {
-    filterType: 'all'
+    filterType: 'myAll'
 }
 
 
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case 'ALLPROJECTTASKS':
-            return { ...state, filterType: 'all' }
-        case 'ONGOING':
-            return { ...state, filterType: 'unfinished' }
-        case 'FINISHED':
-          return { ...state, filterType: 'finished' }
+        case 'MYALLTASKS':
+            return { ...state, filterType: 'myAll' }
+        case 'MYONGOING':
+            return { ...state, filterType: 'myUnfinished' }
+        case 'MYFINISHED':
+          return { ...state, filterType: 'myFinished' }
         default:
             return state;
     }

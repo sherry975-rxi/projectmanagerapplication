@@ -37,11 +37,11 @@ class UserTasks extends Component {
         }
 
         switch (this.props.filter) {
-            case 'all':
+            case 'myAll':
                 return <AccordionMenu list={this.props.allTasks} />;
-            case 'unfinished':
+            case 'myUnfinished':
                 return <AccordionMenu list={this.props.ongoingTasks} />;
-            case 'finished':
+            case 'myFinished':
                 return <AccordionMenu list={this.props.finishedTasks} />;
             default:
                 return <LoadingComponent />;

@@ -1,11 +1,11 @@
 export function changeToFinished() {
-    return { type: 'FINISHED' };
+    return { type: 'MYFINISHED' };
 }
 
 export function changeToOnGoing() {
-    return { type: 'ONGOING' };
+    return { type: 'MYONGOING' };
 }
 
 export function changeToAllTasks() {
-    return { type: 'ALLPROJECTTASKS' };
+    return { type: 'MYALLTASKS' };
 }

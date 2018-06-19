@@ -11,11 +11,11 @@ const ERROR = 'Sorry! Something went wrong. We are working to fix it quickly'
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case 'FINISHTASKS_FETCHED':
+        case 'MYFINISHTASKS_FETCHED':
             return { ...state, itemIsLoading: false, finishedTasks: action.finishedTasks, error: false }
-        case 'ONGOING_FETCHED':
+        case 'MYONGOING_FETCHED':
             return { ...state, itemIsLoading: false, ongoingTasks: action.ongoingTasks, error: false }
-        case 'ALLTASKS_FETCHED':
+        case 'MYALLTASKS_FETCHED':
             return { ...state, itemIsLoading: false, allTasks: action.allTasks, error: false }
         case 'ITEM_LOADING':
             return { ...state, itemIsLoading: true, allTasks: action.allTasks, error: false }
