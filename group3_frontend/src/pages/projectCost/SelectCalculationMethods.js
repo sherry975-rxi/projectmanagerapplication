@@ -58,13 +58,11 @@ class SelectCalculationMethods extends Component {
 
         this.AuthService.fetch(`/projects/${this.props.project.projectId}`, {
             body: JSON.stringify(projectDTO),
-            method: 'patch'
+            method: 'PATCH'
         })
             .then(responseData => {
                 toastr.success('Available Calculation Methods Changed!');
-                setTimeout(function() {
-                    window.location.href = '/activeprojects';
-                }, 1000);
+
             })
             .catch(err => {
                 toastr.error('An error occurred!');
@@ -74,35 +72,29 @@ class SelectCalculationMethods extends Component {
 
     render() {
 
-        return (<div>
-            <p>This is a test</p>
-            <p>"Project ID: " {this.props.project.projectId}</p>
-            <p>"Project Cost Calculation Methods: "  {this.props.project.projectAvaliableCalculationMethods}</p>
+        return (
+                <form onSubmit={this.handleSubmit}>
 
+                    <FormGroup controlId="selectedMethods">
+                        <ControlLabel className="formTitle"><b>Available Calculation Methods</b></ControlLabel>
 
-            <form onSubmit>
+                        <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
+                            Cost Initial
+                        </Checkbox>
+                        <Checkbox value="CF" checked={this.state.selectedMethods.includes("CF")} onChange={this.handleChange}>
+                            Cost Final
+                        </Checkbox>{' '}
+                        <Checkbox value="CM" checked={this.state.selectedMethods.includes("CM")} onChange={this.handleChange}>
+                            Cost Average
+                        </Checkbox>
 
-                <FormGroup controlId="selectedMethods">
-                    <ControlLabel className="formTitle"><b>Available Calculation Methods</b></ControlLabel>
+                    </FormGroup>
 
-                    <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
-                        Cost Initial
-                    </Checkbox>
-                    <Checkbox value="CF" checked={this.state.selectedMethods.includes("CF")} onChange={this.handleChange}>
-                        Cost Final
-                    </Checkbox>{' '}
-                    <Checkbox value="CM" checked={this.state.selectedMethods.includes("CM")} onChange={this.handleChange}>
-                        Cost Average
-                    </Checkbox>
-
-                </FormGroup>
-
-
-                <Button block className="btn btn-primary" disabled={!this.validateForm()} type="submit" >
-                    Update
-                </Button>
-            </form>
-        </div>);
+                    <Button block className="btn btn-primary" disabled={!this.validateForm()} type="submit" >
+                        Update
+                    </Button>
+                </form>
+            );
     }
 }
 export default SelectCalculationMethods;
