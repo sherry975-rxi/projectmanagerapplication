@@ -3,7 +3,7 @@ import Error from './../../components/error/error';
 import { connect } from 'react-redux';
 import AuthService from './../loginPage/AuthService';
 import AccordionMenuUsers from '../../components/AccordianMenuUser/AccordionMenuUsers.jsx';
-import UserFilter from '../tasks/UserFilter';
+import UserFilter from '../users/UserFilter';
 
 class User extends Component {
     constructor(props) {
