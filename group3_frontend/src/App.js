@@ -56,8 +56,9 @@ class App extends Component {
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
                     <ProtectedRoute
-                        exact path="/projects/:projectID/tasks/:taskID/collabsAvailableForTask"
+                        path="/UnassignedProjCollab"
                         component={requiresAuth(ListOfProjCollabWoutTasks)}
+                        permissions={['COLLABORATOR']}
                     />
 
                     <ProtectedRoute

@@ -21,7 +21,7 @@ class ListOfProjCollabWoutTasks extends Component {
     
         async getUnassignedProjCollabs() {
             this.AuthService.fetch(
-                `/projects/2/tasks/WP1.T01/collabsAvailableForTask`,
+                `projects/2/tasks/WP1.T01/collabsAvailableForTask`,
                 { method: 'GET' }
             ).then(responseData => {
                 console.log(responseData)
@@ -33,7 +33,6 @@ class ListOfProjCollabWoutTasks extends Component {
         }
     
         ListOfCollabs() {
-            console.log("4")
             if (this.state.unassignedCollabs.length > 0) {
                 return this.state.unassignedCollabs.map((unassignedCollabsitem, index) => {
                     return (
