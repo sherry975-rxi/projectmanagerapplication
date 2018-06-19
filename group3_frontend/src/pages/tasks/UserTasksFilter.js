@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import './dist/toggle-switch.css';
 import './dist/FetchTask.css';
 import {
-    updateAllTasks,
-    updateFinishedTasks,
-    updateOngoingTasks
+    updateMyAllTasks,
+    updateMyFinishedTasks,
+    updateMyOngoingTasks
 } from './../../actions/userTasksActions';
 
 class UserTasksFilter extends Component {
@@ -21,18 +21,18 @@ class UserTasksFilter extends Component {
     handleChange(key) {
         switch (key) {
             case '1':
-                return this.props.updateAllTasks(this.props.userID);
+                return this.props.updateMyAllTasks(this.props.userID);
             case '2':
-                return this.props.updateOngoingTasks(this.props.userID);
+                return this.props.updateMyOngoingTasks(this.props.userID);
             case '3':
-                return this.props.updateFinishedTasks(this.props.userID);
+                return this.props.updateMyFinishedTasks(this.props.userID);
             default:
                 return;
         }
     }
 
     async componentDidMount() {
-        this.props.updateAllTasks(this.props.userID);
+        this.props.updateMyAllTasks(this.props.userID);
     }
 
     render() {
@@ -76,7 +76,7 @@ class UserTasksFilter extends Component {
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
-        { updateAllTasks, updateFinishedTasks, updateOngoingTasks },
+        { updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks },
         dispatch
     );
 export default connect(
