@@ -1,19 +1,26 @@
 const INITIAL_STATE = {
-    tasksUpdated: false,
+    itemIsLoading: true,
     finishedTasks: [],
     ongoingTasks: [],
-    allTasks: []
+    allTasks: [],
+    error: false
 
 }
+
+const ERROR = 'Sorry! Something went wrong. We are working to fix it quickly'
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'FINISHTASKS_FETCHED':
-            return { ...state, tasksUpdated: true, finishedTasks: action.finishedTasks, error: action.finishedTasks.error }
+            return { ...state, itemIsLoading: false, finishedTasks: action.finishedTasks, error: false }
         case 'ONGOING_FETCHED':
-            return { ...state, tasksUpdated: true, ongoingTasks: action.ongoingTasks, error: action.ongoingTasks.error }
+            return { ...state, itemIsLoading: false, ongoingTasks: action.ongoingTasks, error: false }
         case 'ALLTASKS_FETCHED':
-            return { ...state, tasksUpdated: true, allTasks: action.allTasks, error: action.allTasks.error }
+            return { ...state, itemIsLoading: false, allTasks: action.allTasks, error: false }
+        case 'ITEM_LOADING':
+            return { ...state, itemIsLoading: true, allTasks: action.allTasks, error: false }
+        case 'FETCH_HAS_ERRORED':
+            return { ...state, itemIsLoading: false, error: true }
         default:
             return state;
     }
