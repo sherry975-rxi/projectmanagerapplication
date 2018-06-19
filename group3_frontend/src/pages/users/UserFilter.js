@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import './dist/toggle-switch.css';
-import './dist/FetchTask.css';
+import '../tasks/dist/toggle-switch.css';
+import '../tasks/dist/FetchTask.css';
 import {
     updateAllUsers,
     updateEmail,
