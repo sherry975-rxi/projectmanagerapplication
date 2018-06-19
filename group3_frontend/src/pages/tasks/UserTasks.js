@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './OngoingTasks.css';
 import './AddTask';
 import './MarkTaskAsFinished';
 import '../reports/Reports';
@@ -15,7 +14,7 @@ import { connect } from 'react-redux';
 import LoadingComponent from './../../components/loading/LoadingComponent';
 
 
-class OngoingTasks extends Component {
+class UserTasks extends Component {
     constructor(props) {
         super(props);
         this.AuthService = new AuthService();
@@ -78,4 +77,4 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps,
     null
-)(OngoingTasks);
+)(UserTasks);
