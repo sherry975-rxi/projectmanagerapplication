@@ -427,5 +427,32 @@ public class RestRequestController {
     }
 
 
-}
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR')")
+    @RequestMapping(value = "/requests/user/{userID}", method = RequestMethod.GET)
+    public ResponseEntity<TaskTeamRequest> hasRequestByUser(@PathVariable int userID, @PathVariable String taskId, @PathVariable int projectId) {
+
+
+        ResponseEntity response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        projectService.getProjectById(projectId);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        for(TaskTeamRequest request: task.getPendingTaskTeamRequests()){
+            if(request.getProjCollab().getUserFromProjectCollaborator().getUserID() == userID){
+                response = new ResponseEntity<>(request, HttpStatus.OK);
+            }
+        }
+
+        return response;
+    }
+
+
+
+
+
+
+
+
+    }
 
