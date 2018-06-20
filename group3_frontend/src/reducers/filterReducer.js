@@ -18,6 +18,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, filterType: 'notstarted'}
         case 'EXPIRED':
             return { ...state, filterType: 'expired'}
+        case 'CANCELLED':
+            return { ...state, filterType: 'cancelled'}
         default:
             return state;
     }

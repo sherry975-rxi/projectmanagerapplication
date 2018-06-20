@@ -9,7 +9,8 @@ import {
     updateNotStartedTasks,
     updateStandByTasks,
     updateExpiredTasks,
-    updateUnfinishedTasks
+    updateUnfinishedTasks,
+    updateCancelledTasks
 } from './../../actions/projectTasksActions';
 
 class FetchTaskButton extends Component {
@@ -45,6 +46,12 @@ class FetchTaskButton extends Component {
                 return (
                     <div>
                         {this.props.updateExpiredTasks(this.props.projectID)}
+                    </div>
+                );
+            case '7':
+                return (
+                    <div>
+                        {this.props.updateCancelledTasks(this.props.projectID)}
                     </div>
                 );
             default:
@@ -116,8 +123,15 @@ class FetchTaskButton extends Component {
                         type="radio"
                         onChange={e => this.handleChange(e, '6')}
                     />
-                    <label className="buttonFont" htmlFor="expired">
-                        Expired
+
+                    <input
+                        id="cancelled"
+                        name="view3"
+                        type="radio"
+                        onChange={e => this.handleChange(e, '7')}
+                    />
+                    <label className="buttonFont" htmlFor="cancelled">
+                        Cancelled
                     </label>
                 </div>
             </div>
@@ -133,7 +147,8 @@ const mapDispatchToProps = dispatch =>
             updateNotStartedTasks,
             updateStandByTasks,
             updateExpiredTasks,
-            updateUnfinishedTasks
+            updateUnfinishedTasks,
+            updateCancelledTasks
         },
         dispatch
     );

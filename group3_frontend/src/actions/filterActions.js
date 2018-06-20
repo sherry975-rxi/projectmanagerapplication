@@ -21,3 +21,7 @@ export function changeToExpired() {
 export function changeToAllTasks() {
     return { type: 'ALLPROJECTTASKS' };
 }
+
+export function changeToCancelled() {
+    return { type: 'CANCELLED' };
+}

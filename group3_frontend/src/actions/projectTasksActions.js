@@ -114,6 +114,27 @@ export function updateAllTasks(projectId) {
     };
 }
 
+export function updateCancelledTasks(projectId) {
+    
+    return dispatch => {
+        tasksLoading()
+        fetch(`/projects/${projectId}/tasks/cancelled`, {
+            headers: { Authorization: localStorage.getItem('id_token') },
+            method: 'GET'
+        })
+            .then(responseData => responseData.json())
+            .then(data => {
+                dispatch(cancelledTasksFetched(data));
+                console.log(data)
+                dispatch(filterActions.changeToCancelled());
+                return data;
+            }).catch((error) => {
+                console.log(error)
+                fetchTasksHasErrored();
+            });
+    };
+}
+
 export function finishTasksFetched(finishedTasks) {
     return {
         type: 'FINISHTASKS_FETCHED',
@@ -153,6 +174,13 @@ export function allTasksFetched(allTasks) {
     return {
         type: 'ALLTASKS_FETCHED',
         allTasks
+    };
+}
+
+export function cancelledTasksFetched(cancelledTasks) {
+    return {
+        type: 'CANCELLED_FETCHED',
+        cancelledTasks
     };
 }
 
