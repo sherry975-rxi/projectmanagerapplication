@@ -37,6 +37,7 @@ class SelectCalculationMethods extends Component {
     }
 
     handleChange(event) {
+
         var selectedMethods = this.state.selectedMethods;
 
         if(selectedMethods.includes(event.target.value)) {
@@ -45,6 +46,8 @@ class SelectCalculationMethods extends Component {
         } else {
             selectedMethods.push(event.target.value);
         }
+        console.log(selectedMethods);
+
         selectedMethods.filter(this.validateArray);
         this.setState({
             selectedMethods: selectedMethods
@@ -92,6 +95,7 @@ class SelectCalculationMethods extends Component {
     };
 
     renderDropdownButton(title, i) {
+
         return (
             <Dropdown
                     
@@ -103,29 +107,27 @@ class SelectCalculationMethods extends Component {
                 >
                     <Dropdown.Toggle className="option">{title}</Dropdown.Toggle>
                     <Dropdown.Menu className="super-colors">
-                   <MenuItem
-                        eventKey="XF9NAKamas"
-                        onClick={this.menuItemClickedThatShouldntCloseDropdown}
-                    >
-                         <FormGroup controlId="selectedMethods">
-                            <ControlLabel className="formTitle"><b>Available Calculation Methods</b></ControlLabel>
+                        <form onSubmit={this.handleSubmit}>
+                             <FormGroup controlId="selectedMethods">
+                                <ControlLabel className="formTitle"><b>Available Calculation Methods</b></ControlLabel>
 
-                            <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
-                                    Cost Initial
-                            </Checkbox>{' '}
-                            <Checkbox value="CF" checked={this.state.selectedMethods.includes("CF")} onChange={this.handleChange}>
-                                    Cost Final
-                            </Checkbox>{' '}
-                            <Checkbox value="CM" checked={this.state.selectedMethods.includes("CM")} onChange={this.handleChange}>
-                                    Cost Average
-                            </Checkbox>
+                                <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
+                                        Cost Initial
+                                </Checkbox>{' '}
+                                <Checkbox value="CF" checked={this.state.selectedMethods.includes("CF")} onChange={this.handleChange}>
+                                        Cost Final
+                                </Checkbox>{' '}
+                                <Checkbox value="CM" checked={this.state.selectedMethods.includes("CM")} onChange={this.handleChange}>
+                                        Cost Average
+                                </Checkbox>
 
-                        </FormGroup>
-                    </MenuItem>
+                            </FormGroup>
 
-                    <Button block disabled={!this.validateForm()} type="submit" className="genericButton">
-                        Update
-                    </Button>
+
+                            <Button block disabled={!this.validateForm()} type="submit" className="genericButton">
+                                Update
+                            </Button>
+                        </form>
             </Dropdown.Menu>
             </Dropdown>
             
