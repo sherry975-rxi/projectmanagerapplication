@@ -312,6 +312,35 @@ public class RestProjectTasksController {
 
 
     /**
+     * This methods gets the list of expired tasks from a project
+     *
+     * @param projid Id of the project to search for expired tasks
+     *
+     * @return List of expired from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
+    @RequestMapping(value = "expired", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getExpiredTasks (@PathVariable int projid) {
+
+
+        Project project = this.projectService.getProjectById(projid);
+        List<Task> expiredTasks = new ArrayList<>();
+
+        expiredTasks.addAll(taskService.getProjectExpiredTasks(project));
+
+        for(Task task : expiredTasks) {
+            for(String action : task.getTaskState().getActions()) {
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
+            }
+        }
+
+        return new ResponseEntity<>(expiredTasks, HttpStatus.OK);
+    }
+
+
+    /**
      * This methods gets the list of all tasks from a project
      *
      * @param projid Id of the project to search for all tasks

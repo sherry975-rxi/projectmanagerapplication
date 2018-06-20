@@ -166,7 +166,6 @@ public class US390CalculateReportedProjectCostControllerTest {
 
 
 	@Test
-	@Ignore
 	public void calculateReportedProjectCostControllerTest() {
 
 		// Adds users to the respective tasks
