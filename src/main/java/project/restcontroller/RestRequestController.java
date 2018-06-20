@@ -427,12 +427,15 @@ public class RestRequestController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId  or principal.id==@projectService.getProjectById(#projectId).projectManager.userID or hasRole('ROLE_ADMIN')")
+
+
+
+
+
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR')")
     @RequestMapping(value = "/requests/user/{userID}", method = RequestMethod.GET)
     public ResponseEntity<TaskTeamRequest> hasRequestByUser(@PathVariable int userID, @PathVariable String taskId, @PathVariable int projectId) {
 
-
-        ResponseEntity response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         projectService.getProjectById(projectId);
 
@@ -440,11 +443,11 @@ public class RestRequestController {
 
         for(TaskTeamRequest request: task.getPendingTaskTeamRequests()){
             if(request.getProjCollab().getUserFromProjectCollaborator().getUserID() == userID){
-                response = new ResponseEntity<>(request, HttpStatus.OK);
+                return new ResponseEntity<>(request, HttpStatus.OK);
             }
         }
 
-        return response;
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 

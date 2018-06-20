@@ -29,7 +29,8 @@ class CreateRequest extends Component {
                     shouldRender: false
                 })
             }
-        });
+        }).catch(err => {
+        });;
     }
 
 
