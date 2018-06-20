@@ -90,9 +90,6 @@ class SelectCalculationMethods extends Component {
         }
     }
 
-    menuItemClickedThatShouldntCloseDropdown = () => {
-        this._forceOpen = true;
-    };
 
     renderDropdownButton(title, i) {
 
@@ -107,10 +104,11 @@ class SelectCalculationMethods extends Component {
                 >
                     <Dropdown.Toggle className="option">{title}</Dropdown.Toggle>
                     <Dropdown.Menu className="super-colors">
-                        <form onSubmit={this.handleSubmit}>
-                             <FormGroup controlId="selectedMethods">
-                                <ControlLabel className="formTitle"><b>Available Calculation Methods</b></ControlLabel>
 
+                        <form onSubmit={this.handleSubmit} className="items-menu">
+
+                             <FormGroup controlId="selectedMethods">
+                                 
                                 <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
                                         Cost Initial
                                 </Checkbox>{' '}
@@ -135,7 +133,7 @@ class SelectCalculationMethods extends Component {
     }
 
     render() {
-        return this.renderDropdownButton('Select Cost Method', 0);
+        return this.renderDropdownButton('Select Cost Methods', 0);
     }
 
 }
