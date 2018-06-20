@@ -8,13 +8,15 @@ class CreateRequest extends Component {
         super(props);
         this.state = {
             shouldRender: true,
-            request: {}
+            isActiveInTask: false,
+            request: {},
+            tasks: {}
         };
         this.AuthService = new AuthService();
 
     }
 
-    componentDidMount() {
+   async componentDidMount() {
         this.AuthService.fetch(
             `/projects/${this.props.project}/tasks/${this.props.id}/requests/user/${this.AuthService.getUserId()}`,
             {
@@ -31,11 +33,43 @@ class CreateRequest extends Component {
             }
         }).catch(err => {
         });;
+
+
+        this.AuthService.fetch(
+            `/users/${this.AuthService.getUserId()}/tasks/sortedbydeadline`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            console.log("RESPONSE")
+            console.log(responseData)
+            this.setState({
+                tasks: responseData,
+                message: responseData.error,
+            });
+
+            this.state.tasks.map((taskItem, index) => {
+                console.log(taskItem)
+
+                console.log("TASKID");
+                console.log(taskItem.taskID)
+                console.log(taskItem.taskID)
+                if(taskItem.taskID == this.props.id){
+                    this.setState({
+                        isActiveInTask: true
+                    })
+                }
+            })
+        }).catch(err => {
+            this.setState({
+                tasks: []
+            });
+        });
+
+      
     }
 
 
-
-      
 
    
     handleChange = event => {
@@ -82,7 +116,14 @@ class CreateRequest extends Component {
     
 
     render() {
-        if(this.state.shouldRender){
+        if(this.state.isActiveInTask){
+            return(
+                <div className=" table-striped">
+                    <button className="buttonFinishedInvisible" />
+                </div>
+                );
+        } 
+        else if(this.state.shouldRender){
             return (
                 <div className=" table-striped">
                     <button className="buttonFinished" onClick={this.handleClick}>
@@ -90,8 +131,7 @@ class CreateRequest extends Component {
                     </button>
                 </div>
             );
-        }
-        else{
+        } else {
             return (
                 <div className=" table-striped">
                     <button className="buttonFinishedRequestCreated"  onClick={this.handleAlreadyCreatedRequestClick}>
