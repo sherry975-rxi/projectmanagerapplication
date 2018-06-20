@@ -8,6 +8,7 @@ import projectsReducer from './projectsReducer';
 import metaReducer from './metaReducer';
 import UserReducers from './UserReducers';
 import usersFilterReducer from './usersFilterReducer';
+import projCollabsWoutTasksReducer from './projCollabsWoutTasksReducer';
 
 const rootReducer = combineReducers({
     authenthication: authenticationReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     projects: projectsReducer,
     meta: metaReducer,
     users: UserReducers,
-    usersFilter: usersFilterReducer
+    usersFilter: usersFilterReducer,
+    collabsWoutTasks : projCollabsWoutTasksReducer
 });
 export default rootReducer;
