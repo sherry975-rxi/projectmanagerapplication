@@ -23,7 +23,6 @@ const appReducer = combineReducers({
     users: UserReducers,
     usersFilter: usersFilterReducer,
     userTasks: userTasksReducer,
-    userTasksFilter: userTasksFilterReducer,
     collabsWoutTasks : projCollabsWoutTasksReducer,
     projectTeam: projectTeamReducer
 });

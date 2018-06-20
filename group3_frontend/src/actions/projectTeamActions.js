@@ -8,7 +8,6 @@ export function updateProjectTeam(projectID){
             `/projects/${projectID}/team/`,
             { method: 'get' }
         ).then(data => {
-            console.log(data)
             dispatch(projectTeamFetched(data));
             return data;
             }
