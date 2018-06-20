@@ -66,13 +66,32 @@ export function updateNotStartedTasks(projectId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                dispatch(standByTasksFetched(data));
+                dispatch(notStartedTasksFetched(data));
                 dispatch(filterActions.changeToNotStarted());
                 return data;
             }).catch((error) => {
                 console.log(error)
                 fetchTasksHasErrored();
             });
+    };
+}
+
+export function updateExpiredTasks(projectId) {
+    return dispatch => {
+        tasksLoading()
+        fetch(`/projects/${projectId}/tasks/expired`, {
+            headers: { Authorization: localStorage.getItem('id_token') },
+            method: 'GET'
+        })
+            .then(responseData => responseData.json())
+            .then(data => {
+                dispatch(expiredTasksFetched(data));
+                dispatch(filterActions.changeToExpired());
+                return data;
+            }).catch((error) => {
+            console.log(error)
+            fetchTasksHasErrored();
+        });
     };
 }
 
@@ -120,6 +139,13 @@ export function notStartedTasksFetched(notStartedTasks) {
     return {
         type: 'NOTSTARTED_FETCHED',
         notStartedTasks
+    };
+}
+
+export function expiredTasksFetched(expiredTasks) {
+    return {
+        type: 'EXPIRED_FETCHED',
+        expiredTasks
     };
 }
 

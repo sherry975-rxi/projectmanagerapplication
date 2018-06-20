@@ -16,6 +16,8 @@ export default (state = INITIAL_STATE, action) => {
              return { ...state, filterType: 'withoutCollaborators' }
         case 'NOTSTARTED':
             return { ...state, filterType: 'notstarted'}
+        case 'NOTSTARTED':
+            return { ...state, filterType: 'expired'}
         default:
             return state;
     }
