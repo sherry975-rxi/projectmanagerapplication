@@ -625,8 +625,6 @@ public class RestProjectTasksControllerTest {
         verify(taskService, times(1)).getTaskByTaskID(any(String.class));
         verify(projectService, times(1)).getActiveProjectTeam(project);
         verify(projectService, times(1)).getProjectById(any(Integer.class));
-
-
     }
 
     /**
@@ -664,6 +662,46 @@ public class RestProjectTasksControllerTest {
         //THEN
         assertEquals(HttpStatus.EXPECTATION_FAILED.value(), response.getStatus());
         verify(taskService, times(1)).getTaskByTaskID(any(String.class));
+        verify(projectService, times(1)).getActiveProjectTeam(project);
+        verify(projectService, times(1)).getProjectById(any(Integer.class));
+
+
+    }
+
+    /**
+     * GIVEN
+     * a task id,
+     * project id
+     * and the available project collaborator is the project manager
+     *
+     * WHEN
+     * we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     *
+     * THEN
+     * we receive a message with a 417 EXPECTATION_FAILED
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnProjectTeamNotAddedToAnyTask() throws Exception {
+
+        // GIVEN
+        int projectId = 01;
+
+        ProjectCollaborator pcDaniel = new ProjectCollaborator(uDaniel, 20);
+        List<ProjectCollaborator> team = new ArrayList<>();
+        team.add(pcDaniel);
+
+        // WHEN
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+        when(taskService.isCollaboratorActiveOnAnyTask(pcDaniel)).thenReturn(true);
+        when(projectService.getActiveProjectTeam(project)).thenReturn(team);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/collabsAvailableForTask").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).isCollaboratorActiveOnAnyTask(pcDaniel);
         verify(projectService, times(1)).getActiveProjectTeam(project);
         verify(projectService, times(1)).getProjectById(any(Integer.class));
 
