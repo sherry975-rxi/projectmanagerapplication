@@ -427,7 +427,7 @@ public class RestRequestController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId  or principal.id==@projectService.getProjectById(#projectId).projectManager.userID or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/requests/user/{userID}", method = RequestMethod.GET)
     public ResponseEntity<TaskTeamRequest> hasRequestByUser(@PathVariable int userID, @PathVariable String taskId, @PathVariable int projectId) {
 
