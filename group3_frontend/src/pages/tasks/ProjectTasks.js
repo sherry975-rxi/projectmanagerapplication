@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Error from './../../components/error/error';
 import FetchTaskButton from '../tasks/FetchTaskButton';
 import { connect } from 'react-redux';
 import AuthService from './../loginPage/AuthService';

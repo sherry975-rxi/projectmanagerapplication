@@ -28,11 +28,11 @@ export class Profile extends React.Component {
     }
 
     getImage() {
-        if (this.AuthService.getUserId() == 7 ||
-            this.AuthService.getUserId() == 6 ||
-            this.AuthService.getUserId() == 4 ||
-            this.AuthService.getUserId() == 5 ||
-            this.AuthService.getUserId() == 1) {
+        if (this.AuthService.getUserId() === 7 ||
+            this.AuthService.getUserId() === 6 ||
+            this.AuthService.getUserId() === 4 ||
+            this.AuthService.getUserId() === 5 ||
+            this.AuthService.getUserId() === 1) {
             return (womanProfile)
         }
         else {

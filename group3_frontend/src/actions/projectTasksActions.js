@@ -1,5 +1,4 @@
 import * as filterActions from './filterActions';
-import { itemIsLoading } from './projectTasksActions';
 
 export function updateFinishedTasks(projectId) {
     return dispatch => {

@@ -7,8 +7,6 @@ const INITIAL_STATE = {
 
 }
 
-const ERROR = 'Sorry! Something went wrong. We are working to fix it quickly'
-
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'MYFINISHTASKS_FETCHED':

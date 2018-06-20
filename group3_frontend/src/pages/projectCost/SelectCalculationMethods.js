@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import {
-    MenuItem,
     Dropdown,
     FormGroup,
-    FormControl,
-    ControlLabel, 
     Button,
     Checkbox
 } from 'react-bootstrap';

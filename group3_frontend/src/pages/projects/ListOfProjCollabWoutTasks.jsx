@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PanelGroup, Panel, MenuItem } from 'react-bootstrap';
+import { PanelGroup, Panel } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 

@@ -1,4 +1,3 @@
-import * as filterActions from './filterActions';
 import * as userTasksFilterActions from './userTasksFilterActions';
 import AuthService from "../pages/loginPage/AuthService";
 

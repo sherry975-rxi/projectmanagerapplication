@@ -9,7 +9,6 @@ import ItemsButton from './itemsButton';
 import ActiveProjectTeam from '../../pages/projects/ActiveProjectTeam';
 import SelectCalculationMethods from '../../pages/projectCost/SelectCalculationMethods';
 import { updateUnassignedProjCollabs } from '../../actions/projCollabsWoutTasksActions';
-import ListOfProjCollabWoutTasks from '../../pages/projects/ListOfProjCollabWoutTasks';
 
 class ProjectsTableRow extends Component {
     handleRotate = () => {
