@@ -446,8 +446,7 @@ public class RestProjectTasksController {
     }
 
     /**
-     * This method returns the list of Project collaborators that are not assigned to a certain task
-     * and is not the project Manager of that project
+     * This method returns the list of Project collaborators that are not assigned to any task of that Project
      * @param projid
      * @return
      */
