@@ -10,6 +10,9 @@ import {
 } from 'react-bootstrap';
 import AuthService from "../loginPage/AuthService";
 import {toastr} from "react-redux-toastr";
+import {getActiveProjects} from "../../actions/projectActions";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
 
 
 class SelectCalculationMethods extends Component {
@@ -67,7 +70,7 @@ class SelectCalculationMethods extends Component {
         })
             .then(responseData => {
                 toastr.success('Available Calculation Methods Changed!');
-
+                this.props.getActiveProjects(this.AuthService.getUserId());
             })
             .catch(err => {
                 toastr.error('An error occurred!');
@@ -109,7 +112,7 @@ class SelectCalculationMethods extends Component {
 
                             <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
                                     Cost Initial
-                            </Checkbox>
+                            </Checkbox>{' '}
                             <Checkbox value="CF" checked={this.state.selectedMethods.includes("CF")} onChange={this.handleChange}>
                                     Cost Final
                             </Checkbox>{' '}
@@ -134,4 +137,11 @@ class SelectCalculationMethods extends Component {
     }
 
 }
-export default SelectCalculationMethods;
+export const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ getActiveProjects }, dispatch);
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(SelectCalculationMethods);
