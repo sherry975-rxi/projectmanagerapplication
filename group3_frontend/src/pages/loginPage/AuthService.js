@@ -22,9 +22,7 @@ export default class AuthService {
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            if (decoded.exp < Date.now() / 1000) {
-                return true;
-            } else return false;
+            return (decoded.exp < Date.now() / 1000)
         } catch (err) {
             return false;
         }
@@ -73,7 +71,7 @@ export default class AuthService {
         return fetch(url, {
             headers,
             ...options
-        }).then(this._checkStatus)
+        }).then(this.checkStatus)
           .then(response => {
                 localStorage.setItem('id_token',response.headers.get('Authorization'));
                 return response.json();

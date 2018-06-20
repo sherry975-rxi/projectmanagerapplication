@@ -13,6 +13,7 @@ import project.services.ProjectService;
 import project.services.UserService;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -132,6 +133,7 @@ public class RestProjCollabController {
 
         if(projectCollaborator != null){
             projectCollaborator.setStatus(false);
+            projectCollaborator.setFinishDate(Calendar.getInstance());
             projectService.updateProjectCollaborator(projectCollaborator);
 
             response = new ResponseEntity<>(projectCollaborator, HttpStatus.OK);
