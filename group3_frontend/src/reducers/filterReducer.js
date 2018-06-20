@@ -16,6 +16,12 @@ export default (state = INITIAL_STATE, action) => {
              return { ...state, filterType: 'withoutCollaborators' }
         case 'NOTSTARTED':
             return { ...state, filterType: 'notstarted'}
+        case 'MYALLTASKS':
+            return { ...state, filterType: 'myAll' }
+        case 'MYONGOING':
+            return { ...state, filterType: 'myUnfinished' }
+        case 'MYFINISHED':
+          return { ...state, filterType: 'myFinished' }
         case 'EXPIRED':
             return { ...state, filterType: 'expired'}
         case 'CANCELLED':

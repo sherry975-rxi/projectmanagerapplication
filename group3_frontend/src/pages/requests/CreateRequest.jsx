@@ -6,13 +6,75 @@ import { Redirect } from 'react-router-dom';
 class CreateRequest extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            shouldRender: true,
+            isActiveInTask: false,
+            request: {},
+            tasks: {}
+        };
         this.AuthService = new AuthService();
+
     }
 
+   async componentDidMount() {
+        this.AuthService.fetch(
+            `/projects/${this.props.project}/tasks/${this.props.id}/requests/user/${this.AuthService.getUserId()}`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            this.setState({
+                request: responseData
+            });
+            if(JSON.stringify(this.state.request).length > 0){
+                this.setState({
+                    shouldRender: false
+                })
+            }
+        }).catch(err => {
+        });;
+
+
+        this.AuthService.fetch(
+            `/users/${this.AuthService.getUserId()}/tasks/sortedbydeadline`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            console.log("RESPONSE")
+            console.log(responseData)
+            this.setState({
+                tasks: responseData,
+                message: responseData.error,
+            });
+
+            this.state.tasks.map((taskItem, index) => {
+                console.log(taskItem)
+
+                console.log("TASKID");
+                console.log(taskItem.taskID)
+                console.log(taskItem.taskID)
+                if(taskItem.taskID == this.props.id){
+                    this.setState({
+                        isActiveInTask: true
+                    })
+                }
+            })
+        }).catch(err => {
+            this.setState({
+                tasks: []
+            });
+        });
+
+      
+    }
+
+
+
+   
     handleChange = event => {
         this.setState({
-            [event.target.id]: event.target.value
+            [event.target.id]: event.target.value,
         });
     };
 
@@ -34,6 +96,10 @@ class CreateRequest extends Component {
                 //If the loggin is sucessfull the user gets redirected to its home page
                 if (res.assignmentRequest === true) {
                     toastr.success('Your Request was sucessfull created!');
+                    this.setState({
+                        shouldRender: false
+                    })
+                    
                     return <Redirect to="/requests" />;
                 }
             })
@@ -42,15 +108,45 @@ class CreateRequest extends Component {
             });
     };
 
+    handleAlreadyCreatedRequestClick = () => {
+        toastr.warning('Your Request was already created. Please wait for the Project Manager response.');
+    }
+
+
+    
+
     render() {
-        return (
-            <div className=" table-striped">
-                <button className="buttonFinished" onClick={this.handleClick}>
-                    Create Request
-                </button>
-            </div>
-        );
+        if(this.state.isActiveInTask){
+            return(
+                <div className=" table-striped">
+                    <button className="buttonFinishedInvisible" />
+                </div>
+                );
+        } 
+        else if(this.state.shouldRender){
+            return (
+                <div className=" table-striped">
+                    <button className="buttonFinished" onClick={this.handleClick}>
+                        Create Request
+                    </button>
+                </div>
+            );
+        } else {
+            return (
+                <div className=" table-striped">
+                    <button className="buttonFinishedRequestCreated"  onClick={this.handleAlreadyCreatedRequestClick}>
+                        Awaiting response
+                    </button>
+                </div>
+            );
+        }
+       
     }
 }
+
+var divStyle = {
+    background: "#eee",
+    
+  };
 
 export default CreateRequest;
