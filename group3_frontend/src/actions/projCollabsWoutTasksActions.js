@@ -7,7 +7,7 @@ export function updateUnassignedProjCollabs(projectId) {
 
     return dispatch => {
         listIsLoading()
-        authService.fetch(`projects/2/tasks/WP1.T01/collabsAvailableForTask`, {
+        authService.fetch(`projects/${projectId}/tasks/collabsAvailableForTask`, {
             method: 'GET'
         })
             .then(data => {
