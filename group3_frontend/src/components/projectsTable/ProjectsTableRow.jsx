@@ -51,10 +51,9 @@ class ProjectsTableRow extends Component {
     }
 
     changeCalculationMethod() {
-        if (  this.props.project.projectManagerEmail === this.props.email ||
-            this.props.profile === 'DIRECTOR') {
+        if (this.props.profile === 'DIRECTOR') {
             return <SelectCalculationMethods project={this.props.project} />;
-        }
+        } else return <div> </div>;
     }
 
     getActiveProjectTeam() {

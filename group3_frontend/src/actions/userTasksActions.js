@@ -1,67 +1,95 @@
 import * as filterActions from './filterActions';
+import * as userTasksFilterActions from './userTasksFilterActions';
 import AuthService from "../pages/loginPage/AuthService";
 
 
-export function updateFinishedTasks(userId) {
+export function updateMyFinishedTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
+        myTasksLoading()
         authService.fetch(`/users/${userId}/tasks/finished`, {
             method: 'GET'
         }).then(data => {
-            dispatch(finishTasksFetched(data));
-            dispatch(filterActions.changeToFinished());
+            dispatch(myFinishedTasksFetched(data));
+            dispatch(userTasksFilterActions.changeToFinished());
             return data;
+        }).catch((error) => {
+            console.log(error)
+            myFetchTasksHasErrored();
         });
     };
 }
 
-export function updateOngoingTasks(userId) {
+export function updateMyOngoingTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
+        myTasksLoading()
         authService.fetch(`/users/${userId}/tasks/pending`, {
             method: 'GET'
         }).then(data => {
-                dispatch(ongoingTasksFetched(data));
-                dispatch(filterActions.changeToOnGoing());
+                dispatch(myOngoingTasksFetched(data));
+                dispatch(userTasksFilterActions.changeToOnGoing())
                 return data;
+        }).catch((error) => {
+            console.log(error)
+            myFetchTasksHasErrored();
         });
     };
 }
 
-export function updateAllTasks(userId) {
+export function updateMyAllTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
+        myTasksLoading()
         authService.fetch(`/users/${userId}/tasks/`, {
             method: 'GET'
         }).then(data => {
-                dispatch(allTasksFetched(data));
-                dispatch(filterActions.changeToAllTasks());
+                dispatch(myAllTasksFetched(data));
+                dispatch(userTasksFilterActions.changeToAllTasks())
                 return data;
-            });
+        }).catch((error) => {
+            console.log(error)
+            myFetchTasksHasErrored();
+        });
     };
 }
 
-export function finishTasksFetched(finishedTasks) {
+export function myFinishedTasksFetched(finishedTasks) {
     return {
-        type: 'FINISHTASKS_FETCHED',
+        type: 'MYFINISHTASKS_FETCHED',
         finishedTasks
     };
 }
 
-export function ongoingTasksFetched(ongoingTasks) {
+export function myOngoingTasksFetched(ongoingTasks) {
     return {
-        type: 'ONGOING_FETCHED',
+        type: 'MYONGOING_FETCHED',
         ongoingTasks
     };
 }
 
-export function allTasksFetched(allTasks) {
+export function myAllTasksFetched(allTasks) {
     return {
-        type: 'ALLTASKS_FETCHED',
+        type: 'MYALLTASKS_FETCHED',
         allTasks
     };
 }
+
+
+export function myTasksLoading() {
+    return {
+        type: 'ITEM_LOADING'
+    };
+}
+
+export function myFetchTasksHasErrored() {
+    return {
+        type: 'FETCH_HAS_ERRORED'
+    };
+}
+
+
 
