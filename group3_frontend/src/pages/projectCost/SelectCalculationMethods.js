@@ -133,7 +133,7 @@ class SelectCalculationMethods extends Component {
     }
 
     render() {
-        return this.renderDropdownButton('Select Cost Method', 0);
+        return this.renderDropdownButton('Select Cost Methods', 0);
     }
 
 }
