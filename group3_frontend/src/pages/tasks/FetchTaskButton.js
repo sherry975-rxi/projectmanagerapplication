@@ -8,7 +8,8 @@ import {
     updateFinishedTasks,
     updateNotStartedTasks,
     updateStandByTasks,
-    updateOngoingTasks
+    updateExpiredTasks,
+    updateUnfinishedTasks
 } from './../../actions/projectTasksActions';
 
 class FetchTaskButton extends Component {
@@ -25,7 +26,7 @@ class FetchTaskButton extends Component {
             case '1':
                 return this.props.updateAllTasks(this.props.projectID);
             case '2':
-                return this.props.updateOngoingTasks(this.props.projectID);
+                return this.props.updateUnfinishedTasks(this.props.projectID);
             case '3':
                 return this.props.updateFinishedTasks(this.props.projectID);
             case '4':
@@ -38,6 +39,12 @@ class FetchTaskButton extends Component {
                 return (
                     <div>
                         {this.props.updateStandByTasks(this.props.projectID)}
+                    </div>
+                );
+            case '6':
+                return (
+                    <div>
+                        {this.props.updateExpiredTasks(this.props.projectID)}
                     </div>
                 );
             default:
@@ -70,7 +77,7 @@ class FetchTaskButton extends Component {
                         onChange={e => this.handleChange(e, '2')}
                     />
                     <label className="buttonFont" htmlFor="onGoing">
-                        On Going
+                        Not Finished
                     </label>
 
                     <input
@@ -102,6 +109,16 @@ class FetchTaskButton extends Component {
                     <label className="buttonFont" htmlFor="standBy">
                         Stand By
                     </label>
+
+                    <input
+                        id="expired"
+                        name="view3"
+                        type="radio"
+                        onChange={e => this.handleChange(e, '6')}
+                    />
+                    <label className="buttonFont" htmlFor="expired">
+                        Expired
+                    </label>
                 </div>
             </div>
         );
@@ -115,7 +132,8 @@ const mapDispatchToProps = dispatch =>
             updateFinishedTasks,
             updateNotStartedTasks,
             updateStandByTasks,
-            updateOngoingTasks
+            updateExpiredTasks,
+            updateUnfinishedTasks
         },
         dispatch
     );

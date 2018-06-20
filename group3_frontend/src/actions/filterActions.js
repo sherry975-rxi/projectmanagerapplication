@@ -2,8 +2,8 @@ export function changeToFinished() {
     return { type: 'FINISHED' };
 }
 
-export function changeToOnGoing() {
-    return { type: 'ONGOING' };
+export function changeToUnfinished() {
+    return { type: 'UNFINISHED' };
 }
 
 export function changeToStandBy() {
@@ -12,6 +12,10 @@ export function changeToStandBy() {
 
 export function changeToNotStarted() {
     return { type: 'NOTSTARTED' };
+}
+
+export function changeToExpired() {
+    return { type: 'EXPIRED' };
 }
 
 export function changeToAllTasks() {

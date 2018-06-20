@@ -8,7 +8,7 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'ALLPROJECTTASKS':
             return { ...state, filterType: 'all' }
-        case 'ONGOING':
+        case 'UNFINISHED':
             return { ...state, filterType: 'unfinished' }
         case 'FINISHED':
           return { ...state, filterType: 'finished' }
@@ -22,6 +22,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, filterType: 'myUnfinished' }
         case 'MYFINISHED':
           return { ...state, filterType: 'myFinished' }
+        case 'EXPIRED':
+            return { ...state, filterType: 'expired'}
         default:
             return state;
     }
