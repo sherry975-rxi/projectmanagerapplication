@@ -1,11 +1,11 @@
-export function changeToFinished() {
+export function changeToMyFinished() {
     return { type: 'MYFINISHED' };
 }
 
-export function changeToOnGoing() {
+export function changeToMyOnGoing() {
     return { type: 'MYONGOING' };
 }
 
-export function changeToAllTasks() {
+export function changeToMyAllTasks() {
     return { type: 'MYALLTASKS' };
 }

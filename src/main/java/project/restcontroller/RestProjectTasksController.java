@@ -236,6 +236,34 @@ public class RestProjectTasksController {
         return new ResponseEntity<>(unfinishedTasks, HttpStatus.OK);
     }
 
+    /**
+     * This methods gets the list of cancelled tasks from a project
+     *
+     * @param projid Id of the project to search for cancelled tasks
+     *
+     * @return List of cancelled tasks from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
+    @RequestMapping(value = "cancelled", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getCancelledTasks (@PathVariable int projid) {
+
+
+        Project project = this.projectService.getProjectById(projid);
+        List<Task> cancelledTasks = new ArrayList<>();
+
+        cancelledTasks.addAll(taskService.getProjectCancelledTasks(project));
+
+        for(Task task : cancelledTasks) {
+            for(String action : task.getTaskState().getActions()) {
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
+            }
+        }
+
+        return new ResponseEntity<>(cancelledTasks, HttpStatus.OK);
+    }
+
 
     /**
      * This method gets a task by its id
