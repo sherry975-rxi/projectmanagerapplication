@@ -12,7 +12,7 @@ import userTasksReducer from './userTasksReducer';
 import userTasksFilterReducer from './userTasksFilterReducer';
 import projCollabsWoutTasksReducer from './projCollabsWoutTasksReducer';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     authenthication: authenticationReducer,
     toastr: toastrReducer,
     signUp: signUpReducer,
@@ -26,4 +26,12 @@ const rootReducer = combineReducers({
     userTasksFilter: userTasksFilterReducer,
     collabsWoutTasks : projCollabsWoutTasksReducer
 });
+const rootReducer = (state, action) => {
+    if (action.type === 'LOGOUT') {
+        state = undefined
+    }
+
+    return appReducer(state, action)
+};
+
 export default rootReducer;
