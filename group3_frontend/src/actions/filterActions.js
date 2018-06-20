@@ -14,6 +14,10 @@ export function changeToNotStarted() {
     return { type: 'NOTSTARTED' };
 }
 
+export function changeToExpired() {
+    return { type: 'EXPIRED' };
+}
+
 export function changeToAllTasks() {
     return { type: 'ALLPROJECTTASKS' };
 }

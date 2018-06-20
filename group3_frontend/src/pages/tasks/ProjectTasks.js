@@ -36,6 +36,8 @@ class ProjectTasks extends Component {
                 return <AccordionMenu list={this.props.standByTasks} />;
             case 'notstarted':
                 return <AccordionMenu list={this.props.notStartedTasks} />;
+            case 'expired':
+                return <AccordionMenu list={this.props.expiredTasks} />;
             default: {
                 return <LoadingComponent />;
             }
@@ -63,6 +65,7 @@ const mapStateToProps = state => {
         ongoingTasks: state.projectTasks.ongoingTasks,
         standByTasks: state.projectTasks.wihoutCollab,
         notStartedTasks: state.projectTasks.notStartedTasks,
+        expiredTasks: state.projectTasks.expiredTasks,
         allTasks: state.projectTasks.allTasks,
         tasksLoading: state.projectTasks.itemIsLoading,
         error: state.projectTasks.error

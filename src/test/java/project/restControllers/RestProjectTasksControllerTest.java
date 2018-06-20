@@ -491,7 +491,7 @@ public class RestProjectTasksControllerTest {
 
     /**
      * GIVEN a project id
-     * WHEN we perform a get request to url /projects/<projectId>/tasks/all
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/notstarted
      * THEN we receive a valid message with a 200 Ok and a list of not started tasks from project
      * @throws Exception
      */
@@ -514,6 +514,33 @@ public class RestProjectTasksControllerTest {
         //THEN
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         verify(taskService, times(1)).getProjectUnstartedTasks(project);
+    }
+
+    /**
+     * GIVEN a project id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/expired
+     * THEN we receive a valid message with a 200 Ok and a list of expired tasks from project
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnExpiredTasks () throws Exception {
+
+        // mock expected list of expired tasks
+        projectTasks.add(task);
+        projectTasks.add(task2);
+
+
+        // GIVEN
+        int projectId = 01;
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        // WHEN
+        when(taskService.getProjectExpiredTasks(project)).thenReturn(projectTasks);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/"+ projectId + "/tasks/expired").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getProjectExpiredTasks(project);
     }
 
     /**
