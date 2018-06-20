@@ -8,6 +8,8 @@ import { projectTableDetailsToogle } from '../../actions/metaActions';
 import ItemsButton from './itemsButton';
 import ActiveProjectTeam from '../../pages/projects/ActiveProjectTeam';
 import SelectCalculationMethods from '../../pages/projectCost/SelectCalculationMethods';
+import { updateUnassignedProjCollabs } from '../../actions/projCollabsWoutTasksActions';
+import ListOfProjCollabWoutTasks from '../../pages/projects/ListOfProjCollabWoutTasks';
 
 class ProjectsTableRow extends Component {
     handleRotate = () => {
@@ -71,7 +73,10 @@ class ProjectsTableRow extends Component {
         }
     }
 
-   
+    handleClick(){
+        console.log("dddddd")
+        this.props.updateUnassignedProjCollabs(this.props.project.projectId)
+    }
 
     // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
     // cost calculation methods
@@ -93,6 +98,15 @@ class ProjectsTableRow extends Component {
                         }
                     >
                         <ItemsButton text="View tasks" />
+                    </Link>
+
+                     <Link
+                        className="items-menu"
+                        to={
+                            '/UnassignedProjCollab'
+                        } onClick = {this.handleClick()}
+                    >
+                        <ItemsButton text="Unassigned" />
                     </Link>
 
                     <Link
@@ -231,7 +245,7 @@ const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ projectTableDetailsToogle }, dispatch);
+    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs }, dispatch);
 };
 
 export default connect(
