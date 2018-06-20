@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './MarkTaskAsFinished.css';
 import AuthService from '../loginPage/AuthService';
-import { updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateOngoingTasks } from './../../actions/projectTasksActions';
+import { updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateUnfinishedTasks } from './../../actions/projectTasksActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -31,7 +31,7 @@ class MarkTaskAsFinished extends Component {
         else if (this.props.filter === 'finished')
             this.props.updateFinishedTasks(this.props.project)
         else if (this.props.filter === 'unfinished')
-            this.props.updateOngoingTasks(this.props.project)
+            this.props.updateUnfinishedTasks(this.props.project)
         else if (this.props.filter === 'notStarted')
             this.props.updateNotStartedTasks(this.props.project)
         else
@@ -50,5 +50,5 @@ class MarkTaskAsFinished extends Component {
 }
 
 const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
-const mapDispatchToProps = dispatch => bindActionCreators({ updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateOngoingTasks }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateUnfinishedTasks }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(MarkTaskAsFinished);

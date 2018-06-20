@@ -9,7 +9,7 @@ import {
     updateNotStartedTasks,
     updateStandByTasks,
     updateExpiredTasks,
-    updateOngoingTasks
+    updateUnfinishedTasks
 } from './../../actions/projectTasksActions';
 
 class FetchTaskButton extends Component {
@@ -26,7 +26,7 @@ class FetchTaskButton extends Component {
             case '1':
                 return this.props.updateAllTasks(this.props.projectID);
             case '2':
-                return this.props.updateOngoingTasks(this.props.projectID);
+                return this.props.updateUnfinishedTasks(this.props.projectID);
             case '3':
                 return this.props.updateFinishedTasks(this.props.projectID);
             case '4':
@@ -77,7 +77,7 @@ class FetchTaskButton extends Component {
                         onChange={e => this.handleChange(e, '2')}
                     />
                     <label className="buttonFont" htmlFor="onGoing">
-                        On Going
+                        Not Finished
                     </label>
 
                     <input
@@ -133,7 +133,7 @@ const mapDispatchToProps = dispatch =>
             updateNotStartedTasks,
             updateStandByTasks,
             updateExpiredTasks,
-            updateOngoingTasks
+            updateUnfinishedTasks
         },
         dispatch
     );

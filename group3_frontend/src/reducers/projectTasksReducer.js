@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
     itemIsLoading: true,
     finishedTasks: [],
-    ongoingTasks: [],
+    unfinishedTasks: [],
     wihoutCollab: [],
     notStartedTasks: [],
     expiredTasks: [],
@@ -14,8 +14,8 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'FINISHTASKS_FETCHED':
             return { ...state, itemIsLoading: false, finishedTasks: action.finishedTasks, error: false }
-        case 'ONGOING_FETCHED':
-            return { ...state, itemIsLoading: false, ongoingTasks: action.ongoingTasks, error: false }
+        case 'UNFINISHEDTASKS_FETCHED':
+            return { ...state, itemIsLoading: false, unfinishedTasks: action.unfinishedTasks, error: false }
         case 'STANDBYTASKS_FETCHED':
             return { ...state, itemIsLoading: false, standbyTasks: action.wihoutCollab, error: false }
         case 'NOTSTARTED_FETCHED':
