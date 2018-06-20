@@ -2,8 +2,8 @@ export function changeToFinished() {
     return { type: 'FINISHED' };
 }
 
-export function changeToOnGoing() {
-    return { type: 'ONGOING' };
+export function changeToUnfinished() {
+    return { type: 'UNFINISHED' };
 }
 
 export function changeToStandBy() {

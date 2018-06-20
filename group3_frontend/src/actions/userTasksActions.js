@@ -11,7 +11,7 @@ export function updateMyFinishedTasks(userId) {
             method: 'GET'
         }).then(data => {
             dispatch(myFinishedTasksFetched(data));
-            dispatch(userTasksFilterActions.changeToFinished());
+            dispatch(userTasksFilterActions.changeToMyFinished());
             return data;
         }).catch((error) => {
             console.log(error)
@@ -29,7 +29,7 @@ export function updateMyOngoingTasks(userId) {
             method: 'GET'
         }).then(data => {
                 dispatch(myOngoingTasksFetched(data));
-                dispatch(userTasksFilterActions.changeToOnGoing())
+                dispatch(userTasksFilterActions.changeToMyOnGoing())
                 return data;
         }).catch((error) => {
             console.log(error)
@@ -47,7 +47,7 @@ export function updateMyAllTasks(userId) {
             method: 'GET'
         }).then(data => {
                 dispatch(myAllTasksFetched(data));
-                dispatch(userTasksFilterActions.changeToAllTasks())
+                dispatch(userTasksFilterActions.changeToMyAllTasks())
                 return data;
         }).catch((error) => {
             console.log(error)
@@ -56,24 +56,24 @@ export function updateMyAllTasks(userId) {
     };
 }
 
-export function myFinishedTasksFetched(finishedTasks) {
+export function myFinishedTasksFetched(myFinishedTasks) {
     return {
         type: 'MYFINISHTASKS_FETCHED',
-        finishedTasks
+        myFinishedTasks
     };
 }
 
-export function myOngoingTasksFetched(ongoingTasks) {
+export function myOngoingTasksFetched(myOngoingTasks) {
     return {
         type: 'MYONGOING_FETCHED',
-        ongoingTasks
+        myOngoingTasks
     };
 }
 
-export function myAllTasksFetched(allTasks) {
+export function myAllTasksFetched(myAllTasks) {
     return {
         type: 'MYALLTASKS_FETCHED',
-        allTasks
+        myAllTasks
     };
 }
 

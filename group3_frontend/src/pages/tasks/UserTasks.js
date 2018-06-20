@@ -24,6 +24,7 @@ class UserTasks extends Component {
 
     renderTasks() {
 
+
         if (this.props.tasksLoading) {
             return (<LoadingComponent />)
         }
@@ -32,16 +33,18 @@ class UserTasks extends Component {
             return <Redirect to="/login" />;
         }
 
-        switch (this.props.filter) {
-            case 'myAll':
-                return <AccordionMenu list={this.props.allTasks} />;
-            case 'myUnfinished':
-                return <AccordionMenu list={this.props.ongoingTasks} />;
-            case 'myFinished':
-                return <AccordionMenu list={this.props.finishedTasks} />;
-            default:
-                return <LoadingComponent />;
-        }
+        else if (this.props.filter === 'myAll')
+            return <AccordionMenu list={this.props.myAllTasks} />;
+
+        else if (this.props.filter === 'myFinished')
+            return <AccordionMenu list={this.props.myFinishedTasks} />;
+
+        else if (this.props.filter === 'myUnfinished')
+            return <AccordionMenu list={this.props.myOngoingTasks} />;
+
+        else
+            return <AccordionMenu list={this.props.myAllTasks} />;
+        
     }
 
 
@@ -63,10 +66,10 @@ class UserTasks extends Component {
 
 const mapStateToProps = state => {
     return {
-        filter: state.userTasksFilter.filterType,
-        finishedTasks: state.userTasks.finishedTasks,
-        ongoingTasks: state.userTasks.ongoingTasks,
-        allTasks: state.userTasks.allTasks
+        filter: state.filterReducer.filterType,
+        myFinishedTasks: state.userTasks.myFinishedTasks,
+        myOngoingTasks: state.userTasks.myOngoingTasks,
+        myAllTasks: state.userTasks.myAllTasks
     };
 };
 
