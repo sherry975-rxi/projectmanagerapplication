@@ -64,7 +64,7 @@ class ProjectsTableRow extends Component {
         } else return <div> </div>;
     }
 
-    // if the user is project manager, they can see a button to add a collaborator to the project 
+    // if the user is project manager, they can see a button to add a collaborator to the project
     addCollabToProjectButton() {
         if (this.props.project.projectManagerEmail === this.props.email) {
             return <AddUserToProject project={this.props.project.projectId} />;
@@ -225,9 +225,9 @@ class ProjectsTableRow extends Component {
                     <td colSpan="1">{this.getProjectInfo()}</td>
                     <td>{this.getActiveProjectTeam()}</td>
                     <td colSpan="2">
-                        <div>{this.renderDropdownButton('Options', 0)}</div>
-                        <div>{this.addCollabToProjectButton()}</div>
-                        <div>{this.changeCalculationMethod()}</div>
+                        <div align="center">{this.renderDropdownButton('Options', 0)}</div>
+                        <div align="center">{this.addCollabToProjectButton()}</div>
+                        <div align="center">{this.changeCalculationMethod()}</div>
                     </td>
                 </tr>
             </Fragment>
