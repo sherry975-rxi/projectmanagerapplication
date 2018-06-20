@@ -19,7 +19,7 @@ export function updateFinishedTasks(projectId) {
     };
 }
 
-export function updateOngoingTasks(projectId) {
+export function updateUnfinishedTasks(projectId) {
     return dispatch => {
         tasksLoading()
         fetch(`/projects/${projectId}/tasks/unfinished`, {
@@ -28,8 +28,8 @@ export function updateOngoingTasks(projectId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                dispatch(ongoingTasksFetched(data));
-                dispatch(filterActions.changeToOnGoing());
+                dispatch(unfinishedTasksFetched(data));
+                dispatch(filterActions.changeToUnfinished());
                 return data;
             }).catch((error) => {
                 console.log(error)
@@ -121,10 +121,10 @@ export function finishTasksFetched(finishedTasks) {
     };
 }
 
-export function ongoingTasksFetched(ongoingTasks) {
+export function unfinishedTasksFetched(unfinishedTasks) {
     return {
-        type: 'ONGOING_FETCHED',
-        ongoingTasks
+        type: 'UNFINISHEDTASKS_FETCHED',
+        unfinishedTasks
     };
 }
 

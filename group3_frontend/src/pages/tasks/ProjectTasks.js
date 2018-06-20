@@ -29,7 +29,7 @@ class ProjectTasks extends Component {
             case 'all':
                 return <AccordionMenu list={this.props.allTasks} />;
             case 'unfinished':
-                return <AccordionMenu list={this.props.ongoingTasks} />;
+                return <AccordionMenu list={this.props.unfinishedTasks} />;
             case 'finished':
                 return <AccordionMenu list={this.props.finishedTasks} />;
             case 'withoutCollaborators':
@@ -62,7 +62,7 @@ const mapStateToProps = state => {
     return {
         filter: state.filterReducer.filterType,
         finishedTasks: state.projectTasks.finishedTasks,
-        ongoingTasks: state.projectTasks.ongoingTasks,
+        unfinishedTasks: state.projectTasks.unfinishedTasks,
         standByTasks: state.projectTasks.wihoutCollab,
         notStartedTasks: state.projectTasks.notStartedTasks,
         expiredTasks: state.projectTasks.expiredTasks,
