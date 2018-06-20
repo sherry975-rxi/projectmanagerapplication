@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AuthService from '../loginPage/AuthService';
 import './activeTeam.css';
+import RemoveTaskCollaborator from "./RemoveTaskCollaborator";
 
 class ActiveTaskTeam extends Component {
     constructor(props) {
@@ -31,12 +32,16 @@ class ActiveTaskTeam extends Component {
 
     ListOfCollabs() {
         if (this.state.activeTeam.length > 0) {
+            console.log(this.state.activeTeam)
             return this.state.activeTeam.map((activeTeamitem, index) => {
                 return (
                     <tr className="line" key={index}>
                         <td>
                             {' '}
-                            {activeTeamitem.projCollaborator.collaborator.name}
+                            {activeTeamitem.taskCollaborator.name}
+                        </td>
+                        <td>
+                            <RemoveTaskCollaborator collaborator={activeTeamitem} />
                         </td>
                     </tr>
                 );

@@ -9,7 +9,6 @@ import metaReducer from './metaReducer';
 import UserReducers from './UserReducers';
 import usersFilterReducer from './usersFilterReducer';
 import userTasksReducer from './userTasksReducer';
-import userTasksFilterReducer from './userTasksFilterReducer';
 import projCollabsWoutTasksReducer from './projCollabsWoutTasksReducer';
 import projectTeamReducer from "./projectTeamReducer";
 

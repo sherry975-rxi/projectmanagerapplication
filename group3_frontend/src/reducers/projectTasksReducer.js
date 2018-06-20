@@ -6,6 +6,7 @@ const INITIAL_STATE = {
     notStartedTasks: [],
     expiredTasks: [],
     allTasks: [],
+    cancelledTasks: [],
     error: false
 
 }
@@ -24,6 +25,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, itemIsLoading: false, expiredTasks: action.expiredTasks, error: false }
         case 'ALLTASKS_FETCHED':
             return { ...state, itemIsLoading: false, allTasks: action.allTasks, error: false }
+        case 'CANCELLED_FETCHED':
+            return { ...state, itemIsLoading: false, cancelledTasks: action.cancelledTasks, error: false }
         case 'ITEM_LOADING':
             return { ...state, itemIsLoading: true, allTasks: action.allTasks, error: false }
         case 'FETCH_HAS_ERRORED':
