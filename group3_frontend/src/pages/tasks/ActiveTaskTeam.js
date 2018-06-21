@@ -30,6 +30,12 @@ class ActiveTaskTeam extends Component {
         });
     }
 
+    removeTaskCollaborator(activeTeamItem) {
+
+        if(this.props.task.currentProject.projectManager.userID.toString() === this.authService.getUserId().toString()) {
+            return <td><RemoveTaskCollaborator task={this.props.task} collaborator={activeTeamItem}/></td>;
+        }
+    }
 
     ListOfCollabs() {
 
@@ -38,7 +44,7 @@ class ActiveTaskTeam extends Component {
                 return (
                     <tr className="line" key={index}>
                         <td>{activeTeamitem.taskCollaborator.name}</td>
-                        <td><RemoveTaskCollaborator task={this.props.task} collaborator={activeTeamitem}/></td>
+                        {this.removeTaskCollaborator(activeTeamitem)}
                     </tr>
                 );
             });
