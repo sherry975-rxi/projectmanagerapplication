@@ -77,6 +77,7 @@ class AccordionMenu extends Component {
                 element.state === 'READY';
 
             return authrorizedTaskStates === true ? (
+
                 <DeleteTask id={element.taskID} project={element.project} />
             ) : (
                 ''
@@ -241,7 +242,7 @@ class AccordionMenu extends Component {
                                 <td>
                                     {
                                         <ActiveTaskTeam
-                                            taskTeam={element.taskTeam}
+                                            task={element}
                                         />
                                     }
                                 </td>

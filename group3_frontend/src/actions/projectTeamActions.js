@@ -9,7 +9,6 @@ export function updateProjectTeam(projectID){
             { method: 'get' }
         ).then(data => {
             dispatch(projectTeamFetched(data));
-            return data;
             }
         )
     };
