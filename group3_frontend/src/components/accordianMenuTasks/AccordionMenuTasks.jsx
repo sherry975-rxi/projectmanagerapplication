@@ -241,7 +241,7 @@ class AccordionMenu extends Component {
                                 <td>
                                     {
                                         <ActiveTaskTeam
-                                            taskTeam={element.taskTeam}
+                                            task={element}
                                         />
                                     }
                                 </td>
