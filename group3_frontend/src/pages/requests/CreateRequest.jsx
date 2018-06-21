@@ -29,7 +29,7 @@ class CreateRequest extends Component {
             this.setState({
                 request: responseData
             });
-            if(JSON.stringify(this.state.request).length > 0){
+            if(responseData.error !== null){
                 this.setState({
                     shouldRender: false
                 })
@@ -120,6 +120,7 @@ class CreateRequest extends Component {
     
 
     render() {
+    
         if(this.state.isActiveInTask){
             return(
                 <div className=" table-striped">
