@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { MenuItem, DropdownButton } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
-import { toastr } from 'react-redux-toastr';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addCollaboratorToTask } from '../../actions/projectTasksActions';
 
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            projTeam: [],
             projCollab: '',
             submission: false,
             hideSuccessInfo: 'hide-code'
@@ -15,60 +16,28 @@ class AvailableListOfCollaborators extends Component {
         this.AuthService = new AuthService();
     }
 
-    componentDidMount() {
-        this.getProjTeam();
-    }
-
     showAddCollaboratorButton() {
-        if (this.state.projTeam.length == null) {
+        const collaborators = this.props.collaborators[this.props.taskId];
+        if (!collaborators || (collaborators && !collaborators.length)) {
             return;
         } else {
             return this.renderDropdownButton('Add Collaborator', 0);
         }
     }
 
-    // Load users from database
-    getProjTeam() {
-        this.AuthService.fetch(
-            `/projects/${this.props.project}/tasks/${
-                this.props.id
-            }/collabsAvailableForTask`,
-            { method: 'get' }
-        ).then(responseData => {
-            this.setState({
-                projTeam: responseData,
-                message: responseData.error
-            });
-        });
-    }
-
-    handleClick(event) {
+    handleClick = eventKey => {
+        const collaboratorIndex = eventKey;
+        const { project, taskId } = this.props;
         const userDTO = {
-            email: this.state.projTeam[event].collaborator.email
+            email: this.props.collaborators[this.props.taskId][
+                collaboratorIndex
+            ].collaborator.email
         };
-
-        this.AuthService.fetch(
-            `/projects/${this.props.project}/tasks/${this.props.id}/addCollab`,
-            {
-                method: 'post',
-                body: JSON.stringify(userDTO)
-            }
-        )
-            .then(res => {
-                if (res.taskFinished === false) {
-                    toastr.success('Collaborator was added to task');
-                    this.getProjTeam();
-                    window.location.href = `/projects/${
-                        this.props.project
-                    }/tasks`;
-                }
-            })
-            .catch(err => {
-                toastr.error('Already a Task Collaborator');
-            });
-    }
+        this.props.addCollaboratorToTask(project, taskId, userDTO);
+    };
 
     renderDropdownButton(title, i) {
+        const collaborators = this.props.collaborators[this.props.taskId] || [];
         return (
             <DropdownButton
                 className="buttonFinished"
@@ -76,13 +45,13 @@ class AvailableListOfCollaborators extends Component {
                 key={i}
                 id={`dropdown-basic-${i}`}
             >
-                {this.state.projTeam.map((projTeamitem, index) => (
+                {collaborators.map((user, index) => (
                     <MenuItem
                         eventKey={index}
                         key={index}
-                        onSelect={this.handleClick.bind(this)}
+                        onSelect={this.handleClick}
                     >
-                        {projTeamitem.collaborator.name}
+                        {user.collaborator.name}
                     </MenuItem>
                 ))}
             </DropdownButton>
@@ -98,4 +67,17 @@ class AvailableListOfCollaborators extends Component {
     }
 }
 
-export default AvailableListOfCollaborators;
+export const mapStateToProps = state => {
+    const collaborators =
+        state.projectTasks.availableCollaboratorsForTask || [];
+    return { collaborators };
+};
+
+export const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ addCollaboratorToTask }, dispatch);
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AvailableListOfCollaborators);

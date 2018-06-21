@@ -9,6 +9,7 @@ class CreateRequest extends Component {
         this.state = {
             shouldRender: true,
             isActiveInTask: false,
+            hasFinishedFetch: false,
             request: {},
             tasks: {}
         };
@@ -17,6 +18,8 @@ class CreateRequest extends Component {
     }
 
    async componentDidMount() {
+       
+       
         this.AuthService.fetch(
             `/projects/${this.props.project}/tasks/${this.props.id}/requests/user/${this.AuthService.getUserId()}`,
             {
@@ -46,6 +49,7 @@ class CreateRequest extends Component {
             this.setState({
                 tasks: responseData,
                 message: responseData.error,
+                hasFinishedFetch: true
             });
 
             this.state.tasks.map((taskItem, index) => {
@@ -123,23 +127,33 @@ class CreateRequest extends Component {
                 </div>
                 );
         } 
-        else if(this.state.shouldRender){
-            return (
-                <div className=" table-striped">
-                    <button className="buttonFinished" onClick={this.handleClick}>
-                        Create Request
-                    </button>
-                </div>
-            );
+        if(this.state.hasFinishedFetch) {
+            if(this.state.shouldRender){
+                return (
+                    <div className=" table-striped">
+                        <button className="buttonFinished" onClick={this.handleClick}>
+                            Create Request
+                        </button>
+                    </div>
+                );
+            } else {
+                return (
+                    <div className=" table-striped">
+                        <button className="buttonFinishedRequestCreated"  onClick={this.handleAlreadyCreatedRequestClick}>
+                            Awaiting response
+                        </button>
+                    </div>
+                );
+            }
         } else {
-            return (
+            return(
                 <div className=" table-striped">
-                    <button className="buttonFinishedRequestCreated"  onClick={this.handleAlreadyCreatedRequestClick}>
-                        Awaiting response
-                    </button>
+                    <button className="buttonFinishedInvisible" />
                 </div>
-            );
+                );
+
         }
+       
        
     }
 }

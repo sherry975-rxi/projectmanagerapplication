@@ -432,8 +432,7 @@ public class RestRequestController {
 
 
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR')")
-    @RequestMapping(value = "/requests/user/{userID}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projectId).projectManager.userID or hasRole('ROLE_COLLABORATOR') and principal.id == #userID")    @RequestMapping(value = "/requests/user/{userID}", method = RequestMethod.GET)
     public ResponseEntity<TaskTeamRequest> hasRequestByUser(@PathVariable int userID, @PathVariable String taskId, @PathVariable int projectId) {
 
 
@@ -449,10 +448,6 @@ public class RestRequestController {
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-
-
-
 
 
 

@@ -123,6 +123,9 @@ class FetchTaskButton extends Component {
                         type="radio"
                         onChange={e => this.handleChange(e, '6')}
                     />
+                    <label className="buttonFont" htmlFor="expired">
+                        Expired
+                    </label>
 
                     <input
                         id="cancelled"
