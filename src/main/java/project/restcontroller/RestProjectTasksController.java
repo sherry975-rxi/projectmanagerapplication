@@ -177,7 +177,31 @@ public class RestProjectTasksController {
         return response;
     }
 
+    /**
+     * This method removes a TaskCollaborator from a Task to become a TaskCollaborator
+     *
+     * @param projid Project id of the project whose task needs a task collaborator
+     * @param taskid Task id of the task to add a project collaborator to its team
+     * @param taskCollabDTO user who should be removed from the task
+     *
+     * @return ResponseBody with 200-OK if taskCollab was removed from the task team or
+     *          403-METHOD_NOT_ALLOWED the taskCollaborator was not removed from the task
+     */
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "{taskid}/removeCollab", method = RequestMethod.PATCH)
+    public ResponseEntity<Task> removeCollabFromTask (@RequestBody TaskCollaborator taskCollabDTO, @PathVariable int projid, @PathVariable String taskid) {
 
+        ResponseEntity<Task> response = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        if(task.removeProjectCollaboratorFromTask(taskCollabDTO.getProjCollaborator())) {
+            taskService.saveTask(task);
+            response = new ResponseEntity<>(task, HttpStatus.OK);
+        }
+
+        return response;
+    }
 
     /**
      * This methods gets the list of finished tasks from a project

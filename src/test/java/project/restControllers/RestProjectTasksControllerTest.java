@@ -49,6 +49,8 @@ public class RestProjectTasksControllerTest {
     @Mock
     private HttpServletRequest req;
 
+
+
     @InjectMocks
     private RestProjectTasksController victim;
 
@@ -56,6 +58,7 @@ public class RestProjectTasksControllerTest {
     private JacksonTester<Task> jacksonTask;
     private JacksonTester<TaskDTO> jacksonTaskDto;
     private JacksonTester<User> jacksonUser;
+    private JacksonTester<TaskCollaborator> jacksonTaskCollab;
 
     private MockMvc mockMvc;
     private User uDaniel;
@@ -585,6 +588,56 @@ public class RestProjectTasksControllerTest {
 
         //THEN
         assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
+
+    /**
+     * GIVEN a project  and task id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/<taskId>/removeCollab
+     * THEN we receive a valid message with a 200 Ok and task updated with collab removed
+     * AND WHEN we perform the same request, with the task collaborator now removed
+     * THEN we recieve a message with METHOD NOT ALLOWED
+     * @throws Exception
+     */
+    @Test
+    public void shouldRemoveCollabFromTask () throws Exception {
+
+
+
+        ProjectCollaborator pcInes = new ProjectCollaborator(uInes, 20);
+        pcInes.setProject(project);
+        List<ProjectCollaborator> team = new ArrayList<>();
+        team.add(pcInes);
+        projectService.addProjectCollaborator(pcInes);
+
+        TaskCollaborator tcInes = new TaskCollaborator(pcInes);
+        tcInes.setTask(task);
+        task.addTaskCollaboratorToTask(tcInes);
+
+        // GIVEN
+        int projectId = 01;
+        String taskid = "01";
+
+        when(taskService.getTaskByTaskID(taskid)).thenReturn(task);
+        when(taskService.saveTask(any(Task.class))).thenReturn(task);
+
+        // WHEN
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.patch("/projects/" + projectId + "/tasks/"+ taskid + "/removeCollab").contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonTaskCollab.write(tcInes).getJson()))
+                .andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+
+        //AND WHEN
+        response = mockMvc.perform(MockMvcRequestBuilders.patch("/projects/" + projectId + "/tasks/"+ taskid + "/removeCollab").contentType(MediaType.APPLICATION_JSON)
+                .content(jacksonTaskCollab.write(tcInes).getJson()))
+                .andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.METHOD_NOT_ALLOWED.value(), response.getStatus());
+
+
     }
 
     /**

@@ -8,22 +8,19 @@ import {
 } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
+import { updateProjectTeam } from '../../actions/projectTeamActions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateAvailableUsers } from '../../actions/availableUsersAction';
 
 class AddUserToProject extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            costPerEffort: '',
-            projTeam: [],
-            projCollab: '',
             submission: false,
             hideSuccessInfo: 'hide-code'
         };
         this.AuthService = new AuthService();
-    }
-
-    componentDidMount() {
-        this.getProjTeam();
     }
 
     validateForm() {
@@ -36,20 +33,8 @@ class AddUserToProject extends Component {
         });
     };
 
-    // Load users from database
-    getProjTeam() {
-        this.AuthService.fetch(
-            `/projects/${this.props.project}/team/usersAvailable`,
-            { method: 'get' }
-        ).then(responseData => {
-            this.setState({
-                projTeam: responseData,
-                message: responseData.error
-            });
-        });
-    }
-
     dropdownToggle(newValue) {
+        this.props.updateAvailableUsers(this.props.project);
         if (this._forceOpen) {
             this.setState({ menuOpen: true });
             this._forceOpen = false;
@@ -72,19 +57,19 @@ class AddUserToProject extends Component {
                 projectId: projectId
             },
             collaborator: {
-                email: this.state.projTeam[event].email
+                email: this.props.availableUsers[event].email
             }
         };
 
         this.AuthService.fetch(`/projects/${this.props.project}/team`, {
-            method: 'post',
-            body: JSON.stringify(userDTO)
+            body: JSON.stringify(userDTO),
+            method: 'POST'
         })
             .then(res => {
                 if (res.costPerEffort !== 0) {
+                    this.props.updateProjectTeam(this.props.project);
+                    this.props.updateAvailableUsers(this.props.project);
                     toastr.success('Collaborator was added to Project');
-                    this.getProjTeam();
-                    window.location.href = `/myprojects`;
                 }
             })
             .catch(err => {
@@ -93,6 +78,7 @@ class AddUserToProject extends Component {
     }
 
     renderDropdownButton(title, i) {
+        console.log(this.props.availableUsers);
         return (
             <Dropdown
                 title={title}
@@ -121,7 +107,7 @@ class AddUserToProject extends Component {
                         </FormGroup>
                     </MenuItem>
                     <MenuItem divider />
-                    {this.state.projTeam.map((projTeamitem, index) => (
+                    {this.props.availableUsers.map((projTeamitem, index) => (
                         <MenuItem
                             disabled={!this.validateForm()}
                             eventKey={index}
@@ -141,4 +127,20 @@ class AddUserToProject extends Component {
     }
 }
 
-export default AddUserToProject;
+const mapStateToProps = state => {
+    return {
+        availableUsers: state.availableUsers.availableUsers
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(
+        { updateProjectTeam, updateAvailableUsers },
+        dispatch
+    );
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AddUserToProject);
