@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './MarkTaskAsFinished.css';
 import AuthService from '../loginPage/AuthService';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {updateAllTasks, updateUnfinishedTasks, updateNotStartedTasks} from "../../actions/projectTasksActions";
 
 class DeleteTask extends Component {
     constructor(props) {
@@ -10,18 +13,30 @@ class DeleteTask extends Component {
     }
 
     handleClick = () => {
-        this.AuthService.fetch(
+        fetch(
             `/projects/${this.props.project}/tasks/${this.props.id}`,
             {
+                headers: { Authorization: localStorage.getItem('id_token') },
                 method: 'DELETE'
             }
-            ).then(responseData => {
-            console.log(responseData);
-            window.location.href = `/projects/${
-                this.props.project
-            }/tasks`;
-    });
-};
+            ).then(response => {
+                if(response.status === 202) {
+                    switch (this.props.filter) {
+                        case 'unfinished':
+                            this.props.updateUnfinishedTasks(this.props.project)
+                            break;
+                        case 'notstarted':
+                            this.props.updateNotStartedTasks(this.props.project)
+                            break;
+                        default:
+                            this.props.updateAllTasks(this.props.project)
+                            break;
+                    }
+                }
+            }
+
+        )
+    }
 
     
 
@@ -36,4 +51,17 @@ class DeleteTask extends Component {
     }
 }
 
-export default DeleteTask;
+const mapStateToProps = state => {
+    return {
+        filter: state.filterReducer.filterType,
+    }
+}
+
+export const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ updateAllTasks, updateUnfinishedTasks, updateNotStartedTasks }, dispatch);
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DeleteTask);

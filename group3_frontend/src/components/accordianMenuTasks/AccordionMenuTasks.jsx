@@ -77,6 +77,7 @@ class AccordionMenu extends Component {
                 element.state === 'READY';
 
             return authrorizedTaskStates === true ? (
+
                 <DeleteTask id={element.taskID} project={element.project} />
             ) : (
                 ''
