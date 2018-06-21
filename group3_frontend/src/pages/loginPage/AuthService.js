@@ -22,7 +22,7 @@ export default class AuthService {
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            return (decoded.exp < Date.now() / 1000)
+            return decoded.exp < Date.now() / 1000;
         } catch (err) {
             return false;
         }
@@ -32,7 +32,6 @@ export default class AuthService {
         const idToken = res.headers.authorization;
         localStorage.setItem('id_token', idToken);
     }
-
 
     setUser(res) {
         localStorage.setItem('id_user', res.data.idNumber);
@@ -71,11 +70,13 @@ export default class AuthService {
         return fetch(url, {
             headers,
             ...options
-        }).then(this.checkStatus)
-          .then(response => {
-                localStorage.setItem('id_token',response.headers.get('Authorization'));
-                return response.json();
-          });
+        }).then(response => {
+            localStorage.setItem(
+                'id_token',
+                response.headers.get('Authorization')
+            );
+            return response.json();
+        });
     }
 
     //Verifies if the HTTP response is valid (within 200)
