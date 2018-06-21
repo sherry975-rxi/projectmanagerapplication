@@ -26,6 +26,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, filterType: 'expired'}
         case 'CANCELLED':
             return { ...state, filterType: 'cancelled'}
+        case 'LASTMONTHFINISHED':
+            return {...state, filterType: 'lastMonthFinished'}
         default:
             return state;
     }

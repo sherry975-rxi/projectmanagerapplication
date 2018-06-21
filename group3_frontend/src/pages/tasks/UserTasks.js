@@ -42,6 +42,9 @@ class UserTasks extends Component {
         else if (this.props.filter === 'myUnfinished')
             return <AccordionMenu list={this.props.myOngoingTasks} />;
 
+        else if (this.props.filter === 'lastMonthFinished')
+            return <AccordionMenu list={this.props.lastMonthFinishedTasks} />
+
         else
             return <AccordionMenu list={this.props.myAllTasks} />;
         
@@ -69,7 +72,8 @@ const mapStateToProps = state => {
         filter: state.filterReducer.filterType,
         myFinishedTasks: state.userTasks.myFinishedTasks,
         myOngoingTasks: state.userTasks.myOngoingTasks,
-        myAllTasks: state.userTasks.myAllTasks
+        myAllTasks: state.userTasks.myAllTasks,
+        lastMonthFinishedTasks: state.userTasks.lastMonthFinishedTasks
     };
 };
 

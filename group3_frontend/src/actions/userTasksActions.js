@@ -56,6 +56,24 @@ export function updateMyAllTasks(userId) {
     };
 }
 
+export function updateMyLastMonthFinishedTasks(userId) {
+    const authService = new AuthService();
+
+    return dispatch => {
+        myTasksLoading()
+        authService.fetch(`/users/${userId}/tasks/lastmonthfinished`, {
+            method: 'GET'
+        }).then(data => {
+                dispatch(lastMonthFinishedTasksFetched(data));
+                dispatch(userTasksFilterActions.changeToMyLastMonthFinished())
+                return data;
+        }).catch((error) => {
+            console.log(error)
+            myFetchTasksHasErrored();
+        });
+    };
+}
+
 export function myFinishedTasksFetched(myFinishedTasks) {
     return {
         type: 'MYFINISHTASKS_FETCHED',
@@ -77,6 +95,12 @@ export function myAllTasksFetched(myAllTasks) {
     };
 }
 
+export function lastMonthFinishedTasksFetched(lastMonthFinishedTasks) {
+    return {
+        type: 'LASTMONTHTASKS_FETCHED',
+        lastMonthFinishedTasks
+    };
+}
 
 export function myTasksLoading() {
     return {

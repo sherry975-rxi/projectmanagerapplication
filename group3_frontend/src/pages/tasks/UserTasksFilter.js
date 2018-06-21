@@ -6,7 +6,8 @@ import './dist/FetchTask.css';
 import {
     updateMyAllTasks,
     updateMyFinishedTasks,
-    updateMyOngoingTasks
+    updateMyOngoingTasks,
+    updateMyLastMonthFinishedTasks
 } from './../../actions/userTasksActions';
 
 class UserTasksFilter extends Component {
@@ -26,6 +27,8 @@ class UserTasksFilter extends Component {
                 return this.props.updateMyOngoingTasks(this.props.userID);
             case '3':
                 return this.props.updateMyFinishedTasks(this.props.userID);
+            case '4':
+                return this.props.updateMyLastMonthFinishedTasks(this.props.userID);
             default:
                 return;
         }
@@ -68,6 +71,17 @@ class UserTasksFilter extends Component {
                     <label className="buttonFont" htmlFor="finished">
                         Finished
                     </label>
+
+                    <input
+                        id="lastmonthfinished"
+                        name="view3"
+                        type="radio"
+                        onChange={() => this.handleChange('4')}
+                    />
+                    <label className="buttonFont" htmlFor="lastmonthfinished">
+                        Finished Last Month
+                    </label>
+                    
                 </div>
             </div>
         );
@@ -76,7 +90,7 @@ class UserTasksFilter extends Component {
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
-        { updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks },
+        { updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks, updateMyLastMonthFinishedTasks },
         dispatch
     );
 export default connect(

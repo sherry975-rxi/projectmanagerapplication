@@ -3,6 +3,7 @@ const INITIAL_STATE = {
     myFinishedTasks: [],
     myOngoingTasks: [],
     myAllTasks: [],
+    lastMonthFinishedTasks: [],
     error: false
 
 }
@@ -15,9 +16,11 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, itemIsLoading: false, myOngoingTasks: action.myOngoingTasks, error: false }
         case 'MYALLTASKS_FETCHED':
             return { ...state, itemIsLoading: false, myAllTasks: action.myAllTasks, error: false }
+        case 'LASTMONTHTASKS_FETCHED':
+            return { ...state, itemIsLoading: false, lastMonthFinishedTasks: action.lastMonthFinishedTasks, error: false}
         case 'ITEM_LOADING':
             return { ...state, itemIsLoading: true, myAllTasks: action.myAllTasks, error: false }
-        case 'FETCH_HAS_ERRORED':
+                case 'FETCH_HAS_ERRORED':
             return { ...state, itemIsLoading: false, error: true }
         default:
             return state;
