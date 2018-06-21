@@ -12,6 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -270,5 +271,36 @@ public class RestUserTasksControllerTest {
         //then an error message will be sent informing you that the user was not found
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
         verify(taskServiceMock, times(0)).getTotalTimeOfFinishedTasksFromUserLastMonth(null);
+    }
+
+
+
+    @Test
+    public void testGetLastMonthFinishedTasks(){
+
+        //GIVEN
+        //given a user that does not exist in the database
+        List<Task> userFinishedTaskList = new ArrayList<>();
+        userFinishedTaskList.add(taskCreated);
+
+        //WHEN
+        //We get the finished User tasks from Last Month, the method will return the Dummy list created above
+        Mockito.when(userServiceMock.getUserByID(anyInt())).thenReturn(userRui);
+        Mockito.when(taskServiceMock.getFinishedUserTasksFromLastMonthInDecreasingOrder(userRui)).thenReturn(userFinishedTaskList);
+
+        //WHEN
+        //The controller gets the list of the last month user task List
+        ResponseEntity<List<Task>> actualResponse = victim.getLastMonthFinishedTasks(userRui.getUserID());
+
+
+
+        ResponseEntity<List<Task>>  expectedResponse = new ResponseEntity<>(userFinishedTaskList, HttpStatus.OK);
+
+
+        //THEN
+        //The expected result is that the method will return an HTTPStatus.OK
+
+        assertEquals(actualResponse,expectedResponse);
+
     }
 }
