@@ -1035,6 +1035,20 @@ public class RestRequestControllerTest {
 
 
 
+        //WHEN
+        //There are requests, but not by the given user
+
+        ResponseEntity<TaskTeamRequest> result3 = controller.hasRequestByUser(4, taskIdOne, projectId);
+
+        //THEN
+        //The method will return a NOT_FOUND status
+        ResponseEntity<TaskTeamRequest> notFoundExpected =  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        assertEquals(result3.getStatusCode(), notFoundExpected.getStatusCode());
+
+
+
+
+
 
     }
 

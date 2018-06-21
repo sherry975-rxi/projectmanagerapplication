@@ -23,11 +23,11 @@ export default (state = INITIAL_STATE, action) => {
                 finishedTasks: action.finishedTasks,
                 error: false
             };
-        case 'ONGOING_FETCHED':
+        case 'UNFINISHEDTASKS_FETCHED':
             return {
                 ...state,
                 itemIsLoading: false,
-                ongoingTasks: action.ongoingTasks,
+                unfinishedTasks: action.unfinishedTasks,
                 error: false
             };
         case 'STANDBYTASKS_FETCHED':
