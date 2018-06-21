@@ -22,12 +22,15 @@ import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
 
+import javax.xml.ws.Response;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -127,14 +130,14 @@ public class RestRequestControllerTest {
         List<ProjectCollaborator> userTwoProjCollab = new ArrayList<>();
         userTwoProjCollab.add(projCollabTwo);
 
-        Mockito.when(userRepository.findByEmail("joao@gmail.com")).thenReturn(Optional.of(userTwo));
-        Mockito.when(userRepository.findByEmail(userThreeEmail)).thenReturn(Optional.of(userThree));
-        Mockito.when(userRepository.findByEmail(userFourEmail)).thenReturn(Optional.of(userFour));
-        Mockito.when(userRepository.findByUserID(userTwoId)).thenReturn(Optional.of(userTwo));
-        Mockito.when(projectsRepository.findByProjectId(projectId)).thenReturn(Optional.of(projectOne));
-        Mockito.when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
-        Mockito.when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
-        Mockito.when(taskRepository.findByTaskID(taskIdOne)).thenReturn(Optional.of(taskOne));
+        when(userRepository.findByEmail("joao@gmail.com")).thenReturn(Optional.of(userTwo));
+        when(userRepository.findByEmail(userThreeEmail)).thenReturn(Optional.of(userThree));
+        when(userRepository.findByEmail(userFourEmail)).thenReturn(Optional.of(userFour));
+        when(userRepository.findByUserID(userTwoId)).thenReturn(Optional.of(userTwo));
+        when(projectsRepository.findByProjectId(projectId)).thenReturn(Optional.of(projectOne));
+        when(projCollabRepository.findAllByCollaborator(userTwo)).thenReturn(userTwoProjCollab);
+        when(projCollabRepository.findAllByProject(projectOne)).thenReturn(projCollabsList);
+        when(taskRepository.findByTaskID(taskIdOne)).thenReturn(Optional.of(taskOne));
 
         userDTOTwo = new UserDTO(userTwo);
 
@@ -996,8 +999,48 @@ public class RestRequestControllerTest {
 
 
 
+    @Test
+    public void hasRequestByGivenUser() {
+
+        //GIVEN
+        // That no task request was yet created
+
+        //WHEN
+        // We perform the method to hasRequestByUser to check it's result
+        ResponseEntity<TaskTeamRequest> result = controller.hasRequestByUser(userTwoId, taskIdOne, projectId);
+
+        //THEN
+        //The response will be a HTTPStatus.NOT_FOUND
+
+        ResponseEntity<TaskTeamRequest> notFound =  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        assertEquals(result, notFound);
+
+
+        //GIVEN
+        //That we perform an assignement request with userTwo
+        controller.createAssignmentRequest(taskIdOne, projectId, userDTOTwo);
+
+
+
+        //WHEN
+        //We get the result if it has a request by GivenUser (UserID is 0 due to mocks)
+
+        int userId = 0;
+        
+        ResponseEntity<TaskTeamRequest> result2 = controller.hasRequestByUser(userId, taskIdOne, projectId);
+
+        //THEN
+        ResponseEntity<TaskTeamRequest> okExpected =  new ResponseEntity<>(HttpStatus.OK);
+        assertEquals(result2.getStatusCode(), okExpected.getStatusCode());
 
 
 
 
-}
+    }
+
+
+
+
+
+
+    }
