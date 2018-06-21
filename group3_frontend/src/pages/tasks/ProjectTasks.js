@@ -16,6 +16,8 @@ class ProjectTasks extends Component {
     //TODO: Add sort by ascending or descending order to these tables
 
     renderTasks() {
+        console.log(this.props.filter)
+        console.log(this.props.cancelledTasks)
 
         if (this.props.tasksLoading) {
             return (<LoadingComponent />)
@@ -38,6 +40,8 @@ class ProjectTasks extends Component {
                 return <AccordionMenu list={this.props.notStartedTasks} />;
             case 'expired':
                 return <AccordionMenu list={this.props.expiredTasks} />;
+            case 'cancelled':
+                return <AccordionMenu list={this.props.cancelledTasks} />;
             default: {
                 return <LoadingComponent />;
             }
@@ -67,6 +71,7 @@ const mapStateToProps = state => {
         notStartedTasks: state.projectTasks.notStartedTasks,
         expiredTasks: state.projectTasks.expiredTasks,
         allTasks: state.projectTasks.allTasks,
+        cancelledTasks: state.projectTasks.cancelledTasks,
         tasksLoading: state.projectTasks.itemIsLoading,
         error: state.projectTasks.error
     };

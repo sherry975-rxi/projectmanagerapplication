@@ -3,6 +3,15 @@ import { MenuItem, DropdownButton } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
 import './ChangeProfile.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+    updateAllUsers,
+    updateEmail,
+    updateCollaborators,
+    updateDirector,
+    updateAdministrator
+} from './../../actions/UserActions';
 
 class ChangeProfile extends Component {
     constructor(props) {
@@ -40,7 +49,8 @@ class ChangeProfile extends Component {
             .then(res => {
                 if (res.userProfile === profile) {
                     toastr.success('Profile was changed');
-                    window.location.href = `/usersMngr`;
+                    //window.location.href = `/usersMngr`;
+                    this.updateUsers();
                 }
             })
             .catch(err => {
@@ -70,6 +80,22 @@ class ChangeProfile extends Component {
         );
     }
 
+    updateUsers(){
+
+        if (this.props.filter === 'all')
+        this.props.updateAllUsers()
+    else if (this.props.filter === 'email')
+        this.props.updateEmail(this.props.email)
+    else if (this.props.filter === 'collaborators')
+        this.props.updateCollaborators()
+    else if (this.props.filter === 'directors')
+        this.props.updateDirector()
+    else if (this.props.filter === 'administrators')
+        this.props.updateAdministrator()
+
+
+    }
+
     render() {
         return (
             <div className=" table-striped">
@@ -79,4 +105,12 @@ class ChangeProfile extends Component {
     }
 }
 
-export default ChangeProfile;
+const mapStateToProps = state => { return ({ filter: state.usersFilter.filterType }) }
+const mapDispatchToProps = dispatch => bindActionCreators({ 
+    updateAllUsers,
+    updateEmail,
+    updateCollaborators,
+    updateDirector,
+    updateAdministrator }, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeProfile);
+
