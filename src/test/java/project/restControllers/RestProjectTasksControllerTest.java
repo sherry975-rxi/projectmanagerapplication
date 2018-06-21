@@ -670,15 +670,14 @@ public class RestProjectTasksControllerTest {
 
     /**
      * GIVEN
-     * a task id,
      * project id
      * and the available project collaborator is the project manager
      *
      * WHEN
-     * we perform a get request to url /projects/<projectId>/tasks/<taskId>/collabsAvailableForTask
+     * we perform a get request to url /projects/<projectId>/tasks/collabsAvailableForTask
      *
      * THEN
-     * we receive a message with a 417 EXPECTATION_FAILED
+     * we receive a message with a 200 OK
      *
      * @throws Exception
      */
@@ -696,6 +695,7 @@ public class RestProjectTasksControllerTest {
         when(projectService.getProjectById(projectId)).thenReturn(project);
         when(taskService.isCollaboratorActiveOnAnyTask(pcDaniel)).thenReturn(true);
         when(projectService.getActiveProjectTeam(project)).thenReturn(team);
+ 
 
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/collabsAvailableForTask").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
