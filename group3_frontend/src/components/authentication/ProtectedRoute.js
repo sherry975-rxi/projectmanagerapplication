@@ -2,18 +2,8 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Homepage from "../homePage/Homepage";
-import requiresAuth from "./requiresAuth";
-
-
-
-
 export class ProtectedRoute extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
-
+    
     render() {
         if(this.props.permissions.includes(this.props.profile)) {
             return (

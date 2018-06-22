@@ -8,6 +8,7 @@ import { projectTableDetailsToogle } from '../../actions/metaActions';
 import ItemsButton from './itemsButton';
 import ActiveProjectTeam from '../../pages/projects/ActiveProjectTeam';
 import SelectCalculationMethods from '../../pages/projectCost/SelectCalculationMethods';
+import { updateUnassignedProjCollabs } from '../../actions/projCollabsWoutTasksActions';
 
 class ProjectsTableRow extends Component {
     handleRotate = () => {
@@ -49,10 +50,9 @@ class ProjectsTableRow extends Component {
     }
 
     changeCalculationMethod() {
-        if (  this.props.project.projectManagerEmail === this.props.email ||
-            this.props.profile === 'DIRECTOR') {
+        if (this.props.profile === 'DIRECTOR') {
             return <SelectCalculationMethods project={this.props.project} />;
-        }
+        } else return <div> </div>;
     }
 
     getActiveProjectTeam() {
@@ -64,14 +64,17 @@ class ProjectsTableRow extends Component {
         } else return <div> </div>;
     }
 
-    // if the user is project manager, they can see a button to add a collaborator to the project 
+    // if the user is project manager, they can see a button to add a collaborator to the project
     addCollabToProjectButton() {
         if (this.props.project.projectManagerEmail === this.props.email) {
             return <AddUserToProject project={this.props.project.projectId} />;
         }
     }
 
-   
+    handleClick(){
+        console.log("dddddd")
+        this.props.updateUnassignedProjCollabs(this.props.project.projectId)
+    }
 
     // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
     // cost calculation methods
@@ -93,6 +96,15 @@ class ProjectsTableRow extends Component {
                         }
                     >
                         <ItemsButton text="View tasks" />
+                    </Link>
+
+                     <Link
+                        className="items-menu"
+                        to={
+                            '/UnassignedProjCollab'
+                        } onClick = {this.handleClick()}
+                    >
+                        <ItemsButton text="Unassigned" />
                     </Link>
 
                     <Link
@@ -213,9 +225,9 @@ class ProjectsTableRow extends Component {
                     <td colSpan="1">{this.getProjectInfo()}</td>
                     <td>{this.getActiveProjectTeam()}</td>
                     <td colSpan="2">
-                        <div>{this.renderDropdownButton('Options', 0)}</div>
-                        <div>{this.addCollabToProjectButton()}</div>
-                        <div>{this.changeCalculationMethod()}</div>
+                        <div align="center">{this.renderDropdownButton('Options', 0)}</div>
+                        <div align="center">{this.addCollabToProjectButton()}</div>
+                        <div align="center">{this.changeCalculationMethod()}</div>
                     </td>
                 </tr>
             </Fragment>
@@ -231,7 +243,7 @@ const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ projectTableDetailsToogle }, dispatch);
+    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs }, dispatch);
 };
 
 export default connect(

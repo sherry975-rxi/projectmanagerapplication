@@ -25,6 +25,8 @@ RUN cat package.json && \
     json -I -f package.json -e 'this.proxy="http://backend:8080/"' && \
     cat package.json
 
+RUN touch .env.development
+RUN echo -e '#HOST=appmngr.westeurope.cloudapp.azure.com\n#URL_TO_OPEN="http;//appmngr.westeurope.cloudapp.azure.com:80"\n# Exposing machine:\nDANGEROUSLY_DISABLE_HOST_CHECK=true' > .env.development
 
 # prepare image to start react application when running image
 ENTRYPOINT npm start

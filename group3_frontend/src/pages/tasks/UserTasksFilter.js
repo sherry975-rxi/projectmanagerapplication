@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import './dist/toggle-switch.css';
 import './dist/FetchTask.css';
 import {
-    updateAllTasks,
-    updateFinishedTasks,
-    updateOngoingTasks
+    updateMyAllTasks,
+    updateMyFinishedTasks,
+    updateMyOngoingTasks,
+    updateMyLastMonthFinishedTasks
 } from './../../actions/userTasksActions';
 
 class UserTasksFilter extends Component {
@@ -21,18 +22,20 @@ class UserTasksFilter extends Component {
     handleChange(key) {
         switch (key) {
             case '1':
-                return this.props.updateAllTasks(this.props.userID);
+                return this.props.updateMyAllTasks(this.props.userID);
             case '2':
-                return this.props.updateOngoingTasks(this.props.userID);
+                return this.props.updateMyOngoingTasks(this.props.userID);
             case '3':
-                return this.props.updateFinishedTasks(this.props.userID);
+                return this.props.updateMyFinishedTasks(this.props.userID);
+            case '4':
+                return this.props.updateMyLastMonthFinishedTasks(this.props.userID);
             default:
                 return;
         }
     }
 
     async componentDidMount() {
-        this.props.updateAllTasks(this.props.userID);
+        this.props.updateMyAllTasks(this.props.userID);
     }
 
     render() {
@@ -68,6 +71,17 @@ class UserTasksFilter extends Component {
                     <label className="buttonFont" htmlFor="finished">
                         Finished
                     </label>
+
+                    <input
+                        id="lastmonthfinished"
+                        name="view3"
+                        type="radio"
+                        onChange={() => this.handleChange('4')}
+                    />
+                    <label className="buttonFont" htmlFor="lastmonthfinished">
+                        Finished Last Month
+                    </label>
+                    
                 </div>
             </div>
         );
@@ -76,7 +90,7 @@ class UserTasksFilter extends Component {
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
-        { updateAllTasks, updateFinishedTasks, updateOngoingTasks },
+        { updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks, updateMyLastMonthFinishedTasks },
         dispatch
     );
 export default connect(

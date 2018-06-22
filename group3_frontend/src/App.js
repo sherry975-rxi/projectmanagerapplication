@@ -9,7 +9,6 @@ import ProtectedRoute from './components/authentication/ProtectedRoute';
 
 import ActiveProjects from './pages/projects/ActiveProjects';
 import MyProjects from './pages/projects/MyProjects';
-import FinishedTasks from './pages/tasks/FinishedTasks';
 import LoginPage from './pages/loginPage/LoginPage';
 import SignUpPage from './pages/signUp/SignUpPage';
 import firstPage from './pages/firstPage/firstPage';
@@ -21,7 +20,7 @@ import Reports from './pages/reports/Reports';
 import AllRequests from './pages/requests/AllRequests';
 import AddTask from './pages/tasks/AddTask';
 import ProjectDetails from './pages/projects/ProjectDetails';
-import OngoingTasks from './pages/tasks/OngoingTasks';
+import UserTasks from './pages/tasks/UserTasks';
 import Messages from './components/msgs/Messages';
 import HomePage from '../src/components/homePage/Homepage';
 import Test from './pages/tasks/Test';
@@ -56,8 +55,9 @@ class App extends Component {
             <div className="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <Switch>
                     <ProtectedRoute
-                        exact path="/projects/:projectID/tasks/:taskID/collabsAvailableForTask"
+                        path="/UnassignedProjCollab"
                         component={requiresAuth(ListOfProjCollabWoutTasks)}
+                        permissions={['COLLABORATOR']}
                     />
 
                     <ProtectedRoute
@@ -80,13 +80,7 @@ class App extends Component {
 
                     <ProtectedRoute
                         path="/tasks"
-                        component={requiresAuth(OngoingTasks)}
-                        permissions={['COLLABORATOR']}
-                    />
-
-                    <ProtectedRoute
-                        path="/finishedtasks"
-                        component={requiresAuth(FinishedTasks)}
+                        component={requiresAuth(UserTasks)}
                         permissions={['COLLABORATOR']}
                     />
 

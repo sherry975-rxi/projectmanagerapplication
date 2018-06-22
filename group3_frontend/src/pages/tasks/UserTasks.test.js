@@ -1,9 +1,9 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
-import OngoingTasks from "./OngoingTasks";
+import UserTasks from "./UserTasks";
 import AuthService from "../loginPage/AuthService";
 
-describe("OngoingTasks", () => {
+describe("UserTasks", () => {
     
     describe('componentDidMount', () => {
         const match = {
@@ -31,7 +31,7 @@ describe("OngoingTasks", () => {
             })
           }))
     
-          const renderedComponent = await shallow(<OngoingTasks match={match} />)
+          const renderedComponent = await shallow(<UserTasks match={match} />)
           await renderedComponent.refreshPage()
           expect(renderedComponent.state('tasks').length).toEqual(1)
         })
@@ -41,7 +41,7 @@ describe("OngoingTasks", () => {
             status: 500,
           }))
     
-          const renderedComponent = await shallow(<OngoingTasks match={match} />)
+          const renderedComponent = await shallow(<UserTasks match={match} />)
           await renderedComponent.refreshPage()
           expect(renderedComponent.state('message')).toEqual('FORBIDDEN')
         })
@@ -49,18 +49,18 @@ describe("OngoingTasks", () => {
 
 
       it("always renders a div", () => {
-        const divs = ongoingTasks().find("div");
+        const divs = userTasks().find("div");
         expect(divs.length).toBeGreaterThan(0);
 
     });
 
     describe("the rendered div", () => {
         it("contains everything else that gets rendered", () =>  {
-            const divs = ongoingTasks.find("div");
+            const divs = userTasks.find("div");
 
             const wrappingDiv = divs.first();
 
-            expect(wrappingDiv.children()).toEqual(ongoingTasks.children());
+            expect(wrappingDiv.children()).toEqual(userTasks.children());
         });
     });
 

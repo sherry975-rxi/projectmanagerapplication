@@ -10,7 +10,7 @@ import UserReducers from './UserReducers';
 import usersFilterReducer from './usersFilterReducer';
 import createTaskReducer from './createTaskReducer'
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     authenthication: authenticationReducer,
     toastr: toastrReducer,
     signUp: signUpReducer,
@@ -20,6 +20,19 @@ const rootReducer = combineReducers({
     meta: metaReducer,
     users: UserReducers,
     usersFilter: usersFilterReducer,
+    userTasks: userTasksReducer,
+    collabsWoutTasks: projCollabsWoutTasksReducer,
+    projectTeam: projectTeamReducer,
+    availableUsers: availableUsersReducer
+    usersFilter: usersFilterReducer,
     createTask: createTaskReducer
 });
+const rootReducer = (state, action) => {
+    if (action.type === 'LOGOUT') {
+        state = undefined;
+    }
+
+    return appReducer(state, action);
+};
+
 export default rootReducer;

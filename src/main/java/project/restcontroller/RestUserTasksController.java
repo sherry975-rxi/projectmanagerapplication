@@ -15,6 +15,7 @@ import project.model.User;
 import project.services.TaskService;
 import project.services.UserService;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -93,6 +94,26 @@ public class RestUserTasksController {
             task.add(reference);
         }
         return taskList;
+    }
+
+
+    /**
+     * THis method returns user tasks finished previous month
+     *
+     * @param userId
+     * @return
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "lastmonthfinished", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>>  getLastMonthFinishedTasks (@PathVariable Integer userId) {
+
+        List<Task> taskList = taskService.getFinishedUserTasksFromLastMonthInDecreasingOrder(this.userService.getUserByID(userId));
+
+        ResponseEntity <List<Task>> response;
+
+        response  = new ResponseEntity<>(taskList, HttpStatus.OK);
+
+        return response;
     }
 
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")

@@ -10,9 +10,9 @@ import CreateRequest from './../../pages/requests/CreateRequest';
 import DeleteTask from './../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
 import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
-import ItemsButton from '../projectsTable/itemsButton.jsx';
 import AuthService from './../../pages/loginPage/AuthService';
-
+import { getAvailableCollaboratorsForTask } from '../../actions/projectTasksActions';
+import { bindActionCreators } from 'redux';
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -21,10 +21,9 @@ class AccordionMenu extends Component {
             activeKey: '1',
             rotated: false,
             arrow: 'notRotated',
-            key: '',
+            key: ''
         };
         this.AuthService = new AuthService();
-
     }
 
     handleSelect(activeKey) {
@@ -37,11 +36,17 @@ class AccordionMenu extends Component {
         ));
     }
 
-    toggle(key) {
+    toggle(key, task) {
         document.getElementById(key).className = this.state.rotated
             ? 'notRotated'
             : 'rotatedArrow';
         this.setState({ rotated: !this.state.rotated, key: key });
+        if (!this.state.rotated) {
+            this.props.getAvailableCollaboratorsForTask(
+                task.project,
+                task.taskID
+            );
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -61,16 +66,19 @@ class AccordionMenu extends Component {
 
     renderDeleteTaskButton(element) {
         if (
-            element.currentProject.projectManager.email === this.AuthService.getProfile().sub /* ||
+            element.currentProject.projectManager.email ===
+            this.AuthService.getProfile()
+                .sub /* ||
             this.props.profile === 'DIRECTOR' */
         ) {
-            let authrorizedTaskStates = (element.state === 'PLANNED' || element.state === 'CREATED' || element.state === 'READY')
-            
+            let authrorizedTaskStates =
+                element.state === 'PLANNED' ||
+                element.state === 'CREATED' ||
+                element.state === 'READY';
+
             return authrorizedTaskStates === true ? (
-                <DeleteTask
-                    id={element.taskID}
-                    project={element.project}
-                />
+
+                <DeleteTask id={element.taskID} project={element.project} />
             ) : (
                 ''
             );
@@ -79,15 +87,13 @@ class AccordionMenu extends Component {
 
     renderCreateAssignmentRequestTaskButton(element) {
         if (
-            element.currentProject.projectManager.email !== this.AuthService.getProfile().sub /* ||
+            element.currentProject.projectManager.email !==
+            this.AuthService.getProfile()
+                .sub /* ||
             this.props.profile === 'DIRECTOR' */
         ) {
-            
             return element.state !== 'FINISHED' ? (
-                <CreateRequest
-                            id={element.taskID}
-                            project={element.project}
-                        />
+                <CreateRequest id={element.taskID} project={element.project} />
             ) : (
                 ''
             );
@@ -98,7 +104,6 @@ class AccordionMenu extends Component {
         if (this.props.profile === 'COLLABORATOR') {
             return (
                 <div align="right">
-                    {' '}
                     <p />
                     {element.state !== 'FINISHED' ? (
                         <Link
@@ -154,7 +159,7 @@ class AccordionMenu extends Component {
                     <p />
                     {element.state !== 'FINISHED' ? (
                         <AvailableListOfCollaborators
-                            id={element.taskID}
+                            taskId={element.taskID}
                             project={element.project}
                         />
                     ) : (
@@ -176,9 +181,8 @@ class AccordionMenu extends Component {
                     <Panel.Title toggle>
                         <div
                             className="taskContent"
-                            onClick={() => this.toggle(index)}
+                            onClick={() => this.toggle(index, element)}
                         >
-                            {' '}
                             <table className="table table-content">
                                 <thead>
                                     <tr>
@@ -238,8 +242,7 @@ class AccordionMenu extends Component {
                                 <td>
                                     {
                                         <ActiveTaskTeam
-                                            id={element.taskID}
-                                            project={element.project}
+                                            task={element}
                                         />
                                     }
                                 </td>
@@ -250,71 +253,6 @@ class AccordionMenu extends Component {
                 </Panel.Body>
             </Panel>
         ));
-    }
-
-    renderDropdownButton(title, i) {
-        return (
-            <DropdownButton
-                className="option"
-                bsStyle={title.toLowerCase()}
-                title={title}
-                key={i}
-                id={`dropdown-basic-${i}`}
-            >
-                <MenuItem className="items-menu" onClick={this.toggle}>
-                    <Link
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/tasks'
-                        }
-                        activeClassName="active"
-                    >
-                        <ItemsButton text="View tasks" />
-                    </Link>
-                </MenuItem>
-
-                <MenuItem className="items-menu" onClick={this.toggle}>
-                    <Link
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/addtask'
-                        }
-                        activeClassName="active"
-                    >
-                        <ItemsButton text="Create task" />
-                    </Link>
-                </MenuItem>
-
-                <MenuItem className="items-menu" onClick={this.toggle}>
-                    <Link
-                        to={'/projectcost/' + this.props.project.projectId}
-                        activeClassName="active"
-                    >
-                        <ItemsButton text="Project Cost" />
-                    </Link>
-                </MenuItem>
-
-                <MenuItem className="items-menu" onClick={this.toggle}>
-                    <Link
-                        to={
-                            '/selectprojectcostcalculation/' +
-                            this.props.project.projectId
-                        }
-                        activeClassName="active"
-                    >
-                        <ItemsButton text="Change Calculation Method" />
-                    </Link>
-                </MenuItem>
-
-                <MenuItem className="items-menu" onClick={this.toggle}>
-                    <Link to={'/requests/'}>
-                        <ItemsButton text="View Requests" />
-                    </Link>
-                </MenuItem>
-            </DropdownButton>
-        );
     }
 
     render() {
@@ -344,7 +282,12 @@ const mapStateToProps = state => {
         profile: state.authenthication.user.userProfile
     };
 };
+
+export const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ getAvailableCollaboratorsForTask }, dispatch);
+};
+
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(AccordionMenu);

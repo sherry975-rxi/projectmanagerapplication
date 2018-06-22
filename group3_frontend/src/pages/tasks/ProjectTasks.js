@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Error from './../../components/error/error';
 import FetchTaskButton from '../tasks/FetchTaskButton';
 import { connect } from 'react-redux';
 import AuthService from './../loginPage/AuthService';
@@ -17,6 +16,8 @@ class ProjectTasks extends Component {
     //TODO: Add sort by ascending or descending order to these tables
 
     renderTasks() {
+        console.log(this.props.filter)
+        console.log(this.props.cancelledTasks)
 
         if (this.props.tasksLoading) {
             return (<LoadingComponent />)
@@ -30,13 +31,17 @@ class ProjectTasks extends Component {
             case 'all':
                 return <AccordionMenu list={this.props.allTasks} />;
             case 'unfinished':
-                return <AccordionMenu list={this.props.ongoingTasks} />;
+                return <AccordionMenu list={this.props.unfinishedTasks} />;
             case 'finished':
                 return <AccordionMenu list={this.props.finishedTasks} />;
             case 'withoutCollaborators':
                 return <AccordionMenu list={this.props.standByTasks} />;
             case 'notstarted':
                 return <AccordionMenu list={this.props.notStartedTasks} />;
+            case 'expired':
+                return <AccordionMenu list={this.props.expiredTasks} />;
+            case 'cancelled':
+                return <AccordionMenu list={this.props.cancelledTasks} />;
             default: {
                 return <LoadingComponent />;
             }
@@ -61,10 +66,12 @@ const mapStateToProps = state => {
     return {
         filter: state.filterReducer.filterType,
         finishedTasks: state.projectTasks.finishedTasks,
-        ongoingTasks: state.projectTasks.ongoingTasks,
+        unfinishedTasks: state.projectTasks.unfinishedTasks,
         standByTasks: state.projectTasks.wihoutCollab,
         notStartedTasks: state.projectTasks.notStartedTasks,
+        expiredTasks: state.projectTasks.expiredTasks,
         allTasks: state.projectTasks.allTasks,
+        cancelledTasks: state.projectTasks.cancelledTasks,
         tasksLoading: state.projectTasks.itemIsLoading,
         error: state.projectTasks.error
     };

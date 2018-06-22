@@ -1,19 +1,27 @@
 const INITIAL_STATE = {
-    tasksUpdated: false,
-    finishedTasks: [],
-    ongoingTasks: [],
-    allTasks: []
+    itemIsLoading: true,
+    myFinishedTasks: [],
+    myOngoingTasks: [],
+    myAllTasks: [],
+    lastMonthFinishedTasks: [],
+    error: false
 
 }
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case 'FINISHTASKS_FETCHED':
-            return { ...state, tasksUpdated: true, finishedTasks: action.finishedTasks, error: action.finishedTasks.error }
-        case 'ONGOING_FETCHED':
-            return { ...state, tasksUpdated: true, ongoingTasks: action.ongoingTasks, error: action.ongoingTasks.error }
-        case 'ALLTASKS_FETCHED':
-            return { ...state, tasksUpdated: true, allTasks: action.allTasks, error: action.allTasks.error }
+        case 'MYFINISHTASKS_FETCHED':
+            return { ...state, itemIsLoading: false, myFinishedTasks: action.myFinishedTasks, error: false }
+        case 'MYONGOING_FETCHED':
+            return { ...state, itemIsLoading: false, myOngoingTasks: action.myOngoingTasks, error: false }
+        case 'MYALLTASKS_FETCHED':
+            return { ...state, itemIsLoading: false, myAllTasks: action.myAllTasks, error: false }
+        case 'LASTMONTHTASKS_FETCHED':
+            return { ...state, itemIsLoading: false, lastMonthFinishedTasks: action.lastMonthFinishedTasks, error: false}
+        case 'ITEM_LOADING':
+            return { ...state, itemIsLoading: true, myAllTasks: action.myAllTasks, error: false }
+                case 'FETCH_HAS_ERRORED':
+            return { ...state, itemIsLoading: false, error: true }
         default:
             return state;
     }

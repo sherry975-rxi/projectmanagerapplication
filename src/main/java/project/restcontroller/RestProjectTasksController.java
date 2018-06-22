@@ -117,7 +117,7 @@ public class RestProjectTasksController {
      * @return ResponseBody with 202-ACCEPTED if deleted or 406-NOT_ACCEPTABLE if not
      */
 
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR')and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR')and principal.id==@projectService.getProjectById(#projid).projectManager.getUserID() or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.DELETE)
     public ResponseEntity<Boolean> deleteTask(@PathVariable String taskId, @PathVariable int projid) {
 
@@ -177,7 +177,31 @@ public class RestProjectTasksController {
         return response;
     }
 
+    /**
+     * This method removes a TaskCollaborator from a Task to become a TaskCollaborator
+     *
+     * @param projid Project id of the project whose task needs a task collaborator
+     * @param taskid Task id of the task to add a project collaborator to its team
+     * @param taskCollabDTO user who should be removed from the task
+     *
+     * @return ResponseBody with 200-OK if taskCollab was removed from the task team or
+     *          403-METHOD_NOT_ALLOWED the taskCollaborator was not removed from the task
+     */
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "{taskid}/removeCollab", method = RequestMethod.PATCH)
+    public ResponseEntity<Task> removeCollabFromTask (@RequestBody TaskCollaborator taskCollabDTO, @PathVariable int projid, @PathVariable String taskid) {
 
+        ResponseEntity<Task> response = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        if(task.removeProjectCollaboratorFromTask(taskCollabDTO.getProjCollaborator())) {
+            taskService.saveTask(task);
+            response = new ResponseEntity<>(task, HttpStatus.OK);
+        }
+
+        return response;
+    }
 
     /**
      * This methods gets the list of finished tasks from a project
@@ -234,6 +258,34 @@ public class RestProjectTasksController {
         }
 
         return new ResponseEntity<>(unfinishedTasks, HttpStatus.OK);
+    }
+
+    /**
+     * This methods gets the list of cancelled tasks from a project
+     *
+     * @param projid Id of the project to search for cancelled tasks
+     *
+     * @return List of cancelled tasks from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
+    @RequestMapping(value = "cancelled", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getCancelledTasks (@PathVariable int projid) {
+
+
+        Project project = this.projectService.getProjectById(projid);
+        List<Task> cancelledTasks = new ArrayList<>();
+
+        cancelledTasks.addAll(taskService.getProjectCancelledTasks(project));
+
+        for(Task task : cancelledTasks) {
+            for(String action : task.getTaskState().getActions()) {
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
+            }
+        }
+
+        return new ResponseEntity<>(cancelledTasks, HttpStatus.OK);
     }
 
 
@@ -308,6 +360,35 @@ public class RestProjectTasksController {
         }
 
         return new ResponseEntity<>(notStartedTasks, HttpStatus.OK);
+    }
+
+
+    /**
+     * This methods gets the list of expired tasks from a project
+     *
+     * @param projid Id of the project to search for expired tasks
+     *
+     * @return List of expired from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
+    @RequestMapping(value = "expired", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getExpiredTasks (@PathVariable int projid) {
+
+
+        Project project = this.projectService.getProjectById(projid);
+        List<Task> expiredTasks = new ArrayList<>();
+
+        expiredTasks.addAll(taskService.getProjectExpiredTasks(project));
+
+        for(Task task : expiredTasks) {
+            for(String action : task.getTaskState().getActions()) {
+                Link reference = TaskAction.getLinks(projid, task.getTaskID()).get(action);
+                task.add(reference);
+            }
+        }
+
+        return new ResponseEntity<>(expiredTasks, HttpStatus.OK);
     }
 
 
@@ -412,6 +493,32 @@ public class RestProjectTasksController {
         }   else {
               response  = new ResponseEntity<>(activeTeam, HttpStatus.OK);
         }
+
+        return response;
+    }
+
+    /**
+     * This method returns the list of Project collaborators that are not assigned to any task of that Project
+     * @param projid
+     * @return
+     */
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "collabsAvailableForTask", method = RequestMethod.GET)
+    public ResponseEntity<List<ProjectCollaborator>> getProjectTeamNotAddedToAnyTaskOfProject(@PathVariable int projid) {
+
+        Project project = projectService.getProjectById(projid);
+
+        List <ProjectCollaborator> projCollabs = projectService.getActiveProjectTeam(project);
+        List<ProjectCollaborator> unassignedTeam = new ArrayList<>();
+
+        ResponseEntity <List<ProjectCollaborator>> response ;
+
+        for (ProjectCollaborator other : projCollabs) {
+            if (!taskService.isCollaboratorActiveOnAnyTask(other)) {
+                unassignedTeam.add(other);
+            }
+        }
+            response  = new ResponseEntity<>(unassignedTeam, HttpStatus.OK);
 
         return response;
     }

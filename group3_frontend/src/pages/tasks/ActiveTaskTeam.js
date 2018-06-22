@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import AuthService from '../loginPage/AuthService';
 import './activeTeam.css';
+import AuthService from "../loginPage/AuthService";
+import RemoveTaskCollaborator from "./RemoveTaskCollaborator";
 
 class ActiveTaskTeam extends Component {
     constructor(props) {
         super(props);
         this.state = {
             activeTeam: []
-        };
+        }
 
-        this.AuthService = new AuthService();
+        this.getActiveTaskTeam = this.getActiveTaskTeam.bind(this);
+        this.authService=new AuthService();
     }
 
     componentDidMount() {
@@ -17,27 +19,32 @@ class ActiveTaskTeam extends Component {
     }
 
     async getActiveTaskTeam() {
-        this.AuthService.fetch(
-            `/projects/${this.props.project}/tasks/${this.props.id}/activeTeam`,
-
-            { method: 'GET' }
-        ).then(responseData => {
+        this.authService.fetch(
+            `/projects/${this.props.task.project}/tasks/${this.props.task.taskID}/activeTeam`,
+            { method: "GET" }
+        ).then(response => {
             this.setState({
-                activeTeam: responseData,
-                message: responseData.error
-            });
+                activeTeam: response,
+                message: response.error
+            })
         });
     }
 
+    removeTaskCollaborator(activeTeamItem) {
+
+        if(this.props.task.currentProject.projectManager.userID.toString() === this.authService.getUserId().toString()) {
+            return <td><RemoveTaskCollaborator task={this.props.task} collaborator={activeTeamItem}/></td>;
+        }
+    }
+
     ListOfCollabs() {
-        if (this.state.activeTeam.length > 0) {
+
+        if (this.state.message == null) {
             return this.state.activeTeam.map((activeTeamitem, index) => {
                 return (
                     <tr className="line" key={index}>
-                        <td>
-                            {' '}
-                            {activeTeamitem.projCollaborator.collaborator.name}
-                        </td>
+                        <td>{activeTeamitem.taskCollaborator.name}</td>
+                        {this.removeTaskCollaborator(activeTeamitem)}
                     </tr>
                 );
             });

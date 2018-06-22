@@ -1,67 +1,118 @@
-import * as filterActions from './filterActions';
+import * as userTasksFilterActions from './userTasksFilterActions';
 import AuthService from "../pages/loginPage/AuthService";
 
 
-export function updateFinishedTasks(userId) {
+export function updateMyFinishedTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
+        myTasksLoading()
         authService.fetch(`/users/${userId}/tasks/finished`, {
             method: 'GET'
         }).then(data => {
-            dispatch(finishTasksFetched(data));
-            dispatch(filterActions.changeToFinished());
+            dispatch(myFinishedTasksFetched(data));
+            dispatch(userTasksFilterActions.changeToMyFinished());
             return data;
+        }).catch((error) => {
+            console.log(error)
+            myFetchTasksHasErrored();
         });
     };
 }
 
-export function updateOngoingTasks(userId) {
+export function updateMyOngoingTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
+        myTasksLoading()
         authService.fetch(`/users/${userId}/tasks/pending`, {
             method: 'GET'
         }).then(data => {
-                dispatch(ongoingTasksFetched(data));
-                dispatch(filterActions.changeToOnGoing());
+                dispatch(myOngoingTasksFetched(data));
+                dispatch(userTasksFilterActions.changeToMyOnGoing())
                 return data;
+        }).catch((error) => {
+            console.log(error)
+            myFetchTasksHasErrored();
         });
     };
 }
 
-export function updateAllTasks(userId) {
+export function updateMyAllTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
+        myTasksLoading()
         authService.fetch(`/users/${userId}/tasks/`, {
             method: 'GET'
         }).then(data => {
-                dispatch(allTasksFetched(data));
-                dispatch(filterActions.changeToAllTasks());
+                dispatch(myAllTasksFetched(data));
+                dispatch(userTasksFilterActions.changeToMyAllTasks())
                 return data;
-            });
+        }).catch((error) => {
+            console.log(error)
+            myFetchTasksHasErrored();
+        });
     };
 }
 
-export function finishTasksFetched(finishedTasks) {
-    return {
-        type: 'FINISHTASKS_FETCHED',
-        finishedTasks
+export function updateMyLastMonthFinishedTasks(userId) {
+    const authService = new AuthService();
+
+    return dispatch => {
+        myTasksLoading()
+        authService.fetch(`/users/${userId}/tasks/lastmonthfinished`, {
+            method: 'GET'
+        }).then(data => {
+                dispatch(lastMonthFinishedTasksFetched(data));
+                dispatch(userTasksFilterActions.changeToMyLastMonthFinished())
+                return data;
+        }).catch((error) => {
+            console.log(error)
+            myFetchTasksHasErrored();
+        });
     };
 }
 
-export function ongoingTasksFetched(ongoingTasks) {
+export function myFinishedTasksFetched(myFinishedTasks) {
     return {
-        type: 'ONGOING_FETCHED',
-        ongoingTasks
+        type: 'MYFINISHTASKS_FETCHED',
+        myFinishedTasks
     };
 }
 
-export function allTasksFetched(allTasks) {
+export function myOngoingTasksFetched(myOngoingTasks) {
     return {
-        type: 'ALLTASKS_FETCHED',
-        allTasks
+        type: 'MYONGOING_FETCHED',
+        myOngoingTasks
     };
 }
+
+export function myAllTasksFetched(myAllTasks) {
+    return {
+        type: 'MYALLTASKS_FETCHED',
+        myAllTasks
+    };
+}
+
+export function lastMonthFinishedTasksFetched(lastMonthFinishedTasks) {
+    return {
+        type: 'LASTMONTHTASKS_FETCHED',
+        lastMonthFinishedTasks
+    };
+}
+
+export function myTasksLoading() {
+    return {
+        type: 'ITEM_LOADING'
+    };
+}
+
+export function myFetchTasksHasErrored() {
+    return {
+        type: 'FETCH_HAS_ERRORED'
+    };
+}
+
+
 
