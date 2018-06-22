@@ -8,10 +8,12 @@ import projectsReducer from './projectsReducer';
 import metaReducer from './metaReducer';
 import UserReducers from './UserReducers';
 import usersFilterReducer from './usersFilterReducer';
-import userTasksReducer from './userTasksReducer';
+import createTaskReducer from './createTaskReducer'
+import userTasksReducer from './userTasksReducer'
 import projCollabsWoutTasksReducer from './projCollabsWoutTasksReducer';
 import projectTeamReducer from './projectTeamReducer';
 import availableUsersReducer from './availableProjectTeamReducer';
+
 
 const appReducer = combineReducers({
     authenthication: authenticationReducer,
@@ -26,7 +28,9 @@ const appReducer = combineReducers({
     userTasks: userTasksReducer,
     collabsWoutTasks: projCollabsWoutTasksReducer,
     projectTeam: projectTeamReducer,
-    availableUsers: availableUsersReducer
+    availableUsers: availableUsersReducer,
+    usersFilter: usersFilterReducer,
+    createTask: createTaskReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT') {

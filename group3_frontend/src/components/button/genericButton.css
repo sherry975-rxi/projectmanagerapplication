@@ -18,6 +18,27 @@
 }
 
 .genericButton:focus {
-    background-color: #2a3f54;
+    background-color: rgb(135, 190, 178);
     color: white;
+}
+
+.cancelButton {
+    background-color: rgb(218, 72, 72);
+    border: none;
+    color: rgb(255, 255, 255);
+    font-family: Helvetica;
+    font-weight: normal;
+    text-align: center;
+    display: inline-block;
+    font-size: 13px;
+    width: 140px;
+    height: 32px;
+    border-radius: 0;
+    margin-right: 5px;
+}
+
+.cancelButton:hover {
+    background-color: rgb(116, 42, 42);
+    color: rgb(255, 255, 255);
+    margin-right: 5px;
 }

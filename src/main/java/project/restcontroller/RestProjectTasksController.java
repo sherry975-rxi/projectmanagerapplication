@@ -55,14 +55,16 @@ public class RestProjectTasksController {
 
         Project projectTask = projectService.getProjectById(projid);
         Task task = taskService.createTask(taskDTO.getDescription(), projectTask);
+        task.setEstimatedTaskStartDate(taskDTO.getEstimatedTaskStartDate());
+        task.setTaskDeadline(taskDTO.getTaskDeadline());
+        taskService.saveTask(task);
 
         if (taskDTO.getEstimatedTaskEffort() <= 0.00000001 && taskDTO.getTaskBudget() <= 0.00000001
                 && taskDTO.getEstimatedTaskStartDate() != null && taskDTO.getTaskDeadline() != null) {
 
             task.setEstimatedTaskEffort(taskDTO.getEstimatedTaskEffort());
             task.setTaskBudget(taskDTO.getTaskBudget());
-            task.setEstimatedTaskStartDate(taskDTO.getEstimatedTaskStartDate());
-            task.setTaskDeadline(taskDTO.getTaskDeadline());
+
 
 
         }

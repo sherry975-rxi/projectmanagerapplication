@@ -5,6 +5,11 @@ import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {updateAllTasks} from './../../actions/projectTasksActions';
+import {updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks} from "../../actions/userTasksActions";
+import {
+    updateFinishedTasks, updateNotStartedTasks, updateStandByTasks,
+    updateUnfinishedTasks, updateExpiredTasks
+} from "../../actions/projectTasksActions";
 
 class RemoveTaskCollaborator extends Component {
     constructor(props) {
@@ -48,7 +53,8 @@ class RemoveTaskCollaborator extends Component {
             }
         ).then(response => {
             toastr.success('Removal request approved!');
-            return <Redirect to="myprojects" />;
+            this.updateTasks();
+            this.props.reload();
         }).catch(error => {
             toastr.error('An error occurred!');
         });
@@ -63,11 +69,47 @@ class RemoveTaskCollaborator extends Component {
             }
         ).then(responseData => {
             toastr.success('Collaborator Successfully removed!');
-            return <Redirect to="myprojects" />;
+            this.updateTasks();
+            this.props.reload();
         }).catch(err => {
             toastr.error('An error occurred!');
         });
 
+
+    }
+
+    updateTasks() {
+        console.log(this.props.filter);
+        switch (this.props.filter) {
+
+            case 'all':
+                this.props.updateAllTasks(this.props.task.project);
+                break;
+            case 'finished':
+                this.props.updateFinishedTasks(this.props.task.project);
+                break;
+            case 'unfinished':
+                this.props.updateUnfinishedTasks(this.props.task.project);
+                break;
+            case 'notStarted':
+                this.props.updateNotStartedTasks(this.props.task.project);
+                break;
+            case 'withoutCollaborators':
+                this.props.updateStandByTasks(this.props.task.project);
+                break;
+            case 'expired':
+                this.props.updateExpiredTasks(this.props.task.project);
+                break;
+            case 'myAll':
+                this.props.updateMyAllTasks(this.AuthService.getUserId());
+                break;
+            case 'myFinished':
+                this.props.updateMyFinishedTasks(this.AuthService.getUserId());
+                break;
+            case 'myUnfinished':
+                this.props.updateMyOngoingTasks(this.AuthService.getUserId());
+                break;
+        }
 
     }
 
@@ -77,21 +119,21 @@ class RemoveTaskCollaborator extends Component {
         } else if(this.state.text === 'Remove') {
             this.removeTaskCollaborator();
         }
-        // console.log("PQP!");
-        // console.log(this.props.collaborator);
-        // console.log(this.props.task);
     }
 
     render() {
         return <button onClick={this.handleClick} className="genericButton" >{this.state.text}</button>;
     }
 }
-
-
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateAllTasks }, dispatch);
-};
-export default connect(
-    null,
-    mapDispatchToProps
-)(RemoveTaskCollaborator);
+const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
+const mapDispatchToProps = dispatch => bindActionCreators({
+    updateFinishedTasks,
+    updateAllTasks,
+    updateStandByTasks,
+    updateNotStartedTasks,
+    updateUnfinishedTasks,
+    updateExpiredTasks,
+    updateMyAllTasks,
+    updateMyFinishedTasks,
+    updateMyOngoingTasks }, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(RemoveTaskCollaborator);

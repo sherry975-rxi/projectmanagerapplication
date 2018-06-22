@@ -1,46 +1,35 @@
 import React, { Component } from 'react';
 import './activeTeam.css';
-import AuthService from "../loginPage/AuthService";
-import RemoveTaskCollaborator from "./RemoveTaskCollaborator";
+import RemoveTaskCollaborator from './RemoveTaskCollaborator';
+import AuthService from './../../pages/loginPage/AuthService';
 
 class ActiveTaskTeam extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            activeTeam: []
+
+        this.authService = new AuthService();
+    }
+
+    removeTaskCollaborator = activeTeamItem => {
+        if (
+            this.props.task.currentProject.projectManager.userID.toString() ===
+            this.authService.getUserId().toString()
+        ) {
+            return (
+                <td>
+                    <RemoveTaskCollaborator
+                        task={this.props.task}
+                        collaborator={activeTeamItem}
+                        reload={this.getActiveTaskTeam}
+                    />
+                </td>
+            );
         }
-
-        this.getActiveTaskTeam = this.getActiveTaskTeam.bind(this);
-        this.authService=new AuthService();
-    }
-
-    componentDidMount() {
-        this.getActiveTaskTeam();
-    }
-
-    async getActiveTaskTeam() {
-        this.authService.fetch(
-            `/projects/${this.props.task.project}/tasks/${this.props.task.taskID}/activeTeam`,
-            { method: "GET" }
-        ).then(response => {
-            this.setState({
-                activeTeam: response,
-                message: response.error
-            })
-        });
-    }
-
-    removeTaskCollaborator(activeTeamItem) {
-
-        if(this.props.task.currentProject.projectManager.userID.toString() === this.authService.getUserId().toString()) {
-            return <td><RemoveTaskCollaborator task={this.props.task} collaborator={activeTeamItem}/></td>;
-        }
-    }
+    };
 
     ListOfCollabs() {
-
-        if (this.state.message == null) {
-            return this.state.activeTeam.map((activeTeamitem, index) => {
+        if (this.props.taskTeam.length > 0) {
+            return this.props.taskTeam.map((activeTeamitem, index) => {
                 return (
                     <tr className="line" key={index}>
                         <td>{activeTeamitem.taskCollaborator.name}</td>
