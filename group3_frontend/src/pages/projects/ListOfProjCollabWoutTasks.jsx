@@ -1,21 +1,31 @@
 import React, { Component } from 'react';
 import { PanelGroup, Panel } from 'react-bootstrap';
 import { connect } from 'react-redux';
-
+import { updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateUnfinishedTasks, addCollaboratorToTask } from '../../actions/projectTasksActions';
+import { bindActionCreators } from 'redux';
+import {
+    MenuItem,
+    DropdownButton,
+    FormGroup,
+    FormControl,
+    ControlLabel
+} from 'react-bootstrap';
+import DropListTasksToAddToPCollab from './DropListTasksToAddToPCollab';
 
 class ListOfProjCollabWoutTasks extends Component {
 
     constructor(props){
         super(props);
-        this.ListOfCollabs = this.ListOfCollabs.bind(this);
         this.state = {
             activeKey: '1'
         };
+
+        this.ListOfCollabs = this.ListOfCollabs.bind(this);
     }
 
     
         ListOfCollabs() {
-
+        console.log(this.taskList)
         console.log(this.props.unassignedCollabs)        
         return (this.props.unassignedCollabs.map((unassignedCollabsitem, index) => {  
             return(
@@ -25,7 +35,7 @@ class ListOfProjCollabWoutTasks extends Component {
                         <tr><th>{unassignedCollabsitem.collaborator.name}</th>
                         <th>{unassignedCollabsitem.collaborator.email}</th>
                         <th>{unassignedCollabsitem.costPerEffort}</th>
-                        <th></th></tr>
+                        <th><DropListTasksToAddToPCollab email = {unassignedCollabsitem.collaborator.email} projectID = {unassignedCollabsitem.project.projectId}/> </th></tr>
                     </thead>
                 </table>
         </Panel>)}))
@@ -42,6 +52,7 @@ class ListOfProjCollabWoutTasks extends Component {
             <Panel >
                 <table className="table table-title">
                     <thead>
+                        {console.log("priemiro")}
                         <tr><th>Name</th>
                         <th>Email</th>
                         <th>Cost</th>
@@ -49,16 +60,26 @@ class ListOfProjCollabWoutTasks extends Component {
                     </thead>
                 </table>
             </Panel>
+           
             {this.ListOfCollabs()}
+            {console.log("segundo")}
         </PanelGroup>
             )}
     }
 
+
     const mapStateToProps = state => {
         return {
-            unassignedCollabs: state.collabsWoutTasks.collabs
+            unassignedCollabs: state.collabsWoutTasks.collabs,
+            taskList: state.projectTasks.allTasks
         };
     };
-    
-    export default connect(mapStateToProps,null)(ListOfProjCollabWoutTasks);
+
+    const mapDispatchToProps = dispatch => {
+        return bindActionCreators(
+            { updateAllTasks, addCollaboratorToTask },
+            dispatch);
+    };
+   
+    export default connect(mapStateToProps,mapDispatchToProps)(ListOfProjCollabWoutTasks);
 
