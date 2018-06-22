@@ -101,7 +101,8 @@ class ProjectsTableRow extends Component {
                      <Link
                         className="items-menu"
                         to={
-                            '/UnassignedProjCollab'
+                            '/projects/' +
+                            this.props.project.projectId + '/UnassignedProjCollab'
                         } onClick = {this.handleClick()}
                     >
                         <ItemsButton text="Unassigned" />
