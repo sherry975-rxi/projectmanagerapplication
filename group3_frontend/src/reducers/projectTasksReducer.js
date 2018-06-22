@@ -44,6 +44,13 @@ export default (state = INITIAL_STATE, action) => {
                 notStartedTasks: action.notStartedTasks,
                 error: false
             };
+        case 'EXPIRED_FETCHED':
+            return {
+                ...state,
+                itemIsLoading: false,
+                expiredTasks: action.expiredTasks,
+                error: false
+            };
         case 'ALLTASKS_FETCHED':
             return {
                 ...state,
