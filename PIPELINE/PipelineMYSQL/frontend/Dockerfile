@@ -18,6 +18,7 @@ RUN npm install && \
     npm install redux-thunk --save && \
     npm install progressbar.js --save && \
     npm install dateformat --save && \
+    npm install react-dates --save && \
     npm install -g json
 
 # setting proxy in package.json for backend service...
