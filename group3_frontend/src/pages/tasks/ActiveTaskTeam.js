@@ -33,7 +33,7 @@ class ActiveTaskTeam extends Component {
     removeTaskCollaborator(activeTeamItem) {
 
         if(this.props.task.currentProject.projectManager.userID.toString() === this.authService.getUserId().toString()) {
-            return <td><RemoveTaskCollaborator task={this.props.task} collaborator={activeTeamItem}/></td>;
+            return <td><RemoveTaskCollaborator task={this.props.task} collaborator={activeTeamItem} reload={this.getActiveTaskTeam}/></td>;
         }
     }
 
