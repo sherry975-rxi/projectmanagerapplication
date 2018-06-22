@@ -18,6 +18,6 @@
 }
 
 .genericButton:focus {
-    background-color: #2a3f54;
+    background-color: rgb(135, 190, 178);
     color: white;
 }
