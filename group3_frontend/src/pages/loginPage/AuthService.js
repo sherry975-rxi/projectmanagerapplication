@@ -79,6 +79,30 @@ export default class AuthService {
         });
     }
 
+
+    //Fetch that sends a header with the authorization token storen in the localStorage
+    fetchRaw(url, options) {
+        const headers = {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        };
+
+        if (this.loggedIn()) {
+            headers['Authorization'] = this.getToken();
+        }
+
+        return fetch(url, {
+            headers,
+            ...options
+        }).then(response => {
+            localStorage.setItem(
+                'id_token',
+                response.headers.get('Authorization')
+            );
+            return response
+        });
+    }
+
     //Verifies if the HTTP response is valid (within 200)
     checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
