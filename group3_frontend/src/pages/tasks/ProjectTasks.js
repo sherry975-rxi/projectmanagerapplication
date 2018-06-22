@@ -5,6 +5,7 @@ import AuthService from './../loginPage/AuthService';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 import LoadingComponent from './../../components/loading/LoadingComponent';
 import { Redirect } from 'react-router-dom';
+import CreateTask from './createTask/CreateTask';
 
 class ProjectTasks extends Component {
     constructor(props) {
@@ -51,7 +52,9 @@ class ProjectTasks extends Component {
     render() {
 
         return (
+
             <div>
+                <div align="right"><CreateTask projectId={this.props.match.params.projectID} /></div>
                 <FetchTaskButton
                     projectID={this.props.match.params.projectID}
                 />
