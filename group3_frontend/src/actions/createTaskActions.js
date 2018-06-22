@@ -1,26 +1,54 @@
 import AuthService from "../pages/loginPage/AuthService";
 
+
 export function createTask(taskDetails, projectId) {
     const authService = new AuthService();
 
     return dispatch => {
-        authService.fetch(
+        dispatch(taskIsBeingCreated())
+        authService.fetchRaw(
             `/projects/${projectId}/tasks/`,
             {
                 body: JSON.stringify(taskDetails),
                 method: 'POST'
             }
         ).then(responseData => {
-            dispatch(taskWasCreated())
-            return responseData
-        });
+            if (responseData.status >= 200 && responseData.status <= 300) {
+                return responseData
+            }
+        }).then(responseData => responseData.json())
+            .then(res => {
+                dispatch(taskWasCreated(res))
+            })
+    };
+}
+
+export function deleteTaskCreated(projectId, taskId) {
+
+    return dispatch => {
+        fetch(
+            `/projects/${projectId}/tasks/${taskId}`,
+            {
+                headers: { Authorization: localStorage.getItem('id_token') },
+                method: 'DELETE'
+            }).then(response => {
+                dispatch(taskCreatedWasDeleted())
+            })
+
+    };
+}
+
+export function taskCreatedWasDeleted() {
+    return {
+        type: 'TASK_DELETED'
     };
 }
 
 
-export function taskWasCreated() {
+export function taskWasCreated(task) {
     return {
-        type: 'CREATED_TASK'
+        type: 'TASK_CREATED',
+        task: task
     };
 }
 
