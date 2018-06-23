@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PanelGroup, Panel, DropdownButton, MenuItem } from 'react-bootstrap';
+import { PanelGroup, Panel } from 'react-bootstrap';
 import './AccordionMenuTasks.css';
 import * as Constants from '../utils/titleConstants';
 import { handleTaskHeaders } from '../utils/handleList';
@@ -278,7 +278,6 @@ class AccordionMenu extends Component {
 }
 const mapStateToProps = state => {
     return {
-        updated: state.projectTasks.tasksUpdated,
         profile: state.authenthication.user.userProfile
     };
 };

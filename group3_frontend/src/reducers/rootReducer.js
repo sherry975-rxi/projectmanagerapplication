@@ -3,7 +3,6 @@ import { combineReducers } from 'redux';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 import signUpReducer from './signUpReducer';
 import filterReducer from './filterReducer';
-import projectTasksReducer from './projectTasksReducer';
 import projectsReducer from './projectsReducer';
 import tasksReducer from './tasksReducer';
 import metaReducer from './metaReducer';
@@ -20,7 +19,6 @@ const appReducer = combineReducers({
     toastr: toastrReducer,
     signUp: signUpReducer,
     filterReducer: filterReducer,
-    projectTasks: projectTasksReducer,
     projects: projectsReducer,
     meta: metaReducer,
     users: UserReducers,
