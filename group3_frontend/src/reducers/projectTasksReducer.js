@@ -67,11 +67,7 @@ export default (state = INITIAL_STATE, action) => {
             };
         case 'FETCH_HAS_ERRORED':
             return { ...state, itemIsLoading: false, error: true };
-        case GET_AVAILABLE_COLLABORATORS_FOR_TASK_FULLFIELD:
-            return {
-                ...state,
-                availableCollaboratorsForTask: action.payload
-            };
+
         default:
             return state;
     }

@@ -6,6 +6,7 @@ import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTask
 import LoadingComponent from './../../components/loading/LoadingComponent';
 import { Redirect } from 'react-router-dom';
 import CreateTask from './createTask/CreateTask';
+import { get } from 'lodash';
 
 class ProjectTasks extends Component {
     constructor(props) {
@@ -17,14 +18,9 @@ class ProjectTasks extends Component {
     //TODO: Add sort by ascending or descending order to these tables
 
     renderTasks() {
-        console.log(this.props.filter)
-        console.log(this.props.cancelledTasks)
-
         if (this.props.tasksLoading) {
-            return (<LoadingComponent />)
-        }
-
-        else if (this.props.error) {
+            return <LoadingComponent />;
+        } else if (this.props.error) {
             return <Redirect to="/login" />;
         }
 
@@ -50,33 +46,32 @@ class ProjectTasks extends Component {
     }
 
     render() {
-
         return (
-
             <div>
-                <div align="right"><CreateTask projectId={this.props.match.params.projectID} /></div>
+                <div align="right">
+                    <CreateTask projectId={this.props.match.params.projectID} />
+                </div>
                 <FetchTaskButton
                     projectID={this.props.match.params.projectID}
                 />
                 {this.renderTasks()}
             </div>
         );
-
     }
 }
 
 const mapStateToProps = state => {
     return {
         filter: state.filterReducer.filterType,
-        finishedTasks: state.projectTasks.finishedTasks,
-        unfinishedTasks: state.projectTasks.unfinishedTasks,
-        standByTasks: state.projectTasks.wihoutCollab,
-        notStartedTasks: state.projectTasks.notStartedTasks,
-        expiredTasks: state.projectTasks.expiredTasks,
-        allTasks: state.projectTasks.allTasks,
-        cancelledTasks: state.projectTasks.cancelledTasks,
-        tasksLoading: state.projectTasks.itemIsLoading,
-        error: state.projectTasks.error
+        finishedTasks: get(state, 'tasks.tasksList', []),
+        unfinishedTasks: get(state, 'tasks.tasksList', []),
+        standByTasks: get(state, 'tasks.tasksList', []),
+        notStartedTasks: get(state, 'tasks.tasksList', []),
+        expiredTasks: get(state, 'tasks.tasksList', []),
+        allTasks: get(state, 'tasks.tasksList', []),
+        cancelledTasks: get(state, 'tasks.tasksList', []),
+        tasksLoading: get(state, 'tasks.itemIsLoading', []),
+        error: get(state, 'tasks.error', [])
     };
 };
 

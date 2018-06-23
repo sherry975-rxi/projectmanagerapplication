@@ -4,6 +4,7 @@ import AuthService from './../loginPage/AuthService';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addCollaboratorToTask } from '../../actions/projectTasksActions';
+import { get } from 'lodash';
 
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
@@ -68,8 +69,7 @@ class AvailableListOfCollaborators extends Component {
 }
 
 export const mapStateToProps = state => {
-    const collaborators =
-        state.projectTasks.availableCollaboratorsForTask || [];
+    const collaborators = get(state, 'tasks.availableCollaboratorsForTask', []);
     return { collaborators };
 };
 

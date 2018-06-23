@@ -27,6 +27,7 @@ export default (state = {}, action) => {
                 ...state,
                 availableCollaboratorsForTask: action.payload
             };
+
         default:
             return state;
     }
