@@ -219,42 +219,48 @@ export function updateCancelledTasks(projectId) {
 export function finishTasksFetched(finishedTasks) {
     return {
         type: 'FINISHTASKS_FETCHED',
-        finishedTasks
+        finishedTasks,
+        tasks: finishedTasks
     };
 }
 
 export function unfinishedTasksFetched(unfinishedTasks) {
     return {
         type: 'UNFINISHEDTASKS_FETCHED',
-        unfinishedTasks
+        unfinishedTasks,
+        tasks: unfinishedTasks
     };
 }
 
 export function standByTasksFetched(standbyTasks) {
     return {
         type: 'STANDBYTASKS_FETCHED',
-        standbyTasks
+        standbyTasks,
+        tasks: standbyTasks
     };
 }
 
 export function notStartedTasksFetched(notStartedTasks) {
     return {
         type: 'NOTSTARTED_FETCHED',
-        notStartedTasks
+        notStartedTasks,
+        tasks: notStartedTasks
     };
 }
 
 export function expiredTasksFetched(expiredTasks) {
     return {
         type: 'EXPIRED_FETCHED',
-        expiredTasks
+        expiredTasks,
+        tasks: expiredTasks
     };
 }
 
 export function allTasksFetched(allTasks) {
     return {
         type: 'ALLTASKS_FETCHED',
-        allTasks
+        allTasks,
+        tasks: allTasks
     };
 }
 

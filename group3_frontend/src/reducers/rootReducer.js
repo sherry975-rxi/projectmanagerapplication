@@ -5,15 +5,15 @@ import signUpReducer from './signUpReducer';
 import filterReducer from './filterReducer';
 import projectTasksReducer from './projectTasksReducer';
 import projectsReducer from './projectsReducer';
+import tasksReducer from './tasksReducer';
 import metaReducer from './metaReducer';
 import UserReducers from './UserReducers';
 import usersFilterReducer from './usersFilterReducer';
-import createTaskReducer from './createTaskReducer'
-import userTasksReducer from './userTasksReducer'
+import createTaskReducer from './createTaskReducer';
+import userTasksReducer from './userTasksReducer';
 import projCollabsWoutTasksReducer from './projCollabsWoutTasksReducer';
 import projectTeamReducer from './projectTeamReducer';
 import availableUsersReducer from './availableProjectTeamReducer';
-
 
 const appReducer = combineReducers({
     authenthication: authenticationReducer,
@@ -30,7 +30,8 @@ const appReducer = combineReducers({
     projectTeam: projectTeamReducer,
     availableUsers: availableUsersReducer,
     usersFilter: usersFilterReducer,
-    createTask: createTaskReducer
+    createTask: createTaskReducer,
+    tasks: tasksReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT') {
