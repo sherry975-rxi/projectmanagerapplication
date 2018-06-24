@@ -1,0 +1,41 @@
+body {
+    margin:40px;
+}
+
+.removeButton {
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    border: 0;
+    background: transparent;    
+}   
+
+.glyphicon.glyphicon-remove {
+        color: red;
+        text-align: center;    
+        padding-right: 1px;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        outline: none;
+        border: 0;
+        background: transparent;
+}
+
+    .glyphicon.glyphicon-remove::before {
+        color: red;
+        text-align: center;    
+        padding-right: 1px;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        size:10px;
+}
+
