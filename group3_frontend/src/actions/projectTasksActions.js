@@ -2,8 +2,10 @@ import * as filterActions from './filterActions';
 import { toastr } from 'react-redux-toastr';
 import {
     GET_AVAILABLE_COLLABORATORS_FOR_TASK_ERROR,
-    GET_AVAILABLE_COLLABORATORS_FOR_TASK_FULLFIELD
+    GET_AVAILABLE_COLLABORATORS_FOR_TASK_FULLFIELD,
+    CHANGE_TASK_FILTER
 } from './actions';
+import { TASKS_FILTER } from '../constants/TasksConstants';
 
 export function addCollaboratorToTask(projectId, taskId, userDTO) {
     return dispatch => {
@@ -170,7 +172,6 @@ export function updateExpiredTasks(projectId) {
                 return data;
             })
             .catch(error => {
-                console.log(error);
                 fetchTasksHasErrored();
             });
     };
@@ -195,7 +196,47 @@ export function updateAllTasks(projectId) {
     };
 }
 
+export function getAllProjectTasks(projectId) {
+    return dispatch => {
+        tasksLoading();
+        fetch(`/projects/${projectId}/tasks/all`, {
+            headers: { Authorization: localStorage.getItem('id_token') },
+            method: 'GET'
+        })
+            .then(responseData => responseData.json())
+            .then(data => {
+                dispatch(allProjectTasksFetched(data));
+                return data;
+            })
+            .catch(error => {
+                fetchTasksHasErrored();
+            });
+    };
+}
+
+export const getProjectTasksByFilter = (projectId, filterName) => {
+    switch (filterName) {
+        case TASKS_FILTER.ALL_TASKS:
+            return getAllProjectTasks(projectId);
+        case TASKS_FILTER.CANCELLED_TASKS:
+            return updateCancelledTasks(projectId);
+        case TASKS_FILTER.EXPIRED_TASKS:
+            return updateExpiredTasks(projectId);
+        case TASKS_FILTER.FINISHED_TASKS:
+            return updateFinishedTasks(projectId);
+        case TASKS_FILTER.NOTSTARTED_TASKS:
+            return updateNotStartedTasks(projectId);
+        case TASKS_FILTER.STANDBY_TASKS:
+            return updateStandByTasks(projectId);
+        case TASKS_FILTER.UNFINISHED_TASKS:
+            return updateUnfinishedTasks(projectId);
+        default:
+            return getAllProjectTasks(projectId);
+    }
+};
+
 export function updateCancelledTasks(projectId) {
+    console.log('here');
     return dispatch => {
         tasksLoading();
         fetch(`/projects/${projectId}/tasks/cancelled`, {
@@ -205,12 +246,11 @@ export function updateCancelledTasks(projectId) {
             .then(responseData => responseData.json())
             .then(data => {
                 dispatch(cancelledTasksFetched(data));
-                console.log(data);
+
                 dispatch(filterActions.changeToCancelled());
                 return data;
             })
             .catch(error => {
-                console.log(error);
                 fetchTasksHasErrored();
             });
     };
@@ -219,7 +259,6 @@ export function updateCancelledTasks(projectId) {
 export function finishTasksFetched(finishedTasks) {
     return {
         type: 'FINISHTASKS_FETCHED',
-        finishedTasks,
         tasks: finishedTasks
     };
 }
@@ -227,7 +266,6 @@ export function finishTasksFetched(finishedTasks) {
 export function unfinishedTasksFetched(unfinishedTasks) {
     return {
         type: 'UNFINISHEDTASKS_FETCHED',
-        unfinishedTasks,
         tasks: unfinishedTasks
     };
 }
@@ -235,7 +273,6 @@ export function unfinishedTasksFetched(unfinishedTasks) {
 export function standByTasksFetched(standbyTasks) {
     return {
         type: 'STANDBYTASKS_FETCHED',
-        standbyTasks,
         tasks: standbyTasks
     };
 }
@@ -243,7 +280,6 @@ export function standByTasksFetched(standbyTasks) {
 export function notStartedTasksFetched(notStartedTasks) {
     return {
         type: 'NOTSTARTED_FETCHED',
-        notStartedTasks,
         tasks: notStartedTasks
     };
 }
@@ -251,7 +287,6 @@ export function notStartedTasksFetched(notStartedTasks) {
 export function expiredTasksFetched(expiredTasks) {
     return {
         type: 'EXPIRED_FETCHED',
-        expiredTasks,
         tasks: expiredTasks
     };
 }
@@ -259,7 +294,13 @@ export function expiredTasksFetched(expiredTasks) {
 export function allTasksFetched(allTasks) {
     return {
         type: 'ALLTASKS_FETCHED',
-        allTasks,
+        tasks: allTasks
+    };
+}
+
+export function allProjectTasksFetched(allTasks) {
+    return {
+        type: 'ALL_PROJECT_TASKS_FETCHED',
         tasks: allTasks
     };
 }
@@ -267,7 +308,7 @@ export function allTasksFetched(allTasks) {
 export function cancelledTasksFetched(cancelledTasks) {
     return {
         type: 'CANCELLED_FETCHED',
-        cancelledTasks
+        tasks: cancelledTasks
     };
 }
 
@@ -282,3 +323,10 @@ export function fetchTasksHasErrored() {
         type: 'FETCH_HAS_ERRORED'
     };
 }
+
+export const changeTaskFilter = filterName => {
+    return {
+        type: CHANGE_TASK_FILTER,
+        filter: filterName
+    };
+};

@@ -12,38 +12,18 @@ class ProjectTasks extends Component {
     constructor(props) {
         super(props);
         this.AuthService = new AuthService();
-        this.renderTasks = this.renderTasks.bind(this);
     }
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    renderTasks() {
+    renderTasks = () => {
         if (this.props.tasksLoading) {
             return <LoadingComponent />;
         } else if (this.props.error) {
             return <Redirect to="/login" />;
         }
-
-        switch (this.props.filter) {
-            case 'all':
-                return <AccordionMenu list={this.props.allTasks} />;
-            case 'unfinished':
-                return <AccordionMenu list={this.props.unfinishedTasks} />;
-            case 'finished':
-                return <AccordionMenu list={this.props.finishedTasks} />;
-            case 'withoutCollaborators':
-                return <AccordionMenu list={this.props.standByTasks} />;
-            case 'notstarted':
-                return <AccordionMenu list={this.props.notStartedTasks} />;
-            case 'expired':
-                return <AccordionMenu list={this.props.expiredTasks} />;
-            case 'cancelled':
-                return <AccordionMenu list={this.props.cancelledTasks} />;
-            default: {
-                return <LoadingComponent />;
-            }
-        }
-    }
+        return <AccordionMenu list={this.props.tasks} />;
+    };
 
     render() {
         return (
@@ -52,7 +32,7 @@ class ProjectTasks extends Component {
                     <CreateTask projectId={this.props.match.params.projectID} />
                 </div>
                 <FetchTaskButton
-                    projectID={this.props.match.params.projectID}
+                    projectId={this.props.match.params.projectID}
                 />
                 {this.renderTasks()}
             </div>
@@ -62,20 +42,11 @@ class ProjectTasks extends Component {
 
 const mapStateToProps = state => {
     return {
-        filter: state.filterReducer.filterType,
-        finishedTasks: get(state, 'tasks.tasksList', []),
-        unfinishedTasks: get(state, 'tasks.tasksList', []),
-        standByTasks: get(state, 'tasks.tasksList', []),
-        notStartedTasks: get(state, 'tasks.tasksList', []),
-        expiredTasks: get(state, 'tasks.tasksList', []),
-        allTasks: get(state, 'tasks.tasksList', []),
-        cancelledTasks: get(state, 'tasks.tasksList', []),
+        taskFilter: get(state, 'tasks.taskFilter'),
+        tasks: get(state, 'tasks.tasksList', []),
         tasksLoading: get(state, 'tasks.itemIsLoading', []),
         error: get(state, 'tasks.error', [])
     };
 };
 
-export default connect(
-    mapStateToProps,
-    null
-)(ProjectTasks);
+export default connect(mapStateToProps)(ProjectTasks);

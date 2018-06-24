@@ -1,4 +1,8 @@
-import { GET_AVAILABLE_COLLABORATORS_FOR_TASK_FULLFIELD } from '../actions/actions';
+import {
+    GET_AVAILABLE_COLLABORATORS_FOR_TASK_FULLFIELD,
+    CHANGE_TASK_FILTER,
+    ALL_PROJECT_TASKS_FETCHED
+} from '../actions/actions';
 
 export default (state = {}, action) => {
     switch (action.type) {
@@ -8,6 +12,8 @@ export default (state = {}, action) => {
         case 'NOTSTARTED_FETCHED':
         case 'EXPIRED_FETCHED':
         case 'ALLTASKS_FETCHED':
+        case 'CANCELLED_FETCHED':
+        case ALL_PROJECT_TASKS_FETCHED:
             return {
                 ...state,
                 itemIsLoading: false,
@@ -26,6 +32,11 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 availableCollaboratorsForTask: action.payload
+            };
+        case CHANGE_TASK_FILTER:
+            return {
+                ...state,
+                taskFilter: action.filter
             };
 
         default:
