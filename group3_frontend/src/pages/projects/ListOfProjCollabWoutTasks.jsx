@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { PanelGroup, Panel } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import {
-    updateAllTasks,
-    addCollaboratorToTask
-} from '../../actions/projectTasksActions';
+import { updateAllTasks } from '../../actions/projectTasksActions';
 import { bindActionCreators } from 'redux';
 import DropListTasksToAddToPCollab from './DropListTasksToAddToPCollab';
 import { get } from 'lodash';
@@ -97,10 +94,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators(
-        { updateAllTasks, addCollaboratorToTask },
-        dispatch
-    );
+    return bindActionCreators({ updateAllTasks }, dispatch);
 };
 
 export default connect(

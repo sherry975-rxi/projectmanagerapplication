@@ -7,7 +7,7 @@ import {
 } from './actions';
 import { TASKS_FILTER } from '../constants/TasksConstants';
 
-export function addCollaboratorToTask(projectId, taskId, userDTO) {
+export function addCollaboratorToTask(projectId, taskId, userDTO, filterName) {
     return dispatch => {
         fetch(`/projects/${projectId}/tasks/${taskId}/addCollab`, {
             method: 'post',
@@ -26,7 +26,7 @@ export function addCollaboratorToTask(projectId, taskId, userDTO) {
                     dispatch(
                         getAvailableCollaboratorsForTask(projectId, taskId)
                     );
-                    dispatch(updateAllTasks(projectId));
+                    dispatch(getProjectTasksByFilter(projectId, filterName));
                 }
             })
             .catch(err => {

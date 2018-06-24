@@ -27,7 +27,8 @@ class DropListTasksToAddToPCollab extends Component {
         this.props.addCollaboratorToTask(
             this.props.projectID,
             this.props.taskList[eventKey].taskID,
-            userDTO
+            userDTO,
+            this.props.tasksFilter
         );
     };
 
@@ -63,7 +64,8 @@ class DropListTasksToAddToPCollab extends Component {
 const mapStateToProps = state => {
     return {
         unassignedCollabs: state.collabsWoutTasks.collabs,
-        taskList: get(state, 'tasks.tasksList', [])
+        taskList: get(state, 'tasks.tasksList', []),
+        tasksFilter: get(state, 'tasks.taskFilter')
     };
 };
 
