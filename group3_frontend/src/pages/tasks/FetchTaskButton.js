@@ -4,136 +4,120 @@ import { bindActionCreators } from 'redux';
 import './dist/toggle-switch.css';
 import './dist/FetchTask.css';
 import {
-    updateAllTasks,
-    updateFinishedTasks,
-    updateNotStartedTasks,
-    updateStandByTasks,
-    updateExpiredTasks,
-    updateUnfinishedTasks,
-    updateCancelledTasks
+    changeTaskFilter,
+    getProjectTasksByFilter
 } from './../../actions/projectTasksActions';
+import { TASKS_FILTER } from '../../constants/TasksConstants';
+import { get } from 'lodash';
 
 class FetchTaskButton extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            activeKey: '1'
-        };
+        this.props.getProjectTasksByFilter(
+            this.props.projectId,
+            TASKS_FILTER.ALL_TASKS
+        );
     }
 
-    handleChange(event, key) {
-        switch (key) {
-            case '1':
-                return this.props.updateAllTasks(this.props.projectID);
-            case '2':
-                return this.props.updateUnfinishedTasks(this.props.projectID);
-            case '3':
-                return this.props.updateFinishedTasks(this.props.projectID);
-            case '4':
-                return (
-                    <div>
-                        {this.props.updateNotStartedTasks(this.props.projectID)}
-                    </div>
-                );
-            case '5':
-                return (
-                    <div>
-                        {this.props.updateStandByTasks(this.props.projectID)}
-                    </div>
-                );
-            case '6':
-                return (
-                    <div>
-                        {this.props.updateExpiredTasks(this.props.projectID)}
-                    </div>
-                );
-            case '7':
-                return (
-                    <div>
-                        {this.props.updateCancelledTasks(this.props.projectID)}
-                    </div>
-                );
-            default:
-                return;
-        }
-    }
-
-    async componentDidMount() {
-        this.props.updateAllTasks(this.props.projectID);
-    }
+    handleChange = event => {
+        const taskFilter = event.target.id;
+        this.props.changeTaskFilter(taskFilter);
+        this.props.getProjectTasksByFilter(this.props.projectId, taskFilter);
+    };
 
     render() {
         return (
             <div className="buttonWrapper">
                 <div className="switch-toggle switch-ios">
                     <input
-                        id="alltasks"
-                        name="view3"
+                        id={TASKS_FILTER.ALL_TASKS}
                         type="radio"
-                        onChange={e => this.handleChange(e, '1')}
+                        name="tasksFilter"
+                        onChange={this.handleChange}
                     />
-                    <label className="buttonFont" htmlFor="alltasks">
+                    <label
+                        className="buttonFont"
+                        name="tasksFilter"
+                        htmlFor={TASKS_FILTER.ALL_TASKS}
+                    >
                         All Tasks
                     </label>
 
                     <input
-                        id="onGoing"
-                        name="view3"
+                        id={TASKS_FILTER.UNFINISHED_TASKS}
                         type="radio"
-                        onChange={e => this.handleChange(e, '2')}
+                        name="tasksFilter"
+                        onChange={this.handleChange}
                     />
-                    <label className="buttonFont" htmlFor="onGoing">
-                        Not Finished
+                    <label
+                        className="buttonFont"
+                        htmlFor={TASKS_FILTER.UNFINISHED_TASKS}
+                    >
+                        Unfinished
                     </label>
 
                     <input
-                        id="finished"
-                        name="view3"
+                        id={TASKS_FILTER.FINISHED_TASKS}
                         type="radio"
-                        onChange={e => this.handleChange(e, '3')}
+                        name="tasksFilter"
+                        onChange={this.handleChange}
                     />
-                    <label className="buttonFont" htmlFor="finished">
+                    <label
+                        className="buttonFont"
+                        htmlFor={TASKS_FILTER.FINISHED_TASKS}
+                    >
                         Finished
                     </label>
 
                     <input
-                        id="notStarted"
-                        name="view3"
+                        id={TASKS_FILTER.NOTSTARTED_TASKS}
                         type="radio"
-                        onChange={e => this.handleChange(e, '4')}
+                        name="tasksFilter"
+                        onChange={this.handleChange}
                     />
-                    <label className="buttonFont" htmlFor="notStarted">
+                    <label
+                        className="buttonFont"
+                        htmlFor={TASKS_FILTER.NOTSTARTED_TASKS}
+                    >
                         Not Started
                     </label>
 
                     <input
-                        id="standBy"
-                        name="view3"
+                        id={TASKS_FILTER.STANDBY_TASKS}
                         type="radio"
-                        onChange={e => this.handleChange(e, '5')}
+                        name="tasksFilter"
+                        onChange={this.handleChange}
                     />
-                    <label className="buttonFont" htmlFor="standBy">
+                    <label
+                        className="buttonFont"
+                        htmlFor={TASKS_FILTER.STANDBY_TASKS}
+                    >
                         Stand By
                     </label>
 
                     <input
-                        id="expired"
-                        name="view3"
+                        id={TASKS_FILTER.EXPIRED_TASKS}
                         type="radio"
-                        onChange={e => this.handleChange(e, '6')}
+                        name="tasksFilter"
+                        onChange={this.handleChange}
                     />
-                    <label className="buttonFont" htmlFor="expired">
+                    <label
+                        className="buttonFont"
+                        htmlFor={TASKS_FILTER.EXPIRED_TASKS}
+                    >
                         Expired
                     </label>
 
                     <input
-                        id="cancelled"
-                        name="view3"
+                        id={TASKS_FILTER.CANCELLED_TASKS}
                         type="radio"
-                        onChange={e => this.handleChange(e, '7')}
+                        name="tasksFilter"
+                        onChange={this.handleChange}
                     />
-                    <label className="buttonFont" htmlFor="cancelled">
+                    <label
+                        className="buttonFont"
+                        htmlFor={TASKS_FILTER.CANCELLED_TASKS}
+                    >
                         Cancelled
                     </label>
                 </div>
@@ -142,20 +126,21 @@ class FetchTaskButton extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        taskFilter: get(state, 'tasks.taskFilter', [])
+    };
+};
+
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
         {
-            updateAllTasks,
-            updateFinishedTasks,
-            updateNotStartedTasks,
-            updateStandByTasks,
-            updateExpiredTasks,
-            updateUnfinishedTasks,
-            updateCancelledTasks
+            changeTaskFilter,
+            getProjectTasksByFilter
         },
         dispatch
     );
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(FetchTaskButton);
