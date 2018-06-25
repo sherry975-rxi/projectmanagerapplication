@@ -198,6 +198,57 @@ public class RestProjectTasksControllerTest {
     }
 
 
+    /**
+     * GIVEN a task with a certain ID and no dependencies
+     *
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetTaskDependencies() throws Exception  {
+
+        //GIVEN a task with a certain Id
+
+        task3 = new Task("Task3", project);
+        task3.setTaskID("50");
+        task3.setEstimatedTaskStartDate(estimatedStart);
+        task3.setTaskDeadline(estimatedDeadline);
+        task3.setTaskBudget(2000);
+        projectTasks = new ArrayList<>();
+
+        when(taskService.getTaskByTaskID(anyString())).thenReturn(task3);
+
+        //confirmation that task3 does not have assigned collaborators
+
+        assertTrue(task3.getTaskDependency().isEmpty());
+
+        //WHEN a list of tasks without assigned collaborators is requested
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/1/dependencies")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN the response entity must contain status OK
+
+        assertEquals(HttpStatus.OK.value(),response.getStatus());
+
+
+        //AND WHEN adding a dependency
+        task.setEstimatedTaskStartDate(Calendar.getInstance());
+        task.setTaskID("30");
+
+        assertTrue(task3.createTaskDependence(task, 2));
+
+        List<Task> expected = new ArrayList<>();
+        expected.add(task);
+
+        ResponseEntity<List<Task>> actualResponse = victim.getTaskDependencies("1");
+
+        ResponseEntity<List<Task>> expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
+        assertEquals(expectedResponse,actualResponse);
+
+    }
+
+
     @Test
     public void testGetTasksWithoutCollaborators() throws Exception  {
 
