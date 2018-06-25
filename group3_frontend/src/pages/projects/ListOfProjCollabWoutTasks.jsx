@@ -1,103 +1,88 @@
 import React, { Component } from 'react';
 import { PanelGroup, Panel } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { updateAllTasks } from '../../actions/projectTasksActions';
+import { updateFinishedTasks, updateAllTasks, updateStandByTasks, updateNotStartedTasks, updateUnfinishedTasks, addCollaboratorToTask } from '../../actions/projectTasksActions';
 import { bindActionCreators } from 'redux';
+import {
+    MenuItem,
+    DropdownButton,
+    FormGroup,
+    FormControl,
+    ControlLabel
+} from 'react-bootstrap';
 import DropListTasksToAddToPCollab from './DropListTasksToAddToPCollab';
-import { get } from 'lodash';
+import { updateUnassignedProjCollabs } from '../../actions/projCollabsWoutTasksActions';
+
 
 class ListOfProjCollabWoutTasks extends Component {
-    constructor(props) {
+
+    constructor(props){
         super(props);
         this.state = {
-            activeKey: '1'
+            activeKey: '1', 
+            projectId: ''
         };
-
         this.ListOfCollabs = this.ListOfCollabs.bind(this);
     }
 
-    ListOfCollabs() {
-        return this.props.unassignedCollabs.map(
-            (unassignedCollabsitem, index) => {
-                return (
-                    <Panel>
-                        <table className="table table-title">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        {
-                                            unassignedCollabsitem.collaborator
-                                                .name
-                                        }
-                                    </th>
-                                    <th>
-                                        {
-                                            unassignedCollabsitem.collaborator
-                                                .email
-                                        }
-                                    </th>
-                                    <th>
-                                        {unassignedCollabsitem.costPerEffort}
-                                    </th>
-                                    <th>
-                                        <DropListTasksToAddToPCollab
-                                            email={
-                                                unassignedCollabsitem
-                                                    .collaborator.email
-                                            }
-                                            projectID={
-                                                unassignedCollabsitem.project
-                                                    .projectId
-                                            }
-                                        />{' '}
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </Panel>
-                );
-            }
-        );
-    }
+    
+        ListOfCollabs() {   
+        return (this.props.unassignedCollabs.map((unassignedCollabsitem, index) => {  
+            return(
+            <Panel >
+                <table className="table table-title">
+                    <thead>
+                        <tr><th>{unassignedCollabsitem.collaborator.name}</th>
+                        <th>{unassignedCollabsitem.collaborator.email}</th>
+                        <th>{unassignedCollabsitem.costPerEffort}</th>
+                        <th><DropListTasksToAddToPCollab email = {unassignedCollabsitem.collaborator.email} projectID = {unassignedCollabsitem.project.projectId}/> </th></tr>
+                    </thead>
+                </table>
+        </Panel>)}))
+            
+        }
 
-    render() {
-        return (
+    
+    
+        render() {
+            console.log(this.props.unassignedCollabs)
+            return (
             <PanelGroup
-                accordion
-                className="accordion-menu-tasks"
-                id="accordion-controlled-example"
-            >
-                <Panel>
-                    <table className="table table-title">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Cost</th>
-                                <th />
-                            </tr>
-                        </thead>
-                    </table>
-                </Panel>
-
-                {this.ListOfCollabs()}
-            </PanelGroup>
-        );
+            accordion
+            className="accordion-menu-tasks"
+            id="accordion-controlled-example"
+        >
+            <Panel >
+                <table className="table table-title">
+                    <thead>
+                        <tr><th>Name</th>
+                        <th>Email</th>
+                        <th>Cost</th>
+                        <th></th></tr>
+                    </thead>
+                </table>
+            </Panel>
+           
+            {this.ListOfCollabs()}
+        </PanelGroup>
+            )}
     }
-}
 
-const mapStateToProps = state => {
-    return {
-        unassignedCollabs: state.collabsWoutTasks.collabs,
-        taskList: get(state, 'tasks.tasksList', [])
+    
+
+
+    const mapStateToProps = state => {
+        return {
+            unassignedCollabs: state.collabsWoutTasks.collabs,
+            
+        };
     };
-};
 
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateAllTasks }, dispatch);
-};
+    const mapDispatchToProps = dispatch => {
+        return bindActionCreators(
+            { updateAllTasks, addCollaboratorToTask, updateUnassignedProjCollabs },
+            dispatch);
+    };
+   
+    export default connect(mapStateToProps,mapDispatchToProps)(ListOfProjCollabWoutTasks);
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ListOfProjCollabWoutTasks);
