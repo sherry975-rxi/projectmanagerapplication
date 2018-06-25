@@ -4,6 +4,7 @@ import Weather from './Weather';
 import UserData from './UserData';
 import TaskGraph from './TaskGraph.js';
 import ProjGraph from './ProjectGraph';
+import Calendar from './Calendar'
 
 class Homepage extends Component {
     render() {
@@ -12,7 +13,7 @@ class Homepage extends Component {
                 <tbody className="HomeTable">
                     <tr>
                         <td>
-                            <UserData />
+                            <Calendar />
                         </td>
                         <td className="HomeTableTDLeft">
                             <Weather className="teste" />

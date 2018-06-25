@@ -54,7 +54,7 @@ class RemoveTaskCollaborator extends Component {
         ).then(response => {
             toastr.success('Removal request approved!');
             this.updateTasks();
-            this.props.reload();
+            this.props.updateTeam();
         }).catch(error => {
             toastr.error('An error occurred!');
         });
@@ -70,7 +70,7 @@ class RemoveTaskCollaborator extends Component {
         ).then(responseData => {
             toastr.success('Collaborator Successfully removed!');
             this.updateTasks();
-            this.props.reload();
+            this.props.updateTeam();
         }).catch(err => {
             toastr.error('An error occurred!');
         });
