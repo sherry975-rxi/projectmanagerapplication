@@ -1,9 +1,10 @@
 
 import AuthService from "../pages/loginPage/AuthService";
 
+
 export function updateUnassignedProjCollabs(projectId) {
     const authService = new AuthService();
-
+console.log('fui disprado')
 
     return dispatch => {
         listIsLoading()
@@ -12,6 +13,7 @@ export function updateUnassignedProjCollabs(projectId) {
         })
             .then(data => {
                 dispatch(projCollabWoutTasksFetched(data));
+                console.log(data)
                 return data;
             }).catch((error) => {
                 console.log(error)
