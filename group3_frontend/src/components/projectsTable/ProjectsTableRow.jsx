@@ -72,7 +72,6 @@ class ProjectsTableRow extends Component {
     }
 
     handleClick(){
-        console.log("dddddd")
         this.props.updateUnassignedProjCollabs(this.props.project.projectId)
     }
 
@@ -102,8 +101,9 @@ class ProjectsTableRow extends Component {
                         className="items-menu"
                         to={
                             '/projects/' +
-                            this.props.project.projectId + '/UnassignedProjCollab'
-                        } onClick = {this.handleClick()}
+                            this.props.project.projectId +
+                            '/UnassignedProjCollab'
+                        } onClick = {this.handleClick.bind(this)}
                     >
                         <ItemsButton text="Unassigned" />
                     </Link>
