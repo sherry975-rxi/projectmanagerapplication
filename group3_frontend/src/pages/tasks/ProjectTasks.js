@@ -34,6 +34,10 @@ class ProjectTasks extends Component {
                 <FetchTaskButton
                     projectId={this.props.match.params.projectID}
                 />
+                <h3>
+                    <b>Project Tasks</b>
+                </h3>
+                &nbsp;
                 {this.renderTasks()}
             </div>
         );

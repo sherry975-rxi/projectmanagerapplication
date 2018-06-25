@@ -9,6 +9,7 @@ import ItemsButton from './itemsButton';
 import ActiveProjectTeam from '../../pages/projects/ActiveProjectTeam';
 import SelectCalculationMethods from '../../pages/projectCost/SelectCalculationMethods';
 import { updateUnassignedProjCollabs } from '../../actions/projCollabsWoutTasksActions';
+import { chooseProject } from './../../actions/projectActions';
 
 class ProjectsTableRow extends Component {
     handleRotate = () => {
@@ -71,7 +72,7 @@ class ProjectsTableRow extends Component {
         }
     }
 
-    handleClick(){
+    handleClick() {
         this.props.updateUnassignedProjCollabs(this.props.project.projectId)
     }
 
@@ -91,19 +92,18 @@ class ProjectsTableRow extends Component {
                         to={
                             '/projects/' +
                             this.props.project.projectId +
-                            '/tasks'
-                        }
+                            '/tasks'} onClick={() => this.props.chooseProject(this.props.project.projectManagerEmail)}
                     >
                         <ItemsButton text="View tasks" />
                     </Link>
 
-                     <Link
+                    <Link
                         className="items-menu"
                         to={
                             '/projects/' +
                             this.props.project.projectId +
                             '/UnassignedProjCollab'
-                        } onClick = {this.handleClick.bind(this)}
+                        } onClick={this.handleClick.bind(this)}
                     >
                         <ItemsButton text="Unassigned" />
                     </Link>
@@ -139,7 +139,7 @@ class ProjectsTableRow extends Component {
                     <Link className="items-menu" to={'/requests/'}>
                         <ItemsButton text="View Requests" />
                     </Link>
-                </DropdownButton>
+                </DropdownButton >
             );
         } else if (
             this.props.profile === 'COLLABORATOR' ||
@@ -244,7 +244,7 @@ const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs }, dispatch);
+    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs, chooseProject }, dispatch);
 };
 
 export default connect(
