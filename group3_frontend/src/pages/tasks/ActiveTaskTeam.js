@@ -2,12 +2,40 @@ import React, { Component } from 'react';
 import './activeTeam.css';
 import RemoveTaskCollaborator from './RemoveTaskCollaborator';
 import AuthService from './../../pages/loginPage/AuthService';
+import {connect} from "react-redux";
 
 class ActiveTaskTeam extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            activeTeam: []
+        }
 
+        this.getActiveTaskTeam = this.getActiveTaskTeam.bind(this);
         this.authService = new AuthService();
+    }
+
+    componentDidMount() {
+        this.getActiveTaskTeam();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.id !== prevProps.id) {
+            this.getActiveTaskTeam();
+        }
+    }
+
+    async getActiveTaskTeam() {
+        this.authService.fetch(`/projects/${this.props.task.project}/tasks/${this.props.task.taskID}/activeTeam`,
+            { method: 'GET' }
+            ).then(response => {
+                console.log(this.props.task);
+                console.log(response)
+                this.setState({
+                    activeTeam: response,
+                    message: response.error
+                })
+        });
     }
 
     removeTaskCollaborator = activeTeamItem => {
@@ -20,7 +48,7 @@ class ActiveTaskTeam extends Component {
                     <RemoveTaskCollaborator
                         task={this.props.task}
                         collaborator={activeTeamItem}
-                        reload={this.getActiveTaskTeam}
+                        updateTeam={this.getActiveTaskTeam}
                     />
                 </td>
             );
@@ -28,8 +56,8 @@ class ActiveTaskTeam extends Component {
     };
 
     ListOfCollabs() {
-        if (this.props.taskTeam.length > 0) {
-            return this.props.taskTeam.map((activeTeamitem, index) => {
+        if (this.state.activeTeam.length > 0 && this.state.message == null) {
+            return this.state.activeTeam.map((activeTeamitem, index) => {
                 return (
                     <tr className="line" key={index}>
                         <td>{activeTeamitem.taskCollaborator.name}</td>
@@ -57,5 +85,5 @@ class ActiveTaskTeam extends Component {
         );
     }
 }
-
-export default ActiveTaskTeam;
+const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
+export default connect(mapStateToProps, null) (ActiveTaskTeam);
