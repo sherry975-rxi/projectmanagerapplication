@@ -6,6 +6,7 @@ import {
     CHANGE_TASK_FILTER
 } from './actions';
 import { TASKS_FILTER } from '../constants/TasksConstants';
+import { updateUnassignedProjCollabs } from './projCollabsWoutTasksActions';
 
 export function addCollaboratorToTask(projectId, taskId, userDTO, filterName) {
     return dispatch => {
@@ -22,6 +23,7 @@ export function addCollaboratorToTask(projectId, taskId, userDTO, filterName) {
             .then(res => {
                 if (res.taskFinished === false) {
                     toastr.success('Collaborator was added to task');
+                    dispatch(updateUnassignedProjCollabs(projectId))
 
                     dispatch(
                         getAvailableCollaboratorsForTask(projectId, taskId)
