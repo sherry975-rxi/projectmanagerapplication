@@ -8,7 +8,7 @@ import {updateAllTasks} from './../../actions/projectTasksActions';
 import {updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks} from "../../actions/userTasksActions";
 import {
     updateFinishedTasks, updateNotStartedTasks, updateStandByTasks,
-    updateUnfinishedTasks, updateExpiredTasks
+    updateUnfinishedTasks, updateExpiredTasks, getProjectTasksByFilter
 } from "../../actions/projectTasksActions";
 
 class RemoveTaskCollaborator extends Component {
@@ -127,6 +127,7 @@ class RemoveTaskCollaborator extends Component {
 }
 const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
 const mapDispatchToProps = dispatch => bindActionCreators({
+    getProjectTasksByFilter,
     updateFinishedTasks,
     updateAllTasks,
     updateStandByTasks,

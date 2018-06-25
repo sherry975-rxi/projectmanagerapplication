@@ -20,7 +20,7 @@ class ActiveTaskTeam extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.id !== prevProps.id) {
+        if (this.props.id !== prevProps.id || this.props.task.taskTeam !== prevProps.task.taskTeam) {
             this.getActiveTaskTeam();
         }
     }
