@@ -1,7 +1,3 @@
-body {
-    margin:40px;
-}
-
 .removeButton {
     width: 20px;
     height: 20px;
@@ -10,12 +6,12 @@ body {
     -moz-appearance: none;
     outline: none;
     border: 0;
-    background: transparent;    
-}   
+    background: transparent;
+}
 
 .glyphicon.glyphicon-remove {
         color: red;
-        text-align: center;    
+        text-align: center;
         padding-right: 1px;
         position: relative;
         width: 20px;
@@ -30,7 +26,7 @@ body {
 
     .glyphicon.glyphicon-remove::before {
         color: red;
-        text-align: center;    
+        text-align: center;
         padding-right: 1px;
         position: relative;
         width: 40px;
