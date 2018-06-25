@@ -140,6 +140,23 @@ class AccordionMenu extends Component {
                     )}
                     <a className="key">{key++}</a>
                     <p />
+
+                    <Link
+                        to={
+                            '/projects/' +
+                            element.project +
+                            '/tasks/' +
+                            element.taskID +
+                            '/dependencies'
+                        }
+                    >
+                        <button class="buttonFinished">
+                            View Dependencies
+                        </button>
+                    </Link>
+
+                    <a className="key">{key++}</a>
+                    <p />
                     {element.state !== 'FINISHED' ? (
                         <MarkTaskAsFinished
                             id={element.taskID}
