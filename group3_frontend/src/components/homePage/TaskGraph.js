@@ -68,9 +68,13 @@ class TaskGraph extends Component {
                         deadlineIsOver = '0';
                     }
 
+                    console.log("TAsK ")
+
+                    console.log(difference)
+
                     return (
                         <div className="GraphContainer" key={index}>
-                            <ProgBar limit={difference} />
+                            <ProgBar limit={30} />
                             <table>
                                 <tbody>
                                     <tr className="line">

@@ -73,6 +73,7 @@ class ProjectGraphDirector extends Component {
                     }
 
                     return (
+                        
                         <div className="ProjectGraphContainer" key={index}>
                             <div className="ProgBarCircleContainer">
                                 <ProgBarCircle  limit={100 - actualDaysLeft} />
