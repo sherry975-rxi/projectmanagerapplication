@@ -6,10 +6,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.xml.sax.SAXException;
 import project.model.Profile;
 import project.model.User;
+import project.ui.console.loadfiles.filestorage.StorageService;
 import project.services.UserService;
+import project.ui.console.loadfiles.loaduser.UserReader;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -19,11 +25,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 public class RestUserController {
 
     private final UserService userService;
+    private final StorageService storageService;
     private String userDetails = "User Details";
+    private final UserReader userReader;
 
     @Autowired
-    public RestUserController(UserService userService) {
-        this.userService=userService;
+    public RestUserController(UserService userService, StorageService storageService, UserReader userReader) {
+        this.userService = userService;
+        this.storageService = storageService;
+        this.userReader = userReader;
     }
 
     /**
@@ -167,6 +177,18 @@ public class RestUserController {
             result = new ResponseEntity<>(userToChange ,HttpStatus.OK);
         }
         return result;
+
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/uploadUserFile", method = RequestMethod.POST)
+    public void updateUsersFromFile(@RequestParam("myFile") MultipartFile file) throws IOException, SAXException, ParserConfigurationException {
+
+        storageService.init();
+        storageService.store(file);
+        userReader.readFile("uploadFiles/" + file.getOriginalFilename());
+        storageService.deleteAll();
+
 
     }
 

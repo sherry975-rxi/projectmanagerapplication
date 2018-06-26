@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AuthService from './../loginPage/AuthService';
 import AccordionMenuUsers from '../../components/AccordianMenuUser/AccordionMenuUsers.jsx';
 import UserFilter from '../users/UserFilter';
+import UploadUsersFile from '../../components/UploadUserFile/UploadUsersFile'
 
 class User extends Component {
     constructor(props) {
@@ -44,6 +45,7 @@ class User extends Component {
         } else {
             return (
                 <div>
+                    <UploadUsersFile />
                     <UserFilter />
                     {this.renderUsers()}
                 </div>
