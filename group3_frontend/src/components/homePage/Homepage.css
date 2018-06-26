@@ -63,6 +63,18 @@
         overflow-x:hidden;
 
     }
+
+    .ProjUpperContainerDirector{
+
+      
+        background-color: rgba(255,255,255, 1);
+        width:850px;
+        height: 420px;
+        margin-right:5px;
+        overflow-y: auto;
+        overflow-x:hidden;
+
+    }
 .HomeTableTDBottomLeft{
         padding-top:20px;
         padding-right:21px;
@@ -106,8 +118,8 @@
         text-align: center;
         left: -100px;
         margin-right:15px;
-        padding-left: 45px;
-        padding-right: 25px;
+        padding-left: 25px;
+        padding-right: 45px;
         padding-top:8px;
         height:350px;
         width:350px;
@@ -149,7 +161,20 @@
     
     }
 
+.ProjectGraphContainerDirector{
+        text-align: center;
+        left: -100px;
+        margin-right:15px;
+        padding-left: 45px;
+        padding-right: 25px;
+        padding-top:8px;
+        height:350px;
+        width:850px;
+        background-color: rgb(252, 252, 252);
+        border-color:  rgb(240,240, 240);
+        border-top: 3px solid rgb(248,248, 248);;
 
+}
 
     
 h1{
@@ -247,8 +272,14 @@ h2{
 
   .ProgBarCircleContainer{
           width:200px;
+          padding-left: -10px;
           
   }
+
+  .ProgBarCircleContainer{
+        width:450px;
+        
+}
 
   .ProjectGraphTable{
           width:100%;
