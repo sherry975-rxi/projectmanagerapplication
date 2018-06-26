@@ -86,7 +86,7 @@ class UserFilter extends Component {
             <div className="buttonWrapper">
                                         <fieldset>
 
-                <div class="switch-toggle switch-ios">
+                <div class="switch-toggle switch-candy">
                     {/* <input
                         id="Test"
                         name="view3"
