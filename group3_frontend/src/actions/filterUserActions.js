@@ -17,3 +17,7 @@ export function changeToADMINISTRATOR() {
 export function changeToDIRECTOR() {
     return { type: 'ALLDIRECTORS_FILTER' };
 }
+
+export function changeToSearchUsers() {
+    return { type: 'SEARCHUSERS_FILTER' };
+}
