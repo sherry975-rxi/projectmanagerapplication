@@ -73,8 +73,10 @@ class UserTasksFilter extends Component {
     render() {
         return (
             <div className="buttonWrapper">
+                            <fieldset>
+
                 <div className="switch-toggle switch-ios">
-                    <input
+                    {/* <input
                         id="Test"
                         name="view3"
                         type="radio"
@@ -82,7 +84,7 @@ class UserTasksFilter extends Component {
                     />
                     <label className="buttonFont" htmlFor="">
                         <b>Filter by:</b>
-                    </label>
+                    </label> */}
                     <input
                         id="alltasks"
                         name="view3"
@@ -120,9 +122,13 @@ class UserTasksFilter extends Component {
                         onChange={() => this.handleChange('4')}
                     />
                     <label className="buttonFont" htmlFor="lastmonthfinished">
-                        Finished Last Month
+                        Last Month
                     </label>
+                    <a></a>
+
                 </div>
+                </fieldset>
+
                {/*  <div class="btn-group">
                 <FormGroup bsSize="small" onChange={this.handleChange1} >
                             <FormControl
@@ -158,7 +164,7 @@ class UserTasksFilter extends Component {
                        {/* <button onClick={e => this.handleChange(e, '2')} >
                     Confirm
                     </button> */}
-                        
+
                     </div>
                     </div>
             </div>
