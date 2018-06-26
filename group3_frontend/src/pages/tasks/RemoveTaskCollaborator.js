@@ -101,13 +101,13 @@ class RemoveTaskCollaborator extends Component {
                 this.props.updateExpiredTasks(this.props.task.project);
                 break;
             case 'myAll':
-                this.props.updateMyAllTasks(this.AuthService.getUserId());
+                this.props.updateMyAllTasks(this.authService.getUserId());
                 break;
             case 'myFinished':
-                this.props.updateMyFinishedTasks(this.AuthService.getUserId());
+                this.props.updateMyFinishedTasks(this.authService.getUserId());
                 break;
             case 'myUnfinished':
-                this.props.updateMyOngoingTasks(this.AuthService.getUserId());
+                this.props.updateMyOngoingTasks(this.authService.getUserId());
                 break;
         }
 

@@ -17,3 +17,11 @@ export function changeToADMINISTRATOR() {
 export function changeToDIRECTOR() {
     return { type: 'ALLDIRECTORS_FILTER' };
 }
+
+export function changeToSearchUsers() {
+    return { type: 'SEARCHUSERS_FILTER' };
+}
+
+export function changeToVISITOR() {
+    return { type: 'ALLVISITORS_FILTER' };
+}

@@ -14,6 +14,8 @@ class User extends Component {
             externalData: null
         };
         this.AuthService = new AuthService();
+        this.renderUsers = this.renderUsers.bind(this);
+
     }
 
     //TODO: Add sort by ascending or descending order to these tables
@@ -22,18 +24,25 @@ class User extends Component {
         switch (this.props.filter) {
             case 'all':
                 return <AccordionMenuUsers list={this.props.allUsers} />;
+
             case 'email':
                 return <AccordionMenuUsers list={this.props.emailUsers} />;
+
             case 'collaborators':
-                return (
-                    <AccordionMenuUsers list={this.props.allCollaborators} />
-                );
+                return <AccordionMenuUsers list={this.props.allCollaborators}/>;
+
             case 'directors':
                 return <AccordionMenuUsers list={this.props.allDirector} />;
+
             case 'administrators':
-                return (
-                    <AccordionMenuUsers list={this.props.allAdministrator} />
-                );
+                return <AccordionMenuUsers list={this.props.allAdministrator} />;
+
+            case 'searchUsers':
+                return <AccordionMenuUsers list={this.props.searchList} />;
+                
+            case 'visitors':
+                return <AccordionMenuUsers list={this.props.allVisitors} />;
+
             default:
                 return;
         }
@@ -61,7 +70,9 @@ const mapStateToProps = state => {
         allDirector: state.users.allDirector,
         allCollaborators: state.users.allCollaborators,
         emailUsers: state.users.emailUsers,
-        allUsers: state.users.allUsers
+        allUsers: state.users.allUsers,
+        searchList: state.users.searchList,
+        allVisitors: state.users.allVisitors
     };
 };
 

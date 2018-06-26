@@ -74,6 +74,34 @@ export function updateMyLastMonthFinishedTasks(userId) {
     };
 }
 
+
+
+export function  searchList (event,list) {
+    const authService = new AuthService();
+
+        return dispatch => {
+            var updatedList = searching(event, list)
+            
+                dispatch(searchListTasksFetched(updatedList));
+                dispatch(userTasksFilterActions.changeToSearchTasks())
+            
+        };
+    
+}
+
+export function searching (event, list) {
+        var lista1 = list;
+        //if(list.length > 0){
+        lista1 = lista1.filter(function(item){
+          return item.taskID.toLowerCase().search(
+            event.target.value.toLowerCase()) !== -1;
+        });
+        console.log("LKJHGFDFGNMNBVCXSDERTH")
+        console.log(lista1)
+        return lista1;
+      }
+
+
 export function myFinishedTasksFetched(myFinishedTasks) {
     return {
         type: 'MYFINISHTASKS_FETCHED',
@@ -101,6 +129,14 @@ export function lastMonthFinishedTasksFetched(lastMonthFinishedTasks) {
         lastMonthFinishedTasks
     };
 }
+
+export function searchListTasksFetched(updatedList) {
+    return {
+        type: 'SEARCHTASKS_FETCHED',
+        updatedList
+    };
+}
+
 
 export function myTasksLoading() {
     return {
