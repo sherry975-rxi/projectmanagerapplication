@@ -105,18 +105,7 @@ class ProjectsTableRow extends Component {
                             '/UnassignedProjCollab'
                         } onClick={this.handleClick.bind(this)}
                     >
-                        <ItemsButton text="Unassigned" />
-                    </Link>
-
-                    <Link
-                        className="items-menu"
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/addtask'
-                        }
-                    >
-                        <ItemsButton text="Create task" />
+                        <ItemsButton text=" View unassigned" />
                     </Link>
 
                     <Link
@@ -125,7 +114,7 @@ class ProjectsTableRow extends Component {
                     >
                         <ItemsButton text="Project Cost" />
                     </Link>
-
+                    
                     <Link
                         className="items-menu"
                         to={
