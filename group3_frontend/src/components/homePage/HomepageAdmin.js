@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import './Homepage.css';
 import Weather from './Weather';
-import UserData from './UserData';
-import TaskGraph from './TaskGraph.js';
-import ProjGraph from './ProjectGraph';
 import Calendar from './Calendar'
 import AuthService from '../../pages/loginPage/AuthService'
 import { connect } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
+import Avatar from 'react-user-avatar';
 
 
 class HomepageAdmin extends Component {
@@ -109,20 +107,39 @@ class HomepageAdmin extends Component {
                     </td>
                 </tr>
                 <tr>
-                    <td className="HomeTableTDBottomLeft">
+                    <td className="HomeTableTDBottomLeftAdmin">
                         <div className="ProjUpperContainer">
+                        <p>teste</p>
                         </div>
                     </td>
                     <td className="HomeTableTDBottomLeft">
-                        <div className="TaskGraphUpperContainer">
-                            <h1 className="GraphTitle">Warnings</h1>
-                            <p>Warning, there is {this.state.numberOfGuests} users to be verified. Please, check their status</p>
-                            
-                        
-                                
+                        <div className="UserNumberUpperContainer">
+                            <h1 className="GraphTitle">Users in Application</h1>
+                           
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td className="avatarTdOne">  <Avatar size="88" name="Director" color="#CCC"/></td>
+                                        <td className="avatarTdTwo"> <Avatar size="88" name="Collaborator" color="#66939e" /> </td>
+                                        <td className="avatarTdThree">  <Avatar size="88" name="Unassigned" color="#c44c4c" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td className="avatarTdOne"> 
+                                             <p className="numberUsers">{this.state.numberOfDirectors}</p>
+                                        </td>
+                                        <td className="avatarTdTwo">                                         
+                                             <p className="numberUsers">{this.state.numberOfCollaborators}</p>
+                                        </td>
 
-                            <p>{this.state.numberOfCollaborators}</p>
-                            <p>{this.state.numberOfDirectors}</p>
+                                        <td className="avatarTdThree">
+                                            <p className="numberUsers"> {this.state.numberOfGuests}</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        
+
 
                         </div>
                     </td>
