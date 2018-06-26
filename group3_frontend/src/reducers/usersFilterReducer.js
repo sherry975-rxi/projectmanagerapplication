@@ -16,6 +16,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, filterType: 'administrators' }
         case 'SEARCHUSERS_FILTER':
             return { ...state, filterType: 'searchUsers' }
+        case 'ALLVISITORS_FILTER':
+            return { ...state, filterType: 'visitors' }
         default:
             return state;
     }

@@ -9,7 +9,8 @@ import {
     updateCollaborators,
     updateDirector,
     updateAdministrator,
-    searchList
+    searchList,
+    updateVisitors
 } from './../../actions/UserActions';
 
 class UserFilter extends Component {
@@ -36,6 +37,8 @@ class UserFilter extends Component {
                 return this.props.searchList(event, this.props.allDirector);
                 case '5':
                 return this.props.searchList(event, this.props.allAdministrator);
+                case '6':
+                return this.props.searchList(event, this.props.allVisitors);
                 default:
                 return this.props.searchList(event, this.props.allUsers);
                 
@@ -66,6 +69,9 @@ class UserFilter extends Component {
                 this.activeFilter = "5";
                 return this.props.updateAdministrator();
 
+            case '6':
+                this.activeFilter = "6";
+                return this.props.updateVisitors();
             default:
                 return;
         }
@@ -99,16 +105,16 @@ class UserFilter extends Component {
                         All Users
                     </label>
 
-                    {/*<input
-                        id="emailUsers"
+                    <input
+                        id="allVisitors"
                         name="view3"
                         type="radio"
                         eventKey="1"
-                        onChange={e => this.handleChange(e, '2')}
+                        onChange={e => this.handleChange(e, '6')}
                     />
-                    <label class="buttonFont" for="emailUsers" eventKey="1">
-                        Email
-                    </label>*/}
+                    <label class="buttonFont" for="allVisitors" eventKey="1">
+                        Visitors
+                    </label>
 
                     <input
                         id="allCollaborators"
@@ -182,7 +188,8 @@ const mapStateToProps = state => {
         allDirector: state.users.allDirector,
         allCollaborators: state.users.allCollaborators,
         emailUsers: state.users.emailUsers,
-        allUsers: state.users.allUsers
+        allUsers: state.users.allUsers,
+        allVisitors: state.users.allVisitors
     };
 };
 
@@ -194,7 +201,8 @@ const mapDispatchToProps = dispatch =>
             updateCollaborators,
             updateDirector,
             updateAdministrator,
-            searchList
+            searchList,
+            updateVisitors
         },
         dispatch
     );

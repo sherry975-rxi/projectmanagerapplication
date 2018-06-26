@@ -71,6 +71,7 @@ export function updateAdministrator() {
     };
 }
 
+
 export function  searchList (event,list) {
     const authService = new AuthService();
 
@@ -95,6 +96,21 @@ export function searching (event, list) {
         console.log(newlist)
         return newlist;
       }
+
+
+export function updateVisitors() {
+    const authService = new AuthService();
+
+    return dispatch => {
+        authService.fetch(`/users/profiles/UNASSIGNED`, {
+            method: 'GET'
+        }).then(data => {
+                dispatch(allVisitorsFetched(data));
+                dispatch(filterUserActions.changeToVISITOR());
+                return data;
+            });
+    };
+}
 
 export function allUsersFetched(allUsers) {
     return {
@@ -131,9 +147,17 @@ export function allAdministratorFetched(allAdministrator) {
     };
 }
 
+
 export function searchListUsersFetched(searchList) {
     return {
         type: 'SEARCHUSERS_FETCHED',
         searchList
+    };
+}
+
+export function allVisitorsFetched(allVisitors) {
+    return {
+        type: 'ALLVISITORS_FETCHED',
+        allVisitors
     };
 }

@@ -5,7 +5,8 @@ const INITIAL_STATE = {
     allCollaborators: [],
     allDirector: [],
     allAdministrator: [],
-    searchList: []
+    searchList: [],
+    allVisitors:[]
 
 }
 
@@ -23,6 +24,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, usersUpdated: true, allAdministrator: action.allAdministrator, error: action.allAdministrator.error }
         case 'SEARCHUSERS_FETCHED':
             return { ...state, usersUpdated: true, searchList: action.searchList, error: action.searchList.error }
+        case 'ALLVISITORS_FETCHED':
+            return { ...state, usersUpdated: true, allVisitors: action.allVisitors, error: action.allVisitors.error }
         default:
             return state;
     }
