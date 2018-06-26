@@ -90,10 +90,6 @@ class HomepageAdmin extends Component {
 
         this.sendToastr();
          
-        console.log("render")
-        console.log(this.state.numberOfGuests)
-
-        console.log(this.state.numberOfGuests.length)
 
         return(
             <table className="HomepageContainer">
