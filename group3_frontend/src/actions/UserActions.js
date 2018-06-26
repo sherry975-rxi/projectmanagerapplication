@@ -71,6 +71,20 @@ export function updateAdministrator() {
     };
 }
 
+export function updateVisitors() {
+    const authService = new AuthService();
+
+    return dispatch => {
+        authService.fetch(`/users/profiles/UNASSIGNED`, {
+            method: 'GET'
+        }).then(data => {
+                dispatch(allVisitorsFetched(data));
+                dispatch(filterUserActions.changeToVISITOR());
+                return data;
+            });
+    };
+}
+
 export function allUsersFetched(allUsers) {
     return {
         type: 'ALLUSERS_FETCHED',
@@ -103,5 +117,12 @@ export function allAdministratorFetched(allAdministrator) {
     return {
         type: 'ALLADMINISTRATOR_FETCHED',
         allAdministrator
+    };
+}
+
+export function allVisitorsFetched(allVisitors) {
+    return {
+        type: 'ALLVISITORS_FETCHED',
+        allVisitors
     };
 }

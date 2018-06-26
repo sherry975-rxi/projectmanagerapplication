@@ -33,6 +33,10 @@ class User extends Component {
                 return (
                     <AccordionMenuUsers list={this.props.allAdministrator} />
                 );
+            case 'visitors':
+                return (
+                    <AccordionMenuUsers list={this.props.allVisitors} />
+                );
             default:
                 return;
         }
@@ -59,7 +63,8 @@ const mapStateToProps = state => {
         allDirector: state.users.allDirector,
         allCollaborators: state.users.allCollaborators,
         emailUsers: state.users.emailUsers,
-        allUsers: state.users.allUsers
+        allUsers: state.users.allUsers,
+        allVisitors: state.users.allVisitors
     };
 };
 

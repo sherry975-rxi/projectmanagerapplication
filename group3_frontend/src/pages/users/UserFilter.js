@@ -8,7 +8,8 @@ import {
     updateEmail,
     updateCollaborators,
     updateDirector,
-    updateAdministrator
+    updateAdministrator,
+    updateVisitors
 } from './../../actions/UserActions';
 
 class UserFilter extends Component {
@@ -32,6 +33,8 @@ class UserFilter extends Component {
                 return this.props.updateDirector();
             case '5':
                 return this.props.updateAdministrator();
+            case '6':
+                return this.props.updateVisitors();
             default:
                 return;
         }
@@ -56,16 +59,16 @@ class UserFilter extends Component {
                         All Users
                     </label>
 
-                    {/*<input
-                        id="emailUsers"
+                    <input
+                        id="allVisitors"
                         name="view3"
                         type="radio"
                         eventKey="1"
-                        onChange={e => this.handleChange(e, '2')}
+                        onChange={e => this.handleChange(e, '6')}
                     />
-                    <label class="buttonFont" for="emailUsers" eventKey="1">
-                        Email
-                    </label>*/}
+                    <label class="buttonFont" for="allVisitors" eventKey="1">
+                        Visitors
+                    </label>
 
                     <input
                         id="allCollaborators"
@@ -120,7 +123,8 @@ const mapDispatchToProps = dispatch =>
             updateEmail,
             updateCollaborators,
             updateDirector,
-            updateAdministrator
+            updateAdministrator,
+            updateVisitors
         },
         dispatch
     );
