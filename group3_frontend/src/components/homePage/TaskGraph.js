@@ -61,17 +61,19 @@ class TaskGraph extends Component {
                     const today = momentus(this.state.actualDate);
                     const taskDeadline = momentus(taskItem.taskDeadline);
                     var difference = 100 - taskDeadline.diff(today, 'days');
-                    var deadlineIsOver = difference;
+                    var deadlineIsOver = 100 - difference;
 
                     if (difference < 0) {
                         difference = 0;
-                        deadlineIsOver = difference;
+                        
                     }
 
                     if (difference > 100) {
                         difference = 100;
                         deadlineIsOver = '0';
                     }
+
+                    
 
                     console.log("TAsK ")
 
