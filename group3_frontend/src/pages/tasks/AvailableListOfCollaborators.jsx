@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addCollaboratorToTask } from '../../actions/projectTasksActions';
 import { get } from 'lodash';
+import { refreshTasksByFilter } from "../../actions/refreshTasksActions";
 
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
@@ -35,6 +36,7 @@ class AvailableListOfCollaborators extends Component {
             ].collaborator.email
         };
         this.props.addCollaboratorToTask(project, taskId, userDTO, tasksFilter);
+
     };
 
     renderDropdownButton(title, i) {
@@ -70,11 +72,11 @@ class AvailableListOfCollaborators extends Component {
 
 export const mapStateToProps = state => {
     const collaborators = get(state, 'tasks.availableCollaboratorsForTask', []);
-    return { collaborators, tasksFilter: get(state, 'tasks.taskFilter') };
+    return { collaborators, tasksFilter: get(state, 'filterReducer.filterType') };
 };
 
 export const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ addCollaboratorToTask }, dispatch);
+    return bindActionCreators({ addCollaboratorToTask, refreshTasksByFilter  }, dispatch);
 };
 
 export default connect(
