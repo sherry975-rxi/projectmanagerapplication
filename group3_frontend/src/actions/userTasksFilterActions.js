@@ -13,3 +13,7 @@ export function changeToMyLastMonthFinished() {
 export function changeToMyAllTasks() {
     return { type: 'MYALLTASKS' };
 }
+
+export function changeToSearchTasks() {
+    return { type: 'SEARCHTASKS' };
+}
