@@ -75,7 +75,7 @@ class UserTasksFilter extends Component {
             <div className="buttonWrapper">
                             <fieldset>
 
-                <div className="switch-toggle switch-ios">
+                <div className="switch-toggle switch-candy">
                     {/* <input
                         id="Test"
                         name="view3"
