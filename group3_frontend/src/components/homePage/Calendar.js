@@ -25,6 +25,7 @@ class Calendar extends Component {
         theme={{
             selectionColor: '#2A3F54',
             
+            
             textColor: {
               default: '#333',
               active: '#FFF'
@@ -34,7 +35,8 @@ class Calendar extends Component {
             floatingNav: {
               background: '#1e2d3a',
               color: '#FFF',
-              chevron: '#1e2d3a'
+              chevron: '#1e2d3a',
+              height: '10px'
             }
          }}
       
