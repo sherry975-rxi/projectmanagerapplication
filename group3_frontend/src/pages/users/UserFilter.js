@@ -84,6 +84,8 @@ class UserFilter extends Component {
     render() {
         return (
             <div className="buttonWrapper">
+                                        <fieldset>
+
                 <div class="switch-toggle switch-ios">
                     {/* <input
                         id="Test"
@@ -156,7 +158,11 @@ class UserFilter extends Component {
                     >
                         Admin
                     </label>
+                    <a></a>
+
                 </div>
+                </fieldset>
+
                 <div className=" table-striped">
                     <div className="filter-list">
                         <form>
