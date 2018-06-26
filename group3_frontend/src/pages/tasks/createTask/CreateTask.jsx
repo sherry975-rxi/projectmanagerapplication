@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Modal, Popover, Tooltip, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import { Form, Modal, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 import '../../../components/button/genericButton.css'
 import './CreateTask.css'
 import 'react-dates/initialize';
@@ -15,6 +15,7 @@ import {
 import LoadingComponent from './../../../components/loading/LoadingComponent';
 import '../../../components/loading/LoadingComponent.css'
 import { toastr } from 'react-redux-toastr';
+import AuthService from '../../loginPage/AuthService';
 
 
 class CreateTask extends Component {
@@ -31,6 +32,7 @@ class CreateTask extends Component {
             focusedInput: '',
             confirmCreation: false
         };
+        this.AuthService = new AuthService();
     }
 
     handleClose() {
@@ -195,6 +197,10 @@ class CreateTask extends Component {
 
     render() {
 
+
+
+
+        let isProjectManager = this.props.projManager === this.AuthService.getProfile().sub ? 'genericButton' : 'noButton'
         var toRender = this.renderTaskCreationProcess()
 
         if (this.state.confirmCreation) {
@@ -204,7 +210,7 @@ class CreateTask extends Component {
         return (
 
             <div>
-                <button className="genericButton" onClick={this.handleShow.bind(this)}>
+                <button className={isProjectManager} onClick={this.handleShow.bind(this)}>
                     Create Task
         </button>
 
@@ -222,7 +228,8 @@ const mapStateToProps = state => {
         taskCreated: state.createTask.taskCreated,
         filter: state.filterReducer.filterType,
         task: state.createTask.task,
-        beingCreated: state.createTask.beingCreated
+        beingCreated: state.createTask.beingCreated,
+        projManager: state.projects.projectManager
     };
 };
 const mapDispatchToProps = dispatch => bindActionCreators({ createTask, deleteTaskCreated, updateAllTasks, updateNotStartedTasks, updateUnfinishedTasks }, dispatch);

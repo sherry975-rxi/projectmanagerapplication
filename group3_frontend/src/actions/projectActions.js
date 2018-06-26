@@ -8,8 +8,8 @@ export function getUserProjects(userId) {
         authService.fetch(`/projects/${userId}/myProjects`, {
             method: 'GET'
         }).then(data => {
-                dispatch(getUserProjectsFullfield(data));
-            });
+            dispatch(getUserProjectsFullfield(data));
+        });
     };
 }
 
@@ -28,10 +28,11 @@ export function getActiveProjects(userId) {
         authService.fetch(`/projects/active`, {
             method: 'GET'
         }).then(data => {
-                dispatch(getActiveProjectsFullfield(data));
-            });
+            dispatch(getActiveProjectsFullfield(data));
+        });
     };
 }
+
 
 
 
@@ -41,3 +42,11 @@ export const getActiveProjectsFullfield = payload => {
         payload
     };
 };
+
+
+export function chooseProject(projectManager) {
+    return {
+        type: 'PROJECT_CHOSEN',
+        projectManager
+    }
+}

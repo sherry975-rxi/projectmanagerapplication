@@ -4,7 +4,9 @@ import './activeProjectTeam.css';
 import {connect} from "react-redux";
 import {updateProjectTeam} from "../../actions/projectTeamActions";
 import {bindActionCreators} from "redux";
+import "../../components/button/removeButton.css";
 import "../../components/button/genericButton.css";
+
 
 class ActiveProjectTeam extends Component {
     constructor(props) {
@@ -38,8 +40,10 @@ class ActiveProjectTeam extends Component {
                 return (
                     <tr className="line" key={index}>
                         <td> {activeTeamitem.collaborator.name}</td>
-                        <td>
-                            <button onClick={this.handleClick} id={activeTeamitem.projectCollaboratorId} className="genericButton">Remove</button>
+                        <td>                            
+                            <button className="glyphicon glyphicon-remove"onClick={this.handleClick} id={activeTeamitem.projectCollaboratorId} 
+                            ></button>
+                            
                         </td>
                     </tr>
                 );

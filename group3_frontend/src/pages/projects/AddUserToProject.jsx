@@ -78,7 +78,7 @@ class AddUserToProject extends Component {
     }
 
     renderDropdownButton(title, i) {
-        console.log(this.props.availableUsers);
+    
         return (
             <Dropdown
                 title={title}

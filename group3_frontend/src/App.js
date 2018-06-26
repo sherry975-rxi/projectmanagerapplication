@@ -33,6 +33,7 @@ import AddUserToProject from './pages/projects/AddUserToProject';
 import User from './pages/users/User';
 import ChangeProfile from './pages/users/ChangeProfile';
 import ListOfProjCollabWoutTasks from './pages/projects/ListOfProjCollabWoutTasks';
+import TaskDependencies from './pages/tasks/TaskDependencies';
 
 
 class App extends Component {
@@ -109,6 +110,12 @@ class App extends Component {
                     <ProtectedRoute
                         path="/projects/:projectID/tasks/:taskID/reports"
                         component={requiresAuth(Reports)}
+                        permissions={['COLLABORATOR']}
+                    />
+
+                    <ProtectedRoute
+                        path="/projects/:projectID/tasks/:taskID/dependencies"
+                        component={requiresAuth(TaskDependencies)}
                         permissions={['COLLABORATOR']}
                     />
 

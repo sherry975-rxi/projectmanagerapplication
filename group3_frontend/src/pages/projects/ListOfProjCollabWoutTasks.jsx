@@ -11,22 +11,22 @@ import {
     ControlLabel
 } from 'react-bootstrap';
 import DropListTasksToAddToPCollab from './DropListTasksToAddToPCollab';
+import { updateUnassignedProjCollabs } from '../../actions/projCollabsWoutTasksActions';
+
 
 class ListOfProjCollabWoutTasks extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            activeKey: '1'
+            activeKey: '1', 
+            projectId: ''
         };
-
         this.ListOfCollabs = this.ListOfCollabs.bind(this);
     }
 
     
-        ListOfCollabs() {
-        console.log(this.taskList)
-        console.log(this.props.unassignedCollabs)        
+        ListOfCollabs() {   
         return (this.props.unassignedCollabs.map((unassignedCollabsitem, index) => {  
             return(
             <Panel >
@@ -41,8 +41,11 @@ class ListOfProjCollabWoutTasks extends Component {
         </Panel>)}))
             
         }
+
+    
     
         render() {
+            console.log(this.props.unassignedCollabs)
             return (
             <PanelGroup
             accordion
@@ -52,7 +55,6 @@ class ListOfProjCollabWoutTasks extends Component {
             <Panel >
                 <table className="table table-title">
                     <thead>
-                        {console.log("priemiro")}
                         <tr><th>Name</th>
                         <th>Email</th>
                         <th>Cost</th>
@@ -62,22 +64,23 @@ class ListOfProjCollabWoutTasks extends Component {
             </Panel>
            
             {this.ListOfCollabs()}
-            {console.log("segundo")}
         </PanelGroup>
             )}
     }
+
+    
 
 
     const mapStateToProps = state => {
         return {
             unassignedCollabs: state.collabsWoutTasks.collabs,
-            taskList: state.projectTasks.allTasks
+            
         };
     };
 
     const mapDispatchToProps = dispatch => {
         return bindActionCreators(
-            { updateAllTasks, addCollaboratorToTask },
+            { updateAllTasks, addCollaboratorToTask, updateUnassignedProjCollabs },
             dispatch);
     };
    

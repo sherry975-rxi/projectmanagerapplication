@@ -4,6 +4,7 @@ import AuthService from './../loginPage/AuthService';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addCollaboratorToTask } from '../../actions/projectTasksActions';
+import { get } from 'lodash';
 
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
@@ -27,13 +28,13 @@ class AvailableListOfCollaborators extends Component {
 
     handleClick = eventKey => {
         const collaboratorIndex = eventKey;
-        const { project, taskId } = this.props;
+        const { project, taskId, tasksFilter } = this.props;
         const userDTO = {
             email: this.props.collaborators[this.props.taskId][
                 collaboratorIndex
             ].collaborator.email
         };
-        this.props.addCollaboratorToTask(project, taskId, userDTO);
+        this.props.addCollaboratorToTask(project, taskId, userDTO, tasksFilter);
     };
 
     renderDropdownButton(title, i) {
@@ -68,9 +69,8 @@ class AvailableListOfCollaborators extends Component {
 }
 
 export const mapStateToProps = state => {
-    const collaborators =
-        state.projectTasks.availableCollaboratorsForTask || [];
-    return { collaborators };
+    const collaborators = get(state, 'tasks.availableCollaboratorsForTask', []);
+    return { collaborators, tasksFilter: get(state, 'tasks.taskFilter') };
 };
 
 export const mapDispatchToProps = dispatch => {

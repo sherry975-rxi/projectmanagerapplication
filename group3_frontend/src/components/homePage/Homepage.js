@@ -4,38 +4,84 @@ import Weather from './Weather';
 import UserData from './UserData';
 import TaskGraph from './TaskGraph.js';
 import ProjGraph from './ProjectGraph';
+import Calendar from './Calendar'
+import AuthService from '../../pages/loginPage/AuthService'
+import { connect } from 'react-redux';
+import HomepageAdmin from './HomepageAdmin';
+import HomepageCollaborator from './HomepageCollaborator'
+import HomepageDirector from './HomepageDirector'
+
+
 
 class Homepage extends Component {
-    render() {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            profile: '',
+            numberOfGuests: ''
+            
+        };
+        this.AuthService = new AuthService();
+
+    }
+
+
+    whichProfileToRender(){
+        let options = '';
+
+        if (this.props.profile === 'COLLABORATOR') {
+            options = this.renderAsCollaborator();
+        } else if (this.props.profile === 'DIRECTOR') {
+            options = this.renderAsDirector();
+
+        }
+        else if (this.props.profile === 'ADMIN') {
+            options = this.renderAsAdmin();
+
+        }
+
+
         return (
-            <table className="HomepageContainer">
-                <tbody className="HomeTable">
-                    <tr>
-                        <td>
-                            <UserData />
-                        </td>
-                        <td className="HomeTableTDLeft">
-                            <Weather className="teste" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="HomeTableTDBottomLeft">
-                            <div className="ProjUpperContainer">
-                                <h1 className="GraphTitle">Active Projects</h1>
-                                <ProjGraph />
-                            </div>
-                        </td>
-                        <td className="HomeTableTDBottomLeft">
-                            <div className="TaskGraphUpperContainer">
-                                <h1 className="GraphTitle">Tasks Deadline</h1>
-                                <TaskGraph />
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        );
+            <div>
+               {options}
+            </div>
+        )
+
+    }
+
+
+    
+
+    renderAsCollaborator(){
+       return <HomepageCollaborator />
+    }
+
+ 
+
+    renderAsAdmin(){
+        return <HomepageAdmin />
+    }
+
+    renderAsDirector(){
+        return <HomepageDirector />
+    }
+
+
+    
+
+    render() {
+        return(
+            this.whichProfileToRender()
+        )
+       
+         
     }
 }
 
-export default Homepage;
+
+const mapStateToProps = state => {
+    return { profile: state.authenthication.user.userProfile };
+};
+export default connect(mapStateToProps)(Homepage);
+

@@ -8,7 +8,7 @@ import {updateAllTasks} from './../../actions/projectTasksActions';
 import {updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks} from "../../actions/userTasksActions";
 import {
     updateFinishedTasks, updateNotStartedTasks, updateStandByTasks,
-    updateUnfinishedTasks, updateExpiredTasks
+    updateUnfinishedTasks, updateExpiredTasks, getProjectTasksByFilter
 } from "../../actions/projectTasksActions";
 
 class RemoveTaskCollaborator extends Component {
@@ -54,7 +54,7 @@ class RemoveTaskCollaborator extends Component {
         ).then(response => {
             toastr.success('Removal request approved!');
             this.updateTasks();
-            this.props.reload();
+            this.props.updateTeam();
         }).catch(error => {
             toastr.error('An error occurred!');
         });
@@ -70,7 +70,7 @@ class RemoveTaskCollaborator extends Component {
         ).then(responseData => {
             toastr.success('Collaborator Successfully removed!');
             this.updateTasks();
-            this.props.reload();
+            this.props.updateTeam();
         }).catch(err => {
             toastr.error('An error occurred!');
         });
@@ -101,13 +101,13 @@ class RemoveTaskCollaborator extends Component {
                 this.props.updateExpiredTasks(this.props.task.project);
                 break;
             case 'myAll':
-                this.props.updateMyAllTasks(this.AuthService.getUserId());
+                this.props.updateMyAllTasks(this.authService.getUserId());
                 break;
             case 'myFinished':
-                this.props.updateMyFinishedTasks(this.AuthService.getUserId());
+                this.props.updateMyFinishedTasks(this.authService.getUserId());
                 break;
             case 'myUnfinished':
-                this.props.updateMyOngoingTasks(this.AuthService.getUserId());
+                this.props.updateMyOngoingTasks(this.authService.getUserId());
                 break;
         }
 
@@ -127,6 +127,7 @@ class RemoveTaskCollaborator extends Component {
 }
 const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
 const mapDispatchToProps = dispatch => bindActionCreators({
+    getProjectTasksByFilter,
     updateFinishedTasks,
     updateAllTasks,
     updateStandByTasks,
