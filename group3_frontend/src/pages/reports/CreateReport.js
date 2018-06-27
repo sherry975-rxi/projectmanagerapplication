@@ -58,8 +58,8 @@ class CreateReport extends Component {
         };
 
         this.AuthService.fetch(
-            `/projects/${this.props.match.params.projectID}/tasks/${
-                this.props.match.params.taskID
+            `/projects/${this.props.projectID}/tasks/${
+                this.props.taskID
             }/reports/`,
             {
                 body: JSON.stringify(reportDTOData),
@@ -67,8 +67,8 @@ class CreateReport extends Component {
             }
         ).then(responseData => {
             window.location.href = `/projects/${
-                this.props.match.params.projectID
-            }/tasks/${this.props.match.params.taskID}/reports/`;
+                this.props.projectID
+            }/tasks/${this.props.taskID}/reports/`;
         });
 
         this.setState({
@@ -105,10 +105,13 @@ class CreateReport extends Component {
                     </Modal.Body>
                 <Modal.Footer>
                     <button
+                                            onClick={this.handleSubmit}
+
                         block
                         className="genericButton"
                         disabled={!this.validateForm()}
                         type="submit"
+
                     >
                         Save Report
                     </button>   
