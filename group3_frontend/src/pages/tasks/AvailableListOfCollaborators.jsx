@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addCollaboratorToTask } from '../../actions/projectTasksActions';
 import { get } from 'lodash';
-import { refreshTasksByFilter } from "../../actions/refreshTasksActions";
 
 class AvailableListOfCollaborators extends Component {
     constructor(props) {
@@ -76,7 +75,7 @@ export const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ addCollaboratorToTask, refreshTasksByFilter  }, dispatch);
+    return bindActionCreators({ addCollaboratorToTask  }, dispatch);
 };
 
 export default connect(
