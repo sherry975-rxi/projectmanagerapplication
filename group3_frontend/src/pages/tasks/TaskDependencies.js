@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 import {bindActionCreators} from "redux";
 import {getAllTaskDependencies} from "../../actions/projectTasksActions";
 import Error from "../../components/error/error";
+import AddDependency from "./AddDependency";
 
 class TaskDependencies extends Component {
     constructor(props) {
@@ -37,9 +38,9 @@ class TaskDependencies extends Component {
         return (
             <div>
                 <div align="right">
-                    {/*Insert Create dependency button here!*/}
-                    {/*<CreateTask projectId={this.props.match.params.projectID} />*/}
+                    <AddDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
                 </div>
+
                 {this.renderTasks()}
             </div>
         );
@@ -48,7 +49,7 @@ class TaskDependencies extends Component {
 }
 const mapStateToProps = state => {
     return {
-        tasks: state.tasks.tasksList,
+        tasks: state.tasks.tasksDependencies,
         tasksLoading: state.tasks.itemIsLoading,
         error: state.tasks.error
     };
