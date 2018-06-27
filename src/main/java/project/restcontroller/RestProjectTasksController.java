@@ -325,10 +325,11 @@ public class RestProjectTasksController {
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
             "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "{taskId}/dependencies", method = RequestMethod.GET)
-    public ResponseEntity<List<Task>> getTaskDependencies (@PathVariable String taskId) {
+    public ResponseEntity<List<Task>> getTaskDependencies (@PathVariable String taskId, @PathVariable int projid) {
 
         Task task = taskService.getTaskByTaskID(taskId);
-        List<Task> taskDependencies = task.getTaskDependency();
+        List<Task> taskDependencies = new ArrayList<>();
+        taskDependencies.addAll(task.getTaskDependency());
 
         for(Task dependency : taskDependencies) {
             for(String action : dependency.getTaskState().getActions()) {
