@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {
+    Form,
+    Modal,
     Button,
     FormGroup,
     FormControl,
@@ -7,17 +9,27 @@ import {
     Alert
 } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
+import  './CreateReport.css';
 
 class CreateReport extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            show: false,
             reportedTime: '',
             taskCollabEmail: '',
             hideSuccessInfo: 'hide-code',
             message: ''
         };
         this.AuthService = new AuthService();
+    }
+
+    handleClose() {
+        this.setState({ show: false });
+    }
+
+    handleShow() {
+        this.setState({ show: true });
     }
 
     validateForm() {
@@ -62,47 +74,60 @@ class CreateReport extends Component {
         this.setState({
             hideSuccessInfo: ''
         });
+
     };
 
-    render() {
-        return (
-            <div className=" table-striped">
-                <h3>
-                    <b>Create Report for {this.props.match.params.taskID} </b>
-                </h3>&nbsp;
-                <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="reportedTime" bsSize="large">                        
-                        <ControlLabel></ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="number"
-                            pattern="[0-9]*"
-                            placeholder="Enter reported time (hours)"
-                            inputmode="numeric"
-                            value={this.state.reportedTime}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
 
-                    <Button
+    renderReportCreationProcess() {
+        return (
+            <div>
+                <Modal.Header closeButton>  
+                <Modal.Title>Create Report
+                <h5 >Task {this.props.taskID}</h5>
+                </Modal.Title>
+
+                </Modal.Header>
+                    <Modal.Body>
+                        <Form >
+                            <FormGroup controlId="reportedTime" bsSize="large">                     
+                                <ControlLabel></ControlLabel>
+                                <FormControl 
+                                autoFocus
+                                type="number"
+                                pattern="[0-9]*"
+                                placeholder="Enter reported time (hours)"
+                                inputmode="numeric"
+                                value={this.state.reportedTime}
+                                onChange={this.handleChange}
+                            />
+                            </FormGroup>  
+                        </Form>
+                    </Modal.Body>
+                <Modal.Footer>
+                    <button
                         block
-                        className="btn btn-primary"
+                        className="genericButton"
                         disabled={!this.validateForm()}
                         type="submit"
                     >
                         Save Report
-                    </Button>
-
-                    <Alert
-                        bsStyle="success"
-                        className={this.state.hideSuccessInfo}
-                    >
-                        <strong>
-                            Report successfully saved! <br />
-                        </strong>
-                    </Alert>
-                </form>
+                    </button>   
+</Modal.Footer>
             </div>
+        )
+    }
+
+    render() {
+        return (
+            <div>
+            <button className="genericButton" onClick={this.handleShow.bind(this)}>
+                Create Report 
+            </button>
+
+            <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+            {this.renderReportCreationProcess()}
+            </Modal>
+        </div>
         );
     }
 }
