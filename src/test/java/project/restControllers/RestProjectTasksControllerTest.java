@@ -47,6 +47,9 @@ public class RestProjectTasksControllerTest {
     private UserService userService;
 
     @Mock
+    private Task taskTest;
+
+    @Mock
     private HttpServletRequest req;
 
 
@@ -79,6 +82,9 @@ public class RestProjectTasksControllerTest {
     private List<TaskDTO> projectTaskdtos;
     private ResponseEntity<List<Task>> expectedResponse;
 
+    private ProjectCollaborator projCollab;
+    private TaskCollaborator taskCollaborator;
+
     @Before
     public void setup() {
         JacksonTester.initFields(this, new ObjectMapper());
@@ -89,6 +95,7 @@ public class RestProjectTasksControllerTest {
 
         ProjectCollaborator pcDaniel = new ProjectCollaborator(uDaniel, 20);
         ProjectCollaborator pcInes = new ProjectCollaborator(uInes, 20);
+
 
         startDate = Calendar.getInstance();
         finishDate = Calendar.getInstance();
@@ -123,6 +130,11 @@ public class RestProjectTasksControllerTest {
         // and finally an empty test list to be filled and compared for each assertion
         expected = new ArrayList<>();
         projectTaskdtos = new ArrayList<>();
+
+        projCollab = new ProjectCollaborator(uDaniel, 20);
+
+        taskCollaborator = task.createTaskCollaborator(projCollab);
+
     }
 
     @After
@@ -883,6 +895,43 @@ public class RestProjectTasksControllerTest {
         verify(projectService, times(1)).getActiveProjectTeam(project);
         verify(projectService, times(1)).getProjectById(any(Integer.class));
 
+
+    }
+
+
+
+    @Test
+    public void isCollabActiveInTask() throws Exception{
+
+        // GIVEN
+        int projectId = 02;
+        String taskId = "taskid";
+        String email = "email";
+
+
+        //WHEN
+        when(taskService.getTaskByTaskID(any())).thenReturn(taskTest);
+        when(taskTest.getActiveTaskCollaboratorByEmail(email)).thenReturn(taskCollaborator);
+
+
+        ResponseEntity<String> response = victim.isTaskCollaboratorActiveInTask(projectId,taskId,email);
+
+
+        //THEN
+
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
+
+
+
+        //WHEN
+        //The method getActiveTaskCollabortor returns null
+        when(taskTest.getActiveTaskCollaboratorByEmail(email)).thenReturn(null);
+
+        ResponseEntity<String> responseNull = victim.isTaskCollaboratorActiveInTask(projectId,taskId,email);
+
+        //THEN
+        //The responseEntity will return a value 404 Not Found
+        assertEquals(HttpStatus.NOT_FOUND.value(), responseNull.getStatusCode().value());
 
     }
 

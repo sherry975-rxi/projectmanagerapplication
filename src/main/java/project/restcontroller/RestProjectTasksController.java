@@ -627,5 +627,27 @@ public class RestProjectTasksController {
         return response;
     }
 
+
+
+    @RequestMapping(value = "{taskid}/isCollabInTask/{userEmail}", method = RequestMethod.GET)
+    public ResponseEntity<String> isTaskCollaboratorActiveInTask(@PathVariable int projid, @PathVariable String taskid, @PathVariable String userEmail ) {
+
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        ResponseEntity <String> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        if(task.getActiveTaskCollaboratorByEmail(userEmail) != null) {
+
+            response = new ResponseEntity<>("isActive", HttpStatus.OK);
+
+        }
+
+
+        return response;
+
+    }
+
+
+
 }
 
