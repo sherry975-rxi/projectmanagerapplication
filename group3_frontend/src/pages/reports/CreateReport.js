@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {
+    Form,
+    Modal,
     Button,
     FormGroup,
     FormControl,
@@ -7,17 +9,27 @@ import {
     Alert
 } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
+import  './CreateReport.css';
 
 class CreateReport extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            show: false,
             reportedTime: '',
             taskCollabEmail: '',
             hideSuccessInfo: 'hide-code',
             message: ''
         };
         this.AuthService = new AuthService();
+    }
+
+    handleClose() {
+        this.setState({ show: false });
+    }
+
+    handleShow() {
+        this.setState({ show: true });
     }
 
     validateForm() {
@@ -46,8 +58,8 @@ class CreateReport extends Component {
         };
 
         this.AuthService.fetch(
-            `/projects/${this.props.match.params.projectID}/tasks/${
-                this.props.match.params.taskID
+            `/projects/${this.props.projectID}/tasks/${
+                this.props.taskID
             }/reports/`,
             {
                 body: JSON.stringify(reportDTOData),
@@ -55,54 +67,64 @@ class CreateReport extends Component {
             }
         ).then(responseData => {
             window.location.href = `/projects/${
-                this.props.match.params.projectID
-            }/tasks/${this.props.match.params.taskID}/reports/`;
+                this.props.projectID
+            }/tasks/${this.props.taskID}/reports/`;
         });
 
         this.setState({
             hideSuccessInfo: ''
         });
+
     };
+
+
+    renderReportCreationProcess() {
+        return (
+            <div>
+                <Modal.Header closeButton>  
+                    <Modal.Title>Create Report
+                    <h5 >Task {this.props.taskID}</h5>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form >
+                        <FormGroup controlId="reportedTime" bsSize="large">                     
+                            <FormControl 
+                                autoFocus
+                                type="number"
+                                pattern="[0-9]*"
+                                placeholder="Enter reported time (hours)"
+                                inputmode="numeric"
+                                value={this.state.reportedTime}
+                                onChange={this.handleChange}/>
+                        </FormGroup>  
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button
+                        onClick={this.handleSubmit}
+                        block
+                        className="genericButton"
+                        disabled={!this.validateForm()}
+                        type="submit">
+                        Save Report
+                    </button>   
+                </Modal.Footer>
+            </div>
+        )
+    }
 
     render() {
         return (
-            <div className=" table-striped">
-                <h3>
-                    <b>Create Report for {this.props.match.params.taskID} </b>
-                </h3>&nbsp;
-                <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="reportedTime" bsSize="large">                        
-                        <ControlLabel></ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="number"
-                            pattern="[0-9]*"
-                            placeholder="Enter reported time (hours)"
-                            inputmode="numeric"
-                            value={this.state.reportedTime}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
+            <div>
+            <button className="genericButton" onClick={this.handleShow.bind(this)}>
+                Create Report 
+            </button>
 
-                    <Button
-                        block
-                        className="btn btn-primary"
-                        disabled={!this.validateForm()}
-                        type="submit"
-                    >
-                        Save Report
-                    </Button>
-
-                    <Alert
-                        bsStyle="success"
-                        className={this.state.hideSuccessInfo}
-                    >
-                        <strong>
-                            Report successfully saved! <br />
-                        </strong>
-                    </Alert>
-                </form>
-            </div>
+            <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+            {this.renderReportCreationProcess()}
+            </Modal>
+        </div>
         );
     }
 }

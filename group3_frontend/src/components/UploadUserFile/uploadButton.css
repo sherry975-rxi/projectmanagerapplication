@@ -10,6 +10,7 @@
     width: 140px;
     height: 32px;
     border-radius: 0;
+    margin-bottom:8px;
 }
 
 .uploadButton:hover {

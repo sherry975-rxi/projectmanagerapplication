@@ -239,6 +239,46 @@ export function getAllTaskDependencies(projectId, taskId) {
     };
 }
 
+export function createTaskDependency(projectId, taskId, parentId, postpone) {
+    return dispatch => {
+        tasksLoading();
+        fetch(`/projects/${projectId}/tasks/${taskId}/createDependency/${parentId}/${postpone}`, {
+            headers: { Authorization: localStorage.getItem('id_token') },
+            method: 'PUT'
+        })
+            .then(responseData => responseData.json())
+            .then(data => {
+                console.log(data);
+                dispatch(taskDependenciesFetched(data));
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+                fetchTasksHasErrored();
+            });
+    };
+}
+
+export function removeTaskDependency(projectId, taskId, parentId) {
+    return dispatch => {
+        tasksLoading();
+        fetch(`/projects/${projectId}/tasks/${taskId}/removeDependency/${parentId}/`, {
+            headers: { Authorization: localStorage.getItem('id_token') },
+            method: 'PUT'
+        })
+            .then(responseData => responseData.json())
+            .then(data => {
+                console.log(data);
+                dispatch(taskDependenciesFetched(data));
+                return data;
+            })
+            .catch(error => {
+                console.log(error);
+                fetchTasksHasErrored();
+            });
+    };
+}
+
 export const getProjectTasksByFilter = (projectId, filterName) => {
     switch (filterName) {
         case TASKS_FILTER.ALL_TASKS:
