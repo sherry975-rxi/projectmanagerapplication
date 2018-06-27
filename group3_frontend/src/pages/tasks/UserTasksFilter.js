@@ -39,8 +39,15 @@ class UserTasksFilter extends Component {
 
     renderDropdownButton(title) {
 
+        const styleButton = {
+            position: "absolute",
+            marginTop: "-18px",
+            marginLeft: "-65px"
+        }
+
         return (
             <DropdownButton
+                style={styleButton}
                 className="buttonFinished"
                 title={title}
                 key="1"
