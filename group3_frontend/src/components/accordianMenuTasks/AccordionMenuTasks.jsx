@@ -13,6 +13,7 @@ import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
 import AuthService from './../../pages/loginPage/AuthService';
 import { getAvailableCollaboratorsForTask } from '../../actions/projectTasksActions';
 import { bindActionCreators } from 'redux';
+import CreateReport from '../../pages/reports/CreateReport';
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -122,19 +123,7 @@ class AccordionMenu extends Component {
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (
-                        <Link
-                            to={
-                                '/projects/' +
-                                element.project +
-                                '/tasks/' +
-                                element.taskID +
-                                '/createreport'
-                            }
-                        >
-                            <button class="buttonFinished">
-                                Create Report
-                            </button>
-                        </Link>
+                    <CreateReport taskID = {element.taskID}/>
                     ) : (
                         ''
                     )}
