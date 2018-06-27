@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import AuthService from "../loginPage/AuthService";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {createTaskDependency, updateNotStartedTasks} from "../../actions/projectTasksActions";
+import { createTaskDependency, updateNotStartedTasks } from "../../actions/projectTasksActions";
 import { DropdownButton, MenuItem } from "react-bootstrap";
 import { toastr } from "react-redux-toastr";
 
@@ -11,7 +10,6 @@ class AddDependency extends Component {
     constructor(props) {
         super(props);
 
-        this.authService = new AuthService();
     }
 
     handleClick = () => {
@@ -34,7 +32,7 @@ class AddDependency extends Component {
     };
 
     render() {
-        let isProjectManager = this.props.projManager === this.authService.getProfile().sub ? 'genericButton' : 'noButton';
+
         const taskList = this.props.taskList || [];
 
         return (
