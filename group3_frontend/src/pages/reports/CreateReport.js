@@ -19,10 +19,30 @@ class CreateReport extends Component {
             reportedTime: '',
             taskCollabEmail: '',
             hideSuccessInfo: 'hide-code',
-            message: ''
+            message: '',
+            canRenderResponse: '',
+            canRenderButton: false
         };
         this.AuthService = new AuthService();
     }
+
+
+    async componentDidMount() {
+        this.AuthService.fetchRaw(
+            `/projects/${this.AuthService.getUserId()}/tasks/${this.props.taskID}/isCollabInTask/${this.AuthService.getProfile().sub}`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            this.setState({
+                canRenderResponse: responseData.status,
+                hasFetched: true
+            });
+        }).catch(err => {
+          
+        });
+        };
+
 
     handleClose() {
         this.setState({ show: false });
@@ -114,11 +134,25 @@ class CreateReport extends Component {
         )
     }
 
+     
+
     render() {
+        const showButton = {display: 'block'}
+        const hideButton = {display: 'none'}
+        let style = ''
+
+        if(this.state.canRenderResponse === 200){
+            style = showButton
+        } 
+        else{
+            style = hideButton;
+        }
+    
         return (
             <div>
-            <button className="genericButton" onClick={this.handleShow.bind(this)}>
-                Create Report 
+            <button className="genericButton" onClick={this.handleShow.bind(this)}  style={style}>
+                Create Report
+
             </button>
 
             <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
