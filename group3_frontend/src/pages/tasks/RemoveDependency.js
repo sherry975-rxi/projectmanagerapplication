@@ -1,30 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createTaskDependency, updateNotStartedTasks } from "../../actions/projectTasksActions";
+import { removeTaskDependency } from "../../actions/projectTasksActions";
 import { DropdownButton, MenuItem } from "react-bootstrap";
 import { toastr } from "react-redux-toastr";
 
 
-class AddDependency extends Component {
+class RemoveDependency extends Component {
     constructor(props) {
         super(props);
 
     }
 
-    handleClick = () => {
-        console.log(this.props.taskList);
-        this.props.updateNotStartedTasks(this.props.projectID);
-    }
 
     handleSelect = eventKey => {
 
-        console.log(this.props.taskList[eventKey].taskID);
-
-        this.props.createTaskDependency(this.props.projectID, this.props.taskID, this.props.taskList[eventKey].taskID, 2);
+        this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.taskList[eventKey].taskID);
 
         if(this.props.error) {
-            toastr.success('Dependency added!');
+            toastr.success('Dependency removed!');
         } else {
             toastr.error('lolnope');
         }
@@ -33,16 +27,15 @@ class AddDependency extends Component {
 
     render() {
 
-        const taskList = this.props.taskList || [];
+        const taskList = this.props.dependencies || [];
 
         return (
             <DropdownButton
                 className='genericButton'
-                title='Create Dependency'
+                title='Remove Dependency'
                 key="0"
                 id={`dropdown-basic-0`}
                 value={this.props.projectID}
-                onClick={this.handleClick}
             >
                 {taskList.map((listItem, index) => (
                     <MenuItem
@@ -60,16 +53,15 @@ class AddDependency extends Component {
 
 const mapStateToProps = state => {
     return {
-        taskList: state.tasks.tasksList,
         error: state.tasks.error
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateNotStartedTasks, createTaskDependency }, dispatch);
+    return bindActionCreators({ removeTaskDependency }, dispatch);
 };
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AddDependency);
+)(RemoveDependency);
