@@ -8,14 +8,13 @@ import { refreshTasksByFilter } from "../../actions/refreshTasksActions";
 class RemoveTaskCollaborator extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            text: 'Find request'
-        };
 
-        this.getRequest = this.getRequest.bind(this);
         this.authService=new AuthService();
     }
 
+    // THis method attempts to fetch a pending task removal request from the collaborator.
+    // If the request is found, it will approve it and remove collaborator
+    // If there is an error (request not found), it will instead remove the collaborator
     async getRequest() {
         this.authService.fetch(
             `/projects/${this.props.task.project}/tasks/${this.props.task.taskID}/requests/user/${this.props.collaborator.taskCollaborator.userID}`,
@@ -23,14 +22,11 @@ class RemoveTaskCollaborator extends Component {
                 method: "GET"
             }
         ).then(response => {
-            this.setState({
-                request: response,
-                text: 'Approve Removal'
-            });
+
+            this.approveRemovalRequest();
         }).catch(error => {
-            this.setState({
-                text: 'Remove'
-            });
+
+            this.removeTaskCollaborator();
         });
 
     }
@@ -69,23 +65,12 @@ class RemoveTaskCollaborator extends Component {
 
     handleClick = event => {
 
-        switch(this.state.text) {
-            case 'Find request':
-                this.getRequest();
-                break;
-            case 'Approve Removal':
-                this.approveRemovalRequest();
-                break;
-            case 'Remove':
-                this.removeTaskCollaborator();
-                break;
-
-        }
+        this.getRequest();
 
     }
 
     render() {
-        return <button onClick={this.handleClick} className="genericButton" >{this.state.text}</button>;
+        return <button onClick={this.handleClick} className="genericButton" > Remove </button>;
     }
 }
 const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
