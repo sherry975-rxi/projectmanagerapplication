@@ -13,6 +13,7 @@ export default (state = {}, action) => {
         case 'EXPIRED_FETCHED':
         case 'ALLTASKS_FETCHED':
         case 'CANCELLED_FETCHED':
+        case 'DEPENDENCIES_FETCHED':
         case ALL_PROJECT_TASKS_FETCHED:
             return {
                 ...state,
