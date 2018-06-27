@@ -29,8 +29,8 @@ class UserTasksFilter extends Component {
         this.field = 'Task ID',
         this.option = '1'
         this.state= {
-            selectedOption: '0',
-            selectedField: 'Shit',
+            selectedOption: '1',
+            selectedField: 'Task ID',
         };
         this.renderSearchForm = this.renderSearchForm.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -244,15 +244,19 @@ class UserTasksFilter extends Component {
 
     render() {
 
-
+        const tabStyle = {
+            marginTop: '-20px'
+        }
         const divStyle = {
             width: '100%',
-            
+            marginTop: '-20px',
+            marginBottom: '-40px'
+
           };
 
         const tdStyle = {
             paddingRight: '5px',
-            width: '415px',
+            width: '615px',
         }
 
         return (
