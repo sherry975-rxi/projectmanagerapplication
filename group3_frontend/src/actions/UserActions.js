@@ -71,6 +71,47 @@ export function updateAdministrator() {
     };
 }
 
+
+export function  searchList (event,list) {
+    const authService = new AuthService();
+
+        return dispatch => {
+            var searchList = searching(event, list)
+            
+                dispatch(searchListUsersFetched(searchList));
+                dispatch(filterUserActions.changeToSearchUsers())
+            
+        };
+    
+}
+
+export function searching (event, list) {
+        var newlist = list;
+        //if(list.length > 0){
+        newlist = newlist.filter(function(item){
+          return item.email.toLowerCase().search(
+            event.target.value.toLowerCase()) !== -1;
+        });
+        console.log("LKJHGFDFGNMNBVCXSDERTH")
+        console.log(newlist)
+        return newlist;
+      }
+
+
+export function updateVisitors() {
+    const authService = new AuthService();
+
+    return dispatch => {
+        authService.fetch(`/users/profiles/UNASSIGNED`, {
+            method: 'GET'
+        }).then(data => {
+                dispatch(allVisitorsFetched(data));
+                dispatch(filterUserActions.changeToVISITOR());
+                return data;
+            });
+    };
+}
+
 export function allUsersFetched(allUsers) {
     return {
         type: 'ALLUSERS_FETCHED',
@@ -103,5 +144,20 @@ export function allAdministratorFetched(allAdministrator) {
     return {
         type: 'ALLADMINISTRATOR_FETCHED',
         allAdministrator
+    };
+}
+
+
+export function searchListUsersFetched(searchList) {
+    return {
+        type: 'SEARCHUSERS_FETCHED',
+        searchList
+    };
+}
+
+export function allVisitorsFetched(allVisitors) {
+    return {
+        type: 'ALLVISITORS_FETCHED',
+        allVisitors
     };
 }

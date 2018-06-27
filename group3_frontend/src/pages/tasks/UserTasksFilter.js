@@ -7,28 +7,60 @@ import {
     updateMyAllTasks,
     updateMyFinishedTasks,
     updateMyOngoingTasks,
-    updateMyLastMonthFinishedTasks
+    updateMyLastMonthFinishedTasks,
+    searchList
 } from './../../actions/userTasksActions';
+import {
+    FormGroup,
+    FormControl,
+} from 'react-bootstrap';
 
 class UserTasksFilter extends Component {
     constructor(props) {
         super(props);
+        this.activeFilter = ""
 
-        this.state = {
-            activeKey: '1'
-        };
+    }
+
+    filterList(event) {
+
+        if(event.target.value.toLowerCase()!== -1){
+            
+            switch (this.activeFilter){
+                case "1":
+                return this.props.searchList(event, this.props.myAllTasks);
+                case "2":
+                return this.props.searchList(event, this.props.myOngoingTasks);
+                case "3":
+                return this.props.searchList(event, this.props.myFinishedTasks);
+                case '4':
+                return this.props.searchList(event, this.props.lastMonthFinishedTasks);
+                default:
+                return this.props.searchList(event, this.props.myAllTasks);
+                
+                
+            }        
+        }
     }
 
     handleChange(key) {
         switch (key) {
             case '1':
+                this.activeFilter = "1";
                 return this.props.updateMyAllTasks(this.props.userID);
+                
             case '2':
+                this.activeFilter = "2";
                 return this.props.updateMyOngoingTasks(this.props.userID);
+
             case '3':
+                this.activeFilter = "3";
                 return this.props.updateMyFinishedTasks(this.props.userID);
+
             case '4':
+                this.activeFilter = "4";
                 return this.props.updateMyLastMonthFinishedTasks(this.props.userID);
+                
             default:
                 return;
         }
@@ -41,7 +73,18 @@ class UserTasksFilter extends Component {
     render() {
         return (
             <div className="buttonWrapper">
-                <div className="switch-toggle switch-ios">
+                            <fieldset>
+
+                <div className="switch-toggle switch-candy">
+                    {/* <input
+                        id="Test"
+                        name="view3"
+                        type="radio"
+                        onChange={<div></div>}
+                    />
+                    <label className="buttonFont" htmlFor="">
+                        <b>Filter by:</b>
+                    </label> */}
                     <input
                         id="alltasks"
                         name="view3"
@@ -79,21 +122,70 @@ class UserTasksFilter extends Component {
                         onChange={() => this.handleChange('4')}
                     />
                     <label className="buttonFont" htmlFor="lastmonthfinished">
-                        Finished Last Month
+                        Last Month
                     </label>
-                    
+                    <a></a>
+
                 </div>
+                </fieldset>
+
+               {/*  <div class="btn-group">
+                <FormGroup bsSize="small" onChange={this.handleChange1} >
+                            <FormControl
+                                id="emailUsers"
+                                name="view3"
+                                eventKey="0"
+                                className="textForm"
+                                autoFocus
+                                type="text"
+                                placeholder="Search Users By Email"
+                                value={this.state.emailUsers}
+                                
+                            />
+                </FormGroup>
+                <button onClick={e => this.handleChange(e, '2')} >
+                    Confirm
+                    </button>
+                </div> */}
+                 <div className=" table-striped">
+                    <div className="filter-list">
+                        <form>
+                        <fieldset className="form-group">
+                        <input 
+                            type="text" 
+                            className="form-control form-control-lg" 
+                            placeholder="Search by Task ID" 
+                            onChange={(event) => this.filterList(event)}
+                        />
+                        {console.log("tesTEEEEEEEE")}
+                        {console.log(this.activeFilter)}
+                        </fieldset>
+                        </form>
+                       {/* <button onClick={e => this.handleChange(e, '2')} >
+                    Confirm
+                    </button> */}
+
+                    </div>
+                    </div>
             </div>
         );
     }
 }
+const mapStateToProps = state => {
+    return {
+        myAllTasks: state.userTasks.myAllTasks,
+        myFinishedTasks: state.userTasks.myFinishedTasks,
+        myOngoingTasks: state.userTasks.myOngoingTasks,
+        lastMonthFinishedTasks: state.userTasks.lastMonthFinishedTasks,
 
+    };
+};
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
-        { updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks, updateMyLastMonthFinishedTasks },
+        { updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks, updateMyLastMonthFinishedTasks, searchList },
         dispatch
     );
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(UserTasksFilter);

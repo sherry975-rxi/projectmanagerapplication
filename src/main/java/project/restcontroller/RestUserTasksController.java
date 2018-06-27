@@ -15,7 +15,6 @@ import project.model.User;
 import project.services.TaskService;
 import project.services.UserService;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 

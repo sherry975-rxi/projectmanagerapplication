@@ -7,6 +7,7 @@ import {
 } from './actions';
 import { TASKS_FILTER } from '../constants/TasksConstants';
 import { updateUnassignedProjCollabs } from './projCollabsWoutTasksActions';
+import {refreshTasksByFilter} from "./refreshTasksActions";
 
 export function addCollaboratorToTask(projectId, taskId, userDTO, filterName) {
     return dispatch => {
@@ -28,7 +29,10 @@ export function addCollaboratorToTask(projectId, taskId, userDTO, filterName) {
                     dispatch(
                         getAvailableCollaboratorsForTask(projectId, taskId)
                     );
-                    dispatch(getProjectTasksByFilter(projectId, filterName));
+                    dispatch(
+                        refreshTasksByFilter(projectId, filterName)
+                    );
+
                 }
             })
             .catch(err => {
@@ -216,6 +220,25 @@ export function getAllProjectTasks(projectId) {
     };
 }
 
+export function getAllTaskDependencies(projectId, taskId) {
+    return dispatch => {
+        tasksLoading();
+        fetch(`/projects/${projectId}/tasks/${taskId}/dependencies`, {
+            headers: { Authorization: localStorage.getItem('id_token') },
+            method: 'GET'
+        })
+            .then(responseData => responseData.json())
+            .then(data => {
+                console.log(data);
+                dispatch(taskDependenciesFetched(data));
+                return data;
+            })
+            .catch(error => {
+                fetchTasksHasErrored();
+            });
+    };
+}
+
 export const getProjectTasksByFilter = (projectId, filterName) => {
     switch (filterName) {
         case TASKS_FILTER.ALL_TASKS:
@@ -311,6 +334,13 @@ export function cancelledTasksFetched(cancelledTasks) {
     return {
         type: 'CANCELLED_FETCHED',
         tasks: cancelledTasks
+    };
+}
+
+export function taskDependenciesFetched(taskDependencies) {
+    return {
+        type: 'DEPENDENCIES_FETCHED',
+        tasks: taskDependencies
     };
 }
 

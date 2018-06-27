@@ -8,11 +8,16 @@ import UserTasksFilter from '../tasks/UserTasksFilter';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 import { connect } from 'react-redux';
 import LoadingComponent from './../../components/loading/LoadingComponent';
+import {
+    searchList
+} from './../../actions/userTasksActions';
+
 
 
 class UserTasks extends Component {
     constructor(props) {
         super(props);
+
         this.AuthService = new AuthService();
         this.renderTasks = this.renderTasks.bind(this);
 
@@ -20,8 +25,9 @@ class UserTasks extends Component {
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    
 
+
+   
     renderTasks() {
 
 
@@ -33,21 +39,26 @@ class UserTasks extends Component {
             return <Redirect to="/login" />;
         }
 
-        else if (this.props.filter === 'myAll')
-            return <AccordionMenu list={this.props.myAllTasks} />;
+        else if (this.props.filter === 'myAll'){
 
-        else if (this.props.filter === 'myFinished')
+            return <AccordionMenu list={this.props.myAllTasks} />;
+        }
+
+        else if (this.props.filter === 'myFinished'){
             return <AccordionMenu list={this.props.myFinishedTasks} />;
-
-        else if (this.props.filter === 'myUnfinished')
+        }
+        else if (this.props.filter === 'myUnfinished'){
             return <AccordionMenu list={this.props.myOngoingTasks} />;
-
-        else if (this.props.filter === 'lastMonthFinished')
+        }
+        else if (this.props.filter === 'lastMonthFinished'){
             return <AccordionMenu list={this.props.lastMonthFinishedTasks} />
-
-        else
+        }
+        else if (this.props.filter === 'searchList'){
+            return <AccordionMenu list={this.props.updatedList} />
+        }
+        else {
             return <AccordionMenu list={this.props.myAllTasks} />;
-        
+        }
     }
 
 
@@ -56,11 +67,12 @@ class UserTasks extends Component {
             return (
                 <div className=" table-striped">
                     <UserTasksFilter userID={this.AuthService.getUserId()} />
-                    <h3>
+                        <h3>
                         <b>My Tasks</b>
-                    </h3>
-                    &nbsp;
-                    {this.renderTasks()}
+                        </h3>
+                        &nbsp;
+                        {this.renderTasks()}
+                                            
                 </div>
             );
         }
@@ -73,7 +85,8 @@ const mapStateToProps = state => {
         myFinishedTasks: state.userTasks.myFinishedTasks,
         myOngoingTasks: state.userTasks.myOngoingTasks,
         myAllTasks: state.userTasks.myAllTasks,
-        lastMonthFinishedTasks: state.userTasks.lastMonthFinishedTasks
+        lastMonthFinishedTasks: state.userTasks.lastMonthFinishedTasks,
+        updatedList: state.userTasks.updatedList
     };
 };
 

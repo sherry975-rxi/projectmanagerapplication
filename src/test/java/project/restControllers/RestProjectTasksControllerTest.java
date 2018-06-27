@@ -200,14 +200,18 @@ public class RestProjectTasksControllerTest {
 
     /**
      * GIVEN a task with a certain ID and no dependencies
+     * WHEN a list of tasks dependencies is requested
+     * THEN the response entity must contain status OK
      *
+     * AND WHEN the tested task recieves a dependency
+     * THEN the response entity must contain a list of tasks
      *
      * @throws Exception
      */
     @Test
     public void testGetTaskDependencies() throws Exception  {
 
-        //GIVEN a task with a certain Id
+        //GIVEN
 
         task3 = new Task("Task3", project);
         task3.setTaskID("50");
@@ -216,18 +220,22 @@ public class RestProjectTasksControllerTest {
         task3.setTaskBudget(2000);
         projectTasks = new ArrayList<>();
 
+        int projectId = 123;
+
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
         when(taskService.getTaskByTaskID(anyString())).thenReturn(task3);
 
         //confirmation that task3 does not have assigned collaborators
 
         assertTrue(task3.getTaskDependency().isEmpty());
 
-        //WHEN a list of tasks without assigned collaborators is requested
+        //WHEN
 
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/1/dependencies")
                 .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
-        //THEN the response entity must contain status OK
+        //THEN
 
         assertEquals(HttpStatus.OK.value(),response.getStatus());
 
@@ -241,7 +249,8 @@ public class RestProjectTasksControllerTest {
         List<Task> expected = new ArrayList<>();
         expected.add(task);
 
-        ResponseEntity<List<Task>> actualResponse = victim.getTaskDependencies("1");
+        // THEN
+        ResponseEntity<List<Task>> actualResponse = victim.getTaskDependencies("1", projectId);
 
         ResponseEntity<List<Task>> expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
         assertEquals(expectedResponse,actualResponse);

@@ -28,6 +28,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, filterType: 'cancelled'}
         case 'LASTMONTHFINISHED':
             return {...state, filterType: 'lastMonthFinished'}
+        case 'SEARCHTASKS':
+            return { ...state, filterType: 'searchList' }
         default:
             return state;
     }

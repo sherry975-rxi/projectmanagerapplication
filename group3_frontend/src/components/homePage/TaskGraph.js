@@ -60,13 +60,24 @@ class TaskGraph extends Component {
                 return this.state.tasks.map((taskItem, index) => {
                     const today = momentus(this.state.actualDate);
                     const taskDeadline = momentus(taskItem.taskDeadline);
-                    var difference = taskDeadline.diff(today, 'days');
-                    var deadlineIsOver = difference;
+                    var difference = 100 - taskDeadline.diff(today, 'days');
+                    var deadlineIsOver = 100 - difference;
 
                     if (difference < 0) {
+                        difference = 0;
+                        
+                    }
+
+                    if (difference > 100) {
                         difference = 100;
                         deadlineIsOver = '0';
                     }
+
+                    
+
+                    console.log("TAsK ")
+
+                    console.log(difference)
 
                     return (
                         <div className="GraphContainer" key={index}>

@@ -107,6 +107,13 @@ public class LoadUserXmlVersion1 implements LoadUserXmlVersion {
 			}
 
 		}
-		userService.addUserToUserRepositoryX(eachUser);
+
+		if(userService.isUserinUserContainer(eachUser)){
+			User oldUser = userService.getUserByEmail(eachUser.getEmail());
+			eachUser.setUserID(oldUser.getUserID());
+			userService.updateUser(eachUser);
+		}else {
+			userService.addUserToUserRepositoryX(eachUser);
+		}
 	}
 }

@@ -9,6 +9,7 @@ import AuthService from '../../pages/loginPage/AuthService'
 import { connect } from 'react-redux';
 import HomepageAdmin from './HomepageAdmin';
 import HomepageCollaborator from './HomepageCollaborator'
+import HomepageDirector from './HomepageDirector'
 
 
 
@@ -32,7 +33,7 @@ class Homepage extends Component {
         if (this.props.profile === 'COLLABORATOR') {
             options = this.renderAsCollaborator();
         } else if (this.props.profile === 'DIRECTOR') {
-            options = this.renderAsCollaborator();
+            options = this.renderAsDirector();
 
         }
         else if (this.props.profile === 'ADMIN') {
@@ -58,9 +59,14 @@ class Homepage extends Component {
 
  
 
-        renderAsAdmin(){
-            return <HomepageAdmin />
-        }
+    renderAsAdmin(){
+        return <HomepageAdmin />
+    }
+
+    renderAsDirector(){
+        return <HomepageDirector />
+    }
+
 
     
 

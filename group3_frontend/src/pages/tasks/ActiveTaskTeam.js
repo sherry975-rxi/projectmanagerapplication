@@ -48,7 +48,6 @@ class ActiveTaskTeam extends Component {
                     <RemoveTaskCollaborator
                         task={this.props.task}
                         collaborator={activeTeamItem}
-                        updateTeam={this.getActiveTaskTeam}
                     />
                 </td>
             );
