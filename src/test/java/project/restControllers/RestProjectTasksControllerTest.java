@@ -257,6 +257,71 @@ public class RestProjectTasksControllerTest {
 
     }
 
+    /**
+     * GIVEN two tasks with a certain ID and no dependencies
+     * WHEN making task3 dependent on task
+     * THEN the response entity must contain status OK, and child "task3" must contain task as a dependency
+     *  and its start date must be changed to after parent "task" deadline
+     *
+     * AND WHEN removing that dependency from task
+     * THEN the response entity must contain ok, and child "task3" must have no dependencies
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testCreateAndRemoveTaskDependency() throws Exception  {
+
+        //GIVEN
+
+        task3 = new Task("Task3", project);
+        task3.setTaskID("50");
+        task3.setEstimatedTaskStartDate(estimatedStart);
+        task3.setTaskDeadline(estimatedDeadline);
+        task3.setTaskBudget(2000);
+        projectTasks = new ArrayList<>();
+
+
+        task.setTaskDeadline(Calendar.getInstance());
+        task.setTaskID("30");
+
+        int projectId = 123;
+
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        when(taskService.getTaskByTaskID("50")).thenReturn(task3);
+        when(taskService.getTaskByTaskID("30")).thenReturn(task);
+
+        //confirmation that task3 does not have assigned collaborators
+
+        assertTrue(task3.getTaskDependency().isEmpty());
+        assertFalse(task3.getEstimatedTaskStartDate().after(task.getTaskDeadline()));
+
+        //WHEN
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.put("/projects/1/tasks/50/createDependency/30/2")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+
+        assertEquals(HttpStatus.OK.value(),response.getStatus());
+        assertFalse(task3.getTaskDependency().isEmpty());
+        assertTrue(task3.getTaskDependency().contains(task));
+        assertTrue(task3.getEstimatedTaskStartDate().after(task.getTaskDeadline()));
+
+
+        //AND WHEN
+
+        response = mockMvc.perform(MockMvcRequestBuilders.put("/projects/1/tasks/50/removeDependency/30")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+
+        // THEN
+        assertEquals(HttpStatus.OK.value(),response.getStatus());
+        assertTrue(task3.getTaskDependency().isEmpty());
+
+
+    }
+
 
     @Test
     public void testGetTasksWithoutCollaborators() throws Exception  {
