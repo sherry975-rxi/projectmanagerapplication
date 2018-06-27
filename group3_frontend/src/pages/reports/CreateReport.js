@@ -82,40 +82,34 @@ class CreateReport extends Component {
         return (
             <div>
                 <Modal.Header closeButton>  
-                <Modal.Title>Create Report
-                <h5 >Task {this.props.taskID}</h5>
-                </Modal.Title>
-
+                    <Modal.Title>Create Report
+                    <h5 >Task {this.props.taskID}</h5>
+                    </Modal.Title>
                 </Modal.Header>
-                    <Modal.Body>
-                        <Form >
-                            <FormGroup controlId="reportedTime" bsSize="large">                     
-                                <ControlLabel></ControlLabel>
-                                <FormControl 
+                <Modal.Body>
+                    <Form >
+                        <FormGroup controlId="reportedTime" bsSize="large">                     
+                            <FormControl 
                                 autoFocus
                                 type="number"
                                 pattern="[0-9]*"
                                 placeholder="Enter reported time (hours)"
                                 inputmode="numeric"
                                 value={this.state.reportedTime}
-                                onChange={this.handleChange}
-                            />
-                            </FormGroup>  
-                        </Form>
-                    </Modal.Body>
+                                onChange={this.handleChange}/>
+                        </FormGroup>  
+                    </Form>
+                </Modal.Body>
                 <Modal.Footer>
                     <button
-                                            onClick={this.handleSubmit}
-
+                        onClick={this.handleSubmit}
                         block
                         className="genericButton"
                         disabled={!this.validateForm()}
-                        type="submit"
-
-                    >
+                        type="submit">
                         Save Report
                     </button>   
-</Modal.Footer>
+                </Modal.Footer>
             </div>
         )
     }
