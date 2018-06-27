@@ -4,6 +4,7 @@ import {toastr} from "react-redux-toastr";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import { refreshTasksByFilter } from "../../actions/refreshTasksActions";
+import "../../components/button/removeButton.css";
 
 class RemoveTaskCollaborator extends Component {
     constructor(props) {
@@ -70,7 +71,7 @@ class RemoveTaskCollaborator extends Component {
     }
 
     render() {
-        return <button onClick={this.handleClick} className="genericButton" > Remove </button>;
+        return <button onClick={this.handleClick} className="glyphicon glyphicon-remove" ></button>;
     }
 }
 const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
