@@ -5,6 +5,7 @@ import LoadingComponent from './../../components/loading/LoadingComponent';
 import { Redirect } from 'react-router-dom';
 import {bindActionCreators} from "redux";
 import {getAllTaskDependencies} from "../../actions/projectTasksActions";
+import Error from "../../components/error/error";
 
 class TaskDependencies extends Component {
     constructor(props) {
@@ -17,8 +18,6 @@ class TaskDependencies extends Component {
     }
 
     updateDependencies() {
-        console.log(this.props.match.params.projectID);
-        console.log(this.props.match.params.taskID);
         this.props.getAllTaskDependencies(this.props.match.params.projectID, this.props.match.params.taskID);
     }
 
@@ -26,17 +25,11 @@ class TaskDependencies extends Component {
     renderTasks = () => {
         if (this.props.tasksLoading) {
             return <LoadingComponent />;
-        } else if (this.props.error != null) {
-            return <Redirect to="/login" />;
-        }
-
-        if(this.props.tasks == null) {
-            return <AccordionMenu list={[]} />;
-        } else {
+        } else if (this.props.error) {
+            return <Error message={this.props.error} />;
+        } else if (this.props.tasks != null) {
             return <AccordionMenu list={this.props.tasks} />;
         }
-
-
 
     };
 
@@ -47,7 +40,6 @@ class TaskDependencies extends Component {
                     {/*Insert Create dependency button here!*/}
                     {/*<CreateTask projectId={this.props.match.params.projectID} />*/}
                 </div>
-                {console.log(this.props.tasks)}
                 {this.renderTasks()}
             </div>
         );
