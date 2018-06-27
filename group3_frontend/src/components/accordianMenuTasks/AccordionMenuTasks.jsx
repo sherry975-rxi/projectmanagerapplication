@@ -123,7 +123,7 @@ class AccordionMenu extends Component {
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (
-                    <CreateReport taskID = {element.taskID}/>
+                    <CreateReport taskID = {element.taskID} projectID = {element.project}/>
                     ) : (
                         ''
                     )}

@@ -66,7 +66,7 @@ class UserTasks extends Component {
       
             return (
                 <div className=" table-striped">
-                                        <b>My Tasks</b>
+                                        <h2>My Tasks</h2>
 
                     <UserTasksFilter userID={this.AuthService.getUserId()} />
                         <h3>
