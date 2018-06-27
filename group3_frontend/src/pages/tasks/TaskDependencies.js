@@ -9,6 +9,7 @@ import AddDependency from "./AddDependency";
 import AuthService from "../loginPage/AuthService";
 import RemoveDependency from "./RemoveDependency";
 
+
 class TaskDependencies extends Component {
     constructor(props) {
         super(props);
@@ -51,6 +52,7 @@ class TaskDependencies extends Component {
             return (
             <div align="right">
                 <AddDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
+                {' '}
                 <RemoveDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} dependencies={this.props.tasks} />
             </div>);
         } else {

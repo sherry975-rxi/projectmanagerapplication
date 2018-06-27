@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { removeTaskDependency } from "../../actions/projectTasksActions";
+import '../../components/button/genericButton.css'
 import { DropdownButton, MenuItem } from "react-bootstrap";
 import { toastr } from "react-redux-toastr";
 
@@ -24,6 +25,8 @@ class RemoveDependency extends Component {
         }
 
     };
+
+    
 
     render() {
 
@@ -53,7 +56,8 @@ class RemoveDependency extends Component {
 
 const mapStateToProps = state => {
     return {
-        error: state.tasks.error
+        error: state.tasks.error,
+        loading: state.tasks.loading
     };
 };
 
