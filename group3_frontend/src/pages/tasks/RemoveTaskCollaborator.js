@@ -9,15 +9,11 @@ class RemoveTaskCollaborator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: 'Loading...'
+            text: 'Find request'
         };
 
         this.getRequest = this.getRequest.bind(this);
         this.authService=new AuthService();
-    }
-
-    componentDidMount() {
-        this.getRequest();
     }
 
     async getRequest() {
@@ -72,11 +68,20 @@ class RemoveTaskCollaborator extends Component {
 
 
     handleClick = event => {
-        if(this.state.text === 'Approve Removal') {
-            this.approveRemovalRequest();
-        } else if(this.state.text === 'Remove') {
-            this.removeTaskCollaborator();
+
+        switch(this.state.text) {
+            case 'Find request':
+                this.getRequest();
+                break;
+            case 'Approve Removal':
+                this.approveRemovalRequest();
+                break;
+            case 'Remove':
+                this.removeTaskCollaborator();
+                break;
+
         }
+
     }
 
     render() {
