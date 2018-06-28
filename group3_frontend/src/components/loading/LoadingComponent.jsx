@@ -5,7 +5,7 @@ class LoadingComponent extends Component {
     render() {
         return (
             <div className="container" >
-                <center><div class="loader"></div> </center>
+                <center><div className="loader"></div> </center>
             </div >
         );
     }

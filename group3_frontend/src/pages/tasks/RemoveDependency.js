@@ -8,17 +8,12 @@ import './TaskDependencies.css'
 
 
 class RemoveDependency extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
 
     handleSelect = eventKey => {
 
         this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.tasks[eventKey].taskID);
 
-        if(this.props.error) {
+        if (this.props.error) {
             toastr.success('Dependency removed!');
         } else {
             toastr.error('lolnope');
@@ -26,7 +21,7 @@ class RemoveDependency extends Component {
 
     };
 
-    
+
 
     render() {
 

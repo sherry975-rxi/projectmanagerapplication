@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import './Homepage.css';
-import Weather from './Weather';
-import UserData from './UserData';
-import TaskGraph from './TaskGraph.js';
-import ProjGraph from './ProjectGraph';
-import Calendar from './Calendar'
 import AuthService from '../../pages/loginPage/AuthService'
 import { connect } from 'react-redux';
 import HomepageAdmin from './HomepageAdmin';
@@ -20,14 +15,14 @@ class Homepage extends Component {
         this.state = {
             profile: '',
             numberOfGuests: ''
-            
+
         };
         this.AuthService = new AuthService();
 
     }
 
 
-    whichProfileToRender(){
+    whichProfileToRender() {
         let options = '';
 
         if (this.props.profile === 'COLLABORATOR') {
@@ -44,38 +39,38 @@ class Homepage extends Component {
 
         return (
             <div>
-               {options}
+                {options}
             </div>
         )
 
     }
 
 
-    
 
-    renderAsCollaborator(){
-       return <HomepageCollaborator />
+
+    renderAsCollaborator() {
+        return <HomepageCollaborator />
     }
 
- 
 
-    renderAsAdmin(){
+
+    renderAsAdmin() {
         return <HomepageAdmin />
     }
 
-    renderAsDirector(){
+    renderAsDirector() {
         return <HomepageDirector />
     }
 
 
-    
+
 
     render() {
-        return(
+        return (
             this.whichProfileToRender()
         )
-       
-         
+
+
     }
 }
 

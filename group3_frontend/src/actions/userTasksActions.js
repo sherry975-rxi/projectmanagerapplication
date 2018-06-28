@@ -28,9 +28,9 @@ export function updateMyOngoingTasks(userId) {
         authService.fetch(`/users/${userId}/tasks/pending`, {
             method: 'GET'
         }).then(data => {
-                dispatch(myOngoingTasksFetched(data));
-                dispatch(userTasksFilterActions.changeToMyOnGoing())
-                return data;
+            dispatch(myOngoingTasksFetched(data));
+            dispatch(userTasksFilterActions.changeToMyOnGoing())
+            return data;
         }).catch((error) => {
             console.log(error)
             myFetchTasksHasErrored();
@@ -46,9 +46,9 @@ export function updateMyAllTasks(userId) {
         authService.fetch(`/users/${userId}/tasks/`, {
             method: 'GET'
         }).then(data => {
-                dispatch(myAllTasksFetched(data));
-                dispatch(userTasksFilterActions.changeToMyAllTasks())
-                return data;
+            dispatch(myAllTasksFetched(data));
+            dispatch(userTasksFilterActions.changeToMyAllTasks())
+            return data;
         }).catch((error) => {
             console.log(error)
             myFetchTasksHasErrored();
@@ -64,9 +64,9 @@ export function updateMyLastMonthFinishedTasks(userId) {
         authService.fetch(`/users/${userId}/tasks/lastmonthfinished`, {
             method: 'GET'
         }).then(data => {
-                dispatch(lastMonthFinishedTasksFetched(data));
-                dispatch(userTasksFilterActions.changeToMyLastMonthFinished())
-                return data;
+            dispatch(lastMonthFinishedTasksFetched(data));
+            dispatch(userTasksFilterActions.changeToMyLastMonthFinished())
+            return data;
         }).catch((error) => {
             console.log(error)
             myFetchTasksHasErrored();
@@ -76,83 +76,80 @@ export function updateMyLastMonthFinishedTasks(userId) {
 
 
 
-export function  searchList (event,list, option) {
-    const authService = new AuthService();
+export function searchList(event, list, option) {
 
-        return dispatch => {
-            var updatedList = searching(event, list, option)
-            
-                dispatch(searchListTasksFetched(updatedList));
-                dispatch(userTasksFilterActions.changeToSearchTasks())
-            
-        };
-    
+
+    return dispatch => {
+        var updatedList = searching(event, list, option)
+
+        dispatch(searchListTasksFetched(updatedList));
+        dispatch(userTasksFilterActions.changeToSearchTasks())
+
+    };
+
 }
 
-export function searching (event, list, option) {
-        var lista1 = list;
-        console.log("MAIS UM")
-        console.log(option)
-        //if(list.length > 0){
-            switch (option){
-                case '1':
-                console.log("escolhi opção 1")
+export function searching(event, list, option) {
+    var lista1 = list;
 
-                lista1 = lista1.filter(function(item){
-                    return item.taskID.toLowerCase().search(
-                      event.target.value.toLowerCase()) !== -1;
-                  });
-                  break;
-                case '2':
-                console.log("escolhi opção 2")
-                lista1 = lista1.filter(function(item){
-                    // JSON.stringify(item.project)
-                    return item.project.projectId.toString().toLowerCase().search(
-                      event.target.value.toLowerCase()) !== -1;
-                  });
-                  break;
-                case '3':
-                console.log("escolhi opção 3")
-                lista1 = lista1.filter(function(item){
-                    return item.description.toLowerCase().search(
-                      event.target.value.toLowerCase()) !== -1;
-                  });
-                  break;
-                case '4':
-                lista1 = lista1.filter(function(item){
-                    return item.currentState.toString().toLowerCase().search(
-                      event.target.value.toLowerCase()) !== -1;
-                  });
-                  break;
-                case '5':
-                console.log("escolhi opção 5")
-                lista1 = lista1.filter(function(item){
-                    console.log(item.startDate);
-                    return item.startDate.toString().toLowerCase().search(
-                      event.target.value.toLowerCase()) !== -1;
-                  });
-                  break;
-                case '6':
-                console.log("escolhi opção 6")
-                lista1 = lista1.filter(function(item){
-                    return item.finishDate.toString().toLowerCase().search(
-                      event.target.value.toLowerCase()) !== -1;
-                  });
-                  break;
-                default:
-                console.log("escolhi opção default")
-                lista1 = lista1.filter(function(item){
-                    return item.taskID.toLowerCase().search(
-                      event.target.value.toLowerCase()) !== -1;
-                  });
-                
-                
-            }      
-        
-        console.log("LKJHGFDFGNMNBVCXSDERTH")
-        console.log(lista1)
-        return lista1;
-      }
+    switch (option) {
+        case '1':
+            console.log("escolhi opção 1")
+
+            lista1 = lista1.filter(function (item) {
+                return item.taskID.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '2':
+
+            lista1 = lista1.filter(function (item) {
+                // JSON.stringify(item.project)
+                return item.project.projectId.toString().toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '3':
+
+            lista1 = lista1.filter(function (item) {
+                return item.description.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '4':
+            lista1 = lista1.filter(function (item) {
+                return item.currentState.toString().toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '5':
+
+            lista1 = lista1.filter(function (item) {
+
+                return item.startDate.toString().toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '6':
+
+            lista1 = lista1.filter(function (item) {
+                return item.finishDate.toString().toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        default:
+
+            lista1 = lista1.filter(function (item) {
+                return item.taskID.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+
+
+    }
+
+
+    return lista1;
+}
 
 
 export function myFinishedTasksFetched(myFinishedTasks) {

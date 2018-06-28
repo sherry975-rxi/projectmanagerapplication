@@ -13,13 +13,8 @@ import {
     updateVisitors
 } from './../../actions/UserActions';
 import {
-    FormGroup,
-    FormControl,
     MenuItem,
-    DropdownButton,
-    ButtonGroup,
-    Button,
-    ButtonToolbar
+    DropdownButton
 } from 'react-bootstrap';
 import * as Constants from './../../components/utils/titleConstants';
 
@@ -27,17 +22,16 @@ import * as Constants from './../../components/utils/titleConstants';
 class UserFilter extends Component {
     constructor(props) {
         super(props);
-        this.activeFilter = "",
-        this.field = '',
+        this.activeFilter = ""
         this.option = ''
         this.state = {
             activeKey: '1',
             selectedOption: '2',
             selectedField: 'Email',
         };
-       
-            
-        
+
+
+
     }
 
     renderDropdownButton(title, i) {
@@ -66,146 +60,146 @@ class UserFilter extends Component {
 
 
         var items = Constants.USERS
-             .filter((element, index) => (index < 5))
-             .map((element, index) => {
-                   return (
+            .filter((element, index) => (index < 5))
+            .map((element, index) => {
+                return (
                     <MenuItem
-                    eventKey={index}
-                    key={index}
-                    onSelect={(event) => this.handleClick(event)}
-                >
-                    {element}
-                </MenuItem>
-                   );
-              });
-              return items;
-      
+                        eventKey={index}
+                        key={index}
+                        onSelect={(event) => this.handleClick(event)}
+                    >
+                        {element}
+                    </MenuItem>
+                );
+            });
+        return items;
+
     }
 
-    handleClick(eventKey){
-        if(eventKey !== -1){
-        const selectionIndex = eventKey+1;
-        console.log("Print selection index")
-        console.log(selectionIndex)
-        
-        switch (selectionIndex){
-                case 1:  
-                console.log("entrando no casa")
-                this.option = '1';
-                this.field = 'Name';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                console.log("selectedOption");
-                console.log(this.state.selectedOption);
-                console.log("selected option");
-                console.log(this.option);
-                console.log("selected field");
-                console.log(this.field);
-                
-                break;
+    handleClick(eventKey) {
+        if (eventKey !== -1) {
+            const selectionIndex = eventKey + 1;
+            console.log("Print selection index")
+            console.log(selectionIndex)
+
+            switch (selectionIndex) {
+                case 1:
+                    console.log("entrando no casa")
+                    this.option = '1';
+                    this.field = 'Name';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+                    console.log("selectedOption");
+                    console.log(this.state.selectedOption);
+                    console.log("selected option");
+                    console.log(this.option);
+                    console.log("selected field");
+                    console.log(this.field);
+
+                    break;
                 case 2:
-                this.option = '2';
-                this.field = 'Email';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                console.log("selectedOption");
-                console.log(this.state.selectedOption);
-                console.log("selected option");
-                console.log(this.option);
-                console.log("selected field");
-                console.log(this.field);
-                break;
+                    this.option = '2';
+                    this.field = 'Email';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+                    console.log("selectedOption");
+                    console.log(this.state.selectedOption);
+                    console.log("selected option");
+                    console.log(this.option);
+                    console.log("selected field");
+                    console.log(this.field);
+                    break;
                 case 3:
-                this.option = '3';
-                this.field = 'Profile';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                console.log(this.option)
-                break;
+                    this.option = '3';
+                    this.field = 'Profile';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+                    console.log(this.option)
+                    break;
                 case 4:
-                this.option = '4';
-                this.field = 'Role';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                break;
+                    this.option = '4';
+                    this.field = 'Role';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+                    break;
                 case 5:
-                this.option = '5';
-                this.field = 'State "true" for active or "false" for not active';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                break;
+                    this.option = '5';
+                    this.field = 'State "true" for active or "false" for not active';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+                    break;
                 default:
-                console.log("penetration test");
-                this.option = '2';
-                this.field = 'Email';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                
+                    console.log("penetration test");
+                    this.option = '2';
+                    this.field = 'Email';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+
             }
         }
-               
+
 
     }
 
-    renderSearchForm(){
+    renderSearchForm() {
         return (
-        <div className=" table-striped">
-                    <div className="filter-list">
-                        <form>
+            <div className=" table-striped">
+                <div className="filter-list">
+                    <form>
                         <fieldset className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control form-control-lg" 
-                            placeholder={`Search by ${this.state.selectedField}`} 
-                            onChange={(event) => this.filterList(event, this.state.selectedOption)}
-                        />
-                        {console.log("tesTEEEEEEEE")}
-                        {console.log(this.activeFilter)}
+                            <input
+                                type="text"
+                                className="form-control form-control-lg"
+                                placeholder={`Search by ${this.state.selectedField}`}
+                                onChange={(event) => this.filterList(event, this.state.selectedOption)}
+                            />
+                            {console.log("tesTEEEEEEEE")}
+                            {console.log(this.activeFilter)}
                         </fieldset>
-                        </form>
-                       {/* <button onClick={e => this.handleChange(e, '2')} >
+                    </form>
+                    {/* <button onClick={e => this.handleChange(e, '2')} >
                     Confirm
                     </button> */}
 
-                    </div>
                 </div>
+            </div>
         );
     }
 
     filterList(event, choosenField) {
 
-        if(event.target.value.toLowerCase()!== -1){
-            
-            switch (this.activeFilter){
+        if (event.target.value.toLowerCase() !== -1) {
+
+            switch (this.activeFilter) {
                 case "1":
-                return this.props.searchList(event, this.props.allUsers, choosenField);
+                    return this.props.searchList(event, this.props.allUsers, choosenField);
                 case "2":
-                return this.props.searchList(event, this.props.emailUsers, choosenField);
+                    return this.props.searchList(event, this.props.emailUsers, choosenField);
                 case "3":
-                return this.props.searchList(event, this.props.allCollaborators, choosenField);
+                    return this.props.searchList(event, this.props.allCollaborators, choosenField);
                 case '4':
-                return this.props.searchList(event, this.props.allDirector, choosenField);
+                    return this.props.searchList(event, this.props.allDirector, choosenField);
                 case '5':
-                return this.props.searchList(event, this.props.allAdministrator, choosenField);
+                    return this.props.searchList(event, this.props.allAdministrator, choosenField);
                 case '6':
-                return this.props.searchList(event, this.props.allVisitors, choosenField);
+                    return this.props.searchList(event, this.props.allVisitors, choosenField);
                 default:
-                return this.props.searchList(event, this.props.allUsers, choosenField);
-                
-                
-            }        
+                    return this.props.searchList(event, this.props.allUsers, choosenField);
+
+
+            }
         }
     }
 
@@ -224,7 +218,7 @@ class UserFilter extends Component {
                 return this.props.updateCollaborators();
 
             case '4':
-             this.activeFilter = "4";
+                this.activeFilter = "4";
                 return this.props.updateDirector();
 
             case '5':
@@ -245,15 +239,12 @@ class UserFilter extends Component {
 
     render() {
 
-        const tabStyle = {
-            marginTop: '-20px'
-        }
         const divStyle = {
             width: '100%',
             marginTop: '-20px',
             marginBottom: '-40px'
 
-          };
+        };
 
         const tdStyle = {
             paddingRight: '5px',
@@ -261,10 +252,10 @@ class UserFilter extends Component {
         }
         return (
             <div className="buttonWrapper">
-                                        <fieldset>
+                <fieldset>
 
-                <div class="switch-toggle switch-candy">
-                    {/* <input
+                    <div class="switch-toggle switch-candy">
+                        {/* <input
                         id="Test"
                         name="view3"
                         type="radio"
@@ -273,93 +264,93 @@ class UserFilter extends Component {
                     <label className="buttonFont" htmlFor="">
                         <b>Filter by:</b>
                     </label> */}
-                    <input
-                        id="allUsers"
-                        name="view3"
-                        type="radio"
-                        eventKey="1"
-                        onChange={e => this.handleChange(e, '1')}
-                    />
-                    <label class="buttonFont" for="allUsers" eventKey="1">
-                        All Users
+                        <input
+                            id="allUsers"
+                            name="view3"
+                            type="radio"
+                            eventKey="1"
+                            onChange={e => this.handleChange(e, '1')}
+                        />
+                        <label class="buttonFont" for="allUsers" eventKey="1">
+                            All Users
                     </label>
 
-                    <input
-                        id="allVisitors"
-                        name="view3"
-                        type="radio"
-                        eventKey="1"
-                        onChange={e => this.handleChange(e, '6')}
-                    />
-                    <label class="buttonFont" for="allVisitors" eventKey="1">
-                        Visitors
+                        <input
+                            id="allVisitors"
+                            name="view3"
+                            type="radio"
+                            eventKey="1"
+                            onChange={e => this.handleChange(e, '6')}
+                        />
+                        <label class="buttonFont" for="allVisitors" eventKey="1">
+                            Visitors
                     </label>
 
-                    <input
-                        id="allCollaborators"
-                        name="view3"
-                        type="radio"
-                        eventKey="1"
-                        onChange={e => this.handleChange(e, '3')}
-                    />
-                    <label
-                        class="buttonFont"
-                        for="allCollaborators"
-                        eventKey="1"
-                    >
-                        Collaborator
+                        <input
+                            id="allCollaborators"
+                            name="view3"
+                            type="radio"
+                            eventKey="1"
+                            onChange={e => this.handleChange(e, '3')}
+                        />
+                        <label
+                            class="buttonFont"
+                            for="allCollaborators"
+                            eventKey="1"
+                        >
+                            Collaborator
                     </label>
 
-                    <input
-                        id="allDirector"
-                        name="view3"
-                        type="radio"
-                        eventKey="1"
-                        onChange={e => this.handleChange(e, '4')}
-                    />
-                    <label class="buttonFont" for="allDirector" eventKey="1">
-                        Director
+                        <input
+                            id="allDirector"
+                            name="view3"
+                            type="radio"
+                            eventKey="1"
+                            onChange={e => this.handleChange(e, '4')}
+                        />
+                        <label class="buttonFont" for="allDirector" eventKey="1">
+                            Director
                     </label>
 
-                    <input
-                        id="allAdministrator"
-                        name="view3"
-                        type="radio"
-                        eventKey="1"
-                        onChange={e => this.handleChange(e, '5')}
-                    />
-                    <label
-                        class="buttonFont"
-                        for="allAdministrator"
-                        eventKey="1"
-                    >
-                        Admin
+                        <input
+                            id="allAdministrator"
+                            name="view3"
+                            type="radio"
+                            eventKey="1"
+                            onChange={e => this.handleChange(e, '5')}
+                        />
+                        <label
+                            class="buttonFont"
+                            for="allAdministrator"
+                            eventKey="1"
+                        >
+                            Admin
                     </label>
-                    <a></a>
+                        <a></a>
 
-                </div>
+                    </div>
                 </fieldset>
 
                 {/* <div className=" table-striped">
                     <div className="filter-list">
                         <form>
                         <fieldset className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control form-control-lg" 
-                            placeholder="Search by email" 
+                        <input
+                            type="text"
+                            className="form-control form-control-lg"
+                            placeholder="Search by email"
                             onChange={(event) => this.filterList(event)}
                         />
                         {console.log("tesTEEEEEEEE")}
                         {console.log(this.activeFilter)}
                         </fieldset>
                         </form>
-                       
-                        
+
+
                     </div>
                 </div> */}
                 <table style={divStyle}>
-                    <tr> 
+                    <tr>
                         <td style={tdStyle}> {this.renderSearchForm()}</td>
                         <td> {this.renderDropdownButton('Search Field', 1)}</td>
                     </tr>

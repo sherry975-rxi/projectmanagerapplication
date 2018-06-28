@@ -27,7 +27,6 @@ const appReducer = combineReducers({
     collabsWoutTasks: projCollabsWoutTasksReducer,
     projectTeam: projectTeamReducer,
     availableUsers: availableUsersReducer,
-    usersFilter: usersFilterReducer,
     createTask: createTaskReducer,
     tasks: tasksReducer
 });

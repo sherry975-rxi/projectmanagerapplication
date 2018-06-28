@@ -52,11 +52,10 @@ export function handleUserHeaders(list) {
 }
 
 export function formatDate(date) {
+
     if (date != null) {
-        ;
 
-
-        return moment(date).format("DD/MMM/YYYY");
+        return moment(new Date(date)).format("DD/MMM/YYYY");
     } else {
         return '';
     }
