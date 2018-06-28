@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ActiveProjects from './ActiveProjects';
+import ActiveProjects from '../pages/projects/ActiveProjects';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
