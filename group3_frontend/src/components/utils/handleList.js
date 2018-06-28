@@ -2,7 +2,7 @@ var moment = require('moment');
 
 
 export function handleTaskHeaders(list) {
-    console.log(list)
+
     return list.map(task => ({
         taskID: task.taskID,
         project: task.project.projectId,

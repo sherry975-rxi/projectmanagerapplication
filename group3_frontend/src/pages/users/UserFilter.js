@@ -79,24 +79,17 @@ class UserFilter extends Component {
     handleClick(eventKey) {
         if (eventKey !== -1) {
             const selectionIndex = eventKey + 1;
-            console.log("Print selection index")
-            console.log(selectionIndex)
 
             switch (selectionIndex) {
                 case 1:
-                    console.log("entrando no casa")
+
                     this.option = '1';
                     this.field = 'Name';
                     this.setState({
                         selectedOption: this.option,
                         selectedField: this.field
                     });
-                    console.log("selectedOption");
-                    console.log(this.state.selectedOption);
-                    console.log("selected option");
-                    console.log(this.option);
-                    console.log("selected field");
-                    console.log(this.field);
+
 
                     break;
                 case 2:
@@ -106,12 +99,7 @@ class UserFilter extends Component {
                         selectedOption: this.option,
                         selectedField: this.field
                     });
-                    console.log("selectedOption");
-                    console.log(this.state.selectedOption);
-                    console.log("selected option");
-                    console.log(this.option);
-                    console.log("selected field");
-                    console.log(this.field);
+
                     break;
                 case 3:
                     this.option = '3';
@@ -120,7 +108,7 @@ class UserFilter extends Component {
                         selectedOption: this.option,
                         selectedField: this.field
                     });
-                    console.log(this.option)
+
                     break;
                 case 4:
                     this.option = '4';
@@ -139,7 +127,7 @@ class UserFilter extends Component {
                     });
                     break;
                 default:
-                    console.log("penetration test");
+
                     this.option = '2';
                     this.field = 'Email';
                     this.setState({
@@ -165,8 +153,7 @@ class UserFilter extends Component {
                                 placeholder={`Search by ${this.state.selectedField}`}
                                 onChange={(event) => this.filterList(event, this.state.selectedOption)}
                             />
-                            {console.log("tesTEEEEEEEE")}
-                            {console.log(this.activeFilter)}
+
                         </fieldset>
                     </form>
                     {/* <button onClick={e => this.handleChange(e, '2')} >
@@ -341,8 +328,7 @@ class UserFilter extends Component {
                             placeholder="Search by email"
                             onChange={(event) => this.filterList(event)}
                         />
-                        {console.log("tesTEEEEEEEE")}
-                        {console.log(this.activeFilter)}
+
                         </fieldset>
                         </form>
 

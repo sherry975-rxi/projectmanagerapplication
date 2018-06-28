@@ -7,7 +7,7 @@ import {
 } from './actions';
 import { TASKS_FILTER } from '../constants/TasksConstants';
 import { updateUnassignedProjCollabs } from './projCollabsWoutTasksActions';
-import {refreshTasksByFilter} from "./refreshTasksActions";
+import { refreshTasksByFilter } from "./refreshTasksActions";
 
 export function addCollaboratorToTask(projectId, taskId, userDTO, filterName) {
     return dispatch => {
@@ -296,7 +296,7 @@ export const getProjectTasksByFilter = (projectId, filterName) => {
 };
 
 export function updateCancelledTasks(projectId) {
-    console.log('here');
+
     return dispatch => {
         tasksLoading();
         fetch(`/projects/${projectId}/tasks/cancelled`, {

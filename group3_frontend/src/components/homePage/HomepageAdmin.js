@@ -43,8 +43,6 @@ class HomepageAdmin extends Component {
             `/users/profiles/director`,
             { method: 'get' }
         ).then(responseData => {
-            console.log("Fetch")
-            console.log(responseData)
             this.setState({
                 numberOfDirectors: responseData.length,
 
@@ -57,8 +55,6 @@ class HomepageAdmin extends Component {
             `/users/profiles/collaborator`,
             { method: 'get' }
         ).then(responseData => {
-            console.log("Fetch")
-            console.log(responseData)
             this.setState({
                 numberOfCollaborators: responseData.length,
 

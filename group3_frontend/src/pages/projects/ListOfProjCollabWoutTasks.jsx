@@ -39,7 +39,7 @@ class ListOfProjCollabWoutTasks extends Component {
 
 
     render() {
-        console.log(this.props.unassignedCollabs)
+
         return (
             <PanelGroup
                 accordion

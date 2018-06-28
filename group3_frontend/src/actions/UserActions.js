@@ -89,50 +89,42 @@ export function searching(event, list, option) {
     //if(list.length > 0){
     switch (option) {
         case '1':
-            console.log("escolhi opção 1")
             newlist = newlist.filter(function (item) {
                 return item.name.toLowerCase().search(
                     event.target.value.toLowerCase()) !== -1;
             });
             break;
         case '2':
-            console.log("escolhi opção 2")
             newlist = newlist.filter(function (item) {
                 return item.email.toLowerCase().search(
                     event.target.value.toLowerCase()) !== -1;
             });
             break;
         case '3':
-            console.log("escolhi opção 3")
             newlist = newlist.filter(function (item) {
                 return item.userProfile.toLowerCase().search(
                     event.target.value.toLowerCase()) !== -1;
             });
             break;
         case '4':
-            console.log("escolhi opção 4")
             newlist = newlist.filter(function (item) {
                 return item.function.toLowerCase().search(
                     event.target.value.toLowerCase()) !== -1;
             });
             break;
         case '5':
-            console.log("escolhi opção 5")
             newlist = newlist.filter(function (item) {
                 return item.systemUserStateActive.toString().toLowerCase().search(
                     event.target.value.toLowerCase()) !== -1;
             });
             break;
         default:
-            console.log("escolhi opção default")
             newlist = newlist.filter(function (item) {
                 return item.email.toLowerCase().search(
                     event.target.value.toLowerCase()) !== -1;
             });
 
     }
-    console.log("LKJHGFDFGNMNBVCXSDERTH")
-    console.log(newlist)
     return newlist;
 }
 

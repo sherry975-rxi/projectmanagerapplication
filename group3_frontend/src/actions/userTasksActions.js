@@ -14,7 +14,6 @@ export function updateMyFinishedTasks(userId) {
             dispatch(userTasksFilterActions.changeToMyFinished());
             return data;
         }).catch((error) => {
-            console.log(error)
             myFetchTasksHasErrored();
         });
     };
@@ -32,7 +31,6 @@ export function updateMyOngoingTasks(userId) {
             dispatch(userTasksFilterActions.changeToMyOnGoing())
             return data;
         }).catch((error) => {
-            console.log(error)
             myFetchTasksHasErrored();
         });
     };
@@ -50,7 +48,6 @@ export function updateMyAllTasks(userId) {
             dispatch(userTasksFilterActions.changeToMyAllTasks())
             return data;
         }).catch((error) => {
-            console.log(error)
             myFetchTasksHasErrored();
         });
     };
@@ -68,7 +65,6 @@ export function updateMyLastMonthFinishedTasks(userId) {
             dispatch(userTasksFilterActions.changeToMyLastMonthFinished())
             return data;
         }).catch((error) => {
-            console.log(error)
             myFetchTasksHasErrored();
         });
     };
@@ -94,15 +90,12 @@ export function searching(event, list, option) {
 
     switch (option) {
         case '1':
-            console.log("escolhi opção 1")
-
             lista1 = lista1.filter(function (item) {
                 return item.taskID.toLowerCase().search(
                     event.target.value.toLowerCase()) !== -1;
             });
             break;
         case '2':
-
             lista1 = lista1.filter(function (item) {
                 // JSON.stringify(item.project)
                 return item.project.projectId.toString().toLowerCase().search(
@@ -110,7 +103,6 @@ export function searching(event, list, option) {
             });
             break;
         case '3':
-
             lista1 = lista1.filter(function (item) {
                 return item.description.toLowerCase().search(
                     event.target.value.toLowerCase()) !== -1;
@@ -123,7 +115,6 @@ export function searching(event, list, option) {
             });
             break;
         case '5':
-
             lista1 = lista1.filter(function (item) {
 
                 return item.startDate.toString().toLowerCase().search(
@@ -138,7 +129,6 @@ export function searching(event, list, option) {
             });
             break;
         default:
-
             lista1 = lista1.filter(function (item) {
                 return item.taskID.toLowerCase().search(
                     event.target.value.toLowerCase()) !== -1;
