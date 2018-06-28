@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { createTaskDependency, updateNotStartedTasks } from "../../actions/projectTasksActions";
-import '../../components/button/genericButton.css'
 import {ControlLabel, DropdownButton, FormControl, FormGroup, MenuItem} from "react-bootstrap";
 import { toastr } from "react-redux-toastr";
+import './TaskDependencies.css'
 
 
 class AddDependency extends Component {
@@ -69,7 +69,7 @@ class AddDependency extends Component {
 
         return (
             <DropdownButton
-                className='genericButton'
+                className="genericButton"
                 title='Create Dependency'
                 key="0"
                 id={`dropdown-basic-0`}

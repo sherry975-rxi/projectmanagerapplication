@@ -37,7 +37,7 @@ class UserTasksFilter extends Component {
 
     }
 
-    renderDropdownButton(title) {
+    renderDropdownButton(title, i) {
 
         const styleButton = {
             position: "absolute",
@@ -49,9 +49,10 @@ class UserTasksFilter extends Component {
             <DropdownButton
                 style={styleButton}
                 className="buttonFinished"
+                bsStyle={title.toLowerCase()}
                 title={title}
-                key="1"
-                id={`dropdown-basic-0`}
+                key={i}
+                id={`dropdown-basic-${i}`}
             >
                 {this.renderFields()}
             </DropdownButton>
@@ -366,7 +367,7 @@ class UserTasksFilter extends Component {
                 <table style={divStyle}>
                     <tr> 
                         <td style={tdStyle}> {this.renderSearchForm()}</td>
-                        <td> {this.renderDropdownButton('Search Field')}</td>
+                        <td> {this.renderDropdownButton('Search Field', 0)}</td>
                     </tr>
                 </table>
                 

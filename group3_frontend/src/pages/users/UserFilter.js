@@ -12,35 +12,197 @@ import {
     searchList,
     updateVisitors
 } from './../../actions/UserActions';
+import {
+    FormGroup,
+    FormControl,
+    MenuItem,
+    DropdownButton,
+    ButtonGroup,
+    Button,
+    ButtonToolbar
+} from 'react-bootstrap';
+import * as Constants from './../../components/utils/titleConstants';
+
 
 class UserFilter extends Component {
     constructor(props) {
         super(props);
-        this.activeFilter = ""
+        this.activeFilter = "",
+        this.field = '',
+        this.option = ''
         this.state = {
-            activeKey: '1'
+            activeKey: '1',
+            selectedOption: '2',
+            selectedField: 'Email',
         };
+       
+            
+        
     }
 
-    filterList(event) {
+    renderDropdownButton(title, i) {
+
+        const styleButton = {
+            position: "absolute",
+            marginTop: "-18px",
+            marginLeft: "-65px"
+        }
+
+        return (
+            <DropdownButton
+                style={styleButton}
+                className="buttonFinished"
+                bsStyle={title.toLowerCase()}
+                title={title}
+                key={i}
+                id={`dropdown-basic-${i}`}
+            >
+                {this.renderFields()}
+            </DropdownButton>
+        );
+    }
+
+    renderFields() {
+
+
+        var items = Constants.USERS
+             .filter((element, index) => (index < 5))
+             .map((element, index) => {
+                   return (
+                    <MenuItem
+                    eventKey={index}
+                    key={index}
+                    onSelect={(event) => this.handleClick(event)}
+                >
+                    {element}
+                </MenuItem>
+                   );
+              });
+              return items;
+      
+    }
+
+    handleClick(eventKey){
+        if(eventKey !== -1){
+        const selectionIndex = eventKey+1;
+        console.log("Print selection index")
+        console.log(selectionIndex)
+        
+        switch (selectionIndex){
+                case 1:  
+                console.log("entrando no casa")
+                this.option = '1';
+                this.field = 'Name';
+                this.setState({
+                    selectedOption : this.option,
+                    selectedField : this.field
+                });
+                console.log("selectedOption");
+                console.log(this.state.selectedOption);
+                console.log("selected option");
+                console.log(this.option);
+                console.log("selected field");
+                console.log(this.field);
+                
+                break;
+                case 2:
+                this.option = '2';
+                this.field = 'Email';
+                this.setState({
+                    selectedOption : this.option,
+                    selectedField : this.field
+                });
+                console.log("selectedOption");
+                console.log(this.state.selectedOption);
+                console.log("selected option");
+                console.log(this.option);
+                console.log("selected field");
+                console.log(this.field);
+                break;
+                case 3:
+                this.option = '3';
+                this.field = 'Profile';
+                this.setState({
+                    selectedOption : this.option,
+                    selectedField : this.field
+                });
+                console.log(this.option)
+                break;
+                case 4:
+                this.option = '4';
+                this.field = 'Role';
+                this.setState({
+                    selectedOption : this.option,
+                    selectedField : this.field
+                });
+                break;
+                case 5:
+                this.option = '5';
+                this.field = 'State "true" for active or "false" for not active';
+                this.setState({
+                    selectedOption : this.option,
+                    selectedField : this.field
+                });
+                break;
+                default:
+                console.log("penetration test");
+                this.option = '2';
+                this.field = 'Email';
+                this.setState({
+                    selectedOption : this.option,
+                    selectedField : this.field
+                });
+                
+            }
+        }
+               
+
+    }
+
+    renderSearchForm(){
+        return (
+        <div className=" table-striped">
+                    <div className="filter-list">
+                        <form>
+                        <fieldset className="form-group">
+                        <input 
+                            type="text" 
+                            className="form-control form-control-lg" 
+                            placeholder={`Search by ${this.state.selectedField}`} 
+                            onChange={(event) => this.filterList(event, this.state.selectedOption)}
+                        />
+                        {console.log("tesTEEEEEEEE")}
+                        {console.log(this.activeFilter)}
+                        </fieldset>
+                        </form>
+                       {/* <button onClick={e => this.handleChange(e, '2')} >
+                    Confirm
+                    </button> */}
+
+                    </div>
+                </div>
+        );
+    }
+
+    filterList(event, choosenField) {
 
         if(event.target.value.toLowerCase()!== -1){
             
             switch (this.activeFilter){
                 case "1":
-                return this.props.searchList(event, this.props.allUsers);
+                return this.props.searchList(event, this.props.allUsers, choosenField);
                 case "2":
-                return this.props.searchList(event, this.props.emailUsers);
+                return this.props.searchList(event, this.props.emailUsers, choosenField);
                 case "3":
-                return this.props.searchList(event, this.props.allCollaborators);
+                return this.props.searchList(event, this.props.allCollaborators, choosenField);
                 case '4':
-                return this.props.searchList(event, this.props.allDirector);
+                return this.props.searchList(event, this.props.allDirector, choosenField);
                 case '5':
-                return this.props.searchList(event, this.props.allAdministrator);
+                return this.props.searchList(event, this.props.allAdministrator, choosenField);
                 case '6':
-                return this.props.searchList(event, this.props.allVisitors);
+                return this.props.searchList(event, this.props.allVisitors, choosenField);
                 default:
-                return this.props.searchList(event, this.props.allUsers);
+                return this.props.searchList(event, this.props.allUsers, choosenField);
                 
                 
             }        
@@ -82,6 +244,21 @@ class UserFilter extends Component {
     }
 
     render() {
+
+        const tabStyle = {
+            marginTop: '-20px'
+        }
+        const divStyle = {
+            width: '100%',
+            marginTop: '-20px',
+            marginBottom: '-40px'
+
+          };
+
+        const tdStyle = {
+            paddingRight: '5px',
+            width: '615px',
+        }
         return (
             <div className="buttonWrapper">
                                         <fieldset>
@@ -163,7 +340,7 @@ class UserFilter extends Component {
                 </div>
                 </fieldset>
 
-                <div className=" table-striped">
+                {/* <div className=" table-striped">
                     <div className="filter-list">
                         <form>
                         <fieldset className="form-group">
@@ -177,12 +354,16 @@ class UserFilter extends Component {
                         {console.log(this.activeFilter)}
                         </fieldset>
                         </form>
-                       {/* <button onClick={e => this.handleChange(e, '2')} >
-                    Confirm
-                    </button> */}
+                       
                         
                     </div>
-                </div>
+                </div> */}
+                <table style={divStyle}>
+                    <tr> 
+                        <td style={tdStyle}> {this.renderSearchForm()}</td>
+                        <td> {this.renderDropdownButton('Search Field', 1)}</td>
+                    </tr>
+                </table>
             </div>
         );
     }

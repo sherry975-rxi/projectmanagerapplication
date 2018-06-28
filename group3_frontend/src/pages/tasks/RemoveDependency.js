@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { removeTaskDependency } from "../../actions/projectTasksActions";
-import '../../components/button/genericButton.css'
 import { DropdownButton, MenuItem } from "react-bootstrap";
 import { toastr } from "react-redux-toastr";
+import './TaskDependencies.css'
 
 
 class RemoveDependency extends Component {
@@ -34,7 +34,7 @@ class RemoveDependency extends Component {
 
         return (
             <DropdownButton
-                className='genericButton'
+                className="genericButton"
                 title='Remove Dependency'
                 key="0"
                 id={`dropdown-basic-0`}
