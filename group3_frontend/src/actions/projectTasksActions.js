@@ -229,7 +229,6 @@ export function getAllTaskDependencies(projectId, taskId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                console.log(data);
                 dispatch(taskDependenciesFetched(data));
                 return data;
             })
@@ -248,12 +247,10 @@ export function createTaskDependency(projectId, taskId, parentId, postpone) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                console.log(data);
                 dispatch(taskDependenciesFetched(data));
                 return data;
             })
             .catch(error => {
-                console.log(error);
                 fetchTasksHasErrored();
             });
     };
@@ -268,12 +265,10 @@ export function removeTaskDependency(projectId, taskId, parentId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                console.log(data);
                 dispatch(taskDependenciesFetched(data));
                 return data;
             })
             .catch(error => {
-                console.log(error);
                 fetchTasksHasErrored();
             });
     };

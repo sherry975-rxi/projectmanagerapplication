@@ -19,7 +19,7 @@ class AddDependency extends Component {
     }
 
     validateForm() {
-        return this.state.daysToPostpone >= 0;
+        return this.state.daysToPostpone > 0;
     }
 
     handleClick = () => {
@@ -69,7 +69,7 @@ class AddDependency extends Component {
 
         return (
             <DropdownButton
-                className="genericButton"
+                className="dependencyButton"
                 title='Create Dependency'
                 key="0"
                 id={`dropdown-basic-0`}
@@ -99,7 +99,7 @@ class AddDependency extends Component {
                         key={index}
                         onSelect={this.handleSelect}
                     >
-                        {listItem.taskID}
+                        {listItem.taskID} - {listItem.description}
                     </MenuItem>
                 ))}
             </DropdownButton>

@@ -16,7 +16,7 @@ class RemoveDependency extends Component {
 
     handleSelect = eventKey => {
 
-        this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.taskList[eventKey].taskID);
+        this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.tasks[eventKey].taskID);
 
         if(this.props.error) {
             toastr.success('Dependency removed!');
@@ -30,11 +30,11 @@ class RemoveDependency extends Component {
 
     render() {
 
-        const taskList = this.props.dependencies || [];
+        const taskList = this.props.tasks || [];
 
         return (
             <DropdownButton
-                className="genericButton"
+                className="dependencyButton"
                 title='Remove Dependency'
                 key="0"
                 id={`dropdown-basic-0`}
@@ -56,6 +56,7 @@ class RemoveDependency extends Component {
 
 const mapStateToProps = state => {
     return {
+        tasks: state.tasks.tasksDependencies,
         error: state.tasks.error,
         loading: state.tasks.loading
     };
