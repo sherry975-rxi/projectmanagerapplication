@@ -75,14 +75,13 @@ class ProjectGraph extends Component {
                     return (
                         <div className="ProjectGraphContainer" key={index}>
                             <div className="ProgBarCircleContainer">
-                                <ProgBarCircle limit={mappedPercent} />
+                                <ProgBarCircle  limit={100 - actualDaysLeft} />
                             </div>
                             <table className="ProjectGraphTable">
                                 <tbody>
                                     <tr>
                                         <td className="tdGraphStyleLeft">
                                             Project Start Date
-                                            {this.AuthService.getProfile().sub}
                                         </td>
                                         <td className="tdGraphStyleRight">
                                             Project Finish Date

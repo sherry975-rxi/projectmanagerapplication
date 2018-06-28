@@ -14,6 +14,7 @@ import AuthService from './../../pages/loginPage/AuthService';
 import { getAvailableCollaboratorsForTask } from '../../actions/projectTasksActions';
 import { bindActionCreators } from 'redux';
 import EditTask from './../../pages/tasks/editTask/EditTask';
+import CreateReport from '../../pages/reports/CreateReport';
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -80,8 +81,8 @@ class AccordionMenu extends Component {
             return authrorizedTaskStates === true ? (
                 <DeleteTask id={element.taskID} project={element.project} />
             ) : (
-                    ''
-                );
+                ''
+            );
         } else return <div> </div>;
     }
 
@@ -95,8 +96,8 @@ class AccordionMenu extends Component {
             return element.state !== 'FINISHED' ? (
                 <CreateRequest id={element.taskID} project={element.project} />
             ) : (
-                    ''
-                );
+                ''
+            );
         } else return <div> </div>;
     }
 
@@ -115,30 +116,18 @@ class AccordionMenu extends Component {
                                 '/reports'
                             }
                         >
-                            <button className="buttonFinished">View Reports</button>
+                            <button class="buttonFinished">View Reports</button>
                         </Link>
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (
-                        <Link
-                            to={
-                                '/projects/' +
-                                element.project +
-                                '/tasks/' +
-                                element.taskID +
-                                '/createreport'
-                            }
-                        >
-                            <button className="buttonFinished">
-                                Create Report
-                            </button>
-                        </Link>
+                    <CreateReport taskID = {element.taskID} projectID = {element.project}/>
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
                     <p />
 
@@ -151,7 +140,7 @@ class AccordionMenu extends Component {
                             '/dependencies'
                         }
                     >
-                        <button className="buttonFinished">
+                        <button class="buttonFinished">
                             View Dependencies
                         </button>
                     </Link>
@@ -164,8 +153,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderCreateAssignmentRequestTaskButton(element)}
@@ -180,8 +169,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                            ''
-                        )}
+                        ''
+                    )}
                     <a className="key">{key++}</a>
                 </div>
             );

@@ -64,20 +64,4 @@
 		<password>qwerty1!</password>								<!-- Para fazer login -->
 		<estado_utilizador>Ativo</estado_utilizador>
 	</utilizador>
-	<utilizador>
-		<nome_utilizador>Tiago Soares</nome_utilizador> 		<!-- US201-->
-		<email_utilizador>tc@mymail.com</email_utilizador>
-		<lista_enderecos>
-			<endereco_postal>									<!-- US202-->
-				<rua>Rua do Horto, 25</rua>
-				<localidade>Pancas</localidade>
-				<cp_num>2135-020</cp_num>
-				<cp_loc>Samora Correia</cp_loc>
-				<pais>Portugal</pais>
-			</endereco_postal>
-		</lista_enderecos>
-		<telefone>263650674</telefone>
-		<password>qwerty1!</password>								<!-- Para fazer login -->
-		<estado_utilizador>Ativo</estado_utilizador>
-	</utilizador>
 </lista_utilizadores>

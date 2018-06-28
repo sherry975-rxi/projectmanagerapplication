@@ -7,6 +7,7 @@ import {
 import { bindActionCreators } from 'redux';
 import { MenuItem, DropdownButton } from 'react-bootstrap';
 import { get } from 'lodash';
+import ProjectsTableRow from '../../components/projectsTable/ProjectsTableRow';
 
 class DropListTasksToAddToPCollab extends Component {
     constructor(props) {

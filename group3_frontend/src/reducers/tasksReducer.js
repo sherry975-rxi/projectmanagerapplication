@@ -20,6 +20,13 @@ export default (state = {}, action) => {
                 tasksList: action.tasks,
                 error: false
             };
+        case 'DEPENDENCIES_FETCHED':
+            return {
+                ...state,
+                itemIsLoading: false,
+                tasksDependencies: action.tasks,
+                error: false
+            };
         case 'ITEM_LOADING':
             return {
                 ...state,

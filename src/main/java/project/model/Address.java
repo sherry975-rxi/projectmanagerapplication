@@ -1,8 +1,7 @@
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
@@ -19,8 +18,6 @@ import java.io.Serializable;
  *
  */
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "addressId", scope = User.class)
 public class Address extends ResourceSupport implements Serializable {
 	
 	@Id
@@ -36,6 +33,7 @@ public class Address extends ResourceSupport implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "User_id")
+	@JsonIgnore
 	private User user;
 
 	public Address(){}

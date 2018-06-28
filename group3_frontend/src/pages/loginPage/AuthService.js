@@ -113,4 +113,25 @@ export default class AuthService {
             throw error;
         }
     }
+
+    fetchWithoutContentType(url, options) {
+        const headers = {
+            Accept: 'application/json'
+        };
+
+        if (this.loggedIn()) {
+            headers['Authorization'] = this.getToken();
+        }
+
+        return fetch(url, {
+            headers,
+            ...options
+        }).then(response => {
+            localStorage.setItem(
+                'id_token',
+                response.headers.get('Authorization')
+            );
+            return response
+        });
+    }
 }

@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.hateoas.Link;
@@ -12,13 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import project.model.Profile;
 import project.model.User;
-import project.repository.UserRepository;
 import project.restcontroller.RestUserController;
+import project.ui.console.loadfiles.filestorage.StorageService;
 import project.services.UserService;
+import project.ui.console.loadfiles.loaduser.UserReader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -35,6 +34,13 @@ public class RestUserControllerTest {
     UserService userService;
 
     RestUserController controller;
+
+    @Mock
+    StorageService storageService;
+
+    @Mock
+    UserReader userReader;
+
 
     private User mike, justin, joao, daniel, ana;
     private Link mikeLink, justinLink,joaoLink, danielLink, anaLink;
@@ -88,7 +94,7 @@ public class RestUserControllerTest {
         expected = new ArrayList<>();
 
         // then instantiates the controller using the mocked service
-        controller=new RestUserController(userService);
+        controller=new RestUserController(userService, storageService, userReader);
 
     }
     @After

@@ -1,31 +1,21 @@
 import React, { Component } from 'react';
 import AuthService from "../loginPage/AuthService";
 import {toastr} from "react-redux-toastr";
-import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {updateAllTasks} from './../../actions/projectTasksActions';
-import {updateMyAllTasks, updateMyFinishedTasks, updateMyOngoingTasks} from "../../actions/userTasksActions";
-import {
-    updateFinishedTasks, updateNotStartedTasks, updateStandByTasks,
-    updateUnfinishedTasks, updateExpiredTasks, getProjectTasksByFilter
-} from "../../actions/projectTasksActions";
+import { refreshTasksByFilter } from "../../actions/refreshTasksActions";
+import "../../components/button/removeButton.css";
 
 class RemoveTaskCollaborator extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            text: 'Loading...'
-        };
 
-        this.getRequest = this.getRequest.bind(this);
         this.authService=new AuthService();
     }
 
-    componentDidMount() {
-        this.getRequest();
-    }
-
+    // THis method attempts to fetch a pending task removal request from the collaborator.
+    // If the request is found, it will approve it and remove collaborator
+    // If there is an error (request not found), it will instead remove the collaborator
     async getRequest() {
         this.authService.fetch(
             `/projects/${this.props.task.project}/tasks/${this.props.task.taskID}/requests/user/${this.props.collaborator.taskCollaborator.userID}`,
@@ -33,14 +23,11 @@ class RemoveTaskCollaborator extends Component {
                 method: "GET"
             }
         ).then(response => {
-            this.setState({
-                request: response,
-                text: 'Approve Removal'
-            });
+
+            this.approveRemovalRequest();
         }).catch(error => {
-            this.setState({
-                text: 'Remove'
-            });
+
+            this.removeTaskCollaborator();
         });
 
     }
@@ -53,8 +40,7 @@ class RemoveTaskCollaborator extends Component {
             }
         ).then(response => {
             toastr.success('Removal request approved!');
-            this.updateTasks();
-            this.props.updateTeam();
+            this.props.refreshTasksByFilter(this.props.task.project, this.props.filter);
         }).catch(error => {
             toastr.error('An error occurred!');
         });
@@ -69,8 +55,7 @@ class RemoveTaskCollaborator extends Component {
             }
         ).then(responseData => {
             toastr.success('Collaborator Successfully removed!');
-            this.updateTasks();
-            this.props.updateTeam();
+            this.props.refreshTasksByFilter(this.props.task.project, this.props.filter);
         }).catch(err => {
             toastr.error('An error occurred!');
         });
@@ -78,63 +63,18 @@ class RemoveTaskCollaborator extends Component {
 
     }
 
-    updateTasks() {
-        console.log(this.props.filter);
-        switch (this.props.filter) {
-
-            case 'all':
-                this.props.updateAllTasks(this.props.task.project);
-                break;
-            case 'finished':
-                this.props.updateFinishedTasks(this.props.task.project);
-                break;
-            case 'unfinished':
-                this.props.updateUnfinishedTasks(this.props.task.project);
-                break;
-            case 'notStarted':
-                this.props.updateNotStartedTasks(this.props.task.project);
-                break;
-            case 'withoutCollaborators':
-                this.props.updateStandByTasks(this.props.task.project);
-                break;
-            case 'expired':
-                this.props.updateExpiredTasks(this.props.task.project);
-                break;
-            case 'myAll':
-                this.props.updateMyAllTasks(this.AuthService.getUserId());
-                break;
-            case 'myFinished':
-                this.props.updateMyFinishedTasks(this.AuthService.getUserId());
-                break;
-            case 'myUnfinished':
-                this.props.updateMyOngoingTasks(this.AuthService.getUserId());
-                break;
-        }
-
-    }
 
     handleClick = event => {
-        if(this.state.text === 'Approve Removal') {
-            this.approveRemovalRequest();
-        } else if(this.state.text === 'Remove') {
-            this.removeTaskCollaborator();
-        }
+
+        this.getRequest();
+
     }
 
     render() {
-        return <button onClick={this.handleClick} className="genericButton" >{this.state.text}</button>;
+        return <button onClick={this.handleClick} className="glyphicon glyphicon-remove" ></button>;
     }
 }
 const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
 const mapDispatchToProps = dispatch => bindActionCreators({
-    getProjectTasksByFilter,
-    updateFinishedTasks,
-    updateAllTasks,
-    updateStandByTasks,
-    updateNotStartedTasks,
-    updateUnfinishedTasks,
-    updateExpiredTasks,
-    updateMyAllTasks,
-    updateMyFinishedTasks,
-    updateMyOngoingTasks }, dispatch)
+    refreshTasksByFilter }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(RemoveTaskCollaborator);

@@ -29,6 +29,7 @@
         "react-router-dom": "^4.2.2",
         "react-scripts": "1.1.4",
         "react-skillbars": "^1.5.1",
+        "react-user-avatar": "^1.10.0",
         "redux": "^4.0.0",
         "redux-thunk": "^2.2.0"
     },

@@ -27,101 +27,94 @@ class FetchTaskButton extends Component {
 
     render() {
         return (
+
+
+
+
             <div className="buttonWrapper">
-                <div className="switch-toggle switch-ios">
-                    <input
-                        id={TASKS_FILTER.ALL_TASKS}
-                        type="radio"
-                        name="tasksFilter"
-                        onChange={this.handleChange}
-                    />
-                    <label
+
+            <div class="switch-toggle switch-candy">
+             <input id={TASKS_FILTER.ALL_TASKS} name="view3" type="radio" onChange={this.handleChange}/>
+             <label
                         className="buttonFont"
                         name="tasksFilter"
                         htmlFor={TASKS_FILTER.ALL_TASKS}
                     >
                         All Tasks
                     </label>
-
-                    <input
-                        id={TASKS_FILTER.UNFINISHED_TASKS}
-                        type="radio"
-                        name="tasksFilter"
-                        onChange={this.handleChange}
-                    />
-                    <label
-                        className="buttonFont"
+           
+             <input id={TASKS_FILTER.UNFINISHED_TASKS} name="view3" type="radio" onChange={this.handleChange}/>
+             <label
+                         className="buttonFont"
                         htmlFor={TASKS_FILTER.UNFINISHED_TASKS}
-                    >
-                        Unfinished
+                     >
+                      Unfinished
                     </label>
+           
+             <input 
+                    id={TASKS_FILTER.FINISHED_TASKS} name="view3" type="radio" onChange={this.handleChange} />
+             <label 
+                   className="buttonFont"
+                   htmlFor={TASKS_FILTER.FINISHED_TASKS}
+                onclick="">                        
+                Finished
+                </label>
+           
+             <input 
+                    id={TASKS_FILTER.NOTSTARTED_TASKS} name="view3" type="radio"  onChange={this.handleChange}/>
+             <label 
+                className="buttonFont"
+                htmlFor={TASKS_FILTER.NOTSTARTED_TASKS}
+                onclick="">
+                Not Started</label>
+           
+             <input 
+               id={TASKS_FILTER.STANDBY_TASKS} name="view3" type="radio" onChange={this.handleChange} />
+             <label 
+                className="buttonFont"
+                htmlFor={TASKS_FILTER.STANDBY_TASKS} 
+                onclick="">
+                     Stand By
+            </label>
 
-                    <input
-                        id={TASKS_FILTER.FINISHED_TASKS}
-                        type="radio"
-                        name="tasksFilter"
-                        onChange={this.handleChange}
-                    />
-                    <label
-                        className="buttonFont"
-                        htmlFor={TASKS_FILTER.FINISHED_TASKS}
-                    >
-                        Finished
-                    </label>
-
-                    <input
-                        id={TASKS_FILTER.NOTSTARTED_TASKS}
-                        type="radio"
-                        name="tasksFilter"
-                        onChange={this.handleChange}
-                    />
-                    <label
-                        className="buttonFont"
-                        htmlFor={TASKS_FILTER.NOTSTARTED_TASKS}
-                    >
-                        Not Started
-                    </label>
-
-                    <input
-                        id={TASKS_FILTER.STANDBY_TASKS}
-                        type="radio"
-                        name="tasksFilter"
-                        onChange={this.handleChange}
-                    />
-                    <label
-                        className="buttonFont"
-                        htmlFor={TASKS_FILTER.STANDBY_TASKS}
-                    >
-                        Stand By
-                    </label>
-
-                    <input
-                        id={TASKS_FILTER.EXPIRED_TASKS}
-                        type="radio"
-                        name="tasksFilter"
-                        onChange={this.handleChange}
-                    />
-                    <label
-                        className="buttonFont"
-                        htmlFor={TASKS_FILTER.EXPIRED_TASKS}
-                    >
+             <input 
+               id={TASKS_FILTER.EXPIRED_TASKS} name="view3" type="radio" onChange={this.handleChange} />
+             <label 
+                className="buttonFont"
+                htmlFor={TASKS_FILTER.EXPIRED_TASKS} 
+                onclick="">
                         Expired
-                    </label>
+            </label>
 
-                    <input
-                        id={TASKS_FILTER.CANCELLED_TASKS}
-                        type="radio"
-                        name="tasksFilter"
-                        onChange={this.handleChange}
-                    />
-                    <label
-                        className="buttonFont"
-                        htmlFor={TASKS_FILTER.CANCELLED_TASKS}
-                    >
+            
+          {/*   <input 
+               id={TASKS_FILTER.CANCELLED_TASKS} name="view3" type="radio" onChange={this.handleChange} />
+             <label 
+                className="buttonFont"
+                htmlFor={TASKS_FILTER.CANCELLED_TASKS} 
+                onclick="">
                         Cancelled
-                    </label>
-                </div>
-            </div>
+            </label>
+ */}
+           
+             <a></a>
+           </div>
+            
+                           
+           
+                       </div>
+
+
+
+
+
+
+
+
+
+
+
+
         );
     }
 }

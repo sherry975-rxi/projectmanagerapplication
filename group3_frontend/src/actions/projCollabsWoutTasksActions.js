@@ -8,7 +8,7 @@ console.log('fui disprado')
 
     return dispatch => {
         listIsLoading()
-        authService.fetch(`projects/${projectId}/tasks/collabsAvailableForTask`, {
+        authService.fetch(`/projects/${projectId}/tasks/collabsAvailableForTask`, {
             method: 'GET'
         })
             .then(data => {

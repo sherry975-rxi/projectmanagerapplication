@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     myOngoingTasks: [],
     myAllTasks: [],
     lastMonthFinishedTasks: [],
+    updatedList: [],
     error: false
 
 }
@@ -18,6 +19,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, itemIsLoading: false, myAllTasks: action.myAllTasks, error: false }
         case 'LASTMONTHTASKS_FETCHED':
             return { ...state, itemIsLoading: false, lastMonthFinishedTasks: action.lastMonthFinishedTasks, error: false}
+        case 'SEARCHTASKS_FETCHED':
+            return { ...state, itemIsLoading: false, updatedList: action.updatedList, error: false }
         case 'ITEM_LOADING':
             return { ...state, itemIsLoading: true, myAllTasks: action.myAllTasks, error: false }
                 case 'FETCH_HAS_ERRORED':
