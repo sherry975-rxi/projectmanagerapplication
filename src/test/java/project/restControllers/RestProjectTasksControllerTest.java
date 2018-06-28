@@ -47,6 +47,9 @@ public class RestProjectTasksControllerTest {
     private UserService userService;
 
     @Mock
+    private Task taskTest;
+
+    @Mock
     private HttpServletRequest req;
 
 
@@ -79,6 +82,9 @@ public class RestProjectTasksControllerTest {
     private List<TaskDTO> projectTaskdtos;
     private ResponseEntity<List<Task>> expectedResponse;
 
+    private ProjectCollaborator projCollab;
+    private TaskCollaborator taskCollaborator;
+
     @Before
     public void setup() {
         JacksonTester.initFields(this, new ObjectMapper());
@@ -89,6 +95,7 @@ public class RestProjectTasksControllerTest {
 
         ProjectCollaborator pcDaniel = new ProjectCollaborator(uDaniel, 20);
         ProjectCollaborator pcInes = new ProjectCollaborator(uInes, 20);
+
 
         startDate = Calendar.getInstance();
         finishDate = Calendar.getInstance();
@@ -123,6 +130,11 @@ public class RestProjectTasksControllerTest {
         // and finally an empty test list to be filled and compared for each assertion
         expected = new ArrayList<>();
         projectTaskdtos = new ArrayList<>();
+
+        projCollab = new ProjectCollaborator(uDaniel, 20);
+
+        taskCollaborator = task.createTaskCollaborator(projCollab);
+
     }
 
     @After
@@ -213,14 +225,20 @@ public class RestProjectTasksControllerTest {
 
         //GIVEN
 
+        int projectId = 123;
+        project.setProjectId(projectId);
+
         task3 = new Task("Task3", project);
         task3.setTaskID("50");
         task3.setEstimatedTaskStartDate(estimatedStart);
         task3.setTaskDeadline(estimatedDeadline);
         task3.setTaskBudget(2000);
+
+        task.setProject(project);
+
         projectTasks = new ArrayList<>();
 
-        int projectId = 123;
+
 
         when(projectService.getProjectById(projectId)).thenReturn(project);
 
@@ -232,7 +250,7 @@ public class RestProjectTasksControllerTest {
 
         //WHEN
 
-        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/1/dependencies")
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/123/tasks/1/dependencies")
                 .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //THEN
@@ -257,6 +275,80 @@ public class RestProjectTasksControllerTest {
 
     }
 
+
+    /**
+     * GIVEN three tasks belonging to a single project (task3 with NO dependencies)
+     * WHEN requesting the list of possible dependencies
+     * THEN the response entity must contain status OK
+     *
+     * AND WHEN the tested task recieves a dependency on "task"
+     * THEN the response entity must contain a list of tasks, containing only "task2"
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetPossibleTaskDependencies() throws Exception  {
+
+        //GIVEN
+
+        task.setTaskID("30");
+        task2.setTaskID("20");
+
+        int projectId = 123;
+        project.setProjectId(projectId);
+
+
+        task3 = new Task("Task3", project);
+        task3.setTaskID("50");
+        task3.setEstimatedTaskStartDate(estimatedStart);
+        task3.setTaskDeadline(estimatedDeadline);
+        task3.setTaskBudget(2000);
+
+        projectTasks = new ArrayList<>();
+
+
+        projectTasks.add(task);
+        projectTasks.add(task2);
+        projectTasks.add(task3);
+
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        when(taskService.getTaskByTaskID(anyString())).thenReturn(task3);
+
+        when(taskService.getProjectTasks(project)).thenReturn(projectTasks);
+
+        //confirmation that task3 does not have assigned collaborators
+
+        assertTrue(task3.getTaskDependency().isEmpty());
+
+        //WHEN
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/123/tasks/50/possibleDependencies")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+
+        assertEquals(HttpStatus.OK.value(),response.getStatus());
+
+
+        //AND WHEN adding a dependency
+        task.setEstimatedTaskStartDate(Calendar.getInstance());
+
+        assertTrue(task3.createTaskDependence(task, 2));
+
+        List<Task> expected = new ArrayList<>();
+        expected.add(task2);
+
+        // THEN
+        ResponseEntity<List<Task>> actualResponse = victim.getPossibleTaskDependencies("50", projectId);
+
+        ResponseEntity<List<Task>> expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
+        assertEquals(expectedResponse,actualResponse);
+
+    }
+
+
+
     /**
      * GIVEN two tasks with a certain ID and no dependencies
      * WHEN making task3 dependent on task
@@ -272,6 +364,8 @@ public class RestProjectTasksControllerTest {
     public void testCreateAndRemoveTaskDependency() throws Exception  {
 
         //GIVEN
+        int projectId = 123;
+        project.setProjectId(projectId);
 
         task3 = new Task("Task3", project);
         task3.setTaskID("50");
@@ -281,10 +375,10 @@ public class RestProjectTasksControllerTest {
         projectTasks = new ArrayList<>();
 
 
+        task.setProject(project);
         task.setTaskDeadline(Calendar.getInstance());
         task.setTaskID("30");
 
-        int projectId = 123;
 
         when(projectService.getProjectById(projectId)).thenReturn(project);
 
@@ -298,7 +392,7 @@ public class RestProjectTasksControllerTest {
 
         //WHEN
 
-        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.put("/projects/1/tasks/50/createDependency/30/2")
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.put("/projects/123/tasks/50/createDependency/30/2")
                 .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //THEN
@@ -311,7 +405,7 @@ public class RestProjectTasksControllerTest {
 
         //AND WHEN
 
-        response = mockMvc.perform(MockMvcRequestBuilders.put("/projects/1/tasks/50/removeDependency/30")
+        response = mockMvc.perform(MockMvcRequestBuilders.put("/projects/123/tasks/50/removeDependency/30")
                 .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
 
@@ -883,6 +977,43 @@ public class RestProjectTasksControllerTest {
         verify(projectService, times(1)).getActiveProjectTeam(project);
         verify(projectService, times(1)).getProjectById(any(Integer.class));
 
+
+    }
+
+
+
+    @Test
+    public void isCollabActiveInTask() throws Exception{
+
+        // GIVEN
+        int projectId = 02;
+        String taskId = "taskid";
+        String email = "email";
+
+
+        //WHEN
+        when(taskService.getTaskByTaskID(any())).thenReturn(taskTest);
+        when(taskTest.getActiveTaskCollaboratorByEmail(email)).thenReturn(taskCollaborator);
+
+
+        ResponseEntity<String> response = victim.isTaskCollaboratorActiveInTask(projectId,taskId,email);
+
+
+        //THEN
+
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
+
+
+
+        //WHEN
+        //The method getActiveTaskCollabortor returns null
+        when(taskTest.getActiveTaskCollaboratorByEmail(email)).thenReturn(null);
+
+        ResponseEntity<String> responseNull = victim.isTaskCollaboratorActiveInTask(projectId,taskId,email);
+
+        //THEN
+        //The responseEntity will return a value 404 Not Found
+        assertEquals(HttpStatus.NOT_FOUND.value(), responseNull.getStatusCode().value());
 
     }
 

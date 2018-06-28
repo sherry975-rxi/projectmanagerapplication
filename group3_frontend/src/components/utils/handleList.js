@@ -2,7 +2,7 @@ var moment = require('moment');
 
 
 export function handleTaskHeaders(list) {
-    console.log(list)
+
     return list.map(task => ({
         taskID: task.taskID,
         project: task.project.projectId,
@@ -51,12 +51,11 @@ export function handleUserHeaders(list) {
     ]);
 }
 
-function formatDate(date) {
-    if (date != null) {
-        ;
-       
+export function formatDate(date) {
 
-        return moment(date).format("DD/MMM/YYYY");
+    if (date != null) {
+
+        return moment(new Date(date)).format("DD/MMM/YYYY");
     } else {
         return '';
     }

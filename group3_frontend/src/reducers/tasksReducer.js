@@ -13,12 +13,18 @@ export default (state = {}, action) => {
         case 'EXPIRED_FETCHED':
         case 'ALLTASKS_FETCHED':
         case 'CANCELLED_FETCHED':
-        case 'DEPENDENCIES_FETCHED':
         case ALL_PROJECT_TASKS_FETCHED:
             return {
                 ...state,
                 itemIsLoading: false,
                 tasksList: action.tasks,
+                error: false
+            };
+        case 'DEPENDENCIES_FETCHED':
+            return {
+                ...state,
+                itemIsLoading: false,
+                tasksDependencies: action.tasks,
                 error: false
             };
         case 'ITEM_LOADING':

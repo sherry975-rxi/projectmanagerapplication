@@ -4,22 +4,18 @@ import {toastr} from "react-redux-toastr";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import { refreshTasksByFilter } from "../../actions/refreshTasksActions";
+import "../../components/button/removeButton.css";
 
 class RemoveTaskCollaborator extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            text: 'Loading...'
-        };
 
-        this.getRequest = this.getRequest.bind(this);
         this.authService=new AuthService();
     }
 
-    componentDidMount() {
-        this.getRequest();
-    }
-
+    // THis method attempts to fetch a pending task removal request from the collaborator.
+    // If the request is found, it will approve it and remove collaborator
+    // If there is an error (request not found), it will instead remove the collaborator
     async getRequest() {
         this.authService.fetch(
             `/projects/${this.props.task.project}/tasks/${this.props.task.taskID}/requests/user/${this.props.collaborator.taskCollaborator.userID}`,
@@ -27,14 +23,11 @@ class RemoveTaskCollaborator extends Component {
                 method: "GET"
             }
         ).then(response => {
-            this.setState({
-                request: response,
-                text: 'Approve Removal'
-            });
+
+            this.approveRemovalRequest();
         }).catch(error => {
-            this.setState({
-                text: 'Remove'
-            });
+
+            this.removeTaskCollaborator();
         });
 
     }
@@ -72,15 +65,13 @@ class RemoveTaskCollaborator extends Component {
 
 
     handleClick = event => {
-        if(this.state.text === 'Approve Removal') {
-            this.approveRemovalRequest();
-        } else if(this.state.text === 'Remove') {
-            this.removeTaskCollaborator();
-        }
+
+        this.getRequest();
+
     }
 
     render() {
-        return <button onClick={this.handleClick} className="genericButton" >{this.state.text}</button>;
+        return <button onClick={this.handleClick} className="glyphicon glyphicon-remove" ></button>;
     }
 }
 const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }

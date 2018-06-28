@@ -7,7 +7,7 @@ import {
 } from './actions';
 import { TASKS_FILTER } from '../constants/TasksConstants';
 import { updateUnassignedProjCollabs } from './projCollabsWoutTasksActions';
-import {refreshTasksByFilter} from "./refreshTasksActions";
+import { refreshTasksByFilter } from "./refreshTasksActions";
 
 export function addCollaboratorToTask(projectId, taskId, userDTO, filterName) {
     return dispatch => {
@@ -229,12 +229,52 @@ export function getAllTaskDependencies(projectId, taskId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                console.log(data);
                 dispatch(taskDependenciesFetched(data));
                 return data;
             })
             .catch(error => {
                 fetchTasksHasErrored();
+            });
+    };
+}
+
+export function createTaskDependency(projectId, taskId, parentId, postpone) {
+    return dispatch => {
+        tasksLoading();
+        fetch(`/projects/${projectId}/tasks/${taskId}/createDependency/${parentId}/${postpone}`, {
+            headers: { Authorization: localStorage.getItem('id_token') },
+            method: 'PUT'
+        })
+            .then(responseData => responseData.json())
+            .then(data => {
+                dispatch(taskDependenciesFetched(data));
+                toastr.success('Dependency added!');
+                return data;
+            })
+            .catch(error => {
+                toastr.error('lolnope');
+                fetchTasksHasErrored();
+            });
+    };
+}
+
+export function removeTaskDependency(projectId, taskId, parentId) {
+    return dispatch => {
+        tasksLoading();
+        fetch(`/projects/${projectId}/tasks/${taskId}/removeDependency/${parentId}`, {
+            headers: { Authorization: localStorage.getItem('id_token') },
+            method: 'PUT'
+        })
+            .then(responseData => responseData.json())
+            .then(data => {
+                dispatch(taskDependenciesFetched(data));
+                toastr.success('Dependency removed!');
+                return data;
+            })
+            .catch(error => {
+                toastr.error('lolnope');
+                fetchTasksHasErrored();
+
             });
     };
 }
@@ -261,7 +301,7 @@ export const getProjectTasksByFilter = (projectId, filterName) => {
 };
 
 export function updateCancelledTasks(projectId) {
-    console.log('here');
+
     return dispatch => {
         tasksLoading();
         fetch(`/projects/${projectId}/tasks/cancelled`, {

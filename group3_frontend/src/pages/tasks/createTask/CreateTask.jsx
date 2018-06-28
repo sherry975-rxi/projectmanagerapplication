@@ -3,7 +3,7 @@ import { Form, Modal, FormGroup, ControlLabel, FormControl } from 'react-bootstr
 import '../../../components/button/genericButton.css'
 import './CreateTask.css'
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -12,7 +12,6 @@ import {
     updateAllTasks,
     updateNotStartedTasks, updateUnfinishedTasks
 } from '../../../actions/projectTasksActions';
-import LoadingComponent from './../../../components/loading/LoadingComponent';
 import '../../../components/loading/LoadingComponent.css'
 import { toastr } from 'react-redux-toastr';
 import AuthService from '../../loginPage/AuthService';
@@ -96,7 +95,7 @@ class CreateTask extends Component {
 
     cancelCreation = () => {
         this.setState({ confirmCreation: false })
-        console.log(this.props.projectId)
+
         this.props.deleteTaskCreated(this.props.projectId, this.props.task.taskID)
 
     }
@@ -107,8 +106,10 @@ class CreateTask extends Component {
         switch (this.props.filter) {
             case 'notstarted':
                 this.props.updateNotStartedTasks(this.props.projectId)
+                break
             case 'unfinished':
                 this.props.updateUnfinishedTasks(this.props.projectId)
+                break
             default:
                 this.props.updateAllTasks(this.props.projectId)
         }
@@ -142,16 +143,15 @@ class CreateTask extends Component {
                 <ControlLabel>Estimated Dates</ControlLabel>
                 <div className="calendar">
                     <DateRangePicker
+
                         startDatePlaceholderText='Estimated Start'
                         endDatePlaceholderText='Deadline'
                         endDateId='endDate1'
                         startDateId='startDate1'
-                        showClearDate
-                        startDate={this.state.expectedStart}
-                        endDate={this.state.deadline}
+                        startDate={this.state.expectedStart ? this.state.expectedStart : null}
+                        endDate={this.state.deadline ? this.state.expectedStart : null}
                         onDatesChange={({ startDate, endDate }) => this.setState({ expectedStart: startDate, deadline: endDate })}
-                        placeholder="dasdad"
-                        focusedInput={this.state.focusedInput}
+                        focusedInput={this.state.focusedInput ? this.state.focusedInput : null}
                         onFocusChange={focusedInput => this.setState({ focusedInput })}
                         showDefaultInputIcon
                         inputIconPosition="after"
@@ -196,9 +196,6 @@ class CreateTask extends Component {
     }
 
     render() {
-
-
-
 
         let isProjectManager = this.props.projManager === this.AuthService.getProfile().sub ? 'genericButton' : 'noButton'
         var toRender = this.renderTaskCreationProcess()

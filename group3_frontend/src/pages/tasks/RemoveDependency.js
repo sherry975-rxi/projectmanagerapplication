@@ -1,0 +1,60 @@
+import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { removeTaskDependency } from "../../actions/projectTasksActions";
+import { DropdownButton, MenuItem } from "react-bootstrap";
+import { toastr } from "react-redux-toastr";
+import './TaskDependencies.css'
+
+
+class RemoveDependency extends Component {
+
+    handleSelect = eventKey => {
+
+        this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.tasks[eventKey].taskID);
+
+
+    };
+
+    render() {
+
+        const taskList = this.props.tasks || [];
+
+        return (
+            <DropdownButton
+                className="dependencyButton"
+                title='Remove Dependency'
+                key="0"
+                id={`dropdown-basic-0`}
+                value={this.props.projectID}
+            >
+                {taskList.map((listItem, index) => (
+                    <MenuItem
+                        eventKey={index}
+                        key={index}
+                        onSelect={this.handleSelect}
+                    >
+                        {listItem.taskID}
+                    </MenuItem>
+                ))}
+            </DropdownButton>
+        );
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        tasks: state.tasks.tasksDependencies,
+        error: state.tasks.error,
+        loading: state.tasks.itemIsLoading
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ removeTaskDependency }, dispatch);
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RemoveDependency);

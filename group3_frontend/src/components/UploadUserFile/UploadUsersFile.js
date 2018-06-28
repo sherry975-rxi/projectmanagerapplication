@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import AuthService from "../../pages/loginPage/AuthService";
-import { Form, Modal, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { toastr } from 'react-redux-toastr';
 import './uploadButton.css'
 
@@ -24,13 +24,13 @@ class UploadUsersFile extends Component {
 
 
     uploadAction() {
-        if(this.isFileExtensionValid()) {
+        if (this.isFileExtensionValid()) {
             const formData = new FormData()
             formData.append('myFile', document.querySelector('input[type="file"]').files[0])
             this.AuthService.fetchWithoutContentType("users/uploadUserFile", {
                 method: "POST",
                 body: formData
-            }).then(response =>{
+            }).then(response => {
                 if (response.status === 200) {
                     toastr.success('File uploaded successfully!')
                     this.handleClose()
@@ -45,38 +45,38 @@ class UploadUsersFile extends Component {
 
     getFileExtension() {
         var fileInput = document.getElementById('fileName');
-        if (fileInput!==null && fileInput.files[0]!=undefined) {
+        if (fileInput !== null && fileInput.files[0] !== undefined) {
             var filename = fileInput.files[0].name;
             return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
-        }else{
+        } else {
             return null;
         }
 
     }
 
-    isFileExtensionValid(){
+    isFileExtensionValid() {
         var extension = this.getFileExtension();
-        if(extension!==null) {
+        if (extension !== null) {
             return extension.toLowerCase() === 'xml' || extension.toLowerCase() === 'csv';
         } else {
             return false;
         }
     }
 
-    handleChange(){
+    handleChange() {
         this.setState({
             file: document.getElementById('fileName')
         })
     }
 
-    renderUploadMenu(){
-        return(
+    renderUploadMenu() {
+        return (
             <div>
                 <Modal.Header closeButton>
                     <Modal.Title>Upload Users From File</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <input type="file" id="fileName" name="fileName" autoComplete="off" accept=".xml, .csv" onChange={this.handleChange.bind(this)}/>
+                    <input type="file" id="fileName" name="fileName" autoComplete="off" accept=".xml, .csv" onChange={this.handleChange.bind(this)} />
                 </Modal.Body>
                 <Modal.Footer>
                     <button className="uploadButton" onClick={this.uploadAction.bind(this)} disabled={!this.isFileExtensionValid()}>Upload!</button>
@@ -85,8 +85,8 @@ class UploadUsersFile extends Component {
         )
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <button className="uploadButton" onClick={this.handleShow.bind(this)}>Upload Users</button>
                 <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
@@ -96,5 +96,5 @@ class UploadUsersFile extends Component {
         )
     }
 
-    }
+}
 export default UploadUsersFile;

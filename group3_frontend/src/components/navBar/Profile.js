@@ -4,8 +4,8 @@ import AuthService from '../../pages/loginPage/AuthService';
 import { authorize } from '../../actions/authenticationActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import womanProfile from './profile_logo.png'
-import manProfile from './profile_logo_man.png'
+import womanProfile from './profile_logo.png';
+import manProfile from './profile_logo_man.png';
 
 export class Profile extends React.Component {
     constructor(props) {
@@ -21,24 +21,24 @@ export class Profile extends React.Component {
             this.setState({
                 message: responseData.error
             });
-            if (this.state.message == null) {
+            if (this.state && this.state.message == null) {
                 this.props.authorize(responseData);
             }
         });
     }
 
     getImage() {
-        if (this.AuthService.getUserId() === '7' ||
+        if (
+            this.AuthService.getUserId() === '7' ||
             this.AuthService.getUserId() === '6' ||
             this.AuthService.getUserId() === '4' ||
             this.AuthService.getUserId() === '5' ||
-            this.AuthService.getUserId() === '1') {
-            return (womanProfile)
+            this.AuthService.getUserId() === '1'
+        ) {
+            return womanProfile;
+        } else {
+            return manProfile;
         }
-        else {
-            return (manProfile)
-        }
-
     }
 
     render() {
@@ -68,7 +68,8 @@ export class Profile extends React.Component {
 const mapStateToProps = state => {
     return { user: state.authenthication.user };
 };
-const mapDispatchToProps = dispatch => bindActionCreators({ authorize }, dispatch)
+const mapDispatchToProps = dispatch =>
+    bindActionCreators({ authorize }, dispatch);
 export default connect(
     mapStateToProps,
     mapDispatchToProps

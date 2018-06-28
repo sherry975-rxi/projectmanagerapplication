@@ -18,7 +18,6 @@ import ProjectCost from './pages/projectCost/ProjectCost';
 import CreateReport from './pages/reports/CreateReport';
 import Reports from './pages/reports/Reports';
 import AllRequests from './pages/requests/AllRequests';
-import AddTask from './pages/tasks/AddTask';
 import ProjectDetails from './pages/projects/ProjectDetails';
 import UserTasks from './pages/tasks/UserTasks';
 import Messages from './components/msgs/Messages';
@@ -137,14 +136,8 @@ class App extends Component {
                     />
 
                     <ProtectedRoute
-                        path="/requests"
+                        path="/projects/:projectID/requests"
                         component={requiresAuth(AllRequests)}
-                        permissions={['COLLABORATOR']}
-                    />
-
-                    <ProtectedRoute
-                        path="/projects/:projectID/addtask"
-                        component={requiresAuth(AddTask)}
                         permissions={['COLLABORATOR']}
                     />
 

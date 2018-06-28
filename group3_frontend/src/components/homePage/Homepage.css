@@ -29,7 +29,7 @@
         left:400px;
         margin-bottom:0px;
         margin-left:-50px;
-        height: 370px;        
+        height: 370px;
         padding-top: 30px;
 
 
@@ -38,8 +38,8 @@
 
 
 .UserDataHomepage{
-  
-      
+
+
         background-color: rgba(255,255,255, 1);
         text-align: center;
         left: -100px;
@@ -48,13 +48,13 @@
         width:94%;
         -webkit-animation: bounce-in-top 1.1s both;
         animation: bounce-in-top 1.1s both;
-        
-    
+
+
 }
 
 .ProjUpperContainer{
 
-      
+
         background-color: rgba(255,255,255, 1);
         width:350px;
         height: 420px;
@@ -66,7 +66,7 @@
 
     .ProjUpperContainerDirector{
 
-      
+
         background-color: rgba(255,255,255, 1);
         width:850px;
         height: 420px;
@@ -139,26 +139,26 @@
 
         background-color: rgba(255,255,255, 1);
         margin-left: -10px;
-        
+
         text-align: center;
         height:420px;
         width:100%;
         overflow-y: auto;
         overflow-x:hidden;
-    
+
     }
 
     .UserNumberUpperContainer{
 
         background-color: rgba(255,255,255, 1);
         margin-left: -10px;
-        
+
         text-align: center;
         height: auto;
         width:100%;
         overflow-y: auto;
         overflow-x:hidden;
-    
+
     }
 
 .ProjectGraphContainerDirector{
@@ -176,18 +176,19 @@
 
 }
 
-    
+
 h1{
         text-align:center;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      
+        font-family: Helvetica;
         font-weight: normal;
         font-style: normal;
+        font-size: 25px;
+        color: rgb(80, 79, 79);
 }
 
 h2{
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-       
+
         font-style: normal;
         font-size:20px;
 }
@@ -228,7 +229,7 @@ h2{
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-  
+
 
   .tdGraphStyle{
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;         font-size: 12px;
@@ -236,7 +237,7 @@ h2{
          padding-left:0px;
          text-align:left;
          padding-left:10px;
-         
+
 
   }
 
@@ -253,7 +254,7 @@ h2{
   .tdGraphStyleLeft{
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;         font-size: 12px;
          text-align:left;
-         
+
   }
 
   .line{
@@ -273,24 +274,24 @@ h2{
   .ProgBarCircleContainer{
           width:200px;
           padding-left: -10px;
-          
+
   }
 
   .ProgBarCircleContainer{
         width:450px;
-        
+
 }
 
   .ProjectGraphTable{
           width:100%;
-          
+
   }
 
 .tableUsernameText{
         text-align: center;
         margin-left: 50px;
 
-        
+
 }
 
 
@@ -301,7 +302,7 @@ h2{
           font-weight: bold;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;         font-size: 12px;
 
-          
+
   }
   .tdUserRight{
         text-align: left;
@@ -438,4 +439,3 @@ h2{
                   animation-timing-function: ease-out;
         }
       }
-  

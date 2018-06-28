@@ -8,10 +8,10 @@ export function updateAllUsers() {
         authService.fetch(`/users/allUsers`, {
             method: 'GET'
         }).then(data => {
-                dispatch(allUsersFetched(data));
-                dispatch(filterUserActions.changeToALLUSERS());
-                return data;
-            });
+            dispatch(allUsersFetched(data));
+            dispatch(filterUserActions.changeToALLUSERS());
+            return data;
+        });
     };
 }
 
@@ -22,10 +22,10 @@ export function updateEmail(email) {
         authService.fetch(`/users/email/${email}`, {
             method: 'GET'
         }).then(data => {
-                dispatch(emailUsersFetched(data));
-                dispatch(filterUserActions.changeToEMAIL());
-                return data;
-            });
+            dispatch(emailUsersFetched(data));
+            dispatch(filterUserActions.changeToEMAIL());
+            return data;
+        });
     };
 }
 
@@ -36,10 +36,10 @@ export function updateCollaborators() {
         authService.fetch(`/users/profiles/COLLABORATOR`, {
             method: 'GET'
         }).then(data => {
-                dispatch(allCollaboratorsFetched(data));
-                dispatch(filterUserActions.changeToCOLLABORATOR());
-                return data;
-            });
+            dispatch(allCollaboratorsFetched(data));
+            dispatch(filterUserActions.changeToCOLLABORATOR());
+            return data;
+        });
     };
 }
 
@@ -50,10 +50,10 @@ export function updateDirector() {
         authService.fetch(`/users/profiles/DIRECTOR`, {
             method: 'GET'
         }).then(data => {
-                dispatch(allDirectorFetched(data));
-                dispatch(filterUserActions.changeToDIRECTOR());
-                return data;
-            });
+            dispatch(allDirectorFetched(data));
+            dispatch(filterUserActions.changeToDIRECTOR());
+            return data;
+        });
     };
 }
 
@@ -64,38 +64,69 @@ export function updateAdministrator() {
         authService.fetch(`/users/profiles/ADMIN`, {
             method: 'GET'
         }).then(data => {
-                dispatch(allAdministratorFetched(data));
-                dispatch(filterUserActions.changeToADMINISTRATOR());
-                return data;
-            });
+            dispatch(allAdministratorFetched(data));
+            dispatch(filterUserActions.changeToADMINISTRATOR());
+            return data;
+        });
     };
 }
 
 
-export function  searchList (event,list) {
-    const authService = new AuthService();
+export function searchList(event, list, option) {
 
-        return dispatch => {
-            var searchList = searching(event, list)
-            
-                dispatch(searchListUsersFetched(searchList));
-                dispatch(filterUserActions.changeToSearchUsers())
-            
-        };
-    
+    return dispatch => {
+        var searchList = searching(event, list, option)
+
+        dispatch(searchListUsersFetched(searchList));
+        dispatch(filterUserActions.changeToSearchUsers())
+
+    };
+
 }
 
-export function searching (event, list) {
-        var newlist = list;
-        //if(list.length > 0){
-        newlist = newlist.filter(function(item){
-          return item.email.toLowerCase().search(
-            event.target.value.toLowerCase()) !== -1;
-        });
-        console.log("LKJHGFDFGNMNBVCXSDERTH")
-        console.log(newlist)
-        return newlist;
-      }
+export function searching(event, list, option) {
+    var newlist = list;
+    //if(list.length > 0){
+    switch (option) {
+        case '1':
+            newlist = newlist.filter(function (item) {
+                return item.name.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '2':
+            newlist = newlist.filter(function (item) {
+                return item.email.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '3':
+            newlist = newlist.filter(function (item) {
+                return item.userProfile.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '4':
+            newlist = newlist.filter(function (item) {
+                return item.function.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '5':
+            newlist = newlist.filter(function (item) {
+                return item.systemUserStateActive.toString().toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        default:
+            newlist = newlist.filter(function (item) {
+                return item.email.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+
+    }
+    return newlist;
+}
 
 
 export function updateVisitors() {
@@ -105,10 +136,10 @@ export function updateVisitors() {
         authService.fetch(`/users/profiles/UNASSIGNED`, {
             method: 'GET'
         }).then(data => {
-                dispatch(allVisitorsFetched(data));
-                dispatch(filterUserActions.changeToVISITOR());
-                return data;
-            });
+            dispatch(allVisitorsFetched(data));
+            dispatch(filterUserActions.changeToVISITOR());
+            return data;
+        });
     };
 }
 

@@ -1,23 +1,24 @@
-.uploadButton {
+.dependencyButton {
     background-color: rgb(135, 190, 178);
     border: none;
-    color: rgb(255, 255, 255);
+    color: black;
     font-family: Helvetica;
     font-weight: normal;
-    text-align: center;
+    text-align: left;
+    margin-bottom: 20px;
     display: inline-block;
     font-size: 13px;
-    width: 140px;
+    width: 150px;
     height: 32px;
     border-radius: 0;
-    margin-bottom:8px;
 }
 
-.uploadButton:hover {
+.dependencyButton:hover {
     background-color: #2a3f54;
-    color: white;
+    color: black;
 }
 
-.uploadButton:disabled{
-    background-color: rgb(85, 107, 102);
+.dependencyButton:focus {
+    background-color: rgb(135, 190, 178);
+    color: white;
 }

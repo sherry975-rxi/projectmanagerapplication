@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import {
     Form,
     Modal,
-    Button,
     FormGroup,
-    FormControl,
-    ControlLabel,
-    Alert
+    FormControl
 } from 'react-bootstrap';
 import AuthService from './../loginPage/AuthService';
-import  './CreateReport.css';
+import './CreateReport.css';
 
 class CreateReport extends Component {
     constructor(props) {
@@ -19,10 +16,30 @@ class CreateReport extends Component {
             reportedTime: '',
             taskCollabEmail: '',
             hideSuccessInfo: 'hide-code',
-            message: ''
+            message: '',
+            canRenderResponse: '',
+            canRenderButton: false
         };
         this.AuthService = new AuthService();
     }
+
+
+    async componentDidMount() {
+        this.AuthService.fetchRaw(
+            `/projects/${this.AuthService.getUserId()}/tasks/${this.props.taskID}/isCollabInTask/${this.AuthService.getProfile().sub}`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            this.setState({
+                canRenderResponse: responseData.status,
+                hasFetched: true
+            });
+        }).catch(err => {
+
+        });
+    };
+
 
     handleClose() {
         this.setState({ show: false });
@@ -59,7 +76,7 @@ class CreateReport extends Component {
 
         this.AuthService.fetch(
             `/projects/${this.props.projectID}/tasks/${
-                this.props.taskID
+            this.props.taskID
             }/reports/`,
             {
                 body: JSON.stringify(reportDTOData),
@@ -68,7 +85,7 @@ class CreateReport extends Component {
         ).then(responseData => {
             window.location.href = `/projects/${
                 this.props.projectID
-            }/tasks/${this.props.taskID}/reports/`;
+                }/tasks/${this.props.taskID}/reports/`;
         });
 
         this.setState({
@@ -81,56 +98,63 @@ class CreateReport extends Component {
     renderReportCreationProcess() {
         return (
             <div>
-                <Modal.Header closeButton>  
-                <Modal.Title>Create Report
-                <h5 >Task {this.props.taskID}</h5>
-                </Modal.Title>
-
+                <Modal.Header closeButton>
+                    <Modal.Title>Create Report
+                    <h5 >Task {this.props.taskID}</h5>
+                    </Modal.Title>
                 </Modal.Header>
-                    <Modal.Body>
-                        <Form >
-                            <FormGroup controlId="reportedTime" bsSize="large">                     
-                                <ControlLabel></ControlLabel>
-                                <FormControl 
+                <Modal.Body>
+                    <Form >
+                        <FormGroup controlId="reportedTime" bsSize="large">
+                            <FormControl
                                 autoFocus
                                 type="number"
                                 pattern="[0-9]*"
                                 placeholder="Enter reported time (hours)"
                                 inputmode="numeric"
                                 value={this.state.reportedTime}
-                                onChange={this.handleChange}
-                            />
-                            </FormGroup>  
-                        </Form>
-                    </Modal.Body>
+                                onChange={this.handleChange} />
+                        </FormGroup>
+                    </Form>
+                </Modal.Body>
                 <Modal.Footer>
                     <button
-                                            onClick={this.handleSubmit}
-
+                        onClick={this.handleSubmit}
                         block
                         className="genericButton"
                         disabled={!this.validateForm()}
-                        type="submit"
-
-                    >
+                        type="submit">
                         Save Report
-                    </button>   
-</Modal.Footer>
+                    </button>
+                </Modal.Footer>
             </div>
         )
     }
 
+
+
     render() {
+        const showButton = { display: 'block' }
+        const hideButton = { display: 'none' }
+        var style = ''
+
+        if (this.state.canRenderResponse === 200) {
+            style = showButton
+        }
+        else {
+            style = hideButton;
+        }
+
         return (
             <div>
-            <button className="genericButton" onClick={this.handleShow.bind(this)}>
-                Create Report 
+                <button className="genericButton" onClick={this.handleShow.bind(this)} style={style}>
+                    Create Report
             </button>
 
-            <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
-            {this.renderReportCreationProcess()}
-            </Modal>
-        </div>
+                <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                    {this.renderReportCreationProcess()}
+                </Modal>
+            </div>
         );
     }
 }

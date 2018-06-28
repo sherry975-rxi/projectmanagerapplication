@@ -6,10 +6,10 @@ import {
     Checkbox
 } from 'react-bootstrap';
 import AuthService from "../loginPage/AuthService";
-import {toastr} from "react-redux-toastr";
-import {getActiveProjects} from "../../actions/projectActions";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
+import { toastr } from "react-redux-toastr";
+import { getActiveProjects } from "../../actions/projectActions";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 
 class SelectCalculationMethods extends Component {
@@ -37,14 +37,12 @@ class SelectCalculationMethods extends Component {
 
         var selectedMethods = this.state.selectedMethods;
 
-        if(selectedMethods.includes(event.target.value)) {
+        if (selectedMethods.includes(event.target.value)) {
             var index = selectedMethods.indexOf(event.target.value)
             selectedMethods.splice(index, 1);
         } else {
             selectedMethods.push(event.target.value);
         }
-        console.log(selectedMethods);
-
         selectedMethods.filter(this.validateArray);
         this.setState({
             selectedMethods: selectedMethods
@@ -61,8 +59,6 @@ class SelectCalculationMethods extends Component {
             availableCalculationMethods: selectedMethods.join(','),
             calculationMethod: selectedMethods[0]
         }
-
-        console.log(projectDTO);
 
         this.AuthService.fetch(`/projects/${this.props.project.projectId}`, {
             body: JSON.stringify(projectDTO),
@@ -92,40 +88,40 @@ class SelectCalculationMethods extends Component {
 
         return (
             <Dropdown
-                    
-                    title={title}
-                    key={i}
-                    id={`dropdown-basic-${i}`}
-                    open={this.state.menuOpen}
-                    onToggle={val => this.dropdownToggle(val)}
-                >
-                    <Dropdown.Toggle className="option">{title}</Dropdown.Toggle>
-                    <Dropdown.Menu className="super-colors">
 
-                        <form onSubmit={this.handleSubmit} className="items-menu">
+                title={title}
+                key={i}
+                id={`dropdown-basic-${i}`}
+                open={this.state.menuOpen}
+                onToggle={val => this.dropdownToggle(val)}
+            >
+                <Dropdown.Toggle className="option">{title}</Dropdown.Toggle>
+                <Dropdown.Menu className="super-colors">
 
-                             <FormGroup controlId="selectedMethods">
-                                 
-                                <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
-                                        Cost Initial
+                    <form onSubmit={this.handleSubmit} className="items-menu">
+
+                        <FormGroup controlId="selectedMethods">
+
+                            <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
+                                Cost Initial
                                 </Checkbox>{' '}
-                                <Checkbox value="CF" checked={this.state.selectedMethods.includes("CF")} onChange={this.handleChange}>
-                                        Cost Final
+                            <Checkbox value="CF" checked={this.state.selectedMethods.includes("CF")} onChange={this.handleChange}>
+                                Cost Final
                                 </Checkbox>{' '}
-                                <Checkbox value="CM" checked={this.state.selectedMethods.includes("CM")} onChange={this.handleChange}>
-                                        Cost Average
+                            <Checkbox value="CM" checked={this.state.selectedMethods.includes("CM")} onChange={this.handleChange}>
+                                Cost Average
                                 </Checkbox>
 
-                            </FormGroup>
+                        </FormGroup>
 
 
-                            <Button block disabled={!this.validateForm()} type="submit" className="genericButton">
-                                Update
+                        <Button block disabled={!this.validateForm()} type="submit" className="genericButton">
+                            Update
                             </Button>
-                        </form>
-            </Dropdown.Menu>
+                    </form>
+                </Dropdown.Menu>
             </Dropdown>
-            
+
         );
     }
 

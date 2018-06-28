@@ -4,20 +4,16 @@ import AuthService from "../pages/loginPage/AuthService";
 
 export function updateUnassignedProjCollabs(projectId) {
     const authService = new AuthService();
-console.log('fui disprado')
-
     return dispatch => {
         listIsLoading()
-        authService.fetch(`projects/${projectId}/tasks/collabsAvailableForTask`, {
+        authService.fetch(`/projects/${projectId}/tasks/collabsAvailableForTask`, {
             method: 'GET'
         })
             .then(data => {
                 dispatch(projCollabWoutTasksFetched(data));
-                console.log(data)
                 return data;
             }).catch((error) => {
-                console.log(error)
-                fetchCollabsWoutTasksHasErrored();
+                dispatch(fetchCollabsWoutTasksHasErrored());
             });
     };
 }
