@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PanelGroup, Panel } from 'react-bootstrap';
+import { PanelGroup, Panel, Glyphicon } from 'react-bootstrap';
 import './AccordionMenuTasks.css';
 import * as Constants from '../utils/titleConstants';
 import { handleTaskHeaders } from '../utils/handleList';
@@ -13,6 +13,7 @@ import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
 import AuthService from './../../pages/loginPage/AuthService';
 import { getAvailableCollaboratorsForTask } from '../../actions/projectTasksActions';
 import { bindActionCreators } from 'redux';
+import EditTask from './../../pages/tasks/editTask/EditTask';
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -79,8 +80,8 @@ class AccordionMenu extends Component {
             return authrorizedTaskStates === true ? (
                 <DeleteTask id={element.taskID} project={element.project} />
             ) : (
-                ''
-            );
+                    ''
+                );
         } else return <div> </div>;
     }
 
@@ -94,8 +95,8 @@ class AccordionMenu extends Component {
             return element.state !== 'FINISHED' ? (
                 <CreateRequest id={element.taskID} project={element.project} />
             ) : (
-                ''
-            );
+                    ''
+                );
         } else return <div> </div>;
     }
 
@@ -114,11 +115,11 @@ class AccordionMenu extends Component {
                                 '/reports'
                             }
                         >
-                            <button class="buttonFinished">View Reports</button>
+                            <button className="buttonFinished">View Reports</button>
                         </Link>
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (
@@ -131,13 +132,13 @@ class AccordionMenu extends Component {
                                 '/createreport'
                             }
                         >
-                            <button class="buttonFinished">
+                            <button className="buttonFinished">
                                 Create Report
                             </button>
                         </Link>
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
 
@@ -150,7 +151,7 @@ class AccordionMenu extends Component {
                             '/dependencies'
                         }
                     >
-                        <button class="buttonFinished">
+                        <button className="buttonFinished">
                             View Dependencies
                         </button>
                     </Link>
@@ -163,8 +164,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderCreateAssignmentRequestTaskButton(element)}
@@ -179,8 +180,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                 </div>
             );
@@ -232,6 +233,9 @@ class AccordionMenu extends Component {
                         <thead>
                             <tr>
                                 <th>
+
+                                    <EditTask task={element} /> &nbsp;
+
                                     <p>
                                         <b>Estimated Effort:</b> &nbsp;
                                         {element.estimatedTaskEffort}
@@ -249,8 +253,8 @@ class AccordionMenu extends Component {
                                         {element.taskDeadline}
                                     </p>
                                     <p>
-                                        <b>Cancel date:</b> &nbsp;
-                                        {element.cancelDate}
+                                        <b>Start date:</b> &nbsp;
+                                        {element.startDate}
                                     </p>
                                     <br />
                                     <br />
