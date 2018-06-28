@@ -37,10 +37,10 @@ class TaskGraph extends Component {
                 tasks: []
             });
         });
-        
+
     }
 
-    
+
 
     render() {
         if (this.state.hasFetched === false) {
@@ -65,19 +65,13 @@ class TaskGraph extends Component {
 
                     if (difference < 0) {
                         difference = 0;
-                        
+
                     }
 
                     if (difference > 100) {
                         difference = 100;
                         deadlineIsOver = '0';
                     }
-
-                    
-
-                    console.log("TAsK ")
-
-                    console.log(difference)
 
                     return (
                         <div className="GraphContainer" key={index}>

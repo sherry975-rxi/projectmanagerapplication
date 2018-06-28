@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './StatsNumberWidget.css';
 
 class StatsNumberWidget extends Component {
     state = {};

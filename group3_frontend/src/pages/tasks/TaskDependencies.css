@@ -1,4 +1,4 @@
-.genericButton {
+.dependencyButton {
     background-color: rgb(135, 190, 178);
     border: none;
     color: black;
@@ -13,12 +13,12 @@
     border-radius: 0;
 }
 
-.genericButton:hover {
+.dependencyButton:hover {
     background-color: #2a3f54;
     color: black;
 }
 
-.genericButton:focus {
+.dependencyButton:focus {
     background-color: rgb(135, 190, 178);
     color: white;
 }

@@ -95,7 +95,7 @@ class CreateTask extends Component {
 
     cancelCreation = () => {
         this.setState({ confirmCreation: false })
-        console.log(this.props.projectId)
+
         this.props.deleteTaskCreated(this.props.projectId, this.props.task.taskID)
 
     }

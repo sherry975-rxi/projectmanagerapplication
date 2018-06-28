@@ -13,8 +13,6 @@ import AuthService from "../pages/loginPage/AuthService";
 
 export const refreshTasksByFilter = (projectId, filterName) => {
     const authService = new AuthService();
-    console.log("So Here's my filter");
-    console.log(filterName);
 
     switch (filterName) {
         case 'all':
@@ -32,7 +30,6 @@ export const refreshTasksByFilter = (projectId, filterName) => {
         case 'cancelled':
             return updateCancelledTasks(projectId);
         case 'myAll':
-            console.log("Dispatch me maybe");
             return updateMyAllTasks(authService.getUserId());
         case 'myUnfinished':
             return updateMyOngoingTasks(authService.getUserId());

@@ -1,7 +1,7 @@
 import React from "react";
 import { mount, shallow } from "enzyme";
-import UserTasks from "./UserTasks";
-import AuthService from "../loginPage/AuthService";
+import UserTasks from "../pages/tasks/UserTasks";
+import AuthService from "../pages/loginPage/AuthService";
 
 describe("UserTasks", () => {
     

@@ -29,7 +29,6 @@ class TaskDependencies extends Component {
 
     }
 
-
     isProjectManager() {
         this.authService.fetch(`/projects/${this.props.match.params.projectID}`,
             { method: 'GET' }
@@ -53,7 +52,7 @@ class TaskDependencies extends Component {
             <div align="right">
                 <AddDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
                 {' '}
-                <RemoveDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} dependencies={this.props.tasks} />
+                <RemoveDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
             </div>);
         } else {
             return <div align="right"></div>;

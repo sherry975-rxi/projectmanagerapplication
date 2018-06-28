@@ -7,7 +7,7 @@ import {
 } from './actions';
 import { TASKS_FILTER } from '../constants/TasksConstants';
 import { updateUnassignedProjCollabs } from './projCollabsWoutTasksActions';
-import {refreshTasksByFilter} from "./refreshTasksActions";
+import { refreshTasksByFilter } from "./refreshTasksActions";
 
 export function addCollaboratorToTask(projectId, taskId, userDTO, filterName) {
     return dispatch => {
@@ -229,7 +229,6 @@ export function getAllTaskDependencies(projectId, taskId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                console.log(data);
                 dispatch(taskDependenciesFetched(data));
                 return data;
             })
@@ -248,12 +247,10 @@ export function createTaskDependency(projectId, taskId, parentId, postpone) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                console.log(data);
                 dispatch(taskDependenciesFetched(data));
                 return data;
             })
             .catch(error => {
-                console.log(error);
                 fetchTasksHasErrored();
             });
     };
@@ -268,12 +265,10 @@ export function removeTaskDependency(projectId, taskId, parentId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                console.log(data);
                 dispatch(taskDependenciesFetched(data));
                 return data;
             })
             .catch(error => {
-                console.log(error);
                 fetchTasksHasErrored();
             });
     };
@@ -301,7 +296,7 @@ export const getProjectTasksByFilter = (projectId, filterName) => {
 };
 
 export function updateCancelledTasks(projectId) {
-    console.log('here');
+
     return dispatch => {
         tasksLoading();
         fetch(`/projects/${projectId}/tasks/cancelled`, {

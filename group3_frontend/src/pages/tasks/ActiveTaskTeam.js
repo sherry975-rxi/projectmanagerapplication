@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './activeTeam.css';
 import RemoveTaskCollaborator from './RemoveTaskCollaborator';
 import AuthService from './../../pages/loginPage/AuthService';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 class ActiveTaskTeam extends Component {
     constructor(props) {
@@ -28,13 +28,11 @@ class ActiveTaskTeam extends Component {
     async getActiveTaskTeam() {
         this.authService.fetch(`/projects/${this.props.task.project}/tasks/${this.props.task.taskID}/activeTeam`,
             { method: 'GET' }
-            ).then(response => {
-                console.log(this.props.task);
-                console.log(response)
-                this.setState({
-                    activeTeam: response,
-                    message: response.error
-                })
+        ).then(response => {
+            this.setState({
+                activeTeam: response,
+                message: response.error
+            })
         });
     }
 
@@ -85,4 +83,4 @@ class ActiveTaskTeam extends Component {
     }
 }
 const mapStateToProps = state => { return ({ filter: state.filterReducer.filterType }) }
-export default connect(mapStateToProps, null) (ActiveTaskTeam);
+export default connect(mapStateToProps, null)(ActiveTaskTeam);
