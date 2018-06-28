@@ -136,7 +136,7 @@ class App extends Component {
                     />
 
                     <ProtectedRoute
-                        path="/requests"
+                        path="/projects/:projectID/requests"
                         component={requiresAuth(AllRequests)}
                         permissions={['COLLABORATOR']}
                     />
