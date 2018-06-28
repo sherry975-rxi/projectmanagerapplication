@@ -125,7 +125,8 @@ class ProjectsTableRow extends Component {
                         <ItemsButton text="Change Calculation Method" />
                     </Link>
 
-                    <Link className="items-menu" to={'/requests/'}>
+                    <Link className="items-menu" to={'/projects/' +
+                            this.props.project.projectId +'/requests'}>
                         <ItemsButton text="View Requests" />
                     </Link>
                 </DropdownButton >
