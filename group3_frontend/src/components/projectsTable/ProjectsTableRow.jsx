@@ -114,7 +114,7 @@ class ProjectsTableRow extends Component {
                     >
                         <ItemsButton text="Project Cost" />
                     </Link>
-                    
+
                     <Link
                         className="items-menu"
                         to={

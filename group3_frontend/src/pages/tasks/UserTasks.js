@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './AddTask';
 import './MarkTaskAsFinished';
 import '../reports/Reports';
 import AuthService from '../loginPage/AuthService';
@@ -25,9 +24,8 @@ class UserTasks extends Component {
 
     //TODO: Add sort by ascending or descending order to these tables
 
+    
 
-
-   
     renderTasks() {
 
 
@@ -73,7 +71,7 @@ class UserTasks extends Component {
                         </h3>
                         &nbsp;
                         {this.renderTasks()}
-                                            
+
                 </div>
             );
         }

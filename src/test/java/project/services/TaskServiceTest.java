@@ -2135,4 +2135,43 @@ public class TaskServiceTest {
 
     }
 
+    /**
+     * GIVEN a Task that needs to be edited and a TaskDto with the information to edit the task
+     * WHEN the method editTask is called
+     * THEN a new TaskDto is returned
+     */
+    @Test
+    public void shouldEditTask(){
+
+        Task task = new Task("description", project);
+        task.setEstimatedTaskStartDate(Calendar.getInstance());
+        task.setTaskDeadline(Calendar.getInstance());
+        task.setEstimatedTaskEffort(30.0);
+        task.setTaskBudget(12.00);
+        task.setStartDate(Calendar.getInstance());
+
+
+        Task taskDToCreateDto = new Task("description AA", project);
+        taskDToCreateDto.setEstimatedTaskStartDate(startDate);
+        taskDToCreateDto.setTaskDeadline(startDate);
+        taskDToCreateDto.setEstimatedTaskEffort(10.0);
+        taskDToCreateDto.setTaskBudget(10.00);
+        taskDToCreateDto.setStartDate(startDate);
+
+
+        //GIVEN a Task that needs to be edited and a TaskDto with the information to edit the task
+        when(taskRepository.findByTaskID(any(String.class))).thenReturn(Optional.of(task));
+
+        //When the method editTask is called
+        TaskDTO toCompare = victim.editTask(taskDToCreateDto);
+
+        //THEN a new TaskDto is returned and should be equal to the taskDto received
+
+        assertTrue(Double.compare(toCompare.getEstimatedTaskEffort(), taskDToCreateDto.getEstimatedTaskEffort()) == 0);
+        assertTrue(toCompare.getEstimatedTaskStartDate().equals(taskDToCreateDto.getEstimatedTaskStartDate()));
+        assertTrue(toCompare.getTaskDeadline().equals(taskDToCreateDto.getTaskDeadline()));
+        assertTrue(toCompare.getStartDate().equals(taskDToCreateDto.getStartDate()));
+
+    }
+
 }
