@@ -931,8 +931,9 @@ public class Task extends ResourceSupport implements Serializable {
 		boolean wasDependencyRemoved = false;
 		for (Task other : this.taskDependency) {
 			if (taskToEstablishDependenceUpon.equals(other)) {
-				this.taskDependency.remove(taskToEstablishDependenceUpon);
 				wasDependencyRemoved = true;
+				this.taskDependency.remove(taskToEstablishDependenceUpon);
+
 				break;
 			}
 		}
@@ -949,11 +950,14 @@ public class Task extends ResourceSupport implements Serializable {
 
 		boolean isDependencyValid = true;
 
-		for (Task other : this.taskDependency) {
-			if (other.equals(taskToEstablishDependenceUpon)) {
-				isDependencyValid = false;
-			}
-		}
+		if(this.taskDependency.contains(taskToEstablishDependenceUpon)) {
+            isDependencyValid = false;
+        }
+
+        if(taskToEstablishDependenceUpon.taskDependency.contains(this)) {
+            isDependencyValid = false;
+        }
+
 
 		/*
 		 * Checks the state of this task
