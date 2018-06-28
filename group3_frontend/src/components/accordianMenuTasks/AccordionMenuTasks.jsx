@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PanelGroup, Panel } from 'react-bootstrap';
+import { PanelGroup, Panel, Glyphicon } from 'react-bootstrap';
 import './AccordionMenuTasks.css';
 import * as Constants from '../utils/titleConstants';
 import { handleTaskHeaders } from '../utils/handleList';
@@ -13,6 +13,7 @@ import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
 import AuthService from './../../pages/loginPage/AuthService';
 import { getAvailableCollaboratorsForTask } from '../../actions/projectTasksActions';
 import { bindActionCreators } from 'redux';
+import EditTask from './../../pages/tasks/editTask/EditTask';
 import CreateReport from '../../pages/reports/CreateReport';
 
 class AccordionMenu extends Component {
@@ -123,7 +124,7 @@ class AccordionMenu extends Component {
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (
-                    <CreateReport taskID = {element.taskID}/>
+                    <CreateReport taskID = {element.taskID} projectID = {element.project}/>
                     ) : (
                         ''
                     )}
@@ -221,6 +222,9 @@ class AccordionMenu extends Component {
                         <thead>
                             <tr>
                                 <th>
+
+                                    <EditTask task={element} /> &nbsp;
+
                                     <p>
                                         <b>Estimated Effort:</b> &nbsp;
                                         {element.estimatedTaskEffort}
@@ -238,8 +242,8 @@ class AccordionMenu extends Component {
                                         {element.taskDeadline}
                                     </p>
                                     <p>
-                                        <b>Cancel date:</b> &nbsp;
-                                        {element.cancelDate}
+                                        <b>Start date:</b> &nbsp;
+                                        {element.startDate}
                                     </p>
                                     <br />
                                     <br />

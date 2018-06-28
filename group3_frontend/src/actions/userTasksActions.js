@@ -76,11 +76,11 @@ export function updateMyLastMonthFinishedTasks(userId) {
 
 
 
-export function  searchList (event,list) {
+export function  searchList (event,list, option) {
     const authService = new AuthService();
 
         return dispatch => {
-            var updatedList = searching(event, list)
+            var updatedList = searching(event, list, option)
             
                 dispatch(searchListTasksFetched(updatedList));
                 dispatch(userTasksFilterActions.changeToSearchTasks())
@@ -89,13 +89,66 @@ export function  searchList (event,list) {
     
 }
 
-export function searching (event, list) {
+export function searching (event, list, option) {
         var lista1 = list;
+        console.log("MAIS UM")
+        console.log(option)
         //if(list.length > 0){
-        lista1 = lista1.filter(function(item){
-          return item.taskID.toLowerCase().search(
-            event.target.value.toLowerCase()) !== -1;
-        });
+            switch (option){
+                case '1':
+                console.log("escolhi opção 1")
+
+                lista1 = lista1.filter(function(item){
+                    return item.taskID.toLowerCase().search(
+                      event.target.value.toLowerCase()) !== -1;
+                  });
+                  break;
+                case '2':
+                console.log("escolhi opção 2")
+                lista1 = lista1.filter(function(item){
+                    // JSON.stringify(item.project)
+                    return item.project.projectId.toString().toLowerCase().search(
+                      event.target.value.toLowerCase()) !== -1;
+                  });
+                  break;
+                case '3':
+                console.log("escolhi opção 3")
+                lista1 = lista1.filter(function(item){
+                    return item.description.toLowerCase().search(
+                      event.target.value.toLowerCase()) !== -1;
+                  });
+                  break;
+                case '4':
+                lista1 = lista1.filter(function(item){
+                    return item.currentState.toString().toLowerCase().search(
+                      event.target.value.toLowerCase()) !== -1;
+                  });
+                  break;
+                case '5':
+                console.log("escolhi opção 5")
+                lista1 = lista1.filter(function(item){
+                    console.log(item.startDate);
+                    return item.startDate.toString().toLowerCase().search(
+                      event.target.value.toLowerCase()) !== -1;
+                  });
+                  break;
+                case '6':
+                console.log("escolhi opção 6")
+                lista1 = lista1.filter(function(item){
+                    return item.finishDate.toString().toLowerCase().search(
+                      event.target.value.toLowerCase()) !== -1;
+                  });
+                  break;
+                default:
+                console.log("escolhi opção default")
+                lista1 = lista1.filter(function(item){
+                    return item.taskID.toLowerCase().search(
+                      event.target.value.toLowerCase()) !== -1;
+                  });
+                
+                
+            }      
+        
         console.log("LKJHGFDFGNMNBVCXSDERTH")
         console.log(lista1)
         return lista1;

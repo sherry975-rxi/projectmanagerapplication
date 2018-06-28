@@ -47,6 +47,9 @@ public class RestProjectTasksControllerTest {
     private UserService userService;
 
     @Mock
+    private Task taskTest;
+
+    @Mock
     private HttpServletRequest req;
 
 
@@ -79,6 +82,9 @@ public class RestProjectTasksControllerTest {
     private List<TaskDTO> projectTaskdtos;
     private ResponseEntity<List<Task>> expectedResponse;
 
+    private ProjectCollaborator projCollab;
+    private TaskCollaborator taskCollaborator;
+
     @Before
     public void setup() {
         JacksonTester.initFields(this, new ObjectMapper());
@@ -89,6 +95,7 @@ public class RestProjectTasksControllerTest {
 
         ProjectCollaborator pcDaniel = new ProjectCollaborator(uDaniel, 20);
         ProjectCollaborator pcInes = new ProjectCollaborator(uInes, 20);
+
 
         startDate = Calendar.getInstance();
         finishDate = Calendar.getInstance();
@@ -123,6 +130,11 @@ public class RestProjectTasksControllerTest {
         // and finally an empty test list to be filled and compared for each assertion
         expected = new ArrayList<>();
         projectTaskdtos = new ArrayList<>();
+
+        projCollab = new ProjectCollaborator(uDaniel, 20);
+
+        taskCollaborator = task.createTaskCollaborator(projCollab);
+
     }
 
     @After
@@ -254,6 +266,71 @@ public class RestProjectTasksControllerTest {
 
         ResponseEntity<List<Task>> expectedResponse = new ResponseEntity<>(expected, HttpStatus.OK);
         assertEquals(expectedResponse,actualResponse);
+
+    }
+
+    /**
+     * GIVEN two tasks with a certain ID and no dependencies
+     * WHEN making task3 dependent on task
+     * THEN the response entity must contain status OK, and child "task3" must contain task as a dependency
+     *  and its start date must be changed to after parent "task" deadline
+     *
+     * AND WHEN removing that dependency from task
+     * THEN the response entity must contain ok, and child "task3" must have no dependencies
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testCreateAndRemoveTaskDependency() throws Exception  {
+
+        //GIVEN
+
+        task3 = new Task("Task3", project);
+        task3.setTaskID("50");
+        task3.setEstimatedTaskStartDate(estimatedStart);
+        task3.setTaskDeadline(estimatedDeadline);
+        task3.setTaskBudget(2000);
+        projectTasks = new ArrayList<>();
+
+
+        task.setTaskDeadline(Calendar.getInstance());
+        task.setTaskID("30");
+
+        int projectId = 123;
+
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        when(taskService.getTaskByTaskID("50")).thenReturn(task3);
+        when(taskService.getTaskByTaskID("30")).thenReturn(task);
+
+        //confirmation that task3 does not have assigned collaborators
+
+        assertTrue(task3.getTaskDependency().isEmpty());
+        assertFalse(task3.getEstimatedTaskStartDate().after(task.getTaskDeadline()));
+
+        //WHEN
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.put("/projects/1/tasks/50/createDependency/30/2")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+
+        assertEquals(HttpStatus.OK.value(),response.getStatus());
+        assertFalse(task3.getTaskDependency().isEmpty());
+        assertTrue(task3.getTaskDependency().contains(task));
+        assertTrue(task3.getEstimatedTaskStartDate().after(task.getTaskDeadline()));
+
+
+        //AND WHEN
+
+        response = mockMvc.perform(MockMvcRequestBuilders.put("/projects/1/tasks/50/removeDependency/30")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+
+        // THEN
+        assertEquals(HttpStatus.OK.value(),response.getStatus());
+        assertTrue(task3.getTaskDependency().isEmpty());
+
 
     }
 
@@ -818,6 +895,43 @@ public class RestProjectTasksControllerTest {
         verify(projectService, times(1)).getActiveProjectTeam(project);
         verify(projectService, times(1)).getProjectById(any(Integer.class));
 
+
+    }
+
+
+
+    @Test
+    public void isCollabActiveInTask() throws Exception{
+
+        // GIVEN
+        int projectId = 02;
+        String taskId = "taskid";
+        String email = "email";
+
+
+        //WHEN
+        when(taskService.getTaskByTaskID(any())).thenReturn(taskTest);
+        when(taskTest.getActiveTaskCollaboratorByEmail(email)).thenReturn(taskCollaborator);
+
+
+        ResponseEntity<String> response = victim.isTaskCollaboratorActiveInTask(projectId,taskId,email);
+
+
+        //THEN
+
+        assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
+
+
+
+        //WHEN
+        //The method getActiveTaskCollabortor returns null
+        when(taskTest.getActiveTaskCollaboratorByEmail(email)).thenReturn(null);
+
+        ResponseEntity<String> responseNull = victim.isTaskCollaboratorActiveInTask(projectId,taskId,email);
+
+        //THEN
+        //The responseEntity will return a value 404 Not Found
+        assertEquals(HttpStatus.NOT_FOUND.value(), responseNull.getStatusCode().value());
 
     }
 

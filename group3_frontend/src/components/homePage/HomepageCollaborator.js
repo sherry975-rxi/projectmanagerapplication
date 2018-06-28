@@ -44,7 +44,7 @@ class HomepageCollaborator extends Component {
                             <td className="HomeTableTDBottomLeft">
                                 <div className="TaskGraphUpperContainer">
                                     <h1 className="GraphTitle">
-                                        Tasks Deadline
+                                        Your active Tasks
                                     </h1>
                                     <TaskGraph />
                                 </div>

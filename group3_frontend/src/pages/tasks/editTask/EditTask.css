@@ -1,0 +1,35 @@
+.pencil{
+    color: rgb(135, 190, 178);
+    font-size: 20px;
+}
+
+.pencil:hover{
+    color: rgb(194, 133, 133);
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+.budgetAndEffort {
+    width: 335px;
+}
+
+.control-label > p{
+    font-weight: bold;
+    padding-right: 25px;
+    color: red;
+  }
+
+  .pencilGreen{
+      color: rgb(135, 190, 178)
+  }
+
+  .edited {
+    color: rgb(135, 190, 178);
+    margin-left: 10px;
+  }
+
+  pencilHide {
+    color: red;
+      display: hide
+  }

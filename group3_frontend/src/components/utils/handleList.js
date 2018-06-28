@@ -51,10 +51,10 @@ export function handleUserHeaders(list) {
     ]);
 }
 
-function formatDate(date) {
+export function formatDate(date) {
     if (date != null) {
         ;
-       
+
 
         return moment(date).format("DD/MMM/YYYY");
     } else {

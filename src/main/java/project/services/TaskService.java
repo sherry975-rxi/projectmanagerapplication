@@ -1009,4 +1009,49 @@ public class TaskService {
 		return new TaskDTO(this.getTaskByTaskID(taskId));
 
 	}
+
+
+	/**
+	 *
+	 * This methods edits a task from the database
+	 *
+	 * @param taskDto TaskDto which contains the information to compare and edit in the task to edit
+	 *
+	 * @return TaskDto created from the edited task
+	 */
+	public TaskDTO editTask(Task taskDto) {
+
+		Task toEdit = this.getTaskByTaskID(taskDto.getTaskID());
+
+
+		if(!taskDto.getDescription().equals("") && taskDto.getDescription() != toEdit.getDescription() && taskDto.getDescription() != null) {
+			toEdit.setDescription(taskDto.getDescription());
+	}
+		if (taskDto.getEstimatedTaskStartDate() != null && !taskDto.getEstimatedTaskStartDate().equals(toEdit.getEstimatedTaskStartDate())) {
+			Calendar newEstimatedStartDate = (Calendar) taskDto.getEstimatedTaskStartDate().clone();
+			toEdit.setEstimatedTaskStartDate(newEstimatedStartDate);
+		}
+
+		if (taskDto.getTaskDeadline()  != null && !taskDto.getTaskDeadline().equals(toEdit.getTaskDeadline())) {
+			Calendar newDeadline = (Calendar) taskDto.getTaskDeadline().clone();
+			toEdit.setTaskDeadline(newDeadline);
+		}
+
+		if (Double.compare(taskDto.getEstimatedTaskEffort(), 0.0) != 0 && Double.compare(taskDto.getEstimatedTaskEffort(), taskDto.getEstimatedTaskEffort()) == 0 ) {
+			toEdit.setEstimatedTaskEffort(taskDto.getEstimatedTaskEffort());
+		}
+
+		 if (Double.compare(taskDto.getEstimatedTaskEffort(), 0.0) != 0 && Double.compare(taskDto.getTaskBudget(), taskDto.getTaskBudget()) == 0) {
+			toEdit.setTaskBudget(taskDto.getTaskBudget());
+		}
+
+		 if (taskDto.getStartDate() != null && !taskDto.getStartDate().equals(toEdit.getStartDate())) {
+			Calendar newStartDate = (Calendar) taskDto.getStartDate().clone();
+			toEdit.setStartDate(newStartDate);
+		}
+
+		this.saveTask(toEdit);
+
+		return new TaskDTO(toEdit);
+}
 }

@@ -343,6 +343,78 @@ public class RestProjectTasksController {
 
     }
 
+    /**
+     * This method gets a creates a dependency for task on the parent task, and adjusts the child task's estimated start date to
+     * postponed days after parent task's deadline.
+     *
+     * @param taskId Task id, parentId parent Task ID, postpone days to postpone
+     *
+     * @return The task dependencies for child task
+     */
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "{taskId}/createDependency/{parentId}/{postpone}", method = RequestMethod.PUT)
+    public ResponseEntity<List<Task>> createTaskDependency (@PathVariable String taskId, @PathVariable int projid, @PathVariable String parentId, @PathVariable int postpone) {
+
+        ResponseEntity<List<Task>> response = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+        Task parent = taskService.getTaskByTaskID(parentId);
+
+        List<Task> taskDependencies = new ArrayList<>();
+
+        if(postpone > 0 && task.createTaskDependence(parent, postpone)) {
+
+            taskDependencies.addAll(task.getTaskDependency());
+            for(Task dependency : taskDependencies) {
+                for(String action : dependency.getTaskState().getActions()) {
+                    Link reference = TaskAction.getLinks(dependency.getProject().getProjectId(), dependency.getTaskID()).get(action);
+                    dependency.add(reference);
+                }
+            }
+
+            response = new ResponseEntity<>(taskDependencies, HttpStatus.OK);
+        }
+
+        return response;
+
+
+    }
+
+    /**
+     * This method gets a removes a dependency for task on the parent task
+     *
+     * @param taskId Task id, parentId parent Task ID
+     *
+     * @return The task dependencies for child task
+     */
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "{taskId}/removeDependency/{parentId}", method = RequestMethod.PUT)
+    public ResponseEntity<List<Task>> removeTaskDependency (@PathVariable String taskId, @PathVariable int projid, @PathVariable String parentId) {
+
+        ResponseEntity<List<Task>> response = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        Task task = taskService.getTaskByTaskID(taskId);
+        Task parent = taskService.getTaskByTaskID(parentId);
+
+        List<Task> taskDependencies = new ArrayList<>();
+
+        if(task.removeTaskDependence(parent)) {
+
+            taskDependencies.addAll(task.getTaskDependency());
+            for(Task dependency : taskDependencies) {
+                for(String action : dependency.getTaskState().getActions()) {
+                    Link reference = TaskAction.getLinks(dependency.getProject().getProjectId(), dependency.getTaskID()).get(action);
+                    dependency.add(reference);
+                }
+            }
+
+            response = new ResponseEntity<>(taskDependencies, HttpStatus.OK);
+        }
+
+        return response;
+
+
+    }
 
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @taskService.getTaskByTaskID(#taskId).isProjectCollaboratorActiveInTaskTeam(@projectService.findActiveProjectCollaborator(@userService.getUserByID(principal.id), @projectService.getProjectById(#projid))) " +
             "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')")
@@ -555,5 +627,43 @@ public class RestProjectTasksController {
         return response;
     }
 
+
+
+    @RequestMapping(value = "{taskid}/isCollabInTask/{userEmail}", method = RequestMethod.GET)
+    public ResponseEntity<String> isTaskCollaboratorActiveInTask(@PathVariable int projid, @PathVariable String taskid, @PathVariable String userEmail ) {
+
+        Task task = taskService.getTaskByTaskID(taskid);
+
+        ResponseEntity <String> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        if(task.getActiveTaskCollaboratorByEmail(userEmail) != null) {
+
+            response = new ResponseEntity<>("isActive", HttpStatus.OK);
+
+        }
+
+
+        return response;
+
+    }
+
+
+
+
+    /**
+     * This methods gets the list of all tasks from a project
+     *
+     * @param projid Id of the project to search for all tasks
+     *
+     * @return List of all tasks from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
+            "or hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
+    @RequestMapping(value = "editTask", method = RequestMethod.PATCH)
+    public ResponseEntity<TaskDTO> editTask (@PathVariable int projid, @RequestBody Task taskDto) {
+
+        return new ResponseEntity<>(taskService.editTask(taskDto), HttpStatus.OK);
+
+        }
 }
 
