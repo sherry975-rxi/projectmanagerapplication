@@ -248,9 +248,11 @@ export function createTaskDependency(projectId, taskId, parentId, postpone) {
             .then(responseData => responseData.json())
             .then(data => {
                 dispatch(taskDependenciesFetched(data));
+                toastr.success('Dependency added!');
                 return data;
             })
             .catch(error => {
+                toastr.error('lolnope');
                 fetchTasksHasErrored();
             });
     };
@@ -259,17 +261,20 @@ export function createTaskDependency(projectId, taskId, parentId, postpone) {
 export function removeTaskDependency(projectId, taskId, parentId) {
     return dispatch => {
         tasksLoading();
-        fetch(`/projects/${projectId}/tasks/${taskId}/removeDependency/${parentId}/`, {
+        fetch(`/projects/${projectId}/tasks/${taskId}/removeDependency/${parentId}`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'PUT'
         })
             .then(responseData => responseData.json())
             .then(data => {
                 dispatch(taskDependenciesFetched(data));
+                toastr.success('Dependency removed!');
                 return data;
             })
             .catch(error => {
+                toastr.error('lolnope');
                 fetchTasksHasErrored();
+
             });
     };
 }
