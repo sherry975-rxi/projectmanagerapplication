@@ -33,7 +33,7 @@ class HomepageCollaborator extends Component {
                     </td>
                     <td className="HomeTableTDBottomLeft">
                         <div className="TaskGraphUpperContainer">
-                            <h1 className="GraphTitle">Tasks Deadline</h1>
+                            <h1 className="GraphTitle">Your active Tasks</h1>
                             <TaskGraph />
                         </div>
                     </td>
