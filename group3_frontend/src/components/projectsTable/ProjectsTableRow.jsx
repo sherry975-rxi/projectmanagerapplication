@@ -89,10 +89,12 @@ class ProjectsTableRow extends Component {
                 >
                     <Link
                         className="items-menu"
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/tasks'} onClick={() => this.props.chooseProject(this.props.project.projectManagerEmail)}
+                        to={{
+                            pathname:
+                                '/projects/' +
+                                this.props.project.projectId +
+                                '/tasks'
+                        }} onClick={() => this.props.chooseProject(this.props.project.projectManagerEmail)}
                     >
                         <ItemsButton text="View tasks" />
                     </Link>
@@ -106,17 +108,6 @@ class ProjectsTableRow extends Component {
                         } onClick={this.handleClick.bind(this)}
                     >
                         <ItemsButton text="Unassigned" />
-                    </Link>
-
-                    <Link
-                        className="items-menu"
-                        to={
-                            '/projects/' +
-                            this.props.project.projectId +
-                            '/addtask'
-                        }
-                    >
-                        <ItemsButton text="Create task" />
                     </Link>
 
                     <Link

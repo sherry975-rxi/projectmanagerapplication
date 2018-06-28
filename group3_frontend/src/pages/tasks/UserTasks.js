@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './AddTask';
 import './MarkTaskAsFinished';
 import '../reports/Reports';
 import AuthService from '../loginPage/AuthService';
@@ -20,7 +19,7 @@ class UserTasks extends Component {
 
     //TODO: Add sort by ascending or descending order to these tables
 
-    
+
 
     renderTasks() {
 
@@ -47,24 +46,24 @@ class UserTasks extends Component {
 
         else
             return <AccordionMenu list={this.props.myAllTasks} />;
-        
+
     }
 
 
     render() {
-      
-            return (
-                <div className=" table-striped">
-                    <UserTasksFilter userID={this.AuthService.getUserId()} />
-                    <h3>
-                        <b>My Tasks</b>
-                    </h3>
-                    &nbsp;
+
+        return (
+            <div className=" table-striped">
+                <UserTasksFilter userID={this.AuthService.getUserId()} />
+                <h3>
+                    <b>My Tasks</b>
+                </h3>
+                &nbsp;
                     {this.renderTasks()}
-                </div>
-            );
-        }
+            </div>
+        );
     }
+}
 
 
 const mapStateToProps = state => {
