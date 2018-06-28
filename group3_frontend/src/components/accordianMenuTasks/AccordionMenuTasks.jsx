@@ -116,7 +116,7 @@ class AccordionMenu extends Component {
                                 '/reports'
                             }
                         >
-                            <button class="buttonFinished">View Reports</button>
+                            <button className="buttonFinished">View Reports</button>
                         </Link>
                     ) : (
                             ''
@@ -140,7 +140,7 @@ class AccordionMenu extends Component {
                             '/dependencies'
                         }
                     >
-                        <button class="buttonFinished">
+                        <button className="buttonFinished">
                             View Dependencies
                         </button>
                     </Link>

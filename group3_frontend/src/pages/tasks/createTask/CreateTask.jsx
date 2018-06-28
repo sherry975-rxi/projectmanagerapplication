@@ -143,14 +143,15 @@ class CreateTask extends Component {
                 <ControlLabel>Estimated Dates</ControlLabel>
                 <div className="calendar">
                     <DateRangePicker
+
                         startDatePlaceholderText='Estimated Start'
                         endDatePlaceholderText='Deadline'
                         endDateId='endDate1'
                         startDateId='startDate1'
-                        startDate={this.state.expectedStart}
-                        endDate={this.state.deadline}
+                        startDate={this.state.expectedStart ? this.state.expectedStart : null}
+                        endDate={this.state.deadline ? this.state.expectedStart : null}
                         onDatesChange={({ startDate, endDate }) => this.setState({ expectedStart: startDate, deadline: endDate })}
-                        focusedInput={this.state.focusedInput}
+                        focusedInput={this.state.focusedInput ? this.state.focusedInput : null}
                         onFocusChange={focusedInput => this.setState({ focusedInput })}
                         showDefaultInputIcon
                         inputIconPosition="after"

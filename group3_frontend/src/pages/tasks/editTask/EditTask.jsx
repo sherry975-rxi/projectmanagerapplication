@@ -128,7 +128,7 @@ class EditTask extends Component {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <span><button className="cancelButton" onClick={() => this.setState({ confirmCreation: false })}>Cancel</button></span><span><button className="genericButton" onClick={this.validateDates.bind(this)}>Confirm</button> </span>
+                    <span><button className="cancelButton" onClick={() => this.setState({ confirmCreation: false })}>Cancel</button></span><span><button className="genericButton" onClick={this.handleConfirmation.bind(this)}>Confirm</button> </span>
                 </Modal.Footer>
             </div>)
     }
@@ -159,10 +159,10 @@ class EditTask extends Component {
                                     endDatePlaceholderText='Deadline'
                                     endDateId='endDate1'
                                     startDateId='startDate1'
-                                    startDate={this.state.estimatedStartDate}
-                                    endDate={this.state.deadline}
+                                    startDate={this.state.estimatedStartDate ? this.state.estimatedStartDate : null}
+                                    endDate={this.state.deadline ? this.state.deadline : null}
                                     onDatesChange={({ startDate, endDate }) => this.setState({ estimatedStartDate: startDate, deadline: endDate })}
-                                    focusedInput={this.state.focusedInput}
+                                    focusedInput={this.state.focusedInput ? this.state.focusedInput : null}
                                     onFocusChange={focusedInput => this.setState({ focusedInput })}
                                     showDefaultInputIcon
                                     inputIconPosition="after"
@@ -198,7 +198,7 @@ class EditTask extends Component {
                             <ControlLabel>Start Date: {formatDate(this.props.task.startDate)}</ControlLabel>
                             <div className="calendar">
                                 <SingleDatePicker
-                                    date={this.state.startDate}
+                                    date={this.state.startDate ? this.state.startDate : null}
                                     openDirection="up"
                                     daySize={30}
                                     verticalSpacing={2}
