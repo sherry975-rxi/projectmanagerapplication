@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PanelGroup, Panel, Glyphicon } from 'react-bootstrap';
+import { PanelGroup, Panel } from 'react-bootstrap';
 import './AccordionMenuTasks.css';
 import * as Constants from '../utils/titleConstants';
 import { handleTaskHeaders } from '../utils/handleList';
@@ -81,8 +81,8 @@ class AccordionMenu extends Component {
             return authrorizedTaskStates === true ? (
                 <DeleteTask id={element.taskID} project={element.project} />
             ) : (
-                ''
-            );
+                    ''
+                );
         } else return <div> </div>;
     }
 
@@ -96,8 +96,8 @@ class AccordionMenu extends Component {
             return element.state !== 'FINISHED' ? (
                 <CreateRequest id={element.taskID} project={element.project} />
             ) : (
-                ''
-            );
+                    ''
+                );
         } else return <div> </div>;
     }
 
@@ -116,18 +116,18 @@ class AccordionMenu extends Component {
                                 '/reports'
                             }
                         >
-                            <button class="buttonFinished">View Reports</button>
+                            <button className="buttonFinished">View Reports</button>
                         </Link>
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (
-                    <CreateReport taskID = {element.taskID} projectID = {element.project}/>
+                        <CreateReport taskID={element.taskID} projectID={element.project} />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
 
@@ -140,7 +140,7 @@ class AccordionMenu extends Component {
                             '/dependencies'
                         }
                     >
-                        <button class="buttonFinished">
+                        <button className="buttonFinished">
                             View Dependencies
                         </button>
                     </Link>
@@ -153,8 +153,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderCreateAssignmentRequestTaskButton(element)}
@@ -169,8 +169,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                 </div>
             );

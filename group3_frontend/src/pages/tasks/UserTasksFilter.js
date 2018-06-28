@@ -11,13 +11,8 @@ import {
     searchList
 } from './../../actions/userTasksActions';
 import {
-    FormGroup,
-    FormControl,
     MenuItem,
-    DropdownButton,
-    ButtonGroup,
-    Button,
-    ButtonToolbar
+    DropdownButton
 } from 'react-bootstrap';
 import * as Constants from './../../components/utils/titleConstants';
 
@@ -25,10 +20,8 @@ import * as Constants from './../../components/utils/titleConstants';
 class UserTasksFilter extends Component {
     constructor(props) {
         super(props);
-        this.activeFilter = "",
-        this.field = 'Task ID',
         this.option = '1'
-        this.state= {
+        this.state = {
             selectedOption: '1',
             selectedField: 'Task ID',
         };
@@ -66,160 +59,143 @@ class UserTasksFilter extends Component {
         }) */
 
         var items = Constants.TASKS
-             .filter((element, index) => (index < 4))
-             .map((element, index) => {
-                   return (
+            .filter((element, index) => (index < 4))
+            .map((element, index) => {
+                return (
                     <MenuItem
-                    eventKey={index}
-                    key={index}
-                    onSelect={(event) => this.handleClick(event)}
-                >
-                    {element}
-                </MenuItem>
-                   );
-              });
-              return items;
-       /*  return Constants.TASKS.map((element, index) => (
-            <MenuItem
-                eventKey={index}
-                key={index}
-                onSelect={(event) => this.handleClick(event)}
-            >
-                {element}
-            </MenuItem>
-    )); */
+                        eventKey={index}
+                        key={index}
+                        onSelect={(event) => this.handleClick(event)}
+                    >
+                        {element}
+                    </MenuItem>
+                );
+            });
+        return items;
+        /*  return Constants.TASKS.map((element, index) => (
+             <MenuItem
+                 eventKey={index}
+                 key={index}
+                 onSelect={(event) => this.handleClick(event)}
+             >
+                 {element}
+             </MenuItem>
+     )); */
     }
 
-    handleClick(eventKey){
-        if(eventKey !== -1){
-        const selectionIndex = eventKey+1;
-        console.log("Print selection index")
-        console.log(selectionIndex)
-        
-        switch (selectionIndex){
-                case 1:  
-                console.log("entrando no casa")
-                this.option = '1';
-                this.field = 'Task ID';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                console.log("selectedOption");
-                console.log(this.state.selectedOption);
-                console.log("selected option");
-                console.log(this.option);
-                console.log("selected field");
-                console.log(this.field);
-                
-                break;
+    handleClick(eventKey) {
+        if (eventKey !== -1) {
+            const selectionIndex = eventKey + 1;
+            switch (selectionIndex) {
+                case 1:
+                    this.option = '1';
+                    this.field = 'Task ID';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+
+
+                    break;
                 case 2:
-                this.option = '2';
-                this.field = 'Project ID';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                console.log("selectedOption");
-                console.log(this.state.selectedOption);
-                console.log("selected option");
-                console.log(this.option);
-                console.log("selected field");
-                console.log(this.field);
-                break;
+                    this.option = '2';
+                    this.field = 'Project ID';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+
+                    break;
                 case 3:
-                this.option = '3';
-                this.field = 'Description';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                console.log(this.option)
-                break;
+                    this.option = '3';
+                    this.field = 'Description';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+
+                    break;
                 case 4:
-                this.option = '4';
-                this.field = 'State';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                break;
+                    this.option = '4';
+                    this.field = 'State';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+                    break;
                 case 5:
-                this.option = '5';
-                this.field = 'Start Date "DD/MMM/YYYY"';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                break;
+                    this.option = '5';
+                    this.field = 'Start Date "DD/MMM/YYYY"';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+                    break;
                 case 6:
-                this.option = '6';
-                this.field = 'Finish Date';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                break;
+                    this.option = '6';
+                    this.field = 'Finish Date';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+                    break;
                 default:
-                console.log("penetration test");
-                this.option = '1';
-                this.field = 'Task ID';
-                this.setState({
-                    selectedOption : this.option,
-                    selectedField : this.field
-                });
-                
+
+                    this.option = '1';
+                    this.field = 'Task ID';
+                    this.setState({
+                        selectedOption: this.option,
+                        selectedField: this.field
+                    });
+
             }
         }
-               
+
 
     };
 
-    renderSearchForm(){
+    renderSearchForm() {
         return (
-        <div className=" table-striped">
-                    <div className="filter-list">
-                        <form>
+            <div className=" table-striped">
+                <div className="filter-list">
+                    <form>
                         <fieldset className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control form-control-lg" 
-                            placeholder={`Search by ${this.state.selectedField}`} /* "Search by Task ID"  */
-                            onChange={(event) => this.filterList(event, this.state.selectedOption)}
-                        />
-                        {console.log("tesTEEEEEEEE")}
-                        {console.log(this.activeFilter)}
+                            <input
+                                type="text"
+                                className="form-control form-control-lg"
+                                placeholder={`Search by ${this.state.selectedField}`} /* "Search by Task ID"  */
+                                onChange={(event) => this.filterList(event, this.state.selectedOption)}
+                            />
+
                         </fieldset>
-                        </form>
-                       {/* <button onClick={e => this.handleChange(e, '2')} >
+                    </form>
+                    {/* <button onClick={e => this.handleChange(e, '2')} >
                     Confirm
                     </button> */}
 
-                    </div>
                 </div>
+            </div>
         );
     }
 
     filterList(event, choosenField) {
-        console.log("TESTE OLE OLE")
-        console.log(choosenField)
 
-        if(event.target.value.toLowerCase()!== -1){
-            
-            switch (this.activeFilter){
+        if (event.target.value.toLowerCase() !== -1) {
+
+            switch (this.activeFilter) {
                 case "1":
-                return this.props.searchList(event, this.props.myAllTasks, choosenField);
+                    return this.props.searchList(event, this.props.myAllTasks, choosenField);
                 case "2":
-                return this.props.searchList(event, this.props.myOngoingTasks, choosenField);
+                    return this.props.searchList(event, this.props.myOngoingTasks, choosenField);
                 case "3":
-                return this.props.searchList(event, this.props.myFinishedTasks, choosenField);
+                    return this.props.searchList(event, this.props.myFinishedTasks, choosenField);
                 case '4':
-                return this.props.searchList(event, this.props.lastMonthFinishedTasks, choosenField);
+                    return this.props.searchList(event, this.props.lastMonthFinishedTasks, choosenField);
                 default:
-                return this.props.searchList(event, this.props.myAllTasks, choosenField);
-                
-                
-            }        
+                    return this.props.searchList(event, this.props.myAllTasks, choosenField);
+
+
+            }
         }
     }
 
@@ -228,7 +204,7 @@ class UserTasksFilter extends Component {
             case '1':
                 this.activeFilter = "1";
                 return this.props.updateMyAllTasks(this.props.userID);
-                
+
             case '2':
                 this.activeFilter = "2";
                 return this.props.updateMyOngoingTasks(this.props.userID);
@@ -240,7 +216,7 @@ class UserTasksFilter extends Component {
             case '4':
                 this.activeFilter = "4";
                 return this.props.updateMyLastMonthFinishedTasks(this.props.userID);
-                
+
             default:
                 return;
         }
@@ -252,15 +228,13 @@ class UserTasksFilter extends Component {
 
     render() {
 
-        const tabStyle = {
-            marginTop: '-20px'
-        }
+
         const divStyle = {
             width: '100%',
             marginTop: '-20px',
             marginBottom: '-40px'
 
-          };
+        };
 
         const tdStyle = {
             paddingRight: '5px',
@@ -269,10 +243,10 @@ class UserTasksFilter extends Component {
 
         return (
             <div className="buttonWrapper">
-                            <fieldset>
+                <fieldset>
 
-                <div className="switch-toggle switch-candy">
-                    {/* <input
+                    <div className="switch-toggle switch-candy">
+                        {/* <input
                         id="Test"
                         name="view3"
                         type="radio"
@@ -281,51 +255,51 @@ class UserTasksFilter extends Component {
                     <label className="buttonFont" htmlFor="">
                         <b>Filter by:</b>
                     </label> */}
-                    <input
-                        id="alltasks"
-                        name="view3"
-                        type="radio"
-                        onChange={() => this.handleChange('1')}
-                    />
-                    <label className="buttonFont" htmlFor="alltasks">
-                        All Tasks
+                        <input
+                            id="alltasks"
+                            name="view3"
+                            type="radio"
+                            onChange={() => this.handleChange('1')}
+                        />
+                        <label className="buttonFont" htmlFor="alltasks">
+                            All Tasks
                     </label>
 
-                    <input
-                        id="onGoing"
-                        name="view3"
-                        type="radio"
-                        onChange={() => this.handleChange('2')}
-                    />
-                    <label className="buttonFont" htmlFor="onGoing">
-                        On Going
+                        <input
+                            id="onGoing"
+                            name="view3"
+                            type="radio"
+                            onChange={() => this.handleChange('2')}
+                        />
+                        <label className="buttonFont" htmlFor="onGoing">
+                            On Going
                     </label>
 
-                    <input
-                        id="finished"
-                        name="view3"
-                        type="radio"
-                        onChange={() => this.handleChange('3')}
-                    />
-                    <label className="buttonFont" htmlFor="finished">
-                        Finished
+                        <input
+                            id="finished"
+                            name="view3"
+                            type="radio"
+                            onChange={() => this.handleChange('3')}
+                        />
+                        <label className="buttonFont" htmlFor="finished">
+                            Finished
                     </label>
 
-                    <input
-                        id="lastmonthfinished"
-                        name="view3"
-                        type="radio"
-                        onChange={() => this.handleChange('4')}
-                    />
-                    <label className="buttonFont" htmlFor="lastmonthfinished">
-                        Last Month
+                        <input
+                            id="lastmonthfinished"
+                            name="view3"
+                            type="radio"
+                            onChange={() => this.handleChange('4')}
+                        />
+                        <label className="buttonFont" htmlFor="lastmonthfinished">
+                            Last Month
                     </label>
-                    <a></a>
+                        <a></a>
 
-                </div>
+                    </div>
                 </fieldset>
 
-               {/*  <div class="btn-group">
+                {/*  <div class="btn-group">
                 <FormGroup bsSize="small" onChange={this.handleChange1} >
                             <FormControl
                                 id="emailUsers"
@@ -336,25 +310,24 @@ class UserTasksFilter extends Component {
                                 type="text"
                                 placeholder="Search Users By Email"
                                 value={this.state.emailUsers}
-                                
+
                             />
                 </FormGroup>
                 <button onClick={e => this.handleChange(e, '2')} >
                     Confirm
                     </button>
                 </div> */}
-                 {/* <div className=" table-striped">
+                {/* <div className=" table-striped">
                     <div className="filter-list">
                         <form>
                         <fieldset className="form-group">
-                        <input 
-                            type="text" 
-                            className="form-control form-control-lg" 
-                            placeholder="Search by Task ID" 
+                        <input
+                            type="text"
+                            className="form-control form-control-lg"
+                            placeholder="Search by Task ID"
                             onChange={(event) => this.filterList(event)}
                         />
-                        {console.log("tesTEEEEEEEE")}
-                        {console.log(this.activeFilter)}
+
                         </fieldset>
                         </form>
                        <button onClick={e => this.handleChange(e, '2')} >
@@ -365,12 +338,12 @@ class UserTasksFilter extends Component {
                 </div> */}
 
                 <table style={divStyle}>
-                    <tr> 
+                    <tr>
                         <td style={tdStyle}> {this.renderSearchForm()}</td>
                         <td> {this.renderDropdownButton('Search Field', 0)}</td>
                     </tr>
                 </table>
-                
+
                 {/* <div>
                     <DropdownButton
                         className="buttonFinished"
@@ -381,9 +354,6 @@ class UserTasksFilter extends Component {
                         {this.renderFields()}
                     </DropdownButton>
                 </div> */}
-                
-                {console.log("OLLLEEE")}
-                {console.log(this.option)}
             </div>
         );
     }

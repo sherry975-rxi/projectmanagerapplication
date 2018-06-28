@@ -48,18 +48,12 @@ class AddDependency extends Component {
 
     handleSelect = eventKey => {
 
-        console.log(this.props.taskList[eventKey].taskID);
-
         this.props.createTaskDependency(this.props.projectID, this.props.taskID, this.props.taskList[eventKey].taskID, this.state.daysToPostpone);
 
-        if(this.props.error) {
-            toastr.success('Dependency added!');
             this.setState({
                 open: false
             })
-        } else {
-            toastr.error('lolnope');
-        }
+
 
     };
 
@@ -111,7 +105,7 @@ const mapStateToProps = state => {
     return {
         taskList: state.tasks.tasksList,
         error: state.tasks.error,
-        loading: state.tasks.loading
+        loading: state.tasks.itemIsLoading
     };
 };
 

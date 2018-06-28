@@ -15,6 +15,7 @@ import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("projects/{projid}/tasks/")
@@ -328,6 +329,12 @@ public class RestProjectTasksController {
     public ResponseEntity<List<Task>> getTaskDependencies (@PathVariable String taskId, @PathVariable int projid) {
 
         Task task = taskService.getTaskByTaskID(taskId);
+
+
+        if(task.getProject().getProjectId() != projid ) {
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+
         List<Task> taskDependencies = new ArrayList<>();
         taskDependencies.addAll(task.getTaskDependency());
 
@@ -340,6 +347,38 @@ public class RestProjectTasksController {
 
 
         return new ResponseEntity<>(taskDependencies, HttpStatus.OK);
+
+    }
+
+    /**
+     * This method gets a list of possible task dependencies of a given task
+     *
+     * @param taskId Task id
+     *
+     * @return The possible task dependenciues found by ID
+     */
+    @PreAuthorize ("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID")
+    @RequestMapping(value = "{taskId}/possibleDependencies", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getPossibleTaskDependencies (@PathVariable String taskId, @PathVariable int projid) {
+
+        Task task = taskService.getTaskByTaskID(taskId);
+
+        Project project = projectService.getProjectById(projid);
+
+        if(task.getProject().getProjectId() != projid ) {
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+
+        List<Task> possibleDependencies = new ArrayList<>();
+
+        for(Task projectTask : taskService.getProjectTasks(project)) {
+                if(task.isCreatingTaskDependencyValid(projectTask)) {
+                    possibleDependencies.add(projectTask);
+                }
+
+        }
+
+        return new ResponseEntity<>(possibleDependencies, HttpStatus.OK);
 
     }
 
@@ -360,10 +399,15 @@ public class RestProjectTasksController {
         Task task = taskService.getTaskByTaskID(taskId);
         Task parent = taskService.getTaskByTaskID(parentId);
 
+        if(parent.getProject().getProjectId() != projid || task.getProject().getProjectId() != projid ) {
+            return response;
+        }
+
         List<Task> taskDependencies = new ArrayList<>();
 
         if(postpone > 0 && task.createTaskDependence(parent, postpone)) {
 
+            taskService.saveTask(task);
             taskDependencies.addAll(task.getTaskDependency());
             for(Task dependency : taskDependencies) {
                 for(String action : dependency.getTaskState().getActions()) {
@@ -396,10 +440,15 @@ public class RestProjectTasksController {
         Task task = taskService.getTaskByTaskID(taskId);
         Task parent = taskService.getTaskByTaskID(parentId);
 
+        if(parent.getProject().getProjectId() != projid || task.getProject().getProjectId() != projid ) {
+            return response;
+        }
+
         List<Task> taskDependencies = new ArrayList<>();
 
         if(task.removeTaskDependence(parent)) {
 
+            taskService.saveTask(task);
             taskDependencies.addAll(task.getTaskDependency());
             for(Task dependency : taskDependencies) {
                 for(String action : dependency.getTaskState().getActions()) {

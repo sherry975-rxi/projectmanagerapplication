@@ -15,7 +15,7 @@ class AllRequests extends Component {
     }
 
     async componentDidMount() {
-        this.AuthService.fetch('/projects/2/tasks/WP1.T01/requests', {
+        this.AuthService.fetch(`/projects/${this.props.match.params.projectID}/tasks/WP1.T01/requests`, {
             method: 'get'
         }).then(responseData => {
             this.setState({
@@ -25,6 +25,16 @@ class AllRequests extends Component {
         });
     }
 
+    formatDate(date) {
+        var moment = require('moment');
+        if (date != null) {
+            ;
+            return moment(date).format("DD/MMM/YYYY");
+        } else {
+            return '';
+        }
+    }
+
     renderRequests() {
         return this.state.requests.map(requestsItem => {
             return (
@@ -32,6 +42,8 @@ class AllRequests extends Component {
                     <td>{requestsItem.task.description}</td>
                     <td>{requestsItem.projCollab.collaborator.name}</td>
                     <td>{requestsItem.type}</td>
+                    <td>{this.formatDate(requestsItem.approvalDate)}</td>
+                    <td>{this.formatDate(requestsItem.rejectDate)}</td>
 
                     <Button>
                         <Glyphicon className="ok-button" glyph="ok" />
@@ -57,6 +69,8 @@ class AllRequests extends Component {
                                 <th>Task</th>
                                 <th>Collaborator Name</th>
                                 <th>Request Type</th>
+                                <th>Approval Date</th>
+                                <th>Rejection Date</th>
                             </tr>
                         </thead>
                         <tbody>{this.renderRequests()}</tbody>

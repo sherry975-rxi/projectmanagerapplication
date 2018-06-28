@@ -7,19 +7,12 @@ import 'react-dates/lib/css/_datepicker.css';
 import './EditTask.css'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createTask, deleteTaskCreated } from '../../../actions/createTaskActions'
-import {
-    updateAllTasks,
-    updateNotStartedTasks, updateUnfinishedTasks
-} from '../../../actions/projectTasksActions';
-import LoadingComponent from './../../../components/loading/LoadingComponent';
 import '../../../components/loading/LoadingComponent.css'
 import { toastr } from 'react-redux-toastr';
 import AuthService from '../../loginPage/AuthService';
 import { formatDate } from '../../../components/utils/handleList'
-import { Moment } from 'react-moment';
 import { getProjectTasksByFilter } from '../../../actions/projectTasksActions'
-import { get } from 'lodash';
+
 
 
 class EditTask extends Component {
@@ -59,14 +52,14 @@ class EditTask extends Component {
     handleEffortChange = (event) => {
         event.preventDefault();
         let input = event.target.value;
-        let newEffort = input.replace(/[^?\d+(\.\d{1,2})?$]/gi, '');
+        let newEffort = input.replace(/[^?\d+(\d{1,2})?$]/gi, '');
         this.setState({ estimatedEffort: newEffort })
     }
 
     handleBudgetChange = (event) => {
         event.preventDefault();
         let input = event.target.value;
-        let newBudget = input.replace(/[^?\d+(\.\d{1,2})?$]/gi, '');
+        let newBudget = input.replace(/[^?\d+(\d{1,2})?$]/gi, '');
         this.setState({ estimatedBudget: newBudget })
     }
 
@@ -135,7 +128,7 @@ class EditTask extends Component {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <span><button className="cancelButton" onClick={() => this.setState({ confirmCreation: false })}>Cancel</button></span><span><button className="genericButton" onClick={this.handleConfirmation}>Confirm</button> </span>
+                    <span><button className="cancelButton" onClick={() => this.setState({ confirmCreation: false })}>Cancel</button></span><span><button className="genericButton" onClick={this.handleConfirmation.bind(this)}>Confirm</button> </span>
                 </Modal.Footer>
             </div>)
     }
@@ -166,10 +159,10 @@ class EditTask extends Component {
                                     endDatePlaceholderText='Deadline'
                                     endDateId='endDate1'
                                     startDateId='startDate1'
-                                    startDate={this.state.estimatedStartDate}
-                                    endDate={this.state.deadline}
+                                    startDate={this.state.estimatedStartDate ? this.state.estimatedStartDate : null}
+                                    endDate={this.state.deadline ? this.state.deadline : null}
                                     onDatesChange={({ startDate, endDate }) => this.setState({ estimatedStartDate: startDate, deadline: endDate })}
-                                    focusedInput={this.state.focusedInput}
+                                    focusedInput={this.state.focusedInput ? this.state.focusedInput : null}
                                     onFocusChange={focusedInput => this.setState({ focusedInput })}
                                     showDefaultInputIcon
                                     inputIconPosition="after"
@@ -205,7 +198,7 @@ class EditTask extends Component {
                             <ControlLabel>Start Date: {formatDate(this.props.task.startDate)}</ControlLabel>
                             <div className="calendar">
                                 <SingleDatePicker
-                                    date={this.state.startDate}
+                                    date={this.state.startDate ? this.state.startDate : null}
                                     openDirection="up"
                                     daySize={30}
                                     verticalSpacing={2}
@@ -231,6 +224,7 @@ class EditTask extends Component {
     }
 
     render() {
+
 
 
         let toRender = this.renderTaskEditFields()

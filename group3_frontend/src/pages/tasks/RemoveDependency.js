@@ -8,25 +8,13 @@ import './TaskDependencies.css'
 
 
 class RemoveDependency extends Component {
-    constructor(props) {
-        super(props);
-
-    }
-
 
     handleSelect = eventKey => {
 
         this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.tasks[eventKey].taskID);
 
-        if(this.props.error) {
-            toastr.success('Dependency removed!');
-        } else {
-            toastr.error('lolnope');
-        }
 
     };
-
-    
 
     render() {
 
@@ -58,7 +46,7 @@ const mapStateToProps = state => {
     return {
         tasks: state.tasks.tasksDependencies,
         error: state.tasks.error,
-        loading: state.tasks.loading
+        loading: state.tasks.itemIsLoading
     };
 };
 

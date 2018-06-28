@@ -49,6 +49,7 @@ class HomepageCollaborator extends Component {
                                     <TaskGraph />
                                 </div>
                             </td>
+
                         </tr>
                     </tbody>
                 </table>
