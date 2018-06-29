@@ -55,7 +55,7 @@ export function formatDate(date) {
 
     if (date != null) {
 
-        return moment(new Date(date)).format("DD/MMM/YYYY");
+        return moment(date).format("DD/MMM/YYYY");
     } else {
         return '';
     }
