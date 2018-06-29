@@ -935,6 +935,43 @@ public class RestProjectTasksControllerTest {
 
     }
 
+    /**
+     * GIVEN a project id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/allRequests
+     * THEN we receive a valid message with a 200 Ok and a list of all requests from all tasks of project
+     * @throws Exception
+     */
+    @Test
+    public void shouldReturnAllTasksRequests() throws Exception {
+
+
+        projectTasks.add(task);
+        projectTasks.add(task2);
+
+        ProjectCollaborator pcDaniel = new ProjectCollaborator(uDaniel, 20);
+
+        TaskTeamRequest assignRequest = new TaskTeamRequest();
+        assignRequest.setType(RequestType.ASSIGNMENT);
+        assignRequest.setProjCollab(pcDaniel);
+        assignRequest.setTask(task2);
+
+        List<TaskTeamRequest> allTasksRequests = new ArrayList<>();
+        allTasksRequests.add(assignRequest);
+
+
+        // GIVEN
+        int projectId = 01;
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        // WHEN
+        when(taskService.getProjectTasks(project)).thenReturn(projectTasks);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/allRequests").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getProjectTasks(project);
+    }
+
 
 
 
