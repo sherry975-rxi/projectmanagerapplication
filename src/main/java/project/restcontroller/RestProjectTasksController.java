@@ -16,6 +16,9 @@ import project.services.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("projects/{projid}/tasks/")
 public class RestProjectTasksController {
@@ -665,5 +668,45 @@ public class RestProjectTasksController {
         return new ResponseEntity<>(taskService.editTask(taskDto), HttpStatus.OK);
 
         }
+
+    /**
+     * This methods gets the list of all requests from all tasks of a project
+     *
+     * @param projid Id of the project to search for all tasks
+     *
+     * @return List of all requests of all tasks from the project
+     */
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
+    @RequestMapping(value = "allRequests", method = RequestMethod.GET)
+    public ResponseEntity<List<TaskTeamRequest>> getAllTasksRequests (@PathVariable int projid) {
+
+        ResponseEntity<List<TaskTeamRequest>> responseEntity = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+
+        List<Task> allTasks = new ArrayList<>();
+        List<TaskTeamRequest> allTasksRequests = new ArrayList<>();
+
+        Project project = projectService.getProjectById(projid);
+        allTasks.addAll(taskService.getProjectTasks(project));
+
+        for(Task task : allTasks) {
+
+            List<TaskTeamRequest> requestsList = task.getPendingTaskTeamRequests();
+            for (TaskTeamRequest request : requestsList) {
+
+                Link reference = linkTo(methodOn(RestRequestController.class).getRequestDetails(request.getDbId(), task.getTaskID(), projid)).withRel("Request details").withType(RequestMethod.GET.name());
+                request.add(reference);
+            }
+
+            allTasksRequests.addAll(requestsList);
+
+
+        }
+        responseEntity = new ResponseEntity<>(allTasksRequests, HttpStatus.OK);
+
+        return responseEntity;
+
+
+
+    }
 }
 
