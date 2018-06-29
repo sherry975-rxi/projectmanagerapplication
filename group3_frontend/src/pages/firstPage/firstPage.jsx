@@ -13,7 +13,7 @@ class firstPage extends Component {
                 <div className="Bar">
                     <div className="Logo">
                         <center>
-                            <h1 className="switch">appManager</h1>
+                            <p className="switch">appManager</p>
                         </center>
                         <center>
                             <p className="subTitle">
