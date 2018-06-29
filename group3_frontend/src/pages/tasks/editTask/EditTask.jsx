@@ -88,7 +88,7 @@ class EditTask extends Component {
             startDate: this.state.startDate
         }
 
-        this.AuthService.fetchRaw(`/projects/2/tasks/editTask`, {
+        this.AuthService.fetchRaw(`/projects/${this.props.task.project}/tasks/editTask`, {
             method: 'PATCH',
             body: JSON.stringify(taskToEdit)
         })
