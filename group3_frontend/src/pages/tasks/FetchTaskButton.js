@@ -87,7 +87,7 @@ class FetchTaskButton extends Component {
             </label>
 
 
-                    {/*   <input
+                     <input
                id={TASKS_FILTER.CANCELLED_TASKS} name="view3" type="radio" onChange={this.handleChange} />
              <label
                 className="buttonFont"
@@ -95,7 +95,6 @@ class FetchTaskButton extends Component {
                 onClick="">
                         Cancelled
             </label>
- */}
 
                     <a></a>
                 </div>
