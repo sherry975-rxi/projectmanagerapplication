@@ -21,10 +21,13 @@ class AddDependency extends Component {
 
     }
 
+    // when creating a dependency, the child task's estimated start date should be delayed a given number of
+    // days after the parent's expected deadline
     validateForm() {
         return this.state.daysToPostpone > 0;
     }
 
+    // when opening the Add Dependency dropdown button, it dispatches an action to fetch all possible task dependencies for that task
     handleClick = () => {
         if(!this.state.open) {
             console.log(this.props.taskList);
@@ -40,6 +43,7 @@ class AddDependency extends Component {
 
     }
 
+
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
@@ -49,6 +53,8 @@ class AddDependency extends Component {
 
 
 
+    // when selecting a task with a positive "postpone" value, an action is dispatched that creates the new dependency
+    // when successful, redux state the updated list of dependencies and refreshes the display
     handleSelect = eventKey => {
 
         this.props.createTaskDependency(this.props.projectID, this.props.taskID, this.props.taskList[eventKey].taskID, this.state.daysToPostpone);
