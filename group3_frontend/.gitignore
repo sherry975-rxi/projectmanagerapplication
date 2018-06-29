@@ -7,6 +7,9 @@
 !/node_modules/react-user-avatar
 !/node_modules/react-with-styles-interface-css
 !/node_modules/react-infinite-calendar
+!/node_modules/fetch-mock
+!/node_modules/redux-thunk
+!/node_modules/redux-mock-store
 
 # testing
 /coverage
