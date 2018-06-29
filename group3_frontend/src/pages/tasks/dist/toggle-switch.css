@@ -168,7 +168,7 @@
       z-index: 2;
       display: block;
       float: left;
-      padding: 0 0.5em;
+      padding: 0em;
       margin: 0;
       text-align: center; }
     .switch-toggle a {
@@ -177,7 +177,7 @@
       left: 0;
       padding: 0;
       z-index: 1;
-      width: 10px;
+      width: 5px;
       height: 100%; }
     .switch-toggle label:nth-child(2):nth-last-child(4),
     .switch-toggle label:nth-child(2):nth-last-child(4) ~ label,
@@ -229,6 +229,22 @@
       left: 66.4%; }
     .switch-toggle label:nth-child(2):nth-last-child(12) ~ input:checked:nth-child(11) + label ~ a {
       left: 83%; }
+  .switch-toggle label:nth-child(2):nth-last-child(14),
+  .switch-toggle label:nth-child(2):nth-last-child(14) ~ label,
+  .switch-toggle label:nth-child(2):nth-last-child(14) ~ a {
+    width: calc(100.0%/7.0); }
+  .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(3) + label ~ a {
+    left: calc(100.0%/7.0); }
+  .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(5) + label ~ a {
+    left: calc((100.0%/7.0)*2.0); }
+  .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(7) + label ~ a {
+    left: calc((100.0%/7.0)*3.0); }
+  .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(9) + label ~ a {
+    left: calc((100.0%/7.0)*4.0); }
+  .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(11) + label ~ a {
+    left: calc((100.0%/7.0)*5.0); }
+  .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(13) + label ~ a {
+    left: calc((100.0%/7.0)*6.0); }
   /* Candy Theme
  * Based on the "Sort Switches / Toggles (PSD)" by Ormal Clarck
  * http://www.premiumpixels.com/freebies/sort-switches-toggles-psd/

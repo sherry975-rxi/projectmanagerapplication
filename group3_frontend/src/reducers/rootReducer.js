@@ -15,6 +15,7 @@ import projectTeamReducer from './projectTeamReducer';
 import availableUsersReducer from './availableProjectTeamReducer';
 import requestsReducer from './requestsReducer'
 import requestsFilterReducer from './requestsFilterReducer'
+import dependenciesReducer from './dependenciesReducer';
 
 const appReducer = combineReducers({
     authenthication: authenticationReducer,
@@ -32,7 +33,8 @@ const appReducer = combineReducers({
     createTask: createTaskReducer,
     tasks: tasksReducer,
     requests: requestsReducer,
-    requestsFilter: requestsFilterReducer
+    requestsFilter: requestsFilterReducer,
+    dependencies: dependenciesReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT') {

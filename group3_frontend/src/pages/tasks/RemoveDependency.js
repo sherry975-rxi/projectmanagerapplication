@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { removeTaskDependency } from "../../actions/projectTasksActions";
+import { removeTaskDependency } from "../../actions/dependencyActions";
 import { DropdownButton, MenuItem } from "react-bootstrap";
 import './TaskDependencies.css'
 
@@ -12,7 +12,6 @@ class RemoveDependency extends Component {
     handleSelect = eventKey => {
 
         this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.tasks[eventKey].taskID);
-
 
     };
 
@@ -44,9 +43,9 @@ class RemoveDependency extends Component {
 
 const mapStateToProps = state => {
     return {
-        tasks: state.tasks.tasksDependencies,
-        error: state.tasks.error,
-        loading: state.tasks.itemIsLoading
+        tasks: state.dependencies.tasksDependencies,
+        error: state.dependencies.error,
+        loading: state.dependencies.itemIsLoading
     };
 };
 
