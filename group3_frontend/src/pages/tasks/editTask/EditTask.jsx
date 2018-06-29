@@ -244,13 +244,41 @@ class EditTask extends Component {
             toRender = this.displayConfirmation()
         }
 
+
+
+        for(let i = 0; i < this.props.task.taskTeam.length; i++){
+            console.log(this.props.task.state)
+            console.log(this.props.task.state === "FINISHED")
+
+            if(this.props.task.state === "FINISHED"){
+                return(
+                    <div>
+
+                    </div>
+                )
+            }
+
+            if(this.props.task.taskTeam[i]['taskCollaborator']['email'] === this.AuthService.getProfile().sub || 
+            this.props.task.currentProject.projectManager.email === this.AuthService.getProfile().sub){
+                console.log("Ime here")
+                return (
+                    <div>
+                    <span onClick={this.handleShow.bind(this)}> <Glyphicon className="pencil" glyph="glyphicon glyphicon-edit" /></ span>
+    
+                    <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                        {toRender}
+                    </Modal>
+                </div>
+                )
+            
+            }
+        
+         
+        }
+
         return (
             <div>
-                <span onClick={this.handleShow.bind(this)}> <Glyphicon className="pencil" glyph="glyphicon glyphicon-edit" /></ span>
-
-                <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
-                    {toRender}
-                </Modal>
+              
             </div>
         )
 
