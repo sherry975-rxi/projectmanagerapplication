@@ -112,7 +112,10 @@ class AccordionMenu extends Component {
       
 
 
-        if (this.props.profile === 'COLLABORATOR' && canIViewReports) {
+        if (this.props.profile === 'COLLABORATOR' && canIViewReports || 
+        this.props.profile === 'COLLABORATOR' &&  element.currentProject.projectManager.email ===
+        this.AuthService.getProfile()
+            .sub ) {
             return (
                 <div align="right">
                     <p />
@@ -208,21 +211,14 @@ class AccordionMenu extends Component {
                             '/dependencies'
                         }
                     >
-                        <button class="buttonFinished">
+                        <button className="buttonFinished">
                             View Dependencies
                         </button>
                     </Link>
 
                     <a className="key">{key++}</a>
                     <p />
-                    {element.state !== 'FINISHED' ? (
-                        <MarkTaskAsFinished
-                            id={element.taskID}
-                            project={element.project}
-                        />
-                    ) : (
-                        ''
-                    )}
+              
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderCreateAssignmentRequestTaskButton(element)}
@@ -251,6 +247,11 @@ class AccordionMenu extends Component {
     }
 
     renderList(list) {
+
+        
+      
+        
+
         let key = 0;
         return handleTaskHeaders(list).map((element, index) => (
             <Panel eventKey={key} key={index}>
@@ -293,7 +294,7 @@ class AccordionMenu extends Component {
                         <thead>
                             <tr>
                                 <th>
-
+                                
                                     <EditTask task={element} /> &nbsp;
 
                                     <p>
