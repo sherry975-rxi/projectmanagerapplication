@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 import LoadingComponent from './../../components/loading/LoadingComponent';
 import {bindActionCreators} from "redux";
-import {getAllTaskDependencies} from "../../actions/projectTasksActions";
+import {getAllTaskDependencies} from "../../actions/dependencyActions";
 import Error from "../../components/error/error";
 import AddDependency from "./AddDependency";
 import AuthService from "../loginPage/AuthService";
@@ -124,9 +124,9 @@ class TaskDependencies extends Component {
 }
 const mapStateToProps = state => {
     return {
-        tasks: state.tasks.tasksDependencies,
-        tasksLoading: state.tasks.itemIsLoading,
-        error: state.tasks.error
+        tasks: state.dependencies.tasksDependencies,
+        tasksLoading: state.dependencies.itemIsLoading,
+        error: state.dependencies.error
     };
 };
 const mapDispatchToProps = dispatch =>

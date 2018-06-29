@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createTaskDependency, getPossibleTaskDependencies } from "../../actions/projectTasksActions";
+import { createTaskDependency, getPossibleTaskDependencies } from "../../actions/dependencyActions";
 import {ControlLabel, DropdownButton, FormControl, FormGroup, MenuItem} from "react-bootstrap";
 import './TaskDependencies.css'
 
@@ -108,9 +108,9 @@ class AddDependency extends Component {
 
 const mapStateToProps = state => {
     return {
-        taskList: state.tasks.possibleDependencies,
-        error: state.tasks.error,
-        loading: state.tasks.itemIsLoading
+        taskList: state.dependencies.possibleDependencies,
+        error: state.dependencies.error,
+        loading: state.dependencies.itemIsLoading
     };
 };
 
