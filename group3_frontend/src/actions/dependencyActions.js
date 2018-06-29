@@ -1,6 +1,24 @@
 import {toastr} from "react-redux-toastr";
 
 
+export function reloadTask(projectId, taskId) {
+    return dispatch => {
+        tasksLoading();
+        fetch(`/projects/${projectId}/tasks/${taskId}`, {
+            headers: { Authorization: localStorage.getItem('id_token') },
+            method: 'GET'
+        })
+            .then(responseData => responseData.json())
+            .then(data => {
+                dispatch(taskFetched(data));
+                return data;
+            })
+            .catch(error => {
+                fetchTasksHasErrored();
+            });
+    };
+}
+
 export function getAllTaskDependencies(projectId, taskId) {
     return dispatch => {
         tasksLoading();
@@ -49,6 +67,7 @@ export function createTaskDependency(projectId, taskId, parentId, postpone) {
             .then(data => {
                 dispatch(taskDependenciesFetched(data));
                 toastr.success('Dependency added!');
+                dispatch(reloadTask(projectId, taskId));
                 return data;
             })
             .catch(error => {
@@ -76,6 +95,14 @@ export function removeTaskDependency(projectId, taskId, parentId) {
                 fetchTasksHasErrored();
 
             });
+    };
+}
+
+
+export function taskFetched(task) {
+    return {
+        type: 'CHILD_TASK_FETCHED',
+        child: task
     };
 }
 

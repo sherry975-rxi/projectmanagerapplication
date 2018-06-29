@@ -13,7 +13,6 @@ class RemoveDependency extends Component {
 
         this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.tasks[eventKey].taskID);
 
-
     };
 
     render() {
