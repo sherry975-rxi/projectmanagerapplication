@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { removeTaskDependency } from "../../actions/projectTasksActions";
 import { DropdownButton, MenuItem } from "react-bootstrap";
-import { toastr } from "react-redux-toastr";
 import './TaskDependencies.css'
 
 

@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-    createTaskDependency, getPossibleTaskDependencies,
-    updateNotStartedTasks
-} from "../../actions/projectTasksActions";
+import { createTaskDependency, getPossibleTaskDependencies } from "../../actions/projectTasksActions";
 import {ControlLabel, DropdownButton, FormControl, FormGroup, MenuItem} from "react-bootstrap";
-import { toastr } from "react-redux-toastr";
 import './TaskDependencies.css'
 
 

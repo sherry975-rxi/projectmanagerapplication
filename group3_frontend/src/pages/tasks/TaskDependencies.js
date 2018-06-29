@@ -52,8 +52,8 @@ class TaskDependencies extends Component {
     }
 
     // when the logged in user is the project manager, this method renders both buttons to add and remove dependency
-    getManagerOptions() {
-        if(this.state.projectManager) {
+    getDependencyButtons() {
+        if(this.state.projectManager && this.state.task.startDate == null) {
             return (
             <div align="right">
                 <AddDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
@@ -65,7 +65,7 @@ class TaskDependencies extends Component {
         }
     }
 
-    renderTasks = () => {
+    renderDependencies = () => {
         if (this.props.tasksLoading) {
             return <LoadingComponent />;
         } else if (this.props.error) {
@@ -76,15 +76,47 @@ class TaskDependencies extends Component {
 
     };
 
-    render() {
+    childTaskDetails = () => {
+        console.log(this.state.task);
+        if(this.state.task != null) {
+            return (
+                <table>
+                    <thead>
+                    <tr>
+                        <th>
 
-        console.log(this.state.projectManager);
+                            <p>
+                                <b>Task ID:</b> &nbsp;
+                                {this.state.task.taskID}
+                            </p>
+                            <p>
+                                <b>Description:</b> &nbsp;
+                                {this.state.task.description}
+                            </p>
+                            <p>
+                                <b>State:</b> &nbsp;
+                                {this.state.task.currentState}
+                            </p>
+
+                            <br />
+
+                        </th>
+
+                            {this.getDependencyButtons()}
+
+                    </tr>
+                    </thead>
+                </table>
+            );
+        }
+    }
+
+    render() {
 
         return (
             <div>
-                {this.getManagerOptions()}
-
-                {this.renderTasks()}
+                {this.childTaskDetails()}
+                {this.renderDependencies()}
             </div>
         );
     }
