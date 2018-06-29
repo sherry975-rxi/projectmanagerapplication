@@ -22,6 +22,8 @@ class TaskDependencies extends Component {
         this.authService = new AuthService();
     }
 
+    // after mounting the component, an action is dispatched to fetch all dependencies of the chosen task
+    // as well as confirmation of the logged in user's permissions in the project
     componentDidMount() {
         this.props.getAllTaskDependencies(this.props.match.params.projectID, this.props.match.params.taskID);
 
@@ -29,12 +31,14 @@ class TaskDependencies extends Component {
 
     }
 
+    // this method fetches the selected task and compares its project manager against the logged in user
     isProjectManager() {
         this.authService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}`,
             { method: 'GET' }
         ).then(response => {
             console.log(response);
             this.setState({
+                task: response,
                 projectManager: response.project.projectManager.email === this.authService.getProfile().sub
             });
 
@@ -47,6 +51,7 @@ class TaskDependencies extends Component {
         });
     }
 
+    // when the logged in user is the project manager, this method renders both buttons to add and remove dependency
     getManagerOptions() {
         if(this.state.projectManager) {
             return (

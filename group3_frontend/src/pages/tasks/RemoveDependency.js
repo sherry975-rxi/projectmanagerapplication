@@ -9,6 +9,7 @@ import './TaskDependencies.css'
 
 class RemoveDependency extends Component {
 
+    // when selecting a dependency, an action is dispatched that removes it and stores the updated list of dependencies on the redux state
     handleSelect = eventKey => {
 
         this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.tasks[eventKey].taskID);
