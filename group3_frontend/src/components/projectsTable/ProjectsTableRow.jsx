@@ -92,7 +92,7 @@ class ProjectsTableRow extends Component {
                         to={
                             '/projects/' +
                             this.props.project.projectId +
-                            '/tasks'} onClick={() => this.props.chooseProject(this.props.project.projectManagerEmail)}
+                            '/tasks'} onClick={() => this.props.chooseProject(this.props.project)}
                     >
                         <ItemsButton text="View tasks" />
                     </Link>
@@ -126,7 +126,7 @@ class ProjectsTableRow extends Component {
                     </Link>
 
                     <Link className="items-menu" to={'/projects/' +
-                            this.props.project.projectId +'/requests'}>
+                        this.props.project.projectId + '/requests'}>
                         <ItemsButton text="View Requests" />
                     </Link>
                 </DropdownButton >

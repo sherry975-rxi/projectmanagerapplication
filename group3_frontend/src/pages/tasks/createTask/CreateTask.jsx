@@ -3,7 +3,7 @@ import { Form, Modal, FormGroup, ControlLabel, FormControl } from 'react-bootstr
 import '../../../components/button/genericButton.css'
 import './CreateTask.css'
 import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
+import { DateRangePicker, isInclusivelyAfterDay, isInclusivelyBeforeDay } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -15,6 +15,7 @@ import {
 import '../../../components/loading/LoadingComponent.css'
 import { toastr } from 'react-redux-toastr';
 import AuthService from '../../loginPage/AuthService';
+import moment from 'moment'
 
 
 class CreateTask extends Component {
@@ -55,6 +56,16 @@ class CreateTask extends Component {
         }
     }
 
+    isOutsideRange = (day) => {
+
+        if (this.props.project.projectStartDate === undefined || this.props.project.projectFinishDate === undefined)
+            return false;
+
+        else {
+            return !isInclusivelyAfterDay(day, moment(this.props.project.projectStartDate)) || !isInclusivelyBeforeDay(day, moment(this.props.project.projectFinishDate))
+        }
+
+    }
 
     displayConfirmation() {
 
@@ -143,7 +154,7 @@ class CreateTask extends Component {
                 <ControlLabel>Estimated Dates</ControlLabel>
                 <div className="calendar">
                     <DateRangePicker
-
+                        isOutsideRange={this.isOutsideRange.bind(this)}
                         startDatePlaceholderText='Estimated Start'
                         endDatePlaceholderText='Deadline'
                         endDateId='endDate1'
@@ -197,7 +208,15 @@ class CreateTask extends Component {
 
     render() {
 
-        let isProjectManager = this.props.projManager === this.AuthService.getProfile().sub ? 'genericButton' : 'noButton'
+        console.log(this.props.project)
+
+        let isProjectManager = 'noButton'
+
+        if (this.props.project !== undefined) {
+
+            isProjectManager = this.props.project.projectManagerEmail === this.AuthService.getProfile().sub ? 'genericButton' : 'noButton'
+        }
+
         var toRender = this.renderTaskCreationProcess()
 
         if (this.state.confirmCreation) {
@@ -226,7 +245,7 @@ const mapStateToProps = state => {
         filter: state.filterReducer.filterType,
         task: state.createTask.task,
         beingCreated: state.createTask.beingCreated,
-        projManager: state.projects.projectManager
+        project: state.projects.project
     };
 };
 const mapDispatchToProps = dispatch => bindActionCreators({ createTask, deleteTaskCreated, updateAllTasks, updateNotStartedTasks, updateUnfinishedTasks }, dispatch);

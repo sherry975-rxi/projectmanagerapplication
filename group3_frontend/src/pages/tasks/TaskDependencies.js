@@ -30,11 +30,12 @@ class TaskDependencies extends Component {
     }
 
     isProjectManager() {
-        this.authService.fetch(`/projects/${this.props.match.params.projectID}`,
+        this.authService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}`,
             { method: 'GET' }
         ).then(response => {
+            console.log(response);
             this.setState({
-                projectManager: response.projectManager.email === this.authService.getProfile().sub
+                projectManager: response.project.projectManager.email === this.authService.getProfile().sub
             });
 
         }).catch(error => {

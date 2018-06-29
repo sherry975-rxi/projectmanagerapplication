@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createTaskDependency, updateNotStartedTasks } from "../../actions/projectTasksActions";
+import {
+    createTaskDependency, getPossibleTaskDependencies,
+    updateNotStartedTasks
+} from "../../actions/projectTasksActions";
 import {ControlLabel, DropdownButton, FormControl, FormGroup, MenuItem} from "react-bootstrap";
 import { toastr } from "react-redux-toastr";
 import './TaskDependencies.css'
@@ -25,7 +28,7 @@ class AddDependency extends Component {
     handleClick = () => {
         if(!this.state.open) {
             console.log(this.props.taskList);
-            this.props.updateNotStartedTasks(this.props.projectID);
+            this.props.getPossibleTaskDependencies(this.props.projectID, this.props.taskID);
             this.setState({
                 open: true
             })
@@ -50,9 +53,9 @@ class AddDependency extends Component {
 
         this.props.createTaskDependency(this.props.projectID, this.props.taskID, this.props.taskList[eventKey].taskID, this.state.daysToPostpone);
 
-            this.setState({
-                open: false
-            })
+        this.setState({
+            open: false
+        })
 
 
     };
@@ -103,14 +106,14 @@ class AddDependency extends Component {
 
 const mapStateToProps = state => {
     return {
-        taskList: state.tasks.tasksList,
+        taskList: state.tasks.possibleDependencies,
         error: state.tasks.error,
         loading: state.tasks.itemIsLoading
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateNotStartedTasks, createTaskDependency }, dispatch);
+    return bindActionCreators({ createTaskDependency, getPossibleTaskDependencies }, dispatch);
 };
 
 export default connect(
