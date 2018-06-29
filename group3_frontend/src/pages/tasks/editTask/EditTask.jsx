@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Modal, FormGroup, ControlLabel, FormControl, Glyphicon } from 'react-bootstrap'
 import '../../../components/button/genericButton.css'
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker } from 'react-dates';
+import { DateRangePicker, SingleDatePicker, isInclusivelyAfterDay, isInclusivelyBeforeDay } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './EditTask.css'
 import { connect } from 'react-redux';
@@ -12,6 +12,7 @@ import { toastr } from 'react-redux-toastr';
 import AuthService from '../../loginPage/AuthService';
 import { formatDate } from '../../../components/utils/handleList'
 import { getProjectTasksByFilter } from '../../../actions/projectTasksActions'
+import moment from 'moment'
 
 
 
@@ -63,6 +64,17 @@ class EditTask extends Component {
         this.setState({ estimatedBudget: newBudget })
     }
 
+    isOutsideRange = (day) => {
+        console.log(this.props.task.currentProject.startdate)
+
+        if (this.props.task.currentProject.startdate === undefined || this.props.task.currentProject.finishdate === undefined)
+            return false;
+
+        else {
+            return !isInclusivelyAfterDay(day, moment(this.props.task.currentProject.startdate)) || !isInclusivelyBeforeDay(day, moment(this.props.task.currentProject.finishdate))
+        }
+
+    }
 
     handleConfirmation = () => {
 
@@ -76,7 +88,7 @@ class EditTask extends Component {
             startDate: this.state.startDate
         }
 
-        this.AuthService.fetchRaw(`/projects/2/tasks/editTask`, {
+        this.AuthService.fetchRaw(`/projects/${this.props.task.project}/tasks/editTask`, {
             method: 'PATCH',
             body: JSON.stringify(taskToEdit)
         })
@@ -128,7 +140,7 @@ class EditTask extends Component {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <span><button className="cancelButton" onClick={() => this.setState({ confirmCreation: false })}>Cancel</button></span><span><button className="genericButton" onClick={this.validateDates.bind(this)}>Confirm</button> </span>
+                    <span><button className="cancelButton" onClick={() => this.setState({ confirmCreation: false })}>Cancel</button></span><span><button className="genericButton" onClick={this.handleConfirmation.bind(this)}>Confirm</button> </span>
                 </Modal.Footer>
             </div>)
     }
@@ -155,14 +167,15 @@ class EditTask extends Component {
                             <ControlLabel>Estimated Dates: {formatDate(this.props.task.estimatedTaskStartDate)} | {formatDate(this.props.task.taskDeadline)}</ControlLabel>
                             <div className="calendar">
                                 <DateRangePicker
+                                    isOutsideRange={this.isOutsideRange.bind(this)}
                                     startDatePlaceholderText='Estimated Start'
                                     endDatePlaceholderText='Deadline'
                                     endDateId='endDate1'
                                     startDateId='startDate1'
-                                    startDate={this.state.estimatedStartDate}
-                                    endDate={this.state.deadline}
+                                    startDate={this.state.estimatedStartDate ? this.state.estimatedStartDate : null}
+                                    endDate={this.state.deadline ? this.state.deadline : null}
                                     onDatesChange={({ startDate, endDate }) => this.setState({ estimatedStartDate: startDate, deadline: endDate })}
-                                    focusedInput={this.state.focusedInput}
+                                    focusedInput={this.state.focusedInput ? this.state.focusedInput : null}
                                     onFocusChange={focusedInput => this.setState({ focusedInput })}
                                     showDefaultInputIcon
                                     inputIconPosition="after"
@@ -198,7 +211,8 @@ class EditTask extends Component {
                             <ControlLabel>Start Date: {formatDate(this.props.task.startDate)}</ControlLabel>
                             <div className="calendar">
                                 <SingleDatePicker
-                                    date={this.state.startDate}
+                                    isOutsideRange={this.isOutsideRange.bind(this)}
+                                    date={this.state.startDate ? this.state.startDate : null}
                                     openDirection="up"
                                     daySize={30}
                                     verticalSpacing={2}
@@ -224,8 +238,6 @@ class EditTask extends Component {
     }
 
     render() {
-
-
 
         let toRender = this.renderTaskEditFields()
         if (this.state.confirmCreation) {

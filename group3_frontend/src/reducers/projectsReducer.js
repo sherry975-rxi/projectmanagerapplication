@@ -17,7 +17,7 @@ export const projectsReducer = (state = {}, action = {}) => {
         case 'PROJECT_CHOSEN':
             return {
                 ...state,
-                projectManager: action.projectManager
+                project: action.project
             }
         default:
             return state;

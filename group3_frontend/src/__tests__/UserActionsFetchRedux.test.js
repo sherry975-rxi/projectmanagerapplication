@@ -1,62 +1,28 @@
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import * as actions from '../actions/UserActions';
 import * as types from '../actions/actions';
+import fetchMock from 'fetch-mock'
+import expect from 'jest' // You can use any testing library
 
-describe('actions', () => {
-  it('should create an action to return all users', () => {
-    
-    const text = 'All Users'
-    const expectedAction = {
-      type: types.ALLUSERS_FETCHED,
-      allUsers: text
-    }
-    expect(actions.allUsersFetched(text)).toEqual(expectedAction)
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+describe('async actions', () => {
+  afterEach(() => {
+    fetchMock.reset()
+    fetchMock.restore()
   })
-})
-
-describe('actions', () => {
-  it('should create an action to return all collaborators', () => {
-    
-    const text = 'All Collaborators'
-    const expectedAction = {
-      type: types.ALLCOLLABORATORS_FETCHED,
-      allCollaborators: text
-    }
-    expect(actions.allCollaboratorsFetched(text)).toEqual(expectedAction)
-  })
-})
-
-describe('actions', () => {
-  it('should create an action to return all directors', () => {
-    
-    const text = 'All Directors'
-    const expectedAction = {
-      type: types.ALLDIRECTORS_FETCHED,
-      allDirector: text
-    }
-    expect(actions.allDirectorFetched(text)).toEqual(expectedAction)
-  })
-})
-
-describe('actions', () => {
-  it('should create an action to return all administrators', () => {
-    
-    const text = 'All Administrators'
-    const expectedAction = {
-      type: types.ALLADMINISTRATOR_FETCHED,
-      allAdministrator: text
-    }
-    expect(actions.allAdministratorFetched(text)).toEqual(expectedAction)
-  })
-})
-
-describe('actions', () => {
-  it('should create an action to return all visitors', () => {
-    
-    const text = 'All Visitors'
-    const expectedAction = {
-      type: types.ALLVISITORS_FETCHED,
-      allVisitors: text
-    }
-    expect(actions.allVisitorsFetched(text)).toEqual(expectedAction)
+it('creates ALLUSERS_FETCHED when fetching allUsers has been done', () => {
+    fetchMock
+      .getOnce('/users/allUsers', {headers: { 'content-type': 'application/json' } })
+    const expectedActions = [
+      { type: types.ALLUSERS_FETCHED, body: { allUsers: ['do something'] } }
+    ]
+    const store = mockStore({ allUsers: [] })
+    return store.dispatch(actions.updateAllUsers(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions)
+    }))
   })
 })

@@ -22,6 +22,8 @@ class TaskDependencies extends Component {
         this.authService = new AuthService();
     }
 
+    // after mounting the component, an action is dispatched to fetch all dependencies of the chosen task
+    // as well as confirmation of the logged in user's permissions in the project
     componentDidMount() {
         this.props.getAllTaskDependencies(this.props.match.params.projectID, this.props.match.params.taskID);
 
@@ -29,12 +31,15 @@ class TaskDependencies extends Component {
 
     }
 
+    // this method fetches the selected task and compares its project manager against the logged in user
     isProjectManager() {
-        this.authService.fetch(`/projects/${this.props.match.params.projectID}`,
+        this.authService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}`,
             { method: 'GET' }
         ).then(response => {
+            console.log(response);
             this.setState({
-                projectManager: response.projectManager.email === this.authService.getProfile().sub
+                task: response,
+                projectManager: response.project.projectManager.email === this.authService.getProfile().sub
             });
 
         }).catch(error => {
@@ -46,8 +51,9 @@ class TaskDependencies extends Component {
         });
     }
 
-    getManagerOptions() {
-        if(this.state.projectManager) {
+    // when the logged in user is the project manager, this method renders both buttons to add and remove dependency
+    getDependencyButtons() {
+        if(this.state.projectManager && this.state.task.startDate == null) {
             return (
             <div align="right">
                 <AddDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
@@ -59,7 +65,7 @@ class TaskDependencies extends Component {
         }
     }
 
-    renderTasks = () => {
+    renderDependencies = () => {
         if (this.props.tasksLoading) {
             return <LoadingComponent />;
         } else if (this.props.error) {
@@ -70,15 +76,47 @@ class TaskDependencies extends Component {
 
     };
 
-    render() {
+    childTaskDetails = () => {
+        console.log(this.state.task);
+        if(this.state.task != null) {
+            return (
+                <table>
+                    <thead>
+                    <tr>
+                        <th>
 
-        console.log(this.state.projectManager);
+                            <p>
+                                <b>Task ID:</b> &nbsp;
+                                {this.state.task.taskID}
+                            </p>
+                            <p>
+                                <b>Description:</b> &nbsp;
+                                {this.state.task.description}
+                            </p>
+                            <p>
+                                <b>State:</b> &nbsp;
+                                {this.state.task.currentState}
+                            </p>
+
+                            <br />
+
+                        </th>
+
+                            {this.getDependencyButtons()}
+
+                    </tr>
+                    </thead>
+                </table>
+            );
+        }
+    }
+
+    render() {
 
         return (
             <div>
-                {this.getManagerOptions()}
-
-                {this.renderTasks()}
+                {this.childTaskDetails()}
+                {this.renderDependencies()}
             </div>
         );
     }

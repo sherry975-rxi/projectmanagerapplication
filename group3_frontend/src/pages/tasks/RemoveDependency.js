@@ -3,25 +3,18 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { removeTaskDependency } from "../../actions/projectTasksActions";
 import { DropdownButton, MenuItem } from "react-bootstrap";
-import { toastr } from "react-redux-toastr";
 import './TaskDependencies.css'
 
 
 class RemoveDependency extends Component {
 
+    // when selecting a dependency, an action is dispatched that removes it and stores the updated list of dependencies on the redux state
     handleSelect = eventKey => {
 
         this.props.removeTaskDependency(this.props.projectID, this.props.taskID, this.props.tasks[eventKey].taskID);
 
-        if (this.props.error) {
-            toastr.success('Dependency removed!');
-        } else {
-            toastr.error('lolnope');
-        }
 
     };
-
-
 
     render() {
 
@@ -53,7 +46,7 @@ const mapStateToProps = state => {
     return {
         tasks: state.tasks.tasksDependencies,
         error: state.tasks.error,
-        loading: state.tasks.loading
+        loading: state.tasks.itemIsLoading
     };
 };
 

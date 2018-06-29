@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createTaskDependency, updateNotStartedTasks } from "../../actions/projectTasksActions";
+import { createTaskDependency, getPossibleTaskDependencies } from "../../actions/projectTasksActions";
 import {ControlLabel, DropdownButton, FormControl, FormGroup, MenuItem} from "react-bootstrap";
-import { toastr } from "react-redux-toastr";
 import './TaskDependencies.css'
 
 
@@ -18,14 +17,17 @@ class AddDependency extends Component {
 
     }
 
+    // when creating a dependency, the child task's estimated start date should be delayed a given number of
+    // days after the parent's expected deadline
     validateForm() {
         return this.state.daysToPostpone > 0;
     }
 
+    // when opening the Add Dependency dropdown button, it dispatches an action to fetch all possible task dependencies for that task
     handleClick = () => {
         if(!this.state.open) {
             console.log(this.props.taskList);
-            this.props.updateNotStartedTasks(this.props.projectID);
+            this.props.getPossibleTaskDependencies(this.props.projectID, this.props.taskID);
             this.setState({
                 open: true
             })
@@ -37,6 +39,7 @@ class AddDependency extends Component {
 
     }
 
+
     handleChange = event => {
         this.setState({
             [event.target.id]: event.target.value
@@ -46,20 +49,16 @@ class AddDependency extends Component {
 
 
 
+    // when selecting a task with a positive "postpone" value, an action is dispatched that creates the new dependency
+    // when successful, redux state the updated list of dependencies and refreshes the display
     handleSelect = eventKey => {
-
-        console.log(this.props.taskList[eventKey].taskID);
 
         this.props.createTaskDependency(this.props.projectID, this.props.taskID, this.props.taskList[eventKey].taskID, this.state.daysToPostpone);
 
-        if(this.props.error) {
-            toastr.success('Dependency added!');
-            this.setState({
-                open: false
-            })
-        } else {
-            toastr.error('lolnope');
-        }
+        this.setState({
+            open: false
+        })
+
 
     };
 
@@ -109,14 +108,14 @@ class AddDependency extends Component {
 
 const mapStateToProps = state => {
     return {
-        taskList: state.tasks.tasksList,
+        taskList: state.tasks.possibleDependencies,
         error: state.tasks.error,
-        loading: state.tasks.loading
+        loading: state.tasks.itemIsLoading
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ updateNotStartedTasks, createTaskDependency }, dispatch);
+    return bindActionCreators({ createTaskDependency, getPossibleTaskDependencies }, dispatch);
 };
 
 export default connect(

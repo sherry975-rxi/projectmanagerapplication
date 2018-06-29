@@ -44,9 +44,10 @@ export const getActiveProjectsFullfield = payload => {
 };
 
 
-export function chooseProject(projectManager) {
+export function chooseProject(project) {
+    console.log(project)
     return {
         type: 'PROJECT_CHOSEN',
-        projectManager
+        project
     }
 }
