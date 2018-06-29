@@ -525,6 +525,9 @@ public class RestProjectTasksControllerTest {
         //GIVEN: a project id
         String  taskId = "01";
 
+        project.setProjectId(1);
+        task.setProject(project);
+
         //WHEN
         when(taskService.getTaskByTaskID(taskId)).thenReturn(task);
         when(taskService.getTaskDtoByTaskId(taskId)).thenReturn(taskDTO);

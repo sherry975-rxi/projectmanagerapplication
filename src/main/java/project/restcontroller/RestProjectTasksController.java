@@ -302,9 +302,13 @@ public class RestProjectTasksController {
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
             "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.GET)
-    public ResponseEntity<TaskDTO> getTask (@PathVariable String taskId) {
+    public ResponseEntity<TaskDTO> getTask (@PathVariable String taskId, @PathVariable int projid) {
 
         TaskDTO taskDTO = taskService.getTaskDtoByTaskId(taskId);
+
+        if(taskDTO.getProject().getProjectId() != projid ) {
+            return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+        }
 
         for(String action : taskDTO.getTaskState().getActions()) {
             Link reference = TaskAction.getLinks(taskDTO.getProject().getProjectId(), taskId).get(action);
