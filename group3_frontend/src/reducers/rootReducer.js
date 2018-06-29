@@ -13,6 +13,8 @@ import userTasksReducer from './userTasksReducer';
 import projCollabsWoutTasksReducer from './projCollabsWoutTasksReducer';
 import projectTeamReducer from './projectTeamReducer';
 import availableUsersReducer from './availableProjectTeamReducer';
+import requestsReducer from './requestsReducer'
+import requestsFilterReducer from './requestsFilterReducer'
 import dependenciesReducer from './dependenciesReducer';
 
 const appReducer = combineReducers({
@@ -30,6 +32,8 @@ const appReducer = combineReducers({
     availableUsers: availableUsersReducer,
     createTask: createTaskReducer,
     tasks: tasksReducer,
+    requests: requestsReducer,
+    requestsFilter: requestsFilterReducer,
     dependencies: dependenciesReducer
 });
 const rootReducer = (state, action) => {

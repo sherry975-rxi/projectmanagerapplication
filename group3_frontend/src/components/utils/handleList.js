@@ -60,3 +60,15 @@ export function formatDate(date) {
         return '';
     }
 }
+
+export function handleRequestsHeaders(list) {
+    return list.map(request => ({
+        taskID : request.task.taskID,
+        taskDescription : request.task.description,
+        collaborator : request.projCollab.collaborator.name,
+        type: request.type,
+        approvalDate: formatDate(request.approvalDate),
+        rejectDate : formatDate(request.rejectDate),
+        
+    }));
+}
