@@ -69,6 +69,8 @@ export function handleRequestsHeaders(list) {
         type: request.type,
         approvalDate: formatDate(request.approvalDate),
         rejectDate : formatDate(request.rejectDate),
+        requestID : request.taskRequestDbId, 
+        projectID : request.task.project.projectId
         
     }));
 }

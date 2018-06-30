@@ -45,6 +45,8 @@ class Requests extends Component {
             return <AccordionMenuRequests list={this.props.openedRequests} />;
         }
         else if (this.props.filter === 'closedRequests') {
+            console.log("TESTE filtro close");
+            console.log(this.props.openedRequests);
             return <AccordionMenuRequests list={this.props.closedRequests} />;
         }
         else if (this.props.filter === 'searchList') {

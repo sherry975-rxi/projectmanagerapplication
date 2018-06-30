@@ -1,6 +1,7 @@
 import * as userTasksFilterActions from './userTasksFilterActions';
 import * as requestsFilterActions from './requestsFilterActions';
 import AuthService from "../pages/loginPage/AuthService";
+import {toastr} from "react-redux-toastr";
 
 
 
@@ -78,14 +79,23 @@ export function getOpenedRequests(projectId) {
 } */
 
 export function filterByOpen(list) {
-    var newList = list
-        .filter((item, index) => (item.approvalDate !== null && item.rejectDate !== null))
+  /*   var newList = list
+        .filter((item, index) => (item.approvalDate === "" && item.rejectDate === ""))
         .map((item, index) => {
             return (
                 item
             );
         });
+
+        return newList; */
+
+    var newList = list.filter(function (item) {
+        return item.approvalDate !== '' ? (item) : (null);
+    })
+
+
     return newList;
+    
     
   /*   var newList = list;
     console.log("TESTEEEEEE::::::")
@@ -111,7 +121,7 @@ export function getClosedRequests(projectId) {
             console.log("fetch")
             console.log(data)
            
-            dispatch(openedRequestsFetched(filterByClose(data)));
+            dispatch(closedRequestsFetched(filterByClose(data)));
             dispatch(requestsFilterActions.changeToClosedRequests())
             
         }).catch((error) => {
@@ -125,14 +135,24 @@ export function getClosedRequests(projectId) {
 
 
 export function filterByClose(list) {
-    var newList = list
-        .filter((item, index) => (item.approvalDate === null || item.rejectDate === null))
+/*     var newList = list
+        .filter((item, index) => (item.approvalDate !== "" || item.rejectDate !== ""))
         .map((item, index) => {
             return (
                 item
             );
         });
-    return newList;
+
+        return newList; */
+
+
+        var newList = list.filter(function (item) {
+            return item.approvalDate === '' ? (item) : (null);
+        })
+    
+    
+        return newList;
+
     
 }
 
@@ -206,7 +226,6 @@ export function searching(event, list, option) {
 
     return filteredList;
 }
-
 
 export function searchListRequestsFetched(searchList) {
     return {

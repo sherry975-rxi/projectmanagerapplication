@@ -5,6 +5,7 @@ import * as Constants from '../utils/titleConstants';
 import { connect } from 'react-redux';
 import { handleRequestsHeaders } from '../../components/utils/handleList';
 import ChangeProfile from '../../pages/users/ChangeProfile';
+import ApproveRequest from '../../pages/requests/ApproveRequest';
 
 class AccordionMenuRequests extends Component {
     constructor(props) {
@@ -31,6 +32,22 @@ class AccordionMenuRequests extends Component {
             : 'rotatedArrow';
     }
 
+    showButtons(element){
+        if (
+            element.approvalDate === "" &&
+            element.rejectDate === ""
+        ){
+
+            return (
+                <ApproveRequest projectId={element.projectID} taskId={element.taskID} requestId={element.requestID} />
+            )
+        } else {
+            return <div> </div> 
+        }
+
+
+    }
+
     renderList(list) {
         let key = 0;
 
@@ -39,10 +56,10 @@ class AccordionMenuRequests extends Component {
         return handleRequestsHeaders(list).map((element, index) => (
             <Panel eventKey={key}>
                 <Panel.Heading>
-                    <Panel.Title toggle>
+                    <Panel.Title /* toggle */>
                         <div
                             className="taskContent"
-                            onClick={() => this.toggle(index)}
+                            //onClick={() => this.toggle(index)}
                         >
                             <table className="table table-content">
                                 <thead>
@@ -69,9 +86,12 @@ class AccordionMenuRequests extends Component {
                                             </div>
                                         </th> */}
                                         <th>
-                                        <Button>
+                                        {/* <Button>
                                             <Glyphicon className="ok-button" glyph="ok" />
-                                        </Button> &nbsp;
+                                        </Button>  */}
+                                        {this.showButtons(element)}
+                                        {/* <ApproveRequest projectId={element.projectID} taskId={element.taskID} requestId={element.requestID} /> */}
+                                        &nbsp;
                                         <Button>
                                             <Glyphicon className="remove-button" glyph="remove" />
                                         </Button>
