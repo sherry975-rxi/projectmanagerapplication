@@ -33,6 +33,51 @@ export function getActiveProjects(userId) {
     };
 }
 
+export function getProjectCost(projectId) {
+    const authService = new AuthService();
+    return dispatch => {
+        authService.fetch(
+            `/projects/${projectId}/cost`,
+            {
+                method: 'get'
+            }
+        ).then(responseData => {
+            dispatch(getProjectCostFullfield(responseData));
+        });
+    }
+}
+
+export function changeCalculationMethod(projectId, projectDTOData, userId) {
+    const authService = new AuthService();
+    return dispatch => {
+        authService.fetch(
+            `/projects/${projectId}`,
+            {
+                body: JSON.stringify(projectDTOData),
+                method: 'PATCH'
+            }
+        ).then(responseData => {
+            dispatch(getProjectCost(projectId))
+            dispatch(changeCalculationMethodFullfield(responseData))
+            dispatch(getUserProjects(userId))
+        });
+    }
+}
+
+export const changeCalculationMethodFullfield = payload => {
+    return {
+        type: 'CALCULATION_METHOD_UPDATED',
+        payload
+    }
+}
+
+
+export const getProjectCostFullfield = payload => {
+    return {
+        type: 'PROJECT_COST_LOADED',
+        payload
+    }
+}
 
 
 
@@ -44,10 +89,9 @@ export const getActiveProjectsFullfield = payload => {
 };
 
 
-export function chooseProject(project) {
-    console.log(project)
+export const chooseProject = payload => {
     return {
         type: 'PROJECT_CHOSEN',
-        project
+        payload
     }
 }
