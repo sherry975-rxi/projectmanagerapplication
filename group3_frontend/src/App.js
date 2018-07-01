@@ -13,8 +13,6 @@ import LoginPage from './pages/loginPage/LoginPage';
 import SignUpPage from './pages/signUp/SignUpPage';
 import firstPage from './pages/firstPage/firstPage';
 import Footer from './components/footer/footer';
-import ProjectCostCalculation from './pages/projectCost/ProjectCostCalculation';
-import ProjectCost from './pages/projectCost/ProjectCost';
 import CreateReport from './pages/reports/CreateReport';
 import Reports from './pages/reports/Reports';
 import AllRequests from './pages/requests/AllRequests';
@@ -88,23 +86,6 @@ class App extends Component {
                     <Route
                         path="/homepage"
                         component={requiresAuth(HomePage)}
-                    />
-
-                    <ProtectedRoute
-                        path="/selectprojectcostcalculation/:projectID"
-                        component={requiresAuth(ProjectCostCalculation)}
-                        permissions={['COLLABORATOR', 'DIRECTOR']}
-                    />
-
-                    <Route
-                        path="/test"
-                        component={Test}
-                    />
-
-                    <ProtectedRoute
-                        path="/projectcost/:projectID"
-                        component={requiresAuth(ProjectCost)}
-                        permissions={['COLLABORATOR', 'DIRECTOR']}
                     />
 
                     <ProtectedRoute
