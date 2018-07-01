@@ -65,7 +65,6 @@ class EditTask extends Component {
     }
 
     isOutsideRange = (day) => {
-        console.log(this.props.task.currentProject.startdate)
 
         if (this.props.task.currentProject.startdate === undefined || this.props.task.currentProject.finishdate === undefined)
             return false;
@@ -246,41 +245,30 @@ class EditTask extends Component {
 
 
 
-        for(let i = 0; i < this.props.task.taskTeam.length; i++){
-            console.log(this.props.task.state)
-            console.log(this.props.task.state === "FINISHED")
+        for (let i = 0; i < this.props.task.taskTeam.length; i++) {
 
-            if(this.props.task.state === "FINISHED"){
-                return(
-                    <div>
-
-                    </div>
-                )
+            if (this.props.task.state === "FINISHED") {
+                return null
             }
 
-            if(this.props.task.taskTeam[i]['taskCollaborator']['email'] === this.AuthService.getProfile().sub || 
-            this.props.task.currentProject.projectManager.email === this.AuthService.getProfile().sub){
-                console.log("Ime here")
+            if (this.props.task.taskTeam[i]['taskCollaborator']['email'] === this.AuthService.getProfile().sub ||
+                this.props.task.currentProject.projectManager.email === this.AuthService.getProfile().sub) {
+
                 return (
                     <div>
-                    <span onClick={this.handleShow.bind(this)}> <Glyphicon className="pencil" glyph="glyphicon glyphicon-edit" /></ span>
-    
-                    <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
-                        {toRender}
-                    </Modal>
-                </div>
+                        <span onClick={this.handleShow.bind(this)}> <Glyphicon className="pencil" glyph="glyphicon glyphicon-edit" /></ span>
+
+                        <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                            {toRender}
+                        </Modal>
+                    </div>
                 )
-            
+
             }
-        
-         
+
         }
 
-        return (
-            <div>
-              
-            </div>
-        )
+        return null
 
     }
 }
