@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { handleRequestsHeaders } from '../../components/utils/handleList';
 import ChangeProfile from '../../pages/users/ChangeProfile';
 import ApproveRequest from '../../pages/requests/ApproveRequest';
+import RejectRequest from '../../pages/requests/RejectRequest';
 
 class AccordionMenuRequests extends Component {
     constructor(props) {
@@ -39,7 +40,10 @@ class AccordionMenuRequests extends Component {
         ){
 
             return (
+                <div>
                 <ApproveRequest projectId={element.projectID} taskId={element.taskID} requestId={element.requestID} />
+                <RejectRequest projectId={element.projectID} taskId={element.taskID} requestId={element.requestID} />
+                </div>
             )
         } else {
             return <div> </div> 
@@ -91,10 +95,10 @@ class AccordionMenuRequests extends Component {
                                         </Button>  */}
                                         {this.showButtons(element)}
                                         {/* <ApproveRequest projectId={element.projectID} taskId={element.taskID} requestId={element.requestID} /> */}
-                                        &nbsp;
+                                       {/*  &nbsp;
                                         <Button>
                                             <Glyphicon className="remove-button" glyph="remove" />
-                                        </Button>
+                                        </Button> */}
                                         </th>
                                         <a className="key">{key++}</a>
                                     </tr>
