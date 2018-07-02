@@ -15,6 +15,7 @@ import { getAvailableCollaboratorsForTask } from '../../actions/projectTasksActi
 import { bindActionCreators } from 'redux';
 import EditTask from './../../pages/tasks/editTask/EditTask';
 import CreateReport from '../../pages/reports/CreateReport';
+import { reloadTask } from '../../actions/dependencyActions'
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -66,6 +67,10 @@ class AccordionMenu extends Component {
         }
     }
 
+    handleClickDependencies = (projectId, taskId) => {
+        this.props.reloadTask(projectId, taskId)
+    }
+
     renderDeleteTaskButton(element) {
         if (
             element.currentProject.projectManager.email ===
@@ -83,7 +88,7 @@ class AccordionMenu extends Component {
             ) : (
                     ''
                 );
-        } else return <div> </div>;
+        } else return null;
     }
 
     renderCreateAssignmentRequestTaskButton(element) {
@@ -110,12 +115,14 @@ class AccordionMenu extends Component {
             canIViewReports = (element.taskTeam[i]['taskCollaborator']['email'] === this.AuthService.getProfile().sub)
         }
 
-
-
-        if (this.props.profile === 'COLLABORATOR' && canIViewReports ||
-            this.props.profile === 'COLLABORATOR' && element.currentProject.projectManager.email ===
+        let isCollaborator = this.props.profile === 'COLLABORATOR'
+        let isProjectManager = element.currentProject.projectManager.email ===
             this.AuthService.getProfile()
-                .sub) {
+                .sub
+
+        if ((isCollaborator && canIViewReports) || (
+            (isCollaborator && isProjectManager)
+                .sub)) {
             return (
                 <div align="right">
                     <p />
@@ -153,7 +160,7 @@ class AccordionMenu extends Component {
                             '/dependencies'
                         }
                     >
-                        <button className="buttonFinished">
+                        <button className="buttonFinished" onClick={() => this.handleClickDependencies(element.project, element.taskID)}>
                             View Dependencies
                         </button>
                     </Link>
@@ -211,7 +218,7 @@ class AccordionMenu extends Component {
                             '/dependencies'
                         }
                     >
-                        <button className="buttonFinished">
+                        <button className="buttonFinished" onClick={() => this.handleClickDependencies(element.project, element.taskID)}>
                             View Dependencies
                         </button>
                     </Link>
@@ -247,10 +254,6 @@ class AccordionMenu extends Component {
     }
 
     renderList(list) {
-
-
-
-
 
         let key = 0;
         return handleTaskHeaders(list).map((element, index) => (
@@ -337,6 +340,7 @@ class AccordionMenu extends Component {
     }
 
     render() {
+
         return (
             <PanelGroup
                 accordion
@@ -364,7 +368,7 @@ const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ getAvailableCollaboratorsForTask }, dispatch);
+    return bindActionCreators({ getAvailableCollaboratorsForTask, reloadTask }, dispatch);
 };
 
 export default connect(

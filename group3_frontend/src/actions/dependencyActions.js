@@ -1,9 +1,9 @@
-import {toastr} from "react-redux-toastr";
+import { toastr } from "react-redux-toastr";
 
 
 export function reloadTask(projectId, taskId) {
     return dispatch => {
-        tasksLoading();
+        dispatch(tasksLoading());
         fetch(`/projects/${projectId}/tasks/${taskId}`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'GET'
@@ -39,7 +39,7 @@ export function getAllTaskDependencies(projectId, taskId) {
 
 export function getPossibleTaskDependencies(projectId, taskId) {
     return dispatch => {
-        tasksLoading();
+
         fetch(`/projects/${projectId}/tasks/${taskId}/possibleDependencies`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'GET'
@@ -58,7 +58,6 @@ export function getPossibleTaskDependencies(projectId, taskId) {
 
 export function createTaskDependency(projectId, taskId, parentId, postpone) {
     return dispatch => {
-        tasksLoading();
         fetch(`/projects/${projectId}/tasks/${taskId}/createDependency/${parentId}/${postpone}`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'PUT'
@@ -79,7 +78,7 @@ export function createTaskDependency(projectId, taskId, parentId, postpone) {
 
 export function removeTaskDependency(projectId, taskId, parentId) {
     return dispatch => {
-        tasksLoading();
+
         fetch(`/projects/${projectId}/tasks/${taskId}/removeDependency/${parentId}`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'PUT'
