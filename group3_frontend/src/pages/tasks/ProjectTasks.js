@@ -7,6 +7,7 @@ import LoadingComponent from './../../components/loading/LoadingComponent';
 import { Redirect } from 'react-router-dom';
 import CreateTask from './createTask/CreateTask';
 import { get } from 'lodash';
+import ProjectTasksSearch from './ProjectTasksSearch'
 
 class ProjectTasks extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class ProjectTasks extends Component {
         } else if (this.props.error) {
             return <Redirect to="/login" />;
         }
-        return <AccordionMenu list={this.props.tasks} />;
+        return <AccordionMenu list={this.props.updatedTasks} />;
     };
 
     render() {
@@ -34,6 +35,7 @@ class ProjectTasks extends Component {
                 <h3 id="projectTasksTitle">
                     <b>Project Tasks</b>
                 </h3>
+                <ProjectTasksSearch projectId={this.props.match.params.projectID} />
                 &nbsp;
                 <FetchTaskButton
                     projectId={this.props.match.params.projectID}
@@ -50,8 +52,9 @@ const mapStateToProps = state => {
         taskFilter: get(state, 'tasks.taskFilter'),
         tasks: get(state, 'tasks.tasksList', []),
         tasksLoading: get(state, 'tasks.itemIsLoading', []),
-        error: get(state, 'tasks.error', [])
+        error: get(state, 'tasks.error', []),
+        updatedTasks: get(state, 'tasks.updatedList', [])
     };
 };
 
-export default connect(mapStateToProps)(ProjectTasks);
+export default connect(mapStateToProps, null)(ProjectTasks);

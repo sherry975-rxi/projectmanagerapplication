@@ -66,9 +66,9 @@ class ApproveRequest extends Component {
     render() {
         return (
             <div>
-                <Button>
-                    <Glyphicon className="ok-button" glyph="ok" onClick={this.handleClick.bind(this)}/>
-                </Button>
+                 <span onClick={this.handleClick.bind(this)}> <Glyphicon className="pencil" glyph="ok" /></ span>
+                 
+                    {/* <Glyphicon className="ok-button" glyph="ok" onClick={this.handleClick.bind(this)}/> */}
             </div>
         );
     }

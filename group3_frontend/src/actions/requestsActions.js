@@ -2,6 +2,7 @@ import * as userTasksFilterActions from './userTasksFilterActions';
 import * as requestsFilterActions from './requestsFilterActions';
 import AuthService from "../pages/loginPage/AuthService";
 import {toastr} from "react-redux-toastr";
+import { isNullOrUndefined } from 'util';
 
 
 
@@ -79,22 +80,24 @@ export function getOpenedRequests(projectId) {
 } */
 
 export function filterByOpen(list) {
-  /*   var newList = list
-        .filter((item, index) => (item.approvalDate === "" && item.rejectDate === ""))
+    var newList = list
+        //.filter((item, index) => (item.approvalDate === "" && item.rejectDate === ""))
+        .filter((item, index) => (isNullOrUndefined(item.approvalDate) && isNullOrUndefined(item.rejectDate)))
+
         .map((item, index) => {
             return (
                 item
             );
         });
 
-        return newList; */
+        return newList;
 
-    var newList = list.filter(function (item) {
+/*     var newList = list.filter(function (item) {
         return item.approvalDate !== '' ? (item) : (null);
     })
 
 
-    return newList;
+    return newList; */
     
     
   /*   var newList = list;
@@ -135,23 +138,27 @@ export function getClosedRequests(projectId) {
 
 
 export function filterByClose(list) {
-/*     var newList = list
-        .filter((item, index) => (item.approvalDate !== "" || item.rejectDate !== ""))
+    var newList = list
+        //.filter((item, index) => (item.approvalDate !== "" || item.rejectDate !== ""))
+        .filter((item, index) => (!isNullOrUndefined(item.approvalDate) || !isNullOrUndefined(item.rejectDate)))
+
         .map((item, index) => {
+            console.log("datas")
+            console.log(item.approvalDate)
             return (
                 item
             );
         });
 
-        return newList; */
+        return newList;
 
 
-        var newList = list.filter(function (item) {
+       /*  var newList = list.filter(function (item) {
             return item.approvalDate === '' ? (item) : (null);
         })
     
     
-        return newList;
+        return newList; */
 
     
 }

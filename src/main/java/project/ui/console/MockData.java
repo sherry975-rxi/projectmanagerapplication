@@ -49,14 +49,14 @@ public class MockData {
     // Instantiate the users, sets their passwords
     User userAdmin = userService.createUser("Teresa Ribeiro", "admin@gmail.com", "001",
             "Administrator", "917653635", street, zipCode, city, city, country);
-        userAdmin.setPassword(passwordEncoder.encode("123456"));
+        userAdmin.setPassword(passwordEncoder.encode("Pull2018"));
         userAdmin.setUserProfile(Profile.ADMIN);
 		userAdmin.setQuestion("1");
         userAdmin.setAnswer("Kiko");
 
     User userDirector = userService.createUser("Roberto Santos", "director@gmail.com", "002",
             "Director", "917653636", street, zipCode, city, city, country);
-        userDirector.setPassword(passwordEncoder.encode("abcdef"));
+        userDirector.setPassword(passwordEncoder.encode("kiwi2011"));
         userDirector.setUserProfile(Profile.DIRECTOR);
         userDirector.setQuestion("2");
         userDirector.setAnswer("School of Rock");

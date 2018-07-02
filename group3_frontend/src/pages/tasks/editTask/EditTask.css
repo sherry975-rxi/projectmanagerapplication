@@ -37,3 +37,15 @@
   #projectTasksTitle{
 margin-top: 5px;
   }
+
+.cross-remove{
+    color: rgb(177, 105, 105);
+    font-size: 20px;
+}
+
+.cross-remove:hover{
+    color: rgb(102, 38, 38);
+    font-size: 20px;
+    cursor: pointer;
+
+}
