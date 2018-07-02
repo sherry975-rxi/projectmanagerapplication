@@ -11,14 +11,14 @@ WORKDIR /switch-2017-g003/group3_frontend
 
 # preparing react app environment...
 RUN npm install && \
-    npm install react-country-region-selector --save && \
-    npm install react-skillbars --save && \
-    npm install react-redux --save && \
-    npm install redux --save && \
-    npm install redux-thunk --save && \
-    npm install progressbar.js --save && \
-    npm install dateformat --save && \
-    npm install react-dates --save && \
+    # npm install react-country-region-selector --save && \
+    # npm install react-skillbars --save && \
+    # npm install react-redux --save && \
+    # npm install redux --save && \
+    # npm install redux-thunk --save && \
+    # npm install progressbar.js --save && \
+    # npm install dateformat --save && \
+    # npm install react-dates --save && \
     npm install -g json
 
 # setting proxy in package.json for backend service...
