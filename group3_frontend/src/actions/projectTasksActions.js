@@ -8,6 +8,7 @@ import {
 import { TASKS_FILTER } from '../constants/TasksConstants';
 import { updateUnassignedProjCollabs } from './projCollabsWoutTasksActions';
 import { refreshTasksByFilter } from "./refreshTasksActions";
+import * as userTasksFilterActions from "./userTasksFilterActions";
 
 export function addCollaboratorToTask(projectId, taskId, userDTO, filterName) {
     return dispatch => {
@@ -212,6 +213,7 @@ export function getAllProjectTasks(projectId) {
             .then(responseData => responseData.json())
             .then(data => {
                 dispatch(allProjectTasksFetched(data));
+                dispatch(filterActions.changeToAllTasks());
                 return data;
             })
             .catch(error => {
@@ -261,6 +263,74 @@ export function updateCancelledTasks(projectId) {
                 fetchTasksHasErrored();
             });
     };
+}
+
+export function searchList(event, list, option) {
+
+    return dispatch => {
+        var updatedList = searching(event, list, option)
+
+        dispatch(searchListTasksFetched(updatedList));
+        dispatch(userTasksFilterActions.changeToSearchTasks())
+
+    };
+
+}
+
+export function searching(event, list, option) {
+    var lista1 = list;
+
+    switch (option) {
+        case '1':
+            lista1 = lista1.filter(function (item) {
+                return item.taskID.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '2':
+            lista1 = lista1.filter(function (item) {
+                // JSON.stringify(item.project)
+                return item.project.projectId.toString().toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '3':
+            lista1 = lista1.filter(function (item) {
+                return item.description.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '4':
+            lista1 = lista1.filter(function (item) {
+                return item.currentState.toString().toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '5':
+            lista1 = lista1.filter(function (item) {
+
+                return item.startDate.toString().toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        case '6':
+
+            lista1 = lista1.filter(function (item) {
+                return item.finishDate.toString().toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+            break;
+        default:
+            lista1 = lista1.filter(function (item) {
+                return item.taskID.toLowerCase().search(
+                    event.target.value.toLowerCase()) !== -1;
+            });
+
+
+    }
+
+
+    return lista1;
 }
 
 export function finishTasksFetched(finishedTasks) {
@@ -329,6 +399,13 @@ export function tasksLoading() {
 export function fetchTasksHasErrored() {
     return {
         type: 'FETCH_HAS_ERRORED'
+    };
+}
+
+export function searchListTasksFetched(updatedList) {
+    return {
+        type: 'SEARCHTASKS_FETCHED',
+        updatedList
     };
 }
 
