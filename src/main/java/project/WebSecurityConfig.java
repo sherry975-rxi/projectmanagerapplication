@@ -27,7 +27,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS = {
             "/account/**"
+
     };
+    private static final String[] PUBLIC_MATCHERSHTTPS = {
+            "/**"
+
+    };
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
     @Autowired
@@ -43,6 +49,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
+
+        http.requiresChannel()
+                .antMatchers(PUBLIC_MATCHERSHTTPS).requiresSecure();
 
         http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 
