@@ -7,6 +7,7 @@ import UserTasksFilter from '../tasks/UserTasksFilter';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 import { connect } from 'react-redux';
 import LoadingComponent from './../../components/loading/LoadingComponent';
+import { tasksLoading } from './../../actions/dependencyActions';
 
 class UserTasks extends Component {
     constructor(props) {
@@ -23,16 +24,11 @@ class UserTasks extends Component {
 
     renderTasks() {
 
-
-        if (this.props.tasksLoading) {
+        while (this.props.tasksLoading) {
             return (<LoadingComponent />)
         }
 
-        else if (this.props.error) {
-            return <Redirect to="/login" />;
-        }
-
-        else if (this.props.filter === 'myAll') {
+        if (this.props.filter === 'myAll') {
 
             return <AccordionMenu list={this.props.myAllTasks} />;
         }
@@ -80,7 +76,8 @@ const mapStateToProps = state => {
         myOngoingTasks: state.userTasks.myOngoingTasks,
         myAllTasks: state.userTasks.myAllTasks,
         lastMonthFinishedTasks: state.userTasks.lastMonthFinishedTasks,
-        updatedList: state.userTasks.updatedList
+        updatedList: state.userTasks.updatedList,
+        tasksLoading: state.userTasks.itemIsLoading
     };
 };
 

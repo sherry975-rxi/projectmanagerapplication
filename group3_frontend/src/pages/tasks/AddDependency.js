@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {createTaskDependency, getPossibleTaskDependencies } from "../../actions/dependencyActions";
-import {ControlLabel, DropdownButton, FormControl, FormGroup, MenuItem} from "react-bootstrap";
+import { createTaskDependency, getPossibleTaskDependencies } from "../../actions/dependencyActions";
+import { ControlLabel, DropdownButton, FormControl, FormGroup, MenuItem } from "react-bootstrap";
 import './TaskDependencies.css'
 
 
@@ -25,7 +25,7 @@ class AddDependency extends Component {
 
     // when opening the Add Dependency dropdown button, it dispatches an action to fetch all possible task dependencies for that task
     handleClick = () => {
-        if(!this.state.open) {
+        if (!this.state.open) {
             this.props.getPossibleTaskDependencies(this.props.projectID, this.props.taskID);
             this.setState({
                 open: true
@@ -67,10 +67,10 @@ class AddDependency extends Component {
 
         return (
             <DropdownButton
-                className="dependencyButton"
+                className="dependencyGenericButton"
                 title='Create Dependency'
                 key="0"
-                id={`dropdown-basic-0`}
+                id='dropdown-basic-0'
                 value={this.props.projectID}
                 onClick={this.handleClick}
                 open={this.state.open}

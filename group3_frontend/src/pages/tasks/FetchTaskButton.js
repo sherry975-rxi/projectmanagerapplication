@@ -87,12 +87,12 @@ class FetchTaskButton extends Component {
             </label>
 
 
-                     <input
-               id={TASKS_FILTER.CANCELLED_TASKS} name="view3" type="radio" onChange={this.handleChange} />
-             <label
-                className="buttonFont"
-                htmlFor={TASKS_FILTER.CANCELLED_TASKS}
-                onClick="">
+                    <input
+                        id={TASKS_FILTER.CANCELLED_TASKS} name="view3" type="radio" onChange={this.handleChange} />
+                    <label
+                        className="buttonFont"
+                        htmlFor={TASKS_FILTER.CANCELLED_TASKS}
+                    >
                         Cancelled
             </label>
 

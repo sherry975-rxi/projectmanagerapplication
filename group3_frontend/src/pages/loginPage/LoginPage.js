@@ -75,7 +75,7 @@ class LoginPage extends Component {
                                 type="password"
                             />
                         </FormGroup>
-                        <button onClick={!this.validateForm}> login </button>
+                        <button onClick={() => !this.validateForm}> login </button>
                         <p className="message">
                             Not registered?
                             <a href="/signup">Create an account</a>
