@@ -140,7 +140,7 @@ export function getClosedRequests(projectId) {
 export function filterByClose(list) {
     var newList = list
         //.filter((item, index) => (item.approvalDate !== "" || item.rejectDate !== ""))
-        .filter((item, index) => (!isNullOrUndefined(item.approvalDate)|| !isNullOrUndefined(item.rejectDate)))
+        .filter((item, index) => (!isNullOrUndefined(item.approvalDate) || !isNullOrUndefined(item.rejectDate)))
 
         .map((item, index) => {
             console.log("datas")

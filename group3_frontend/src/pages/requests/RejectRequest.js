@@ -66,9 +66,10 @@ class RejectRequest extends Component {
     render() {
         return (
             <div>
-                <Button>
+                <span onClick={this.handleClick.bind(this)}> <Glyphicon className="cross-remove" glyph="remove" /></ span>
+                {/* <Button>
                     <Glyphicon className="remove-button" glyph="remove" onClick={this.handleClick.bind(this)}/>
-                </Button>
+                </Button> */}
             </div>
         );
     }
