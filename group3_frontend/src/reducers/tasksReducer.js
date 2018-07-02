@@ -21,20 +21,7 @@ export default (state = {}, action) => {
                 updatedList: action.tasks,
                 error: false
             };
-        case 'DEPENDENCIES_FETCHED':
-            return {
-                ...state,
-                itemIsLoading: false,
-                tasksDependencies: action.tasks,
-                error: false
-            };
-        case 'POSSIBLE_DEPENDENCIES_FETCHED':
-            return {
-                ...state,
-                itemIsLoading: false,
-                possibleDependencies: action.tasks,
-                error: false
-            };
+
         case 'ITEM_LOADING':
             return {
                 ...state,

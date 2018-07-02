@@ -718,7 +718,16 @@ public class RestProjectTasksController {
     @RequestMapping(value = "editTask", method = RequestMethod.PATCH)
     public ResponseEntity<TaskDTO> editTask (@PathVariable int projid, @RequestBody Task taskDto) {
 
-        return new ResponseEntity<>(taskService.editTask(taskDto), HttpStatus.OK);
+        TaskDTO editedTask = taskService.editTask(taskDto);
+
+        for(String action : editedTask.getTaskState().getActions()) {
+            Link actionLink = TaskAction.getLinks(projid, taskDto.getTaskID()).get(action);
+            editedTask.add(actionLink);
+
+        }
+
+        //If the task is not found an exception will be thrown by the taskService
+        return new ResponseEntity<>(editedTask, HttpStatus.OK);
 
         }
 

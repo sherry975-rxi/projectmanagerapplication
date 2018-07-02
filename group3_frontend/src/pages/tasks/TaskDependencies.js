@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 import LoadingComponent from './../../components/loading/LoadingComponent';
-import {bindActionCreators} from "redux";
-import {getAllTaskDependencies} from "../../actions/projectTasksActions";
+import { bindActionCreators } from "redux";
+import { getAllTaskDependencies, reloadTask } from "../../actions/dependencyActions";
 import Error from "../../components/error/error";
 import AddDependency from "./AddDependency";
 import AuthService from "../loginPage/AuthService";
@@ -14,10 +14,7 @@ class TaskDependencies extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            projectManager: false
-        }
-
+        this.props.reloadTask(this.props.match.params.projectID, this.props.match.params.taskID);
 
         this.authService = new AuthService();
     }
@@ -25,41 +22,27 @@ class TaskDependencies extends Component {
     // after mounting the component, an action is dispatched to fetch all dependencies of the chosen task
     // as well as confirmation of the logged in user's permissions in the project
     componentDidMount() {
-        this.props.getAllTaskDependencies(this.props.match.params.projectID, this.props.match.params.taskID);
 
-        this.isProjectManager();
+        this.props.getAllTaskDependencies(this.props.match.params.projectID, this.props.match.params.taskID);
 
     }
 
     // this method fetches the selected task and compares its project manager against the logged in user
     isProjectManager() {
-        this.authService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${this.props.match.params.taskID}`,
-            { method: 'GET' }
-        ).then(response => {
-            console.log(response);
-            this.setState({
-                task: response,
-                projectManager: response.project.projectManager.email === this.authService.getProfile().sub
-            });
 
-        }).catch(error => {
-            console.log(error);
-            this.setState({
-                projectManager: false
-            });
+        return this.props.childTask.project.projectManager.email === this.authService.getProfile().sub;
 
-        });
     }
 
     // when the logged in user is the project manager, this method renders both buttons to add and remove dependency
     getDependencyButtons() {
-        if(this.state.projectManager && this.state.task.startDate == null) {
+        if (this.isProjectManager() && this.props.childTask.startDate == null) {
             return (
-            <div align="right">
-                <AddDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
-                {' '}
-                <RemoveDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
-            </div>);
+                <div align="right">
+                    <AddDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
+                    {' '}
+                    <RemoveDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
+                </div>);
         } else {
             return <div align="right"></div>;
         }
@@ -77,34 +60,51 @@ class TaskDependencies extends Component {
     };
 
     childTaskDetails = () => {
-        console.log(this.state.task);
-        if(this.state.task != null) {
+        console.log(this.props.childTask);
+        if (this.props.childTask != null) {
             return (
                 <table>
                     <thead>
-                    <tr>
-                        <th>
+                        <tr>
+                            <th>
 
-                            <p>
-                                <b>Task ID:</b> &nbsp;
-                                {this.state.task.taskID}
-                            </p>
-                            <p>
-                                <b>Description:</b> &nbsp;
-                                {this.state.task.description}
-                            </p>
-                            <p>
-                                <b>State:</b> &nbsp;
-                                {this.state.task.currentState}
-                            </p>
+                                <p>
+                                    <b>Task ID:</b> &nbsp;
+                                {this.props.childTask.taskID}
+                                </p>
+                                <p>
+                                    <b>Description:</b> &nbsp;
+                                {this.props.childTask.description}
+                                </p>
+                                <p>
+                                    <b>State:</b> &nbsp;
+                                {this.props.childTask.currentState}
+                                </p>
 
-                            <br />
+                                <p>
+                                    <b>Estimated Start Date:</b> &nbsp;
+                                {this.props.childTask.estimatedTaskStartDate}
+                                </p>
+                                <p>
+                                    <b>Estimated Deadline:</b> &nbsp;
+                                {this.props.childTask.taskDeadline}
+                                </p>
+                                <p>
+                                    <b>Start Date:</b> &nbsp;
+                                {this.props.childTask.startDate}
+                                </p>
+                                <p>
+                                    <b>Finish Date:</b> &nbsp;
+                                {this.props.childTask.finishDate}
+                                </p>
 
-                        </th>
+                                <br />
+
+                            </th>
 
                             {this.getDependencyButtons()}
 
-                    </tr>
+                        </tr>
                     </thead>
                 </table>
             );
@@ -124,14 +124,15 @@ class TaskDependencies extends Component {
 }
 const mapStateToProps = state => {
     return {
-        tasks: state.tasks.tasksDependencies,
-        tasksLoading: state.tasks.itemIsLoading,
-        error: state.tasks.error
+        childTask: state.dependencies.childTask,
+        tasks: state.dependencies.tasksDependencies,
+        tasksLoading: state.dependencies.itemIsLoading,
+        error: state.dependencies.error
     };
 };
 const mapDispatchToProps = dispatch =>
     bindActionCreators(
-        { getAllTaskDependencies }, dispatch
+        { getAllTaskDependencies, reloadTask }, dispatch
     );
 export default connect(
     mapStateToProps,

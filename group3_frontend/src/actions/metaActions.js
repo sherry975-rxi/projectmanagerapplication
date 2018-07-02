@@ -10,19 +10,21 @@ export const projectTableDetailsToogle = payload => {
     };
 };
 
-export function getTotalTimeSpentOnTasksLastMonth(userId) {
+export const getTotalTimeSpentOnTasksLastMonth = userId => {
     return dispatch => {
-        fetch(`/users/${userId}/tasks/totaltimespent/completed/lastmonth`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
-            method: 'GET'
-        })
+        return fetch(
+            `/users/${userId}/tasks/totaltimespent/completed/lastmonth`,
+            {
+                headers: { Authorization: localStorage.getItem('id_token') },
+                method: 'GET'
+            }
+        )
             .then(responseData => responseData.json())
             .then(payload => {
                 dispatch(totalTimeSpentOnTasksLastMonth(payload));
-            })
-            .catch(error => {});
+            });
     };
-}
+};
 
 export function totalTimeSpentOnTasksLastMonth(payload) {
     return {

@@ -10,6 +10,14 @@
 !/node_modules/fetch-mock
 !/node_modules/redux-thunk
 !/node_modules/redux-mock-store
+!node_modules/react-forecast
+!node_modules/react-forecast/*
+!/node_modules/chart.js
+!/node_modules/chartjs-color
+!/node_modules/chartjs-color-string
+!/node_modules/react-chartjs-2
+!/node_modules/lodash.isplainobject
+
 
 # testing
 /coverage

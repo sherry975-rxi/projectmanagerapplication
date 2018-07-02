@@ -9,7 +9,8 @@ import ItemsButton from './itemsButton';
 import ActiveProjectTeam from '../../pages/projects/ActiveProjectTeam';
 import SelectCalculationMethods from '../../pages/projectCost/SelectCalculationMethods';
 import { updateUnassignedProjCollabs } from '../../actions/projCollabsWoutTasksActions';
-import { chooseProject } from './../../actions/projectActions';
+import { chooseProject, getProjectCost } from './../../actions/projectActions';
+import ProjectCost from '../../pages/projectCost/ProjectCost.jsx'
 
 class ProjectsTableRow extends Component {
     handleRotate = () => {
@@ -76,6 +77,11 @@ class ProjectsTableRow extends Component {
         this.props.updateUnassignedProjCollabs(this.props.project.projectId)
     }
 
+    handleClickOnProjectCost(projectId) {
+        this.props.chooseProject(this.props.project)
+        this.props.getProjectCost(projectId)
+    }
+
     // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
     // cost calculation methods
     renderDropdownButton(title, i) {
@@ -108,25 +114,15 @@ class ProjectsTableRow extends Component {
                         <ItemsButton text=" View unassigned" />
                     </Link>
 
-                    <Link
-                        className="items-menu"
-                        to={'/projectcost/' + this.props.project.projectId}
-                    >
-                        <ItemsButton text="Project Cost" />
-                    </Link>
+                    <ProjectCost project={this.props.project} />
 
-                    <Link
-                        className="items-menu"
+                    <Link className="items-menu"
                         to={
-                            '/selectprojectcostcalculation/' +
-                            this.props.project.projectId
-                        }
+                            '/projects/' +
+                            this.props.project.projectId +
+                            '/requests'}
+                        onClick={this.handleClickOnProjectCost(this.props.project.projectId, this.props.project.projectCalculationMethod)}
                     >
-                        <ItemsButton text="Change Calculation Method" />
-                    </Link>
-
-                    <Link className="items-menu" to={'/projects/' +
-                        this.props.project.projectId + '/requests'}>
                         <ItemsButton text="View Requests" />
                     </Link>
                 </DropdownButton >
@@ -234,7 +230,7 @@ const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs, chooseProject }, dispatch);
+    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs, chooseProject, getProjectCost }, dispatch);
 };
 
 export default connect(
