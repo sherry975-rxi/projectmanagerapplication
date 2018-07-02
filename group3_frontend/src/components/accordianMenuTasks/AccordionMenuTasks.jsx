@@ -105,17 +105,17 @@ class AccordionMenu extends Component {
 
         let canIViewReports = false
 
-       for(let i = 0; i < Object.keys(element.taskTeam).length; i++){
-         
+        for (let i = 0; i < Object.keys(element.taskTeam).length; i++) {
+
             canIViewReports = (element.taskTeam[i]['taskCollaborator']['email'] === this.AuthService.getProfile().sub)
-       }
-      
+        }
 
 
-        if (this.props.profile === 'COLLABORATOR' && canIViewReports || 
-        this.props.profile === 'COLLABORATOR' &&  element.currentProject.projectManager.email ===
-        this.AuthService.getProfile()
-            .sub ) {
+
+        if (this.props.profile === 'COLLABORATOR' && canIViewReports ||
+            this.props.profile === 'COLLABORATOR' && element.currentProject.projectManager.email ===
+            this.AuthService.getProfile()
+                .sub) {
             return (
                 <div align="right">
                     <p />
@@ -132,15 +132,15 @@ class AccordionMenu extends Component {
                             <button className="buttonFinished">View Reports </button>
                         </Link>
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (
-                    <CreateReport taskID = {element.taskID} projectID = {element.project}/>
+                        <CreateReport taskID={element.taskID} projectID={element.project} />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
 
@@ -166,8 +166,8 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderCreateAssignmentRequestTaskButton(element)}
@@ -182,23 +182,23 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                 </div>
             );
-        } else if(this.props.profile === 'COLLABORATOR') {
+        } else if (this.props.profile === 'COLLABORATOR') {
             return (
                 <div align="right">
                     <p />
-                   
+
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (
-                    <CreateReport taskID = {element.taskID} projectID = {element.project}/>
+                        <CreateReport taskID={element.taskID} projectID={element.project} />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                     <p />
 
@@ -218,7 +218,7 @@ class AccordionMenu extends Component {
 
                     <a className="key">{key++}</a>
                     <p />
-              
+
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderCreateAssignmentRequestTaskButton(element)}
@@ -233,14 +233,14 @@ class AccordionMenu extends Component {
                             project={element.project}
                         />
                     ) : (
-                        ''
-                    )}
+                            ''
+                        )}
                     <a className="key">{key++}</a>
                 </div>
             );
         }
-        
-        
+
+
         else {
             return <div align="right"> </div>;
         }
@@ -248,9 +248,9 @@ class AccordionMenu extends Component {
 
     renderList(list) {
 
-        
-      
-        
+
+
+
 
         let key = 0;
         return handleTaskHeaders(list).map((element, index) => (
@@ -293,9 +293,7 @@ class AccordionMenu extends Component {
                     <table className="table table-details">
                         <thead>
                             <tr>
-                                <th>
-                                
-                                    <EditTask task={element} /> &nbsp;
+                                <th id="taskContent">
 
                                     <p>
                                         <b>Estimated Effort:</b> &nbsp;
@@ -317,9 +315,10 @@ class AccordionMenu extends Component {
                                         <b>Start date:</b> &nbsp;
                                         {element.startDate}
                                     </p>
-                                    <br />
-                                    <br />
+                                    <EditTask task={element} /> &nbsp;
+
                                 </th>
+
                                 <td>
                                     {
                                         <ActiveTaskTeam

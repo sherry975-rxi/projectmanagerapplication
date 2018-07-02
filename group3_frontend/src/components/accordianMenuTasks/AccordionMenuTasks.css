@@ -169,3 +169,7 @@
 .accordion-menu-tasks .table.table-content > thead:hover {
     background: none;
 }
+
+#taskContent{
+   vertical-align: text-top
+}

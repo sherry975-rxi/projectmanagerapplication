@@ -2,6 +2,7 @@
     background-color: #ecf0f1;
     margin-top: -10px;
     color: rgb(93, 93, 93);
+    margin-top: 1px;
 }
 
 .table.table-hover.projectteam > thead > tr > th {
@@ -12,7 +13,9 @@
     font-size: 12px;
     font-family: 'Oxygen', sans-serif;
     font-weight: bold;
+
 }
+
 .table.table-hover.projectteam > tbody > tr > td {
     text-align: left;
     color: rgb(93, 93, 93);
