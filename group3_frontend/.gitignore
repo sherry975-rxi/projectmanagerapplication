@@ -17,6 +17,14 @@
 !/node_modules/chartjs-color-string
 !/node_modules/react-chartjs-2
 !/node_modules/lodash.isplainobject
+!/node_modules/react-country-region-selector
+!/node_modules/react-skillbars
+!/node_modules/react-redux
+!/node_modules/redux
+!/node_modules/progressbar.js
+!/node_modules/react-dates
+
+
 
 
 # testing
