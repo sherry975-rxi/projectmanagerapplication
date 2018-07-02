@@ -11,13 +11,10 @@ import java.util.Calendar;
 @Entity
 @Table(name = "ProjectCollaborator")
 @Transactional
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "projectCollaboratorId", scope = ProjectCollaborator.class)
 public class ProjectCollaborator extends ResourceSupport implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIdentityReference(alwaysAsId = true)
 	private long projectCollaboratorId;
 
 

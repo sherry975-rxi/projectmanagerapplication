@@ -14,14 +14,12 @@ import java.util.Calendar;
 
 @Entity
 @Table(name = "TaskTeamRequest")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "taskRequestDbId", scope = TaskTeamRequest.class)
 public class TaskTeamRequest extends ResourceSupport implements Serializable {
 
 	static final long serialVersionUID = 61L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonIdentityReference(alwaysAsId = true)
     private int taskRequestDbId;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
