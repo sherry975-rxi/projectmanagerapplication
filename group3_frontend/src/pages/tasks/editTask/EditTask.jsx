@@ -244,33 +244,55 @@ class EditTask extends Component {
         }
 
 
+        if (this.props.task.currentProject.projectManager.email === this.AuthService.getProfile().sub){
 
-        for (let i = 0; i < this.props.task.taskTeam.length; i++) {
+            return (
+                <div>
+                    <span onClick={this.handleShow.bind(this)}> <Glyphicon className="pencil" glyph="glyphicon glyphicon-edit" /></ span>
 
-            if (this.props.task.state === "FINISHED") {
-                return null
+                    <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                        {toRender}
+                    </Modal>
+                </div>
+            )
+        } 
+        else if(this.props.task.taskTeam.length > 0)
+        {
+
+
+            for (let i = 0; i < this.props.task.taskTeam.length; i++) {
+
+                if (this.props.task.state === "FINISHED") {
+                    return null
+                }
+
+                if (this.props.task.taskTeam[i]['taskCollaborator']['email'] == this.AuthService.getProfile().sub) {
+
+                    return (
+                        <div>
+                            <span onClick={this.handleShow.bind(this)}> <Glyphicon className="pencil" glyph="glyphicon glyphicon-edit" /></ span>
+
+                            <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                                {toRender}
+                            </Modal>
+                        </div>
+                    )
+
+                }
+                
             }
 
-            if (this.props.task.taskTeam[i]['taskCollaborator']['email'] === this.AuthService.getProfile().sub ||
-                this.props.task.currentProject.projectManager.email === this.AuthService.getProfile().sub) {
-
-                return (
-                    <div>
-                        <span onClick={this.handleShow.bind(this)}> <Glyphicon className="pencil" glyph="glyphicon glyphicon-edit" /></ span>
-
-                        <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
-                            {toRender}
-                        </Modal>
-                    </div>
-                )
-
-            }
+            return null;
 
         }
 
-        return null
+        else {
+            return null
+        }
 
-    }
+        }
+
+        
 }
 
 const mapStateToProps = state => {
