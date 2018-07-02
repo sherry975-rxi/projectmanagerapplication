@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
+
 .Login {
     padding: 60px 0;
   }
@@ -6,3 +8,93 @@
     margin: 0 auto;
     max-width: 320px;
   }
+
+  .bigBox {
+    width:568px;
+    height: 120px;
+    margin-top: 50px;
+  }
+
+  .leftBox {
+    float:left;
+    height:100px;
+    width: 274px;
+    margin-right: 3px;
+
+  }
+
+  .rightBox {
+    float:right;
+    height:100px;
+    width: 274px;
+    margin-left: 3px;
+
+
+
+  }
+
+  .left-upperBox{
+    float: top;
+    height:40px;
+    width: 274px;
+    padding-top: 5px;
+    background-color: rgb(135, 190, 178);
+    color:white;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Helvetica;
+  }
+
+
+  .left-lowerBox{
+    float: bottom;
+    height:60px;
+    width: 274px;
+    background-color: rgb(135, 190, 178);
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Fjalla One';
+  }
+
+  .right-upperBox{
+    padding-top: 5px;
+    align-content: center;
+    float: top;
+    height:40px;
+    width: 274px;
+    background-color: rgb(135, 190, 178);
+    color:white;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Helvetica;
+  }
+
+
+  .right-lowerBox{
+    float: bottom;
+    height:60px;
+    width: 274px;
+    background-color: rgb(135, 190, 178);
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Fjalla One';
+  }
+
+  .costIcon{
+    font-size: 25px;
+    margin-right: 2px;
+  }
+
+  .editBudget{
+    float: right;
+    margin-right: 7px;
+    font-size: 20px;
+  }
+
+  .editBudget:hover{
+   color: rgb(42, 114, 102);
+  }
+
+

@@ -9,80 +9,16 @@ class AllRequests extends Component {
         super(props);
         this.state = {
             requests: [],
-            tasks: [],
             message: ''
         };
         this.authService = new AuthService();
-        //this.getAllTasks = this.getAllTasks.bind(this);
     }
 
-    /* async getAllTasks() {
-        console.log("arranque do fetch");
-        console.log(this.props.match.params.projectID);
-        this.authService.fetch(
-            `/projects/${this.props.match.params.projectID}/tasks/all`, 
-            {
-            method: 'GET' }
-        ).then(responseData => {
-                this.setState({
-                    tasks: responseData,
-                    message: responseData.error
-                })
-        });
-            
-            console.log(this.state.tasks);
-            console.log("fim do fetch");
-        
-                
-        } */
+    
     
 
    async componentDidMount() {
-
-    /* console.log("arranque do fetch");
-    console.log(this.props.match.params.projectID);
-    this.authService.fetch(
-        `/projects/${this.props.match.params.projectID}/tasks/all`, 
-        {
-        method: 'GET' }
-    ).then(responseData => {
-     
-            this.setState({
-                tasks: responseData,
-                message: responseData.error
-            })
-            console.log(this.state.tasks)
     
-        console.log("segundo")
-
-        console.log(this.state.tasks)
-
-        var allRequests = [];
-      
-        this.state.tasks.map((taskItem ) => {
-            console.log("mapeamento")
-        this.authService.fetch(`/projects/${this.props.match.params.projectID}/tasks/${taskItem.taskID}/requests`, {
-            method: 'get'
-        }).then(responseData => {
-            console.log("resquests")
-            console.log(responseData)
-            console.log("fim dos request de cada uma")
-            // this.setState({
-            //     requests: responseData,
-            //     message: responseData.error
-            // });
-            if(responseData.length >0){
-            allRequests.push(responseData);
-            console.log("show me the way")
-            console.log(allRequests)}
-        });
-    });
-    this.setState({
-        requests: allRequests,
-    });
-}); */
-    
-
     this.authService.fetch(`/projects/${this.props.match.params.projectID}/tasks/allRequests`, {
         method: 'get'
     }).then(responseData => {
@@ -127,7 +63,6 @@ class AllRequests extends Component {
     }
 
     render() {
-        if (this.state.message !== '') {
             return (
                 <div className="Requests">
                     <h3>
@@ -147,9 +82,7 @@ class AllRequests extends Component {
                     </table>
                 </div>
             );
-        } else {
-            return <Error message={this.state.message + ' NOT AUTHORIZED!'} />;
-        }
+       
     }
 }
 

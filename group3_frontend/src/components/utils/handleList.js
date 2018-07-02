@@ -55,8 +55,22 @@ export function formatDate(date) {
 
     if (date != null) {
 
-        return moment(date).format("DD/MMM/YYYY");
+        return moment(date).format("YYYY-MM-DD");
     } else {
         return '';
     }
+}
+
+export function handleRequestsHeaders(list) {
+    return list.map(request => ({
+        taskID: request.task.taskID,
+        taskDescription: request.task.description,
+        collaborator: request.projCollab.collaborator.name,
+        type: request.type,
+        approvalDate: formatDate(request.approvalDate),
+        rejectDate: formatDate(request.rejectDate),
+        requestID: request.taskRequestDbId,
+        projectID: request.task.project.projectId
+
+    }));
 }

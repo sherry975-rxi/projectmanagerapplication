@@ -13,8 +13,6 @@ import LoginPage from './pages/loginPage/LoginPage';
 import SignUpPage from './pages/signUp/SignUpPage';
 import firstPage from './pages/firstPage/firstPage';
 import Footer from './components/footer/footer';
-import ProjectCostCalculation from './pages/projectCost/ProjectCostCalculation';
-import ProjectCost from './pages/projectCost/ProjectCost';
 import CreateReport from './pages/reports/CreateReport';
 import Reports from './pages/reports/Reports';
 import AllRequests from './pages/requests/AllRequests';
@@ -33,6 +31,7 @@ import User from './pages/users/User';
 import ChangeProfile from './pages/users/ChangeProfile';
 import ListOfProjCollabWoutTasks from './pages/projects/ListOfProjCollabWoutTasks';
 import TaskDependencies from './pages/tasks/TaskDependencies';
+import Requests from './pages/requests/Requests';
 
 
 class App extends Component {
@@ -90,23 +89,6 @@ class App extends Component {
                     />
 
                     <ProtectedRoute
-                        path="/selectprojectcostcalculation/:projectID"
-                        component={requiresAuth(ProjectCostCalculation)}
-                        permissions={['COLLABORATOR', 'DIRECTOR']}
-                    />
-
-                    <Route
-                        path="/test"
-                        component={Test}
-                    />
-
-                    <ProtectedRoute
-                        path="/projectcost/:projectID"
-                        component={requiresAuth(ProjectCost)}
-                        permissions={['COLLABORATOR', 'DIRECTOR']}
-                    />
-
-                    <ProtectedRoute
                         path="/projects/:projectID/tasks/:taskID/reports"
                         component={requiresAuth(Reports)}
                         permissions={['COLLABORATOR']}
@@ -135,11 +117,11 @@ class App extends Component {
                         component={requiresAuth(Profile)}
                     />
 
-                    <ProtectedRoute
-                        path="/projects/:projectID/requests"
+                    {/* <ProtectedRoute
+                        exact path="/projects/:projectID/requests"
                         component={requiresAuth(AllRequests)}
                         permissions={['COLLABORATOR']}
-                    />
+                    /> */}
 
                     <ProtectedRoute
                         path="/projectdetails/:projectID"
@@ -176,6 +158,11 @@ class App extends Component {
                         exact path="/updateProfile"
                         component={requiresAuth(ChangeProfile)}
                         permissions={['ADMIN']}
+                    />
+                    <ProtectedRoute
+                        exact path="/projects/:projectID/requests"
+                        component={requiresAuth(Requests)}
+                        permissions={['COLLABORATOR']}
                     />
 
                 </Switch>

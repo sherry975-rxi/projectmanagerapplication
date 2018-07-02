@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 import LoadingComponent from './../../components/loading/LoadingComponent';
-import {bindActionCreators} from "redux";
-import {getAllTaskDependencies, reloadTask} from "../../actions/dependencyActions";
+import { bindActionCreators } from "redux";
+import { getAllTaskDependencies, reloadTask } from "../../actions/dependencyActions";
 import Error from "../../components/error/error";
 import AddDependency from "./AddDependency";
 import AuthService from "../loginPage/AuthService";
@@ -36,13 +36,13 @@ class TaskDependencies extends Component {
 
     // when the logged in user is the project manager, this method renders both buttons to add and remove dependency
     getDependencyButtons() {
-        if(this.isProjectManager() && this.props.childTask.startDate == null) {
+        if (this.isProjectManager() && this.props.childTask.startDate == null) {
             return (
-            <div align="right">
-                <AddDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
-                {' '}
-                <RemoveDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
-            </div>);
+                <div align="right">
+                    <AddDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
+                    {' '}
+                    <RemoveDependency projectID={this.props.match.params.projectID} taskID={this.props.match.params.taskID} />
+                </div>);
         } else {
             return <div align="right"></div>;
         }
@@ -61,50 +61,50 @@ class TaskDependencies extends Component {
 
     childTaskDetails = () => {
         console.log(this.props.childTask);
-        if(this.props.childTask != null) {
+        if (this.props.childTask != null) {
             return (
                 <table>
                     <thead>
-                    <tr>
-                        <th>
+                        <tr>
+                            <th>
 
-                            <p>
-                                <b>Task ID:</b> &nbsp;
+                                <p>
+                                    <b>Task ID:</b> &nbsp;
                                 {this.props.childTask.taskID}
-                            </p>
-                            <p>
-                                <b>Description:</b> &nbsp;
+                                </p>
+                                <p>
+                                    <b>Description:</b> &nbsp;
                                 {this.props.childTask.description}
-                            </p>
-                            <p>
-                                <b>State:</b> &nbsp;
+                                </p>
+                                <p>
+                                    <b>State:</b> &nbsp;
                                 {this.props.childTask.currentState}
-                            </p>
+                                </p>
 
-                            <p>
-                                <b>Estimated Start Date:</b> &nbsp;
+                                <p>
+                                    <b>Estimated Start Date:</b> &nbsp;
                                 {this.props.childTask.estimatedTaskStartDate}
-                            </p>
-                            <p>
-                                <b>Estimated Deadline:</b> &nbsp;
+                                </p>
+                                <p>
+                                    <b>Estimated Deadline:</b> &nbsp;
                                 {this.props.childTask.taskDeadline}
-                            </p>
-                            <p>
-                                <b>Start Date:</b> &nbsp;
+                                </p>
+                                <p>
+                                    <b>Start Date:</b> &nbsp;
                                 {this.props.childTask.startDate}
-                            </p>
-                            <p>
-                                <b>Finish Date:</b> &nbsp;
+                                </p>
+                                <p>
+                                    <b>Finish Date:</b> &nbsp;
                                 {this.props.childTask.finishDate}
-                            </p>
+                                </p>
 
-                            <br />
+                                <br />
 
-                        </th>
+                            </th>
 
                             {this.getDependencyButtons()}
 
-                    </tr>
+                        </tr>
                     </thead>
                 </table>
             );

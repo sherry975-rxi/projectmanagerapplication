@@ -17,7 +17,6 @@ import { toastr } from 'react-redux-toastr';
 import AuthService from '../../loginPage/AuthService';
 import moment from 'moment'
 
-
 class CreateTask extends Component {
 
     constructor(props, context) {
@@ -77,7 +76,7 @@ class CreateTask extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         <div className="loadingTaskWrapper">
-                            <center><div class="loadingTask"></div> </center></div>
+                            <center><div className="loadingTask"></div> </center></div>
                     </Modal.Body>
                     <Modal.Footer>
                     </Modal.Footer>
@@ -207,9 +206,6 @@ class CreateTask extends Component {
     }
 
     render() {
-
-        console.log(this.props.project)
-
         let isProjectManager = 'noButton'
 
         if (this.props.project !== undefined) {
