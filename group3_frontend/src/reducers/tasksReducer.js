@@ -18,6 +18,7 @@ export default (state = {}, action) => {
                 ...state,
                 itemIsLoading: false,
                 tasksList: action.tasks,
+                updatedList: action.tasks,
                 error: false
             };
         case 'DEPENDENCIES_FETCHED':
@@ -52,7 +53,8 @@ export default (state = {}, action) => {
                 ...state,
                 taskFilter: action.filter
             };
-
+        case 'SEARCHTASKS_FETCHED':
+            return { ...state, itemIsLoading: false, updatedList: action.updatedList, error: false }
         default:
             return state;
     }
