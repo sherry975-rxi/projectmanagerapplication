@@ -19,7 +19,7 @@ export function changeToDIRECTOR() {
 }
 
 export function changeToSearchUsers() {
-    return { type: 'SEARCHUSERS_FILTER' };
+    return { type: 'SEARCHUSERS_FILTER'};
 }
 
 export function changeToVISITOR() {

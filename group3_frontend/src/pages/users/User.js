@@ -5,17 +5,30 @@ import AuthService from './../loginPage/AuthService';
 import AccordionMenuUsers from '../../components/AccordianMenuUser/AccordionMenuUsers.jsx';
 import UserFilter from '../users/UserFilter';
 import UploadUsersFile from '../../components/UploadUserFile/UploadUsersFile'
+import {
+    finishUpdate
+} from "../../actions/UserActions";
+import {bindActionCreators} from "redux";
 
 class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
             users: [],
-            externalData: null
+            externalData: null,
+            check: false
         };
         this.AuthService = new AuthService();
         this.renderUsers = this.renderUsers.bind(this);
 
+    }
+
+    updateUsers(){
+        if(this.props.updated===true){
+            this.renderUsers();
+            this.forceUpdate();
+            this.props.finishUpdate();
+        }
     }
 
     //TODO: Add sort by ascending or descending order to these tables
@@ -54,7 +67,7 @@ class User extends Component {
         } else {
             return (
                 <div>
-                    <UploadUsersFile />
+                    <UploadUsersFile onChange={this.updateUsers()}/>
                     <UserFilter />
                     {this.renderUsers()}
                 </div>
@@ -66,6 +79,7 @@ class User extends Component {
 const mapStateToProps = state => {
     return {
         filter: state.usersFilter.filterType,
+        updated: state.usersFilter.update,
         allAdministrator: state.users.allAdministrator,
         allDirector: state.users.allDirector,
         allCollaborators: state.users.allCollaborators,
@@ -76,7 +90,9 @@ const mapStateToProps = state => {
     };
 };
 
+const mapDispatchToProps = dispatch => bindActionCreators({ finishUpdate }, dispatch)
+
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(User);

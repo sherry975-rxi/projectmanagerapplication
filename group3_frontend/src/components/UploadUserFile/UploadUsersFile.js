@@ -3,6 +3,18 @@ import AuthService from "../../pages/loginPage/AuthService";
 import { Modal } from 'react-bootstrap';
 import { toastr } from 'react-redux-toastr';
 import './uploadButton.css'
+import {
+    updateAllUsers,
+    markToUpdate,
+    updateCollaborators,
+    updateDirector,
+    updateVisitors,
+    updateAdministrator,
+    updateEmail,
+} from '../../actions/UserActions'
+import { changeToALLUSERS } from '../../actions/filterUserActions'
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
 
 class UploadUsersFile extends Component {
     constructor(props) {
@@ -15,6 +27,34 @@ class UploadUsersFile extends Component {
     }
 
     handleClose() {
+
+        if(this.props.filter === 'searchUsers'){
+            var trueFilter = this.props.previousFilter;
+        } else {
+            var trueFilter = this.props.filter;
+        }
+        switch (trueFilter) {
+            case 'email':
+                this.props.updateEmail(this.props.userID);
+                break;
+            case 'collaborators':
+                this.props.updateCollaborators();
+                break;
+            case 'directors':
+                this.props.updateDirector();
+                break;
+            case 'administrators':
+                this.props.updateAdministrator();
+                break;
+            case 'visitors':
+                this.props.updateVisitors();
+                break;
+            default:
+                this.props.updateAllUsers();
+                break;
+        }
+
+        this.props.markToUpdate();
         this.setState({ show: false });
     }
 
@@ -97,4 +137,11 @@ class UploadUsersFile extends Component {
     }
 
 }
-export default UploadUsersFile;
+const mapStateToProps = state => { return ({ filter: state.usersFilter.filterType, previousFilter: state.usersFilter.prevFilter }) }
+const mapDispatchToProps = dispatch => bindActionCreators({
+    updateAllUsers, changeToALLUSERS, markToUpdate, updateEmail,
+    updateCollaborators,
+    updateDirector,
+    updateAdministrator,
+    updateVisitors }, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(UploadUsersFile);
