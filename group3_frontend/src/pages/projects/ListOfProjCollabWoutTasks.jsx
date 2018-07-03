@@ -44,8 +44,11 @@ class ListOfProjCollabWoutTasks extends Component {
             <PanelGroup
                 accordion
                 className="accordion-menu-tasks"
-                id="accordion-controlled-example"
-            >
+                id="accordion-controlled-example">
+                <h3>
+                    <b>Unassigned Collaborators</b>
+                    <br></br>
+                </h3>
                 <Panel >
                     <table className="table table-title">
                         <thead>

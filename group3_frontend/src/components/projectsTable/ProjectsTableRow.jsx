@@ -11,6 +11,7 @@ import SelectCalculationMethods from '../../pages/projectCost/SelectCalculationM
 import { updateUnassignedProjCollabs } from '../../actions/projCollabsWoutTasksActions';
 import { chooseProject, getProjectCost } from './../../actions/projectActions';
 import ProjectCost from '../../pages/projectCost/ProjectCost.jsx'
+import { updateProjectTeam } from "../../actions/projectTeamActions";
 
 class ProjectsTableRow extends Component {
     handleRotate = () => {
@@ -20,6 +21,8 @@ class ProjectsTableRow extends Component {
                 : this.props.index;
         const payload = { index: index };
         this.props.projectTableDetailsToogle(payload);
+        this.props.updateProjectTeam(this.props.project.projectId)
+        this.props.getProjectCost(this.props.project.projectId)
     };
 
     getManagerIcon() {
@@ -48,7 +51,7 @@ class ProjectsTableRow extends Component {
                     <br />
                 </div>
             );
-        } else return <div> </div>;
+        } else return null;
     }
 
     changeCalculationMethod() {
@@ -77,10 +80,6 @@ class ProjectsTableRow extends Component {
         this.props.updateUnassignedProjCollabs(this.props.project.projectId)
     }
 
-    handleClickOnProjectCost(projectId) {
-        this.props.chooseProject(this.props.project)
-        this.props.getProjectCost(projectId)
-    }
 
     // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
     // cost calculation methods
@@ -111,7 +110,7 @@ class ProjectsTableRow extends Component {
                             '/UnassignedProjCollab'
                         } onClick={this.handleClick.bind(this)}
                     >
-                        <ItemsButton text=" View unassigned" />
+                        <ItemsButton text=" View unassigned collabs" />
                     </Link>
 
                     <ProjectCost project={this.props.project} />
@@ -121,15 +120,13 @@ class ProjectsTableRow extends Component {
                             '/projects/' +
                             this.props.project.projectId +
                             '/requests'}
-                        onClick={this.handleClickOnProjectCost(this.props.project.projectId, this.props.project.projectCalculationMethod)}
                     >
                         <ItemsButton text="View Requests" />
                     </Link>
                 </DropdownButton >
             );
         } else if (
-            this.props.profile === 'COLLABORATOR' ||
-            this.props.profile === 'DIRECTOR'
+            this.props.profile === 'COLLABORATOR'
         ) {
             return (
                 <DropdownButton
@@ -217,7 +214,7 @@ class ProjectsTableRow extends Component {
                         <div align="center">{this.changeCalculationMethod()}</div>
                     </td>
                 </tr>
-            </Fragment>
+            </Fragment >
         );
     }
 }
@@ -230,7 +227,7 @@ const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs, chooseProject, getProjectCost }, dispatch);
+    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs, chooseProject, updateProjectTeam, getProjectCost }, dispatch);
 };
 
 export default connect(

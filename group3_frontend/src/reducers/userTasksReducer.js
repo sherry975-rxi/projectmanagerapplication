@@ -18,12 +18,12 @@ export default (state = INITIAL_STATE, action) => {
         case 'MYALLTASKS_FETCHED':
             return { ...state, itemIsLoading: false, myAllTasks: action.myAllTasks, error: false }
         case 'LASTMONTHTASKS_FETCHED':
-            return { ...state, itemIsLoading: false, lastMonthFinishedTasks: action.lastMonthFinishedTasks, error: false}
+            return { ...state, itemIsLoading: false, lastMonthFinishedTasks: action.lastMonthFinishedTasks, error: false }
         case 'SEARCHTASKS_FETCHED':
             return { ...state, itemIsLoading: false, updatedList: action.updatedList, error: false }
         case 'ITEM_LOADING':
-            return { ...state, itemIsLoading: true, myAllTasks: action.myAllTasks, error: false }
-                case 'FETCH_HAS_ERRORED':
+            return { ...state, itemIsLoading: true }
+        case 'FETCH_HAS_ERRORED':
             return { ...state, itemIsLoading: false, error: true }
         default:
             return state;

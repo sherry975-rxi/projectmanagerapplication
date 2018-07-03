@@ -11,6 +11,8 @@ class ProjectCostWidget extends Component {
     }
 
     render() {
+
+        console.log(this.props.calculationMethod)
         return (
             <div className="bigBox">
                 <div className="leftBox">

@@ -73,6 +73,7 @@ export const changeCalculationMethodFullfield = payload => {
 
 
 export const getProjectCostFullfield = payload => {
+    console.log(payload)
     return {
         type: 'PROJECT_COST_LOADED',
         payload

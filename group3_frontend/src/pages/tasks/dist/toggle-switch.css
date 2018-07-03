@@ -232,19 +232,19 @@
   .switch-toggle label:nth-child(2):nth-last-child(14),
   .switch-toggle label:nth-child(2):nth-last-child(14) ~ label,
   .switch-toggle label:nth-child(2):nth-last-child(14) ~ a {
-    width: calc(100.0%/7.0); }
+    width: calc(99.9%/7.0); }
   .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(3) + label ~ a {
-    left: calc(100.0%/7.0); }
+    left: calc(99.9%/7.0); }
   .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(5) + label ~ a {
-    left: calc((100.0%/7.0)*2.0); }
+    left: calc((99.9%/7.0)*2.0); }
   .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(7) + label ~ a {
-    left: calc((100.0%/7.0)*3.0); }
+    left: calc((99.9%/7.0)*3.0); }
   .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(9) + label ~ a {
-    left: calc((100.0%/7.0)*4.0); }
+    left: calc((99.9%/7.0)*4.0); }
   .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(11) + label ~ a {
-    left: calc((100.0%/7.0)*5.0); }
+    left: calc((99.9%/7.0)*5.0); }
   .switch-toggle label:nth-child(2):nth-last-child(14) ~ input:checked:nth-child(13) + label ~ a {
-    left: calc((100.0%/7.0)*6.0); }
+    left: calc((99.9%/7.0)*6.0); }
   /* Candy Theme
  * Based on the "Sort Switches / Toggles (PSD)" by Ormal Clarck
  * http://www.premiumpixels.com/freebies/sort-switches-toggles-psd/
@@ -253,27 +253,25 @@
   .switch-light.switch-candy > span {
     background-color: #2A3F54;
     border-radius: 3px;
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.2); }
+     }
   .switch-light.switch-candy span span,
   .switch-light.switch-candy input:checked ~ span span:first-child,
   .switch-toggle.switch-candy label {
     color: #fff;
     font-weight: 100;
-    text-align: center;
-    text-shadow: 1px 1px 1px #191b1e; }
+    text-align: center;}
   .switch-light.switch-candy input ~ span span:first-child,
   .switch-light.switch-candy input:checked ~ span span:nth-child(2),
   .switch-candy input:checked + label {
-    color: #333;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); }
+    color: rgb(255, 255, 255);
+     }
   .switch-candy a {
     /*
     border: 1px solid #333;
     border-radius: 3px;
     */
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.45);
-    background-color: rgb(135, 190, 178);
-    background-image: linear-gradient(rgba(255, 255, 255, 0.2), transparent); }
+
+    background-color: rgb(135, 190, 178); }
   .switch-candy-blue a {
     background-color: #38a3d4; }
   .switch-candy-yellow a {
@@ -327,11 +325,11 @@
     color: #fff; }
   .switch-ios.switch-toggle {
     border-bottom: 0.4px solid #ddd;
-    
+
   }
     .switch-ios.switch-toggle a {
       background-color: rgb(230, 230, 230);
-      
+
       transition: all 0.12s ease-out; }
     .switch-ios.switch-toggle label {
       height: 2.4em;
