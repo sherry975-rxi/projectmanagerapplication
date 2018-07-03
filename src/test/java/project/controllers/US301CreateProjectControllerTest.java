@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.model.*;
+import project.model.costcalculationinterface.CostCalculationFactory;
 import project.services.ProjectService;
 import project.services.UserService;
 
@@ -203,9 +204,9 @@ public class US301CreateProjectControllerTest {
 
 		 newProject.createAvailableCalculationMethodsString(allowedMethods);
 
-		List<CalculationMethod> allowedMethodNames = new ArrayList<>();
-		allowedMethodNames.add(CalculationMethod.CI);
-		allowedMethodNames.add(CalculationMethod.CF);
+		List<CostCalculationFactory.Method> allowedMethodNames = new ArrayList<>();
+		allowedMethodNames.add(CostCalculationFactory.Method.CI);
+		allowedMethodNames.add(CostCalculationFactory.Method.CF);
 
 		 assertEquals(allowedMethodNames, newProject.listAvaliableCalculationMethods());
 
@@ -228,9 +229,9 @@ public class US301CreateProjectControllerTest {
 
 		us301CreateProjectController.selectCalculationMethods(allowedMethods);
 
-		assertEquals(CalculationMethod.CF, newProject.getCalculationMethod());
+		assertEquals(CostCalculationFactory.Method.CF, newProject.getCalculationMethod());
 
-		assertFalse(newProject.isCalculationMethodAllowed(CalculationMethod.CI.getCode()));
+		assertFalse(newProject.isCalculationMethodAllowed(CostCalculationFactory.Method.CI.getCode()));
 
 	}
 

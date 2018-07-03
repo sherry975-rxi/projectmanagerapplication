@@ -173,3 +173,37 @@
 #taskContent{
    vertical-align: text-top
 }
+
+.statusIcon{
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: #1381CE;
+}
+
+.statusIcon.standby{
+    background-color: #FFB413;
+}
+
+.statusIcon.finished{
+    background-color: #28AA46;
+}
+
+.statusIcon.cancelled{
+    background-color: #D30545;
+}
+
+.statusIcon.created{
+    background-color: #b9b9b9;
+}
+
+.statusIcon.planned{
+    background-color: #969696;
+}
+
+.statusIcon.ready{
+    background-color: rgb(57, 82, 131);
+}
+
+

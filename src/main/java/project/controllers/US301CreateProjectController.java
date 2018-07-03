@@ -2,10 +2,10 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.model.CalculationMethod;
 import project.model.EffortUnit;
 import project.model.Project;
 import project.model.User;
+import project.model.costcalculationinterface.CostCalculationFactory;
 import project.services.ProjectService;
 import project.services.UserService;
 
@@ -136,7 +136,7 @@ public class US301CreateProjectController {
 	 */
 	public void selectCalculationMethods(List<Integer> allowedMethods) {
 	    createdProject.createAvailableCalculationMethodsString(allowedMethods);
-	    createdProject.setCalculationMethod(CalculationMethod.toEnum(allowedMethods.get(0)));
+	    createdProject.setCalculationMethod(CostCalculationFactory.Method.toEnum(allowedMethods.get(0)));
 	    projectService.updateProject(createdProject);
 
     }

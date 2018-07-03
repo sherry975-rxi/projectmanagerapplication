@@ -15,7 +15,6 @@ import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -669,16 +668,27 @@ public class RestProjectTasksController {
         Project project = projectService.getProjectById(projid);
 
         List <ProjectCollaborator> projCollabs = projectService.getActiveProjectTeam(project);
+        List <Task> tasksFromProject = taskService.getProjectTasks(project);
+
         List<ProjectCollaborator> unassignedTeam = new ArrayList<>();
+        int newCollab;
 
         ResponseEntity <List<ProjectCollaborator>> response ;
 
         for (ProjectCollaborator other : projCollabs) {
-            if (!taskService.isCollaboratorActiveOnAnyTask(other)) {
+            newCollab = 0;
+            for (Task task: tasksFromProject) {
+
+                if(task.isProjectCollaboratorActiveInTaskTeam(other)){
+                    newCollab ++;
+                }
+            }
+            if (newCollab == 0) {
                 unassignedTeam.add(other);
             }
         }
-            response  = new ResponseEntity<>(unassignedTeam, HttpStatus.OK);
+
+        response  = new ResponseEntity<>(unassignedTeam, HttpStatus.OK);
 
         return response;
     }
@@ -742,8 +752,6 @@ public class RestProjectTasksController {
     @RequestMapping(value = "allRequests", method = RequestMethod.GET)
     public ResponseEntity<List<TaskTeamRequest>> getAllTasksRequests (@PathVariable int projid) {
 
-        ResponseEntity<List<TaskTeamRequest>> responseEntity = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-
         List<Task> allTasks = new ArrayList<>();
         List<TaskTeamRequest> allTasksRequests = new ArrayList<>();
 
@@ -763,9 +771,8 @@ public class RestProjectTasksController {
 
 
         }
-        responseEntity = new ResponseEntity<>(allTasksRequests, HttpStatus.OK);
 
-        return responseEntity;
+        return new ResponseEntity<>(allTasksRequests, HttpStatus.OK);
 
 
 
