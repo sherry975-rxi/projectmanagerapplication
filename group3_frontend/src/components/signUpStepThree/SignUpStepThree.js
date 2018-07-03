@@ -19,7 +19,7 @@ class SignUpStepThree extends Component {
     handleCodeSubmit = event => {
         event.preventDefault();
         const verificationCode = this.state.verificationCode;
-        fetch(this.props.validationCodeUrl, {
+        return fetch(this.props.validationCodeUrl, {
             body: JSON.stringify({ codeToCheck: verificationCode }),
             headers: {
                 'content-type': 'application/json'
@@ -36,7 +36,6 @@ class SignUpStepThree extends Component {
                 this.setState({
                     hideWrongCode: ''
                 });
-                console.error('Verification code is incorrect. Try again');
             });
     };
 
