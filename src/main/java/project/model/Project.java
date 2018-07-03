@@ -2,6 +2,7 @@ package project.model;
 
 import com.google.common.base.Joiner;
 import org.springframework.hateoas.ResourceSupport;
+import project.model.costcalculationinterface.CostCalculationFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,7 +46,7 @@ public class Project extends ResourceSupport implements Serializable{
 	private Calendar finishdate;
 
 	@Enumerated(EnumType.STRING)
-	private CalculationMethod calculationMethod;
+	private CostCalculationFactory.Method calculationMethod;
 
 	private double projectCost;
 
@@ -89,7 +90,7 @@ public class Project extends ResourceSupport implements Serializable{
 		this.effortUnit = EffortUnit.HOURS;
 		this.budget = 0;
 		this.status = PLANNING;
-		this.calculationMethod = CalculationMethod.CI;
+		this.calculationMethod = CostCalculationFactory.Method.CI;
 		this.startdate = null;
 		this.finishdate = null;
 		this.availableCalculationMethods = "CI,CF,CM";
@@ -112,14 +113,13 @@ public class Project extends ResourceSupport implements Serializable{
 		this.status = status;
 	}
 
-    public CalculationMethod getCalculationMethod() {
+    public CostCalculationFactory.Method getCalculationMethod() {
         return calculationMethod;
     }
 
-    public void setCalculationMethod(CalculationMethod calculationMethod) {
-        this.calculationMethod = calculationMethod;
+    public void setCalculationMethod(CostCalculationFactory.Method method) {
+        this.calculationMethod = method;
     }
-
 
 	public void setName(String name) {
 		this.name = name;
@@ -404,14 +404,15 @@ public class Project extends ResourceSupport implements Serializable{
 		return this.getProjectStatus() == PLANNING || this.getProjectStatus() == INITIATION || this.getProjectStatus() ==  EXECUTION  || this.getProjectStatus() == DELIVERY;
 	}
 
-    public List<CalculationMethod> listAvaliableCalculationMethods() {
+    public List<CostCalculationFactory.Method> listAvaliableCalculationMethods() {
         return Arrays.asList(availableCalculationMethods.split(",")).stream().
-                map(CalculationMethod::valueOf).collect(Collectors.toList());
+                map(CostCalculationFactory.Method::valueOf).collect(Collectors.toList());
     }
 	public void createAvailableCalculationMethodsString(List<Integer> availableCalculationMethodList) {
 
 		this.availableCalculationMethods = Joiner.on(",").join(
-                availableCalculationMethodList.stream().map(CalculationMethod::toEnum).map(CalculationMethod::name).collect(Collectors.toList()));
+                availableCalculationMethodList.stream().map(CostCalculationFactory.Method::toEnum)
+						.map(CostCalculationFactory.Method::name).collect(Collectors.toList()));
 	}
 
 
@@ -431,7 +432,7 @@ public class Project extends ResourceSupport implements Serializable{
 	 * @return
 	 */
 	public boolean isCalculationMethodAllowed(Integer method) {
-		return listAvaliableCalculationMethods().contains(CalculationMethod.toEnum(method));
+		return listAvaliableCalculationMethods().contains(CostCalculationFactory.Method.toEnum(method));
 	}
 
 	public void setProjectCost(double projectCost) {

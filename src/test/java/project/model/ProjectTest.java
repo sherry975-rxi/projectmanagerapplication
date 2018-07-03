@@ -3,7 +3,7 @@ package project.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import project.services.TaskService;
+import project.model.costcalculationinterface.CostCalculationFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -222,14 +222,14 @@ public class ProjectTest {
 	 */
 	@Test
 	public void testSetAndGetCalculationMethod() {
-		p1.setCalculationMethod(CalculationMethod.CI);
-		assertEquals(p1.getCalculationMethod(), CalculationMethod.CI);
-		p1.setCalculationMethod(CalculationMethod.CF);
-		assertEquals(p1.getCalculationMethod(), CalculationMethod.CF);
-		p1.setCalculationMethod(CalculationMethod.CM);
-		assertEquals(p1.getCalculationMethod(), CalculationMethod.CM);
-		p1.setCalculationMethod(CalculationMethod.CIFM);
-		assertEquals(p1.getCalculationMethod(), CalculationMethod.CIFM);
+		p1.setCalculationMethod(CostCalculationFactory.Method.CI);
+		assertEquals(p1.getCalculationMethod(), CostCalculationFactory.Method.CI);
+		p1.setCalculationMethod(CostCalculationFactory.Method.CF);
+		assertEquals(p1.getCalculationMethod(), CostCalculationFactory.Method.CF);
+		p1.setCalculationMethod(CostCalculationFactory.Method.CM);
+		assertEquals(p1.getCalculationMethod(), CostCalculationFactory.Method.CM);
+		p1.setCalculationMethod(CostCalculationFactory.Method.CIFM);
+		assertEquals(p1.getCalculationMethod(), CostCalculationFactory.Method.CIFM);
 
 	}
 
@@ -422,25 +422,25 @@ public class ProjectTest {
 	}
 
     /**
-     * Tests the various returns of CalculationMethod.toEnum
+     * Tests the various returns of Method.toEnum
      */
 	@Test
 	public void testCalculationMethodsEnum() {
 	    // GIVEN valid enum values
         // WHEN calling toEnum method
         //THEN the result must be the chosen enum
-		assertEquals(CalculationMethod.toEnum(1), CalculationMethod.CI);
-		assertEquals(CalculationMethod.toEnum(2), CalculationMethod.CF);
-		assertEquals(CalculationMethod.toEnum(3), CalculationMethod.CM);
-        assertEquals(CalculationMethod.toEnum(4), CalculationMethod.CIFM);
+		assertEquals(CostCalculationFactory.Method.toEnum(1), CostCalculationFactory.Method.CI);
+		assertEquals(CostCalculationFactory.Method.toEnum(2), CostCalculationFactory.Method.CF);
+		assertEquals(CostCalculationFactory.Method.toEnum(3), CostCalculationFactory.Method.CM);
+        assertEquals(CostCalculationFactory.Method.toEnum(4), CostCalculationFactory.Method.CIFM);
 
         // AND WHEN calling the to enum method with a null input
         // THEN the output must be null
-        assertNull(CalculationMethod.toEnum(null));
+        assertNull(CostCalculationFactory.Method.toEnum(null));
 
         // AND WHEN calling the get description method
         // Then it must return the calculation method's desricption
-		assertEquals("First Collaborator Cost", CalculationMethod.CI.getDescription());
+		assertEquals("First Collaborator Cost", CostCalculationFactory.Method.CI.getDescription());
 
 	}
 
@@ -450,7 +450,7 @@ public class ProjectTest {
     @Test(expected= IllegalArgumentException.class)
     public void testCalculationMethodsEnumException() {
         // THEN it must throw an exception
-        assertEquals(CalculationMethod.toEnum(96), CalculationMethod.CI);
+        assertEquals(CostCalculationFactory.Method.toEnum(96), CostCalculationFactory.Method.CI);
 
     }
 

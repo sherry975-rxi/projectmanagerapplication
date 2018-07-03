@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import project.dto.TaskDTO;
 import project.model.*;
+import project.model.costcalculationinterface.CostCalculationFactory;
 import project.model.taskstateinterface.*;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
@@ -1732,7 +1733,7 @@ public class TaskServiceTest {
 
         // when the project is set to Last Collaborator for each report, and the cost
         // calculated
-        project.setCalculationMethod(CalculationMethod.CF);
+        project.setCalculationMethod(CostCalculationFactory.Method.CF);
         victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 20
@@ -1808,7 +1809,7 @@ public class TaskServiceTest {
 
         // when the project is set to First/Last Collaborator average for each report,
         // and the cost calculated
-        project.setCalculationMethod(CalculationMethod.CIFM);
+        project.setCalculationMethod(CostCalculationFactory.Method.CIFM);
         victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 15
@@ -1894,7 +1895,7 @@ public class TaskServiceTest {
 
         // when the project is set to Last Collaborator for each report, and the cost
         // calculated
-        project.setCalculationMethod(CalculationMethod.CF);
+        project.setCalculationMethod(CostCalculationFactory.Method.CF);
         victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 20
@@ -1903,7 +1904,7 @@ public class TaskServiceTest {
 
         // when the project is set to First/Last Collaborator average for each report,
         // and the cost calculated
-        project.setCalculationMethod(CalculationMethod.CIFM);
+        project.setCalculationMethod(CostCalculationFactory.Method.CIFM);
         victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 15
@@ -1912,7 +1913,7 @@ public class TaskServiceTest {
 
         // when the project is set to Collaborator cost average for each report, and the
         // cost calculated
-        project.setCalculationMethod(CalculationMethod.CM);
+        project.setCalculationMethod(CostCalculationFactory.Method.CM);
         victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 15
@@ -1931,7 +1932,7 @@ public class TaskServiceTest {
 
         // when the project is set to First/Last Collaborator average for each report,
         // and the cost calculated
-        project.setCalculationMethod(CalculationMethod.CIFM);
+        project.setCalculationMethod(CostCalculationFactory.Method.CIFM);
         victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 15
@@ -1940,7 +1941,7 @@ public class TaskServiceTest {
 
         // when the project is set to Collaborator cost average for each report, and the
         // cost calculated
-        project.setCalculationMethod(CalculationMethod.CM);
+        project.setCalculationMethod(CostCalculationFactory.Method.CM);
         victim.calculateReportEffortCost(project);
 
         // then the second report remains unchanged, and the first report becomes 33.33

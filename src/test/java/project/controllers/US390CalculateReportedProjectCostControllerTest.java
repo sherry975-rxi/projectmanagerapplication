@@ -2,7 +2,6 @@ package project.controllers;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.model.*;
+import project.model.costcalculationinterface.CostCalculationFactory;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -302,27 +302,27 @@ public class US390CalculateReportedProjectCostControllerTest {
         assertEquals(50, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
         // since the first calculation method (first collaborator instance) is the default one
-        controllerCost.selectReportCostCalculation(project, CalculationMethod.CI.getCode());
+        controllerCost.selectReportCostCalculation(project, CostCalculationFactory.Method.CI.getCode());
 
         // when chose, the cost must remain unchanged
         assertEquals(50, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
 
         // when cost is set to last collaborator instance
-        controllerCost.selectReportCostCalculation(project, CalculationMethod.CF.getCode());
+        controllerCost.selectReportCostCalculation(project, CostCalculationFactory.Method.CF.getCode());
 
         // then the cost must be Daniel's last cost (100) x 5
         assertEquals(500, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
 
         // when cost is set  to first/last average collaborator cost
-        controllerCost.selectReportCostCalculation(project, CalculationMethod.CIFM.getCode());
+        controllerCost.selectReportCostCalculation(project, CostCalculationFactory.Method.CIFM.getCode());
 
         // then the cost must be the average of Daniel's fist and last cost, times hours: ((100+10) /2 ) x 5
         assertEquals(275, controllerCost.calculateReportedProjectCostController(project), 0.01);
 
         // when cost is set is to 4, then the result must be the average of all costs from the user x hours
-        controllerCost.selectReportCostCalculation(project, CalculationMethod.CM.getCode());
+        controllerCost.selectReportCostCalculation(project, CostCalculationFactory.Method.CM.getCode());
 
         // then the total cost must be 225: ((10+25+100)/3)*5
         double average = 225;
