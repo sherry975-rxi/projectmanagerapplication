@@ -669,16 +669,25 @@ public class RestProjectTasksController {
         Project project = projectService.getProjectById(projid);
 
         List <ProjectCollaborator> projCollabs = projectService.getActiveProjectTeam(project);
+        List <Task> tasks = taskService.getProjectTasks(project);
         List<ProjectCollaborator> unassignedTeam = new ArrayList<>();
+        int newCollab;
 
         ResponseEntity <List<ProjectCollaborator>> response ;
 
         for (ProjectCollaborator other : projCollabs) {
-            if (!taskService.isCollaboratorActiveOnAnyTask(other)) {
+            newCollab = 0;
+            for (Task task: tasks) {
+                if(task.isProjectCollaboratorActiveInTaskTeam(other)){
+                    newCollab ++;
+                }
+            }
+            if (newCollab == 0) {
                 unassignedTeam.add(other);
             }
         }
-            response  = new ResponseEntity<>(unassignedTeam, HttpStatus.OK);
+
+        response  = new ResponseEntity<>(unassignedTeam, HttpStatus.OK);
 
         return response;
     }
