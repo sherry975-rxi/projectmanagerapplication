@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import AuthService from '../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
 import { Redirect } from 'react-router-dom';
-import { Modal } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap';
+import { isNullOrUndefined } from 'util';
+
 
 
 class CreateRemovalRequest extends Component {
@@ -12,6 +14,7 @@ class CreateRemovalRequest extends Component {
             shouldRender: true,
             isActiveInTask: false,
             hasFinishedFetch: false,
+            openRequest : false,
             request: {},
             tasks: {}
         };
@@ -31,6 +34,16 @@ class CreateRemovalRequest extends Component {
             this.setState({
                 request: responseData
             });
+            if (responseData.type === 'ASSIGNMENT'){
+                this.setState({
+                    shouldRender: false
+                })
+            }
+            if(isNullOrUndefined(responseData.approvalDate) && isNullOrUndefined(responseData.rejectDate)){
+                this.setState({
+                    openRequest: true
+                });
+            }
             if (responseData.error !== null) {
                 this.setState({
                     shouldRender: false
@@ -152,6 +165,7 @@ class CreateRemovalRequest extends Component {
 
         if (this.state.hasFinishedFetch) {
             if (this.state.isActiveInTask && this.state.shouldRender) {
+                if(!this.state.openRequest){
                 return (
                     <div>
                          <button className="genericButton" onClick={this.handleShow.bind(this)}>
@@ -170,7 +184,9 @@ class CreateRemovalRequest extends Component {
                         </button>
                     </div>
                 );
-            }
+            } 
+        }else {
+            return null}
         } else {
             return null
         }

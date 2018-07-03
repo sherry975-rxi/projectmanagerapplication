@@ -31,6 +31,11 @@ class CreateRequest extends Component {
             this.setState({
                 request: responseData
             });
+            if (responseData.type === 'REMOVAL'){
+                this.setState({
+                    shouldRender: false
+                })
+            }
             if (responseData.error !== null) {
                 this.setState({
                     shouldRender: false
