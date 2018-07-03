@@ -25,7 +25,7 @@
         "react-redux": "^5.0.7",
         "react-redux-toastr": "^7.2.6",
         "react-router-dom": "^4.2.2",
-        "react-scripts": "1.1.4",
+        "react-scripts": "^1.1.4",
         "react-skillbars": "^1.5.1",
         "react-user-avatar": "^1.10.0",
         "redux": "^4.0.0",

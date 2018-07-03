@@ -17,7 +17,7 @@ added this JavaScript/JSON snippet: Untitled
 ​
 # dependencies
 /node_modules/*
-!/node_modules/react-scripts/
+!/node_modules/react-scripts
 !/node_modules/dateformat
 !/node_modules/react-forecast
 !/node_modules/react-user-avatar
