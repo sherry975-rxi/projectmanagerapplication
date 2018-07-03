@@ -25,6 +25,12 @@
 
 .project-table .project-row td {
     vertical-align: middle;
+    padding-top: 0px;
+}
+
+.project-table .project-row.open td {
+    vertical-align: top;
+    padding-top: 0px;
 }
 .project-table.table.table-content > thead:hover {
     background: none;

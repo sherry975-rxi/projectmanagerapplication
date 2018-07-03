@@ -21,7 +21,7 @@ class RemoveDependency extends Component {
 
         return (
             <DropdownButton
-                className="dependencyButton"
+                className="dependencyGenericButton"
                 title='Remove Dependency'
                 key="0"
                 id={`dropdown-basic-0`}

@@ -24,8 +24,8 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Profile("!test")
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@Profile("test")
+public class TestSecurityConfig  extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS = {
             "/account/**"
@@ -51,9 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-
-        http.requiresChannel()
-                .antMatchers(PUBLIC_MATCHERSHTTPS).requiresSecure();
 
         http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 

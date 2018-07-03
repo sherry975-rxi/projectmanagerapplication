@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.model.*;
+import project.model.costcalculationinterface.CostCalculationFactory;
 import project.services.ProjectService;
 import project.services.TaskService;
 import project.services.UserService;
@@ -235,13 +236,13 @@ public class PrintProjectInfoControllerTest {
 
 		assertEquals(expectedOptions, controller.printCostCalculationMethods());
 
-		List<CalculationMethod> expected = project.listAvaliableCalculationMethods();
-		expected.remove(CalculationMethod.CI);
+		List<CostCalculationFactory.Method> expected = project.listAvaliableCalculationMethods();
+		expected.remove(CostCalculationFactory.Method.CI);
 
-		List<Integer> expectedCodes = expected.stream().map(CalculationMethod::getCode).collect(Collectors.toList());
+		List<Integer> expectedCodes = expected.stream().map(CostCalculationFactory.Method::getCode).collect(Collectors.toList());
 
 		project.createAvailableCalculationMethodsString(expectedCodes);
-		project.setCalculationMethod(CalculationMethod.CF);
+		project.setCalculationMethod(CostCalculationFactory.Method.CF);
 		projectContainer.updateProject(project);
 		controller.setProject(project);
 
@@ -253,7 +254,7 @@ public class PrintProjectInfoControllerTest {
         // when First Collaborator Cost option has been disabled
         // then the controller should print that option as [Disabled], and current cost as 2
         assertEquals(2, expected.size());
-        assertFalse(project.isCalculationMethodAllowed(CalculationMethod.CI.getCode()));
+        assertFalse(project.isCalculationMethodAllowed(CostCalculationFactory.Method.CI.getCode()));
         assertEquals(expectedOptions, controller.printCostCalculationMethods());
 
 

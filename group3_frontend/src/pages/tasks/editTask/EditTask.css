@@ -4,7 +4,7 @@
 }
 
 .pencil:hover{
-    color: rgb(67, 155, 136);
+    color: rgb(194, 133, 133);
     font-size: 20px;
     cursor: pointer;
 
@@ -32,6 +32,10 @@
   pencilHide {
     color: red;
       display: hide
+  }
+
+  #projectTasksTitle{
+margin-top: 5px;
   }
 
 .cross-remove{

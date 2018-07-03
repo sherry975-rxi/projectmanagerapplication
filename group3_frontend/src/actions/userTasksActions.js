@@ -6,7 +6,7 @@ export function updateMyFinishedTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
-        myTasksLoading()
+        dispatch(myTasksLoading())
         authService.fetch(`/users/${userId}/tasks/finished`, {
             method: 'GET'
         }).then(data => {
@@ -23,7 +23,7 @@ export function updateMyOngoingTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
-        myTasksLoading()
+        dispatch(myTasksLoading())
         authService.fetch(`/users/${userId}/tasks/pending`, {
             method: 'GET'
         }).then(data => {
@@ -40,7 +40,7 @@ export function updateMyAllTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
-        myTasksLoading()
+        dispatch(myTasksLoading())
         authService.fetch(`/users/${userId}/tasks/`, {
             method: 'GET'
         }).then(data => {
@@ -57,7 +57,7 @@ export function updateMyLastMonthFinishedTasks(userId) {
     const authService = new AuthService();
 
     return dispatch => {
-        myTasksLoading()
+        dispatch(myTasksLoading())
         authService.fetch(`/users/${userId}/tasks/lastmonthfinished`, {
             method: 'GET'
         }).then(data => {

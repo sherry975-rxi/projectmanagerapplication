@@ -8,6 +8,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import project.model.*;
+import project.model.costcalculationinterface.CostCalculationFactory;
 import project.model.taskstateinterface.Finished;
 import project.model.taskstateinterface.OnGoing;
 import project.services.ProjectService;
@@ -97,9 +98,9 @@ public class LoadProjectXmlv01 implements LoadProjectXml{
                 .valueOf(eElementProject.getElementsByTagName("unidade_esforco").item(0).getTextContent());
         project.setEffortUnit(effortUnit);
 
-        CalculationMethod calculationMethod = CalculationMethod.valueOf(eElementProject.getElementsByTagName("calculo_custo").item(0).getTextContent());
+		CostCalculationFactory.Method method = CostCalculationFactory.Method.valueOf(eElementProject.getElementsByTagName("calculo_custo").item(0).getTextContent());
 
-		project.setCalculationMethod(calculationMethod);
+		project.setCalculationMethod(method);
 
 		project.createAvailableCalculationMethodsString(new ArrayList<>(Arrays.asList(1,2,3)));
 

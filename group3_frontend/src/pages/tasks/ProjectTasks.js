@@ -32,14 +32,15 @@ class ProjectTasks extends Component {
                 <div align="right">
                     <CreateTask projectId={this.props.match.params.projectID} />
                 </div>
-                <FetchTaskButton
-                    projectId={this.props.match.params.projectID}
-                />
-                <h3>
+                <h3 id="projectTasksTitle">
                     <b>Project Tasks</b>
                 </h3>
                 <ProjectTasksSearch projectId={this.props.match.params.projectID} />
                 &nbsp;
+                <FetchTaskButton
+                    projectId={this.props.match.params.projectID}
+                />
+
                 {this.renderTasks()}
             </div>
         );

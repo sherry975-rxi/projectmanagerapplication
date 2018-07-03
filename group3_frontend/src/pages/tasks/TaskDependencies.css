@@ -1,24 +1,62 @@
-.dependencyButton {
-    background-color: rgb(135, 190, 178);
-    border: none;
-    color: black;
-    font-family: Helvetica;
-    font-weight: normal;
-    text-align: left;
-    margin-bottom: 20px;
-    display: inline-block;
-    font-size: 13px;
-    width: 150px;
-    height: 32px;
-    border-radius: 0;
-}
-
-.dependencyButton:hover {
+.dependencyGenericButton:hover {
     background-color: #2a3f54;
-    color: black;
+    color: white;
+    border: white;
+    border-radius: 0 !important;
 }
 
-.dependencyButton:focus {
+.open > .dropdown-toggle.btn-default.dependencyGenericButton:active{
     background-color: rgb(135, 190, 178);
     color: white;
+    border: white;
+    border-radius: 0 !important;
+}
+
+.open > .dropdown-toggle.btn-default.dependencyGenericButton {
+    background-color: rgb(135, 190, 178);
+    color: white;
+    border: white;
+    border-radius: 0 !important;
+}
+
+.dependencyGenericButton {
+    background-color: rgb(135, 190, 178);
+    background-image: none;
+    color: white;
+    border: white;
+    font-size: 12px;
+    width: 150px;
+    margin-bottom: 15px;
+    height: 30px;
+    border-radius: 0 !important;
+}
+
+
+
+
+
+.taskDependencies{
+    margin-bottom: 15px;
+    width: 100%
+}
+
+.taskDependencies > thead  {
+   background-color: white;
+}
+
+.taskDependencies > thead > tr > th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: normal;
+    text-align: center;
+    font-family: Helvetica;
+    color: #585858;
+    font-size: 12px;
+    border-bottom: solid 1px #eeeeee;
+}
+
+#taskToCreateDependency{
+    color: #757575;
+    font-family: Helvetica;
+    font-size: 16px;
 }

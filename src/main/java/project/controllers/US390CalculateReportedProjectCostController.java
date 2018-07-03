@@ -2,9 +2,9 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import project.model.CalculationMethod;
 import project.model.Project;
 import project.model.Task;
+import project.model.costcalculationinterface.CostCalculationFactory;
 import project.services.ProjectService;
 import project.services.TaskService;
 
@@ -74,7 +74,7 @@ public class US390CalculateReportedProjectCostController {
      *            The Project Class number assigned to each calculation method
      */
 	public void selectReportCostCalculation(Project project, int chosenMethod) {
-        project.setCalculationMethod(CalculationMethod.toEnum(chosenMethod));
+        project.setCalculationMethod(CostCalculationFactory.Method.toEnum(chosenMethod));
 
         projectService.updateProject(project);
         taskService.calculateReportEffortCost(project);

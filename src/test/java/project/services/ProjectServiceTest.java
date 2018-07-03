@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
 import project.model.*;
+import project.model.costcalculationinterface.CostCalculationFactory;
 import project.repository.ProjCollabRepository;
 import project.repository.ProjectsRepository;
 
@@ -661,8 +662,8 @@ public class ProjectServiceTest {
 		when(projectUpdates.getProjectManager()).thenReturn(user);
 		when(user.getEmail()).thenReturn("moked@mail.pt");
 		when(userService.getUserByEmail(anyString())).thenReturn(user);
-        when(project.getCalculationMethod()).thenReturn(CalculationMethod.CI);
-        when(project.isCalculationMethodAllowed(CalculationMethod.CI.getCode())).thenReturn(true);
+        when(project.getCalculationMethod()).thenReturn(CostCalculationFactory.Method.CI);
+        when(project.isCalculationMethodAllowed(CostCalculationFactory.Method.CI.getCode())).thenReturn(true);
 
 		//WHEN updateProjectData is called with an update for project manager
 		projectService.updateProjectData(projectUpdates, project);
@@ -675,16 +676,16 @@ public class ProjectServiceTest {
 		//GIVEN a project to update
 		when(projectUpdates.getProjectManager()).thenReturn(null);
 		when(projectUpdates.getAvailableCalculationMethods()).thenReturn("CF,CM");
-		when(projectUpdates.getCalculationMethod()).thenReturn(CalculationMethod.CM);
-		when(project.getCalculationMethod()).thenReturn(CalculationMethod.CM);
-		when(project.isCalculationMethodAllowed(CalculationMethod.CM.getCode())).thenReturn(true);
+		when(projectUpdates.getCalculationMethod()).thenReturn(CostCalculationFactory.Method.CM);
+		when(project.getCalculationMethod()).thenReturn(CostCalculationFactory.Method.CM);
+		when(project.isCalculationMethodAllowed(CostCalculationFactory.Method.CM.getCode())).thenReturn(true);
 
 		//WHEN updateProjectData is called with an update for calculation method
 		projectService.updateProjectData(projectUpdates, project);
 
 		//THEN the project is updated and saved
 		verify(project, times(1)).setAvailableCalculationMethods("CF,CM");
-		verify(project, times(1)).setCalculationMethod(CalculationMethod.CM);
+		verify(project, times(1)).setCalculationMethod(CostCalculationFactory.Method.CM);
 		verify(projectRep, times(3)).save(project);
 
 

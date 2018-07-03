@@ -39,7 +39,7 @@ class SignUpStepTwo extends Component {
             validationType === SMSVALIDATION ||
             validationType === EMAILVALIDATION
         ) {
-            fetch(this.props.validationUrl[validationType])
+            return fetch(this.props.validationUrl[validationType])
                 .then(response => {
                     return response.json();
                 })
@@ -50,6 +50,7 @@ class SignUpStepTwo extends Component {
                     });
                 });
         }
+        return;
     };
 }
 
