@@ -1,0 +1,287 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUpStepTwo should render correctly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <SignUpStepTwo />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className="chooseValidationMethodText"
+>
+          To continue with sign up process, you will receive a validation code by SMS or email. Choose the method:
+</div>,
+        <ButtonToolbar
+          bsClass="btn-toolbar"
+          className="buttonValidationToolbar"
+>
+          <Button
+                    active={false}
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    disabled={false}
+                    id="smsValidation"
+                    onClick={[Function]}
+          >
+                    SMS
+          </Button>
+          <Button
+                    active={false}
+                    block={false}
+                    bsClass="btn"
+                    bsStyle="default"
+                    disabled={false}
+                    id="emailValidation"
+                    onClick={[Function]}
+          >
+                    Email
+          </Button>
+</ButtonToolbar>,
+      ],
+      "className": "stepTwoValidation",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "To continue with sign up process, you will receive a validation code by SMS or email. Choose the method:",
+          "className": "chooseValidationMethodText",
+        },
+        "ref": null,
+        "rendered": "To continue with sign up process, you will receive a validation code by SMS or email. Choose the method:",
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "bsClass": "btn-toolbar",
+          "children": Array [
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsStyle="default"
+              disabled={false}
+              id="smsValidation"
+              onClick={[Function]}
+>
+              SMS
+</Button>,
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsStyle="default"
+              disabled={false}
+              id="emailValidation"
+              onClick={[Function]}
+>
+              Email
+</Button>,
+          ],
+          "className": "buttonValidationToolbar",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "active": false,
+              "block": false,
+              "bsClass": "btn",
+              "bsStyle": "default",
+              "children": "SMS",
+              "disabled": false,
+              "id": "smsValidation",
+              "onClick": [Function],
+            },
+            "ref": null,
+            "rendered": "SMS",
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "active": false,
+              "block": false,
+              "bsClass": "btn",
+              "bsStyle": "default",
+              "children": "Email",
+              "disabled": false,
+              "id": "emailValidation",
+              "onClick": [Function],
+            },
+            "ref": null,
+            "rendered": "Email",
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className="chooseValidationMethodText"
+>
+            To continue with sign up process, you will receive a validation code by SMS or email. Choose the method:
+</div>,
+          <ButtonToolbar
+            bsClass="btn-toolbar"
+            className="buttonValidationToolbar"
+>
+            <Button
+                        active={false}
+                        block={false}
+                        bsClass="btn"
+                        bsStyle="default"
+                        disabled={false}
+                        id="smsValidation"
+                        onClick={[Function]}
+            >
+                        SMS
+            </Button>
+            <Button
+                        active={false}
+                        block={false}
+                        bsClass="btn"
+                        bsStyle="default"
+                        disabled={false}
+                        id="emailValidation"
+                        onClick={[Function]}
+            >
+                        Email
+            </Button>
+</ButtonToolbar>,
+        ],
+        "className": "stepTwoValidation",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "To continue with sign up process, you will receive a validation code by SMS or email. Choose the method:",
+            "className": "chooseValidationMethodText",
+          },
+          "ref": null,
+          "rendered": "To continue with sign up process, you will receive a validation code by SMS or email. Choose the method:",
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "bsClass": "btn-toolbar",
+            "children": Array [
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="default"
+                disabled={false}
+                id="smsValidation"
+                onClick={[Function]}
+>
+                SMS
+</Button>,
+              <Button
+                active={false}
+                block={false}
+                bsClass="btn"
+                bsStyle="default"
+                disabled={false}
+                id="emailValidation"
+                onClick={[Function]}
+>
+                Email
+</Button>,
+            ],
+            "className": "buttonValidationToolbar",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "active": false,
+                "block": false,
+                "bsClass": "btn",
+                "bsStyle": "default",
+                "children": "SMS",
+                "disabled": false,
+                "id": "smsValidation",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": "SMS",
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "active": false,
+                "block": false,
+                "bsClass": "btn",
+                "bsStyle": "default",
+                "children": "Email",
+                "disabled": false,
+                "id": "emailValidation",
+                "onClick": [Function],
+              },
+              "ref": null,
+              "rendered": "Email",
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
