@@ -31,10 +31,6 @@ public class TestSecurityConfig  extends WebSecurityConfigurerAdapter {
             "/account/**"
 
     };
-    private static final String[] PUBLIC_MATCHERSHTTPS = {
-            "/**"
-
-    };
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -50,13 +46,15 @@ public class TestSecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable();
 
         http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 
-        http.addFilter(new JWTAuthentication(authenticationManager(), jwtUtil));
+        http.cors().and().csrf().disable();
 
         http.addFilter(new JWTAuthorization(authenticationManager(), jwtUtil, userDetailsService));
+
+        http.addFilter(new JWTAuthentication(authenticationManager(), jwtUtil));
+
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
@@ -65,8 +63,8 @@ public class TestSecurityConfig  extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
         source.registerCorsConfiguration("/**", config);
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
         return source;
     }
     @Bean
