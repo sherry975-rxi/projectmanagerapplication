@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import AuthService from '../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
 import { Redirect } from 'react-router-dom';
+import { Modal } from 'react-bootstrap'
+
 
 class CreateRequest extends Component {
     constructor(props) {
@@ -100,7 +102,9 @@ class CreateRequest extends Component {
                 if (res.assignmentRequest === true) {
                     toastr.success('Your Request was sucessfull created!');
                     this.setState({
-                        shouldRender: false
+                        shouldRender: false,
+                        show : false
+
                     })
 
                     return <Redirect to="/requests" />;
@@ -115,25 +119,49 @@ class CreateRequest extends Component {
         toastr.warning('Your Request was already created. Please wait for the Project Manager response.');
     }
 
+    displayConfirmation() {
 
+        return (
+            <div>
+                <Modal.Header closeButton>
+                    <Modal.Title> Create Request</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                    {<p><b>Do you want to create a request to be assigned to task {this.props.id}?</b> </p> }
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <span><button className="cancelButton" onClick={() => this.setState({ show: false })}>Cancel</button></span><span><button className="genericButton" onClick={this.handleClick.bind(this)}>Confirm</button> </span>
+                </Modal.Footer>
+            </div>)
+    }
+
+    handleClose() {
+        this.setState({ show: false });
+    }
+ 
+    handleShow() {
+        this.setState({ show: true });
+    }
 
 
     render() {
 
         if (this.state.isActiveInTask) {
-            return (
-                <div className=" table-striped">
-                    <button className="buttonFinishedInvisible" />
-                </div>
-            );
+            return null     
         }
+
         if (this.state.hasFinishedFetch) {
             if (this.state.shouldRender) {
                 return (
-                    <div className=" table-striped">
-                        <button className="buttonFinished" onClick={this.handleClick}>
+                    <div>
+                         <button className="genericButton" onClick={this.handleShow.bind(this)}>
                             Create Request
                         </button>
+                       <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                            {this.displayConfirmation()}
+                        </Modal>
                     </div>
                 );
             } else {
@@ -146,15 +174,8 @@ class CreateRequest extends Component {
                 );
             }
         } else {
-            return (
-                <div className=" table-striped">
-                    <button className="buttonFinishedInvisible" />
-                </div>
-            );
-
+            return null
         }
-
-
     }
 }
 
