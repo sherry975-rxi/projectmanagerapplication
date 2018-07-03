@@ -179,19 +179,19 @@
     height: 10px;
     display: inline-block;
     border-radius: 50%;
-    background-color: #36c0d8;
+    background-color: #1381CE;
 }
 
 .statusIcon.standby{
-    background-color: #d1cf52;
+    background-color: #FFB413;
 }
 
 .statusIcon.finished{
-    background-color: #2ecc71;
+    background-color: #28AA46;
 }
 
 .statusIcon.cancelled{
-    background-color: #292929;
+    background-color: #D30545;
 }
 
 .statusIcon.created{
@@ -203,7 +203,7 @@
 }
 
 .statusIcon.ready{
-    background-color: #a2e7f3;
+    background-color: rgb(57, 82, 131);
 }
 
 

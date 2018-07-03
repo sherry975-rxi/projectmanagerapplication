@@ -95,29 +95,23 @@ class SelectCalculationMethods extends Component {
                 open={this.state.menuOpen}
                 onToggle={val => this.dropdownToggle(val)}
             >
-                <Dropdown.Toggle className="option">{title}</Dropdown.Toggle>
-                <Dropdown.Menu className="super-colors">
+                <Dropdown.Toggle className="dependencyGenericButton">{title}</Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <form onSubmit={this.handleSubmit} className="availableMethodsDropDown">
 
-                    <form onSubmit={this.handleSubmit} className="items-menu">
-
-                        <FormGroup controlId="selectedMethods">
-
-                            <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
-                                Cost Initial
+                        <Checkbox value="CI" checked={this.state.selectedMethods.includes("CI")} onChange={this.handleChange}>
+                            Cost Initial
                                 </Checkbox>{' '}
-                            <Checkbox value="CF" checked={this.state.selectedMethods.includes("CF")} onChange={this.handleChange}>
-                                Cost Final
+                        <Checkbox value="CF" checked={this.state.selectedMethods.includes("CF")} onChange={this.handleChange}>
+                            Cost Final
                                 </Checkbox>{' '}
-                            <Checkbox value="CM" checked={this.state.selectedMethods.includes("CM")} onChange={this.handleChange}>
-                                Cost Average
+                        <Checkbox value="CM" checked={this.state.selectedMethods.includes("CM")} onChange={this.handleChange}>
+                            Cost Average
                                 </Checkbox>
 
-                        </FormGroup>
-
-
-                        <Button block disabled={!this.validateForm()} type="submit" className="genericButton">
+                        <button block disabled={!this.validateForm()} type="submit" className="genericButton">
                             Update
-                            </Button>
+                            </button>
                     </form>
                 </Dropdown.Menu>
             </Dropdown>
