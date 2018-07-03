@@ -15,7 +15,6 @@ import project.services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -742,8 +741,6 @@ public class RestProjectTasksController {
     @RequestMapping(value = "allRequests", method = RequestMethod.GET)
     public ResponseEntity<List<TaskTeamRequest>> getAllTasksRequests (@PathVariable int projid) {
 
-        ResponseEntity<List<TaskTeamRequest>> responseEntity = new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
-
         List<Task> allTasks = new ArrayList<>();
         List<TaskTeamRequest> allTasksRequests = new ArrayList<>();
 
@@ -763,9 +760,8 @@ public class RestProjectTasksController {
 
 
         }
-        responseEntity = new ResponseEntity<>(allTasksRequests, HttpStatus.OK);
 
-        return responseEntity;
+        return new ResponseEntity<>(allTasksRequests, HttpStatus.OK);
 
 
 
