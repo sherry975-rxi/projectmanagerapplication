@@ -16,6 +16,7 @@ import { bindActionCreators } from 'redux';
 import EditTask from './../../pages/tasks/editTask/EditTask';
 import CreateReport from '../../pages/reports/CreateReport';
 import { reloadTask } from '../../actions/dependencyActions'
+import CreateRemovalRequest from '../../pages/requests/CreateRemovalRequest';
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -106,6 +107,21 @@ class AccordionMenu extends Component {
         } else return <div> </div>;
     }
 
+    renderCreateRemovalRequestTaskButton(element) {
+        if (
+            element.currentProject.projectManager.email !==
+            this.AuthService.getProfile()
+                .sub /* ||
+            this.props.profile === 'DIRECTOR' */
+        ) {
+            return element.state !== 'FINISHED' ? (
+                <CreateRemovalRequest id={element.taskID} project={element.project} />
+            ) : (
+                    ''
+                );
+        } else return <div> </div>;
+    }
+
     renderTaskButtons(element, key) {
 
         let canIViewReports = false
@@ -178,6 +194,7 @@ class AccordionMenu extends Component {
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderCreateAssignmentRequestTaskButton(element)}
+                    {this.renderCreateRemovalRequestTaskButton(element)}
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderDeleteTaskButton(element)}
@@ -229,6 +246,7 @@ class AccordionMenu extends Component {
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderCreateAssignmentRequestTaskButton(element)}
+                    {this.renderCreateRemovalRequestTaskButton(element)}
                     <a className="key">{key++}</a>
                     <p />
                     {this.renderDeleteTaskButton(element)}

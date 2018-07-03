@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { Modal } from 'react-bootstrap'
 
 
-class CreateRequest extends Component {
+class CreateRemovalRequest extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -91,7 +91,7 @@ class CreateRequest extends Component {
         this.AuthService.fetch(
             `/projects/${this.props.project}/tasks/${
             this.props.id
-            }/requests/assignmentRequest`,
+            }/requests/removalRequest`,
             {
                 method: 'POST',
                 body: JSON.stringify(requestBodyDTO)
@@ -99,7 +99,7 @@ class CreateRequest extends Component {
         )
             .then(res => {
                 //If the loggin is sucessfull the user gets redirected to its home page
-                if (res.assignmentRequest === true) {
+                if (res.removalRequest === true) {
                     toastr.success('Your Request was sucessfull created!');
                     this.setState({
                         shouldRender: false,
@@ -128,7 +128,7 @@ class CreateRequest extends Component {
                 </Modal.Header>
                 <Modal.Body>
 
-                    {<p><b>Do you want to create a request to be assigned to task {this.props.id}?</b> </p> }
+                    {<p><b>Do you want to create a request to be removed from task {this.props.id}?</b> </p> }
 
                 </Modal.Body>
                 <Modal.Footer>
@@ -148,12 +148,10 @@ class CreateRequest extends Component {
 
     render() {
 
-        if (this.state.isActiveInTask) {
-            return null     
-        }
+       
 
         if (this.state.hasFinishedFetch) {
-            if (this.state.shouldRender) {
+            if (this.state.isActiveInTask && this.state.shouldRender) {
                 return (
                     <div>
                          <button className="genericButton" onClick={this.handleShow.bind(this)}>
@@ -180,4 +178,4 @@ class CreateRequest extends Component {
 }
 
 
-export default CreateRequest;
+export default CreateRemovalRequest;

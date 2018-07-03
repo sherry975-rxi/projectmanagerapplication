@@ -27,22 +27,18 @@ import java.util.Arrays;
 @Profile("test")
 public class TestSecurityConfig  extends WebSecurityConfigurerAdapter {
 
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     private static final String[] PUBLIC_MATCHERS = {
             "/account/**"
 
     };
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-    @Autowired
-    private JWTUtil jwtUtil;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -57,6 +53,13 @@ public class TestSecurityConfig  extends WebSecurityConfigurerAdapter {
 
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder authManager)
+            throws Exception {
+
+        authManager.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
