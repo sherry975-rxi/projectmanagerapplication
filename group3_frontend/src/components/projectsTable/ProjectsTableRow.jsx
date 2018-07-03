@@ -111,7 +111,7 @@ class ProjectsTableRow extends Component {
                             '/UnassignedProjCollab'
                         } onClick={this.handleClick.bind(this)}
                     >
-                        <ItemsButton text=" View unassigned" />
+                        <ItemsButton text=" View unassigned collabs" />
                     </Link>
 
                     <ProjectCost project={this.props.project} />
