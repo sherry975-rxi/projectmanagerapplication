@@ -512,6 +512,35 @@ public class RestProjectTasksControllerTest {
         verify(taskService, times(1)).getProjectUnFinishedTasks(project);
     }
 
+    /**
+     * GIVEN a project id
+     * WHEN we perform a get request to url /projects/<projectId>/tasks/cancelled
+     * THEN we receive a valid message with a 200 Ok and a list of the project cancelled tasks
+     */
+
+    @Test
+    public void shouldReturnCancelledTasks() throws Exception {
+
+        task.setStartDateAndState(startDate);
+        task2.setStartDateAndState(startDate);
+        task.cancelTask();
+
+        projectTasks.add(task);
+
+
+        //GIVEN: a project id
+        int projectId = 01;
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        //WHEN: we perform a get request to url /projects/<projectId>/tasks/unfinished
+        when(taskService.getProjectUnFinishedTasks(project)).thenReturn(projectTasks);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/1/tasks/cancelled").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //THEN: we receive a valid message with a 200 Ok and a list of the project finished tasks
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getProjectCancelledTasks(project);
+    }
+
 
     /**
      * GIVEN a task id
