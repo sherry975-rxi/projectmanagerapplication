@@ -1024,7 +1024,7 @@ public class TaskService {
 		Task toEdit = this.getTaskByTaskID(taskDto.getTaskID());
 
 
-		if(!taskDto.getDescription().equals("") && taskDto.getDescription() != toEdit.getDescription() && taskDto.getDescription() != null) {
+		if(!"".equals(taskDto.getDescription()) && taskDto.getDescription() != toEdit.getDescription() && taskDto.getDescription() != null) {
 			toEdit.setDescription(taskDto.getDescription());
 	}
 		if (taskDto.getEstimatedTaskStartDate() != null && !taskDto.getEstimatedTaskStartDate().equals(toEdit.getEstimatedTaskStartDate())) {
