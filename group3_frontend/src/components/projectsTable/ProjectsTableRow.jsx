@@ -80,9 +80,6 @@ class ProjectsTableRow extends Component {
         this.props.updateUnassignedProjCollabs(this.props.project.projectId)
     }
 
-    handleClickOnRequests(projectId) {
-        this.props.chooseProject(this.props.project)
-    }
 
     // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
     // cost calculation methods
@@ -123,7 +120,6 @@ class ProjectsTableRow extends Component {
                             '/projects/' +
                             this.props.project.projectId +
                             '/requests'}
-                        onClick={this.handleClickOnRequests(this.props.project.projectId, this.props.project.projectCalculationMethod)}
                     >
                         <ItemsButton text="View Requests" />
                     </Link>
