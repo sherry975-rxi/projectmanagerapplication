@@ -27,46 +27,47 @@ import java.util.Arrays;
 @Profile("test")
 public class TestSecurityConfig  extends WebSecurityConfigurerAdapter {
 
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     private static final String[] PUBLIC_MATCHERS = {
             "/account/**"
 
     };
-    private static final String[] PUBLIC_MATCHERSHTTPS = {
-            "/**"
 
-    };
-
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-    @Autowired
-    private JWTUtil jwtUtil;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable();
 
         http.authorizeRequests().antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 
-        http.addFilter(new JWTAuthentication(authenticationManager(), jwtUtil));
+        http.cors().and().csrf().disable();
 
         http.addFilter(new JWTAuthorization(authenticationManager(), jwtUtil, userDetailsService));
 
+        http.addFilter(new JWTAuthentication(authenticationManager(), jwtUtil));
+
+
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder authManager)
+            throws Exception {
+
+        authManager.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
         source.registerCorsConfiguration("/**", config);
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
         return source;
     }
     @Bean

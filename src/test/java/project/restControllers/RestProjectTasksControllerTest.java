@@ -968,16 +968,15 @@ public class RestProjectTasksControllerTest {
 
         // WHEN
         when(projectService.getProjectById(projectId)).thenReturn(project);
-        when(taskService.isCollaboratorActiveOnAnyTask(pcDaniel)).thenReturn(true);
-        when(projectService.getActiveProjectTeam(project)).thenReturn(team);
+        when(taskService.getProjectTasks(project)).thenReturn(projectTasks);
+
  
 
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/" + projectId +"/tasks/collabsAvailableForTask").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
         //THEN
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        verify(taskService, times(1)).isCollaboratorActiveOnAnyTask(pcDaniel);
-        verify(projectService, times(1)).getActiveProjectTeam(project);
+        verify(taskService, times(1)).getProjectTasks(project);
         verify(projectService, times(1)).getProjectById(any(Integer.class));
 
 
