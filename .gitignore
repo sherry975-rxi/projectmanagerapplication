@@ -288,11 +288,7 @@ build/Release
 ​
 # Dependency directories
 /node_modules/*
-!node_modules/react-forecast
-!node_modules/react-forecast/*
-jspm_packages/
-!/node_modules/react-scripts/bin/
-​
+
 # Typescript v1 declaration files
 typings/
 ​
