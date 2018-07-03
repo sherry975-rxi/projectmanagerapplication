@@ -128,6 +128,17 @@ export function searching(event, list, option) {
     return newlist;
 }
 
+export function markToUpdate() {
+    return dispatch =>{
+        dispatch(toUpdate());
+    }
+}
+
+export function finishUpdate(){
+    return dispatch =>{
+        dispatch(updated());
+    }
+}
 
 export function updateVisitors() {
     const authService = new AuthService();
@@ -142,6 +153,7 @@ export function updateVisitors() {
         });
     };
 }
+
 
 export function allUsersFetched(allUsers) {
     return {
@@ -190,5 +202,17 @@ export function allVisitorsFetched(allVisitors) {
     return {
         type: 'ALLVISITORS_FETCHED',
         allVisitors
+    };
+}
+
+export function toUpdate() {
+    return {
+        type: 'TOUPDATE'
+    };
+}
+
+export function updated() {
+    return {
+        type: 'UPDATED'
     };
 }

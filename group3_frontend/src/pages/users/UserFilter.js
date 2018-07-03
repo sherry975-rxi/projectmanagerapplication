@@ -166,9 +166,7 @@ class UserFilter extends Component {
     }
 
     filterList(event, choosenField) {
-
         if (event.target.value.toLowerCase() !== -1) {
-
             switch (this.activeFilter) {
                 case "1":
                     return this.props.searchList(event, this.props.allUsers, choosenField);
