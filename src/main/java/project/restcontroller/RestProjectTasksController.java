@@ -668,7 +668,7 @@ public class RestProjectTasksController {
         Project project = projectService.getProjectById(projid);
 
         List <ProjectCollaborator> projCollabs = projectService.getActiveProjectTeam(project);
-        List <Task> tasks = taskService.getProjectTasks(project);
+        List <Task> taskList = taskService.getProjectTasks(project);
         List<ProjectCollaborator> unassignedTeam = new ArrayList<>();
         int newCollab;
 
@@ -676,7 +676,7 @@ public class RestProjectTasksController {
 
         for (ProjectCollaborator other : projCollabs) {
             newCollab = 0;
-            for (Task task: tasks) {
+            for (Task task: taskList) {
                 if(task.isProjectCollaboratorActiveInTaskTeam(other)){
                     newCollab ++;
                 }

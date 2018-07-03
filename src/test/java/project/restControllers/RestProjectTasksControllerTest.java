@@ -355,8 +355,8 @@ public class RestProjectTasksControllerTest {
      * THEN the response entity must contain status OK, and child "task3" must contain task as a dependency
      *  and its start date must be changed to after parent "task" deadline
      *
-     * AND WHEN removing that dependency from task
-     * THEN the response entity must contain ok, and child "task3" must have no dependencies
+     * AND WHEN removing that dependency from task, and adding a new dependency
+     * THEN the response entity must contain ok, and child "task3" must have a single dependency
      *
      * @throws Exception
      */
@@ -374,6 +374,9 @@ public class RestProjectTasksControllerTest {
         task3.setTaskBudget(2000);
         projectTasks = new ArrayList<>();
 
+        task2.setProject(project);
+        task2.setTaskDeadline(Calendar.getInstance());
+        task2.setTaskID("20");
 
         task.setProject(project);
         task.setTaskDeadline(Calendar.getInstance());
@@ -384,6 +387,7 @@ public class RestProjectTasksControllerTest {
 
         when(taskService.getTaskByTaskID("50")).thenReturn(task3);
         when(taskService.getTaskByTaskID("30")).thenReturn(task);
+        when(taskService.getTaskByTaskID("20")).thenReturn(task2);
 
         //confirmation that task3 does not have assigned collaborators
 
@@ -405,13 +409,18 @@ public class RestProjectTasksControllerTest {
 
         //AND WHEN
 
+        mockMvc.perform(MockMvcRequestBuilders.put("/projects/123/tasks/50/createDependency/20/2")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        assertEquals(2, task3.getTaskDependency().size());
+
         response = mockMvc.perform(MockMvcRequestBuilders.put("/projects/123/tasks/50/removeDependency/30")
                 .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
 
         // THEN
         assertEquals(HttpStatus.OK.value(),response.getStatus());
-        assertTrue(task3.getTaskDependency().isEmpty());
+        assertEquals(1, task3.getTaskDependency().size());
 
 
     }
