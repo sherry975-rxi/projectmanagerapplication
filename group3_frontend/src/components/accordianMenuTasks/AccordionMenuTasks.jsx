@@ -254,7 +254,6 @@ class AccordionMenu extends Component {
     }
 
     renderList(list) {
-
         let key = 0;
         return handleTaskHeaders(list).map((element, index) => (
             <Panel eventKey={key} key={index}>
@@ -267,6 +266,7 @@ class AccordionMenu extends Component {
                             <table className="table table-content">
                                 <thead>
                                     <tr>
+                                        <th id="statusIcon"> <span className={'statusIcon ' + element.state.toLowerCase()}></span></th>
                                         <th> {element.taskID} </th>
                                         <th> {element.project} </th>
                                         <th> {element.description} </th>
@@ -352,7 +352,7 @@ class AccordionMenu extends Component {
                 <Panel eventKey="1">
                     <table className="table table-title">
                         <thead>
-                            <tr>{this.renderTitles()}</tr>
+                            <tr><th id="statusIcon">Status</th>{this.renderTitles()}</tr>
                         </thead>
                     </table>
                 </Panel>
