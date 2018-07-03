@@ -22,6 +22,7 @@ class ProjectsTableRow extends Component {
         const payload = { index: index };
         this.props.projectTableDetailsToogle(payload);
         this.props.updateProjectTeam(this.props.project.projectId)
+        this.props.getProjectCost(this.props.project.projectId)
     };
 
     getManagerIcon() {
@@ -79,9 +80,8 @@ class ProjectsTableRow extends Component {
         this.props.updateUnassignedProjCollabs(this.props.project.projectId)
     }
 
-    handleClickOnProjectCost(projectId) {
+    handleClickOnRequests(projectId) {
         this.props.chooseProject(this.props.project)
-        this.props.getProjectCost(projectId)
     }
 
     // as collaborator or director, the user can only see the project's tasks. As Project manager, they can create tasks and change
@@ -123,7 +123,7 @@ class ProjectsTableRow extends Component {
                             '/projects/' +
                             this.props.project.projectId +
                             '/requests'}
-                        onClick={this.handleClickOnProjectCost(this.props.project.projectId, this.props.project.projectCalculationMethod)}
+                        onClick={this.handleClickOnRequests(this.props.project.projectId, this.props.project.projectCalculationMethod)}
                     >
                         <ItemsButton text="View Requests" />
                     </Link>
@@ -231,7 +231,7 @@ const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = dispatch => {
-    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs, chooseProject, getProjectCost, updateProjectTeam }, dispatch);
+    return bindActionCreators({ projectTableDetailsToogle, updateUnassignedProjCollabs, chooseProject, updateProjectTeam, getProjectCost }, dispatch);
 };
 
 export default connect(
