@@ -32,8 +32,8 @@ public class RunConsole implements CommandLineRunner {
 		mockData.instantiateMockData();
 		userReader.readFile("Utilizador_v00_Dt1.xml");
 		userReader.readFile("Utilizador_v01_Dt2.xml");
-    	reader.readFile("CorrectedProjectsv1.xml");
-		reader.readFile("CorrectedProjectsv2.xml");
+    	reader.readFile("ProjetoCorrigido_v01_Dt1.xml");
+		reader.readFile("ProjetoCorrigido_v01_Dt2.xml");
     	main.mainMenu();
     }
     
