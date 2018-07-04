@@ -211,4 +211,51 @@ public class RestProjCollabControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
+    /**
+     * GIVEN a project ID
+     * WHEN we perform a get request to url /projects/<projectId>/team/usersAvailable
+     * THEN we we receive status NOT_ACCEPTABLE when All users are in the project
+     *
+     * AND WHEN one of the collaborators is NOT active in the project
+     * THEN we recieve status OK and the response entity must contain a list of one user
+     *
+     * @throws Exception
+     */
+    @Test
+    public void shouldGetAvailableCollaborators() throws Exception{
+
+        //GIVEN a project ID and a projectCollaboratorID
+        int projectId = 1;
+
+        List<User> activeCollabs = new ArrayList<>();
+        activeCollabs.add(uDaniel);
+        activeCollabs.add(uInes);
+
+        //WHEN we perform a put request to url /projects/<projectId>/team
+        when(projectServiceMock.getProjectById(projectId)).thenReturn(projectMock);
+        when(userServiceMock.getUserByEmail(uDaniel.getEmail())).thenReturn(uDaniel);
+        when(projectServiceMock.getProjectCollaboratorById(pcDaniel.getProjectCollaboratorId())).thenReturn(pcDaniel);
+        when(projectServiceMock.createProjectCollaboratorWithEmail(any(String.class),any(Integer.class), any(Double.class))).thenReturn(pcDaniel);
+
+        when(userServiceMock.getAllActiveCollaboratorsFromRepository()).thenReturn(activeCollabs);
+        when(projectServiceMock.isUserActiveInProject(uDaniel, projectMock)).thenReturn(true);
+        when(projectServiceMock.isUserActiveInProject(uInes, projectMock)).thenReturn(true);
+
+
+        MockHttpServletResponse response = mvc.perform(get("/projects/" + projectId + "/team/usersAvailable").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+
+        //THEN
+        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
+
+        //AND WHEN
+        when(projectServiceMock.isUserActiveInProject(uInes, projectMock)).thenReturn(false);
+        response = mvc.perform(get("/projects/" + projectId + "/team/usersAvailable").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        // THEN
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(1, victim.usersAvailableToAdd(1).getBody().size());
+
+    }
+
 }
