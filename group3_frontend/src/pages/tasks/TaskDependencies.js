@@ -34,7 +34,7 @@ class TaskDependencies extends Component {
 
     // when the logged in user is the project manager, this method renders both buttons to add and remove dependency
     getDependencyButtons() {
-        console.log(this.props.childTask)
+
         if (this.isProjectManager() && this.props.childTask.startDate == null) {
             return (
                 <div align="right">
@@ -48,6 +48,7 @@ class TaskDependencies extends Component {
     }
 
     renderDependencies = () => {
+
         if (this.props.tasksLoading) {
             return <LoadingComponent />;
         } else if (this.props.error) {
