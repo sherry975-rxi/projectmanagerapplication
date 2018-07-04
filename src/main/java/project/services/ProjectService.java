@@ -2,6 +2,7 @@ package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
@@ -359,11 +360,11 @@ public class ProjectService {
 	 */
 	public void updateProjectData(Project projectUpdates, Project project){
 
-		if((projectUpdates.getName() != null)) {
+		if(StringUtils.isEmpty(projectUpdates.getName())) {
 			project.setName(projectUpdates.getName());
 		}
 
-		if((projectUpdates.getDescription() != null)) {
+		if(StringUtils.isEmpty(projectUpdates.getDescription())) {
 			project.setDescription(projectUpdates.getDescription());
 		}
 

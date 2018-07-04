@@ -73,6 +73,7 @@ public class RestProjectTasksControllerTest {
     private TaskDTO taskDTO;
 
     private List<Task> projectTasks;
+    private List<Task> projectCancelledTasks;
     private Calendar startDate;
     private Calendar finishDate;
     private Calendar estimatedStart;
@@ -126,6 +127,7 @@ public class RestProjectTasksControllerTest {
         task3.setTaskDeadline(estimatedDeadline);
         task3.setTaskBudget(2000);
         projectTasks = new ArrayList<>();
+        projectCancelledTasks = new ArrayList<>();
 
         // and finally an empty test list to be filled and compared for each assertion
         expected = new ArrayList<>();
@@ -152,6 +154,7 @@ public class RestProjectTasksControllerTest {
         estimatedDeadline = null;
         startDate = null;
         finishDate = null;
+        projectCancelledTasks = null;
     }
 
     //GIVEN a project with a certain Id
@@ -1094,7 +1097,30 @@ public class RestProjectTasksControllerTest {
         verify(taskService, times(1)).getProjectTasks(project);
     }
 
+    /**
+     * Given a project
+     * When we perform a get request to url projects/{projid}/tasks/cancelled
+     * Then receive a valid message with a 200 Ok and a list of all cancelled tasks from project
+     */
+    @Test
+    public void shouldReturnCancelledTasksFromProject() throws Exception {
+        // expected list of not started tasks
+        projectCancelledTasks.add(task);
+        projectCancelledTasks.add(task2);
 
+        //Given a project
+        int projectId = 01;
+        when(projectService.getProjectById(projectId)).thenReturn(project);
+
+        //When we perform a get request to url projects/{projid}/tasks/cancelled
+        when(taskService.getProjectCancelledTasks(project)).thenReturn(projectCancelledTasks);
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/projects/"+ projectId + "/tasks/cancelled").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+
+        //Then receive a valid message with a 200 Ok and a list of all cancelled tasks from project
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        verify(taskService, times(1)).getProjectCancelledTasks(project);
+
+    }
 
 
 }

@@ -196,7 +196,6 @@ class ProjectsTableRow extends Component {
                 >
                     <td colSpan="2">
                         <div className="project-details">
-                            <EditProject project={this.props.project} />
                             <strong>Project Manager:&nbsp;</strong>
                             {this.props.project.projectManagerName}
                             <br />
@@ -206,6 +205,7 @@ class ProjectsTableRow extends Component {
                             <strong>Finish date:&nbsp;</strong>
                             {this.props.project.projectFinishDate}
                             <br />
+                            <EditProject project={this.props.project} />
                         </div>
                     </td>
                     <td colSpan="1">{this.getProjectInfo()}</td>
