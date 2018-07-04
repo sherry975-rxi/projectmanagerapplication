@@ -10,7 +10,8 @@ import {
     updateEmail,
     updateCollaborators,
     updateDirector,
-    updateAdministrator
+    updateAdministrator,
+    updateVisitors
 } from './../../actions/UserActions';
 
 class ChangeProfile extends Component {
@@ -92,6 +93,8 @@ class ChangeProfile extends Component {
         this.props.updateDirector()
     else if (this.props.filter === 'administrators')
         this.props.updateAdministrator()
+    else if (this.props.filter === 'visitors')
+        this.props.updateVisitors() 
 
 
     }
@@ -111,6 +114,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     updateEmail,
     updateCollaborators,
     updateDirector,
-    updateAdministrator }, dispatch)
+    updateAdministrator,
+    updateVisitors }, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(ChangeProfile);
 
