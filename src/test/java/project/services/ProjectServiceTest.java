@@ -686,14 +686,14 @@ public class ProjectServiceTest {
 		//THEN the project is updated and saved
 		verify(project, times(1)).setAvailableCalculationMethods("CF,CM");
 		verify(project, times(1)).setCalculationMethod(CostCalculationFactory.Method.CM);
-		verify(projectRep, times(3)).save(project);
+		verify(projectRep, times(2)).save(project);
 
 
 		//GIVEN a project to update
 		//WHEN updateProjectData is called with no updates
 		when(projectUpdates.getCalculationMethod()).thenReturn(null);
 		//THEN the project is not update
-		verify(projectRep, times(3)).save(project);
+		verify(projectRep, times(2)).save(project);
 
 	}
 

@@ -372,27 +372,44 @@ public class ProjectService {
 	 */
 	public void updateProjectData(Project projectUpdates, Project project){
 
+		if((projectUpdates.getName() != null)) {
+			project.setName(projectUpdates.getName());
+		}
+
+		if((projectUpdates.getDescription() != null)) {
+			project.setDescription(projectUpdates.getDescription());
+		}
+
+		if((projectUpdates.getStartdate() != null)) {
+			project.setStartdate(projectUpdates.getStartdate());
+		}
+
+		if((projectUpdates.getFinishdate() != null)) {
+			project.setFinishdate(projectUpdates.getFinishdate());
+		}
+
+        if((projectUpdates.getBudget() > 0)) {
+            project.setBudget((int) projectUpdates.getBudget());
+        }
+
 		if((projectUpdates.getProjectManager() != null)) {
 			User user = userService.getUserByEmail(projectUpdates.getProjectManager().getEmail());
 			project.setProjectManager(user);
-			updateProject(project);
 		}
 
 		if((projectUpdates.getAvailableCalculationMethods()!=null)) {
 		    project.setAvailableCalculationMethods(projectUpdates.getAvailableCalculationMethods());
-		    updateProject(project);
         }
 
 		if(projectUpdates.getCalculationMethod()!= null && project.isCalculationMethodAllowed(projectUpdates.getCalculationMethod().getCode())){
 			project.setCalculationMethod(projectUpdates.getCalculationMethod());
-			updateProject(project);
 		}
 
         if(!project.isCalculationMethodAllowed(project.getCalculationMethod().getCode())) {
 		    project.setCalculationMethod(project.listAvaliableCalculationMethods().get(0));
-		    updateProject(project);
         }
 
+		updateProject(project);
 	}
 
 	/**
