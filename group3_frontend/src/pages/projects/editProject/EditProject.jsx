@@ -76,11 +76,11 @@ class EditProject extends Component {
             body: JSON.stringify(projToEdit)
         })
             .then(data => {
-                if (data.status === 200)
+                if (data.status === 200) {
                     toastr.success('Project:' + this.props.project.projectId + ' successfully edited');
-                else {
-                    toastr.error('Something went wrong! Project not updated')
                     this.props.refreshProjects(this.props.profile, this.AuthService.getUserId())
+                } else {
+                    toastr.error('Something went wrong! Project not updated')
                 }
                 return data;
             }).catch((error) => {
@@ -126,154 +126,74 @@ class EditProject extends Component {
     }
 
     renderProjEditFields() {
-
-        if(this.props.project.projectStartDate.length > 0 && this.props.project.projectFinishDate.length > 0  ) {
-  
-            return (
-                <div>
-                    <Modal.Header closeButton>
-                        <Modal.Title><Glyphicon className="pencilGreen" glyph="glyphicon glyphicon-edit" /> Edit Project </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form >
-                            <FormGroup bsSize="large">
-                                <ControlLabel>Project Name : {this.props.project.projectName}</ControlLabel>
-                                <FormControl id="nameForm"
-                                             autoFocus
-                                             type="text"
-                                             value={this.state.name}
-                                             onChange={this.handleNameChange}
-                                             placeholder="Enter new name"
+        return (
+            <div>
+                <Modal.Header closeButton>
+                    <Modal.Title><Glyphicon className="pencilGreen" glyph="glyphicon glyphicon-edit" /> Edit Project </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form >
+                        <FormGroup bsSize="large">
+                            <ControlLabel>Project Name : {this.props.project.projectName}</ControlLabel>
+                            <FormControl id="nameForm"
+                                         autoFocus
+                                         type="text"
+                                         value={this.state.name}
+                                         onChange={this.handleNameChange}
+                                         placeholder="Enter new name"
+                            />
+                        </FormGroup>
+                        <FormGroup bsSize="large">
+                            <ControlLabel>Project Description : {this.props.project.projectDescription}</ControlLabel>
+                            <FormControl id="descriptionForm"
+                                autoFocus
+                                type="text"
+                                value={this.state.description}
+                                onChange={this.handleDescriptionChange}
+                                placeholder="Enter new description"
+                            />
+                        </FormGroup>
+                        <FormGroup bsSize="large">
+                            <ControlLabel>Estimated Dates: {formatDate(this.props.project.projectStartDate)} | {formatDate(this.props.project.projectFinishDate)}</ControlLabel>
+                            <div className="calendar">
+                                <DateRangePicker
+                                    startDatePlaceholderText='Estimated Start'
+                                    endDatePlaceholderText='Estimated Finish'
+                                    endDateId='endDate1'
+                                    startDateId='startDate1'
+                                    startDate={this.state.startDate ? this.state.startDate : null}
+                                    endDate={this.state.finishDate ? this.state.finishDate : null}
+                                    onDatesChange={({ startDate, endDate }) => this.setState({ startDate: startDate, finishDate: endDate })}
+                                    focusedInput={this.state.focusedInput ? this.state.focusedInput : null}
+                                    onFocusChange={focusedInput => this.setState({ focusedInput })}
+                                    showDefaultInputIcon
+                                    inputIconPosition="after"
                                 />
-                            </FormGroup>
+                            </div>
+                        </FormGroup>
+                        <div className="budgetAndEffort">
                             <FormGroup bsSize="large">
-                                <ControlLabel>Project Description : {this.props.project.projectDescription}</ControlLabel>
-                                <FormControl id="descriptionForm"
+                                <ControlLabel>Estimated Budget: {this.props.project.projectBudget}</ControlLabel>
+                                <FormControl id="projectBudget"
                                     autoFocus
                                     type="text"
-                                    value={this.state.description}
-                                    onChange={this.handleDescriptionChange}
-                                    placeholder="Enter new description"
+                                    pattern="[0-9]*"
+                                    value={this.state.estimatedBudget}
+                                    onChange={this.handleBudgetChange}
+                                    placeholder="Enter new budget"
                                 />
                             </FormGroup>
-                            <FormGroup bsSize="large">
-                               
-                                <ControlLabel>Estimated Dates: Start: {formatDate(this.props.project.projectStartDate)} |  Finish: {formatDate(this.props.project.projectFinishDate)}</ControlLabel>
-                                <div className="calendar">
-                                    <DateRangePicker
-                                        startDatePlaceholderText='Estimated Start'
-                                        endDatePlaceholderText='Estimated Finish'
-                                        endDateId='endDate1'
-                                        startDateId='startDate1'
-                                        startDate={this.state.startDate ? this.state.startDate : null}
-                                        endDate={this.state.finishDate ? this.state.finishDate : null}
-                                        onDatesChange={({ startDate, endDate }) => this.setState({ startDate: startDate, finishDate: endDate })}
-                                        focusedInput={this.state.focusedInput ? this.state.focusedInput : null}
-                                        onFocusChange={focusedInput => this.setState({ focusedInput })}
-                                        showDefaultInputIcon
-                                        inputIconPosition="after"
-                                    />
-                                </div>
-                            </FormGroup>
-                            <div className="budgetAndEffort">
-                                <FormGroup bsSize="large">
-                                    <ControlLabel>Estimated Budget: {this.props.project.projectBudget}</ControlLabel>
-                                    <FormControl id="projectBudget"
-                                        autoFocus
-                                        type="text"
-                                        pattern="[0-9]*"
-                                        value={this.state.estimatedBudget}
-                                        onChange={this.handleBudgetChange}
-                                        placeholder="Enter new budget"
-                                    />
-                                </FormGroup>
-    
-                            </div>
-    
-    
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <button className="genericButton" onClick={() => this.setState({ confirmCreation: true })}>Edit Project</button>
-                    </Modal.Footer>
-                </div>
-            )
-        }
-            else {
-              
 
-                return (
-                    <div>
-                        <Modal.Header closeButton>
-                            <Modal.Title><Glyphicon className="pencilGreen" glyph="glyphicon glyphicon-edit" /> Edit Project </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form >
-                                <FormGroup bsSize="large">
-                                    <ControlLabel>Project Name : {this.props.project.projectName}</ControlLabel>
-                                    <FormControl id="nameForm"
-                                                 autoFocus
-                                                 type="text"
-                                                 value={this.state.name}
-                                                 onChange={this.handleNameChange}
-                                                 placeholder="Enter new name"
-                                    />
-                                </FormGroup>
-                                <FormGroup bsSize="large">
-                                    <ControlLabel>Project Description : {this.props.project.projectDescription}</ControlLabel>
-                                    <FormControl id="descriptionForm"
-                                        autoFocus
-                                        type="text"
-                                        value={this.state.description}
-                                        onChange={this.handleDescriptionChange}
-                                        placeholder="Enter new description"
-                                    />
-                                </FormGroup>
-                                <FormGroup bsSize="large">
-                                   
-                                    <ControlLabel>Estimated Dates</ControlLabel>
-                                    <div className="calendar">
-                                        <DateRangePicker
-                                            startDatePlaceholderText='Estimated Start'
-                                            endDatePlaceholderText='Estimated Finish'
-                                            endDateId='endDate1'
-                                            startDateId='startDate1'
-                                            startDate={this.state.startDate ? this.state.startDate : null}
-                                            endDate={this.state.finishDate ? this.state.finishDate : null}
-                                            onDatesChange={({ startDate, endDate }) => this.setState({ startDate: startDate, finishDate: endDate })}
-                                            focusedInput={this.state.focusedInput ? this.state.focusedInput : null}
-                                            onFocusChange={focusedInput => this.setState({ focusedInput })}
-                                            showDefaultInputIcon
-                                            inputIconPosition="after"
-                                        />
-                                    </div>
-                                </FormGroup>
-                                <div className="budgetAndEffort">
-                                    <FormGroup bsSize="large">
-                                        <ControlLabel>Estimated Budget: {this.props.project.projectBudget}</ControlLabel>
-                                        <FormControl id="projectBudget"
-                                            autoFocus
-                                            type="text"
-                                            pattern="[0-9]*"
-                                            value={this.state.estimatedBudget}
-                                            onChange={this.handleBudgetChange}
-                                            placeholder="Enter new budget"
-                                        />
-                                    </FormGroup>
-        
-                                </div>
-        
-        
-                            </Form>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <button className="genericButton" onClick={() => this.setState({ confirmCreation: true })}>Edit Project</button>
-                        </Modal.Footer>
-                    </div>
-                )
+                        </div>
 
-        }
-       
+
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="genericButton" onClick={() => this.setState({ confirmCreation: true })}>Edit Project</button>
+                </Modal.Footer>
+            </div>
+        )
     }
 
     render() {
