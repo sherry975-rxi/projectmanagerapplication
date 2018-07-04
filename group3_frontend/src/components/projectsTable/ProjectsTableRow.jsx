@@ -12,6 +12,7 @@ import { updateUnassignedProjCollabs } from '../../actions/projCollabsWoutTasksA
 import { chooseProject, getProjectCost } from './../../actions/projectActions';
 import ProjectCost from '../../pages/projectCost/ProjectCost.jsx'
 import { updateProjectTeam } from "../../actions/projectTeamActions";
+import EditProject from "../../pages/projects/editProject/EditProject";
 
 class ProjectsTableRow extends Component {
     handleRotate = () => {
@@ -195,6 +196,7 @@ class ProjectsTableRow extends Component {
                 >
                     <td colSpan="2">
                         <div className="project-details">
+                            <EditProject project={this.props.project} />
                             <strong>Project Manager:&nbsp;</strong>
                             {this.props.project.projectManagerName}
                             <br />
