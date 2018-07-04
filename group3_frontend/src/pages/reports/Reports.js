@@ -46,7 +46,7 @@ class Reports extends Component {
     refreshPage = () => {
         this.AuthService.fetch(
             `/projects/${this.props.match.params.projectID}/tasks/${
-                this.props.match.params.taskID
+            this.props.match.params.taskID
             }/reports/`,
             {
                 method: 'get'
@@ -62,7 +62,7 @@ class Reports extends Component {
     reportsFromCollaborator() {
         this.AuthService.fetch(
             `/projects/${this.props.match.params.projectID}/tasks/${
-                this.props.match.params.taskID
+            this.props.match.params.taskID
             }/reports/users/${this.AuthService.getUserId()}`,
             {
                 method: 'get'
@@ -78,10 +78,11 @@ class Reports extends Component {
     renderReports() {
         return this.state.reports.map(reportItem => {
             return (
-                <tr className="line">
-                    <td className="tdteste">{reportItem.reportDbId}</td>
+
+                <tr>
+                    <td >{reportItem.reportDbId}</td>
                     <td>{reportItem.cost}</td>
-                    <td>{reportItem.reportedTime}</td>
+                    <td><span className="reportedTime"><p>{reportItem.reportedTime}</p></span></td>
                     <td>
                         <Moment format="YYYY/MM/DD">
                             {reportItem.firstDateOfReport}
@@ -92,29 +93,32 @@ class Reports extends Component {
                             {reportItem.dateOfUpdate}
                         </Moment>
                     </td>
-                    <td>
-                        <UpdateReport
-                            taskId={this.props.match.params.taskID}
-                            projId={this.props.match.params.projectID}
-                            reportId={reportItem.reportDbId}
-                            onSubmit={this.chooseWhichToRender}
-                        />
+                    <td className="updateReport">
+                        <div align="center">
+                            <UpdateReport
+                                taskId={this.props.match.params.taskID}
+                                projId={this.props.match.params.projectID}
+                                reportId={reportItem.reportDbId}
+                                onSubmit={this.chooseWhichToRender}
+                            />
+                        </div>
                     </td>
                 </tr>
+
             );
         });
     }
 
     render() {
         if (this.state.message != null) {
-            return <Error message="Unauthorized"/>;
+            return <Error message="Unauthorized" />;
         } else {
             return (
                 <div className=" table-striped">
                     <h3>
                         <b>Reports for {this.props.match.params.taskID} </b>
                     </h3>
-                    <table className="table table-hover">
+                    <table className="reportTable">
                         <thead>
                             <tr>
                                 <th>Report ID</th>
@@ -122,9 +126,10 @@ class Reports extends Component {
                                 <th>Time</th>
                                 <th>Date of Creation</th>
                                 <th>Date of Update</th>
+                                <th>Update</th>
                             </tr>
+                            {this.renderReports()}
                         </thead>
-                        <tbody>{this.renderReports()}</tbody>
                     </table>
                 </div>
             );
