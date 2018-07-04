@@ -15,6 +15,7 @@ import project.model.User;
 import project.services.TaskService;
 import project.services.UserService;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -49,16 +50,24 @@ public class RestUserTasksController {
         }
 
         List<Task> taskFromUser = taskService.getUserTasks(user);
+        List<Task> userTasks = new ArrayList<>();
 
-        for(Task task: taskFromUser){
-            for(String action: task.getTaskState().getActions()){
+        for(Task task: taskFromUser) {
 
-                Link taskLinkn = TaskAction.getLinks(task.getProject().getProjectId(), task.getTaskID()).get(action);
-                task.add(taskLinkn);
+            if (task.getActiveTaskCollaboratorByEmail(user.getEmail()) != null) {
+
+                for (String action : task.getTaskState().getActions()) {
+
+                    Link taskLinkn = TaskAction.getLinks(task.getProject().getProjectId(), task.getTaskID()).get(action);
+                    task.add(taskLinkn);
+                }
+
+                userTasks.add(task);
+
             }
         }
 
-        return ResponseEntity.ok().body(taskFromUser);
+        return ResponseEntity.ok().body(userTasks);
     }
 
     /**
