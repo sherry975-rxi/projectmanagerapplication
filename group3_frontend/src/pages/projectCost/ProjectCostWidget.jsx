@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 
 class ProjectCostWidget extends Component {
 
-
     render() {
 
         console.log(this.props.calculationMethod)

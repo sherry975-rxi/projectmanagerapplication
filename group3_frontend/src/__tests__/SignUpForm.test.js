@@ -6,9 +6,6 @@ describe('SignUpForm', () => {
     const fetchResult = {
         json: jest.fn().mockReturnValue({ href: 'responseUrl' })
     };
-    global.fetch = jest
-        .fn()
-        .mockImplementation(() => Promise.resolve(fetchResult));
 
     let mockedClass;
     let eventMock = { preventDefault: jest.fn() };
@@ -18,8 +15,14 @@ describe('SignUpForm', () => {
     });
 
     beforeEach(() => {
+        global.fetch = jest
+            .fn()
+            .mockImplementation(() => Promise.resolve(fetchResult));
+
         mockedClass = new SignUpForm();
-        mockedClass.setState = jest.fn();
+        mockedClass.setState = jest.fn().mockImplementation(val => {
+            return val;
+        });
     });
 
     it('should render correctly', () => {
@@ -55,16 +58,14 @@ describe('SignUpForm', () => {
             method: 'POST'
         };
 
-        const expectedProps = {
-            incrementStep: '1'
-        };
+        const fetchResult = { href: 'responseUrl' };
 
         mockedClass.handleSubmit(eventMock).then(() => {
             expect(global.fetch.mock.calls.length).toEqual(1);
             expect(global.fetch.mock.calls[0][0]).toBe('/account/register');
             expect(global.fetch.mock.calls[0][1]).toEqual(expectedFetchOptions);
             expect(mockedClass.props.incrementStep).toHaveBeenCalledWith(
-                expectedProps
+                fetchResult
             );
         });
         expect(eventMock.preventDefault).toBeCalled();
@@ -98,6 +99,7 @@ describe('SignUpForm', () => {
 
     it('should setState when checkBoxTerms is checked', () => {
         eventMock = {
+            ...eventMock,
             target: {
                 checked: 'checked'
             }

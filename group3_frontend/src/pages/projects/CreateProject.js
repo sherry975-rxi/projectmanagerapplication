@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './CreateProject.css';
 import {
     FormGroup,
@@ -10,6 +11,7 @@ import {
 import AuthService from './../loginPage/AuthService';
 import ListPossibleProjectManagers from './ListPossibleProjectManagers';
 import { toastr } from 'react-redux-toastr';
+
 
 class CreateProject extends Component {
     constructor(props) {
@@ -85,7 +87,7 @@ class CreateProject extends Component {
         })
             .then(responseData => {
                 toastr.success('Project Created Successfully!');
-                setTimeout(function() {
+                setTimeout(function () {
                     window.location.href = '/activeprojects';
                 }, 1000);
             })
@@ -100,16 +102,16 @@ class CreateProject extends Component {
     render() {
 
         return (
-            <div className=" table-striped">
+            <div >
                 <span className="pageTitle">
-                    <b>Create project</b>
+                    <b>Create new project</b>
                 </span>
-                <div className="createProjectForm">
-                    <form onSubmit={this.handleSubmit}>
+                <div className="createProjectContainer">
+                    <form className="createProjectForm" onSubmit={this.handleSubmit}>
                         <FormGroup controlId="name" bsSize="large">
                             <ControlLabel className="formTitle">Project Name</ControlLabel>
                             <FormControl
-                                className="textForm"
+                                className="textFormProject"
                                 autoFocus
                                 type="text"
                                 value={this.state.name}
@@ -120,7 +122,7 @@ class CreateProject extends Component {
                         <FormGroup controlId="description" bsSize="large">
                             <ControlLabel className="formTitle">Description</ControlLabel>
                             <FormControl
-                                className="textForm"
+                                className="textFormProject"
                                 autoFocus
                                 type="text"
                                 value={this.state.description}
@@ -131,7 +133,7 @@ class CreateProject extends Component {
                         <FormGroup controlId="budget" bsSize="large">
                             <ControlLabel className="formTitle" >Budget / €</ControlLabel>
                             <FormControl
-                                className="textForm"
+                                className="textFormProject"
                                 autoFocus
                                 type="number"
                                 pattern="[0-9]*"
@@ -147,25 +149,25 @@ class CreateProject extends Component {
                                 onChange={this.handleEffortSelection}>
                                 Hours
                         </Radio>{' '}
-                        <Radio value="PM" checked={this.state.effortUnit === "PM"}
-                            onChange={this.handleEffortSelection}>
-                            Person/Month
+                            <Radio value="PM" checked={this.state.effortUnit === "PM"}
+                                onChange={this.handleEffortSelection}>
+                                Person/Month
                         </Radio>
-                    </FormGroup>
+                        </FormGroup>
 
                         <ControlLabel className="formTitle"> Project Manager ({this.state.projectManager.name})  </ControlLabel>
                         <br />
                         <ListPossibleProjectManagers onSelect={this.selectManager} />
 
-                    <br />
+                        <br />
 
+                        <button block className="projectManagerButton" disabled={!this.validateForm()} type="submit" >
+                            Create Project
+                    </button>
 
-                    <Button block className="btn btn-primary" disabled={!this.validateForm()} type="submit" >
-                        Create Project
-                    </Button>
                     </form>
                 </div>
-            </div>
+            </ div>
         );
     }
 
