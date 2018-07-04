@@ -159,7 +159,7 @@ class CreateTask extends Component {
                         endDateId='endDate1'
                         startDateId='startDate1'
                         startDate={this.state.expectedStart ? this.state.expectedStart : null}
-                        endDate={this.state.deadline ? this.state.expectedStart : null}
+                        endDate={this.state.deadline ? this.state.deadline : null}
                         onDatesChange={({ startDate, endDate }) => this.setState({ expectedStart: startDate, deadline: endDate })}
                         focusedInput={this.state.focusedInput ? this.state.focusedInput : null}
                         onFocusChange={focusedInput => this.setState({ focusedInput })}
