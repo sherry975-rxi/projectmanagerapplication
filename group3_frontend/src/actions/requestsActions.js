@@ -1,7 +1,5 @@
-import * as userTasksFilterActions from './userTasksFilterActions';
 import * as requestsFilterActions from './requestsFilterActions';
 import AuthService from "../pages/loginPage/AuthService";
-import {toastr} from "react-redux-toastr";
 import { isNullOrUndefined } from 'util';
 
 

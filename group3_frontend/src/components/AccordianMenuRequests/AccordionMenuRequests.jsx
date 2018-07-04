@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { PanelGroup, Panel, Button, Glyphicon } from 'react-bootstrap';
+import { PanelGroup, Panel } from 'react-bootstrap';
 import './AccordionMenuRequests.css'
 import * as Constants from '../utils/titleConstants';
 import { connect } from 'react-redux';
 import { handleRequestsHeaders } from '../../components/utils/handleList';
-import ChangeProfile from '../../pages/users/ChangeProfile';
 import ApproveRequest from '../../pages/requests/ApproveRequest';
 import RejectRequest from '../../pages/requests/RejectRequest';
 

@@ -19,7 +19,6 @@ import ProjectDetails from './pages/projects/ProjectDetails';
 import UserTasks from './pages/tasks/UserTasks';
 import Messages from './components/msgs/Messages';
 import HomePage from '../src/components/homePage/Homepage';
-import Test from './pages/tasks/Test';
 import ProjectTasks from './pages/tasks/ProjectTasks';
 import CreateProject from './pages/projects/CreateProject';
 import AvailableListOfCollaborators from './pages/tasks/AvailableListOfCollaborators';

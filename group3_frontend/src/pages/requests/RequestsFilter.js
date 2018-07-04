@@ -266,8 +266,6 @@ class RequestsFilter extends Component {
                             All Requests
                     </label>
 
-                        <a></a>
-
                     </div>
                 </fieldset>
 

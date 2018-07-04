@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Modal, FormGroup, ControlLabel, FormControl, Glyphicon } from 'react-bootstrap'
 import '../../../components/button/genericButton.css'
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, isInclusivelyAfterDay, isInclusivelyBeforeDay } from 'react-dates';
+import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './EditProject.css'
 import { connect } from 'react-redux';

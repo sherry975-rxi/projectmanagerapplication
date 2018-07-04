@@ -31,7 +31,7 @@ class UploadUsersFile extends Component {
         if(this.props.filter === 'searchUsers'){
             var trueFilter = this.props.previousFilter;
         } else {
-            var trueFilter = this.props.filter;
+            trueFilter = this.props.filter;
         }
         switch (trueFilter) {
             case 'email':
