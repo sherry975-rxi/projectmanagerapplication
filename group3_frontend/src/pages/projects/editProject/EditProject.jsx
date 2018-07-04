@@ -78,7 +78,7 @@ class EditProject extends Component {
             .then(data => {
                 if (data.status === 200) {
                     toastr.success('Project:' + this.props.project.projectId + ' successfully edited');
-                    this.props.refreshProjects(this.props.profile, this.AuthService.getUserId())
+                    this.props.refreshProjects(this.props.userProfile, this.AuthService.getUserId())
                 } else {
                     toastr.error('Something went wrong! Project not updated')
                 }
