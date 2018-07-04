@@ -1,5 +1,4 @@
-import { toastr } from "react-redux-toastr";
-
+import { toastr } from 'react-redux-toastr';
 
 export function reloadTask(projectId, taskId) {
     return dispatch => {
@@ -11,13 +10,12 @@ export function reloadTask(projectId, taskId) {
             .then(responseData => responseData.json())
             .then(data => {
                 console.log(data);
-                if(data.msg == null) {
+                if (data.msg == null) {
                     dispatch(taskFetched(data));
                     return data;
                 } else {
                     dispatch(fetchTasksHasErrored());
                 }
-
             });
     };
 }
@@ -31,8 +29,7 @@ export function getAllTaskDependencies(projectId, taskId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                if(data.msg == null) {
-                    console.log(data);
+                if (data.msg == null) {
                     dispatch(taskDependenciesFetched(data));
                     return data;
                 } else {
@@ -44,35 +41,34 @@ export function getAllTaskDependencies(projectId, taskId) {
 
 export function getPossibleTaskDependencies(projectId, taskId) {
     return dispatch => {
-
         fetch(`/projects/${projectId}/tasks/${taskId}/possibleDependencies`, {
             headers: { Authorization: localStorage.getItem('id_token') },
             method: 'GET'
         })
             .then(responseData => responseData.json())
             .then(data => {
-                if(data.msg == null) {
+                if (data.msg == null) {
                     dispatch(possibleTaskDependenciesFetched(data));
                     return data;
                 } else {
                     dispatch(fetchTasksHasErrored());
                 }
-
             });
-
     };
 }
 
-
 export function createTaskDependency(projectId, taskId, parentId, postpone) {
     return dispatch => {
-        fetch(`/projects/${projectId}/tasks/${taskId}/createDependency/${parentId}/${postpone}`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
-            method: 'PUT'
-        })
+        fetch(
+            `/projects/${projectId}/tasks/${taskId}/createDependency/${parentId}/${postpone}`,
+            {
+                headers: { Authorization: localStorage.getItem('id_token') },
+                method: 'PUT'
+            }
+        )
             .then(responseData => responseData.json())
             .then(data => {
-                if(data.msg == null) {
+                if (data.msg == null) {
                     dispatch(reloadTask(projectId, taskId));
                     toastr.success('Dependency added!');
                     return data;
@@ -80,21 +76,22 @@ export function createTaskDependency(projectId, taskId, parentId, postpone) {
                     toastr.error('An error occurred!');
                     dispatch(fetchTasksHasErrored());
                 }
-
             });
     };
 }
 
 export function removeTaskDependency(projectId, taskId, parentId) {
     return dispatch => {
-
-        fetch(`/projects/${projectId}/tasks/${taskId}/removeDependency/${parentId}`, {
-            headers: { Authorization: localStorage.getItem('id_token') },
-            method: 'PUT'
-        })
+        fetch(
+            `/projects/${projectId}/tasks/${taskId}/removeDependency/${parentId}`,
+            {
+                headers: { Authorization: localStorage.getItem('id_token') },
+                method: 'PUT'
+            }
+        )
             .then(responseData => responseData.json())
             .then(data => {
-                if(data.msg == null) {
+                if (data.msg == null) {
                     dispatch(taskDependenciesFetched(data));
                     toastr.success('Dependency removed!');
                     return data;
@@ -106,7 +103,6 @@ export function removeTaskDependency(projectId, taskId, parentId) {
     };
 }
 
-
 export function taskFetched(task) {
     return {
         type: 'CHILD_TASK_FETCHED',
@@ -114,7 +110,6 @@ export function taskFetched(task) {
         tasks: task.taskDependency
     };
 }
-
 
 export function taskDependenciesFetched(taskDependencies) {
     return {
@@ -135,7 +130,6 @@ export function tasksLoading() {
         type: 'ITEM_LOADING'
     };
 }
-
 
 export function fetchTasksHasErrored() {
     return {
