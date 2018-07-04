@@ -302,8 +302,8 @@ public class RestProjectTasksController {
      *
      * @return The task found by the id
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and (@projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid))" +
+            "or principal.id==@projectService.getProjectById(#projid).projectManager.userID)" + "or hasRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "{taskId}", method = RequestMethod.GET)
     public ResponseEntity<TaskDTO> getTask (@PathVariable String taskId, @PathVariable int projid) {
 
@@ -330,8 +330,8 @@ public class RestProjectTasksController {
      *
      * @return The task dependenciues found by ID
      */
-    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and @projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid)) " +
-            "or hasRole('ROLE_COLLABORATOR') and principal.id==projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and (@projectService.isUserActiveInProject(@userService.getUserByEmail(principal.username),@projectService.getProjectById(#projid))" +
+            "or principal.id==@projectService.getProjectById(#projid).projectManager.userID)" + "or hasRole('ROLE_ADMIN') or hasRole('ROLE_DIRECTOR')")
     @RequestMapping(value = "{taskId}/dependencies", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getTaskDependencies (@PathVariable String taskId, @PathVariable int projid) {
 
