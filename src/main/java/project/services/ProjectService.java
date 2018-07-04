@@ -360,11 +360,11 @@ public class ProjectService {
 	 */
 	public void updateProjectData(Project projectUpdates, Project project){
 
-		if(StringUtils.isEmpty(projectUpdates.getName())) {
+		if(!StringUtils.isEmpty(projectUpdates.getName())) {
 			project.setName(projectUpdates.getName());
 		}
 
-		if(StringUtils.isEmpty(projectUpdates.getDescription())) {
+		if(!StringUtils.isEmpty(projectUpdates.getDescription())) {
 			project.setDescription(projectUpdates.getDescription());
 		}
 

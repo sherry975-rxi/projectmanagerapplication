@@ -10,7 +10,7 @@ public class SMSSender implements ValidationMethod {
     public String performValidationMethod(String receipientPhoneNum, String email, String question, String msg) {
 
         SendSMS sendSMS = new SendSMS();
-        sendSMS.sendMessage(msg, receipientPhoneNum, false);
+        sendSMS.sendMessage("Your verification code for registering in the ProjectManagement App is: " + msg, receipientPhoneNum, false);
         return "SMS sent! Please input the code sent to you:";
     }
 

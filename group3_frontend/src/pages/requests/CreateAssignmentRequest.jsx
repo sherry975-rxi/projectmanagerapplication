@@ -56,6 +56,7 @@ class CreateAssignmentRequest extends Component {
                 message: response.error,
             });
 
+            try{
             this.state.activeTeam.map((collab, index) => {
 
                 if (collab.projCollaborator.collaborator.userID == this.AuthService.getUserId()) {
@@ -66,6 +67,7 @@ class CreateAssignmentRequest extends Component {
 
                 return collab
             })
+        } catch (error) {}
         });
     }
 

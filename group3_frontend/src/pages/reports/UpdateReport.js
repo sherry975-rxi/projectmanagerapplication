@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Modal } from 'react';
 import {
     Button,
     FormGroup,
@@ -67,41 +67,28 @@ class UpdateReport extends Component {
 
     render() {
         return (
-            <div className="table-striped">
+            <div styles={{ width: '300px' }} >
                 <label className="title" />
-
                 <form onSubmit={this.handleSubmit}>
-                    <td className="tdSubmit">
-                        <FormGroup controlId="reportedTime">
-                            <ControlLabel>Reported time to update</ControlLabel>
-                            <FormControl
-                                autoFocus
-                                type="number"
-                                pattern="[0-9]*"
-                                inputmode="numeric"
-                                value={this.state.reportedTime}
-                                onChange={this.handleChange}
-                            />
-                        </FormGroup>
-                    </td>
-                    <td className="tdButton">
-                        <Button
-                            block
-                            className="btn btn-primary"
-                            disabled={!this.validateForm()}
-                            type="submit"
-                        >
-                            Update
-                        </Button>
-                    </td>
-                    <Alert
-                        bsStyle="success"
-                        className={this.state.hideSuccessInfo}
-                    >
-                        <strong>
-                            Report successfully updated! <br />
-                        </strong>
-                    </Alert>
+                    <FormGroup controlId="reportedTime">
+                        <ControlLabel>Reported time to update</ControlLabel>
+                        <FormControl
+                            autoFocus
+                            type="number"
+                            pattern="[0-9]*"
+                            inputmode="numeric"
+                            value={this.state.reportedTime}
+                            onChange={this.handleChange}
+                        />
+                    </FormGroup>
+
+                    <button
+                        block
+                        className="genericButton"
+                        disabled={!this.validateForm()}
+                        type="submit"
+                    >Update
+                        </button>
                 </form>
             </div>
         );

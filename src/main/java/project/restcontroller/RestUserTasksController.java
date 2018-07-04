@@ -127,13 +127,24 @@ public class RestUserTasksController {
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "pending", method = RequestMethod.GET)
     public List<Task> getPendingTasks(@PathVariable Integer userId) {
-        List<Task> taskList = taskService.getStartedNotFinishedUserTaskList(userService.getUserByID(userId));
+
+        User user = userService.getUserByID(userId);
+
+
+        List<Task> taskList = taskService.getStartedNotFinishedUserTaskList(user);
+        List<Task> userTasks = new ArrayList<>();
+
         for(Task task: taskList) {
-            Link reference = linkTo(getClass(), userId).slash("task").slash(task.getDbTaskId()).withSelfRel();
-            task.add(reference);
+            if (task.getActiveTaskCollaboratorByEmail(user.getEmail()) != null) {
+
+                Link reference = linkTo(getClass(), userId).slash("task").slash(task.getDbTaskId()).withSelfRel();
+                task.add(reference);
+                userTasks.add(task);
+
+            }
         }
 
-        return taskList;
+        return userTasks;
     }
 
 
@@ -148,14 +159,29 @@ public class RestUserTasksController {
     @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id == #userId or hasRole('ROLE_DIRECTOR') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "sortedbydeadline", method = RequestMethod.GET)
     public List<Task> getSortedTaskListByDeadline(@PathVariable Integer userId) {
-        List<Task> taskList = taskService.getStartedNotFinishedUserTaskList(userService.getUserByID(userId));
-        taskList = taskService.sortTaskListByDeadline(taskList);
-        for(Task task: taskList) {
-            Link reference = linkTo(getClass(), userId).slash("task").slash(task.getDbTaskId()).withSelfRel();
-            task.add(reference);
+
+        User user = userService.getUserByID(userId);
+
+        List<Task> ongoingTaskList = taskService.getStartedNotFinishedUserTaskList(user);
+
+        List<Task> userOngoingTasks = new ArrayList<>();
+
+
+        for(Task task: ongoingTaskList) {
+            if (task.getActiveTaskCollaboratorByEmail(user.getEmail()) != null) {
+
+                Link reference = linkTo(getClass(), userId).slash("task").slash(task.getDbTaskId()).withSelfRel();
+
+                task.add(reference);
+
+                userOngoingTasks.add(task);
+
+            }
         }
 
-        return taskList;
+        userOngoingTasks = taskService.sortTaskListByDeadline(userOngoingTasks);
+
+        return userOngoingTasks;
     }
 
 

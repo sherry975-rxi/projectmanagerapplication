@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import './firstPage.css';
 import logo from './top_banner.png';
 import brand from './brand.svg';
-
 import Button from '../../components/button/button';
 
 class firstPage extends Component {
-    state = {};
     render() {
         return (
             <div>
