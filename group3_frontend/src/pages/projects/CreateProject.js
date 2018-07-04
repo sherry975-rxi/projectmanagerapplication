@@ -129,7 +129,7 @@ class CreateProject extends Component {
                         </FormGroup>
 
                         <FormGroup controlId="budget" bsSize="large">
-                            <ControlLabel className="formTitle" >Budget</ControlLabel>
+                            <ControlLabel className="formTitle" >Budget / €</ControlLabel>
                             <FormControl
                                 className="textForm"
                                 autoFocus
