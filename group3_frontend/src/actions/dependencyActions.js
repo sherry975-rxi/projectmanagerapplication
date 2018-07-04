@@ -10,11 +10,12 @@ export function reloadTask(projectId, taskId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
+                console.log(data);
                 if(data.msg == null) {
                     dispatch(taskFetched(data));
                     return data;
                 } else {
-                    fetchTasksHasErrored();
+                    dispatch(fetchTasksHasErrored());
                 }
 
             });
@@ -35,7 +36,7 @@ export function getAllTaskDependencies(projectId, taskId) {
                     dispatch(taskDependenciesFetched(data));
                     return data;
                 } else {
-                    fetchTasksHasErrored();
+                    dispatch(fetchTasksHasErrored());
                 }
             });
     };
@@ -54,7 +55,7 @@ export function getPossibleTaskDependencies(projectId, taskId) {
                     dispatch(possibleTaskDependenciesFetched(data));
                     return data;
                 } else {
-                    fetchTasksHasErrored();
+                    dispatch(fetchTasksHasErrored());
                 }
 
             });
@@ -72,13 +73,12 @@ export function createTaskDependency(projectId, taskId, parentId, postpone) {
             .then(responseData => responseData.json())
             .then(data => {
                 if(data.msg == null) {
-                    dispatch(taskDependenciesFetched(data));
-                    toastr.success('Dependency added!');
                     dispatch(reloadTask(projectId, taskId));
+                    toastr.success('Dependency added!');
                     return data;
                 } else {
                     toastr.error('An error occurred!');
-                    fetchTasksHasErrored();
+                    dispatch(fetchTasksHasErrored());
                 }
 
             });
@@ -100,7 +100,7 @@ export function removeTaskDependency(projectId, taskId, parentId) {
                     return data;
                 } else {
                     toastr.error('An error occurred!');
-                    fetchTasksHasErrored();
+                    dispatch(fetchTasksHasErrored());
                 }
             });
     };
@@ -110,7 +110,8 @@ export function removeTaskDependency(projectId, taskId, parentId) {
 export function taskFetched(task) {
     return {
         type: 'CHILD_TASK_FETCHED',
-        child: task
+        child: task,
+        tasks: task.taskDependency
     };
 }
 
@@ -138,6 +139,6 @@ export function tasksLoading() {
 
 export function fetchTasksHasErrored() {
     return {
-        type: 'FETCH_HAS_ERRORED'
+        type: 'DEPENDENCY_ERROR'
     };
 }
