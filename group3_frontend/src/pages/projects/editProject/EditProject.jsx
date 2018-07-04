@@ -76,11 +76,11 @@ class EditProject extends Component {
             body: JSON.stringify(projToEdit)
         })
             .then(data => {
-                if (data.status === 200)
+                if (data.status === 200) {
                     toastr.success('Project:' + this.props.project.projectId + ' successfully edited');
-                else {
-                    toastr.error('Something went wrong! Project not updated')
                     this.props.refreshProjects(this.props.profile, this.AuthService.getUserId())
+                } else {
+                    toastr.error('Something went wrong! Project not updated')
                 }
                 return data;
             }).catch((error) => {
