@@ -58,6 +58,8 @@ class CreateRemovalRequest extends Component {
 
             });
 
+            try{
+
             this.state.activeTeam.map((collab, index) => {
  
 
@@ -70,6 +72,8 @@ class CreateRemovalRequest extends Component {
 
                 return collab
             })
+        }
+        catch(error) {}
         });
     }
 
