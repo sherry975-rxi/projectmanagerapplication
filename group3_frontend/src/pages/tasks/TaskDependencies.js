@@ -15,18 +15,19 @@ class TaskDependencies extends Component {
     constructor(props) {
         super(props);
         this.authService = new AuthService();
+
     }
 
     // after mounting the component, an action is dispatched to fetch all dependencies of the chosen task
     // as well as confirmation of the logged in user's permissions in the project
     componentDidMount() {
-        this.props.getAllTaskDependencies(this.props.match.params.projectID, this.props.match.params.taskID);
+        this.props.reloadTask(this.props.match.params.projectID, this.props.match.params.taskID);
     }
 
     // this method fetches the selected task and compares its project manager against the logged in user
     isProjectManager() {
 
-        if (this.props.childTask !== undefined)
+        if (this.props.childTask != null)
             return this.props.childTask.project.projectManager.email === this.authService.getProfile().sub;
         else
             return false;

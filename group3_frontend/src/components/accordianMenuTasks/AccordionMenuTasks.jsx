@@ -127,9 +127,13 @@ class AccordionMenu extends Component {
         let canIViewReports = false
 
         for (let i = 0; i < Object.keys(element.taskTeam).length; i++) {
+          
 
-            canIViewReports = (element.taskTeam[i]['taskCollaborator']['email'] === this.AuthService.getProfile().sub)
+            if((element.taskTeam[i]['taskCollaborator']['email'] === this.AuthService.getProfile().sub)) {
+                canIViewReports = true;
+            }
         }
+    
 
         let isCollaborator = this.props.profile === 'COLLABORATOR'
         let isProjectManager = element.currentProject.projectManager.email ===
@@ -137,11 +141,13 @@ class AccordionMenu extends Component {
                 .sub
 
         if ((isCollaborator && canIViewReports) || (
-            (isCollaborator && isProjectManager)
+            (isProjectManager)
                 .sub)) {
+            
             return (
                 <div align="right">
                     <p />
+                
                     {element.state !== 'FINISHED' ? (
                         <Link
                             to={
@@ -215,7 +221,6 @@ class AccordionMenu extends Component {
             return (
                 <div align="right">
                     <p />
-
                     <a className="key">{key++}</a>
                     <p />
                     {element.state !== 'FINISHED' ? (

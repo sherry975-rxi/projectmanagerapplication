@@ -19,7 +19,8 @@ class ChangeProfile extends Component {
         super(props);
         this.state = {
             submission: false,
-            hideSuccessInfo: 'hide-code'
+            hideSuccessInfo: 'hide-code',
+            userprofile: ''
         };
         this.AuthService = new AuthService();
         this.handleClick = this.handleClick.bind(this);
@@ -99,12 +100,31 @@ class ChangeProfile extends Component {
 
     }
 
+    isUserAdmin(){
+        this.AuthService.fetch('/users/email/' + this.props.email, {
+            method: 'get'
+        }).then(responseData => {
+            this.setState({
+                userprofile: responseData[0]['userProfile']
+            });
+        })
+
+        return this.state.userprofile==='ADMIN'
+    }
+
     render() {
-        return (
-            <div className=" table-striped">
-                <tbody>{this.renderDropdownButton('Change', 0)}</tbody>
-            </div>
-        );
+        if(!this.isUserAdmin()) {
+            return (
+                <div className=" table-striped">
+                    <tbody>{this.renderDropdownButton('Change', 0)}</tbody>
+                </div>
+            );
+        } else {
+            return(
+                <div/>
+            )
+        }
+
     }
 }
 

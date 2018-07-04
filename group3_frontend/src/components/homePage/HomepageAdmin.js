@@ -110,9 +110,9 @@ class HomepageAdmin extends Component {
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <td className="avatarTdOne">  <Avatar size="88" name="Director" color="#CCC" /></td>
-                                            <td className="avatarTdTwo"> <Avatar size="88" name="Collaborator" color="#66939e" /> </td>
-                                            <td className="avatarTdThree">  <Avatar size="88" name="Unassigned" color="#c44c4c" /></td>
+                                            <td className="avatarTdOne">  <Avatar size="96" name="D i r e c t o r s" color="#CCC" /></td>
+                                            <td className="avatarTdTwo"> <Avatar size="96" name="C o l l a b o r a t o r s" color="#66939e" /> </td>
+                                            <td className="avatarTdThree">  <Avatar size="96" name="U n a s s i g n e d" color="#c44c4c" /></td>
                                         </tr>
                                         <tr>
                                             <td className="avatarTdOne">
