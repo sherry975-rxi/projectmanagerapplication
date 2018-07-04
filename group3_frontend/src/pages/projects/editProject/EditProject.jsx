@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Modal, FormGroup, ControlLabel, FormControl, Glyphicon } from 'react-bootstrap'
 import '../../../components/button/genericButton.css'
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, isInclusivelyAfterDay, isInclusivelyBeforeDay } from 'react-dates';
+import { DateRangePicker, } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import './EditProject.css'
 import { connect } from 'react-redux';
@@ -136,11 +136,11 @@ class EditProject extends Component {
                         <FormGroup bsSize="large">
                             <ControlLabel>Project Name : {this.props.project.projectName}</ControlLabel>
                             <FormControl id="nameForm"
-                                         autoFocus
-                                         type="text"
-                                         value={this.state.name}
-                                         onChange={this.handleNameChange}
-                                         placeholder="Enter new name"
+                                autoFocus
+                                type="text"
+                                value={this.state.name}
+                                onChange={this.handleNameChange}
+                                placeholder="Enter new name"
                             />
                         </FormGroup>
                         <FormGroup bsSize="large">
@@ -204,7 +204,7 @@ class EditProject extends Component {
         }
 
 
-        if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub || this.props.userProfile === "DIRECTOR"){
+        if (this.props.project.projectManagerEmail === this.AuthService.getProfile().sub || this.props.userProfile === "DIRECTOR") {
 
             return (
                 <div>
@@ -215,16 +215,16 @@ class EditProject extends Component {
                     </Modal>
                 </div>
             )
-        } 
+        }
 
 
         else {
             return null
         }
 
-        }
+    }
 
-        
+
 }
 
 const mapStateToProps = state => {

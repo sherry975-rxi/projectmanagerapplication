@@ -36,6 +36,7 @@ class ListPossibleProjectManagers extends Component {
                 bsStyle={title.toLowerCase()}
                 title={title}
                 key={i}
+                className="projectManagerButton"
                 id={`dropdown-basic-${i}`}
             >
                 {this.state.collaborators.map((projTeamitem, index) => (

@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import './MarkTaskAsFinished';
 import '../reports/Reports';
 import AuthService from '../loginPage/AuthService';
-import { Redirect } from 'react-router-dom';
 import UserTasksFilter from '../tasks/UserTasksFilter';
 import AccordionMenu from '../../components/accordianMenuTasks/AccordionMenuTasks.jsx';
 import { connect } from 'react-redux';
 import LoadingComponent from './../../components/loading/LoadingComponent';
-import { tasksLoading } from './../../actions/dependencyActions';
 
 class UserTasks extends Component {
     constructor(props) {

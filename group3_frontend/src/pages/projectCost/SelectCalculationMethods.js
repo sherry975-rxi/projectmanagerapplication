@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
     Dropdown,
-    FormGroup,
-    Button,
     Checkbox
 } from 'react-bootstrap';
 import AuthService from "../loginPage/AuthService";
