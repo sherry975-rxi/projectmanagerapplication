@@ -1010,6 +1010,26 @@ public class TaskService {
 
 	}
 
+	public Boolean setFinishDateToAllTaskCollabsFromProjCollab(ProjectCollaborator collab, Calendar finishDate){
+
+		List<Task> allTasks = this.getAllTasksFromProjectCollaborator(collab);
+		Boolean wasTaskUpdated = false;
+
+		for (Task other: allTasks){
+			if(other.isProjectCollaboratorActiveInTaskTeam(collab)){
+				other.getActiveTaskCollaboratorByEmail(collab.getUserFromProjectCollaborator().getEmail())
+						.setFinishDate(finishDate);
+
+				this.saveTask(other);
+				wasTaskUpdated = true;
+			}
+		}
+
+		return wasTaskUpdated;
+
+	}
+
+
 
 	/**
 	 *

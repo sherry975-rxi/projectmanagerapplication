@@ -14,6 +14,7 @@ import project.services.TaskService;
 import project.services.UserService;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -777,5 +778,34 @@ public class RestProjectTasksController {
 
 
     }
+
+
+    @PreAuthorize("hasRole('ROLE_COLLABORATOR') and principal.id==@projectService.getProjectById(#projid).projectManager.userID or hasRole('ROLE_ADMIN')" + "or hasRole('ROLE_DIRECTOR')")
+    @RequestMapping(value = "{collaboratorId}/setFinishDateForCollab/", method = RequestMethod.DELETE)
+    public ResponseEntity<String> removeAllCollabsFromProjectCollaborator(@PathVariable int projid, @PathVariable long collaboratorId){
+
+        ResponseEntity<String> responseEntity = new ResponseEntity<>("not deleted", HttpStatus.NOT_FOUND);
+
+        Calendar finishDate = Calendar.getInstance();
+
+        Project project = projectService.getProjectById(projid);
+
+        ProjectCollaborator projectCollaborator = projectService.getProjectCollaboratorById(collaboratorId);
+
+
+        for(ProjectCollaborator other: this.projectService.getProjectTeam(project)){
+            if(other == projectCollaborator){
+
+                this.taskService.setFinishDateToAllTaskCollabsFromProjCollab(other, finishDate);
+
+                responseEntity = new ResponseEntity<>("ok", HttpStatus.OK);
+
+
+            }
+        }
+
+        return responseEntity;
+    }
+
 }
 

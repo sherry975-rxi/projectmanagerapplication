@@ -28,6 +28,19 @@ class ActiveProjectTeam extends Component {
         }
 
         )
+
+        fetch(
+            `/projects/${this.props.project}/tasks/${event.target.id}/setFinishDateForCollab/`,
+            {
+                headers: { Authorization: localStorage.getItem('id_token') },
+                method: 'delete' }
+        ).then(response => {
+
+            if(response.status === 200) {
+                this.props.updateProjectTeam(this.props.project)
+            }
+        })
+
     }
 
     ListOfCollabs() {
