@@ -42,6 +42,7 @@ class ApproveRequest extends Component {
             else if (responseData.type === 'REMOVAL'){
                 toastr.success('Request Approved! Collaborator was removed from task');
 
+            this.updateRequests();
             }
         }).catch((error) => {
             toastr.error('Something went wrong! Request not approved');

@@ -41,7 +41,8 @@ class RejectRequest extends Component {
             }
             else if (responseData.type === 'REMOVAL'){
                 toastr.success('Request Rejected! Collaborator was not removed from task');
-
+                
+            this.updateRequests();
             }
         }).catch((error) => {
             toastr.error('Something went wrong! Request not rejected');

@@ -23,7 +23,8 @@ export const projectsReducer = (state = {}, action = {}) => {
         case PROJECT_COST_LOADED:
             return {
                 ...state,
-                projectCost: action.payload.projectCost
+                projectCost: action.payload.projectCost,
+                calculationMethod: action.payload.calculationMethod
             }
         case CALCULATION_METHOD_UPDATED:
             return {

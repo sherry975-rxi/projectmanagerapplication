@@ -23,8 +23,10 @@ class RemoveTaskCollaborator extends Component {
                 method: "GET"
             }
         ).then(response => {
+            if (response.type === 'REMOVAL'){
 
-            this.approveRemovalRequest();
+            this.approveRemovalRequest(response.taskRequestDbId);
+            }
         }).catch(error => {
 
             this.removeTaskCollaborator();
@@ -32,9 +34,9 @@ class RemoveTaskCollaborator extends Component {
 
     }
 
-    async approveRemovalRequest() {
+    async approveRemovalRequest(requestId) {
         this.authService.fetch(
-            `/projects/${this.props.task.project}/tasks/${this.props.task.taskID}/requests/${this.props.request.taskRequestDbId}/approval`,
+            `/projects/${this.props.task.project}/tasks/${this.props.task.taskID}/requests/${requestId}/approval`,
             {
                 method: "PUT"
             }

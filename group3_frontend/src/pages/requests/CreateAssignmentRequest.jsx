@@ -5,13 +5,12 @@ import { Redirect } from 'react-router-dom';
 import { Modal } from 'react-bootstrap'
 
 
-class CreateRequest extends Component {
+class CreateAssignmentRequest extends Component {
     constructor(props) {
         super(props);
         this.state = {
             shouldRender: true,
             isActiveInTask: false,
-            hasFinishedFetch: false,
             request: {},
             tasks: {}
         };
@@ -31,6 +30,11 @@ class CreateRequest extends Component {
             this.setState({
                 request: responseData
             });
+            if (responseData.type === 'REMOVAL'){
+                this.setState({
+                    shouldRender: false
+                })
+            }
             if (responseData.error !== null) {
                 this.setState({
                     shouldRender: false
@@ -39,39 +43,30 @@ class CreateRequest extends Component {
         }).catch(err => {
         });;
 
+        this.getActiveTaskTeam();
 
-        this.AuthService.fetch(
-            `/users/${this.AuthService.getUserId()}/tasks/sortedbydeadline`,
-            {
-                method: 'get'
-            }
-        ).then(responseData => {
+    }
 
+    async getActiveTaskTeam() {
+        this.AuthService.fetch(`/projects/${this.props.project}/tasks/${this.props.id}/activeTeam`,
+            { method: 'GET' }
+        ).then(response => {
             this.setState({
-                tasks: responseData,
-                message: responseData.error,
-                hasFinishedFetch: true
+                activeTeam: response,
+                message: response.error,
             });
 
+            this.state.activeTeam.map((collab, index) => {
 
-            this.state.tasks.map((taskItem, index) => {
-
-                if (taskItem.taskID === this.props.id) {
+                if (collab.projCollaborator.collaborator.userID == this.AuthService.getUserId()) {
                     this.setState({
                         isActiveInTask: true
                     })
                 }
-                return taskItem
+
+                return collab
             })
-
-            return responseData
-        }).catch(err => {
-            this.setState({
-                tasks: []
-            });
         });
-
-
     }
 
 
@@ -148,16 +143,12 @@ class CreateRequest extends Component {
 
     render() {
 
-        if (this.state.isActiveInTask) {
-            return null     
-        }
-
-        if (this.state.hasFinishedFetch) {
+        if (!this.state.isActiveInTask) {
             if (this.state.shouldRender) {
                 return (
                     <div>
                          <button className="genericButton" onClick={this.handleShow.bind(this)}>
-                            Create Request
+                            Request Assign
                         </button>
                        <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
                             {this.displayConfirmation()}
@@ -180,4 +171,4 @@ class CreateRequest extends Component {
 }
 
 
-export default CreateRequest;
+export default CreateAssignmentRequest;

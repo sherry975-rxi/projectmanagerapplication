@@ -6,7 +6,6 @@ import { handleTaskHeaders } from '../utils/handleList';
 import MarkTaskAsFinished from './../../pages/tasks/MarkTaskAsFinished';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import CreateRequest from './../../pages/requests/CreateRequest';
 import DeleteTask from './../../pages/tasks/DeleteTask';
 import AvailableListOfCollaborators from './../../pages/tasks/AvailableListOfCollaborators';
 import ActiveTaskTeam from '../../pages/tasks/ActiveTaskTeam';
@@ -17,6 +16,7 @@ import EditTask from './../../pages/tasks/editTask/EditTask';
 import CreateReport from '../../pages/reports/CreateReport';
 import { reloadTask } from '../../actions/dependencyActions'
 import CreateRemovalRequest from '../../pages/requests/CreateRemovalRequest';
+import CreateAssignmentRequest from '../../pages/requests/CreateAssignmentRequest';
 
 class AccordionMenu extends Component {
     constructor(props) {
@@ -100,7 +100,7 @@ class AccordionMenu extends Component {
             this.props.profile === 'DIRECTOR' */
         ) {
             return element.state !== 'FINISHED' ? (
-                <CreateRequest id={element.taskID} project={element.project} />
+                <CreateAssignmentRequest id={element.taskID} project={element.project} />
             ) : (
                     ''
                 );

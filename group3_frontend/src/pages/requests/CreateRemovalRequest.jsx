@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AuthService from '../loginPage/AuthService';
 import { toastr } from 'react-redux-toastr';
 import { Redirect } from 'react-router-dom';
-import { Modal } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap';
 
 
 class CreateRemovalRequest extends Component {
@@ -11,7 +11,6 @@ class CreateRemovalRequest extends Component {
         this.state = {
             shouldRender: true,
             isActiveInTask: false,
-            hasFinishedFetch: false,
             request: {},
             tasks: {}
         };
@@ -31,6 +30,11 @@ class CreateRemovalRequest extends Component {
             this.setState({
                 request: responseData
             });
+            if (responseData.type === 'ASSIGNMENT'){
+                this.setState({
+                    shouldRender: false
+                })
+            }
             if (responseData.error !== null) {
                 this.setState({
                     shouldRender: false
@@ -39,41 +43,35 @@ class CreateRemovalRequest extends Component {
         }).catch(err => {
         });;
 
+        this.getActiveTaskTeam();
 
-        this.AuthService.fetch(
-            `/users/${this.AuthService.getUserId()}/tasks/sortedbydeadline`,
-            {
-                method: 'get'
-            }
-        ).then(responseData => {
+    }
 
+    async getActiveTaskTeam() {
+        this.AuthService.fetch(`/projects/${this.props.project}/tasks/${this.props.id}/activeTeam`,
+            { method: 'GET' }
+        ).then(response => {
             this.setState({
-                tasks: responseData,
-                message: responseData.error,
-                hasFinishedFetch: true
+                activeTeam: response,
+                message: response.error,
+
+
             });
 
+            this.state.activeTeam.map((collab, index) => {
+ 
 
-            this.state.tasks.map((taskItem, index) => {
 
-                if (taskItem.taskID === this.props.id) {
+                if (collab.projCollaborator.collaborator.userID == this.AuthService.getUserId()) {
                     this.setState({
                         isActiveInTask: true
                     })
                 }
-                return taskItem
+
+                return collab
             })
-
-            return responseData
-        }).catch(err => {
-            this.setState({
-                tasks: []
-            });
         });
-
-
     }
-
 
 
 
@@ -148,32 +146,30 @@ class CreateRemovalRequest extends Component {
 
     render() {
 
-       
-
-        if (this.state.hasFinishedFetch) {
-            if (this.state.isActiveInTask && this.state.shouldRender) {
-                return (
-                    <div>
-                         <button className="genericButton" onClick={this.handleShow.bind(this)}>
-                            Create Request
-                        </button>
-                       <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
-                            {this.displayConfirmation()}
-                        </Modal>
-                    </div>
-                );
-            } else {
-                return (
-                    <div className=" table-striped">
-                        <button className="buttonFinishedRequestCreated" onClick={this.handleAlreadyCreatedRequestClick}>
-                            Awaiting response
-                        </button>
-                    </div>
-                );
-            }
-        } else {
-            return null
-        }
+            if(this.state.isActiveInTask){
+                    if (this.state.shouldRender) {
+                        return (
+                            <div>
+                                <button className="genericButton" onClick={this.handleShow.bind(this)}>
+                                    Request Removal
+                                </button>
+                            <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                                    {this.displayConfirmation()}
+                                </Modal>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div className=" table-striped">
+                                <button className="buttonFinishedRequestCreated" onClick={this.handleAlreadyCreatedRequestClick}>
+                                    Awaiting response
+                                </button>
+                            </div>
+                        );
+                    }
+                } else {return null}
+        
+        
     }
 }
 

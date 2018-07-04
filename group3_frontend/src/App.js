@@ -15,14 +15,12 @@ import firstPage from './pages/firstPage/firstPage';
 import Footer from './components/footer/footer';
 import CreateReport from './pages/reports/CreateReport';
 import Reports from './pages/reports/Reports';
-import AllRequests from './pages/requests/AllRequests';
 import ProjectDetails from './pages/projects/ProjectDetails';
 import UserTasks from './pages/tasks/UserTasks';
 import Messages from './components/msgs/Messages';
 import HomePage from '../src/components/homePage/Homepage';
 import Test from './pages/tasks/Test';
 import ProjectTasks from './pages/tasks/ProjectTasks';
-import CreateRequest from './pages/requests/CreateRequest';
 import CreateProject from './pages/projects/CreateProject';
 import AvailableListOfCollaborators from './pages/tasks/AvailableListOfCollaborators';
 import DeleteTask from './pages/tasks/DeleteTask';
@@ -117,11 +115,6 @@ class App extends Component {
                         component={requiresAuth(Profile)}
                     />
 
-                    {/* <ProtectedRoute
-                        exact path="/projects/:projectID/requests"
-                        component={requiresAuth(AllRequests)}
-                        permissions={['COLLABORATOR']}
-                    /> */}
 
                     <ProtectedRoute
                         path="/projectdetails/:projectID"
@@ -129,11 +122,6 @@ class App extends Component {
                         permissions={['COLLABORATOR', 'DIRECTOR']}
                     />
 
-                    <ProtectedRoute
-                        path="/projects/:projectID/tasks/:taskID/requests/assignmentRequest"
-                        component={requiresAuth(CreateRequest)}
-                        permissions={['COLLABORATOR']}
-                    />
                     <ProtectedRoute
                         path="/projects/:projectID/activeTeam"
                         component={requiresAuth(AvailableListOfCollaborators)}

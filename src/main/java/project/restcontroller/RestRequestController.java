@@ -442,7 +442,7 @@ public class RestRequestController {
         Task task = taskService.getTaskByTaskID(taskId);
 
         for(TaskTeamRequest request: task.getPendingTaskTeamRequests()){
-            if(request.getProjCollab().getUserFromProjectCollaborator().getUserID() == userID){
+            if(request.getProjCollab().getUserFromProjectCollaborator().getUserID() == userID && request.getApprovalDate() == null && request.getRejectDate() == null){
                 return new ResponseEntity<>(request, HttpStatus.OK);
             }
         }

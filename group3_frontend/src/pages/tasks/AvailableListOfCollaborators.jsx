@@ -17,6 +17,40 @@ class AvailableListOfCollaborators extends Component {
         this.AuthService = new AuthService();
     }
 
+    // THis method attempts to fetch a pending task removal request from the collaborator.
+    // If the request is found, it will approve it and remove collaborator
+    // If there is an error (request not found), it will instead remove the collaborator
+     getRequest(project, taskId, userId) {
+        this.AuthService.fetch(
+            `/projects/${project}/tasks/${taskId}/requests/user/${userId}`,
+            {
+                method: "GET"
+            }
+        ).then(response => {
+            if (response.type === 'ASSIGNMENT'){
+
+            this.approveAssignmentRequest(project, taskId,response.taskRequestDbId);
+            }
+        }).catch(error => {
+
+            //this.removeTaskCollaborator();
+        });
+
+    }
+
+     approveAssignmentRequest(project, taskId, requestId) {
+        this.AuthService.fetch(
+            `/projects/${project}/tasks/${taskId}/requests/${requestId}/approval`,
+            {
+                method: "PUT"
+            }
+        ).then(response => {
+           // toastr.success('Assignment request approved!');
+        }).catch(error => {
+           // toastr.error('An error occurred!');
+        });
+    }
+
     showAddCollaboratorButton() {
         const collaborators = this.props.collaborators[this.props.taskId];
         if (!collaborators || (collaborators && !collaborators.length)) {
@@ -34,6 +68,11 @@ class AvailableListOfCollaborators extends Component {
                 collaboratorIndex
             ].collaborator.email
         };
+        const userId = this.props.collaborators[this.props.taskId][
+                collaboratorIndex
+            ].collaborator.userID
+        ;
+        this.getRequest(project, taskId, userId);
         this.props.addCollaboratorToTask(project, taskId, userDTO, tasksFilter);
 
     };
