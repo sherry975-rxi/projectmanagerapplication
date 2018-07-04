@@ -151,7 +151,7 @@ class CreateRemovalRequest extends Component {
                         return (
                             <div>
                                 <button className="genericButton" onClick={this.handleShow.bind(this)}>
-                                    Create Request
+                                    Request Removal
                                 </button>
                             <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
                                     {this.displayConfirmation()}

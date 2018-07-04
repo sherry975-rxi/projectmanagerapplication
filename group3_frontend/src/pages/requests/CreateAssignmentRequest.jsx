@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { Modal } from 'react-bootstrap'
 
 
-class CreateRequest extends Component {
+class CreateAssignmentRequest extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -148,7 +148,7 @@ class CreateRequest extends Component {
                 return (
                     <div>
                          <button className="genericButton" onClick={this.handleShow.bind(this)}>
-                            Create Request
+                            Request Assign
                         </button>
                        <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
                             {this.displayConfirmation()}
@@ -171,4 +171,4 @@ class CreateRequest extends Component {
 }
 
 
-export default CreateRequest;
+export default CreateAssignmentRequest;
