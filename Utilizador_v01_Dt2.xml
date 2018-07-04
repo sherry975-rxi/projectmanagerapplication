@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lista_utilizadores id="TestSet02" description="Lista de utilizadores do TestSet02">
+	<utilizador>
+		<nome_utilizador>Joao Silva</nome_utilizador>
+		<email_utilizador>js@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Rua da Urzes, 25</rua>
+				<localidade>Pancas</localidade>
+				<cp_num>2135-012</cp_num>
+				<cp_loc>Samora Correia</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>263650670</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+	<utilizador>
+		<nome_utilizador>Manel Costa</nome_utilizador>
+		<email_utilizador>ms@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Rua da Charneca, 5</rua>
+				<localidade>Pancas</localidade>
+				<cp_num>2135-012</cp_num>
+				<cp_loc>Samora Correia</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>263650520</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+	<utilizador>
+		<nome_utilizador>Xico Ferreira</nome_utilizador>
+		<email_utilizador>xf@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Rua do Rio Seco, 123</rua>
+				<localidade>Pancas</localidade>
+				<cp_num>2135-012</cp_num>
+				<cp_loc>Samora Correia</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>263650532</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+	<utilizador>
+		<nome_utilizador>Tiago Cancado</nome_utilizador>
+		<email_utilizador>tc@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Rua da Charneca, 9</rua>
+				<localidade>Pancas</localidade>
+				<cp_num>2135-012</cp_num>
+				<cp_loc>Samora Correia</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>263650345</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+	<utilizador>
+		<nome_utilizador>Urbino das Urzes</nome_utilizador>
+		<email_utilizador>udu@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Rua da Charneca, 22</rua>
+				<localidade>Pancas</localidade>
+				<cp_num>2135-012</cp_num>
+				<cp_loc>Samora Correia</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>263650127</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+	<utilizador>
+		<nome_utilizador>Ze da Esquina</nome_utilizador>
+		<email_utilizador>ze@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Estrada Nacional 118, Km 21</rua>
+				<localidade>Pancas</localidade>
+				<cp_num>2135-321</cp_num>
+				<cp_loc>Samora Correia</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>212349016</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+</lista_utilizadores>
