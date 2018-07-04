@@ -158,15 +158,13 @@ class RequestsFilter extends Component {
                             <input
                                 type="text"
                                 className="form-control form-control-lg"
-                                placeholder={`Search by ${this.state.selectedField}`} /* "Search by Task ID"  */
+                                placeholder={`Search by ${this.state.selectedField}`}
                                 onChange={(event) => this.filterList(event, this.state.selectedOption)}
                             />
 
                         </fieldset>
                     </form>
-                    {/* <button onClick={e => this.handleChange(e, '2')} >
-                    Confirm
-                    </button> */}
+
 
                 </div>
             </div>
@@ -184,8 +182,6 @@ class RequestsFilter extends Component {
                     return this.props.searchList(event, this.props.openedRequests, choosenField);
                 case "3":
                     return this.props.searchList(event, this.props.closedRequests, choosenField);
-                case '4':
-                    return this.props.searchList(event, this.props.lastMonthFinishedTasks, choosenField);
                 default:
                     return this.props.searchList(event, this.props.allRequests, choosenField);
 
@@ -208,17 +204,12 @@ class RequestsFilter extends Component {
                 this.activeFilter = "3";
                 return this.props.getClosedRequests(this.props.projectId);
 
-            case '4':
-                this.activeFilter = "4";
-                return this.props.updateMyLastMonthFinishedTasks(this.props.userID);
-
             default:
                 return;
         }
     }
 
     async componentDidMount() {
-        //this.props.updateMyAllTasks(this.props.userID);
         console.log("Teste props project")
         console.log(this.props.projectId)
         this.props.getOpenedRequests(this.props.projectId)
@@ -244,15 +235,7 @@ class RequestsFilter extends Component {
                 <fieldset>
 
                     <div className="switch-toggle switch-candy">
-                        {/* <input
-                        id="Test"
-                        name="view3"
-                        type="radio"
-                        onChange={<div></div>}
-                    />
-                    <label className="buttonFont" htmlFor="">
-                        <b>Filter by:</b>
-                    </label> */}
+                       
                         <input
                             id="openedRequests"
                             name="view3"
@@ -283,57 +266,10 @@ class RequestsFilter extends Component {
                             All Requests
                     </label>
 
-                        {/* <input
-                            id="lastmonthfinished"
-                            name="view3"
-                            type="radio"
-                            onChange={() => this.handleChange('4')}
-                        />
-                        <label className="buttonFont" htmlFor="lastmonthfinished">
-                            Last Month
-                    </label> */}
                         <a></a>
 
                     </div>
                 </fieldset>
-
-                {/*  <div class="btn-group">
-                <FormGroup bsSize="small" onChange={this.handleChange1} >
-                            <FormControl
-                                id="emailUsers"
-                                name="view3"
-                                eventKey="0"
-                                className="textForm"
-                                autoFocus
-                                type="text"
-                                placeholder="Search Users By Email"
-                                value={this.state.emailUsers}
-
-                            />
-                </FormGroup>
-                <button onClick={e => this.handleChange(e, '2')} >
-                    Confirm
-                    </button>
-                </div> */}
-                {/* <div className=" table-striped">
-                    <div className="filter-list">
-                        <form>
-                        <fieldset className="form-group">
-                        <input
-                            type="text"
-                            className="form-control form-control-lg"
-                            placeholder="Search by Task ID"
-                            onChange={(event) => this.filterList(event)}
-                        />
-
-                        </fieldset>
-                        </form>
-                       <button onClick={e => this.handleChange(e, '2')} >
-                    Confirm
-                    </button>
-
-                    </div>
-                </div> */}
 
                 <table style={divStyle}>
                     <tr>
@@ -342,16 +278,6 @@ class RequestsFilter extends Component {
                     </tr>
                 </table>
 
-                {/* <div>
-                    <DropdownButton
-                        className="buttonFinished"
-                        title='Select Field'
-                        key= "0"
-                        id={`dropdown-basic-${i}`}
-                    >
-                        {this.renderFields()}
-                    </DropdownButton>
-                </div> */}
             </div>
         );
     }
@@ -361,7 +287,7 @@ const mapStateToProps = state => {
         allRequests : state.requests.allRequests,
         openedRequests : state.requests.openedRequests,
         closedRequests : state.requests.closedRequests,
-        searchList : state.requests.closedRequests,
+        searchList : state.requests.searchList,
         project : state.projects.project,
        
 
