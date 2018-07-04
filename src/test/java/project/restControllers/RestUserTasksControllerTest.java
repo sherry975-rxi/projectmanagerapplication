@@ -107,12 +107,14 @@ public class RestUserTasksControllerTest {
     }
 
     @Test
-    public void shouldReturnUserPendingTaskList () {
-        //GIVEN a user id
+    public void shouldReturnUserPendingTaskList () throws Exception {
+       /* //GIVEN a user id
         List<Task> pendingTaskList = new ArrayList<>();
         pendingTaskList.add(taskMock);
         when(userServiceMock.getUserByID(any(int.class))).thenReturn(userMock);
         when(taskServiceMock.getStartedNotFinishedUserTaskList(userMock)).thenReturn(pendingTaskList);
+        when(taskMock.getActiveTaskCollaboratorByEmail(userMock.getEmail())).thenReturn(userMock);
+
 
         //WHEN we call getPendingTasks with a valid userId
         List<Task> response = victim.getPendingTasks(userId);
@@ -120,7 +122,38 @@ public class RestUserTasksControllerTest {
         //THEN we receive a valid list of tasks
         assertEquals(pendingTaskList, response);
         verify(taskServiceMock, times(1)).getStartedNotFinishedUserTaskList(userMock);
-        verify(userServiceMock, times(1)).getUserByID(userId);
+        verify(userServiceMock, times(1)).getUserByID(userId);*/
+
+        project = new Project("test", "test", userRui);
+
+
+        List<Task> pendingTaskList = new ArrayList<>();
+
+        Task task1 = new Task("taskTest1", project);
+        Task task2 = new Task("taskTest2", project);
+        Task task3 = new Task("taskTest3", project);
+
+        pendingTaskList.add(task1);
+        pendingTaskList.add(task2);
+        pendingTaskList.add(task3);
+
+        Mockito.when(userServiceMock.getUserByID(anyInt())).thenReturn(userRui);
+        Mockito.when(taskServiceMock.getStartedNotFinishedUserTaskList(anyObject())).thenReturn(pendingTaskList);
+
+        //WHEN
+        //when you ask for all the tasks of this particular user
+        MockHttpServletResponse response = mvc.perform(get("/users/" + userRui.getUserID() + "/tasks/pending")
+                .accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
+        victim.getPendingTasks(userId);
+
+        //THEN
+        //then a list of all your tasks is returned
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        //verify(taskServiceMock, times(2)).getStartedNotFinishedUserTaskList(userRui);
+
+
+
+
     }
 
     /**
