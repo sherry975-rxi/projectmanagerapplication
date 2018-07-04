@@ -6,6 +6,7 @@ export default (state = {}, action) => {
                 ...state,
                 itemIsLoading: false,
                 childTask: action.child,
+                tasksDependencies: action.tasks,
                 error: false
             };
         case 'DEPENDENCIES_FETCHED':
@@ -29,7 +30,7 @@ export default (state = {}, action) => {
                 itemIsLoading: true,
                 error: false
             };
-        case 'FETCH_HAS_ERRORED':
+        case 'DEPENDENCY_ERROR':
             return { ...state, itemIsLoading: false, error: true };
 
         default:

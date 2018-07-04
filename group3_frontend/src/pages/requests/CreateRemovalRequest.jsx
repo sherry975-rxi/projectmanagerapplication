@@ -41,7 +41,7 @@ class CreateRemovalRequest extends Component {
                 })
             }
         }).catch(err => {
-        });;
+        });
 
         this.getActiveTaskTeam();
 
@@ -58,6 +58,8 @@ class CreateRemovalRequest extends Component {
 
             });
 
+            try{
+
             this.state.activeTeam.map((collab, index) => {
  
 
@@ -70,6 +72,8 @@ class CreateRemovalRequest extends Component {
 
                 return collab
             })
+        }
+        catch(error) {}
         });
     }
 
@@ -153,7 +157,7 @@ class CreateRemovalRequest extends Component {
                                 <button className="genericButton" onClick={this.handleShow.bind(this)}>
                                     Request Removal
                                 </button>
-                            <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                            <Modal show={this.state.show} onHide={this.handleClose.bind(this)} style={{position: "fixed",}}>
                                     {this.displayConfirmation()}
                                 </Modal>
                             </div>

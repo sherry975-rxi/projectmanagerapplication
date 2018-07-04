@@ -1,0 +1,51 @@
+.pencil{
+    color: rgb(135, 190, 178);
+    font-size: 20px;
+}
+
+.pencil:hover{
+    color: rgb(194, 133, 133);
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+.budgetAndEffort {
+    width: 335px;
+}
+
+.control-label > p{
+    font-weight: bold;
+    padding-right: 25px;
+    color: red;
+  }
+
+  .pencilGreen{
+      color: rgb(135, 190, 178)
+  }
+
+  .edited {
+    color: rgb(135, 190, 178);
+    margin-left: 10px;
+  }
+
+  pencilHide {
+    color: red;
+      display: hide
+  }
+
+  #projectTasksTitle{
+margin-top: 5px;
+  }
+
+.cross-remove{
+    color: rgb(177, 105, 105);
+    font-size: 20px;
+}
+
+.cross-remove:hover{
+    color: rgb(102, 38, 38);
+    font-size: 20px;
+    cursor: pointer;
+
+}

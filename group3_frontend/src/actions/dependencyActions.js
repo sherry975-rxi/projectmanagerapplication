@@ -10,11 +10,14 @@ export function reloadTask(projectId, taskId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                dispatch(taskFetched(data));
-                return data;
-            })
-            .catch(error => {
-                fetchTasksHasErrored();
+                console.log(data);
+                if(data.msg == null) {
+                    dispatch(taskFetched(data));
+                    return data;
+                } else {
+                    dispatch(fetchTasksHasErrored());
+                }
+
             });
     };
 }
@@ -28,11 +31,13 @@ export function getAllTaskDependencies(projectId, taskId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                dispatch(taskDependenciesFetched(data));
-                return data;
-            })
-            .catch(error => {
-                fetchTasksHasErrored();
+                if(data.msg == null) {
+                    console.log(data);
+                    dispatch(taskDependenciesFetched(data));
+                    return data;
+                } else {
+                    dispatch(fetchTasksHasErrored());
+                }
             });
     };
 }
@@ -46,12 +51,15 @@ export function getPossibleTaskDependencies(projectId, taskId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                dispatch(possibleTaskDependenciesFetched(data));
-                return data;
-            })
-            .catch(error => {
-                fetchTasksHasErrored();
+                if(data.msg == null) {
+                    dispatch(possibleTaskDependenciesFetched(data));
+                    return data;
+                } else {
+                    dispatch(fetchTasksHasErrored());
+                }
+
             });
+
     };
 }
 
@@ -64,14 +72,15 @@ export function createTaskDependency(projectId, taskId, parentId, postpone) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                dispatch(taskDependenciesFetched(data));
-                toastr.success('Dependency added!');
-                dispatch(reloadTask(projectId, taskId));
-                return data;
-            })
-            .catch(error => {
-                toastr.error('lolnope');
-                fetchTasksHasErrored();
+                if(data.msg == null) {
+                    dispatch(reloadTask(projectId, taskId));
+                    toastr.success('Dependency added!');
+                    return data;
+                } else {
+                    toastr.error('An error occurred!');
+                    dispatch(fetchTasksHasErrored());
+                }
+
             });
     };
 }
@@ -85,14 +94,14 @@ export function removeTaskDependency(projectId, taskId, parentId) {
         })
             .then(responseData => responseData.json())
             .then(data => {
-                dispatch(taskDependenciesFetched(data));
-                toastr.success('Dependency removed!');
-                return data;
-            })
-            .catch(error => {
-                toastr.error('lolnope');
-                fetchTasksHasErrored();
-
+                if(data.msg == null) {
+                    dispatch(taskDependenciesFetched(data));
+                    toastr.success('Dependency removed!');
+                    return data;
+                } else {
+                    toastr.error('An error occurred!');
+                    dispatch(fetchTasksHasErrored());
+                }
             });
     };
 }
@@ -101,7 +110,8 @@ export function removeTaskDependency(projectId, taskId, parentId) {
 export function taskFetched(task) {
     return {
         type: 'CHILD_TASK_FETCHED',
-        child: task
+        child: task,
+        tasks: task.taskDependency
     };
 }
 
@@ -129,6 +139,6 @@ export function tasksLoading() {
 
 export function fetchTasksHasErrored() {
     return {
-        type: 'FETCH_HAS_ERRORED'
+        type: 'DEPENDENCY_ERROR'
     };
 }

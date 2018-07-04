@@ -2,6 +2,7 @@ package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import project.model.Project;
 import project.model.ProjectCollaborator;
 import project.model.User;
@@ -142,27 +143,14 @@ public class ProjectService {
 	public List<Project> getProjectsFromUser(User user) {
 
 		List<Project> projects = new ArrayList<>();
-		List<ProjectCollaborator> userProjCollabs = new ArrayList<>();
-
-		// Finds all projectCollaborators from a given user
-		userProjCollabs.addAll(this.projectCollaboratorRepository.findAllByCollaborator(user));
-
-		long projectId;
 
 		// Compares de projectId of the projectCollaborator to the project id of the
 		// projects in the database
-		for (ProjectCollaborator collaborator : userProjCollabs) {
-			projectId = collaborator.getProject().getProjectId();
-			for (Project project : this.getAllProjectsfromProjectsContainer()) {
-
-				if(project.getProjectManager() == user) {
-					projects.add(project);
-				}
-				else if (project.getProjectId() == projectId) {
-					projects.add(project);
-				}
-			}
-		}
+        for(Project project : this.getAllProjectsfromProjectsContainer()) {
+            if(project.isProjectManager(user) || this.isUserActiveInProject(user, project)) {
+                projects.add(project);
+            }
+        }
 
 		return projects;
 	}
@@ -372,27 +360,44 @@ public class ProjectService {
 	 */
 	public void updateProjectData(Project projectUpdates, Project project){
 
+		if(StringUtils.isEmpty(projectUpdates.getName())) {
+			project.setName(projectUpdates.getName());
+		}
+
+		if(StringUtils.isEmpty(projectUpdates.getDescription())) {
+			project.setDescription(projectUpdates.getDescription());
+		}
+
+		if((projectUpdates.getStartdate() != null)) {
+			project.setStartdate(projectUpdates.getStartdate());
+		}
+
+		if((projectUpdates.getFinishdate() != null)) {
+			project.setFinishdate(projectUpdates.getFinishdate());
+		}
+
+        if((projectUpdates.getBudget() > 0)) {
+            project.setBudget((int) projectUpdates.getBudget());
+        }
+
 		if((projectUpdates.getProjectManager() != null)) {
 			User user = userService.getUserByEmail(projectUpdates.getProjectManager().getEmail());
 			project.setProjectManager(user);
-			updateProject(project);
 		}
 
 		if((projectUpdates.getAvailableCalculationMethods()!=null)) {
 		    project.setAvailableCalculationMethods(projectUpdates.getAvailableCalculationMethods());
-		    updateProject(project);
         }
 
 		if(projectUpdates.getCalculationMethod()!= null && project.isCalculationMethodAllowed(projectUpdates.getCalculationMethod().getCode())){
 			project.setCalculationMethod(projectUpdates.getCalculationMethod());
-			updateProject(project);
 		}
 
         if(!project.isCalculationMethodAllowed(project.getCalculationMethod().getCode())) {
 		    project.setCalculationMethod(project.listAvaliableCalculationMethods().get(0));
-		    updateProject(project);
         }
 
+		updateProject(project);
 	}
 
 	/**

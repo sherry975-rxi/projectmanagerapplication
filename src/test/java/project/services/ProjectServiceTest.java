@@ -317,6 +317,11 @@ public class ProjectServiceTest {
 
 		when(projectService.getAllProjectsfromProjectsContainer()).thenReturn(projectsList);
 
+		when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectCollaboratorFromUser);
+        when(projectCollaboratorRepository.findAllByProject(project2)).thenReturn(new ArrayList<ProjectCollaborator>());
+        when(projectCollaboratorRepository.findAllByProject(project3)).thenReturn(projectCollaboratorFromUser);
+        when(projectCollaboratorRepository.findAllByProject(project4)).thenReturn(new ArrayList<ProjectCollaborator>());
+
 		/*
 		 * Creates a list of projects that is supposed to be returned by the method
 		 */
@@ -686,14 +691,14 @@ public class ProjectServiceTest {
 		//THEN the project is updated and saved
 		verify(project, times(1)).setAvailableCalculationMethods("CF,CM");
 		verify(project, times(1)).setCalculationMethod(CostCalculationFactory.Method.CM);
-		verify(projectRep, times(3)).save(project);
+		verify(projectRep, times(2)).save(project);
 
 
 		//GIVEN a project to update
 		//WHEN updateProjectData is called with no updates
 		when(projectUpdates.getCalculationMethod()).thenReturn(null);
 		//THEN the project is not update
-		verify(projectRep, times(3)).save(project);
+		verify(projectRep, times(2)).save(project);
 
 	}
 

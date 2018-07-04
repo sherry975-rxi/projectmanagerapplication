@@ -41,7 +41,7 @@ class CreateAssignmentRequest extends Component {
                 })
             }
         }).catch(err => {
-        });;
+        });
 
         this.getActiveTaskTeam();
 
@@ -56,6 +56,7 @@ class CreateAssignmentRequest extends Component {
                 message: response.error,
             });
 
+            try{
             this.state.activeTeam.map((collab, index) => {
 
                 if (collab.projCollaborator.collaborator.userID == this.AuthService.getUserId()) {
@@ -66,6 +67,7 @@ class CreateAssignmentRequest extends Component {
 
                 return collab
             })
+        } catch (error) {}
         });
     }
 
@@ -115,9 +117,8 @@ class CreateAssignmentRequest extends Component {
     }
 
     displayConfirmation() {
-
         return (
-            <div>
+            < div >
                 <Modal.Header closeButton>
                     <Modal.Title> Create Request</Modal.Title>
                 </Modal.Header>
@@ -150,7 +151,7 @@ class CreateAssignmentRequest extends Component {
                          <button className="genericButton" onClick={this.handleShow.bind(this)}>
                             Request Assign
                         </button>
-                       <Modal show={this.state.show} onHide={this.handleClose.bind(this)}>
+                       <Modal show={this.state.show} onHide={this.handleClose.bind(this)} style={{position: "fixed",}}>
                             {this.displayConfirmation()}
                         </Modal>
                     </div>

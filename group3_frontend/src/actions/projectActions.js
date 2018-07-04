@@ -1,6 +1,15 @@
 import { GET_USER_PROJECTS_FULLFIELD, GET_ACTIVE_PROJECTS_FULLFIELD } from './actions';
 import AuthService from "../pages/loginPage/AuthService";
 
+
+export function refreshProjects(profile, userId) {
+    if(profile === "DIRECTOR") {
+        getActiveProjects(userId);
+    } else if (profile === "COLLABORATOR") {
+        getUserProjects(userId);
+    }
+}
+
 export function getUserProjects(userId) {
     const authService = new AuthService();
 
