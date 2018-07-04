@@ -317,6 +317,11 @@ public class ProjectServiceTest {
 
 		when(projectService.getAllProjectsfromProjectsContainer()).thenReturn(projectsList);
 
+		when(projectCollaboratorRepository.findAllByProject(project1)).thenReturn(projectCollaboratorFromUser);
+        when(projectCollaboratorRepository.findAllByProject(project2)).thenReturn(new ArrayList<ProjectCollaborator>());
+        when(projectCollaboratorRepository.findAllByProject(project3)).thenReturn(projectCollaboratorFromUser);
+        when(projectCollaboratorRepository.findAllByProject(project4)).thenReturn(new ArrayList<ProjectCollaborator>());
+
 		/*
 		 * Creates a list of projects that is supposed to be returned by the method
 		 */

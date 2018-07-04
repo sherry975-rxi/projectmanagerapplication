@@ -142,27 +142,14 @@ public class ProjectService {
 	public List<Project> getProjectsFromUser(User user) {
 
 		List<Project> projects = new ArrayList<>();
-		List<ProjectCollaborator> userProjCollabs = new ArrayList<>();
-
-		// Finds all projectCollaborators from a given user
-		userProjCollabs.addAll(this.projectCollaboratorRepository.findAllByCollaborator(user));
-
-		long projectId;
 
 		// Compares de projectId of the projectCollaborator to the project id of the
 		// projects in the database
-		for (ProjectCollaborator collaborator : userProjCollabs) {
-			projectId = collaborator.getProject().getProjectId();
-			for (Project project : this.getAllProjectsfromProjectsContainer()) {
-
-				if(project.getProjectManager() == user) {
-					projects.add(project);
-				}
-				else if (project.getProjectId() == projectId) {
-					projects.add(project);
-				}
-			}
-		}
+        for(Project project : this.getAllProjectsfromProjectsContainer()) {
+            if(project.isProjectManager(user) || this.isUserActiveInProject(user, project)) {
+                projects.add(project);
+            }
+        }
 
 		return projects;
 	}
