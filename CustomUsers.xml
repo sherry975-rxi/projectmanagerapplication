@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lista_utilizadores id="TestSet02" description="Lista de utilizadores do TestSet02">
+	<utilizador>
+		<nome_utilizador>Júlia Santos</nome_utilizador>
+		<email_utilizador>js@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Rua da Urzes, 25</rua>
+				<localidade>Pancas</localidade>
+				<cp_num>9652-541</cp_num>
+				<cp_loc>Bugues</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>263650670</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+	<utilizador>
+		<nome_utilizador>Genoveva Albertina Dias</nome_utilizador>
+		<email_utilizador>gad@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Avenida da Fortuna, 58</rua>
+				<localidade>Dancas</localidade>
+				<cp_num>2135-012</cp_num>
+				<cp_loc>Samora Correia</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>263650520</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+	<utilizador>
+		<nome_utilizador>Jacinto Leite Capelo Rego</nome_utilizador>
+		<email_utilizador>jlcr@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Rua do Rio Molhado, 789</rua>
+				<localidade>Mandalo</localidade>
+				<cp_num>4785-012</cp_num>
+				<cp_loc>Amora Senreia</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>263650532</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+    <utilizador>
+        <nome_utilizador>Dan K'mimes</nome_utilizador>
+		<email_utilizador>dk@mymail.com</email_utilizador>
+		<lista_enderecos>
+			<endereco_postal>
+				<rua>Praça da alegria, 62</rua>
+				<localidade>Réquete Meite</localidade>
+				<cp_num>6321-459</cp_num>
+				<cp_loc>Major Gomes</cp_loc>
+				<pais>Portugal</pais>
+			</endereco_postal>
+		</lista_enderecos>
+		<telefone>263650532</telefone>
+		<password>qwerty1!</password>								<!-- Para fazer login -->
+		<estado_utilizador>Ativo</estado_utilizador>
+	</utilizador>
+</lista_utilizadores>
