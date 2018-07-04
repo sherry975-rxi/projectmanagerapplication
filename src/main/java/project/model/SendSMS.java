@@ -42,8 +42,8 @@ public class SendSMS extends ResourceSupport {
 
          */
         if(!overrideAccountAuth){
-            accountSid = "AC4ffe069234a3ce253b84b7f7ed678407";
-            authToken = "7b30788fd931e158fe3846ec7e3866a0";
+            accountSid = "ACce621bdb7d6153096a909247191dcbd4";
+            authToken = "4debf2603070c7ddf6cb37d55787d263";
 
         }
 
@@ -56,7 +56,7 @@ public class SendSMS extends ResourceSupport {
         This is the host number provided by Twilio's Service
          */
         if(numberProvidedByTwilio == null){
-            numberProvidedByTwilio = "+17044577646";
+            numberProvidedByTwilio = "ProjectApp";
         }
 
         /*
@@ -65,10 +65,11 @@ public class SendSMS extends ResourceSupport {
          */
 
 
-        String overrideNumber = "+351911790134";
+
+        String appendToString = "+351" + numberToSend;
 
 
-        return Message.creator(new PhoneNumber(overrideNumber),
+        return Message.creator(new PhoneNumber(appendToString),
                 new PhoneNumber(numberProvidedByTwilio),
                 messageToSend).create().getStatus();
 

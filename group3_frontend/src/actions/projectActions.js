@@ -3,11 +3,15 @@ import AuthService from "../pages/loginPage/AuthService";
 
 
 export function refreshProjects(profile, userId) {
-    if(profile === "DIRECTOR") {
-        getActiveProjects(userId);
-    } else if (profile === "COLLABORATOR") {
-        getUserProjects(userId);
+
+    return dispatch => {
+        if(profile === "DIRECTOR") {
+            dispatch(getActiveProjects(userId));
+        } else if (profile === "COLLABORATOR") {
+            dispatch(getUserProjects(userId));
+        }
     }
+
 }
 
 export function getUserProjects(userId) {
