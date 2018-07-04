@@ -7,3 +7,59 @@
 
     text-align: center
   }
+
+  .reportTable{
+    margin-bottom: 15px;
+    width: 100%
+}
+
+.reportTable > thead  {
+   background-color: white;
+}
+
+.reportTable > thead > tr > th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+    font-family: Helvetica;
+    color: #797979;
+    font-size: 12px;
+    border-bottom: solid 1px #e7e7e7;
+}
+
+
+.reportTable > thead > tr > td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: normal;
+  text-align: center;
+  font-family: Helvetica;
+  color: #585858;
+  font-size: 12px;
+  border-bottom: solid 1px #eeeeee;
+}
+
+.reportTable > thead > tr > td {
+  border-bottom: solid 1px #eeeeee;
+  padding-left: 65px;
+  padding-right: 65px;
+  padding-bottom: 30px;
+}
+
+.reportedTime{
+  height: 40px;
+  width: 40px;
+  background-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid rgb(135, 190, 178);
+  align-content: center;
+}
+
+.reportedTime > p {
+  margin-top: 8px;
+  margin-right: 2px;
+  font-size: 16px;
+  color: rgb(135, 190, 178);
+}
