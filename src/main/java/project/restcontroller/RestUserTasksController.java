@@ -50,11 +50,9 @@ public class RestUserTasksController {
         }
 
         List<Task> taskFromUser = taskService.getUserTasks(user);
-        List<Task> userTasks = new ArrayList<>();
 
         for(Task task: taskFromUser) {
 
-            if (task.getActiveTaskCollaboratorByEmail(user.getEmail()) != null) {
 
                 for (String action : task.getTaskState().getActions()) {
 
@@ -62,12 +60,11 @@ public class RestUserTasksController {
                     task.add(taskLinkn);
                 }
 
-                userTasks.add(task);
 
-            }
+
         }
 
-        return ResponseEntity.ok().body(userTasks);
+        return ResponseEntity.ok().body(taskFromUser);
     }
 
     /**

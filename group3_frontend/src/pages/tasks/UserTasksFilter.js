@@ -223,7 +223,7 @@ class UserTasksFilter extends Component {
     }
 
     async componentDidMount() {
-        this.props.updateMyAllTasks(this.props.userID);
+        this.props.updateMyOngoingTasks(this.props.userID);
     }
 
     render() {
@@ -259,40 +259,40 @@ class UserTasksFilter extends Component {
                             id="alltasks"
                             name="view3"
                             type="radio"
-                            onChange={() => this.handleChange('1')}
+                            onChange={() => this.handleChange('2')}
                         />
                         <label className="buttonFont" htmlFor="alltasks">
-                            All Tasks
+                            On Going
                     </label>
 
                         <input
                             id="onGoing"
                             name="view3"
                             type="radio"
-                            onChange={() => this.handleChange('2')}
+                            onChange={() => this.handleChange('3')}
                         />
                         <label className="buttonFont" htmlFor="onGoing">
-                            On Going
+                            Finished
                     </label>
 
                         <input
                             id="finished"
                             name="view3"
                             type="radio"
-                            onChange={() => this.handleChange('3')}
+                            onChange={() => this.handleChange('4')}
                         />
                         <label className="buttonFont" htmlFor="finished">
-                            Finished
+                            Last Month
                     </label>
 
                         <input
                             id="lastmonthfinished"
                             name="view3"
                             type="radio"
-                            onChange={() => this.handleChange('4')}
+                            onChange={() => this.handleChange('1')}
                         />
                         <label className="buttonFont" htmlFor="lastmonthfinished">
-                            Last Month
+                            All Tasks
                     </label>
                         <a></a>
 
