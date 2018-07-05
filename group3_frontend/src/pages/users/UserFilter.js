@@ -312,7 +312,6 @@ class UserFilter extends Component {
                             Admin
                     </label>
                         <a></a>
-
                     </div>
                 </fieldset>
 

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './firstPage.css';
-import logo from './top_banner.png';
-import brand from './brand.svg';
 import Button from '../../components/button/button';
+import macs from './appWebLogo.png'
 
 class firstPage extends Component {
     render() {
@@ -21,6 +20,7 @@ class firstPage extends Component {
                     </div>
 
                     <div className="ButtonsStartPage">
+                        <center><img src={macs} className="macs" alt="mcs" /></center>
                         <table className="tableButtom">
                             <tbody>
                                 <tr className="spacer">
@@ -39,10 +39,6 @@ class firstPage extends Component {
                         </table>
                     </div>
                 </div>
-                <div>
-                    <img src={logo} alt="logo" className="image" href="/" />
-                </div>
-                <img src={brand} alt="brand" className="switch" href="/" />
             </div>
         );
     }

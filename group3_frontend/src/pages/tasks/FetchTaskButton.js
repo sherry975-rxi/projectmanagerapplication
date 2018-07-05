@@ -95,7 +95,6 @@ class FetchTaskButton extends Component {
                     >
                         Cancelled
             </label>
-
                     <a></a>
                 </div>
 

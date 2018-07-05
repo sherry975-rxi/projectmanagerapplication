@@ -1,21 +1,30 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
 .pageTitle{
+    margin-left: 25px;
     font-size: 25px;
-    font-family: 'Roboto', sans-serif;
+    font-family: Helvetica;
     color: rgb(98, 98, 98);
     padding-bottom: 50px;
     width: bold;
+    margin-bottom: 25px;
 }
 
-.createProjectForm {
-    padding-top: 50px;
+.createProjectContainer{
+    padding-top: 40px;
+    padding-bottom: 20px;
+    width: 700px;
 }
 
-.textForm {
+.createProjectForm{
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+.textFormProject {
     padding-bottom: 10px;
     border: none;
-    width: 350px;
+    width: 550px;
     font-size: 12px;
 }
 
@@ -32,4 +41,27 @@
 
 .btn.btn-primary:hover{
     background-color: #2A3F54;
+}
+
+.projectManagerButton {
+    background-color: rgb(135, 190, 178);
+    background-image: none;
+    color: white;
+    border: white;
+    font-size: 13px;
+    width: 180px;
+    height: 35px;
+    border-radius: 0 !important;
+}
+
+.projectManagerButton:hover{
+    background-color: #2a3f54;
+    background-image: none;
+    color: white;
+    border: white;
+    font-size: 13px;
+    font-weight: bold;
+    width: 180px;
+    height: 35px;
+    border-radius: 0 !important;
 }

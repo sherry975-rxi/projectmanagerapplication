@@ -6,9 +6,6 @@ describe('SignUpStepThree', () => {
     const fetchResult = {
         json: jest.fn().mockReturnValue({ href: 'responseUrl' })
     };
-    global.fetch = jest
-        .fn()
-        .mockImplementation(() => Promise.resolve(fetchResult));
 
     let mockedClass;
     let eventMock = { preventDefault: jest.fn() };
@@ -18,6 +15,10 @@ describe('SignUpStepThree', () => {
     });
 
     beforeEach(() => {
+        global.fetch = jest
+            .fn()
+            .mockImplementation(() => Promise.resolve(fetchResult));
+
         mockedClass = new SignUpStepThree();
     });
 

@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { getAllRequests, getOpenedRequests, getClosedRequests, searchList } from '../../actions/requestsActions'
-import {
-    MenuItem,
-    DropdownButton,
-    PanelGroup, Panel, Button, Glyphicon
-} from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import {toastr} from "react-redux-toastr";
 
 

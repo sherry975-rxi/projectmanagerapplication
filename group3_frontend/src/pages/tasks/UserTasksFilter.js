@@ -295,7 +295,6 @@ class UserTasksFilter extends Component {
                             All Tasks
                     </label>
                         <a></a>
-
                     </div>
                 </fieldset>
 

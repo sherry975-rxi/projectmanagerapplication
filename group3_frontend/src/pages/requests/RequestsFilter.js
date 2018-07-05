@@ -265,9 +265,7 @@ class RequestsFilter extends Component {
                         <label className="buttonFont" htmlFor="allRequests">
                             All Requests
                     </label>
-
                         <a></a>
-
                     </div>
                 </fieldset>
 
