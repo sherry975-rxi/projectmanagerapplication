@@ -294,7 +294,7 @@ class UserTasksFilter extends Component {
                         <label className="buttonFont" htmlFor="lastmonthfinished">
                             Last Month
                     </label>
-
+                        <a></a>
                     </div>
                 </fieldset>
 
