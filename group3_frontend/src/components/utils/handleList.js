@@ -1,4 +1,6 @@
+import { isNullOrUndefined } from 'util';
 var moment = require('moment');
+
 
 
 export function handleTaskHeaders(list) {
@@ -61,16 +63,46 @@ export function formatDate(date) {
     }
 }
 
-export function handleRequestsHeaders(list) {
-    return list.map(request => ({
-        taskID: request.task.taskID,
-        taskDescription: request.task.description,
-        collaborator: request.projCollab.collaborator.name,
-        type: request.type,
-        approvalDate: formatDate(request.approvalDate),
-        rejectDate: formatDate(request.rejectDate),
-        requestID: request.taskRequestDbId,
-        projectID: request.task.project.projectId
+export function handleRequestsHeaders(requests) {
 
-    }));
+    var output = [];
+
+    for(let i = 0; i < requests.length; i++) {
+
+        if(isNullOrUndefined(requests[i].task.project)) {
+            console.log("poject nao defindo")
+            console.log(requests[i])
+
+            output.push({
+                        taskId: requests[i].task,
+                        collaborator: requests[i].projCollab.collaborator.name,
+                        type: requests[i].type,
+                        approvalDate: formatDate(requests[i].approvalDate),
+                        rejectDate: formatDate(requests[i].rejectDate),
+                        requestID: requests[i].taskRequestDbId,
+                        projectID: requests[i].projCollab.project.projectId
+                
+            
+            });
+        
+        } else {
+            console.log("poject  defindo")
+            console.log(requests[i].task.taskID)
+
+            output.push({
+                    taskId: requests[i].task.taskID,
+                    collaborator: requests[i].projCollab.collaborator.name,
+                    type: requests[i].type,
+                    approvalDate: formatDate(requests[i].approvalDate),
+                    rejectDate: formatDate(requests[i].rejectDate),
+                    requestID: requests[i].taskRequestDbId,
+                    projectID: requests[i].task.project.projectId
+                
+                });
+        }
+
+    }
+    return output;
+
+    
 }

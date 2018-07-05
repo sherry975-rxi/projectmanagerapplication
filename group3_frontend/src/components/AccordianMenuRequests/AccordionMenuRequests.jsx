@@ -40,8 +40,8 @@ class AccordionMenuRequests extends Component {
 
             return (
                 <div>
-                <ApproveRequest projectId={element.projectID} taskId={element.taskID} requestId={element.requestID} />
-                <RejectRequest projectId={element.projectID} taskId={element.taskID} requestId={element.requestID} />
+                <ApproveRequest projectId={element.projectID} taskId={element.taskId} requestId={element.requestID} />
+                <RejectRequest projectId={element.projectID} taskId={element.taskId} requestId={element.requestID} />
                 </div>
             )
         } else {
@@ -57,6 +57,7 @@ class AccordionMenuRequests extends Component {
         if(list.length > 0){
 
         return handleRequestsHeaders(list).map((element, index) => (
+           
             <Panel eventKey={key}>
                 <Panel.Heading>
                     <Panel.Title /* toggle */>
@@ -67,8 +68,8 @@ class AccordionMenuRequests extends Component {
                             <table className="table table-content">
                                 <thead>
                                     <tr>
-                                        <th> {element.taskID} </th>
-                                        <th> {element.taskDescription} </th>
+                                    {console.log(element)}
+                                        <th> {element.taskId} </th>
                                         <th> {element.collaborator} </th>
                                         <th>
                                             <b>{element.type}</b>

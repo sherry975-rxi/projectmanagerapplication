@@ -4,5 +4,5 @@ export const TASKS = ['Task ID', 'Project ID', 'Description', 'State', 'Start Da
 
 export const PROJECTS = ['Status', 'Project', ' ', 'Description', 'State', ' '];
 
-export const REQUESTS = ['Task ID', 'Task Description', 'Collaborator Name', 'Request Type', 'Approval Date', 'Rejection Date', ' '];
+export const REQUESTS = ['Task ID', 'Collaborator Name', 'Request Type', 'Approval Date', 'Rejection Date', ' '];
 
