@@ -10,12 +10,10 @@ import java.util.Calendar;
 
 @Entity
 @Table(name = "TaskCollaborator")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "taskCollabDbId", scope = TaskCollaborator.class)
 public class TaskCollaborator extends ResourceSupport implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIdentityReference(alwaysAsId = true)
     private long taskCollabDbId;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ProjectCollaborator_id")
