@@ -13,7 +13,7 @@ class SignUpStepTwo extends Component {
         <div className="stepTwoValidation">
             <div className="chooseValidationMethodText">
                 To continue with sign up process, you will receive a validation
-                code by SMS or email. Choose the method:
+                code by SMS or email. Please, choose which one:
             </div>
             <ButtonToolbar className="buttonValidationToolbar">
                 <Button

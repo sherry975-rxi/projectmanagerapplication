@@ -29,6 +29,8 @@
 
 .stepTwoValidation {
     margin: 100px 600px auto 300px;
+    text-align: center;
+    min-width:600px;
 }
 
 .validationCodeForm {
@@ -37,6 +39,12 @@
 
 .buttonValidationToolbar {
     margin: 10px auto auto auto;
+    margin-left: 50%
+}
+
+.buttonRegisterAlign{
+    text-align:center;
+    
 }
 
 .stepFourConfirmation {
@@ -50,7 +58,9 @@
 
 .chooseValidationMethodText {
     font-size: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 40px;
+    min-width: 800px;
+    text-align: center;
 }
 
 
