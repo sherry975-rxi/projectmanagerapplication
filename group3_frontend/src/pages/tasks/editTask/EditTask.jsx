@@ -92,11 +92,13 @@ class EditTask extends Component {
             body: JSON.stringify(taskToEdit)
         })
             .then(data => {
-                if (data.status === 200)
+                if (data.status === 200) {
                     toastr.success('Task:' + this.props.task.taskID + ' successfully edited');
+                    this.props.getProjectTasksByFilter(this.props.task.project, this.props.filter)
+                }
+
                 else
                     toastr.error('Something went wrong! Task not updated')
-                this.props.getProjectTasksByFilter(this.props.task.project, this.props.filter)
                 return data;
             }).catch((error) => {
                 toastr.error('Something went wrong! Task not updated')
@@ -238,13 +240,15 @@ class EditTask extends Component {
 
     render() {
 
+        console.log(this.props.filter)
+
         let toRender = this.renderTaskEditFields()
         if (this.state.confirmCreation) {
             toRender = this.displayConfirmation()
         }
 
 
-        if (this.props.task.currentProject.projectManager.email === this.AuthService.getProfile().sub){
+        if (this.props.task.currentProject.projectManager.email === this.AuthService.getProfile().sub) {
 
             return (
                 <div>
@@ -255,9 +259,8 @@ class EditTask extends Component {
                     </Modal>
                 </div>
             )
-        } 
-        else if(this.props.task.taskTeam.length > 0)
-        {
+        }
+        else if (this.props.task.taskTeam.length > 0) {
 
 
             for (let i = 0; i < this.props.task.taskTeam.length; i++) {
@@ -279,7 +282,7 @@ class EditTask extends Component {
                     )
 
                 }
-                
+
             }
 
             return null;
@@ -290,9 +293,9 @@ class EditTask extends Component {
             return null
         }
 
-        }
+    }
 
-        
+
 }
 
 const mapStateToProps = state => {

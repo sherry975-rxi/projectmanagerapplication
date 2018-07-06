@@ -91,8 +91,8 @@ class CreateTask extends Component {
                 <Modal.Body>
                     <p><b>Description:</b> {this.props.task.description} </p>
                     <p><b>Task ID:</b> {this.props.task.taskID} </p>
-                    <p><b>Estimated Start Date:</b> {this.props.task.estimatedTaskStartDate} </p>
-                    <p><b>Estimated Deadline:</b> {this.props.task.taskDeadline} </p>
+                    <p><b>Estimated Start Date:</b> {this.props.task.estimatedTaskStartDate.format('DD/MM/YYYY').toString()} </p>
+                    <p><b>Estimated Deadline:</b> {this.props.task.taskDeadline.format('DD/MM/YYYY').toString()} </p>
                     <p><b>State:</b> {this.props.task.currentState} </p>
                     <p><b>Project:</b> {this.props.projectId} </p>
                 </Modal.Body>

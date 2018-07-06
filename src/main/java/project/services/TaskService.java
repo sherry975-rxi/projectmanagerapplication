@@ -1061,7 +1061,7 @@ public class TaskService {
 			toEdit.setEstimatedTaskEffort(taskDto.getEstimatedTaskEffort());
 		}
 
-		 if (Double.compare(taskDto.getEstimatedTaskEffort(), 0.0) != 0 && Double.compare(taskDto.getTaskBudget(), taskDto.getTaskBudget()) == 0) {
+		 if (Double.compare(taskDto.getTaskBudget(), 0.0) != 0 && Double.compare(taskDto.getTaskBudget(), taskDto.getTaskBudget()) == 0) {
 			toEdit.setTaskBudget(taskDto.getTaskBudget());
 		}
 
