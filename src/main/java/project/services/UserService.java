@@ -305,18 +305,6 @@ public class UserService {
 	}
 
 	/**
-	 * This method create a User Dto with a user id
-	 *
-	 * @param userId
-	 *
-	 * @return userDTO
-	 */
-	public UserDTO createUserDtoWithUserId(Integer userId) {
-
-		return new UserDTO(getUserByID(userId));
-	}
-
-	/**
 	 * This method checks if an e-mail inserted by the user is valid or not
 	 *
 	 * @param email email

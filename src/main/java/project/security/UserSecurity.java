@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import project.dto.UserDTO;
-import project.model.Profile;
 import project.model.User;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class UserSecurity implements UserDetails {
     private String email;
     private String password;
     private Collection<SimpleGrantedAuthority> authorities;
-
 
     public UserSecurity() {
         //empty constructor because...
@@ -69,10 +67,6 @@ public class UserSecurity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public boolean hasProfile(Profile profile) {
-        return getAuthorities().contains(new SimpleGrantedAuthority(profile.getDescription()));
     }
 
     public UserDTO getPrincipalAsDTO() {
